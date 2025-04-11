@@ -109,15 +109,30 @@ const BooksPage = () => {
         <div className="container mx-auto">
           {/* GIF Banner */}
           <div className="flex justify-center mb-4">
-            <img 
-              src={`${S3_ICON_BASE_URL}VISUAL 0a.gif`} 
-              alt="Visual English Animation" 
-              className="max-h-60 object-contain rounded-lg shadow-sm"
-              onError={(e) => {
-                // Fallback to default GIF if specific one doesn't exist
-                (e.target as HTMLImageElement).src = `${S3_ICON_BASE_URL}VISUAL 1.gif`;
-              }}
-            />
+            <div className="relative bg-gray-50 rounded-lg flex items-center justify-center h-60">
+              {/* Fallback display when gif fails to load */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="flex flex-col items-center">
+                  <BookOpen className="h-16 w-16 text-purple-600 mb-4" />
+                  <h2 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+                    Visual English
+                  </h2>
+                  <p className="text-gray-500 text-sm mt-2">Interactive Learning Platform</p>
+                </div>
+              </div>
+              
+              {/* Attempt to load GIF but hide on error */}
+              <img 
+                src={`${S3_ICON_BASE_URL}VISUAL 0a.gif`} 
+                alt="Visual English Animation" 
+                className="max-h-60 object-contain rounded-lg shadow-sm relative z-10"
+                onError={(e) => {
+                  console.log("Failed to load GIF banner");
+                  // Hide the broken image and let the fallback show
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
           </div>
           
           {/* Search and controls */}
@@ -192,6 +207,16 @@ const BooksPage = () => {
                         src={`${S3_ICON_BASE_URL}book_${book.bookId.toLowerCase().replace(/\s/g, '')}.png`} 
                         alt={book.title}
                         className="max-h-full max-w-full object-contain relative z-10"
+                        onError={(e) => {
+                          console.log(`Failed to load thumbnail for book ${book.bookId}`);
+                          // Keep the BookOpen icon visible by not changing opacity when image fails
+                          const bookIcon = e.currentTarget.previousElementSibling;
+                          if (bookIcon) {
+                            (bookIcon as HTMLElement).style.opacity = "1";
+                          }
+                          // Hide the broken image
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
                     </div>
                   </div>
