@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Book } from "@shared/schema";
@@ -8,6 +8,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Navigation } from "@/components/ui/Navigation";
 import { BookOpen, BookOpenCheck, BookPlus } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+
+// Book icon URL template
+const S3_ICON_BASE_URL = "https://visualenglishmaterial.s3.amazonaws.com/icons/";
+
+// Add this to your tailwind.config.ts in the colors section
+// For now adding as inline style
 
 const BooksPage = () => {
   const { user, isLoading: authLoading } = useAuth();
@@ -103,25 +109,24 @@ const BooksPage = () => {
 
         {isLoading ? (
           // Loading state
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, index) => (
-              <Card key={index} className="overflow-hidden">
-                <CardHeader className="pb-2">
-                  <Skeleton className="h-6 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-1/2" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-20 w-full" />
-                </CardContent>
-                <CardFooter>
-                  <Skeleton className="h-10 w-full" />
-                </CardFooter>
-              </Card>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {[...Array(10)].map((_, index) => (
+              <div key={index} className="flex flex-col overflow-hidden bg-white shadow">
+                <div className="p-3 text-center border-b">
+                  <Skeleton className="h-6 w-3/4 mx-auto" />
+                </div>
+                <div className="flex-1 p-6 flex items-center justify-center">
+                  <Skeleton className="h-32 w-32 rounded-md" />
+                </div>
+                <div className="p-2">
+                  <Skeleton className="h-10 w-full rounded" />
+                </div>
+              </div>
             ))}
           </div>
         ) : (
-          // Books grid
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          // Books grid with 5 columns on larger screens to match the design
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {filteredBooks.length === 0 ? (
               <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
                 <BookOpenCheck className="h-16 w-16 text-gray-300 mb-4" />
@@ -132,32 +137,30 @@ const BooksPage = () => {
               </div>
             ) : (
               filteredBooks.map((book) => (
-                <Card key={book.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="text-xl">
-                        {book.bookId}: {book.title}
-                      </CardTitle>
-                      <div className="p-1.5 bg-primary/10 rounded-full">
-                        <BookOpen className="h-5 w-5 text-primary" />
-                      </div>
+                <div key={book.id} className="flex flex-col overflow-hidden bg-white shadow hover:shadow-md transition-shadow">
+                  <div className="p-3 text-center border-b">
+                    <h3 className="font-semibold">{book.title}</h3>
+                  </div>
+                  <div className="flex-1 p-6 flex items-center justify-center">
+                    <div className="relative h-32 w-32 bg-gray-50 flex items-center justify-center">
+                      <BookOpen className="h-16 w-16 text-gray-300" style={{ position: 'absolute', opacity: 0.5 }} />
+                      <img 
+                        src={`${S3_ICON_BASE_URL}book_${book.bookId.toLowerCase().replace(/\s/g, '')}.png`} 
+                        alt={book.title}
+                        className="max-h-full max-w-full object-contain relative z-10"
+                      />
                     </div>
-                    <CardDescription>Level {book.level || "N/A"}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 line-clamp-3">
-                      {book.description || "No description available"}
-                    </p>
-                  </CardContent>
-                  <CardFooter className="pt-2">
+                  </div>
+                  <div className="p-2">
                     <Button 
                       onClick={() => setLocation(`/admin/books/${book.id}`)}
-                      className="w-full"
+                      className="w-full py-2 text-white hover:bg-opacity-90"
+                      style={{ backgroundColor: '#172554' }} // navy blue color
                     >
-                      Open Book
+                      View Book <span className="ml-1">→</span>
                     </Button>
-                  </CardFooter>
-                </Card>
+                  </div>
+                </div>
               ))
             )}
           </div>
