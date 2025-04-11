@@ -28,6 +28,30 @@ const AdminDashboard = () => {
   const navigateToContent = () => {
     navigate("/admin/content");
   };
+  
+  const navigateToFiles = () => {
+    console.log("Navigating to file management");
+    // Will be implemented in future
+    // navigate("/admin/files");
+  };
+  
+  const navigateToUsers = () => {
+    console.log("Navigating to user management");
+    // Will be implemented in future
+    // navigate("/admin/users");
+  };
+  
+  const navigateToSchools = () => {
+    console.log("Navigating to school management");
+    // Will be implemented in future
+    // navigate("/admin/schools");
+  };
+  
+  const navigateToSettings = () => {
+    console.log("Navigating to system settings");
+    // Will be implemented in future
+    // navigate("/admin/settings");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -71,7 +95,11 @@ const AdminDashboard = () => {
                 </Button>
               </li>
               <li>
-                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
+                  onClick={navigateToUsers}
+                >
                   <span className="flex items-center">
                     <Users className="h-5 w-5 mr-3" />
                     Users Management
@@ -79,7 +107,11 @@ const AdminDashboard = () => {
                 </Button>
               </li>
               <li>
-                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
+                  onClick={navigateToSchools}
+                >
                   <span className="flex items-center">
                     <School className="h-5 w-5 mr-3" />
                     Schools
@@ -111,7 +143,11 @@ const AdminDashboard = () => {
                 </Button>
               </li>
               <li>
-                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
+                  onClick={navigateToSettings}
+                >
                   <span className="flex items-center">
                     <Settings className="h-5 w-5 mr-3" />
                     Settings
@@ -139,93 +175,77 @@ const AdminDashboard = () => {
           <h2 className="text-3xl font-bold mb-2">Welcome, Admin</h2>
           <p className="text-gray-600 mb-8">Manage all aspects of the Visual English Learning Platform</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* File Management Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-blue-50 rounded-md mr-4">
-                  <FileText className="h-6 w-6 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">File Management</h3>
-                  <p className="text-sm text-gray-500">Upload and manage educational files and resources</p>
+          {/* Management Icons Row */}
+          <div className="flex justify-center items-center gap-4 mb-8">
+            {/* File Management Icon */}
+            <div className="text-center cursor-pointer hover:opacity-80 transition-opacity" onClick={navigateToFiles}>
+              <div className="flex justify-center mb-3">
+                <div className="p-4 bg-blue-50 rounded-full hover:bg-blue-100 transition-colors">
+                  <FileText className="h-8 w-8 text-blue-600" />
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button variant="outline" className="w-full bg-blue-600 text-white hover:bg-blue-700">Manage Files</Button>
-              </div>
+              <h3 className="text-sm font-semibold">Files</h3>
             </div>
 
-            {/* User Management Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-amber-50 rounded-md mr-4">
-                  <Users className="h-6 w-6 text-amber-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">User Management</h3>
-                  <p className="text-sm text-gray-500">Add and manage users, roles, and permissions</p>
+            {/* User Management Icon */}
+            <div className="text-center cursor-pointer hover:opacity-80 transition-opacity" onClick={navigateToUsers}>
+              <div className="flex justify-center mb-3">
+                <div className="p-4 bg-amber-50 rounded-full hover:bg-amber-100 transition-colors">
+                  <Users className="h-8 w-8 text-amber-600" />
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button variant="outline" className="w-full bg-amber-600 text-white hover:bg-amber-700">Manage Users</Button>
-              </div>
+              <h3 className="text-sm font-semibold">Users</h3>
             </div>
 
-            {/* School Management Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-green-50 rounded-md mr-4">
-                  <School className="h-6 w-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">School Management</h3>
-                  <p className="text-sm text-gray-500">Register and manage schools and their licenses</p>
+            {/* School Management Icon */}
+            <div className="text-center cursor-pointer hover:opacity-80 transition-opacity" onClick={navigateToSchools}>
+              <div className="flex justify-center mb-3">
+                <div className="p-4 bg-green-50 rounded-full hover:bg-green-100 transition-colors">
+                  <School className="h-8 w-8 text-green-600" />
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button variant="outline" className="w-full bg-green-600 text-white hover:bg-green-700">Manage Schools</Button>
-              </div>
+              <h3 className="text-sm font-semibold">Schools</h3>
             </div>
 
-            {/* Content Management Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-purple-50 rounded-md mr-4">
-                  <BookOpen className="h-6 w-6 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">Content Management</h3>
-                  <p className="text-sm text-gray-500">Organize books, units, and learning materials</p>
+            {/* Content Management Icon */}
+            <div className="text-center cursor-pointer hover:opacity-80 transition-opacity" onClick={navigateToContent}>
+              <div className="flex justify-center mb-3">
+                <div className="p-4 bg-purple-50 rounded-full hover:bg-purple-100 transition-colors">
+                  <BookOpen className="h-8 w-8 text-purple-600" />
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button 
-                  variant="outline" 
-                  className="w-full bg-purple-600 text-white hover:bg-purple-700"
-                  onClick={navigateToContent}
-                >
-                  Manage Content
-                </Button>
-              </div>
+              <h3 className="text-sm font-semibold">Content</h3>
             </div>
 
-            {/* System Settings Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-gray-50 rounded-md mr-4">
-                  <Settings className="h-6 w-6 text-gray-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">System Settings</h3>
-                  <p className="text-sm text-gray-500">Configure system preferences and global settings</p>
+            {/* System Settings Icon */}
+            <div className="text-center cursor-pointer hover:opacity-80 transition-opacity" onClick={navigateToSettings}>
+              <div className="flex justify-center mb-3">
+                <div className="p-4 bg-gray-50 rounded-full hover:bg-gray-200 transition-colors">
+                  <Settings className="h-8 w-8 text-gray-600" />
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button variant="outline" className="w-full bg-gray-600 text-white hover:bg-gray-700">System Settings</Button>
-              </div>
+              <h3 className="text-sm font-semibold">Settings</h3>
             </div>
           </div>
+          
+          {/* Management Cards - Additional section that can be uncommented if needed
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
+              <h3 className="text-lg font-semibold mb-2">Recent Activity</h3>
+              <p className="text-sm text-gray-500">View your most recent platform activities</p>
+            </div>
+            
+            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
+              <h3 className="text-lg font-semibold mb-2">System Status</h3>
+              <p className="text-sm text-gray-500">Monitor the health of your system</p>
+            </div>
+            
+            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
+              <h3 className="text-lg font-semibold mb-2">Quick Actions</h3>
+              <p className="text-sm text-gray-500">Perform common administrative tasks</p>
+            </div>
+          </div>
+          */}
         </div>
       </div>
     </div>
