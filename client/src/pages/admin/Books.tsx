@@ -5,7 +5,7 @@ import { Book } from "@shared/schema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { BookOpen, BookOpenCheck, BookPlus, Search } from "lucide-react";
+import { BookOpen, BookOpenCheck, BookPlus, Search, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 // Book icon URL template
@@ -104,44 +104,85 @@ const BooksPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Visual banner with GIF */}
-      <div className="bg-white shadow-sm px-4 py-6 mb-4">
-        <div className="container mx-auto">
-          {/* Simple Visual English header */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="text-purple-600 mb-2">
-              <BookOpen className="h-14 w-14" />
-            </div>
-            <h2 className="text-2xl font-bold text-purple-600 mb-1">
-              Visual English
-            </h2>
-            <p className="text-gray-500 text-sm">
-              Interactive Learning Platform
-            </p>
-          </div>
-          
-          {/* Search and controls */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 max-w-xl mx-auto">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-              <Input 
-                placeholder="Search books..." 
-                className="pl-9 py-6 text-base rounded-md border-gray-200"
-                value={searchQuery}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            {user?.role === "admin" && (
-              <Button 
-                onClick={() => setLocation("/admin/books/create")}
-                className="whitespace-nowrap w-full md:w-auto py-6 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium"
-              >
-                <BookPlus className="h-5 w-5 mr-2" />
-                Create Book
-              </Button>
-            )}
-          </div>
+      {/* Top Navigation Bar */}
+      <div className="bg-white shadow-sm px-6 py-4 flex justify-between items-center mb-8">
+        <div className="flex items-center space-x-2">
+          <BookOpen className="h-6 w-6 text-purple-600" />
+          <h1 className="text-xl font-semibold">Content Manager</h1>
         </div>
+
+        <div className="flex items-center space-x-5">
+          <Button 
+            variant="ghost" 
+            className="text-gray-700"
+            onClick={() => setLocation("/admin")}
+          >
+            Dashboard
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-gray-700"
+            onClick={() => setLocation("/admin/content")}
+          >
+            Content Management
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-gray-700 font-medium"
+            onClick={() => setLocation("/admin/books")}
+          >
+            Books
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-red-600"
+            onClick={() => {
+              const { logoutMutation } = useAuth();
+              logoutMutation.mutate();
+              setLocation("/auth");
+            }}
+          >
+            <LogOut className="h-4 w-4 mr-1" />
+            Sign Out
+          </Button>
+        </div>
+      </div>
+      
+      {/* Visual English Header */}
+      <div className="flex flex-col items-center mb-8">
+        <div className="text-purple-600 mb-2">
+          <BookOpen className="h-14 w-14" />
+        </div>
+        <h2 className="text-2xl font-bold text-purple-600 mb-1">
+          Visual English
+        </h2>
+        <p className="text-gray-500 text-sm">
+          Interactive Learning Platform
+        </p>
+      </div>
+      
+      {/* Search and controls */}
+      <div className="flex items-center justify-center gap-4 max-w-xl mx-auto mb-8 px-4">
+        <div className="relative w-full">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Input 
+            placeholder="Search books..." 
+            className="pl-9 py-2 text-base rounded-md border-gray-200"
+            value={searchQuery}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        {user?.role === "admin" && (
+          <Button 
+            onClick={() => setLocation("/admin/books/create")}
+            className="whitespace-nowrap bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            Create Book
+          </Button>
+        )}
       </div>
 
       <main className="container mx-auto px-4 py-4">

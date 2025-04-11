@@ -31,111 +31,66 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Top Navigation */}
-      <div className="bg-white shadow-sm px-6 py-2 flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Admin User</h1>
-        <div className="flex items-center space-x-4">
-          <span>{user?.username || "Loading..."}</span>
+      {/* Top Navigation Bar */}
+      <div className="bg-white shadow-sm px-6 py-4 flex justify-between items-center mb-8">
+        <div className="flex items-center space-x-2">
+          <BookOpen className="h-6 w-6 text-purple-600" />
+          <h1 className="text-xl font-semibold">Content Manager</h1>
         </div>
+
+        <div className="flex items-center space-x-5">
+          <Button 
+            variant="ghost" 
+            className="text-gray-700 font-medium"
+            onClick={() => navigate("/admin")}
+          >
+            Dashboard
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-gray-700"
+            onClick={navigateToContent}
+          >
+            Content Management
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-gray-700"
+            onClick={navigateToBooks}
+          >
+            Books
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-red-600"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4 mr-1" />
+            Sign Out
+          </Button>
+        </div>
+      </div>
+      
+      {/* Visual English Header */}
+      <div className="flex flex-col items-center mb-8">
+        <div className="text-purple-600 mb-2">
+          <BookOpen className="h-14 w-14" />
+        </div>
+        <h2 className="text-2xl font-bold text-purple-600 mb-1">
+          Visual English
+        </h2>
+        <p className="text-gray-500 text-sm">
+          Interactive Learning Platform
+        </p>
       </div>
 
       {/* Main Content */}
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 min-h-screen bg-white shadow-md">
-          <div className="p-6">
-            <div className="flex items-center space-x-3">
-              <div className="h-10 w-10 rounded-full bg-gray-900 flex items-center justify-center text-white font-semibold">
-                AU
-              </div>
-              <div>
-                <div className="font-semibold">Admin User</div>
-                <div className="text-xs text-gray-500">Administrator</div>
-              </div>
-            </div>
-          </div>
-
-          <nav className="mt-4">
-            <ul>
-              <li>
-                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
-                  <span className="flex items-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="mr-3">
-                      <rect width="7" height="9" x="3" y="3" rx="1" fill="currentColor" fillOpacity=".2" />
-                      <rect width="7" height="5" x="3" y="15" rx="1" fill="currentColor" fillOpacity=".2" />
-                      <rect width="7" height="5" x="13" y="3" rx="1" fill="currentColor" fillOpacity=".2" />
-                      <rect width="7" height="9" x="13" y="11" rx="1" fill="currentColor" fillOpacity=".2" />
-                    </svg>
-                    Dashboard
-                  </span>
-                </Button>
-              </li>
-              <li>
-                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
-                  <span className="flex items-center">
-                    <Users className="h-5 w-5 mr-3" />
-                    Users Management
-                  </span>
-                </Button>
-              </li>
-              <li>
-                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
-                  <span className="flex items-center">
-                    <School className="h-5 w-5 mr-3" />
-                    Schools
-                  </span>
-                </Button>
-              </li>
-              <li>
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
-                  onClick={navigateToBooks}
-                >
-                  <span className="flex items-center">
-                    <BookOpen className="h-5 w-5 mr-3" />
-                    Visual English Books
-                  </span>
-                </Button>
-              </li>
-              <li>
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
-                  onClick={navigateToContent}
-                >
-                  <span className="flex items-center">
-                    <BookOpen className="h-5 w-5 mr-3" />
-                    Content Management
-                  </span>
-                </Button>
-              </li>
-              <li>
-                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
-                  <span className="flex items-center">
-                    <Settings className="h-5 w-5 mr-3" />
-                    Settings
-                  </span>
-                </Button>
-              </li>
-              <li>
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start px-6 py-3 text-red-600 hover:bg-red-50"
-                  onClick={handleLogout}
-                >
-                  <span className="flex items-center">
-                    <LogOut className="h-5 w-5 mr-3" />
-                    Sign Out
-                  </span>
-                </Button>
-              </li>
-            </ul>
-          </nav>
-        </div>
-
+      <div>
         {/* Main Content Area */}
-        <div className="flex-1 p-8">
+        <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-2">Welcome, Admin</h2>
           <p className="text-gray-600 mb-8">Manage all aspects of the Visual English Learning Platform</p>
 
