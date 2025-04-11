@@ -21,6 +21,10 @@ const AdminDashboard = () => {
   const navigateToBooks = () => {
     navigate("/admin/books");
   };
+  
+  const navigateToContent = () => {
+    navigate("/admin/content");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -80,10 +84,26 @@ const AdminDashboard = () => {
                 </Button>
               </li>
               <li>
-                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
+                  onClick={navigateToBooks}
+                >
                   <span className="flex items-center">
                     <BookOpen className="h-5 w-5 mr-3" />
                     Visual English Books
+                  </span>
+                </Button>
+              </li>
+              <li>
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
+                  onClick={navigateToContent}
+                >
+                  <span className="flex items-center">
+                    <BookOpen className="h-5 w-5 mr-3" />
+                    Content Management
                   </span>
                 </Button>
               </li>
@@ -188,9 +208,9 @@ const AdminDashboard = () => {
                 <Button 
                   variant="outline" 
                   className="w-full bg-black text-white hover:bg-gray-800"
-                  onClick={navigateToBooks}
+                  onClick={navigateToContent}
                 >
-                  Upgrade Lesson
+                  Manage Content
                 </Button>
               </div>
             </div>
