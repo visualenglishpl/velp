@@ -128,7 +128,11 @@ const AdminDashboard = () => {
                   <p className="text-sm text-gray-500">Upload and manage educational files and resources</p>
                 </div>
               </div>
-              <Button variant="outline" className="w-full">Manage</Button>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="text-sm text-gray-500 mb-1">6-Month License</div>
+                <div className="text-2xl font-bold mb-2">€149</div>
+                <Button variant="outline" className="w-full">Manage</Button>
+              </div>
             </div>
 
             {/* User Management Card */}
@@ -142,7 +146,11 @@ const AdminDashboard = () => {
                   <p className="text-sm text-gray-500">Add and manage users, roles, and permissions</p>
                 </div>
               </div>
-              <Button variant="outline" className="w-full">Manage</Button>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="text-sm text-gray-500 mb-1">6-Month License</div>
+                <div className="text-2xl font-bold mb-2">€299</div>
+                <Button variant="outline" className="w-full">Manage</Button>
+              </div>
             </div>
 
             {/* School Management Card */}
@@ -156,7 +164,11 @@ const AdminDashboard = () => {
                   <p className="text-sm text-gray-500">Register and manage schools and their licenses</p>
                 </div>
               </div>
-              <Button variant="outline" className="w-full">Manage</Button>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="text-sm text-gray-500 mb-1">6-Month License</div>
+                <div className="text-2xl font-bold mb-2">€499</div>
+                <Button variant="outline" className="w-full">Manage</Button>
+              </div>
             </div>
 
             {/* Content Management Card */}
@@ -170,13 +182,17 @@ const AdminDashboard = () => {
                   <p className="text-sm text-gray-500">Organize books, units, and learning materials</p>
                 </div>
               </div>
-              <Button 
-                variant="outline" 
-                className="w-full"
-                onClick={navigateToBooks}
-              >
-                Manage
-              </Button>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="text-sm text-gray-500 mb-1">6-Month License</div>
+                <div className="text-2xl font-bold mb-2">€299</div>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={navigateToBooks}
+                >
+                  Manage
+                </Button>
+              </div>
             </div>
 
             {/* System Settings Card */}
@@ -190,7 +206,11 @@ const AdminDashboard = () => {
                   <p className="text-sm text-gray-500">Configure system preferences and global settings</p>
                 </div>
               </div>
-              <Button variant="outline" className="w-full">Manage</Button>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="text-sm text-gray-500 mb-1">Custom License</div>
+                <div className="text-2xl font-bold mb-2">Contact</div>
+                <Button variant="outline" className="w-full">Manage</Button>
+              </div>
             </div>
           </div>
         </div>
