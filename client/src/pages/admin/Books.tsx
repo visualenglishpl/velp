@@ -1,11 +1,11 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Book } from "@shared/schema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { BookOpen, BookOpenCheck, BookPlus, Search, LogOut, Settings } from "lucide-react";
+import { BookOpen, BookOpenCheck, BookPlus, Search, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 // Book icon URL template
@@ -35,8 +35,8 @@ const getBookButtonColor = (bookId: string): string => {
 };
 
 const BooksPage = () => {
-  const { user, isLoading: authLoading } = useAuth();
-  const [, setLocation] = useLocation();
+  const { user, logoutMutation, isLoading: authLoading } = useAuth();
+  const [, navigate] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   
   // Redirect to auth page if not logged in
@@ -44,13 +44,13 @@ const BooksPage = () => {
     if (!authLoading) {
       if (!user) {
         console.log("User not authenticated, redirecting to auth page");
-        window.location.replace("/auth");
+        navigate("/auth");
       } else if (user.role !== "admin" && user.role !== "teacher") {
         console.log("User not authorized for books page, redirecting to homepage");
-        window.location.replace("/");
+        navigate("/");
       }
     }
-  }, [user, authLoading]);
+  }, [user, authLoading, navigate]);
 
   // Fetch books from API
   const { data: books, isLoading } = useQuery<Book[]>({
@@ -115,7 +115,7 @@ const BooksPage = () => {
           <Button 
             variant="ghost" 
             className="text-gray-700"
-            onClick={() => setLocation("/admin")}
+            onClick={() => navigate("/admin")}
           >
             Dashboard
           </Button>
@@ -123,7 +123,7 @@ const BooksPage = () => {
           <Button 
             variant="ghost" 
             className="text-gray-700"
-            onClick={() => setLocation("/admin/content")}
+            onClick={() => navigate("/admin/content")}
           >
             Content Management
           </Button>
@@ -131,7 +131,7 @@ const BooksPage = () => {
           <Button 
             variant="ghost" 
             className="text-gray-700 font-medium"
-            onClick={() => setLocation("/admin/books")}
+            onClick={() => navigate("/admin/books")}
           >
             Books
           </Button>
@@ -140,9 +140,8 @@ const BooksPage = () => {
             variant="ghost" 
             className="text-red-600"
             onClick={() => {
-              const { logoutMutation } = useAuth();
               logoutMutation.mutate();
-              setLocation("/auth");
+              navigate("/auth");
             }}
           >
             <LogOut className="h-4 w-4 mr-1" />
@@ -177,7 +176,7 @@ const BooksPage = () => {
         </div>
         {user?.role === "admin" && (
           <Button 
-            onClick={() => setLocation("/admin/books/create")}
+            onClick={() => navigate("/admin/books/create")}
             className="whitespace-nowrap bg-blue-600 hover:bg-blue-700 text-white"
           >
             Create Book
@@ -243,7 +242,7 @@ const BooksPage = () => {
                   </div>
                   <div className="p-2">
                     <Button 
-                      onClick={() => setLocation(`/admin/books/${book.id}`)}
+                      onClick={() => navigate(`/admin/books/${book.id}`)}
                       className="w-full py-2 text-white hover:bg-opacity-90"
                       style={{ 
                         /* Apply different colors based on book ID to make them colorful */
