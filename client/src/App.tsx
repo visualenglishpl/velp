@@ -29,6 +29,9 @@ function App() {
   const isAdminPage = location.startsWith("/admin");
   const showNavFooter = !isAuthPage && !isAdminPage;
 
+  // Debugging
+  console.log("Current location:", location);
+  
   return (
     <AuthProvider>
       <div className="flex flex-col min-h-screen">

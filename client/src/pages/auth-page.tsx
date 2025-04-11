@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import VelpLogo from "@/components/ui/velp-logo";
@@ -50,13 +50,18 @@ const AuthPage = () => {
   };
 
   // Redirect logged in users to appropriate page
-  if (user && !isLoading) {
-    if (user.role === "admin") {
-      return <Redirect to="/admin" />;
-    } else {
-      return <Redirect to="/" />;
+  useEffect(() => {
+    if (user && !isLoading) {
+      console.log("User authenticated:", user);
+      console.log("User role:", user.role);
+      
+      if (user.role === "admin") {
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/";
+      }
     }
-  }
+  }, [user, isLoading]);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
