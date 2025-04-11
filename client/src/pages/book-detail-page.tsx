@@ -29,8 +29,14 @@ const BookDetailPage = () => {
 
   // Redirect to auth page if not logged in
   useEffect(() => {
-    if (!user && !authLoading) {
-      window.location.href = "/auth";
+    if (!authLoading) {
+      if (!user) {
+        console.log("User not authenticated, redirecting to auth page");
+        window.location.replace("/auth");
+      } else if (user.role !== "admin" && user.role !== "teacher") {
+        console.log("User not authorized for book details page, redirecting to homepage");
+        window.location.replace("/");
+      }
     }
   }, [user, authLoading]);
 

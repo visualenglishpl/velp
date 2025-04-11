@@ -55,11 +55,19 @@ const AuthPage = () => {
       console.log("User authenticated:", user);
       console.log("User role:", user.role);
       
-      if (user.role === "admin") {
-        window.location.href = "/admin";
-      } else {
-        window.location.href = "/";
-      }
+      // Use setTimeout to ensure this happens after React rendering cycle
+      setTimeout(() => {
+        if (user.role === "admin") {
+          console.log("Redirecting admin to dashboard");
+          window.location.replace("/admin");
+        } else if (user.role === "teacher") {
+          console.log("Redirecting teacher to homepage");
+          window.location.replace("/");
+        } else if (user.role === "school") {
+          console.log("Redirecting school to homepage");
+          window.location.replace("/");
+        }
+      }, 100);
     }
   }, [user, isLoading]);
 
