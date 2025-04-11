@@ -152,7 +152,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button variant="outline" className="w-full bg-blue-600 text-white hover:bg-blue-700">Manage Files</Button>
+                <Button className="w-full py-2 bg-blue-600 text-white hover:bg-blue-700 border-0">Manage Files</Button>
               </div>
             </div>
 
@@ -168,7 +168,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button variant="outline" className="w-full bg-amber-600 text-white hover:bg-amber-700">Manage Users</Button>
+                <Button className="w-full py-2 bg-amber-600 text-white hover:bg-amber-700 border-0">Manage Users</Button>
               </div>
             </div>
 
@@ -184,7 +184,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button variant="outline" className="w-full bg-green-600 text-white hover:bg-green-700">Manage Schools</Button>
+                <Button className="w-full py-2 bg-green-600 text-white hover:bg-green-700 border-0">Manage Schools</Button>
               </div>
             </div>
 
@@ -201,8 +201,7 @@ const AdminDashboard = () => {
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <Button 
-                  variant="outline" 
-                  className="w-full bg-purple-600 text-white hover:bg-purple-700"
+                  className="w-full py-2 bg-purple-600 text-white hover:bg-purple-700 border-0"
                   onClick={navigateToContent}
                 >
                   Manage Content
@@ -222,7 +221,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button variant="outline" className="w-full bg-gray-600 text-white hover:bg-gray-700">System Settings</Button>
+                <Button className="w-full py-2 bg-gray-600 text-white hover:bg-gray-700 border-0">System Settings</Button>
               </div>
             </div>
           </div>
