@@ -201,7 +201,8 @@ const AdminDashboard = () => {
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <Button 
-                  className="w-full py-2 bg-purple-600 text-white hover:bg-purple-700 border-0"
+                  className="w-full py-2 text-white hover:bg-opacity-90 border-0"
+                  style={{ backgroundColor: '#9333ea' }} // Bright purple color to match screenshot
                   onClick={navigateToContent}
                 >
                   Manage Content
@@ -221,7 +222,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button className="w-full py-2 bg-gray-600 text-white hover:bg-gray-700 border-0">System Settings</Button>
+                <Button className="w-full py-2 text-white hover:bg-opacity-90 border-0" style={{ backgroundColor: '#474e59' }}>System Settings</Button>
               </div>
             </div>
           </div>
