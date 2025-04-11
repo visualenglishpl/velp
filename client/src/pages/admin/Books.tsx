@@ -150,19 +150,6 @@ const BooksPage = () => {
         </div>
       </div>
       
-      {/* Visual English Header */}
-      <div className="flex flex-col items-center mb-8">
-        <div className="text-purple-600 mb-2">
-          <BookOpen className="h-14 w-14" />
-        </div>
-        <h2 className="text-2xl font-bold text-purple-600 mb-1">
-          Visual English
-        </h2>
-        <p className="text-gray-500 text-sm">
-          Interactive Learning Platform
-        </p>
-      </div>
-      
       {/* Search and controls */}
       <div className="flex items-center justify-center gap-4 max-w-xl mx-auto mb-8 px-4">
         <div className="relative w-full">
