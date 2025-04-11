@@ -104,31 +104,43 @@ const BooksPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Simplified header with just the title and search */}
+      {/* Visual banner with GIF */}
       <div className="bg-white shadow-sm px-4 py-3 mb-4">
-        <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center space-x-3">
-            <h1 className="text-xl font-bold">Books</h1>
+        <div className="container mx-auto">
+          {/* GIF Banner */}
+          <div className="flex justify-center mb-4">
+            <img 
+              src={`${S3_ICON_BASE_URL}VISUAL 1.gif`} 
+              alt="Visual English Animation" 
+              className="max-h-60 object-contain rounded-lg shadow-sm"
+            />
           </div>
-          <div className="w-full sm:w-auto flex">
-            <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-              <Input 
-                placeholder="Search books..." 
-                className="pl-9"
-                value={searchQuery}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-              />
+          
+          {/* Search and controls */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-4">
+            <div className="flex items-center space-x-3">
+              <h1 className="text-xl font-bold">Books</h1>
             </div>
-            {user?.role === "admin" && (
-              <Button 
-                onClick={() => setLocation("/admin/books/create")}
-                className="ml-2 bg-blue-600 hover:bg-blue-700"
-              >
-                <BookPlus className="h-4 w-4 mr-1" />
-                <span className="hidden sm:inline">Create Book</span>
-              </Button>
-            )}
+            <div className="w-full sm:w-auto flex">
+              <div className="relative w-full sm:w-64">
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                <Input 
+                  placeholder="Search books..." 
+                  className="pl-9"
+                  value={searchQuery}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              {user?.role === "admin" && (
+                <Button 
+                  onClick={() => setLocation("/admin/books/create")}
+                  className="ml-2 bg-blue-600 hover:bg-blue-700"
+                >
+                  <BookPlus className="h-4 w-4 mr-1" />
+                  <span className="hidden sm:inline">Create Book</span>
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

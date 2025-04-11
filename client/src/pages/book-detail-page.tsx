@@ -5,7 +5,6 @@ import { Book, Unit } from "@shared/schema";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Navigation } from "@/components/ui/Navigation";
 import { 
   BookOpen, 
   ChevronLeft, 
@@ -15,10 +14,36 @@ import {
   Layers, 
   File, 
   Pencil,
-  Terminal
+  Terminal,
+  Search
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
+
+// Book icon URL template
+const S3_ICON_BASE_URL = "https://visualenglishmaterial.s3.amazonaws.com/icons/";
+
+// Function to get different button colors based on unit number 
+const getButtonColor = (unitNumber: number): string => {
+  // Use modulo to cycle through colors
+  const colorIndex = unitNumber % 10;
+  
+  // Color palette - colorful buttons for different units
+  const colors = {
+    0: '#2563eb', // blue
+    1: '#059669', // green
+    2: '#d97706', // amber
+    3: '#dc2626', // red
+    4: '#0891b2', // cyan
+    5: '#4f46e5', // indigo
+    6: '#be123c', // rose
+    7: '#a16207', // yellow
+    8: '#7c3aed', // violet
+    9: '#9333ea', // purple
+  };
+  
+  return colors[colorIndex as keyof typeof colors] || '#172554'; // default navy blue
+};
 
 const BookDetailPage = () => {
   const { user, isLoading: authLoading } = useAuth();
@@ -69,15 +94,26 @@ const BookDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation 
-        allowBookChange={true}
-        showUnitSelector={false}
-        showSearch={false}
-        selectedBookId={book?.bookId}
-        books={[book].filter(Boolean) as Book[]}
-      />
+      {/* Visual banner with GIF */}
+      <div className="bg-white shadow-sm px-4 py-3 mb-4">
+        <div className="container mx-auto">
+          {/* GIF Banner */}
+          <div className="flex justify-center mb-4">
+            <img 
+              src={`${S3_ICON_BASE_URL}VISUAL 1.gif`} 
+              alt="Visual English Animation" 
+              className="max-h-60 object-contain rounded-lg shadow-sm"
+            />
+          </div>
+          
+          {/* Book title header */}
+          <div className="flex justify-center mt-4">
+            <h1 className="text-xl font-bold">{book ? `${book.bookId}: ${book.title}` : 'Book Details'}</h1>
+          </div>
+        </div>
+      </div>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-4">
         {/* Back button and top actions */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <Button
@@ -261,9 +297,13 @@ const BookDetailPage = () => {
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   <Button 
-                    variant="outline"
                     size="sm"
                     onClick={() => setLocation(`/admin/units/${unit.id}`)}
+                    className="text-white hover:bg-opacity-90"
+                    style={{ 
+                      // Apply different color based on unit number for visual variety
+                      backgroundColor: getButtonColor(unit.unitNumber)
+                    }}
                   >
                     View Unit
                   </Button>
