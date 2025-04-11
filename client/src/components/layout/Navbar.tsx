@@ -37,16 +37,12 @@ const Navbar = () => {
                 FAQ
               </a>
             </Link>
-            <Link href="#contact">
-              <a className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
-                Contact
-              </a>
-            </Link>
-            <Link href="#bookstore">
+
+            <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
               <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
-                New Bookstor
+                Bookstore
               </Button>
-            </Link>
+            </a>
             <Button variant="outline" className="border-gray-300 text-gray-700">
               Sign In
             </Button>
@@ -82,19 +78,15 @@ const Navbar = () => {
                 FAQ
               </a>
             </Link>
-            <Link href="#contact">
-              <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
-                Contact
-              </a>
-            </Link>
-            <Link href="#bookstore">
+
+            <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
               <Button 
                 variant="default" 
                 className="bg-black hover:bg-gray-800 text-white w-full justify-start"
               >
-                New Bookstor
+                Bookstore
               </Button>
-            </Link>
+            </a>
             <Button 
               variant="outline" 
               className="border-gray-300 text-gray-700 w-full justify-start mt-1"

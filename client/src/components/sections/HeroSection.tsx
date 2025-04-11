@@ -15,11 +15,11 @@ const HeroSection = () => {
           <Button className="bg-black hover:bg-gray-800 text-white px-5 py-3">
             Try a Free Sample
           </Button>
-          <Link href="#bookstore">
+          <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
             <Button variant="outline" className="border-gray-300 text-gray-700 px-5 py-3">
-              Visit New Bookstor
+              Visit Bookstore
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
     </section>
