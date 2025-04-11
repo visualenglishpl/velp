@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 const IndividualPlans = () => {
   const plans = [
     {
-      title: "1 Visual Lesson",
+      title: "One visual Engish\nlesson",
       color: "bg-emerald-500",
       features: [
         "Images, video, game",
@@ -17,7 +17,7 @@ const IndividualPlans = () => {
       valueSubtext: "",
     },
     {
-      title: "One Book Digital",
+      title: "one visual english\ndigital book",
       color: "bg-blue-500",
       features: [
         "16-20 lessons",
@@ -31,7 +31,7 @@ const IndividualPlans = () => {
       valueSubtext: "",
     },
     {
-      title: "One Book Digital + Print",
+      title: "one visual english\ndigital + print",
       color: "bg-primary",
       features: [
         "Digital access + printed book",
@@ -46,7 +46,7 @@ const IndividualPlans = () => {
       highlight: true,
     },
     {
-      title: "Already Bought a Lesson",
+      title: "Already bought\na lesson",
       color: "bg-amber-500",
       features: [
         "Upgrade to the full book",

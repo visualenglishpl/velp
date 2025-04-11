@@ -15,7 +15,7 @@ const HeroSection = () => {
             Try a Free Sample
           </Button>
           <Button variant="outline" className="border-gray-300 text-gray-700 px-5 py-3">
-            Visit New Bookstore
+            Visit New Bookstor
           </Button>
         </div>
       </div>

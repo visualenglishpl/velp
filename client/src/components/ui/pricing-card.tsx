@@ -27,7 +27,7 @@ const PricingCard = ({ plan }: PricingCardProps) => {
         </div>
       )}
       <div className={cn(plan.color, "p-6 text-white")}>
-        <h3 className="text-xl font-semibold text-center">{plan.title}</h3>
+        <h3 className="text-xl font-semibold text-center whitespace-pre-line">{plan.title}</h3>
       </div>
       <div className="p-6 flex-grow">
         <ul className="space-y-3">
