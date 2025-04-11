@@ -43,9 +43,11 @@ const Navbar = () => {
                 Bookstore
               </Button>
             </a>
-            <Button variant="outline" className="border-gray-300 text-gray-700">
-              Sign In
-            </Button>
+            <Link href="/auth">
+              <Button variant="outline" className="border-gray-300 text-gray-700">
+                Sign In
+              </Button>
+            </Link>
           </div>
           <div className="flex md:hidden items-center">
             <Button
@@ -87,12 +89,14 @@ const Navbar = () => {
                 Bookstore
               </Button>
             </a>
-            <Button 
-              variant="outline" 
-              className="border-gray-300 text-gray-700 w-full justify-start mt-1"
-            >
-              Sign In
-            </Button>
+            <Link href="/auth">
+              <Button 
+                variant="outline" 
+                className="border-gray-300 text-gray-700 w-full justify-start mt-1"
+              >
+                Sign In
+              </Button>
+            </Link>
           </div>
         </div>
       )}
