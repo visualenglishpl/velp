@@ -1,83 +1,164 @@
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { ArrowLeft } from "lucide-react";
+import { Book } from "@shared/schema";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Navigation } from "@/components/ui/Navigation";
+import { BookOpen, BookOpenCheck, BookPlus } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
-const AdminBooks = () => {
-  const { user } = useAuth();
-  const [, navigate] = useLocation();
+const BooksPage = () => {
+  const { user, isLoading: authLoading } = useAuth();
+  const [, setLocation] = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  // Redirect to auth page if not logged in
+  useEffect(() => {
+    if (!user && !authLoading) {
+      window.location.href = "/auth";
+    }
+  }, [user, authLoading]);
 
-  if (!user || user.role !== "admin") {
-    navigate("/auth");
-    return null;
-  }
+  // Fetch books from API
+  const { data: books, isLoading } = useQuery<Book[]>({
+    queryKey: ["/api/books"],
+    enabled: !!user,
+  });
 
-  // Define the book data with S3 thumbnail paths
-  const books = [
-    { id: '0a', title: 'Book 0a', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_0a.gif' },
-    { id: '0b', title: 'Book 0b', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_0b.gif' },
-    { id: '0c', title: 'Book 0c', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_0c.gif' },
-    { id: '1', title: 'Book 1', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_1.gif' },
-    { id: '2', title: 'Book 2', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_2.gif' },
-    { id: '3', title: 'Book 3', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_3.gif' },
-    { id: '4', title: 'Book 4', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_4.gif' },
-    { id: '5', title: 'Book 5', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_5.gif' },
-    { id: '6', title: 'Book 6', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_6.gif' },
-    { id: '7', title: 'Book 7', thumbnail: 'https://s3.amazonaws.com/visualenglishmaterial/icons/book_7.gif' },
-  ];
+  // Filter and sort books based on search query
+  const filteredBooks = useMemo(() => {
+    if (!books) return [];
+
+    return books
+      .filter((book) => {
+        if (!searchQuery.trim()) return true;
+        
+        const query = searchQuery.toLowerCase();
+        return (
+          book.title.toLowerCase().includes(query) || 
+          book.bookId.toLowerCase().includes(query) ||
+          (book.description && book.description.toLowerCase().includes(query))
+        );
+      })
+      .sort((a, b) => {
+        // Sort books by bookId with special handling for 0A, 0B, 0C format
+        const aId = a.bookId;
+        const bId = b.bookId;
+
+        // Extract number and letter part if in format like "0A"
+        const aMatch = aId.match(/^(\d+)([A-Za-z])?/);
+        const bMatch = bId.match(/^(\d+)([A-Za-z])?/);
+
+        if (aMatch && bMatch) {
+          const aNum = parseInt(aMatch[1]);
+          const bNum = parseInt(bMatch[1]);
+
+          // Compare numbers first
+          if (aNum !== bNum) {
+            return aNum - bNum;
+          }
+          
+          // If numbers are the same, compare letter parts
+          const aLetter = aMatch[2] || '';
+          const bLetter = bMatch[2] || '';
+          return aLetter.localeCompare(bLetter);
+        }
+
+        // Fallback to regular string comparison
+        return aId.localeCompare(bId);
+      });
+  }, [books, searchQuery]);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm p-4">
-        <div className="container mx-auto flex items-center">
-          <Button variant="ghost" onClick={() => navigate("/admin")} className="mr-4">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Dashboard
-          </Button>
-          <div className="flex-1">
-            <div className="flex items-center">
-              <span className="text-gray-500 mx-2 text-sm">{'>'}</span>
-              <span className="text-sm">Books</span>
-            </div>
-          </div>
-          <div className="w-72">
-            <Input type="text" placeholder="Search..." className="w-full" />
-          </div>
-        </div>
-      </div>
+      <Navigation 
+        allowBookChange={false}
+        showUnitSelector={false}
+        showSearch={true}
+        searchValue={searchQuery}
+        onSearchChange={(e) => setSearchQuery(e.target.value)}
+      />
 
-      {/* Main Content */}
-      <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {books.map((book) => (
-            <div key={book.id} className="bg-white rounded-md shadow-sm overflow-hidden">
-              <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
-                {/* S3 thumbnail image */}
-                <img 
-                  src={book.thumbnail} 
-                  alt={`${book.title} thumbnail`} 
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    // Fallback in case image fails to load
-                    e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>';
-                  }}
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-medium text-center">{book.title}</h3>
-                <Button variant="secondary" className="w-full mt-3 bg-gray-900 text-white hover:bg-gray-800">
-                  View Book
-                </Button>
-              </div>
-            </div>
-          ))}
+      <main className="container mx-auto px-4 py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Books Library</h1>
+          {user?.role === "admin" && (
+            <Button 
+              onClick={() => setLocation("/admin/books/create")}
+              className="flex items-center gap-2"
+            >
+              <BookPlus className="h-4 w-4" />
+              Create New Book
+            </Button>
+          )}
         </div>
-      </div>
+
+        {isLoading ? (
+          // Loading state
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <Card key={index} className="overflow-hidden">
+                <CardHeader className="pb-2">
+                  <Skeleton className="h-6 w-3/4 mb-2" />
+                  <Skeleton className="h-4 w-1/2" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-20 w-full" />
+                </CardContent>
+                <CardFooter>
+                  <Skeleton className="h-10 w-full" />
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          // Books grid
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredBooks.length === 0 ? (
+              <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
+                <BookOpenCheck className="h-16 w-16 text-gray-300 mb-4" />
+                <h3 className="text-xl font-medium text-gray-700">No books found</h3>
+                <p className="text-gray-500 mt-2">
+                  {searchQuery ? "Try adjusting your search query" : "No books have been added yet"}
+                </p>
+              </div>
+            ) : (
+              filteredBooks.map((book) => (
+                <Card key={book.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <CardTitle className="text-xl">
+                        {book.bookId}: {book.title}
+                      </CardTitle>
+                      <div className="p-1.5 bg-primary/10 rounded-full">
+                        <BookOpen className="h-5 w-5 text-primary" />
+                      </div>
+                    </div>
+                    <CardDescription>Level {book.level || "N/A"}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 line-clamp-3">
+                      {book.description || "No description available"}
+                    </p>
+                  </CardContent>
+                  <CardFooter className="pt-2">
+                    <Button 
+                      onClick={() => setLocation(`/admin/books/${book.id}`)}
+                      className="w-full"
+                    >
+                      Open Book
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))
+            )}
+          </div>
+        )}
+      </main>
     </div>
   );
 };
 
-export default AdminBooks;
+export default BooksPage;
