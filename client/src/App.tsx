@@ -5,6 +5,7 @@ import Home from "@/pages/Home";
 import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminBooks from "@/pages/admin/Books";
+import BookDetailPage from "@/pages/book-detail-page";
 import ContentManagement from "@/pages/admin/ContentManagement";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -17,7 +18,7 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/books" component={AdminBooks} />
-      <Route path="/admin/books/:id" component={AdminBooks} />
+      <Route path="/admin/books/:id" component={BookDetailPage} />
       <Route path="/admin/content" component={ContentManagement} />
       <Route component={NotFound} />
     </Switch>
