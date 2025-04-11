@@ -105,61 +105,41 @@ const BooksPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Visual banner with GIF */}
-      <div className="bg-white shadow-sm px-4 py-3 mb-4">
+      <div className="bg-white shadow-sm px-4 py-6 mb-4">
         <div className="container mx-auto">
-          {/* GIF Banner */}
-          <div className="flex justify-center mb-4">
-            <div className="relative bg-gray-50 rounded-lg flex items-center justify-center h-60">
-              {/* Fallback display when gif fails to load */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex flex-col items-center">
-                  <BookOpen className="h-16 w-16 text-purple-600 mb-4" />
-                  <h2 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
-                    Visual English
-                  </h2>
-                  <p className="text-gray-500 text-sm mt-2">Interactive Learning Platform</p>
-                </div>
-              </div>
-              
-              {/* Attempt to load GIF but hide on error */}
-              <img 
-                src={`${S3_ICON_BASE_URL}VISUAL 0a.gif`} 
-                alt="Visual English Animation" 
-                className="max-h-60 object-contain rounded-lg shadow-sm relative z-10"
-                onError={(e) => {
-                  console.log("Failed to load GIF banner");
-                  // Hide the broken image and let the fallback show
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
+          {/* Simple Visual English header */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="text-purple-600 mb-2">
+              <BookOpen className="h-14 w-14" />
             </div>
+            <h2 className="text-2xl font-bold text-purple-600 mb-1">
+              Visual English
+            </h2>
+            <p className="text-gray-500 text-sm">
+              Interactive Learning Platform
+            </p>
           </div>
           
           {/* Search and controls */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-4">
-            <div className="flex items-center space-x-3">
-              <h1 className="text-xl font-bold">Books</h1>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 max-w-xl mx-auto">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+              <Input 
+                placeholder="Search books..." 
+                className="pl-9 py-6 text-base rounded-md border-gray-200"
+                value={searchQuery}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              />
             </div>
-            <div className="w-full sm:w-auto flex">
-              <div className="relative w-full sm:w-64">
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                <Input 
-                  placeholder="Search books..." 
-                  className="pl-9"
-                  value={searchQuery}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              {user?.role === "admin" && (
-                <Button 
-                  onClick={() => setLocation("/admin/books/create")}
-                  className="ml-2 bg-blue-600 hover:bg-blue-700"
-                >
-                  <BookPlus className="h-4 w-4 mr-1" />
-                  <span className="hidden sm:inline">Create Book</span>
-                </Button>
-              )}
-            </div>
+            {user?.role === "admin" && (
+              <Button 
+                onClick={() => setLocation("/admin/books/create")}
+                className="whitespace-nowrap w-full md:w-auto py-6 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+              >
+                <BookPlus className="h-5 w-5 mr-2" />
+                Create Book
+              </Button>
+            )}
           </div>
         </div>
       </div>
