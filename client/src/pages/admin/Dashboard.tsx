@@ -129,9 +129,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <div className="text-sm text-gray-500 mb-1">6-Month License</div>
-                <div className="text-2xl font-bold mb-2">€149</div>
-                <Button variant="outline" className="w-full">Manage</Button>
+                <div className="text-sm text-gray-500 mb-1">Starting at</div>
+                <div className="text-3xl font-bold mb-4">€5</div>
+                <Button variant="outline" className="w-full bg-black text-white hover:bg-gray-800">Buy This Lesson</Button>
               </div>
             </div>
 
@@ -147,9 +147,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <div className="text-sm text-gray-500 mb-1">6-Month License</div>
-                <div className="text-2xl font-bold mb-2">€299</div>
-                <Button variant="outline" className="w-full">Manage</Button>
+                <div className="text-sm text-gray-500 mb-1">Best value</div>
+                <div className="text-3xl font-bold mb-4">€25</div>
+                <Button variant="outline" className="w-full bg-black text-white hover:bg-gray-800">Buy Book Digital</Button>
               </div>
             </div>
 
@@ -165,9 +165,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <div className="text-sm text-gray-500 mb-1">6-Month License</div>
-                <div className="text-2xl font-bold mb-2">€499</div>
-                <Button variant="outline" className="w-full">Manage</Button>
+                <div className="text-sm text-gray-500 mb-1">Complete package</div>
+                <div className="text-3xl font-bold mb-4">€39</div>
+                <Button variant="outline" className="w-full bg-black text-white hover:bg-gray-800">Buy Book Digital + Print</Button>
               </div>
             </div>
 
@@ -183,14 +183,14 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <div className="text-sm text-gray-500 mb-1">6-Month License</div>
-                <div className="text-2xl font-bold mb-2">€299</div>
+                <div className="text-sm text-gray-500 mb-1">Upgrade price</div>
+                <div className="text-3xl font-bold mb-4">+€20</div>
                 <Button 
                   variant="outline" 
-                  className="w-full"
+                  className="w-full bg-black text-white hover:bg-gray-800"
                   onClick={navigateToBooks}
                 >
-                  Manage
+                  Upgrade Lesson
                 </Button>
               </div>
             </div>
@@ -208,8 +208,8 @@ const AdminDashboard = () => {
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <div className="text-sm text-gray-500 mb-1">Custom License</div>
-                <div className="text-2xl font-bold mb-2">Contact</div>
-                <Button variant="outline" className="w-full">Manage</Button>
+                <div className="text-3xl font-bold mb-4">Contact</div>
+                <Button variant="outline" className="w-full bg-black text-white hover:bg-gray-800">Upgrade Lesson</Button>
               </div>
             </div>
           </div>
