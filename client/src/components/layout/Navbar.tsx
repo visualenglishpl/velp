@@ -11,9 +11,8 @@ const Navbar = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
   
-  const navigateToAuth = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate("/auth");
+  const navigateToAuth = () => {
+    window.location.href = "/auth";
   };
 
   return (
