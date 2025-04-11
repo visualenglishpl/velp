@@ -33,13 +33,13 @@ const AuthPage = () => {
   // Handle register form submission
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!registerData.username || !registerData.password || !registerData.email) {
+    if (!registerData.username || !registerData.password || !registerData.email || !selectedRole) {
       return; // TODO: Add form validation
     }
     // Set the role from the selection
     registerMutation.mutate({
       ...registerData,
-      role: selectedRole === "school" ? "school" : "teacher"
+      role: selectedRole as "admin" | "teacher" | "school"
     });
   };
 
@@ -264,7 +264,19 @@ const AuthPage = () => {
                   <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
                     Account Type
                   </label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedRole("admin")}
+                      className={`flex flex-col items-center justify-center p-3 rounded-md transition-colors ${
+                        selectedRole === "admin"
+                          ? "bg-blue-100 text-blue-800"
+                          : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                      }`}
+                    >
+                      <UserRound className="h-5 w-5 mb-1" />
+                      <span className="text-xs">Admin</span>
+                    </button>
                     <button
                       type="button"
                       onClick={() => setSelectedRole("teacher")}

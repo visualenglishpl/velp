@@ -26,6 +26,7 @@ type LoginData = {
 // Extend the insertUserSchema for registration with confirmation fields
 const registerSchema = insertUserSchema.extend({
   password: z.string().min(6, "Password must be at least 6 characters"),
+  role: z.enum(["admin", "teacher", "school"]),
 });
 
 type RegisterData = z.infer<typeof registerSchema>;
