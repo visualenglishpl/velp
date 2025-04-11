@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [, navigate] = useLocation();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+  
+  const navigateToAuth = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate("/auth");
   };
 
   return (
@@ -43,7 +49,7 @@ const Navbar = () => {
                 Bookstore
               </Button>
             </a>
-            <a href="/auth">
+            <a href="/auth" onClick={navigateToAuth}>
               <Button variant="outline" className="border-gray-300 text-gray-700">
                 Sign In
               </Button>
@@ -89,7 +95,7 @@ const Navbar = () => {
                 Bookstore
               </Button>
             </a>
-            <a href="/auth">
+            <a href="/auth" onClick={navigateToAuth}>
               <Button 
                 variant="outline" 
                 className="border-gray-300 text-gray-700 w-full justify-start mt-1"
