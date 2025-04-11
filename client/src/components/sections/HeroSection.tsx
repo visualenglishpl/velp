@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 
 const HeroSection = () => {
   return (
@@ -14,9 +15,11 @@ const HeroSection = () => {
           <Button className="bg-black hover:bg-gray-800 text-white px-5 py-3">
             Try a Free Sample
           </Button>
-          <Button variant="outline" className="border-gray-300 text-gray-700 px-5 py-3">
-            Visit New Bookstor
-          </Button>
+          <Link href="#bookstore">
+            <Button variant="outline" className="border-gray-300 text-gray-700 px-5 py-3">
+              Visit New Bookstor
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
