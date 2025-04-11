@@ -27,7 +27,13 @@ const AuthPage = () => {
     if (!loginData.username || !loginData.password) {
       return; // TODO: Add form validation
     }
-    loginMutation.mutate(loginData);
+    // Use admin role by default if none selected
+    const role = selectedRole || "admin";
+    console.log("Logging in with:", { ...loginData, role });
+    loginMutation.mutate({ 
+      ...loginData,
+      role
+    });
   };
 
   // Handle register form submission
@@ -43,10 +49,14 @@ const AuthPage = () => {
     });
   };
 
-  // Temporarily disabled auto-redirect for logged in users
-  // if (user && !isLoading) {
-  //   return <Redirect to="/" />;
-  // }
+  // Redirect logged in users to appropriate page
+  if (user && !isLoading) {
+    if (user.role === "admin") {
+      return <Redirect to="/admin" />;
+    } else {
+      return <Redirect to="/" />;
+    }
+  }
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
