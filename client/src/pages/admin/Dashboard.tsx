@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { FileText, Users, School, BookOpen, Settings, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,13 @@ const AdminDashboard = () => {
   const { user, logoutMutation } = useAuth();
   const [, navigate] = useLocation();
 
-  if (!user || user.role !== "admin") {
-    navigate("/auth");
-    return null;
-  }
+  // User auth check moved to useEffect to prevent constant redirects
+  useEffect(() => {
+    if (!user && !logoutMutation.isPending) {
+      console.log("No user found on dashboard, redirecting to auth page");
+      navigate("/auth");
+    }
+  }, [user, navigate, logoutMutation.isPending]);
 
   const handleLogout = () => {
     logoutMutation.mutate();
@@ -32,7 +35,7 @@ const AdminDashboard = () => {
       <div className="bg-white shadow-sm px-6 py-2 flex justify-between items-center">
         <h1 className="text-xl font-semibold">Admin User</h1>
         <div className="flex items-center space-x-4">
-          <span>{user.username}</span>
+          <span>{user?.username || "Loading..."}</span>
         </div>
       </div>
 

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import VelpLogo from "@/components/ui/velp-logo";
 import { User, UserRound, Laptop, School, BookOpen, Globe, Check, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
-import { Redirect } from "wouter";
+import { Redirect, useLocation } from "wouter";
 
 const AuthPage = () => {
   const { user, isLoading, loginMutation, registerMutation } = useAuth();
@@ -49,27 +49,29 @@ const AuthPage = () => {
     });
   };
 
+  // For navigation
+  const [, navigate] = useLocation();
+
   // Redirect logged in users to appropriate page
   useEffect(() => {
-    if (user && !isLoading) {
+    // Check if we're already on an admin page to avoid redirect loops
+    const isAlreadyOnAdminPage = window.location.pathname.startsWith('/admin');
+    const isAlreadyOnAuthPage = window.location.pathname === '/auth';
+    
+    if (user && !isLoading && isAlreadyOnAuthPage) {
       console.log("User authenticated:", user);
       console.log("User role:", user.role);
       
-      // Use setTimeout to ensure this happens after React rendering cycle
-      setTimeout(() => {
-        if (user.role === "admin") {
-          console.log("Redirecting admin to dashboard");
-          window.location.replace("/admin");
-        } else if (user.role === "teacher") {
-          console.log("Redirecting teacher to homepage");
-          window.location.replace("/");
-        } else if (user.role === "school") {
-          console.log("Redirecting school to homepage");
-          window.location.replace("/");
-        }
-      }, 100);
+      // Navigate directly to the appropriate page
+      if (user.role === "admin") {
+        console.log("Redirecting admin to dashboard");
+        navigate("/admin");
+      } else if (user.role === "teacher" || user.role === "school") {
+        console.log("Redirecting to homepage");
+        navigate("/");
+      }
     }
-  }, [user, isLoading]);
+  }, [user, isLoading, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
