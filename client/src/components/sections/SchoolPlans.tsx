@@ -15,7 +15,7 @@ const SchoolPlans = () => {
         "School admin dashboard",
       ],
       price: "€149",
-      licenseType: "6-Month License",
+      licenseType: "Starting at",
       buttonText: "Get School License",
     },
     {
@@ -30,7 +30,7 @@ const SchoolPlans = () => {
         "Email support",
       ],
       price: "€299",
-      licenseType: "6-Month License",
+      licenseType: "Best value",
       buttonText: "Get School License",
     },
     {
@@ -45,9 +45,9 @@ const SchoolPlans = () => {
         "Bulk printed books discount",
       ],
       price: "€499",
-      licenseType: "6-Month License",
+      licenseType: "Complete package",
       buttonText: "Get School License",
-      valueTag: "Best Value",
+      valueTag: "Most Popular",
       highlight: true,
     },
     {
