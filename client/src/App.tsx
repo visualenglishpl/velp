@@ -1,12 +1,11 @@
 import { Switch, Route, useLocation } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import AuthPage from "@/pages/auth-page";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { AuthProvider } from "@/hooks/use-auth";
 
 function Router() {
   return (
@@ -23,7 +22,7 @@ function App() {
   const showNavFooter = location !== "/auth";
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <AuthProvider>
       <div className="flex flex-col min-h-screen">
         {showNavFooter && <Navbar />}
         <main className={`flex-grow ${!showNavFooter ? 'min-h-screen' : ''}`}>
@@ -32,7 +31,7 @@ function App() {
         {showNavFooter && <Footer />}
       </div>
       <Toaster />
-    </QueryClientProvider>
+    </AuthProvider>
   );
 }
 

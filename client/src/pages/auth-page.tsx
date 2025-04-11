@@ -2,11 +2,51 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import VelpLogo from "@/components/ui/velp-logo";
-import { User, UserRound, Laptop, School, BookOpen, Globe, Check } from "lucide-react";
+import { User, UserRound, Laptop, School, BookOpen, Globe, Check, Loader2 } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { Redirect } from "wouter";
 
 const AuthPage = () => {
+  const { user, isLoading, loginMutation, registerMutation } = useAuth();
   const [activeTab, setActiveTab] = useState("login");
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  
+  // Form data state
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    password: "",
+    email: "",
+    fullName: "",
+    role: "teacher" as const
+  });
+
+  // Handle login form submission
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!loginData.username || !loginData.password) {
+      return; // TODO: Add form validation
+    }
+    loginMutation.mutate(loginData);
+  };
+
+  // Handle register form submission
+  const handleRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!registerData.username || !registerData.password || !registerData.email) {
+      return; // TODO: Add form validation
+    }
+    // Set the role from the selection
+    registerMutation.mutate({
+      ...registerData,
+      role: selectedRole === "school" ? "school" : "teacher"
+    });
+  };
+
+  // If user is already logged in, redirect to home page
+  if (user && !isLoading) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -48,7 +88,7 @@ const AuthPage = () => {
               <h3 className="text-xl font-semibold mb-2">Welcome back</h3>
               <p className="text-gray-600 text-sm mb-6">Sign in to your account to continue</p>
 
-              <div className="space-y-4">
+              <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                   <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
                     Username
@@ -59,6 +99,9 @@ const AuthPage = () => {
                     type="text"
                     placeholder="Username"
                     className="w-full"
+                    value={loginData.username}
+                    onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
+                    required
                   />
                 </div>
 
@@ -72,6 +115,9 @@ const AuthPage = () => {
                     type="password"
                     placeholder="Password"
                     className="w-full"
+                    value={loginData.password}
+                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                    required
                   />
                 </div>
 
@@ -122,21 +168,27 @@ const AuthPage = () => {
                 </p>
 
                 <Button 
+                  type="submit"
                   className="w-full bg-gray-900 hover:bg-gray-800"
+                  disabled={loginMutation.isPending}
                 >
+                  {loginMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : null}
                   Sign In
                 </Button>
 
                 <p className="mt-4 text-center text-sm text-gray-500">
                   Don't have an account?{' '}
                   <button 
+                    type="button"
                     onClick={() => setActiveTab("register")} 
                     className="font-semibold text-primary hover:text-primary/80"
                   >
                     Create an account
                   </button>
                 </p>
-              </div>
+              </form>
             </div>
           ) : (
             // Register Form
@@ -144,7 +196,7 @@ const AuthPage = () => {
               <h3 className="text-xl font-semibold mb-2">Create an account</h3>
               <p className="text-gray-600 text-sm mb-6">Register to get started with VELP</p>
               
-              <div className="space-y-4">
+              <form onSubmit={handleRegister} className="space-y-4">
                 <div>
                   <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                     Full Name
@@ -155,6 +207,8 @@ const AuthPage = () => {
                     type="text"
                     placeholder="Full Name"
                     className="w-full"
+                    value={registerData.fullName}
+                    onChange={(e) => setRegisterData({ ...registerData, fullName: e.target.value })}
                   />
                 </div>
                 
@@ -168,6 +222,9 @@ const AuthPage = () => {
                     type="email"
                     placeholder="Email"
                     className="w-full"
+                    value={registerData.email}
+                    onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
+                    required
                   />
                 </div>
 
@@ -181,6 +238,9 @@ const AuthPage = () => {
                     type="text"
                     placeholder="Username"
                     className="w-full"
+                    value={registerData.username}
+                    onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
+                    required
                   />
                 </div>
 
@@ -194,6 +254,9 @@ const AuthPage = () => {
                     type="password"
                     placeholder="Password"
                     className="w-full"
+                    value={registerData.password}
+                    onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
+                    required
                   />
                 </div>
 
@@ -201,7 +264,7 @@ const AuthPage = () => {
                   <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
                     Account Type
                   </label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     <button
                       type="button"
                       onClick={() => setSelectedRole("teacher")}
@@ -230,21 +293,27 @@ const AuthPage = () => {
                 </div>
 
                 <Button 
+                  type="submit"
                   className="w-full bg-gray-900 hover:bg-gray-800"
+                  disabled={registerMutation.isPending}
                 >
+                  {registerMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : null}
                   Create Account
                 </Button>
 
                 <p className="mt-4 text-center text-sm text-gray-500">
                   Already have an account?{' '}
                   <button 
+                    type="button"
                     onClick={() => setActiveTab("login")} 
                     className="font-semibold text-primary hover:text-primary/80"
                   >
                     Sign in
                   </button>
                 </p>
-              </div>
+              </form>
             </div>
           )}
         </div>
