@@ -43,10 +43,10 @@ const AuthPage = () => {
     });
   };
 
-  // If user is already logged in, redirect to home page
-  if (user && !isLoading) {
-    return <Redirect to="/" />;
-  }
+  // Temporarily disabled auto-redirect for logged in users
+  // if (user && !isLoading) {
+  //   return <Redirect to="/" />;
+  // }
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
