@@ -3,6 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import AuthPage from "@/pages/auth-page";
+import AdminDashboard from "@/pages/admin/Dashboard";
+import AdminBooks from "@/pages/admin/Books";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -12,6 +14,8 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/auth" component={AuthPage} />
+      <Route path="/admin" component={AdminDashboard} />
+      <Route path="/admin/books" component={AdminBooks} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -19,7 +23,9 @@ function Router() {
 
 function App() {
   const [location] = useLocation();
-  const showNavFooter = location !== "/auth";
+  const isAuthPage = location === "/auth";
+  const isAdminPage = location.startsWith("/admin");
+  const showNavFooter = !isAuthPage && !isAdminPage;
 
   return (
     <AuthProvider>

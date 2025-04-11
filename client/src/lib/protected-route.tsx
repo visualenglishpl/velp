@@ -28,6 +28,15 @@ export function ProtectedRoute({
       </Route>
     );
   }
+  
+  // If user is admin, redirect to admin dashboard
+  if (user.role === "admin" && path === "/") {
+    return (
+      <Route path={path}>
+        <Redirect to="/admin" />
+      </Route>
+    );
+  }
 
   return <Route path={path} component={Component} />;
 }
