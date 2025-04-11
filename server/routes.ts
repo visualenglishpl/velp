@@ -32,6 +32,15 @@ function hasRole(roles: string[]) {
 const isAdmin = hasRole(["admin"]);
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Add request logging middleware
+  app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+    if (req.method === 'POST') {
+      console.log('Request body:', req.body);
+    }
+    next();
+  });
+
   // Set up authentication routes
   setupAuth(app);
 

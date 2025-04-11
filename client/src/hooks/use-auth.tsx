@@ -21,6 +21,7 @@ type AuthContextType = {
 type LoginData = {
   username: string;
   password: string;
+  role?: string;
 };
 
 // Extend the insertUserSchema for registration with confirmation fields
@@ -47,8 +48,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
+      console.log("Login attempting with:", credentials);
       const res = await apiRequest("POST", "/api/login", credentials);
-      return await res.json();
+      const data = await res.json();
+      console.log("Login response:", data);
+      return data;
     },
     onSuccess: (user: User) => {
       queryClient.setQueryData(["/api/user"], user);
