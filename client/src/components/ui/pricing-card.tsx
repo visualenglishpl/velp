@@ -22,7 +22,7 @@ const PricingCard = ({ plan }: PricingCardProps) => {
       plan.highlight && "relative"
     )}>
       {plan.valueSubtext && (
-        <div className="absolute top-0 right-0 bg-primary text-white px-3 py-1 text-xs font-medium rounded-bl-lg">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-primary text-white px-3 py-1 text-xs font-medium">
           {plan.valueSubtext}
         </div>
       )}
@@ -44,7 +44,7 @@ const PricingCard = ({ plan }: PricingCardProps) => {
           ))}
         </ul>
       </div>
-      <div className="bg-gray-50 p-6 border-t border-gray-100">
+      <div className="bg-gray-50 p-6 border-t border-gray-100 text-center">
         <p className="text-sm text-gray-500 mb-2">{plan.priceSubtext}</p>
         <p className="text-3xl font-bold text-gray-900 mb-4">{plan.price}</p>
         <Button className="w-full bg-black hover:bg-gray-800 text-white">{plan.buttonText}</Button>
