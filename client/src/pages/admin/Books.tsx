@@ -2,18 +2,37 @@ import { useState, useMemo, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Book } from "@shared/schema";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Navigation } from "@/components/ui/Navigation";
-import { BookOpen, BookOpenCheck, BookPlus } from "lucide-react";
+import { BookOpen, BookOpenCheck, BookPlus, Search } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 // Book icon URL template
 const S3_ICON_BASE_URL = "https://visualenglishmaterial.s3.amazonaws.com/icons/";
 
-// Add this to your tailwind.config.ts in the colors section
-// For now adding as inline style
+// Function to get different button colors based on book ID
+const getBookButtonColor = (bookId: string): string => {
+  // Extract the first character of the bookId to determine color
+  const firstChar = bookId.charAt(0).toLowerCase();
+  
+  // Color palette - colorful buttons for different books
+  const colors = {
+    '0': '#9333ea', // purple
+    '1': '#2563eb', // blue
+    '2': '#059669', // green
+    '3': '#d97706', // amber
+    '4': '#dc2626', // red
+    '5': '#0891b2', // cyan
+    '6': '#4f46e5', // indigo
+    '7': '#be123c', // rose
+    '8': '#a16207', // yellow
+    '9': '#7c3aed', // violet
+  };
+  
+  // Return a color based on the first character, or default to navy blue
+  return colors[firstChar as keyof typeof colors] || '#172554'; // default navy blue
+};
 
 const BooksPage = () => {
   const { user, isLoading: authLoading } = useAuth();
@@ -85,27 +104,36 @@ const BooksPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation 
-        allowBookChange={false}
-        showUnitSelector={false}
-        showSearch={true}
-        searchValue={searchQuery}
-        onSearchChange={(e) => setSearchQuery(e.target.value)}
-      />
-
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Books Library</h1>
-          {user?.role === "admin" && (
-            <Button 
-              onClick={() => setLocation("/admin/books/create")}
-              className="flex items-center gap-2"
-            >
-              <BookPlus className="h-4 w-4" />
-              Create New Book
-            </Button>
-          )}
+      {/* Simplified header with just the title and search */}
+      <div className="bg-white shadow-sm px-4 py-3 mb-4">
+        <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center space-x-3">
+            <h1 className="text-xl font-bold">Books</h1>
+          </div>
+          <div className="w-full sm:w-auto flex">
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+              <Input 
+                placeholder="Search books..." 
+                className="pl-9"
+                value={searchQuery}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            {user?.role === "admin" && (
+              <Button 
+                onClick={() => setLocation("/admin/books/create")}
+                className="ml-2 bg-blue-600 hover:bg-blue-700"
+              >
+                <BookPlus className="h-4 w-4 mr-1" />
+                <span className="hidden sm:inline">Create Book</span>
+              </Button>
+            )}
+          </div>
         </div>
+      </div>
+
+      <main className="container mx-auto px-4 py-4">
 
         {isLoading ? (
           // Loading state
@@ -155,7 +183,10 @@ const BooksPage = () => {
                     <Button 
                       onClick={() => setLocation(`/admin/books/${book.id}`)}
                       className="w-full py-2 text-white hover:bg-opacity-90"
-                      style={{ backgroundColor: '#172554' }} // navy blue color
+                      style={{ 
+                        /* Apply different colors based on book ID to make them colorful */
+                        backgroundColor: getBookButtonColor(book.bookId)
+                      }} 
                     >
                       View Book <span className="ml-1">→</span>
                     </Button>
