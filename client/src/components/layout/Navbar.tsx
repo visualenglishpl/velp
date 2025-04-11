@@ -49,11 +49,13 @@ const Navbar = () => {
                 Bookstore
               </Button>
             </a>
-            <a href="/auth" onClick={navigateToAuth}>
-              <Button variant="outline" className="border-gray-300 text-gray-700">
-                Sign In
-              </Button>
-            </a>
+            <Button 
+              variant="outline" 
+              className="border-gray-300 text-gray-700"
+              onClick={navigateToAuth}
+            >
+              Sign In
+            </Button>
           </div>
           <div className="flex md:hidden items-center">
             <Button
@@ -95,14 +97,13 @@ const Navbar = () => {
                 Bookstore
               </Button>
             </a>
-            <a href="/auth" onClick={navigateToAuth}>
-              <Button 
-                variant="outline" 
-                className="border-gray-300 text-gray-700 w-full justify-start mt-1"
-              >
-                Sign In
-              </Button>
-            </a>
+            <Button 
+              variant="outline" 
+              className="border-gray-300 text-gray-700 w-full justify-start mt-1"
+              onClick={navigateToAuth}
+            >
+              Sign In
+            </Button>
           </div>
         </div>
       )}
