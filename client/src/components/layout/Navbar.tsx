@@ -16,7 +16,9 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/">
-              <a className="text-primary font-bold text-xl">Visual English</a>
+              <div className="flex items-center">
+                <img src="/images/logo.svg" alt="Visual English Logo" className="h-8 mr-2" />
+              </div>
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-6">
@@ -40,9 +42,11 @@ const Navbar = () => {
                 Contact
               </a>
             </Link>
-            <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
-              New Bookstore
-            </Button>
+            <Link href="#bookstore">
+              <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
+                New Bookstor
+              </Button>
+            </Link>
             <Button variant="outline" className="border-gray-300 text-gray-700">
               Sign In
             </Button>
@@ -83,12 +87,14 @@ const Navbar = () => {
                 Contact
               </a>
             </Link>
-            <Button 
-              variant="default" 
-              className="bg-black hover:bg-gray-800 text-white w-full justify-start"
-            >
-              New Bookstore
-            </Button>
+            <Link href="#bookstore">
+              <Button 
+                variant="default" 
+                className="bg-black hover:bg-gray-800 text-white w-full justify-start"
+              >
+                New Bookstor
+              </Button>
+            </Link>
             <Button 
               variant="outline" 
               className="border-gray-300 text-gray-700 w-full justify-start mt-1"
