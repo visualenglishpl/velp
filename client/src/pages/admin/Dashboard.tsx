@@ -28,30 +28,6 @@ const AdminDashboard = () => {
   const navigateToContent = () => {
     navigate("/admin/content");
   };
-  
-  const navigateToFiles = () => {
-    console.log("Navigating to file management");
-    // Will be implemented in future
-    // navigate("/admin/files");
-  };
-  
-  const navigateToUsers = () => {
-    console.log("Navigating to user management");
-    // Will be implemented in future
-    // navigate("/admin/users");
-  };
-  
-  const navigateToSchools = () => {
-    console.log("Navigating to school management");
-    // Will be implemented in future
-    // navigate("/admin/schools");
-  };
-  
-  const navigateToSettings = () => {
-    console.log("Navigating to system settings");
-    // Will be implemented in future
-    // navigate("/admin/settings");
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -95,11 +71,7 @@ const AdminDashboard = () => {
                 </Button>
               </li>
               <li>
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
-                  onClick={navigateToUsers}
-                >
+                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
                   <span className="flex items-center">
                     <Users className="h-5 w-5 mr-3" />
                     Users Management
@@ -107,11 +79,7 @@ const AdminDashboard = () => {
                 </Button>
               </li>
               <li>
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
-                  onClick={navigateToSchools}
-                >
+                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
                   <span className="flex items-center">
                     <School className="h-5 w-5 mr-3" />
                     Schools
@@ -143,11 +111,7 @@ const AdminDashboard = () => {
                 </Button>
               </li>
               <li>
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100"
-                  onClick={navigateToSettings}
-                >
+                <Button variant="ghost" className="w-full justify-start px-6 py-3 text-gray-700 hover:bg-gray-100">
                   <span className="flex items-center">
                     <Settings className="h-5 w-5 mr-3" />
                     Settings
@@ -175,60 +139,6 @@ const AdminDashboard = () => {
           <h2 className="text-3xl font-bold mb-2">Welcome, Admin</h2>
           <p className="text-gray-600 mb-8">Manage all aspects of the Visual English Learning Platform</p>
 
-          {/* Management Icons Row - Based on the provided image */}
-          <div className="flex justify-center items-center gap-16 mb-12">
-            {/* File Management Icon */}
-            <div className="text-center cursor-pointer" onClick={navigateToFiles}>
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center bg-blue-100 rounded-full">
-                  <FileText className="h-8 w-8 text-blue-600" />
-                </div>
-              </div>
-              <h3 className="text-base font-medium">Files</h3>
-            </div>
-
-            {/* User Management Icon */}
-            <div className="text-center cursor-pointer" onClick={navigateToUsers}>
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center bg-amber-100 rounded-full">
-                  <Users className="h-8 w-8 text-amber-600" />
-                </div>
-              </div>
-              <h3 className="text-base font-medium">Users</h3>
-            </div>
-
-            {/* School Management Icon */}
-            <div className="text-center cursor-pointer" onClick={navigateToSchools}>
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center bg-green-100 rounded-full">
-                  <School className="h-8 w-8 text-green-600" />
-                </div>
-              </div>
-              <h3 className="text-base font-medium">Schools</h3>
-            </div>
-
-            {/* Content Management Icon */}
-            <div className="text-center cursor-pointer" onClick={navigateToContent}>
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center bg-purple-100 rounded-full">
-                  <BookOpen className="h-8 w-8 text-purple-600" />
-                </div>
-              </div>
-              <h3 className="text-base font-medium">Content</h3>
-            </div>
-
-            {/* System Settings Icon */}
-            <div className="text-center cursor-pointer" onClick={navigateToSettings}>
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full">
-                  <Settings className="h-8 w-8 text-gray-600" />
-                </div>
-              </div>
-              <h3 className="text-base font-medium">Settings</h3>
-            </div>
-          </div>
-          
-          {/* Management Cards Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* File Management Card */}
             <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
@@ -240,6 +150,9 @@ const AdminDashboard = () => {
                   <h3 className="text-lg font-semibold">File Management</h3>
                   <p className="text-sm text-gray-500">Upload and manage educational files and resources</p>
                 </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <Button variant="outline" className="w-full bg-blue-600 text-white hover:bg-blue-700">Manage Files</Button>
               </div>
             </div>
 
@@ -254,6 +167,9 @@ const AdminDashboard = () => {
                   <p className="text-sm text-gray-500">Add and manage users, roles, and permissions</p>
                 </div>
               </div>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <Button variant="outline" className="w-full bg-amber-600 text-white hover:bg-amber-700">Manage Users</Button>
+              </div>
             </div>
 
             {/* School Management Card */}
@@ -266,6 +182,9 @@ const AdminDashboard = () => {
                   <h3 className="text-lg font-semibold">School Management</h3>
                   <p className="text-sm text-gray-500">Register and manage schools and their licenses</p>
                 </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <Button variant="outline" className="w-full bg-green-600 text-white hover:bg-green-700">Manage Schools</Button>
               </div>
             </div>
 
@@ -302,27 +221,8 @@ const AdminDashboard = () => {
                   <p className="text-sm text-gray-500">Configure system preferences and global settings</p>
                 </div>
               </div>
-            </div>
-            
-            {/* Books Management Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-indigo-50 rounded-md mr-4">
-                  <BookOpen className="h-6 w-6 text-indigo-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">Books Management</h3>
-                  <p className="text-sm text-gray-500">Manage Visual English books and their details</p>
-                </div>
-              </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button 
-                  variant="outline" 
-                  className="w-full bg-indigo-600 text-white hover:bg-indigo-700"
-                  onClick={navigateToBooks}
-                >
-                  Manage Books
-                </Button>
+                <Button variant="outline" className="w-full bg-gray-600 text-white hover:bg-gray-700">System Settings</Button>
               </div>
             </div>
           </div>
