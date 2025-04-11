@@ -110,9 +110,13 @@ const BooksPage = () => {
           {/* GIF Banner */}
           <div className="flex justify-center mb-4">
             <img 
-              src={`${S3_ICON_BASE_URL}VISUAL 1.gif`} 
+              src={`${S3_ICON_BASE_URL}VISUAL 0a.gif`} 
               alt="Visual English Animation" 
               className="max-h-60 object-contain rounded-lg shadow-sm"
+              onError={(e) => {
+                // Fallback to default GIF if specific one doesn't exist
+                (e.target as HTMLImageElement).src = `${S3_ICON_BASE_URL}VISUAL 1.gif`;
+              }}
             />
           </div>
           
