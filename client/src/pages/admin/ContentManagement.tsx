@@ -42,7 +42,9 @@ import {
   Video, 
   AudioLines, 
   ClipboardList,
-  BookOpen
+  BookOpen,
+  LogOut,
+  Settings
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -82,9 +84,9 @@ type Material = {
   updatedAt: string;
 };
 
-// Sidebar and content management layout
+// Content management layout with top navigation
 function ContentManagementLayout({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
+  const { user, logoutMutation } = useAuth();
   const [, navigate] = useLocation();
 
   if (!user || user.role !== "admin") {
@@ -92,47 +94,72 @@ function ContentManagementLayout({ children }: { children: React.ReactNode }) {
     return null;
   }
 
+  const handleLogout = () => {
+    logoutMutation.mutate();
+    navigate("/auth");
+  };
+
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      {/* Admin Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 hidden md:block">
-        <div className="flex flex-col h-full">
-          <div className="p-4">
-            <div className="flex items-center space-x-2 mb-8">
-              <BookOpen className="h-6 w-6 text-purple-600" />
-              <h2 className="text-xl font-bold">Content Manager</h2>
-            </div>
-            
-            <nav className="space-y-1">
-              <Button
-                variant="ghost"
-                className="w-full justify-start"
-                onClick={() => navigate("/admin")}
-              >
-                Dashboard
-              </Button>
-              <Button
-                variant="ghost"
-                className="w-full justify-start bg-gray-100 text-gray-900"
-                onClick={() => navigate("/admin/content")}
-              >
-                Content Management
-              </Button>
-              <Button
-                variant="ghost"
-                className="w-full justify-start"
-                onClick={() => navigate("/admin/books")}
-              >
-                Books
-              </Button>
-            </nav>
-          </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Top Navigation Bar */}
+      <div className="bg-white shadow-sm px-6 py-4 flex justify-between items-center mb-8">
+        <div className="flex items-center space-x-2">
+          <BookOpen className="h-6 w-6 text-purple-600" />
+          <h1 className="text-xl font-semibold">Content Manager</h1>
         </div>
+
+        <div className="flex items-center space-x-5">
+          <Button 
+            variant="ghost" 
+            className="text-gray-700"
+            onClick={() => navigate("/admin")}
+          >
+            Dashboard
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-gray-700 font-medium"
+            onClick={() => navigate("/admin/content")}
+          >
+            Content Management
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-gray-700"
+            onClick={() => navigate("/admin/books")}
+          >
+            Books
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-red-600"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4 mr-1" />
+            Sign Out
+          </Button>
+        </div>
+      </div>
+      
+      {/* Visual English Header */}
+      <div className="flex flex-col items-center mb-8">
+        <div className="text-purple-600 mb-2">
+          <BookOpen className="h-14 w-14" />
+        </div>
+        <h2 className="text-2xl font-bold text-purple-600 mb-1">
+          Visual English
+        </h2>
+        <p className="text-gray-500 text-sm">
+          Interactive Learning Platform
+        </p>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
-        <div className="p-8">{children}</div>
+      <div className="container mx-auto px-4">
+        {children}
       </div>
     </div>
   );
