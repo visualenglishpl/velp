@@ -54,6 +54,8 @@ export default function MaterialViewer() {
   const materialId = matches ? parseInt(matches[2], 10) : 0;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(materialId === 0 ? 0 : -1); // Use -1 when specific material is requested
   const [showSidebar, setShowSidebar] = useState(true);
+  
+
 
   // Fetch unit details
   const { data: unit, isLoading: unitLoading } = useQuery<Unit>({
@@ -360,8 +362,10 @@ export default function MaterialViewer() {
     };
     
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentSlideIndex]);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentSlideIndex, navigateToSlide]);
   
   const navigateToSlide = (index: number) => {
     if (index >= 0 && index < materials.length) {

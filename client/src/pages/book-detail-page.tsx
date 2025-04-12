@@ -410,14 +410,22 @@ const BookDetailPage = () => {
                   <div className="flex gap-2">
                     <Button 
                       size="sm"
-                      onClick={() => setLocation(`/admin/units/${unit.id}`)}
+                      onClick={() => {
+                        // For students, go directly to Material Viewer
+                        // For admins/teachers, go to unit details
+                        if (user?.role === "student") {
+                          setLocation(`/units/${unit.id}/materials/0`);
+                        } else {
+                          setLocation(`/admin/units/${unit.id}`);
+                        }
+                      }}
                       className="text-white hover:bg-opacity-90"
                       style={{ 
                         // Apply different color based on unit number for visual variety
                         backgroundColor: getButtonColor(unit.unitNumber)
                       }}
                     >
-                      View Unit
+                      {user?.role === "student" ? "Start Lesson" : "View Unit"}
                     </Button>
                     
                     <Button 
@@ -528,7 +536,7 @@ const BookDetailPage = () => {
                         className="text-white hover:bg-opacity-90"
                         style={{ backgroundColor: getButtonColor(unitNumber) }}
                       >
-                        View Unit
+                        {user?.role === "student" ? "Start Lesson" : "View Unit"}
                       </Button>
                       
                       {canEdit && (
