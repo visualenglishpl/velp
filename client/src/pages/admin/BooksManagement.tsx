@@ -450,7 +450,7 @@ const BooksManagementPage = () => {
   }, [user, authLoading, navigate]);
 
   // Fetch books from API
-  const { data: books, isLoading: isBooksLoading } = useQuery<Book[]>({
+  const { data: books, isLoading: isBooksLoading } = useQuery<BookType[]>({
     queryKey: ["/api/books"],
     enabled: !!user,
   });
@@ -705,7 +705,7 @@ const BooksManagementPage = () => {
   };
 
   // Edit actions
-  const handleEditBook = (book: Book) => {
+  const handleEditBook = (book: BookType) => {
     setEditingBook(book);
     setIsBookDialogOpen(true);
   };
@@ -870,7 +870,7 @@ const BooksManagementPage = () => {
             className="p-0 h-auto"
             onClick={handleBackToBooks}
           >
-            <Book className="h-4 w-4 mr-1" />
+            <BookIcon className="h-4 w-4 mr-1" />
             Books
           </Button>
           
