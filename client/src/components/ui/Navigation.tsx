@@ -1,5 +1,4 @@
-import { BookOpen, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { 
   Select,
@@ -12,9 +11,6 @@ import {
 interface NavigationProps {
   allowBookChange?: boolean;
   showUnitSelector?: boolean;
-  showSearch?: boolean;
-  searchValue?: string;
-  onSearchChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedBookId?: string;
   onBookChange?: (bookId: string) => void;
   selectedUnitId?: string;
@@ -26,9 +22,6 @@ interface NavigationProps {
 export function Navigation({
   allowBookChange = true,
   showUnitSelector = true,
-  showSearch = true,
-  searchValue = "",
-  onSearchChange,
   selectedBookId,
   onBookChange,
   selectedUnitId,
@@ -83,18 +76,6 @@ export function Navigation({
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-            )}
-
-            {showSearch && (
-              <div className="relative w-full md:w-64">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
-                <Input
-                  placeholder="Search books..."
-                  className="pl-8"
-                  value={searchValue}
-                  onChange={onSearchChange}
-                />
               </div>
             )}
           </div>
