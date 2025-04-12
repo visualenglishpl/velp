@@ -68,9 +68,8 @@ export default function ContentViewer() {
   
   // *** Special Book 5 text content handling removed as per request to make it consistent with other books ***
   // School vocabulary check removed to handle Book 5 like other books
-  // Returning false to ensure consistent content handling across all books
   const isSchoolVocabularyContent = (material: Material): boolean => {
-    return false; // No special case handling for Book 5 vocabulary
+    return false; // No special handling for Book 5 vocabulary 
   };
   
   // Data fetching hooks
