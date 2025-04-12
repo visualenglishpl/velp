@@ -801,9 +801,7 @@ export default function MaterialViewer() {
                     <li>"Can you describe it more?"</li>
                     <li>"What else can you see?"</li>
                   </ul>
-                  <div className="bg-blue-50 p-3 rounded mt-3 text-sm italic border-l-2 border-primary">
-                    Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.
-                  </div>
+
                 </div>
                 
                 <div className="bg-white p-4 rounded-lg shadow-sm">
