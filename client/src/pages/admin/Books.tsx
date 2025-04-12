@@ -208,14 +208,14 @@ const BooksPage = () => {
                     <h3 className="font-semibold">{book.title}</h3>
                   </div>
                   <div className="flex-1 p-6 flex items-center justify-center">
-                    <div className="relative h-32 w-32 bg-gray-50 flex items-center justify-center">
+                    <div className="relative h-40 w-40 bg-gray-50 flex items-center justify-center overflow-hidden">
                       <BookOpen className="h-16 w-16 text-gray-300" style={{ position: 'absolute', opacity: 0.5 }} />
                       <img 
-                        src={`${S3_ICON_BASE_URL}book_${book.bookId.toLowerCase().replace(/\s/g, '')}.png`} 
+                        src={`${S3_ICON_BASE_URL}VISUAL ${book.bookId}.gif`} 
                         alt={book.title}
                         className="max-h-full max-w-full object-contain relative z-10"
                         onError={(e) => {
-                          console.log(`Failed to load thumbnail for book ${book.bookId}`);
+                          console.log(`Failed to load GIF thumbnail for book ${book.bookId}`);
                           // Keep the BookOpen icon visible by not changing opacity when image fails
                           const bookIcon = e.currentTarget.previousElementSibling;
                           if (bookIcon) {

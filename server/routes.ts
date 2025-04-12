@@ -4,6 +4,8 @@ import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@shared/schema";
 import { z } from "zod";
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 // Authentication middleware to protect routes
 function isAuthenticated(req: Request, res: Response, next: Function) {
@@ -31,6 +33,30 @@ function hasRole(roles: string[]) {
 // Admin-only middleware
 const isAdmin = hasRole(["admin"]);
 
+// Initialize S3 Client
+const s3Client = new S3Client({
+  region: "eu-north-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ""
+  }
+});
+
+// Helper function to generate a presigned URL for S3 objects
+async function getS3PresignedUrl(key: string, expiresIn = 3600) {
+  const command = new GetObjectCommand({
+    Bucket: "visualenglishmaterial",
+    Key: key
+  });
+  
+  try {
+    return await getSignedUrl(s3Client, command, { expiresIn });
+  } catch (error) {
+    console.error(`Error generating presigned URL for ${key}:`, error);
+    return null;
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Add request logging middleware
   app.use((req, res, next) => {
@@ -45,6 +71,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
   setupAuth(app);
 
   // ----- CONTENT MANAGEMENT API ROUTES -----
+  
+  // S3 Assets API
+  app.get("/api/assets/book-thumbnails", isAuthenticated, async (req, res) => {
+    try {
+      const books = await storage.getBooks();
+      const bookThumbnails = [];
+      
+      // Generate presigned URLs for each book
+      for (const book of books) {
+        const gifUrl = await getS3PresignedUrl(`icons/VISUAL ${book.bookId}.gif`);
+        if (gifUrl) {
+          bookThumbnails.push({
+            bookId: book.bookId,
+            title: book.title,
+            gifUrl
+          });
+        }
+      }
+      
+      res.json(bookThumbnails);
+    } catch (err) {
+      console.error("Error fetching book thumbnails:", err);
+      res.status(500).json({ error: "Failed to fetch book thumbnails" });
+    }
+  });
   
   // Books API
   app.get("/api/books", isAuthenticated, async (req, res) => {
