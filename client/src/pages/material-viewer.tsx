@@ -405,10 +405,7 @@ export default function MaterialViewer() {
 
       <div className="flex flex-col md:flex-row gap-6">
         {/* Main content area */}
-        <div className={cn(
-          "flex-grow",
-          showSidebar ? "md:w-3/4" : "md:w-full"
-        )}>
+        <div className="flex-grow w-full">
           {/* Slide title and progress */}
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-medium">
@@ -868,43 +865,7 @@ export default function MaterialViewer() {
           </div>
         </div>
 
-        {/* Slide Navigation Sidebar */}
-        {showSidebar && (
-          <div className="md:w-1/4 bg-gray-50 p-4 rounded-lg">
-            <h3 className="font-medium mb-4">Slides</h3>
-            <ul className="space-y-2">
-              {materials.map((material: Material, index: number) => (
-                <li key={material.id}>
-                  <button
-                    onClick={() => navigateToSlide(index)}
-                    className={cn(
-                      "flex items-center w-full text-left p-2 rounded hover:bg-gray-100 transition",
-                      currentSlideIndex === index ? "bg-gray-200" : ""
-                    )}
-                  >
-                    <div className="flex items-center gap-2 w-full">
-                      {material.isLocked ? (
-                        <Lock className="h-4 w-4 text-gray-500 flex-shrink-0" />
-                      ) : viewedSlides.includes(material.id) ? (
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-                      ) : (
-                        <div className="h-4 w-4 border border-gray-300 rounded-full flex-shrink-0" />
-                      )}
-                      <div className="truncate flex-grow">
-                        <span className="text-sm font-medium block truncate">
-                          Slide {index + 1}
-                        </span>
-                        <span className="text-xs text-gray-500 block truncate">
-                          {material.contentType}
-                        </span>
-                      </div>
-                    </div>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {/* Sidebar removed as requested */}
       </div>
     </div>
   );
