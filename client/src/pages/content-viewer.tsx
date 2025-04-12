@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -266,10 +266,20 @@ export default function ContentViewer() {
     return decodedFilename.split('/').pop()?.split('.')[0] || "Learning Content";
   };
 
+  // Filter out empty slides
+  const filteredMaterials = useMemo(() => {
+    if (!materials) return [];
+    return materials.filter(material => 
+      material.content && 
+      material.content.trim() !== '' && 
+      !material.title.includes('Empty')
+    );
+  }, [materials]);
+  
   // Derived values
-  const totalSlides = materials?.length || 0;
-  const currentMaterial = materials && materials.length > 0 
-    ? materials[currentSlideIndex] 
+  const totalSlides = filteredMaterials?.length || 0;
+  const currentMaterial = filteredMaterials && filteredMaterials.length > 0 
+    ? filteredMaterials[currentSlideIndex] 
     : null;
 
   // Loading state
