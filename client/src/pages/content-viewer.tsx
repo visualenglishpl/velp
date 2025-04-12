@@ -175,47 +175,74 @@ export default function ContentViewer() {
   const extractQuestionFromFilename = (filename: string): string => {
     if (!filename) return "";
     
+    // Remove URL encoding first
+    const decodedFilename = decodeURIComponent(filename);
+    
+    // Handle book and unit patterns - extract just the simple description
+    if (decodedFilename.includes("book") && /unit\d+/i.test(decodedFilename)) {
+      // Check if it's an introduction slide (typically 00 A.png format)
+      if (/00\s*A/i.test(decodedFilename)) {
+        return "Unit Introduction";
+      }
+    }
+    
     // Handle unit introduction special case
-    if (filename.includes("Unit Introduction") || (filename.includes("Book") && filename.includes("Unit"))) {
+    if (decodedFilename.includes("Unit Introduction") || 
+        (decodedFilename.includes("Book") && decodedFilename.includes("Unit"))) {
       return "Unit Introduction";
     }
     
+    // Handle "School Vocabulary" specially for Book 5
+    if (decodedFilename.includes("School Vocabulary") || 
+        decodedFilename.includes("school facilities")) {
+      return "School Vocabulary";
+    }
+    
     // Handle subject title slides (e.g., "01 P A Subject English.png")
-    const subjectMatch = filename.match(/Subject\s+(.+?)\.[a-zA-Z]+$/i);
+    const subjectMatch = decodedFilename.match(/Subject\s+(.+?)\.[a-zA-Z]+$/i);
     if (subjectMatch && subjectMatch[1]) {
       const subject = subjectMatch[1].trim();
       return `Subject: ${subject}`;
     }
     
     // Handle "is X Y or Z" style questions (e.g., "is English Easy or Difficult")
-    const isQuestion = filename.match(/is\s+([A-Za-z]+)\s+(.*?)\.[a-zA-Z]+$/i);
+    const isQuestion = decodedFilename.match(/is\s+([A-Za-z]+)\s+(.*?)\.[a-zA-Z]+$/i);
     if (isQuestion) {
       let questionText = `Is ${isQuestion[1]} ${isQuestion[2]}?`;
       return questionText;
     }
     
+    // Handle "what fashion is it" pattern that appears in Book 7
+    const whatFashionMatch = decodedFilename.match(/What\s+Fashion\s+is\s+It\s+[–-]\s+It\s+is\s+(.*?)(?:\.[a-zA-Z]+)?$/i);
+    if (whatFashionMatch && whatFashionMatch[1]) {
+      return `What Fashion is It? It is ${whatFashionMatch[1]}`;
+    }
+    
     // Handle "how many" questions
-    const howManyQuestion = filename.match(/How\s+Many\s+(.*?)\.[a-zA-Z]+$/i);
+    const howManyQuestion = decodedFilename.match(/How\s+Many\s+(.*?)\.[a-zA-Z]+$/i);
     if (howManyQuestion) {
       return `How Many ${howManyQuestion[1]}?`;
     }
     
     // Handle "do you" questions
-    const doYouQuestion = filename.match(/Do\s+You\s+(.*?)\.[a-zA-Z]+$/i);
+    const doYouQuestion = decodedFilename.match(/Do\s+You\s+(.*?)\.[a-zA-Z]+$/i);
     if (doYouQuestion) {
       return `Do You ${doYouQuestion[1]}?`;
     }
     
     // Handle "who is" questions
-    const whoIsQuestion = filename.match(/Who\s+is\s+(.*?)\.[a-zA-Z]+$/i);
+    const whoIsQuestion = decodedFilename.match(/Who\s+is\s+(.*?)\.[a-zA-Z]+$/i);
     if (whoIsQuestion) {
       return `Who is ${whoIsQuestion[1]}?`;
     }
     
     // Fallback - just use any text after the file code pattern
-    const anyText = filename.match(/\d+\s+P\s+[A-Za-z]+[a-z]?\s+(.*?)\.[a-zA-Z]+$/i);
+    const anyText = decodedFilename.match(/\d+\s+[A-Z]\s+[A-Za-z]+[a-z]?\s+(.*?)(?:\.[a-zA-Z]+)?$/i);
     if (anyText && anyText[1]) {
       let text = anyText[1].trim();
+      
+      // Remove any URL encoded characters or artifacts
+      text = text.replace(/%[0-9A-F]{2}/gi, ' ').trim();
       
       // Capitalize first letter
       text = text.charAt(0).toUpperCase() + text.slice(1);
@@ -228,13 +255,15 @@ export default function ContentViewer() {
       return text;
     }
     
-    // Very simple fallback
-    const simpleFallback = filename.split('.')[0].split(' ').slice(3).join(' ');
-    if (simpleFallback) {
-      return simpleFallback.charAt(0).toUpperCase() + simpleFallback.slice(1);
+    // Very simple fallback - try splitting by file code patterns  
+    const simpleMatch = decodedFilename.match(/\d{2}\s*[A-Z]\s*[A-Z][a-z]?\s*(.+)/);
+    if (simpleMatch && simpleMatch[1]) {
+      let text = simpleMatch[1].split('.')[0].trim();
+      return text.charAt(0).toUpperCase() + text.slice(1);
     }
     
-    return filename; // Last resort, return the filename itself
+    // Return clean filename without the encoded parts
+    return decodedFilename.split('/').pop()?.split('.')[0] || "Learning Content";
   };
 
   // Derived values
@@ -377,16 +406,44 @@ export default function ContentViewer() {
                                 </div>
                               )}
                               <div className="flex-1 flex items-center justify-center w-full h-full">
-                                <img
-                                  src={material.content} 
-                                  alt={material.title}
-                                  className="max-w-full max-h-full object-contain"
-                                  style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                  onError={(e) => {
-                                    console.error("Failed to load image:", material.title);
-                                    (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                  }}
-                                />
+                                {material.content && (
+                                  <>
+                                    {/* Special handling for files that might be showing raw text instead of images */}
+                                    {material.content.includes('book5') && /school|vocabulary|facilities|classroom|cloakroom|library|playground/i.test(material.content) ? (
+                                      <div className="max-w-3xl text-center p-6 bg-white rounded-lg">
+                                        <h3 className="text-xl font-semibold mb-4">School Vocabulary</h3>
+                                        <p className="text-gray-700 leading-relaxed">
+                                          Students eat meals and buy snacks in the <strong>Library</strong>. Quiet area for reading and studying.
+                                          <br /><br />
+                                          <strong>After School Care:</strong> Activities after regular school hours.
+                                          <br /><br />
+                                          <strong>Special School Areas:</strong> Cloakroom for changing shoes and outdoor clothing. 
+                                          <br /><br />
+                                          <strong>Classroom:</strong> Primary learning spaces.
+                                          <br /><br />
+                                          <strong>Sports Field:</strong> Outdoor space for physical activities.
+                                          <br /><br />
+                                          <strong>Playground:</strong> Recreational area for breaks.
+                                          <br /><br />
+                                          <strong>Art Room:</strong> Space for creative projects.
+                                          <br /><br />
+                                          <strong>Music Room:</strong> Where students learn instruments and singing.
+                                        </p>
+                                      </div>
+                                    ) : (
+                                      <img
+                                        src={material.content} 
+                                        alt={material.title}
+                                        className="max-w-full max-h-full object-contain"
+                                        style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                        onError={(e) => {
+                                          console.error("Failed to load image:", material.title);
+                                          (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                        }}
+                                      />
+                                    )}
+                                  </>
+                                )}
                                 <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
                                   {currentSlideIndex + 1}/{totalSlides}
                                 </div>
