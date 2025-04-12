@@ -760,61 +760,13 @@ export default function MaterialViewer() {
                   Unit-specific guidance for {book?.title}, Unit {unit?.unitNumber} - {unit?.title}
                 </h4>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h5 className="font-medium text-primary mb-3 flex items-center">
-                      <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
-                        <FileText className="h-4 w-4" />
-                      </span>
-                      Presenting Questions
-                    </h5>
-                    <ul className="list-disc pl-5 space-y-2 text-sm">
-                      <li>Show the question on the slide and point to any key image details (e.g. facial expressions, actions, background objects).</li>
-                      <li>Clearly read the question aloud to the class — say it twice to help students process the language.</li>
-                    </ul>
+                <div className="bg-white p-5 rounded-lg shadow-sm">
+                  <div className="bg-blue-50 p-4 rounded text-sm border-l-2 border-primary">
+                    <p className="font-medium mb-2">Teaching Tip:</p>
+                    <p>Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.</p>
                   </div>
                   
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h5 className="font-medium text-primary mb-3 flex items-center">
-                      <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
-                        <AlertCircle className="h-4 w-4" />
-                      </span>
-                      Check Vocabulary Understanding
-                    </h5>
-                    <ul className="list-disc pl-5 space-y-2 text-sm">
-                      <li>Refer back to the textbook vocabulary section if available.</li>
-                      <li>Pause and explain any unfamiliar words using visuals, gestures, or simple definitions.</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
-                  <h5 className="font-medium text-primary mb-3 flex items-center">
-                    <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
-                      <Video className="h-4 w-4" />
-                    </span>
-                    Ask Follow-up Questions
-                  </h5>
-                  <p className="text-sm mb-3 font-medium">To reinforce comprehension:</p>
-                  <ul className="list-disc pl-5 space-y-2 text-sm">
-                    <li>"Why do you think so?"</li>
-                    <li>"Can you describe it more?"</li>
-                    <li>"What else can you see?"</li>
-                  </ul>
-                  <div className="bg-blue-50 p-3 rounded mt-3 text-sm italic border-l-2 border-primary">
-                    Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.
-                  </div>
-                </div>
-                
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <h5 className="font-medium text-primary mb-3 flex items-center">
-                    <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
-                      <Gamepad2 className="h-4 w-4" />
-                    </span>
-                    Prompt Student Answers
-                  </h5>
-                  <p className="text-sm mb-3 font-medium">Use structured sentence frames:</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                  <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                     <div className="flex items-center bg-gray-50 p-2 rounded">
                       <span className="font-medium mr-1">Q:</span> "Is it a cat or a dog?" 
                       <span className="mx-1">→</span>
