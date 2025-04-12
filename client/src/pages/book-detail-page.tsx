@@ -14,8 +14,7 @@ import {
   Layers, 
   File, 
   Pencil,
-  Terminal,
-  Search
+  Terminal
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
