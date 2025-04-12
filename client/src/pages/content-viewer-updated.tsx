@@ -194,10 +194,29 @@ export default function ContentViewer() {
                         if (index >= formats.length) {
                           // All formats failed
                           console.error(`Error loading image (all formats tried): ${currentMaterial.content}`);
+                          
+                          // Hide the broken image
                           (e.target as HTMLImageElement).style.display = 'none';
+                          
+                          // Create a more detailed error message container
                           const container = document.createElement('div');
-                          container.innerHTML = `<p class="text-center text-red-500 mt-4">Image could not be loaded</p>`;
-                          (e.target as HTMLImageElement).parentNode?.appendChild(container);
+                          container.className = 'p-4 bg-red-50 border border-red-200 rounded-md text-red-600';
+                          container.innerHTML = `
+                            <div class="flex items-center mb-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                              <span class="font-medium">Content Not Available</span>
+                            </div>
+                            <p>This image could not be displayed. Please try another slide.</p>
+                            <p class="mt-2 text-xs text-gray-600">Book ${book?.bookId}, Unit ${unit?.unitNumber}, Material ID ${currentMaterial.id}</p>
+                          `;
+                          
+                          // Add the error message to the DOM
+                          const parent = (e.target as HTMLImageElement).parentNode as HTMLElement;
+                          if (parent) {
+                            parent.appendChild(container);
+                          }
                           return;
                         }
                         
@@ -215,18 +234,29 @@ export default function ContentViewer() {
                       
                       // Define all possible formats to try
                       const possibleFormats = [
-                        // No space between number and letter
+                        // PNG format with different naming patterns
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.png`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`,
                         // Using '00 A.png' format for first slide
                         currentIndex === 0 ? `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.png` : null,
                         // Using '00A.png' format for first slide
                         currentIndex === 0 ? `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.png` : null,
-                        // JPG format
+                        // JPG format with different naming patterns
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.jpg`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.jpg`,
-                        // JPEG format
+                        // JPEG format with different naming patterns
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.jpeg`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.jpeg`,
+                        // GIF format with different naming patterns (based on s3://visualenglishmaterial/book3/unit12/01 D Ad the Children are Young – Middle Aged – Old.gif)
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.gif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.gif`,
+                        // Format with letter variations (B, C, D, etc.) for books that use different lettering pattern
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} B.png`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} C.png`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} D.png`,
+                        // AVIF format (newer image format)
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.avif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.avif`,
                         // Original material content as fallback
                         currentMaterial.content
                       ].filter(Boolean) as string[];
@@ -239,16 +269,95 @@ export default function ContentViewer() {
               )}
               
               {currentMaterial.contentType === 'VIDEO' && (
-                <video controls className="max-w-full max-h-[50vh]">
-                  <source 
-                    src={
-                      book && unit
-                        ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`
-                        : currentMaterial.content
-                    }
-                  />
-                  Your browser does not support video playback.
-                </video>
+                <div className="max-w-full max-h-[50vh] mx-auto">
+                  <video 
+                    controls 
+                    className="max-w-full max-h-[50vh]" 
+                    onError={(e) => {
+                      const tryAlternateVideoFormats = (formats: string[], index = 0) => {
+                        if (index >= formats.length) {
+                          // All formats failed
+                          console.error(`Error loading video (all formats tried): ${currentMaterial.content}`);
+                          
+                          // Create error container
+                          const container = document.createElement('div');
+                          container.className = 'p-4 bg-red-50 border border-red-200 rounded-md text-red-600';
+                          container.innerHTML = `
+                            <div class="flex items-center mb-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                              <span class="font-medium">Video Not Available</span>
+                            </div>
+                            <p>This video could not be displayed. Please try another slide.</p>
+                            <p class="mt-2 text-xs text-gray-600">Book ${book?.bookId}, Unit ${unit?.unitNumber}, Material ID ${currentMaterial.id}</p>
+                          `;
+                          
+                          // Replace video with error message
+                          const parent = e.target.parentNode as HTMLElement;
+                          if (parent) {
+                            parent.innerHTML = '';
+                            parent.appendChild(container);
+                          }
+                          return;
+                        }
+                        
+                        // Try the next format
+                        const format = formats[index];
+                        console.log(`Trying video format ${index + 1}/${formats.length}: ${format}`);
+                        
+                        // Create a new source element
+                        const source = document.createElement('source');
+                        source.src = format;
+                        
+                        // Clear any existing sources
+                        while ((e.target as HTMLVideoElement).firstChild) {
+                          (e.target as HTMLVideoElement).removeChild((e.target as HTMLVideoElement).firstChild);
+                        }
+                        
+                        // Add the new source
+                        (e.target as HTMLVideoElement).appendChild(source);
+                        
+                        // Load the video again
+                        (e.target as HTMLVideoElement).load();
+                        
+                        // Set up error handler for the next format
+                        const video = e.target as HTMLVideoElement;
+                        video.addEventListener('error', () => {
+                          tryAlternateVideoFormats(formats, index + 1);
+                        });
+                      };
+                      
+                      // Define all possible video formats to try
+                      const possibleVideoFormats = [
+                        // MP4 format with different naming patterns
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.mp4`,
+                        // Webm format with different naming patterns
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.webm`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.webm`,
+                        // Format with letter variations
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} B.mp4`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} C.mp4`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} D.mp4`,
+                        // Original material content as fallback
+                        currentMaterial.content
+                      ].filter(Boolean) as string[];
+                      
+                      // Start trying formats
+                      tryAlternateVideoFormats(possibleVideoFormats);
+                    }}
+                  >
+                    <source 
+                      src={
+                        book && unit
+                          ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`
+                          : currentMaterial.content
+                      }
+                    />
+                    Your browser does not support video playback.
+                  </video>
+                </div>
               )}
               
               {(currentMaterial.contentType === 'PDF' || currentMaterial.contentType === 'DOCUMENT') && (
