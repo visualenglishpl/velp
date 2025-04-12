@@ -1,13 +1,13 @@
-import { useEffect, useState, useMemo } from "react";
-import { useLocation } from "wouter";
-import { useAuth } from "@/hooks/use-auth";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
+import { useLocation } from "wouter";
+import { Book as BookType, Unit, Material } from "@shared/schema";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import {
   Table,
@@ -22,38 +22,38 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
 import { 
-  Pencil, 
+  BookOpen, 
+  BookOpenCheck, 
+  ChevronRight,
+  BookIcon, 
+  Search, 
+  LogOut, 
   Plus, 
-  Trash2, 
-  Book, 
-  ChevronRight, 
-  FileText, 
+  Pencil, 
+  Trash2,
+  FileText,
   Video, 
   AudioLines, 
-  ClipboardList,
-  BookOpen,
-  LogOut,
-  Settings,
-  Search
+  ClipboardList
 } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 import { toast } from "@/hooks/use-toast";
 
+// Type definition for the book thumbnail
+type BookThumbnail = {
+  bookId: string;
+  title: string;
+  gifUrl: string;
+};
+
 // Function to get different button colors based on book ID
-const getButtonColor = (bookId: number): string => {
-  // Convert book ID to string and get the first character
-  const idString = bookId.toString();
-  const firstChar = idString.charAt(0);
+const getBookButtonColor = (bookId: string): string => {
+  // Extract the first character of the bookId to determine color
+  const firstChar = bookId.charAt(0).toLowerCase();
   
   // Color palette - colorful buttons for different books
   const colors = {
@@ -73,113 +73,9 @@ const getButtonColor = (bookId: number): string => {
   return colors[firstChar as keyof typeof colors] || '#172554'; // default navy blue
 };
 
-// Type definitions from schema
-type Book = {
-  id: number;
-  bookId: string;
-  title: string;
-  description: string | null;
-  thumbnail: string;
-  level: string;
-  isPublished: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type Unit = {
-  id: number;
-  bookId: number;
-  unitNumber: number;
-  title: string;
-  description: string | null;
-  isPublished: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type Material = {
-  id: number;
-  unitId: number;
-  title: string;
-  contentType: 'lesson' | 'exercise' | 'quiz' | 'video' | 'audio' | 'document';
-  content: any;
-  orderIndex: number;
-  isPublished: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
-
-// Content management layout with top navigation
-function ContentManagementLayout({ children }: { children: React.ReactNode }) {
-  const { user, logoutMutation } = useAuth();
-  const [, navigate] = useLocation();
-
-  if (!user || user.role !== "admin") {
-    navigate("/auth");
-    return null;
-  }
-
-  const handleLogout = () => {
-    logoutMutation.mutate();
-    navigate("/auth");
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Top Navigation Bar */}
-      <div className="bg-white shadow-sm px-6 py-4 flex justify-between items-center mb-8">
-        <div className="flex items-center space-x-2">
-          <BookOpen className="h-6 w-6 text-purple-600" />
-          <h1 className="text-xl font-semibold">Content Manager</h1>
-        </div>
-
-        <div className="flex items-center space-x-5">
-          <Button 
-            variant="ghost" 
-            className="text-gray-700"
-            onClick={() => navigate("/admin")}
-          >
-            Dashboard
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            className="text-gray-700 font-medium"
-            onClick={() => navigate("/admin/content")}
-          >
-            Content Management
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            className="text-gray-700"
-            onClick={() => navigate("/admin/books")}
-          >
-            Books
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            className="text-red-600"
-            onClick={handleLogout}
-          >
-            <LogOut className="h-4 w-4 mr-1" />
-            Sign Out
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="container mx-auto px-4">
-        {children}
-      </div>
-    </div>
-  );
-}
-
 // Book Form Component
 function BookForm({ book, onSubmit, onCancel }: { 
-  book?: Book; 
+  book?: BookType; 
   onSubmit: (data: any) => void; 
   onCancel: () => void 
 }) {
@@ -377,7 +273,7 @@ function UnitForm({ unit, bookId, onSubmit, onCancel }: {
   );
 }
 
-// Material Form Component (simplified)
+// Material Form Component 
 function MaterialForm({ material, unitId, onSubmit, onCancel }: { 
   material?: Material; 
   unitId: number;
@@ -526,26 +422,47 @@ function ContentTypeIcon({ type }: { type: string }) {
   }
 }
 
-// Main Content Management Component
-function ContentManagement() {
+// Main component 
+const BooksManagementPage = () => {
+  const { user, logoutMutation, isLoading: authLoading } = useAuth();
+  const [, navigate] = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<number | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
   const [isBookDialogOpen, setIsBookDialogOpen] = useState(false);
   const [isUnitDialogOpen, setIsUnitDialogOpen] = useState(false);
   const [isMaterialDialogOpen, setIsMaterialDialogOpen] = useState(false);
-  const [editingBook, setEditingBook] = useState<Book | null>(null);
+  const [editingBook, setEditingBook] = useState<BookType | null>(null);
   const [editingUnit, setEditingUnit] = useState<Unit | null>(null);
   const [editingMaterial, setEditingMaterial] = useState<Material | null>(null);
   
-  // Fetch books
-  const { data: books, isLoading: booksLoading } = useQuery<Book[]>({
-    queryKey: ['/api/books'],
-    retry: 1,
+  // Redirect to auth page if not logged in
+  useEffect(() => {
+    if (!authLoading) {
+      if (!user) {
+        console.log("User not authenticated, redirecting to auth page");
+        navigate("/auth");
+      } else if (user.role !== "admin" && user.role !== "teacher") {
+        console.log("User not authorized for books page, redirecting to homepage");
+        navigate("/");
+      }
+    }
+  }, [user, authLoading, navigate]);
+
+  // Fetch books from API
+  const { data: books, isLoading: isBooksLoading } = useQuery<Book[]>({
+    queryKey: ["/api/books"],
+    enabled: !!user,
+  });
+  
+  // Fetch thumbnails with presigned URLs
+  const { data: thumbnails, isLoading: isThumbnailsLoading } = useQuery<BookThumbnail[]>({
+    queryKey: ["/api/assets/book-thumbnails"],
+    enabled: !!user,
   });
   
   // Fetch units for selected book
-  const { data: units, isLoading: unitsLoading } = useQuery<Unit[]>({
+  const { data: units, isLoading: isUnitsLoading } = useQuery<Unit[]>({
     queryKey: ['/api/books', selectedBookId, 'units'],
     enabled: !!selectedBookId,
     queryFn: async () => {
@@ -557,7 +474,7 @@ function ContentManagement() {
   });
   
   // Fetch materials for selected unit
-  const { data: materials, isLoading: materialsLoading } = useQuery<Material[]>({
+  const { data: materials, isLoading: isMaterialsLoading } = useQuery<Material[]>({
     queryKey: ['/api/units', selectedUnitId, 'materials'],
     enabled: !!selectedUnitId,
     queryFn: async () => {
@@ -568,6 +485,9 @@ function ContentManagement() {
     },
   });
   
+  // Combined loading state
+  const isLoading = isBooksLoading || isThumbnailsLoading;
+
   // Book mutations
   const createBookMutation = useMutation({
     mutationFn: async (bookData: any) => {
@@ -854,7 +774,7 @@ function ContentManagement() {
     setIsMaterialDialogOpen(false);
   };
 
-  // Filter books based on search query
+  // Filter and sort books based on search query
   const filteredBooks = useMemo(() => {
     if (!books) return [];
 
@@ -868,6 +788,33 @@ function ContentManagement() {
           book.bookId.toLowerCase().includes(query) ||
           (book.description && book.description.toLowerCase().includes(query))
         );
+      })
+      .sort((a, b) => {
+        // Sort books by bookId with special handling for 0A, 0B, 0C format
+        const aId = a.bookId;
+        const bId = b.bookId;
+
+        // Extract number and letter part if in format like "0A"
+        const aMatch = aId.match(/^(\d+)([A-Za-z])?/);
+        const bMatch = bId.match(/^(\d+)([A-Za-z])?/);
+
+        if (aMatch && bMatch) {
+          const aNum = parseInt(aMatch[1]);
+          const bNum = parseInt(bMatch[1]);
+
+          // Compare numbers first
+          if (aNum !== bNum) {
+            return aNum - bNum;
+          }
+          
+          // If numbers are the same, compare letter parts
+          const aLetter = aMatch[2] || '';
+          const bLetter = bMatch[2] || '';
+          return aLetter.localeCompare(bLetter);
+        }
+
+        // Fallback to regular string comparison
+        return aId.localeCompare(bId);
       });
   }, [books, searchQuery]);
 
@@ -876,10 +823,48 @@ function ContentManagement() {
   const currentUnit = units?.find(unit => unit.id === selectedUnitId);
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Top Navigation Bar */}
+      <div className="bg-white shadow-sm px-6 py-4 flex justify-between items-center mb-8">
+        <div className="flex items-center space-x-2">
+          <BookOpen className="h-6 w-6 text-purple-600" />
+          <h1 className="text-xl font-semibold">Books & Content Manager</h1>
+        </div>
+
+        <div className="flex items-center space-x-5">
+          <Button 
+            variant="ghost" 
+            className="text-gray-700"
+            onClick={() => navigate("/admin")}
+          >
+            Dashboard
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-gray-700 font-medium"
+            onClick={() => navigate("/admin/books")}
+          >
+            Books & Content
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="text-red-600"
+            onClick={() => {
+              logoutMutation.mutate();
+              navigate("/auth");
+            }}
+          >
+            <LogOut className="h-4 w-4 mr-1" />
+            Sign Out
+          </Button>
+        </div>
+      </div>
+
       {/* Breadcrumb Navigation - Only show when inside a book or unit */}
       {(selectedBookId || selectedUnitId) && (
-        <div className="flex items-center text-sm text-gray-500 mb-8">
+        <div className="flex items-center text-sm text-gray-500 mb-8 px-6">
           <Button
             variant="link"
             className="p-0 h-auto"
@@ -910,32 +895,36 @@ function ContentManagement() {
           )}
         </div>
       )}
-
+      
       {/* Search and controls */}
       <div className="flex items-center justify-center gap-4 max-w-xl mx-auto mb-8 px-4">
         <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input 
-            placeholder="Search content..." 
+            placeholder="Search books..." 
             className="pl-9 py-2 text-base rounded-md border-gray-200"
             value={searchQuery}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
           />
         </div>
-        <Button 
-          onClick={() => setIsBookDialogOpen(true)}
-          className="whitespace-nowrap bg-blue-600 hover:bg-blue-700 text-white"
-        >
-          Create Book
-        </Button>
+        {user?.role === "admin" && (
+          <Button 
+            onClick={() => {
+              setEditingBook(null);
+              setIsBookDialogOpen(true);
+            }}
+            className="whitespace-nowrap bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            Create Book
+          </Button>
+        )}
       </div>
-      
-      {/* Content Area */}
+
       <main className="container mx-auto px-4 py-4">
         {!selectedBookId ? (
           // Books List View
           <div>
-            {booksLoading ? (
+            {isLoading ? (
               // Loading state
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                 {[...Array(10)].map((_, index) => (
@@ -952,8 +941,16 @@ function ContentManagement() {
                   </div>
                 ))}
               </div>
-            ) : filteredBooks.length > 0 ? (
-              // Books grid with 5 columns on larger screens to match the design
+            ) : filteredBooks.length === 0 ? (
+              <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
+                <BookOpenCheck className="h-16 w-16 text-gray-300 mb-4" />
+                <h3 className="text-xl font-medium text-gray-700">No books found</h3>
+                <p className="text-gray-500 mt-2">
+                  {searchQuery ? "Try adjusting your search query" : "No books have been added yet"}
+                </p>
+              </div>
+            ) : (
+              // Books grid with 5 columns on larger screens
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                 {filteredBooks.map((book) => (
                   <div key={book.id} className="flex flex-col overflow-hidden bg-white shadow hover:shadow-md transition-shadow">
@@ -964,11 +961,11 @@ function ContentManagement() {
                       <div className="relative h-40 w-40 bg-gray-50 flex items-center justify-center overflow-hidden">
                         <BookOpen className="h-16 w-16 text-gray-300" style={{ position: 'absolute', opacity: 0.5 }} />
                         <img 
-                          src={book.thumbnail} 
-                          alt={`${book.title} thumbnail`} 
+                          src={thumbnails?.find(t => t.bookId === book.bookId)?.gifUrl || ''}
+                          alt={book.title}
                           className="max-h-full max-w-full object-contain relative z-10"
                           onError={(e) => {
-                            console.log(`Failed to load thumbnail for book ${book.bookId}`);
+                            console.log(`Failed to load GIF thumbnail for book ${book.bookId}`);
                             // Keep the BookOpen icon visible by not changing opacity when image fails
                             const bookIcon = e.currentTarget.previousElementSibling;
                             if (bookIcon) {
@@ -980,28 +977,40 @@ function ContentManagement() {
                         />
                       </div>
                     </div>
-                    <div className="p-2">
+                    <div className="p-2 flex flex-col gap-2">
                       <Button 
                         onClick={() => handleBookSelect(book.id)}
                         className="w-full py-2 text-white hover:bg-opacity-90"
                         style={{ 
-                          /* Apply different colors based on book ID to make them colorful */
-                          backgroundColor: getButtonColor(book.id)
+                          backgroundColor: getBookButtonColor(book.bookId)
                         }} 
                       >
                         Manage Book <span className="ml-1">→</span>
                       </Button>
+                      
+                      {user?.role === "admin" && (
+                        <div className="flex justify-between">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => handleEditBook(book)}
+                            className="flex-1 mr-1"
+                          >
+                            <Pencil className="h-4 w-4 mr-1" /> Edit
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleDeleteBook(book.id)}
+                            className="flex-1 ml-1 text-red-500 hover:text-red-700"
+                          >
+                            <Trash2 className="h-4 w-4 mr-1" /> Delete
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
-              </div>
-            ) : (
-              <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
-                <BookOpen className="h-16 w-16 text-gray-300 mb-4" />
-                <h3 className="text-xl font-medium text-gray-700">No books found</h3>
-                <p className="text-gray-500 mt-2">
-                  {searchQuery ? "Try adjusting your search query" : "No books have been added yet"}
-                </p>
               </div>
             )}
           </div>
@@ -1012,73 +1021,89 @@ function ContentManagement() {
               <h1 className="text-2xl font-bold">
                 Units - {currentBook?.title}
               </h1>
-              <Button 
-                onClick={() => setIsUnitDialogOpen(true)}
-                className="bg-purple-600 hover:bg-purple-700"
-              >
-                <Plus className="h-4 w-4 mr-2" /> New Unit
-              </Button>
+              {user?.role === "admin" && (
+                <Button 
+                  onClick={() => {
+                    setEditingUnit(null);
+                    setIsUnitDialogOpen(true);
+                  }}
+                  className="bg-purple-600 hover:bg-purple-700 text-white"
+                >
+                  <Plus className="h-4 w-4 mr-2" /> New Unit
+                </Button>
+              )}
             </div>
             
-            {unitsLoading ? (
-              <div className="text-center py-8">Loading units...</div>
+            {isUnitsLoading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                {[...Array(8)].map((_, index) => (
+                  <div key={index} className="flex flex-col overflow-hidden bg-white shadow">
+                    <div className="p-3 text-center border-b">
+                      <Skeleton className="h-6 w-3/4 mx-auto" />
+                    </div>
+                    <div className="flex-1 p-6 flex items-center justify-center">
+                      <Skeleton className="h-32 w-32 rounded-md" />
+                    </div>
+                    <div className="p-2">
+                      <Skeleton className="h-10 w-full rounded" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : units && units.length > 0 ? (
-              <Table>
-                <TableCaption>List of units for {currentBook?.title}</TableCaption>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-16">Unit #</TableHead>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead className="w-24">Status</TableHead>
-                    <TableHead className="text-right w-32">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {units.map((unit) => (
-                    <TableRow key={unit.id}>
-                      <TableCell className="font-medium">{unit.unitNumber}</TableCell>
-                      <TableCell>{unit.title}</TableCell>
-                      <TableCell className="max-w-md truncate">
-                        {unit.description || "No description"}
-                      </TableCell>
-                      <TableCell>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {units.map((unit) => (
+                  <div key={unit.id} className="flex flex-col overflow-hidden bg-white shadow hover:shadow-md transition-shadow">
+                    <div className="p-3 text-center border-b">
+                      <h3 className="font-semibold">Unit {unit.unitNumber}: {unit.title}</h3>
+                    </div>
+                    <div className="p-4">
+                      <p className="text-sm text-gray-500 mb-4 h-12 overflow-hidden">
+                        {unit.description || "No description provided"}
+                      </p>
+                      <div className="mb-4">
                         {unit.isPublished ? (
                           <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1">Published</span>
                         ) : (
                           <span className="bg-gray-100 text-gray-800 text-xs rounded-full px-2 py-1">Draft</span>
                         )}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end space-x-1">
+                      </div>
+                    </div>
+                    <div className="mt-auto p-2 flex flex-col gap-2">
+                      <Button 
+                        onClick={() => handleUnitSelect(unit.id)}
+                        className="w-full py-2 text-white hover:bg-opacity-90"
+                        style={{ 
+                          backgroundColor: getBookButtonColor(unit.unitNumber.toString())
+                        }} 
+                      >
+                        Manage Materials <span className="ml-1">→</span>
+                      </Button>
+                      
+                      {user?.role === "admin" && (
+                        <div className="flex justify-between">
                           <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => handleUnitSelect(unit.id)}
-                          >
-                            Manage
-                          </Button>
-                          <Button 
-                            variant="ghost" 
+                            variant="outline" 
                             size="sm" 
                             onClick={() => handleEditUnit(unit)}
+                            className="flex-1 mr-1"
                           >
-                            <Pencil className="h-4 w-4" />
+                            <Pencil className="h-4 w-4 mr-1" /> Edit
                           </Button>
                           <Button 
-                            variant="ghost" 
+                            variant="outline" 
                             size="sm"
                             onClick={() => handleDeleteUnit(unit.id)}
-                            className="text-red-500 hover:text-red-700"
+                            className="flex-1 ml-1 text-red-500 hover:text-red-700"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-4 w-4 mr-1" /> Delete
                           </Button>
                         </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
               <div className="text-center py-8 text-gray-500">
                 No units found for this book. Create a new unit to get started.
@@ -1092,16 +1117,24 @@ function ContentManagement() {
               <h1 className="text-2xl font-bold">
                 Materials - {currentUnit?.title}
               </h1>
-              <Button 
-                onClick={() => setIsMaterialDialogOpen(true)}
-                className="bg-purple-600 hover:bg-purple-700"
-              >
-                <Plus className="h-4 w-4 mr-2" /> New Material
-              </Button>
+              {user?.role === "admin" && (
+                <Button 
+                  onClick={() => {
+                    setEditingMaterial(null);
+                    setIsMaterialDialogOpen(true);
+                  }}
+                  className="bg-purple-600 hover:bg-purple-700 text-white"
+                >
+                  <Plus className="h-4 w-4 mr-2" /> New Material
+                </Button>
+              )}
             </div>
             
-            {materialsLoading ? (
-              <div className="text-center py-8">Loading materials...</div>
+            {isMaterialsLoading ? (
+              <div className="text-center py-8">
+                <Skeleton className="h-8 w-64 mx-auto mb-4" />
+                <Skeleton className="h-32 w-full mx-auto" />
+              </div>
             ) : materials && materials.length > 0 ? (
               <Table>
                 <TableCaption>List of materials for {currentUnit?.title}</TableCaption>
@@ -1133,23 +1166,25 @@ function ContentManagement() {
                         )}
                       </TableCell>
                       <TableCell className="text-right">
-                        <div className="flex justify-end space-x-1">
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => handleEditMaterial(material)}
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button 
-                            variant="ghost" 
-                            size="sm"
-                            onClick={() => handleDeleteMaterial(material.id)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
+                        {user?.role === "admin" && (
+                          <div className="flex justify-end space-x-1">
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={() => handleEditMaterial(material)}
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => handleDeleteMaterial(material.id)}
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -1231,12 +1266,6 @@ function ContentManagement() {
       </Dialog>
     </div>
   );
-}
+};
 
-export default function ContentManagementPage() {
-  return (
-    <ContentManagementLayout>
-      <ContentManagement />
-    </ContentManagementLayout>
-  );
-}
+export default BooksManagementPage;

@@ -4,9 +4,8 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
-import AdminBooks from "@/pages/admin/Books";
+import BooksManagement from "@/pages/admin/BooksManagement";
 import BookDetailPage from "@/pages/book-detail-page";
-import ContentManagement from "@/pages/admin/ContentManagement";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -17,9 +16,15 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/auth" component={AuthPage} />
       <Route path="/admin" component={AdminDashboard} />
-      <Route path="/admin/books" component={AdminBooks} />
+      <Route path="/admin/books" component={BooksManagement} />
       <Route path="/admin/books/:id" component={BookDetailPage} />
-      <Route path="/admin/content" component={ContentManagement} />
+      {/* Redirect from old content management page to new unified books management */}
+      <Route path="/admin/content">
+        {() => {
+          window.location.href = "/admin/books";
+          return null;
+        }}
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );
