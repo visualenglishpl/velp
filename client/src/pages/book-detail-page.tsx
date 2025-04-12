@@ -410,10 +410,7 @@ const BookDetailPage = () => {
                   <div className="flex gap-2">
                     <Button 
                       size="sm"
-                      onClick={() => {
-                        // Go directly to the content slider with first material
-                        setLocation(`/units/${unit.id}/materials/0`);
-                      }}
+                      onClick={() => setLocation(`/units/${unit.id}/materials/0`)}
                       className="text-white hover:bg-opacity-90"
                       style={{ 
                         // Apply different color based on unit number for visual variety
