@@ -390,25 +390,6 @@ export default function MaterialViewer() {
           {book?.title} – {unit?.title}
         </h1>
       </div>
-      
-      {/* Unit Introduction Section */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="bg-primary/10 rounded-full p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
-            </svg>
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold">School Facilities & Areas</h2>
-            <p className="text-sm text-gray-600">Unit {unit?.unitNumber} of {book?.title}</p>
-          </div>
-        </div>
-        <p className="text-sm text-gray-700 pl-10">
-          This unit teaches about school layouts and helps students express how these spaces are used in English.
-          Ready for a tour around your school? Let's navigate and learn together!
-        </p>
-      </div>
 
       <div className="flex flex-col md:flex-row gap-6">
         {/* Main content area */}
