@@ -470,19 +470,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
               alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
             }
             
-            // Add backup patterns as fallbacks
-            if (bookId === '1' || bookId === '2' || bookId === '3') {
-              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-            } else if (bookId === '3') {
-              // Book 3 special case with space
-              alternatePaths.push(`thumbnails/thumbnailsuni3 -${unit.unitNumber}.png`);
-            } else if (bookId === '4') {
-              alternatePaths.push(`thumbnails/thumbnailsuni4-${unit.unitNumber}.png`);
-            } else if (bookId === '5') {
-              alternatePaths.push(`thumbnails/thumbnailsuni5-${unit.unitNumber}.png`);
-            } else if (bookId === '6' || bookId === '7') {
-              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-            }
+            // Add backup patterns as fallbacks - consistent across all books
+            // Simple path format for all books
+            alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            
+            // Special case with space (add for all books for flexibility)
+            alternatePaths.push(`thumbnails/thumbnailsuni${bookId} -${unit.unitNumber}.png`);
             
             // Always add these common patterns as fallbacks
             alternatePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
@@ -954,19 +947,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
         }
         
-        // Add backup patterns as fallbacks
-        if (bookId === '1' || bookId === '2' || bookId === '3') {
-          possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
-        } else if (bookId === '3') {
-          // Book 3 special case with space
-          possiblePaths.push(`thumbnails/thumbnailsuni3 -${range}.png`);
-        } else if (bookId === '4') {
-          possiblePaths.push(`thumbnails/thumbnailsuni4-${range}.png`);
-        } else if (bookId === '5') {
-          possiblePaths.push(`thumbnails/thumbnailsuni5-${range}.png`);
-        } else if (bookId === '6' || bookId === '7') {
-          possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
-        }
+        // Add common patterns for all books - consistent handling
+        // Simple path format as primary backup
+        possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
+        
+        // Add special case with space as fallback for all books
+        possiblePaths.push(`thumbnails/thumbnailsuni${bookId} -${range}.png`);
         
         // Always add these common patterns as fallbacks
         possiblePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${range}.png`);
