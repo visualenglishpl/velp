@@ -1289,6 +1289,58 @@ export default function MaterialViewer() {
                 </div>
               </Card>
             </div>
+            
+            {/* Material Covered Section */}
+            <div className="mb-6">
+              <h3 className="text-lg font-medium mb-4">Material Covered</h3>
+              <Card className="p-6 bg-gradient-to-br from-white to-green-50/40">
+                <div className="space-y-4">
+                  <div className="bg-white p-5 rounded-lg border border-gray-100">
+                    <h5 className="text-primary font-medium mb-4 flex items-center">
+                      <FileText className="h-5 w-5 mr-2 text-primary/80" />
+                      School Facilities
+                    </h5>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>Primary School: Main building for younger students</li>
+                      <li>Office: Administrative area with headmaster's office</li>
+                      <li>Gym: Space for physical education and sports activities</li>
+                      <li>Canteen/Tuck Shop: Where students eat meals and buy snacks</li>
+                      <li>Library: Quiet area for reading and studying</li>
+                      <li>After School Care: Activities after regular school hours</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-white p-5 rounded-lg border border-gray-100">
+                    <h5 className="text-primary font-medium mb-4 flex items-center">
+                      <FileText className="h-5 w-5 mr-2 text-primary/80" />
+                      Special School Areas
+                    </h5>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>Cloakroom: For changing shoes and outdoor clothing</li>
+                      <li>Classroom: Primary learning spaces</li>
+                      <li>Sports Field: Outdoor space for physical activities</li>
+                      <li>Playground: Recreational area for breaks</li>
+                      <li>Art Room: Space for creative projects</li>
+                      <li>Music Room: Where students learn instruments and singing</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-white p-5 rounded-lg border border-gray-100">
+                    <h5 className="text-primary font-medium mb-4 flex items-center">
+                      <FileText className="h-5 w-5 mr-2 text-primary/80" />
+                      ESL Activities
+                    </h5>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>Role Play: Practice conversation in school contexts</li>
+                      <li>Discussion Questions: Talk about favorite school areas</li>
+                      <li>School Map Creation: Label school locations in English</li>
+                      <li>Dream School Design: Describe ideal learning spaces</li>
+                      <li>School Day Schedule: Create English timetables</li>
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
