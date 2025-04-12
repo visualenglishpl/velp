@@ -216,8 +216,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const units = await storage.getUnits(book.id);
       
-      // Get the book details to determine the correct thumbnail path format
-      const currentBook = await storage.getBookById(bookId);
+      // We already have the book, no need to fetch it again
+      const currentBook = book;
       
       // Generate presigned URLs for unit thumbnails
       const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
@@ -405,19 +405,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   app.post("/api/books/:bookId/units", isAdmin, async (req, res) => {
     try {
-      const bookId = parseInt(req.params.bookId);
-      if (isNaN(bookId)) {
-        return res.status(400).json({ error: "Invalid book ID" });
+      // Check if bookId parameter is a database ID (number) or a book_id string
+      const bookIdParam = req.params.bookId;
+      let book;
+      
+      // If it's a numeric ID, use the database ID
+      if (!isNaN(parseInt(bookIdParam))) {
+        const dbId = parseInt(bookIdParam);
+        book = await storage.getBookById(dbId);
+      } else {
+        // Otherwise use the book_id (like '0a', '1', etc.)
+        book = await storage.getBookByBookId(bookIdParam);
       }
       
-      const book = await storage.getBookById(bookId);
       if (!book) {
         return res.status(404).json({ error: "Book not found" });
       }
       
       const unitData = insertUnitSchema.parse({
         ...req.body,
-        bookId
+        bookId: book.id // Use the actual database ID for the foreign key
       });
       
       const unit = await storage.createUnit(unitData);
