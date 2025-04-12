@@ -399,7 +399,7 @@ export default function MaterialViewer() {
           </div>
         </div>
         <p className="text-sm text-gray-700 pl-10">
-          Unit 1 of BOOK 5: This unit teaches about school layouts and helps students express how these spaces are used in English. Ready for a tour around your school?
+          This unit teaches about school layouts and helps students express how these spaces are used in English. Ready for a tour around your school?
         </p>
       </div>
 
