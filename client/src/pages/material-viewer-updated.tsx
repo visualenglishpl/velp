@@ -510,7 +510,8 @@ export default function MaterialViewer() {
       filename.match(/is\s+(\w+)\s+useful\s+or\s+useless/i) ||
       filename.match(/how\s+many\s+(\w+)\s+lessons/i) ||
       filename.match(/who\s+is\s+your\s+(\w+)\s+teacher/i) ||
-      filename.match(/do\s+you\s+have\s+(\w+)\s+in\s+school/i)
+      filename.match(/do\s+you\s+have\s+(\w+)\s+in\s+school/i) ||
+      filename.match(/do\s+you\s+have\s+(\w+)\s+experiments\s+in\s+school/i)
     );
     
     // If it has a prompt, we want to always show the question
@@ -616,6 +617,7 @@ export default function MaterialViewer() {
             const howManyLessonsMatch = filename.match(/how\s+many\s+(\w+)\s+lessons/i);
             const whoIsYourTeacherMatch = filename.match(/who\s+is\s+your\s+(\w+)\s+teacher/i);
             const doYouHaveInSchoolMatch = filename.match(/do\s+you\s+have\s+(\w+)\s+in\s+school/i);
+            const doYouHaveExperimentsMatch = filename.match(/do\s+you\s+have\s+(\w+)\s+experiments\s+in\s+school/i);
             
             // Return appropriate prompt based on question type with "It is" format
             if (isEasyOrDifficultMatch) {
@@ -648,6 +650,13 @@ export default function MaterialViewer() {
               return (
                 <div className="text-sm text-gray-500 mt-2">
                   <span className="font-medium">Prompt answers:</span> "My {subject} teacher is..."
+                </div>
+              );
+            } else if (doYouHaveExperimentsMatch) {
+              const subject = doYouHaveExperimentsMatch[1];
+              return (
+                <div className="text-sm text-gray-500 mt-2">
+                  <span className="font-medium">Prompt answers:</span> "Yes, I do." or "No, I don't."
                 </div>
               );
             } else if (doYouHaveInSchoolMatch) {
