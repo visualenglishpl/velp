@@ -587,73 +587,66 @@ export default function ContentViewer() {
                               <div className="flex-1 flex items-center justify-center w-full h-full">
                                 {material.content && (
                                     <>
-                                      {book && (book.bookId === "5" || book.bookId === "4") ? (
-                                        <>
-                                          {/* For proper S3 path structure with books 4 and 5 */}
-                                          <img
-                                            src={`/api/content/${book.bookId}/unit${unit?.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`}
-                                            alt={material.title}
-                                            className="max-w-full max-h-full object-contain"
-                                            style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                            onError={(e) => {
-                                              console.error(`Failed to load Book ${book.bookId} image:`, material.title);
-                                              (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                              
-                                              // Display generic unit content on error
-                                              const imgElement = e.target as HTMLImageElement;
-                                              imgElement.style.display = 'none';
-                                              
-                                              // Try different image formats one by one
-                                              const tryAlternateFormats = (formats = ['.png', '.jpg', '.gif', '.jpeg', '.webp', '.avif']) => {
-                                                if (formats.length === 0) {
-                                                  // All formats tried, show error message
-                                                  const container = document.createElement('div');
-                                                  container.className = 'p-4 bg-white rounded text-center';
-                                                  container.innerHTML = `
-                                                    <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
-                                                    <p class="text-gray-700">Content not available for ${material.title}</p>
-                                                  `;
-                                                  imgElement.parentNode?.appendChild(container);
-                                                  return;
-                                                }
-                                                
-                                                // Try the next format
-                                                const format = formats[0];
-                                                const filenameWithoutExt = material.content.replace(/\.[^/.]+$/, "").replace(/^.*[\\\/]/, '');
-                                                
-                                                const altImg = document.createElement('img');
-                                                altImg.src = `/api/content/${book.bookId}/unit${unit?.unitNumber}/${encodeURIComponent(filenameWithoutExt)}${format}`;
-                                                altImg.alt = material.title;
-                                                altImg.className = "max-w-full max-h-full object-contain";
-                                                altImg.style.objectFit = 'contain';
-                                                altImg.style.maxHeight = 'calc(60vh - 60px)';
-                                                
-                                                // If this format fails, try the next one
-                                                altImg.onerror = () => {
-                                                  altImg.remove();
-                                                  tryAlternateFormats(formats.slice(1));
-                                                };
-                                                
-                                                imgElement.parentNode?.appendChild(altImg);
-                                              };
-                                              
-                                              // Start trying different formats
-                                              tryAlternateFormats();
-                                            }}
-                                          />
-                                        </>
-                                      ) : (
-                                        <img
-                                          src={material.content} 
-                                          alt={material.title}
-                                          className="max-w-full max-h-full object-contain"
-                                          style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                          onError={(e) => {
-                                            console.error("Failed to load image:", material.title);
-                                            (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                          }}
-                                        />
-                                      )}
+                                      {/* Standardized path structure for all books */}
+                                      <img
+                                        src={
+                                          // If content already starts with API path, use it directly
+                                          material.content.startsWith('/api/content') 
+                                            ? material.content 
+                                            // Otherwise, construct a standard path for all books using the same format
+                                            : book && unit 
+                                              ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`
+                                              : material.content
+                                        }
+                                        alt={material.title}
+                                        className="max-w-full max-h-full object-contain"
+                                        style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                        onError={(e) => {
+                                          console.error(`Failed to load image:`, material.title);
+                                          (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                          
+                                          // Display generic unit content on error
+                                          const imgElement = e.target as HTMLImageElement;
+                                          imgElement.style.display = 'none';
+                                          
+                                          // Try different image formats one by one for all books
+                                          const tryAlternateFormats = (formats = ['.png', '.jpg', '.gif', '.jpeg', '.webp', '.avif']) => {
+                                            if (formats.length === 0 || !book || !unit) {
+                                              // All formats tried or missing book/unit info, show error message
+                                              const container = document.createElement('div');
+                                              container.className = 'p-4 bg-white rounded text-center';
+                                              container.innerHTML = `
+                                                <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
+                                                <p class="text-gray-700">Content not available for ${material.title}</p>
+                                              `;
+                                              imgElement.parentNode?.appendChild(container);
+                                              return;
+                                            }
+                                            
+                                            // Try the next format - same handling for all books
+                                            const format = formats[0];
+                                            const filenameWithoutExt = material.content.replace(/\.[^/.]+$/, "").replace(/^.*[\\\/]/, '');
+                                            
+                                            const altImg = document.createElement('img');
+                                            altImg.src = `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(filenameWithoutExt)}${format}`;
+                                            altImg.alt = material.title;
+                                            altImg.className = "max-w-full max-h-full object-contain";
+                                            altImg.style.objectFit = 'contain';
+                                            altImg.style.maxHeight = 'calc(60vh - 60px)';
+                                            
+                                            // If this format fails, try the next one
+                                            altImg.onerror = () => {
+                                              altImg.remove();
+                                              tryAlternateFormats(formats.slice(1));
+                                            };
+                                            
+                                            imgElement.parentNode?.appendChild(altImg);
+                                          };
+                                          
+                                          // Start trying different formats
+                                          tryAlternateFormats();
+                                        }}
+                                      />
                                     </>
                                   )}
                                   <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
@@ -828,23 +821,24 @@ export default function ContentViewer() {
                 </div>
                 {material.contentType === 'IMAGE' && material.content && (
                   <>
-                    {book && (book.bookId === "5" || book.bookId === "4") ? (
-                      <img
-                        src={`/api/content/${book.bookId}/unit${unit?.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover opacity-70"
-                        onError={(e) => {
-                          const imgElement = e.target as HTMLImageElement;
-                          imgElement.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src={material.content}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover opacity-70"
-                      />
-                    )}
+                    {/* Standardized path structure for all books in thumbnails */}
+                    <img
+                      src={
+                        // If content already starts with API path, use it directly
+                        material.content.startsWith('/api/content') 
+                          ? material.content 
+                          // Otherwise, construct a standard path for all books using the same format
+                          : book && unit 
+                            ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`
+                            : material.content
+                      }
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover opacity-70"
+                      onError={(e) => {
+                        const imgElement = e.target as HTMLImageElement;
+                        imgElement.style.display = 'none';
+                      }}
+                    />
                   </>
                 )}
                 <div className="absolute bottom-0 right-0 p-0.5 bg-gray-100 rounded-tl-md">
