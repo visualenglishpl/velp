@@ -398,7 +398,7 @@ const BookDetailPage = () => {
                 <CardHeader className="pb-1 pt-3">
                   <CardTitle className="text-base flex flex-col">
                     <span className="font-bold">UNIT {unit.unitNumber}</span>
-                    <span>{unit.title}</span>
+                    <span className="uppercase">{unit.title}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pb-3 pt-0">

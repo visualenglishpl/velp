@@ -963,7 +963,7 @@ const BooksManagementPage = () => {
                     <div className="p-3 text-center border-b">
                       <h3 className="font-semibold flex flex-col">
                         <span>UNIT {unit.unitNumber}</span>
-                        <span>{unit.title}</span>
+                        <span className="uppercase">{unit.title}</span>
                       </h3>
                     </div>
                     <div className="flex-1 p-6 flex items-center justify-center">
