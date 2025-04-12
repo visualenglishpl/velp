@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { 
   ArrowLeft, 
@@ -331,8 +330,8 @@ export default function ContentViewer() {
         <div className="mb-6">
           <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
             <div className="flex items-center gap-3 mb-3">
-              <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center">
-                <Lock className="h-5 w-5 text-primary/80" />
+              <div className="h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
+                <Lock className="h-5 w-5 text-gray-600" />
               </div>
               <div>
                 <h2 className="text-lg font-semibold">Unit {unit?.unitNumber} of {book?.title}</h2>
@@ -366,12 +365,12 @@ export default function ContentViewer() {
                           {material.contentType === 'IMAGE' && (
                             <div className="flex flex-col items-center justify-center bg-white h-full">
                               {material.content && (
-                                <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
                                   <div className="flex flex-col items-center justify-center">
                                     <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
                                       <Check className="h-5 w-5 text-green-600" />
                                     </span>
-                                    <h3 className="text-xl font-semibold text-primary">
+                                    <h3 className="text-xl font-semibold text-gray-900">
                                       {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
                                     </h3>
                                   </div>
@@ -398,12 +397,12 @@ export default function ContentViewer() {
                           {material.contentType === 'VIDEO' && (
                             <div className="flex flex-col bg-white h-full">
                               {material.content && (
-                                <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
                                   <div className="flex flex-col items-center justify-center">
                                     <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
                                       <Check className="h-5 w-5 text-green-600" />
                                     </span>
-                                    <h3 className="text-xl font-semibold text-primary">
+                                    <h3 className="text-xl font-semibold text-gray-900">
                                       {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
                                     </h3>
                                   </div>
@@ -435,12 +434,12 @@ export default function ContentViewer() {
                           {material.contentType === 'GAME' && (
                             <div className="flex flex-col bg-white h-full">
                               {material.content && (
-                                <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
                                   <div className="flex flex-col items-center justify-center">
                                     <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
                                       <Check className="h-5 w-5 text-green-600" />
                                     </span>
-                                    <h3 className="text-xl font-semibold text-primary">
+                                    <h3 className="text-xl font-semibold text-gray-900">
                                       {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
                                     </h3>
                                   </div>
@@ -466,12 +465,12 @@ export default function ContentViewer() {
                           {!['IMAGE', 'VIDEO', 'PDF', 'GAME'].includes(material.contentType) && (
                             <div className="flex flex-col items-center justify-center h-full bg-white">
                               {material.content && (
-                                <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
                                   <div className="flex flex-col items-center justify-center">
                                     <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
                                       <Check className="h-5 w-5 text-green-600" />
                                     </span>
-                                    <h3 className="text-xl font-semibold text-primary">
+                                    <h3 className="text-xl font-semibold text-gray-900">
                                       {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
                                     </h3>
                                   </div>
@@ -564,7 +563,7 @@ export default function ContentViewer() {
                       className={cn(
                         "flex-[0_0_80px] min-w-0 cursor-pointer",
                         "relative overflow-hidden rounded border-2 transition-all",
-                        currentSlideIndex === actualIndex ? "border-primary" : "border-transparent"
+                        currentSlideIndex === actualIndex ? "border-gray-500" : "border-transparent"
                       )}
                       onClick={() => navigateToSlide(actualIndex)}
                       role="button"
