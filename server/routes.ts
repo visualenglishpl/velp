@@ -208,7 +208,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const units = await storage.getUnits(bookId);
-      res.json(units);
+      
+      // Generate presigned URLs for unit thumbnails
+      const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
+        let thumbnailUrl = null;
+        if (unit.thumbnail) {
+          thumbnailUrl = await getS3PresignedUrl(unit.thumbnail);
+        }
+        return {
+          ...unit,
+          thumbnailUrl
+        };
+      }));
+      
+      res.json(unitsWithThumbnails);
     } catch (err) {
       console.error("Error fetching units:", err);
       res.status(500).json({ error: "Failed to fetch units" });
@@ -227,7 +240,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Unit not found" });
       }
       
-      res.json(unit);
+      // Generate presigned URL for the unit thumbnail if it exists
+      let thumbnailUrl = null;
+      if (unit.thumbnail) {
+        thumbnailUrl = await getS3PresignedUrl(unit.thumbnail);
+      }
+      
+      res.json({
+        ...unit,
+        thumbnailUrl
+      });
     } catch (err) {
       console.error("Error fetching unit:", err);
       res.status(500).json({ error: "Failed to fetch unit" });
