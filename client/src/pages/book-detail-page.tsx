@@ -350,7 +350,7 @@ const BookDetailPage = () => {
                     <img 
                       src={unit.thumbnailUrl} 
                       alt={`Thumbnail for Unit ${unit.unitNumber}`}
-                      className="w-full h-full object-contain transition-transform group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
                       onError={(e) => {
                         console.log(`Failed to load thumbnail for unit ${unit.unitNumber}`);
                         (e.target as HTMLImageElement).style.display = "none";
@@ -365,6 +365,25 @@ const BookDetailPage = () => {
                   {/* Unit number overlay */}
                   <div className="absolute top-2 left-2 bg-white/90 text-primary font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-sm">
                     {unit.unitNumber}
+                  </div>
+                  
+                  {/* Lock/Unlock status */}
+                  <div className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm">
+                    {unit.published ? (
+                      <div className="text-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                      </div>
+                    ) : (
+                      <div className="text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                          <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                        </svg>
+                      </div>
+                    )}
                   </div>
                 </div>
                 
@@ -433,6 +452,16 @@ const BookDetailPage = () => {
                       {/* Unit number overlay */}
                       <div className="absolute top-2 left-2 bg-white/90 text-primary font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-sm">
                         {unitNumber}
+                      </div>
+                      
+                      {/* Lock icon */}
+                      <div className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm">
+                        <div className="text-gray-400">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                          </svg>
+                        </div>
                       </div>
                     </div>
                     
