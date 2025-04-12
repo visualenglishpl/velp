@@ -828,7 +828,7 @@ const BooksManagementPage = () => {
       <div className="bg-white shadow-sm px-6 py-4 flex justify-between items-center mb-8">
         <div className="flex items-center space-x-2">
           <BookOpen className="h-6 w-6 text-purple-600" />
-          <h1 className="text-xl font-semibold">Books & Content Manager</h1>
+          <h1 className="text-xl font-semibold">Books</h1>
         </div>
 
         <div className="flex items-center space-x-5">
@@ -845,7 +845,7 @@ const BooksManagementPage = () => {
             className="text-gray-700 font-medium"
             onClick={() => navigate("/admin/books")}
           >
-            Books & Content
+            Books
           </Button>
           
           <Button 

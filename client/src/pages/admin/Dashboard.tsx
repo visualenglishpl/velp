@@ -48,7 +48,7 @@ const AdminDashboard = () => {
             className="text-gray-700"
             onClick={navigateToBooksAndContent}
           >
-            Books & Content
+            Books
           </Button>
           
           <Button 
@@ -125,7 +125,7 @@ const AdminDashboard = () => {
                   <BookOpen className="h-6 w-6 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">Books & Content</h3>
+                  <h3 className="text-lg font-semibold">Books</h3>
                   <p className="text-sm text-gray-500">Organize books, units, and learning materials</p>
                 </div>
               </div>
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
                   style={{ backgroundColor: '#9333ea' }} // Bright purple color to match screenshot
                   onClick={navigateToBooksAndContent}
                 >
-                  Books & Content
+                  Books
                 </Button>
               </div>
             </div>
