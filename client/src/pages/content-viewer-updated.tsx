@@ -593,7 +593,7 @@ export default function ContentViewer() {
                                         <>
                                           {/* For proper S3 path structure with books 4 and 5 */}
                                           <img
-                                            src={`/api/content/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
+                                            src={`/api/content/${book.bookId}/unit${unit?.unitNumber}/${encodeURIComponent(material.content.split('/').pop() || '')}`}
                                             alt={material.title}
                                             className="max-w-full max-h-full object-contain"
                                             style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
@@ -806,7 +806,7 @@ export default function ContentViewer() {
                   <>
                     {book && (material.content.includes('book5') || material.content.includes('book4')) ? (
                       <img
-                        src={`/api/content/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
+                        src={`/api/content/${book.bookId}/unit${unit?.unitNumber}/${encodeURIComponent(material.content.split('/').pop() || '')}`}
                         alt={`Thumbnail ${index + 1}`}
                         className="w-full h-full object-cover opacity-70"
                       />

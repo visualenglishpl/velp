@@ -1022,6 +1022,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Add a secure proxy endpoint for S3 content
   // This prevents exposing AWS credentials to the frontend
+  app.get("/api/content/:bookId/unit:unitNumber/:filename", async (req, res) => {
+    try {
+      const { bookId, unitNumber, filename } = req.params;
+      const key = `book${bookId}/unit${unitNumber}/${decodeURIComponent(filename)}`;
+      console.log(`Fetching content for key: ${key}`);
+      
+      // Generate a presigned URL on the server
+      const presignedUrl = await getS3PresignedUrl(key);
+      
+      if (!presignedUrl) {
+        console.error(`No presigned URL generated for key: ${key}`);
+        return res.status(404).json({ error: "Content not found" });
+      }
+      
+      // For most content types, we can redirect to the presigned URL
+      // This avoids having to stream the content through our server
+      res.setHeader('Cache-Control', 'public, max-age=3600'); // Add caching for better performance
+      return res.redirect(presignedUrl);
+    } catch (error) {
+      console.error("Error fetching content:", error);
+      res.status(500).json({ error: "Failed to fetch content" });
+    }
+  });
+  
+  // Fallback route for older content paths
   app.get("/api/content/:key", async (req, res) => {
     try {
       const key = decodeURIComponent(req.params.key);
