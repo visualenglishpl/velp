@@ -847,20 +847,7 @@ const BooksManagementPage = () => {
         </div>
       )}
       
-      {/* Create Book Button */}
-      <div className="flex items-center justify-center max-w-xl mx-auto mb-8 px-4">
-        {user?.role === "admin" && (
-          <Button 
-            onClick={() => {
-              setEditingBook(null);
-              setIsBookDialogOpen(true);
-            }}
-            className="whitespace-nowrap bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            Create Book
-          </Button>
-        )}
-      </div>
+
 
       <main className="container mx-auto px-4 py-4">
         {!selectedBookId ? (
@@ -944,17 +931,7 @@ const BooksManagementPage = () => {
               <h1 className="text-2xl font-bold">
                 Units - {currentBook?.title}
               </h1>
-              {user?.role === "admin" && (
-                <Button 
-                  onClick={() => {
-                    setEditingUnit(null);
-                    setIsUnitDialogOpen(true);
-                  }}
-                  className="bg-purple-600 hover:bg-purple-700 text-white"
-                >
-                  <Plus className="h-4 w-4 mr-2" /> New Unit
-                </Button>
-              )}
+
             </div>
             
             {isUnitsLoading ? (

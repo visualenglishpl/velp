@@ -129,14 +129,7 @@ const BooksPage = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
           />
         </div>
-        {user?.role === "admin" && (
-          <Button 
-            onClick={() => navigate("/admin/books/create")}
-            className="whitespace-nowrap bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            Create Book
-          </Button>
-        )}
+
       </div>
 
       <main className="container mx-auto px-4 py-4">
