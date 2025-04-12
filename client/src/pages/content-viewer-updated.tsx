@@ -165,19 +165,26 @@ export default function ContentViewer() {
                   <img 
                     src={
                       book && unit
-                        ? book.bookId === "5" && unit.unitNumber === 1 
-                          ? `/api/content/5/unit1/00 A.png` // Use exact path for Book 5 Unit 1 intro
-                          : `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(currentMaterial.content.split('/').pop() || '')}`
+                        ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`
                         : currentMaterial.content
                     }
                     alt={currentMaterial.title}
                     className="max-w-full max-h-[50vh] mx-auto object-contain"
                     onError={(e) => {
-                      console.error(`Error loading image: ${currentMaterial.content}`);
-                      (e.target as HTMLImageElement).style.display = 'none';
-                      const container = document.createElement('div');
-                      container.innerHTML = `<p class="text-center text-red-500 mt-4">Image could not be loaded</p>`;
-                      (e.target as HTMLImageElement).parentNode?.appendChild(container);
+                      console.log(`Trying alternative format for slide ${currentIndex+1}`);
+                      // Try alternate format (no space between number and letter)
+                      const alternateFormat = `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.png`;
+                      (e.target as HTMLImageElement).src = alternateFormat;
+                      
+                      // Save original error handler and set a new one for the alternate format
+                      const originalOnError = e.onError;
+                      (e.target as HTMLImageElement).onError = (e2) => {
+                        console.error(`Error loading image (all formats tried): ${currentMaterial.content}`);
+                        (e2.target as HTMLImageElement).style.display = 'none';
+                        const container = document.createElement('div');
+                        container.innerHTML = `<p class="text-center text-red-500 mt-4">Image could not be loaded</p>`;
+                        (e2.target as HTMLImageElement).parentNode?.appendChild(container);
+                      };
                     }}
                   />
                 </div>
@@ -188,7 +195,7 @@ export default function ContentViewer() {
                   <source 
                     src={
                       book && unit
-                        ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(currentMaterial.content.split('/').pop() || '')}`
+                        ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`
                         : currentMaterial.content
                     }
                   />
@@ -200,7 +207,7 @@ export default function ContentViewer() {
                 <iframe
                   src={
                     book && unit
-                      ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(currentMaterial.content.split('/').pop() || '')}`
+                      ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.pdf`
                       : currentMaterial.content
                   }
                   className="w-full h-[50vh]"
@@ -211,7 +218,7 @@ export default function ContentViewer() {
                 <iframe
                   src={
                     book && unit
-                      ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(currentMaterial.content.split('/').pop() || '')}`
+                      ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.html`
                       : currentMaterial.content
                   }
                   className="w-full h-[50vh] border-0"
