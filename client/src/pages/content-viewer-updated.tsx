@@ -186,6 +186,9 @@ export default function ContentViewer() {
       if (introSlideIndex !== -1) {
         // If we found the intro slide, navigate to it
         navigateToSlide(introSlideIndex);
+        console.log(`Found intro slide at index ${introSlideIndex}: ${materials[introSlideIndex].title}`);
+      } else {
+        console.log("No intro slide found with 00A pattern, using first slide");
       }
     }
   }, [materials, book, navigateToSlide]);
@@ -407,14 +410,44 @@ export default function ContentViewer() {
     return "";
   };
 
-  // Filter out empty slides
+  // Filter out empty slides and prioritize slides starting with 00A
   const filteredMaterials = useMemo(() => {
     if (!materials) return [];
-    return materials.filter(material => 
+    
+    // First get all valid materials (non-empty)
+    const validMaterials = materials.filter(material => 
       material.content && 
       material.content.trim() !== '' && 
       !material.title.includes('Empty')
     );
+    
+    // Check if there's an intro slide (00A pattern)
+    const introSlidePattern = /00\s*A/i;
+    const hasIntroSlide = validMaterials.some(material => 
+      material.content && 
+      introSlidePattern.test(material.content.split('/').pop() || '')
+    );
+    
+    // If no intro slide, return the materials as is
+    if (!hasIntroSlide) {
+      console.log("No 00A intro slide found in this unit");
+      return validMaterials;
+    }
+    
+    // Otherwise, sort to prioritize the 00A slide to come first
+    return [...validMaterials].sort((a, b) => {
+      const aFilename = a.content.split('/').pop() || '';
+      const bFilename = b.content.split('/').pop() || '';
+      
+      const aIsIntro = introSlidePattern.test(aFilename);
+      const bIsIntro = introSlidePattern.test(bFilename);
+      
+      if (aIsIntro && !bIsIntro) return -1; // a comes first
+      if (!aIsIntro && bIsIntro) return 1;  // b comes first
+      
+      // If both are intro slides or neither are, maintain original order
+      return 0;
+    });
   }, [materials]);
   
   // Derived values
