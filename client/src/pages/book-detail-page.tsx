@@ -324,8 +324,23 @@ const BookDetailPage = () => {
           </div>
         ) : units && units.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {units.map((unit) => (
-              <Card key={unit.id} className="hover:shadow-md transition-shadow">
+            {units.map((unit: any) => (
+              <Card key={unit.id} className="hover:shadow-md transition-shadow overflow-hidden">
+                {/* Unit thumbnail */}
+                {unit.thumbnailUrl && (
+                  <div className="w-full h-32 bg-gray-100 relative overflow-hidden">
+                    <img 
+                      src={unit.thumbnailUrl} 
+                      alt={`Thumbnail for Unit ${unit.unitNumber}`}
+                      className="w-full h-full object-cover transition-transform hover:scale-105"
+                      onError={(e) => {
+                        console.log(`Failed to load thumbnail for unit ${unit.unitNumber}`);
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                  </div>
+                )}
+                
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg">Unit {unit.unitNumber}</CardTitle>
                   <CardDescription>{unit.title}</CardDescription>
