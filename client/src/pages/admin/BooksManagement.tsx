@@ -965,6 +965,24 @@ const BooksManagementPage = () => {
                     </div>
                     <div className="flex-1 p-6 flex items-center justify-center">
                       <div className="relative h-40 w-40 bg-gray-50 flex items-center justify-center overflow-hidden">
+                        {/* Small padlock icon in corner */}
+                        <div className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm z-20">
+                          {unit.isPublished ? (
+                            <div className="text-green-500">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                              </svg>
+                            </div>
+                          ) : (
+                            <div className="text-gray-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                              </svg>
+                            </div>
+                          )}
+                        </div>
                         <FileImage className="h-16 w-16 text-gray-300" style={{ position: 'absolute', opacity: 0.5 }} />
                         {unit.thumbnailUrl && (
                           <img 
@@ -987,17 +1005,6 @@ const BooksManagementPage = () => {
                     </div>
                     <div className="p-4">
                       <div className="mb-4">
-                        {unit.isPublished ? (
-                          <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1 flex items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                            <span>Published</span>
-                          </span>
-                        ) : (
-                          <span className="bg-gray-100 text-gray-800 text-xs rounded-full px-2 py-1">Draft</span>
-                        )}
                       </div>
                     </div>
                     <div className="mt-auto p-2 flex flex-col gap-2">
@@ -1071,15 +1078,23 @@ const BooksManagementPage = () => {
                       </TableCell>
                       <TableCell>
                         {material.isPublished ? (
-                          <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1 flex items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                            <span>Published</span>
-                          </span>
+                          <div className="flex justify-center">
+                            <div className="text-green-500 bg-white/90 rounded-full p-1 shadow-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                              </svg>
+                            </div>
+                          </div>
                         ) : (
-                          <span className="bg-gray-100 text-gray-800 text-xs rounded-full px-2 py-1">Draft</span>
+                          <div className="flex justify-center">
+                            <div className="text-gray-400 bg-white/90 rounded-full p-1 shadow-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                              </svg>
+                            </div>
+                          </div>
                         )}
                       </TableCell>
                     </TableRow>
