@@ -223,10 +223,10 @@ export default function MaterialViewer() {
               variant="outline" 
               size="sm" 
               className="flex items-center gap-2"
-              onClick={() => window.location.href = `/books/${book?.bookId}/units/${unitId}`}
+              onClick={() => window.location.href = `/admin/books`}
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to Unit
+              Back to Books
             </Button>
             <h1 className="text-xl font-semibold hidden md:block">
               {book?.title} – {unit?.title}
@@ -433,10 +433,10 @@ export default function MaterialViewer() {
             variant="outline" 
             size="sm" 
             className="flex items-center gap-2"
-            onClick={() => window.location.href = `/books/${book?.bookId}/units/${unitId}`}
+            onClick={() => window.location.href = `/admin/books`}
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Unit
+            Back to Books
           </Button>
           <h1 className="text-xl font-semibold hidden md:block">
             {book?.title} – {unit?.title}
