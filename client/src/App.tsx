@@ -6,7 +6,7 @@ import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import BookDetailPage from "@/pages/book-detail-page";
-import MaterialViewer from "@/pages/material-viewer";
+import MaterialViewer from "@/pages/material-viewer-updated";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";

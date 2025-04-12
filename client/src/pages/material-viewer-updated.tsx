@@ -7,23 +7,59 @@ import { cn } from '@/lib/utils';
 import useEmblaCarousel from 'embla-carousel-react';
 import { AlertCircle, ArrowLeft, Check, ChevronLeft, ChevronRight, Download, ExternalLink, FileText, Lock, Maximize, Menu, Pencil, Plus, X, Youtube } from 'lucide-react';
 
+// Define our types based on the backend schemas
+interface Material {
+  id: number;
+  unitId: number;
+  title: string;
+  description: string | null;
+  contentType: 'IMAGE' | 'VIDEO' | 'PDF' | 'GAME' | 'audio' | 'video' | 'document' | 'lesson' | 'exercise' | 'quiz';
+  content: string;
+  orderIndex: number;
+  isPublished: boolean;
+  isLocked: boolean;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface Unit {
+  id: number;
+  bookId: number;
+  unitNumber: number;
+  title: string;
+  description?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface Book {
+  id: number;
+  bookId: string;
+  title: string;
+  description?: string;
+  coverImage?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export default function MaterialViewer() {
   const { unitId, materialId } = useParams();
   const initialMaterialIndex = materialId ? parseInt(materialId) : 0;
   
   // Fetch unit and book data
-  const { data: unit } = useQuery({
+  const { data: unit } = useQuery<Unit>({
     queryKey: [`/api/units/${unitId}`],
     enabled: !!unitId,
   });
   
-  const { data: book } = useQuery({
+  const { data: book } = useQuery<Book>({
     queryKey: [`/api/books/${unit?.bookId}`],
     enabled: !!unit?.bookId,
   });
   
   // Fetch materials for this unit
-  const { data: materials = [], isLoading } = useQuery({
+  const { data: materials = [], isLoading } = useQuery<Material[]>({
     queryKey: [`/api/units/${unitId}/materials`],
     enabled: !!unitId,
   });
@@ -31,7 +67,6 @@ export default function MaterialViewer() {
   // Carousel setup
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     startIndex: initialMaterialIndex,
-    draggable: false,
   });
   
   const [thumbsRef, thumbsApi] = useEmblaCarousel({
@@ -79,8 +114,10 @@ export default function MaterialViewer() {
       navigateToSlide(0);
     }
     
+    // Cleanup function 
     return () => {
-      emblaApi.off('select');
+      // No explicit need to remove event listeners 
+      // emblaCarousel handles this automatically
     };
   }, [emblaApi, thumbsApi, totalSlides, navigateToSlide, initialMaterialIndex]);
   
