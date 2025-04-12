@@ -17,7 +17,12 @@ import {
   Video,
   Image as ImageIcon,
   AlertCircle,
-  Gamepad2
+  Gamepad2,
+  ExternalLink,
+  Plus,
+  Pencil,
+  X,
+  Youtube
 } from "lucide-react";
 import useEmblaCarousel from 'embla-carousel-react';
 
@@ -386,131 +391,23 @@ export default function MaterialViewer() {
         </h1>
       </div>
       
-      {/* Unit Information Section */}
+      {/* Unit Introduction Section */}
       <div className="bg-gray-50 rounded-lg p-4 mb-6">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="md:w-2/3">
-            <h2 className="text-lg font-semibold mb-2">School Facilities & Areas</h2>
-            <p className="text-sm text-gray-700 mb-4">
-              This unit not only teaches about the physical layout of schools but also encourages students to think about 
-              how they use each space and articulate these thoughts in English. Ready for a tour around your school with fresh eyes? 
-              Let's navigate and learn together! 🌍📖
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <h3 className="text-sm font-medium mb-2">School Facilities:</h3>
-                <ul className="text-sm space-y-1">
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🏫</span>
-                    <span>Primary School: Structure and role of primary education</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🏢</span>
-                    <span>Office: Administrative tasks; headmaster/headmistress</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">💪</span>
-                    <span>Gym: Physical education and sports</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🍽️</span>
-                    <span>Canteen/Tuck Shop: Lunch and snacks</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">📚</span>
-                    <span>Library: Quiet area for reading and studying</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🌟</span>
-                    <span>After School Care: Post-school activities</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="text-sm font-medium mb-2">Special School Areas:</h3>
-                <ul className="text-sm space-y-1">
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🧥</span>
-                    <span>Cloakroom: Changing shoes and storing clothing</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🏫</span>
-                    <span>Classroom: Primary area for lessons and learning</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">⚽</span>
-                    <span>Sports Field: Outdoor sports and activities</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🤾</span>
-                    <span>Playground: Free play and informal activities</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🎨</span>
-                    <span>Art Room: Creative space for drawing and crafting</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">🎼</span>
-                    <span>Music Room: Learning and practicing music</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-primary/10 rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
+            </svg>
           </div>
-          
-          <div className="md:w-1/3">
-            <h3 className="text-sm font-medium mb-2">Learning Objectives:</h3>
-            <ul className="text-sm space-y-2">
-              <li className="flex items-start">
-                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span>Identify and name different school facilities</span>
-              </li>
-              <li className="flex items-start">
-                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span>Describe activities that take place in different parts of a school</span>
-              </li>
-              <li className="flex items-start">
-                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span>Ask and respond to questions about school locations</span>
-              </li>
-              <li className="flex items-start">
-                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span>Use prepositions of place correctly in conversations about schools</span>
-              </li>
-              <li className="flex items-start">
-                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span>Compare different types of schools using comparative language</span>
-              </li>
-            </ul>
-            
-            <div className="mt-4 p-3 bg-blue-50 rounded border border-blue-100">
-              <h3 className="text-sm font-medium text-blue-800 mb-1">Teaching Tips:</h3>
-              <p className="text-xs text-blue-700">Use role plays to simulate asking for directions within the school. Create a school map activity where students draw and label different areas of their school.</p>
-            </div>
+          <div>
+            <h2 className="text-lg font-semibold">School Facilities & Areas</h2>
+            <p className="text-sm text-gray-600">Unit {unit?.unitNumber} of {book?.title}</p>
           </div>
         </div>
+        <p className="text-sm text-gray-700 pl-10">
+          This unit teaches about school layouts and helps students express how these spaces are used in English.
+          Ready for a tour around your school? Let's navigate and learn together!
+        </p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-6">
@@ -743,6 +640,238 @@ export default function MaterialViewer() {
               )}
             </div>
             <p className="text-sm text-gray-500">{currentMaterial?.description}</p>
+          </div>
+          
+          {/* Teacher Resources Section */}
+          <div className="mt-8">
+            <div className="border-b border-gray-200 mb-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Teacher Resources</h2>
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Plus className="h-4 w-4" />
+                  Add Resource
+                </Button>
+              </div>
+            </div>
+            
+            {/* Interactive Resources */}
+            <div className="mb-6">
+              <h3 className="text-lg font-medium mb-4">Interactive Resources</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Kahoot Quiz */}
+                <Card className="p-4">
+                  <div className="flex justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-5 w-5 text-orange-500" />
+                      <h4 className="font-medium">Kahoot Quiz: Unit 1</h4>
+                    </div>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500">
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-500 mb-3">Interactive quiz about key vocabulary</p>
+                  <Button variant="link" size="sm" className="flex items-center gap-1 px-0 text-primary" onClick={() => window.open('#', '_blank')}>
+                    <ExternalLink className="h-3 w-3" />
+                    <span>Kahoot Quiz: Unit 1</span>
+                  </Button>
+                </Card>
+                
+                {/* Vocabulary Practice */}
+                <Card className="p-4">
+                  <div className="flex justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-5 w-5 text-blue-500" />
+                      <h4 className="font-medium">Wordwall: Vocabulary Practice</h4>
+                    </div>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500">
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-500 mb-3">Practice key vocabulary from this unit</p>
+                  <Button variant="link" size="sm" className="flex items-center gap-1 px-0 text-primary" onClick={() => window.open('#', '_blank')}>
+                    <ExternalLink className="h-3 w-3" />
+                    <span>Wordwall: Vocabulary Practice</span>
+                  </Button>
+                </Card>
+                
+                {/* YouTube Resources */}
+                <Card className="p-4">
+                  <div className="flex justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <Youtube className="h-5 w-5 text-red-500" />
+                      <h4 className="font-medium">YouTube Teaching Resources</h4>
+                    </div>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500">
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-500 mb-3">Find teaching videos for ESL lessons</p>
+                  <Button variant="link" size="sm" className="flex items-center gap-1 px-0 text-primary" onClick={() => window.open('#', '_blank')}>
+                    <ExternalLink className="h-3 w-3" />
+                    <span>YouTube Teaching Resources</span>
+                  </Button>
+                </Card>
+                
+                {/* Online Games PDF */}
+                <Card className="p-4">
+                  <div className="flex justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-5 w-5 text-green-500" />
+                      <h4 className="font-medium">Online Games PDF</h4>
+                    </div>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500">
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-500 mb-3">PDF with links to online games (if available)</p>
+                  <div className="bg-amber-50 p-3 rounded border border-amber-100 text-sm">
+                    <div className="font-medium text-amber-800 mb-1">Untrusted URL</div>
+                    <p className="text-amber-700 text-xs">This URL cannot be embedded. Please use a trusted educational platform.</p>
+                    <Button variant="link" size="sm" className="flex items-center gap-1 px-0 text-amber-800 mt-1" onClick={() => window.open('#', '_blank')}>
+                      <ExternalLink className="h-3 w-3" />
+                      <span>Open link in new tab</span>
+                    </Button>
+                  </div>
+                </Card>
+              </div>
+            </div>
+            
+            {/* Teaching Guidance */}
+            <div className="mb-6">
+              <h3 className="text-lg font-medium mb-4">Teaching Guidance</h3>
+              <Card className="p-6">
+                <h4 className="font-medium text-gray-800 mb-4">Unit-specific guidance for {book?.title}, Unit {unit?.unitNumber} - {unit?.title}</h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <h5 className="font-medium mb-2">Presenting Questions</h5>
+                    <ul className="list-disc pl-5 space-y-2 text-sm">
+                      <li>Show the question on the slide and point to any key image details (e.g. facial expressions, actions, background objects).</li>
+                      <li>Clearly read the question aloud to the class — say it twice to help students process the language.</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium mb-2">Check Vocabulary Understanding</h5>
+                    <ul className="list-disc pl-5 space-y-2 text-sm">
+                      <li>Refer back to the textbook vocabulary section if available.</li>
+                      <li>Pause and explain any unfamiliar words using visuals, gestures, or simple definitions.</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <h5 className="font-medium mb-2">Ask Follow-up Questions</h5>
+                  <p className="text-sm mb-2">To reinforce comprehension:</p>
+                  <ul className="list-disc pl-5 space-y-1 text-sm">
+                    <li>"Why do you think so?"</li>
+                    <li>"Can you describe it more?"</li>
+                    <li>"What else can you see?"</li>
+                  </ul>
+                  <p className="text-sm italic mt-2">Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.</p>
+                </div>
+                
+                <div>
+                  <h5 className="font-medium mb-2">Prompt Student Answers</h5>
+                  <p className="text-sm mb-2">Use structured sentence frames:</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                    <div>"Is it a cat or a dog?" → "It is a..."</div>
+                    <div>"Are they sitting or standing?" → "They are..."</div>
+                    <div>"Is he eating or sleeping?" → "He is..."</div>
+                    <div>"Is she happy or sad?" → "She is..."</div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+            
+            {/* School Facilities & Areas */}
+            <div className="mb-6">
+              <h3 className="text-lg font-medium mb-4">Unit Content Summary</h3>
+              <Card className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-medium mb-3">School Facilities:</h5>
+                    <ul className="space-y-2">
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🏫</span>
+                        <span>Primary School: Structure and role of primary education</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🏢</span>
+                        <span>Office: Administrative tasks; headmaster/headmistress</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">💪</span>
+                        <span>Gym: Physical education and sports</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🍽️</span>
+                        <span>Canteen/Tuck Shop: Lunch and snacks</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">📚</span>
+                        <span>Library: Quiet area for reading and studying</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🌟</span>
+                        <span>After School Care: Post-school activities</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium mb-3">Special School Areas:</h5>
+                    <ul className="space-y-2">
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🧥</span>
+                        <span>Cloakroom: Changing shoes and storing clothing</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🏫</span>
+                        <span>Classroom: Primary area for lessons and learning</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">⚽</span>
+                        <span>Sports Field: Outdoor sports and activities</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🤾</span>
+                        <span>Playground: Free play and informal activities</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🎨</span>
+                        <span>Art Room: Creative space for drawing and crafting</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-primary">🎼</span>
+                        <span>Music Room: Learning and practicing music</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
 
