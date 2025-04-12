@@ -75,7 +75,7 @@ export default function MaterialViewer() {
   });
   
   // State management
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(1); // Start from slide 2 (index 1)
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
