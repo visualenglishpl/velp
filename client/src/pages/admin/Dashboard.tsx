@@ -21,12 +21,8 @@ const AdminDashboard = () => {
     navigate("/auth");
   };
 
-  const navigateToBooks = () => {
+  const navigateToBooksAndContent = () => {
     navigate("/admin/books");
-  };
-  
-  const navigateToContent = () => {
-    navigate("/admin/content");
   };
 
   return (
@@ -35,7 +31,7 @@ const AdminDashboard = () => {
       <div className="bg-white shadow-sm px-6 py-4 flex justify-between items-center mb-8">
         <div className="flex items-center space-x-2">
           <BookOpen className="h-6 w-6 text-purple-600" />
-          <h1 className="text-xl font-semibold">Content Manager</h1>
+          <h1 className="text-xl font-semibold">Visual English Admin</h1>
         </div>
 
         <div className="flex items-center space-x-5">
@@ -50,17 +46,9 @@ const AdminDashboard = () => {
           <Button 
             variant="ghost" 
             className="text-gray-700"
-            onClick={navigateToContent}
+            onClick={navigateToBooksAndContent}
           >
-            Content Management
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            className="text-gray-700"
-            onClick={navigateToBooks}
-          >
-            Books
+            Books & Content
           </Button>
           
           <Button 
@@ -137,7 +125,7 @@ const AdminDashboard = () => {
                   <BookOpen className="h-6 w-6 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">Content Management</h3>
+                  <h3 className="text-lg font-semibold">Books & Content</h3>
                   <p className="text-sm text-gray-500">Organize books, units, and learning materials</p>
                 </div>
               </div>
@@ -145,9 +133,9 @@ const AdminDashboard = () => {
                 <Button 
                   className="w-full py-2 text-white hover:bg-opacity-90 border-0"
                   style={{ backgroundColor: '#9333ea' }} // Bright purple color to match screenshot
-                  onClick={navigateToContent}
+                  onClick={navigateToBooksAndContent}
                 >
-                  Manage Content
+                  Books & Content
                 </Button>
               </div>
             </div>
