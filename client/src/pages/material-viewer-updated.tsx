@@ -500,6 +500,30 @@ export default function MaterialViewer() {
       );
     }
     
+    // Extract the question from the decoded filename
+    const question = extractQuestionFromFilename(filename) || title;
+    
+    // Special handling for slides with prompts - we always want to show these
+    const hasPrompt = (
+      filename.match(/is\s+(\w+)\s+easy\s+or\s+difficult/i) ||
+      filename.match(/is\s+(\w+)\s+interesting\s+or\s+boring/i) ||
+      filename.match(/is\s+(\w+)\s+useful\s+or\s+useless/i) ||
+      filename.match(/how\s+many\s+(\w+)\s+lessons/i) ||
+      filename.match(/who\s+is\s+your\s+(\w+)\s+teacher/i) ||
+      filename.match(/do\s+you\s+have\s+(\w+)\s+in\s+school/i)
+    );
+    
+    // If it has a prompt, we want to always show the question
+    if (hasPrompt) {
+      return (
+        <div className="w-full text-center mb-4 p-2">
+          <h3 className="text-2xl font-semibold">
+            {question}
+          </h3>
+        </div>
+      );
+    }
+    
     // Check if the filename indicates a slide with no text content
     // Common patterns for image-only slides without questions
     if (
@@ -513,9 +537,6 @@ export default function MaterialViewer() {
       // Don't show any question text for image-only slides
       return null;
     }
-    
-    // Extract the question from the decoded filename
-    const question = extractQuestionFromFilename(filename) || title;
     
     // If we couldn't extract a meaningful question, don't show anything
     if (!question || question === filename || question === title) {
