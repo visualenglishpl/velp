@@ -66,22 +66,10 @@ export default function ContentViewer() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
   
-  // Helper function to determine if content is actually text in Book 5 despite being marked as IMAGE
-  const isBook5TextContent = (content: string): boolean => {
-    if (!content || typeof content !== 'string') return false;
-    
-    return content.includes("\n") || 
-           content.includes("Material Covered") || 
-           content.includes("School Vocabulary") ||
-           content.includes("Practice sentences") ||
-           content.includes("School Facilities");
-  };
-  
-  // Special check for school vocabulary content in Book 5
+  // *** Special Book 5 text content handling removed as per request to make it consistent with other books ***
+  // School vocabulary check removed to handle Book 5 like other books
   const isSchoolVocabularyContent = (material: Material): boolean => {
-    if (material.title.includes("School Vocabulary")) return true;
-    if (typeof material.content !== 'string') return false;
-    return material.content.includes("School Vocabulary") || material.content.includes("School Facilities");
+    return false; // No special handling for Book 5 vocabulary 
   };
   
   // Data fetching hooks
@@ -246,11 +234,8 @@ export default function ContentViewer() {
     // Remove URL encoding first
     const decodedFilename = decodeURIComponent(filename);
     
-    // Handle "School Vocabulary" specially for Book 5
-    if (decodedFilename.includes("School Vocabulary") || 
-        decodedFilename.includes("school facilities")) {
-      return "School Vocabulary";
-    }
+    // No special handling for "School Vocabulary" in Book 5 anymore
+    // We want all books to be handled consistently
     
     // Handle "What is Their Nationality" pattern
     if (decodedFilename.toLowerCase().includes("what is their nationality")) {
