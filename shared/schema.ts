@@ -135,6 +135,7 @@ export const units = pgTable("units", {
   unitNumber: integer("unit_number").notNull(),
   title: text("title").notNull(),
   description: text("description"),
+  thumbnail: text("thumbnail"),
   isPublished: boolean("is_published").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(), 
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
