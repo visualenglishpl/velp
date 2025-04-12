@@ -658,56 +658,63 @@ export default function MaterialViewer() {
           <div className="relative mt-4 px-8">
             <div className="overflow-hidden" ref={thumbsRef}>
               <div className="flex gap-2 py-2">
-                {materials.map((material, index) => (
-                  <div 
-                    key={material.id} 
-                    className={cn(
-                      "flex-[0_0_80px] min-w-0 cursor-pointer",
-                      "relative overflow-hidden rounded border-2 transition-all",
-                      currentSlideIndex === index ? "border-primary" : "border-transparent"
-                    )}
-                    onClick={() => navigateToSlide(index)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Go to slide ${index + 1}: ${material.title}`}
-                  >
-                    {/* Content preview */}
-                    <div className="relative h-14 bg-gray-100 flex items-center justify-center">
-                      {material.contentType === 'IMAGE' && material.content ? (
-                        <img 
-                          src={material.content}
-                          alt={`Thumbnail for ${material.title}`}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center h-full w-full">
-                          {getContentTypeIcon(material.contentType)}
-                        </div>
-                      )}
-                      
-                      {/* Status indicator overlay */}
-                      {material.isLocked && (
-                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                          <Lock className="h-3 w-3 text-white" />
-                        </div>
-                      )}
-                      
-                      {/* View status dot */}
-                      {!material.isLocked && (
-                        <div className="absolute top-0.5 right-0.5">
-                          {viewedSlides.includes(material.id) ? (
-                            <div className="h-2 w-2 rounded-full bg-green-500" />
+                {materials
+                  // Filter out PDF materials from thumbnails
+                  .filter(material => material.contentType !== 'PDF')
+                  .map((material, index) => {
+                    // Find the actual index in the full materials array
+                    const actualIndex = materials.findIndex(m => m.id === material.id);
+                    return (
+                      <div 
+                        key={material.id} 
+                        className={cn(
+                          "flex-[0_0_80px] min-w-0 cursor-pointer",
+                          "relative overflow-hidden rounded border-2 transition-all",
+                          currentSlideIndex === actualIndex ? "border-primary" : "border-transparent"
+                        )}
+                        onClick={() => navigateToSlide(actualIndex)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Go to slide ${actualIndex + 1}: ${material.title}`}
+                      >
+                        {/* Content preview */}
+                        <div className="relative h-14 bg-gray-100 flex items-center justify-center">
+                          {material.contentType === 'IMAGE' && material.content ? (
+                            <img 
+                              src={material.content}
+                              alt={`Thumbnail for ${material.title}`}
+                              className="w-full h-full object-cover"
+                            />
                           ) : (
-                            <div className="h-2 w-2 rounded-full bg-gray-300" />
+                            <div className="flex items-center justify-center h-full w-full">
+                              {getContentTypeIcon(material.contentType)}
+                            </div>
+                          )}
+                          
+                          {/* Status indicator overlay */}
+                          {material.isLocked && (
+                            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                              <Lock className="h-3 w-3 text-white" />
+                            </div>
+                          )}
+                          
+                          {/* View status dot */}
+                          {!material.isLocked && (
+                            <div className="absolute top-0.5 right-0.5">
+                              {viewedSlides.includes(material.id) ? (
+                                <div className="h-2 w-2 rounded-full bg-green-500" />
+                              ) : (
+                                <div className="h-2 w-2 rounded-full bg-gray-300" />
+                              )}
+                            </div>
                           )}
                         </div>
-                      )}
-                    </div>
-                    <div className="text-xs truncate text-center py-1 px-1">
-                      {index + 1}
-                    </div>
-                  </div>
-                ))}
+                        <div className="text-xs truncate text-center py-1 px-1">
+                          {actualIndex + 1}
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -725,11 +732,19 @@ export default function MaterialViewer() {
                   {currentMaterial?.isLocked ? 'Locked Content' : 'Content Available'}
                 </span>
               </div>
-              {currentMaterial?.contentType === 'PDF' && (
+              
+              {/* Always show PDF download button in this panel regardless of current content type */}
+              {materials.some(m => m.contentType === 'PDF') && (
                 <Button size="sm" variant="outline" className="flex items-center gap-2"
-                  onClick={() => window.open(currentMaterial.content, '_blank')}>
+                  onClick={() => {
+                    // Find the first PDF material in this unit
+                    const pdfMaterial = materials.find(m => m.contentType === 'PDF');
+                    if (pdfMaterial) {
+                      window.open(pdfMaterial.content, '_blank');
+                    }
+                  }}>
                   <Download className="h-4 w-4" />
-                  Download
+                  Download PDF
                 </Button>
               )}
             </div>
