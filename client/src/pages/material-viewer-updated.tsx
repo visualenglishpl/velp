@@ -764,7 +764,7 @@ export default function MaterialViewer() {
                     // Find the first PDF material in this unit
                     const pdfMaterial = materials.find(m => m.contentType === 'PDF');
                     if (pdfMaterial) {
-                      window.open(pdfMaterial.content, '_blank');
+                      window.open(pdfMaterial.content.split('?')[0], '_blank');
                     }
                   }}>
                   <Download className="h-4 w-4" />
