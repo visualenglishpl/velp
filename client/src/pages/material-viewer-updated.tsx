@@ -355,6 +355,11 @@ export default function MaterialViewer() {
       return "Unit Introduction";
     }
     
+    // Handle "00 A.png" pattern slides
+    if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/)) {
+      return "Unit Content";
+    }
+    
     // Clean up and format the extracted text
     const formatQuestion = (text: string): string => {
       // Trim whitespace and normalize spaces
@@ -482,6 +487,17 @@ export default function MaterialViewer() {
       console.error('Error extracting filename from URL:', error);
       // Fallback to using the title if we can't extract the filename
       filename = '';
+    }
+    
+    // Special handling for "00 A.png" type slides - show "Unit Content" instead of blank
+    if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/)) {
+      return (
+        <div className="w-full text-center mb-4 p-2">
+          <h3 className="text-2xl font-semibold">
+            Unit Content
+          </h3>
+        </div>
+      );
     }
     
     // Extract the question from the decoded filename
