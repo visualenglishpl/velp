@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import useEmblaCarousel from 'embla-carousel-react';
-import { AlertCircle, ArrowLeft, Check, ChevronLeft, ChevronRight, Download, ExternalLink, FileText, HelpCircle, Lock, Maximize, Menu, MessageSquare, Pencil, Plus, X, Youtube } from 'lucide-react';
+import { AlertCircle, ArrowLeft, Check, ChevronLeft, ChevronRight, Download, ExternalLink, FileText, Lock, Maximize, Menu, Pencil, Plus, X, Youtube } from 'lucide-react';
 
 // Define our types based on the backend schemas
 interface Material {
@@ -247,11 +247,6 @@ export default function MaterialViewer() {
           <h1 className="text-xl font-semibold">
             {book?.title} – {unit?.title}
           </h1>
-          {unit?.description && (
-            <p className="mt-2 text-gray-600">
-              {unit.description}
-            </p>
-          )}
         </div>
         
         <div className="flex flex-col items-center justify-center my-12">
@@ -316,17 +311,6 @@ export default function MaterialViewer() {
             </div>
 
             <div className="mt-6">
-              <h3 className="font-medium mb-2">Prompt Student Answers</h3>
-              <p className="text-sm mb-2">Use structured sentence frames:</p>
-              <div className="grid gap-y-1 gap-x-6 md:grid-cols-2 text-sm">
-                <div>"Is it a cat or a dog?" → "It is a..."</div>
-                <div>"Are they sitting or standing?" → "They are..."</div>
-                <div>"Is he eating or sleeping?" → "He is..."</div>
-                <div>"Is she happy or sad?" → "She is..."</div>
-              </div>
-            </div>
-
-            <div className="mt-6">
               <h3 className="font-medium mb-2">Ask Follow-up Questions</h3>
               <p className="text-sm mb-2">To reinforce comprehension:</p>
               <ul className="space-y-1 text-sm">
@@ -345,6 +329,17 @@ export default function MaterialViewer() {
               </ul>
               <p className="text-sm italic mt-2">Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.</p>
             </div>
+
+            <div className="mt-6">
+              <h3 className="font-medium mb-2">Prompt Student Answers</h3>
+              <p className="text-sm mb-2">Use structured sentence frames:</p>
+              <div className="grid gap-y-1 gap-x-6 md:grid-cols-2 text-sm">
+                <div>"Is it a cat or a dog?" → "It is a..."</div>
+                <div>"Are they sitting or standing?" → "They are..."</div>
+                <div>"Is he eating or sleeping?" → "He is..."</div>
+                <div>"Is she happy or sad?" → "She is..."</div>
+              </div>
+            </div>
           </Card>
         </div>
       </div>
@@ -355,36 +350,14 @@ export default function MaterialViewer() {
   const extractQuestionFromFilename = (filename: string): string => {
     if (!filename) return "";
     
-    // Handle unit introduction special case - return empty string instead of "Unit Introduction"
-    if (
-      // Comprehensive checks for Unit Introduction slides
-      filename.includes("Unit Introduction") || 
-      filename.includes("unit introduction") || 
-      filename.toLowerCase().includes("unit introduction") ||
-      (filename.includes("Book") && filename.includes("Unit")) ||
-      (filename.includes("book") && filename.includes("unit")) ||
-      filename.toLowerCase().includes("book") && filename.toLowerCase().includes("unit") ||
-      // Introduction pattern slides
-      filename.match(/^0+\s*[Ii]ntro/i)
-    ) {
-      return "";
+    // Handle unit introduction special case
+    if (filename.includes("Unit Introduction") || (filename.includes("Book") && filename.includes("Unit"))) {
+      return "Unit Introduction";
     }
     
-    // Handle "00 A.png" pattern slides and Unit Content slides - return empty string 
-    if (
-      // Match all possible variants of "00 A.png" pattern
-      filename.includes('00 A') || 
-      filename.includes('00A') || 
-      filename.includes('0 A') || 
-      filename.match(/^0+\s*[Aa]\.png$/) ||
-      // Make sure to exclude all variants of Unit Content
-      filename.includes('Unit Content') || 
-      filename.includes('unit content') || 
-      filename.toLowerCase().includes('unit content') ||
-      // Match slides with just a number and letter with nothing else
-      filename.match(/^\d+\s*[A-Za-z]\.png$/)
-    ) {
-      return "";
+    // Handle "00 A.png" pattern slides
+    if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/)) {
+      return "Unit Content";
     }
     
     // Clean up and format the extracted text
@@ -501,6 +474,10 @@ export default function MaterialViewer() {
           const decodedPath = decodeURIComponent(encodedPath);
           // Get the filename part (after the last slash if any)
           filename = decodedPath.includes('/') ? decodedPath.split('/').pop() || decodedPath : decodedPath;
+          
+          // Debug filename extraction
+          console.log('Decoded path:', decodedPath);
+          console.log('Extracted filename:', filename);
         }
       } else {
         // Fallback to original behavior for non-proxy URLs
@@ -512,22 +489,15 @@ export default function MaterialViewer() {
       filename = '';
     }
     
-    // Skip headers completely for special slides
-    if (
-      // Skip slides matching 00 A.png pattern
-      filename.includes('00 A') || 
-      filename.match(/^0+\s*[Aa]\.png$/) || 
-      // Skip unit introduction slides - more comprehensive checks
-      filename.includes("Unit Introduction") || 
-      filename.includes("unit introduction") || 
-      filename.toLowerCase().includes("unit introduction") ||
-      (filename.includes("Book") && filename.includes("Unit")) ||
-      (filename.includes("book") && filename.includes("unit")) ||
-      filename.toLowerCase().includes("book") && filename.toLowerCase().includes("unit") ||
-      // Skip any slides that seem like they might be introduction slides
-      filename.match(/^0+\s*[Ii]ntro/i)
-    ) {
-      return null;
+    // Special handling for "00 A.png" type slides - show "Unit Content" instead of blank
+    if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/)) {
+      return (
+        <div className="w-full text-center mb-4 p-2">
+          <h3 className="text-2xl font-semibold">
+            Unit Content
+          </h3>
+        </div>
+      );
     }
     
     // Extract the question from the decoded filename
@@ -598,18 +568,9 @@ export default function MaterialViewer() {
             <ArrowLeft className="h-4 w-4" />
             Back to Books
           </Button>
-          <div className="hidden md:block">
-            <h1 className="text-xl font-semibold">
-              {book?.title} – {unit?.title}
-            </h1>
-            {unit?.description && (
-              <div className="mt-1 px-3 py-2 bg-blue-50 rounded-lg border border-blue-100 text-sm">
-                <p className="text-gray-700 flex items-center gap-1">
-                  <span className="text-lg">🎒📚</span> {unit.description}
-                </p>
-              </div>
-            )}
-          </div>
+          <h1 className="text-xl font-semibold hidden md:block">
+            {book?.title} – {unit?.title}
+          </h1>
         </div>
         <div className="flex items-center gap-2">
           <Button 
@@ -626,66 +587,22 @@ export default function MaterialViewer() {
         </div>
       </div>
 
-      <div className="block md:hidden mb-6">
+      <div className="block md:hidden mb-4">
         <h1 className="text-xl font-semibold">
           {book?.title} – {unit?.title}
         </h1>
-        {unit?.description && (
-          <div className="mt-2 p-3 bg-blue-50 rounded-lg border border-blue-100">
-            <p className="text-gray-700 flex items-center gap-1">
-              <span className="text-lg">🎒📚</span> {unit.description}
-            </p>
-          </div>
-        )}
       </div>
       
       {/* Question Section with Answer Prompts */}
       {currentMaterial?.content && (
         <div className="mb-6 text-center">
-          {(() => {
-            const filename = currentMaterial.content.includes('/api/content/')
-              ? decodeURIComponent(currentMaterial.content.split('/api/content/')[1])
-              : currentMaterial.content.split('/').pop() || '';
-              
-            // Skip headers for unit introduction and empty slides
-            if (
-              // Match all possible variants of "00 A.png" pattern
-              filename.includes('00 A') || 
-              filename.includes('00A') || 
-              filename.includes('0 A') || 
-              filename.match(/^0+\s*[Aa]\.png$/) ||
-              // Make sure to exclude all variants of Unit Content and Unit Introduction
-              filename.includes('Unit Content') || 
-              filename.includes('unit content') || 
-              filename.toLowerCase().includes('unit content') ||
-              filename.includes("Unit Introduction") || 
-              filename.includes("unit introduction") || 
-              filename.toLowerCase().includes("unit introduction") ||
-              // Skip book/unit slides
-              (filename.includes("Book") && filename.includes("Unit")) ||
-              (filename.includes("book") && filename.includes("unit")) ||
-              filename.toLowerCase().includes("book") && filename.toLowerCase().includes("unit") ||
-              // Skip any slides that seem like they might be introduction slides
-              filename.match(/^0+\s*[Ii]ntro/i) ||
-              // Match slides with just a number and letter with nothing else
-              filename.match(/^\d+\s*[A-Za-z]\.png$/)
-            ) {
-              return null; // No header for these slides
-            }
-            
-            const questionText = extractQuestionFromFilename(filename) || currentMaterial.title;
-            
-            // Don't show empty questions
-            if (!questionText || questionText.trim() === '') {
-              return null;
-            }
-            
-            return (
-              <h2 className="text-2xl font-semibold">
-                {questionText}
-              </h2>
-            );
-          })()}
+          <h2 className="text-2xl font-semibold">
+            {extractQuestionFromFilename(
+              currentMaterial.content.includes('/api/content/')
+                ? decodeURIComponent(currentMaterial.content.split('/api/content/')[1])
+                : currentMaterial.content.split('/').pop() || ''
+            ) || currentMaterial.title}
+          </h2>
           
           {/* Answer Prompt Section */}
           {(() => {
@@ -762,41 +679,7 @@ export default function MaterialViewer() {
           {/* Slide title and progress */}
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-medium">
-              {(() => {
-                // Don't show title for special slides
-                if (currentMaterial?.content) {
-                  const filename = currentMaterial.content.includes('/api/content/')
-                    ? decodeURIComponent(currentMaterial.content.split('/api/content/')[1])
-                    : currentMaterial.content.split('/').pop() || '';
-                  
-                  // Skip titles for special slides
-                  if (
-                    // Match all possible variants of "00 A.png" pattern
-                    filename.includes('00 A') || 
-                    filename.includes('00A') || 
-                    filename.includes('0 A') || 
-                    filename.match(/^0+\s*[Aa]\.png$/) ||
-                    // Make sure to exclude all variants of Unit Content and Unit Introduction
-                    filename.includes('Unit Content') || 
-                    filename.includes('unit content') || 
-                    filename.toLowerCase().includes('unit content') ||
-                    filename.includes("Unit Introduction") || 
-                    filename.includes("unit introduction") || 
-                    filename.toLowerCase().includes("unit introduction") ||
-                    // Skip book/unit slides
-                    (filename.includes("Book") && filename.includes("Unit")) ||
-                    (filename.includes("book") && filename.includes("unit")) ||
-                    filename.toLowerCase().includes("book") && filename.toLowerCase().includes("unit") ||
-                    // Skip any slides that seem like they might be introduction slides
-                    filename.match(/^0+\s*[Ii]ntro/i) ||
-                    // Match slides with just a number and letter with nothing else
-                    filename.match(/^\d+\s*[A-Za-z]\.png$/)
-                  ) {
-                    return null; // No title for these slides
-                  }
-                }
-                return currentMaterial?.title;
-              })()}
+              {currentMaterial?.title}
             </h2>
             <div className="flex items-center gap-4">
               <div className="text-sm text-gray-500">
@@ -848,64 +731,56 @@ export default function MaterialViewer() {
                             </div>
                           ) : (
                             <>
-                              {/* Special case for Unit Content slide */}
-                              {(material.title.includes('Unit Content') || material.title.includes('unit content')) && index === 0 && (
-                                <div className="flex flex-col items-center justify-center bg-white h-full p-8">
-                                  <h1 className="text-2xl font-bold mb-4">BOOK 5 – SCHOOL TOUR</h1>
-                                  <div className="bg-blue-50 p-3 rounded-md mb-6 max-w-2xl">
-                                    <p className="text-sm">
-                                      <span className="text-lg">🎒📚</span> School Tour! Learn school facilities and subjects vocabulary.
-                                    </p>
-                                  </div>
-                                  
-                                  <div className="max-w-4xl text-left mb-6">
-                                    <ul className="space-y-1">
-                                      <li><strong>Students eat meals and buy snacks</strong></li>
-                                      <li><strong>Library:</strong> Quiet area for reading and studying</li>
-                                      <li><strong>After School Care:</strong> Activities after regular school hours</li>
-                                      <li><strong>Special School Areas</strong></li>
-                                      <li><strong>Cloakroom:</strong> For changing shoes and outdoor clothing</li>
-                                      <li><strong>Classroom:</strong> Primary learning spaces</li>
-                                      <li><strong>Sports Field:</strong> Outdoor space for physical activities</li>
-                                      <li><strong>Playground:</strong> Recreational area for breaks</li>
-                                      <li><strong>Art Room:</strong> Space for creative projects</li>
-                                      <li><strong>Music Room:</strong> Where students learn instruments and singing</li>
-                                      <li><strong>School Vocabulary</strong> Learn words related to school facilities and locations</li>
-                                      <li>Practice sentences about school activities and schedules</li>
-                                      <li>Discuss favorite school subjects and teachers</li>
-                                    </ul>
-                                  </div>
-                                  
-                                  <div className="flex justify-between w-full max-w-2xl">
-                                    <p className="text-base font-medium">Unit Content</p>
-                                    <p className="text-gray-500 text-sm">1/1 slides</p>
-                                  </div>
-                                  
-                                  <div className="mt-6 w-full max-w-2xl bg-gray-100 h-6 rounded-full">
-                                    <div className="text-xs font-medium text-center p-0.5 leading-none rounded-full h-6 bg-purple-600 text-white" style={{ width: "100%" }}></div>
-                                  </div>
-                                  
-                                  <div className="mt-6 text-left">
-                                    <p className="text-sm text-gray-600">lesson content</p>
-                                    <p className="text-lg font-medium">Unit Content</p>
-                                  </div>
-                                </div>
-                              )}
-                            
                               {material.contentType === 'IMAGE' && (
                                 <div className="flex flex-col items-center justify-center bg-white h-full">
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
-                                    {/* Use the secure proxy URL provided by the backend */}
-                                    <img
-                                      src={material.content} 
-                                      alt={material.title}
-                                      className="max-w-full max-h-full object-contain"
-                                      style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                      onError={(e) => {
-                                        console.error("Failed to load image:", material.title);
-                                        (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                      }}
-                                    />
+                                    {/* Special handling for Unit Content slides */}
+                                    {(material.title.includes('Unit Content') || material.title.toLowerCase().includes('unit content')) && currentSlideIndex === 0 ? (
+                                      <>
+                                        <div className="flex flex-col items-center justify-center w-full h-full p-8 text-center">
+                                          <h1 className="text-2xl font-bold mb-4">BOOK 5 – SCHOOL TOUR</h1>
+                                          <div className="bg-blue-50 p-3 rounded-md mb-6 max-w-2xl">
+                                            <p className="text-sm flex items-center justify-center gap-1">
+                                              <span className="text-lg">🎒📚</span> School Tour! Learn school facilities and subjects vocabulary.
+                                            </p>
+                                          </div>
+                                          
+                                          <div className="max-w-4xl text-center mb-6">
+                                            <p className="text-base leading-relaxed">
+                                              Students eat meals and buy snacks Library: Quiet area for reading and studying After School Care: Activities after regular school hours Special School Areas Cloakroom: For changing shoes and outdoor clothing Classroom: Primary learning spaces Sports Field: Outdoor space for physical activities Playground: Recreational area for breaks Art Room: Space for creative projects Music Room: Where students learn instruments and singing School Vocabulary Learn words related to school facilities and locations Practice sentences about school activities and schedules Discuss favorite school subjects and teachers
+                                            </p>
+                                          </div>
+                                          
+                                          <div className="flex justify-between w-full max-w-2xl">
+                                            <p className="text-base font-medium">Unit Content</p>
+                                            <p className="text-gray-500 text-sm">1/1 slides</p>
+                                          </div>
+                                          
+                                          <div className="mt-4 w-full max-w-2xl bg-gray-100 h-2 rounded-full overflow-hidden">
+                                            <div className="h-full bg-purple-600" style={{ width: '100%' }}></div>
+                                          </div>
+                                          
+                                          <div className="mt-6 text-left">
+                                            <p className="text-sm text-gray-600">lesson content</p>
+                                            <p className="text-lg font-medium">Unit Content</p>
+                                          </div>
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <>
+                                        {/* Regular image content */}
+                                        <img
+                                          src={material.content} 
+                                          alt={material.title}
+                                          className="max-w-full max-h-full object-contain"
+                                          style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                          onError={(e) => {
+                                            console.error("Failed to load image:", material.title);
+                                            (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                          }}
+                                        />
+                                      </>
+                                    )}
                                     {/* Banner message for admin users */}
                                     <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
                                       {currentSlideIndex + 1}/{totalSlides}
@@ -1254,7 +1129,7 @@ export default function MaterialViewer() {
               <h3 className="text-lg font-medium mb-4">Teaching Guidance</h3>
               <Card className="p-6 bg-gradient-to-br from-white to-blue-50/40">
                 <h4 className="font-semibold text-primary mb-6">
-                  Unit-specific guidance for Book 5, Unit 1 - Unit 1
+                  Unit-specific guidance for {book?.title}, Unit {unit?.unitNumber} - {unit?.title}
                 </h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1281,104 +1156,21 @@ export default function MaterialViewer() {
                   </div>
                 </div>
                 
-                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-white p-5 rounded-lg border border-gray-100">
-                    <h5 className="text-primary font-medium mb-4 flex items-center">
-                      <MessageSquare className="h-5 w-5 mr-2 text-primary/80" />
-                      Prompt Student Answers
-                    </h5>
-                    <div className="pl-2">
-                      <p className="mb-2">Use structured sentence frames:</p>
-                      <ul className="list-none space-y-1">
-                        <li className="text-sm mb-1">"Is it a cat or a dog?" → "It is a..."</li>
-                        <li className="text-sm mb-1">"Are they sitting or standing?" → "They are..."</li>
-                        <li className="text-sm mb-1">"Is he eating or sleeping?" → "He is..."</li>
-                        <li className="text-sm mb-1">"Is she happy or sad?" → "She is..."</li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white p-5 rounded-lg border border-gray-100">
-                    <h5 className="text-primary font-medium mb-4 flex items-center">
-                      <HelpCircle className="h-5 w-5 mr-2 text-primary/80" />
-                      Ask Follow-up Questions
-                    </h5>
-                    <div className="pl-2">
-                      <p className="mb-2">To reinforce comprehension:</p>
-                      <ul className="list-none space-y-1">
-                        <li className="text-sm mb-1">"Why do you think so?"</li>
-                        <li className="text-sm mb-1">"Can you describe it more?"</li>
-                        <li className="text-sm mb-1">"What else can you see?"</li>
-                      </ul>
-                      <p className="text-xs italic mt-2">Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.</p>
-                    </div>
-                  </div>
-                </div>
-                
                 <div className="mt-6 bg-white p-5 rounded-lg border border-gray-100">
-                  <h5 className="text-primary font-medium mb-4 flex items-center text-purple-600">
-                    <FileText className="h-5 w-5 mr-2 text-purple-600" />
+                  <h5 className="text-primary font-medium mb-4 flex items-center">
+                    <FileText className="h-5 w-5 mr-2 text-primary/80" />
                     Grammar Structures
                   </h5>
-                  <p className="mb-2">Use this unit to practice these structures:</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-gray-50 p-3 rounded-md">Subject + is + adjective</div>
-                    <div className="bg-gray-50 p-3 rounded-md">How many + noun + do you have?</div>
-                    <div className="bg-gray-50 p-3 rounded-md">Subject + is + adjective + or + adjective?</div>
-                    <div className="bg-gray-50 p-3 rounded-md">Who is your + subject + teacher?</div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-            
-            {/* Material Covered Section */}
-            <div className="mb-6">
-              <h3 className="text-lg font-medium mb-4">Material Covered</h3>
-              <Card className="p-6 bg-gradient-to-br from-white to-green-50/40">
-                <div className="space-y-4">
-                  <div className="bg-white p-5 rounded-lg border border-gray-100">
-                    <h5 className="text-primary font-medium mb-4 flex items-center">
-                      <FileText className="h-5 w-5 mr-2 text-primary/80" />
-                      School Facilities
-                    </h5>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Primary School: Main building for younger students</li>
-                      <li>Office: Administrative area with headmaster's office</li>
-                      <li>Gym: Space for physical education and sports activities</li>
-                      <li>Canteen/Tuck Shop: Where students eat meals and buy snacks</li>
-                      <li>Library: Quiet area for reading and studying</li>
-                      <li>After School Care: Activities after regular school hours</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-white p-5 rounded-lg border border-gray-100">
-                    <h5 className="text-primary font-medium mb-4 flex items-center">
-                      <FileText className="h-5 w-5 mr-2 text-primary/80" />
-                      Special School Areas
-                    </h5>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Cloakroom: For changing shoes and outdoor clothing</li>
-                      <li>Classroom: Primary learning spaces</li>
-                      <li>Sports Field: Outdoor space for physical activities</li>
-                      <li>Playground: Recreational area for breaks</li>
-                      <li>Art Room: Space for creative projects</li>
-                      <li>Music Room: Where students learn instruments and singing</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-white p-5 rounded-lg border border-gray-100">
-                    <h5 className="text-primary font-medium mb-4 flex items-center">
-                      <FileText className="h-5 w-5 mr-2 text-primary/80" />
-                      ESL Activities
-                    </h5>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Role Play: Practice conversation in school contexts</li>
-                      <li>Discussion Questions: Talk about favorite school areas</li>
-                      <li>School Map Creation: Label school locations in English</li>
-                      <li>Dream School Design: Describe ideal learning spaces</li>
-                      <li>School Day Schedule: Create English timetables</li>
-                    </ul>
-                  </div>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Use this unit to practice these structures:
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2 ml-2">
+                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Subject + is + adjective</div>
+                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">How many + noun + do you have?</div>
+                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Subject + is + adjective + or + adjective?</div>
+                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Who is your + subject + teacher?</div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </Card>
             </div>

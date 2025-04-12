@@ -159,16 +159,9 @@ const BookDetailPage = () => {
             )}
           </div>
           
-          {/* Book title and short description */}
-          <div className="flex flex-col items-center mt-4 text-center">
-            <h1 className="text-xl font-bold">{book ? `VISUAL ENGLISH BOOK ${book.bookId}` : 'Book Details'}</h1>
-            {book?.description && (
-              <p className="mt-2 text-gray-600 max-w-xl">
-                {book.description.length > 100 
-                  ? `${book.description.substring(0, 100)}...` 
-                  : book.description}
-              </p>
-            )}
+          {/* Book title header */}
+          <div className="flex justify-center mt-4">
+            <h1 className="text-xl font-bold">{book ? `Visual English Book ${book.bookId}` : 'Book Details'}</h1>
           </div>
         </div>
       </div>
