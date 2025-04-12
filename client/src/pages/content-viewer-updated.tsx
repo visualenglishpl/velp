@@ -66,12 +66,7 @@ export default function ContentViewer() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
   
-  // *** Special Book 5 text content handling removed as per request to make it consistent with other books ***
-  // School vocabulary check removed to handle Book 5 like other books
-  // Returning false to ensure consistent content handling across all books
-  const isSchoolVocabularyContent = (material: Material): boolean => {
-    return false; // No special case handling for Book 5 vocabulary
-  };
+  // Standardized content handling for all books
   
   // Data fetching hooks
   const { data: unit, isLoading: unitLoading } = useQuery<Unit>({
@@ -235,8 +230,7 @@ export default function ContentViewer() {
     // Remove URL encoding first
     const decodedFilename = decodeURIComponent(filename);
     
-    // No special handling for "School Vocabulary" in Book 5 anymore
-    // We want all books to be handled consistently
+    // All books handled consistently
     
     // Handle "What is Their Nationality" pattern
     if (decodedFilename.toLowerCase().includes("what is their nationality")) {
@@ -281,7 +275,7 @@ export default function ContentViewer() {
       return questionText;
     }
     
-    // Handle "what fashion is it" pattern that appears in Book 7
+    // Handle "what fashion is it" pattern
     const whatFashionMatch = decodedFilename.match(/What\s+Fashion\s+is\s+It\s+[–-]\s+It\s+is\s+(.*?)(?:\.[a-zA-Z]+)?$/i);
     if (whatFashionMatch && whatFashionMatch[1]) {
       return `What Fashion is It?`;
@@ -344,7 +338,7 @@ export default function ContentViewer() {
     // Remove URL encoding first
     const decodedFilename = decodeURIComponent(filename);
     
-    // Special case for "what is their nationality" pattern
+    // Extract answer for "what is their nationality" pattern
     if (decodedFilename.toLowerCase().includes("what is their nationality")) {
       const nationalityMatch = decodedFilename.match(/They\s+are\s+([^\.]+)/i);
       if (nationalityMatch && nationalityMatch[1]) {
@@ -352,7 +346,7 @@ export default function ContentViewer() {
       }
     }
     
-    // Special case for "what language does she speak" pattern
+    // Extract answer for "what language does she speak" pattern
     if (decodedFilename.toLowerCase().includes("what language does she speak")) {
       const languageMatch = decodedFilename.match(/[Ss]he\s+[Ss]peaks\s+([^\.]+)/i);
       if (languageMatch && languageMatch[1]) {
@@ -360,7 +354,7 @@ export default function ContentViewer() {
       }
     }
     
-    // Special case for "where are they from" pattern
+    // Extract answer for "where are they from" pattern
     if (decodedFilename.toLowerCase().includes("where are they from")) {
       const whereMatch = decodedFilename.match(/They\s+are\s+[Ff]rom\s+(.+?)(?:\.[a-zA-Z]+)?$/i);
       if (whereMatch && whereMatch[1]) {
