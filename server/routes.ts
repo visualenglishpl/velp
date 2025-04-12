@@ -80,7 +80,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Generate presigned URLs for each book
       for (const book of books) {
-        const gifUrl = await getS3PresignedUrl(`icons/VISUAL ${book.bookId}.gif`);
+        // Special case for book 3 which has a space before the extension in S3
+        const filePath = book.bookId === "3" 
+          ? `icons/VISUAL ${book.bookId} .gif` 
+          : `icons/VISUAL ${book.bookId}.gif`;
+          
+        const gifUrl = await getS3PresignedUrl(filePath);
         if (gifUrl) {
           bookThumbnails.push({
             bookId: book.bookId,
