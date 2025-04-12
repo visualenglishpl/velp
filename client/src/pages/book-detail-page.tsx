@@ -101,12 +101,15 @@ const BookDetailPage = () => {
           <div className="flex justify-center mb-4">
             {book ? (
               <img 
-                src={`${S3_ICON_BASE_URL}VISUAL ${book.bookId.toLowerCase()}.gif`} 
+                src={`${S3_ICON_BASE_URL}VISUAL ${book.bookId}.gif`} 
                 alt={`Visual English Animation for Book ${book.bookId}`}
                 className="max-h-60 object-contain rounded-lg shadow-sm"
                 onError={(e) => {
+                  console.log(`Failed to load GIF banner for book ${book.bookId}`);
                   // Fallback to default GIF if specific one doesn't exist
                   (e.target as HTMLImageElement).src = `${S3_ICON_BASE_URL}VISUAL 1.gif`;
+                  // Add a subtle border to indicate a fallback is being used
+                  (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
                 }}
               />
             ) : (
