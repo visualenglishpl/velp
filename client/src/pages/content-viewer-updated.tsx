@@ -1,25 +1,24 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import useEmblaCarousel from 'embla-carousel-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Image as ImageIcon,
+  Lock,
+  Video,
+  FileText,
+  Gamepad2,
+  Check,
+  AlertCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { 
-  ArrowLeft, 
-  ChevronLeft, 
-  ChevronRight, 
-  Check, 
-  Lock, 
-  FileText, 
-  Download,
-  Video,
-  Image as ImageIcon,
-  AlertCircle,
-  Gamepad2
-} from "lucide-react";
-import useEmblaCarousel from 'embla-carousel-react';
 
-// Type definitions
+// Types
 type Material = {
   id: number;
   unitId: number;
@@ -46,22 +45,12 @@ type Book = {
 };
 
 export default function ContentViewer() {
-  // Parse URL parameters
-  const [location] = useLocation();
-  const materialMatches = location.match(/\/units\/(\d+)\/materials\/(\d+)/);
-  const unitMatches = location.match(/\/units\/(\d+)$/);
+  // Get unitId and initialMaterialIndex from URL
+  const [, params] = useLocation();
+  const urlParts = window.location.pathname.split("/");
+  const unitId = parseInt(urlParts[2] || "0", 10);
+  const initialMaterialIndex = parseInt(urlParts[4] || "0", 10) || 0;
   
-  // Extract unitId and materialIndex from URL
-  const unitId = materialMatches 
-    ? parseInt(materialMatches[1], 10) 
-    : unitMatches 
-      ? parseInt(unitMatches[1], 10) 
-      : 0;
-  
-  const initialMaterialIndex = materialMatches 
-    ? parseInt(materialMatches[2], 10) 
-    : 0;
-
   // State hooks
   const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
@@ -193,25 +182,12 @@ export default function ContentViewer() {
     }
   };
 
-  // Make sure questions end with a question mark
+  // Format question and ensure it has a question mark
   const formatQuestion = (text: string): string => {
     if (!text) return "";
     
     // If it's already a question with a question mark, return as is
     if (text.trim().endsWith('?')) return text;
-    
-    // Format based on specific patterns we want to ensure are questions
-    if (text.toLowerCase().includes("what is their nationality")) {
-      return "What is Their Nationality?";
-    }
-    
-    if (text.toLowerCase().includes("what language does she speak")) {
-      return "What Language Does She Speak?";
-    }
-    
-    if (text.toLowerCase().includes("where are they from")) {
-      return "Where are They From?";
-    }
     
     // If it looks like a question but doesn't have a question mark, add one
     if (/^(is|are|do|does|who|what|where|when|why|how|can|could|will|should|may)/i.test(text)) {
@@ -223,107 +199,22 @@ export default function ContentViewer() {
     return text;
   };
 
-  // Extract and format question from filename
+  // Extract question from filename
   const extractQuestionFromFilename = (filename: string): string => {
     if (!filename) return "";
     
     // Remove URL encoding first
     const decodedFilename = decodeURIComponent(filename);
     
-    // All books handled consistently
-    
-    // Handle "What is Their Nationality" pattern
-    if (decodedFilename.toLowerCase().includes("what is their nationality")) {
-      return "What is Their Nationality?";
-    }
-    
-    // Handle "What Language Does She Speak" pattern
-    if (decodedFilename.toLowerCase().includes("what language does she speak")) {
-      return "What Language Does She Speak?";
-    }
-    
-    // Handle book and unit patterns - extract just the simple description
-    if (decodedFilename.includes("book") && /unit\d+/i.test(decodedFilename)) {
-      // Check if it's an introduction slide (typically 00 A.png format)
-      if (/00\s*A/i.test(decodedFilename)) {
-        return "Unit Introduction";
-      }
-    }
-    
-    // Handle unit introduction special case
-    if (decodedFilename.includes("Unit Introduction") || 
-        (decodedFilename.includes("Book") && decodedFilename.includes("Unit"))) {
+    // Handle unit introduction
+    if (/00\s*A/i.test(decodedFilename)) {
       return "Unit Introduction";
     }
     
-    // Handle "where are they from" pattern
-    if (decodedFilename.toLowerCase().includes("where are they from")) {
-      return "Where are They From?";
-    }
-    
-    // Handle subject title slides (e.g., "01 P A Subject English.png")
-    const subjectMatch = decodedFilename.match(/Subject\s+(.+?)\.[a-zA-Z]+$/i);
-    if (subjectMatch && subjectMatch[1]) {
-      const subject = subjectMatch[1].trim();
-      return `Subject: ${subject}`;
-    }
-    
-    // Handle "is X Y or Z" style questions (e.g., "is English Easy or Difficult")
-    const isQuestion = decodedFilename.match(/is\s+([A-Za-z]+)\s+(.*?)\.[a-zA-Z]+$/i);
-    if (isQuestion) {
-      let questionText = `Is ${isQuestion[1]} ${isQuestion[2]}?`;
-      return questionText;
-    }
-    
-    // Handle "what fashion is it" pattern
-    const whatFashionMatch = decodedFilename.match(/What\s+Fashion\s+is\s+It\s+[–-]\s+It\s+is\s+(.*?)(?:\.[a-zA-Z]+)?$/i);
-    if (whatFashionMatch && whatFashionMatch[1]) {
-      return `What Fashion is It?`;
-    }
-    
-    // Handle "how many" questions
-    const howManyQuestion = decodedFilename.match(/How\s+Many\s+(.*?)\.[a-zA-Z]+$/i);
-    if (howManyQuestion) {
-      return `How Many ${howManyQuestion[1]}?`;
-    }
-    
-    // Handle "do you" questions
-    const doYouQuestion = decodedFilename.match(/Do\s+You\s+(.*?)\.[a-zA-Z]+$/i);
-    if (doYouQuestion) {
-      return `Do You ${doYouQuestion[1]}?`;
-    }
-    
-    // Handle "who is" questions
-    const whoIsQuestion = decodedFilename.match(/Who\s+is\s+(.*?)\.[a-zA-Z]+$/i);
-    if (whoIsQuestion) {
-      return `Who is ${whoIsQuestion[1]}?`;
-    }
-    
-    // Handle "where" questions
-    const whereQuestion = decodedFilename.match(/Where\s+(.*?)\.[a-zA-Z]+$/i);
-    if (whereQuestion) {
-      return `Where ${whereQuestion[1]}?`;
-    }
-    
-    // Fallback - just use any text after the file code pattern
-    const anyText = decodedFilename.match(/\d+\s+[A-Z]\s+[A-Za-z]+[a-z]?\s+(.*?)(?:\.[a-zA-Z]+)?$/i);
-    if (anyText && anyText[1]) {
-      let text = anyText[1].trim();
-      
-      // Remove any URL encoded characters or artifacts
-      text = text.replace(/%[0-9A-F]{2}/gi, ' ').trim();
-      
-      // Capitalize first letter
-      text = text.charAt(0).toUpperCase() + text.slice(1);
-      
-      // Add question mark if it seems like a question
-      return formatQuestion(text);
-    }
-    
-    // Very simple fallback - try splitting by file code patterns  
-    const simpleMatch = decodedFilename.match(/\d{2}\s*[A-Z]\s*[A-Z][a-z]?\s*(.+)/);
-    if (simpleMatch && simpleMatch[1]) {
-      let text = simpleMatch[1].split('.')[0].trim();
+    // Simple extraction - look for text after file code pattern
+    const textMatch = decodedFilename.match(/\d+\s*[A-Z]\s*[A-Z]?\s*(.+?)(?:\.[a-zA-Z]+)?$/i);
+    if (textMatch && textMatch[1]) {
+      const text = textMatch[1].trim();
       return formatQuestion(text.charAt(0).toUpperCase() + text.slice(1));
     }
     
@@ -331,65 +222,6 @@ export default function ContentViewer() {
     return decodedFilename.split('/').pop()?.split('.')[0] || "Learning Content";
   };
   
-  // Extract and format answer from filename
-  const getAnswerFromFilename = (filename: string): string => {
-    if (!filename) return "";
-    
-    // Remove URL encoding first
-    const decodedFilename = decodeURIComponent(filename);
-    
-    // Extract answer for "what is their nationality" pattern
-    if (decodedFilename.toLowerCase().includes("what is their nationality")) {
-      const nationalityMatch = decodedFilename.match(/They\s+are\s+([^\.]+)/i);
-      if (nationalityMatch && nationalityMatch[1]) {
-        return `They are ${nationalityMatch[1]}`;
-      }
-    }
-    
-    // Extract answer for "what language does she speak" pattern
-    if (decodedFilename.toLowerCase().includes("what language does she speak")) {
-      const languageMatch = decodedFilename.match(/[Ss]he\s+[Ss]peaks\s+([^\.]+)/i);
-      if (languageMatch && languageMatch[1]) {
-        return `She speaks ${languageMatch[1]}`;
-      }
-    }
-    
-    // Extract answer for "where are they from" pattern
-    if (decodedFilename.toLowerCase().includes("where are they from")) {
-      const whereMatch = decodedFilename.match(/They\s+are\s+[Ff]rom\s+(.+?)(?:\.[a-zA-Z]+)?$/i);
-      if (whereMatch && whereMatch[1]) {
-        return `They are from ${whereMatch[1]}`;
-      }
-    }
-    
-    // Look for patterns with dash or en-dash followed by answer
-    // Format: "Question – Answer" or "Question - Answer"
-    const answerMatch = decodedFilename.match(/[–-]\s*(.+?)(?:\.[a-zA-Z]+)?$/);
-    
-    if (answerMatch && answerMatch[1]) {
-      let answer = answerMatch[1].trim();
-      
-      // Clean up the answer: capitalize first letter, remove encoding artifacts
-      answer = answer.replace(/%[0-9A-F]{2}/gi, ' ').trim();
-      answer = answer.charAt(0).toUpperCase() + answer.slice(1);
-      
-      // Correct common spelling errors
-      answer = answer
-        .replace(/Scottland/gi, 'Scotland')
-        .replace(/Brittish/gi, 'British')
-        .replace(/Australlian/gi, 'Australian')
-        .replace(/Amerrican/gi, 'American')
-        .replace(/Ingland/gi, 'England')
-        .replace(/Whales/gi, 'Wales')
-        .replace(/Irland/gi, 'Ireland')
-        .replace(/Capital citis/gi, 'Capital cities');
-      
-      return answer;
-    }
-    
-    return "";
-  };
-
   // Filter out empty slides and prioritize slides starting with 00A
   const filteredMaterials = useMemo(() => {
     if (!materials) return [];
@@ -528,7 +360,7 @@ export default function ContentViewer() {
               </div>
               <div>
                 <h2 className="text-lg font-semibold">Unit {unit?.unitNumber} of {book?.title}</h2>
-                <p className="text-sm text-gray-500">This unit teaches about school layouts and helps students express how these spaces are used in English.</p>
+                <p className="text-sm text-gray-500">Educational content for this unit.</p>
               </div>
             </div>
           </div>
@@ -565,201 +397,164 @@ export default function ContentViewer() {
                                     </span>
                                     <div className="space-y-2">
                                       <h3 className="text-xl font-semibold text-gray-900">
-                                        {formatQuestion(extractQuestionFromFilename(material.content.split('/').pop() || ''))}
+                                        {extractQuestionFromFilename(material.content.split('/').pop() || '')}
                                       </h3>
-                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
-                                        <p className="text-xs text-gray-600 mt-1">
-                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
-                                        </p>
-                                      )}
                                     </div>
                                   </div>
                                 </div>
                               )}
                               
-                              {/* No special handling for any books - treating all content consistently */}
+                              {/* Standardized image handling for all books */}
                               <div className="flex-1 flex items-center justify-center w-full h-full">
                                 {material.content && (
-                                    <>
-                                      {/* Standardized path structure for all books */}
-                                      <img
-                                        src={
-                                          // If content already starts with API path, use it directly
-                                          material.content.startsWith('/api/content') 
-                                            ? material.content 
-                                            // Otherwise, construct a standard path for all books using the same format
-                                            : book && unit 
-                                              ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`
-                                              : material.content
-                                        }
-                                        alt={material.title}
-                                        className="max-w-full max-h-full object-contain"
-                                        style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                        onError={(e) => {
-                                          console.error(`Failed to load image:`, material.title);
-                                          (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                  <>
+                                    <img
+                                      src={
+                                        // If content already starts with API path, use it directly
+                                        material.content.startsWith('/api/content') 
+                                          ? material.content 
+                                          // Otherwise, construct a standard path for all books
+                                          : book && unit 
+                                            ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`
+                                            : material.content
+                                      }
+                                      alt={material.title}
+                                      className="max-w-full max-h-full object-contain"
+                                      style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                      onError={(e) => {
+                                        console.error(`Failed to load image:`, material.title);
+                                        (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                        
+                                        // Display generic unit content on error
+                                        const imgElement = e.target as HTMLImageElement;
+                                        imgElement.style.display = 'none';
+                                        
+                                        // Try different image formats one by one
+                                        const tryAlternateFormats = (formats = ['.png', '.jpg', '.gif', '.jpeg', '.webp']) => {
+                                          if (formats.length === 0 || !book || !unit) {
+                                            // All formats tried or missing book/unit info, show error message
+                                            const container = document.createElement('div');
+                                            container.className = 'p-4 bg-white rounded text-center';
+                                            container.innerHTML = `
+                                              <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
+                                              <p class="text-gray-700">Content not available for ${material.title}</p>
+                                            `;
+                                            imgElement.parentNode?.appendChild(container);
+                                            return;
+                                          }
                                           
-                                          // Display generic unit content on error
-                                          const imgElement = e.target as HTMLImageElement;
-                                          imgElement.style.display = 'none';
+                                          // Try the next format
+                                          const format = formats[0];
+                                          const filenameWithoutExt = material.content.replace(/\.[^/.]+$/, "").replace(/^.*[\\\/]/, '');
                                           
-                                          // Try different image formats one by one for all books
-                                          const tryAlternateFormats = (formats = ['.png', '.jpg', '.gif', '.jpeg', '.webp', '.avif']) => {
-                                            if (formats.length === 0 || !book || !unit) {
-                                              // All formats tried or missing book/unit info, show error message
-                                              const container = document.createElement('div');
-                                              container.className = 'p-4 bg-white rounded text-center';
-                                              container.innerHTML = `
-                                                <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
-                                                <p class="text-gray-700">Content not available for ${material.title}</p>
-                                              `;
-                                              imgElement.parentNode?.appendChild(container);
-                                              return;
-                                            }
-                                            
-                                            // Try the next format - same handling for all books
-                                            const format = formats[0];
-                                            const filenameWithoutExt = material.content.replace(/\.[^/.]+$/, "").replace(/^.*[\\\/]/, '');
-                                            
-                                            const altImg = document.createElement('img');
-                                            altImg.src = `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(filenameWithoutExt)}${format}`;
-                                            altImg.alt = material.title;
-                                            altImg.className = "max-w-full max-h-full object-contain";
-                                            altImg.style.objectFit = 'contain';
-                                            altImg.style.maxHeight = 'calc(60vh - 60px)';
-                                            
-                                            // If this format fails, try the next one
-                                            altImg.onerror = () => {
-                                              altImg.remove();
-                                              tryAlternateFormats(formats.slice(1));
-                                            };
-                                            
-                                            imgElement.parentNode?.appendChild(altImg);
+                                          const altImg = document.createElement('img');
+                                          altImg.src = `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(filenameWithoutExt)}${format}`;
+                                          altImg.alt = material.title;
+                                          altImg.className = "max-w-full max-h-full object-contain";
+                                          altImg.style.objectFit = 'contain';
+                                          altImg.style.maxHeight = 'calc(60vh - 60px)';
+                                          
+                                          // If this format fails, try the next one
+                                          altImg.onerror = () => {
+                                            altImg.remove();
+                                            tryAlternateFormats(formats.slice(1));
                                           };
                                           
-                                          // Start trying different formats
-                                          tryAlternateFormats();
-                                        }}
-                                      />
-                                    </>
-                                  )}
-                                  <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                    {index + 1}/{totalSlides}
-                                  </div>
+                                          imgElement.parentNode?.appendChild(altImg);
+                                        };
+                                        
+                                        // Start trying different formats
+                                        tryAlternateFormats();
+                                      }}
+                                    />
+                                  </>
+                                )}
+                                <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
+                                  {index + 1}/{totalSlides}
                                 </div>
+                              </div>
                             </div>
                           )}
                           
                           {material.contentType === 'VIDEO' && (
                             <div className="flex flex-col bg-white h-full">
-                              {material.content && (
-                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
-                                  <div className="flex flex-col items-center justify-center">
-                                    <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                      <Check className="h-5 w-5 text-green-600" />
-                                    </span>
-                                    <div className="space-y-2">
-                                      <h3 className="text-xl font-semibold text-gray-900">
-                                        {formatQuestion(extractQuestionFromFilename(material.content.split('/').pop() || ''))}
-                                      </h3>
-                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
-                                        <p className="text-xs text-gray-600 mt-1">
-                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                              <div className="flex-1 flex items-center justify-center w-full h-full">
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                  <video 
-                                    controls 
-                                    className="max-w-full max-h-full object-contain"
-                                    src={material.content}
-                                    style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                    onError={(e) => {
-                                      console.error("Failed to load video:", material.title);
-                                    }}
+                              <div className="w-full bg-gray-100 p-4 text-center mb-4">
+                                <h3 className="text-xl font-semibold">
+                                  {material.title}
+                                </h3>
+                              </div>
+                              
+                              <div className="flex-1 flex items-center justify-center w-full">
+                                {material.content && (
+                                  <video
+                                    controls
+                                    className="max-w-full max-h-full"
+                                    style={{ maxHeight: 'calc(60vh - 60px)' }}
                                   >
+                                    <source 
+                                      src={
+                                        material.content.startsWith('/api/content')
+                                          ? material.content
+                                          : book && unit
+                                            ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`
+                                            : material.content
+                                      } 
+                                    />
                                     Your browser does not support the video tag.
                                   </video>
-                                  <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                    {index + 1}/{totalSlides}
-                                  </div>
-                                </div>
+                                )}
                               </div>
                             </div>
                           )}
                           
-                          {/* PDF type hidden as per request */}
+                          {(material.contentType === 'PDF' || material.contentType === 'DOCUMENT') && (
+                            <div className="flex flex-col bg-white h-full">
+                              <div className="w-full bg-gray-100 p-4 text-center mb-4">
+                                <h3 className="text-xl font-semibold">
+                                  {material.title}
+                                </h3>
+                              </div>
+                              
+                              <div className="flex-1 flex items-center justify-center w-full">
+                                {material.content && (
+                                  <iframe
+                                    src={
+                                      material.content.startsWith('/api/content')
+                                        ? material.content
+                                        : book && unit
+                                          ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`
+                                          : material.content
+                                    }
+                                    className="w-full h-full"
+                                    style={{ minHeight: '60vh' }}
+                                  />
+                                )}
+                              </div>
+                            </div>
+                          )}
                           
                           {material.contentType === 'GAME' && (
                             <div className="flex flex-col bg-white h-full">
-                              {material.content && (
-                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
-                                  <div className="flex flex-col items-center justify-center">
-                                    <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                      <Check className="h-5 w-5 text-green-600" />
-                                    </span>
-                                    <div className="space-y-2">
-                                      <h3 className="text-xl font-semibold text-gray-900">
-                                        {formatQuestion(extractQuestionFromFilename(material.content.split('/').pop() || ''))}
-                                      </h3>
-                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
-                                        <p className="text-xs text-gray-600 mt-1">
-                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                              <div className="flex-1 flex items-center justify-center w-full h-full">
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                  <iframe
-                                    src={material.content}
-                                    title={material.title}
-                                    className="max-w-full max-h-full"
-                                    style={{ width: '100%', height: 'calc(60vh - 60px)' }}
-                                    allowFullScreen
-                                  />
-                                  <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                    {index + 1}/{totalSlides}
-                                  </div>
-                                </div>
+                              <div className="w-full bg-gray-100 p-4 text-center mb-4">
+                                <h3 className="text-xl font-semibold">
+                                  {material.title} - Interactive Game
+                                </h3>
                               </div>
-                            </div>
-                          )}
-                          
-                          {!['IMAGE', 'VIDEO', 'PDF', 'GAME'].includes(material.contentType) && (
-                            <div className="flex flex-col items-center justify-center h-full bg-white">
-                              {material.content && (
-                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
-                                  <div className="flex flex-col items-center justify-center">
-                                    <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                      <Check className="h-5 w-5 text-green-600" />
-                                    </span>
-                                    <div className="space-y-2">
-                                      <h3 className="text-xl font-semibold text-gray-900">
-                                        {formatQuestion(extractQuestionFromFilename(material.content.split('/').pop() || ''))}
-                                      </h3>
-                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
-                                        <p className="text-xs text-gray-600 mt-1">
-                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                              <div className="relative w-full h-full">
-                                <pre className="whitespace-pre-wrap p-4 text-sm text-gray-800 bg-gray-50 rounded overflow-auto max-h-[calc(60vh-60px)]">
-                                  {material.content}
-                                </pre>
-                                <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                  {index + 1}/{totalSlides}
-                                </div>
+                              
+                              <div className="flex-1 flex items-center justify-center w-full">
+                                {material.content && material.content.endsWith('.html') && (
+                                  <iframe
+                                    src={
+                                      material.content.startsWith('/api/content')
+                                        ? material.content
+                                        : book && unit
+                                          ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`
+                                          : material.content
+                                    }
+                                    className="w-full h-full border-0"
+                                    style={{ minHeight: '60vh' }}
+                                  />
+                                )}
                               </div>
                             </div>
                           )}
@@ -771,81 +566,72 @@ export default function ContentViewer() {
               ))}
             </div>
           </div>
-        </div>
-        
-        {/* Controls and thumbnails */}
-        <div className="my-6 flex justify-center space-x-3">
-          <Button
-            variant="outline"
-            size="sm" 
-            className="flex items-center"
-            onClick={() => navigateToSlide(currentSlideIndex - 1)}
-            disabled={currentSlideIndex <= 0}
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex items-center"
-            onClick={() => navigateToSlide(currentSlideIndex + 1)}
-            disabled={!filteredMaterials || currentSlideIndex >= filteredMaterials.length - 1}
-          >
-            Next
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
-        </div>
-        
-        {/* Thumbnails */}
-        <div className="overflow-hidden mt-4" ref={thumbsRef}>
-          <div className="flex gap-2 py-2 px-1">
-            {filteredMaterials && filteredMaterials.map((material, index) => (
-              <div
-                key={material.id}
-                className={cn(
-                  "relative flex-[0_0_80px] min-w-0 h-14 border rounded-md overflow-hidden cursor-pointer transition-all",
-                  currentSlideIndex === index ? "border-blue-500 ring-2 ring-blue-200" : "border-gray-200",
-                  viewedSlides.includes(material.id) ? "after:absolute after:inset-0 after:bg-green-500 after:bg-opacity-10" : ""
-                )}
-                onClick={() => navigateToSlide(index)}
-              >
-                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-50">
-                  {index + 1}
-                </div>
-                {material.contentType === 'IMAGE' && material.content && (
-                  <>
-                    {/* Standardized path structure for all books in thumbnails */}
-                    <img
-                      src={
-                        // If content already starts with API path, use it directly
-                        material.content.startsWith('/api/content') 
-                          ? material.content 
-                          // Otherwise, construct a standard path for all books using the same format
-                          : book && unit 
-                            ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`
-                            : material.content
-                      }
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover opacity-70"
-                      onError={(e) => {
-                        const imgElement = e.target as HTMLImageElement;
-                        imgElement.style.display = 'none';
-                      }}
-                    />
-                  </>
-                )}
-                <div className="absolute bottom-0 right-0 p-0.5 bg-gray-100 rounded-tl-md">
-                  {getContentTypeIcon(material.contentType)}
-                </div>
-                {viewedSlides.includes(material.id) && (
-                  <div className="absolute top-0 right-0 p-0.5">
-                    <Check className="h-3 w-3 text-green-600" />
-                  </div>
-                )}
-              </div>
-            ))}
+          
+          {/* Navigation arrows */}
+          <div className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10">
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="bg-white/80 hover:bg-white"
+              onClick={() => navigateToSlide(currentSlideIndex - 1)}
+              disabled={currentSlideIndex === 0}
+            >
+              <ChevronLeft />
+            </Button>
           </div>
+          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10">
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="bg-white/80 hover:bg-white"
+              onClick={() => navigateToSlide(currentSlideIndex + 1)}
+              disabled={currentSlideIndex === (filteredMaterials?.length || 0) - 1}
+            >
+              <ChevronRight />
+            </Button>
+          </div>
+        </div>
+        
+        {/* Thumbnail navigation */}
+        <div className="mt-6">
+          <div className="overflow-hidden" ref={thumbsRef}>
+            <div className="flex gap-2 py-2">
+              {filteredMaterials.map((material, index) => (
+                <button
+                  key={material.id}
+                  type="button"
+                  className={`flex-[0_0_100px] min-w-0 h-16 overflow-hidden border rounded-md ${
+                    index === currentSlideIndex ? 'border-blue-500 ring-2 ring-blue-300' : 'border-gray-200'
+                  } ${viewedSlides.includes(material.id) ? 'opacity-100' : 'opacity-60'}`}
+                  onClick={() => navigateToSlide(index)}
+                >
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-gray-50 text-xs text-center p-1">
+                    <div className="flex items-center justify-center mb-1">
+                      {getContentTypeIcon(material.contentType)}
+                    </div>
+                    <span className="truncate w-full">{`Slide ${index + 1}`}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        {/* Material information */}
+        <div className="mt-6 bg-gray-50 p-4 rounded-lg">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-medium text-gray-700">
+              {currentMaterial?.title}
+            </h3>
+            <div className="text-xs text-gray-500">
+              {currentSlideIndex + 1} of {totalSlides}
+            </div>
+          </div>
+          {currentMaterial?.description && (
+            <p className="mt-1 text-xs text-gray-500">
+              {currentMaterial.description}
+            </p>
+          )}
         </div>
       </div>
     </div>
