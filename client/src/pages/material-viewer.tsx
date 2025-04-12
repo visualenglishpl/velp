@@ -59,8 +59,10 @@ export default function MaterialViewer() {
   // If we have material matches, use those, otherwise just get the unit ID
   const unitId = materialMatches ? parseInt(materialMatches[1], 10) : 
                 unitMatches ? parseInt(unitMatches[1], 10) : 0;
-  const materialId = materialMatches ? parseInt(materialMatches[2], 10) : 0;
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0); // Always start at 0
+  
+  // Get material index or default to 0
+  const materialIndex = materialMatches ? parseInt(materialMatches[2], 10) : 0;
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(materialIndex); // Set to provided index or 0
   const [showSidebar, setShowSidebar] = useState(true);
 
   // Fetch unit details
@@ -81,9 +83,9 @@ export default function MaterialViewer() {
     enabled: !!unitId,
   });
 
-  // Get current material
+  // Get current material based on the index in the URL
   const currentMaterial = materials && materials.length > 0 
-    ? materials.find((m) => m.id === materialId) || materials[currentSlideIndex] 
+    ? materials[currentSlideIndex] 
     : null;
 
   // Track viewed slides
