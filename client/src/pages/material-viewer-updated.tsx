@@ -454,10 +454,10 @@ export default function MaterialViewer() {
         </h1>
       </div>
       
-      {/* Question Section - Replaces Unit Introduction */}
+      {/* Question Section */}
       {currentMaterial?.content && (
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-semibold text-emerald-700">
+          <h2 className="text-2xl font-semibold">
             {extractQuestionFromFilename(
               currentMaterial.content.includes('/api/content/')
                 ? decodeURIComponent(currentMaterial.content.split('/api/content/')[1])
