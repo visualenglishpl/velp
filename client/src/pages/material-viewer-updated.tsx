@@ -604,8 +604,8 @@ export default function MaterialViewer() {
             </h1>
             {unit?.description && (
               <div className="mt-1 px-3 py-2 bg-blue-50 rounded-lg border border-blue-100 text-sm">
-                <p className="text-gray-700">
-                  {unit.description}
+                <p className="text-gray-700 flex items-center gap-1">
+                  <span className="text-lg">🎒📚</span> {unit.description}
                 </p>
               </div>
             )}
@@ -632,8 +632,8 @@ export default function MaterialViewer() {
         </h1>
         {unit?.description && (
           <div className="mt-2 p-3 bg-blue-50 rounded-lg border border-blue-100">
-            <p className="text-gray-700">
-              {unit.description}
+            <p className="text-gray-700 flex items-center gap-1">
+              <span className="text-lg">🎒📚</span> {unit.description}
             </p>
           </div>
         )}
@@ -848,6 +848,50 @@ export default function MaterialViewer() {
                             </div>
                           ) : (
                             <>
+                              {/* Special case for Unit Content slide */}
+                              {(material.title.includes('Unit Content') || material.title.includes('unit content')) && index === 0 && (
+                                <div className="flex flex-col items-center justify-center bg-white h-full p-8">
+                                  <h1 className="text-2xl font-bold mb-4">BOOK 5 – SCHOOL TOUR</h1>
+                                  <div className="bg-blue-50 p-3 rounded-md mb-6 max-w-2xl">
+                                    <p className="text-sm">
+                                      <span className="text-lg">🎒📚</span> School Tour! Learn school facilities and subjects vocabulary.
+                                    </p>
+                                  </div>
+                                  
+                                  <div className="max-w-4xl text-left mb-6">
+                                    <ul className="space-y-1">
+                                      <li><strong>Students eat meals and buy snacks</strong></li>
+                                      <li><strong>Library:</strong> Quiet area for reading and studying</li>
+                                      <li><strong>After School Care:</strong> Activities after regular school hours</li>
+                                      <li><strong>Special School Areas</strong></li>
+                                      <li><strong>Cloakroom:</strong> For changing shoes and outdoor clothing</li>
+                                      <li><strong>Classroom:</strong> Primary learning spaces</li>
+                                      <li><strong>Sports Field:</strong> Outdoor space for physical activities</li>
+                                      <li><strong>Playground:</strong> Recreational area for breaks</li>
+                                      <li><strong>Art Room:</strong> Space for creative projects</li>
+                                      <li><strong>Music Room:</strong> Where students learn instruments and singing</li>
+                                      <li><strong>School Vocabulary</strong> Learn words related to school facilities and locations</li>
+                                      <li>Practice sentences about school activities and schedules</li>
+                                      <li>Discuss favorite school subjects and teachers</li>
+                                    </ul>
+                                  </div>
+                                  
+                                  <div className="flex justify-between w-full max-w-2xl">
+                                    <p className="text-base font-medium">Unit Content</p>
+                                    <p className="text-gray-500 text-sm">1/1 slides</p>
+                                  </div>
+                                  
+                                  <div className="mt-6 w-full max-w-2xl bg-gray-100 h-6 rounded-full">
+                                    <div className="text-xs font-medium text-center p-0.5 leading-none rounded-full h-6 bg-purple-600 text-white" style={{ width: "100%" }}></div>
+                                  </div>
+                                  
+                                  <div className="mt-6 text-left">
+                                    <p className="text-sm text-gray-600">lesson content</p>
+                                    <p className="text-lg font-medium">Unit Content</p>
+                                  </div>
+                                </div>
+                              )}
+                            
                               {material.contentType === 'IMAGE' && (
                                 <div className="flex flex-col items-center justify-center bg-white h-full">
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
