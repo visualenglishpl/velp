@@ -375,6 +375,25 @@ export default function MaterialViewer() {
   const QuestionHeader = ({ content, title }: { content: string; title: string }) => {
     if (!content) return null;
     
+    // Extract and decode the filename from the content URL
+    let filename = '';
+    if (content.includes('/api/content/')) {
+      // Handle proxy URL format: /api/content/book5%2Funit1%2F01%20P%20Ab%20is%20English...
+      const encodedPath = content.split('/api/content/')[1];
+      if (encodedPath) {
+        // Decode the URL-encoded path
+        const decodedPath = decodeURIComponent(encodedPath);
+        // Get the filename part (after the last slash if any)
+        filename = decodedPath.split('/').pop() || decodedPath;
+      }
+    } else {
+      // Fallback to original behavior for non-proxy URLs
+      filename = content.split('/').pop() || '';
+    }
+    
+    // Extract the question from the decoded filename
+    const question = extractQuestionFromFilename(filename) || title;
+    
     return (
       <div className="w-full bg-green-100 p-4 text-center mb-4 rounded-md shadow-sm">
         <div className="flex flex-col items-center justify-center">
@@ -383,7 +402,7 @@ export default function MaterialViewer() {
             <Check className="h-5 w-5 text-white" />
           </span>
           <h3 className="text-2xl font-semibold text-green-800">
-            {extractQuestionFromFilename(content.split('/').pop() || '') || title}
+            {question}
           </h3>
         </div>
       </div>
