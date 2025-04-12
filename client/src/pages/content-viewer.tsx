@@ -407,25 +407,35 @@ export default function ContentViewer() {
                               )}
                               <div className="flex-1 flex items-center justify-center w-full h-full">
                                 {material.content && (
-                                  <div className="w-full text-center">
+                                  <>
                                     {material.content.includes('book5') ? (
-                                      <pre className="bg-gray-800 text-white p-4 rounded-md overflow-auto text-left text-sm font-mono" style={{maxHeight: 'calc(60vh - 100px)'}}>
-                                        {`// Book 5 content URL
-${material.content}
-
-// Content available in database but image not accessible
-// Students eat meals and buy snacks in the Library. Quiet area for reading and studying
-// After School Care: Activities after regular school hours
-// Special School Areas: Cloakroom for changing shoes and outdoor clothing
-// Classroom: Primary learning spaces
-// Sports Field: Outdoor space for physical activities
-// Playground: Recreational area for breaks
-// Art Room: Space for creative projects
-// Music Room: Where students learn instruments and singing
-// School Vocabulary: Learn words related to school facilities and locations
-// Practice sentences about school activities and schedules
-// Discuss favorite school subjects and teachers`}
-                                      </pre>
+                                      <>
+                                        {/* For Book 5, we display the image using the correct S3 path structure */}
+                                        <img
+                                          src={`/api/content/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
+                                          alt={material.title}
+                                          className="max-w-full max-h-full object-contain"
+                                          style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                          onError={(e) => {
+                                            console.error("Failed to load Book 5 image:", material.title);
+                                            (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                            
+                                            // Display generic unit content on error
+                                            const imgElement = e.target as HTMLImageElement;
+                                            imgElement.style.display = 'none';
+                                            
+                                            // Create a container for the fallback content
+                                            const container = document.createElement('div');
+                                            container.className = 'p-4 bg-white rounded text-center';
+                                            container.innerHTML = `
+                                              <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
+                                              <p class="text-gray-700">Loading image from S3 path: s3://visualenglishmaterial/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}</p>
+                                            `;
+                                            
+                                            imgElement.parentNode?.appendChild(container);
+                                          }}
+                                        />
+                                      </>
                                     ) : (
                                       <img
                                         src={material.content} 
@@ -438,7 +448,7 @@ ${material.content}
                                         }}
                                       />
                                     )}
-                                  </div>
+                                  </>
                                 )}
                                 <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
                                   {currentSlideIndex + 1}/{totalSlides}
@@ -627,7 +637,10 @@ ${material.content}
                       <div className="relative h-14 bg-gray-100 flex items-center justify-center">
                         {material.contentType === 'IMAGE' && material.content ? (
                           <img 
-                            src={material.content}
+                            src={material.content.includes('book5') 
+                              ? `/api/content/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}`
+                              : material.content
+                            }
                             alt={`Thumbnail for ${material.title}`}
                             className="w-full h-full object-cover"
                           />
