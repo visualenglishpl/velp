@@ -6,6 +6,7 @@ import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import BookDetailPage from "@/pages/book-detail-page";
+import UnitDetailPage from "@/pages/unit-detail-page";
 import MaterialViewer from "@/pages/material-viewer";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/books" component={BooksManagement} />
       <Route path="/admin/books/:id" component={BookDetailPage} />
+      <Route path="/units/:unitId" component={UnitDetailPage} />
       <Route path="/units/:unitId/materials/:materialId?" component={MaterialViewer} />
       {/* Redirect from old content management page to new unified books management */}
       <Route path="/admin/content">

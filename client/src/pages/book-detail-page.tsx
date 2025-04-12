@@ -411,7 +411,7 @@ const BookDetailPage = () => {
                     <Button 
                       size="sm"
                       onClick={() => {
-                        // Everyone can access the Material Viewer
+                        // Go directly to the content slider
                         setLocation(`/units/${unit.id}/materials/0`);
                       }}
                       className="text-white hover:bg-opacity-90"
