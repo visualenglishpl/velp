@@ -30,7 +30,6 @@ import {
   BookOpenCheck, 
   ChevronRight,
   BookIcon, 
-  Search, 
   LogOut, 
   Plus, 
   Pencil, 
@@ -885,17 +884,8 @@ const BooksManagementPage = () => {
         </div>
       )}
       
-      {/* Search and controls */}
-      <div className="flex items-center justify-center gap-4 max-w-xl mx-auto mb-8 px-4">
-        <div className="relative w-full">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input 
-            placeholder="Search books..." 
-            className="pl-9 py-2 text-base rounded-md border-gray-200"
-            value={searchQuery}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-          />
-        </div>
+      {/* Create Book Button */}
+      <div className="flex items-center justify-center max-w-xl mx-auto mb-8 px-4">
         {user?.role === "admin" && (
           <Button 
             onClick={() => {
@@ -935,7 +925,7 @@ const BooksManagementPage = () => {
                 <BookOpenCheck className="h-16 w-16 text-gray-300 mb-4" />
                 <h3 className="text-xl font-medium text-gray-700">No books found</h3>
                 <p className="text-gray-500 mt-2">
-                  {searchQuery ? "Try adjusting your search query" : "No books have been added yet"}
+                  No books have been added yet. Create a book to get started.
                 </p>
               </div>
             ) : (
