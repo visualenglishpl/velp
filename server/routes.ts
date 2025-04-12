@@ -224,13 +224,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
             // Try alternate path format if first attempt fails
             if (currentBook) {
               // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
-              // For books 1-7: book1/icons/thumbnailsuni1-14.png
+              // For books 1, 2, 3, 5, 6, 7: thumbnails/thumbnailsuni1-14.png (direct in thumbnails folder)
+              // For book 4: book4/icons/thumbnailsuni4-7.png
               let alternatePath;
+              
               if (currentBook.bookId.startsWith('0')) {
+                // Books 0a-0c follow this pattern
+                alternatePath = `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
+              } else if (currentBook.bookId === '4') {
+                // Book 4 follows this pattern
                 alternatePath = `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
               } else {
-                // For books 1-7, use the format: book1/icons/thumbnailsuni1-14.png
-                alternatePath = `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
+                // Books 1, 2, 3, 5, 6, 7 follow this pattern
+                alternatePath = `thumbnails/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
               }
               
               if (alternatePath !== unit.thumbnail) {
@@ -287,13 +293,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Try alternate path format if first attempt fails
           if (bookDetails) {
             // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
-            // For books 1-7: book1/icons/thumbnailsuni1-14.png
+            // For books 1, 2, 3, 5, 6, 7: thumbnails/thumbnailsuni1-14.png (direct in thumbnails folder)
+            // For book 4: book4/icons/thumbnailsuni4-7.png
             let alternatePath;
+              
             if (bookDetails.bookId.startsWith('0')) {
+              // Books 0a-0c follow this pattern
+              alternatePath = `book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
+            } else if (bookDetails.bookId === '4') {
+              // Book 4 follows this pattern
               alternatePath = `book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
             } else {
-              // For books 1-7, use the format: book1/icons/thumbnailsuni1-14.png
-              alternatePath = `book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
+              // Books 1, 2, 3, 5, 6, 7 follow this pattern
+              alternatePath = `thumbnails/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
             }
             
             if (alternatePath !== unit.thumbnail) {
