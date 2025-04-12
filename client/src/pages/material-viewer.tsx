@@ -546,21 +546,49 @@ export default function MaterialViewer() {
                               {/* PDF type hidden as per request */}
                               
                               {material.contentType === 'GAME' && (
-                                <div className="h-full">
-                                  <iframe
-                                    src={material.content}
-                                    title={material.title}
-                                    className="w-full h-full"
-                                    allowFullScreen
-                                  />
+                                <div className="flex flex-col bg-white h-full">
+                                  {/* Extract question from filename and display at top */}
+                                  {material.content && (
+                                    <div className="w-full bg-primary/10 p-3 text-center mb-2">
+                                      <div className="flex items-center justify-center gap-2 mb-1">
+                                        {/* Checkmark to show question was asked */}
+                                        <Check className="h-5 w-5 text-green-600" />
+                                        <h3 className="text-lg font-medium">
+                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                        </h3>
+                                      </div>
+                                    </div>
+                                  )}
+                                  <div className="flex-1">
+                                    <iframe
+                                      src={material.content}
+                                      title={material.title}
+                                      className="w-full h-full"
+                                      allowFullScreen
+                                    />
+                                  </div>
                                 </div>
                               )}
                               
                               {!['IMAGE', 'VIDEO', 'PDF', 'GAME'].includes(material.contentType) && (
-                                <div className="flex flex-col items-center justify-center h-full bg-gray-50">
-                                  <p className="text-gray-500">{material.contentType} content</p>
-                                  <h3 className="text-xl font-semibold">{material.title}</h3>
-                                  <p className="text-gray-500 mt-2">{material.description}</p>
+                                <div className="flex flex-col items-center justify-center h-full bg-white">
+                                  {/* Extract question from filename and display at top */}
+                                  {material.content && (
+                                    <div className="w-full bg-primary/10 p-3 text-center mb-2">
+                                      <div className="flex items-center justify-center gap-2 mb-1">
+                                        {/* Checkmark to show question was asked */}
+                                        <Check className="h-5 w-5 text-green-600" />
+                                        <h3 className="text-lg font-medium">
+                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                        </h3>
+                                      </div>
+                                    </div>
+                                  )}
+                                  <div className="p-6">
+                                    <p className="text-gray-500">{material.contentType} content</p>
+                                    <h3 className="text-xl font-semibold">{material.title}</h3>
+                                    <p className="text-gray-500 mt-2">{material.description}</p>
+                                  </div>
                                 </div>
                               )}
                             </>
