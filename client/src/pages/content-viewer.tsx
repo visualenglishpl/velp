@@ -20,9 +20,6 @@ import {
 } from "lucide-react";
 import useEmblaCarousel from 'embla-carousel-react';
 
-// Define content for school tour text
-const schoolTourContent = `Students eat meals and buy snacks Library: Quiet area for reading and studying After School Care: Activities after regular school hours Special School Areas Cloakroom: For changing shoes and outdoor clothing Classroom: Primary learning spaces Sports Field: Outdoor space for physical activities Playground: Recreational area for breaks Art Room: Space for creative projects Music Room: Where students learn instruments and singing School Vocabulary Learn words related to school facilities and locations Practice sentences about school activities and schedules Discuss favorite school subjects and teachers`;
-
 // Type definitions
 type Material = {
   id: number;
@@ -69,7 +66,6 @@ export default function ContentViewer() {
   // State hooks
   const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   
   // Data fetching hooks
   const { data: unit, isLoading: unitLoading } = useQuery<Unit>({
@@ -369,52 +365,33 @@ export default function ContentViewer() {
                         <>
                           {material.contentType === 'IMAGE' && (
                             <div className="flex flex-col items-center justify-center bg-white h-full">
-                              {/* Special case for Book 5 Unit 1 school tour content */}
-                              {unit?.unitNumber === 1 && book?.bookId === "5" && material.title && material.title.toLowerCase().includes("unit content") ? (
-                                <div className="flex flex-col items-center justify-center w-full h-full bg-purple-50 p-8">
-                                  <div className="w-full text-center">
-                                    <div className="flex justify-center mb-4">
-                                      <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full">
-                                        <Check className="h-5 w-5 text-green-600" />
-                                      </span>
-                                    </div>
-                                    <p className="text-center text-purple-700 text-lg max-w-5xl mx-auto leading-relaxed">
-                                      {schoolTourContent}
-                                    </p>
+                              {material.content && (
+                                <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                  <div className="flex flex-col items-center justify-center">
+                                    <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
+                                      <Check className="h-5 w-5 text-green-600" />
+                                    </span>
+                                    <h3 className="text-xl font-semibold text-primary">
+                                      {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                    </h3>
                                   </div>
                                 </div>
-                              ) : (
-                                <>
-                                  {/* Standard image content with question header */}
-                                  {material.content && (
-                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
-                                      <div className="flex flex-col items-center justify-center">
-                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                          <Check className="h-5 w-5 text-green-600" />
-                                        </span>
-                                        <h3 className="text-xl font-semibold text-primary">
-                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                        </h3>
-                                      </div>
-                                    </div>
-                                  )}
-                                  <div className="flex-1 flex items-center justify-center w-full h-full">
-                                    <img
-                                      src={material.content} 
-                                      alt={material.title}
-                                      className="max-w-full max-h-full object-contain"
-                                      style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                      onError={(e) => {
-                                        console.error("Failed to load image:", material.title);
-                                        (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                      }}
-                                    />
-                                    <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                      {currentSlideIndex + 1}/{totalSlides}
-                                    </div>
-                                  </div>
-                                </>
                               )}
+                              <div className="flex-1 flex items-center justify-center w-full h-full">
+                                <img
+                                  src={material.content} 
+                                  alt={material.title}
+                                  className="max-w-full max-h-full object-contain"
+                                  style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                  onError={(e) => {
+                                    console.error("Failed to load image:", material.title);
+                                    (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                  }}
+                                />
+                                <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
+                                  {currentSlideIndex + 1}/{totalSlides}
+                                </div>
+                              </div>
                             </div>
                           )}
                           
