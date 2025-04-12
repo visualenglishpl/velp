@@ -228,12 +228,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
               // For book 4: book4/icons/thumbnailsuni4-7.png
               // Check multiple possible paths
               let alternatePaths = [];
+              const bookId = currentBook.bookId;
               
-              // Path 1: book{id}/icons/thumbnailsuni{id}-{number}.png
-              alternatePaths.push(`book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`);
+              // Path patterns based on specific book IDs
+              if (bookId.startsWith('0')) {
+                // Books 0a-0c
+                alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              } else if (bookId === '1' || bookId === '2' || bookId === '3') {
+                // Books 1-3
+                alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              } else if (bookId === '4') {
+                // Book 4 special case
+                alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              } else if (bookId === '5') {
+                // Book 5 - try both patterns to be safe
+                alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+                alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              } else {
+                // Books 6-7
+                alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              }
               
-              // Path 2: thumbnails/thumbnailsuni{id}-{number}.png
-              alternatePaths.push(`thumbnails/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`);
+              // Always add these common patterns as fallbacks
+              alternatePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              alternatePaths.push(`thumbnails/book${bookId}/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              alternatePaths.push(`icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               
               // Try each path
               let thumbnailFound = false;
@@ -304,12 +323,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
             
             // Check multiple possible paths
             let alternatePaths = [];
+            const bookId = bookDetails.bookId;
             
-            // Path 1: book{id}/icons/thumbnailsuni{id}-{number}.png
-            alternatePaths.push(`book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`);
+            // Path patterns based on specific book IDs
+            if (bookId.startsWith('0')) {
+              // Books 0a-0c
+              alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            } else if (bookId === '1' || bookId === '2' || bookId === '3') {
+              // Books 1-3
+              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            } else if (bookId === '4') {
+              // Book 4 special case
+              alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            } else if (bookId === '5') {
+              // Book 5 - try both patterns to be safe
+              alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            } else {
+              // Books 6-7
+              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            }
             
-            // Path 2: thumbnails/thumbnailsuni{id}-{number}.png
-            alternatePaths.push(`thumbnails/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`);
+            // Always add these common patterns as fallbacks
+            alternatePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            alternatePaths.push(`thumbnails/book${bookId}/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            alternatePaths.push(`icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
             
             // Try each path
             let thumbnailFound = false;
@@ -569,11 +607,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Try multiple possible paths for different books
         let possiblePaths = [];
         
-        // Path 1: book{id}/icons/thumbnailsuni{id}-{range}.png
-        possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
+        // Path patterns based on specific book IDs
+        if (bookId.startsWith('0')) {
+          // Books 0a-0c
+          possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
+        } else if (bookId === '1' || bookId === '2' || bookId === '3') {
+          // Books 1-3
+          possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
+        } else if (bookId === '4') {
+          // Book 4 special case
+          possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
+        } else if (bookId === '5') {
+          // Book 5 - try both patterns to be safe
+          possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
+          possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
+        } else {
+          // Books 6-7
+          possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
+        }
         
-        // Path 2: thumbnails/thumbnailsuni{id}-{range}.png
-        possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
+        // Always add these common patterns as fallbacks
+        possiblePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${range}.png`);
+        possiblePaths.push(`thumbnails/book${bookId}/thumbnailsuni${bookId}-${range}.png`);
+        possiblePaths.push(`icons/thumbnailsuni${bookId}-${range}.png`);
         
         let thumbnailFound = false;
         let successUrl = '';
