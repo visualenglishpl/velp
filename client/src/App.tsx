@@ -7,6 +7,7 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import BookDetailPage from "@/pages/book-detail-page";
 import ContentViewer from "@/pages/content-viewer-updated";
+import ContentViewer7272f2be from "@/pages/content-viewer-7272f2be";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -22,6 +23,9 @@ function Router() {
       <Route path="/units/:unitId/materials/:materialId?" component={ContentViewer} />
       {/* This is our main entry point for the Content Slider - we don't need a separate UnitDetailPage */}
       <Route path="/units/:unitId" component={ContentViewer} />
+      {/* Special route for the 7272f2be restore point version */}
+      <Route path="/restore/7272f2be/units/:unitId/materials/:materialId?" component={ContentViewer7272f2be} />
+      <Route path="/restore/7272f2be/units/:unitId" component={ContentViewer7272f2be} />
       {/* Redirect from old content management page to new unified books management */}
       <Route path="/admin/content">
         {() => {
@@ -38,7 +42,7 @@ function App() {
   const [location] = useLocation();
   const isAuthPage = location === "/auth";
   const isAdminPage = location.startsWith("/admin");
-  const isMaterialViewer = location.includes("/units/");
+  const isMaterialViewer = location.includes("/units/") || location.includes("/restore/7272f2be/units/");
   const showNavFooter = !isAuthPage && !isAdminPage && !isMaterialViewer;
 
   // Debugging
