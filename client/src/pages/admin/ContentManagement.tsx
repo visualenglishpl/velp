@@ -232,7 +232,7 @@ function BookForm({ book, onSubmit, onCancel }: {
           checked={formData.isPublished}
           onCheckedChange={handleSwitchChange}
         />
-        <Label htmlFor="isPublished">Published</Label>
+        <Label htmlFor="isPublished">Unlocked</Label>
       </div>
       
       <div className="flex justify-end space-x-2 pt-4">
@@ -320,7 +320,7 @@ function UnitForm({ unit, bookId, onSubmit, onCancel }: {
           checked={formData.isPublished}
           onCheckedChange={handleSwitchChange}
         />
-        <Label htmlFor="isPublished">Published</Label>
+        <Label htmlFor="isPublished">Unlocked</Label>
       </div>
       
       <div className="flex justify-end space-x-2 pt-4">
@@ -448,7 +448,7 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
             checked={formData.isPublished}
             onCheckedChange={handleSwitchChange}
           />
-          <Label htmlFor="isPublished">Published</Label>
+          <Label htmlFor="isPublished">Unlocked</Label>
         </div>
       </div>
       
@@ -1002,7 +1002,7 @@ function ContentManagement() {
                       </TableCell>
                       <TableCell>
                         {unit.isPublished ? (
-                          <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1">Published</span>
+                          <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1">Unlocked</span>
                         ) : (
                           <span className="bg-gray-100 text-gray-800 text-xs rounded-full px-2 py-1">Draft</span>
                         )}
@@ -1085,7 +1085,7 @@ function ContentManagement() {
                       </TableCell>
                       <TableCell>
                         {material.isPublished ? (
-                          <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1">Published</span>
+                          <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1">Unlocked</span>
                         ) : (
                           <span className="bg-gray-100 text-gray-800 text-xs rounded-full px-2 py-1">Draft</span>
                         )}
