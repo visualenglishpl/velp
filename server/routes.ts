@@ -241,9 +241,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 // Book 4 special case
                 alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               } else if (bookId === '5') {
-                // Book 5 - try both patterns to be safe
+                // Book 5 - try additional patterns for maximum compatibility
                 alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
                 alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+                alternatePaths.push(`book5/thumbnails/thumbnailsuni5-${unit.unitNumber}.png`);
+                alternatePaths.push(`thumbnails/book5/thumbnailsuni5-${unit.unitNumber}.png`);
+                alternatePaths.push(`icons/thumbnailsuni5-${unit.unitNumber}.png`);
+                // Try without leading zero
+                alternatePaths.push(`thumbnails/thumbnailsuni5-${String(unit.unitNumber).padStart(2, '0')}.png`);
+                // Try with spaces (like Book 3 has)
+                alternatePaths.push(`thumbnails/thumbnailsuni5 -${unit.unitNumber}.png`);
               } else {
                 // Books 6-7
                 alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
@@ -336,9 +343,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
               // Book 4 special case
               alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
             } else if (bookId === '5') {
-              // Book 5 - try both patterns to be safe
+              // Book 5 - try additional patterns for maximum compatibility
               alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+              alternatePaths.push(`book5/thumbnails/thumbnailsuni5-${unit.unitNumber}.png`);
+              alternatePaths.push(`thumbnails/book5/thumbnailsuni5-${unit.unitNumber}.png`);
+              alternatePaths.push(`icons/thumbnailsuni5-${unit.unitNumber}.png`);
+              // Try without leading zero
+              alternatePaths.push(`thumbnails/thumbnailsuni5-${String(unit.unitNumber).padStart(2, '0')}.png`);
+              // Try with spaces (like Book 3 has)
+              alternatePaths.push(`thumbnails/thumbnailsuni5 -${unit.unitNumber}.png`);
             } else {
               // Books 6-7
               alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
@@ -618,9 +632,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Book 4 special case
           possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
         } else if (bookId === '5') {
-          // Book 5 - try both patterns to be safe
+          // Book 5 - try additional patterns for maximum compatibility
           possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
           possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
+          possiblePaths.push(`book5/thumbnails/thumbnailsuni5-${range}.png`);
+          possiblePaths.push(`thumbnails/book5/thumbnailsuni5-${range}.png`);
+          possiblePaths.push(`icons/thumbnailsuni5-${range}.png`);
+          // Try without leading zero
+          possiblePaths.push(`thumbnails/thumbnailsuni5-${range.split('-')[0].padStart(2, '0')}-${range.split('-')[1].padStart(2, '0')}.png`);
+          // Try with spaces (like Book 3 has)
+          possiblePaths.push(`thumbnails/thumbnailsuni5 -${range}.png`);
         } else {
           // Books 6-7
           possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
