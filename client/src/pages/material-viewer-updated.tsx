@@ -44,6 +44,8 @@ interface Book {
 }
 
 export default function MaterialViewer() {
+  // Special case content for Book 5 Unit 1 School Tour
+  const schoolTourContent = `Students eat meals and buy snacks Library: Quiet area for reading and studying After School Care: Activities after regular school hours Special School Areas Cloakroom: For changing shoes and outdoor clothing Classroom: Primary learning spaces Sports Field: Outdoor space for physical activities Playground: Recreational area for breaks Art Room: Space for creative projects Music Room: Where students learn instruments and singing School Vocabulary Learn words related to school facilities and locations Practice sentences about school activities and schedules Discuss favorite school subjects and teachers`;
   const { unitId, materialId } = useParams();
   const initialMaterialIndex = materialId ? parseInt(materialId) : 0;
   
@@ -696,7 +698,7 @@ export default function MaterialViewer() {
                                           <span className="text-green-500">✓</span>
                                         </h2>
                                         <p className="text-center text-purple-700 text-lg max-w-5xl mx-auto leading-relaxed">
-                                          Students eat meals and buy snacks Library: Quiet area for reading and studying After School Care: Activities after regular school hours Special School Areas Cloakroom: For changing shoes and outdoor clothing Classroom: Primary learning spaces Sports Field: Outdoor space for physical activities Playground: Recreational area for breaks Art Room: Space for creative projects Music Room: Where students learn instruments and singing School Vocabulary Learn words related to school facilities and locations Practice sentences about school activities and schedules Discuss favorite school subjects and teachers
+                                          {schoolTourContent}
                                         </p>
                                       </div>
                                     </div>
