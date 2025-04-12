@@ -354,6 +354,33 @@ export default function MaterialViewer() {
     );
   }
 
+  // Extract and format question from filename
+  const extractQuestionFromFilename = (filename: string): string => {
+    if (!filename) return "";
+    
+    // Try to extract meaningful title from filename like "01 C a are You A Good or Bad Singer.gif"
+    const nameMatch = filename.match(/^\d+\s+[A-Z]\s+[a-z]\s+(.+)\.[a-zA-Z]+$/);
+    if (nameMatch && nameMatch[1]) {
+      // Clean up the extracted title
+      let extractedTitle = nameMatch[1].trim();
+      
+      // Fix common issues with extracted titles
+      extractedTitle = extractedTitle
+        // Add question mark if missing
+        .replace(/(\?)?$/, "?")
+        // Capitalize first letter of each sentence
+        .replace(/\b\w/g, c => c.toUpperCase())
+        // Fix spacing around punctuation
+        .replace(/\s+([,.?!:;])/g, "$1")
+        // Ensure space after punctuation
+        .replace(/([,.?!:;])([A-Za-z])/g, "$1 $2");
+      
+      return extractedTitle;
+    }
+    
+    return "";
+  };
+
   // Main UI with materials
   return (
     <div className="container mx-auto px-4 py-6">
@@ -437,7 +464,7 @@ export default function MaterialViewer() {
             id="content-viewer"
             className={cn(
               "relative rounded-lg overflow-hidden transition-all", 
-              isFullscreen ? "fixed inset-0 z-50 bg-black flex items-center justify-center" : ""
+              isFullscreen ? "fixed inset-0 z-50 bg-white flex items-center justify-center" : ""
             )}
           >
             {/* Progress bar at top */}
@@ -467,39 +494,56 @@ export default function MaterialViewer() {
                           ) : (
                             <>
                               {material.contentType === 'IMAGE' && (
-                                <div className="flex items-center justify-center bg-black h-full">
-                                  <img
-                                    src={material.content}
-                                    alt={material.title}
-                                    className="max-h-full max-w-full object-contain"
-                                  />
+                                <div className="flex flex-col items-center justify-center bg-white h-full">
+                                  {/* Extract question from filename and display at top */}
+                                  {material.content && (
+                                    <div className="w-full bg-primary/10 p-3 text-center mb-2">
+                                      <div className="flex items-center justify-center gap-2 mb-1">
+                                        {/* Checkmark to show question was asked */}
+                                        <Check className="h-5 w-5 text-green-600" />
+                                        <h3 className="text-lg font-medium">
+                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                        </h3>
+                                      </div>
+                                    </div>
+                                  )}
+                                  <div className="flex-1 flex items-center justify-center">
+                                    <img
+                                      src={material.content}
+                                      alt={material.title}
+                                      className="max-h-full max-w-full object-contain"
+                                    />
+                                  </div>
                                 </div>
                               )}
                               
                               {material.contentType === 'VIDEO' && (
-                                <div className="h-full">
-                                  <video 
-                                    controls 
-                                    className="w-full h-full"
-                                    src={material.content}
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
+                                <div className="flex flex-col bg-white h-full">
+                                  {/* Extract question from filename and display at top */}
+                                  {material.content && (
+                                    <div className="w-full bg-primary/10 p-3 text-center mb-2">
+                                      <div className="flex items-center justify-center gap-2 mb-1">
+                                        {/* Checkmark to show question was asked */}
+                                        <Check className="h-5 w-5 text-green-600" />
+                                        <h3 className="text-lg font-medium">
+                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                        </h3>
+                                      </div>
+                                    </div>
+                                  )}
+                                  <div className="flex-1">
+                                    <video 
+                                      controls 
+                                      className="w-full h-full"
+                                      src={material.content}
+                                    >
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </div>
                                 </div>
                               )}
                               
-                              {material.contentType === 'PDF' && (
-                                <div className="h-full bg-gray-50 flex flex-col items-center justify-center">
-                                  <div className="text-center mb-4">
-                                    <p className="text-gray-500">PDF Document</p>
-                                    <h3 className="text-xl font-semibold">{material.title}</h3>
-                                  </div>
-                                  <Button className="flex items-center gap-2" onClick={() => window.open(material.content, '_blank')}>
-                                    <Download className="h-4 w-4" />
-                                    Open PDF
-                                  </Button>
-                                </div>
-                              )}
+                              {/* PDF type hidden as per request */}
                               
                               {material.contentType === 'GAME' && (
                                 <div className="h-full">
