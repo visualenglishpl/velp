@@ -8,8 +8,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { BookOpen, BookOpenCheck, BookPlus, Search, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
-// Book icon URL template
-const S3_ICON_BASE_URL = "https://visualenglishmaterial.s3.amazonaws.com/icons/";
+// Type definition for the book thumbnail
+type BookThumbnail = {
+  bookId: string;
+  title: string;
+  gifUrl: string;
+};
 
 // Function to get different button colors based on book ID
 const getBookButtonColor = (bookId: string): string => {
@@ -53,10 +57,19 @@ const BooksPage = () => {
   }, [user, authLoading, navigate]);
 
   // Fetch books from API
-  const { data: books, isLoading } = useQuery<Book[]>({
+  const { data: books, isLoading: isBooksLoading } = useQuery<Book[]>({
     queryKey: ["/api/books"],
     enabled: !!user,
   });
+  
+  // Fetch thumbnails with presigned URLs
+  const { data: thumbnails, isLoading: isThumbnailsLoading } = useQuery<BookThumbnail[]>({
+    queryKey: ["/api/assets/book-thumbnails"],
+    enabled: !!user,
+  });
+  
+  // Combined loading state
+  const isLoading = isBooksLoading || isThumbnailsLoading;
 
   // Filter and sort books based on search query
   const filteredBooks = useMemo(() => {
@@ -211,7 +224,7 @@ const BooksPage = () => {
                     <div className="relative h-40 w-40 bg-gray-50 flex items-center justify-center overflow-hidden">
                       <BookOpen className="h-16 w-16 text-gray-300" style={{ position: 'absolute', opacity: 0.5 }} />
                       <img 
-                        src={`${S3_ICON_BASE_URL}VISUAL ${book.bookId}.gif`} 
+                        src={thumbnails?.find(t => t.bookId === book.bookId)?.gifUrl || ''}
                         alt={book.title}
                         className="max-h-full max-w-full object-contain relative z-10"
                         onError={(e) => {
