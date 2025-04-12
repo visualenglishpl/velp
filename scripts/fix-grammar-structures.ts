@@ -1,51 +1,61 @@
 import { db } from "../server/db";
-import { materials } from "../shared/schema";
-import { eq, like } from "drizzle-orm";
+import { units } from "../shared/schema";
+import { eq } from "drizzle-orm";
 
-// Remove grammar structure entries from unit materials
+// Specific grammar structure fixes to remove redundant "I"
 async function fixGrammarStructures() {
   try {
-    console.log("Removing grammar structure sections from all units...");
+    console.log("Fixing grammar structures to remove redundant 'I'...");
     
-    // Check all units for materials with the title "Grammar Structures"
-    const allMaterials = await db.select()
-      .from(materials)
-      .where(like(materials.title, '%Grammar%'));
-    
-    if (allMaterials.length > 0) {
-      console.log(`Found ${allMaterials.length} materials with 'Grammar' in the title.`);
-      
-      // Delete grammar structure materials
-      for (const material of allMaterials) {
-        await db.delete(materials)
-          .where(eq(materials.id, material.id));
-        
-        console.log(`Removed grammar structure material with ID ${material.id} from unit ${material.unitId}`);
+    // Hard-coded updates for specific unit content
+    const updates = [
+      {
+        bookId: 8, // Book 5
+        unitNumber: 1, // Unit 1 - School Tour
+        grammarFix: `### Grammar Structures
+
+Use this unit to practice these structures:
+
+Subject + is + adjective               How many + noun + do you have?
+
+Subject + is + adjective + or + adjective?     Who is your + subject + teacher?`
       }
-    } else {
-      console.log("No grammar structure materials found.");
+    ];
+    
+    for (const update of updates) {
+      // Find the unit to update
+      const unitsToUpdate = await db.select()
+        .from(units)
+        .where(eq(units.bookId, update.bookId))
+        .where(eq(units.unitNumber, update.unitNumber));
+      
+      if (unitsToUpdate.length > 0) {
+        const unit = unitsToUpdate[0];
+        
+        // Check if the unit description contains "Material Covered"
+        if (unit.description && unit.description.includes('Material Covered')) {
+          // Keep the original description intact
+          await db.update(units)
+            .set({ 
+              description: unit.description,
+              updatedAt: new Date()
+            })
+            .where(eq(units.id, unit.id));
+        } else {
+          // Set the new grammar fixes
+          await db.update(units)
+            .set({ 
+              description: update.grammarFix,
+              updatedAt: new Date()
+            })
+            .where(eq(units.id, unit.id));
+        }
+        
+        console.log(`Updated grammar structures for ${update.bookId}.${update.unitNumber}`);
+      }
     }
     
-    // Also search for materials with grammar structure content
-    const contentMaterials = await db.select()
-      .from(materials)
-      .where(like(materials.content, '%Subject + is + adjective%'));
-    
-    if (contentMaterials.length > 0) {
-      console.log(`Found ${contentMaterials.length} materials with grammar structure content.`);
-      
-      // Delete these materials as well
-      for (const material of contentMaterials) {
-        await db.delete(materials)
-          .where(eq(materials.id, material.id));
-        
-        console.log(`Removed material with grammar structure content, ID ${material.id}`);
-      }
-    } else {
-      console.log("No materials with grammar structure content found.");
-    }
-    
-    console.log("Grammar structure removal complete!");
+    console.log("Grammar structure fixes completed!");
     process.exit(0);
   } catch (error) {
     console.error("Error fixing grammar structures:", error);
