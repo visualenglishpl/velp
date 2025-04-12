@@ -87,6 +87,25 @@ export default function ContentViewer() {
   // Current material
   const currentMaterial = materials && materials.length > 0 ? materials[currentIndex] : null;
   
+  // Debug paths when material or indices change
+  useEffect(() => {
+    if (book && unit && currentMaterial) {
+      const primaryPath = `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`;
+      const alternatePath = `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.png`;
+      
+      console.log('Content paths:', {
+        materialId: currentMaterial.id,
+        materialTitle: currentMaterial.title,
+        materialContent: currentMaterial.content,
+        materialIndex: currentIndex,
+        constructedPrimaryPath: primaryPath,
+        constructedAlternatePath: alternatePath,
+        bookId: book.bookId,
+        unitNumber: unit.unitNumber
+      });
+    }
+  }, [book, unit, currentMaterial, currentIndex]);
+  
   // Loading state
   if (unitLoading || bookLoading || materialsLoading) {
     return (
@@ -171,20 +190,48 @@ export default function ContentViewer() {
                     alt={currentMaterial.title}
                     className="max-w-full max-h-[50vh] mx-auto object-contain"
                     onError={(e) => {
-                      console.log(`Trying alternative format for slide ${currentIndex+1}`);
-                      // Try alternate format (no space between number and letter)
-                      const alternateFormat = `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.png`;
-                      (e.target as HTMLImageElement).src = alternateFormat;
-                      
-                      // Save original error handler and set a new one for the alternate format
-                      const originalOnError = e.onError;
-                      (e.target as HTMLImageElement).onError = (e2) => {
-                        console.error(`Error loading image (all formats tried): ${currentMaterial.content}`);
-                        (e2.target as HTMLImageElement).style.display = 'none';
-                        const container = document.createElement('div');
-                        container.innerHTML = `<p class="text-center text-red-500 mt-4">Image could not be loaded</p>`;
-                        (e2.target as HTMLImageElement).parentNode?.appendChild(container);
+                      const tryAlternateFormats = (formats: string[], index = 0) => {
+                        if (index >= formats.length) {
+                          // All formats failed
+                          console.error(`Error loading image (all formats tried): ${currentMaterial.content}`);
+                          (e.target as HTMLImageElement).style.display = 'none';
+                          const container = document.createElement('div');
+                          container.innerHTML = `<p class="text-center text-red-500 mt-4">Image could not be loaded</p>`;
+                          (e.target as HTMLImageElement).parentNode?.appendChild(container);
+                          return;
+                        }
+                        
+                        // Try the next format
+                        const format = formats[index];
+                        console.log(`Trying format ${index + 1}/${formats.length}: ${format}`);
+                        (e.target as HTMLImageElement).src = format;
+                        
+                        // Set up handler for the next format if this one fails
+                        (e.target as HTMLImageElement).onerror = (event: Event) => {
+                          tryAlternateFormats(formats, index + 1);
+                        };
                       };
+                      
+                      // Define all possible formats to try
+                      const possibleFormats = [
+                        // No space between number and letter
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.png`,
+                        // Using '00 A.png' format for first slide
+                        currentIndex === 0 ? `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.png` : null,
+                        // Using '00A.png' format for first slide
+                        currentIndex === 0 ? `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.png` : null,
+                        // JPG format
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.jpg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.jpg`,
+                        // JPEG format
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.jpeg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.jpeg`,
+                        // Original material content as fallback
+                        currentMaterial.content
+                      ].filter(Boolean) as string[];
+                      
+                      // Start trying formats
+                      tryAlternateFormats(possibleFormats);
                     }}
                   />
                 </div>
