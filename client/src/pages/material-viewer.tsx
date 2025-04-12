@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "wouter";
-import { ArrowLeft, Download, Lock, Check, RefreshCw } from "lucide-react";
+import { ArrowLeft, Download, Lock, Check, RefreshCw, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -84,29 +84,71 @@ export default function MaterialViewer() {
   // No materials state
   if (!materials || materials.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-8">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <RefreshCw className="h-16 w-16 text-gray-400" />
+      <div className="container mx-auto px-4 py-6">
+        {/* Top Navigation Bar */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-4">
+            <Link href={`/books/${book?.id}/units`}>
+              <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Unit
+              </Button>
+            </Link>
+            <h1 className="text-xl font-semibold hidden md:block">
+              {book?.title} – {unit?.title}
+            </h1>
           </div>
-          <h1 className="text-2xl font-bold mb-2">No Slides Available</h1>
-          <p className="text-gray-500 mb-4">There are no slides available for this lesson. This might be due to:</p>
-          <ul className="text-left text-gray-500 mb-6">
-            <li className="flex items-start mb-2">
-              <span className="mr-2">•</span>
-              <span>Content is still being loaded from storage</span>
-            </li>
-            <li className="flex items-start mb-2">
-              <span className="mr-2">•</span>
-              <span>The slides are stored in a different format or location</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">•</span>
-              <span>The unit content is not yet available</span>
-            </li>
+        </div>
+
+        <div className="block md:hidden mb-4">
+          <h1 className="text-xl font-semibold">
+            {book?.title} – {unit?.title}
+          </h1>
+        </div>
+        
+        {/* Unit description */}
+        <div className="mb-6">
+          <p className="text-gray-600">Visual English Lesson</p>
+          <p className="text-gray-700 mt-2">
+            This unit covers key vocabulary and language structures related to {unit?.title}. 
+            Students will practice conversation, reading, and interactive activities.
+          </p>
+        </div>
+        
+        {/* Progress bar */}
+        <div className="mb-8">
+          <div className="flex justify-between text-sm mb-1">
+            <span>Class Progress</span>
+            <span>65% Complete</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="bg-primary h-2 rounded-full" style={{ width: '65%' }}></div>
+          </div>
+        </div>
+        
+        <div className="flex flex-col items-center justify-center my-12">
+          <div className="flex items-center justify-center mb-6 bg-gray-100 rounded-full w-16 h-16">
+            <AlertCircle className="h-8 w-8 text-gray-400" />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">No Slides Available</h2>
+          <p className="text-gray-500 mb-4 text-center">There are no slides available for this lesson. This might be due to:</p>
+          <ul className="space-y-2 text-gray-500 mb-6 list-disc pl-6">
+            <li>Content is still being loaded from storage</li>
+            <li>The slides are stored in a different format or location</li>
+            <li>The unit content is not yet available</li>
           </ul>
-          <Button className="flex items-center gap-2">
-            <RefreshCw className="h-4 w-4" />
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="flex items-center gap-2"
+            onClick={() => window.location.reload()}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+              <path d="M21 3v5h-5"></path>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+              <path d="M8 16H3v5"></path>
+            </svg>
             Retry Loading Slides
           </Button>
         </div>
