@@ -515,9 +515,9 @@ export default function MaterialViewer() {
                                     />
                                   )}
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
-                                    {/* Hide AWS credentials by using a cleaned version of the URL */}
+                                    {/* Use the secure proxy URL provided by the backend */}
                                     <img
-                                      src={material.content.split('?')[0]} 
+                                      src={material.content} 
                                       alt={material.title}
                                       className="max-w-full max-h-full object-contain"
                                       style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
@@ -548,7 +548,7 @@ export default function MaterialViewer() {
                                       <video 
                                         controls 
                                         className="max-w-full max-h-full object-contain"
-                                        src={material.content.split('?')[0]}
+                                        src={material.content}
                                         style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
                                         onError={(e) => {
                                           console.error("Failed to load video:", material.title);
@@ -579,7 +579,7 @@ export default function MaterialViewer() {
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
                                     <div className="relative w-full h-full flex items-center justify-center">
                                       <iframe
-                                        src={material.content.split('?')[0]}
+                                        src={material.content}
                                         title={material.title}
                                         className="max-w-full max-h-full"
                                         style={{ width: '100%', height: 'calc(60vh - 60px)' }}
@@ -705,7 +705,7 @@ export default function MaterialViewer() {
                         <div className="relative h-14 bg-gray-100 flex items-center justify-center">
                           {material.contentType === 'IMAGE' && material.content ? (
                             <img 
-                              src={material.content.split('?')[0]}
+                              src={material.content}
                               alt={`Thumbnail for ${material.title}`}
                               className="w-full h-full object-cover"
                             />
@@ -764,7 +764,7 @@ export default function MaterialViewer() {
                     // Find the first PDF material in this unit
                     const pdfMaterial = materials.find(m => m.contentType === 'PDF');
                     if (pdfMaterial) {
-                      window.open(pdfMaterial.content.split('?')[0], '_blank');
+                      window.open(pdfMaterial.content, '_blank');
                     }
                   }}>
                   <Download className="h-4 w-4" />
