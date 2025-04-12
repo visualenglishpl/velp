@@ -219,7 +219,7 @@ export default function MaterialViewer() {
         {/* Top Navigation Bar */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-4">
-            <Link href={`/books/${book?.id}/units`}>
+            <Link href={`/books/${book?.bookId}/units/${unitId}`}>
               <Button variant="outline" size="sm" className="flex items-center gap-2">
                 <ArrowLeft className="h-4 w-4" />
                 Back to Unit
@@ -426,7 +426,7 @@ export default function MaterialViewer() {
       {/* Top Navigation Bar */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <Link href={`/books/${book?.id}/units/${unitId}`}>
+          <Link href={`/books/${book?.bookId}/units/${unitId}`}>
             <Button variant="outline" size="sm" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Unit
