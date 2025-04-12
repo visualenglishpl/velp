@@ -629,7 +629,7 @@ export default function MaterialViewer() {
                 </Button>
               )}
             </div>
-            <p className="text-sm text-gray-500">{currentMaterial?.description}</p>
+            {/* Description removed as requested */}
           </div>
           
           {/* Teacher Resources Section */}
