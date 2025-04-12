@@ -207,9 +207,10 @@ export default function ContentViewer() {
                         (e.target as HTMLImageElement).src = format;
                         
                         // Set up handler for the next format if this one fails
-                        (e.target as HTMLImageElement).onerror = (event: Event) => {
+                        const img = e.target as HTMLImageElement;
+                        img.addEventListener('error', () => {
                           tryAlternateFormats(formats, index + 1);
-                        };
+                        });
                       };
                       
                       // Define all possible formats to try
@@ -251,14 +252,46 @@ export default function ContentViewer() {
               )}
               
               {(currentMaterial.contentType === 'PDF' || currentMaterial.contentType === 'DOCUMENT') && (
-                <iframe
-                  src={
-                    book && unit
-                      ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.pdf`
-                      : currentMaterial.content
-                  }
-                  className="w-full h-[50vh]"
-                />
+                <div className="w-full">
+                  <iframe
+                    src={currentMaterial.content}
+                    className="w-full h-[50vh] border-0"
+                    onLoad={(e) => {
+                      // Check if frame loaded successfully
+                      const frame = e.target as HTMLIFrameElement;
+                      try {
+                        // This will throw an error if the content failed to load
+                        const frameContent = frame.contentWindow?.document?.body?.innerText || '';
+                        
+                        // Check if the content contains S3 error messages
+                        if (frameContent.includes('NoSuchKey') || frameContent.includes('does not exist')) {
+                          // Create error display
+                          const errorContainer = document.createElement('div');
+                          errorContainer.className = 'p-4 bg-red-50 border border-red-200 rounded-md text-red-600';
+                          errorContainer.innerHTML = `
+                            <div class="flex items-center mb-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                              <span class="font-medium">Content Not Available</span>
+                            </div>
+                            <p>The requested document could not be found. Please try an alternative format or contact support.</p>
+                            <p class="mt-2 text-xs text-gray-600">Path: ${currentMaterial.content}</p>
+                          `;
+                          
+                          // Replace iframe with error message
+                          const parent = frame.parentNode as HTMLElement;
+                          if (parent) {
+                            parent.innerHTML = '';
+                            parent.appendChild(errorContainer);
+                          }
+                        }
+                      } catch (error) {
+                        console.error("Error loading PDF content:", error);
+                      }
+                    }}
+                  />
+                </div>
               )}
               
               {currentMaterial.contentType === 'GAME' && (
