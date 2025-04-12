@@ -73,7 +73,15 @@ export default function ContentViewer() {
     return content.includes("\n") || 
            content.includes("Material Covered") || 
            content.includes("School Vocabulary") ||
-           content.includes("Practice sentences");
+           content.includes("Practice sentences") ||
+           content.includes("School Facilities");
+  };
+  
+  // Special check for school vocabulary content in Book 5
+  const isSchoolVocabularyContent = (material: Material): boolean => {
+    if (material.title.includes("School Vocabulary")) return true;
+    if (typeof material.content !== 'string') return false;
+    return material.content.includes("School Vocabulary") || material.content.includes("School Facilities");
   };
   
   // Data fetching hooks
@@ -557,8 +565,7 @@ export default function ContentViewer() {
                               )}
                               
                               {/* Special case for School Vocabulary in Book 5 */}
-                              {(material.title.includes('School Vocabulary') || 
-                                 (material.content && material.content.includes('School Vocabulary'))) ? (
+                              {isSchoolVocabularyContent(material) ? (
                                 <div className="flex-1 w-full h-full p-4 bg-white rounded-lg">
                                   <div className="w-full h-full overflow-auto">
                                     <div className="max-w-4xl mx-auto">
