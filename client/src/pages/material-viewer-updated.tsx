@@ -350,14 +350,14 @@ export default function MaterialViewer() {
   const extractQuestionFromFilename = (filename: string): string => {
     if (!filename) return "";
     
-    // Handle unit introduction special case
+    // Handle unit introduction special case - return empty string instead of "Unit Introduction"
     if (filename.includes("Unit Introduction") || (filename.includes("Book") && filename.includes("Unit"))) {
-      return "Unit Introduction";
+      return "";
     }
     
-    // Handle "00 A.png" pattern slides
+    // Handle "00 A.png" pattern slides - return empty string instead of "Unit Content"
     if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/)) {
-      return "Unit Content";
+      return "";
     }
     
     // Clean up and format the extracted text
@@ -489,15 +489,9 @@ export default function MaterialViewer() {
       filename = '';
     }
     
-    // Special handling for "00 A.png" type slides - show "Unit Content" instead of blank
+    // Special handling for "00 A.png" type slides - don't show any header
     if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/)) {
-      return (
-        <div className="w-full text-center mb-4 p-2">
-          <h3 className="text-2xl font-semibold">
-            Unit Content
-          </h3>
-        </div>
-      );
+      return null;
     }
     
     // Extract the question from the decoded filename
