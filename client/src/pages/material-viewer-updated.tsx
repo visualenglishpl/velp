@@ -684,23 +684,41 @@ export default function MaterialViewer() {
                             <>
                               {material.contentType === 'IMAGE' && (
                                 <div className="flex flex-col items-center justify-center bg-white h-full">
-                                  <div className="flex-1 flex items-center justify-center w-full h-full">
-                                    {/* Use the secure proxy URL provided by the backend */}
-                                    <img
-                                      src={material.content} 
-                                      alt={material.title}
-                                      className="max-w-full max-h-full object-contain"
-                                      style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                      onError={(e) => {
-                                        console.error("Failed to load image:", material.title);
-                                        (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                      }}
-                                    />
-                                    {/* Banner message for admin users */}
-                                    <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                      {currentSlideIndex + 1}/{totalSlides}
+                                  {/* Special case for Unit Content slides with school facilities */}
+                                  {material.title && 
+                                   material.title.toLowerCase().includes('unit content') && 
+                                   unit?.unitNumber === 1 && 
+                                   book?.bookId === "5" && 
+                                   currentSlideIndex === 0 ? (
+                                    <div className="flex flex-col items-center justify-center w-full h-full bg-purple-50 p-8">
+                                      <div className="w-full text-center">
+                                        <h2 className="text-2xl font-semibold pb-6 text-purple-700">
+                                          <span className="text-green-500">✓</span>
+                                        </h2>
+                                        <p className="text-center text-purple-700 text-lg max-w-5xl mx-auto leading-relaxed">
+                                          Students eat meals and buy snacks Library: Quiet area for reading and studying After School Care: Activities after regular school hours Special School Areas Cloakroom: For changing shoes and outdoor clothing Classroom: Primary learning spaces Sports Field: Outdoor space for physical activities Playground: Recreational area for breaks Art Room: Space for creative projects Music Room: Where students learn instruments and singing School Vocabulary Learn words related to school facilities and locations Practice sentences about school activities and schedules Discuss favorite school subjects and teachers
+                                        </p>
+                                      </div>
                                     </div>
-                                  </div>
+                                  ) : (
+                                    <div className="flex-1 flex items-center justify-center w-full h-full">
+                                      {/* Use the secure proxy URL provided by the backend */}
+                                      <img
+                                        src={material.content} 
+                                        alt={material.title}
+                                        className="max-w-full max-h-full object-contain"
+                                        style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                        onError={(e) => {
+                                          console.error("Failed to load image:", material.title);
+                                          (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                        }}
+                                      />
+                                      {/* Banner message for admin users */}
+                                      <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
+                                        {currentSlideIndex + 1}/{totalSlides}
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
                               )}
                               
