@@ -411,8 +411,8 @@ const BookDetailPage = () => {
                     <Button 
                       size="sm"
                       onClick={() => {
-                        // Go directly to the content slider
-                        setLocation(`/units/${unit.id}/materials/0`);
+                        // Go directly to the content slider 
+                        setLocation(`/units/${unit.id}`);
                       }}
                       className="text-white hover:bg-opacity-90"
                       style={{ 
@@ -426,8 +426,8 @@ const BookDetailPage = () => {
                     <Button 
                       size="sm"
                       variant="outline"
-                      onClick={() => setLocation(`/units/${unit.id}/materials/0`)}
-                      title="Open in Material Viewer"
+                      onClick={() => setLocation(`/units/${unit.id}`)}
+                      title="Open in Content Viewer"
                     >
                       <Layers className="h-4 w-4" />
                     </Button>

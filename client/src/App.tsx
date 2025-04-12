@@ -20,8 +20,9 @@ function Router() {
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/books" component={BooksManagement} />
       <Route path="/admin/books/:id" component={BookDetailPage} />
-      <Route path="/units/:unitId" component={UnitDetailPage} />
+      <Route path="/admin/units/:unitId" component={UnitDetailPage} />
       <Route path="/units/:unitId/materials/:materialId?" component={MaterialViewer} />
+      <Route path="/units/:unitId" component={MaterialViewer} />
       {/* Redirect from old content management page to new unified books management */}
       <Route path="/admin/content">
         {() => {
@@ -38,7 +39,7 @@ function App() {
   const [location] = useLocation();
   const isAuthPage = location === "/auth";
   const isAdminPage = location.startsWith("/admin");
-  const isMaterialViewer = location.includes("/units/") && location.includes("/materials/");
+  const isMaterialViewer = location.includes("/units/");
   const showNavFooter = !isAuthPage && !isAdminPage && !isMaterialViewer;
 
   // Debugging

@@ -53,10 +53,14 @@ type Book = {
 export default function MaterialViewer() {
   // Get unit ID and material ID from the URL
   const [location] = useLocation();
-  const matches = location.match(/\/units\/(\d+)\/materials\/(\d+)/);
-  const unitId = matches ? parseInt(matches[1], 10) : 0;
-  const materialId = matches ? parseInt(matches[2], 10) : 0;
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(materialId === 0 ? 0 : -1); // Use -1 when specific material is requested
+  const materialMatches = location.match(/\/units\/(\d+)\/materials\/(\d+)/);
+  const unitMatches = location.match(/\/units\/(\d+)$/);
+  
+  // If we have material matches, use those, otherwise just get the unit ID
+  const unitId = materialMatches ? parseInt(materialMatches[1], 10) : 
+                unitMatches ? parseInt(unitMatches[1], 10) : 0;
+  const materialId = materialMatches ? parseInt(materialMatches[2], 10) : 0;
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0); // Always start at 0
   const [showSidebar, setShowSidebar] = useState(true);
 
   // Fetch unit details
