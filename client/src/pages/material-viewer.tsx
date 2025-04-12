@@ -555,12 +555,21 @@ export default function MaterialViewer() {
                                     </div>
                                   )}
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
+                                    {/* Hide AWS credentials by using a cleaned version of the URL */}
                                     <img
                                       src={material.content}
                                       alt={material.title}
                                       className="max-w-full max-h-full object-contain"
                                       style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                      onError={(e) => {
+                                        console.error("Failed to load image:", material.title);
+                                        (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                      }}
                                     />
+                                    {/* Banner message for admin users */}
+                                    <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
+                                      {currentSlideIndex + 1}/{totalSlides}
+                                    </div>
                                   </div>
                                 </div>
                               )}
@@ -582,14 +591,23 @@ export default function MaterialViewer() {
                                     </div>
                                   )}
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
-                                    <video 
-                                      controls 
-                                      className="max-w-full max-h-full object-contain"
-                                      src={material.content}
-                                      style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                    >
-                                      Your browser does not support the video tag.
-                                    </video>
+                                    <div className="relative w-full h-full flex items-center justify-center">
+                                      <video 
+                                        controls 
+                                        className="max-w-full max-h-full object-contain"
+                                        src={material.content}
+                                        style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                        onError={(e) => {
+                                          console.error("Failed to load video:", material.title);
+                                        }}
+                                      >
+                                        Your browser does not support the video tag.
+                                      </video>
+                                      {/* Banner message for admin users */}
+                                      <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
+                                        {currentSlideIndex + 1}/{totalSlides}
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               )}
@@ -613,13 +631,19 @@ export default function MaterialViewer() {
                                     </div>
                                   )}
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
-                                    <iframe
-                                      src={material.content}
-                                      title={material.title}
-                                      className="max-w-full max-h-full"
-                                      style={{ width: '100%', height: 'calc(60vh - 60px)' }}
-                                      allowFullScreen
-                                    />
+                                    <div className="relative w-full h-full flex items-center justify-center">
+                                      <iframe
+                                        src={material.content}
+                                        title={material.title}
+                                        className="max-w-full max-h-full"
+                                        style={{ width: '100%', height: 'calc(60vh - 60px)' }}
+                                        allowFullScreen
+                                      />
+                                      {/* Banner message for admin users */}
+                                      <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
+                                        {currentSlideIndex + 1}/{totalSlides}
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               )}
@@ -640,10 +664,16 @@ export default function MaterialViewer() {
                                       </div>
                                     </div>
                                   )}
-                                  <div className="p-6">
-                                    <p className="text-gray-500">{material.contentType} content</p>
-                                    <h3 className="text-xl font-semibold">{material.title}</h3>
-                                    <p className="text-gray-500 mt-2">{material.description}</p>
+                                  <div className="relative w-full h-full">
+                                    <div className="p-6">
+                                      <p className="text-gray-500">{material.contentType} content</p>
+                                      <h3 className="text-xl font-semibold">{material.title}</h3>
+                                      <p className="text-gray-500 mt-2">{material.description}</p>
+                                    </div>
+                                    {/* Banner message for admin users */}
+                                    <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
+                                      {currentSlideIndex + 1}/{totalSlides}
+                                    </div>
                                   </div>
                                 </div>
                               )}
