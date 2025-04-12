@@ -1020,12 +1020,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   const httpServer = createServer(app);
 
-  // Add a secure proxy endpoint for S3 content
+  // Add a secure proxy endpoint for S3 content with fixed path structure
   // This prevents exposing AWS credentials to the frontend
   app.get("/api/content/:bookId/unit:unitNumber/:filename", async (req, res) => {
     try {
       const { bookId, unitNumber, filename } = req.params;
-      const key = `book${bookId}/unit${unitNumber}/${decodeURIComponent(filename)}`;
+      
+      // Remove doubled path if it exists (like: /book5/unit1/book5/unit1/image.png)
+      let cleanFilename = decodeURIComponent(filename);
+      
+      // Check if filename already contains book/unit path and clean it
+      if (cleanFilename.includes(`book${bookId}/unit${unitNumber}/`)) {
+        cleanFilename = cleanFilename.split(`book${bookId}/unit${unitNumber}/`).pop() || cleanFilename;
+      }
+      
+      // Construct final key
+      const key = `book${bookId}/unit${unitNumber}/${cleanFilename}`;
       console.log(`Fetching content for key: ${key}`);
       
       // Generate a presigned URL on the server
