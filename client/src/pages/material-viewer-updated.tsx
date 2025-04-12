@@ -75,7 +75,8 @@ export default function MaterialViewer() {
   });
   
   // State management
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(1); // Start from slide 2 (index 1)
+  // Initialize with first slide (will be updated to first PNG in useEffect)
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
@@ -107,19 +108,52 @@ export default function MaterialViewer() {
       thumbsApi.scrollTo(selected);
     });
     
-    // Initialize with current slide
-    if (initialMaterialIndex >= 0 && initialMaterialIndex < totalSlides) {
-      navigateToSlide(initialMaterialIndex);
-    } else if (totalSlides > 0) {
-      navigateToSlide(0);
-    }
+    // Find the first PNG image slide (skipping the first/empty slide)
+    const findFirstPngSlide = () => {
+      if (materials && materials.length > 0) {
+        // Always skip the first empty slide (index 0) and start from 1
+        const skipFirstSlide = 1;
+        
+        // If initialMaterialIndex is provided and valid, use it instead
+        if (initialMaterialIndex > skipFirstSlide && initialMaterialIndex < totalSlides) {
+          return initialMaterialIndex;
+        }
+        
+        // First try: Look for the first PNG slide starting from index 1
+        for (let i = skipFirstSlide; i < materials.length; i++) {
+          const content = materials[i].content || '';
+          const isPng = content.toLowerCase().endsWith('.png');
+          
+          if (isPng) {
+            console.log('Found first PNG at index:', i);
+            return i;
+          }
+        }
+        
+        // Second try: Look for any image type starting from index 1
+        for (let i = skipFirstSlide; i < materials.length; i++) {
+          if (materials[i].contentType === 'IMAGE') {
+            console.log('Found first image at index:', i);
+            return i;
+          }
+        }
+        
+        // Fallback to the second slide (index 1) or the first valid slide
+        return materials.length > skipFirstSlide ? skipFirstSlide : 0;
+      }
+      return 0;
+    };
+    
+    // Navigate to the appropriate slide
+    const firstPngIndex = findFirstPngSlide();
+    navigateToSlide(firstPngIndex);
     
     // Cleanup function 
     return () => {
       // No explicit need to remove event listeners 
       // emblaCarousel handles this automatically
     };
-  }, [emblaApi, thumbsApi, totalSlides, navigateToSlide, initialMaterialIndex]);
+  }, [emblaApi, thumbsApi, totalSlides, navigateToSlide, initialMaterialIndex, materials]);
   
   // Keyboard navigation
   useEffect(() => {
@@ -407,7 +441,7 @@ export default function MaterialViewer() {
     
     return (
       <div className="w-full text-center mb-4 p-2">
-        <h3 className="text-2xl font-semibold text-emerald-700">
+        <h3 className="text-2xl font-semibold">
           {question}
         </h3>
       </div>
