@@ -20,8 +20,12 @@ import {
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 
-// Book icon URL template
-const S3_ICON_BASE_URL = "https://visualenglishmaterial.s3.amazonaws.com/icons/";
+// Type definition for the book thumbnail
+type BookThumbnail = {
+  bookId: string;
+  title: string;
+  gifUrl: string;
+};
 
 // Function to get different button colors based on unit number 
 const getButtonColor = (unitNumber: number): string => {
@@ -76,6 +80,12 @@ const BookDetailPage = () => {
     queryKey: [`/api/books/${bookId}/units`],
     enabled: !!bookId && !!user,
   });
+  
+  // Fetch thumbnails with presigned URLs
+  const { data: thumbnails, isLoading: isThumbnailsLoading } = useQuery<BookThumbnail[]>({
+    queryKey: ["/api/assets/book-thumbnails"],
+    enabled: !!user,
+  });
 
   // Determine if user can edit (admin only)
   const canEdit = user?.role === "admin";
@@ -99,31 +109,46 @@ const BookDetailPage = () => {
         <div className="container mx-auto">
           {/* GIF Banner */}
           <div className="flex justify-center mb-4">
-            {book ? (
-              <img 
-                src={`${S3_ICON_BASE_URL}VISUAL ${book.bookId}.gif`} 
-                alt={`Visual English Animation for Book ${book.bookId}`}
-                className="max-h-60 object-contain rounded-lg shadow-sm"
-                onError={(e) => {
-                  console.log(`Failed to load GIF banner for book ${book.bookId}`);
-                  // Fallback to default GIF if specific one doesn't exist
-                  (e.target as HTMLImageElement).src = `${S3_ICON_BASE_URL}VISUAL 1.gif`;
-                  // Add a subtle border to indicate a fallback is being used
-                  (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                }}
-              />
+            {book && thumbnails ? (
+              <div className="relative">
+                {/* Find the matching thumbnail with presigned URL */}
+                {(() => {
+                  const thumbnail = thumbnails.find(t => t.bookId === book.bookId);
+                  
+                  if (thumbnail) {
+                    return (
+                      <img 
+                        src={thumbnail.gifUrl} 
+                        alt={`Visual English Animation for Book ${book.bookId}`}
+                        className="max-h-60 object-contain rounded-lg shadow-sm"
+                        onError={(e) => {
+                          console.log(`Failed to load GIF banner for book ${book.bookId}`);
+                          // Add a subtle border to indicate a fallback is being used
+                          (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                        }}
+                      />
+                    );
+                  } else {
+                    // If thumbnail is not found, display a skeleton loader
+                    return (
+                      <div className="w-96 h-60 bg-gray-100 animate-pulse rounded-lg flex items-center justify-center">
+                        <BookOpen className="h-16 w-16 text-gray-300" />
+                      </div>
+                    );
+                  }
+                })()}
+              </div>
             ) : (
-              <img 
-                src={`${S3_ICON_BASE_URL}VISUAL 1.gif`} 
-                alt="Visual English Animation" 
-                className="max-h-60 object-contain rounded-lg shadow-sm"
-              />
+              // Loading state
+              <div className="w-96 h-60 bg-gray-100 animate-pulse rounded-lg flex items-center justify-center">
+                <BookOpen className="h-16 w-16 text-gray-300" />
+              </div>
             )}
           </div>
           
           {/* Book title header */}
           <div className="flex justify-center mt-4">
-            <h1 className="text-xl font-bold">{book ? `${book.bookId}: ${book.title}` : 'Book Details'}</h1>
+            <h1 className="text-xl font-bold">{book ? `Visual English Book ${book.bookId}` : 'Book Details'}</h1>
           </div>
         </div>
       </div>
@@ -335,6 +360,85 @@ const BookDetailPage = () => {
                 </CardFooter>
               </Card>
             ))}
+          </div>
+        ) : book ? (
+          // If book exists but no units were found from the API, render placeholders for units
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {(() => {
+              // Determine number of units to display based on book ID
+              let unitCount = 0;
+              if (book.bookId.startsWith('0')) {
+                unitCount = 20; // Books 0a, 0b, 0c have 20 units
+              } else {
+                const bookNum = parseInt(book.bookId);
+                if (bookNum >= 1 && bookNum <= 3) {
+                  unitCount = 18; // Books 1-3 have 18 units
+                } else if (bookNum >= 4 && bookNum <= 7) {
+                  unitCount = 16; // Books 4-7 have 16 units
+                }
+              }
+              
+              // Create array of placeholder units
+              return Array.from({ length: unitCount }, (_, i) => {
+                const unitNumber = i + 1;
+                return (
+                  <Card key={`unit-${unitNumber}`} className="hover:shadow-md transition-shadow">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg">Unit {unitNumber}</CardTitle>
+                      <CardDescription>Unit {unitNumber} of Book {book.bookId}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        No description available.
+                      </p>
+                    </CardContent>
+                    <CardFooter className="flex justify-between">
+                      <Button 
+                        size="sm"
+                        onClick={() => {
+                          // If admin, show a toast with option to create unit
+                          if (canEdit) {
+                            toast({
+                              title: "Unit Not Available",
+                              description: `Unit ${unitNumber} needs to be created first. Would you like to create it now?`,
+                              action: (
+                                <Button 
+                                  size="sm" 
+                                  variant="outline"
+                                  onClick={() => setLocation(`/admin/books/${bookId}/units/create`)}
+                                >
+                                  Create Unit
+                                </Button>
+                              )
+                            });
+                          } else {
+                            toast({
+                              title: "Unit Not Available",
+                              description: "This unit hasn't been created yet. Please contact an administrator.",
+                              variant: "destructive"
+                            });
+                          }
+                        }}
+                        className="text-white hover:bg-opacity-90"
+                        style={{ backgroundColor: getButtonColor(unitNumber) }}
+                      >
+                        View Unit
+                      </Button>
+                      
+                      {canEdit && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setLocation(`/admin/books/${bookId}/units/create`)}
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </CardFooter>
+                  </Card>
+                );
+              });
+            })()}
           </div>
         ) : (
           <Card className="bg-gray-50 border-dashed border-2 border-gray-200">

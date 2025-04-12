@@ -417,6 +417,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to delete material" });
     }
   });
+  
+  // Unit thumbnails endpoint
+  app.get("/api/assets/unit-thumbnails/:bookId", isAuthenticated, async (req, res) => {
+    try {
+      const { bookId } = req.params;
+      
+      if (!bookId) {
+        return res.status(400).json({ error: "Book ID is required" });
+      }
+      
+      // Generate presigned URLs for unit thumbnails
+      // Format for unit thumbnails is book[bookId]/icons/thumbnailsuni1-10.png
+      // Different ranges based on book: 
+      // - Books 0a-0c: units 1-20
+      // - Books 1-3: units 1-18
+      // - Books 4-7: units 1-16
+      
+      let unitCount = 0;
+      
+      // Determine unit count based on book ID
+      if (bookId.startsWith('0')) {
+        unitCount = 20; // Books 0a, 0b, 0c have 20 units
+      } else {
+        const bookNum = parseInt(bookId);
+        if (bookNum >= 1 && bookNum <= 3) {
+          unitCount = 18; // Books 1-3 have 18 units
+        } else if (bookNum >= 4 && bookNum <= 7) {
+          unitCount = 16; // Books 4-7 have 16 units
+        }
+      }
+      
+      const thumbnails = [];
+      
+      // Generate thumbnails in batches of 10 (as per the file naming pattern)
+      for (let i = 1; i <= unitCount; i += 10) {
+        const startUnit = i;
+        const endUnit = Math.min(i + 9, unitCount);
+        const range = `${startUnit}-${endUnit}`;
+        
+        const thumbnailUrl = await getS3PresignedUrl(`book${bookId}/icons/thumbnailsuni${range}.png`);
+        
+        if (thumbnailUrl) {
+          thumbnails.push({
+            startUnit,
+            endUnit, 
+            url: thumbnailUrl
+          });
+        }
+      }
+      
+      res.json(thumbnails);
+    } catch (err) {
+      console.error("Error generating unit thumbnail URLs:", err);
+      res.status(500).json({ error: "Failed to generate unit thumbnail URLs" });
+    }
+  });
 
   const httpServer = createServer(app);
 
