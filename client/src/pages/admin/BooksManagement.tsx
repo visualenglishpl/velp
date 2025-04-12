@@ -751,7 +751,8 @@ const BooksManagementPage = () => {
   };
   
   const handleUnitSelect = (unitId: number) => {
-    setSelectedUnitId(unitId);
+    // Instead of showing materials management, redirect directly to content slider
+    navigate(`/units/${unitId}/materials/0`);
   };
   
   const handleBackToBooks = () => {
