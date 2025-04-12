@@ -381,7 +381,10 @@ export default function MaterialViewer() {
         .replace(/\bEnglsih\b/gi, 'English')
         .replace(/\bMathematics\b/gi, 'Mathematics')
         .replace(/\bGeograpy\b/gi, 'Geography')
-        .replace(/\bSchoool\b/gi, 'School');
+        .replace(/\bSchoool\b/gi, 'School')
+        // Fix capitalization for special subjects
+        .replace(/\b(pe|Pe)\b/g, 'PE')
+        .replace(/\b(it|It)\b/g, 'IT');
       
       return formattedText;
     };
@@ -555,6 +558,8 @@ export default function MaterialViewer() {
             const isInterestingOrBoringMatch = filename.match(/is\s+(\w+)\s+interesting\s+or\s+boring/i);
             const isUsefulOrUselessMatch = filename.match(/is\s+(\w+)\s+useful\s+or\s+useless/i);
             const howManyLessonsMatch = filename.match(/how\s+many\s+(\w+)\s+lessons/i);
+            const whoIsYourTeacherMatch = filename.match(/who\s+is\s+your\s+(\w+)\s+teacher/i);
+            const doYouHaveInSchoolMatch = filename.match(/do\s+you\s+have\s+(\w+)\s+in\s+school/i);
             
             // Return appropriate prompt based on question type with "It is" format
             if (isEasyOrDifficultMatch) {
@@ -580,6 +585,20 @@ export default function MaterialViewer() {
               return (
                 <div className="text-sm text-gray-500 mt-2">
                   <span className="font-medium">Prompt answers:</span> "I have ... {subject} lessons a week."
+                </div>
+              );
+            } else if (whoIsYourTeacherMatch) {
+              const subject = whoIsYourTeacherMatch[1];
+              return (
+                <div className="text-sm text-gray-500 mt-2">
+                  <span className="font-medium">Prompt answers:</span> "My {subject} teacher is..."
+                </div>
+              );
+            } else if (doYouHaveInSchoolMatch) {
+              const subject = doYouHaveInSchoolMatch[1];
+              return (
+                <div className="text-sm text-gray-500 mt-2">
+                  <span className="font-medium">Prompt answers:</span> "Yes, I do." or "No, I don't."
                 </div>
               );
             }
