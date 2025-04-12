@@ -306,51 +306,64 @@ const BookDetailPage = () => {
         </div>
 
         {isLoadingUnits ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[...Array(3)].map((_, index) => (
-              <Card key={index}>
-                <CardHeader className="pb-2">
-                  <Skeleton className="h-6 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-1/2" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            {[...Array(10)].map((_, index) => (
+              <Card key={index} className="overflow-hidden">
+                {/* Thumbnail skeleton */}
+                <div className="aspect-[4/3] w-full bg-gray-100">
+                  <Skeleton className="h-full w-full" />
+                </div>
+                
+                <CardHeader className="pb-1 pt-3">
+                  <Skeleton className="h-5 w-3/4 mb-1" />
                 </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-10 w-full" />
+                <CardContent className="pb-3 pt-0">
+                  <Skeleton className="h-3 w-full mb-1" />
+                  <Skeleton className="h-3 w-2/3" />
                 </CardContent>
-                <CardFooter>
-                  <Skeleton className="h-9 w-full" />
+                <CardFooter className="pt-0">
+                  <Skeleton className="h-8 w-24" />
                 </CardFooter>
               </Card>
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {units.map((unit: any) => (
-              <Card key={unit.id} className="hover:shadow-md transition-shadow overflow-hidden">
+              <Card key={unit.id} className="hover:shadow-md transition-shadow overflow-hidden group">
                 {/* Unit thumbnail */}
-                {unit.thumbnailUrl && (
-                  <div className="w-full h-32 bg-gray-100 relative overflow-hidden">
+                <div className="aspect-[4/3] w-full bg-gray-100 relative overflow-hidden">
+                  {unit.thumbnailUrl ? (
                     <img 
                       src={unit.thumbnailUrl} 
                       alt={`Thumbnail for Unit ${unit.unitNumber}`}
-                      className="w-full h-full object-cover transition-transform hover:scale-105"
+                      className="w-full h-full object-contain transition-transform group-hover:scale-105"
                       onError={(e) => {
                         console.log(`Failed to load thumbnail for unit ${unit.unitNumber}`);
                         (e.target as HTMLImageElement).style.display = "none";
                       }}
                     />
+                  ) : (
+                    <div className="flex items-center justify-center h-full">
+                      <BookOpen className="h-12 w-12 text-gray-300" />
+                    </div>
+                  )}
+                  
+                  {/* Unit number overlay */}
+                  <div className="absolute top-2 left-2 bg-white/90 text-primary font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-sm">
+                    {unit.unitNumber}
                   </div>
-                )}
+                </div>
                 
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">Unit {unit.unitNumber}</CardTitle>
-                  <CardDescription>{unit.title}</CardDescription>
+                <CardHeader className="pb-1 pt-3">
+                  <CardTitle className="text-base">{unit.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600 line-clamp-2">
+                <CardContent className="pb-3 pt-0">
+                  <p className="text-xs text-gray-600 line-clamp-2">
                     {unit.description || "No description available."}
                   </p>
                 </CardContent>
-                <CardFooter className="flex justify-between">
+                <CardFooter className="flex justify-between pt-0">
                   <Button 
                     size="sm"
                     onClick={() => setLocation(`/admin/units/${unit.id}`)}
@@ -378,7 +391,7 @@ const BookDetailPage = () => {
           </div>
         ) : book ? (
           // If book exists but no units were found from the API, render placeholders for units
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {(() => {
               // Determine number of units to display based on book ID
               let unitCount = 0;
@@ -397,17 +410,28 @@ const BookDetailPage = () => {
               return Array.from({ length: unitCount }, (_, i) => {
                 const unitNumber = i + 1;
                 return (
-                  <Card key={`unit-${unitNumber}`} className="hover:shadow-md transition-shadow">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-lg">Unit {unitNumber}</CardTitle>
-                      <CardDescription>Unit {unitNumber} of Book {book.bookId}</CardDescription>
+                  <Card key={`unit-${unitNumber}`} className="hover:shadow-md transition-shadow overflow-hidden group">
+                    {/* Placeholder thumbnail */}
+                    <div className="aspect-[4/3] w-full bg-gray-100 relative overflow-hidden">
+                      <div className="flex items-center justify-center h-full">
+                        <BookOpen className="h-12 w-12 text-gray-300" />
+                      </div>
+                      
+                      {/* Unit number overlay */}
+                      <div className="absolute top-2 left-2 bg-white/90 text-primary font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-sm">
+                        {unitNumber}
+                      </div>
+                    </div>
+                    
+                    <CardHeader className="pb-1 pt-3">
+                      <CardTitle className="text-base">Unit {unitNumber}</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-gray-600 line-clamp-2">
+                    <CardContent className="pb-3 pt-0">
+                      <p className="text-xs text-gray-600 line-clamp-2">
                         No description available.
                       </p>
                     </CardContent>
-                    <CardFooter className="flex justify-between">
+                    <CardFooter className="flex justify-between pt-0">
                       <Button 
                         size="sm"
                         onClick={() => {
