@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import useEmblaCarousel from 'embla-carousel-react';
-import { AlertCircle, ArrowLeft, Check, ChevronLeft, ChevronRight, Download, ExternalLink, FileText, Lock, Maximize, Menu, Pencil, Plus, X, Youtube } from 'lucide-react';
+import { AlertCircle, ArrowLeft, Check, ChevronLeft, ChevronRight, Download, ExternalLink, FileText, HelpCircle, Lock, Maximize, Menu, MessageSquare, Pencil, Plus, X, Youtube } from 'lucide-react';
 
 // Define our types based on the backend schemas
 interface Material {
@@ -1210,7 +1210,7 @@ export default function MaterialViewer() {
               <h3 className="text-lg font-medium mb-4">Teaching Guidance</h3>
               <Card className="p-6 bg-gradient-to-br from-white to-blue-50/40">
                 <h4 className="font-semibold text-primary mb-6">
-                  Unit-specific guidance for {book?.title}, Unit {unit?.unitNumber} - {unit?.title}
+                  Unit-specific guidance for Book 5, Unit 1 - Unit 1
                 </h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1234,6 +1234,40 @@ export default function MaterialViewer() {
                       <li>Refer back to the textbook vocabulary section if available.</li>
                       <li>Pause and explain any unfamiliar words using visuals, gestures, or simple definitions.</li>
                     </ul>
+                  </div>
+                </div>
+                
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-white p-5 rounded-lg border border-gray-100">
+                    <h5 className="text-primary font-medium mb-4 flex items-center">
+                      <MessageSquare className="h-5 w-5 mr-2 text-primary/80" />
+                      Prompt Student Answers
+                    </h5>
+                    <div className="pl-2">
+                      <p className="mb-2">Use structured sentence frames:</p>
+                      <ul className="list-none space-y-1">
+                        <li className="text-sm mb-1">"Is it a cat or a dog?" → "It is a..."</li>
+                        <li className="text-sm mb-1">"Are they sitting or standing?" → "They are..."</li>
+                        <li className="text-sm mb-1">"Is he eating or sleeping?" → "He is..."</li>
+                        <li className="text-sm mb-1">"Is she happy or sad?" → "She is..."</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-5 rounded-lg border border-gray-100">
+                    <h5 className="text-primary font-medium mb-4 flex items-center">
+                      <HelpCircle className="h-5 w-5 mr-2 text-primary/80" />
+                      Ask Follow-up Questions
+                    </h5>
+                    <div className="pl-2">
+                      <p className="mb-2">To reinforce comprehension:</p>
+                      <ul className="list-none space-y-1">
+                        <li className="text-sm mb-1">"Why do you think so?"</li>
+                        <li className="text-sm mb-1">"Can you describe it more?"</li>
+                        <li className="text-sm mb-1">"What else can you see?"</li>
+                      </ul>
+                      <p className="text-xs italic mt-2">Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.</p>
+                    </div>
                   </div>
                 </div>
                 
