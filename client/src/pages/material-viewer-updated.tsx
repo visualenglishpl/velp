@@ -108,7 +108,7 @@ export default function MaterialViewer() {
       thumbsApi.scrollTo(selected);
     });
     
-    // Find the first PNG image slide (skipping the first/empty slide)
+    // Find the first PNG image slide (skipping the empty slides)
     const findFirstPngSlide = () => {
       if (materials && materials.length > 0) {
         // Always skip the first empty slide (index 0) and start from 1
@@ -119,12 +119,19 @@ export default function MaterialViewer() {
           return initialMaterialIndex;
         }
         
-        // First try: Look for the first PNG slide starting from index 1
+        // First try: Look for the first PNG slide starting from index 1, skipping empty slides
         for (let i = skipFirstSlide; i < materials.length; i++) {
           const content = materials[i].content || '';
-          const isPng = content.toLowerCase().endsWith('.png');
+          // Extract the filename from the content URL
+          const filename = content.split('/').pop() || '';
           
-          if (isPng) {
+          // Check if it's a PNG image that's not an empty slide
+          const isPng = content.toLowerCase().endsWith('.png');
+          // Check if it's an empty slide like "00 A.png" or similar
+          const isEmptySlide = filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/);
+          
+          // Find a PNG that's not an empty slide
+          if (isPng && !isEmptySlide) {
             console.log('Found first PNG at index:', i);
             return i;
           }
