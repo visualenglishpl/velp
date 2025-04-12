@@ -66,6 +66,15 @@ export default function ContentViewer() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
   
+  // Helper function to determine if content is actually text in Book 5 despite being marked as IMAGE
+  const isBook5TextContent = (content: string): boolean => {
+    return content && 
+           (content.includes("\n") || 
+            content.includes("Material Covered") || 
+            content.includes("School Vocabulary") ||
+            content.includes("Practice sentences"));
+  };
+  
   // Data fetching hooks
   const { data: unit, isLoading: unitLoading } = useQuery<Unit>({
     queryKey: [`/api/units/${unitId}`],
@@ -605,15 +614,30 @@ export default function ContentViewer() {
                                               const imgElement = e.target as HTMLImageElement;
                                               imgElement.style.display = 'none';
                                               
-                                              // Create a container for the fallback content
-                                              const container = document.createElement('div');
-                                              container.className = 'p-4 bg-white rounded text-center';
-                                              container.innerHTML = `
-                                                <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
-                                                <p class="text-gray-700">Loading image from S3 path: s3://visualenglishmaterial/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}</p>
-                                              `;
-                                              
-                                              imgElement.parentNode?.appendChild(container);
+                                              // Check if this is a Book 5 text content that's being mishandled as an image
+                                              if (book.bookId === "5" && isBook5TextContent(material.content)) {
+                                                // This is actually text content in Book 5, render it as text
+                                                const textContainer = document.createElement('div');
+                                                textContainer.className = 'p-4 bg-white rounded max-h-[calc(60vh-60px)] overflow-auto';
+                                                
+                                                // Create a pre element to preserve formatting
+                                                const preElement = document.createElement('pre');
+                                                preElement.className = 'whitespace-pre-wrap text-sm text-gray-800 font-sans';
+                                                preElement.textContent = material.content;
+                                                
+                                                textContainer.appendChild(preElement);
+                                                imgElement.parentNode?.appendChild(textContainer);
+                                              } else {
+                                                // Regular image error
+                                                const container = document.createElement('div');
+                                                container.className = 'p-4 bg-white rounded text-center';
+                                                container.innerHTML = `
+                                                  <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
+                                                  <p class="text-gray-700">Loading image from S3 path: s3://visualenglishmaterial/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}</p>
+                                                `;
+                                                
+                                                imgElement.parentNode?.appendChild(container);
+                                              }
                                             }}
                                           />
                                         </>
