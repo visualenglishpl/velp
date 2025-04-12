@@ -961,7 +961,10 @@ const BooksManagementPage = () => {
                 {units.map((unit) => (
                   <div key={unit.id} className="flex flex-col overflow-hidden bg-white shadow hover:shadow-md transition-shadow">
                     <div className="p-3 text-center border-b">
-                      <h3 className="font-semibold">Unit {unit.unitNumber}: {unit.title}</h3>
+                      <h3 className="font-semibold flex flex-col">
+                        <span>UNIT {unit.unitNumber}</span>
+                        <span>{unit.title}</span>
+                      </h3>
                     </div>
                     <div className="flex-1 p-6 flex items-center justify-center">
                       <div className="relative h-40 w-40 bg-gray-50 flex items-center justify-center overflow-hidden">
