@@ -351,12 +351,34 @@ export default function MaterialViewer() {
     if (!filename) return "";
     
     // Handle unit introduction special case - return empty string instead of "Unit Introduction"
-    if (filename.includes("Unit Introduction") || (filename.includes("Book") && filename.includes("Unit"))) {
+    if (
+      // Comprehensive checks for Unit Introduction slides
+      filename.includes("Unit Introduction") || 
+      filename.includes("unit introduction") || 
+      filename.toLowerCase().includes("unit introduction") ||
+      (filename.includes("Book") && filename.includes("Unit")) ||
+      (filename.includes("book") && filename.includes("unit")) ||
+      filename.toLowerCase().includes("book") && filename.toLowerCase().includes("unit") ||
+      // Introduction pattern slides
+      filename.match(/^0+\s*[Ii]ntro/i)
+    ) {
       return "";
     }
     
-    // Handle "00 A.png" pattern slides - return empty string instead of "Unit Content"
-    if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/)) {
+    // Handle "00 A.png" pattern slides and Unit Content slides - return empty string 
+    if (
+      // Match all possible variants of "00 A.png" pattern
+      filename.includes('00 A') || 
+      filename.includes('00A') || 
+      filename.includes('0 A') || 
+      filename.match(/^0+\s*[Aa]\.png$/) ||
+      // Make sure to exclude all variants of Unit Content
+      filename.includes('Unit Content') || 
+      filename.includes('unit content') || 
+      filename.toLowerCase().includes('unit content') ||
+      // Match slides with just a number and letter with nothing else
+      filename.match(/^\d+\s*[A-Za-z]\.png$/)
+    ) {
       return "";
     }
     
@@ -487,12 +509,18 @@ export default function MaterialViewer() {
     
     // Skip headers completely for special slides
     if (
-      // Skip unit introduction slides
-      filename.includes('Unit Introduction') || 
-      (filename.includes('Book') && filename.includes('Unit')) ||
-      // Skip "00 A.png" pattern slides 
+      // Skip slides matching 00 A.png pattern
       filename.includes('00 A') || 
-      filename.match(/^0+\s*[Aa]\.png$/)
+      filename.match(/^0+\s*[Aa]\.png$/) || 
+      // Skip unit introduction slides - more comprehensive checks
+      filename.includes("Unit Introduction") || 
+      filename.includes("unit introduction") || 
+      filename.toLowerCase().includes("unit introduction") ||
+      (filename.includes("Book") && filename.includes("Unit")) ||
+      (filename.includes("book") && filename.includes("unit")) ||
+      filename.toLowerCase().includes("book") && filename.toLowerCase().includes("unit") ||
+      // Skip any slides that seem like they might be introduction slides
+      filename.match(/^0+\s*[Ii]ntro/i)
     ) {
       return null;
     }
@@ -599,8 +627,28 @@ export default function MaterialViewer() {
               : currentMaterial.content.split('/').pop() || '';
               
             // Skip headers for unit introduction and empty slides
-            if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/) || 
-                filename.includes("Unit Introduction") || (filename.includes("Book") && filename.includes("Unit"))) {
+            if (
+              // Match all possible variants of "00 A.png" pattern
+              filename.includes('00 A') || 
+              filename.includes('00A') || 
+              filename.includes('0 A') || 
+              filename.match(/^0+\s*[Aa]\.png$/) ||
+              // Make sure to exclude all variants of Unit Content and Unit Introduction
+              filename.includes('Unit Content') || 
+              filename.includes('unit content') || 
+              filename.toLowerCase().includes('unit content') ||
+              filename.includes("Unit Introduction") || 
+              filename.includes("unit introduction") || 
+              filename.toLowerCase().includes("unit introduction") ||
+              // Skip book/unit slides
+              (filename.includes("Book") && filename.includes("Unit")) ||
+              (filename.includes("book") && filename.includes("unit")) ||
+              filename.toLowerCase().includes("book") && filename.toLowerCase().includes("unit") ||
+              // Skip any slides that seem like they might be introduction slides
+              filename.match(/^0+\s*[Ii]ntro/i) ||
+              // Match slides with just a number and letter with nothing else
+              filename.match(/^\d+\s*[A-Za-z]\.png$/)
+            ) {
               return null; // No header for these slides
             }
             
