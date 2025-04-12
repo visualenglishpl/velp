@@ -368,24 +368,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
               } else if (bookId === '1' || bookId === '2' || bookId === '3') {
                 // Books 1-3
                 alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-              } else if (bookId === '4') {
-                // Book 4 special case
+              } else if (bookId === '4' || bookId === '5') {
+                // Book 4 & 5 use same pattern for consistency
                 alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-              } else if (bookId === '5') {
-                // Book 5 - use exact path format from S3
-                // Primary path exactly matching s3://visualenglishmaterial/book5/icons/thumbnailsuni5-2.png
-                alternatePaths.push(`book5/icons/thumbnailsuni5-${unit.unitNumber}.png`);
                 
-                // Backup patterns for flexibility
-                alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+                // Common backup patterns for all books
                 alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-                alternatePaths.push(`book5/thumbnails/thumbnailsuni5-${unit.unitNumber}.png`);
-                alternatePaths.push(`thumbnails/book5/thumbnailsuni5-${unit.unitNumber}.png`);
-                alternatePaths.push(`icons/thumbnailsuni5-${unit.unitNumber}.png`);
+                alternatePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+                alternatePaths.push(`thumbnails/book${bookId}/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+                alternatePaths.push(`icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
                 // Try without leading zero
-                alternatePaths.push(`thumbnails/thumbnailsuni5-${String(unit.unitNumber).padStart(2, '0')}.png`);
-                // Try with spaces (like Book 3 has)
-                alternatePaths.push(`thumbnails/thumbnailsuni5 -${unit.unitNumber}.png`);
+                alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${String(unit.unitNumber).padStart(2, '0')}.png`);
+                // Try with spaces
+                alternatePaths.push(`thumbnails/thumbnailsuni${bookId} -${unit.unitNumber}.png`);
               } else {
                 // Books 6-7
                 alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
@@ -1041,16 +1036,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate a presigned URL on the server
       const presignedUrl = await getS3PresignedUrl(key);
       
-      // For Book 5 content, do a fallback check
-      if (!presignedUrl && bookId === '5') {
+      // For all books, do a fallback check (no special case for Book 5)
+      if (!presignedUrl) {
         // Try alternate formats
-        const fileExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
+        const fileExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif'];
         let foundUrl = null;
         
         for (const ext of fileExtensions) {
           if (!cleanFilename.toLowerCase().endsWith(ext)) {
             const altKey = `book${bookId}/unit${unitNumber}/${cleanFilename}${ext}`;
-            console.log(`Trying alternate key: ${altKey}`);
+            console.log(`Trying alternate key for Book ${bookId}: ${altKey}`);
             foundUrl = await getS3PresignedUrl(altKey);
             if (foundUrl) {
               console.log(`Found alternate URL for ${key} => ${altKey}`);
