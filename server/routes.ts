@@ -513,7 +513,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log(`Looking for materials in S3 path: ${basePath}`);
         
         try {
-          // Create a set of well-known content types
+          // Create a set of content types and patterns to check
           const contentTypes = [
             { 
               type: "IMAGE",
@@ -521,7 +521,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 `${basePath}slide01.jpg`, 
                 `${basePath}slide01.png`,
                 `${basePath}slides/slide01.jpg`,
-                `${basePath}slides/slide01.png`
+                `${basePath}slides/slide01.png`,
+                // Add format for the new naming convention
+                `${basePath}01 P A Subject English.png`,
+                `${basePath}01 *.png`,
+                `${basePath}01 *.jpg`,
+                `${basePath}01*.png`,
+                `${basePath}01*.jpg`
               ],
               title: "Unit Introduction",
               description: "Introduction to unit concepts",
@@ -533,7 +539,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 `${basePath}slide02.jpg`, 
                 `${basePath}slide02.png`,
                 `${basePath}slides/slide02.jpg`,
-                `${basePath}slides/slide02.png`
+                `${basePath}slides/slide02.png`,
+                // Add format for the new naming convention
+                `${basePath}02 *.png`,
+                `${basePath}02 *.jpg`,
+                `${basePath}02*.png`,
+                `${basePath}02*.jpg`
               ],
               title: "Key Vocabulary",
               description: "Essential vocabulary for this unit",
@@ -545,7 +556,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 `${basePath}slide03.jpg`, 
                 `${basePath}slide03.png`,
                 `${basePath}slides/slide03.jpg`,
-                `${basePath}slides/slide03.png`
+                `${basePath}slides/slide03.png`,
+                // Add format for the new naming convention
+                `${basePath}03 *.png`,
+                `${basePath}03 *.jpg`,
+                `${basePath}03*.png`,
+                `${basePath}03*.jpg`
               ],
               title: "Grammar Focus",
               description: "Key language structures explained",
@@ -557,7 +573,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 `${basePath}slide04.jpg`, 
                 `${basePath}slide04.png`,
                 `${basePath}slides/slide04.jpg`,
-                `${basePath}slides/slide04.png`
+                `${basePath}slides/slide04.png`,
+                // Add format for the new naming convention
+                `${basePath}04 *.png`,
+                `${basePath}04 *.jpg`,
+                `${basePath}04*.png`,
+                `${basePath}04*.jpg`
               ],
               title: "Vocabulary Practice",
               description: "Practice exercises for new vocabulary",
@@ -569,7 +590,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 `${basePath}slide05.jpg`, 
                 `${basePath}slide05.png`,
                 `${basePath}slides/slide05.jpg`,
-                `${basePath}slides/slide05.png`
+                `${basePath}slides/slide05.png`,
+                // Add format for the new naming convention
+                `${basePath}05 *.png`,
+                `${basePath}05 *.jpg`,
+                `${basePath}05*.png`,
+                `${basePath}05*.jpg`
               ],
               title: "Pattern Practice",
               description: "Practice language patterns and structures",
@@ -581,7 +607,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 `${basePath}slide06.jpg`, 
                 `${basePath}slide06.png`,
                 `${basePath}slides/slide06.jpg`,
-                `${basePath}slides/slide06.png`
+                `${basePath}slides/slide06.png`,
+                // Add format for the new naming convention
+                `${basePath}06 *.png`,
+                `${basePath}06 *.jpg`,
+                `${basePath}06*.png`,
+                `${basePath}06*.jpg`
               ],
               title: "Reading Exercise",
               description: "Reading comprehension activity",
