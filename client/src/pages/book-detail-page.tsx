@@ -407,17 +407,28 @@ const BookDetailPage = () => {
                   </p>
                 </CardContent>
                 <CardFooter className="flex justify-between pt-0">
-                  <Button 
-                    size="sm"
-                    onClick={() => setLocation(`/admin/units/${unit.id}`)}
-                    className="text-white hover:bg-opacity-90"
-                    style={{ 
-                      // Apply different color based on unit number for visual variety
-                      backgroundColor: getButtonColor(unit.unitNumber)
-                    }}
-                  >
-                    View Unit
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      size="sm"
+                      onClick={() => setLocation(`/admin/units/${unit.id}`)}
+                      className="text-white hover:bg-opacity-90"
+                      style={{ 
+                        // Apply different color based on unit number for visual variety
+                        backgroundColor: getButtonColor(unit.unitNumber)
+                      }}
+                    >
+                      View Unit
+                    </Button>
+                    
+                    <Button 
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setLocation(`/units/${unit.id}/materials/0`)}
+                      title="Open in Material Viewer"
+                    >
+                      <Layers className="h-4 w-4" />
+                    </Button>
+                  </div>
                   
                   {canEdit && (
                     <Button

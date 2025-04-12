@@ -495,7 +495,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Unit not found" });
       }
       
-      const materials = await storage.getMaterials(unitId);
+      let materials = await storage.getMaterials(unitId);
+      
+      // If no materials exist, generate placeholder materials for demonstration
+      if (materials.length === 0) {
+        const now = new Date();
+        const dummyMaterials = [
+          {
+            id: 10000 + (unitId * 100) + 1,
+            unitId,
+            title: "Introduction",
+            description: "Introduction to the unit concepts and vocabulary",
+            contentType: "IMAGE" as "document", // Type assertion to match schema
+            content: "https://picsum.photos/800/600?random=1",
+            orderIndex: 1,
+            isPublished: true,
+            createdAt: now,
+            updatedAt: now
+          },
+          {
+            id: 10000 + (unitId * 100) + 2,
+            unitId,
+            title: "Key Vocabulary",
+            description: "Essential vocabulary for this unit",
+            contentType: "IMAGE" as "document", // Type assertion to match schema
+            content: "https://picsum.photos/800/600?random=2",
+            orderIndex: 2,
+            isPublished: true,
+            createdAt: now,
+            updatedAt: now
+          },
+          {
+            id: 10000 + (unitId * 100) + 3,
+            unitId,
+            title: "Grammar Explanation",
+            description: "Explanation of grammar concepts",
+            contentType: "PDF" as "document", // Type assertion to match schema
+            content: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            orderIndex: 3,
+            isPublished: true,
+            createdAt: now,
+            updatedAt: now
+          },
+          {
+            id: 10000 + (unitId * 100) + 4,
+            unitId,
+            title: "Conversation Practice",
+            description: "Interactive dialogue examples",
+            contentType: "VIDEO" as "video", // Type assertion to match schema
+            content: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            orderIndex: 4,
+            isPublished: true,
+            createdAt: now,
+            updatedAt: now
+          },
+          {
+            id: 10000 + (unitId * 100) + 5,
+            unitId,
+            title: "Interactive Exercise",
+            description: "Practice what you've learned",
+            contentType: "GAME" as "exercise", // Type assertion to match schema
+            content: "https://h5p.org/h5p/embed/617",
+            orderIndex: 5,
+            isPublished: false, // This one is locked
+            createdAt: now,
+            updatedAt: now
+          }
+        ];
+        
+        // Add our custom properties to the materials for UI purposes
+        materials = dummyMaterials.map(material => ({
+          ...material,
+          // Custom properties for the material viewer
+          isLocked: !material.isPublished,
+          order: material.orderIndex,
+          // Override contentType for the viewer
+          contentType: material.contentType === "document" && material.content.includes(".pdf") ? "PDF" : 
+                      material.contentType === "video" ? "VIDEO" : 
+                      material.contentType === "exercise" ? "GAME" : "IMAGE"
+        }));
+      }
+      
       res.json(materials);
     } catch (err) {
       console.error("Error fetching materials:", err);

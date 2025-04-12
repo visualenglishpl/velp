@@ -37,7 +37,7 @@ export default function MaterialViewer() {
   const matches = location.match(/\/units\/(\d+)\/materials\/(\d+)/);
   const unitId = matches ? parseInt(matches[1], 10) : 0;
   const materialId = matches ? parseInt(matches[2], 10) : 0;
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(materialId === 0 ? 0 : -1); // Use -1 when specific material is requested
   const [showSidebar, setShowSidebar] = useState(true);
 
   // Fetch unit details
