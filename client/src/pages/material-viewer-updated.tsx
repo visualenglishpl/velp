@@ -1,219 +1,150 @@
-import { useState, useEffect, useCallback } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Link, useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { 
-  ArrowLeft, 
-  ChevronLeft, 
-  ChevronRight, 
-  Check, 
-  Lock, 
-  Maximize, 
-  FileText, 
-  Download,
-  Video,
-  Image as ImageIcon,
-  AlertCircle,
-  Gamepad2,
-  MessageSquare,
-  BookOpen,
-  HelpCircle,
-  MessageCircle,
-  ArrowRight,
-  ExternalLink,
-  Plus,
-  Pencil,
-  X,
-  Youtube
-} from "lucide-react";
+import { useParams, useLocation } from 'wouter';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import useEmblaCarousel from 'embla-carousel-react';
-
-// Material interface from shared schema
-type Material = {
-  id: number;
-  unitId: number;
-  title: string;
-  description: string | null;
-  contentType: string;
-  content: string;
-  order: number;
-  isLocked: boolean;
-};
-
-type Unit = {
-  id: number;
-  bookId: number;
-  unitNumber: number;
-  title: string;
-  description?: string;
-};
-
-type Book = {
-  id: number;
-  bookId: string;
-  title: string;
-};
+import { AlertCircle, ArrowLeft, Check, ChevronLeft, ChevronRight, Download, ExternalLink, FileText, Lock, Maximize, Menu, Pencil, Plus, X, Youtube } from 'lucide-react';
 
 export default function MaterialViewer() {
-  // Parse URL parameters
-  const [location] = useLocation();
-  const materialMatches = location.match(/\/units\/(\d+)\/materials\/(\d+)/);
-  const unitMatches = location.match(/\/units\/(\d+)$/);
+  const { unitId, materialId } = useParams();
+  const initialMaterialIndex = materialId ? parseInt(materialId) : 0;
   
-  // Extract unitId and materialIndex from URL
-  const unitId = materialMatches 
-    ? parseInt(materialMatches[1], 10) 
-    : unitMatches 
-      ? parseInt(unitMatches[1], 10) 
-      : 0;
-  
-  const initialMaterialIndex = materialMatches 
-    ? parseInt(materialMatches[2], 10) 
-    : 0;
-
-  // All useState hooks must be defined before any conditional logic
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
-  // Sidebar removed as requested
-  const showSidebar = false;
-  const [viewedSlides, setViewedSlides] = useState<number[]>([]);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  
-  // All useQuery hooks must be defined consistently
-  const { data: unit, isLoading: unitLoading } = useQuery<Unit>({
+  // Fetch unit and book data
+  const { data: unit } = useQuery({
     queryKey: [`/api/units/${unitId}`],
     enabled: !!unitId,
   });
-
-  const { data: book, isLoading: bookLoading } = useQuery<Book>({
+  
+  const { data: book } = useQuery({
     queryKey: [`/api/books/${unit?.bookId}`],
     enabled: !!unit?.bookId,
   });
-
-  const { data: materials, isLoading: materialsLoading } = useQuery<Material[]>({
+  
+  // Fetch materials for this unit
+  const { data: materials = [], isLoading } = useQuery({
     queryKey: [`/api/units/${unitId}/materials`],
     enabled: !!unitId,
   });
-
-  // All useEmblaCarousel hooks must be defined consistently
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: false,
-    align: 'center',
-    containScroll: 'keepSnaps',
+  
+  // Carousel setup
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    startIndex: initialMaterialIndex,
+    draggable: false,
   });
   
   const [thumbsRef, thumbsApi] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     dragFree: true,
-    axis: 'x'
   });
   
-  // All useCallback hooks must be defined consistently
-  const navigateToSlide = useCallback((index: number) => {
-    if (materials && index >= 0 && index < materials.length) {
-      setCurrentSlideIndex(index);
-      
-      if (emblaApi) {
-        emblaApi.scrollTo(index);
-      }
-    }
-  }, [materials, emblaApi]);
+  // State management
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [viewedSlides, setViewedSlides] = useState<number[]>([]);
   
-  const toggleFullscreen = useCallback(() => {
-    const element = document.getElementById('content-viewer');
-    
-    if (!document.fullscreenElement) {
-      element?.requestFullscreen().catch(err => {
-        console.error(`Error attempting to enable fullscreen: ${err.message}`);
-      });
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen();
-      setIsFullscreen(false);
-    }
-  }, []);
+  const totalSlides = materials.length;
+  const currentMaterial = materials[currentSlideIndex];
   
-  // Content type icon helper - regular function, not a hook
-  const getContentTypeIcon = (type: string) => {
-    switch (type) {
-      case 'IMAGE':
-        return <ImageIcon className="h-4 w-4" />;
-      case 'VIDEO':
-        return <Video className="h-4 w-4" />;
-      case 'PDF':
-        return <FileText className="h-4 w-4" />;
-      case 'GAME':
-        return <Gamepad2 className="h-4 w-4" />;
-      default:
-        return <FileText className="h-4 w-4" />;
-    }
-  };
-
-  // All useEffect hooks must be defined consistently
+  // Track viewed slides
   useEffect(() => {
-    if (materials && materials.length > 0) {
-      const currentMaterial = materials[currentSlideIndex];
-      if (currentMaterial && !viewedSlides.includes(currentMaterial.id)) {
-        setViewedSlides(prev => [...prev, currentMaterial.id]);
-      }
+    if (currentMaterial?.id && !viewedSlides.includes(currentMaterial.id)) {
+      setViewedSlides(prev => [...prev, currentMaterial.id]);
     }
-  }, [currentSlideIndex, materials, viewedSlides]);
+  }, [currentMaterial, viewedSlides]);
+  
+  // Methods for controlling the carousel
+  const navigateToSlide = useCallback((index: number) => {
+    if (emblaApi && index >= 0 && index < totalSlides) {
+      emblaApi.scrollTo(index);
+      setCurrentSlideIndex(index);
+    }
+  }, [emblaApi, totalSlides]);
   
   useEffect(() => {
     if (!emblaApi || !thumbsApi) return;
     
-    const onSelect = () => {
-      const index = emblaApi.selectedScrollSnap();
-      thumbsApi.scrollTo(index);
-      setCurrentSlideIndex(index);
-    };
+    emblaApi.on('select', () => {
+      setCurrentSlideIndex(emblaApi.selectedScrollSnap());
+      const selected = emblaApi.selectedScrollSnap();
+      thumbsApi.scrollTo(selected);
+    });
     
-    emblaApi.on('select', onSelect);
-    return () => {
-      emblaApi.off('select', onSelect);
-    };
-  }, [emblaApi, thumbsApi, setCurrentSlideIndex]);
-  
-  useEffect(() => {
-    if (emblaApi && currentSlideIndex >= 0) {
-      emblaApi.scrollTo(currentSlideIndex);
+    // Initialize with current slide
+    if (initialMaterialIndex >= 0 && initialMaterialIndex < totalSlides) {
+      navigateToSlide(initialMaterialIndex);
+    } else if (totalSlides > 0) {
+      navigateToSlide(0);
     }
-  }, [currentSlideIndex, emblaApi]);
+    
+    return () => {
+      emblaApi.off('select');
+    };
+  }, [emblaApi, thumbsApi, totalSlides, navigateToSlide, initialMaterialIndex]);
   
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
-        navigateToSlide(currentSlideIndex - 1);
-      } else if (e.key === 'ArrowRight') {
+      if (e.code === 'ArrowRight' || e.code === 'Space') {
         navigateToSlide(currentSlideIndex + 1);
+      } else if (e.code === 'ArrowLeft') {
+        navigateToSlide(currentSlideIndex - 1);
+      } else if (e.code === 'Escape') {
+        setIsFullscreen(false);
       }
     };
     
     window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentSlideIndex, navigateToSlide]);
-
-  // Calculate derived values
-  const totalSlides = materials?.length || 0;
-  const currentMaterial = materials && materials.length > 0 
-    ? materials[currentSlideIndex] 
-    : null;
-
+  
+  // Toggle fullscreen
+  const toggleFullscreen = () => {
+    setIsFullscreen(prev => !prev);
+  };
+  
+  // Handle exit fullscreen event (e.g., when user presses Escape)
+  useEffect(() => {
+    const handleExitFullscreen = () => {
+      if (document.fullscreenElement === null && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    
+    document.addEventListener('fullscreenchange', handleExitFullscreen);
+    return () => document.removeEventListener('fullscreenchange', handleExitFullscreen);
+  }, [isFullscreen]);
+  
+  // Function to get icon based on content type
+  const getContentTypeIcon = (contentType: string) => {
+    switch (contentType) {
+      case 'VIDEO':
+        return <Youtube className="h-4 w-4 text-red-500" />;
+      case 'PDF':
+        return <FileText className="h-4 w-4 text-blue-500" />;
+      case 'GAME':
+        return <div className="h-4 w-4 text-green-500">🎮</div>;
+      default:
+        return <FileText className="h-4 w-4 text-gray-500" />;
+    }
+  };
+  
   // Loading state
-  if (unitLoading || bookLoading || materialsLoading) {
-    return <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <Skeleton className="h-12 w-3/4 mb-4" />
-      <Skeleton className="h-[60vh] w-full mb-4" />
-      <Skeleton className="h-24 w-3/4" />
-    </div>;
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-12 flex items-center justify-center">
+        <div className="text-center">
+          <div className="h-12 w-12 border-4 border-t-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-500">Loading materials...</p>
+        </div>
+      </div>
+    );
   }
-
+  
   // No materials state
-  if (!materials || materials.length === 0) {
+  if (materials.length === 0) {
     return (
       <div className="container mx-auto px-4 py-6">
         {/* Top Navigation Bar */}
@@ -238,26 +169,6 @@ export default function MaterialViewer() {
           <h1 className="text-xl font-semibold">
             {book?.title} – {unit?.title}
           </h1>
-        </div>
-        
-        {/* Unit description */}
-        <div className="mb-6">
-          <p className="text-gray-600">Visual English Lesson</p>
-          <p className="text-gray-700 mt-2">
-            This unit covers key vocabulary and language structures related to {unit?.title}. 
-            Students will practice conversation, reading, and interactive activities.
-          </p>
-        </div>
-        
-        {/* Progress bar */}
-        <div className="mb-8">
-          <div className="flex justify-between text-sm mb-1">
-            <span>Class Progress</span>
-            <span>65% Complete</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div className="bg-primary h-2 rounded-full" style={{ width: '65%' }}></div>
-          </div>
         </div>
         
         <div className="flex flex-col items-center justify-center my-12">
@@ -561,17 +472,10 @@ export default function MaterialViewer() {
                                 <div className="flex flex-col items-center justify-center bg-white h-full">
                                   {/* Extract question from filename and display prominently at top */}
                                   {material.content && (
-                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
-                                      <div className="flex flex-col items-center justify-center">
-                                        {/* Checkmark to show question was asked */}
-                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                          <Check className="h-5 w-5 text-green-600" />
-                                        </span>
-                                        <h3 className="text-xl font-semibold text-primary">
-                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                        </h3>
-                                      </div>
-                                    </div>
+                                    <QuestionHeader 
+                                      content={material.content} 
+                                      title={material.title} 
+                                    />
                                   )}
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
                                     {/* Hide AWS credentials by using a cleaned version of the URL */}
@@ -597,17 +501,10 @@ export default function MaterialViewer() {
                                 <div className="flex flex-col bg-white h-full">
                                   {/* Extract question from filename and display prominently at top */}
                                   {material.content && (
-                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
-                                      <div className="flex flex-col items-center justify-center">
-                                        {/* Checkmark to show question was asked */}
-                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                          <Check className="h-5 w-5 text-green-600" />
-                                        </span>
-                                        <h3 className="text-xl font-semibold text-primary">
-                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                        </h3>
-                                      </div>
-                                    </div>
+                                    <QuestionHeader 
+                                      content={material.content} 
+                                      title={material.title} 
+                                    />
                                   )}
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
                                     <div className="relative w-full h-full flex items-center justify-center">
@@ -637,17 +534,10 @@ export default function MaterialViewer() {
                                 <div className="flex flex-col bg-white h-full">
                                   {/* Extract question from filename and display prominently at top */}
                                   {material.content && (
-                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
-                                      <div className="flex flex-col items-center justify-center">
-                                        {/* Checkmark to show question was asked */}
-                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                          <Check className="h-5 w-5 text-green-600" />
-                                        </span>
-                                        <h3 className="text-xl font-semibold text-primary">
-                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                        </h3>
-                                      </div>
-                                    </div>
+                                    <QuestionHeader 
+                                      content={material.content} 
+                                      title={material.title} 
+                                    />
                                   )}
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
                                     <div className="relative w-full h-full flex items-center justify-center">
@@ -671,17 +561,10 @@ export default function MaterialViewer() {
                                 <div className="flex flex-col items-center justify-center h-full bg-white">
                                   {/* Extract question from filename and display prominently at top */}
                                   {material.content && (
-                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
-                                      <div className="flex flex-col items-center justify-center">
-                                        {/* Checkmark to show question was asked */}
-                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                          <Check className="h-5 w-5 text-green-600" />
-                                        </span>
-                                        <h3 className="text-xl font-semibold text-primary">
-                                          {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                        </h3>
-                                      </div>
-                                    </div>
+                                    <QuestionHeader 
+                                      content={material.content} 
+                                      title={material.title}
+                                    />
                                   )}
                                   <div className="relative w-full h-full">
                                     <div className="p-6">
@@ -1000,124 +883,28 @@ export default function MaterialViewer() {
                       <li>Pause and explain any unfamiliar words using visuals, gestures, or simple definitions.</li>
                     </ul>
                   </div>
-                
-                  <div className="bg-white p-5 rounded-lg border border-gray-100">
-                    <h5 className="text-primary font-medium mb-4 flex items-center">
-                      <Video className="h-5 w-5 mr-2 text-primary/80" />
-                      Ask Follow-up Questions
-                    </h5>
-                    <p className="mb-3">To reinforce comprehension:</p>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>"Why do you think so?"</li>
-                      <li>"Can you describe it more?"</li>
-                      <li>"What else can you see?"</li>
-                    </ul>
-                  </div>
-                
-                  <div className="bg-white p-5 rounded-lg border border-gray-100">
-                    <h5 className="text-primary font-medium mb-4 flex items-center">
-                      <MessageSquare className="h-5 w-5 mr-2 text-primary/80" />
-                      Prompt Student Answers
-                    </h5>
-                    <p className="mb-3">Use structured sentence frames:</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div className="bg-gray-50 p-3 rounded">
-                        <span className="font-medium">Q:</span> "Is it a cat or a dog?"
-                        <span className="mx-2">→</span>
-                        <span className="font-medium">A:</span> "It is a..."
-                      </div>
-                      <div className="bg-gray-50 p-3 rounded">
-                        <span className="font-medium">Q:</span> "Are they sitting or standing?"
-                        <span className="mx-2">→</span>
-                        <span className="font-medium">A:</span> "They are..."
-                      </div>
-                      <div className="bg-gray-50 p-3 rounded">
-                        <span className="font-medium">Q:</span> "Is he eating or sleeping?"
-                        <span className="mx-2">→</span>
-                        <span className="font-medium">A:</span> "He is..."
-                      </div>
-                      <div className="bg-gray-50 p-3 rounded">
-                        <span className="font-medium">Q:</span> "Is she happy or sad?"
-                        <span className="mx-2">→</span>
-                        <span className="font-medium">A:</span> "She is..."
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </Card>
-            </div>
-            
-            {/* School Facilities & Areas */}
-            <div className="mb-6">
-              <h3 className="text-lg font-medium mb-4">Unit Content Summary</h3>
-              <Card className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h5 className="font-medium mb-3">School Facilities:</h5>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🏫</span>
-                        <span>Primary School: Structure and role of primary education</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🏢</span>
-                        <span>Office: Administrative tasks; headmaster/headmistress</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">💪</span>
-                        <span>Gym: Physical education and sports</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🍽️</span>
-                        <span>Canteen/Tuck Shop: Lunch and snacks</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">📚</span>
-                        <span>Library: Quiet area for reading and studying</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🌟</span>
-                        <span>After School Care: Post-school activities</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="font-medium mb-3">Special School Areas:</h5>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🧥</span>
-                        <span>Cloakroom: Changing shoes and storing clothing</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🏫</span>
-                        <span>Classroom: Primary area for lessons and learning</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">⚽</span>
-                        <span>Sports Field: Outdoor sports and activities</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🤾</span>
-                        <span>Playground: Free play and informal activities</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🎨</span>
-                        <span>Art Room: Creative space for drawing and crafting</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-primary">🎼</span>
-                        <span>Music Room: Learning and practicing music</span>
-                      </li>
-                    </ul>
-                  </div>
+                
+                <div className="mt-6 bg-white p-5 rounded-lg border border-gray-100">
+                  <h5 className="text-primary font-medium mb-4 flex items-center">
+                    <FileText className="h-5 w-5 mr-2 text-primary/80" />
+                    Grammar Structures
+                  </h5>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Use this unit to practice these structures:
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2 ml-2">
+                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Subject + is + adjective</div>
+                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">How many + noun + do you have?</div>
+                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Subject + is + adjective + or + adjective?</div>
+                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Who is your + subject + teacher?</div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </Card>
             </div>
           </div>
         </div>
-
-        {/* Sidebar removed as requested */}
       </div>
     </div>
   );
