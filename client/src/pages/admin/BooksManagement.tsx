@@ -985,7 +985,7 @@ const BooksManagementPage = () => {
                           backgroundColor: getBookButtonColor(book.bookId)
                         }} 
                       >
-                        Manage Book <span className="ml-1">→</span>
+                        View Book <span className="ml-1">→</span>
                       </Button>
                       
 
@@ -1058,7 +1058,7 @@ const BooksManagementPage = () => {
                           backgroundColor: getBookButtonColor(unit.unitNumber.toString())
                         }} 
                       >
-                        Manage Materials <span className="ml-1">→</span>
+                        View Materials <span className="ml-1">→</span>
                       </Button>
                       
 
