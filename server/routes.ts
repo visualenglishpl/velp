@@ -495,85 +495,258 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Unit not found" });
       }
       
+      // Get book details for S3 paths
+      const book = await storage.getBookById(unit.bookId);
+      if (!book) {
+        return res.status(404).json({ error: "Book not found" });
+      }
+      
       let materials = await storage.getMaterials(unitId);
       
-      // If no materials exist, generate placeholder materials for demonstration
+      // If no materials exist in database, fetch materials from S3
       if (materials.length === 0) {
-        const now = new Date();
-        const dummyMaterials = [
-          {
-            id: 10000 + (unitId * 100) + 1,
-            unitId,
-            title: "Introduction",
-            description: "Introduction to the unit concepts and vocabulary",
-            contentType: "IMAGE" as "document", // Type assertion to match schema
-            content: "https://picsum.photos/800/600?random=1",
-            orderIndex: 1,
-            isPublished: true,
-            createdAt: now,
-            updatedAt: now
-          },
-          {
-            id: 10000 + (unitId * 100) + 2,
-            unitId,
-            title: "Key Vocabulary",
-            description: "Essential vocabulary for this unit",
-            contentType: "IMAGE" as "document", // Type assertion to match schema
-            content: "https://picsum.photos/800/600?random=2",
-            orderIndex: 2,
-            isPublished: true,
-            createdAt: now,
-            updatedAt: now
-          },
-          {
-            id: 10000 + (unitId * 100) + 3,
-            unitId,
-            title: "Grammar Explanation",
-            description: "Explanation of grammar concepts",
-            contentType: "PDF" as "document", // Type assertion to match schema
-            content: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-            orderIndex: 3,
-            isPublished: true,
-            createdAt: now,
-            updatedAt: now
-          },
-          {
-            id: 10000 + (unitId * 100) + 4,
-            unitId,
-            title: "Conversation Practice",
-            description: "Interactive dialogue examples",
-            contentType: "VIDEO" as "video", // Type assertion to match schema
-            content: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-            orderIndex: 4,
-            isPublished: true,
-            createdAt: now,
-            updatedAt: now
-          },
-          {
-            id: 10000 + (unitId * 100) + 5,
-            unitId,
-            title: "Interactive Exercise",
-            description: "Practice what you've learned",
-            contentType: "GAME" as "exercise", // Type assertion to match schema
-            content: "https://h5p.org/h5p/embed/617",
-            orderIndex: 5,
-            isPublished: false, // This one is locked
-            createdAt: now,
-            updatedAt: now
-          }
-        ];
+        const bookId = book.bookId;
+        const unitNumber = unit.unitNumber;
         
-        // Add our custom properties to the materials for UI purposes
-        materials = dummyMaterials.map(material => ({
-          ...material,
-          // Custom properties for the material viewer
-          isLocked: !material.isPublished,
-          order: material.orderIndex,
-          // Override contentType for the viewer
-          contentType: material.contentType === "document" && material.content.includes(".pdf") ? "PDF" : 
-                      material.contentType === "video" ? "VIDEO" : 
-                      material.contentType === "exercise" ? "GAME" : "IMAGE"
-        }));
+        // Create the S3 base path for this unit
+        const basePath = `book${bookId}/unit${unitNumber}/`;
+        console.log(`Looking for materials in S3 path: ${basePath}`);
+        
+        try {
+          // Create a set of well-known content types
+          const contentTypes = [
+            { 
+              type: "IMAGE",
+              paths: [
+                `${basePath}slide01.jpg`, 
+                `${basePath}slide01.png`,
+                `${basePath}slides/slide01.jpg`,
+                `${basePath}slides/slide01.png`
+              ],
+              title: "Unit Introduction",
+              description: "Introduction to unit concepts",
+              isPublished: true
+            },
+            { 
+              type: "IMAGE", 
+              paths: [
+                `${basePath}slide02.jpg`, 
+                `${basePath}slide02.png`,
+                `${basePath}slides/slide02.jpg`,
+                `${basePath}slides/slide02.png`
+              ],
+              title: "Key Vocabulary",
+              description: "Essential vocabulary for this unit",
+              isPublished: true
+            },
+            { 
+              type: "IMAGE", 
+              paths: [
+                `${basePath}slide03.jpg`, 
+                `${basePath}slide03.png`,
+                `${basePath}slides/slide03.jpg`,
+                `${basePath}slides/slide03.png`
+              ],
+              title: "Grammar Focus",
+              description: "Key language structures explained",
+              isPublished: true
+            },
+            { 
+              type: "IMAGE", 
+              paths: [
+                `${basePath}slide04.jpg`, 
+                `${basePath}slide04.png`,
+                `${basePath}slides/slide04.jpg`,
+                `${basePath}slides/slide04.png`
+              ],
+              title: "Vocabulary Practice",
+              description: "Practice exercises for new vocabulary",
+              isPublished: true
+            },
+            { 
+              type: "IMAGE", 
+              paths: [
+                `${basePath}slide05.jpg`, 
+                `${basePath}slide05.png`,
+                `${basePath}slides/slide05.jpg`,
+                `${basePath}slides/slide05.png`
+              ],
+              title: "Pattern Practice",
+              description: "Practice language patterns and structures",
+              isPublished: true
+            },
+            { 
+              type: "IMAGE", 
+              paths: [
+                `${basePath}slide06.jpg`, 
+                `${basePath}slide06.png`,
+                `${basePath}slides/slide06.jpg`,
+                `${basePath}slides/slide06.png`
+              ],
+              title: "Reading Exercise",
+              description: "Reading comprehension activity",
+              isPublished: true
+            },
+            { 
+              type: "PDF", 
+              paths: [
+                `${basePath}worksheet.pdf`,
+                `${basePath}handout.pdf`
+              ],
+              title: "Printable Worksheet",
+              description: "Printable exercises for additional practice",
+              isPublished: true
+            },
+            { 
+              type: "VIDEO", 
+              paths: [
+                `${basePath}video.mp4`,
+                `${basePath}media/video.mp4`
+              ],
+              title: "Video Lesson",
+              description: "Video explanation of unit concepts",
+              isPublished: true
+            },
+            { 
+              type: "GAME", 
+              paths: [
+                `${basePath}game.html`,
+                `${basePath}interactive/game.html`
+              ],
+              title: "Interactive Exercise",
+              description: "Interactive game to practice new concepts",
+              isPublished: false
+            }
+          ];
+          
+          // Array to store successfully found materials
+          const foundMaterials = [];
+          let orderIndex = 1;
+          
+          // Check each content type for available materials
+          for (const contentItem of contentTypes) {
+            // Try each possible path until we find one that works
+            for (const path of contentItem.paths) {
+              try {
+                const url = await getS3PresignedUrl(path);
+                if (url) {
+                  console.log(`Found material at path: ${path}`);
+                  
+                  // Create a material object 
+                  foundMaterials.push({
+                    id: 10000 + (unitId * 100) + orderIndex,
+                    unitId,
+                    title: contentItem.title,
+                    description: contentItem.description,
+                    contentType: contentItem.type,
+                    content: url,
+                    orderIndex: orderIndex,
+                    isPublished: contentItem.isPublished,
+                    isLocked: !contentItem.isPublished,
+                    order: orderIndex,
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                  });
+                  
+                  orderIndex++;
+                  break; // Found a valid path, move to next content item
+                }
+              } catch (error) {
+                // Path not found, try next one
+                console.log(`Path not found: ${path}`);
+              }
+            }
+          }
+          
+          if (foundMaterials.length > 0) {
+            materials = foundMaterials;
+            console.log(`Found ${materials.length} materials for unit ${unitNumber} of book ${bookId}`);
+          } else {
+            console.log(`No materials found in S3 for unit ${unitNumber} of book ${bookId}`);
+          }
+        } catch (error) {
+          console.error("Error fetching materials from S3:", error);
+        }
+        
+        // If still no materials, generate placeholders as fallback
+        if (materials.length === 0) {
+          console.log("Using placeholder materials as fallback");
+          const now = new Date();
+          const dummyMaterials = [
+            {
+              id: 10000 + (unitId * 100) + 1,
+              unitId,
+              title: "Introduction",
+              description: "Introduction to the unit concepts and vocabulary",
+              contentType: "IMAGE" as "document", // Type assertion to match schema
+              content: "https://picsum.photos/800/600?random=1",
+              orderIndex: 1,
+              isPublished: true,
+              createdAt: now,
+              updatedAt: now
+            },
+            {
+              id: 10000 + (unitId * 100) + 2,
+              unitId,
+              title: "Key Vocabulary",
+              description: "Essential vocabulary for this unit",
+              contentType: "IMAGE" as "document", // Type assertion to match schema
+              content: "https://picsum.photos/800/600?random=2",
+              orderIndex: 2,
+              isPublished: true,
+              createdAt: now,
+              updatedAt: now
+            },
+            {
+              id: 10000 + (unitId * 100) + 3,
+              unitId,
+              title: "Grammar Explanation",
+              description: "Explanation of grammar concepts",
+              contentType: "PDF" as "document", // Type assertion to match schema
+              content: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+              orderIndex: 3,
+              isPublished: true,
+              createdAt: now,
+              updatedAt: now
+            },
+            {
+              id: 10000 + (unitId * 100) + 4,
+              unitId,
+              title: "Conversation Practice",
+              description: "Interactive dialogue examples",
+              contentType: "VIDEO" as "video", // Type assertion to match schema
+              content: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+              orderIndex: 4,
+              isPublished: true,
+              createdAt: now,
+              updatedAt: now
+            },
+            {
+              id: 10000 + (unitId * 100) + 5,
+              unitId,
+              title: "Interactive Exercise",
+              description: "Practice what you've learned",
+              contentType: "GAME" as "exercise", // Type assertion to match schema
+              content: "https://h5p.org/h5p/embed/617",
+              orderIndex: 5,
+              isPublished: false, // This one is locked
+              createdAt: now,
+              updatedAt: now
+            }
+          ];
+          
+          // Add our custom properties to the materials for UI purposes
+          materials = dummyMaterials.map(material => ({
+            ...material,
+            // Custom properties for the material viewer
+            isLocked: !material.isPublished,
+            order: material.orderIndex,
+            // Override contentType for the viewer
+            contentType: material.contentType === "document" && material.content.includes(".pdf") ? "PDF" : 
+                        material.contentType === "video" ? "VIDEO" : 
+                        material.contentType === "exercise" ? "GAME" : "IMAGE"
+          }));
+        }
       }
       
       res.json(materials);

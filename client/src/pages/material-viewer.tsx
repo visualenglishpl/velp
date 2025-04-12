@@ -1,27 +1,30 @@
 import { useState, useEffect, useCallback } from "react";
-import { useLocation, Link } from "wouter";
-import { 
-  ArrowLeft, 
-  Download, 
-  Lock, 
-  Check, 
-  RefreshCw, 
-  AlertCircle, 
-  ChevronLeft, 
-  ChevronRight,
-  Maximize,
-  Video,
-  FileText,
-  Image as ImageIcon,
-  Gamepad2
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
+import { Link, useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { 
+  ArrowLeft, 
+  Book, 
+  BookOpen, 
+  Layers, 
+  ChevronLeft, 
+  ChevronRight, 
+  Check, 
+  Lock, 
+  Maximize, 
+  FileText, 
+  Download,
+  Video,
+  Image as ImageIcon,
+  AlertCircle,
+  Gamepad2
+} from "lucide-react";
 import useEmblaCarousel from 'embla-carousel-react';
 
+// Material interface from shared schema
 type Material = {
   id: number;
   unitId: number;
@@ -48,14 +51,13 @@ type Book = {
 };
 
 export default function MaterialViewer() {
+  // Get unit ID and material ID from the URL
   const [location] = useLocation();
   const matches = location.match(/\/units\/(\d+)\/materials\/(\d+)/);
   const unitId = matches ? parseInt(matches[1], 10) : 0;
   const materialId = matches ? parseInt(matches[2], 10) : 0;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(materialId === 0 ? 0 : -1); // Use -1 when specific material is requested
   const [showSidebar, setShowSidebar] = useState(true);
-  
-
 
   // Fetch unit details
   const { data: unit, isLoading: unitLoading } = useQuery<Unit>({
@@ -242,80 +244,6 @@ export default function MaterialViewer() {
 
   const totalSlides = materials.length;
   
-  // Render content based on content type
-  const renderContent = () => {
-    if (!currentMaterial) return null;
-    
-    if (currentMaterial.isLocked) {
-      return (
-        <div className="flex flex-col items-center justify-center h-[60vh] bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
-          <Lock className="h-12 w-12 text-gray-400 mb-4" />
-          <h3 className="text-xl font-semibold mb-2">Content Locked</h3>
-          <p className="text-gray-500 text-center max-w-md">
-            This content is currently locked. Please upgrade your subscription to access all materials.
-          </p>
-        </div>
-      );
-    }
-
-    switch (currentMaterial.contentType) {
-      case 'IMAGE':
-        return (
-          <div className="flex items-center justify-center bg-black h-[60vh] rounded-lg overflow-hidden">
-            <img
-              src={currentMaterial.content}
-              alt={currentMaterial.title}
-              className="max-h-full max-w-full object-contain"
-            />
-          </div>
-        );
-      case 'VIDEO':
-        return (
-          <div className="h-[60vh] rounded-lg overflow-hidden">
-            <video 
-              controls 
-              className="w-full h-full"
-              src={currentMaterial.content}
-            >
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        );
-      case 'PDF':
-        return (
-          <div className="h-[60vh] rounded-lg overflow-hidden bg-gray-50 flex flex-col items-center justify-center">
-            <div className="text-center mb-4">
-              <p className="text-gray-500">PDF Document</p>
-              <h3 className="text-xl font-semibold">{currentMaterial.title}</h3>
-            </div>
-            <Button className="flex items-center gap-2" onClick={() => window.open(currentMaterial.content, '_blank')}>
-              <Download className="h-4 w-4" />
-              Open PDF
-            </Button>
-          </div>
-        );
-      case 'GAME':
-        return (
-          <div className="h-[60vh] rounded-lg overflow-hidden">
-            <iframe
-              src={currentMaterial.content}
-              title={currentMaterial.title}
-              className="w-full h-full"
-              allowFullScreen
-            />
-          </div>
-        );
-      default:
-        return (
-          <div className="flex flex-col items-center justify-center h-[60vh] bg-gray-50 rounded-lg">
-            <p className="text-gray-500">{currentMaterial.contentType} content</p>
-            <h3 className="text-xl font-semibold">{currentMaterial.title}</h3>
-            <p className="text-gray-500 mt-2">{currentMaterial.description}</p>
-          </div>
-        );
-    }
-  };
-
   // Initialize Embla Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
@@ -328,6 +256,17 @@ export default function MaterialViewer() {
     dragFree: true,
     axis: 'x'
   });
+  
+  // Define slide navigation function
+  const navigateToSlide = useCallback((index: number) => {
+    if (materials && index >= 0 && index < materials.length) {
+      setCurrentSlideIndex(index);
+      
+      if (emblaApi) {
+        emblaApi.scrollTo(index);
+      }
+    }
+  }, [materials, emblaApi]);
   
   // Sync main carousel with thumbnails and external state
   useEffect(() => {
@@ -366,16 +305,6 @@ export default function MaterialViewer() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [currentSlideIndex, navigateToSlide]);
-  
-  const navigateToSlide = (index: number) => {
-    if (index >= 0 && index < materials.length) {
-      setCurrentSlideIndex(index);
-      
-      if (emblaApi) {
-        emblaApi.scrollTo(index);
-      }
-    }
-  };
   
   // Fullscreen functionality
   const [isFullscreen, setIsFullscreen] = useState(false);
