@@ -248,7 +248,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 // Book 4 special case
                 alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               } else if (bookId === '5') {
-                // Book 5 - try additional patterns for maximum compatibility
+                // Book 5 - use exact path format from S3
+                // Primary path exactly matching s3://visualenglishmaterial/book5/icons/thumbnailsuni5-2.png
+                alternatePaths.push(`book5/icons/thumbnailsuni5-${unit.unitNumber}.png`);
+                
+                // Backup patterns for flexibility
                 alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
                 alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
                 alternatePaths.push(`book5/thumbnails/thumbnailsuni5-${unit.unitNumber}.png`);
@@ -350,7 +354,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
               // Book 4 special case
               alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
             } else if (bookId === '5') {
-              // Book 5 - try additional patterns for maximum compatibility
+              // Book 5 - use exact path format from S3
+              // Primary path exactly matching s3://visualenglishmaterial/book5/icons/thumbnailsuni5-2.png
+              alternatePaths.push(`book5/icons/thumbnailsuni5-${unit.unitNumber}.png`);
+              
+              // Backup patterns for flexibility
               alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               alternatePaths.push(`book5/thumbnails/thumbnailsuni5-${unit.unitNumber}.png`);
@@ -646,7 +654,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Book 4 special case
           possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
         } else if (bookId === '5') {
-          // Book 5 - try additional patterns for maximum compatibility
+          // Book 5 - use exact path format from S3
+          // Primary path exactly matching s3://visualenglishmaterial/book5/icons/thumbnailsuni5-2.png
+          possiblePaths.push(`book5/icons/thumbnailsuni5-${range}.png`);
+          
+          // Backup patterns for flexibility
           possiblePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`);
           possiblePaths.push(`thumbnails/thumbnailsuni${bookId}-${range}.png`);
           possiblePaths.push(`book5/thumbnails/thumbnailsuni5-${range}.png`);
