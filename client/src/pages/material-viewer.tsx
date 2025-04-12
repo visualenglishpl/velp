@@ -1,11 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLocation, Link } from "wouter";
-import { ArrowLeft, Download, Lock, Check, RefreshCw, AlertCircle } from "lucide-react";
+import { 
+  ArrowLeft, 
+  Download, 
+  Lock, 
+  Check, 
+  RefreshCw, 
+  AlertCircle, 
+  ChevronLeft, 
+  ChevronRight,
+  Maximize,
+  Video,
+  FileText,
+  Image as ImageIcon,
+  Gamepad2
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
+import useEmblaCarousel from 'embla-carousel-react';
 
 type Material = {
   id: number;
@@ -299,9 +314,95 @@ export default function MaterialViewer() {
     }
   };
 
+  // Initialize Embla Carousel
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: false,
+    align: 'center',
+    containScroll: 'keepSnaps',
+  });
+  
+  const [thumbsRef, thumbsApi] = useEmblaCarousel({
+    containScroll: 'keepSnaps',
+    dragFree: true,
+    axis: 'x'
+  });
+  
+  // Sync main carousel with thumbnails and external state
+  useEffect(() => {
+    if (!emblaApi || !thumbsApi) return;
+    
+    // Sync from main carousel to thumbnails
+    const onSelect = () => {
+      const index = emblaApi.selectedScrollSnap();
+      thumbsApi.scrollTo(index);
+      setCurrentSlideIndex(index);
+    };
+    
+    emblaApi.on('select', onSelect);
+    return () => emblaApi.off('select', onSelect);
+  }, [emblaApi, thumbsApi]);
+  
+  // Update carousel when currentSlideIndex changes from outside
+  useEffect(() => {
+    if (emblaApi && currentSlideIndex >= 0) {
+      emblaApi.scrollTo(currentSlideIndex);
+    }
+  }, [currentSlideIndex, emblaApi]);
+  
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        navigateToSlide(currentSlideIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        navigateToSlide(currentSlideIndex + 1);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentSlideIndex]);
+  
   const navigateToSlide = (index: number) => {
     if (index >= 0 && index < materials.length) {
       setCurrentSlideIndex(index);
+      
+      if (emblaApi) {
+        emblaApi.scrollTo(index);
+      }
+    }
+  };
+  
+  // Fullscreen functionality
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  
+  const toggleFullscreen = useCallback(() => {
+    const element = document.getElementById('content-viewer');
+    
+    if (!document.fullscreenElement) {
+      element?.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  }, []);
+  
+  // Content type icon
+  const getContentTypeIcon = (type: string) => {
+    switch (type) {
+      case 'IMAGE':
+        return <ImageIcon className="h-4 w-4" />;
+      case 'VIDEO':
+        return <Video className="h-4 w-4" />;
+      case 'PDF':
+        return <FileText className="h-4 w-4" />;
+      case 'GAME':
+        return <Gamepad2 className="h-4 w-4" />;
+      default:
+        return <FileText className="h-4 w-4" />;
     }
   };
 
@@ -321,6 +422,16 @@ export default function MaterialViewer() {
           </h1>
         </div>
         <div className="flex items-center gap-2">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={toggleFullscreen}
+            title="Toggle fullscreen"
+            className="hidden md:flex items-center gap-2"
+          >
+            <Maximize className="h-4 w-4" />
+            <span>Fullscreen</span>
+          </Button>
           <Button 
             variant="ghost" 
             size="sm"
@@ -348,13 +459,202 @@ export default function MaterialViewer() {
             <h2 className="text-lg font-medium">
               {currentMaterial?.title}
             </h2>
-            <div className="text-sm text-gray-500">
-              {currentSlideIndex + 1}/{totalSlides} slides
+            <div className="flex items-center gap-4">
+              <div className="text-sm text-gray-500">
+                {currentSlideIndex + 1}/{totalSlides} slides
+              </div>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={toggleFullscreen}
+                title="Toggle fullscreen"
+                className="md:hidden"
+              >
+                <Maximize className="h-4 w-4" />
+              </Button>
             </div>
           </div>
 
-          {/* Main Slide Viewer Area */}
-          {renderContent()}
+          {/* Main Content Carousel */}
+          <div 
+            id="content-viewer"
+            className={cn(
+              "relative rounded-lg overflow-hidden transition-all", 
+              isFullscreen ? "fixed inset-0 z-50 bg-black flex items-center justify-center" : ""
+            )}
+          >
+            {/* Progress bar at top */}
+            <div className="absolute top-0 left-0 right-0 z-10 h-1 bg-gray-200">
+              <div 
+                className="h-full bg-primary transition-all"
+                style={{ width: `${((currentSlideIndex + 1) / totalSlides) * 100}%` }}
+              />
+            </div>
+            
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex">
+                {materials.map((material, index) => (
+                  <div key={material.id} className="flex-[0_0_100%]">
+                    <div className="h-[60vh] relative">
+                      {/* Render content for each slide */}
+                      {currentSlideIndex === index && (
+                        <div className="w-full h-full">
+                          {material.isLocked ? (
+                            <div className="flex flex-col items-center justify-center h-full bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                              <Lock className="h-12 w-12 text-gray-400 mb-4" />
+                              <h3 className="text-xl font-semibold mb-2">Content Locked</h3>
+                              <p className="text-gray-500 text-center max-w-md">
+                                This content is currently locked. Please upgrade your subscription to access all materials.
+                              </p>
+                            </div>
+                          ) : (
+                            <>
+                              {material.contentType === 'IMAGE' && (
+                                <div className="flex items-center justify-center bg-black h-full">
+                                  <img
+                                    src={material.content}
+                                    alt={material.title}
+                                    className="max-h-full max-w-full object-contain"
+                                  />
+                                </div>
+                              )}
+                              
+                              {material.contentType === 'VIDEO' && (
+                                <div className="h-full">
+                                  <video 
+                                    controls 
+                                    className="w-full h-full"
+                                    src={material.content}
+                                  >
+                                    Your browser does not support the video tag.
+                                  </video>
+                                </div>
+                              )}
+                              
+                              {material.contentType === 'PDF' && (
+                                <div className="h-full bg-gray-50 flex flex-col items-center justify-center">
+                                  <div className="text-center mb-4">
+                                    <p className="text-gray-500">PDF Document</p>
+                                    <h3 className="text-xl font-semibold">{material.title}</h3>
+                                  </div>
+                                  <Button className="flex items-center gap-2" onClick={() => window.open(material.content, '_blank')}>
+                                    <Download className="h-4 w-4" />
+                                    Open PDF
+                                  </Button>
+                                </div>
+                              )}
+                              
+                              {material.contentType === 'GAME' && (
+                                <div className="h-full">
+                                  <iframe
+                                    src={material.content}
+                                    title={material.title}
+                                    className="w-full h-full"
+                                    allowFullScreen
+                                  />
+                                </div>
+                              )}
+                              
+                              {!['IMAGE', 'VIDEO', 'PDF', 'GAME'].includes(material.contentType) && (
+                                <div className="flex flex-col items-center justify-center h-full bg-gray-50">
+                                  <p className="text-gray-500">{material.contentType} content</p>
+                                  <h3 className="text-xl font-semibold">{material.title}</h3>
+                                  <p className="text-gray-500 mt-2">{material.description}</p>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Navigation controls overlaid on the carousel */}
+            <button 
+              className={cn(
+                "absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md transition-opacity",
+                currentSlideIndex === 0 ? "opacity-50 cursor-not-allowed" : "opacity-80"
+              )}
+              onClick={() => navigateToSlide(currentSlideIndex - 1)}
+              disabled={currentSlideIndex === 0}
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+            
+            <button 
+              className={cn(
+                "absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md transition-opacity",
+                currentSlideIndex === totalSlides - 1 ? "opacity-50 cursor-not-allowed" : "opacity-80"
+              )}
+              onClick={() => navigateToSlide(currentSlideIndex + 1)}
+              disabled={currentSlideIndex === totalSlides - 1}
+              aria-label="Next slide"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+          </div>
+          
+          {/* Thumbnails slider */}
+          <div className="relative mt-4 px-8">
+            <div className="overflow-hidden" ref={thumbsRef}>
+              <div className="flex gap-2 py-2">
+                {materials.map((material, index) => (
+                  <div 
+                    key={material.id} 
+                    className={cn(
+                      "flex-[0_0_80px] min-w-0 cursor-pointer",
+                      "relative overflow-hidden rounded border-2 transition-all",
+                      currentSlideIndex === index ? "border-primary" : "border-transparent"
+                    )}
+                    onClick={() => navigateToSlide(index)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Go to slide ${index + 1}: ${material.title}`}
+                  >
+                    {/* Content preview */}
+                    <div className="relative h-14 bg-gray-100 flex items-center justify-center">
+                      {material.contentType === 'IMAGE' && material.content ? (
+                        <img 
+                          src={material.content}
+                          alt={`Thumbnail for ${material.title}`}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full w-full">
+                          {getContentTypeIcon(material.contentType)}
+                        </div>
+                      )}
+                      
+                      {/* Status indicator overlay */}
+                      {material.isLocked && (
+                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                          <Lock className="h-3 w-3 text-white" />
+                        </div>
+                      )}
+                      
+                      {/* View status dot */}
+                      {!material.isLocked && (
+                        <div className="absolute top-0.5 right-0.5">
+                          {viewedSlides.includes(material.id) ? (
+                            <div className="h-2 w-2 rounded-full bg-green-500" />
+                          ) : (
+                            <div className="h-2 w-2 rounded-full bg-gray-300" />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-xs truncate text-center py-1 px-1">
+                      {index + 1}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Slide Info & Question Panel */}
           <div className="mt-4 p-4 border rounded-lg">
@@ -378,23 +678,6 @@ export default function MaterialViewer() {
               )}
             </div>
             <p className="text-sm text-gray-500">{currentMaterial?.description}</p>
-          </div>
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-between mt-4">
-            <Button
-              variant="outline"
-              onClick={() => navigateToSlide(currentSlideIndex - 1)}
-              disabled={currentSlideIndex === 0}
-            >
-              Previous
-            </Button>
-            <Button
-              onClick={() => navigateToSlide(currentSlideIndex + 1)}
-              disabled={currentSlideIndex === totalSlides - 1}
-            >
-              Next
-            </Button>
           </div>
         </div>
 
