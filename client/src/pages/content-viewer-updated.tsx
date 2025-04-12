@@ -195,9 +195,24 @@ export default function ContentViewer() {
     // If it's already a question with a question mark, return as is
     if (text.trim().endsWith('?')) return text;
     
+    // Format based on specific patterns we want to ensure are questions
+    if (text.toLowerCase().includes("what is their nationality")) {
+      return "What is Their Nationality?";
+    }
+    
+    if (text.toLowerCase().includes("what language does she speak")) {
+      return "What Language Does She Speak?";
+    }
+    
+    if (text.toLowerCase().includes("where are they from")) {
+      return "Where are They From?";
+    }
+    
     // If it looks like a question but doesn't have a question mark, add one
     if (/^(is|are|do|does|who|what|where|when|why|how|can|could|will|should|may)/i.test(text)) {
-      return text.trim() + '?';
+      // Capitalize important words in the question
+      const capitalizedText = text.replace(/\b[a-z]/g, char => char.toUpperCase());
+      return capitalizedText.trim() + '?';
     }
     
     return text;
@@ -574,16 +589,16 @@ export default function ContentViewer() {
                                 <div className="flex-1 flex items-center justify-center w-full h-full">
                                   {material.content && (
                                     <>
-                                      {material.content.includes('book5') ? (
+                                      {book && (material.content.includes('book5') || material.content.includes('book4')) ? (
                                         <>
-                                          {/* For Book 5, we display the image using the correct S3 path structure */}
+                                          {/* For proper S3 path structure with books 4 and 5 */}
                                           <img
-                                            src={`/api/content/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
+                                            src={`/api/content/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
                                             alt={material.title}
                                             className="max-w-full max-h-full object-contain"
                                             style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
                                             onError={(e) => {
-                                              console.error("Failed to load Book 5 image:", material.title);
+                                              console.error(`Failed to load Book ${book.bookId} image:`, material.title);
                                               (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
                                               
                                               // Display generic unit content on error
@@ -595,7 +610,7 @@ export default function ContentViewer() {
                                               container.className = 'p-4 bg-white rounded text-center';
                                               container.innerHTML = `
                                                 <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
-                                                <p class="text-gray-700">Loading image from S3 path: s3://visualenglishmaterial/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}</p>
+                                                <p class="text-gray-700">Loading image from S3 path: s3://visualenglishmaterial/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}</p>
                                               `;
                                               
                                               imgElement.parentNode?.appendChild(container);
@@ -789,9 +804,9 @@ export default function ContentViewer() {
                 </div>
                 {material.contentType === 'IMAGE' && material.content && (
                   <>
-                    {material.content.includes('book5') ? (
+                    {book && (material.content.includes('book5') || material.content.includes('book4')) ? (
                       <img
-                        src={`/api/content/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
+                        src={`/api/content/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
                         alt={`Thumbnail ${index + 1}`}
                         className="w-full h-full object-cover opacity-70"
                       />
