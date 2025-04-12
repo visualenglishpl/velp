@@ -17,8 +17,17 @@ async function updateUnitThumbnails() {
       
       for (const unit of bookUnits) {
         // Format the thumbnail path following the pattern:
-        // s3://visualenglishmaterial/book0a/icons/thumbnailsuni0a-11.png
-        const thumbnailPath = `book${book.bookId}/icons/thumbnailsuni${book.bookId}-${unit.unitNumber}.png`;
+        // For book0a-0c: s3://visualenglishmaterial/book0a/icons/thumbnailsuni0a-11.png
+        // For book1-7: s3://visualenglishmaterial/thumbnails/thumbnailsuni1-1.png
+        
+        let thumbnailPath;
+        if (book.bookId.startsWith('0')) {
+          // Use the book0a/icons/... format for books 0a, 0b, 0c
+          thumbnailPath = `book${book.bookId}/icons/thumbnailsuni${book.bookId}-${unit.unitNumber}.png`;
+        } else {
+          // Use the thumbnails/... format for books 1-7
+          thumbnailPath = `thumbnails/thumbnailsuni${book.bookId}-${unit.unitNumber}.png`;
+        }
         
         // Update the unit with the thumbnail path
         await db.update(units)

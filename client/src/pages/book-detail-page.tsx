@@ -76,10 +76,24 @@ const BookDetailPage = () => {
   });
 
   // Fetch units for this book
-  const { data: units, isLoading: isLoadingUnits } = useQuery<Unit[]>({
+  const { 
+    data: units, 
+    isLoading: isLoadingUnits,
+    error: unitsError 
+  } = useQuery<Unit[]>({
     queryKey: [`/api/books/${bookId}/units`],
     enabled: !!bookId && !!user,
   });
+  
+  // Log units data for debugging
+  React.useEffect(() => {
+    if (units) {
+      console.log("Units data:", units);
+    }
+    if (unitsError) {
+      console.error("Error fetching units:", unitsError);
+    }
+  }, [units, unitsError]);
   
   // Fetch thumbnails with presigned URLs
   const { data: thumbnails, isLoading: isThumbnailsLoading } = useQuery<BookThumbnail[]>({

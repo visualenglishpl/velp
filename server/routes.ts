@@ -214,6 +214,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         let thumbnailUrl = null;
         if (unit.thumbnail) {
           thumbnailUrl = await getS3PresignedUrl(unit.thumbnail);
+          console.log(`Generated thumbnail URL for unit ${unit.unitNumber}: ${unit.thumbnail}`);
+        } else {
+          console.log(`No thumbnail found for unit ${unit.unitNumber}`);
         }
         return {
           ...unit,
