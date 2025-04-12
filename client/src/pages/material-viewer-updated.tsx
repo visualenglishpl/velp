@@ -247,6 +247,11 @@ export default function MaterialViewer() {
           <h1 className="text-xl font-semibold">
             {book?.title} – {unit?.title}
           </h1>
+          {unit?.description && (
+            <p className="mt-2 text-gray-600">
+              {unit.description}
+            </p>
+          )}
         </div>
         
         <div className="flex flex-col items-center justify-center my-12">
@@ -593,9 +598,18 @@ export default function MaterialViewer() {
             <ArrowLeft className="h-4 w-4" />
             Back to Books
           </Button>
-          <h1 className="text-xl font-semibold hidden md:block">
-            {book?.title} – {unit?.title}
-          </h1>
+          <div className="hidden md:block">
+            <h1 className="text-xl font-semibold">
+              {book?.title} – {unit?.title}
+            </h1>
+            {unit?.description && (
+              <div className="mt-1 px-3 py-2 bg-blue-50 rounded-lg border border-blue-100 text-sm">
+                <p className="text-gray-700">
+                  {unit.description}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <Button 
@@ -612,10 +626,17 @@ export default function MaterialViewer() {
         </div>
       </div>
 
-      <div className="block md:hidden mb-4">
+      <div className="block md:hidden mb-6">
         <h1 className="text-xl font-semibold">
           {book?.title} – {unit?.title}
         </h1>
+        {unit?.description && (
+          <div className="mt-2 p-3 bg-blue-50 rounded-lg border border-blue-100">
+            <p className="text-gray-700">
+              {unit.description}
+            </p>
+          </div>
+        )}
       </div>
       
       {/* Question Section with Answer Prompts */}
