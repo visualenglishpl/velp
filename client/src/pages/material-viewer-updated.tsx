@@ -517,7 +517,7 @@ export default function MaterialViewer() {
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
                                     {/* Hide AWS credentials by using a cleaned version of the URL */}
                                     <img
-                                      src={material.content}
+                                      src={material.content.split('?')[0]} 
                                       alt={material.title}
                                       className="max-w-full max-h-full object-contain"
                                       style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
@@ -548,7 +548,7 @@ export default function MaterialViewer() {
                                       <video 
                                         controls 
                                         className="max-w-full max-h-full object-contain"
-                                        src={material.content}
+                                        src={material.content.split('?')[0]}
                                         style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
                                         onError={(e) => {
                                           console.error("Failed to load video:", material.title);
@@ -579,7 +579,7 @@ export default function MaterialViewer() {
                                   <div className="flex-1 flex items-center justify-center w-full h-full">
                                     <div className="relative w-full h-full flex items-center justify-center">
                                       <iframe
-                                        src={material.content}
+                                        src={material.content.split('?')[0]}
                                         title={material.title}
                                         className="max-w-full max-h-full"
                                         style={{ width: '100%', height: 'calc(60vh - 60px)' }}
@@ -705,7 +705,7 @@ export default function MaterialViewer() {
                         <div className="relative h-14 bg-gray-100 flex items-center justify-center">
                           {material.contentType === 'IMAGE' && material.content ? (
                             <img 
-                              src={material.content}
+                              src={material.content.split('?')[0]}
                               alt={`Thumbnail for ${material.title}`}
                               className="w-full h-full object-cover"
                             />
