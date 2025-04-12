@@ -165,7 +165,9 @@ export default function ContentViewer() {
                   <img 
                     src={
                       book && unit
-                        ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(currentMaterial.content.split('/').pop() || '')}`
+                        ? book.bookId === "5" && unit.unitNumber === 1 
+                          ? `/api/content/5/unit1/00 A.png` // Use exact path for Book 5 Unit 1 intro
+                          : `/api/content/${book.bookId}/unit${unit.unitNumber}/${encodeURIComponent(currentMaterial.content.split('/').pop() || '')}`
                         : currentMaterial.content
                     }
                     alt={currentMaterial.title}

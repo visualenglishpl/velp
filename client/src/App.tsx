@@ -7,6 +7,7 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import BookDetailPage from "@/pages/book-detail-page";
 import ContentViewer from "@/pages/content-viewer-updated";
+import S3Test from "@/pages/s3-test";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -22,6 +23,8 @@ function Router() {
       <Route path="/units/:unitId/materials/:materialId?" component={ContentViewer} />
       {/* This is our main entry point for the Content Slider - we don't need a separate UnitDetailPage */}
       <Route path="/units/:unitId" component={ContentViewer} />
+      {/* S3 Testing route */}
+      <Route path="/s3-test" component={S3Test} />
       {/* Redirect from old content management page to new unified books management */}
       <Route path="/admin/content">
         {() => {
