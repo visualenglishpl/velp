@@ -549,33 +549,33 @@ export default function MaterialViewer() {
             const isUsefulOrUselessMatch = filename.match(/is\s+(\w+)\s+useful\s+or\s+useless/i);
             const howManyLessonsMatch = filename.match(/how\s+many\s+(\w+)\s+lessons/i);
             
-            // Return appropriate prompt based on question type
+            // Return appropriate prompt based on question type with simplified format
             if (isEasyOrDifficultMatch) {
               const subject = isEasyOrDifficultMatch[1];
               return (
                 <div className="text-sm text-gray-500 mt-2">
-                  <span className="font-medium">Prompt answers:</span> "{subject} is easy because..." or "{subject} is difficult because..."
+                  <span className="font-medium">Prompt answers:</span> "{subject} is easy..." or "{subject} is difficult..."
                 </div>
               );
             } else if (isInterestingOrBoringMatch) {
               const subject = isInterestingOrBoringMatch[1];
               return (
                 <div className="text-sm text-gray-500 mt-2">
-                  <span className="font-medium">Prompt answers:</span> "{subject} is interesting because..." or "{subject} is boring because..."
+                  <span className="font-medium">Prompt answers:</span> "{subject} is interesting..." or "{subject} is boring..."
                 </div>
               );
             } else if (isUsefulOrUselessMatch) {
               const subject = isUsefulOrUselessMatch[1];
               return (
                 <div className="text-sm text-gray-500 mt-2">
-                  <span className="font-medium">Prompt answers:</span> "{subject} is useful because..." or "{subject} is useless because..."
+                  <span className="font-medium">Prompt answers:</span> "{subject} is useful..." or "{subject} is useless..."
                 </div>
               );
             } else if (howManyLessonsMatch) {
               const subject = howManyLessonsMatch[1];
               return (
                 <div className="text-sm text-gray-500 mt-2">
-                  <span className="font-medium">Prompt answers:</span> "I have [number] {subject} lessons a week."
+                  <span className="font-medium">Prompt answers:</span> "I have ... {subject} lessons a week."
                 </div>
               );
             }
