@@ -7,9 +7,6 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { 
   ArrowLeft, 
-  Book, 
-  BookOpen, 
-  Layers, 
   ChevronLeft, 
   ChevronRight, 
   Check, 
@@ -51,52 +48,149 @@ type Book = {
 };
 
 export default function MaterialViewer() {
-  // Get unit ID and material ID from the URL
+  // Parse URL parameters
   const [location] = useLocation();
   const materialMatches = location.match(/\/units\/(\d+)\/materials\/(\d+)/);
   const unitMatches = location.match(/\/units\/(\d+)$/);
   
-  // If we have material matches, use those, otherwise just get the unit ID
-  const unitId = materialMatches ? parseInt(materialMatches[1], 10) : 
-                unitMatches ? parseInt(unitMatches[1], 10) : 0;
+  // Extract unitId and materialIndex from URL
+  const unitId = materialMatches 
+    ? parseInt(materialMatches[1], 10) 
+    : unitMatches 
+      ? parseInt(unitMatches[1], 10) 
+      : 0;
   
-  // Get material index or default to 0
-  const materialIndex = materialMatches ? parseInt(materialMatches[2], 10) : 0;
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(materialIndex); // Set to provided index or 0
-  const [showSidebar, setShowSidebar] = useState(true);
+  const initialMaterialIndex = materialMatches 
+    ? parseInt(materialMatches[2], 10) 
+    : 0;
 
-  // Fetch unit details
+  // All useState hooks must be defined before any conditional logic
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [viewedSlides, setViewedSlides] = useState<number[]>([]);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  
+  // All useQuery hooks must be defined consistently
   const { data: unit, isLoading: unitLoading } = useQuery<Unit>({
     queryKey: [`/api/units/${unitId}`],
     enabled: !!unitId,
   });
 
-  // Fetch book details
   const { data: book, isLoading: bookLoading } = useQuery<Book>({
     queryKey: [`/api/books/${unit?.bookId}`],
     enabled: !!unit?.bookId,
   });
 
-  // Fetch materials for unit
   const { data: materials, isLoading: materialsLoading } = useQuery<Material[]>({
     queryKey: [`/api/units/${unitId}/materials`],
     enabled: !!unitId,
   });
 
-  // Get current material based on the index in the URL
+  // All useEmblaCarousel hooks must be defined consistently
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: false,
+    align: 'center',
+    containScroll: 'keepSnaps',
+  });
+  
+  const [thumbsRef, thumbsApi] = useEmblaCarousel({
+    containScroll: 'keepSnaps',
+    dragFree: true,
+    axis: 'x'
+  });
+  
+  // All useCallback hooks must be defined consistently
+  const navigateToSlide = useCallback((index: number) => {
+    if (materials && index >= 0 && index < materials.length) {
+      setCurrentSlideIndex(index);
+      
+      if (emblaApi) {
+        emblaApi.scrollTo(index);
+      }
+    }
+  }, [materials, emblaApi]);
+  
+  const toggleFullscreen = useCallback(() => {
+    const element = document.getElementById('content-viewer');
+    
+    if (!document.fullscreenElement) {
+      element?.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  }, []);
+  
+  // Content type icon helper - regular function, not a hook
+  const getContentTypeIcon = (type: string) => {
+    switch (type) {
+      case 'IMAGE':
+        return <ImageIcon className="h-4 w-4" />;
+      case 'VIDEO':
+        return <Video className="h-4 w-4" />;
+      case 'PDF':
+        return <FileText className="h-4 w-4" />;
+      case 'GAME':
+        return <Gamepad2 className="h-4 w-4" />;
+      default:
+        return <FileText className="h-4 w-4" />;
+    }
+  };
+
+  // All useEffect hooks must be defined consistently
+  useEffect(() => {
+    if (materials && materials.length > 0) {
+      const currentMaterial = materials[currentSlideIndex];
+      if (currentMaterial && !viewedSlides.includes(currentMaterial.id)) {
+        setViewedSlides(prev => [...prev, currentMaterial.id]);
+      }
+    }
+  }, [currentSlideIndex, materials, viewedSlides]);
+  
+  useEffect(() => {
+    if (!emblaApi || !thumbsApi) return;
+    
+    const onSelect = () => {
+      const index = emblaApi.selectedScrollSnap();
+      thumbsApi.scrollTo(index);
+      setCurrentSlideIndex(index);
+    };
+    
+    emblaApi.on('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi, thumbsApi, setCurrentSlideIndex]);
+  
+  useEffect(() => {
+    if (emblaApi && currentSlideIndex >= 0) {
+      emblaApi.scrollTo(currentSlideIndex);
+    }
+  }, [currentSlideIndex, emblaApi]);
+  
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        navigateToSlide(currentSlideIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        navigateToSlide(currentSlideIndex + 1);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentSlideIndex, navigateToSlide]);
+
+  // Calculate derived values
+  const totalSlides = materials?.length || 0;
   const currentMaterial = materials && materials.length > 0 
     ? materials[currentSlideIndex] 
     : null;
-
-  // Track viewed slides and fullscreen state
-  const [viewedSlides, setViewedSlides] = useState<number[]>([]);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  
-  useEffect(() => {
-    if (currentMaterial && !viewedSlides.includes(currentMaterial.id)) {
-      setViewedSlides(prev => [...prev, currentMaterial.id]);
-    }
-  }, [currentMaterial]);
 
   // Loading state
   if (unitLoading || bookLoading || materialsLoading) {
@@ -249,103 +343,7 @@ export default function MaterialViewer() {
     );
   }
 
-  const totalSlides = materials.length;
-  
-  // Initialize Embla Carousel
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: false,
-    align: 'center',
-    containScroll: 'keepSnaps',
-  });
-  
-  const [thumbsRef, thumbsApi] = useEmblaCarousel({
-    containScroll: 'keepSnaps',
-    dragFree: true,
-    axis: 'x'
-  });
-  
-  // Define slide navigation function
-  const navigateToSlide = useCallback((index: number) => {
-    if (materials && index >= 0 && index < materials.length) {
-      setCurrentSlideIndex(index);
-      
-      if (emblaApi) {
-        emblaApi.scrollTo(index);
-      }
-    }
-  }, [materials, emblaApi]);
-  
-  // Sync main carousel with thumbnails and external state
-  useEffect(() => {
-    if (!emblaApi || !thumbsApi) return;
-    
-    // Sync from main carousel to thumbnails
-    const onSelect = () => {
-      const index = emblaApi.selectedScrollSnap();
-      thumbsApi.scrollTo(index);
-      setCurrentSlideIndex(index);
-    };
-    
-    emblaApi.on('select', onSelect);
-    return () => {
-      emblaApi.off('select', onSelect);
-    };
-  }, [emblaApi, thumbsApi]);
-  
-  // Update carousel when currentSlideIndex changes from outside
-  useEffect(() => {
-    if (emblaApi && currentSlideIndex >= 0) {
-      emblaApi.scrollTo(currentSlideIndex);
-    }
-  }, [currentSlideIndex, emblaApi]);
-  
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
-        navigateToSlide(currentSlideIndex - 1);
-      } else if (e.key === 'ArrowRight') {
-        navigateToSlide(currentSlideIndex + 1);
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [currentSlideIndex, navigateToSlide]);
-  
-  // Fullscreen functionality
-  const toggleFullscreen = useCallback(() => {
-    const element = document.getElementById('content-viewer');
-    
-    if (!document.fullscreenElement) {
-      element?.requestFullscreen().catch(err => {
-        console.error(`Error attempting to enable fullscreen: ${err.message}`);
-      });
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen();
-      setIsFullscreen(false);
-    }
-  }, []);
-  
-  // Content type icon
-  const getContentTypeIcon = (type: string) => {
-    switch (type) {
-      case 'IMAGE':
-        return <ImageIcon className="h-4 w-4" />;
-      case 'VIDEO':
-        return <Video className="h-4 w-4" />;
-      case 'PDF':
-        return <FileText className="h-4 w-4" />;
-      case 'GAME':
-        return <Gamepad2 className="h-4 w-4" />;
-      default:
-        return <FileText className="h-4 w-4" />;
-    }
-  };
-
+  // Main UI with materials
   return (
     <div className="container mx-auto px-4 py-6">
       {/* Top Navigation Bar */}
