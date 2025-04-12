@@ -1041,6 +1041,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate a presigned URL on the server
       const presignedUrl = await getS3PresignedUrl(key);
       
+      // For Book 5 content, do a fallback check
+      if (!presignedUrl && bookId === '5') {
+        // Try alternate formats
+        const fileExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
+        let foundUrl = null;
+        
+        for (const ext of fileExtensions) {
+          if (!cleanFilename.toLowerCase().endsWith(ext)) {
+            const altKey = `book${bookId}/unit${unitNumber}/${cleanFilename}${ext}`;
+            console.log(`Trying alternate key: ${altKey}`);
+            foundUrl = await getS3PresignedUrl(altKey);
+            if (foundUrl) {
+              console.log(`Found alternate URL for ${key} => ${altKey}`);
+              break;
+            }
+          }
+        }
+        
+        if (foundUrl) {
+          res.setHeader('Cache-Control', 'public, max-age=3600');
+          return res.redirect(foundUrl);
+        }
+      }
+      
       if (!presignedUrl) {
         console.error(`No presigned URL generated for key: ${key}`);
         return res.status(404).json({ error: "Content not found" });

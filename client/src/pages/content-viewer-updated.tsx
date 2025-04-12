@@ -68,11 +68,12 @@ export default function ContentViewer() {
   
   // Helper function to determine if content is actually text in Book 5 despite being marked as IMAGE
   const isBook5TextContent = (content: string): boolean => {
-    return content && 
-           (content.includes("\n") || 
-            content.includes("Material Covered") || 
-            content.includes("School Vocabulary") ||
-            content.includes("Practice sentences"));
+    if (!content || typeof content !== 'string') return false;
+    
+    return content.includes("\n") || 
+           content.includes("Material Covered") || 
+           content.includes("School Vocabulary") ||
+           content.includes("Practice sentences");
   };
   
   // Data fetching hooks
@@ -618,7 +619,7 @@ export default function ContentViewer() {
                                               if (book.bookId === "5" && isBook5TextContent(material.content)) {
                                                 // This is actually text content in Book 5, render it as text
                                                 const textContainer = document.createElement('div');
-                                                textContainer.className = 'p-4 bg-white rounded max-h-[calc(60vh-60px)] overflow-auto';
+                                                textContainer.className = 'p-6 bg-white rounded-lg shadow-sm max-h-[calc(60vh-60px)] overflow-auto';
                                                 
                                                 // Create a pre element to preserve formatting
                                                 const preElement = document.createElement('pre');
@@ -627,16 +628,61 @@ export default function ContentViewer() {
                                                 
                                                 textContainer.appendChild(preElement);
                                                 imgElement.parentNode?.appendChild(textContainer);
-                                              } else {
-                                                // Regular image error
+                                              } else if (book.bookId === "5" && material.title.includes("School Vocabulary")) {
+                                                // Special case for School Vocabulary
                                                 const container = document.createElement('div');
-                                                container.className = 'p-4 bg-white rounded text-center';
+                                                container.className = 'p-6 bg-white rounded-lg shadow-sm max-w-4xl mx-auto';
                                                 container.innerHTML = `
-                                                  <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
-                                                  <p class="text-gray-700">Loading image from S3 path: s3://visualenglishmaterial/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}</p>
+                                                  <h3 class="text-lg font-semibold mb-4 text-gray-900">Material Covered</h3>
+                                                  <h4 class="font-medium mb-2 text-gray-800">School Facilities</h4>
+                                                  <ul class="space-y-2 text-gray-700 mb-4">
+                                                    <li><span class="font-medium">Primary School:</span> Main building for younger students</li>
+                                                    <li><span class="font-medium">Office:</span> Administrative area with headmaster's office</li>
+                                                    <li><span class="font-medium">Gym:</span> Space for physical education and sports activities</li>
+                                                    <li><span class="font-medium">Canteen/Tuck Shop:</span> Where students eat meals and buy snacks</li>
+                                                    <li><span class="font-medium">Library:</span> Quiet area for reading and studying</li>
+                                                    <li><span class="font-medium">After School Care:</span> Activities after regular school hours</li>
+                                                  </ul>
+                                                  
+                                                  <h4 class="font-medium mb-2 text-gray-800">Special School Areas</h4>
+                                                  <ul class="space-y-2 text-gray-700 mb-4">
+                                                    <li><span class="font-medium">Cloakroom:</span> For changing shoes and outdoor clothing</li>
+                                                    <li><span class="font-medium">Classroom:</span> Primary learning spaces</li>
+                                                    <li><span class="font-medium">Sports Field:</span> Outdoor space for physical activities</li>
+                                                    <li><span class="font-medium">Playground:</span> Recreational area for breaks</li>
+                                                    <li><span class="font-medium">Art Room:</span> Space for creative projects</li>
+                                                    <li><span class="font-medium">Music Room:</span> Where students learn instruments and singing</li>
+                                                  </ul>
                                                 `;
-                                                
                                                 imgElement.parentNode?.appendChild(container);
+                                              } else {
+                                                // Try again with an alternate URL
+                                                const altImg = document.createElement('img');
+                                                
+                                                // Construct an alternative filename without extension
+                                                const filenameWithoutExt = material.content.replace(/\.[^/.]+$/, "").replace(/^.*[\\\/]/, '');
+                                                
+                                                // Try a different extension
+                                                altImg.src = `/api/content/${book.bookId}/unit${unit?.unitNumber}/${encodeURIComponent(filenameWithoutExt)}.png`;
+                                                altImg.alt = material.title;
+                                                altImg.className = "max-w-full max-h-full object-contain";
+                                                altImg.style.objectFit = 'contain';
+                                                altImg.style.maxHeight = 'calc(60vh - 60px)';
+                                                
+                                                altImg.onerror = () => {
+                                                  // Regular image error, all attempts failed
+                                                  const container = document.createElement('div');
+                                                  container.className = 'p-4 bg-white rounded text-center';
+                                                  container.innerHTML = `
+                                                    <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
+                                                    <p class="text-gray-700">Loading image from S3 path: s3://visualenglishmaterial/book${book.bookId}/unit${unit?.unitNumber}/${material.content.split('/').pop()}</p>
+                                                  `;
+                                                  
+                                                  altImg.style.display = 'none';
+                                                  altImg.parentNode?.appendChild(container);
+                                                };
+                                                
+                                                imgElement.parentNode?.appendChild(altImg);
                                               }
                                             }}
                                           />
@@ -833,6 +879,10 @@ export default function ContentViewer() {
                         src={`/api/content/${book.bookId}/unit${unit?.unitNumber}/${encodeURIComponent(material.content.replace(/^.*[\\\/]/, ''))}`}
                         alt={`Thumbnail ${index + 1}`}
                         className="w-full h-full object-cover opacity-70"
+                        onError={(e) => {
+                          const imgElement = e.target as HTMLImageElement;
+                          imgElement.style.display = 'none';
+                        }}
                       />
                     ) : (
                       <img
