@@ -88,8 +88,9 @@ export default function MaterialViewer() {
     ? materials[currentSlideIndex] 
     : null;
 
-  // Track viewed slides
+  // Track viewed slides and fullscreen state
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   
   useEffect(() => {
     if (currentMaterial && !viewedSlides.includes(currentMaterial.id)) {
@@ -286,7 +287,9 @@ export default function MaterialViewer() {
     };
     
     emblaApi.on('select', onSelect);
-    return () => emblaApi.off('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
   }, [emblaApi, thumbsApi]);
   
   // Update carousel when currentSlideIndex changes from outside
@@ -313,8 +316,6 @@ export default function MaterialViewer() {
   }, [currentSlideIndex, navigateToSlide]);
   
   // Fullscreen functionality
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  
   const toggleFullscreen = useCallback(() => {
     const element = document.getElementById('content-viewer');
     
