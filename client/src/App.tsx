@@ -20,8 +20,9 @@ function Router() {
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/books" component={BooksManagement} />
       <Route path="/admin/books/:id" component={BookDetailPage} />
+      <Route path="/admin/books/units/content/:unitId/:materialId?" component={ContentViewer} />
+      {/* Keep backward compatibility with previous routes */}
       <Route path="/units/:unitId/materials/:materialId?" component={ContentViewer} />
-      {/* This is our main entry point for the Content Slider - we don't need a separate UnitDetailPage */}
       <Route path="/units/:unitId" component={ContentViewer} />
       {/* S3 Testing route */}
       <Route path="/s3-test" component={S3Test} />

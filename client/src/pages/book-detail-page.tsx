@@ -410,7 +410,7 @@ const BookDetailPage = () => {
                   <div className="flex gap-2">
                     <Button 
                       size="sm"
-                      onClick={() => setLocation(`/units/${unit.id}/materials/0`)}
+                      onClick={() => setLocation(`/admin/books/units/content/${unit.id}/0`)}
                       className="text-white hover:bg-opacity-90"
                       style={{ 
                         // Apply different color based on unit number for visual variety
@@ -423,7 +423,7 @@ const BookDetailPage = () => {
                     <Button 
                       size="sm"
                       variant="outline"
-                      onClick={() => setLocation(`/units/${unit.id}/materials/0`)}
+                      onClick={() => setLocation(`/admin/books/units/content/${unit.id}/0`)}
                       title="Open in Content Viewer"
                     >
                       <Layers className="h-4 w-4" />
