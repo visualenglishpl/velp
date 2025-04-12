@@ -534,13 +534,15 @@ export default function MaterialViewer() {
                             <>
                               {material.contentType === 'IMAGE' && (
                                 <div className="flex flex-col items-center justify-center bg-white h-full">
-                                  {/* Extract question from filename and display at top */}
+                                  {/* Extract question from filename and display prominently at top */}
                                   {material.content && (
-                                    <div className="w-full bg-primary/10 p-3 text-center mb-2">
-                                      <div className="flex items-center justify-center gap-2 mb-1">
+                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                      <div className="flex flex-col items-center justify-center">
                                         {/* Checkmark to show question was asked */}
-                                        <Check className="h-5 w-5 text-green-600" />
-                                        <h3 className="text-lg font-medium">
+                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
+                                          <Check className="h-5 w-5 text-green-600" />
+                                        </span>
+                                        <h3 className="text-xl font-semibold text-primary">
                                           {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
                                         </h3>
                                       </div>
@@ -559,13 +561,15 @@ export default function MaterialViewer() {
                               
                               {material.contentType === 'VIDEO' && (
                                 <div className="flex flex-col bg-white h-full">
-                                  {/* Extract question from filename and display at top */}
+                                  {/* Extract question from filename and display prominently at top */}
                                   {material.content && (
-                                    <div className="w-full bg-primary/10 p-3 text-center mb-2">
-                                      <div className="flex items-center justify-center gap-2 mb-1">
+                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                      <div className="flex flex-col items-center justify-center">
                                         {/* Checkmark to show question was asked */}
-                                        <Check className="h-5 w-5 text-green-600" />
-                                        <h3 className="text-lg font-medium">
+                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
+                                          <Check className="h-5 w-5 text-green-600" />
+                                        </span>
+                                        <h3 className="text-xl font-semibold text-primary">
                                           {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
                                         </h3>
                                       </div>
@@ -588,13 +592,15 @@ export default function MaterialViewer() {
                               
                               {material.contentType === 'GAME' && (
                                 <div className="flex flex-col bg-white h-full">
-                                  {/* Extract question from filename and display at top */}
+                                  {/* Extract question from filename and display prominently at top */}
                                   {material.content && (
-                                    <div className="w-full bg-primary/10 p-3 text-center mb-2">
-                                      <div className="flex items-center justify-center gap-2 mb-1">
+                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                      <div className="flex flex-col items-center justify-center">
                                         {/* Checkmark to show question was asked */}
-                                        <Check className="h-5 w-5 text-green-600" />
-                                        <h3 className="text-lg font-medium">
+                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
+                                          <Check className="h-5 w-5 text-green-600" />
+                                        </span>
+                                        <h3 className="text-xl font-semibold text-primary">
                                           {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
                                         </h3>
                                       </div>
@@ -614,13 +620,15 @@ export default function MaterialViewer() {
                               
                               {!['IMAGE', 'VIDEO', 'PDF', 'GAME'].includes(material.contentType) && (
                                 <div className="flex flex-col items-center justify-center h-full bg-white">
-                                  {/* Extract question from filename and display at top */}
+                                  {/* Extract question from filename and display prominently at top */}
                                   {material.content && (
-                                    <div className="w-full bg-primary/10 p-3 text-center mb-2">
-                                      <div className="flex items-center justify-center gap-2 mb-1">
+                                    <div className="w-full bg-primary/10 p-4 text-center mb-4">
+                                      <div className="flex flex-col items-center justify-center">
                                         {/* Checkmark to show question was asked */}
-                                        <Check className="h-5 w-5 text-green-600" />
-                                        <h3 className="text-lg font-medium">
+                                        <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
+                                          <Check className="h-5 w-5 text-green-600" />
+                                        </span>
+                                        <h3 className="text-xl font-semibold text-primary">
                                           {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
                                         </h3>
                                       </div>
