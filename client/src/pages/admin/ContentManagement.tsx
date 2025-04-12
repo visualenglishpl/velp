@@ -126,48 +126,6 @@ function ContentManagementLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Top Navigation Bar */}
-      <div className="bg-white shadow-sm px-6 py-4 flex justify-between items-center mb-8">
-        <div className="flex items-center space-x-2">
-          <BookOpen className="h-6 w-6 text-purple-600" />
-          <h1 className="text-xl font-semibold">Content Manager</h1>
-        </div>
-
-        <div className="flex items-center space-x-5">
-          <Button 
-            variant="ghost" 
-            className="text-gray-700"
-            onClick={() => navigate("/admin")}
-          >
-            Dashboard
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            className="text-gray-700 font-medium"
-            onClick={() => navigate("/admin/content")}
-          >
-            Content Management
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            className="text-gray-700"
-            onClick={() => navigate("/admin/books")}
-          >
-            Books
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            className="text-red-600"
-            onClick={handleLogout}
-          >
-            <LogOut className="h-4 w-4 mr-1" />
-            Sign Out
-          </Button>
-        </div>
-      </div>
 
       {/* Main Content */}
       <div className="container mx-auto px-4">
