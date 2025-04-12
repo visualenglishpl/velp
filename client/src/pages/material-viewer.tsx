@@ -760,7 +760,7 @@ export default function MaterialViewer() {
                   Unit-specific guidance for {book?.title}, Unit {unit?.unitNumber} - {unit?.title}
                 </h4>
                 
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-white p-5 rounded-lg border border-gray-100">
                     <h5 className="text-primary font-medium mb-4 flex items-center">
                       <FileText className="h-5 w-5 mr-2 text-primary/80" />
@@ -802,7 +802,7 @@ export default function MaterialViewer() {
                       Prompt Student Answers
                     </h5>
                     <p className="mb-3">Use structured sentence frames:</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div className="bg-gray-50 p-3 rounded">
                         <span className="font-medium">Q:</span> "Is it a cat or a dog?"
                         <span className="mx-2">→</span>
