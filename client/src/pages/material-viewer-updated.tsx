@@ -339,7 +339,7 @@ export default function MaterialViewer() {
     );
   }
 
-  // Extract and format question from filename
+  // Extract and format question from filename with enhanced formatting
   const extractQuestionFromFilename = (filename: string): string => {
     if (!filename) return "";
     
@@ -348,47 +348,85 @@ export default function MaterialViewer() {
       return "Unit Introduction";
     }
     
+    // Clean up and format the extracted text
+    const formatQuestion = (text: string): string => {
+      // Trim whitespace and normalize spaces
+      let formattedText = text.trim().replace(/\s+/g, ' ');
+      
+      // Make sure first letter is capitalized
+      formattedText = formattedText.charAt(0).toUpperCase() + formattedText.slice(1);
+      
+      // Clean up common formatting issues
+      formattedText = formattedText
+        // Fix spacing around punctuation
+        .replace(/\s+\?/g, '?')
+        .replace(/\s+\!/g, '!')
+        .replace(/\s+\./g, '.')
+        .replace(/\s+\,/g, ',')
+        // Add space after commas if missing
+        .replace(/,([^\s])/g, ', $1')
+        // Remove multiple question marks and exclamation points
+        .replace(/\?+/g, '?')
+        .replace(/\!+/g, '!')
+        // Fix capitalization after punctuation
+        .replace(/\. ([a-z])/g, (_, letter) => '. ' + letter.toUpperCase())
+        // Fix common spelling errors
+        .replace(/\bEnglsih\b/gi, 'English')
+        .replace(/\bMathematics\b/gi, 'Mathematics')
+        .replace(/\bGeograpy\b/gi, 'Geography')
+        .replace(/\bSchoool\b/gi, 'School');
+      
+      return formattedText;
+    };
+    
     // Handle subject title slides (e.g., "01 P A Subject English.png")
     const subjectMatch = filename.match(/Subject\s+(.+?)\.[a-zA-Z]+$/i);
     if (subjectMatch && subjectMatch[1]) {
-      const subject = subjectMatch[1].trim();
+      const subject = formatQuestion(subjectMatch[1].trim());
       return `Subject: ${subject}`;
     }
     
     // Handle "is X Y or Z" style questions (e.g., "is English Easy or Difficult")
     const isQuestion = filename.match(/is\s+([A-Za-z]+)\s+(.*?)\.[a-zA-Z]+$/i);
     if (isQuestion) {
-      let questionText = `Is ${isQuestion[1]} ${isQuestion[2]}?`;
-      return questionText;
+      const subject = formatQuestion(isQuestion[1]);
+      const predicates = formatQuestion(isQuestion[2]);
+      
+      // Format "or" questions properly
+      if (predicates.toLowerCase().includes(' or ')) {
+        return `Is ${subject} ${predicates}?`;
+      } else {
+        return `Is ${subject} ${predicates}?`;
+      }
     }
     
     // Handle "how many" questions
     const howManyQuestion = filename.match(/How\s+Many\s+(.*?)\.[a-zA-Z]+$/i);
     if (howManyQuestion) {
-      return `How Many ${howManyQuestion[1]}?`;
+      const questionText = formatQuestion(howManyQuestion[1]);
+      return `How many ${questionText}?`;
     }
     
     // Handle "do you" questions
     const doYouQuestion = filename.match(/Do\s+You\s+(.*?)\.[a-zA-Z]+$/i);
     if (doYouQuestion) {
-      return `Do You ${doYouQuestion[1]}?`;
+      const questionText = formatQuestion(doYouQuestion[1]);
+      return `Do you ${questionText}?`;
     }
     
     // Handle "who is" questions
     const whoIsQuestion = filename.match(/Who\s+is\s+(.*?)\.[a-zA-Z]+$/i);
     if (whoIsQuestion) {
-      return `Who is ${whoIsQuestion[1]}?`;
+      const questionText = formatQuestion(whoIsQuestion[1]);
+      return `Who is ${questionText}?`;
     }
     
     // Fallback - just use any text after the file code pattern
     const anyText = filename.match(/\d+\s+P\s+[A-Za-z]+[a-z]?\s+(.*?)\.[a-zA-Z]+$/i);
     if (anyText && anyText[1]) {
-      let text = anyText[1].trim();
+      let text = formatQuestion(anyText[1]);
       
-      // Capitalize first letter
-      text = text.charAt(0).toUpperCase() + text.slice(1);
-      
-      // Add question mark if it seems like a question
+      // Add question mark if it seems like a question and doesn't already have one
       if (/^(is|are|do|does|who|what|where|when|why|how|can|could)/i.test(text) && !text.endsWith("?")) {
         text += "?";
       }
@@ -399,7 +437,7 @@ export default function MaterialViewer() {
     // Very simple fallback
     const simpleFallback = filename.split('.')[0].split(' ').slice(3).join(' ');
     if (simpleFallback) {
-      return simpleFallback.charAt(0).toUpperCase() + simpleFallback.slice(1);
+      return formatQuestion(simpleFallback);
     }
     
     return filename; // Last resort, return the filename itself
@@ -488,7 +526,7 @@ export default function MaterialViewer() {
         </h1>
       </div>
       
-      {/* Question Section */}
+      {/* Question Section with Answer Prompts */}
       {currentMaterial?.content && (
         <div className="mb-6 text-center">
           <h2 className="text-2xl font-semibold">
@@ -498,6 +536,52 @@ export default function MaterialViewer() {
                 : currentMaterial.content.split('/').pop() || ''
             ) || currentMaterial.title}
           </h2>
+          
+          {/* Answer Prompt Section */}
+          {(() => {
+            const filename = currentMaterial.content.includes('/api/content/')
+              ? decodeURIComponent(currentMaterial.content.split('/api/content/')[1])
+              : currentMaterial.content.split('/').pop() || '';
+            
+            // Extract and detect question type for prompt
+            const isEasyOrDifficultMatch = filename.match(/is\s+(\w+)\s+easy\s+or\s+difficult/i);
+            const isInterestingOrBoringMatch = filename.match(/is\s+(\w+)\s+interesting\s+or\s+boring/i);
+            const isUsefulOrUselessMatch = filename.match(/is\s+(\w+)\s+useful\s+or\s+useless/i);
+            const howManyLessonsMatch = filename.match(/how\s+many\s+(\w+)\s+lessons/i);
+            
+            // Return appropriate prompt based on question type
+            if (isEasyOrDifficultMatch) {
+              const subject = isEasyOrDifficultMatch[1];
+              return (
+                <div className="text-sm text-gray-500 mt-2">
+                  <span className="font-medium">Prompt answers:</span> "{subject} is easy because..." or "{subject} is difficult because..."
+                </div>
+              );
+            } else if (isInterestingOrBoringMatch) {
+              const subject = isInterestingOrBoringMatch[1];
+              return (
+                <div className="text-sm text-gray-500 mt-2">
+                  <span className="font-medium">Prompt answers:</span> "{subject} is interesting because..." or "{subject} is boring because..."
+                </div>
+              );
+            } else if (isUsefulOrUselessMatch) {
+              const subject = isUsefulOrUselessMatch[1];
+              return (
+                <div className="text-sm text-gray-500 mt-2">
+                  <span className="font-medium">Prompt answers:</span> "{subject} is useful because..." or "{subject} is useless because..."
+                </div>
+              );
+            } else if (howManyLessonsMatch) {
+              const subject = howManyLessonsMatch[1];
+              return (
+                <div className="text-sm text-gray-500 mt-2">
+                  <span className="font-medium">Prompt answers:</span> "I have [number] {subject} lessons a week."
+                </div>
+              );
+            }
+            
+            return null;
+          })()}
         </div>
       )}
 
