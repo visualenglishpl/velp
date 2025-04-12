@@ -316,6 +316,17 @@ export default function MaterialViewer() {
             </div>
 
             <div className="mt-6">
+              <h3 className="font-medium mb-2">Prompt Student Answers</h3>
+              <p className="text-sm mb-2">Use structured sentence frames:</p>
+              <div className="grid gap-y-1 gap-x-6 md:grid-cols-2 text-sm">
+                <div>"Is it a cat or a dog?" → "It is a..."</div>
+                <div>"Are they sitting or standing?" → "They are..."</div>
+                <div>"Is he eating or sleeping?" → "He is..."</div>
+                <div>"Is she happy or sad?" → "She is..."</div>
+              </div>
+            </div>
+
+            <div className="mt-6">
               <h3 className="font-medium mb-2">Ask Follow-up Questions</h3>
               <p className="text-sm mb-2">To reinforce comprehension:</p>
               <ul className="space-y-1 text-sm">
@@ -333,17 +344,6 @@ export default function MaterialViewer() {
                 </li>
               </ul>
               <p className="text-sm italic mt-2">Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.</p>
-            </div>
-
-            <div className="mt-6">
-              <h3 className="font-medium mb-2">Prompt Student Answers</h3>
-              <p className="text-sm mb-2">Use structured sentence frames:</p>
-              <div className="grid gap-y-1 gap-x-6 md:grid-cols-2 text-sm">
-                <div>"Is it a cat or a dog?" → "It is a..."</div>
-                <div>"Are they sitting or standing?" → "They are..."</div>
-                <div>"Is he eating or sleeping?" → "He is..."</div>
-                <div>"Is she happy or sad?" → "She is..."</div>
-              </div>
             </div>
           </Card>
         </div>
