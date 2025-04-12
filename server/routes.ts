@@ -224,15 +224,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
             // Try alternate path format if first attempt fails
             if (currentBook) {
               // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
-              // For book4: book4/icons/thumbnailsuni4-12.png
-              // For books 1-3, 5-7: thumbnails/thumbnailsuni[book-id]-[unit-number].png
+              // For books 1-7: book1/icons/thumbnailsuni1-14.png
               let alternatePath;
               if (currentBook.bookId.startsWith('0')) {
                 alternatePath = `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
-              } else if (currentBook.bookId === '4') {
-                alternatePath = `book4/icons/thumbnailsuni4-${unit.unitNumber}.png`;
               } else {
-                alternatePath = `thumbnails/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
+                // For books 1-7, use the format: book1/icons/thumbnailsuni1-14.png
+                alternatePath = `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
               }
               
               if (alternatePath !== unit.thumbnail) {
@@ -289,15 +287,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Try alternate path format if first attempt fails
           if (bookDetails) {
             // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
-            // For book4: book4/icons/thumbnailsuni4-12.png
-            // For books 1-3, 5-7: thumbnails/thumbnailsuni[book-id]-[unit-number].png
+            // For books 1-7: book1/icons/thumbnailsuni1-14.png
             let alternatePath;
             if (bookDetails.bookId.startsWith('0')) {
               alternatePath = `book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
-            } else if (bookDetails.bookId === '4') {
-              alternatePath = `book4/icons/thumbnailsuni4-${unit.unitNumber}.png`;
             } else {
-              alternatePath = `thumbnails/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
+              // For books 1-7, use the format: book1/icons/thumbnailsuni1-14.png
+              alternatePath = `book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
             }
             
             if (alternatePath !== unit.thumbnail) {
@@ -549,10 +545,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         let thumbnailPath;
         if (bookId.startsWith('0')) {
           thumbnailPath = `book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`;
-        } else if (bookId === '4') {
-          thumbnailPath = `book4/icons/thumbnailsuni4-${range}.png`;
         } else {
-          thumbnailPath = `thumbnails/thumbnailsuni${bookId}-${range}.png`;
+          // For books 1-7, use the format: book1/icons/thumbnailsuni1-14.png
+          thumbnailPath = `book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`;
         }
           
         try {
