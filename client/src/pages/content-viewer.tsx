@@ -407,28 +407,25 @@ export default function ContentViewer() {
                               )}
                               <div className="flex-1 flex items-center justify-center w-full h-full">
                                 {material.content && (
-                                  <>
-                                    {/* Book 5 has text content rather than images */}
+                                  <div className="w-full text-center">
                                     {material.content.includes('book5') ? (
-                                      <div className="w-full max-w-3xl bg-white p-6 rounded-lg" style={{maxHeight: 'calc(60vh - 60px)', overflow: 'auto'}}>
-                                        <div className="text-center">
-                                          <h3 className="text-xl font-semibold mb-4">School Vocabulary</h3>
-                                          <div className="text-left text-gray-800 leading-relaxed">
-                                            <p className="mb-2"><strong>Students eat meals and buy snacks</strong> in the cafeteria.</p>
-                                            <p className="mb-2"><strong>Library:</strong> Quiet area for reading and studying.</p>
-                                            <p className="mb-2"><strong>After School Care:</strong> Activities after regular school hours.</p>
-                                            <p className="mb-2"><strong>Special School Areas:</strong> Cloakroom for changing shoes and outdoor clothing.</p>
-                                            <p className="mb-2"><strong>Classroom:</strong> Primary learning spaces.</p>
-                                            <p className="mb-2"><strong>Sports Field:</strong> Outdoor space for physical activities.</p>
-                                            <p className="mb-2"><strong>Playground:</strong> Recreational area for breaks.</p>
-                                            <p className="mb-2"><strong>Art Room:</strong> Space for creative projects.</p>
-                                            <p className="mb-2"><strong>Music Room:</strong> Where students learn instruments and singing.</p>
-                                            <p className="mb-2"><strong>School Vocabulary:</strong> Learn words related to school facilities and locations.</p>
-                                            <p className="mb-2"><strong>Practice sentences</strong> about school activities and schedules.</p>
-                                            <p className="mb-2"><strong>Discuss</strong> favorite school subjects and teachers.</p>
-                                          </div>
-                                        </div>
-                                      </div>
+                                      <pre className="bg-gray-800 text-white p-4 rounded-md overflow-auto text-left text-sm font-mono" style={{maxHeight: 'calc(60vh - 100px)'}}>
+                                        {`// Book 5 content URL
+${material.content}
+
+// Content available in database but image not accessible
+// Students eat meals and buy snacks in the Library. Quiet area for reading and studying
+// After School Care: Activities after regular school hours
+// Special School Areas: Cloakroom for changing shoes and outdoor clothing
+// Classroom: Primary learning spaces
+// Sports Field: Outdoor space for physical activities
+// Playground: Recreational area for breaks
+// Art Room: Space for creative projects
+// Music Room: Where students learn instruments and singing
+// School Vocabulary: Learn words related to school facilities and locations
+// Practice sentences about school activities and schedules
+// Discuss favorite school subjects and teachers`}
+                                      </pre>
                                     ) : (
                                       <img
                                         src={material.content} 
@@ -441,7 +438,7 @@ export default function ContentViewer() {
                                         }}
                                       />
                                     )}
-                                  </>
+                                  </div>
                                 )}
                                 <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
                                   {currentSlideIndex + 1}/{totalSlides}
