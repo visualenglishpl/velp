@@ -86,7 +86,7 @@ const BookDetailPage = () => {
   });
   
   // Log units data for debugging
-  React.useEffect(() => {
+  useEffect(() => {
     if (units) {
       console.log("Units data:", units);
     }

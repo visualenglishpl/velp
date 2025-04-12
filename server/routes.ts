@@ -209,12 +209,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const units = await storage.getUnits(bookId);
       
+      // Get the book details to determine the correct thumbnail path format
+      const currentBook = await storage.getBookById(bookId);
+      
       // Generate presigned URLs for unit thumbnails
       const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
         let thumbnailUrl = null;
         if (unit.thumbnail) {
-          thumbnailUrl = await getS3PresignedUrl(unit.thumbnail);
-          console.log(`Generated thumbnail URL for unit ${unit.unitNumber}: ${unit.thumbnail}`);
+          try {
+            thumbnailUrl = await getS3PresignedUrl(unit.thumbnail);
+            console.log(`Success: Generated thumbnail URL for unit ${unit.unitNumber}: ${unit.thumbnail}`);
+          } catch (error) {
+            console.error(`Error generating URL for ${unit.thumbnail}:`, error);
+            // Try alternate path format if first attempt fails
+            if (currentBook) {
+              // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
+              // For book1-7: thumbnails/thumbnailsuni1-1.png
+              const alternatePath = currentBook.bookId.startsWith('0')
+                ? `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`
+                : `thumbnails/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
+              
+              if (alternatePath !== unit.thumbnail) {
+                console.log(`Trying alternate path: ${alternatePath}`);
+                try {
+                  thumbnailUrl = await getS3PresignedUrl(alternatePath);
+                  console.log(`Success with alternate path for unit ${unit.unitNumber}`);
+                } catch (altError) {
+                  console.error(`Failed with alternate path for unit ${unit.unitNumber}`);
+                }
+              }
+            }
+          }
         } else {
           console.log(`No thumbnail found for unit ${unit.unitNumber}`);
         }
@@ -246,7 +271,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate presigned URL for the unit thumbnail if it exists
       let thumbnailUrl = null;
       if (unit.thumbnail) {
-        thumbnailUrl = await getS3PresignedUrl(unit.thumbnail);
+        try {
+          thumbnailUrl = await getS3PresignedUrl(unit.thumbnail);
+          console.log(`Success: Generated thumbnail URL for single unit ${unit.unitNumber}: ${unit.thumbnail}`);
+        } catch (error) {
+          console.error(`Error generating URL for single unit ${unit.thumbnail}:`, error);
+          
+          // Get the book to determine the correct path format
+          const bookDetails = await storage.getBookById(unit.bookId);
+          
+          // Try alternate path format if first attempt fails
+          if (bookDetails) {
+            // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
+            // For book1-7: thumbnails/thumbnailsuni1-1.png
+            const alternatePath = bookDetails.bookId.startsWith('0')
+              ? `book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`
+              : `thumbnails/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
+            
+            if (alternatePath !== unit.thumbnail) {
+              console.log(`Trying alternate path for single unit: ${alternatePath}`);
+              try {
+                thumbnailUrl = await getS3PresignedUrl(alternatePath);
+                console.log(`Success with alternate path for single unit ${unit.unitNumber}`);
+              } catch (altError) {
+                console.error(`Failed with alternate path for single unit ${unit.unitNumber}`);
+              }
+            }
+          }
+        }
       }
       
       res.json({
@@ -481,14 +533,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const endUnit = Math.min(i + 9, unitCount);
         const range = `${startUnit}-${endUnit}`;
         
-        const thumbnailUrl = await getS3PresignedUrl(`book${bookId}/icons/thumbnailsuni${range}.png`);
-        
-        if (thumbnailUrl) {
-          thumbnails.push({
-            startUnit,
-            endUnit, 
-            url: thumbnailUrl
-          });
+        // Use different path patterns for different books
+        const thumbnailPath = bookId.startsWith('0')
+          ? `book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`
+          : `thumbnails/thumbnailsuni${bookId}-${range}.png`;
+          
+        try {
+          console.log(`Attempting to get presigned URL for batch thumbnail: ${thumbnailPath}`);
+          const thumbnailUrl = await getS3PresignedUrl(thumbnailPath);
+          
+          if (thumbnailUrl) {
+            console.log(`Successfully generated URL for ${thumbnailPath}`);
+            thumbnails.push({
+              startUnit,
+              endUnit, 
+              url: thumbnailUrl
+            });
+          }
+        } catch (error) {
+          console.error(`Failed to generate URL for ${thumbnailPath}:`, error);
         }
       }
       
