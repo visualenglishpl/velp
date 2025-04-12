@@ -31,9 +31,6 @@ import {
 } from "lucide-react";
 import useEmblaCarousel from 'embla-carousel-react';
 
-// School tour content for Book 5 Unit 1
-const schoolTourContent = `Students eat meals and buy snacks Library: Quiet area for reading and studying After School Care: Activities after regular school hours Special School Areas Cloakroom: For changing shoes and outdoor clothing Classroom: Primary learning spaces Sports Field: Outdoor space for physical activities Playground: Recreational area for breaks Art Room: Space for creative projects Music Room: Where students learn instruments and singing School Vocabulary Learn words related to school facilities and locations Practice sentences about school activities and schedules Discuss favorite school subjects and teachers`;
-
 // Material interface from shared schema
 type Material = {
   id: number;
