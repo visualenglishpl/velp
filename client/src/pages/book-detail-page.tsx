@@ -375,7 +375,7 @@ const BookDetailPage = () => {
                     {unit.unitNumber}
                   </div>
                   
-                  {/* Lock/Unlock status */}
+                  {/* Small padlock icon in corner */}
                   <div className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm">
                     {unit.isPublished ? (
                       <div className="text-green-500" title="Unlocked">
