@@ -385,6 +385,133 @@ export default function MaterialViewer() {
           {book?.title} – {unit?.title}
         </h1>
       </div>
+      
+      {/* Unit Information Section */}
+      <div className="bg-gray-50 rounded-lg p-4 mb-6">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="md:w-2/3">
+            <h2 className="text-lg font-semibold mb-2">School Facilities & Areas</h2>
+            <p className="text-sm text-gray-700 mb-4">
+              This unit not only teaches about the physical layout of schools but also encourages students to think about 
+              how they use each space and articulate these thoughts in English. Ready for a tour around your school with fresh eyes? 
+              Let's navigate and learn together! 🌍📖
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="text-sm font-medium mb-2">School Facilities:</h3>
+                <ul className="text-sm space-y-1">
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🏫</span>
+                    <span>Primary School: Structure and role of primary education</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🏢</span>
+                    <span>Office: Administrative tasks; headmaster/headmistress</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">💪</span>
+                    <span>Gym: Physical education and sports</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🍽️</span>
+                    <span>Canteen/Tuck Shop: Lunch and snacks</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">📚</span>
+                    <span>Library: Quiet area for reading and studying</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🌟</span>
+                    <span>After School Care: Post-school activities</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-sm font-medium mb-2">Special School Areas:</h3>
+                <ul className="text-sm space-y-1">
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🧥</span>
+                    <span>Cloakroom: Changing shoes and storing clothing</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🏫</span>
+                    <span>Classroom: Primary area for lessons and learning</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">⚽</span>
+                    <span>Sports Field: Outdoor sports and activities</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🤾</span>
+                    <span>Playground: Free play and informal activities</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🎨</span>
+                    <span>Art Room: Creative space for drawing and crafting</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">🎼</span>
+                    <span>Music Room: Learning and practicing music</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="md:w-1/3">
+            <h3 className="text-sm font-medium mb-2">Learning Objectives:</h3>
+            <ul className="text-sm space-y-2">
+              <li className="flex items-start">
+                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span>Identify and name different school facilities</span>
+              </li>
+              <li className="flex items-start">
+                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span>Describe activities that take place in different parts of a school</span>
+              </li>
+              <li className="flex items-start">
+                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span>Ask and respond to questions about school locations</span>
+              </li>
+              <li className="flex items-start">
+                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span>Use prepositions of place correctly in conversations about schools</span>
+              </li>
+              <li className="flex items-start">
+                <div className="h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span>Compare different types of schools using comparative language</span>
+              </li>
+            </ul>
+            
+            <div className="mt-4 p-3 bg-blue-50 rounded border border-blue-100">
+              <h3 className="text-sm font-medium text-blue-800 mb-1">Teaching Tips:</h3>
+              <p className="text-xs text-blue-700">Use role plays to simulate asking for directions within the school. Create a school map activity where students draw and label different areas of their school.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="flex flex-col md:flex-row gap-6">
         {/* Main content area */}
