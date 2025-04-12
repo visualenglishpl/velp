@@ -500,8 +500,27 @@ export default function MaterialViewer() {
       );
     }
     
+    // Check if the filename indicates a slide with no text content
+    // Common patterns for image-only slides without questions
+    if (
+      // Check for slides that don't have any question pattern
+      (filename.match(/^\d+\s*[a-zA-Z]?\.(png|jpg|gif|jpeg)$/i)) || 
+      // Check for slides that just have a letter code but no actual question
+      (filename.match(/^\d+\s+[A-Z]\s+[a-zA-Z]?\.(png|jpg|gif|jpeg)$/i)) ||
+      // Check for slides with just image indicators
+      (filename.toLowerCase().includes('image') || filename.toLowerCase().includes('picture'))
+    ) {
+      // Don't show any question text for image-only slides
+      return null;
+    }
+    
     // Extract the question from the decoded filename
     const question = extractQuestionFromFilename(filename) || title;
+    
+    // If we couldn't extract a meaningful question, don't show anything
+    if (!question || question === filename || question === title) {
+      return null;
+    }
     
     return (
       <div className="w-full text-center mb-4 p-2">
