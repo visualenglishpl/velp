@@ -71,7 +71,8 @@ export default function MaterialViewer() {
 
   // All useState hooks must be defined before any conditional logic
   const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
-  const [showSidebar, setShowSidebar] = useState(true);
+  // Sidebar removed as requested
+  const showSidebar = false;
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   
@@ -375,20 +376,31 @@ export default function MaterialViewer() {
             <Maximize className="h-4 w-4" />
             <span>Fullscreen</span>
           </Button>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => setShowSidebar(!showSidebar)}
-          >
-            {showSidebar ? 'Hide Sidebar' : 'Show Sidebar'}
-          </Button>
+          {/* Sidebar button removed */}
         </div>
       </div>
 
-      <div className="block md:hidden mb-6">
+      <div className="block md:hidden mb-4">
         <h1 className="text-xl font-semibold">
           {book?.title} – {unit?.title}
         </h1>
+      </div>
+      
+      {/* Unit Introduction Section */}
+      <div className="bg-gray-50 rounded-lg p-4 mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-primary/10 rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold">Unit {unit?.unitNumber} of {book?.title}</h2>
+          </div>
+        </div>
+        <p className="text-sm text-gray-700 pl-10">
+          Unit 1 of BOOK 5: This unit teaches about school layouts and helps students express how these spaces are used in English. Ready for a tour around your school?
+        </p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-6">
