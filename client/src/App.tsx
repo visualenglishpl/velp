@@ -19,7 +19,7 @@ function Router() {
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/books" component={BooksManagement} />
       <Route path="/admin/books/:id" component={BookDetailPage} />
-      <Route path="/units/:unitId/materials/:materialId" component={MaterialViewer} />
+      <Route path="/units/:unitId/materials/:materialId?" component={MaterialViewer} />
       {/* Redirect from old content management page to new unified books management */}
       <Route path="/admin/content">
         {() => {

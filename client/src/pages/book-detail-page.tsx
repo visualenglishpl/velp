@@ -411,13 +411,8 @@ const BookDetailPage = () => {
                     <Button 
                       size="sm"
                       onClick={() => {
-                        // For students, go directly to Material Viewer
-                        // For admins/teachers, go to unit details
-                        if (user?.role === "student") {
-                          setLocation(`/units/${unit.id}/materials/0`);
-                        } else {
-                          setLocation(`/admin/units/${unit.id}`);
-                        }
+                        // Everyone can access the Material Viewer
+                        setLocation(`/units/${unit.id}/materials/0`);
                       }}
                       className="text-white hover:bg-opacity-90"
                       style={{ 
