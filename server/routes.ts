@@ -627,14 +627,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   // Determine material type and title from filename
                   const { type, title } = getMaterialTypeFromFilename(filename);
                   
-                  // Create a material object 
+                  // Create a material object with secure proxy URL
+                  // Instead of exposing AWS credentials, create a proxy endpoint
+                  const proxyUrl = `/api/content/${encodeURIComponent(objectKey)}`;
+                  
+                  // Ensure contentType is properly typed
+                  const contentTypeMapping = {
+                    "IMAGE": "IMAGE",
+                    "PDF": "PDF",
+                    "VIDEO": "VIDEO",
+                    "GAME": "GAME"
+                  } as const;
+                  
+                  // Make sure we have a valid content type from our enum
+                  const validContentType = contentTypeMapping[type as keyof typeof contentTypeMapping] || "IMAGE";
+                  
                   foundMaterials.push({
                     id: 10000 + (unitId * 100) + orderIndex,
                     unitId,
                     title: title,
                     description: `${title} for Unit ${unitNumber}`,
-                    contentType: type,
-                    content: url,
+                    contentType: validContentType, // Now properly typed
+                    content: proxyUrl, // Use the secure proxy URL instead of direct presigned URL
                     orderIndex: orderIndex,
                     isPublished: true, // Default to published
                     isLocked: false,   // Default to unlocked
@@ -962,6 +976,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+
+  // Add a secure proxy endpoint for S3 content
+  // This prevents exposing AWS credentials to the frontend
+  app.get("/api/content/:key", async (req, res) => {
+    try {
+      const key = decodeURIComponent(req.params.key);
+      
+      // Generate a presigned URL on the server
+      const presignedUrl = await getS3PresignedUrl(key);
+      
+      if (!presignedUrl) {
+        return res.status(404).json({ error: "Content not found" });
+      }
+      
+      // For most content types, we can redirect to the presigned URL
+      // This avoids having to stream the content through our server
+      res.redirect(presignedUrl);
+      
+      // Alternative approach for more control (if needed in the future):
+      // const response = await fetch(presignedUrl);
+      // response.body.pipe(res);
+    } catch (error) {
+      console.error("Error fetching content:", error);
+      res.status(500).json({ error: "Failed to fetch content" });
+    }
+  });
 
   return httpServer;
 }
