@@ -70,7 +70,8 @@ async function listS3Objects(prefix: string): Promise<string[]> {
   
   try {
     const response = await s3Client.send(command);
-    const objects = response.Contents || [];
+    // Add type annotations to avoid TypeScript errors
+    const objects = (response.Contents || []) as Array<{Key?: string}>;
     return objects.map(obj => obj.Key || "").filter(key => key !== "");
   } catch (error) {
     console.error(`Error listing objects with prefix ${prefix}:`, error);

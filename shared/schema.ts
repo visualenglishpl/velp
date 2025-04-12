@@ -148,7 +148,12 @@ export const contentTypeEnum = pgEnum("content_type", [
   "quiz",
   "video",
   "audio",
-  "document"
+  "document",
+  // Adding custom types for S3 content
+  "IMAGE",
+  "PDF",
+  "VIDEO",
+  "GAME"
 ]);
 
 export const materials = pgTable("materials", {
