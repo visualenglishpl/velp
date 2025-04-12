@@ -809,7 +809,7 @@ export default function MaterialViewer() {
                 <div className="bg-white p-4 rounded-lg shadow-sm">
                   <h5 className="font-medium text-primary mb-3 flex items-center">
                     <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
-                      <MessageCircle className="h-4 w-4" />
+                      <Gamepad2 className="h-4 w-4" />
                     </span>
                     Prompt Student Answers
                   </h5>
@@ -817,22 +817,22 @@ export default function MaterialViewer() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                     <div className="flex items-center bg-gray-50 p-2 rounded">
                       <span className="font-medium mr-1">Q:</span> "Is it a cat or a dog?" 
-                      <ArrowRight className="h-3 w-3 mx-1" /> 
+                      <span className="mx-1">→</span>
                       <span className="font-medium mr-1">A:</span> "It is a..."
                     </div>
                     <div className="flex items-center bg-gray-50 p-2 rounded">
                       <span className="font-medium mr-1">Q:</span> "Are they sitting or standing?" 
-                      <ArrowRight className="h-3 w-3 mx-1" /> 
+                      <span className="mx-1">→</span>
                       <span className="font-medium mr-1">A:</span> "They are..."
                     </div>
                     <div className="flex items-center bg-gray-50 p-2 rounded">
                       <span className="font-medium mr-1">Q:</span> "Is he eating or sleeping?" 
-                      <ArrowRight className="h-3 w-3 mx-1" /> 
+                      <span className="mx-1">→</span>
                       <span className="font-medium mr-1">A:</span> "He is..."
                     </div>
                     <div className="flex items-center bg-gray-50 p-2 rounded">
                       <span className="font-medium mr-1">Q:</span> "Is she happy or sad?" 
-                      <ArrowRight className="h-3 w-3 mx-1" /> 
+                      <span className="mx-1">→</span>
                       <span className="font-medium mr-1">A:</span> "She is..."
                     </div>
                   </div>
