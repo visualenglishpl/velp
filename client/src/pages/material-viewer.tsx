@@ -358,24 +358,51 @@ export default function MaterialViewer() {
   const extractQuestionFromFilename = (filename: string): string => {
     if (!filename) return "";
     
-    // Try to extract meaningful title from filename like "01 C a are You A Good or Bad Singer.gif"
-    const nameMatch = filename.match(/^\d+\s+[A-Z]\s+[a-z]\s+(.+)\.[a-zA-Z]+$/);
-    if (nameMatch && nameMatch[1]) {
-      // Clean up the extracted title
-      let extractedTitle = nameMatch[1].trim();
+    // Handle unit introduction special case
+    if (filename.includes("Unit Introduction") || filename.includes("Book") && filename.includes("Unit")) {
+      return "Unit Introduction";
+    }
+    
+    // Handle subject title slides (e.g., "01 P A Subject English.png")
+    const subjectMatch = filename.match(/^\d+\s+P\s+[A-Za-z]+\s+Subject\s+(.+)\.[a-zA-Z]+$/i);
+    if (subjectMatch && subjectMatch[1]) {
+      const subject = subjectMatch[1].trim();
+      return `Subject: ${subject}`;
+    }
+    
+    // Handle question slides (e.g., "01 P Ba is It Interesting or Boring.gif")
+    const questionMatch = filename.match(/^\d+\s+P\s+[A-Za-z]+[a-z]\s+(.+)\.[a-zA-Z]+$/i);
+    if (questionMatch && questionMatch[1]) {
+      // Clean up the extracted question
+      let extractedQuestion = questionMatch[1].trim();
       
-      // Fix common issues with extracted titles
-      extractedTitle = extractedTitle
-        // Add question mark if missing
-        .replace(/(\?)?$/, "?")
-        // Capitalize first letter of each sentence
-        .replace(/\b\w/g, c => c.toUpperCase())
+      // Format question properly
+      extractedQuestion = extractedQuestion
+        // Fix capitalization
+        .replace(/^\w/, c => c.toUpperCase())
+        // Add question mark for question formats
+        .replace(/^(is|are|do|does|who|what|where|when|why|how|can|could)(.+?)(\?)?$/i, (match, qWord, rest, qMark) => {
+          return `${qWord.charAt(0).toUpperCase() + qWord.slice(1)}${rest}?`;
+        })
         // Fix spacing around punctuation
         .replace(/\s+([,.?!:;])/g, "$1")
         // Ensure space after punctuation
         .replace(/([,.?!:;])([A-Za-z])/g, "$1 $2");
       
-      return extractedTitle;
+      // Make sure it's a proper question if it's in question format
+      if (/^(Is|Are|Do|Does|Who|What|Where|When|Why|How|Can|Could)/i.test(extractedQuestion) && !extractedQuestion.endsWith("?")) {
+        extractedQuestion += "?";
+      }
+      
+      return extractedQuestion;
+    }
+    
+    // Fallback for other formats
+    const genericMatch = filename.match(/^\d+\s+\w+\s+\w+\s+(.+)\.[a-zA-Z]+$/);
+    if (genericMatch && genericMatch[1]) {
+      let title = genericMatch[1].trim();
+      title = title.charAt(0).toUpperCase() + title.slice(1);
+      return title;
     }
     
     return "";
