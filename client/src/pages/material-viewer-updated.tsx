@@ -474,10 +474,6 @@ export default function MaterialViewer() {
           const decodedPath = decodeURIComponent(encodedPath);
           // Get the filename part (after the last slash if any)
           filename = decodedPath.includes('/') ? decodedPath.split('/').pop() || decodedPath : decodedPath;
-          
-          // Debug filename extraction
-          console.log('Decoded path:', decodedPath);
-          console.log('Extracted filename:', filename);
         }
       } else {
         // Fallback to original behavior for non-proxy URLs
@@ -489,8 +485,15 @@ export default function MaterialViewer() {
       filename = '';
     }
     
-    // Special handling for "00 A.png" type slides - don't show any header
-    if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/)) {
+    // Skip headers completely for special slides
+    if (
+      // Skip unit introduction slides
+      filename.includes('Unit Introduction') || 
+      (filename.includes('Book') && filename.includes('Unit')) ||
+      // Skip "00 A.png" pattern slides 
+      filename.includes('00 A') || 
+      filename.match(/^0+\s*[Aa]\.png$/)
+    ) {
       return null;
     }
     
