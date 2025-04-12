@@ -1,7 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { Book as BookType, Unit, Material } from "@shared/schema";
+import { Book as BookType, Unit as BaseUnit, Material } from "@shared/schema";
+
+// Extended Unit type with thumbnailUrl
+interface Unit extends BaseUnit {
+  thumbnailUrl?: string | null;
+}
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -37,7 +42,8 @@ import {
   FileText,
   Video, 
   AudioLines, 
-  ClipboardList
+  ClipboardList,
+  FileImage
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "@/hooks/use-toast";
@@ -957,10 +963,29 @@ const BooksManagementPage = () => {
                     <div className="p-3 text-center border-b">
                       <h3 className="font-semibold">Unit {unit.unitNumber}: {unit.title}</h3>
                     </div>
+                    <div className="flex-1 p-6 flex items-center justify-center">
+                      <div className="relative h-40 w-40 bg-gray-50 flex items-center justify-center overflow-hidden">
+                        <FileImage className="h-16 w-16 text-gray-300" style={{ position: 'absolute', opacity: 0.5 }} />
+                        {unit.thumbnailUrl && (
+                          <img 
+                            src={unit.thumbnailUrl}
+                            alt={`Unit ${unit.unitNumber} thumbnail`}
+                            className="max-h-full max-w-full object-contain relative z-10"
+                            onError={(e) => {
+                              console.log(`Failed to load thumbnail for unit ${unit.unitNumber}`);
+                              // Keep the icon visible when image fails
+                              const icon = e.currentTarget.previousElementSibling;
+                              if (icon) {
+                                (icon as HTMLElement).style.opacity = "1";
+                              }
+                              // Hide the broken image
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        )}
+                      </div>
+                    </div>
                     <div className="p-4">
-                      <p className="text-sm text-gray-500 mb-4 h-12 overflow-hidden">
-                        {unit.description || "No description provided"}
-                      </p>
                       <div className="mb-4">
                         {unit.isPublished ? (
                           <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1">Published</span>
