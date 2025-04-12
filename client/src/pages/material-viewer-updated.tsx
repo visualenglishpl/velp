@@ -590,13 +590,30 @@ export default function MaterialViewer() {
       {/* Question Section with Answer Prompts */}
       {currentMaterial?.content && (
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-semibold">
-            {extractQuestionFromFilename(
-              currentMaterial.content.includes('/api/content/')
-                ? decodeURIComponent(currentMaterial.content.split('/api/content/')[1])
-                : currentMaterial.content.split('/').pop() || ''
-            ) || currentMaterial.title}
-          </h2>
+          {(() => {
+            const filename = currentMaterial.content.includes('/api/content/')
+              ? decodeURIComponent(currentMaterial.content.split('/api/content/')[1])
+              : currentMaterial.content.split('/').pop() || '';
+              
+            // Skip headers for unit introduction and empty slides
+            if (filename.includes('00 A') || filename.match(/^0+\s*[Aa]\.png$/) || 
+                filename.includes("Unit Introduction") || (filename.includes("Book") && filename.includes("Unit"))) {
+              return null; // No header for these slides
+            }
+            
+            const questionText = extractQuestionFromFilename(filename) || currentMaterial.title;
+            
+            // Don't show empty questions
+            if (!questionText || questionText.trim() === '') {
+              return null;
+            }
+            
+            return (
+              <h2 className="text-2xl font-semibold">
+                {questionText}
+              </h2>
+            );
+          })()}
           
           {/* Answer Prompt Section */}
           {(() => {
