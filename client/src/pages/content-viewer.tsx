@@ -154,6 +154,23 @@ export default function ContentViewer() {
       emblaApi.scrollTo(currentSlideIndex);
     }
   }, [currentSlideIndex, emblaApi]);
+
+  // Find the slide index for a specific file pattern (like "00 A.png")
+  useEffect(() => {
+    if (materials && materials.length > 0 && book) {
+      // Look for first slide with "00 A.png" pattern or similar for unit intro
+      const introSlidePattern = /00\s*A/i;
+      const introSlideIndex = materials.findIndex(material => 
+        material.content && 
+        introSlidePattern.test(material.content.split('/').pop() || '')
+      );
+      
+      if (introSlideIndex !== -1) {
+        // If we found the intro slide, navigate to it
+        navigateToSlide(introSlideIndex);
+      }
+    }
+  }, [materials, book, navigateToSlide]);
   
   // Content type icon helper
   const getContentTypeIcon = (type: string) => {
@@ -264,6 +281,41 @@ export default function ContentViewer() {
     
     // Return clean filename without the encoded parts
     return decodedFilename.split('/').pop()?.split('.')[0] || "Learning Content";
+  };
+  
+  // Extract and format answer from filename
+  const getAnswerFromFilename = (filename: string): string => {
+    if (!filename) return "";
+    
+    // Remove URL encoding first
+    const decodedFilename = decodeURIComponent(filename);
+    
+    // Look for patterns with dash or en-dash followed by answer
+    // Format: "Question – Answer" or "Question - Answer"
+    const answerMatch = decodedFilename.match(/[–-]\s*(.+?)(?:\.[a-zA-Z]+)?$/);
+    
+    if (answerMatch && answerMatch[1]) {
+      let answer = answerMatch[1].trim();
+      
+      // Clean up the answer: capitalize first letter, remove encoding artifacts
+      answer = answer.replace(/%[0-9A-F]{2}/gi, ' ').trim();
+      answer = answer.charAt(0).toUpperCase() + answer.slice(1);
+      
+      // Correct common spelling errors
+      answer = answer
+        .replace(/Scottland/gi, 'Scotland')
+        .replace(/Brittish/gi, 'British')
+        .replace(/Australlian/gi, 'Australian')
+        .replace(/Amerrican/gi, 'American')
+        .replace(/Ingland/gi, 'England')
+        .replace(/Whales/gi, 'Wales')
+        .replace(/Irland/gi, 'Ireland')
+        .replace(/Capital citis/gi, 'Capital cities');
+      
+      return answer;
+    }
+    
+    return "";
   };
 
   // Filter out empty slides
@@ -384,7 +436,7 @@ export default function ContentViewer() {
         <div id="content-viewer" className="relative rounded-lg overflow-hidden transition-all">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
-              {materials.map((material, index) => (
+              {filteredMaterials.map((material, index) => (
                 <div 
                   key={material.id} 
                   className="flex-[0_0_100%] min-w-0"
@@ -409,9 +461,16 @@ export default function ContentViewer() {
                                     <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
                                       <Check className="h-5 w-5 text-green-600" />
                                     </span>
-                                    <h3 className="text-xl font-semibold text-gray-900">
-                                      {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                    </h3>
+                                    <div className="space-y-1">
+                                      <h3 className="text-xl font-semibold text-gray-900">
+                                        {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                      </h3>
+                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
+                                        <p className="text-sm text-gray-600 mt-1">
+                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
+                                        </p>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               )}
@@ -461,7 +520,7 @@ export default function ContentViewer() {
                                   </>
                                 )}
                                 <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                  {currentSlideIndex + 1}/{totalSlides}
+                                  {index + 1}/{totalSlides}
                                 </div>
                               </div>
                             </div>
@@ -475,9 +534,16 @@ export default function ContentViewer() {
                                     <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
                                       <Check className="h-5 w-5 text-green-600" />
                                     </span>
-                                    <h3 className="text-xl font-semibold text-gray-900">
-                                      {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                    </h3>
+                                    <div className="space-y-1">
+                                      <h3 className="text-xl font-semibold text-gray-900">
+                                        {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                      </h3>
+                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
+                                        <p className="text-sm text-gray-600 mt-1">
+                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
+                                        </p>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               )}
@@ -495,7 +561,7 @@ export default function ContentViewer() {
                                     Your browser does not support the video tag.
                                   </video>
                                   <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                    {currentSlideIndex + 1}/{totalSlides}
+                                    {index + 1}/{totalSlides}
                                   </div>
                                 </div>
                               </div>
@@ -512,9 +578,16 @@ export default function ContentViewer() {
                                     <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
                                       <Check className="h-5 w-5 text-green-600" />
                                     </span>
-                                    <h3 className="text-xl font-semibold text-gray-900">
-                                      {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                    </h3>
+                                    <div className="space-y-1">
+                                      <h3 className="text-xl font-semibold text-gray-900">
+                                        {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                      </h3>
+                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
+                                        <p className="text-sm text-gray-600 mt-1">
+                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
+                                        </p>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               )}
@@ -528,7 +601,7 @@ export default function ContentViewer() {
                                     allowFullScreen
                                   />
                                   <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                    {currentSlideIndex + 1}/{totalSlides}
+                                    {index + 1}/{totalSlides}
                                   </div>
                                 </div>
                               </div>
@@ -543,20 +616,25 @@ export default function ContentViewer() {
                                     <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
                                       <Check className="h-5 w-5 text-green-600" />
                                     </span>
-                                    <h3 className="text-xl font-semibold text-gray-900">
-                                      {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                    </h3>
+                                    <div className="space-y-1">
+                                      <h3 className="text-xl font-semibold text-gray-900">
+                                        {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
+                                      </h3>
+                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
+                                        <p className="text-sm text-gray-600 mt-1">
+                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
+                                        </p>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               )}
                               <div className="relative w-full h-full">
-                                <div className="p-6">
-                                  <p className="text-gray-500">{material.contentType} content</p>
-                                  <h3 className="text-xl font-semibold">{material.title}</h3>
-                                  <p className="text-gray-500 mt-2">{material.description}</p>
-                                </div>
+                                <pre className="whitespace-pre-wrap p-4 text-sm text-gray-800 bg-gray-50 rounded overflow-auto max-h-[calc(60vh-60px)]">
+                                  {material.content}
+                                </pre>
                                 <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                  {currentSlideIndex + 1}/{totalSlides}
+                                  {index + 1}/{totalSlides}
                                 </div>
                               </div>
                             </div>
@@ -569,153 +647,75 @@ export default function ContentViewer() {
               ))}
             </div>
           </div>
-          
-          {/* Navigation controls */}
-          <button 
-            className={cn(
-              "absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md transition-opacity",
-              currentSlideIndex === 0 ? "opacity-50 cursor-not-allowed" : "opacity-80"
-            )}
-            onClick={() => navigateToSlide(currentSlideIndex - 1)}
-            disabled={currentSlideIndex === 0}
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-          
-          <button 
-            className={cn(
-              "absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md transition-opacity",
-              currentSlideIndex === totalSlides - 1 ? "opacity-50 cursor-not-allowed" : "opacity-80"
-            )}
-            onClick={() => navigateToSlide(currentSlideIndex + 1)}
-            disabled={currentSlideIndex === totalSlides - 1}
-            aria-label="Next slide"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
         </div>
         
-        {/* Thumbnails slider */}
-        <div className="relative mt-4 px-8">
-          <button 
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 rounded-full p-1 shadow-md z-10"
-            onClick={() => {
-              if (thumbsApi) {
-                thumbsApi.scrollPrev();
-              }
-            }}
-            aria-label="Previous thumbnails"
+        {/* Controls and thumbnails */}
+        <div className="my-6 flex justify-center space-x-3">
+          <Button
+            variant="outline"
+            size="sm" 
+            className="flex items-center"
+            onClick={() => navigateToSlide(currentSlideIndex - 1)}
+            disabled={currentSlideIndex <= 0}
           >
-            <ChevronLeft className="h-5 w-5 text-gray-600" />
-          </button>
-
-          <button 
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 rounded-full p-1 shadow-md z-10"
-            onClick={() => {
-              if (thumbsApi) {
-                thumbsApi.scrollNext();
-              }
-            }}
-            aria-label="Next thumbnails"
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center"
+            onClick={() => navigateToSlide(currentSlideIndex + 1)}
+            disabled={!filteredMaterials || currentSlideIndex >= filteredMaterials.length - 1}
           >
-            <ChevronRight className="h-5 w-5 text-gray-600" />
-          </button>
-
-          <div className="overflow-hidden" ref={thumbsRef}>
-            <div className="flex gap-2 py-2">
-              {materials
-                // Filter out PDF materials from thumbnails
-                .filter(material => material.contentType !== 'PDF')
-                .map((material, index) => {
-                  // Find the actual index in the full materials array
-                  const actualIndex = materials.findIndex(m => m.id === material.id);
-                  return (
-                    <div 
-                      key={material.id} 
-                      className={cn(
-                        "flex-[0_0_80px] min-w-0 cursor-pointer",
-                        "relative overflow-hidden rounded border-2 transition-all",
-                        currentSlideIndex === actualIndex ? "border-gray-500" : "border-transparent"
-                      )}
-                      onClick={() => navigateToSlide(actualIndex)}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`Go to slide ${actualIndex + 1}: ${material.title}`}
-                    >
-                      {/* Content preview */}
-                      <div className="relative h-14 bg-gray-100 flex items-center justify-center">
-                        {material.contentType === 'IMAGE' && material.content ? (
-                          <img 
-                            src={material.content.includes('book5') 
-                              ? `/api/content/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}`
-                              : material.content
-                            }
-                            alt={`Thumbnail for ${material.title}`}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="flex items-center justify-center h-full w-full">
-                            {getContentTypeIcon(material.contentType)}
-                          </div>
-                        )}
-                        
-                        {/* Status indicator overlay */}
-                        {material.isLocked && (
-                          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                            <Lock className="h-3 w-3 text-white" />
-                          </div>
-                        )}
-                        
-                        {/* View status dot */}
-                        {!material.isLocked && (
-                          <div className="absolute top-0.5 right-0.5">
-                            {viewedSlides.includes(material.id) ? (
-                              <div className="h-2 w-2 rounded-full bg-green-500" />
-                            ) : (
-                              <div className="h-2 w-2 rounded-full bg-gray-300" />
-                            )}
-                          </div>
-                        )}
-                      </div>
-                      <div className="text-xs truncate text-center py-1 px-1">
-                        {actualIndex + 1}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
+            Next
+            <ChevronRight className="h-4 w-4 ml-1" />
+          </Button>
         </div>
-
-        {/* Slide Info & Resources Panel */}
-        <div className="mt-4 p-4 border rounded-lg">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              {currentMaterial?.isLocked ? (
-                <Lock className="h-4 w-4 text-gray-500" />
-              ) : (
-                <Check className="h-4 w-4 text-green-500" />
-              )}
-              <span className="text-sm font-medium">
-                {currentMaterial?.isLocked ? 'Locked Content' : 'Content Available'}
-              </span>
-            </div>
-            
-            {/* PDF download button */}
-            {materials.some(m => m.contentType === 'PDF') && (
-              <Button size="sm" variant="outline" className="flex items-center gap-2"
-                onClick={() => {
-                  // Find the first PDF material in this unit
-                  const pdfMaterial = materials.find(m => m.contentType === 'PDF');
-                  if (pdfMaterial) {
-                    window.open(pdfMaterial.content, '_blank');
-                  }
-                }}>
-                <Download className="h-4 w-4" />
-                Download PDF
-              </Button>
-            )}
+        
+        {/* Thumbnails */}
+        <div className="overflow-hidden mt-4" ref={thumbsRef}>
+          <div className="flex gap-2 py-2 px-1">
+            {filteredMaterials && filteredMaterials.map((material, index) => (
+              <div
+                key={material.id}
+                className={cn(
+                  "relative flex-[0_0_80px] min-w-0 h-14 border rounded-md overflow-hidden cursor-pointer transition-all",
+                  currentSlideIndex === index ? "border-blue-500 ring-2 ring-blue-200" : "border-gray-200",
+                  viewedSlides.includes(material.id) ? "after:absolute after:inset-0 after:bg-green-500 after:bg-opacity-10" : ""
+                )}
+                onClick={() => navigateToSlide(index)}
+              >
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-50">
+                  {index + 1}
+                </div>
+                {material.contentType === 'IMAGE' && material.content && (
+                  <>
+                    {material.content.includes('book5') ? (
+                      <img
+                        src={`/api/content/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
+                        alt={`Thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover opacity-70"
+                      />
+                    ) : (
+                      <img
+                        src={material.content}
+                        alt={`Thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover opacity-70"
+                      />
+                    )}
+                  </>
+                )}
+                <div className="absolute bottom-0 right-0 p-0.5 bg-gray-100 rounded-tl-md">
+                  {getContentTypeIcon(material.contentType)}
+                </div>
+                {viewedSlides.includes(material.id) && (
+                  <div className="absolute top-0 right-0 p-0.5">
+                    <Check className="h-3 w-3 text-green-600" />
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
