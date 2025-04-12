@@ -549,26 +549,23 @@ export default function MaterialViewer() {
             const isUsefulOrUselessMatch = filename.match(/is\s+(\w+)\s+useful\s+or\s+useless/i);
             const howManyLessonsMatch = filename.match(/how\s+many\s+(\w+)\s+lessons/i);
             
-            // Return appropriate prompt based on question type with simplified format
+            // Return appropriate prompt based on question type with "It is" format
             if (isEasyOrDifficultMatch) {
-              const subject = isEasyOrDifficultMatch[1];
               return (
                 <div className="text-sm text-gray-500 mt-2">
-                  <span className="font-medium">Prompt answers:</span> "{subject} is easy..." or "{subject} is difficult..."
+                  <span className="font-medium">Prompt answers:</span> "It is easy..." or "It is difficult..."
                 </div>
               );
             } else if (isInterestingOrBoringMatch) {
-              const subject = isInterestingOrBoringMatch[1];
               return (
                 <div className="text-sm text-gray-500 mt-2">
-                  <span className="font-medium">Prompt answers:</span> "{subject} is interesting..." or "{subject} is boring..."
+                  <span className="font-medium">Prompt answers:</span> "It is interesting..." or "It is boring..."
                 </div>
               );
             } else if (isUsefulOrUselessMatch) {
-              const subject = isUsefulOrUselessMatch[1];
               return (
                 <div className="text-sm text-gray-500 mt-2">
-                  <span className="font-medium">Prompt answers:</span> "{subject} is useful..." or "{subject} is useless..."
+                  <span className="font-medium">Prompt answers:</span> "It is useful..." or "It is useless..."
                 </div>
               );
             } else if (howManyLessonsMatch) {
