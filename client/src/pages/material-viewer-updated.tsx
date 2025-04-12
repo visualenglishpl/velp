@@ -741,7 +741,41 @@ export default function MaterialViewer() {
           {/* Slide title and progress */}
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-medium">
-              {currentMaterial?.title}
+              {(() => {
+                // Don't show title for special slides
+                if (currentMaterial?.content) {
+                  const filename = currentMaterial.content.includes('/api/content/')
+                    ? decodeURIComponent(currentMaterial.content.split('/api/content/')[1])
+                    : currentMaterial.content.split('/').pop() || '';
+                  
+                  // Skip titles for special slides
+                  if (
+                    // Match all possible variants of "00 A.png" pattern
+                    filename.includes('00 A') || 
+                    filename.includes('00A') || 
+                    filename.includes('0 A') || 
+                    filename.match(/^0+\s*[Aa]\.png$/) ||
+                    // Make sure to exclude all variants of Unit Content and Unit Introduction
+                    filename.includes('Unit Content') || 
+                    filename.includes('unit content') || 
+                    filename.toLowerCase().includes('unit content') ||
+                    filename.includes("Unit Introduction") || 
+                    filename.includes("unit introduction") || 
+                    filename.toLowerCase().includes("unit introduction") ||
+                    // Skip book/unit slides
+                    (filename.includes("Book") && filename.includes("Unit")) ||
+                    (filename.includes("book") && filename.includes("unit")) ||
+                    filename.toLowerCase().includes("book") && filename.toLowerCase().includes("unit") ||
+                    // Skip any slides that seem like they might be introduction slides
+                    filename.match(/^0+\s*[Ii]ntro/i) ||
+                    // Match slides with just a number and letter with nothing else
+                    filename.match(/^\d+\s*[A-Za-z]\.png$/)
+                  ) {
+                    return null; // No title for these slides
+                  }
+                }
+                return currentMaterial?.title;
+              })()}
             </h2>
             <div className="flex items-center gap-4">
               <div className="text-sm text-gray-500">
