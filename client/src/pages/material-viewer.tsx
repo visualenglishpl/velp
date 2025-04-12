@@ -18,6 +18,11 @@ import {
   Image as ImageIcon,
   AlertCircle,
   Gamepad2,
+  MessageSquare,
+  BookOpen,
+  HelpCircle,
+  MessageCircle,
+  ArrowRight,
   ExternalLink,
   Plus,
   Pencil,
@@ -750,20 +755,32 @@ export default function MaterialViewer() {
             {/* Teaching Guidance */}
             <div className="mb-6">
               <h3 className="text-lg font-medium mb-4">Teaching Guidance</h3>
-              <Card className="p-6">
-                <h4 className="font-medium text-gray-800 mb-4">Unit-specific guidance for {book?.title}, Unit {unit?.unitNumber} - {unit?.title}</h4>
+              <Card className="p-6 bg-gradient-to-br from-white to-blue-50">
+                <h4 className="font-semibold text-primary mb-4 border-b pb-2">
+                  Unit-specific guidance for {book?.title}, Unit {unit?.unitNumber} - {unit?.title}
+                </h4>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h5 className="font-medium mb-2">Presenting Questions</h5>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h5 className="font-medium text-primary mb-3 flex items-center">
+                      <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
+                        <FileText className="h-4 w-4" />
+                      </span>
+                      Presenting Questions
+                    </h5>
                     <ul className="list-disc pl-5 space-y-2 text-sm">
                       <li>Show the question on the slide and point to any key image details (e.g. facial expressions, actions, background objects).</li>
                       <li>Clearly read the question aloud to the class — say it twice to help students process the language.</li>
                     </ul>
                   </div>
                   
-                  <div>
-                    <h5 className="font-medium mb-2">Check Vocabulary Understanding</h5>
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h5 className="font-medium text-primary mb-3 flex items-center">
+                      <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
+                        <AlertCircle className="h-4 w-4" />
+                      </span>
+                      Check Vocabulary Understanding
+                    </h5>
                     <ul className="list-disc pl-5 space-y-2 text-sm">
                       <li>Refer back to the textbook vocabulary section if available.</li>
                       <li>Pause and explain any unfamiliar words using visuals, gestures, or simple definitions.</li>
@@ -771,25 +788,53 @@ export default function MaterialViewer() {
                   </div>
                 </div>
                 
-                <div className="mb-6">
-                  <h5 className="font-medium mb-2">Ask Follow-up Questions</h5>
-                  <p className="text-sm mb-2">To reinforce comprehension:</p>
-                  <ul className="list-disc pl-5 space-y-1 text-sm">
+                <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
+                  <h5 className="font-medium text-primary mb-3 flex items-center">
+                    <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
+                      <Video className="h-4 w-4" />
+                    </span>
+                    Ask Follow-up Questions
+                  </h5>
+                  <p className="text-sm mb-3 font-medium">To reinforce comprehension:</p>
+                  <ul className="list-disc pl-5 space-y-2 text-sm">
                     <li>"Why do you think so?"</li>
                     <li>"Can you describe it more?"</li>
                     <li>"What else can you see?"</li>
                   </ul>
-                  <p className="text-sm italic mt-2">Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.</p>
+                  <div className="bg-blue-50 p-3 rounded mt-3 text-sm italic border-l-2 border-primary">
+                    Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.
+                  </div>
                 </div>
                 
-                <div>
-                  <h5 className="font-medium mb-2">Prompt Student Answers</h5>
-                  <p className="text-sm mb-2">Use structured sentence frames:</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                    <div>"Is it a cat or a dog?" → "It is a..."</div>
-                    <div>"Are they sitting or standing?" → "They are..."</div>
-                    <div>"Is he eating or sleeping?" → "He is..."</div>
-                    <div>"Is she happy or sad?" → "She is..."</div>
+                <div className="bg-white p-4 rounded-lg shadow-sm">
+                  <h5 className="font-medium text-primary mb-3 flex items-center">
+                    <span className="bg-primary/10 p-1.5 rounded mr-2 text-primary">
+                      <MessageCircle className="h-4 w-4" />
+                    </span>
+                    Prompt Student Answers
+                  </h5>
+                  <p className="text-sm mb-3 font-medium">Use structured sentence frames:</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div className="flex items-center bg-gray-50 p-2 rounded">
+                      <span className="font-medium mr-1">Q:</span> "Is it a cat or a dog?" 
+                      <ArrowRight className="h-3 w-3 mx-1" /> 
+                      <span className="font-medium mr-1">A:</span> "It is a..."
+                    </div>
+                    <div className="flex items-center bg-gray-50 p-2 rounded">
+                      <span className="font-medium mr-1">Q:</span> "Are they sitting or standing?" 
+                      <ArrowRight className="h-3 w-3 mx-1" /> 
+                      <span className="font-medium mr-1">A:</span> "They are..."
+                    </div>
+                    <div className="flex items-center bg-gray-50 p-2 rounded">
+                      <span className="font-medium mr-1">Q:</span> "Is he eating or sleeping?" 
+                      <ArrowRight className="h-3 w-3 mx-1" /> 
+                      <span className="font-medium mr-1">A:</span> "He is..."
+                    </div>
+                    <div className="flex items-center bg-gray-50 p-2 rounded">
+                      <span className="font-medium mr-1">Q:</span> "Is she happy or sad?" 
+                      <ArrowRight className="h-3 w-3 mx-1" /> 
+                      <span className="font-medium mr-1">A:</span> "She is..."
+                    </div>
                   </div>
                 </div>
               </Card>
