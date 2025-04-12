@@ -62,17 +62,55 @@ async function getS3PresignedUrl(key: string, expiresIn = 3600) {
 
 // Helper function to list objects in an S3 path (used for finding materials with descriptive filenames)
 async function listS3Objects(prefix: string): Promise<string[]> {
+  // AWS S3 has a maximum of 1000 objects per response
   const command = new ListObjectsV2Command({
     Bucket: S3_BUCKET,
     Prefix: prefix,
-    MaxKeys: 50 // Limit to 50 results per "folder"
+    MaxKeys: 1000 // Increase to the maximum allowed by S3 API
   });
   
   try {
-    const response = await s3Client.send(command);
-    // Add type annotations to avoid TypeScript errors
-    const objects = (response.Contents || []) as Array<{Key?: string}>;
-    return objects.map(obj => obj.Key || "").filter(key => key !== "");
+    let allObjects: string[] = [];
+    let response = await s3Client.send(command);
+    
+    // Add initial objects to our results
+    const initialObjects = (response.Contents || []) as Array<{Key?: string}>;
+    allObjects = initialObjects.map(obj => obj.Key || "").filter(key => key !== "");
+    
+    // If there are more objects (truncated response), continue fetching
+    if (response.IsTruncated) {
+      console.log(`Initial response was truncated, fetching more objects for prefix: ${prefix}`);
+      
+      let continuationToken = response.NextContinuationToken;
+      while (continuationToken) {
+        // Create a new command with the continuation token
+        const nextCommand = new ListObjectsV2Command({
+          Bucket: S3_BUCKET,
+          Prefix: prefix,
+          MaxKeys: 1000,
+          ContinuationToken: continuationToken
+        });
+        
+        // Get the next batch of objects
+        const nextResponse = await s3Client.send(nextCommand);
+        const nextObjects = (nextResponse.Contents || []) as Array<{Key?: string}>;
+        
+        // Add to our results
+        const validObjects = nextObjects.map(obj => obj.Key || "").filter(key => key !== "");
+        allObjects = [...allObjects, ...validObjects];
+        
+        // Check if we need to continue
+        if (nextResponse.IsTruncated) {
+          continuationToken = nextResponse.NextContinuationToken;
+          console.log(`Fetched ${validObjects.length} more objects, continuing...`);
+        } else {
+          continuationToken = undefined;
+        }
+      }
+    }
+    
+    console.log(`Total objects found for prefix ${prefix}: ${allObjects.length}`);
+    return allObjects;
   } catch (error) {
     console.error(`Error listing objects with prefix ${prefix}:`, error);
     return [];
@@ -664,6 +702,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
               }
             }
             
+            // Log total found materials before sorting
+            console.log(`Total materials found before sorting: ${foundMaterials.length}`);
+            
             // Sort materials by their numerical prefix if they have one
             foundMaterials.sort((a, b) => {
               // Extract leading number from titles if present
@@ -676,9 +717,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
               return a.order - b.order;
             });
             
+            // Set the materials without any limit
             if (foundMaterials.length > 0) {
               materials = foundMaterials;
               console.log(`Found ${materials.length} materials for unit ${unitNumber} of book ${bookId}`);
+              console.log(`First material: ${materials[0].title}, Last material: ${materials[materials.length - 1].title}`);
             } else {
               console.log(`No materials found in S3 for unit ${unitNumber} of book ${bookId}`);
             }
