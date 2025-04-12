@@ -988,26 +988,7 @@ const BooksManagementPage = () => {
                         Manage Book <span className="ml-1">→</span>
                       </Button>
                       
-                      {user?.role === "admin" && (
-                        <div className="flex justify-between">
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => handleEditBook(book)}
-                            className="flex-1 mr-1"
-                          >
-                            <Pencil className="h-4 w-4 mr-1" /> Edit
-                          </Button>
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => handleDeleteBook(book.id)}
-                            className="flex-1 ml-1 text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="h-4 w-4 mr-1" /> Delete
-                          </Button>
-                        </div>
-                      )}
+
                     </div>
                   </div>
                 ))}
@@ -1080,26 +1061,7 @@ const BooksManagementPage = () => {
                         Manage Materials <span className="ml-1">→</span>
                       </Button>
                       
-                      {user?.role === "admin" && (
-                        <div className="flex justify-between">
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => handleEditUnit(unit)}
-                            className="flex-1 mr-1"
-                          >
-                            <Pencil className="h-4 w-4 mr-1" /> Edit
-                          </Button>
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => handleDeleteUnit(unit.id)}
-                            className="flex-1 ml-1 text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="h-4 w-4 mr-1" /> Delete
-                          </Button>
-                        </div>
-                      )}
+
                     </div>
                   </div>
                 ))}
@@ -1144,7 +1106,6 @@ const BooksManagementPage = () => {
                     <TableHead>Title</TableHead>
                     <TableHead className="w-24">Type</TableHead>
                     <TableHead className="w-24">Status</TableHead>
-                    <TableHead className="text-right w-32">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -1163,27 +1124,6 @@ const BooksManagementPage = () => {
                           <span className="bg-green-100 text-green-800 text-xs rounded-full px-2 py-1">Published</span>
                         ) : (
                           <span className="bg-gray-100 text-gray-800 text-xs rounded-full px-2 py-1">Draft</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {user?.role === "admin" && (
-                          <div className="flex justify-end space-x-1">
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              onClick={() => handleEditMaterial(material)}
-                            >
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="sm"
-                              onClick={() => handleDeleteMaterial(material.id)}
-                              className="text-red-500 hover:text-red-700"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
                         )}
                       </TableCell>
                     </TableRow>
