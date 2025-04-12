@@ -359,53 +359,65 @@ export default function MaterialViewer() {
     if (!filename) return "";
     
     // Handle unit introduction special case
-    if (filename.includes("Unit Introduction") || filename.includes("Book") && filename.includes("Unit")) {
+    if (filename.includes("Unit Introduction") || (filename.includes("Book") && filename.includes("Unit"))) {
       return "Unit Introduction";
     }
     
     // Handle subject title slides (e.g., "01 P A Subject English.png")
-    const subjectMatch = filename.match(/^\d+\s+P\s+[A-Za-z]+\s+Subject\s+(.+)\.[a-zA-Z]+$/i);
+    const subjectMatch = filename.match(/Subject\s+(.+?)\.[a-zA-Z]+$/i);
     if (subjectMatch && subjectMatch[1]) {
       const subject = subjectMatch[1].trim();
       return `Subject: ${subject}`;
     }
     
-    // Handle question slides (e.g., "01 P Ba is It Interesting or Boring.gif")
-    const questionMatch = filename.match(/^\d+\s+P\s+[A-Za-z]+[a-z]\s+(.+)\.[a-zA-Z]+$/i);
-    if (questionMatch && questionMatch[1]) {
-      // Clean up the extracted question
-      let extractedQuestion = questionMatch[1].trim();
+    // Handle "is X Y or Z" style questions (e.g., "is English Easy or Difficult")
+    const isQuestion = filename.match(/is\s+([A-Za-z]+)\s+(.*?)\.[a-zA-Z]+$/i);
+    if (isQuestion) {
+      let questionText = `Is ${isQuestion[1]} ${isQuestion[2]}?`;
+      return questionText;
+    }
+    
+    // Handle "how many" questions
+    const howManyQuestion = filename.match(/How\s+Many\s+(.*?)\.[a-zA-Z]+$/i);
+    if (howManyQuestion) {
+      return `How Many ${howManyQuestion[1]}?`;
+    }
+    
+    // Handle "do you" questions
+    const doYouQuestion = filename.match(/Do\s+You\s+(.*?)\.[a-zA-Z]+$/i);
+    if (doYouQuestion) {
+      return `Do You ${doYouQuestion[1]}?`;
+    }
+    
+    // Handle "who is" questions
+    const whoIsQuestion = filename.match(/Who\s+is\s+(.*?)\.[a-zA-Z]+$/i);
+    if (whoIsQuestion) {
+      return `Who is ${whoIsQuestion[1]}?`;
+    }
+    
+    // Fallback - just use any text after the file code pattern
+    const anyText = filename.match(/\d+\s+P\s+[A-Za-z]+[a-z]?\s+(.*?)\.[a-zA-Z]+$/i);
+    if (anyText && anyText[1]) {
+      let text = anyText[1].trim();
       
-      // Format question properly
-      extractedQuestion = extractedQuestion
-        // Fix capitalization
-        .replace(/^\w/, c => c.toUpperCase())
-        // Add question mark for question formats
-        .replace(/^(is|are|do|does|who|what|where|when|why|how|can|could)(.+?)(\?)?$/i, (match, qWord, rest, qMark) => {
-          return `${qWord.charAt(0).toUpperCase() + qWord.slice(1)}${rest}?`;
-        })
-        // Fix spacing around punctuation
-        .replace(/\s+([,.?!:;])/g, "$1")
-        // Ensure space after punctuation
-        .replace(/([,.?!:;])([A-Za-z])/g, "$1 $2");
+      // Capitalize first letter
+      text = text.charAt(0).toUpperCase() + text.slice(1);
       
-      // Make sure it's a proper question if it's in question format
-      if (/^(Is|Are|Do|Does|Who|What|Where|When|Why|How|Can|Could)/i.test(extractedQuestion) && !extractedQuestion.endsWith("?")) {
-        extractedQuestion += "?";
+      // Add question mark if it seems like a question
+      if (/^(is|are|do|does|who|what|where|when|why|how|can|could)/i.test(text) && !text.endsWith("?")) {
+        text += "?";
       }
       
-      return extractedQuestion;
+      return text;
     }
     
-    // Fallback for other formats
-    const genericMatch = filename.match(/^\d+\s+\w+\s+\w+\s+(.+)\.[a-zA-Z]+$/);
-    if (genericMatch && genericMatch[1]) {
-      let title = genericMatch[1].trim();
-      title = title.charAt(0).toUpperCase() + title.slice(1);
-      return title;
+    // Very simple fallback
+    const simpleFallback = filename.split('.')[0].split(' ').slice(3).join(' ');
+    if (simpleFallback) {
+      return simpleFallback.charAt(0).toUpperCase() + simpleFallback.slice(1);
     }
     
-    return "";
+    return filename; // Last resort, return the filename itself
   };
 
   // Main UI with materials
@@ -538,7 +550,8 @@ export default function MaterialViewer() {
                                     <img
                                       src={material.content}
                                       alt={material.title}
-                                      className="max-h-full max-w-full object-contain"
+                                      className="w-full h-full object-contain"
+                                      style={{ objectFit: 'contain', maxHeight: '100%', maxWidth: '100%' }}
                                     />
                                   </div>
                                 </div>
@@ -561,8 +574,9 @@ export default function MaterialViewer() {
                                   <div className="flex-1">
                                     <video 
                                       controls 
-                                      className="w-full h-full"
+                                      className="w-full h-full object-contain"
                                       src={material.content}
+                                      style={{ maxHeight: '100%', width: '100%' }}
                                     >
                                       Your browser does not support the video tag.
                                     </video>
@@ -656,6 +670,40 @@ export default function MaterialViewer() {
           
           {/* Thumbnails slider */}
           <div className="relative mt-4 px-8">
+            {/* Left arrow navigation for thumbnails */}
+            <button 
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 rounded-full p-1 shadow-md z-10"
+              onClick={() => {
+                const container = thumbsRef.current;
+                if (container) {
+                  container.scrollTo({
+                    left: container.scrollLeft - 240,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+              aria-label="Previous thumbnails"
+            >
+              <ChevronLeft className="h-5 w-5 text-gray-600" />
+            </button>
+
+            {/* Right arrow navigation for thumbnails */}
+            <button 
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 rounded-full p-1 shadow-md z-10"
+              onClick={() => {
+                const container = thumbsRef.current;
+                if (container) {
+                  container.scrollTo({
+                    left: container.scrollLeft + 240,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+              aria-label="Next thumbnails"
+            >
+              <ChevronRight className="h-5 w-5 text-gray-600" />
+            </button>
+
             <div className="overflow-hidden" ref={thumbsRef}>
               <div className="flex gap-2 py-2">
                 {materials
