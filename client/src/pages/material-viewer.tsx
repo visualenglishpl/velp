@@ -546,12 +546,12 @@ export default function MaterialViewer() {
                                       </div>
                                     </div>
                                   )}
-                                  <div className="flex-1 flex items-center justify-center">
+                                  <div className="flex-1 flex items-center justify-center w-full h-full">
                                     <img
                                       src={material.content}
                                       alt={material.title}
-                                      className="w-full h-full object-contain"
-                                      style={{ objectFit: 'contain', maxHeight: '100%', maxWidth: '100%' }}
+                                      className="max-w-full max-h-full object-contain"
+                                      style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
                                     />
                                   </div>
                                 </div>
@@ -571,12 +571,12 @@ export default function MaterialViewer() {
                                       </div>
                                     </div>
                                   )}
-                                  <div className="flex-1">
+                                  <div className="flex-1 flex items-center justify-center w-full h-full">
                                     <video 
                                       controls 
-                                      className="w-full h-full object-contain"
+                                      className="max-w-full max-h-full object-contain"
                                       src={material.content}
-                                      style={{ maxHeight: '100%', width: '100%' }}
+                                      style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
                                     >
                                       Your browser does not support the video tag.
                                     </video>
@@ -600,11 +600,12 @@ export default function MaterialViewer() {
                                       </div>
                                     </div>
                                   )}
-                                  <div className="flex-1">
+                                  <div className="flex-1 flex items-center justify-center w-full h-full">
                                     <iframe
                                       src={material.content}
                                       title={material.title}
-                                      className="w-full h-full"
+                                      className="max-w-full max-h-full"
+                                      style={{ width: '100%', height: 'calc(60vh - 60px)' }}
                                       allowFullScreen
                                     />
                                   </div>
@@ -674,12 +675,8 @@ export default function MaterialViewer() {
             <button 
               className="absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 rounded-full p-1 shadow-md z-10"
               onClick={() => {
-                const container = thumbsRef.current;
-                if (container) {
-                  container.scrollTo({
-                    left: container.scrollLeft - 240,
-                    behavior: 'smooth'
-                  });
+                if (thumbsApi) {
+                  thumbsApi.scrollPrev();
                 }
               }}
               aria-label="Previous thumbnails"
@@ -691,12 +688,8 @@ export default function MaterialViewer() {
             <button 
               className="absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 rounded-full p-1 shadow-md z-10"
               onClick={() => {
-                const container = thumbsRef.current;
-                if (container) {
-                  container.scrollTo({
-                    left: container.scrollLeft + 240,
-                    behavior: 'smooth'
-                  });
+                if (thumbsApi) {
+                  thumbsApi.scrollNext();
                 }
               }}
               aria-label="Next thumbnails"
