@@ -407,42 +407,16 @@ export default function ContentViewer() {
                               )}
                               <div className="flex-1 flex items-center justify-center w-full h-full">
                                 {material.content && (
-                                  <>
-                                    {/* Special handling for files that might be showing raw text instead of images */}
-                                    {material.content.includes('book5') && /school|vocabulary|facilities|classroom|cloakroom|library|playground/i.test(material.content) ? (
-                                      <div className="max-w-3xl text-center p-6 bg-white rounded-lg">
-                                        <h3 className="text-xl font-semibold mb-4">School Vocabulary</h3>
-                                        <p className="text-gray-700 leading-relaxed">
-                                          Students eat meals and buy snacks in the <strong>Library</strong>. Quiet area for reading and studying.
-                                          <br /><br />
-                                          <strong>After School Care:</strong> Activities after regular school hours.
-                                          <br /><br />
-                                          <strong>Special School Areas:</strong> Cloakroom for changing shoes and outdoor clothing. 
-                                          <br /><br />
-                                          <strong>Classroom:</strong> Primary learning spaces.
-                                          <br /><br />
-                                          <strong>Sports Field:</strong> Outdoor space for physical activities.
-                                          <br /><br />
-                                          <strong>Playground:</strong> Recreational area for breaks.
-                                          <br /><br />
-                                          <strong>Art Room:</strong> Space for creative projects.
-                                          <br /><br />
-                                          <strong>Music Room:</strong> Where students learn instruments and singing.
-                                        </p>
-                                      </div>
-                                    ) : (
-                                      <img
-                                        src={material.content} 
-                                        alt={material.title}
-                                        className="max-w-full max-h-full object-contain"
-                                        style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                        onError={(e) => {
-                                          console.error("Failed to load image:", material.title);
-                                          (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                        }}
-                                      />
-                                    )}
-                                  </>
+                                  <img
+                                    src={material.content} 
+                                    alt={material.title}
+                                    className="max-w-full max-h-full object-contain"
+                                    style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
+                                    onError={(e) => {
+                                      console.error("Failed to load image:", material.title);
+                                      (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
+                                    }}
+                                  />
                                 )}
                                 <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
                                   {currentSlideIndex + 1}/{totalSlides}
