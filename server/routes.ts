@@ -224,10 +224,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
             // Try alternate path format if first attempt fails
             if (currentBook) {
               // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
-              // For book1-7: thumbnails/thumbnailsuni1-1.png
-              const alternatePath = currentBook.bookId.startsWith('0')
-                ? `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`
-                : `thumbnails/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
+              // For book4: book4/icons/thumbnailsuni4-12.png
+              // For books 1-3, 5-7: thumbnails/thumbnailsuni[book-id]-[unit-number].png
+              let alternatePath;
+              if (currentBook.bookId.startsWith('0')) {
+                alternatePath = `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
+              } else if (currentBook.bookId === '4') {
+                alternatePath = `book4/icons/thumbnailsuni4-${unit.unitNumber}.png`;
+              } else {
+                alternatePath = `thumbnails/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
+              }
               
               if (alternatePath !== unit.thumbnail) {
                 console.log(`Trying alternate path: ${alternatePath}`);
@@ -283,10 +289,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Try alternate path format if first attempt fails
           if (bookDetails) {
             // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
-            // For book1-7: thumbnails/thumbnailsuni1-1.png
-            const alternatePath = bookDetails.bookId.startsWith('0')
-              ? `book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`
-              : `thumbnails/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
+            // For book4: book4/icons/thumbnailsuni4-12.png
+            // For books 1-3, 5-7: thumbnails/thumbnailsuni[book-id]-[unit-number].png
+            let alternatePath;
+            if (bookDetails.bookId.startsWith('0')) {
+              alternatePath = `book${bookDetails.bookId}/icons/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
+            } else if (bookDetails.bookId === '4') {
+              alternatePath = `book4/icons/thumbnailsuni4-${unit.unitNumber}.png`;
+            } else {
+              alternatePath = `thumbnails/thumbnailsuni${bookDetails.bookId}-${unit.unitNumber}.png`;
+            }
             
             if (alternatePath !== unit.thumbnail) {
               console.log(`Trying alternate path for single unit: ${alternatePath}`);
@@ -534,9 +546,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const range = `${startUnit}-${endUnit}`;
         
         // Use different path patterns for different books
-        const thumbnailPath = bookId.startsWith('0')
-          ? `book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`
-          : `thumbnails/thumbnailsuni${bookId}-${range}.png`;
+        let thumbnailPath;
+        if (bookId.startsWith('0')) {
+          thumbnailPath = `book${bookId}/icons/thumbnailsuni${bookId}-${range}.png`;
+        } else if (bookId === '4') {
+          thumbnailPath = `book4/icons/thumbnailsuni4-${range}.png`;
+        } else {
+          thumbnailPath = `thumbnails/thumbnailsuni${bookId}-${range}.png`;
+        }
           
         try {
           console.log(`Attempting to get presigned URL for batch thumbnail: ${thumbnailPath}`);
