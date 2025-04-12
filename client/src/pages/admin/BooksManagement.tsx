@@ -1037,7 +1037,7 @@ const BooksManagementPage = () => {
                           backgroundColor: getBookButtonColor(unit.unitNumber.toString())
                         }} 
                       >
-                        View Materials <span className="ml-1">→</span>
+                        View Unit <span className="ml-1">→</span>
                       </Button>
                       
 
