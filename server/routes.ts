@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@shared/schema";
 import { z } from "zod";
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 // Authentication middleware to protect routes
@@ -42,10 +42,13 @@ const s3Client = new S3Client({
   }
 });
 
+// S3 bucket name constant
+const S3_BUCKET = "visualenglishmaterial";
+
 // Helper function to generate a presigned URL for S3 objects
 async function getS3PresignedUrl(key: string, expiresIn = 3600) {
   const command = new GetObjectCommand({
-    Bucket: "visualenglishmaterial",
+    Bucket: S3_BUCKET,
     Key: key
   });
   
@@ -55,6 +58,88 @@ async function getS3PresignedUrl(key: string, expiresIn = 3600) {
     console.error(`Error generating presigned URL for ${key}:`, error);
     return null;
   }
+}
+
+// Helper function to list objects in an S3 path (used for finding materials with descriptive filenames)
+async function listS3Objects(prefix: string): Promise<string[]> {
+  const command = new ListObjectsV2Command({
+    Bucket: S3_BUCKET,
+    Prefix: prefix,
+    MaxKeys: 50 // Limit to 50 results per "folder"
+  });
+  
+  try {
+    const response = await s3Client.send(command);
+    const objects = response.Contents || [];
+    return objects.map(obj => obj.Key || "").filter(key => key !== "");
+  } catch (error) {
+    console.error(`Error listing objects with prefix ${prefix}:`, error);
+    return [];
+  }
+}
+
+// Helper to determine material type from filename
+function getMaterialTypeFromFilename(filename: string): { type: string, title: string } {
+  // Default values
+  let type = "IMAGE";
+  let title = "Unit Content";
+  
+  // Extract file extension
+  const extension = filename.split('.').pop()?.toLowerCase();
+  
+  // Set type based on extension
+  if (extension === "pdf") {
+    type = "PDF";
+    title = "Printable Worksheet";
+  } else if (extension === "mp4" || extension === "mov") {
+    type = "VIDEO";
+    title = "Video Lesson";
+  } else if (extension === "html") {
+    type = "GAME";
+    title = "Interactive Exercise";
+  } else if (extension === "gif" || extension === "png" || extension === "jpg" || extension === "jpeg") {
+    type = "IMAGE";
+  }
+  
+  // Try to extract meaningful title from filename
+  // Example format: "01 C a are You A Good or Bad Singer.gif"
+  
+  // First, extract number prefix if present
+  const numberMatch = filename.match(/^(\d+)/);
+  if (numberMatch) {
+    const number = parseInt(numberMatch[1]);
+    
+    // Assign title based on slide number
+    if (number === 1) {
+      title = "Unit Introduction";
+    } else if (number === 2) {
+      title = "Key Vocabulary";
+    } else if (number === 3) {
+      title = "Grammar Focus";
+    } else if (number === 4) {
+      title = "Vocabulary Practice";
+    } else if (number === 5) {
+      title = "Pattern Practice";
+    } else if (number === 6) {
+      title = "Reading Exercise";
+    }
+    
+    // If we have a more complex name (like Visual English pattern), try to extract title from it
+    const nameMatch = filename.match(/^\d+\s+[A-Z]\s+[a-z]\s+(.+)\.[a-zA-Z]+$/);
+    if (nameMatch && nameMatch[1]) {
+      // Clean up the extracted title
+      let extractedTitle = nameMatch[1].trim();
+      // Capitalize first letter of each word
+      extractedTitle = extractedTitle.replace(/\b\w/g, c => c.toUpperCase());
+      
+      // If we have a nice title, use it instead
+      if (extractedTitle.length > 3) {
+        title = `${title}: ${extractedTitle}`;
+      }
+    }
+  }
+  
+  return { type, title };
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -513,187 +598,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log(`Looking for materials in S3 path: ${basePath}`);
         
         try {
-          // Create a set of content types and patterns to check
-          const contentTypes = [
-            { 
-              type: "IMAGE",
-              paths: [
-                `${basePath}slide01.jpg`, 
-                `${basePath}slide01.png`,
-                `${basePath}slides/slide01.jpg`,
-                `${basePath}slides/slide01.png`,
-                // Add format for the new naming convention
-                `${basePath}01 P A Subject English.png`,
-                `${basePath}01 *.png`,
-                `${basePath}01 *.jpg`,
-                `${basePath}01*.png`,
-                `${basePath}01*.jpg`
-              ],
-              title: "Unit Introduction",
-              description: "Introduction to unit concepts",
-              isPublished: true
-            },
-            { 
-              type: "IMAGE", 
-              paths: [
-                `${basePath}slide02.jpg`, 
-                `${basePath}slide02.png`,
-                `${basePath}slides/slide02.jpg`,
-                `${basePath}slides/slide02.png`,
-                // Add format for the new naming convention
-                `${basePath}02 *.png`,
-                `${basePath}02 *.jpg`,
-                `${basePath}02*.png`,
-                `${basePath}02*.jpg`
-              ],
-              title: "Key Vocabulary",
-              description: "Essential vocabulary for this unit",
-              isPublished: true
-            },
-            { 
-              type: "IMAGE", 
-              paths: [
-                `${basePath}slide03.jpg`, 
-                `${basePath}slide03.png`,
-                `${basePath}slides/slide03.jpg`,
-                `${basePath}slides/slide03.png`,
-                // Add format for the new naming convention
-                `${basePath}03 *.png`,
-                `${basePath}03 *.jpg`,
-                `${basePath}03*.png`,
-                `${basePath}03*.jpg`
-              ],
-              title: "Grammar Focus",
-              description: "Key language structures explained",
-              isPublished: true
-            },
-            { 
-              type: "IMAGE", 
-              paths: [
-                `${basePath}slide04.jpg`, 
-                `${basePath}slide04.png`,
-                `${basePath}slides/slide04.jpg`,
-                `${basePath}slides/slide04.png`,
-                // Add format for the new naming convention
-                `${basePath}04 *.png`,
-                `${basePath}04 *.jpg`,
-                `${basePath}04*.png`,
-                `${basePath}04*.jpg`
-              ],
-              title: "Vocabulary Practice",
-              description: "Practice exercises for new vocabulary",
-              isPublished: true
-            },
-            { 
-              type: "IMAGE", 
-              paths: [
-                `${basePath}slide05.jpg`, 
-                `${basePath}slide05.png`,
-                `${basePath}slides/slide05.jpg`,
-                `${basePath}slides/slide05.png`,
-                // Add format for the new naming convention
-                `${basePath}05 *.png`,
-                `${basePath}05 *.jpg`,
-                `${basePath}05*.png`,
-                `${basePath}05*.jpg`
-              ],
-              title: "Pattern Practice",
-              description: "Practice language patterns and structures",
-              isPublished: true
-            },
-            { 
-              type: "IMAGE", 
-              paths: [
-                `${basePath}slide06.jpg`, 
-                `${basePath}slide06.png`,
-                `${basePath}slides/slide06.jpg`,
-                `${basePath}slides/slide06.png`,
-                // Add format for the new naming convention
-                `${basePath}06 *.png`,
-                `${basePath}06 *.jpg`,
-                `${basePath}06*.png`,
-                `${basePath}06*.jpg`
-              ],
-              title: "Reading Exercise",
-              description: "Reading comprehension activity",
-              isPublished: true
-            },
-            { 
-              type: "PDF", 
-              paths: [
-                `${basePath}worksheet.pdf`,
-                `${basePath}handout.pdf`
-              ],
-              title: "Printable Worksheet",
-              description: "Printable exercises for additional practice",
-              isPublished: true
-            },
-            { 
-              type: "VIDEO", 
-              paths: [
-                `${basePath}video.mp4`,
-                `${basePath}media/video.mp4`
-              ],
-              title: "Video Lesson",
-              description: "Video explanation of unit concepts",
-              isPublished: true
-            },
-            { 
-              type: "GAME", 
-              paths: [
-                `${basePath}game.html`,
-                `${basePath}interactive/game.html`
-              ],
-              title: "Interactive Exercise",
-              description: "Interactive game to practice new concepts",
-              isPublished: false
-            }
-          ];
+          // Use the listS3Objects to get all files in this unit directory
+          const s3Objects = await listS3Objects(basePath);
           
-          // Array to store successfully found materials
-          const foundMaterials = [];
-          let orderIndex = 1;
-          
-          // Check each content type for available materials
-          for (const contentItem of contentTypes) {
-            // Try each possible path until we find one that works
-            for (const path of contentItem.paths) {
+          if (s3Objects.length > 0) {
+            // Array to store successfully found materials
+            const foundMaterials = [];
+            let orderIndex = 1;
+            
+            // Process each object
+            for (const objectKey of s3Objects) {
               try {
-                const url = await getS3PresignedUrl(path);
+                // Get the filename from the full path
+                const filename = objectKey.split('/').pop() || '';
+                
+                // Skip any directory listings or unwanted files
+                if (!filename || filename.endsWith('/') || filename.startsWith('.')) {
+                  continue;
+                }
+                
+                // Generate a presigned URL for the object
+                const url = await getS3PresignedUrl(objectKey);
+                
                 if (url) {
-                  console.log(`Found material at path: ${path}`);
+                  console.log(`Found material at path: ${objectKey}`);
+                  
+                  // Determine material type and title from filename
+                  const { type, title } = getMaterialTypeFromFilename(filename);
                   
                   // Create a material object 
                   foundMaterials.push({
                     id: 10000 + (unitId * 100) + orderIndex,
                     unitId,
-                    title: contentItem.title,
-                    description: contentItem.description,
-                    contentType: contentItem.type,
+                    title: title,
+                    description: `${title} for Unit ${unitNumber}`,
+                    contentType: type,
                     content: url,
                     orderIndex: orderIndex,
-                    isPublished: contentItem.isPublished,
-                    isLocked: !contentItem.isPublished,
+                    isPublished: true, // Default to published
+                    isLocked: false,   // Default to unlocked
                     order: orderIndex,
                     createdAt: new Date(),
                     updatedAt: new Date()
                   });
                   
                   orderIndex++;
-                  break; // Found a valid path, move to next content item
                 }
               } catch (error) {
-                // Path not found, try next one
-                console.log(`Path not found: ${path}`);
+                console.log(`Error processing object: ${objectKey}`, error);
               }
             }
-          }
-          
-          if (foundMaterials.length > 0) {
-            materials = foundMaterials;
-            console.log(`Found ${materials.length} materials for unit ${unitNumber} of book ${bookId}`);
-          } else {
-            console.log(`No materials found in S3 for unit ${unitNumber} of book ${bookId}`);
+            
+            // Sort materials by their numerical prefix if they have one
+            foundMaterials.sort((a, b) => {
+              // Extract leading number from titles if present
+              const aMatch = a.title.match(/^.*?(\d+)/);
+              const bMatch = b.title.match(/^.*?(\d+)/);
+              
+              if (aMatch && bMatch) {
+                return parseInt(aMatch[1]) - parseInt(bMatch[1]);
+              }
+              return a.order - b.order;
+            });
+            
+            if (foundMaterials.length > 0) {
+              materials = foundMaterials;
+              console.log(`Found ${materials.length} materials for unit ${unitNumber} of book ${bookId}`);
+            } else {
+              console.log(`No materials found in S3 for unit ${unitNumber} of book ${bookId}`);
+            }
           }
         } catch (error) {
           console.error("Error fetching materials from S3:", error);
