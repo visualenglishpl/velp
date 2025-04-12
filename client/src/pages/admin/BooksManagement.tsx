@@ -426,7 +426,7 @@ function ContentTypeIcon({ type }: { type: string }) {
 const BooksManagementPage = () => {
   const { user, logoutMutation, isLoading: authLoading } = useAuth();
   const [, navigate] = useLocation();
-  const [searchQuery, setSearchQuery] = useState("");
+  // Search removed as requested
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<number | null>(null);
   const [isBookDialogOpen, setIsBookDialogOpen] = useState(false);
@@ -774,49 +774,38 @@ const BooksManagementPage = () => {
     setIsMaterialDialogOpen(false);
   };
 
-  // Filter and sort books based on search query
+  // Sort books only (no search filter)
   const filteredBooks = useMemo(() => {
     if (!books) return [];
 
-    return books
-      .filter((book) => {
-        if (!searchQuery.trim()) return true;
-        
-        const query = searchQuery.toLowerCase();
-        return (
-          book.title.toLowerCase().includes(query) || 
-          book.bookId.toLowerCase().includes(query) ||
-          (book.description && book.description.toLowerCase().includes(query))
-        );
-      })
-      .sort((a, b) => {
-        // Sort books by bookId with special handling for 0A, 0B, 0C format
-        const aId = a.bookId;
-        const bId = b.bookId;
+    return books.sort((a, b) => {
+      // Sort books by bookId with special handling for 0A, 0B, 0C format
+      const aId = a.bookId;
+      const bId = b.bookId;
 
-        // Extract number and letter part if in format like "0A"
-        const aMatch = aId.match(/^(\d+)([A-Za-z])?/);
-        const bMatch = bId.match(/^(\d+)([A-Za-z])?/);
+      // Extract number and letter part if in format like "0A"
+      const aMatch = aId.match(/^(\d+)([A-Za-z])?/);
+      const bMatch = bId.match(/^(\d+)([A-Za-z])?/);
 
-        if (aMatch && bMatch) {
-          const aNum = parseInt(aMatch[1]);
-          const bNum = parseInt(bMatch[1]);
+      if (aMatch && bMatch) {
+        const aNum = parseInt(aMatch[1]);
+        const bNum = parseInt(bMatch[1]);
 
-          // Compare numbers first
-          if (aNum !== bNum) {
-            return aNum - bNum;
-          }
-          
-          // If numbers are the same, compare letter parts
-          const aLetter = aMatch[2] || '';
-          const bLetter = bMatch[2] || '';
-          return aLetter.localeCompare(bLetter);
+        // Compare numbers first
+        if (aNum !== bNum) {
+          return aNum - bNum;
         }
+        
+        // If numbers are the same, compare letter parts
+        const aLetter = aMatch[2] || '';
+        const bLetter = bMatch[2] || '';
+        return aLetter.localeCompare(bLetter);
+      }
 
-        // Fallback to regular string comparison
-        return aId.localeCompare(bId);
-      });
-  }, [books, searchQuery]);
+      // Fallback to regular string comparison
+      return aId.localeCompare(bId);
+    });
+  }, [books]);
 
   // Find current book and unit names
   const currentBook = books?.find(book => book.id === selectedBookId);
