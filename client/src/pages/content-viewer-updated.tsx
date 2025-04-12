@@ -147,9 +147,16 @@ export default function ContentViewer() {
     if (materials && materials.length > 0 && book) {
       // Look for first slide with "00 A.png" pattern or similar for unit intro
       const introSlidePattern = /00\s*A/i;
+      
+      // First try to find a slide with "00 A" in the filename
       const introSlideIndex = materials.findIndex(material => 
         material.content && 
-        introSlidePattern.test(material.content.split('/').pop() || '')
+        (
+          // Check in the filename part only
+          introSlidePattern.test(material.content.split('/').pop() || '') ||
+          // Also check the full path for "00 A" pattern which might be in the content field
+          /00\s*A/i.test(material.content)
+        )
       );
       
       if (introSlideIndex !== -1) {
