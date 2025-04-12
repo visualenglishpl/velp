@@ -1272,20 +1272,17 @@ export default function MaterialViewer() {
                 </div>
                 
                 <div className="mt-6 bg-white p-5 rounded-lg border border-gray-100">
-                  <h5 className="text-primary font-medium mb-4 flex items-center">
-                    <FileText className="h-5 w-5 mr-2 text-primary/80" />
+                  <h5 className="text-primary font-medium mb-4 flex items-center text-purple-600">
+                    <FileText className="h-5 w-5 mr-2 text-purple-600" />
                     Grammar Structures
                   </h5>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>Use this unit to practice these structures:
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2 ml-2">
-                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Subject + is + adjective</div>
-                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">How many + noun + do you have?</div>
-                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Subject + is + adjective + or + adjective?</div>
-                        <div className="py-1 px-2 bg-gray-50 rounded text-sm">Who is your + subject + teacher?</div>
-                      </div>
-                    </li>
-                  </ul>
+                  <p className="mb-2">Use this unit to practice these structures:</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-gray-50 p-3 rounded-md">Subject + is + adjective</div>
+                    <div className="bg-gray-50 p-3 rounded-md">How many + noun + do you have?</div>
+                    <div className="bg-gray-50 p-3 rounded-md">Subject + is + adjective + or + adjective?</div>
+                    <div className="bg-gray-50 p-3 rounded-md">Who is your + subject + teacher?</div>
+                  </div>
                 </div>
               </Card>
             </div>
