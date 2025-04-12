@@ -377,34 +377,39 @@ export default function MaterialViewer() {
     
     // Extract and decode the filename from the content URL
     let filename = '';
-    if (content.includes('/api/content/')) {
-      // Handle proxy URL format: /api/content/book5%2Funit1%2F01%20P%20Ab%20is%20English...
-      const encodedPath = content.split('/api/content/')[1];
-      if (encodedPath) {
-        // Decode the URL-encoded path
-        const decodedPath = decodeURIComponent(encodedPath);
-        // Get the filename part (after the last slash if any)
-        filename = decodedPath.split('/').pop() || decodedPath;
+    
+    try {
+      if (content.includes('/api/content/')) {
+        // Handle proxy URL format: /api/content/book5%2Funit1%2F01%20P%20Ab%20is%20English...
+        const encodedPath = content.split('/api/content/')[1];
+        if (encodedPath) {
+          // Decode the URL-encoded path
+          const decodedPath = decodeURIComponent(encodedPath);
+          // Get the filename part (after the last slash if any)
+          filename = decodedPath.includes('/') ? decodedPath.split('/').pop() || decodedPath : decodedPath;
+          
+          // Debug filename extraction
+          console.log('Decoded path:', decodedPath);
+          console.log('Extracted filename:', filename);
+        }
+      } else {
+        // Fallback to original behavior for non-proxy URLs
+        filename = content.split('/').pop() || '';
       }
-    } else {
-      // Fallback to original behavior for non-proxy URLs
-      filename = content.split('/').pop() || '';
+    } catch (error) {
+      console.error('Error extracting filename from URL:', error);
+      // Fallback to using the title if we can't extract the filename
+      filename = '';
     }
     
     // Extract the question from the decoded filename
     const question = extractQuestionFromFilename(filename) || title;
     
     return (
-      <div className="w-full bg-green-100 p-4 text-center mb-4 rounded-md shadow-sm">
-        <div className="flex flex-col items-center justify-center">
-          {/* Checkmark to show question was asked */}
-          <span className="inline-flex items-center justify-center bg-green-500 p-1.5 rounded-full mb-2">
-            <Check className="h-5 w-5 text-white" />
-          </span>
-          <h3 className="text-2xl font-semibold text-green-800">
-            {question}
-          </h3>
-        </div>
+      <div className="w-full text-center mb-4 p-2">
+        <h3 className="text-2xl font-semibold text-emerald-700">
+          {question}
+        </h3>
       </div>
     );
   };

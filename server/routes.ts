@@ -982,21 +982,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/content/:key", async (req, res) => {
     try {
       const key = decodeURIComponent(req.params.key);
+      console.log(`Fetching content for key: ${key}`);
       
       // Generate a presigned URL on the server
       const presignedUrl = await getS3PresignedUrl(key);
       
       if (!presignedUrl) {
+        console.error(`No presigned URL generated for key: ${key}`);
         return res.status(404).json({ error: "Content not found" });
       }
       
       // For most content types, we can redirect to the presigned URL
       // This avoids having to stream the content through our server
-      res.redirect(presignedUrl);
-      
-      // Alternative approach for more control (if needed in the future):
-      // const response = await fetch(presignedUrl);
-      // response.body.pipe(res);
+      res.setHeader('Cache-Control', 'public, max-age=3600'); // Add caching for better performance
+      return res.redirect(presignedUrl);
     } catch (error) {
       console.error("Error fetching content:", error);
       res.status(500).json({ error: "Failed to fetch content" });
