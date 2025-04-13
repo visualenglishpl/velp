@@ -176,17 +176,18 @@ export default function ContentViewer() {
       
       {/* Content container */}
       <div className="relative bg-white border rounded-lg p-4 min-h-[60vh] mb-4">
-        {/* Content title */}
-        <div className="bg-gray-100 p-4 text-center mb-6 rounded">
-          <h3 className="text-xl font-semibold">
-            {currentMaterial?.title === "Unit Introduction" ? "" : currentMaterial?.title.replace(/^[A-Z]\s+/, '')}
-          </h3>
-          
-          {/* Extract question from filename if present - only show if not displaying actual content */}
-          {currentMaterial?.content && 
-            (currentMaterial?.contentType !== 'IMAGE' && currentMaterial?.contentType !== 'VIDEO') && (
-            <div className="mt-2 text-gray-700">
-              {(() => {
+        {/* Content title - hide for Unit Content since we display it in the formatted section */}
+        {currentMaterial?.title !== "Unit Content" && (
+          <div className="bg-gray-100 p-4 text-center mb-6 rounded">
+            <h3 className="text-xl font-semibold">
+              {currentMaterial?.title === "Unit Introduction" ? "" : currentMaterial?.title.replace(/^[A-Z]\s+/, '')}
+            </h3>
+            
+            {/* Extract question from filename if present - only show if not displaying actual content */}
+            {currentMaterial?.content && 
+              (currentMaterial?.contentType !== 'IMAGE' && currentMaterial?.contentType !== 'VIDEO') && (
+              <div className="mt-2 text-gray-700">
+                {(() => {
                 // Extract filename from path
                 const contentPath = currentMaterial.content;
                 const pathParts = contentPath.split('/');
@@ -354,7 +355,8 @@ export default function ContentViewer() {
               })()}
             </div>
           )}
-        </div>
+          </div>
+        )}
         
         {/* Content display */}
         <div className="flex justify-center items-center">
