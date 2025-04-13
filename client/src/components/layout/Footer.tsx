@@ -24,10 +24,16 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-4">Visual English</h3>
-            <p className="text-gray-400">
-              Interactive English materials for effective language learning.
-            </p>
+            <div className="flex flex-col items-start">
+              <img 
+                src="/api/asset/icons/LOGO VISUAL ENGLISH.png" 
+                alt="Visual English Logo"
+                className="h-14 mb-4"
+              />
+              <p className="text-gray-400">
+                Interactive English materials for effective language learning.
+              </p>
+            </div>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Our Website</h3>
