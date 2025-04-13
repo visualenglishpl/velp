@@ -1,25 +1,10 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { 
-  ArrowLeft, 
-  ChevronLeft, 
-  ChevronRight, 
-  Check, 
-  Lock, 
-  FileText, 
-  Download,
-  Video,
-  Image as ImageIcon,
-  AlertCircle,
-  Gamepad2
-} from "lucide-react";
-import useEmblaCarousel from 'embla-carousel-react';
 
-// Type definitions
+// Types
 type Material = {
   id: number;
   unitId: number;
@@ -46,678 +31,708 @@ type Book = {
 };
 
 export default function ContentViewer() {
-  // Parse URL parameters
-  const [location] = useLocation();
-  const materialMatches = location.match(/\/units\/(\d+)\/materials\/(\d+)/);
-  const unitMatches = location.match(/\/units\/(\d+)$/);
+  // Get the unit ID and material index from the URL
+  const unitId = parseInt(window.location.pathname.split('/')[2]);
+  const materialIndex = parseInt(window.location.pathname.split('/')[4] || '0');
   
-  // Extract unitId and materialIndex from URL
-  const unitId = materialMatches 
-    ? parseInt(materialMatches[1], 10) 
-    : unitMatches 
-      ? parseInt(unitMatches[1], 10) 
-      : 0;
+  // State for tracking current material index
+  const [currentIndex, setCurrentIndex] = useState<number>(materialIndex);
   
-  const initialMaterialIndex = materialMatches 
-    ? parseInt(materialMatches[2], 10) 
-    : 0;
-
-  // State hooks
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(initialMaterialIndex);
-  const [viewedSlides, setViewedSlides] = useState<number[]>([]);
-  
-  // Data fetching hooks
-  const { data: unit, isLoading: unitLoading } = useQuery<Unit>({
-    queryKey: [`/api/units/${unitId}`],
+  // Fetch unit details
+  const {
+    data: unit,
+    isLoading: unitLoading,
+    error: unitError
+  } = useQuery<Unit>({
+    queryKey: ['/api/units', unitId],
     enabled: !!unitId,
   });
-
-  const { data: book, isLoading: bookLoading } = useQuery<Book>({
-    queryKey: [`/api/books/${unit?.bookId}`],
+  
+  // Fetch materials for the unit
+  const {
+    data: materials,
+    isLoading: materialsLoading,
+    error: materialsError
+  } = useQuery<Material[]>({
+    queryKey: ['/api/units', unitId, 'materials'],
+    enabled: !!unitId,
+  });
+  
+  // Fetch book details
+  const {
+    data: book,
+    isLoading: bookLoading,
+    error: bookError
+  } = useQuery<Book>({
+    queryKey: ['/api/books', unit?.bookId],
     enabled: !!unit?.bookId,
   });
-
-  const { data: materials, isLoading: materialsLoading } = useQuery<Material[]>({
-    queryKey: [`/api/units/${unitId}/materials`],
-    enabled: !!unitId,
-  });
-
-  // Carousel hooks
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: false,
-    align: 'center',
-    containScroll: 'keepSnaps',
-  });
   
-  const [thumbsRef, thumbsApi] = useEmblaCarousel({
-    containScroll: 'keepSnaps',
-    dragFree: true,
-    axis: 'x'
-  });
+  // Current material
+  const currentMaterial = materials && materials.length > 0 ? 
+    materials[currentIndex] : null;
   
-  // Navigation logic
-  const navigateToSlide = useCallback((index: number) => {
-    if (materials && index >= 0 && index < materials.length) {
-      setCurrentSlideIndex(index);
-      
-      if (emblaApi) {
-        emblaApi.scrollTo(index);
-      }
+  // Navigation handlers
+  const goToPrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      window.history.pushState({}, "", `/units/${unitId}/materials/${currentIndex - 1}`);
     }
-  }, [materials, emblaApi]);
+  };
   
-  // Handle keyboard navigation
+  const goToNext = () => {
+    if (materials && currentIndex < materials.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      window.history.pushState({}, "", `/units/${unitId}/materials/${currentIndex + 1}`);
+    }
+  };
+  
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
-        navigateToSlide(currentSlideIndex - 1);
+        goToPrev();
       } else if (e.key === 'ArrowRight') {
-        navigateToSlide(currentSlideIndex + 1);
+        goToNext();
       }
     };
     
     window.addEventListener('keydown', handleKeyDown);
+    
+    // Debug content paths
+    if (currentMaterial) {
+      console.log("Content paths:", {
+        materialId: currentMaterial.id,
+        materialTitle: currentMaterial.title,
+        materialContent: currentMaterial.content,
+        materialIndex: currentIndex,
+        constructedPrimaryPath: `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`,
+        constructedAlternatePath: `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.png`,
+        bookId: book?.bookId,
+        unitNumber: unit?.unitNumber
+      });
+    }
+    
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentSlideIndex, navigateToSlide]);
+  }, [currentIndex, materials, goToPrev, goToNext, currentMaterial, book?.bookId, unit?.unitNumber]);
   
-  // Track viewed slides
-  useEffect(() => {
-    if (materials && materials.length > 0) {
-      const currentMaterial = materials[currentSlideIndex];
-      if (currentMaterial && !viewedSlides.includes(currentMaterial.id)) {
-        setViewedSlides(prev => [...prev, currentMaterial.id]);
-      }
-    }
-  }, [currentSlideIndex, materials, viewedSlides]);
-  
-  // Sync carousel and state
-  useEffect(() => {
-    if (!emblaApi || !thumbsApi) return;
-    
-    const onSelect = () => {
-      const index = emblaApi.selectedScrollSnap();
-      thumbsApi.scrollTo(index);
-      setCurrentSlideIndex(index);
-    };
-    
-    emblaApi.on('select', onSelect);
-    return () => {
-      emblaApi.off('select', onSelect);
-    };
-  }, [emblaApi, thumbsApi, setCurrentSlideIndex]);
-  
-  // Update carousel when slide index changes
-  useEffect(() => {
-    if (emblaApi && currentSlideIndex >= 0) {
-      emblaApi.scrollTo(currentSlideIndex);
-    }
-  }, [currentSlideIndex, emblaApi]);
-
-  // Find the slide index for a specific file pattern (like "00 A.png")
-  useEffect(() => {
-    if (materials && materials.length > 0 && book) {
-      // Look for first slide with "00 A.png" pattern or similar for unit intro
-      const introSlidePattern = /00\s*A/i;
-      const introSlideIndex = materials.findIndex(material => 
-        material.content && 
-        introSlidePattern.test(material.content.split('/').pop() || '')
-      );
-      
-      if (introSlideIndex !== -1) {
-        // If we found the intro slide, navigate to it
-        navigateToSlide(introSlideIndex);
-      }
-    }
-  }, [materials, book, navigateToSlide]);
-  
-  // Content type icon helper
-  const getContentTypeIcon = (type: string) => {
-    switch (type) {
-      case 'IMAGE':
-        return <ImageIcon className="h-4 w-4" />;
-      case 'VIDEO':
-        return <Video className="h-4 w-4" />;
-      case 'PDF':
-        return <FileText className="h-4 w-4" />;
-      case 'GAME':
-        return <Gamepad2 className="h-4 w-4" />;
-      default:
-        return <FileText className="h-4 w-4" />;
-    }
-  };
-
-  // Extract and format question from filename
-  const extractQuestionFromFilename = (filename: string): string => {
-    if (!filename) return "";
-    
-    // Remove URL encoding first
-    const decodedFilename = decodeURIComponent(filename);
-    
-    // Handle book and unit patterns - extract just the simple description
-    if (decodedFilename.includes("book") && /unit\d+/i.test(decodedFilename)) {
-      // Check if it's an introduction slide (typically 00 A.png format)
-      if (/00\s*A/i.test(decodedFilename)) {
-        return "Unit Introduction";
-      }
-    }
-    
-    // Handle unit introduction special case
-    if (decodedFilename.includes("Unit Introduction") || 
-        (decodedFilename.includes("Book") && decodedFilename.includes("Unit"))) {
-      return "Unit Introduction";
-    }
-    
-    // Handle "School Vocabulary" specially for Book 5
-    if (decodedFilename.includes("School Vocabulary") || 
-        decodedFilename.includes("school facilities")) {
-      return "School Vocabulary";
-    }
-    
-    // Handle subject title slides (e.g., "01 P A Subject English.png")
-    const subjectMatch = decodedFilename.match(/Subject\s+(.+?)\.[a-zA-Z]+$/i);
-    if (subjectMatch && subjectMatch[1]) {
-      const subject = subjectMatch[1].trim();
-      return `Subject: ${subject}`;
-    }
-    
-    // Handle "is X Y or Z" style questions (e.g., "is English Easy or Difficult")
-    const isQuestion = decodedFilename.match(/is\s+([A-Za-z]+)\s+(.*?)\.[a-zA-Z]+$/i);
-    if (isQuestion) {
-      let questionText = `Is ${isQuestion[1]} ${isQuestion[2]}?`;
-      return questionText;
-    }
-    
-    // Handle "what fashion is it" pattern that appears in Book 7
-    const whatFashionMatch = decodedFilename.match(/What\s+Fashion\s+is\s+It\s+[–-]\s+It\s+is\s+(.*?)(?:\.[a-zA-Z]+)?$/i);
-    if (whatFashionMatch && whatFashionMatch[1]) {
-      return `What Fashion is It? It is ${whatFashionMatch[1]}`;
-    }
-    
-    // Handle "how many" questions
-    const howManyQuestion = decodedFilename.match(/How\s+Many\s+(.*?)\.[a-zA-Z]+$/i);
-    if (howManyQuestion) {
-      return `How Many ${howManyQuestion[1]}?`;
-    }
-    
-    // Handle "do you" questions
-    const doYouQuestion = decodedFilename.match(/Do\s+You\s+(.*?)\.[a-zA-Z]+$/i);
-    if (doYouQuestion) {
-      return `Do You ${doYouQuestion[1]}?`;
-    }
-    
-    // Handle "who is" questions
-    const whoIsQuestion = decodedFilename.match(/Who\s+is\s+(.*?)\.[a-zA-Z]+$/i);
-    if (whoIsQuestion) {
-      return `Who is ${whoIsQuestion[1]}?`;
-    }
-    
-    // Fallback - just use any text after the file code pattern
-    const anyText = decodedFilename.match(/\d+\s+[A-Z]\s+[A-Za-z]+[a-z]?\s+(.*?)(?:\.[a-zA-Z]+)?$/i);
-    if (anyText && anyText[1]) {
-      let text = anyText[1].trim();
-      
-      // Remove any URL encoded characters or artifacts
-      text = text.replace(/%[0-9A-F]{2}/gi, ' ').trim();
-      
-      // Capitalize first letter
-      text = text.charAt(0).toUpperCase() + text.slice(1);
-      
-      // Add question mark if it seems like a question
-      if (/^(is|are|do|does|who|what|where|when|why|how|can|could)/i.test(text) && !text.endsWith("?")) {
-        text += "?";
-      }
-      
-      return text;
-    }
-    
-    // Very simple fallback - try splitting by file code patterns  
-    const simpleMatch = decodedFilename.match(/\d{2}\s*[A-Z]\s*[A-Z][a-z]?\s*(.+)/);
-    if (simpleMatch && simpleMatch[1]) {
-      let text = simpleMatch[1].split('.')[0].trim();
-      return text.charAt(0).toUpperCase() + text.slice(1);
-    }
-    
-    // Return clean filename without the encoded parts
-    return decodedFilename.split('/').pop()?.split('.')[0] || "Learning Content";
-  };
-  
-  // Extract and format answer from filename
-  const getAnswerFromFilename = (filename: string): string => {
-    if (!filename) return "";
-    
-    // Remove URL encoding first
-    const decodedFilename = decodeURIComponent(filename);
-    
-    // Look for patterns with dash or en-dash followed by answer
-    // Format: "Question – Answer" or "Question - Answer"
-    const answerMatch = decodedFilename.match(/[–-]\s*(.+?)(?:\.[a-zA-Z]+)?$/);
-    
-    if (answerMatch && answerMatch[1]) {
-      let answer = answerMatch[1].trim();
-      
-      // Clean up the answer: capitalize first letter, remove encoding artifacts
-      answer = answer.replace(/%[0-9A-F]{2}/gi, ' ').trim();
-      answer = answer.charAt(0).toUpperCase() + answer.slice(1);
-      
-      // Correct common spelling errors
-      answer = answer
-        .replace(/Scottland/gi, 'Scotland')
-        .replace(/Brittish/gi, 'British')
-        .replace(/Australlian/gi, 'Australian')
-        .replace(/Amerrican/gi, 'American')
-        .replace(/Ingland/gi, 'England')
-        .replace(/Whales/gi, 'Wales')
-        .replace(/Irland/gi, 'Ireland')
-        .replace(/Capital citis/gi, 'Capital cities');
-      
-      return answer;
-    }
-    
-    return "";
-  };
-
-  // Filter out empty slides
-  const filteredMaterials = useMemo(() => {
-    if (!materials) return [];
-    return materials.filter(material => 
-      material.content && 
-      material.content.trim() !== '' && 
-      !material.title.includes('Empty')
-    );
-  }, [materials]);
-  
-  // Derived values
-  const totalSlides = filteredMaterials?.length || 0;
-  const currentMaterial = filteredMaterials && filteredMaterials.length > 0 
-    ? filteredMaterials[currentSlideIndex] 
-    : null;
-
   // Loading state
-  if (unitLoading || bookLoading || materialsLoading) {
-    return <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <Skeleton className="h-12 w-3/4 mb-4" />
-      <Skeleton className="h-[60vh] w-full mb-4" />
-      <Skeleton className="h-24 w-3/4" />
-    </div>;
+  if (unitLoading || materialsLoading || bookLoading) {
+    return (
+      <div className="p-8">
+        <Skeleton className="h-8 w-64 mb-4" />
+        <Skeleton className="h-4 w-full mb-2" />
+        <Skeleton className="h-4 w-full mb-2" />
+        <Skeleton className="h-4 w-3/4 mb-8" />
+        <Skeleton className="h-[60vh] w-full rounded-lg" />
+      </div>
+    );
   }
-
+  
+  // Error state
+  if (unitError || materialsError || bookError) {
+    return (
+      <div className="p-8 text-red-500">
+        <h2 className="text-xl font-bold mb-4">Error Loading Content</h2>
+        <p>There was an error loading the content. Please try again later.</p>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="mt-4"
+          onClick={() => window.location.href = `/admin/books`}
+        >
+          Back to Books
+        </Button>
+      </div>
+    );
+  }
+  
   // No materials state
   if (!materials || materials.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-4">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="flex items-center gap-2"
-              onClick={() => window.location.href = `/admin/books`}
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Books
-            </Button>
-            <h1 className="text-xl font-semibold hidden md:block">
-              {book?.title} – {unit?.title}
-            </h1>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center justify-center my-12">
-          <div className="flex items-center justify-center mb-6 bg-gray-100 rounded-full w-16 h-16">
-            <AlertCircle className="h-8 w-8 text-gray-400" />
-          </div>
-          <h2 className="text-xl font-semibold mb-2">No Slides Available</h2>
-          <p className="text-gray-500 mb-4 text-center">There are no slides available for this lesson.</p>
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="flex items-center gap-2"
-            onClick={() => window.location.reload()}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-              <path d="M21 3v5h-5"></path>
-              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-              <path d="M8 16H3v5"></path>
-            </svg>
-            Retry Loading Slides
-          </Button>
-        </div>
+      <div className="p-8">
+        <h2 className="text-xl font-bold mb-4">No Content Available</h2>
+        <p>There are no materials available for this unit.</p>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="mt-4"
+          onClick={() => window.location.href = `/admin/books`}
+        >
+          Back to Books
+        </Button>
       </div>
     );
   }
-
-  // Main UI with materials
+  
   return (
-    <div className="container mx-auto px-4 py-6">
-      {/* Top Navigation Bar */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-4">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex items-center gap-2"
-            onClick={() => window.location.href = `/admin/books`}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Books
-          </Button>
-          <h1 className="text-xl font-semibold hidden md:block">
-            {book?.title} – {unit?.title}
-          </h1>
-        </div>
-      </div>
-
-      <div className="block md:hidden mb-4">
-        <h1 className="text-xl font-semibold">
-          {book?.title} – {unit?.title}
-        </h1>
+    <div className="container mx-auto p-4 max-w-5xl">
+      {/* Header with book and unit info */}
+      <div className="mb-6">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="flex items-center gap-2 mb-4"
+          onClick={() => window.location.href = `/admin/books`}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Books
+        </Button>
+        
+        <h1 className="text-2xl font-bold mb-1">{book?.title} – {unit?.title}</h1>
+        <p className="text-gray-600">
+          Unit {unit?.unitNumber} of {book?.title}
+        </p>
       </div>
       
-      <div className="flex flex-col">
-        {/* Unit information panel */}
-        <div className="mb-6">
-          <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
-                <Lock className="h-5 w-5 text-gray-600" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold">Unit {unit?.unitNumber} of {book?.title}</h2>
-                <p className="text-sm text-gray-500">This unit teaches about school layouts and helps students express how these spaces are used in English.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Main content area */}
-        <div id="content-viewer" className="relative rounded-lg overflow-hidden transition-all">
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
-              {filteredMaterials.map((material, index) => (
-                <div 
-                  key={material.id} 
-                  className="flex-[0_0_100%] min-w-0"
-                >
-                  <div className="p-4 bg-white rounded-lg shadow-sm">
-                    <div className="flex flex-col min-h-[60vh]">
-                      {material.isLocked ? (
-                        <div className="flex flex-col items-center justify-center h-full">
-                          <Lock className="h-12 w-12 text-gray-300 mb-4" />
-                          <h3 className="text-xl font-semibold mb-2">Content Locked</h3>
-                          <p className="text-gray-500 text-center max-w-md">
-                            This content is currently locked. Please upgrade your subscription to access all materials.
-                          </p>
-                        </div>
-                      ) : (
+      {/* Content container */}
+      <div className="relative bg-white border rounded-lg p-4 min-h-[60vh] mb-4">
+        {/* Content title - hide for Unit Content since we display it in the formatted section */}
+        {currentMaterial?.title !== "Unit Content" && (
+          <div className="bg-gray-100 p-4 text-center mb-6 rounded">
+            <h3 className="text-xl font-semibold">
+              {currentMaterial?.title === "Unit Introduction" ? "" : currentMaterial?.title.replace(/^[A-Z]\s+/, '')}
+            </h3>
+            
+            {/* Extract question from filename if present - only show if not displaying actual content */}
+            {currentMaterial?.content && 
+              (currentMaterial?.contentType !== 'IMAGE' && currentMaterial?.contentType !== 'VIDEO') && (
+              <div className="mt-2 text-gray-700">
+                {(() => {
+                // Extract filename from path
+                const contentPath = currentMaterial.content;
+                const pathParts = contentPath.split('/');
+                const filename = pathParts[pathParts.length - 1];
+                
+                // Try to extract question from filename
+                // Common pattern in files: "01 D What is the Capital of Australia – the Capital is Canberra.jpg"
+                // We want to display "What is the Capital of Australia?"
+                try {
+                  // Decode URI component to handle special characters
+                  const decodedFilename = decodeURIComponent(filename);
+                  
+                  // Extract question and answer if available
+                  // Pattern like: "01 D What is the Capital of Australia – the Capital is Canberra.jpg"
+                  const contentParts = decodedFilename.split('–');
+                  
+                  if (contentParts.length >= 1) {
+                    // Extract question from the first part, removing any lettering prefixes (like "E" or "J")
+                    // More flexible regex that can handle various prefixes and patterns (numeric, letter combinations)
+                    // This should handle "01 E Aa", "01 R A", and other prefix variations before the actual question
+                    const questionMatch = contentParts[0].match(/(?:\d+\s+)?(?:[A-Z]\s+)?(?:[A-Za-z]+\s+)?([^.]+)/);
+                    if (questionMatch && questionMatch[1]) {
+                      let question = questionMatch[1].trim();
+                      
+                      // Further cleanup for Book 5 & 7 - remove any remaining alphabetic prefixes before actual question
+                      if (book?.bookId === "5" || book?.bookId === "7") {
+                        // Remove additional letter prefixes that might still be present
+                        question = question.replace(/^[A-Za-z]+\s+/, '');
+                      }
+                      
+                      // Format and correct the question
+                      
+                      // Fix common spelling errors
+                      question = question
+                        .replace(/\bthier\b/gi, "their")
+                        .replace(/\bwere\b(?=.*\bfrom\b)/gi, "where")
+                        .replace(/\bwhos\b/gi, "who's")
+                        .replace(/\bits\b(?=.*\bname)/gi, "it's")
+                        .replace(/\bcomon\b/gi, "common")
+                        .replace(/\bwhats\b/gi, "what's")
+                        .replace(/\bhows\b/gi, "how's")
+                        .replace(/\bwhen\b(?=.*\bdo)/gi, "when do");
+                      
+                      // Capitalize first letter
+                      question = question.charAt(0).toUpperCase() + question.slice(1);
+                      
+                      // Make sure country names and nationalities are capitalized
+                      const countries = ["australia", "poland", "japan", "france", "germany", "italy", "england", "china", "korea", "brazil", "canada", "mexico", "russia", "ireland", "spain", "thailand", "vietnam"];
+                      const nationalities = ["australian", "polish", "japanese", "french", "german", "italian", "english", "chinese", "korean", "brazilian", "canadian", "mexican", "russian", "irish", "spanish", "thai", "vietnamese"];
+                      
+                      countries.forEach(country => {
+                        const regex = new RegExp(`\\b${country}\\b`, 'gi');
+                        question = question.replace(regex, country.charAt(0).toUpperCase() + country.slice(1));
+                      });
+                      
+                      nationalities.forEach(nationality => {
+                        const regex = new RegExp(`\\b${nationality}\\b`, 'gi');
+                        question = question.replace(regex, nationality.charAt(0).toUpperCase() + nationality.slice(1));
+                      });
+                      
+                      // Check if the question is a question - should contain question words
+                      const questionWords = ["what", "where", "when", "why", "who", "which", "how", "is", "are", "do", "does", "did", "can", "could", "will", "would"];
+                      const isActuallyAQuestion = questionWords.some(word => 
+                        question.toLowerCase().includes(word.toLowerCase()) && 
+                        (question.toLowerCase().indexOf(word.toLowerCase()) < 5 || question.toLowerCase().startsWith(word.toLowerCase()))
+                      );
+                      
+                      // Add question mark if it's a question and doesn't already have one
+                      const formattedQuestion = isActuallyAQuestion && !question.endsWith('?') ? `${question}?` : question;
+                      
+                      // Extract answer if available (after the dash)
+                      let answer = contentParts.length > 1 ? contentParts[1].trim() : null;
+                      
+                      // Remove file extensions from answers
+                      if (answer) {
+                        // Remove common file extensions (.jpg, .png, .gif, etc.)
+                        answer = answer.replace(/\.(jpg|jpeg|png|gif|webp|avif)\.?$/i, '');
+                      }
+                      
+                      // Format the answer - capitalize first letter, fix punctuation
+                      if (answer) {
+                        // Capitalize first letter
+                        answer = answer.charAt(0).toUpperCase() + answer.slice(1);
+                        
+                        // Add period at the end if it doesn't have punctuation
+                        if (!/[.!?]$/.test(answer)) {
+                          answer += '.';
+                        }
+                        
+                        // Capitalize country names and nationalities in answer
+                        countries.forEach(country => {
+                          if (answer) { // Additional null check
+                            const regex = new RegExp(`\\b${country}\\b`, 'gi');
+                            answer = answer.replace(regex, country.charAt(0).toUpperCase() + country.slice(1));
+                          }
+                        });
+                        
+                        nationalities.forEach(nationality => {
+                          if (answer) { // Additional null check
+                            const regex = new RegExp(`\\b${nationality}\\b`, 'gi');
+                            answer = answer.replace(regex, nationality.charAt(0).toUpperCase() + nationality.slice(1));
+                          }
+                        });
+                        
+                        // Format yes/no answers with proper response format
+                        // For "Do you have..." questions, use "Yes, I do / No, I don't"
+                        // For "Is it a..." questions, use "Yes, it is / No, it isn't"
+                        if (formattedQuestion.toLowerCase().startsWith("do you") || 
+                            formattedQuestion.toLowerCase().startsWith("does")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, I do.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, I don't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("is it")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, it is.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, it isn't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("is he")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, he is.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, he isn't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("is she")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, she is.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, she isn't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("are they")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, they are.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, they aren't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("are you")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, I am.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, I'm not.";
+                          }
+                        }
+                      }
+                      
+                      return (
                         <>
-                          {material.contentType === 'IMAGE' && (
-                            <div className="flex flex-col items-center justify-center bg-white h-full">
-                              {material.content && (
-                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
-                                  <div className="flex flex-col items-center justify-center">
-                                    <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                      <Check className="h-5 w-5 text-green-600" />
-                                    </span>
-                                    <div className="space-y-1">
-                                      <h3 className="text-xl font-semibold text-gray-900">
-                                        {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                      </h3>
-                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
-                                        <p className="text-sm text-gray-600 mt-1">
-                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                              <div className="flex-1 flex items-center justify-center w-full h-full">
-                                {material.content && (
-                                  <>
-                                    {material.content.includes('book5') ? (
-                                      <>
-                                        {/* For Book 5, we display the image using the correct S3 path structure */}
-                                        <img
-                                          src={`/api/content/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
-                                          alt={material.title}
-                                          className="max-w-full max-h-full object-contain"
-                                          style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                          onError={(e) => {
-                                            console.error("Failed to load Book 5 image:", material.title);
-                                            (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                            
-                                            // Display generic unit content on error
-                                            const imgElement = e.target as HTMLImageElement;
-                                            imgElement.style.display = 'none';
-                                            
-                                            // Create a container for the fallback content
-                                            const container = document.createElement('div');
-                                            container.className = 'p-4 bg-white rounded text-center';
-                                            container.innerHTML = `
-                                              <h3 class="text-xl font-bold mb-2">Unit ${unit?.unitNumber} Content</h3>
-                                              <p class="text-gray-700">Loading image from S3 path: s3://visualenglishmaterial/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}</p>
-                                            `;
-                                            
-                                            imgElement.parentNode?.appendChild(container);
-                                          }}
-                                        />
-                                      </>
-                                    ) : (
-                                      <img
-                                        src={material.content} 
-                                        alt={material.title}
-                                        className="max-w-full max-h-full object-contain"
-                                        style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                        onError={(e) => {
-                                          console.error("Failed to load image:", material.title);
-                                          (e.target as HTMLImageElement).style.border = "1px dashed #e5e7eb";
-                                        }}
-                                      />
-                                    )}
-                                  </>
-                                )}
-                                <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                  {index + 1}/{totalSlides}
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          
-                          {material.contentType === 'VIDEO' && (
-                            <div className="flex flex-col bg-white h-full">
-                              {material.content && (
-                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
-                                  <div className="flex flex-col items-center justify-center">
-                                    <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                      <Check className="h-5 w-5 text-green-600" />
-                                    </span>
-                                    <div className="space-y-1">
-                                      <h3 className="text-xl font-semibold text-gray-900">
-                                        {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                      </h3>
-                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
-                                        <p className="text-sm text-gray-600 mt-1">
-                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                              <div className="flex-1 flex items-center justify-center w-full h-full">
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                  <video 
-                                    controls 
-                                    className="max-w-full max-h-full object-contain"
-                                    src={material.content}
-                                    style={{ objectFit: 'contain', maxHeight: 'calc(60vh - 60px)' }}
-                                    onError={(e) => {
-                                      console.error("Failed to load video:", material.title);
-                                    }}
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
-                                  <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                    {index + 1}/{totalSlides}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          
-                          {/* PDF type hidden as per request */}
-                          
-                          {material.contentType === 'GAME' && (
-                            <div className="flex flex-col bg-white h-full">
-                              {material.content && (
-                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
-                                  <div className="flex flex-col items-center justify-center">
-                                    <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                      <Check className="h-5 w-5 text-green-600" />
-                                    </span>
-                                    <div className="space-y-1">
-                                      <h3 className="text-xl font-semibold text-gray-900">
-                                        {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                      </h3>
-                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
-                                        <p className="text-sm text-gray-600 mt-1">
-                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                              <div className="flex-1 flex items-center justify-center w-full h-full">
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                  <iframe
-                                    src={material.content}
-                                    title={material.title}
-                                    className="max-w-full max-h-full"
-                                    style={{ width: '100%', height: 'calc(60vh - 60px)' }}
-                                    allowFullScreen
-                                  />
-                                  <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                    {index + 1}/{totalSlides}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          
-                          {!['IMAGE', 'VIDEO', 'PDF', 'GAME'].includes(material.contentType) && (
-                            <div className="flex flex-col items-center justify-center h-full bg-white">
-                              {material.content && (
-                                <div className="w-full bg-gray-100 p-4 text-center mb-4">
-                                  <div className="flex flex-col items-center justify-center">
-                                    <span className="inline-flex items-center justify-center bg-green-100 p-1 rounded-full mb-2">
-                                      <Check className="h-5 w-5 text-green-600" />
-                                    </span>
-                                    <div className="space-y-1">
-                                      <h3 className="text-xl font-semibold text-gray-900">
-                                        {extractQuestionFromFilename(material.content.split('/').pop() || '') || material.title}
-                                      </h3>
-                                      {getAnswerFromFilename(material.content.split('/').pop() || '') && (
-                                        <p className="text-sm text-gray-600 mt-1">
-                                          {getAnswerFromFilename(material.content.split('/').pop() || '')}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                              <div className="relative w-full h-full">
-                                <pre className="whitespace-pre-wrap p-4 text-sm text-gray-800 bg-gray-50 rounded overflow-auto max-h-[calc(60vh-60px)]">
-                                  {material.content}
-                                </pre>
-                                <div className="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-bl-md">
-                                  {index + 1}/{totalSlides}
-                                </div>
-                              </div>
-                            </div>
+                          <p className="font-medium text-center text-gray-800">{formattedQuestion}</p>
+                          {answer && (
+                            <p className="text-sm text-center text-gray-600 mt-1">
+                              {answer}
+                            </p>
                           )}
                         </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        {/* Controls and thumbnails */}
-        <div className="my-6 flex justify-center space-x-3">
-          <Button
-            variant="outline"
-            size="sm" 
-            className="flex items-center"
-            onClick={() => navigateToSlide(currentSlideIndex - 1)}
-            disabled={currentSlideIndex <= 0}
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex items-center"
-            onClick={() => navigateToSlide(currentSlideIndex + 1)}
-            disabled={!filteredMaterials || currentSlideIndex >= filteredMaterials.length - 1}
-          >
-            Next
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
-        </div>
-        
-        {/* Thumbnails */}
-        <div className="overflow-hidden mt-4" ref={thumbsRef}>
-          <div className="flex gap-2 py-2 px-1">
-            {filteredMaterials && filteredMaterials.map((material, index) => (
-              <div
-                key={material.id}
-                className={cn(
-                  "relative flex-[0_0_80px] min-w-0 h-14 border rounded-md overflow-hidden cursor-pointer transition-all",
-                  currentSlideIndex === index ? "border-blue-500 ring-2 ring-blue-200" : "border-gray-200",
-                  viewedSlides.includes(material.id) ? "after:absolute after:inset-0 after:bg-green-500 after:bg-opacity-10" : ""
-                )}
-                onClick={() => navigateToSlide(index)}
-              >
-                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-50">
-                  {index + 1}
-                </div>
-                {material.contentType === 'IMAGE' && material.content && (
-                  <>
-                    {material.content.includes('book5') ? (
-                      <img
-                        src={`/api/content/book5/unit${unit?.unitNumber}/${material.content.split('/').pop()}`}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover opacity-70"
-                      />
-                    ) : (
-                      <img
-                        src={material.content}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover opacity-70"
-                      />
-                    )}
-                  </>
-                )}
-                <div className="absolute bottom-0 right-0 p-0.5 bg-gray-100 rounded-tl-md">
-                  {getContentTypeIcon(material.contentType)}
-                </div>
-                {viewedSlides.includes(material.id) && (
-                  <div className="absolute top-0 right-0 p-0.5">
-                    <Check className="h-3 w-3 text-green-600" />
-                  </div>
-                )}
+                      );
+                    }
+                  }
+                } catch (error) {
+                  console.error("Error extracting question from filename:", error);
+                }
+                
+                return null;
+              })()}
               </div>
-            ))}
+            )}
           </div>
+        )}
+        
+        {/* Content display */}
+        <div className="flex justify-center items-center">
+          {currentMaterial && (
+            <>
+              {/* Special handling for Unit Content (text-based overview) */}
+              {currentMaterial.title === "Unit Content" && (
+                <div className="max-w-full w-full text-center bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                  <h3 className="text-xl font-semibold mb-4">Unit Content</h3>
+                  <div className="text-left mx-auto max-w-3xl">
+                    {/* Handle all Unit Content consistently across books */}
+                    {currentMaterial.contentType === 'IMAGE' ? (
+                      <div className="text-center">
+                        <img 
+                          src={currentMaterial.content}
+                          alt="Unit Content"
+                          className="max-w-full max-h-[50vh] mx-auto object-contain"
+                          onError={(e) => {
+                            console.log("Trying alternate format for Unit Content image");
+                            
+                            // Define all possible formats to try
+                            const possibleFormats = [
+                              // Special handling for Book 5 Unit Content
+                              book?.bookId === "5" ? `/api/content/book5/unit${unit?.unitNumber}/00 A.png` : null,
+                              book?.bookId === "5" ? `/api/content/book5/unit${unit?.unitNumber}/00A.png` : null,
+                              
+                              // Standard formats for all books
+                              `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.png`,
+                              `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.png`,
+                              `/api/content/${book?.bookId}/unit${unit?.unitNumber}/Unit Content.png`,
+                              `/api/content/${book?.bookId}/unit${unit?.unitNumber}/unit content.png`,
+                              
+                              // Try different file extensions
+                              `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.jpg`,
+                              `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.jpg`,
+                            ].filter(Boolean) as string[];
+                            
+                            // Try each format
+                            let currentIndex = 0;
+                            
+                            const tryNextFormat = () => {
+                              if (currentIndex >= possibleFormats.length) {
+                                console.error("Failed to load Unit Content image, showing text fallback");
+                                // Hide the broken image
+                                const img = e.target as HTMLImageElement;
+                                img.style.display = 'none';
+                                
+                                // Show fallback text if available
+                                const parent = img.parentNode as HTMLElement;
+                                if (parent && typeof currentMaterial.content === 'string' && 
+                                    currentMaterial.content.includes("Material Covered")) {
+                                  parent.innerHTML = currentMaterial.content
+                                    .split('\n')
+                                    .map(line => `<p class="mb-1 text-left">${line}</p>`)
+                                    .join('');
+                                } else {
+                                  // Generic content if nothing else is available
+                                  parent.innerHTML = `
+                                    <p class="font-medium text-lg mb-2">Material Covered</p>
+                                    <p class="mb-1">This unit covers essential vocabulary and language patterns.</p>
+                                    <p class="mb-1">Practice real-world conversations and interactive exercises.</p>
+                                    <p class="mb-1">Learn key expressions for everyday situations.</p>
+                                  `;
+                                }
+                                return;
+                              }
+                              
+                              const format = possibleFormats[currentIndex];
+                              console.log(`Trying format ${currentIndex + 1}/${possibleFormats.length}: ${format}`);
+                              
+                              const img = e.target as HTMLImageElement;
+                              img.src = format;
+                              
+                              // Set up for the next format if this one fails
+                              currentIndex++;
+                              img.addEventListener('error', tryNextFormat, { once: true });
+                            };
+                            
+                            // Start trying formats
+                            tryNextFormat();
+                          }}
+                        />
+                      </div>
+                    ) : currentMaterial.content && typeof currentMaterial.content === 'string' && 
+                       currentMaterial.content.includes("Material Covered") ? (
+                      // For structured content with Material Covered format
+                      currentMaterial.content.split('\n').map((line, index) => (
+                        <p key={index} className={`mb-1 ${index === 0 ? 'font-medium text-lg' : ''}`}>
+                          {line}
+                        </p>
+                      ))
+                    ) : (
+                      // For unstructured content - create a structured format
+                      <div>
+                        <p className="font-medium text-lg mb-2">Material Covered</p>
+                        {currentMaterial.content && typeof currentMaterial.content === 'string' ? (
+                          currentMaterial.content
+                            .split(/[.:]/)
+                            .filter(item => item.trim().length > 0)
+                            .map((item, idx) => (
+                              <p key={idx} className="mb-1">
+                                {item.trim().replace(/\s+/g, ' ')}{idx < currentMaterial.content.split(/[.:]/).length - 2 ? '.' : ''}
+                              </p>
+                            ))
+                        ) : (
+                          // Fallback content if nothing else is available
+                          <>
+                            <p className="mb-1">This unit covers essential vocabulary and language patterns.</p>
+                            <p className="mb-1">Practice real-world conversations and interactive exercises.</p>
+                            <p className="mb-1">Learn key expressions for everyday situations.</p>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              
+              {/* Image content */}
+              {currentMaterial.contentType === 'IMAGE' && currentMaterial.title !== "Unit Content" && (
+                <div className="max-w-full text-center">
+                  <img 
+                    src={currentMaterial.content}
+                    alt={currentMaterial.title === "Unit Introduction" ? "Slide Content" : currentMaterial.title.replace(/^[A-Z]\s+/, '')}
+                    className="max-w-full max-h-[50vh] mx-auto object-contain"
+                    onError={(e) => {
+                      const tryAlternateFormats = (formats: string[], index = 0) => {
+                        if (index >= formats.length) {
+                          // All formats failed
+                          console.error(`Error loading image (all formats tried): ${currentMaterial.content}`);
+                          
+                          // Hide the broken image
+                          (e.target as HTMLImageElement).style.display = 'none';
+                          
+                          // Create a more detailed error message container
+                          const container = document.createElement('div');
+                          container.className = 'p-4 bg-red-50 border border-red-200 rounded-md text-red-600';
+                          container.innerHTML = `
+                            <div class="flex items-center mb-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                              <span class="font-medium">Content Not Available</span>
+                            </div>
+                            <p>This image could not be displayed. Please try another slide.</p>
+                            <p class="mt-2 text-xs text-gray-600">Book ${book?.bookId}, Unit ${unit?.unitNumber}, Material ID ${currentMaterial.id}</p>
+                          `;
+                          
+                          // Add the error message to the DOM
+                          const parent = (e.target as HTMLImageElement).parentNode as HTMLElement;
+                          if (parent) {
+                            parent.appendChild(container);
+                          }
+                          return;
+                        }
+                        
+                        // Try the next format
+                        const format = formats[index];
+                        console.log(`Trying format ${index + 1}/${formats.length}: ${format}`);
+                        (e.target as HTMLImageElement).src = format;
+                        
+                        // Set up handler for the next format if this one fails
+                        const img = e.target as HTMLImageElement;
+                        img.addEventListener('error', () => {
+                          tryAlternateFormats(formats, index + 1);
+                        });
+                      };
+                      
+                      // Define all possible formats to try
+                      const possibleFormats = [
+                        // Special handling for Book 5 - try direct book5 path
+                        ...(book?.bookId === "5" ? [
+                          `/api/content/book5/unit${unit?.unitNumber}/00 A.png`,
+                          `/api/content/book5/unit${unit?.unitNumber}/00A.png`,
+                        ] : []),
+                        
+                        // Start with 00A pattern for ALL slides (as per requirement)
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.png`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.png`,
+                        
+                        // Then try regular numbering pattern if 00A fails
+                        // PNG format with different naming patterns
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.png`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`,
+                        
+                        // JPG format with different naming patterns
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.jpg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.jpg`,
+                        
+                        // JPEG format with different naming patterns
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.jpeg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.jpeg`,
+                        
+                        // GIF format with different naming patterns
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.gif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.gif`,
+                        
+                        // Format with letter variations (B, C, D, etc.) for books that use different lettering pattern
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} B.png`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} C.png`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} D.png`,
+                        
+                        // AVIF format (newer image format)
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.avif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.avif`,
+                        
+                        // Other file extensions for 00A pattern
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.jpg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.jpg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.jpeg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.jpeg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.gif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.gif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.avif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.avif`,
+                        
+                        // Original material content as fallback
+                        currentMaterial.content
+                      ].filter(Boolean) as string[];
+                      
+                      // Start trying formats
+                      tryAlternateFormats(possibleFormats);
+                    }}
+                  />
+                </div>
+              )}
+              
+              {/* Video content */}
+              {currentMaterial.contentType === 'VIDEO' && (
+                <div className="max-w-full max-h-[50vh] mx-auto">
+                  <video 
+                    controls 
+                    className="max-w-full max-h-[50vh]" 
+                    onError={(e) => {
+                      const tryAlternateVideoFormats = (formats: string[], index = 0) => {
+                        if (index >= formats.length) {
+                          // All formats failed
+                          console.error(`Error loading video (all formats tried): ${currentMaterial.content}`);
+                          
+                          // Create error container
+                          const container = document.createElement('div');
+                          container.className = 'p-4 bg-red-50 border border-red-200 rounded-md text-red-600';
+                          container.innerHTML = `
+                            <div class="flex items-center mb-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                              <span class="font-medium">Video Not Available</span>
+                            </div>
+                            <p>This video could not be displayed. Please try another slide.</p>
+                            <p class="mt-2 text-xs text-gray-600">Book ${book?.bookId}, Unit ${unit?.unitNumber}, Material ID ${currentMaterial.id}</p>
+                          `;
+                          
+                          // Replace video with error message
+                          const videoElement = e.target as HTMLVideoElement;
+                          const parent = videoElement.parentNode as HTMLElement;
+                          if (parent) {
+                            parent.innerHTML = '';
+                            parent.appendChild(container);
+                          }
+                          return;
+                        }
+                        
+                        // Try the next format
+                        const format = formats[index];
+                        console.log(`Trying video format ${index + 1}/${formats.length}: ${format}`);
+                        
+                        // Create a new source element
+                        const source = document.createElement('source');
+                        source.src = format;
+                        
+                        // Clear any existing sources
+                        const videoElement = e.target as HTMLVideoElement;
+                        while (videoElement.firstChild) {
+                          const child = videoElement.firstChild;
+                          if (child) {
+                            videoElement.removeChild(child);
+                          }
+                        }
+                        
+                        // Add the new source
+                        (e.target as HTMLVideoElement).appendChild(source);
+                        
+                        // Load the video again
+                        (e.target as HTMLVideoElement).load();
+                        
+                        // Set up error handler for the next format
+                        const video = e.target as HTMLVideoElement;
+                        video.addEventListener('error', () => {
+                          tryAlternateVideoFormats(formats, index + 1);
+                        });
+                      };
+                      
+                      // Define all possible video formats to try
+                      const possibleVideoFormats = [
+                        // Special handling for Book 5 videos
+                        ...(book?.bookId === "5" ? [
+                          `/api/content/book5/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`,
+                          `/api/content/book5/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.mp4`,
+                        ] : []),
+                        
+                        // MP4 format with different naming patterns
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.mp4`,
+                        // Webm format with different naming patterns
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.webm`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.webm`,
+                        // Format with letter variations
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} B.mp4`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} C.mp4`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} D.mp4`,
+                        // Original material content as fallback
+                        currentMaterial.content
+                      ].filter(Boolean) as string[];
+                      
+                      // Start trying formats
+                      tryAlternateVideoFormats(possibleVideoFormats);
+                    }}
+                  >
+                    <source src={currentMaterial.content} />
+                    Your browser does not support video playback.
+                  </video>
+                </div>
+              )}
+              
+              {/* PDF and DOCUMENT types are filtered out */}
+              
+              {currentMaterial.contentType === 'GAME' && (
+                <iframe
+                  src={currentMaterial.content}
+                  className="w-full h-[50vh] border-0"
+                />
+              )}
+            </>
+          )}
         </div>
+        
+        {/* Navigation buttons */}
+        <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            onClick={goToPrev}
+            disabled={currentIndex === 0}
+          >
+            <ChevronLeft />
+          </Button>
+        </div>
+        <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+          <Button 
+            variant="outline"
+            size="icon"
+            onClick={goToNext}
+            disabled={!materials || currentIndex === materials.length - 1}
+          >
+            <ChevronRight />
+          </Button>
+        </div>
+      </div>
+      
+      {/* Pagination info */}
+      <div className="text-center text-sm text-gray-500">
+        Slide {currentIndex + 1} of {materials.length}
       </div>
     </div>
   );
