@@ -1,6 +1,6 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Image as ImageIcon, FileText, Video, MessageSquare, Check } from 'lucide-react';
+import { Image as ImageIcon, FileText, Video, MessageSquare, Check, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
@@ -50,25 +50,107 @@ export default function ThumbnailsBar({
   
   // Get icon based on content type
   const getContentTypeIcon = (contentType: string) => {
-    switch (contentType) {
-      case 'image':
-        return <ImageIcon className="h-4 w-4" />;
-      case 'video':
-        return <Video className="h-4 w-4" />;
-      case 'text':
-        return <FileText className="h-4 w-4" />;
-      case 'exercise':
-        return <MessageSquare className="h-4 w-4" />;
-      default:
-        return <FileText className="h-4 w-4" />;
+    const type = contentType.toLowerCase();
+    if (type === 'image' || type.includes('gif') || type.includes('png') || type.includes('jpg')) {
+      return <ImageIcon className="h-4 w-4" />;
+    } else if (type === 'video' || type.includes('mp4')) {
+      return <Video className="h-4 w-4" />;
+    } else if (type === 'text' || type.includes('pdf') || type.includes('doc')) {
+      return <FileText className="h-4 w-4" />;
+    } else if (type === 'exercise') {
+      return <MessageSquare className="h-4 w-4" />;
+    } else {
+      return <FileText className="h-4 w-4" />;
     }
   };
   
+  // Format the title from the content
+  const formatTitle = (content: string) => {
+    try {
+      // Strip out the leading number codes (like "01 N A")
+      const titleMatch = content.match(/^\d+\s+[A-Z]\s+[A-Z]\s+(.*?)(?:\.[a-zA-Z0-9]+)?$/);
+      
+      // Just return the cleaned filename if no match
+      if (!titleMatch) {
+        return formatSlideTitle(content);
+      }
+      
+      let title = titleMatch[1];
+      
+      // Format questions to ensure they have question marks
+      if (title.toLowerCase().includes("what is") || 
+          title.toLowerCase().includes("whose is") || 
+          title.toLowerCase().includes("where is") ||
+          title.toLowerCase().includes("how many")) {
+        
+        // Ensure there's a question mark for questions
+        if (!title.includes("?")) {
+          title = title + "?";
+        }
+      }
+      
+      return title;
+    } catch (error) {
+      return formatSlideTitle(content);
+    }
+  };
+  
+  // Format slide title from filename
+  const formatSlideTitle = (content: string) => {
+    // Remove file extension
+    const withoutExtension = content.replace(/\.[^/.]+$/, "");
+    
+    // Handle special formats that have dashes or special characters
+    if (withoutExtension.includes(" – ")) {
+      // Split by the dash and use parts intelligently
+      const parts = withoutExtension.split(" – ");
+      if (parts.length > 1) {
+        // For question-answer format
+        const firstPart = parts[0].trim();
+        
+        // Add question mark if it's a question without one
+        if (isQuestion(firstPart) && !firstPart.endsWith("?")) {
+          return firstPart + "?";
+        }
+        return firstPart;
+      }
+    }
+    
+    // Default truncation if other formatting fails
+    return truncateTitle(withoutExtension);
+  };
+  
+  // Check if text is likely a question
+  const isQuestion = (text: string) => {
+    const questionWords = ['what', 'where', 'when', 'why', 'how', 'which', 'who', 'whose', 'is it', 'are they'];
+    const lowerText = text.toLowerCase();
+    return questionWords.some(word => lowerText.includes(word));
+  };
+  
   // Truncate title to a reasonable length
-  const truncateTitle = (title: string, maxLength = 15) => {
+  const truncateTitle = (title: string, maxLength = 20) => {
     return title.length > maxLength
       ? title.substring(0, maxLength) + '...'
       : title;
+  };
+  
+  // Get content thumbnail URL or placeholder
+  const getThumbnailUrl = (material: Material) => {
+    // Analyze content type to determine if we can show a thumbnail
+    const contentType = material.contentType.toLowerCase();
+    const content = material.content.toLowerCase();
+    
+    if (contentType === 'image' || 
+        content.endsWith('.png') || 
+        content.endsWith('.jpg') || 
+        content.endsWith('.jpeg') || 
+        content.endsWith('.gif')) {
+      // For image content, we can use the actual image as thumbnail
+      // This path needs to match how ContentSlide component gets its URLs
+      return `/api/direct/book3/unit1/assets/${encodeURIComponent(material.content)}`;
+    }
+    
+    return null; // No thumbnail available
   };
   
   return (
@@ -80,29 +162,58 @@ export default function ThumbnailsBar({
         >
           {materials.map((material, index) => {
             const isActive = index === currentIndex;
-            const isViewed = viewedSlides.includes(material.id);
+            const isViewed = viewedSlides.includes(index);
+            const thumbnailUrl = getThumbnailUrl(material);
+            const formattedTitle = formatTitle(material.content);
             
             return (
               <motion.div
-                key={material.id}
+                key={index} // Using index as key since material.id might not be reliable
                 className={`
                   relative p-2 rounded-md cursor-pointer
                   ${isActive ? 'active-thumbnail bg-primary/10 border border-primary/30' : 'hover:bg-gray-100'}
                 `}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.03 }}
+                transition={{ delay: index * 0.01 }}
                 onClick={() => onSelectSlide(index)}
               >
-                <div className="flex flex-col items-center w-20">
+                <div className="flex flex-col items-center w-24">
                   <div className={`
-                    h-16 w-16 rounded flex items-center justify-center
-                    ${isActive ? 'bg-primary/5' : 'bg-gray-100'}
+                    h-16 w-16 rounded flex items-center justify-center overflow-hidden
+                    ${isActive ? 'bg-primary/5 ring-2 ring-primary' : 'bg-gray-100'}
                   `}>
-                    {getContentTypeIcon(material.contentType)}
+                    {thumbnailUrl ? (
+                      <>
+                        <img 
+                          src={thumbnailUrl} 
+                          alt={formattedTitle}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                          onError={(e) => {
+                            // On error, fall back to icon
+                            (e.target as HTMLElement).classList.add('hidden');
+                            const fallback = e.currentTarget.parentElement?.querySelector('.thumbnail-fallback');
+                            if (fallback) {
+                              fallback.classList.remove('hidden');
+                              fallback.classList.add('flex');
+                            }
+                          }}
+                        />
+                        <div 
+                          className="h-full w-full items-center justify-center hidden thumbnail-fallback"
+                        >
+                          {getContentTypeIcon(material.contentType)}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="h-full w-full flex items-center justify-center">
+                        {getContentTypeIcon(material.contentType)}
+                      </div>
+                    )}
                   </div>
                   <span className="text-xs mt-2 text-center font-medium">
-                    {truncateTitle(material.title)}
+                    {truncateTitle(formattedTitle, 20)}
                   </span>
                   <span className="text-xs text-gray-500">
                     {index + 1}/{materials.length}

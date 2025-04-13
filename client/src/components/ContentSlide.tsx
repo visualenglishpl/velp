@@ -48,6 +48,66 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     console.log(`Using direct path: ${directPath}`);
     return directPath;
   };
+  
+  // Format the title/question text by cleaning up the filename
+  const formatContentTitle = () => {
+    try {
+      const content = material.content;
+      
+      // Remove file extension
+      const withoutExtension = content.replace(/\.[^/.]+$/, "");
+      
+      // Check if it contains a question or a dash for the question-answer format
+      if (withoutExtension.includes(" – ")) {
+        const parts = withoutExtension.split(" – ");
+        if (parts.length >= 2) {
+          // Extract the question (first part)
+          let question = parts[0];
+          
+          // Remove the leading number codes (like "01 N A ")
+          question = question.replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+)?/, "");
+          
+          // Ensure question has a question mark if needed
+          if (isQuestion(question) && !question.endsWith("?")) {
+            question = question + "?";
+          }
+          
+          // Extract the answer (second part)
+          const answer = parts[1];
+          
+          return {
+            question,
+            answer
+          };
+        }
+      }
+      
+      // If not a question-answer format, just clean up the content name
+      const cleanedTitle = withoutExtension
+        .replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+)?/, "") // Remove leading codes
+        .replace(/\s{2,}/g, ' '); // Clean up multiple spaces
+      
+      return {
+        question: isQuestion(cleanedTitle) && !cleanedTitle.endsWith("?") 
+          ? cleanedTitle + "?" 
+          : cleanedTitle,
+        answer: null
+      };
+    } catch (error) {
+      // If any error, just return the content as is
+      return {
+        question: material.content,
+        answer: null
+      };
+    }
+  };
+  
+  // Check if text is likely a question
+  const isQuestion = (text: string) => {
+    const questionWords = ['what', 'where', 'when', 'why', 'how', 'which', 'who', 'whose', 'is it', 'are they'];
+    const lowerText = text.toLowerCase();
+    return questionWords.some(word => lowerText.includes(word));
+  };
 
   useEffect(() => {
     // Reset state when the active slide changes
@@ -248,12 +308,30 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     );
   };
 
+  // Parse the content title to extract questions and answers
+  const { question, answer } = formatContentTitle();
+
   return (
     <div className="p-4 min-h-[50vh] flex flex-col">
-      <h2 className="text-xl font-semibold text-center mb-4">{material.title}</h2>
+      {/* Display formatted question if available */}
+      {question && (
+        <div className="mb-4 text-center">
+          <h2 className="text-xl font-semibold">{question}</h2>
+          {answer && (
+            <p className="text-sm text-gray-600 mt-1">{answer}</p>
+          )}
+        </div>
+      )}
+      
+      {/* Fallback to original title if question formatting failed */}
+      {!question && material.title && (
+        <h2 className="text-xl font-semibold text-center mb-4">{material.title}</h2>
+      )}
+      
       {material.description && (
         <p className="text-gray-600 text-center mb-6">{material.description}</p>
       )}
+      
       <div className="flex-1 flex items-center justify-center">
         {renderContent()}
       </div>
