@@ -34,17 +34,10 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
   const getS3Url = () => {
     console.log(`Getting URL for material: contentType=${material.contentType}, content=${material.content}`);
     
-    // For our hardcoded examples in book7/unit12, use placeholder images
+    // Special direct path for book7/unit12
     if (bookId === '7' && unitNumber === 12) {
-      // Use a placeholder image URL for the samples
-      if (material.content === '01.jpg') {
-        return 'https://picsum.photos/800/600?random=1';
-      }
-      if (material.content === '02.jpg') {
-        return 'https://picsum.photos/800/600?random=2';
-      }
-      // Default placeholder if no specific image match
-      return 'https://picsum.photos/800/600?random=3';
+      // Use our direct endpoint that matches S3 structure exactly
+      return `/api/viewer/book7/unit12/assets/${material.content}`;
     }
     
     // Check if the content is already a complete path

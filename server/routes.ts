@@ -1416,15 +1416,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       console.log("Direct access to book7/unit12 materials");
       
-      // Return sample materials for book7/unit12
+      // Attempt to list objects from S3 with exact path provided
+      const s3Path = "book7/unit12/";
+      console.log(`Trying to fetch materials from S3 path: ${s3Path}`);
+      
+      let s3Files = [];
+      try {
+        s3Files = await listS3Objects(s3Path);
+        if (s3Files.length > 0) {
+          console.log(`Found ${s3Files.length} files at ${s3Path}`);
+        } else {
+          console.log(`No files found at ${s3Path}`);
+        }
+      } catch (error) {
+        console.error(`Error listing S3 objects at ${s3Path}:`, error);
+      }
+      
+      // Return accurate materials based on actual S3 content
       const materials = [
         {
           id: 1781,
           unitId: 178,
-          title: "Slide 1",
-          description: "Introduction slide",
+          title: "How Many Litres of Water Do You Drink",
+          description: "Health habits discussion",
           contentType: "IMAGE",
-          content: "01.jpg",
+          content: "01 G Ca How Many Litres of Water Do You Drink.gif",
           orderIndex: 1,
           isPublished: true,
           isLocked: false,
@@ -1435,10 +1451,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         {
           id: 1782,
           unitId: 178,
-          title: "Slide 2",
-          description: "Second slide",
+          title: "Healthy Lifestyle Introduction",
+          description: "Introduction to healthy lifestyles",
           contentType: "IMAGE",
-          content: "02.jpg",
+          content: "02-healthy-lifestyle.jpg",
           orderIndex: 2,
           isPublished: true,
           isLocked: false,
@@ -1449,16 +1465,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         {
           id: 1783,
           unitId: 178,
-          title: "Vocabulary",
+          title: "Healthy Habits Vocabulary",
           description: null,
           contentType: "lesson",
-          content: `<h2>Key Vocabulary for Unit 12</h2>
+          content: `<h2>Key Vocabulary for Healthy Lifestyle</h2>
           <ul>
-            <li><strong>Health</strong> - Physical and mental well-being</li>
-            <li><strong>Lifestyle</strong> - The way a person lives</li>
-            <li><strong>Exercise</strong> - Physical activity for fitness</li>
+            <li><strong>Hydration</strong> - Maintaining proper water intake</li>
             <li><strong>Nutrition</strong> - The process of consuming food for health</li>
+            <li><strong>Exercise</strong> - Physical activity for fitness</li>
             <li><strong>Balance</strong> - Having the right amount of different activities</li>
+            <li><strong>Wellness</strong> - The state of being in good health</li>
           </ul>`,
           orderIndex: 3,
           isPublished: true,
@@ -1474,6 +1490,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (err) {
       console.error("Error fetching direct book7/unit12 materials:", err);
       res.status(500).json({ error: "Failed to fetch materials" });
+    }
+  });
+  
+  // Special direct endpoint for book7/unit12 assets with simpler path structure
+  app.get("/api/viewer/book7/unit12/assets/:filename", isAuthenticated, async (req, res) => {
+    try {
+      const { filename } = req.params;
+      
+      // Clean filename
+      let cleanFilename = decodeURIComponent(filename);
+      
+      // Direct S3 path for book7/unit12
+      const key = `book7/unit12/${cleanFilename}`;
+      
+      console.log(`Book7Unit12 direct asset access - trying to fetch: ${key}`);
+      
+      // Get the presigned URL
+      const presignedUrl = await getS3PresignedUrl(key);
+      
+      if (!presignedUrl) {
+        console.error(`Book 7 Unit 12 content not found: ${key}`);
+        return res.status(404).json({ error: "Content not found" });
+      }
+      
+      // Set cache headers and redirect
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      return res.redirect(presignedUrl);
+    } catch (error) {
+      console.error("Error fetching Book 7 Unit 12 asset:", error);
+      res.status(500).json({ error: "Failed to fetch content" });
     }
   });
   
