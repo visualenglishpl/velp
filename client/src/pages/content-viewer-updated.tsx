@@ -182,8 +182,9 @@ export default function ContentViewer() {
             {currentMaterial?.title === "Unit Introduction" ? "" : currentMaterial?.title.replace(/^[A-Z]\s+/, '')}
           </h3>
           
-          {/* Extract question from filename if present */}
-          {currentMaterial?.content && (
+          {/* Extract question from filename if present - only show if not displaying actual content */}
+          {currentMaterial?.content && 
+            (currentMaterial?.contentType !== 'IMAGE' && currentMaterial?.contentType !== 'VIDEO') && (
             <div className="mt-2 text-gray-700">
               {(() => {
                 // Extract filename from path
