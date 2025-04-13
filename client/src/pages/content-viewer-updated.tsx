@@ -203,8 +203,9 @@ export default function ContentViewer() {
                   const contentParts = decodedFilename.split('–');
                   
                   if (contentParts.length >= 1) {
-                    // Extract question from the first part
-                    const questionMatch = contentParts[0].match(/\d+\s+[A-Z]\s+([^.]+)/);
+                    // Extract question from the first part, removing any lettering prefixes (like "E" or "J")
+                    // This regex looks for the pattern: digits + whitespace + optional letter + whitespace + actual question
+                    const questionMatch = contentParts[0].match(/\d+\s+(?:[A-Z]\s+)?([^.]+)/);
                     if (questionMatch && questionMatch[1]) {
                       let question = questionMatch[1].trim();
                       
@@ -281,6 +282,48 @@ export default function ContentViewer() {
                             answer = answer.replace(regex, nationality.charAt(0).toUpperCase() + nationality.slice(1));
                           }
                         });
+                        
+                        // Format yes/no answers with proper response format
+                        // For "Do you have..." questions, use "Yes, I do / No, I don't"
+                        // For "Is it a..." questions, use "Yes, it is / No, it isn't"
+                        if (formattedQuestion.toLowerCase().startsWith("do you") || 
+                            formattedQuestion.toLowerCase().startsWith("does")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, I do.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, I don't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("is it")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, it is.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, it isn't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("is he")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, he is.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, he isn't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("is she")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, she is.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, she isn't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("are they")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, they are.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, they aren't.";
+                          }
+                        } else if (formattedQuestion.toLowerCase().startsWith("are you")) {
+                          if (answer && answer.toLowerCase().includes("yes")) {
+                            answer = "Yes, I am.";
+                          } else if (answer && answer.toLowerCase().includes("no")) {
+                            answer = "No, I'm not.";
+                          }
+                        }
                       }
                       
                       return (
