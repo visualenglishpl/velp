@@ -178,7 +178,9 @@ export default function ContentViewer() {
       <div className="relative bg-white border rounded-lg p-4 min-h-[60vh] mb-4">
         {/* Content title */}
         <div className="bg-gray-100 p-4 text-center mb-6 rounded">
-          <h3 className="text-xl font-semibold">{currentMaterial?.title}</h3>
+          <h3 className="text-xl font-semibold">
+            {currentMaterial?.title === "Unit Introduction" ? "" : currentMaterial?.title}
+          </h3>
           
           {/* Extract question from filename if present */}
           {currentMaterial?.content && (
