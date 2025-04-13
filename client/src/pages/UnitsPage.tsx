@@ -47,8 +47,17 @@ export default function UnitsPage() {
       // In a real app, this would be an API call
       const demoUnits: UnitInfo[] = [];
       
-      // Books 4-7 have 16 units, others have 10
-      const unitCount = ['4', '5', '6', '7'].includes(bookId) ? 16 : 10;
+      // Special cases for unit counts by book:
+      // - Book 0a has 20 units
+      // - Books 4-7 have 16 units
+      // - Others have 10 units by default
+      let unitCount = 10;
+      
+      if (bookId === '0a') {
+        unitCount = 20;
+      } else if (['4', '5', '6', '7'].includes(bookId)) {
+        unitCount = 16;
+      }
       
       for (let i = 1; i <= unitCount; i++) {
         demoUnits.push({
