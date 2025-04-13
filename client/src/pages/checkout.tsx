@@ -7,13 +7,148 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import { loadStripe } from '@stripe/stripe-js';
+import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { apiRequest } from '@/lib/queryClient';
+
+// Make sure to call loadStripe outside of a component's render to avoid
+// recreating the Stripe object on every render.
+// This is your test publishable API key.
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 // Subscription types
 type PlanType = 'single_lesson' | 'whole_book' | 'printed_book' | 'free_trial';
 type BillingCycle = 'monthly' | 'yearly';
+
+// CheckoutForm component that handles the payment
+function CheckoutForm({
+  planType,
+  billingCycle,
+  planDetails,
+  customerInfo
+}: {
+  planType: PlanType;
+  billingCycle: BillingCycle;
+  planDetails: {
+    name: string;
+    price: string;
+    cycle: string;
+    description: string;
+  };
+  customerInfo: {
+    name: string;
+    email: string;
+  };
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { toast } = useToast();
+  const [, setLocation] = useLocation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      // Stripe.js hasn't loaded yet. Make sure to disable
+      // form submission until Stripe.js has loaded.
+      return;
+    }
+
+    setIsProcessing(true);
+
+    // Get a reference to a mounted PaymentElement
+    const paymentElement = elements.getElement(PaymentElement);
+    
+    if (!paymentElement) {
+      setErrorMessage("Payment element not found");
+      setIsProcessing(false);
+      return;
+    }
+
+    try {
+      // Trigger form validation and wallet collection
+      const {error: submitError} = await elements.submit();
+      if (submitError) {
+        setErrorMessage(submitError.message || "An error occurred");
+        setIsProcessing(false);
+        return;
+      }
+
+      let result;
+      
+      if (planType === 'free_trial') {
+        // Use setup intent for free trial
+        result = await stripe.confirmSetup({
+          elements,
+          confirmParams: {
+            return_url: window.location.origin,
+          },
+          redirect: 'if_required',
+        });
+      } else {
+        // Use payment intent for immediate payment
+        result = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: window.location.origin,
+          },
+          redirect: 'if_required',
+        });
+      }
+
+      if (result.error) {
+        // Show error to your customer
+        setErrorMessage(result.error.message || "An unexpected error occurred");
+        toast({
+          title: "Payment Failed",
+          description: result.error.message,
+          variant: "destructive",
+        });
+      } else {
+        // Payment successful
+        toast({
+          title: "Payment Successful",
+          description: `Thank you for your purchase of ${planDetails.name}!`,
+        });
+        // Redirect to home page after successful payment
+        setLocation('/');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      setErrorMessage("An unexpected error occurred");
+      toast({
+        title: "Payment Error",
+        description: "Something went wrong processing your payment",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {errorMessage && (
+        <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
+      )}
+      
+      <PaymentElement />
+      
+      <Button 
+        type="submit" 
+        disabled={isProcessing || !stripe || !elements} 
+        className="w-full mt-4"
+      >
+        {isProcessing ? 'Processing...' : 
+          planType === 'free_trial' 
+            ? 'Start Free Trial' 
+            : `Pay ${planDetails.price}`}
+      </Button>
+    </form>
+  );
+}
 
 export default function CheckoutPage() {
   // Get the planId from the URL
@@ -24,29 +159,31 @@ export default function CheckoutPage() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [planType, setPlanType] = useState<PlanType>(planId as PlanType || 'single_lesson');
   
-  // Update planType when URL parameter changes
-  useEffect(() => {
-    if (planId && ['single_lesson', 'whole_book', 'printed_book', 'free_trial'].includes(planId)) {
-      setPlanType(planId as PlanType);
-    }
-  }, [planId]);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [formData, setFormData] = useState({
+  // Customer information state
+  const [customerInfo, setCustomerInfo] = useState({
     name: '',
     email: '',
-    cardNumber: '',
-    expiry: '',
-    cvc: '',
     address: '',
     city: '',
     country: '',
     postalCode: ''
   });
 
-  // Handle form input changes
+  // Update planType when URL parameter changes
+  useEffect(() => {
+    if (planId && ['single_lesson', 'whole_book', 'printed_book', 'free_trial'].includes(planId)) {
+      setPlanType(planId as PlanType);
+    }
+  }, [planId]);
+
+  // Stripe setup
+  const [clientSecret, setClientSecret] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Handle customer info input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setCustomerInfo(prev => ({ ...prev, [name]: value }));
   };
 
   // Get plan details based on type and billing cycle
@@ -84,21 +221,188 @@ export default function CheckoutPage() {
 
   const planDetails = getPlanDetails();
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsProcessing(true);
+  // Create payment intent when plan type or billing cycle changes
+  useEffect(() => {
+    // Don't create a payment intent until customer enters their info
+    if (!customerInfo.name || !customerInfo.email) {
+      setIsLoading(false);
+      return;
+    }
 
-    // Simulate payment processing
-    setTimeout(() => {
-      setIsProcessing(false);
-      toast({
-        title: "Purchase Successful",
-        description: `Thank you for your purchase of ${planDetails.name}!`,
-      });
-      setLocation('/');
-    }, 2000);
+    setIsLoading(true);
+    const createPaymentIntent = async () => {
+      try {
+        const response = await apiRequest("POST", "/api/create-payment-intent", { 
+          planType, 
+          billingCycle 
+        });
+        
+        const data = await response.json();
+        
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+        } else {
+          toast({
+            title: "Error",
+            description: "Could not initialize payment",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error("Error creating payment intent:", error);
+        toast({
+          title: "Error",
+          description: "Failed to connect to payment service",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    createPaymentIntent();
+  }, [planType, billingCycle, toast, customerInfo.name, customerInfo.email]);
+
+  // Create Stripe Elements options
+  const stripeOptions: StripeElementsOptions = {
+    clientSecret,
+    appearance: {
+      theme: 'stripe',
+    },
   };
+
+  // Initial customer information form
+  const renderCustomerForm = () => (
+    <Card className="md:col-span-1">
+      <CardHeader>
+        <CardTitle>Customer Information</CardTitle>
+        <CardDescription>Please provide your details</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form 
+          className="space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setIsLoading(true);
+          }}
+        >
+          <div className="space-y-2">
+            <Label htmlFor="name">Full Name</Label>
+            <Input 
+              id="name" 
+              name="name" 
+              placeholder="John Doe" 
+              required 
+              value={customerInfo.name}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input 
+              id="email" 
+              name="email" 
+              type="email" 
+              placeholder="john@example.com" 
+              required
+              value={customerInfo.email}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          {planType === 'printed_book' && (
+            <>
+              <Separator className="my-4" />
+              <h3 className="font-medium mb-4">Shipping Address</h3>
+              
+              <div className="space-y-2">
+                <Label htmlFor="address">Address</Label>
+                <Input 
+                  id="address" 
+                  name="address" 
+                  placeholder="123 Example St" 
+                  required
+                  value={customerInfo.address}
+                  onChange={handleInputChange}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="city">City</Label>
+                  <Input 
+                    id="city" 
+                    name="city" 
+                    placeholder="City" 
+                    required
+                    value={customerInfo.city}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="postalCode">Postal Code</Label>
+                  <Input 
+                    id="postalCode" 
+                    name="postalCode" 
+                    placeholder="12345" 
+                    required
+                    value={customerInfo.postalCode}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="country">Country</Label>
+                <Input 
+                  id="country" 
+                  name="country" 
+                  placeholder="Country" 
+                  required
+                  value={customerInfo.country}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </>
+          )}
+
+          <CardFooter className="flex justify-end px-0 pt-4">
+            <Button type="submit" className="w-full">
+              Continue to Payment
+            </Button>
+          </CardFooter>
+        </form>
+      </CardContent>
+    </Card>
+  );
+
+  // Payment form with Stripe Elements
+  const renderPaymentForm = () => (
+    <Card className="md:col-span-1">
+      <CardHeader>
+        <CardTitle>Payment Details</CardTitle>
+        <CardDescription>Enter your payment information securely</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {clientSecret && (
+          <Elements options={stripeOptions} stripe={stripePromise}>
+            <CheckoutForm 
+              planType={planType} 
+              billingCycle={billingCycle} 
+              planDetails={planDetails}
+              customerInfo={customerInfo}
+            />
+          </Elements>
+        )}
+        {isLoading && (
+          <div className="flex justify-center items-center h-40">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
 
   return (
     <div className="container max-w-4xl mx-auto py-10 px-4">
@@ -175,143 +479,8 @@ export default function CheckoutPage() {
             </CardContent>
           </Card>
 
-          {/* Payment Form */}
-          <Card className="md:col-span-1">
-            <CardHeader>
-              <CardTitle>Payment Details</CardTitle>
-              <CardDescription>Enter your payment information securely</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input 
-                    id="name" 
-                    name="name" 
-                    placeholder="John Doe" 
-                    required 
-                    value={formData.name}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input 
-                    id="email" 
-                    name="email" 
-                    type="email" 
-                    placeholder="john@example.com" 
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="cardNumber">Card Number</Label>
-                  <Input 
-                    id="cardNumber" 
-                    name="cardNumber" 
-                    placeholder="1234 5678 9012 3456" 
-                    required
-                    value={formData.cardNumber}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="expiry">Expiry Date</Label>
-                    <Input 
-                      id="expiry" 
-                      name="expiry" 
-                      placeholder="MM/YY" 
-                      required
-                      value={formData.expiry}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="cvc">CVC</Label>
-                    <Input 
-                      id="cvc" 
-                      name="cvc" 
-                      placeholder="123" 
-                      required
-                      value={formData.cvc}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-
-                {planType === 'printed_book' && (
-                  <>
-                    <Separator className="my-4" />
-                    <h3 className="font-medium mb-4">Shipping Address</h3>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="address">Address</Label>
-                      <Input 
-                        id="address" 
-                        name="address" 
-                        placeholder="123 Example St" 
-                        required
-                        value={formData.address}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="city">City</Label>
-                        <Input 
-                          id="city" 
-                          name="city" 
-                          placeholder="City" 
-                          required
-                          value={formData.city}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="postalCode">Postal Code</Label>
-                        <Input 
-                          id="postalCode" 
-                          name="postalCode" 
-                          placeholder="12345" 
-                          required
-                          value={formData.postalCode}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="country">Country</Label>
-                      <Input 
-                        id="country" 
-                        name="country" 
-                        placeholder="Country" 
-                        required
-                        value={formData.country}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                  </>
-                )}
-
-                <CardFooter className="flex justify-end px-0 pt-4">
-                  <Button type="submit" disabled={isProcessing} className="w-full">
-                    {isProcessing ? 'Processing...' : 
-                      planType === 'free_trial' 
-                        ? 'Start Free Trial' 
-                        : `Pay ${planDetails.price}`}
-                  </Button>
-                </CardFooter>
-              </form>
-            </CardContent>
-          </Card>
+          {/* Customer Information or Payment Form */}
+          {customerInfo.name && customerInfo.email ? renderPaymentForm() : renderCustomerForm()}
         </div>
       </motion.div>
     </div>

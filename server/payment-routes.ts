@@ -118,23 +118,30 @@ export function setupPaymentRoutes(app: Express) {
         },
       });
       
+      // First create a product
+      const productName = planType === 'single_lesson' ? 'Single Lesson Access' : 'Whole Book Access';
+      const product = await stripe.products.create({
+        name: productName,
+      });
+      
+      // Create a price for the product
+      const price = await stripe.prices.create({
+        product: product.id,
+        currency: 'eur',
+        unit_amount: planType === 'single_lesson' 
+          ? PLAN_PRICES.single_lesson[billingCycle as 'monthly' | 'yearly'] 
+          : PLAN_PRICES.whole_book[billingCycle as 'monthly' | 'yearly'],
+        recurring: {
+          interval: billingCycle === 'monthly' ? 'month' : 'year',
+        },
+      });
+      
       // Create subscription
       const subscription = await stripe.subscriptions.create({
         customer: customer.id,
         items: [
           {
-            price_data: {
-              currency: 'eur',
-              product_data: {
-                name: planType === 'single_lesson' ? 'Single Lesson Access' : 'Whole Book Access',
-              },
-              unit_amount: planType === 'single_lesson' 
-                ? PLAN_PRICES.single_lesson[billingCycle as 'monthly' | 'yearly'] 
-                : PLAN_PRICES.whole_book[billingCycle as 'monthly' | 'yearly'],
-              recurring: {
-                interval: billingCycle === 'monthly' ? 'month' : 'year',
-              },
-            },
+            price: price.id,
           },
         ],
         payment_settings: {
@@ -184,21 +191,27 @@ export function setupPaymentRoutes(app: Express) {
         },
       });
       
+      // First create a product for the free trial
+      const product = await stripe.products.create({
+        name: 'Visual English Free Trial',
+      });
+      
+      // Create a price for the product
+      const price = await stripe.prices.create({
+        product: product.id,
+        currency: 'eur',
+        unit_amount: PLAN_PRICES.whole_book.monthly, // After trial, charge for whole book
+        recurring: {
+          interval: 'month',
+        },
+      });
+      
       // Create a trial subscription with a free period
       const subscription = await stripe.subscriptions.create({
         customer: customer.id,
         items: [
           {
-            price_data: {
-              currency: 'eur',
-              product_data: {
-                name: 'Visual English Free Trial',
-              },
-              unit_amount: PLAN_PRICES.whole_book.monthly, // After trial, charge for whole book
-              recurring: {
-                interval: 'month',
-              },
-            },
+            price: price.id,
           },
         ],
         trial_period_days: 7,
