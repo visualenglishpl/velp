@@ -35,8 +35,13 @@ function Router() {
         {(params) => <ContentViewer />}
       </Route>
       
-      {/* Direct path to Book 7 Unit 12 - matching S3 structure */}
+      {/* Direct paths matching S3 structure */}
       <Route path="/book7/unit12" component={Book7Unit12Viewer} />
+      
+      {/* Generic direct content viewer - works with ANY book/unit path that matches S3 */}
+      <Route path="/:bookPath/:unitPath">
+        {(params) => <DirectContentViewer />}
+      </Route>
       
       {/* S3 Testing route */}
       <Route path="/s3-test" component={S3Test} />
@@ -56,7 +61,12 @@ function App() {
   const [location] = useLocation();
   const isAuthPage = location === "/auth";
   const isAdminPage = location.startsWith("/admin");
-  const isContentViewer = location.startsWith("/units/") || location.startsWith("/book7/unit12");
+  
+  // Check if we're in any content viewer (with database IDs or direct paths)
+  const isContentViewer = location.startsWith("/units/") || 
+                         location.startsWith("/book") || 
+                         (location.includes("/") && location.split("/").length > 2);
+  
   const showNavFooter = !isAuthPage && !isAdminPage && !isContentViewer;
 
   // Debugging

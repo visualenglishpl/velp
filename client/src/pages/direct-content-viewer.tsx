@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
-import { useNavigate, useParams } from "wouter";
+import { useLocation, useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { useEmblaCarousel } from "embla-carousel-react";
+import useEmblaCarousel from "embla-carousel-react";
 import ContentSlide from "@/components/ContentSlide";
 import ThumbnailsBar from "@/components/ThumbnailsBar";
 import { Loader2 } from "lucide-react";
@@ -46,7 +46,7 @@ export default function DirectContentViewer() {
   });
 
   // Navigate hook for routing
-  const navigate = useNavigate();
+  const [_, navigate] = useLocation();
 
   // Handle a user selecting a slide from the thumbnails bar
   const onThumbnailClick = useCallback(
@@ -81,13 +81,13 @@ export default function DirectContentViewer() {
   }, [emblaApi]);
 
   // Query for direct unit data
-  const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery({
+  const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery<DirectUnit>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}`],
     enabled: !!bookPath && !!unitPath,
   });
 
   // Query for direct materials data
-  const { data: materialsData, error: materialsError, isLoading: materialsLoading } = useQuery({
+  const { data: materialsData, error: materialsError, isLoading: materialsLoading } = useQuery<DirectMaterial[]>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
     enabled: !!bookPath && !!unitPath,
   });
@@ -130,11 +130,11 @@ export default function DirectContentViewer() {
   }
 
   // Convert materials for our components
-  const materials: any[] = materialsData.map((material: DirectMaterial) => ({
+  const materials = materialsData?.map((material: DirectMaterial) => ({
     ...material,
     // For ContentSlide component compatibility
     unitId: 0, // Not needed for direct access
-  }));
+  })) || [];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -143,10 +143,10 @@ export default function DirectContentViewer() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">
-              BOOK {bookPath.toUpperCase().replace('BOOK', '')}
+              BOOK {bookPath ? bookPath.toUpperCase().replace('BOOK', '') : ''}
             </h1>
             <h2 className="text-lg text-gray-600">
-              UNIT {unitPath.replace(/[^\d]/g, '')} - {unitData.title}
+              UNIT {unitPath ? unitPath.replace(/[^\d]/g, '') : ''} - {unitData?.title || ''}
             </h2>
           </div>
           <Button variant="ghost" onClick={() => navigate("/")}>
@@ -165,8 +165,8 @@ export default function DirectContentViewer() {
                 <ContentSlide 
                   material={material}
                   isActive={index === currentSlideIndex}
-                  bookId={bookPath}
-                  unitNumber={parseInt(unitPath.replace(/[^\d]/g, ''))} 
+                  bookId={bookPath || ""}
+                  unitNumber={unitPath ? parseInt(unitPath.replace(/[^\d]/g, '') || "0") : 0} 
                 />
               </div>
             ))}
