@@ -1,0 +1,60 @@
+Carousel-Based Layout with Embla Carousel
+
+A responsive, touch-friendly carousel interface that works well on all devices
+Smooth transitions between slides
+Support for keyboard navigation (arrow keys)
+Built-in accessibility features
+Specialized Content Type Rendering
+
+Dedicated renderers for different content types (images, text, video, interactive elements)
+Optimized image loading with proper error handling and fallbacks
+Support for content annotations and overlays
+Ability to zoom in/out on images for detailed viewing
+Interactive Exercise Components
+
+Multiple choice questions with immediate feedback
+Fill-in-the-blank exercises
+Matching exercises
+Drag-and-drop activities
+Speaking/pronunciation practice (with audio recording capabilities)
+Progress Tracking and Analytics
+
+Track which slides/content has been viewed
+Record time spent on each slide
+Monitor exercise completion and scores
+Visual progress indicators
+Teaching Tools
+
+Ability to highlight or annotate content during presentation
+Timer for classroom activities
+Teacher notes that can be toggled on/off
+Screen sharing and presentation modes
+Responsive Design Features
+
+Optimal viewing experience on any device (desktop, tablet, mobile)
+Adjustable text size and contrast settings
+Portrait and landscape orientation support
+Consideration for classroom projector displays
+Content Navigation
+
+Thumbnail navigation strip for quick slide selection
+Chapter/section markers
+Table of contents sidebar
+Search functionality for finding specific content
+Offline Capabilities
+
+Content caching for offline usage
+Automatic resumption when connectivity returns
+Sync progress when back online
+Implementation Approach
+For implementation, I would recommend using a combination of:
+
+React Hooks and Context API for state management
+Embla Carousel for the core slide navigation
+Framer Motion for smooth animations and transitions
+TypeScript for robust type safety and better code organization
+CSS Modules or Tailwind CSS for styling
+Lazy loading for better performance with large content sets
+This approach would create a specialized viewer tailored to educational content that balances performance, usability, and pedagogical features needed for effective language teaching.
+
+Would you like me to start implementing a content viewer with these features, or would you prefer to focus on a specific subset of these capabilities?

@@ -1,0 +1,88 @@
+Carousel-Based Educational Content Viewer with Embla Carousel
+Carousel Layout
+Responsive, touch-friendly interface optimized for all devices
+
+Smooth transitions between slides
+
+Keyboard navigation support (arrow keys)
+
+Built-in accessibility features (ARIA support, screen reader compatibility)
+
+Specialized Content Rendering
+Custom renderers for different content types: images, text, videos, interactive elements
+
+Optimized image loading with error handling and fallbacks
+
+Support for annotations, overlays, and content-specific metadata
+
+Zoom functionality for detailed image viewing
+
+Interactive Exercise Components
+Multiple-choice questions with instant feedback
+
+Fill-in-the-blank and matching activities
+
+Drag-and-drop interactions
+
+Speaking and pronunciation practice with audio recording and playback
+
+Progress Tracking & Analytics
+Track viewed slides and content engagement
+
+Record time spent per slide or activity
+
+Monitor exercise completion and performance scores
+
+Visual indicators showing learner progress
+
+Teaching Tools
+Annotation tools for highlighting or marking content during presentations
+
+Built-in timer for classroom activities and challenges
+
+Toggleable teacher notes
+
+Screen sharing and dedicated presentation mode
+
+Responsive Design Features
+Fully optimized for desktop, tablet, and mobile
+
+Adjustable text size and contrast for accessibility
+
+Support for both portrait and landscape orientation
+
+Compatible with classroom projector displays
+
+Content Navigation
+Thumbnail navigation for quick slide access
+
+Section/chapter markers for structured lessons
+
+Table of contents sidebar
+
+Search functionality for fast content lookup
+
+Offline Capabilities
+Smart content caching for offline access
+
+Automatic resume functionality when connectivity is restored
+
+Sync progress and data once back online
+
+Slide Naming Convention
+Each slide should include a question, and the file name should reflect the question along with a prompted answer. This helps organize content and improves searchability.
+
+Recommended Tech Stack for Implementation
+To develop this viewer effectively, I recommend the following tools and frameworks:
+
+React Hooks & Context API for scalable state management
+
+Embla Carousel for robust slide navigation
+
+Framer Motion for smooth, elegant transitions
+
+TypeScript for maintainable and type-safe code
+
+CSS Modules or Tailwind CSS for styling flexibility and responsiveness
+
+Lazy Loading strategies for improved performance, especially with large content sets

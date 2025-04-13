@@ -5,6 +5,7 @@ import Home from "@/pages/Home";
 import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
+import ContentViewer from "@/pages/content-viewer";
 import S3Test from "@/pages/s3-test";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -24,7 +25,13 @@ function Router() {
           return null;
         }}
       </Route>
-      {/* Content viewer routes have been removed */}
+      {/* Content viewer routes */}
+      <Route path="/units/:unitId/materials/:materialId">
+        {(params) => <ContentViewer />}
+      </Route>
+      <Route path="/units/:unitId">
+        {(params) => <ContentViewer />}
+      </Route>
       {/* S3 Testing route */}
       <Route path="/s3-test" component={S3Test} />
       {/* Redirect from old content management page to new unified books management */}
@@ -43,7 +50,8 @@ function App() {
   const [location] = useLocation();
   const isAuthPage = location === "/auth";
   const isAdminPage = location.startsWith("/admin");
-  const showNavFooter = !isAuthPage && !isAdminPage;
+  const isContentViewer = location.startsWith("/units/");
+  const showNavFooter = !isAuthPage && !isAdminPage && !isContentViewer;
 
   // Debugging
   console.log("Current location:", location);
