@@ -348,11 +348,7 @@ export default function DirectContentViewer() {
     }
   };
   
-  // Get the unit description
-  const unitDescription = useMemo(() => {
-    if (!sortedMaterials.length) return "";
-    return generateUnitDescription(sortedMaterials);
-  }, [sortedMaterials, bookPath, unitNumber]);
+  // Unit description will be created after sortedMaterials is defined
 
   // Add keyboard navigation effect - needs to be in a consistent location
   useEffect(() => {
@@ -519,6 +515,12 @@ export default function DirectContentViewer() {
     // For ContentSlide component compatibility
     unitId: 0, // Not needed for direct access
   }));
+  
+  // Generate unit description after sortedMaterials is available
+  const unitDescription = useMemo(() => {
+    if (!sortedMaterials.length) return "";
+    return generateUnitDescription(sortedMaterials);
+  }, [sortedMaterials, bookPath, unitNumber]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50" ref={contentContainerRef}>
@@ -533,6 +535,13 @@ export default function DirectContentViewer() {
               <h2 className="text-lg text-gray-600 uppercase">
                 UNIT {unitPath ? unitPath.replace(/[^\d]/g, '') : ''} {unitData?.title ? `- ${unitData.title}` : ''}
               </h2>
+              
+              {/* Unit description */}
+              {unitDescription && (
+                <p className="text-sm mt-1 text-gray-700 max-w-xl">
+                  {unitDescription}
+                </p>
+              )}
               
               {/* Progress indicator */}
               <div className="flex items-center gap-2 mt-1">
@@ -586,14 +595,18 @@ export default function DirectContentViewer() {
                   </TooltipTrigger>
                   <TooltipContent>
                     <div className="space-y-2 max-w-xs">
-                      <p className="font-medium">Keyboard shortcuts:</p>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                        <span>← / →</span>
-                        <span>Previous / Next</span>
-                        <span>Home / End</span>
-                        <span>First / Last slide</span>
-                        <span>F</span>
-                        <span>Toggle fullscreen</span>
+                      <p className="font-medium">Unit Information:</p>
+                      <p className="text-sm">{unitDescription}</p>
+                      <div className="border-t border-gray-200 mt-2 pt-2">
+                        <p className="font-medium">Keyboard shortcuts:</p>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                          <span>← / →</span>
+                          <span>Previous / Next</span>
+                          <span>Home / End</span>
+                          <span>First / Last slide</span>
+                          <span>F</span>
+                          <span>Toggle fullscreen</span>
+                        </div>
                       </div>
                     </div>
                   </TooltipContent>
@@ -733,6 +746,18 @@ export default function DirectContentViewer() {
                   Use keyboard arrow keys ← → to navigate between slides
                 </div>
               </div>
+              
+              {/* Unit description in fullscreen mode */}
+              {isFullscreen && unitDescription && (
+                <motion.div 
+                  className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md text-sm max-w-xl z-30"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p className="text-gray-800 font-medium">{unitDescription}</p>
+                </motion.div>
+              )}
               
               {/* Keyboard feedback indicator */}
               {keyboardFeedback && (
