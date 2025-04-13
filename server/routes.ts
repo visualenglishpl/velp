@@ -1169,8 +1169,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: unitId * 1000 + 1,
             unitId: unitId,
             title: `Vocabulary for ${unit.title}`,
-            description: "Key vocabulary for this unit",
-            contentType: "text",
+
+            contentType: "lesson",
             content: `<h2>Key Vocabulary</h2>
             <ul>
               <li><strong>School</strong> - A place where students learn</li>
@@ -1188,8 +1188,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: unitId * 1000 + 2,
             unitId: unitId,
             title: `Grammar for ${unit.title}`,
-            description: "Grammar points for this unit",
-            contentType: "text",
+
+            contentType: "lesson",
             content: `<h2>Grammar Rules</h2>
             <p>This section covers the main grammar points for this unit:</p>
             <ol>
@@ -1206,7 +1206,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: unitId * 1000 + 3,
             unitId: unitId,
             title: `Exercise for ${unit.title}`,
-            description: "Practice exercises for this unit",
+
             contentType: "exercise",
             content: `<div class="exercise">
               <h2>Practice Questions</h2>
