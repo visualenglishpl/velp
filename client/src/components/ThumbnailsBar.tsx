@@ -214,6 +214,7 @@ export default function ThumbnailsBar({
                     ${isVerticalLayout ? 'h-12 w-12 mr-3' : 'h-16 w-16'} 
                     rounded flex items-center justify-center overflow-hidden
                     ${isActive ? 'bg-primary/5 ring-2 ring-primary' : 'bg-gray-100'}
+                    ${document.fullscreenElement ? 'h-14 w-14 border border-white/30' : ''}
                   `}>
                     {thumbnailUrl ? (
                       <>
@@ -246,10 +247,10 @@ export default function ThumbnailsBar({
                   </div>
                   
                   <div className={isVerticalLayout ? 'flex-1' : 'w-full text-center'}>
-                    <div className="text-xs mt-1 font-medium">
+                    <div className={`text-xs mt-1 font-medium ${document.fullscreenElement ? 'text-white' : ''}`}>
                       {truncateTitle(formattedTitle, isVerticalLayout ? 30 : 20)}
                     </div>
-                    <div className="text-xs text-gray-500">
+                    <div className={`text-xs ${document.fullscreenElement ? 'text-gray-300' : 'text-gray-500'}`}>
                       {index + 1}/{materials.length}
                     </div>
                   </div>

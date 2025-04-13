@@ -380,7 +380,11 @@ export default function DirectContentViewer() {
     const nonsensePatterns = [
       /nit\s*\d+\_page\_\d+/i,  // Pattern for "Nit 4_Page_1" etc.
       /page\_\d+/i,             // Just "Page_1" etc.
-      /^\d+$/                   // Just numbers
+      /^\d+$/,                  // Just numbers
+      /\.swf$/i,                // SWF files
+      /\.pdf$/i,                // PDF files
+      /\bswf\b/i,               // Contains "swf" anywhere
+      /\bpdf\b/i                // Contains "pdf" anywhere
     ];
     
     const shouldExclude = 
@@ -388,6 +392,12 @@ export default function DirectContentViewer() {
       material.contentType === "SWF" || 
       excludedExtensions.some(ext => content.endsWith(ext)) ||
       nonsensePatterns.some(pattern => pattern.test(material.content));
+    
+    // Double check file extensions from the content field
+    if (content.toLowerCase().endsWith('.pdf') || content.toLowerCase().endsWith('.swf')) {
+      console.log(`Filtering out file with extension: ${material.content}`);
+      return false;
+    }
     
     return !shouldExclude;
   });
@@ -628,28 +638,26 @@ export default function DirectContentViewer() {
             </div>
           </div>
 
-          {/* Thumbnails below main content - hidden when in fullscreen mode */}
-          {!isFullscreen && (
-            <div className="mt-4 bg-white shadow rounded-lg p-4">
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="text-sm font-medium text-gray-700">Lesson Slides</h3>
-                <div className="text-sm text-gray-500">
-                  Viewed: {slidesInView.length} of {materials.length} slides
-                </div>
-              </div>
-              <ThumbnailsBar
-                materials={materials}
-                currentIndex={currentSlideIndex}
-                onSelectSlide={onThumbnailClick}
-                viewedSlides={slidesInView}
-              />
-              
-              {/* Keyboard shortcuts info */}
-              <div className="mt-2 text-center text-sm text-gray-500">
-                <p>Use keyboard arrow keys ← → to navigate between slides</p>
+          {/* Thumbnails below main content - shown in both modes but styled differently */}
+          <div className={`${isFullscreen ? 'mt-2 bg-gray-900/80 p-3 rounded-t-lg border-t border-gray-700 absolute bottom-0 left-0 right-0 z-10' : 'mt-4 bg-white shadow rounded-lg p-4'}`}>
+            <div className="flex justify-between items-center mb-2">
+              <h3 className={`text-sm font-medium ${isFullscreen ? 'text-white' : 'text-gray-700'}`}>Lesson Slides</h3>
+              <div className={`text-sm ${isFullscreen ? 'text-gray-300' : 'text-gray-500'}`}>
+                Viewed: {slidesInView.length} of {materials.length} slides
               </div>
             </div>
-          )}
+            <ThumbnailsBar
+              materials={materials}
+              currentIndex={currentSlideIndex}
+              onSelectSlide={onThumbnailClick}
+              viewedSlides={slidesInView}
+            />
+            
+            {/* Keyboard shortcuts info */}
+            <div className={`mt-2 text-center text-sm ${isFullscreen ? 'text-gray-300' : 'text-gray-500'}`}>
+              <p>Use keyboard arrow keys ← → to navigate between slides</p>
+            </div>
+          </div>
         </div>
       </main>
     </div>
