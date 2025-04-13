@@ -5,7 +5,6 @@ import Home from "@/pages/Home";
 import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
-import BookDetailPage from "@/pages/book-detail-page";
 import ContentViewer from "@/pages/content-viewer-updated";
 import S3Test from "@/pages/s3-test";
 import Navbar from "@/components/layout/Navbar";
@@ -19,7 +18,13 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/books" component={BooksManagement} />
-      <Route path="/admin/books/:id" component={BookDetailPage} />
+      {/* Redirect book detail page directly to books management */}
+      <Route path="/admin/books/:id">
+        {() => {
+          window.location.href = "/admin/books";
+          return null;
+        }}
+      </Route>
       <Route path="/admin/books/units/content/:unitId/:materialId?" component={ContentViewer} />
       {/* Keep backward compatibility with previous routes */}
       <Route path="/units/:unitId/materials/:materialId?" component={ContentViewer} />
