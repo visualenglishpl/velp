@@ -129,10 +129,10 @@ export default function UnitsPage() {
                           (() => {
                             // For book 0a, 0b, 0c - they have special icon folder structure
                             if (bookId.startsWith("0")) {
-                              // For Book 0 series - try numerical icon path first (without 'unit' prefix)
-                              // This appears to be the most consistent format for book0a
+                              // For Book 0 series - use the discovered actual format in the S3 bucket
+                              // The exact format is "thumbnailsuni0a-1.png" etc.
                               const unitNum = parseInt(unit.unitNumber, 10);
-                              return `/api/direct/book${bookId.slice(0, 3)}/icons/${unitNum}.png`;
+                              return `/api/direct/book${bookId.slice(0, 3)}/icons/thumbnailsuni${bookId}-${unitNum}.png`;
                             }
                             // For all known problematic units in any book
                             else if (
@@ -190,12 +190,12 @@ export default function UnitsPage() {
                               // IMPORTANT DEBUGGING: Log each attempt for book 0 thumbnails
                               console.log(`Book ${bookId}, Unit ${unit.unitNumber}: Trying icons folder first`);
                               
-                              // CRITICAL FIX: For Book 0 series, try the icons folder FIRST before other paths
-                              // Book0a structure is likely icons/unit1.png (without the 'unit' prefix)
+                              // CRITICAL FIX: Use the discovered correct path format for Book 0 series thumbnails
+                              // The actual format is "thumbnailsuni0a-1.png" etc.
                               const unitNum = parseInt(unit.unitNumber, 10);
-                              const simpleGenericIconsPath = `/api/direct/book${bookId.slice(0, 3)}/icons/${unitNum}.png`;
-                              console.log(`Trying direct icons path: ${simpleGenericIconsPath}`);
-                              img.src = simpleGenericIconsPath;
+                              const thumbnailIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/thumbnailsuni${bookId}-${unitNum}.png`;
+                              console.log(`Trying thumbnail path: ${thumbnailIconPath}`);
+                              img.src = thumbnailIconPath;
                               
                               img.onerror = () => {
                                 // Try with 'unit' prefix in icons folder
