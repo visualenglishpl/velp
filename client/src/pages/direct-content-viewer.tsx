@@ -584,34 +584,61 @@ export default function DirectContentViewer() {
                 </div>
               </div>
               
-              {/* Navigation controls */}
-              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 p-4">
+              {/* Enhanced Navigation Controls - Based on the user's design */}
+              <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-4 py-3 bg-white/80 backdrop-blur-sm border-b border-gray-200 z-10">
                 <Button 
-                  onClick={scrollPrev} 
-                  variant="secondary" 
-                  size="icon" 
-                  className="rounded-full shadow-md"
+                  onClick={() => {
+                    emblaApi?.scrollTo(0);
+                    setCurrentSlideIndex(0);
+                  }}
+                  variant="ghost"
+                  className="font-medium px-4"
                   disabled={currentSlideIndex === 0}
                 >
-                  <ChevronLeft className="h-6 w-6" />
+                  First
                 </Button>
-              </div>
-              
-              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 p-4">
+                
+                <div className="flex items-center gap-4">
+                  <Button 
+                    onClick={scrollPrev} 
+                    variant="outline" 
+                    size="icon" 
+                    className="rounded-full h-8 w-8 flex items-center justify-center"
+                    disabled={currentSlideIndex === 0}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  
+                  <Button 
+                    onClick={scrollNext} 
+                    variant="outline" 
+                    size="icon" 
+                    className="rounded-full h-8 w-8 flex items-center justify-center"
+                    disabled={currentSlideIndex === materials.length - 1}
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+                
                 <Button 
-                  onClick={scrollNext} 
-                  variant="secondary" 
-                  size="icon" 
-                  className="rounded-full shadow-md"
+                  onClick={() => {
+                    emblaApi?.scrollTo(materials.length - 1);
+                    setCurrentSlideIndex(materials.length - 1);
+                  }}
+                  variant="ghost"
+                  className="font-medium px-4"
                   disabled={currentSlideIndex === materials.length - 1}
                 >
-                  <ChevronRight className="h-6 w-6" />
+                  Last
                 </Button>
               </div>
               
               {/* Current slide indicator */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full shadow-md text-sm">
-                {currentSlideIndex + 1} / {materials.length}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md text-sm">
+                Viewed: {currentSlideIndex + 1} of {materials.length} slides
+                <div className="text-xs text-gray-600 mt-1 text-center">
+                  Use keyboard arrow keys ← → to navigate between slides
+                </div>
               </div>
               
               {/* Keyboard feedback indicator */}
