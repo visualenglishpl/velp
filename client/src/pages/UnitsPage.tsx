@@ -129,8 +129,10 @@ export default function UnitsPage() {
                           (() => {
                             // For book 0a, 0b, 0c - they have special icon folder structure
                             if (bookId.startsWith("0")) {
-                              // Try the icons folder first for Book 0 series
-                              return `/api/direct/book${bookId.slice(0, 3)}/icons/unit${unit.unitNumber}.png`;
+                              // For Book 0 series - try numerical icon path first (without 'unit' prefix)
+                              // This appears to be the most consistent format for book0a
+                              const unitNum = parseInt(unit.unitNumber, 10);
+                              return `/api/direct/book${bookId.slice(0, 3)}/icons/${unitNum}.png`;
                             }
                             // For all known problematic units in any book
                             else if (
@@ -185,25 +187,37 @@ export default function UnitsPage() {
                               // Only try this path if the image is still failing to load
                               if (img.style.opacity !== "0") return;
                               
-                              // Try icons with book prefix (e.g., book0a/icons or book0b/icons)
-                              let iconPath = `/api/direct/book${bookId}/icons/unit${unit.unitNumber}.png`;
-                              img.src = iconPath;
+                              // IMPORTANT DEBUGGING: Log each attempt for book 0 thumbnails
+                              console.log(`Book ${bookId}, Unit ${unit.unitNumber}: Trying icons folder first`);
+                              
+                              // CRITICAL FIX: For Book 0 series, try the icons folder FIRST before other paths
+                              // Book0a structure is likely icons/unit1.png (without the 'unit' prefix)
+                              const unitNum = parseInt(unit.unitNumber, 10);
+                              const simpleGenericIconsPath = `/api/direct/book${bookId.slice(0, 3)}/icons/${unitNum}.png`;
+                              console.log(`Trying direct icons path: ${simpleGenericIconsPath}`);
+                              img.src = simpleGenericIconsPath;
+                              
                               img.onerror = () => {
-                                // Try the base book folder (e.g., book0a) with different icon formatting
-                                let unitNum = parseInt(unit.unitNumber, 10);
-                                let simpleIconPath = `/api/direct/book${bookId}/icons/unit${unitNum}.png`;
-                                img.src = simpleIconPath;
+                                // Try with 'unit' prefix in icons folder
+                                const genericIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/unit${unitNum}.png`;
+                                console.log(`Trying with unit prefix: ${genericIconPath}`);
+                                img.src = genericIconPath;
+                                
                                 img.onerror = () => {
-                                  // Finally, try the shared structure of book0a/icons/ which often contains icons for all
-                                  // Book 0 series units
-                                  let genericIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/unit${unit.unitNumber}.png`;
-                                  img.src = genericIconPath;
+                                  // Try book-specific icons folder with numeric filename
+                                  const bookSpecificIconPath = `/api/direct/book${bookId}/icons/${unitNum}.png`;
+                                  console.log(`Trying book-specific icon path: ${bookSpecificIconPath}`);
+                                  img.src = bookSpecificIconPath;
+                                  
                                   img.onerror = () => {
-                                    // One last attempt with simple number for the generic folder
-                                    let simpleGenericIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/unit${unitNum}.png`;
-                                    img.src = simpleGenericIconPath;
+                                    // Try book-specific icons folder with unit-prefixed filename
+                                    const unitPrefixedPath = `/api/direct/book${bookId}/icons/unit${unitNum}.png`;
+                                    console.log(`Trying unit-prefixed path: ${unitPrefixedPath}`);
+                                    img.src = unitPrefixedPath;
+                                    
                                     img.onerror = () => {
-                                      // All icons failed too, now hide the image
+                                      // If all icon attempts fail, fall back to original approach
+                                      console.log(`All icon attempts failed for Book ${bookId}, Unit ${unit.unitNumber}`);
                                       img.style.opacity = "0";
                                     };
                                   };

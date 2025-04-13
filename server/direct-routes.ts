@@ -150,12 +150,17 @@ async function listS3Objects(prefix: string): Promise<string[]> {
 // Helper function to get a presigned URL for an S3 object
 async function getS3PresignedUrl(key: string, expiresIn = 3600): Promise<string | null> {
   try {
+    // DEBUG: Log the exact key we're trying to access
+    console.log(`Requesting S3 presigned URL for key: "${key}"`);
+    
     const command = new GetObjectCommand({
       Bucket: S3_BUCKET,
       Key: key
     });
     
-    return await getSignedUrl(s3Client, command, { expiresIn });
+    const url = await getSignedUrl(s3Client, command, { expiresIn });
+    console.log(`Generated presigned URL for key: "${key}" - Success`);
+    return url;
   } catch (error) {
     console.error(`Error generating presigned URL for ${key}:`, error);
     return null;
@@ -388,6 +393,65 @@ export function registerDirectRoutes(app: Express) {
     } catch (error) {
       console.error(`Error fetching asset: ${error}`);
       res.status(500).json({ error: "Failed to fetch content" });
+    }
+  });
+  
+  // Special endpoint for Book 0 icons folder access
+  app.get("/api/direct/:bookPath/icons/:filename", isAuthenticated, async (req, res) => {
+    try {
+      const { bookPath, filename } = req.params;
+      
+      // Clean filename
+      const cleanFilename = decodeURIComponent(filename);
+      
+      // Construct the exact S3 path
+      const key = `${bookPath}/icons/${cleanFilename}`;
+      
+      console.log(`ICONS FOLDER ACCESS - trying to fetch from icons folder: ${key}`);
+      
+      // Get the presigned URL
+      const presignedUrl = await getS3PresignedUrl(key);
+      
+      if (!presignedUrl) {
+        console.error(`Icon not found: ${key}`);
+        return res.status(404).json({ error: "Icon not found" });
+      }
+      
+      // Handle the same way as other assets
+      console.log(`Using presigned URL for icon: ${presignedUrl}`);
+      
+      // Use fetch to get the content directly
+      const response = await fetch(presignedUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': '*/*',
+        },
+      });
+      
+      if (!response.ok) {
+        console.error(`Error fetching icon: ${response.status} ${response.statusText}`);
+        return res.status(response.status).json({ 
+          error: "Error fetching icon from S3", 
+          details: `${response.status} ${response.statusText}` 
+        });
+      }
+      
+      // Get the content type from the response
+      const contentType = response.headers.get('content-type');
+      if (contentType) {
+        res.setHeader('Content-Type', contentType);
+      }
+      
+      // Set cache headers
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      
+      // Stream the response back to the client
+      const buffer = await response.arrayBuffer();
+      return res.send(Buffer.from(buffer));
+      
+    } catch (error) {
+      console.error(`Error fetching icon: ${error}`);
+      res.status(500).json({ error: "Failed to fetch icon" });
     }
   });
   
