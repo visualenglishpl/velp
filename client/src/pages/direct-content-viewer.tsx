@@ -218,6 +218,60 @@ export default function DirectContentViewer() {
     }
   }, [materialsData, emblaApi, initialSlideSet]);
 
+  // Add keyboard navigation effect - needs to be in a consistent location
+  useEffect(() => {
+    if (!emblaApi) return;
+    
+    const handleKeyDown = (event: KeyboardEvent) => {
+      let feedbackText = null;
+      
+      switch (event.key) {
+        case "ArrowLeft":
+          scrollPrev();
+          feedbackText = "Previous slide";
+          break;
+        case "ArrowRight":
+          scrollNext();
+          feedbackText = "Next slide";
+          break;
+        case "Home":
+          emblaApi.scrollTo(0);
+          feedbackText = "First slide";
+          break;
+        case "End":
+          if (materialsData?.length) {
+            const lastIndex = materialsData.length - 1;
+            emblaApi.scrollTo(lastIndex);
+            feedbackText = "Last slide";
+          }
+          break;
+        case "f":
+        case "F":
+          // Toggle fullscreen mode
+          setIsFullscreen(!isFullscreen);
+          feedbackText = isFullscreen ? "Exit fullscreen" : "Enter fullscreen";
+          break;
+        default:
+          break;
+      }
+      
+      // Show keyboard feedback if available
+      if (feedbackText) {
+        setKeyboardFeedback(feedbackText);
+        
+        // Hide feedback after a delay
+        setTimeout(() => {
+          setKeyboardFeedback(null);
+        }, 1500);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [emblaApi, scrollNext, scrollPrev, isFullscreen, materialsData?.length]);
+
   // Loading state
   if (unitLoading || materialsLoading) {
     return (
@@ -289,55 +343,6 @@ export default function DirectContentViewer() {
     // For ContentSlide component compatibility
     unitId: 0, // Not needed for direct access
   }));
-  
-  // Add keyboard navigation - added after materials is defined
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      let feedbackText = null;
-      
-      switch (event.key) {
-        case "ArrowLeft":
-          scrollPrev();
-          feedbackText = "Previous slide";
-          break;
-        case "ArrowRight":
-          scrollNext();
-          feedbackText = "Next slide";
-          break;
-        case "Home":
-          if (emblaApi) emblaApi.scrollTo(0);
-          feedbackText = "First slide";
-          break;
-        case "End":
-          if (emblaApi && materials?.length) emblaApi.scrollTo(materials.length - 1);
-          feedbackText = "Last slide";
-          break;
-        case "f":
-        case "F":
-          // Toggle fullscreen mode
-          setIsFullscreen(!isFullscreen);
-          feedbackText = isFullscreen ? "Exit fullscreen" : "Enter fullscreen";
-          break;
-        default:
-          break;
-      }
-      
-      // Show keyboard feedback if available
-      if (feedbackText) {
-        setKeyboardFeedback(feedbackText);
-        
-        // Hide feedback after a delay
-        setTimeout(() => {
-          setKeyboardFeedback(null);
-        }, 1500);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [emblaApi, scrollNext, scrollPrev, isFullscreen, materials?.length]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50" ref={contentContainerRef}>
