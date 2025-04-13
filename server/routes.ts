@@ -1015,14 +1015,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         cleanFilename = cleanFilename.split(`book${bookId}/unit${unitNumber}/`).pop() || cleanFilename;
       }
       
-      // Construct final key
-      const key = `book${bookId}/unit${unitNumber}/${cleanFilename}`;
-      console.log(`Fetching content for key: ${key}`);
+      // Construct final key with special handling for Book 5
+      let key = `book${bookId}/unit${unitNumber}/${cleanFilename}`;
+      console.log(`Attempting to fetch content for key: ${key}`);
       
       // Generate a presigned URL on the server
-      const presignedUrl = await getS3PresignedUrl(key);
+      let presignedUrl = await getS3PresignedUrl(key);
       
-      // For all books, do a fallback check (no special case for Book 5)
+      // Special case for Book 5 - try direct book5 path if the normal path fails
+      if (!presignedUrl && bookId === '5') {
+        // Try with explicit 'book5' path
+        const book5Key = `book5/unit${unitNumber}/${cleanFilename}`;
+        console.log(`Book 5 special handling - trying alternate path: ${book5Key}`);
+        presignedUrl = await getS3PresignedUrl(book5Key);
+      }
+      
+      // For all books, do a fallback check if still not found
       if (!presignedUrl) {
         // Try alternate formats
         const fileExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif'];
@@ -1030,11 +1038,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         for (const ext of fileExtensions) {
           if (!cleanFilename.toLowerCase().endsWith(ext)) {
+            // Try standard path first
             const altKey = `book${bookId}/unit${unitNumber}/${cleanFilename}${ext}`;
             console.log(`Trying alternate key for Book ${bookId}: ${altKey}`);
             foundUrl = await getS3PresignedUrl(altKey);
+            
+            // Special case for Book 5 - try direct book5 path if standard path fails
+            if (!foundUrl && bookId === '5') {
+              const book5AltKey = `book5/unit${unitNumber}/${cleanFilename}${ext}`;
+              console.log(`Book 5 special handling - trying alternate key with extension: ${book5AltKey}`);
+              foundUrl = await getS3PresignedUrl(book5AltKey);
+            }
+            
             if (foundUrl) {
-              console.log(`Found alternate URL for ${key} => ${altKey}`);
+              console.log(`Found alternate URL for ${key} => ${foundUrl}`);
               break;
             }
           }
@@ -1068,7 +1085,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`Fetching content for key: ${key}`);
       
       // Generate a presigned URL on the server
-      const presignedUrl = await getS3PresignedUrl(key);
+      let presignedUrl = await getS3PresignedUrl(key);
+      
+      // Check if this is a Book 5 content request that needs special handling
+      if (!presignedUrl && key.startsWith('book5/')) {
+        console.log(`Book 5 special handling in fallback route for: ${key}`);
+        // Try different variations for Book 5 content
+        const cleanKey = key.replace(/^book5\/unit(\d+)\//, 'book5/unit$1/');
+        if (cleanKey !== key) {
+          console.log(`Trying cleaned Book 5 key: ${cleanKey}`);
+          presignedUrl = await getS3PresignedUrl(cleanKey);
+        }
+      }
       
       if (!presignedUrl) {
         console.error(`No presigned URL generated for key: ${key}`);
