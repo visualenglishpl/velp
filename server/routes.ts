@@ -1089,9 +1089,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         cleanFilename = cleanFilename.split(`book5/unit${unitNumber}/`).pop() || cleanFilename;
       }
       
-      // Construct the key
-      const key = `book5/unit${unitNumber}/${cleanFilename}`;
+      // Construct the key - explicitly removing the book prefix to avoid "bookbook5" issue
+      // Fix by using a consistent path format that matches what's in S3
+      const key = cleanFilename.includes("book") ? 
+        `book5/unit${unitNumber}/${cleanFilename.replace(/^.*?\//, '')}` : 
+        `book5/unit${unitNumber}/${cleanFilename}`;
+        
       console.log(`Book 5 direct route - trying to fetch: ${key}`);
+      
+      // Print request details for debugging
+      console.log(`Book 5 request details: unitNumber=${unitNumber}, filename=${filename}, cleanFilename=${cleanFilename}`);
+      
+      // Log the expected S3 URL format to verify it doesn't have double "book" prefix
+      console.log(`Expected S3 URL format: s3://${S3_BUCKET}/${key}`);
       
       // Try to get the presigned URL
       let presignedUrl = await getS3PresignedUrl(key);

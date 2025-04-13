@@ -380,8 +380,63 @@ export default function ContentViewer() {
                 <div className="max-w-full w-full text-center bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                   <h3 className="text-xl font-semibold mb-4">Unit Content</h3>
                   <div className="text-left mx-auto max-w-3xl">
-                    {/* Handle all Unit Content consistently across books */}
-                    {currentMaterial.contentType === 'IMAGE' ? (
+                    {/* Special handling for Book 5 - use text content directly without attempting to load images */}
+                    {book?.bookId === "5" ? (
+                      // Book 5-specific structured content
+                      <div>
+                        <p className="font-medium text-lg mb-2">Material Covered</p>
+                        
+                        {unit?.unitNumber === 1 && (
+                          <>
+                            <p className="mb-1">School Subjects - Learning subjects at school</p>
+                            <p className="mb-1">Class Schedule - Weekly and daily school timetables</p>
+                            <p className="mb-1">Classroom Objects - Items used in a classroom</p>
+                            <p className="mb-1">School Supplies - Essentials for learning</p>
+                            <p className="mb-1">School Types - Different educational institutions</p>
+                          </>
+                        )}
+                        
+                        {unit?.unitNumber === 2 && (
+                          <>
+                            <p className="mb-1">School Facilities - Areas and rooms in a school</p>
+                            <p className="mb-1">School Tour - Navigation around a school</p>
+                            <p className="mb-1">School Staff - People who work at school</p>
+                            <p className="mb-1">School Activities - Things to do at school</p>
+                            <p className="mb-1">School Rules - Important guidelines to follow</p>
+                          </>
+                        )}
+                        
+                        {unit?.unitNumber === 3 && (
+                          <>
+                            <p className="mb-1">Library - Using the school library</p>
+                            <p className="mb-1">Library Books - Types of books and resources</p>
+                            <p className="mb-1">Reading Areas - Places to read in school</p>
+                            <p className="mb-1">Digital Resources - Electronic learning materials</p>
+                            <p className="mb-1">Borrowing System - How to check out library materials</p>
+                          </>
+                        )}
+                        
+                        {unit?.unitNumber === 4 && (
+                          <>
+                            <p className="mb-1">Cafeteria - The school dining area</p>
+                            <p className="mb-1">School Meals - Types of food served at school</p>
+                            <p className="mb-1">Nutrition - Healthy eating at school</p>
+                            <p className="mb-1">Lunchtime Activities - Things to do during lunch break</p>
+                            <p className="mb-1">Cafeteria Rules - Expected behavior in the dining area</p>
+                          </>
+                        )}
+                        
+                        {unit?.unitNumber >= 5 && (
+                          <>
+                            <p className="mb-1">School Facilities - Areas and spaces in the school</p>
+                            <p className="mb-1">School Activities - Various educational activities</p>
+                            <p className="mb-1">School Rules - Important guidelines to follow</p>
+                            <p className="mb-1">School Community - People in the school environment</p>
+                            <p className="mb-1">School Resources - Tools and materials for learning</p>
+                          </>
+                        )}
+                      </div>
+                    ) : currentMaterial.contentType === 'IMAGE' ? (
                       <div className="text-center">
                         <img 
                           src={currentMaterial.content}
@@ -392,10 +447,6 @@ export default function ContentViewer() {
                             
                             // Define all possible formats to try
                             const possibleFormats = [
-                              // Special handling for Book 5 Unit Content
-                              book?.bookId === "5" ? `/api/content/book5/unit${unit?.unitNumber}/00 A.png` : null,
-                              book?.bookId === "5" ? `/api/content/book5/unit${unit?.unitNumber}/00A.png` : null,
-                              
                               // Standard formats for all books
                               `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.png`,
                               `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.png`,
