@@ -91,6 +91,16 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           // Make first letter uppercase for consistency
           answer = answer.charAt(0).toUpperCase() + answer.slice(1);
           
+          // Generate appropriate answer prompts based on question structure
+          let answerPrompt = generateAnswerPrompt(question);
+          
+          // If we have both a standard answer and a generated prompt, combine them
+          if (answerPrompt && answer) {
+            answer = `${answer} ${answerPrompt}`;
+          } else if (answerPrompt && !answer) {
+            answer = answerPrompt;
+          }
+          
           return {
             question,
             answer
@@ -113,9 +123,12 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       // Make first letter uppercase
       cleanedTitle = cleanedTitle.charAt(0).toUpperCase() + cleanedTitle.slice(1);
       
+      // See if we can generate an answer prompt for this title
+      const answerPrompt = generateAnswerPrompt(cleanedTitle);
+      
       return {
         question: cleanedTitle,
-        answer: null
+        answer: answerPrompt
       };
     } catch (error) {
       // If any error, just return the content as is
@@ -124,6 +137,121 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         answer: null
       };
     }
+  };
+  
+  // Generate appropriate answer prompts based on question structure
+  const generateAnswerPrompt = (question: string): string | null => {
+    // Normalize the question for pattern matching
+    const normalizedQuestion = question.toLowerCase();
+    
+    // Do you...? pattern
+    if (normalizedQuestion.startsWith("do you")) {
+      return "Yes, I do / No, I don't";
+    }
+    
+    // Does he/she...? pattern
+    if (normalizedQuestion.startsWith("does he") || normalizedQuestion.startsWith("does she")) {
+      return normalizedQuestion.includes("she") 
+        ? "Yes, she does / No, she doesn't" 
+        : "Yes, he does / No, he doesn't";
+    }
+    
+    // Do they...? pattern
+    if (normalizedQuestion.startsWith("do they")) {
+      return "Yes, they do / No, they don't";
+    }
+    
+    // Are you...? pattern
+    if (normalizedQuestion.startsWith("are you")) {
+      return "Yes, I am / No, I'm not";
+    }
+    
+    // Is he/she...? pattern
+    if (normalizedQuestion.startsWith("is he") || normalizedQuestion.startsWith("is she")) {
+      return normalizedQuestion.includes("she") 
+        ? "Yes, she is / No, she isn't" 
+        : "Yes, he is / No, he isn't";
+    }
+    
+    // Can you...? pattern
+    if (normalizedQuestion.startsWith("can you")) {
+      return "Yes, I can / No, I can't";
+    }
+    
+    // Could you...? pattern
+    if (normalizedQuestion.startsWith("could you")) {
+      return "Yes, I could / No, I couldn't";
+    }
+    
+    // Have you...? pattern
+    if (normalizedQuestion.startsWith("have you")) {
+      return "Yes, I have / No, I haven't";
+    }
+    
+    // Did you...? pattern
+    if (normalizedQuestion.startsWith("did you")) {
+      return "Yes, I did / No, I didn't";
+    }
+    
+    // Will you...? pattern
+    if (normalizedQuestion.startsWith("will you")) {
+      return "Yes, I will / No, I won't";
+    }
+    
+    // Would you...? pattern
+    if (normalizedQuestion.startsWith("would you")) {
+      return "Yes, I would / No, I wouldn't";
+    }
+    
+    // Where does...? pattern
+    if (normalizedQuestion.startsWith("where does")) {
+      // For specific responses like: "Where Does Babysitter Work?"
+      if (normalizedQuestion.includes("babysitter") || normalizedQuestion.includes("baby sitter")) {
+        return "A baby sitter works...";
+      }
+      return "They work at...";
+    }
+    
+    // What does...? pattern
+    if (normalizedQuestion.startsWith("what does")) {
+      // For specific responses like: "What Does Chef Do?"
+      if (normalizedQuestion.includes("chef")) {
+        return "A chef...";
+      }
+      return "They...";
+    }
+    
+    // What is...? pattern
+    if (normalizedQuestion.startsWith("what is")) {
+      return "It is...";
+    }
+    
+    // Would you like...? pattern
+    if (normalizedQuestion.includes("would you like")) {
+      return "Yes, I would like / No, I wouldn't like";
+    }
+    
+    // Is [job/thing]...? pattern
+    if (normalizedQuestion.startsWith("is") && 
+        (normalizedQuestion.includes("job") || 
+         normalizedQuestion.includes("babysitter") ||
+         normalizedQuestion.includes("chef"))) {
+      if (normalizedQuestion.includes("easy or difficult")) {
+        return "A babysitter's job is...";
+      }
+      if (normalizedQuestion.includes("well or badly paying")) {
+        return "A babysitter's job is...";
+      }
+      return "It is...";
+    }
+    
+    // Dream job pattern
+    if (normalizedQuestion.includes("dream job")) {
+      return "My dream job is...";
+    }
+
+    // For other question types or non-questions
+    return null;
   };
   
   // Enhanced check if text is likely a question
