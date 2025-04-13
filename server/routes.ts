@@ -1078,6 +1078,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Special route for Book 5 content
+  app.get("/api/content/book5/unit:unitNumber/:filename", async (req, res) => {
+    try {
+      const { unitNumber, filename } = req.params;
+      
+      // Clean filename
+      let cleanFilename = decodeURIComponent(filename);
+      if (cleanFilename.includes(`book5/unit${unitNumber}/`)) {
+        cleanFilename = cleanFilename.split(`book5/unit${unitNumber}/`).pop() || cleanFilename;
+      }
+      
+      // Construct the key
+      const key = `book5/unit${unitNumber}/${cleanFilename}`;
+      console.log(`Book 5 direct route - trying to fetch: ${key}`);
+      
+      // Try to get the presigned URL
+      let presignedUrl = await getS3PresignedUrl(key);
+      
+      // If that fails, try common variations
+      if (!presignedUrl) {
+        const variations = [
+          // Special handling for Unit Content
+          cleanFilename === "00 A.png" ? `book5/unit${unitNumber}/00A.png` : null,
+          cleanFilename === "00A.png" ? `book5/unit${unitNumber}/00 A.png` : null,
+          
+          // Try without space variation
+          cleanFilename.includes(" ") ? `book5/unit${unitNumber}/${cleanFilename.replace(/\s+/g, "")}` : null,
+          
+          // Try with space variation
+          cleanFilename.includes("A") && !cleanFilename.includes(" A") ? 
+            `book5/unit${unitNumber}/${cleanFilename.replace("A", " A")}` : null
+        ].filter(Boolean);
+        
+        for (const variant of variations) {
+          if (variant) {
+            console.log(`Book 5 trying variant: ${variant}`);
+            presignedUrl = await getS3PresignedUrl(variant);
+            if (presignedUrl) {
+              console.log(`Found variant URL: ${presignedUrl}`);
+              break;
+            }
+          }
+        }
+      }
+      
+      if (!presignedUrl) {
+        console.error(`Book 5 content not found: ${key}`);
+        return res.status(404).json({ error: "Content not found" });
+      }
+      
+      // Set cache headers and redirect
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      return res.redirect(presignedUrl);
+    } catch (error) {
+      console.error("Error fetching Book 5 content:", error);
+      res.status(500).json({ error: "Failed to fetch content" });
+    }
+  });
+
   // Fallback route for older content paths
   app.get("/api/content/:key", async (req, res) => {
     try {

@@ -380,7 +380,41 @@ export default function ContentViewer() {
                 <div className="max-w-full w-full text-center bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                   <h3 className="text-xl font-semibold mb-4">Unit Content</h3>
                   <div className="text-left mx-auto max-w-3xl">
-                    {currentMaterial.content && currentMaterial.content.includes("Material Covered") ? (
+                    {/* Handle image-based Unit Content (mainly for Book 5) */}
+                    {currentMaterial.contentType === 'IMAGE' ? (
+                      <div className="text-center">
+                        <img 
+                          src={currentMaterial.content}
+                          alt="Unit Content"
+                          className="max-w-full max-h-[50vh] mx-auto object-contain"
+                          onError={(e) => {
+                            console.log("Trying alternate format for Unit Content image");
+                            // Try special format for Book 5 Unit Content
+                            (e.target as HTMLImageElement).src = `/api/content/book5/unit${unit?.unitNumber}/00 A.png`;
+                            
+                            // Set up handler if that fails too
+                            const img = e.target as HTMLImageElement;
+                            img.addEventListener('error', () => {
+                              console.error("Failed to load Unit Content image, trying text fallback");
+                              // Hide the broken image
+                              img.style.display = 'none';
+                              
+                              // Show fallback text if available
+                              const parent = img.parentNode as HTMLElement;
+                              if (parent && typeof currentMaterial.content === 'string' && 
+                                  currentMaterial.content.includes("Material Covered")) {
+                                parent.innerHTML = currentMaterial.content
+                                  .split('\n')
+                                  .map(line => `<p class="mb-1 text-left">${line}</p>`)
+                                  .join('');
+                              } else {
+                                parent.innerHTML = '<p class="text-center text-red-600">Content not available</p>';
+                              }
+                            });
+                          }}
+                        />
+                      </div>
+                    ) : currentMaterial.content && currentMaterial.content.includes("Material Covered") ? (
                       // For structured content with Material Covered format
                       currentMaterial.content.split('\n').map((line, index) => (
                         <p key={index} className={`mb-1 ${index === 0 ? 'font-medium text-lg' : ''}`}>
