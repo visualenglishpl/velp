@@ -13,17 +13,59 @@ if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
   console.log("AWS credentials are available for S3 access.");
 }
 
-// Create the S3 client with custom endpoint for S3-compatible services
+// Import NodeJS's https module to check for redirects
+import https from 'https';
+
+// Function to check where a bucket URL redirects to
+async function checkBucketRedirect(bucketUrl: string): Promise<string | null> {
+  return new Promise((resolve) => {
+    const req = https.get(bucketUrl, (res) => {
+      if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        console.log(`Bucket redirects to: ${res.headers.location}`);
+        resolve(res.headers.location);
+      } else {
+        console.log(`Bucket doesn't redirect. Status: ${res.statusCode}`);
+        resolve(null);
+      }
+      res.resume(); // consume the response to free resources
+    });
+    
+    req.on('error', (e) => {
+      console.error(`Error checking bucket redirect: ${e.message}`);
+      resolve(null);
+    });
+    
+    req.end();
+  });
+}
+
+// Log debug info before we create the client
+console.log(`Creating S3 client with settings - Bucket: ${S3_BUCKET}`);
+
+// Create the S3 client with the CORRECT region
+// We found the exact endpoint: visualenglishmaterial.s3.eu-north-1.amazonaws.com
+// This means the bucket is in EU North 1 (Stockholm) region, not EU Central 1
 const s3Client = new S3Client({
-  // Try to use a regional endpoint format that works with more S3 providers
-  endpoint: "https://visualenglishmaterial.s3.amazonaws.com", // Try virtual-hosted style URL
-  region: "auto", // 'auto' to avoid region validation
+  region: 'eu-north-1', // Using EU North 1 (Stockholm) region - IMPORTANT: This is the correct region!
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ""
   },
-  forcePathStyle: false // Use virtual-hosted style S3 URLs
+  // Explicitly set the endpoint to avoid redirects
+  endpoint: 'https://s3.eu-north-1.amazonaws.com'
 });
+
+// Check the bucket redirect immediately
+(async () => {
+  try {
+    const redirectUrl = await checkBucketRedirect(`https://${S3_BUCKET}.s3.amazonaws.com`);
+    if (redirectUrl) {
+      console.log(`IMPORTANT: S3 bucket redirects to ${redirectUrl}. Please update S3 client configuration to use this endpoint.`);
+    }
+  } catch (error) {
+    console.error("Error checking redirect:", error);
+  }
+})();
 
 // Log S3 configuration
 console.log(`S3 configuration: Bucket=${S3_BUCKET}, Region=${process.env.AWS_REGION || "eu-central-1"}`);
