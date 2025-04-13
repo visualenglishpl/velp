@@ -168,40 +168,49 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         );
         
       case 'exercise':
-        // For exercises, we parse the content as JSON
-        try {
-          const exercise = JSON.parse(material.content);
-          return (
-            <Card className="p-4 max-w-2xl mx-auto">
-              <h3 className="text-xl font-bold mb-4">{exercise.title || 'Exercise'}</h3>
-              <div className="space-y-4">
-                {exercise.questions?.map((question: any, index: number) => (
-                  <div key={index} className="p-3 border rounded-md">
-                    <p className="font-medium">{index + 1}. {question.text}</p>
-                    {question.options && (
-                      <div className="mt-2 space-y-2">
-                        {question.options.map((option: string, optIndex: number) => (
-                          <label key={optIndex} className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-50 rounded-md">
-                            <input 
-                              type="radio" 
-                              name={`question-${index}`} 
-                              className="h-4 w-4 text-blue-600" 
-                            />
-                            <span>{option}</span>
-                          </label>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+        // For exercises, try to parse as JSON if it looks like JSON, otherwise treat as HTML
+        if (material.content.trim().startsWith('{') && material.content.trim().endsWith('}')) {
+          try {
+            const exercise = JSON.parse(material.content);
+            return (
+              <Card className="p-4 max-w-2xl mx-auto">
+                <h3 className="text-xl font-bold mb-4">{exercise.title || 'Exercise'}</h3>
+                <div className="space-y-4">
+                  {exercise.questions?.map((question: any, index: number) => (
+                    <div key={index} className="p-3 border rounded-md">
+                      <p className="font-medium">{index + 1}. {question.text}</p>
+                      {question.options && (
+                        <div className="mt-2 space-y-2">
+                          {question.options.map((option: string, optIndex: number) => (
+                            <label key={optIndex} className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-50 rounded-md">
+                              <input 
+                                type="radio" 
+                                name={`question-${index}`} 
+                                className="h-4 w-4 text-blue-600" 
+                              />
+                              <span>{option}</span>
+                            </label>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            );
+          } catch (e) {
+            // If JSON parsing fails, fall back to treating it as HTML
+            return (
+              <div className="prose prose-lg max-w-none mx-auto px-4 py-2">
+                <div dangerouslySetInnerHTML={{ __html: material.content }} className="break-words" />
               </div>
-            </Card>
-          );
-        } catch (e) {
+            );
+          }
+        } else {
+          // If it doesn't look like JSON, treat it as HTML content
           return (
-            <div className="text-center text-red-500 p-4">
-              <p>Failed to parse exercise content</p>
-              <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">{material.content}</pre>
+            <div className="prose prose-lg max-w-none mx-auto px-4 py-2">
+              <div dangerouslySetInnerHTML={{ __html: material.content }} className="break-words" />
             </div>
           );
         }

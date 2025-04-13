@@ -1156,11 +1156,90 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Fetch materials
       const materials = await storage.getMaterials(unitId);
       
+      // If no materials exist, create sample placeholder materials for testing
+      if (!materials || materials.length === 0) {
+        console.log(`No materials found for unit ${unitId}. Creating samples for testing.`);
+        
+        const bookId = unit.bookId;
+        const book = await storage.getBookById(bookId);
+        
+        // Create sample materials with appropriate content types
+        let sampleMaterials = [
+          {
+            id: unitId * 1000 + 1,
+            unitId: unitId,
+            title: `Vocabulary for ${unit.title}`,
+            description: "Key vocabulary for this unit",
+            contentType: "text",
+            content: `<h2>Key Vocabulary</h2>
+            <ul>
+              <li><strong>School</strong> - A place where students learn</li>
+              <li><strong>Classroom</strong> - A room where classes are taught</li>
+              <li><strong>Teacher</strong> - A person who teaches students</li>
+              <li><strong>Student</strong> - A person who studies at a school</li>
+              <li><strong>Book</strong> - A collection of pages with information</li>
+            </ul>`,
+            orderIndex: 1,
+            isPublished: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: unitId * 1000 + 2,
+            unitId: unitId,
+            title: `Grammar for ${unit.title}`,
+            description: "Grammar points for this unit",
+            contentType: "text",
+            content: `<h2>Grammar Rules</h2>
+            <p>This section covers the main grammar points for this unit:</p>
+            <ol>
+              <li>Subject + Verb + Object structure</li>
+              <li>Using articles (a, an, the)</li>
+              <li>Present simple tense for routines and facts</li>
+            </ol>`,
+            orderIndex: 2,
+            isPublished: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: unitId * 1000 + 3,
+            unitId: unitId,
+            title: `Exercise for ${unit.title}`,
+            description: "Practice exercises for this unit",
+            contentType: "exercise",
+            content: `<div class="exercise">
+              <h2>Practice Questions</h2>
+              <div class="question">
+                <p>1. What do you do at school?</p>
+                <div class="answer">I learn new things at school.</div>
+              </div>
+              <div class="question">
+                <p>2. Where is the classroom?</p>
+                <div class="answer">The classroom is on the second floor.</div>
+              </div>
+              <div class="question">
+                <p>3. Who is your teacher?</p>
+                <div class="answer">My teacher is Ms. Johnson.</div>
+              </div>
+            </div>`,
+            orderIndex: 3,
+            isPublished: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }
+        ];
+        
+        materials = sampleMaterials;
+      }
+      
       // Add isLocked and order properties for the content viewer
       const enhancedMaterials = materials.map(material => ({
         ...material,
-        isLocked: !material.isPublished,
-        order: material.orderIndex || 0
+        isLocked: material.isPublished === false,
+        order: material.orderIndex || 0,
+        // Ensure content is properly handled as string
+        content: typeof material.content === 'string' ? material.content : String(material.content)
       }));
       
       res.json(enhancedMaterials);
