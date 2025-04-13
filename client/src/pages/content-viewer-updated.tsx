@@ -173,6 +173,59 @@ export default function ContentViewer() {
         {/* Content title */}
         <div className="bg-gray-100 p-4 text-center mb-6 rounded">
           <h3 className="text-xl font-semibold">{currentMaterial?.title}</h3>
+          
+          {/* Extract question from filename if present */}
+          {currentMaterial?.content && (
+            <div className="mt-2 text-gray-700">
+              {(() => {
+                // Extract filename from path
+                const contentPath = currentMaterial.content;
+                const pathParts = contentPath.split('/');
+                const filename = pathParts[pathParts.length - 1];
+                
+                // Try to extract question from filename
+                // Common pattern in files: "01 D What is the Capital of Australia – the Capital is Canberra.jpg"
+                // We want to display "What is the Capital of Australia?"
+                try {
+                  // Decode URI component to handle special characters
+                  const decodedFilename = decodeURIComponent(filename);
+                  
+                  // Extract question and answer if available
+                  // Pattern like: "01 D What is the Capital of Australia – the Capital is Canberra.jpg"
+                  const contentParts = decodedFilename.split('–');
+                  
+                  if (contentParts.length >= 1) {
+                    // Extract question from the first part
+                    const questionMatch = contentParts[0].match(/\d+\s+[A-Z]\s+([^.]+)/);
+                    if (questionMatch && questionMatch[1]) {
+                      const question = questionMatch[1].trim();
+                      
+                      // Add question mark if it doesn't already have one
+                      const formattedQuestion = question.endsWith('?') ? question : `${question}?`;
+                      
+                      // Extract answer if available (after the dash)
+                      const answer = contentParts.length > 1 ? contentParts[1].trim() : null;
+                      
+                      return (
+                        <>
+                          <p className="font-medium text-center text-gray-800">{formattedQuestion}</p>
+                          {answer && (
+                            <p className="text-sm text-center text-gray-600 mt-1">
+                              {answer}
+                            </p>
+                          )}
+                        </>
+                      );
+                    }
+                  }
+                } catch (error) {
+                  console.error("Error extracting question from filename:", error);
+                }
+                
+                return null;
+              })()}
+            </div>
+          )}
         </div>
         
         {/* Content display */}
@@ -234,29 +287,46 @@ export default function ContentViewer() {
                       
                       // Define all possible formats to try
                       const possibleFormats = [
+                        // Start with 00A pattern for ALL slides (as per requirement)
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.png`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.png`,
+                        
+                        // Then try regular numbering pattern if 00A fails
                         // PNG format with different naming patterns
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.png`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`,
-                        // Using '00 A.png' format for first slide
-                        currentIndex === 0 ? `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.png` : null,
-                        // Using '00A.png' format for first slide
-                        currentIndex === 0 ? `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.png` : null,
+                        
                         // JPG format with different naming patterns
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.jpg`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.jpg`,
+                        
                         // JPEG format with different naming patterns
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.jpeg`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.jpeg`,
+                        
                         // GIF format with different naming patterns (based on s3://visualenglishmaterial/book3/unit12/01 D Ad the Children are Young – Middle Aged – Old.gif)
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.gif`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.gif`,
+                        
                         // Format with letter variations (B, C, D, etc.) for books that use different lettering pattern
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} B.png`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} C.png`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} D.png`,
+                        
                         // AVIF format (newer image format)
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.avif`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.avif`,
+                        
+                        // Other file extensions for 00A pattern
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.jpg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.jpg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.jpeg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.jpeg`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.gif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.gif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.avif`,
+                        `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.avif`,
+                        
                         // Original material content as fallback
                         currentMaterial.content
                       ].filter(Boolean) as string[];
@@ -294,7 +364,8 @@ export default function ContentViewer() {
                           `;
                           
                           // Replace video with error message
-                          const parent = e.target.parentNode as HTMLElement;
+                          const videoElement = e.target as HTMLVideoElement;
+                          const parent = videoElement.parentNode as HTMLElement;
                           if (parent) {
                             parent.innerHTML = '';
                             parent.appendChild(container);
@@ -311,8 +382,12 @@ export default function ContentViewer() {
                         source.src = format;
                         
                         // Clear any existing sources
-                        while ((e.target as HTMLVideoElement).firstChild) {
-                          (e.target as HTMLVideoElement).removeChild((e.target as HTMLVideoElement).firstChild);
+                        const videoElement = e.target as HTMLVideoElement;
+                        while (videoElement.firstChild) {
+                          const child = videoElement.firstChild;
+                          if (child) {
+                            videoElement.removeChild(child);
+                          }
                         }
                         
                         // Add the new source
