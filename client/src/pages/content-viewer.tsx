@@ -426,7 +426,7 @@ export default function ContentViewer() {
                           </>
                         )}
                         
-                        {unit?.unitNumber >= 5 && (
+                        {unit?.unitNumber && unit.unitNumber >= 5 && (
                           <>
                             <p className="mb-1">School Facilities - Areas and spaces in the school</p>
                             <p className="mb-1">School Activities - Various educational activities</p>
