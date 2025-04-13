@@ -63,11 +63,11 @@ const Navbar = () => {
               FAQ
             </a>
 
-            <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
+            <Link href="#plans">
               <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
                 Bookstore
               </Button>
-            </a>
+            </Link>
             <Button 
               variant="outline" 
               className="border-gray-300 text-gray-700"
@@ -103,14 +103,14 @@ const Navbar = () => {
               FAQ
             </a>
 
-            <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
+            <Link href="#plans">
               <Button 
                 variant="default" 
                 className="bg-black hover:bg-gray-800 text-white w-full justify-start"
               >
                 Bookstore
               </Button>
-            </a>
+            </Link>
             <Button 
               variant="outline" 
               className="border-gray-300 text-gray-700 w-full justify-start mt-1"
