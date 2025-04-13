@@ -251,6 +251,38 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         };
       }
       
+      // Special handling for Book 3 Unit 2 clock and time related content
+      if (bookId === "book3" && unitNumber === 2) {
+        // Specific handling for clock images
+        if (content.includes("Clock") && !content.includes("–")) {
+          // For files like "01 N Clock.jpg"
+          if (/^\d+\s+[A-Z]\s+Clock\.[^.]+$/.test(content)) {
+            return {
+              question: "Where is the clock?",
+              answer: "The clock is on the wall."
+            };
+          }
+          
+          // For files like "Where is the Clock – in the Bedroom.gif"
+          if (content.toLowerCase().includes("where is the clock")) {
+            const locationMatch = content.match(/in the ([A-Za-z]+)/i);
+            const location = locationMatch ? locationMatch[1] : "room";
+            return {
+              question: "Where is the clock?",
+              answer: `The clock is in the ${location}.`
+            };
+          }
+          
+          // For files with "What is the Time"
+          if (content.toLowerCase().includes("what is the time")) {
+            return {
+              question: "What is the time?",
+              answer: "It is ___ o'clock."
+            };
+          }
+        }
+      }
+      
       // Special handling for 00 X pattern files - prioritize these for all books
       if (/^00\s+[A-Z]/.test(content)) {
         // For files like "00 E.png" (just a letter), display a contextual title
@@ -266,6 +298,11 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           } else if (mainLetter === 'C' && bookId?.includes('1')) {
             return {
               question: "Let's Say Hello",
+              answer: null
+            };
+          } else if (mainLetter === 'E' && bookId === "book3" && unitNumber === 2) {
+            return {
+              question: "Time and Daily Routine",
               answer: null
             };
           } else {
