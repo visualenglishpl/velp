@@ -360,7 +360,22 @@ export default function ContentViewer() {
         <div className="flex justify-center items-center">
           {currentMaterial && (
             <>
-              {currentMaterial.contentType === 'IMAGE' && (
+              {/* Special handling for Unit Content (text-based overview) */}
+              {currentMaterial.title === "Unit Content" && currentMaterial.content && currentMaterial.content.includes("Material Covered") && (
+                <div className="max-w-full w-full text-center bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                  <h3 className="text-xl font-semibold mb-4">Unit Content</h3>
+                  <div className="text-left mx-auto max-w-3xl">
+                    {currentMaterial.content.split('\n').map((line, index) => (
+                      <p key={index} className={`mb-1 ${index === 0 ? 'font-medium text-lg' : ''}`}>
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Image content */}
+              {currentMaterial.contentType === 'IMAGE' && currentMaterial.title !== "Unit Content" && (
                 <div className="max-w-full text-center">
                   <img 
                     src={currentMaterial.content}
