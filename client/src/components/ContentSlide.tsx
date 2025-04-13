@@ -143,6 +143,7 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         );
         
       case 'text':
+      case 'lesson':
         return (
           <div className="prose prose-lg max-w-none mx-auto px-4 py-2">
             {/* Handle different text formats */}

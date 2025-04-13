@@ -1154,17 +1154,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Fetch materials
-      const materials = await storage.getMaterials(unitId);
+      let materialList = await storage.getMaterials(unitId);
       
       // If no materials exist, create sample placeholder materials for testing
-      if (!materials || materials.length === 0) {
+      if (!materialList || materialList.length === 0) {
         console.log(`No materials found for unit ${unitId}. Creating samples for testing.`);
         
         const bookId = unit.bookId;
         const book = await storage.getBookById(bookId);
         
         // Create sample materials with appropriate content types
-        let sampleMaterials = [
+        materialList = [
           {
             id: unitId * 1000 + 1,
             unitId: unitId,
@@ -1229,12 +1229,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
             updatedAt: new Date()
           }
         ];
-        
-        materials = sampleMaterials;
       }
       
       // Add isLocked and order properties for the content viewer
-      const enhancedMaterials = materials.map(material => ({
+      const enhancedMaterials = materialList.map(material => ({
         ...material,
         isLocked: material.isPublished === false,
         order: material.orderIndex || 0,

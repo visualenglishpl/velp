@@ -17,8 +17,12 @@ type Material = {
   description: string | null;
   contentType: string;
   content: string;
-  order: number;
-  isLocked: boolean;
+  order?: number;
+  orderIndex?: number;
+  isLocked?: boolean;
+  isPublished?: boolean;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 };
 
 type Unit = {
