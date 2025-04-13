@@ -125,8 +125,8 @@ export default function UnitsPage() {
                       {/* Try multiple image patterns in order */}
                       <img 
                         src={
-                          // Try a direct path without assets folder first for all books
-                          `/api/direct/book${bookId}/unit${unit.unitNumber}/00.png`
+                          // Use the same path structure as in ContentSlide.tsx
+                          `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`
                         } 
                         alt={`Thumbnail for ${unit.title}`}
                         className="h-full w-full object-contain relative z-10"
@@ -134,39 +134,79 @@ export default function UnitsPage() {
                         onError={(e) => {
                           // Try different common filenames in sequence
                           const img = e.target as HTMLImageElement;
-                          const tryFilenames = [
-                            "00.png",
-                            "00 A.png", 
-                            "00 B.png",
-                            "00 C.png",
-                            "01 A.png",
-                            "01.png",
-                            "001.png",
-                            "01.png",
-                            "1.png",
-                            "unit.png",
-                            "title.png",
-                            "cover.png"
-                          ];
+                          
+                          // Book-specific filename patterns
+                          let tryFilenames: string[] = [];
+                          
+                          // For Book 4, use specific patterns first
+                          if (bookId === "4") {
+                            tryFilenames = [
+                              "00.png",
+                              "00 A.png", 
+                              "00 B.png",
+                              "00 C.png",
+                              "00 D.png",
+                              "00 E.png",
+                              "001.png",
+                              "01.png",
+                              "1.png"
+                            ];
+                          } 
+                          // For problematic units 5, 8, 13, try unit.png first
+                          else if (["5", "8", "13"].includes(unit.unitNumber)) {
+                            tryFilenames = [
+                              "unit.png",
+                              "title.png",
+                              "cover.png",
+                              "00.png",
+                              "00 A.png"
+                            ];
+                          }
+                          // Default patterns for all other cases
+                          else {
+                            tryFilenames = [
+                              "00 E.png",
+                              "00 A.png", 
+                              "00 B.png",
+                              "00 C.png",
+                              "00 D.png",
+                              "00.png",
+                              "01 A.png",
+                              "01.png",
+                              "001.png",
+                              "1.png",
+                              "unit.png",
+                              "title.png",
+                              "cover.png"
+                            ];
+                          }
                           
                           // Try next filename or hide if all fail
-                          const tryNextOrHide = (index = 0) => {
+                          const tryNextOrHide = (index = 0, inAssets = true) => {
                             if (index >= tryFilenames.length) {
-                              // All attempts failed, hide the image
-                              img.style.opacity = "0";
-                              return;
+                              if (inAssets) {
+                                // Try again outside the assets folder
+                                tryNextOrHide(0, false);
+                                return;
+                              } else {
+                                // All attempts failed, hide the image
+                                img.style.opacity = "0";
+                                return;
+                              }
                             }
                             
                             // Try in assets folder first, then directly in unit folder
-                            img.src = `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/${tryFilenames[index]}`;
+                            const path = inAssets 
+                              ? `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/${tryFilenames[index]}`
+                              : `/api/direct/book${bookId}/unit${unit.unitNumber}/${tryFilenames[index]}`;
+                              
+                            img.src = path;
                             img.onerror = () => {
-                              // If assets folder fails, try directly in the unit folder
-                              img.src = `/api/direct/book${bookId}/unit${unit.unitNumber}/${tryFilenames[index]}`;
-                              img.onerror = () => tryNextOrHide(index + 1);
+                              tryNextOrHide(index + 1, inAssets);
                             };
                           };
                           
-                          tryNextOrHide(0);
+                          tryNextOrHide(0, true);
                         }}
                       />
                     </div>
