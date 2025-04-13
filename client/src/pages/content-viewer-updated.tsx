@@ -206,13 +206,72 @@ export default function ContentViewer() {
                     // Extract question from the first part
                     const questionMatch = contentParts[0].match(/\d+\s+[A-Z]\s+([^.]+)/);
                     if (questionMatch && questionMatch[1]) {
-                      const question = questionMatch[1].trim();
+                      let question = questionMatch[1].trim();
                       
-                      // Add question mark if it doesn't already have one
-                      const formattedQuestion = question.endsWith('?') ? question : `${question}?`;
+                      // Format and correct the question
+                      
+                      // Fix common spelling errors
+                      question = question
+                        .replace(/\bthier\b/gi, "their")
+                        .replace(/\bwere\b(?=.*\bfrom\b)/gi, "where")
+                        .replace(/\bwhos\b/gi, "who's")
+                        .replace(/\bits\b(?=.*\bname)/gi, "it's")
+                        .replace(/\bcomon\b/gi, "common")
+                        .replace(/\bwhats\b/gi, "what's")
+                        .replace(/\bhows\b/gi, "how's")
+                        .replace(/\bwhen\b(?=.*\bdo)/gi, "when do");
+                      
+                      // Capitalize first letter
+                      question = question.charAt(0).toUpperCase() + question.slice(1);
+                      
+                      // Make sure country names and nationalities are capitalized
+                      const countries = ["australia", "poland", "japan", "france", "germany", "italy", "england", "china", "korea", "brazil", "canada", "mexico", "russia", "ireland", "spain", "thailand", "vietnam"];
+                      const nationalities = ["australian", "polish", "japanese", "french", "german", "italian", "english", "chinese", "korean", "brazilian", "canadian", "mexican", "russian", "irish", "spanish", "thai", "vietnamese"];
+                      
+                      countries.forEach(country => {
+                        const regex = new RegExp(`\\b${country}\\b`, 'gi');
+                        question = question.replace(regex, country.charAt(0).toUpperCase() + country.slice(1));
+                      });
+                      
+                      nationalities.forEach(nationality => {
+                        const regex = new RegExp(`\\b${nationality}\\b`, 'gi');
+                        question = question.replace(regex, nationality.charAt(0).toUpperCase() + nationality.slice(1));
+                      });
+                      
+                      // Check if the question is a question - should contain question words
+                      const questionWords = ["what", "where", "when", "why", "who", "which", "how", "is", "are", "do", "does", "did", "can", "could", "will", "would"];
+                      const isActuallyAQuestion = questionWords.some(word => 
+                        question.toLowerCase().includes(word.toLowerCase()) && 
+                        (question.toLowerCase().indexOf(word.toLowerCase()) < 5 || question.toLowerCase().startsWith(word.toLowerCase()))
+                      );
+                      
+                      // Add question mark if it's a question and doesn't already have one
+                      const formattedQuestion = isActuallyAQuestion && !question.endsWith('?') ? `${question}?` : question;
                       
                       // Extract answer if available (after the dash)
-                      const answer = contentParts.length > 1 ? contentParts[1].trim() : null;
+                      let answer = contentParts.length > 1 ? contentParts[1].trim() : null;
+                      
+                      // Format the answer - capitalize first letter, fix punctuation
+                      if (answer) {
+                        // Capitalize first letter
+                        answer = answer.charAt(0).toUpperCase() + answer.slice(1);
+                        
+                        // Add period at the end if it doesn't have punctuation
+                        if (!/[.!?]$/.test(answer)) {
+                          answer += '.';
+                        }
+                        
+                        // Capitalize country names and nationalities in answer
+                        countries.forEach(country => {
+                          const regex = new RegExp(`\\b${country}\\b`, 'gi');
+                          answer = answer.replace(regex, country.charAt(0).toUpperCase() + country.slice(1));
+                        });
+                        
+                        nationalities.forEach(nationality => {
+                          const regex = new RegExp(`\\b${nationality}\\b`, 'gi');
+                          answer = answer.replace(regex, nationality.charAt(0).toUpperCase() + nationality.slice(1));
+                        });
+                      }
                       
                       return (
                         <>
