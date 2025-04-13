@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, PenTool } from "lucide-react";
 
 interface ContentSlideProps {
   material: {
@@ -737,24 +737,39 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         
     if (contentType === 'video') {
       return (
-        <div className="relative px-4">
-          <div className="bg-black/5 rounded-lg overflow-hidden shadow-lg border-2 border-gray-100">
-            <video
-              src={getS3Url()}
-              controls={true}
-              className="max-w-[90%] max-h-[50vh] mx-auto"
-              autoPlay={isActive && isPlaying}
-              muted={isMuted}
-              playsInline
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onError={() => setIsError(true)}
-              style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}
-            />
+        <div className="relative">
+          {/* Modern video player with enhanced styling */}
+          <div className="bg-gradient-to-b from-blue-50 to-gray-50 rounded-xl overflow-hidden shadow-xl p-4">
+            <div className="rounded-lg overflow-hidden border border-gray-200 shadow-inner">
+              <video
+                src={getS3Url()}
+                controls={true}
+                className="max-w-[95%] max-h-[55vh] mx-auto rounded-lg"
+                autoPlay={isActive && isPlaying}
+                muted={isMuted}
+                playsInline
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onError={() => setIsError(true)}
+                poster="/images/video-placeholder.jpg"
+                style={{ 
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.08), 0 2px 10px rgba(0,0,0,0.06)',
+                }}
+              />
+            </div>
+            
+            {/* Video caption - optional */}
+            <div className="mt-4 text-center">
+              <p className="text-gray-700 font-medium">
+                {material.title || formattedQuestion || "Educational Video"}
+              </p>
+            </div>
           </div>
+          
+          {/* Styled error message for videos */}
           {isError && (
-            <div className="text-center text-red-500 p-4 mt-2 bg-red-50 rounded-lg border border-red-100">
-              <p>Failed to load video. Please try again later.</p>
+            <div className="text-center bg-red-50 border border-red-100 p-4 mt-4 rounded-lg">
+              <p className="text-red-600 font-medium">Failed to load video. Please try again later.</p>
             </div>
           )}
         </div>
@@ -763,24 +778,27 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       
     if (contentType === 'text' || contentType === 'lesson') {
       return (
-        <div className="prose prose-lg max-w-none mx-auto px-4 py-2 bg-white rounded-lg border-2 border-gray-100 shadow-md">
-          {/* Handle different text formats */}
+        <div className="prose prose-lg max-w-none mx-auto px-6 py-6 bg-white rounded-xl border border-gray-200 shadow-lg">
+          {/* Enhanced text content display */}
           {material.content.startsWith('http') ? (
-            <div className="text-center py-4">
-              <p className="text-gray-700">External content is available at the link below:</p>
+            <div className="text-center py-6">
+              <p className="text-gray-700 mb-3">External content is available at the link below:</p>
               <a 
                 href={material.content} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-primary-600 hover:underline inline-flex items-center mt-2 font-medium"
+                className="text-primary-600 hover:text-primary-700 inline-flex items-center mt-2 font-medium px-4 py-2 bg-primary-50 rounded-lg transition-colors"
               >
-                {material.title} <ExternalLink className="h-4 w-4 ml-1" />
+                {material.title} <ExternalLink className="h-4 w-4 ml-2" />
               </a>
             </div>
           ) : (
-            <div 
+            <motion.div 
               dangerouslySetInnerHTML={{ __html: material.content }}
-              className="break-words p-4"
+              className="break-words p-5 rounded-lg bg-gray-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
             />
           )}
         </div>
@@ -793,54 +811,98 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         try {
           const exercise = JSON.parse(material.content);
           return (
-            <Card className="p-6 max-w-2xl mx-auto bg-white rounded-lg border-2 border-gray-100 shadow-md">
-              <h3 className="text-xl font-bold mb-4 text-primary-800 border-b pb-2">{exercise.title || 'Exercise'}</h3>
-              <div className="space-y-4">
+            <Card className="p-6 max-w-2xl mx-auto bg-gradient-to-b from-white to-blue-50 rounded-xl border border-blue-100 shadow-lg">
+              <motion.h3 
+                className="text-xl font-bold mb-5 text-primary-800 border-b border-blue-100 pb-3 flex items-center"
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <span className="bg-primary-600 text-white p-2 rounded-lg mr-3">
+                  <PenTool className="h-5 w-5" />
+                </span>
+                {exercise.title || 'Interactive Exercise'}
+              </motion.h3>
+              
+              <motion.div 
+                className="space-y-5"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              >
                 {exercise.questions?.map((question: any, index: number) => (
-                  <div key={index} className="p-4 border rounded-md bg-gray-50">
-                    <p className="font-medium text-gray-800">{index + 1}. {question.text}</p>
+                  <motion.div 
+                    key={index} 
+                    className="p-5 border border-blue-100 rounded-lg bg-white shadow-sm"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 * index }}
+                  >
+                    <p className="font-medium text-gray-800 mb-3 text-lg">{index + 1}. {question.text}</p>
                     {question.options && (
-                      <div className="mt-3 space-y-2">
+                      <div className="mt-4 space-y-3">
                         {question.options.map((option: string, optIndex: number) => (
-                          <label key={optIndex} className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-white rounded-md border border-gray-100">
+                          <label 
+                            key={optIndex} 
+                            className="flex items-center space-x-3 cursor-pointer p-3 hover:bg-blue-50 rounded-lg border border-gray-200 transition-colors"
+                          >
                             <input 
                               type="radio" 
                               name={`question-${index}`} 
-                              className="h-4 w-4 text-primary-600" 
+                              className="h-5 w-5 text-primary-600 focus:ring-primary-500" 
                             />
-                            <span>{option}</span>
+                            <span className="text-gray-700">{option}</span>
                           </label>
                         ))}
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+                
+                {/* Submit button for exercises */}
+                <div className="mt-6 flex justify-end">
+                  <button className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-lg font-medium transition-colors shadow-sm">
+                    Check Answers
+                  </button>
+                </div>
+              </motion.div>
             </Card>
           );
         } catch (e) {
           // If JSON parsing fails, fall back to treating it as HTML
           return (
-            <div className="prose prose-lg max-w-none mx-auto px-4 py-4 bg-white rounded-lg border-2 border-gray-100 shadow-md">
-              <div dangerouslySetInnerHTML={{ __html: material.content }} className="break-words p-2" />
+            <div className="prose prose-lg max-w-none mx-auto px-6 py-6 bg-white rounded-xl border border-gray-200 shadow-lg">
+              <motion.div 
+                dangerouslySetInnerHTML={{ __html: material.content }} 
+                className="break-words p-4 rounded-lg bg-gray-50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              />
             </div>
           );
         }
       } else {
         // If it doesn't look like JSON, treat it as HTML content
         return (
-          <div className="prose prose-lg max-w-none mx-auto px-4 py-4 bg-white rounded-lg border-2 border-gray-100 shadow-md">
-            <div dangerouslySetInnerHTML={{ __html: material.content }} className="break-words p-2" />
+          <div className="prose prose-lg max-w-none mx-auto px-6 py-6 bg-white rounded-xl border border-gray-200 shadow-lg">
+            <motion.div 
+              dangerouslySetInnerHTML={{ __html: material.content }} 
+              className="break-words p-4 rounded-lg bg-gray-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            />
           </div>
         );
       }
     }
       
-    // Default case - with CONSISTENT STYLING
+    // Default case - with modern styling consistent with other content types
     return (
-      <div className="text-center p-6 bg-white rounded-lg border-2 border-gray-100 shadow-md">
-        <p className="text-gray-700 mb-2">Unsupported content type: {material.contentType}</p>
-        <pre className="mt-3 text-xs bg-gray-50 p-3 rounded-md border border-gray-200 overflow-auto max-w-full">{material.content}</pre>
+      <div className="text-center p-6 bg-white rounded-xl border border-gray-200 shadow-lg">
+        <p className="text-gray-700 mb-4 font-medium">Unsupported content type: {material.contentType}</p>
+        <pre className="mt-4 text-sm bg-gray-50 p-4 rounded-lg border border-gray-200 overflow-auto max-w-full shadow-sm">{material.content}</pre>
       </div>
     );
   };
