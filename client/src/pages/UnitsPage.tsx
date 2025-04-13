@@ -102,15 +102,13 @@ export default function UnitsPage() {
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col">
                 <div className="aspect-video bg-gray-100 relative overflow-hidden">
-                  {/* First unit is always accessible as a sample */}
                   {!hasPurchased && index > 0 && (
-                    <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center z-10 text-white">
-                      <LockIcon className="h-8 w-8 mb-2" />
-                      <span className="text-sm font-medium">Premium Content</span>
+                    <div className="absolute top-2 right-2 bg-primary/90 rounded-full p-1 z-10">
+                      <LockIcon className="h-4 w-4 text-white" />
                     </div>
                   )}
                   
-                  <div className={`h-full w-full ${!hasPurchased && index > 0 ? 'blur-sm' : ''}`}>
+                  <div className="h-full w-full">
                     {unit.thumbnailUrl ? (
                       <img 
                         src={unit.thumbnailUrl}
@@ -138,20 +136,22 @@ export default function UnitsPage() {
                   )}
                 </CardHeader>
                 
-                <CardFooter className="pt-0 px-4 pb-4 mt-auto">
-                  {hasPurchased || index === 0 ? (
-                    <Link href={`/book${bookId}/unit${unit.unitNumber}`} className="w-full">
-                      <Button className="w-full">
-                        {index === 0 && !hasPurchased ? 'Free Preview' : 'View Content'}
-                      </Button>
-                    </Link>
-                  ) : (
+                <CardFooter className="pt-0 px-4 pb-4 mt-auto flex-col gap-2">
+                  {/* Free Sample button - always visible */}
+                  <Link href={`/book${bookId}/unit${unit.unitNumber}`} className="w-full">
+                    <Button className="w-full" variant={index === 0 || hasPurchased ? "default" : "secondary"}>
+                      {index === 0 ? 'Free Preview' : hasPurchased ? 'View Content' : 'Free Sample'}
+                    </Button>
+                  </Link>
+                  
+                  {/* Buy Access button - visible if not purchased and not the first unit */}
+                  {!hasPurchased && (
                     <Button
                       variant="outline"
                       className="w-full"
                       onClick={() => window.location.href = `/checkout/single_lesson?book=${bookId}&unit=${unit.unitNumber}`}
                     >
-                      Buy This Unit
+                      Buy Lesson
                     </Button>
                   )}
                 </CardFooter>

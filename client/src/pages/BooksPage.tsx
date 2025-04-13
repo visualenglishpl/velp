@@ -121,22 +121,13 @@ export default function BooksPage() {
                       View Units
                     </Button>
                   </Link>
-                  <div className="flex gap-2 w-full">
-                    <Button 
-                      className="w-1/2" 
-                      variant="outline"
-                      onClick={() => window.location.href = `/book${book.bookId}/unit1`}
-                    >
-                      Free Sample
-                    </Button>
-                    <Button 
-                      className="w-1/2" 
-                      variant="secondary"
-                      onClick={() => window.location.href = `/checkout/single_lesson?book=${book.bookId}`}
-                    >
-                      Buy Access
-                    </Button>
-                  </div>
+                  <Button 
+                    className="w-full" 
+                    variant="secondary"
+                    onClick={() => window.location.href = `/checkout/whole_book?book=${book.bookId}`}
+                  >
+                    Buy Whole Book Access
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
