@@ -98,8 +98,8 @@ const PricingPlans = () => {
               </div>
               
               {/* Content - Fixed height list section */}
-              <div className="flex-grow p-6 flex flex-col justify-between">
-                <ul className="space-y-4 min-h-[180px]">
+              <div className="flex-grow p-8 flex flex-col justify-between">
+                <ul className="space-y-5 min-h-[200px]">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
                       <Check className={`h-5 w-5 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
@@ -109,12 +109,12 @@ const PricingPlans = () => {
                 </ul>
                 
                 {/* Fixed height pricing section */}
-                <div className="mt-6 pt-6 text-center h-[160px] flex flex-col justify-end border-t border-gray-100">
-                  <div className="text-sm text-gray-500 mb-2">{plan.priceSubtext}</div>
-                  <div className="text-5xl font-bold mb-8">{plan.price}</div>
+                <div className="mt-8 pt-8 text-center h-[200px] flex flex-col justify-end border-t border-gray-100">
+                  <div className="text-sm text-gray-500 mb-3">{plan.priceSubtext}</div>
+                  <div className="text-6xl font-bold mb-12">{plan.price}</div>
                   
                   <button 
-                    className={`w-full py-3 px-4 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out`}
+                    className={`w-full py-4 px-4 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out`}
                   >
                     {plan.buttonText}
                   </button>
