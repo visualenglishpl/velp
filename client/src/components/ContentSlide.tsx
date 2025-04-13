@@ -32,9 +32,17 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
 
   // Format the S3 URL based on content path
   const getS3Url = () => {
-    console.log(`Getting URL for material: contentType=${material.contentType}, content=${material.content}`);
+    console.log(`Getting URL for material: bookId=${bookId}, unitNumber=${unitNumber}, contentType=${material.contentType}, content=${material.content}`);
     
-    // Special direct path for book7/unit12
+    // Check if the bookId starts with 'book' (direct path format)
+    if (bookId.startsWith('book')) {
+      // Use the direct API endpoint that exactly matches S3 structure
+      const unitPath = `unit${unitNumber}`;
+      console.log(`Using direct path: /api/direct/${bookId}/${unitPath}/assets/${material.content}`);
+      return `/api/direct/${bookId}/${unitPath}/assets/${material.content}`;
+    }
+    
+    // Special direct path for book7/unit12 (legacy path)
     if (bookId === '7' && unitNumber === 12) {
       // Use our direct endpoint that matches S3 structure exactly
       return `/api/viewer/book7/unit12/assets/${material.content}`;

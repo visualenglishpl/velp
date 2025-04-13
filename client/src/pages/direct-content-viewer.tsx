@@ -84,16 +84,52 @@ export default function DirectContentViewer() {
     };
   }, [emblaApi]);
 
-  // Query for direct unit data
+  // Use more robust custom queries with better error handling
   const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery<DirectUnit>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}`],
     enabled: !!bookPath && !!unitPath,
+    queryFn: async () => {
+      console.log(`Fetching unit data from: /api/direct/${bookPath}/${unitPath}`);
+      const res = await fetch(`/api/direct/${bookPath}/${unitPath}`);
+      
+      if (!res.ok) {
+        console.error(`Failed to load unit: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to load unit: ${res.status}`);
+      }
+      
+      try {
+        const data = await res.json();
+        console.log("Unit data received:", data);
+        return data;
+      } catch (err) {
+        console.error("Invalid JSON in unit response:", err);
+        throw new Error("Invalid response format");
+      }
+    }
   });
 
-  // Query for direct materials data
+  // Query for direct materials data with improved error handling
   const { data: materialsData, error: materialsError, isLoading: materialsLoading } = useQuery<DirectMaterial[]>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
     enabled: !!bookPath && !!unitPath,
+    queryFn: async () => {
+      console.log(`Fetching materials from: /api/direct/${bookPath}/${unitPath}/materials`);
+      const res = await fetch(`/api/direct/${bookPath}/${unitPath}/materials`);
+      
+      if (!res.ok) {
+        console.error(`Failed to load materials: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to load materials: ${res.status}`);
+      }
+      
+      try {
+        const data = await res.json();
+        console.log("Materials received:", data);
+        return data;
+      } catch (err) {
+        console.error("Invalid JSON in materials response:", err);
+        throw new Error("Invalid response format");
+      }
+    }
   });
 
   // Loading state
