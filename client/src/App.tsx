@@ -7,6 +7,7 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import ContentViewer from "@/pages/content-viewer";
 import Book7Unit12Viewer from "@/pages/book7-unit12-viewer"; // Direct path to Book 7 Unit 12
+import DirectContentViewer from "@/pages/direct-content-viewer"; // New direct content viewer
 import S3Test from "@/pages/s3-test";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";

@@ -6,6 +6,7 @@ import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@share
 import { z } from "zod";
 import { S3Client, GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { registerDirectRoutes } from "./direct-routes";
 
 // Authentication middleware to protect routes
 function isAuthenticated(req: Request, res: Response, next: Function) {
@@ -214,6 +215,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Set up authentication routes
   setupAuth(app);
+
+  // Register direct routes that map 1:1 with S3 structure
+  // These routes don't use database IDs and directly match the S3 path structure
+  registerDirectRoutes(app);
 
   // ----- CONTENT MANAGEMENT API ROUTES -----
   
