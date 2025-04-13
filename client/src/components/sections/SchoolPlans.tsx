@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 const SchoolPlans = () => {
   const plans = [
     {
-      title: "Yearly Digital Access",
+      title: "Digital Access",
       subtitle: "For Schools",
       color: "bg-emerald-500",
       textColor: "text-white",
@@ -14,9 +14,9 @@ const SchoolPlans = () => {
         "Tools for classroom use",
         "Annual subscription only",
       ],
-      price: "€249",
-      licenseType: "per school per year",
-      buttonText: "Get School Access",
+      price: "Contact",
+      licenseType: "Institutional pricing",
+      buttonText: "Request Quote",
     },
     {
       title: "Free Trial",
@@ -42,10 +42,10 @@ const SchoolPlans = () => {
         "Purchase printed books for your school",
         "Special discount for 10+ copies",
         "Each teacher needs their own copy",
-        "Combine with digital access for best results",
+        "€20 each (discounts for 10+ copies)",
       ],
-      price: "€39",
-      licenseType: "per book + discount for bulk orders",
+      price: "€20",
+      licenseType: "per book with bulk discounts",
       buttonText: "Order School Books",
       valueTag: "Most Popular",
       highlight: true,
@@ -71,9 +71,9 @@ const SchoolPlans = () => {
     <section id="school-plans" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900">For Schools and Institutions</h2>
+          <h2 className="text-3xl font-bold text-gray-900">For Schools & Institutions</h2>
           <p className="mt-4 text-lg text-gray-600">
-            Designed for classroom integration and group learning with special institutional benefits.
+            Special pricing and options for educational institutions with bulk book discounts.
           </p>
         </div>
 
