@@ -21,9 +21,17 @@ const Navbar = () => {
     const element = document.getElementById(sectionId);
     if (element) {
       setMobileMenuOpen(false);
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      
+      // Add a small offset to account for the fixed navbar height
+      const navbar = document.querySelector('nav');
+      const navbarHeight = navbar ? navbar.offsetHeight : 0;
+      
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navbarHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
       });
     }
   };
@@ -40,16 +48,16 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="#plans">
-              <a className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
-                Plans & Pricing
-              </a>
-            </Link>
-            <Link href="#faq">
-              <a className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
-                FAQ
-              </a>
-            </Link>
+            <a href="#plans" 
+               onClick={scrollToSection('plans')}
+               className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
+              Plans & Pricing
+            </a>
+            <a href="#faq"
+               onClick={scrollToSection('faq')}
+               className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
+              FAQ
+            </a>
 
             <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
               <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
@@ -80,16 +88,16 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link href="#plans">
-              <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
-                Plans & Pricing
-              </a>
-            </Link>
-            <Link href="#faq">
-              <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
-                FAQ
-              </a>
-            </Link>
+            <a href="#plans" 
+               onClick={scrollToSection('plans')}
+               className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
+              Plans & Pricing
+            </a>
+            <a href="#faq"
+               onClick={scrollToSection('faq')}
+               className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
+              FAQ
+            </a>
 
             <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
               <Button 
