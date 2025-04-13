@@ -27,31 +27,19 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="#individual-plans">
+            <Link href="#plans">
               <a className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
-                Individual Plans
+                Plans & Pricing
               </a>
             </Link>
-            <Link href="#school-plans">
+            <Link href="#features">
               <a className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
-                School Plans
+                Features
               </a>
             </Link>
             <Link href="#faq">
               <a className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
                 FAQ
-              </a>
-            </Link>
-            
-            <Link href="/book7/unit12">
-              <a className="text-blue-600 hover:text-blue-800 px-3 py-2 text-sm font-bold">
-                Book7/Unit12
-              </a>
-            </Link>
-            
-            <Link href="/book3/unit12">
-              <a className="text-green-600 hover:text-green-800 px-3 py-2 text-sm font-bold">
-                Book3/Unit12
               </a>
             </Link>
 
@@ -84,31 +72,19 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link href="#individual-plans">
+            <Link href="#plans">
               <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
-                Individual Plans
+                Plans & Pricing
               </a>
             </Link>
-            <Link href="#school-plans">
+            <Link href="#features">
               <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
-                School Plans
+                Features
               </a>
             </Link>
             <Link href="#faq">
               <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
                 FAQ
-              </a>
-            </Link>
-            
-            <Link href="/book7/unit12">
-              <a className="text-blue-600 hover:text-blue-800 block px-3 py-2 text-base font-bold">
-                Book7/Unit12
-              </a>
-            </Link>
-            
-            <Link href="/book3/unit12">
-              <a className="text-green-600 hover:text-green-800 block px-3 py-2 text-base font-bold">
-                Book3/Unit12
               </a>
             </Link>
 
