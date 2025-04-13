@@ -179,7 +179,7 @@ export default function ContentViewer() {
         {/* Content title */}
         <div className="bg-gray-100 p-4 text-center mb-6 rounded">
           <h3 className="text-xl font-semibold">
-            {currentMaterial?.title === "Unit Introduction" ? "" : currentMaterial?.title}
+            {currentMaterial?.title === "Unit Introduction" ? "" : currentMaterial?.title.replace(/^[A-Z]\s+/, '')}
           </h3>
           
           {/* Extract question from filename if present */}
@@ -251,6 +251,12 @@ export default function ContentViewer() {
                       // Extract answer if available (after the dash)
                       let answer = contentParts.length > 1 ? contentParts[1].trim() : null;
                       
+                      // Remove file extensions from answers
+                      if (answer) {
+                        // Remove common file extensions (.jpg, .png, .gif, etc.)
+                        answer = answer.replace(/\.(jpg|jpeg|png|gif|webp|avif)\.?$/i, '');
+                      }
+                      
                       // Format the answer - capitalize first letter, fix punctuation
                       if (answer) {
                         // Capitalize first letter
@@ -311,7 +317,7 @@ export default function ContentViewer() {
                         ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`
                         : currentMaterial.content
                     }
-                    alt={currentMaterial.title === "Unit Introduction" ? "Slide Content" : currentMaterial.title}
+                    alt={currentMaterial.title === "Unit Introduction" ? "Slide Content" : currentMaterial.title.replace(/^[A-Z]\s+/, '')}
                     className="max-w-full max-h-[50vh] mx-auto object-contain"
                     onError={(e) => {
                       const tryAlternateFormats = (formats: string[], index = 0) => {
