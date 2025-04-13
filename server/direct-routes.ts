@@ -391,5 +391,56 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
+  // General asset endpoint for accessing icons and other global assets
+  app.get("/api/asset/:path(*)", async (req, res) => {
+    try {
+      const assetPath = req.params.path;
+      console.log(`Asset access - trying to fetch: ${assetPath}`);
+      
+      // Get the presigned URL
+      const presignedUrl = await getS3PresignedUrl(assetPath);
+      
+      if (!presignedUrl) {
+        console.error(`Asset not found: ${assetPath}`);
+        return res.status(404).json({ error: "Asset not found" });
+      }
+      
+      console.log(`Using presigned URL for asset: ${presignedUrl}`);
+      
+      // Use fetch to get the content directly
+      const response = await fetch(presignedUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': '*/*',
+        },
+      });
+      
+      if (!response.ok) {
+        console.error(`Error fetching asset: ${response.status} ${response.statusText}`);
+        return res.status(response.status).json({ 
+          error: "Error fetching asset from S3", 
+          details: `${response.status} ${response.statusText}` 
+        });
+      }
+      
+      // Get the content type from the response
+      const contentType = response.headers.get('content-type');
+      if (contentType) {
+        res.setHeader('Content-Type', contentType);
+      }
+      
+      // Set cache headers
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      
+      // Stream the response back to the client
+      const buffer = await response.arrayBuffer();
+      return res.send(Buffer.from(buffer));
+      
+    } catch (error) {
+      console.error("Error fetching asset:", error);
+      res.status(500).json({ error: "Error fetching asset" });
+    }
+  });
+  
   console.log("Direct routes registered successfully");
 }

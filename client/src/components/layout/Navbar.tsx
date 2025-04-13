@@ -43,7 +43,11 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center">
-                <span className="font-bold text-xl md:text-2xl text-black">VISUAL ENGLISH</span>
+                <img 
+                  src="/api/asset/icons/LOGO VISUAL ENGLISH.png" 
+                  alt="Visual English Logo"
+                  className="h-10 mr-2"
+                />
               </div>
             </Link>
           </div>
