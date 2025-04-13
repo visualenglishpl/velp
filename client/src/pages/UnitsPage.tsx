@@ -125,8 +125,28 @@ export default function UnitsPage() {
                       {/* Try multiple image patterns in order */}
                       <img 
                         src={
-                          // Use the same path structure as in ContentSlide.tsx
-                          `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`
+                          // Dynamically determine the best starting path based on book and unit
+                          (() => {
+                            // For book 0a, 0b, 0c - they don't use the assets folder structure
+                            if (bookId.startsWith("0")) {
+                              return `/api/direct/book${bookId}/unit${unit.unitNumber}/cover.png`;
+                            }
+                            // For all known problematic units in any book
+                            else if (
+                              (bookId === "1" && ["1", "2", "5", "10"].includes(unit.unitNumber)) ||
+                              (bookId === "2" && ["1", "4", "5", "8", "9", "10"].includes(unit.unitNumber)) ||
+                              (bookId === "3" && ["3", "5", "7", "8", "10"].includes(unit.unitNumber)) ||
+                              (bookId === "4" && unit.unitNumber === "14") ||
+                              ((bookId === "5" || bookId === "6") && ["5", "8", "13"].includes(unit.unitNumber)) ||
+                              (bookId === "7" && ["5", "7", "8", "13", "14"].includes(unit.unitNumber))
+                            ) {
+                              return `/api/direct/book${bookId}/unit${unit.unitNumber}/title.png`;
+                            }
+                            // Standard path for most units
+                            else {
+                              return `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`;
+                            }
+                          })()
                         } 
                         alt={`Thumbnail for ${unit.title}`}
                         className="h-full w-full object-contain relative z-10"
@@ -138,25 +158,94 @@ export default function UnitsPage() {
                           // Book-specific filename patterns
                           let tryFilenames: string[] = [];
                           
-                          // For Book 4, use specific patterns first
-                          if (bookId === "4") {
-                            tryFilenames = [
-                              "00.png",
-                              "00 A.png", 
-                              "00 B.png",
-                              "00 C.png",
-                              "00 D.png",
-                              "00 E.png",
-                              "001.png",
-                              "01.png",
-                              "1.png"
-                            ];
-                          } 
-                          // For problematic units 5, 8, 13, try unit.png first
-                          else if (["5", "8", "13"].includes(unit.unitNumber)) {
+                          // For Book 0a, 0b, 0c with completely different structure
+                          if (bookId.startsWith("0")) {
+                            // Start with assets=false for Book 0 series as they don't typically use the assets folder
                             tryFilenames = [
                               "unit.png",
+                              "cover.png",
                               "title.png",
+                              "00 E.png",
+                              "00 A.png",
+                              "00.png",
+                              "0.png",
+                              "1.png",
+                              "01.png", 
+                              "preview.png",
+                              "thumbnail.png",
+                              "index.png"
+                            ];
+                          }
+                          // For Book 1, some units have special format
+                          else if (bookId === "1" && ["1", "2", "5", "10"].includes(unit.unitNumber)) {
+                            tryFilenames = [
+                              "title.png",
+                              "unit.png",
+                              "cover.png",
+                              "00.png",
+                              "1.png"
+                            ];
+                          }
+                          // For Book 2, some units have special format
+                          else if (bookId === "2" && ["1", "4", "5", "8", "9", "10"].includes(unit.unitNumber)) {
+                            tryFilenames = [
+                              "title.png",
+                              "unit.png",
+                              "cover.png",
+                              "00.png",
+                              "1.png"
+                            ];
+                          }
+                          // For Book 3, some units have special format
+                          else if (bookId === "3" && ["3", "5", "7", "8", "10"].includes(unit.unitNumber)) {
+                            tryFilenames = [
+                              "title.png",
+                              "unit.png",
+                              "cover.png",
+                              "00.png",
+                              "1.png"
+                            ];
+                          }
+                          // For Book 4, use specific patterns
+                          else if (bookId === "4") {
+                            // Special handling for unit 14
+                            if (unit.unitNumber === "14") {
+                              tryFilenames = [
+                                "title.png",
+                                "unit.png",
+                                "cover.png",
+                                "00.png"
+                              ];
+                            } else {
+                              tryFilenames = [
+                                "00.png",
+                                "00 A.png", 
+                                "00 B.png",
+                                "00 C.png",
+                                "00 D.png",
+                                "00 E.png",
+                                "001.png",
+                                "01.png",
+                                "1.png"
+                              ];
+                            }
+                          } 
+                          // For Book 5, 6, 7 problematic units
+                          else if ((bookId === "5" || bookId === "6" || bookId === "7") && 
+                                  ["5", "8", "13"].includes(unit.unitNumber)) {
+                            tryFilenames = [
+                              "title.png",
+                              "unit.png",
+                              "cover.png",
+                              "00.png",
+                              "00 A.png"
+                            ];
+                          }
+                          // Book 7 has additional problematic units
+                          else if (bookId === "7" && ["7", "14"].includes(unit.unitNumber)) {
+                            tryFilenames = [
+                              "title.png",
+                              "unit.png",
                               "cover.png",
                               "00.png",
                               "00 A.png"
@@ -206,7 +295,12 @@ export default function UnitsPage() {
                             };
                           };
                           
-                          tryNextOrHide(0, true);
+                          // For book 0 series, start directly with non-assets path as they typically don't use assets folder
+                          if (bookId.startsWith("0")) {
+                            tryNextOrHide(0, false);
+                          } else {
+                            tryNextOrHide(0, true);
+                          }
                         }}
                       />
                     </div>
