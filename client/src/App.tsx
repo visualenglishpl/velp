@@ -35,11 +35,11 @@ function Router() {
         {(params) => <ContentViewer />}
       </Route>
       
-      {/* Direct paths matching S3 structure */}
+      {/* Direct paths matching S3 structure - specific book/unit routes first */}
       <Route path="/book7/unit12" component={Book7Unit12Viewer} />
       
-      {/* Generic direct content viewer - works with ANY book/unit path that matches S3 */}
-      <Route path="/:bookPath/:unitPath">
+      {/* Generic direct content viewer - works with ANY book/unit path that matches S3 pattern */}
+      <Route path="/book:bookNumber/unit:unitNumber">
         {(params) => <DirectContentViewer />}
       </Route>
       

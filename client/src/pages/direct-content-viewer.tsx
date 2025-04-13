@@ -33,7 +33,11 @@ type DirectUnit = {
 
 export default function DirectContentViewer() {
   // Get the book and unit parameters from the URL
-  const { bookPath, unitPath } = useParams();
+  const { bookNumber, unitNumber } = useParams();
+  
+  // Construct the proper paths for S3
+  const bookPath = `book${bookNumber}`;
+  const unitPath = `unit${unitNumber}`;
   
   // State for carousel management
   const [slidesInView, setSlidesInView] = useState<number[]>([]);
