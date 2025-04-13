@@ -48,6 +48,12 @@ const Navbar = () => {
                 Book7/Unit12
               </a>
             </Link>
+            
+            <Link href="/book3/unit12">
+              <a className="text-green-600 hover:text-green-800 px-3 py-2 text-sm font-bold">
+                Book3/Unit12
+              </a>
+            </Link>
 
             <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
               <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
@@ -97,6 +103,12 @@ const Navbar = () => {
             <Link href="/book7/unit12">
               <a className="text-blue-600 hover:text-blue-800 block px-3 py-2 text-base font-bold">
                 Book7/Unit12
+              </a>
+            </Link>
+            
+            <Link href="/book3/unit12">
+              <a className="text-green-600 hover:text-green-800 block px-3 py-2 text-base font-bold">
+                Book3/Unit12
               </a>
             </Link>
 
