@@ -67,13 +67,22 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           // Remove the leading number codes (like "01 N A ")
           question = question.replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+)?/, "");
           
-          // Ensure question has a question mark if needed
+          // Format the question: remove unnecessary words, fix "A/An" articles, proper spacing
+          question = question
+            .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove standalone "A" before uppercase words
+            .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
+            .trim();
+          
+          // Ensure question has a question mark if it's a question
           if (isQuestion(question) && !question.endsWith("?")) {
             question = question + "?";
           }
           
-          // Extract the answer (second part)
-          const answer = parts[1];
+          // Extract and clean the answer (second part)
+          let answer = parts[1].trim();
+          
+          // Handle specific article formatting in answers
+          answer = answer.replace(/\bit is\s+a\b/i, "It is a");
           
           return {
             question,
@@ -83,14 +92,19 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       }
       
       // If not a question-answer format, just clean up the content name
-      const cleanedTitle = withoutExtension
+      let cleanedTitle = withoutExtension
         .replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+)?/, "") // Remove leading codes
-        .replace(/\s{2,}/g, ' '); // Clean up multiple spaces
+        .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove "A" before uppercase words
+        .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
+        .trim();
+      
+      // Add question mark for questions
+      if (isQuestion(cleanedTitle) && !cleanedTitle.endsWith("?")) {
+        cleanedTitle = cleanedTitle + "?";
+      }
       
       return {
-        question: isQuestion(cleanedTitle) && !cleanedTitle.endsWith("?") 
-          ? cleanedTitle + "?" 
-          : cleanedTitle,
+        question: cleanedTitle,
         answer: null
       };
     } catch (error) {
@@ -102,10 +116,20 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     }
   };
   
-  // Check if text is likely a question
+  // Enhanced check if text is likely a question
   const isQuestion = (text: string) => {
-    const questionWords = ['what', 'where', 'when', 'why', 'how', 'which', 'who', 'whose', 'is it', 'are they'];
+    const questionWords = [
+      'what', 'where', 'when', 'why', 'how', 'which', 'who', 'whose', 
+      'is it', 'are they', 'do you', 'can you', 'does it', 'is this', 
+      'are these', 'how many', 'how much', 'how long', 'how often'
+    ];
     const lowerText = text.toLowerCase();
+    
+    // Special case handling: begins with "is" or another auxiliary verb (common question pattern)
+    if (/^(is|are|do|does|can|could|will|would|should|has|have)\b/i.test(lowerText)) {
+      return true;
+    }
+    
     return questionWords.some(word => lowerText.includes(word));
   };
 
@@ -332,14 +356,14 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       {/* Display formatted question if available */}
       {question && (
         <motion.div 
-          className="mb-4 text-center"
+          className="mb-6 text-center"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
         >
-          <h2 className="text-xl font-semibold">{question}</h2>
+          <h2 className="text-2xl font-bold mb-2">{question}</h2>
           {answer && (
-            <p className="text-sm text-gray-600 mt-1">{answer}</p>
+            <p className="text-base text-gray-700 mt-2">{answer}</p>
           )}
         </motion.div>
       )}
