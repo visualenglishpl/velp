@@ -46,11 +46,15 @@ export default function UnitsPage() {
       // For demo purposes, generate sample units
       // In a real app, this would be an API call
       const demoUnits: UnitInfo[] = [];
-      for (let i = 1; i <= 10; i++) {
+      
+      // Books 4-7 have 16 units, others have 10
+      const unitCount = ['4', '5', '6', '7'].includes(bookId) ? 16 : 10;
+      
+      for (let i = 1; i <= unitCount; i++) {
         demoUnits.push({
           unitNumber: i.toString(),
           title: `UNIT ${i}`,
-          description: `Interactive lessons and exercises for Unit ${i}.`,
+          description: '', // Remove descriptions as requested
           thumbnailUrl: `/api/asset/book${bookId}/unit${i}/thumbnail.jpg`
         });
       }
@@ -113,11 +117,8 @@ export default function UnitsPage() {
                     <div className="h-full w-full relative">
                       {/* Styled unit background with gradient */}
                       <div className="h-full w-full bg-gradient-to-br from-primary/10 to-primary/30 flex flex-col items-center justify-center absolute inset-0">
-                        <span className="text-3xl font-bold text-primary/80 drop-shadow-sm mb-1">
+                        <span className="text-3xl font-bold text-primary/80 drop-shadow-sm">
                           UNIT {unit.unitNumber}
-                        </span>
-                        <span className="text-sm font-medium text-gray-600 max-w-[80%] text-center">
-                          {unit.title}
                         </span>
                       </div>
                       
