@@ -5,7 +5,6 @@ import Home from "@/pages/Home";
 import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
-import ContentViewer from "@/pages/content-viewer";
 import S3Test from "@/pages/s3-test";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -25,10 +24,7 @@ function Router() {
           return null;
         }}
       </Route>
-      <Route path="/admin/books/units/content/:unitId/:materialId?" component={ContentViewer} />
-      {/* Keep backward compatibility with previous routes */}
-      <Route path="/units/:unitId/materials/:materialId?" component={ContentViewer} />
-      <Route path="/units/:unitId" component={ContentViewer} />
+      {/* Content viewer routes have been removed */}
       {/* S3 Testing route */}
       <Route path="/s3-test" component={S3Test} />
       {/* Redirect from old content management page to new unified books management */}
