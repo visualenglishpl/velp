@@ -34,33 +34,19 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
   const getS3Url = () => {
     console.log(`Getting URL for material: bookId=${bookId}, unitNumber=${unitNumber}, contentType=${material.contentType}, content=${material.content}`);
     
-    // Check if the bookId starts with 'book' (direct path format)
-    if (bookId.startsWith('book')) {
-      // Use the direct API endpoint that exactly matches S3 structure
-      const unitPath = `unit${unitNumber}`;
-      console.log(`Using direct path: /api/direct/${bookId}/${unitPath}/assets/${material.content}`);
-      return `/api/direct/${bookId}/${unitPath}/assets/${material.content}`;
-    }
+    // Always convert numeric bookId to "book" format
+    const formattedBookId = bookId.startsWith('book') 
+      ? bookId 
+      : `book${bookId}`;
     
-    // Special direct path for book7/unit12 (legacy path)
-    if (bookId === '7' && unitNumber === 12) {
-      // Use our direct endpoint that matches S3 structure exactly
-      return `/api/viewer/book7/unit12/assets/${material.content}`;
-    }
+    // Always format unit number consistently
+    const unitPath = `unit${unitNumber}`;
     
-    // Check if the content is already a complete path
-    if (material.content.includes('/')) {
-      // If it has slashes, it might be a full path already
-      return `/api/content/${material.content}`;
-    }
-    
-    // Otherwise, construct the path based on bookId and unitNumber
-    const formattedBookId = bookId.replace(/^(\d+[a-z]*)$/, (_, id) => `book${id}`);
-    const formattedUnitNumber = unitNumber > 0 ? `unit${unitNumber}` : '';
-    
-    // Standard path for other books/units
-    const basePath = `/api/assets/${formattedBookId}/${formattedUnitNumber}`;
-    return `${basePath}/${material.content}`;
+    // IMPORTANT: Always use the direct path which we fixed in the backend
+    // This is the most reliable method that handles S3 content directly
+    const directPath = `/api/direct/${formattedBookId}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+    console.log(`Using direct path: ${directPath}`);
+    return directPath;
   };
 
   useEffect(() => {
