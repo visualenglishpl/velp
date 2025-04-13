@@ -2,6 +2,7 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
+import { setupPaymentRoutes } from "./payment-routes";
 import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@shared/schema";
 import { z } from "zod";
 import { S3Client, GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
@@ -215,6 +216,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Set up authentication routes
   setupAuth(app);
+
+  // Set up payment routes for Stripe integration
+  setupPaymentRoutes(app);
 
   // Register direct routes that map 1:1 with S3 structure
   // These routes don't use database IDs and directly match the S3 path structure

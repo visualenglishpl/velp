@@ -7,6 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { apiRequest } from '@/lib/queryClient';
 
 // Subscription types
 type PlanType = 'single_lesson' | 'whole_book' | 'printed_book' | 'free_trial';
