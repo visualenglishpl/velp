@@ -62,6 +62,11 @@ const Navbar = () => {
                className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
               FAQ
             </a>
+            
+            <Link href="/books"
+               className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
+              Books
+            </Link>
 
             <Link href="#plans">
               <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
@@ -102,13 +107,18 @@ const Navbar = () => {
                className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
               FAQ
             </a>
+            
+            <Link href="/books"
+               className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
+              Books
+            </Link>
 
-            <Link href="/books">
+            <Link href="#plans">
               <Button 
                 variant="default" 
                 className="bg-black hover:bg-gray-800 text-white w-full justify-start"
               >
-                Bookstore
+                Store
               </Button>
             </Link>
             <Button 

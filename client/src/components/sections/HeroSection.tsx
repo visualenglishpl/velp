@@ -12,14 +12,16 @@ const HeroSection = () => {
           Access engaging visual lessons, interactive games, worksheets, and more – designed for young learners and busy classrooms.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Button className="bg-black hover:bg-gray-800 text-white px-5 py-3">
-            Try a Free Sample
-          </Button>
-          <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
+          <Link href="/checkout/free_trial">
+            <Button className="bg-black hover:bg-gray-800 text-white px-5 py-3">
+              Try a Free Sample
+            </Button>
+          </Link>
+          <Link href="/books">
             <Button variant="outline" className="border-gray-300 text-gray-700 px-5 py-3">
               Visit Bookstore
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
     </section>
