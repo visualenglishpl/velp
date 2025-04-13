@@ -978,15 +978,15 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
     >
-      {/* Simple Clean Question Display */}
+      {/* Centered Question Display */}
       {formattedQuestion && (
         <motion.div 
-          className="mb-4 z-10"
+          className="mb-4 z-10 text-center"
           initial={{ y: -5, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200 inline-block">
             <h2 className="text-xl font-semibold text-gray-800">{formattedQuestion}</h2>
             {answer && (
               <div className="mt-2 text-gray-700">
@@ -997,29 +997,29 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         </motion.div>
       )}
       
-      {/* Simple title display */}
+      {/* Centered title display */}
       {!question && material.title && (
         <motion.div
-          className="mb-4 z-10"
+          className="mb-4 z-10 text-center"
           initial={{ y: -5, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200 inline-block">
             <h2 className="text-xl font-semibold text-gray-800">{material.title}</h2>
           </div>
         </motion.div>
       )}
       
-      {/* Simple description display */}
+      {/* Centered description display */}
       {material.description && !question && (
         <motion.div
-          className="mb-4 z-10"
+          className="mb-4 z-10 text-center"
           initial={{ y: -5, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200 inline-block">
             <p className="text-gray-700">{material.description}</p>
           </div>
         </motion.div>
