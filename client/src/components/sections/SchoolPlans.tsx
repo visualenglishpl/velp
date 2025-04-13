@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 const SchoolPlans = () => {
   const plans = [
     {
-      title: "Digital Access",
+      title: "Yearly Digital Access",
       subtitle: "For Schools",
       color: "bg-emerald-500",
       textColor: "text-white",
@@ -14,9 +14,9 @@ const SchoolPlans = () => {
         "Tools for classroom use",
         "Annual subscription only",
       ],
-      price: "Contact",
-      licenseType: "Institutional pricing",
-      buttonText: "Request Quote",
+      price: "€249",
+      licenseType: "per school per year",
+      buttonText: "Get School Access",
     },
     {
       title: "Free Trial",
@@ -26,7 +26,7 @@ const SchoolPlans = () => {
       features: [
         "Try the platform before subscribing",
         "Full access for evaluation",
-        "Credit card required",
+        "No credit card required",
         "Includes admin dashboard",
       ],
       price: "Free",
@@ -42,10 +42,10 @@ const SchoolPlans = () => {
         "Purchase printed books for your school",
         "Special discount for 10+ copies",
         "Each teacher needs their own copy",
-        "€20 each (discounts for 10+ copies)",
+        "Combine with digital access for best results",
       ],
-      price: "€20",
-      licenseType: "per book with bulk discounts",
+      price: "€39",
+      licenseType: "per book + discount for bulk orders",
       buttonText: "Order School Books",
       valueTag: "Most Popular",
       highlight: true,
@@ -71,9 +71,9 @@ const SchoolPlans = () => {
     <section id="school-plans" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900">For Schools & Institutions</h2>
+          <h2 className="text-3xl font-bold text-gray-900">For Schools and Institutions</h2>
           <p className="mt-4 text-lg text-gray-600">
-            Special pricing and options for educational institutions with bulk book discounts.
+            Multi-teacher licenses with comprehensive features for your entire English department.
           </p>
         </div>
 
@@ -86,7 +86,7 @@ const SchoolPlans = () => {
         <div className="mt-8 text-center">
           <p className="text-gray-600 flex items-center justify-center">
             <Star className="h-5 w-5 text-amber-500 mr-2" fill="currentColor" />
-            Special discount on printed books for orders of 10 or more copies.
+            All school plans include separate teacher logins, student access, and progress tracking.
           </p>
         </div>
       </div>

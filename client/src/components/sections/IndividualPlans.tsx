@@ -11,37 +11,37 @@ const IndividualPlans = () => {
         "Physical delivery",
         "Choose any book level",
       ],
-      price: "€20",
+      price: "€39",
       priceSubtext: "+ delivery",
       buttonText: "Order Printed Book",
       valueSubtext: "",
     },
     {
-      title: "Single Lesson\nDigital Access",
+      title: "Digital Platform\nAccess Only",
       color: "bg-blue-500",
       features: [
-        "200+ images, interactive questions",
-        "Games and media content",
-        "Access to one complete lesson",
-        "Monthly or yearly subscription",
-      ],
-      price: "€5",
-      priceSubtext: "per month or €40/year",
-      buttonText: "Get Lesson Access",
-      valueSubtext: "",
-    },
-    {
-      title: "Whole Book\nDigital Access",
-      color: "bg-primary",
-      features: [
-        "Full access to one Visual English book",
-        "200+ images, interactive questions",
-        "Games and media content",
+        "Choose one Visual English book",
+        "All visuals, questions, games",
+        "Interactive media content",
         "Monthly or yearly subscription",
       ],
       price: "€25",
-      priceSubtext: "per month or €180/year",
-      buttonText: "Get Book Access",
+      priceSubtext: "per month",
+      buttonText: "Get Digital Access",
+      valueSubtext: "",
+    },
+    {
+      title: "Book + Digital\nPlatform Access",
+      color: "bg-primary",
+      features: [
+        "Printed book delivered to you",
+        "Plus digital access to same book",
+        "All digital features included",
+        "Monthly or yearly subscription",
+      ],
+      price: "€39",
+      priceSubtext: "+ monthly subscription",
+      buttonText: "Get Complete Package",
       valueSubtext: "Most Popular",
       highlight: true,
     },
@@ -51,8 +51,8 @@ const IndividualPlans = () => {
       features: [
         "7-day free trial",
         "Full access to platform",
-        "Try before subscribing",
-        "Credit card required",
+        "Choose one book to explore",
+        "No credit card required",
       ],
       price: "Free",
       priceSubtext: "7-day trial",
@@ -65,7 +65,7 @@ const IndividualPlans = () => {
     <section id="individual-plans" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900">Flexible options to fit your teaching style</h2>
+          <h2 className="text-3xl font-bold text-gray-900">For Independent Teachers</h2>
           <p className="mt-4 text-lg text-gray-600">
             Choose the plan that works best for your teaching style and classroom needs.
           </p>
@@ -80,7 +80,7 @@ const IndividualPlans = () => {
         <div className="mt-8 text-center">
           <p className="text-gray-600 flex items-center justify-center">
             <Star className="h-5 w-5 text-amber-500 mr-2" fill="currentColor" />
-            Contact your school for institutional pricing and additional discounts.
+            Schools can also order printed books in bulk.
           </p>
         </div>
       </div>
