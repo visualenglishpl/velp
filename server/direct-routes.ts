@@ -13,13 +13,16 @@ if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
   console.log("AWS credentials are available for S3 access.");
 }
 
-// Create the S3 client
+// Create the S3 client with custom endpoint for S3-compatible services
 const s3Client = new S3Client({
-  region: process.env.AWS_REGION || "eu-central-1",
+  // Try to use a regional endpoint format that works with more S3 providers
+  endpoint: "https://visualenglishmaterial.s3.amazonaws.com", // Try virtual-hosted style URL
+  region: "auto", // 'auto' to avoid region validation
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ""
-  }
+  },
+  forcePathStyle: false // Use virtual-hosted style S3 URLs
 });
 
 // Log S3 configuration
