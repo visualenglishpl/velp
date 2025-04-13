@@ -32,11 +32,6 @@ const Navbar = () => {
                 Plans & Pricing
               </a>
             </Link>
-            <Link href="#features">
-              <a className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
-                Features
-              </a>
-            </Link>
             <Link href="#faq">
               <a className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
                 FAQ
@@ -75,11 +70,6 @@ const Navbar = () => {
             <Link href="#plans">
               <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
                 Plans & Pricing
-              </a>
-            </Link>
-            <Link href="#features">
-              <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
-                Features
               </a>
             </Link>
             <Link href="#faq">

@@ -1,6 +1,6 @@
 import { Star, Check } from "lucide-react";
 
-const IndividualPlans = () => {
+const PricingPlans = () => {
   const plans = [
     {
       title: "Printed Book Only",
@@ -76,9 +76,9 @@ const IndividualPlans = () => {
     <section id="plans" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900">Flexible options to fit your teaching style</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Flexible options to fit your needs</h2>
           <p className="mt-4 text-lg text-gray-600">
-            Choose the plan that works best for your teaching style and classroom needs.
+            Choose the plan that works best for you.
           </p>
         </div>
 
@@ -126,7 +126,7 @@ const IndividualPlans = () => {
         <div className="mt-8 text-center">
           <p className="text-gray-600 flex items-center justify-center">
             <Star className="h-5 w-5 text-amber-500 mr-2" fill="currentColor" />
-            Contact your school for institutional pricing and additional discounts.
+            Contact us for bulk pricing and additional discounts.
           </p>
         </div>
       </div>
@@ -134,4 +134,4 @@ const IndividualPlans = () => {
   );
 };
 
-export default IndividualPlans;
+export default PricingPlans;
