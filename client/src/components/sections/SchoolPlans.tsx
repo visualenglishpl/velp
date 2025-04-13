@@ -4,65 +4,65 @@ import { Star } from "lucide-react";
 const SchoolPlans = () => {
   const plans = [
     {
-      title: "Small School",
-      subtitle: "Up to 5 Teachers",
+      title: "Yearly Digital Access",
+      subtitle: "For Schools",
       color: "bg-emerald-500",
       textColor: "text-white",
       features: [
-        "5 teacher accounts",
-        "All digital books included",
-        "Interactive games & worksheets",
-        "School admin dashboard",
+        "Full access to one Visual English digital book",
+        "All images, questions, games",
+        "Tools for classroom use",
+        "Annual subscription only",
       ],
-      price: "€149",
-      licenseType: "Starting at",
-      buttonText: "Get School License",
+      price: "€249",
+      licenseType: "per school per year",
+      buttonText: "Get School Access",
     },
     {
-      title: "Medium School",
-      subtitle: "Up to 10 Teachers",
+      title: "Free Trial",
+      subtitle: "1-Week Trial",
       color: "bg-blue-500",
       textColor: "text-white",
       features: [
-        "10 teacher accounts",
-        "All Small School features",
-        "Department admin dashboard",
-        "Email support",
+        "Try the platform before subscribing",
+        "Full access for evaluation",
+        "No credit card required",
+        "Includes admin dashboard",
       ],
-      price: "€299",
-      licenseType: "Best value",
-      buttonText: "Get School License",
+      price: "Free",
+      licenseType: "7-day evaluation",
+      buttonText: "Start Free Trial",
     },
     {
-      title: "Large School",
-      subtitle: "Up to 20 Teachers",
+      title: "Printed Books",
+      subtitle: "For Schools",
       color: "bg-primary",
       textColor: "text-white",
       features: [
-        "20 teacher accounts",
-        "All Medium School features",
-        "Priority support",
-        "Bulk printed books discount",
+        "Purchase printed books for your school",
+        "Special discount for 10+ copies",
+        "Each teacher needs their own copy",
+        "Combine with digital access for best results",
       ],
-      price: "€499",
-      licenseType: "Complete package",
-      buttonText: "Get School License",
+      price: "€39",
+      licenseType: "per book + discount for bulk orders",
+      buttonText: "Order School Books",
       valueTag: "Most Popular",
       highlight: true,
     },
     {
-      title: "Custom Plan",
-      subtitle: "Enterprise Solution",
+      title: "Custom Solution",
+      subtitle: "For Large Institutions",
       color: "bg-amber-500",
       textColor: "text-white",
       features: [
-        "Unlimited teacher accounts",
-        "Custom implementation support",
-        "API integration options",
-        "Dedicated account manager",
+        "Custom implementation for your school",
+        "Multiple books access",
+        "Teacher training support",
+        "Integration with school systems",
       ],
       price: "Contact",
-      licenseType: "Custom License",
+      licenseType: "Custom Quote",
       buttonText: "Contact Us",
     },
   ];
@@ -73,7 +73,7 @@ const SchoolPlans = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900">For Schools and Institutions</h2>
           <p className="mt-4 text-lg text-gray-600">
-            Multi-teacher licenses with comprehensive features for your entire English department.
+            Designed for classroom integration and group learning with special institutional benefits.
           </p>
         </div>
 
@@ -86,7 +86,7 @@ const SchoolPlans = () => {
         <div className="mt-8 text-center">
           <p className="text-gray-600 flex items-center justify-center">
             <Star className="h-5 w-5 text-amber-500 mr-2" fill="currentColor" />
-            All school plans include separate teacher logins, student access, and progress tracking.
+            Special discount on printed books for orders of 10 or more copies.
           </p>
         </div>
       </div>
