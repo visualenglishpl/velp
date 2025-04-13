@@ -204,10 +204,17 @@ export default function ContentViewer() {
                   
                   if (contentParts.length >= 1) {
                     // Extract question from the first part, removing any lettering prefixes (like "E" or "J")
-                    // This regex looks for the pattern: digits + whitespace + optional letter + whitespace + actual question
-                    const questionMatch = contentParts[0].match(/\d+\s+(?:[A-Z]\s+)?([^.]+)/);
+                    // More flexible regex that can handle various prefixes and patterns (numeric, letter combinations)
+                    // This should handle "01 E Aa", "01 R A", and other prefix variations before the actual question
+                    const questionMatch = contentParts[0].match(/(?:\d+\s+)?(?:[A-Z]\s+)?(?:[A-Za-z]+\s+)?([^.]+)/);
                     if (questionMatch && questionMatch[1]) {
                       let question = questionMatch[1].trim();
+                      
+                      // Further cleanup for Book 5 & 7 - remove any remaining alphabetic prefixes before actual question
+                      if (book?.bookId === "5" || book?.bookId === "7") {
+                        // Remove additional letter prefixes that might still be present
+                        question = question.replace(/^[A-Za-z]+\s+/, '');
+                      }
                       
                       // Format and correct the question
                       
@@ -403,6 +410,12 @@ export default function ContentViewer() {
                       
                       // Define all possible formats to try
                       const possibleFormats = [
+                        // Special handling for Book 5 - try direct book5 path
+                        ...(book?.bookId === "5" ? [
+                          `/api/content/book5/unit${unit?.unitNumber}/00 A.png`,
+                          `/api/content/book5/unit${unit?.unitNumber}/00A.png`,
+                        ] : []),
+                        
                         // Start with 00A pattern for ALL slides (as per requirement)
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00 A.png`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/00A.png`,
@@ -521,6 +534,12 @@ export default function ContentViewer() {
                       
                       // Define all possible video formats to try
                       const possibleVideoFormats = [
+                        // Special handling for Book 5 videos
+                        ...(book?.bookId === "5" ? [
+                          `/api/content/book5/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`,
+                          `/api/content/book5/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.mp4`,
+                        ] : []),
+                        
                         // MP4 format with different naming patterns
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`,
                         `/api/content/${book?.bookId}/unit${unit?.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1}A.mp4`,
