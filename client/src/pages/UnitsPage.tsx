@@ -127,9 +127,10 @@ export default function UnitsPage() {
                         src={
                           // Dynamically determine the best starting path based on book and unit
                           (() => {
-                            // For book 0a, 0b, 0c - they don't use the assets folder structure
+                            // For book 0a, 0b, 0c - they have special icon folder structure
                             if (bookId.startsWith("0")) {
-                              return `/api/direct/book${bookId}/unit${unit.unitNumber}/cover.png`;
+                              // Try the icons folder first for Book 0 series
+                              return `/api/direct/book${bookId.slice(0, 3)}/icons/unit${unit.unitNumber}.png`;
                             }
                             // For all known problematic units in any book
                             else if (
@@ -160,7 +161,9 @@ export default function UnitsPage() {
                           
                           // For Book 0a, 0b, 0c with completely different structure
                           if (bookId.startsWith("0")) {
-                            // Start with assets=false for Book 0 series as they don't typically use the assets folder
+                            // Special handling for Book 0 series - try both regular paths and icons folder
+                            
+                            // First try the main unit folder paths
                             tryFilenames = [
                               "unit.png",
                               "cover.png",
@@ -175,6 +178,41 @@ export default function UnitsPage() {
                               "thumbnail.png",
                               "index.png"
                             ];
+                            
+                            // This custom handling tries all paths in the folder structure first,
+                            // then checks the special icons folder that holds thumbnails for book 0 series
+                            const book0IconCheck = () => {
+                              // Only try this path if the image is still failing to load
+                              if (img.style.opacity !== "0") return;
+                              
+                              // Try icons with book prefix (e.g., book0a/icons or book0b/icons)
+                              let iconPath = `/api/direct/book${bookId}/icons/unit${unit.unitNumber}.png`;
+                              img.src = iconPath;
+                              img.onerror = () => {
+                                // Try the base book folder (e.g., book0a) with different icon formatting
+                                let unitNum = parseInt(unit.unitNumber, 10);
+                                let simpleIconPath = `/api/direct/book${bookId}/icons/unit${unitNum}.png`;
+                                img.src = simpleIconPath;
+                                img.onerror = () => {
+                                  // Finally, try the shared structure of book0a/icons/ which often contains icons for all
+                                  // Book 0 series units
+                                  let genericIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/unit${unit.unitNumber}.png`;
+                                  img.src = genericIconPath;
+                                  img.onerror = () => {
+                                    // One last attempt with simple number for the generic folder
+                                    let simpleGenericIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/unit${unitNum}.png`;
+                                    img.src = simpleGenericIconPath;
+                                    img.onerror = () => {
+                                      // All icons failed too, now hide the image
+                                      img.style.opacity = "0";
+                                    };
+                                  };
+                                };
+                              };
+                            };
+                            
+                            // Add this check to run after the main folder structure checks
+                            setTimeout(book0IconCheck, 500);
                           }
                           // For Book 1, some units have special format
                           else if (bookId === "1" && ["1", "2", "5", "10"].includes(unit.unitNumber)) {
