@@ -43,8 +43,7 @@ function App() {
   const [location] = useLocation();
   const isAuthPage = location === "/auth";
   const isAdminPage = location.startsWith("/admin");
-  const isMaterialViewer = location.includes("/units/");
-  const showNavFooter = !isAuthPage && !isAdminPage && !isMaterialViewer;
+  const showNavFooter = !isAuthPage && !isAdminPage;
 
   // Debugging
   console.log("Current location:", location);
