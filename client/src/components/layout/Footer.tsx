@@ -25,11 +25,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="flex flex-col items-start">
-              <img 
-                src="/api/asset/icons/LOGO VISUAL ENGLISH.png" 
-                alt="Visual English Logo"
-                className="h-14 mb-4"
-              />
+              <div className="bg-white p-3 inline-block rounded-md mb-4">
+                <img 
+                  src="/api/asset/icons/LOGO VISUAL ENGLISH.png" 
+                  alt="Visual English Logo"
+                  className="h-16"
+                />
+              </div>
               <p className="text-gray-400">
                 Interactive English materials for effective language learning.
               </p>
