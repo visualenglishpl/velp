@@ -65,7 +65,7 @@ const Navbar = () => {
 
             <Link href="#plans">
               <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
-                Bookstore
+                Store
               </Button>
             </Link>
             <Button 
@@ -103,7 +103,7 @@ const Navbar = () => {
               FAQ
             </a>
 
-            <Link href="#plans">
+            <Link href="/books">
               <Button 
                 variant="default" 
                 className="bg-black hover:bg-gray-800 text-white w-full justify-start"
