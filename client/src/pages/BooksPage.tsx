@@ -80,35 +80,31 @@ export default function BooksPage() {
         <p className="mb-8 text-lg text-gray-600">Browse our collection of educational materials.</p>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {[...Array(10)].map((_, i) => (
               <Card key={i} className="overflow-hidden">
-                <div className="aspect-video bg-gray-100 w-full">
+                <div className="aspect-square bg-gray-100 w-full">
                   <Skeleton className="h-full w-full" />
                 </div>
-                <CardHeader>
-                  <Skeleton className="h-8 w-2/3" />
+                <CardHeader className="py-3 px-4">
+                  <Skeleton className="h-6 w-2/3" />
                 </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-5/6" />
-                </CardContent>
-                <CardFooter>
-                  <Skeleton className="h-10 w-full" />
+                <CardFooter className="py-3 px-4">
+                  <Skeleton className="h-8 w-full" />
                 </CardFooter>
               </Card>
             ))}
           </div>
         ) : books && books.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {books.map((book) => (
               <Card key={book.bookId} className="overflow-hidden flex flex-col">
-                <div className="aspect-video bg-gray-100 relative overflow-hidden flex items-center justify-center">
+                <div className="aspect-square bg-gray-100 relative overflow-hidden flex items-center justify-center">
                   {book.gifUrl ? (
                     <img 
                       src={book.gifUrl} 
                       alt={`Cover of ${book.title}`} 
-                      className="object-contain w-full h-full"
+                      className="object-contain w-full h-full p-4"
                     />
                   ) : (
                     <div className="flex items-center justify-center h-full w-full bg-gray-200 text-gray-500">
@@ -116,21 +112,13 @@ export default function BooksPage() {
                     </div>
                   )}
                 </div>
-                <CardHeader>
-                  <CardTitle>{book.title}</CardTitle>
+                <CardHeader className="py-3 px-4">
+                  <CardTitle className="text-center text-lg">{book.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="text-gray-600">
-                    Book ID: {book.bookId}
-                  </p>
-                  <p className="text-gray-600 mt-2">
-                    {book.description || 'Explore this visual English book with interactive lessons and exercises.'}
-                  </p>
-                </CardContent>
-                <CardFooter>
+                <CardFooter className="py-3 px-4">
                   <Link href={`/book${book.bookId}/unit1`} className="w-full">
                     <Button className="w-full" variant="default">
-                      View Book Content
+                      View Content
                     </Button>
                   </Link>
                 </CardFooter>
