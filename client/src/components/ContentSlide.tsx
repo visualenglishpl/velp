@@ -738,6 +738,55 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
   // Parse the content title to extract questions and answers
   const { question, answer } = formatContentTitle();
 
+  // Ensure proper capitalization for questions
+  const capitalizeQuestion = (q: string): string => {
+    if (!q) return "";
+    
+    // Special handling for "is it" questions (common in logs)
+    if (q.toLowerCase().startsWith("is it") || q.toLowerCase().startsWith("s it")) {
+      return "Is it" + q.slice(q.toLowerCase().indexOf("it") + 2);
+    }
+    
+    // Special handling for "is he/she" questions
+    if (q.toLowerCase().startsWith("is he") || q.toLowerCase().startsWith("s he")) {
+      return "Is he" + q.slice(q.toLowerCase().indexOf("he") + 2);
+    }
+    
+    if (q.toLowerCase().startsWith("is she") || q.toLowerCase().startsWith("s she")) {
+      return "Is she" + q.slice(q.toLowerCase().indexOf("she") + 3);
+    }
+    
+    // Split into sentences and capitalize each one
+    return q.split('. ')
+      .map(sentence => {
+        if (!sentence.trim()) return "";
+        
+        // Fix specific start patterns
+        const lowerSentence = sentence.toLowerCase();
+        if (lowerSentence.startsWith("what")) return "What" + sentence.slice(4);
+        if (lowerSentence.startsWith("where")) return "Where" + sentence.slice(5);
+        if (lowerSentence.startsWith("when")) return "When" + sentence.slice(4);
+        if (lowerSentence.startsWith("who")) return "Who" + sentence.slice(3);
+        if (lowerSentence.startsWith("how")) return "How" + sentence.slice(3);
+        if (lowerSentence.startsWith("why")) return "Why" + sentence.slice(3);
+        if (lowerSentence.startsWith("do")) return "Do" + sentence.slice(2);
+        if (lowerSentence.startsWith("does")) return "Does" + sentence.slice(4);
+        if (lowerSentence.startsWith("are")) return "Are" + sentence.slice(3);
+        if (lowerSentence.startsWith("can")) return "Can" + sentence.slice(3);
+        if (lowerSentence.startsWith("could")) return "Could" + sentence.slice(5);
+        if (lowerSentence.startsWith("would")) return "Would" + sentence.slice(5);
+        if (lowerSentence.startsWith("should")) return "Should" + sentence.slice(6);
+        if (lowerSentence.startsWith("will")) return "Will" + sentence.slice(4);
+        
+        // Capitalize first letter of each sentence as fallback
+        return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+      })
+      .join('. ');
+  };
+  
+  // If we have a question, make sure it's properly capitalized
+  const formattedQuestion = question ? capitalizeQuestion(question) : null;
+  
   return (
     <motion.div 
       className="p-4 min-h-[50vh] flex flex-col"
@@ -746,16 +795,18 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       transition={{ duration: 0.3 }}
     >
       {/* Display formatted question if available - BEFORE the content for visual flow */}
-      {question && (
+      {formattedQuestion && (
         <motion.div 
           className="mb-6 text-center"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
         >
-          <h2 className="text-2xl font-bold mb-3">{question}</h2>
+          <h2 className="text-2xl font-bold mb-3">{formattedQuestion}</h2>
           {answer && (
-            <p className="text-lg text-gray-700 mt-2">{answer}</p>
+            <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-100 shadow-sm">
+              <p className="text-lg text-gray-700 font-medium">{answer}</p>
+            </div>
           )}
         </motion.div>
       )}
