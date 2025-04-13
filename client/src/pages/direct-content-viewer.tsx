@@ -602,8 +602,6 @@ export default function DirectContentViewer() {
                         <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                           <span>← / →</span>
                           <span>Previous / Next</span>
-                          <span>Home / End</span>
-                          <span>First / Last slide</span>
                           <span>F</span>
                           <span>Toggle fullscreen</span>
                         </div>
@@ -709,53 +707,29 @@ export default function DirectContentViewer() {
                 </div>
               </div>
               
-              {/* Enhanced Navigation Controls - Based on the user's design */}
-              <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-4 py-3 bg-white/80 backdrop-blur-sm border-b border-gray-200 z-10">
-                <Button 
-                  onClick={() => {
-                    emblaApi?.scrollTo(0);
-                    setCurrentSlideIndex(0);
-                  }}
-                  variant="ghost"
-                  className="font-medium px-4"
-                  disabled={currentSlideIndex === 0}
-                >
-                  First
-                </Button>
-                
-                <div className="flex items-center gap-4">
+              {/* Simplified Navigation Controls - Removed First/Last buttons */}
+              <div className="absolute top-0 left-0 right-0 flex justify-center items-center px-4 py-3 bg-white/80 backdrop-blur-sm border-b border-gray-200 z-10">
+                <div className="flex items-center gap-6">
                   <Button 
                     onClick={scrollPrev} 
                     variant="outline" 
                     size="icon" 
-                    className="rounded-full h-8 w-8 flex items-center justify-center"
+                    className="rounded-full h-10 w-10 flex items-center justify-center"
                     disabled={currentSlideIndex === 0}
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronLeft className="h-5 w-5" />
                   </Button>
                   
                   <Button 
                     onClick={scrollNext} 
                     variant="outline" 
                     size="icon" 
-                    className="rounded-full h-8 w-8 flex items-center justify-center"
+                    className="rounded-full h-10 w-10 flex items-center justify-center"
                     disabled={currentSlideIndex === materials.length - 1}
                   >
-                    <ChevronRight className="h-4 w-4" />
+                    <ChevronRight className="h-5 w-5" />
                   </Button>
                 </div>
-                
-                <Button 
-                  onClick={() => {
-                    emblaApi?.scrollTo(materials.length - 1);
-                    setCurrentSlideIndex(materials.length - 1);
-                  }}
-                  variant="ghost"
-                  className="font-medium px-4"
-                  disabled={currentSlideIndex === materials.length - 1}
-                >
-                  Last
-                </Button>
               </div>
               
               {/* Current slide indicator */}
