@@ -387,6 +387,58 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         };
       }
       
+      // Special handling for Book 0A Unit 1 (Peek-a-boo content)
+      if (bookId === "book0a" && unitNumber === 1) {
+        // For flashcards content
+        if (content.includes("Flashcards")) {
+          // Extract location from filename
+          const locationMatch = content.match(/Flashcards\s+(in|on|under)\s+the\s+([A-Za-z]+)/i);
+          if (locationMatch) {
+            const preposition = locationMatch[1]; // "in", "on", or "under" 
+            const location = locationMatch[2]; // "Bowl", "Book", etc.
+            return {
+              question: `Where are the flashcards?`,
+              answer: `The flashcards are ${preposition} the ${location}.`
+            };
+          }
+          
+          // For generic flashcards
+          if (content.includes("Flashcards Craft Peekaboo")) {
+            return {
+              question: "What are these flashcards for?",
+              answer: "These flashcards are for the Peek-a-boo game."
+            };
+          }
+        }
+        
+        // For Peek-a-boo content
+        if (content.toLowerCase().includes("peek a boo") || content.toLowerCase().includes("peekaboo")) {
+          // For videos
+          if (content.includes("Video")) {
+            return {
+              question: "What is this video about?",
+              answer: "This is a Peek-a-boo song/activity video for children."
+            };
+          }
+          
+          // For crafts
+          if (content.includes("Crafts")) {
+            return {
+              question: "What can children make with these crafts?",
+              answer: "Children can make Peek-a-boo games and activities."
+            };
+          }
+          
+          // For drawings or other activities
+          if (content.includes("Draw")) {
+            return {
+              question: "What game are we playing?",
+              answer: "We are playing Peek-a-boo."
+            };
+          }
+        }
+      }
+      
       // Special handling for Book 3 Unit 2 clock and time related content
       if (bookId === "book3" && unitNumber === 2) {
         // Specific handling for clock images
@@ -529,9 +581,56 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         cleanedTitle = "Are chores relaxing?";
       }
       
-      // Special handling for grammatical errors
+      // Special handling for grammatical errors and missing first letters
       if (cleanedTitle.toLowerCase().startsWith("hat is")) {
         cleanedTitle = "What is" + cleanedTitle.substring(6);
+      } else if (cleanedTitle.toLowerCase().startsWith("ideo ")) {
+        cleanedTitle = "V" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("rite ")) {
+        cleanedTitle = "W" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("eek ")) {
+        cleanedTitle = "P" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("eekaboo ")) {
+        cleanedTitle = "P" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("lashcards ")) {
+        cleanedTitle = "F" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("here ")) {
+        cleanedTitle = "W" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("ho ")) {
+        cleanedTitle = "W" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("hy ")) {
+        cleanedTitle = "W" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("hen ")) {
+        cleanedTitle = "W" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("an ")) {
+        cleanedTitle = "C" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("o ")) {
+        cleanedTitle = "D" + cleanedTitle;
+      } else if (cleanedTitle.toLowerCase().startsWith("oes ")) {
+        cleanedTitle = "D" + cleanedTitle;
+      }
+      
+      // Handle special cases for Book 0A/0C
+      if (bookId === "book0a" || bookId === "book0c") {
+        if (cleanedTitle.toLowerCase() === "flashcards craft peekaboo") {
+          cleanedTitle = "What game can we play with these flashcards?";
+        } else if (cleanedTitle.toLowerCase() === "video song peekaboo song") {
+          cleanedTitle = "What is this Peek-a-boo song about?";
+        } else if (cleanedTitle.toLowerCase() === "video story") {
+          cleanedTitle = "What is this story about?";
+        } else if (cleanedTitle.toLowerCase().startsWith("video song")) {
+          cleanedTitle = "What is this song teaching us?";
+        } else if (cleanedTitle.toLowerCase().startsWith("video teacher")) {
+          cleanedTitle = "What teaching activity is shown here?";
+        }
+        
+        // Special handling for Flashcards with locations
+        const flashcardLocationMatch = cleanedTitle.match(/Flashcards\s+(in|on|under)\s+the\s+([A-Za-z]+)/i);
+        if (flashcardLocationMatch) {
+          const preposition = flashcardLocationMatch[1]; // "in", "on", or "under" 
+          const location = flashcardLocationMatch[2]; // "Bowl", "Book", etc.
+          cleanedTitle = `Where are the flashcards?`;
+        }
       }
       
       // Add question mark for questions
