@@ -74,6 +74,26 @@ console.log(`S3 configuration: Bucket=${S3_BUCKET}, Region=${process.env.AWS_REG
 async function listS3Objects(prefix: string): Promise<string[]> {
   console.log(`Listing S3 objects with prefix: ${prefix}`);
   try {
+    // Make sure prefix doesn't start with a slash if it's not empty
+    if (prefix.startsWith('/') && prefix !== '/') {
+      prefix = prefix.substring(1);
+    }
+
+    // Handle bucket URLs that might be passed instead of prefixes
+    if (prefix.includes('http')) {
+      try {
+        const url = new URL(prefix);
+        // Extract the path from the URL and remove leading slash
+        prefix = url.pathname.startsWith('/') ? url.pathname.substring(1) : url.pathname;
+        console.log(`Converted URL to prefix: ${prefix}`);
+      } catch (urlError) {
+        console.error(`Invalid URL format: ${prefix}`, urlError);
+      }
+    }
+    
+    // Log the final prefix for debugging
+    console.log(`Using final S3 prefix: "${prefix}"`);
+    
     const command = new ListObjectsV2Command({
       Bucket: S3_BUCKET,
       Prefix: prefix,
@@ -82,28 +102,34 @@ async function listS3Objects(prefix: string): Promise<string[]> {
     
     console.log(`S3 ListObjectsV2Command created for bucket: ${S3_BUCKET}`);
     
-    // Test AWS credentials by listing the current bucket before filtering
-    const response = await s3Client.send(command);
-    console.log('S3 API response received');
-    
-    if (!response.Contents) {
-      console.log('No contents found in S3 response');
-      return [];
-    }
-    
-    // Log found keys for debugging
-    const keys = response.Contents
-      .map(item => item.Key || "")
-      .filter(key => key !== "");
+    try {
+      // Test AWS credentials by listing the current bucket before filtering
+      const response = await s3Client.send(command);
+      console.log('S3 API response received');
       
-    console.log(`Found ${keys.length} objects in S3 bucket for prefix "${prefix}":`, 
-      keys.length > 0 ? keys.slice(0, 5).join(', ') + (keys.length > 5 ? '...' : '') : 'None');
-    
-    return keys;
+      if (!response.Contents) {
+        console.log('No contents found in S3 response');
+        return [];
+      }
+      
+      // Log found keys for debugging
+      const keys = response.Contents
+        .map(item => item.Key || "")
+        .filter(key => key !== "");
+        
+      console.log(`Found ${keys.length} objects in S3 bucket for prefix "${prefix}":`, 
+        keys.length > 0 ? keys.slice(0, 5).join(', ') + (keys.length > 5 ? '...' : '') : 'None');
+      
+      return keys;
+    } catch (innerError) {
+      console.error(`Error from S3 client: ${innerError}`);
+      throw innerError; // Re-throw to be caught by outer try/catch
+    }
   } catch (error) {
     console.error(`Error listing S3 objects with prefix ${prefix}:`, error);
+    
     // More detailed error handling
-    const err = error as { name?: string, message?: string };
+    const err = error as { name?: string, message?: string, $metadata?: { httpStatusCode?: number } };
     if (err.name === 'CredentialsProviderError') {
       console.error('AWS credential error - check AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY');
     } else if (err.name === 'NoSuchBucket') {
@@ -112,9 +138,11 @@ async function listS3Objects(prefix: string): Promise<string[]> {
       console.error('Access denied to S3 bucket - check permissions');
     }
     
-    // Create a dummy file for testing if needed - uncomment to use
-    // return [`${prefix}dummy-file-for-testing.jpg`];
+    if (err.$metadata?.httpStatusCode) {
+      console.error(`HTTP Status Code: ${err.$metadata.httpStatusCode}`);
+    }
     
+    // We always return an array, even if empty, to avoid JSON parsing errors
     return [];
   }
 }
@@ -316,9 +344,47 @@ export function registerDirectRoutes(app: Express) {
         return res.status(404).json({ error: "Content not found" });
       }
       
-      // Set cache headers and redirect
-      res.setHeader('Cache-Control', 'public, max-age=3600');
-      return res.redirect(presignedUrl);
+      // CHANGE: Instead of redirecting, proxy the S3 response
+      // This avoids CORS issues and ensures we return JSON
+      try {
+        console.log(`Using presigned URL: ${presignedUrl}`);
+        
+        // Use fetch to get the content directly
+        const response = await fetch(presignedUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': '*/*',
+          },
+        });
+        
+        if (!response.ok) {
+          console.error(`Error fetching from presigned URL: ${response.status} ${response.statusText}`);
+          return res.status(response.status).json({ 
+            error: "Error fetching from S3", 
+            details: `${response.status} ${response.statusText}` 
+          });
+        }
+        
+        // Get the content type from the response
+        const contentType = response.headers.get('content-type');
+        if (contentType) {
+          res.setHeader('Content-Type', contentType);
+        }
+        
+        // Set cache headers
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        
+        // Stream the response back to the client
+        const buffer = await response.arrayBuffer();
+        return res.send(Buffer.from(buffer));
+        
+      } catch (fetchError) {
+        console.error(`Fetch error from presigned URL: ${fetchError}`);
+        return res.status(500).json({ 
+          error: "Failed to fetch from S3", 
+          details: String(fetchError)
+        });
+      }
     } catch (error) {
       console.error(`Error fetching asset: ${error}`);
       res.status(500).json({ error: "Failed to fetch content" });
