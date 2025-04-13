@@ -438,12 +438,12 @@ export default function DirectContentViewer() {
       )}
 
       <main className="flex-grow container mx-auto px-4 pb-6 pt-4">
-        {/* Two-column layout for desktop */}
-        <div className={`grid ${isFullscreen ? '' : 'grid-cols-1 lg:grid-cols-3 gap-4'}`}>
+        {/* Vertical layout - main content on top, thumbnails on bottom */}
+        <div className="flex flex-col">
           {/* Main Carousel wrapper */}
-          <div className={`${isFullscreen ? '' : 'col-span-1 lg:col-span-2'}`}>
+          <div className="w-full">
             <div className={`relative bg-white shadow rounded-lg overflow-hidden transition-all duration-300
-              ${isFullscreen ? 'fixed inset-0 z-50 bg-black h-screen max-h-screen m-0 flex items-center justify-center rounded-none' : 'h-[70vh]'}`}>
+              ${isFullscreen ? 'fixed inset-0 z-50 bg-black h-screen max-h-screen m-0 flex items-center justify-center rounded-none' : 'h-[60vh]'}`}>
               
               {/* Exit fullscreen button - only visible in fullscreen mode */}
               {isFullscreen && (
@@ -553,35 +553,31 @@ export default function DirectContentViewer() {
                 </motion.div>
               )}
             </div>
-
-            {/* Keyboard shortcuts info - hidden when in fullscreen mode and on desktop view */}
-            {!isFullscreen && (
-              <div className="mt-2 text-center text-sm text-gray-500 lg:hidden">
-                <p>Use keyboard arrow keys ← → to navigate between slides</p>
-              </div>
-            )}
           </div>
 
-          {/* Thumbnails sidebar - hidden when in fullscreen mode */}
+          {/* Thumbnails below main content - hidden when in fullscreen mode */}
           {!isFullscreen && (
-            <div className="col-span-1 bg-white shadow rounded-lg p-3 h-[70vh] overflow-auto flex flex-col">
-              <h3 className="text-sm font-medium mb-2 text-gray-700">Lesson Slides</h3>
+            <div className="mt-4 bg-white shadow rounded-lg p-4">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="text-sm font-medium text-gray-700">Lesson Slides</h3>
+                <div className="text-sm text-gray-500">
+                  Viewed: {slidesInView.length} of {materials.length} slides
+                </div>
+              </div>
               <ThumbnailsBar
                 materials={materials}
                 currentIndex={currentSlideIndex}
                 onSelectSlide={onThumbnailClick}
                 viewedSlides={slidesInView}
               />
+              
+              {/* Keyboard shortcuts info */}
+              <div className="mt-2 text-center text-sm text-gray-500">
+                <p>Use keyboard arrow keys ← → to navigate between slides</p>
+              </div>
             </div>
           )}
         </div>
-        
-        {/* Keyboard shortcuts info at the bottom of the page */}
-        {!isFullscreen && (
-          <div className="mt-4 text-center text-sm text-gray-500 hidden lg:block">
-            <p>Use keyboard arrow keys ← → to navigate between slides</p>
-          </div>
-        )}
       </main>
     </div>
   );

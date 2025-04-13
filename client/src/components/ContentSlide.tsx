@@ -78,11 +78,19 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
             question = question + "?";
           }
           
+          // Make first letter uppercase for better presentation
+          question = question.charAt(0).toUpperCase() + question.slice(1);
+          
           // Extract and clean the answer (second part)
           let answer = parts[1].trim();
           
           // Handle specific article formatting in answers
-          answer = answer.replace(/\bit is\s+a\b/i, "It is a");
+          answer = answer
+            .replace(/\bit is\s+a\b/i, "It is a")
+            .replace(/\b([Aa])\s+(?=[A-Z])/g, "a "); // Fix article placement
+          
+          // Make first letter uppercase for consistency
+          answer = answer.charAt(0).toUpperCase() + answer.slice(1);
           
           return {
             question,
@@ -102,6 +110,9 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       if (isQuestion(cleanedTitle) && !cleanedTitle.endsWith("?")) {
         cleanedTitle = cleanedTitle + "?";
       }
+      
+      // Make first letter uppercase
+      cleanedTitle = cleanedTitle.charAt(0).toUpperCase() + cleanedTitle.slice(1);
       
       return {
         question: cleanedTitle,
@@ -353,44 +364,7 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Display formatted question if available */}
-      {question && (
-        <motion.div 
-          className="mb-6 text-center"
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
-        >
-          <h2 className="text-2xl font-bold mb-2">{question}</h2>
-          {answer && (
-            <p className="text-base text-gray-700 mt-2">{answer}</p>
-          )}
-        </motion.div>
-      )}
-      
-      {/* Fallback to original title if question formatting failed */}
-      {!question && material.title && (
-        <motion.h2 
-          className="text-xl font-semibold text-center mb-4"
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
-        >
-          {material.title}
-        </motion.h2>
-      )}
-      
-      {material.description && (
-        <motion.p 
-          className="text-gray-600 text-center mb-6"
-          initial={{ y: -5, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
-        >
-          {material.description}
-        </motion.p>
-      )}
-      
+      {/* Content comes first for questions with images */}
       <motion.div 
         className="flex-1 flex items-center justify-center"
         initial={{ scale: 0.95, opacity: 0 }}
@@ -399,6 +373,44 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       >
         {renderContent()}
       </motion.div>
+      
+      {/* Display formatted question if available - AFTER the content for visual flow */}
+      {question && (
+        <motion.div 
+          className="mt-6 text-center"
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+        >
+          <h2 className="text-2xl font-bold mb-3">{question}</h2>
+          {answer && (
+            <p className="text-lg text-gray-700 mt-2">{answer}</p>
+          )}
+        </motion.div>
+      )}
+      
+      {/* Fallback to original title if question formatting failed */}
+      {!question && material.title && (
+        <motion.h2 
+          className="text-xl font-semibold text-center mb-4 mt-4"
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+        >
+          {material.title}
+        </motion.h2>
+      )}
+      
+      {material.description && !question && (
+        <motion.p 
+          className="text-gray-600 text-center mb-6"
+          initial={{ y: 5, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.3 }}
+        >
+          {material.description}
+        </motion.p>
+      )}
     </motion.div>
   );
 }
