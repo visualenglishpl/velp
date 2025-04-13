@@ -54,6 +54,10 @@ export default function DirectContentViewer() {
   const [initialSlideSet, setInitialSlideSet] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [keyboardFeedback, setKeyboardFeedback] = useState<string | null>(null);
+  
+  // State for access control
+  const [hasPurchasedAccess, setHasPurchasedAccess] = useState(false);
+  const FREE_SLIDES_LIMIT = 10; // First 10 slides are free
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "center",
