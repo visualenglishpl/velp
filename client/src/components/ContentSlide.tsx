@@ -692,32 +692,43 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     
     if (isImage) {
       return (
-        <div className="relative overflow-hidden transition-all duration-300 ease-in-out px-3">
+        <div className="relative overflow-hidden transition-all duration-300 ease-in-out">
+          {/* Modern loading state with brighter colors */}
           {!imageLoaded && (
-            <div className="flex items-center justify-center bg-gray-100 h-[50vh] rounded-lg">
-              <div className="w-full max-w-md p-4">
-                <div className="animate-pulse space-y-4">
-                  <div className="h-40 bg-gray-300 rounded-md mx-auto"></div>
-                  <div className="h-3 bg-gray-300 rounded w-3/4 mx-auto"></div>
-                  <div className="h-3 bg-gray-300 rounded w-1/2 mx-auto"></div>
+            <div className="flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 h-[50vh] rounded-xl">
+              <div className="w-full max-w-md p-6">
+                <div className="animate-pulse space-y-6">
+                  <div className="h-40 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-xl mx-auto"></div>
+                  <div className="h-4 bg-blue-200 rounded-full w-3/4 mx-auto"></div>
+                  <div className="h-4 bg-indigo-200 rounded-full w-1/2 mx-auto"></div>
                 </div>
               </div>
             </div>
           )}
+          
+          {/* Enhanced image with modern styling */}
           <motion.img
             src={getS3Url()}
             alt={material.title || "Educational content"}
-            className="max-w-[90%] max-h-[50vh] mx-auto object-contain transition-all duration-300 rounded-lg border-2 border-gray-100"
+            className="max-w-[95%] max-h-[55vh] mx-auto object-contain transition-all duration-300 rounded-xl"
             onLoad={handleImageLoad}
             onError={handleImageError}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: imageLoaded ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-            style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ 
+              opacity: imageLoaded ? 1 : 0,
+              scale: imageLoaded ? 1 : 0.95,
+            }}
+            transition={{ duration: 0.4 }}
+            style={{ 
+              boxShadow: '0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.06)',
+              border: '1px solid rgba(255,255,255,0.2)',
+            }}
           />
+          
+          {/* Styled error message */}
           {isError && (
-            <div className="text-center text-red-500 p-4 mt-2">
-              <p>Failed to load image. Please try again later.</p>
+            <div className="text-center bg-red-50 border border-red-100 p-4 mt-4 rounded-lg">
+              <p className="text-red-600 font-medium">Failed to load image. Please try again later.</p>
             </div>
           )}
         </div>
@@ -888,44 +899,45 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
   
   return (
     <motion.div 
-      className="p-4 min-h-[50vh] flex flex-col"
+      className="p-4 min-h-[50vh] flex flex-col bg-gradient-to-b from-gray-50 to-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      {/* STANDARDIZED QUESTION DISPLAY - Always use consistent styling */}
+      {/* Modern Question Display with improved visibility */}
       {formattedQuestion && (
         <motion.div 
-          className="mb-6 text-center"
+          className="mb-8 text-center"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
         >
-          <div className="bg-primary-50 py-4 px-6 rounded-lg border-b-2 border-primary-200 shadow-sm">
-            <h2 className="text-2xl font-bold mb-2 text-primary-800">{formattedQuestion}</h2>
+          <div className="bg-gradient-to-r from-primary-600 to-primary-500 py-6 px-8 rounded-xl shadow-lg">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 text-white tracking-wide">{formattedQuestion}</h2>
             {answer && (
-              <div className="mt-3 p-3 bg-white rounded-md border border-gray-100 shadow-sm inline-block min-w-[250px]">
-                <p className="text-lg text-gray-700 font-medium">{answer}</p>
+              <div className="mt-4 p-4 bg-white rounded-lg border border-primary-100 shadow inline-block min-w-[300px] transform transition-all hover:shadow-md">
+                <p className="text-lg md:text-xl text-gray-700 font-medium">{answer}</p>
               </div>
             )}
           </div>
         </motion.div>
       )}
       
-      {/* Fallback to original title if question formatting failed - with CONSISTENT STYLING */}
+      {/* Enhanced title display if question formatting failed */}
       {!question && material.title && (
         <motion.div
-          className="mb-6 text-center"
+          className="mb-8 text-center"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
         >
-          <div className="bg-primary-50 py-4 px-6 rounded-lg border-b-2 border-primary-200 shadow-sm">
-            <h2 className="text-2xl font-bold text-primary-800">{material.title}</h2>
+          <div className="bg-gradient-to-r from-primary-600 to-primary-500 py-6 px-8 rounded-xl shadow-lg">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-wide">{material.title}</h2>
           </div>
         </motion.div>
       )}
       
+      {/* Enhanced description display */}
       {material.description && !question && (
         <motion.div
           className="mb-6 text-center"
@@ -933,15 +945,15 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.3 }}
         >
-          <div className="mt-3 p-3 bg-white rounded-md border border-gray-100 shadow-sm inline-block">
+          <div className="mt-3 p-4 bg-white rounded-lg border border-gray-200 shadow inline-block">
             <p className="text-lg text-gray-700">{material.description}</p>
           </div>
         </motion.div>
       )}
       
-      {/* Content comes after the question/title */}
+      {/* Enhanced content display with shadow and border */}
       <motion.div 
-        className="flex-1 flex items-center justify-center"
+        className="flex-1 flex items-center justify-center p-4 rounded-xl bg-white shadow-sm border border-gray-100"
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.4 }}
