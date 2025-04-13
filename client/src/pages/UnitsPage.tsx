@@ -188,13 +188,15 @@ export default function UnitsPage() {
                               if (img.style.opacity !== "0") return;
                               
                               // IMPORTANT DEBUGGING: Log each attempt for book 0 thumbnails
-                              console.log(`Book ${bookId}, Unit ${unit.unitNumber}: Trying icons folder first`);
+                              console.log(`Book ${bookId}, Unit ${unit.unitNumber}: Trying Book 0 icons folder paths`);
                               
-                              // CRITICAL FIX: Use the discovered correct path format for Book 0 series thumbnails
-                              // The actual format is "thumbnailsuni0a-1.png" etc.
+                              // CRITICAL FIX: Start with the confirmed working path format for Book 0 series
+                              // The exact format is "thumbnailsuni0a-1.png" etc.
                               const unitNum = parseInt(unit.unitNumber, 10);
+                              
+                              // 1. First try the best format we've discovered in S3 bucket
                               const thumbnailIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/thumbnailsuni${bookId}-${unitNum}.png`;
-                              console.log(`Trying thumbnail path: ${thumbnailIconPath}`);
+                              console.log(`Trying exact thumbnail path: ${thumbnailIconPath}`);
                               img.src = thumbnailIconPath;
                               
                               img.onerror = () => {
