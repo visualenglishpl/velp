@@ -973,64 +973,64 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
   
   return (
     <motion.div 
-      className="p-4 min-h-[50vh] flex flex-col bg-gradient-to-b from-gray-50 to-white"
+      className="p-2 min-h-[50vh] flex flex-col bg-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.2 }}
     >
-      {/* Modern Question Display with improved visibility */}
+      {/* Simple Clean Question Display */}
       {formattedQuestion && (
         <motion.div 
-          className="mb-8 text-center z-10"
-          initial={{ y: -10, opacity: 0 }}
+          className="mb-4 z-10"
+          initial={{ y: -5, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
+          transition={{ duration: 0.2 }}
         >
-          <div className="bg-gradient-to-r from-primary-700 to-primary-500 py-6 px-8 rounded-xl shadow-lg border-2 border-primary-400">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white tracking-wide">{formattedQuestion}</h2>
+          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-800">{formattedQuestion}</h2>
             {answer && (
-              <div className="mt-4 p-6 bg-white rounded-lg border-2 border-primary-200 shadow-md inline-block min-w-[400px] transform transition-all hover:shadow-lg">
-                <p className="text-xl md:text-2xl text-gray-800 font-medium">{answer}</p>
+              <div className="mt-2 text-gray-700">
+                <p>{answer}</p>
               </div>
             )}
           </div>
         </motion.div>
       )}
       
-      {/* Enhanced title display if question formatting failed - matching question style */}
+      {/* Simple title display */}
       {!question && material.title && (
         <motion.div
-          className="mb-8 text-center z-10"
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
-        >
-          <div className="bg-gradient-to-r from-primary-700 to-primary-500 py-6 px-8 rounded-xl shadow-lg border-2 border-primary-400">
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-wide">{material.title}</h2>
-          </div>
-        </motion.div>
-      )}
-      
-      {/* Enhanced description display with improved visibility */}
-      {material.description && !question && (
-        <motion.div
-          className="mb-6 text-center z-10"
+          className="mb-4 z-10"
           initial={{ y: -5, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
+          transition={{ duration: 0.2 }}
         >
-          <div className="mt-3 p-5 bg-white rounded-lg border-2 border-primary-100 shadow-md inline-block">
-            <p className="text-xl text-gray-800 font-medium">{material.description}</p>
+          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-800">{material.title}</h2>
           </div>
         </motion.div>
       )}
       
-      {/* Enhanced content display with clearer separation from questions */}
+      {/* Simple description display */}
+      {material.description && !question && (
+        <motion.div
+          className="mb-4 z-10"
+          initial={{ y: -5, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200">
+            <p className="text-gray-700">{material.description}</p>
+          </div>
+        </motion.div>
+      )}
+      
+      {/* Simple content display */}
       <motion.div 
-        className="flex-1 flex items-center justify-center p-6 rounded-xl bg-white shadow-md border-2 border-gray-200 mt-6"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.4 }}
+        className="flex-1 flex items-center justify-center p-4 bg-white shadow-sm border border-gray-200 mt-3"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
       >
         {renderContent()}
       </motion.div>

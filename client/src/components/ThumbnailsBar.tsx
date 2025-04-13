@@ -217,48 +217,34 @@ export default function ThumbnailsBar({
               const formattedTitle = formatTitle(material.content);
               
               return (
-                <motion.div
-                  key={index} // Using index as key since material.id might not be reliable
+                <div
+                  key={index}
                   className={`
-                    relative p-2 rounded-md cursor-pointer 
-                    ${isActive ? 'active-thumbnail bg-primary/10 border border-primary/30' : 'hover:bg-gray-100'}
-                    ${isVerticalLayout ? 'w-full' : 'w-24'}
+                    relative cursor-pointer rounded-md
+                    ${isActive ? 'active-thumbnail border border-primary' : 'border border-transparent hover:border-gray-200'}
+                    ${isVerticalLayout ? 'w-full' : 'w-16'}
                   `}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.01 }}
                   onClick={() => onSelectSlide(index)}
                 >
-                  <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'}`}>
+                  <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'} p-1`}>
                     <div className={`
-                      ${isVerticalLayout ? 'h-12 w-12 mr-3' : 'h-16 w-16'} 
+                      ${isVerticalLayout ? 'h-10 w-10 mr-2' : 'h-12 w-12'} 
                       rounded flex items-center justify-center overflow-hidden
-                      ${isActive ? 'bg-primary/5 ring-2 ring-primary' : 'bg-gray-100'}
-                      ${document.fullscreenElement ? 'h-14 w-14 border border-white/30' : ''}
+                      ${isActive ? 'bg-white shadow-sm' : 'bg-gray-50'}
                     `}>
                       {thumbnailUrl ? (
-                        <>
-                          <img 
-                            src={thumbnailUrl} 
-                            alt={formattedTitle}
-                            className="h-full w-full object-cover"
-                            loading="lazy"
-                            onError={(e) => {
-                              // On error, fall back to icon
-                              (e.target as HTMLElement).classList.add('hidden');
-                              const fallback = e.currentTarget.parentElement?.querySelector('.thumbnail-fallback');
-                              if (fallback) {
-                                fallback.classList.remove('hidden');
-                                fallback.classList.add('flex');
-                              }
-                            }}
-                          />
-                          <div 
-                            className="h-full w-full items-center justify-center hidden thumbnail-fallback"
-                          >
-                            {getContentTypeIcon(material.contentType)}
-                          </div>
-                        </>
+                        <img 
+                          src={thumbnailUrl} 
+                          alt={formattedTitle}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                          onError={(e) => {
+                            (e.target as HTMLElement).style.display = 'none';
+                            (e.currentTarget.parentElement as HTMLElement).innerHTML = material.contentType === 'video' ? 
+                              '<div class="flex items-center justify-center w-full h-full"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-video"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg></div>' : 
+                              '<div class="flex items-center justify-center w-full h-full"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>';
+                          }}
+                        />
                       ) : (
                         <div className="h-full w-full flex items-center justify-center">
                           {getContentTypeIcon(material.contentType)}
@@ -266,31 +252,11 @@ export default function ThumbnailsBar({
                       )}
                     </div>
                     
-                    <div className={isVerticalLayout ? 'flex-1' : 'w-full text-center'}>
-                      <div className={`text-xs mt-1 font-medium ${document.fullscreenElement ? 'text-white' : ''}`}>
-                        {truncateTitle(formattedTitle, isVerticalLayout ? 30 : 20)}
-                      </div>
-                      <div className={`text-xs ${document.fullscreenElement ? 'text-gray-300' : 'text-gray-500'}`}>
-                        {index + 1}/{materials.length}
-                      </div>
-                    </div>
-                    
-                    {/* Viewed indicator */}
-                    {isViewed && !isActive && (
-                      <div className="absolute top-1 right-1 h-4 w-4 bg-green-500 rounded-full flex items-center justify-center">
-                        <Check className="h-3 w-3 text-white" />
-                      </div>
-                    )}
-                    
-                    {/* Active indicator */}
                     {isActive && (
-                      <motion.div 
-                        className={`absolute ${isVerticalLayout ? 'left-0 top-0 bottom-0 w-1' : 'bottom-0 left-0 right-0 h-1'} bg-primary rounded-full`}
-                        layoutId="activeIndicator"
-                      />
+                      <div className="absolute inset-0 border-2 border-primary rounded-md"/>
                     )}
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -298,45 +264,7 @@ export default function ThumbnailsBar({
         </ScrollArea>
       </div>
       
-      {/* Simple navigation controls - First/Previous/Next/Last */}
-      <div className="mt-4 flex justify-between">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => onSelectSlide(0)}
-          disabled={currentIndex === 0}
-        >
-          First
-        </Button>
-        
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onSelectSlide(currentIndex - 1)}
-            disabled={currentIndex === 0}
-          >
-            &lt;
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onSelectSlide(currentIndex + 1)}
-            disabled={currentIndex === materials.length - 1}
-          >
-            &gt;
-          </Button>
-        </div>
-        
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => onSelectSlide(materials.length - 1)}
-          disabled={currentIndex === materials.length - 1}
-        >
-          Last
-        </Button>
-      </div>
+      {/* Removed navigation controls to reduce clutter */}
     </div>
   );
 }
