@@ -361,15 +361,33 @@ export default function ContentViewer() {
           {currentMaterial && (
             <>
               {/* Special handling for Unit Content (text-based overview) */}
-              {currentMaterial.title === "Unit Content" && currentMaterial.content && currentMaterial.content.includes("Material Covered") && (
+              {currentMaterial.title === "Unit Content" && (
                 <div className="max-w-full w-full text-center bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                   <h3 className="text-xl font-semibold mb-4">Unit Content</h3>
                   <div className="text-left mx-auto max-w-3xl">
-                    {currentMaterial.content.split('\n').map((line, index) => (
-                      <p key={index} className={`mb-1 ${index === 0 ? 'font-medium text-lg' : ''}`}>
-                        {line}
-                      </p>
-                    ))}
+                    {currentMaterial.content && currentMaterial.content.includes("Material Covered") ? (
+                      // For structured content with Material Covered format
+                      currentMaterial.content.split('\n').map((line, index) => (
+                        <p key={index} className={`mb-1 ${index === 0 ? 'font-medium text-lg' : ''}`}>
+                          {line}
+                        </p>
+                      ))
+                    ) : (
+                      // For unstructured content - create a structured format
+                      <div>
+                        <p className="font-medium text-lg mb-2">Material Covered</p>
+                        {currentMaterial.content && typeof currentMaterial.content === 'string' && (
+                          currentMaterial.content
+                            .split(/[.:]/)
+                            .filter(item => item.trim().length > 0)
+                            .map((item, idx) => (
+                              <p key={idx} className="mb-1">
+                                {item.trim().replace(/\s+/g, ' ')}{idx < currentMaterial.content.split(/[.:]/).length - 2 ? '.' : ''}
+                              </p>
+                            ))
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
