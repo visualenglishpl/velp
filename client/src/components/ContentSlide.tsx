@@ -32,8 +32,23 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
 
   // Format the S3 URL based on content path
   const getS3Url = () => {
+    // Check if the content is already a complete path
+    if (material.content.includes('/')) {
+      // If it has slashes, it might be a full path already
+      return `/api/content/${material.content}`;
+    }
+    
+    // Otherwise, construct the path based on bookId and unitNumber
     const formattedBookId = bookId.replace(/^(\d+[a-z]*)$/, (_, id) => `book${id}`);
     const formattedUnitNumber = unitNumber > 0 ? `unit${unitNumber}` : '';
+    
+    // For book7/unit12 specific path - handle direct access to s3://visualenglishmaterial/book7/unit12/
+    if (formattedBookId === 'book7' && unitNumber === 12) {
+      console.log(`Loading book7/unit12 image: ${material.content}`);
+      return `/api/content/book7/unit12/${material.content}`;
+    }
+    
+    // Standard path for other books/units
     const basePath = `/api/assets/${formattedBookId}/${formattedUnitNumber}`;
     return `${basePath}/${material.content}`;
   };
@@ -59,8 +74,15 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
 
   // Render based on content type
   const renderContent = () => {
-    switch (material.contentType) {
+    switch (material.contentType.toLowerCase()) {
       case 'image':
+      case 'img':
+      case 'jpg':
+      case 'png':
+      case 'gif':
+      case 'svg':
+      case 'jpeg':
+      case 'IMAGE':
         return (
           <div className={`relative overflow-hidden transition-all duration-300 ease-in-out ${zoomedIn ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}>
             {!imageLoaded && (

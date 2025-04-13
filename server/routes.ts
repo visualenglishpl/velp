@@ -125,19 +125,40 @@ function getMaterialTypeFromFilename(filename: string): { type: string, title: s
   
   // Extract file extension
   const extension = filename.split('.').pop()?.toLowerCase();
+  const lowerFilename = filename.toLowerCase();
   
   // Set type based on extension
   if (extension === "pdf") {
-    type = "PDF";
+    type = "document";
     title = "Printable Worksheet";
-  } else if (extension === "mp4" || extension === "mov") {
-    type = "VIDEO";
+  } else if (extension === "mp4" || extension === "mov" || extension === "webm") {
+    type = "video";
     title = "Video Lesson";
+  } else if (extension === "mp3" || extension === "wav") {
+    type = "audio";
+    title = "Audio Lesson";
   } else if (extension === "html") {
     type = "GAME";
     title = "Interactive Exercise";
-  } else if (extension === "gif" || extension === "png" || extension === "jpg" || extension === "jpeg") {
+  } else if (lowerFilename.includes('exercise')) {
+    type = "exercise";
+    title = "Practice Exercise";
+  } else if (lowerFilename.includes('quiz')) {
+    type = "quiz";
+    title = "Quiz";
+  } else if (lowerFilename.includes('lesson')) {
+    type = "lesson";
+    title = "Lesson";
+  } else if (["gif", "png", "jpg", "jpeg", "svg"].includes(extension || "")) {
     type = "IMAGE";
+    title = "Slide";
+    
+    // For book7/unit12 images, we specifically want to just display the raw images
+    if (lowerFilename.match(/^(\d+)(\w)?\.(?:png|jpg|jpeg|gif|svg)$/i)) {
+      // For files like "01.png", "02A.png", etc.
+      const baseName = filename.replace(/\.(png|jpg|jpeg|gif|svg)$/i, '');
+      title = `Slide ${baseName}`;
+    }
   }
   
   // Try to extract meaningful title from filename
@@ -1153,15 +1174,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Unit not found" });
       }
       
-      // Fetch materials
+      // Find which book this unit belongs to
+      const bookId = unit.bookId;
+      const book = await storage.getBookById(bookId);
+      if (!book) {
+        return res.status(404).json({ error: "Book not found" });
+      }
+      
+      // Try to list S3 materials for this unit
+      const s3BookPrefix = book.bookId.replace(/^(\d+[a-z]*)$/, (_, id) => `book${id}`);
+      const s3UnitPrefix = `${s3BookPrefix}/unit${unit.unitNumber}/`;
+      console.log(`Looking for materials in S3 path: ${s3UnitPrefix}`);
+      
+      let s3Files = [];
+      try {
+        s3Files = await listS3Objects(s3UnitPrefix);
+        if (s3Files.length > 0) {
+          console.log(`Found ${s3Files.length} files in S3 for unit ${unitId}`);
+        } else {
+          console.log(`No files found in S3 for unit ${unitId}`);
+        }
+      } catch (err) {
+        console.error("Error listing S3 objects:", err);
+      }
+      
+      // Fetch existing materials from database
       let materialList = await storage.getMaterials(unitId);
       
-      // If no materials exist, create sample placeholder materials for testing
+      // If S3 files were found, create materials from them
+      if (s3Files.length > 0) {
+        // Extract filenames from S3 keys
+        const s3Materials = s3Files.map((key, index) => {
+          // Extract the filename from the S3 key
+          const filename = key.split('/').pop() || '';
+          const { type, title } = getMaterialTypeFromFilename(filename);
+          
+          return {
+            id: unitId * 10000 + index + 1,
+            unitId: unitId,
+            title: title || `Slide ${index + 1}`,
+            contentType: type || "IMAGE",  // Default to IMAGE if type cannot be determined
+            content: filename,  // Store just the filename, not the full path
+            orderIndex: index + 1,
+            isPublished: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          };
+        });
+        
+        // Use S3 materials if they exist
+        if (s3Materials.length > 0) {
+          materialList = s3Materials;
+          console.log(`Created ${s3Materials.length} materials from S3 files`);
+        }
+      }
+      
+      // If no materials exist in database or S3, create sample placeholder materials for testing
       if (!materialList || materialList.length === 0) {
         console.log(`No materials found for unit ${unitId}. Creating samples for testing.`);
-        
-        const bookId = unit.bookId;
-        const book = await storage.getBookById(bookId);
         
         // Create sample materials with appropriate content types
         materialList = [
@@ -1169,7 +1239,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: unitId * 1000 + 1,
             unitId: unitId,
             title: `Vocabulary for ${unit.title}`,
-
             contentType: "lesson",
             content: `<h2>Key Vocabulary</h2>
             <ul>
@@ -1188,7 +1257,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: unitId * 1000 + 2,
             unitId: unitId,
             title: `Grammar for ${unit.title}`,
-
             contentType: "lesson",
             content: `<h2>Grammar Rules</h2>
             <p>This section covers the main grammar points for this unit:</p>
@@ -1206,7 +1274,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: unitId * 1000 + 3,
             unitId: unitId,
             title: `Exercise for ${unit.title}`,
-
             contentType: "exercise",
             content: `<div class="exercise">
               <h2>Practice Questions</h2>
