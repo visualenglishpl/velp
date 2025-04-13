@@ -55,84 +55,191 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
 
   // Generate appropriate answer prompts based on question structure
   const generateAnswerPrompt = (question: string): string | null => {
+    // Skip if the question is empty
+    if (!question || question.trim() === "") {
+      return null;
+    }
+    
     // Normalize the question for pattern matching
     const normalizedQuestion = question.toLowerCase();
     
-    // Do you...? pattern (Books 1-7)
+    // Log for debugging
+    console.log(`Processing question: "${normalizedQuestion}"`);
+    
+    // Logic check function - returns whether this is a valid question with expected patterns
+    const logicCheckQuestion = (q: string): boolean => {
+      // Check for common grammar issues
+      const hasGrammarIssues = q.includes(" a the ") || 
+                              q.includes(" a a ") || 
+                              q.includes(" the the ") ||
+                              q.match(/\bare\b.*\bis\b/) || // "are" followed by "is"
+                              q.match(/\bis\b.*\bare\b/);   // "is" followed by "are"
+                              
+      // Check for specific Book 7 crime-related malformed content
+      const hasCrimeContentIssues = q.includes("criminal") && q.includes("vandal") && q.length < 15;
+      
+      // Check for specific issues with Book 3 Unit 2 formatting
+      const hasTimeIssues = q.includes("clock") && !q.includes("what") && !q.includes("where") && !q.includes("is");
+        
+      return !hasGrammarIssues && !hasCrimeContentIssues && !hasTimeIssues;
+    };
+    
+    // Perform logic check
+    const isValidQuestion = logicCheckQuestion(normalizedQuestion);
+    if (!isValidQuestion) {
+      console.log(`Logic check failed for: "${normalizedQuestion}"`);
+      // Return a corrected version for specific failures
+      if (normalizedQuestion.includes("clock") && !normalizedQuestion.includes("where")) {
+        return "It's a clock.";
+      }
+      if (normalizedQuestion.includes("criminal")) {
+        return "They are committing a crime.";
+      }
+    }
+    
+    // Special handling for Book 7 crime-related content
+    if (bookId === "book7") {
+      // Crime pattern detection
+      if (normalizedQuestion.includes("crime") || 
+          normalizedQuestion.includes("criminal") || 
+          normalizedQuestion.includes("terrorist") ||
+          normalizedQuestion.includes("vandal")) {
+        
+        // "What crime is he/she committing" pattern
+        if (normalizedQuestion.includes("crime") && normalizedQuestion.includes("committing")) {
+          if (normalizedQuestion.includes("pickpocket")) {
+            return "He is pickpocketing.";
+          }
+          if (normalizedQuestion.includes("shoplift")) {
+            return "She is shoplifting.";
+          }
+          if (normalizedQuestion.includes("vandal")) {
+            return "They are vandalizing.";
+          }
+          return "They are committing a crime.";
+        }
+        
+        // "Is it good or bad" pattern for vandalism
+        if (normalizedQuestion.includes("good or bad") && normalizedQuestion.includes("vandalism")) {
+          return "It depends on your perspective.";
+        }
+      }
+    }
+    
+    // Book 3 Unit 2 time patterns (clock related)
+    if (bookId === "book3" && unitNumber === 2) {
+      if (normalizedQuestion.includes("clock")) {
+        if (normalizedQuestion.startsWith("where is the clock")) {
+          // Try to extract location from the question
+          const locationMatch = normalizedQuestion.match(/in the ([a-z]+)/i);
+          if (locationMatch && locationMatch[1]) {
+            return `The clock is in the ${locationMatch[1]}.`;
+          }
+          return "The clock is on the wall.";
+        }
+        
+        if (normalizedQuestion.startsWith("what is")) {
+          return "It is a clock.";
+        }
+      }
+      
+      if (normalizedQuestion.includes("time")) {
+        return "It is ___ o'clock.";
+      }
+    }
+    
+    // Standard patterns across all books
+    
+    // "Do you...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("do you")) {
       return "Yes, I do / No, I don't";
     }
     
-    // Does he/she...? pattern (Books 1-7)
+    // "Does he/she...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("does he") || normalizedQuestion.startsWith("does she")) {
       return normalizedQuestion.includes("she") 
         ? "Yes, she does / No, she doesn't" 
         : "Yes, he does / No, he doesn't";
     }
     
-    // Do they...? pattern (Books 1-7)
+    // "Does it...?" pattern (All books)
+    if (normalizedQuestion.startsWith("does it")) {
+      return "Yes, it does / No, it doesn't";
+    }
+    
+    // "Do they...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("do they")) {
       return "Yes, they do / No, they don't";
     }
     
-    // Are you...? pattern (Books 1-7)
+    // "Are you...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("are you")) {
       return "Yes, I am / No, I'm not";
     }
     
-    // Are there...? pattern (Books 1-7)
+    // "Are they...?" pattern (Books 1-7)
+    if (normalizedQuestion.startsWith("are they")) {
+      return "Yes, they are / No, they're not";
+    }
+    
+    // "Are there...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("are there")) {
       return "Yes, there are / No, there aren't";
     }
     
-    // Is he/she...? pattern (Books 1-7)
+    // "Is he/she...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("is he") || normalizedQuestion.startsWith("is she")) {
       return normalizedQuestion.includes("she") 
         ? "Yes, she is / No, she isn't" 
         : "Yes, he is / No, he isn't";
     }
     
-    // Is there...? pattern (Books 1-7)
+    // "Is it...?" pattern (Books 1-7)
+    if (normalizedQuestion.startsWith("is it")) {
+      return "Yes, it is / No, it isn't";
+    }
+    
+    // "Is there...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("is there")) {
       return "Yes, there is / No, there isn't";
     }
     
-    // Is this...? pattern (Books 1-7)
+    // "Is this...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("is this")) {
       return "Yes, it is / No, it isn't";
     }
     
-    // Can you...? pattern (Books 1-7)
+    // "Can you...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("can you")) {
       return "Yes, I can / No, I can't";
     }
     
-    // Could you...? pattern (Books 1-7)
+    // "Could you...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("could you")) {
       return "Yes, I could / No, I couldn't";
     }
     
-    // Have you...? pattern (Books 1-7)
+    // "Have you...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("have you")) {
       return "Yes, I have / No, I haven't";
     }
     
-    // Did you...? pattern (Books 1-7)
+    // "Did you...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("did you")) {
       return "Yes, I did / No, I didn't";
     }
     
-    // Will you...? pattern (Books 1-7)
+    // "Will you...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("will you")) {
       return "Yes, I will / No, I won't";
     }
     
-    // Would you...? pattern (Books 1-7)
+    // "Would you...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("would you")) {
       return "Yes, I would / No, I wouldn't";
     }
     
-    // Where does...? pattern (Book 3-7 job-related questions)
+    // "Where does...?" pattern (Book 3-7 job-related questions)
     if (normalizedQuestion.startsWith("where does")) {
       // For specific responses like: "Where Does Babysitter Work?"
       if (normalizedQuestion.includes("babysitter") || normalizedQuestion.includes("baby sitter")) {
@@ -150,7 +257,7 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       return "They work at...";
     }
     
-    // What does...? pattern (Book 3-7 job-related questions)
+    // "What does...?" pattern (Book 3-7 job-related questions)
     if (normalizedQuestion.startsWith("what does")) {
       // For specific responses like: "What Does Chef Do?"
       if (normalizedQuestion.includes("chef")) {
@@ -162,25 +269,38 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       if (normalizedQuestion.includes("teacher")) {
         return "A teacher...";
       }
+      if (normalizedQuestion.includes("terrorist")) {
+        return "A terrorist...";
+      }
       return "They...";
     }
     
-    // What is...? pattern (Books 1-7)
+    // "What is...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("what is")) {
       return "It is...";
     }
     
-    // What are...? pattern (Books 1-7)
+    // "What are...?" pattern (Books 1-7)
     if (normalizedQuestion.startsWith("what are")) {
       return "They are...";
     }
     
-    // Would you like...? pattern (Books 1-7)
+    // "Who are...?" pattern (Books 1-7)
+    if (normalizedQuestion.startsWith("who are")) {
+      return "They are...";
+    }
+    
+    // "Who is...?" pattern (Books 1-7)
+    if (normalizedQuestion.startsWith("who is")) {
+      return "He/She is...";
+    }
+    
+    // "Would you like...?" pattern (Books 1-7)
     if (normalizedQuestion.includes("would you like")) {
       return "Yes, I would like / No, I wouldn't like";
     }
     
-    // Is [job/thing]...? pattern (Book 3-7 job-related questions)
+    // "Is [job/thing]...?" pattern (Book 3-7 job-related questions)
     if (normalizedQuestion.startsWith("is") && 
         (normalizedQuestion.includes("job") || 
          normalizedQuestion.includes("babysitter") ||
@@ -206,6 +326,11 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       return "I think it is...";
     }
     
+    // "good or bad" pattern (Book 7)
+    if (normalizedQuestion.includes("good or bad")) {
+      return "I think it is...";
+    }
+    
     // "do you use" pattern (Book 7 vacation questions)
     if (normalizedQuestion.includes("do you use") && 
         (normalizedQuestion.includes("holiday") || normalizedQuestion.includes("vacation"))) {
@@ -225,13 +350,24 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       }
     }
     
-    // Books 1-2 basic patterns
+    // "How many" pattern
     if (normalizedQuestion.includes("how many")) {
       return "There are...";
     }
     
+    // "How much" pattern
     if (normalizedQuestion.includes("how much")) {
       return "It costs...";
+    }
+    
+    // "When do you" pattern
+    if (normalizedQuestion.startsWith("when do you")) {
+      return "I...";
+    }
+    
+    // "Where do you" pattern
+    if (normalizedQuestion.startsWith("where do you")) {
+      return "I...";
     }
     
     // For other question types or non-questions
