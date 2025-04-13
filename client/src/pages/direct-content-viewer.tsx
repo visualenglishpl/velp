@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from "embla-carousel-react";
@@ -260,6 +260,99 @@ export default function DirectContentViewer() {
       setInitialSlideSet(true);
     }
   }, [materialsData, emblaApi, initialSlideSet]);
+
+  // Analyze materials to generate unit description
+  const generateUnitDescription = (materials: DirectMaterial[]): string => {
+    if (!materials || materials.length === 0) return "No content available";
+    
+    // Count different content types
+    const contentTypes = new Map<string, number>();
+    const topics = new Set<string>();
+    
+    // Pattern for extracting subject topics from filenames
+    const subjectPatterns = [
+      { pattern: /subject\s+(\w+)/i, group: 1 },
+      { pattern: /(\w+)\s+lessons/i, group: 1 },
+      { pattern: /school\s+(\w+)/i, group: 1 },
+      { pattern: /(\w+)\s+school/i, group: 1 },
+      { pattern: /(\w+)\s+class/i, group: 1 },
+      { pattern: /(\w+)\s+film/i, group: 1 },
+      { pattern: /(\w+)\s+movie/i, group: 1 },
+      { pattern: /genre\s+(\w+)/i, group: 1 },
+      { pattern: /(\w+)\s+genre/i, group: 1 },
+    ];
+    
+    // Extract topics and content types
+    materials.forEach(material => {
+      // Count content types
+      const contentType = material.contentType.toLowerCase();
+      contentTypes.set(contentType, (contentTypes.get(contentType) || 0) + 1);
+      
+      // Try to extract topics
+      const content = material.content.toLowerCase();
+      
+      // Check for specific topics in the filename
+      subjectPatterns.forEach(({ pattern, group }) => {
+        const match = content.match(pattern);
+        if (match && match[group]) {
+          topics.add(match[group].charAt(0).toUpperCase() + match[group].slice(1));
+        }
+      });
+      
+      // Check for common educational topics
+      if (content.includes('english')) topics.add('English');
+      if (content.includes('math')) topics.add('Mathematics');
+      if (content.includes('history')) topics.add('History');
+      if (content.includes('science')) topics.add('Science');
+      if (content.includes('chemistry')) topics.add('Chemistry');
+      if (content.includes('biology')) topics.add('Biology');
+      if (content.includes('art')) topics.add('Art');
+      if (content.includes('school')) topics.add('School Life');
+      if (content.includes('classroom')) topics.add('Classroom');
+      if (content.includes('teacher')) topics.add('Teachers');
+      if (content.includes('playground')) topics.add('Playground');
+      if (content.includes('film') || content.includes('movie')) topics.add('Films');
+      if (content.includes('crime')) topics.add('Crime');
+      if (content.includes('holiday') || content.includes('vacation')) topics.add('Holidays');
+      if (content.includes('genre')) topics.add('Film Genres');
+    });
+    
+    // Generate description
+    const topicsArray = Array.from(topics).slice(0, 5);
+    const imagesCount = contentTypes.get('image') || 0;
+    const videosCount = contentTypes.get('video') || 0;
+    const totalContent = materials.length;
+    
+    // Book-specific descriptions
+    if (bookPath === "book0a") {
+      return `Early Learning Unit: Peek-a-boo activities and early childhood language introduction with ${imagesCount} visuals and ${videosCount} videos.`;
+    }
+    
+    if (bookPath === "book3" && unitNumber === 2) {
+      return `Time & Clock Unit: Learn to tell time, clock-related vocabulary and expressions with ${totalContent} educational materials.`;
+    }
+    
+    if (bookPath === "book5") {
+      return `School Life Unit: Explore ${topicsArray.join(', ')} with ${imagesCount} images and ${videosCount} interactive videos.`;
+    }
+    
+    if (bookPath === "book7" && topics.has('Films')) {
+      return `Film & Entertainment Unit: Discover film genres, movie vocabulary, and media topics through ${totalContent} engaging materials.`;
+    }
+    
+    // Generic description
+    if (topicsArray.length > 0) {
+      return `Educational Unit: ${topicsArray.join(', ')} with ${totalContent} learning materials including ${imagesCount} visuals and ${videosCount} videos.`;
+    } else {
+      return `Unit ${unitNumber}: ${totalContent} educational materials with ${imagesCount} images and ${videosCount} videos.`;
+    }
+  };
+  
+  // Get the unit description
+  const unitDescription = useMemo(() => {
+    if (!sortedMaterials.length) return "";
+    return generateUnitDescription(sortedMaterials);
+  }, [sortedMaterials, bookPath, unitNumber]);
 
   // Add keyboard navigation effect - needs to be in a consistent location
   useEffect(() => {
