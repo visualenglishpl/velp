@@ -1106,6 +1106,106 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Try to get the presigned URL
       let presignedUrl = await getS3PresignedUrl(key);
       
+      if (!presignedUrl) {
+        console.error(`Book 5 content not found: ${key}`);
+        return res.status(404).json({ error: "Content not found" });
+      }
+      
+      // Set cache headers and redirect
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      return res.redirect(presignedUrl);
+    } catch (error) {
+      console.error("Error fetching Book 5 content:", error);
+      res.status(500).json({ error: "Failed to fetch content" });
+    }
+  });
+  
+  // New routes for content viewer
+  app.get("/api/units/:unitId", async (req, res) => {
+    try {
+      const unitId = parseInt(req.params.unitId);
+      if (isNaN(unitId)) {
+        return res.status(400).json({ error: "Invalid unit ID" });
+      }
+      
+      const unit = await storage.getUnitById(unitId);
+      if (!unit) {
+        return res.status(404).json({ error: "Unit not found" });
+      }
+      
+      res.json(unit);
+    } catch (err) {
+      console.error("Error fetching unit:", err);
+      res.status(500).json({ error: "Failed to fetch unit" });
+    }
+  });
+  
+  app.get("/api/units/:unitId/materials", async (req, res) => {
+    try {
+      const unitId = parseInt(req.params.unitId);
+      if (isNaN(unitId)) {
+        return res.status(400).json({ error: "Invalid unit ID" });
+      }
+      
+      // Make sure unit exists
+      const unit = await storage.getUnitById(unitId);
+      if (!unit) {
+        return res.status(404).json({ error: "Unit not found" });
+      }
+      
+      // Fetch materials
+      const materials = await storage.getMaterials(unitId);
+      
+      // Add isLocked and order properties for the content viewer
+      const enhancedMaterials = materials.map(material => ({
+        ...material,
+        isLocked: !material.isPublished,
+        order: material.orderIndex || 0
+      }));
+      
+      res.json(enhancedMaterials);
+    } catch (err) {
+      console.error("Error fetching materials:", err);
+      res.status(500).json({ error: "Failed to fetch materials" });
+    }
+  });
+  
+  // Generic asset endpoint for content viewer
+  app.get("/api/assets/:bookId/:unitPath/:filename", async (req, res) => {
+    try {
+      const { bookId, unitPath, filename } = req.params;
+      
+      // Parse unit number from unitPath (e.g., "unit1" -> 1)
+      const unitNumber = parseInt(unitPath.replace(/\D/g, ""));
+      if (isNaN(unitNumber)) {
+        return res.status(400).json({ error: "Invalid unit number" });
+      }
+      
+      // Clean filename
+      let cleanFilename = decodeURIComponent(filename);
+      
+      // Special handling based on bookId to match S3 structure
+      // s3://visualenglishmaterial/book{bookId}/unit{unitNumber}/
+      let key;
+      if (bookId === 'book5') {
+        // Special case for Book 5 to avoid "bookbook5" issue
+        key = `book5/unit${unitNumber}/${cleanFilename}`;
+      } else {
+        // Normal pattern for all other books
+        key = `${bookId}/unit${unitNumber}/${cleanFilename}`;
+      }
+      
+      console.log(`Content viewer - trying to fetch: ${key}`);
+      
+      // Print request details for debugging
+      console.log(`Book 5 request details: unitNumber=${unitNumber}, filename=${filename}, cleanFilename=${cleanFilename}`);
+      
+      // Log the expected S3 URL format to verify it doesn't have double "book" prefix
+      console.log(`Expected S3 URL format: s3://${S3_BUCKET}/${key}`);
+      
+      // Try to get the presigned URL
+      let presignedUrl = await getS3PresignedUrl(key);
+      
       // If that fails, try common variations
       if (!presignedUrl) {
         const variations = [
