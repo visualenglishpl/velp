@@ -1181,6 +1181,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Book not found" });
       }
       
+      // Special case for book7/unit12 - hard coded for demonstration
+      if (book.bookId === '7' && unit.unitNumber === 12) {
+        console.log("Special case for book7/unit12 - directly listing S3 content");
+        
+        // Directly list files from s3://visualenglishmaterial/book7/unit12/
+        const s3Files = await listS3Objects('book7/unit12/');
+        
+        if (s3Files.length > 0) {
+          console.log(`Found ${s3Files.length} files in s3://visualenglishmaterial/book7/unit12/`);
+          
+          // Sort files alphanumerically to ensure proper order
+          s3Files.sort((a, b) => {
+            const fileA = a.split('/').pop() || '';
+            const fileB = b.split('/').pop() || '';
+            
+            // Extract leading numbers if present for proper sorting
+            const numA = parseInt(fileA.match(/^(\d+)/)?.[1] || '0');
+            const numB = parseInt(fileB.match(/^(\d+)/)?.[1] || '0');
+            
+            if (numA !== numB) return numA - numB;
+            return fileA.localeCompare(fileB);
+          });
+          
+          // Create materials directly from S3 files
+          const materials = s3Files.map((key, index) => {
+            // Extract just the filename from the full S3 key
+            const filename = key.split('/').pop() || '';
+            
+            return {
+              id: unitId * 10000 + index + 1,
+              unitId: unitId,
+              title: `Slide ${index + 1}`,
+              contentType: "IMAGE",
+              content: `book7/unit12/${filename}`,  // Store the full S3 path for direct access
+              orderIndex: index + 1,
+              isPublished: true,
+              createdAt: new Date(),
+              updatedAt: new Date()
+            };
+          });
+          
+          // Add isLocked and order properties for the content viewer
+          const enhancedMaterials = materials.map(material => ({
+            ...material,
+            isLocked: false,
+            order: material.orderIndex || 0,
+          }));
+          
+          console.log(`Returning ${enhancedMaterials.length} materials for book7/unit12`);
+          return res.json(enhancedMaterials);
+        }
+        
+        console.log("No files found for book7/unit12, falling back to database content");
+      }
+      
+      // Default behavior for other books/units
       // Try to list S3 materials for this unit
       const s3BookPrefix = book.bookId.replace(/^(\d+[a-z]*)$/, (_, id) => `book${id}`);
       const s3UnitPrefix = `${s3BookPrefix}/unit${unit.unitNumber}/`;
