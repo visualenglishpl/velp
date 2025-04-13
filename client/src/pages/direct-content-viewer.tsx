@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from "embla-carousel-react";
 import ContentSlide from "@/components/ContentSlide";
 import ThumbnailsBar from "@/components/ThumbnailsBar";
-import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, AlertCircle, Info } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Book, Home, Maximize2, Minimize2, AlertCircle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
@@ -53,6 +53,7 @@ export default function DirectContentViewer() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [initialSlideSet, setInitialSlideSet] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [keyboardFeedback, setKeyboardFeedback] = useState<string | null>(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "center",
@@ -289,29 +290,48 @@ export default function DirectContentViewer() {
     unitId: 0, // Not needed for direct access
   }));
   
+  // No duplicated declaration needed here
+  
   // Add keyboard navigation - added after materials is defined
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      let feedbackText = null;
+      
       switch (event.key) {
         case "ArrowLeft":
           scrollPrev();
+          feedbackText = "Previous slide";
           break;
         case "ArrowRight":
           scrollNext();
+          feedbackText = "Next slide";
           break;
         case "Home":
           if (emblaApi) emblaApi.scrollTo(0);
+          feedbackText = "First slide";
           break;
         case "End":
           if (emblaApi && materials?.length) emblaApi.scrollTo(materials.length - 1);
+          feedbackText = "Last slide";
           break;
         case "f":
         case "F":
           // Toggle fullscreen mode
           setIsFullscreen(!isFullscreen);
+          feedbackText = isFullscreen ? "Exit fullscreen" : "Enter fullscreen";
           break;
         default:
           break;
+      }
+      
+      // Show keyboard feedback if available
+      if (feedbackText) {
+        setKeyboardFeedback(feedbackText);
+        
+        // Hide feedback after a delay
+        setTimeout(() => {
+          setKeyboardFeedback(null);
+        }, 1500);
       }
     };
 
@@ -415,8 +435,8 @@ export default function DirectContentViewer() {
       {/* Main content */}
       <main className="flex-grow container mx-auto px-4 pb-12 pt-4">
         {/* Carousel wrapper */}
-        <div className={`relative bg-white shadow rounded-lg overflow-hidden mb-8 
-          ${isFullscreen ? 'bg-black h-screen max-h-screen m-0 flex items-center justify-center' : ''}`}>
+        <div className={`relative bg-white shadow rounded-lg overflow-hidden mb-8 transition-all duration-300
+          ${isFullscreen ? 'fixed inset-0 z-50 bg-black h-screen max-h-screen m-0 flex items-center justify-center rounded-none' : ''}`}>
           {/* Sliding progress indicator */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 z-10">
             <motion.div 
@@ -437,14 +457,26 @@ export default function DirectContentViewer() {
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {materials.map((material, index) => (
-                <div key={index} className="flex-[0_0_100%] min-w-0">
+                <motion.div 
+                  key={index} 
+                  className="flex-[0_0_100%] min-w-0"
+                  initial={{ opacity: 0 }}
+                  animate={{ 
+                    opacity: index === currentSlideIndex ? 1 : 0.4,
+                    scale: index === currentSlideIndex ? 1 : 0.98,
+                  }}
+                  transition={{ 
+                    opacity: { duration: 0.5 },
+                    scale: { duration: 0.3 }
+                  }}
+                >
                   <ContentSlide 
                     material={material}
                     isActive={index === currentSlideIndex}
                     bookId={bookPath || ""}
                     unitNumber={unitNumber} 
                   />
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -478,6 +510,28 @@ export default function DirectContentViewer() {
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full shadow-md text-sm">
             {currentSlideIndex + 1} / {materials.length}
           </div>
+          
+          {/* Keyboard feedback indicator */}
+          {keyboardFeedback && (
+            <motion.div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                       bg-black/70 text-white px-4 py-2 rounded-lg shadow-lg backdrop-blur-sm
+                       flex items-center gap-2 z-50"
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: "spring", duration: 0.3 }}
+            >
+              {keyboardFeedback === "Previous slide" && <ChevronLeft className="h-5 w-5" />}
+              {keyboardFeedback === "Next slide" && <ChevronRight className="h-5 w-5" />}
+              {keyboardFeedback === "First slide" && <ChevronLeft className="h-5 w-5 mr-0.5" />}
+              {keyboardFeedback === "Last slide" && <ChevronRight className="h-5 w-5 mr-0.5" />}
+              {keyboardFeedback.includes("fullscreen") && (
+                isFullscreen ? <Minimize2 className="h-5 w-5" /> : <Maximize2 className="h-5 w-5" />
+              )}
+              <span className="font-medium">{keyboardFeedback}</span>
+            </motion.div>
+          )}
         </div>
 
         {/* Thumbnails bar */}
