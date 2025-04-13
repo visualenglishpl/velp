@@ -11,6 +11,14 @@ interface ContentSlideProps {
     contentType: string;
     content: string;
     bookId?: string;
+    unitId?: number;
+    path?: string;
+    orderIndex?: number;
+    order?: number;
+    isPublished?: boolean;
+    isLocked?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
   };
   isActive: boolean;
   bookId: string;

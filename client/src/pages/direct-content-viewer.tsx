@@ -55,6 +55,9 @@ export default function DirectContentViewer() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [keyboardFeedback, setKeyboardFeedback] = useState<string | null>(null);
   
+  // Navigate hook for routing
+  const [_, navigate] = useLocation();
+  
   // State for access control
   const [hasPurchasedAccess, setHasPurchasedAccess] = useState(false);
   const [showAccessDialog, setShowAccessDialog] = useState(false);
@@ -66,15 +69,13 @@ export default function DirectContentViewer() {
     // Navigate to checkout page with the relevant plan details
     navigate(`/checkout/unit?bookId=${bookPath}&unitId=${unitPath}`);
   }, [bookPath, unitPath, navigate]);
+  
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "center",
     containScroll: "keepSnaps",
     dragFree: false
   });
-
-  // Navigate hook for routing
-  const [_, navigate] = useLocation();
 
   // Handle a user selecting a slide from the thumbnails bar
   const onThumbnailClick = useCallback(
@@ -648,7 +649,11 @@ export default function DirectContentViewer() {
                         material={material}
                         isActive={index === currentSlideIndex}
                         bookId={bookPath || ""}
-                        unitNumber={unitNumber} 
+                        unitNumber={unitNumber}
+                        slideIndex={index}
+                        isPremium={index >= FREE_SLIDES_LIMIT}
+                        hasPurchasedAccess={hasPurchasedAccess}
+                        onPurchaseClick={handlePurchaseClick}
                       />
                     </motion.div>
                   ))}
