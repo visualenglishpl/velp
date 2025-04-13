@@ -160,11 +160,21 @@ export default function ContentViewer() {
 
   // Show error state if any errors occurred
   if (unitError || materialsError || bookError) {
+    console.error("Content viewer error:", {
+      unitError,
+      materialsError,
+      bookError
+    });
+    
     return (
       <div className="container mx-auto p-4">
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-600 max-w-3xl mx-auto">
           <h3 className="text-lg font-medium mb-2">Error Loading Content</h3>
-          <p>{(unitError || materialsError || bookError)?.message || 'Failed to load content'}</p>
+          <p>Oops, we couldn't load this unit. Please try again later.</p>
+          <details className="mt-4 text-xs text-gray-600">
+            <summary>Technical details</summary>
+            <p className="mt-2">{(unitError || materialsError || bookError)?.message || 'Failed to load content'}</p>
+          </details>
           <Button 
             variant="outline" 
             className="mt-4" 

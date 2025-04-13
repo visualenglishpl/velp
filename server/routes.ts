@@ -1142,18 +1142,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // New routes for content viewer
-  app.get("/api/units/:unitId", async (req, res) => {
+  app.get("/api/units/:unitId", isAuthenticated, async (req, res) => {
     try {
+      console.log(`Fetching unit details for ID: ${req.params.unitId}`);
+      
       const unitId = parseInt(req.params.unitId);
       if (isNaN(unitId)) {
+        console.log(`Invalid unit ID: ${req.params.unitId}`);
         return res.status(400).json({ error: "Invalid unit ID" });
       }
       
       const unit = await storage.getUnitById(unitId);
       if (!unit) {
+        console.log(`Unit not found: ${unitId}`);
         return res.status(404).json({ error: "Unit not found" });
       }
       
+      console.log(`Found unit: ${unit.id} (${unit.title})`);
       res.json(unit);
     } catch (err) {
       console.error("Error fetching unit:", err);
@@ -1161,16 +1166,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  app.get("/api/units/:unitId/materials", async (req, res) => {
+  app.get("/api/units/:unitId/materials", isAuthenticated, async (req, res) => {
     try {
+      console.log(`Fetching materials for unit ID: ${req.params.unitId}`);
+      
       const unitId = parseInt(req.params.unitId);
       if (isNaN(unitId)) {
+        console.log(`Invalid unit ID: ${req.params.unitId}`);
         return res.status(400).json({ error: "Invalid unit ID" });
       }
       
       // Make sure unit exists
       const unit = await storage.getUnitById(unitId);
       if (!unit) {
+        console.log(`Unit not found: ${unitId}`);
         return res.status(404).json({ error: "Unit not found" });
       }
       
@@ -1178,8 +1187,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const bookId = unit.bookId;
       const book = await storage.getBookById(bookId);
       if (!book) {
+        console.log(`Book not found for unit: ${unitId}, book ID: ${bookId}`);
         return res.status(404).json({ error: "Book not found" });
       }
+      
+      console.log(`Found book: ${book.bookId} (${book.title}) for unit: ${unit.unitNumber} (${unit.title})`);
+      
       
       // Special case for book7/unit12 - hard coded for demonstration
       if (book.bookId === '7' && unit.unitNumber === 12) {
@@ -1378,7 +1391,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Generic asset endpoint for content viewer
-  app.get("/api/assets/:bookId/:unitPath/:filename", async (req, res) => {
+  app.get("/api/assets/:bookId/:unitPath/:filename", isAuthenticated, async (req, res) => {
     try {
       const { bookId, unitPath, filename } = req.params;
       
@@ -1455,7 +1468,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Fallback route for older content paths
-  app.get("/api/content/:key", async (req, res) => {
+  app.get("/api/content/:key", isAuthenticated, async (req, res) => {
     try {
       const key = decodeURIComponent(req.params.key);
       console.log(`Fetching content for key: ${key}`);
