@@ -751,8 +751,26 @@ const BooksManagementPage = () => {
   };
   
   const handleUnitSelect = (unitId: number) => {
-    // Instead of showing materials management, redirect directly to content slider
-    navigate(`/units/${unitId}/materials/0`);
+    // Get the selected unit and book info
+    const selectedUnit = units?.find(u => u.id === unitId);
+    const selectedBook = books?.find(b => b.id === selectedBookId);
+    
+    if (selectedUnit && selectedBook) {
+      // Use the S3-matching direct path structure instead of database IDs
+      const bookPath = `book${selectedBook.bookId}`;
+      const unitPath = `unit${selectedUnit.unitNumber}`;
+      console.log(`Navigating to direct path: /${bookPath}/${unitPath}`);
+      
+      // Navigate to direct content viewer with S3 path format
+      navigate(`/${bookPath}/${unitPath}`);
+    } else {
+      console.error('Could not find unit or book information');
+      toast({
+        title: "Navigation error",
+        description: "Could not find unit information",
+        variant: "destructive"
+      });
+    }
   };
   
   const handleBackToBooks = () => {
