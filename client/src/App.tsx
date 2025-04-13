@@ -7,6 +7,7 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import ContentViewer from "@/pages/content-viewer";
 import DirectContentViewer from "@/pages/direct-content-viewer";
+import CheckoutPage from "@/pages/checkout";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -45,6 +46,7 @@ function Router() {
       {/* Public Routes */}
       <Route path="/" component={Home} />
       <Route path="/auth" component={AuthPage} />
+      <Route path="/checkout/:planId?" component={CheckoutPage} />
       
       {/* Admin Dashboard - Protected Admin Route */}
       <Route path="/admin">

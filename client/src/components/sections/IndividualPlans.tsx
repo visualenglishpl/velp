@@ -1,4 +1,5 @@
 import { Star, Check } from "lucide-react";
+import { Link } from "wouter";
 
 const PricingPlans = () => {
   const plans = [
@@ -17,6 +18,7 @@ const PricingPlans = () => {
       priceSubtext: "+ delivery",
       buttonText: "Order Printed Book",
       buttonColor: "bg-black hover:bg-gray-800",
+      planId: "printed_book"
     },
     {
       title: "Single Lesson\nDigital Access",
@@ -34,6 +36,7 @@ const PricingPlans = () => {
       priceSubtext: "per month or €40/year",
       buttonText: "Get Lesson Access",
       buttonColor: "bg-black hover:bg-gray-800",
+      planId: "single_lesson"
     },
     {
       title: "Whole Book\nDigital Access",
@@ -52,6 +55,7 @@ const PricingPlans = () => {
       buttonText: "Get Book Access",
       buttonColor: "bg-black hover:bg-gray-800",
       popular: true,
+      planId: "whole_book"
     },
     {
       title: "Free Trial",
@@ -69,6 +73,7 @@ const PricingPlans = () => {
       priceSubtext: "7-day trial",
       buttonText: "Start Free Trial",
       buttonColor: "bg-black hover:bg-gray-800",
+      planId: "free_trial"
     },
   ];
 
