@@ -263,13 +263,17 @@ export default function ContentViewer() {
                         
                         // Capitalize country names and nationalities in answer
                         countries.forEach(country => {
-                          const regex = new RegExp(`\\b${country}\\b`, 'gi');
-                          answer = answer.replace(regex, country.charAt(0).toUpperCase() + country.slice(1));
+                          if (answer) { // Additional null check
+                            const regex = new RegExp(`\\b${country}\\b`, 'gi');
+                            answer = answer.replace(regex, country.charAt(0).toUpperCase() + country.slice(1));
+                          }
                         });
                         
                         nationalities.forEach(nationality => {
-                          const regex = new RegExp(`\\b${nationality}\\b`, 'gi');
-                          answer = answer.replace(regex, nationality.charAt(0).toUpperCase() + nationality.slice(1));
+                          if (answer) { // Additional null check
+                            const regex = new RegExp(`\\b${nationality}\\b`, 'gi');
+                            answer = answer.replace(regex, nationality.charAt(0).toUpperCase() + nationality.slice(1));
+                          }
                         });
                       }
                       
@@ -307,7 +311,7 @@ export default function ContentViewer() {
                         ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`
                         : currentMaterial.content
                     }
-                    alt={currentMaterial.title}
+                    alt={currentMaterial.title === "Unit Introduction" ? "Slide Content" : currentMaterial.title}
                     className="max-w-full max-h-[50vh] mx-auto object-contain"
                     onError={(e) => {
                       const tryAlternateFormats = (formats: string[], index = 0) => {
