@@ -1011,8 +1011,14 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200 inline-block">
             <h2 className="text-xl font-semibold text-gray-800">{formattedQuestion}</h2>
             {answer && (
-              <div className="mt-2 text-gray-700">
-                <p>{answer}</p>
+              <div className="mt-3 text-gray-700 border-t pt-2 border-gray-100">
+                <p className="font-medium">{answer}</p>
+              </div>
+            )}
+            {/* Show answer prompt from our pattern matching, if available */}
+            {!answer && formattedQuestion && (
+              <div className="mt-3 text-blue-600 border-t pt-2 border-gray-100">
+                <p className="font-medium">{generateAnswerPrompt(formattedQuestion.toLowerCase())}</p>
               </div>
             )}
           </div>
