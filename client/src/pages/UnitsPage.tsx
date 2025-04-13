@@ -78,7 +78,7 @@ export default function UnitsPage() {
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
               <Card key={i} className="overflow-hidden flex flex-col">
                 <div className="aspect-video bg-gray-100 w-full">
@@ -98,7 +98,7 @@ export default function UnitsPage() {
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col">
                 <div className="aspect-video bg-gray-100 relative overflow-hidden">
@@ -109,19 +109,51 @@ export default function UnitsPage() {
                   )}
                   
                   <div className="h-full w-full">
-                    {unit.thumbnailUrl ? (
-                      <img 
-                        src={unit.thumbnailUrl}
-                        alt={`Thumbnail for ${unit.title}`}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="h-full w-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-gray-400">
-                          {unit.unitNumber}
+                    {/* Generate direct S3 path to first image from the unit */}
+                    <div className="h-full w-full relative">
+                      {/* Styled unit background with gradient */}
+                      <div className="h-full w-full bg-gradient-to-br from-primary/10 to-primary/30 flex flex-col items-center justify-center absolute inset-0">
+                        <span className="text-3xl font-bold text-primary/80 drop-shadow-sm mb-1">
+                          UNIT {unit.unitNumber}
+                        </span>
+                        <span className="text-sm font-medium text-gray-600 max-w-[80%] text-center">
+                          {unit.title}
                         </span>
                       </div>
-                    )}
+                      
+                      {/* Try multiple image patterns in order */}
+                      <img 
+                        src={`/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`} 
+                        alt={`Thumbnail for ${unit.title}`}
+                        className="h-full w-full object-cover relative z-10"
+                        onError={(e) => {
+                          // Try different common filenames in sequence
+                          const img = e.target as HTMLImageElement;
+                          const tryFilenames = [
+                            "00.png",
+                            "00 A.png", 
+                            "00 B.png",
+                            "00 C.png",
+                            "01 A.png",
+                            "01.png"
+                          ];
+                          
+                          // Try next filename or hide if all fail
+                          const tryNextOrHide = (index = 0) => {
+                            if (index >= tryFilenames.length) {
+                              // All attempts failed, hide the image
+                              img.style.opacity = "0";
+                              return;
+                            }
+                            
+                            img.src = `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/${tryFilenames[index]}`;
+                            img.onerror = () => tryNextOrHide(index + 1);
+                          };
+                          
+                          tryNextOrHide(0);
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
                 
