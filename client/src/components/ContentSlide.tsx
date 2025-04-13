@@ -144,8 +144,18 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       return (
         <div className={`relative overflow-hidden transition-all duration-300 ease-in-out ${zoomedIn ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}>
           {!imageLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
-              <span className="sr-only">Loading...</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 h-[50vh]">
+              <div className="w-full max-w-md p-4">
+                <div className="animate-pulse space-y-4">
+                  <div className="h-40 bg-gray-300 rounded-md mx-auto"></div>
+                  <div className="h-3 bg-gray-300 rounded w-3/4 mx-auto"></div>
+                  <div className="h-3 bg-gray-300 rounded w-1/2 mx-auto"></div>
+                  <div className="flex justify-center space-x-2">
+                    <div className="rounded-full bg-gray-300 h-6 w-6"></div>
+                    <div className="rounded-full bg-gray-300 h-6 w-6"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
           <motion.img
@@ -157,6 +167,7 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
             onError={handleImageError}
             initial={{ opacity: 0 }}
             animate={{ opacity: imageLoaded ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
           />
           {imageLoaded && !isError && (
             <Button
@@ -312,29 +323,58 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
   const { question, answer } = formatContentTitle();
 
   return (
-    <div className="p-4 min-h-[50vh] flex flex-col">
+    <motion.div 
+      className="p-4 min-h-[50vh] flex flex-col"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Display formatted question if available */}
       {question && (
-        <div className="mb-4 text-center">
+        <motion.div 
+          className="mb-4 text-center"
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1, duration: 0.3 }}
+        >
           <h2 className="text-xl font-semibold">{question}</h2>
           {answer && (
             <p className="text-sm text-gray-600 mt-1">{answer}</p>
           )}
-        </div>
+        </motion.div>
       )}
       
       {/* Fallback to original title if question formatting failed */}
       {!question && material.title && (
-        <h2 className="text-xl font-semibold text-center mb-4">{material.title}</h2>
+        <motion.h2 
+          className="text-xl font-semibold text-center mb-4"
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1, duration: 0.3 }}
+        >
+          {material.title}
+        </motion.h2>
       )}
       
       {material.description && (
-        <p className="text-gray-600 text-center mb-6">{material.description}</p>
+        <motion.p 
+          className="text-gray-600 text-center mb-6"
+          initial={{ y: -5, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+        >
+          {material.description}
+        </motion.p>
       )}
       
-      <div className="flex-1 flex items-center justify-center">
+      <motion.div 
+        className="flex-1 flex items-center justify-center"
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 0.1, duration: 0.4 }}
+      >
         {renderContent()}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

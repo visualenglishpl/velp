@@ -288,6 +288,38 @@ export default function DirectContentViewer() {
     // For ContentSlide component compatibility
     unitId: 0, // Not needed for direct access
   }));
+  
+  // Add keyboard navigation - added after materials is defined
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "ArrowLeft":
+          scrollPrev();
+          break;
+        case "ArrowRight":
+          scrollNext();
+          break;
+        case "Home":
+          if (emblaApi) emblaApi.scrollTo(0);
+          break;
+        case "End":
+          if (emblaApi && materials?.length) emblaApi.scrollTo(materials.length - 1);
+          break;
+        case "f":
+        case "F":
+          // Toggle fullscreen mode
+          setIsFullscreen(!isFullscreen);
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [emblaApi, scrollNext, scrollPrev, isFullscreen, materials?.length]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50" ref={contentContainerRef}>
@@ -383,7 +415,8 @@ export default function DirectContentViewer() {
       {/* Main content */}
       <main className="flex-grow container mx-auto px-4 pb-12 pt-4">
         {/* Carousel wrapper */}
-        <div className={`relative bg-white shadow rounded-lg overflow-hidden mb-8 ${isFullscreen ? 'fullscreen-content' : ''}`}>
+        <div className={`relative bg-white shadow rounded-lg overflow-hidden mb-8 
+          ${isFullscreen ? 'bg-black h-screen max-h-screen m-0 flex items-center justify-center' : ''}`}>
           {/* Sliding progress indicator */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 z-10">
             <motion.div 
@@ -392,7 +425,12 @@ export default function DirectContentViewer() {
               animate={{ 
                 width: `${((currentSlideIndex + 1) / materials.length) * 100}%` 
               }}
-              transition={{ type: "spring", stiffness: 100 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 100, 
+                damping: 15,
+                mass: 0.5
+              }}
             />
           </div>
           
@@ -457,19 +495,6 @@ export default function DirectContentViewer() {
           <p>Use keyboard arrow keys ← → to navigate between slides</p>
         </div>
       </main>
-      
-      {/* Fullscreen style */}
-      <style jsx>{`
-        .fullscreen-content {
-          background-color: black;
-          height: 100vh;
-          max-height: 100vh;
-          margin: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-      `}</style>
     </div>
   );
 }
