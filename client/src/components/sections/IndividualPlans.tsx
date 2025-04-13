@@ -52,7 +52,7 @@ const IndividualPlans = () => {
         "7-day free trial",
         "Full access to platform",
         "Try before subscribing",
-        "No credit card required",
+        "Credit card required",
       ],
       price: "Free",
       priceSubtext: "7-day trial",

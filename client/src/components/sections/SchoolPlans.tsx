@@ -26,7 +26,7 @@ const SchoolPlans = () => {
       features: [
         "Try the platform before subscribing",
         "Full access for evaluation",
-        "No credit card required",
+        "Credit card required",
         "Includes admin dashboard",
       ],
       price: "Free",
