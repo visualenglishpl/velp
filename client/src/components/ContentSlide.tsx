@@ -707,13 +707,13 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           <motion.img
             src={getS3Url()}
             alt={material.title || "Educational content"}
-            className="max-w-[90%] max-h-[50vh] mx-auto object-contain transition-all duration-300 rounded-lg"
+            className="max-w-[90%] max-h-[50vh] mx-auto object-contain transition-all duration-300 rounded-lg border-2 border-gray-100"
             onLoad={handleImageLoad}
             onError={handleImageError}
             initial={{ opacity: 0 }}
             animate={{ opacity: imageLoaded ? 1 : 0 }}
             transition={{ duration: 0.3 }}
-            style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+            style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}
           />
           {isError && (
             <div className="text-center text-red-500 p-4 mt-2">
@@ -727,7 +727,7 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     if (contentType === 'video') {
       return (
         <div className="relative px-4">
-          <div className="bg-black/5 rounded-lg overflow-hidden shadow-lg">
+          <div className="bg-black/5 rounded-lg overflow-hidden shadow-lg border-2 border-gray-100">
             <video
               src={getS3Url()}
               controls={true}
@@ -738,11 +738,11 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               onError={() => setIsError(true)}
-              style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+              style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}
             />
           </div>
           {isError && (
-            <div className="text-center text-red-500 p-4 mt-2">
+            <div className="text-center text-red-500 p-4 mt-2 bg-red-50 rounded-lg border border-red-100">
               <p>Failed to load video. Please try again later.</p>
             </div>
           )}
@@ -752,16 +752,16 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       
     if (contentType === 'text' || contentType === 'lesson') {
       return (
-        <div className="prose prose-lg max-w-none mx-auto px-4 py-2">
+        <div className="prose prose-lg max-w-none mx-auto px-4 py-2 bg-white rounded-lg border-2 border-gray-100 shadow-md">
           {/* Handle different text formats */}
           {material.content.startsWith('http') ? (
-            <div className="text-center">
-              <p>External content is available at the link below:</p>
+            <div className="text-center py-4">
+              <p className="text-gray-700">External content is available at the link below:</p>
               <a 
                 href={material.content} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:underline inline-flex items-center mt-2"
+                className="text-primary-600 hover:underline inline-flex items-center mt-2 font-medium"
               >
                 {material.title} <ExternalLink className="h-4 w-4 ml-1" />
               </a>
@@ -769,7 +769,7 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           ) : (
             <div 
               dangerouslySetInnerHTML={{ __html: material.content }}
-              className="break-words"
+              className="break-words p-4"
             />
           )}
         </div>
@@ -782,20 +782,20 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         try {
           const exercise = JSON.parse(material.content);
           return (
-            <Card className="p-4 max-w-2xl mx-auto">
-              <h3 className="text-xl font-bold mb-4">{exercise.title || 'Exercise'}</h3>
+            <Card className="p-6 max-w-2xl mx-auto bg-white rounded-lg border-2 border-gray-100 shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-primary-800 border-b pb-2">{exercise.title || 'Exercise'}</h3>
               <div className="space-y-4">
                 {exercise.questions?.map((question: any, index: number) => (
-                  <div key={index} className="p-3 border rounded-md">
-                    <p className="font-medium">{index + 1}. {question.text}</p>
+                  <div key={index} className="p-4 border rounded-md bg-gray-50">
+                    <p className="font-medium text-gray-800">{index + 1}. {question.text}</p>
                     {question.options && (
-                      <div className="mt-2 space-y-2">
+                      <div className="mt-3 space-y-2">
                         {question.options.map((option: string, optIndex: number) => (
-                          <label key={optIndex} className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-50 rounded-md">
+                          <label key={optIndex} className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-white rounded-md border border-gray-100">
                             <input 
                               type="radio" 
                               name={`question-${index}`} 
-                              className="h-4 w-4 text-blue-600" 
+                              className="h-4 w-4 text-primary-600" 
                             />
                             <span>{option}</span>
                           </label>
@@ -810,26 +810,26 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         } catch (e) {
           // If JSON parsing fails, fall back to treating it as HTML
           return (
-            <div className="prose prose-lg max-w-none mx-auto px-4 py-2">
-              <div dangerouslySetInnerHTML={{ __html: material.content }} className="break-words" />
+            <div className="prose prose-lg max-w-none mx-auto px-4 py-4 bg-white rounded-lg border-2 border-gray-100 shadow-md">
+              <div dangerouslySetInnerHTML={{ __html: material.content }} className="break-words p-2" />
             </div>
           );
         }
       } else {
         // If it doesn't look like JSON, treat it as HTML content
         return (
-          <div className="prose prose-lg max-w-none mx-auto px-4 py-2">
-            <div dangerouslySetInnerHTML={{ __html: material.content }} className="break-words" />
+          <div className="prose prose-lg max-w-none mx-auto px-4 py-4 bg-white rounded-lg border-2 border-gray-100 shadow-md">
+            <div dangerouslySetInnerHTML={{ __html: material.content }} className="break-words p-2" />
           </div>
         );
       }
     }
       
-    // Default case
+    // Default case - with CONSISTENT STYLING
     return (
-      <div className="text-center p-4">
-        <p>Unsupported content type: {material.contentType}</p>
-        <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">{material.content}</pre>
+      <div className="text-center p-6 bg-white rounded-lg border-2 border-gray-100 shadow-md">
+        <p className="text-gray-700 mb-2">Unsupported content type: {material.contentType}</p>
+        <pre className="mt-3 text-xs bg-gray-50 p-3 rounded-md border border-gray-200 overflow-auto max-w-full">{material.content}</pre>
       </div>
     );
   };
@@ -893,7 +893,7 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Display formatted question if available - BEFORE the content for visual flow */}
+      {/* STANDARDIZED QUESTION DISPLAY - Always use consistent styling */}
       {formattedQuestion && (
         <motion.div 
           className="mb-6 text-center"
@@ -901,36 +901,42 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
         >
-          <h2 className="text-2xl font-bold mb-3">{formattedQuestion}</h2>
-          {answer && (
-            <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-100 shadow-sm">
-              <p className="text-lg text-gray-700 font-medium">{answer}</p>
-            </div>
-          )}
+          <div className="bg-primary-50 py-4 px-6 rounded-lg border-b-2 border-primary-200 shadow-sm">
+            <h2 className="text-2xl font-bold mb-2 text-primary-800">{formattedQuestion}</h2>
+            {answer && (
+              <div className="mt-3 p-3 bg-white rounded-md border border-gray-100 shadow-sm inline-block min-w-[250px]">
+                <p className="text-lg text-gray-700 font-medium">{answer}</p>
+              </div>
+            )}
+          </div>
         </motion.div>
       )}
       
-      {/* Fallback to original title if question formatting failed */}
+      {/* Fallback to original title if question formatting failed - with CONSISTENT STYLING */}
       {!question && material.title && (
-        <motion.h2 
-          className="text-xl font-semibold text-center mb-4"
+        <motion.div
+          className="mb-6 text-center"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
         >
-          {material.title}
-        </motion.h2>
+          <div className="bg-primary-50 py-4 px-6 rounded-lg border-b-2 border-primary-200 shadow-sm">
+            <h2 className="text-2xl font-bold text-primary-800">{material.title}</h2>
+          </div>
+        </motion.div>
       )}
       
       {material.description && !question && (
-        <motion.p 
-          className="text-gray-600 text-center mb-6"
+        <motion.div
+          className="mb-6 text-center"
           initial={{ y: -5, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.3 }}
         >
-          {material.description}
-        </motion.p>
+          <div className="mt-3 p-3 bg-white rounded-md border border-gray-100 shadow-sm inline-block">
+            <p className="text-lg text-gray-700">{material.description}</p>
+          </div>
+        </motion.div>
       )}
       
       {/* Content comes after the question/title */}
