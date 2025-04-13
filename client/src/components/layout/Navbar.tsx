@@ -14,6 +14,19 @@ const Navbar = () => {
   const navigateToAuth = () => {
     window.location.href = "/auth";
   };
+  
+  const scrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    const element = document.getElementById(sectionId);
+    if (element) {
+      setMobileMenuOpen(false);
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">

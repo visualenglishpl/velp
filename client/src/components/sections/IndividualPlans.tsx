@@ -19,7 +19,7 @@ const PricingPlans = () => {
       buttonColor: "bg-black hover:bg-gray-800",
     },
     {
-      title: "Single Lesson Digital Access",
+      title: "Single Lesson\nDigital Access",
       color: "bg-blue-500",
       textColor: "text-blue-500",
       checkColor: "text-blue-500",
@@ -36,7 +36,7 @@ const PricingPlans = () => {
       buttonColor: "bg-black hover:bg-gray-800",
     },
     {
-      title: "Whole Book Digital Access",
+      title: "Whole Book\nDigital Access",
       color: "bg-violet-600",
       textColor: "text-violet-600",
       checkColor: "text-violet-600",
@@ -82,24 +82,24 @@ const PricingPlans = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
-            <div key={index} className="flex flex-col h-full">
-              {/* Header */}
-              <div className={`${plan.headerBg} text-white p-6 text-center rounded-t-lg`}>
+            <div key={index} className="flex flex-col h-full bg-white rounded-lg shadow overflow-hidden border border-gray-100">
+              {/* Header - Fixed height for all headers */}
+              <div className={`${plan.headerBg} text-white py-5 px-4 text-center h-[100px] flex flex-col justify-center`}>
                 {plan.popular && (
-                  <div className="text-sm font-medium mb-1">
+                  <div className="text-sm font-medium -mt-1 mb-1 whitespace-nowrap">
                     Most Popular
                   </div>
                 )}
-                <h3 className="text-xl font-bold whitespace-pre-line">
+                <h3 className="text-xl font-bold leading-tight whitespace-pre-line">
                   {plan.title}
                 </h3>
               </div>
               
-              {/* Content */}
-              <div className="bg-white flex-grow p-6 flex flex-col">
-                <ul className="space-y-3 mb-auto">
+              {/* Content - Fixed height list section */}
+              <div className="flex-grow p-6 flex flex-col justify-between">
+                <ul className="space-y-4 min-h-[180px]">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
                       <Check className={`h-5 w-5 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
@@ -108,12 +108,13 @@ const PricingPlans = () => {
                   ))}
                 </ul>
                 
-                <div className="mt-6 pt-6 text-center">
+                {/* Fixed height pricing section */}
+                <div className="mt-6 pt-4 text-center h-[140px] flex flex-col justify-end border-t border-gray-100">
                   <div className="text-sm text-gray-500 mb-1">{plan.priceSubtext}</div>
                   <div className="text-4xl font-bold mb-6">{plan.price}</div>
                   
                   <button 
-                    className={`w-full py-2 px-4 rounded font-medium ${plan.buttonColor} text-white`}
+                    className={`w-full py-3 px-4 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out`}
                   >
                     {plan.buttonText}
                   </button>
