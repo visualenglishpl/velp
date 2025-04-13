@@ -524,100 +524,36 @@ export default function DirectContentViewer() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50" ref={contentContainerRef}>
-      {/* Header with navigation - hidden in fullscreen mode */}
+      {/* Simplified header - hidden in fullscreen mode */}
       {!isFullscreen && (
-        <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-          <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+        <header className="bg-white border-b sticky top-0 z-10">
+          <div className="container mx-auto px-4 py-2 flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold uppercase">
-                BOOK {bookPath ? bookPath.replace(/[^\d]/g, '') : ''}
-              </h1>
-              <h2 className="text-lg text-gray-600 uppercase">
-                UNIT {unitPath ? unitPath.replace(/[^\d]/g, '') : ''} {unitData?.title ? `- ${unitData.title}` : ''}
-              </h2>
-              
-              {/* Unit description */}
-              {unitDescription && (
-                <p className="text-sm mt-1 text-gray-700 max-w-xl">
-                  {unitDescription}
-                </p>
-              )}
-              
-              {/* Progress indicator */}
-              <div className="flex items-center gap-2 mt-1">
-                <div className="text-sm text-gray-500 flex items-center">
-                  <span>Slide {currentSlideIndex + 1} of {materials.length}</span>
-                  <span className="mx-2">•</span>
-                  <span className="text-green-600">{slidesInView.length} viewed</span>
-                </div>
-              </div>
-              
-              {/* Progress bar */}
-              <div className="mt-2 w-full md:w-80">
-                <Progress 
-                  value={(slidesInView.length / (materials?.length || 1)) * 100} 
-                  className="h-2"
-                  aria-label="Progress through unit"
-                />
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg font-semibold uppercase">
+                  BOOK {bookPath ? bookPath.replace(/[^\d]/g, '') : ''} /
+                  UNIT {unitPath ? unitPath.replace(/[^\d]/g, '') : ''}
+                </h1>
+                <span className="text-sm text-gray-500">
+                  Slide {currentSlideIndex + 1}/{materials.length}
+                </span>
               </div>
             </div>
             
             <div className="flex gap-2 items-center">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      onClick={() => setIsFullscreen(!isFullscreen)}
-                      variant="outline" 
-                      size="icon"
-                      className="h-8 w-8"
-                    >
-                      {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{isFullscreen ? "Exit fullscreen (F)" : "Enter fullscreen (F)"}</p>
-                  </TooltipContent>
-                </Tooltip>
-                
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="icon"
-                      className="h-8 w-8"
-                      asChild
-                    >
-                      <div>
-                        <Info className="h-4 w-4" />
-                      </div>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <div className="space-y-2 max-w-xs">
-                      <p className="font-medium">Unit Information:</p>
-                      <p className="text-sm">{unitDescription}</p>
-                      <div className="border-t border-gray-200 mt-2 pt-2">
-                        <p className="font-medium">Keyboard shortcuts:</p>
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                          <span>← / →</span>
-                          <span>Previous / Next</span>
-                          <span>F</span>
-                          <span>Toggle fullscreen</span>
-                        </div>
-                      </div>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              
-              <Button onClick={() => navigate("/admin/books")} variant="outline" size="sm">
-                <Book className="mr-2 h-4 w-4" />
-                Books List
+              <Button 
+                onClick={() => setIsFullscreen(!isFullscreen)}
+                variant="ghost" 
+                size="sm"
+                className="h-8"
+              >
+                <Maximize2 className="h-4 w-4 mr-1" />
+                Fullscreen
               </Button>
-              <Button onClick={() => navigate("/")} variant="ghost" size="sm">
-                <Home className="mr-2 h-4 w-4" />
-                Home
+              
+              <Button onClick={() => navigate("/admin/books")} variant="ghost" size="sm">
+                <Book className="mr-1 h-4 w-4" />
+                Books
               </Button>
             </div>
           </div>
@@ -707,37 +643,9 @@ export default function DirectContentViewer() {
                 </div>
               </div>
               
-              {/* Simplified Navigation Controls - Removed First/Last buttons */}
-              <div className="absolute top-0 left-0 right-0 flex justify-center items-center px-4 py-3 bg-white/80 backdrop-blur-sm border-b border-gray-200 z-10">
-                <div className="flex items-center gap-6">
-                  <Button 
-                    onClick={scrollPrev} 
-                    variant="outline" 
-                    size="icon" 
-                    className="rounded-full h-10 w-10 flex items-center justify-center"
-                    disabled={currentSlideIndex === 0}
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </Button>
-                  
-                  <Button 
-                    onClick={scrollNext} 
-                    variant="outline" 
-                    size="icon" 
-                    className="rounded-full h-10 w-10 flex items-center justify-center"
-                    disabled={currentSlideIndex === materials.length - 1}
-                  >
-                    <ChevronRight className="h-5 w-5" />
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Current slide indicator */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md text-sm">
-                Viewed: {currentSlideIndex + 1} of {materials.length} slides
-                <div className="text-xs text-gray-600 mt-1 text-center">
-                  Use keyboard arrow keys ← → to navigate between slides
-                </div>
+              {/* Minimal slide controls removed to reduce clutter */}
+              <div className="absolute bottom-2 right-2 bg-white/60 backdrop-blur-sm px-2 py-1 rounded text-xs text-gray-600 z-10">
+                {currentSlideIndex + 1}/{materials.length}
               </div>
               
               {/* Unit description in fullscreen mode */}
@@ -776,25 +684,14 @@ export default function DirectContentViewer() {
             </div>
           </div>
 
-          {/* Thumbnails below main content - shown in both modes but styled differently */}
-          <div className={`${isFullscreen ? 'mt-2 bg-gray-900/80 p-3 rounded-t-lg border-t border-gray-700 absolute bottom-0 left-0 right-0 z-10' : 'mt-4 bg-white shadow rounded-lg p-4'}`}>
-            <div className="flex justify-between items-center mb-2">
-              <h3 className={`text-sm font-medium ${isFullscreen ? 'text-white' : 'text-gray-700'}`}>Lesson Slides</h3>
-              <div className={`text-sm ${isFullscreen ? 'text-gray-300' : 'text-gray-500'}`}>
-                Viewed: {slidesInView.length} of {materials.length} slides
-              </div>
-            </div>
+          {/* Minimalist thumbnails */}
+          <div className={`${isFullscreen ? 'mt-2 bg-black/70 p-2 absolute bottom-0 left-0 right-0 z-10' : 'mt-3 p-2'}`}>
             <ThumbnailsBar
               materials={materials}
               currentIndex={currentSlideIndex}
               onSelectSlide={onThumbnailClick}
               viewedSlides={slidesInView}
             />
-            
-            {/* Keyboard shortcuts info */}
-            <div className={`mt-2 text-center text-sm ${isFullscreen ? 'text-gray-300' : 'text-gray-500'}`}>
-              <p>Use keyboard arrow keys ← → to navigate between slides</p>
-            </div>
           </div>
         </div>
       </main>
