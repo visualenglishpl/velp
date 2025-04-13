@@ -118,11 +118,13 @@ const PricingPlans = () => {
                   <div className="text-sm text-gray-500 mb-1">{plan.priceSubtext}</div>
                   <div className="text-4xl font-bold mb-6">{plan.price}</div>
                   
-                  <button 
-                    className={`w-full py-3 px-4 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out`}
-                  >
-                    {plan.buttonText}
-                  </button>
+                  <Link href={`/checkout/${plan.planId}`}>
+                    <button 
+                      className={`w-full py-3 px-4 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out`}
+                    >
+                      {plan.buttonText}
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

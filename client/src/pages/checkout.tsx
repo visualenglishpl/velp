@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useLocation } from 'wouter';
+import { useLocation, useRoute } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,19 +8,25 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 
-// Simulate subscription types
-type PlanType = 'single_lesson' | 'whole_book' | 'printed_book';
+// Subscription types
+type PlanType = 'single_lesson' | 'whole_book' | 'printed_book' | 'free_trial';
 type BillingCycle = 'monthly' | 'yearly';
 
-interface CheckoutPageProps {
-  planId?: string;
-}
-
-export default function CheckoutPage({ planId = 'single_lesson' }: CheckoutPageProps) {
+export default function CheckoutPage() {
+  // Get the planId from the URL
+  const [, params] = useRoute('/checkout/:planId?');
+  const planId = params?.planId || 'single_lesson';
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [planType, setPlanType] = useState<PlanType>(planId as PlanType || 'single_lesson');
+  
+  // Update planType when URL parameter changes
+  useEffect(() => {
+    if (planId && ['single_lesson', 'whole_book', 'printed_book', 'free_trial'].includes(planId)) {
+      setPlanType(planId as PlanType);
+    }
+  }, [planId]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -55,6 +61,13 @@ export default function CheckoutPage({ planId = 'single_lesson' }: CheckoutPageP
         price: billingCycle === 'monthly' ? '€25' : '€180',
         cycle: billingCycle === 'monthly' ? 'month' : 'year',
         description: 'Full access to an entire book of lessons'
+      };
+    } else if (planType === 'free_trial') {
+      return {
+        name: '7-Day Free Trial',
+        price: 'Free',
+        cycle: 'trial',
+        description: 'Full access to the platform for 7 days'
       };
     } else {
       return {
@@ -107,13 +120,21 @@ export default function CheckoutPage({ planId = 'single_lesson' }: CheckoutPageP
                   <span className="font-bold text-lg">{planDetails.price}</span>
                 </div>
                 <div className="text-sm text-gray-500">
-                  {planDetails.cycle === 'one-time' ? 
-                    'One-time payment' : 
-                    `Billed ${billingCycle} (${billingCycle === 'monthly' ? 'monthly' : 'annually'})`}
+                  {planDetails.cycle === 'one-time' 
+                    ? 'One-time payment' 
+                    : planDetails.cycle === 'trial'
+                      ? '7-day free trial, then regular pricing applies'
+                      : `Billed ${billingCycle} (${billingCycle === 'monthly' ? 'monthly' : 'annually'})`}
                 </div>
+                
+                {planType === 'free_trial' && (
+                  <div className="text-sm text-amber-600 mt-2 font-medium">
+                    Note: A valid credit card is required to start your free trial. Your card will not be charged until the trial period ends.
+                  </div>
+                )}
                 <p className="text-sm text-gray-600">{planDetails.description}</p>
                 
-                {planType !== 'printed_book' && (
+                {(planType !== 'printed_book' && planType !== 'free_trial') && (
                   <div className="pt-4">
                     <Label className="font-medium mb-2 block">Billing Cycle</Label>
                     <div className="flex space-x-4">
@@ -279,7 +300,10 @@ export default function CheckoutPage({ planId = 'single_lesson' }: CheckoutPageP
 
                 <CardFooter className="flex justify-end px-0 pt-4">
                   <Button type="submit" disabled={isProcessing} className="w-full">
-                    {isProcessing ? 'Processing...' : `Pay ${planDetails.price}`}
+                    {isProcessing ? 'Processing...' : 
+                      planType === 'free_trial' 
+                        ? 'Start Free Trial' 
+                        : `Pay ${planDetails.price}`}
                   </Button>
                 </CardFooter>
               </form>
