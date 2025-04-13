@@ -437,135 +437,148 @@ export default function DirectContentViewer() {
         </header>
       )}
 
-      <main className="flex-grow container mx-auto px-4 pb-12 pt-4">
-        {/* Carousel wrapper */}
-        <div className={`relative bg-white shadow rounded-lg overflow-hidden mb-8 transition-all duration-300
-          ${isFullscreen ? 'fixed inset-0 z-50 bg-black h-screen max-h-screen m-0 flex items-center justify-center rounded-none' : ''}`}>
-          
-          {/* Exit fullscreen button - only visible in fullscreen mode */}
-          {isFullscreen && (
-            <Button 
-              onClick={() => setIsFullscreen(false)}
-              variant="outline" 
-              size="icon"
-              className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 border-0 rounded-full z-50"
-            >
-              <Minimize2 className="h-4 w-4 text-white" />
-            </Button>
-          )}
-          
-          {/* Sliding progress indicator */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 z-10">
-            <motion.div 
-              className="h-full bg-primary"
-              initial={{ width: 0 }}
-              animate={{ 
-                width: `${((currentSlideIndex + 1) / materials.length) * 100}%` 
-              }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 100, 
-                damping: 15,
-                mass: 0.5
-              }}
-            />
-          </div>
-          
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
-              {materials.map((material, index) => (
+      <main className="flex-grow container mx-auto px-4 pb-6 pt-4">
+        {/* Two-column layout for desktop */}
+        <div className={`grid ${isFullscreen ? '' : 'grid-cols-1 lg:grid-cols-3 gap-4'}`}>
+          {/* Main Carousel wrapper */}
+          <div className={`${isFullscreen ? '' : 'col-span-1 lg:col-span-2'}`}>
+            <div className={`relative bg-white shadow rounded-lg overflow-hidden transition-all duration-300
+              ${isFullscreen ? 'fixed inset-0 z-50 bg-black h-screen max-h-screen m-0 flex items-center justify-center rounded-none' : 'h-[70vh]'}`}>
+              
+              {/* Exit fullscreen button - only visible in fullscreen mode */}
+              {isFullscreen && (
+                <Button 
+                  onClick={() => setIsFullscreen(false)}
+                  variant="outline" 
+                  size="icon"
+                  className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 border-0 rounded-full z-50"
+                >
+                  <Minimize2 className="h-4 w-4 text-white" />
+                </Button>
+              )}
+              
+              {/* Sliding progress indicator */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 z-10">
                 <motion.div 
-                  key={index} 
-                  className="flex-[0_0_100%] min-w-0"
-                  initial={{ opacity: 0 }}
+                  className="h-full bg-primary"
+                  initial={{ width: 0 }}
                   animate={{ 
-                    opacity: index === currentSlideIndex ? 1 : 0.4,
-                    scale: index === currentSlideIndex ? 1 : 0.98,
+                    width: `${((currentSlideIndex + 1) / materials.length) * 100}%` 
                   }}
                   transition={{ 
-                    opacity: { duration: 0.5 },
-                    scale: { duration: 0.3 }
+                    type: "spring", 
+                    stiffness: 100, 
+                    damping: 15,
+                    mass: 0.5
                   }}
+                />
+              </div>
+              
+              <div className="overflow-hidden h-full" ref={emblaRef}>
+                <div className="flex h-full">
+                  {materials.map((material, index) => (
+                    <motion.div 
+                      key={index} 
+                      className="flex-[0_0_100%] min-w-0 h-full"
+                      initial={{ opacity: 0 }}
+                      animate={{ 
+                        opacity: index === currentSlideIndex ? 1 : 0.4,
+                        scale: index === currentSlideIndex ? 1 : 0.98,
+                      }}
+                      transition={{ 
+                        opacity: { duration: 0.5 },
+                        scale: { duration: 0.3 }
+                      }}
+                    >
+                      <ContentSlide 
+                        material={material}
+                        isActive={index === currentSlideIndex}
+                        bookId={bookPath || ""}
+                        unitNumber={unitNumber} 
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Navigation controls */}
+              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 p-4">
+                <Button 
+                  onClick={scrollPrev} 
+                  variant="secondary" 
+                  size="icon" 
+                  className="rounded-full shadow-md"
+                  disabled={currentSlideIndex === 0}
                 >
-                  <ContentSlide 
-                    material={material}
-                    isActive={index === currentSlideIndex}
-                    bookId={bookPath || ""}
-                    unitNumber={unitNumber} 
-                  />
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
+              </div>
+              
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 p-4">
+                <Button 
+                  onClick={scrollNext} 
+                  variant="secondary" 
+                  size="icon" 
+                  className="rounded-full shadow-md"
+                  disabled={currentSlideIndex === materials.length - 1}
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </Button>
+              </div>
+              
+              {/* Current slide indicator */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full shadow-md text-sm">
+                {currentSlideIndex + 1} / {materials.length}
+              </div>
+              
+              {/* Keyboard feedback indicator */}
+              {keyboardFeedback && (
+                <motion.div 
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                          bg-black/70 text-white px-4 py-2 rounded-lg shadow-lg backdrop-blur-sm
+                          flex items-center gap-2 z-50"
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ type: "spring", duration: 0.3 }}
+                >
+                  {keyboardFeedback === "Previous slide" && <ChevronLeft className="h-5 w-5" />}
+                  {keyboardFeedback === "Next slide" && <ChevronRight className="h-5 w-5" />}
+                  {keyboardFeedback === "First slide" && <ChevronLeft className="h-5 w-5 mr-0.5" />}
+                  {keyboardFeedback === "Last slide" && <ChevronRight className="h-5 w-5 mr-0.5" />}
+                  {keyboardFeedback.includes("fullscreen") && (
+                    isFullscreen ? <Minimize2 className="h-5 w-5" /> : <Maximize2 className="h-5 w-5" />
+                  )}
+                  <span className="font-medium">{keyboardFeedback}</span>
                 </motion.div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Navigation controls */}
-          <div className="absolute left-0 top-1/2 transform -translate-y-1/2 p-4">
-            <Button 
-              onClick={scrollPrev} 
-              variant="secondary" 
-              size="icon" 
-              className="rounded-full shadow-md"
-              disabled={currentSlideIndex === 0}
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </Button>
-          </div>
-          
-          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 p-4">
-            <Button 
-              onClick={scrollNext} 
-              variant="secondary" 
-              size="icon" 
-              className="rounded-full shadow-md"
-              disabled={currentSlideIndex === materials.length - 1}
-            >
-              <ChevronRight className="h-6 w-6" />
-            </Button>
-          </div>
-          
-          {/* Current slide indicator */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full shadow-md text-sm">
-            {currentSlideIndex + 1} / {materials.length}
-          </div>
-          
-          {/* Keyboard feedback indicator */}
-          {keyboardFeedback && (
-            <motion.div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                       bg-black/70 text-white px-4 py-2 rounded-lg shadow-lg backdrop-blur-sm
-                       flex items-center gap-2 z-50"
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ type: "spring", duration: 0.3 }}
-            >
-              {keyboardFeedback === "Previous slide" && <ChevronLeft className="h-5 w-5" />}
-              {keyboardFeedback === "Next slide" && <ChevronRight className="h-5 w-5" />}
-              {keyboardFeedback === "First slide" && <ChevronLeft className="h-5 w-5 mr-0.5" />}
-              {keyboardFeedback === "Last slide" && <ChevronRight className="h-5 w-5 mr-0.5" />}
-              {keyboardFeedback.includes("fullscreen") && (
-                isFullscreen ? <Minimize2 className="h-5 w-5" /> : <Maximize2 className="h-5 w-5" />
               )}
-              <span className="font-medium">{keyboardFeedback}</span>
-            </motion.div>
+            </div>
+
+            {/* Keyboard shortcuts info - hidden when in fullscreen mode and on desktop view */}
+            {!isFullscreen && (
+              <div className="mt-2 text-center text-sm text-gray-500 lg:hidden">
+                <p>Use keyboard arrow keys ← → to navigate between slides</p>
+              </div>
+            )}
+          </div>
+
+          {/* Thumbnails sidebar - hidden when in fullscreen mode */}
+          {!isFullscreen && (
+            <div className="col-span-1 bg-white shadow rounded-lg p-3 h-[70vh] overflow-auto flex flex-col">
+              <h3 className="text-sm font-medium mb-2 text-gray-700">Lesson Slides</h3>
+              <ThumbnailsBar
+                materials={materials}
+                currentIndex={currentSlideIndex}
+                onSelectSlide={onThumbnailClick}
+                viewedSlides={slidesInView}
+              />
+            </div>
           )}
         </div>
-
-        {/* Thumbnails bar - hidden when in fullscreen mode */}
-        {!isFullscreen && (
-          <div className="bg-white shadow rounded-lg p-4">
-            <ThumbnailsBar
-              materials={materials}
-              currentIndex={currentSlideIndex}
-              onSelectSlide={onThumbnailClick}
-              viewedSlides={slidesInView}
-            />
-          </div>
-        )}
         
-        {/* Keyboard shortcuts info - hidden when in fullscreen mode */}
+        {/* Keyboard shortcuts info at the bottom of the page */}
         {!isFullscreen && (
-          <div className="mt-4 text-center text-sm text-gray-500">
+          <div className="mt-4 text-center text-sm text-gray-500 hidden lg:block">
             <p>Use keyboard arrow keys ← → to navigate between slides</p>
           </div>
         )}

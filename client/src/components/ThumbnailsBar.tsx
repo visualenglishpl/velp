@@ -161,11 +161,33 @@ export default function ThumbnailsBar({
     return null; // No thumbnail available
   };
   
+  // Check if the layout should be vertical (for sidebar) or horizontal (original)
+  // We'll detect this by checking the parent element's width vs height
+  const [isVerticalLayout, setIsVerticalLayout] = useState(false);
+
+  useEffect(() => {
+    const checkLayout = () => {
+      if (scrollRef.current) {
+        const parent = scrollRef.current.parentElement;
+        if (parent) {
+          // If parent is taller than it is wide, we'll use vertical layout
+          const isVertical = parent.clientHeight > parent.clientWidth * 1.2; 
+          setIsVerticalLayout(isVertical);
+        }
+      }
+    };
+
+    checkLayout();
+    window.addEventListener('resize', checkLayout);
+    return () => window.removeEventListener('resize', checkLayout);
+  }, []);
+
   return (
-    <div className="mt-4">
-      <ScrollArea>
+    <div className="flex-1 flex flex-col">
+      {/* Thumbnail grid/list */}
+      <ScrollArea className="flex-1">
         <div 
-          className="flex space-x-2 p-2 bg-gray-50 rounded-lg" 
+          className={`p-2 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-2' : 'flex flex-row space-x-2'}`}
           ref={scrollRef}
         >
           {materials.map((material, index) => {
@@ -178,17 +200,19 @@ export default function ThumbnailsBar({
               <motion.div
                 key={index} // Using index as key since material.id might not be reliable
                 className={`
-                  relative p-2 rounded-md cursor-pointer
+                  relative p-2 rounded-md cursor-pointer 
                   ${isActive ? 'active-thumbnail bg-primary/10 border border-primary/30' : 'hover:bg-gray-100'}
+                  ${isVerticalLayout ? 'w-full' : 'w-24'}
                 `}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.01 }}
                 onClick={() => onSelectSlide(index)}
               >
-                <div className="flex flex-col items-center w-24">
+                <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'}`}>
                   <div className={`
-                    h-16 w-16 rounded flex items-center justify-center overflow-hidden
+                    ${isVerticalLayout ? 'h-12 w-12 mr-3' : 'h-16 w-16'} 
+                    rounded flex items-center justify-center overflow-hidden
                     ${isActive ? 'bg-primary/5 ring-2 ring-primary' : 'bg-gray-100'}
                   `}>
                     {thumbnailUrl ? (
@@ -220,12 +244,15 @@ export default function ThumbnailsBar({
                       </div>
                     )}
                   </div>
-                  <span className="text-xs mt-2 text-center font-medium">
-                    {truncateTitle(formattedTitle, 20)}
-                  </span>
-                  <span className="text-xs text-gray-500">
-                    {index + 1}/{materials.length}
-                  </span>
+                  
+                  <div className={isVerticalLayout ? 'flex-1' : 'w-full text-center'}>
+                    <div className="text-xs mt-1 font-medium">
+                      {truncateTitle(formattedTitle, isVerticalLayout ? 30 : 20)}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {index + 1}/{materials.length}
+                    </div>
+                  </div>
                   
                   {/* Viewed indicator */}
                   {isViewed && !isActive && (
@@ -237,7 +264,7 @@ export default function ThumbnailsBar({
                   {/* Active indicator */}
                   {isActive && (
                     <motion.div 
-                      className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-full"
+                      className={`absolute ${isVerticalLayout ? 'left-0 top-0 bottom-0 w-1' : 'bottom-0 left-0 right-0 h-1'} bg-primary rounded-full`}
                       layoutId="activeIndicator"
                     />
                   )}
@@ -246,9 +273,10 @@ export default function ThumbnailsBar({
             );
           })}
         </div>
-        <ScrollBar orientation="horizontal" />
+        <ScrollBar orientation={isVerticalLayout ? "vertical" : "horizontal"} />
       </ScrollArea>
       
+      {/* Navigation controls */}
       <div className="mt-4 flex justify-between">
         <Button
           variant="outline"
@@ -266,7 +294,7 @@ export default function ThumbnailsBar({
             onClick={() => onSelectSlide(currentIndex - 1)}
             disabled={currentIndex === 0}
           >
-            Previous
+            &lt;
           </Button>
           <Button
             variant="outline"
@@ -274,7 +302,7 @@ export default function ThumbnailsBar({
             onClick={() => onSelectSlide(currentIndex + 1)}
             disabled={currentIndex === materials.length - 1}
           >
-            Next
+            &gt;
           </Button>
         </div>
         
@@ -288,6 +316,7 @@ export default function ThumbnailsBar({
         </Button>
       </div>
       
+      {/* Progress indicator */}
       <div className="mt-4 flex justify-center">
         <div className="text-sm text-gray-500">
           Viewed: {viewedSlides.length} of {materials.length} slides
