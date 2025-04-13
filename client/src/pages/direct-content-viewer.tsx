@@ -290,7 +290,7 @@ export default function DirectContentViewer() {
     unitId: 0, // Not needed for direct access
   }));
   
-  // No duplicated declaration needed here
+  // Keyboard navigation code below
   
   // Add keyboard navigation - added after materials is defined
   useEffect(() => {
