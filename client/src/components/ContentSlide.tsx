@@ -25,7 +25,6 @@ interface ContentSlideProps {
 
 export default function ContentSlide({ material, isActive, bookId, unitNumber }: ContentSlideProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [zoomedIn, setZoomedIn] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -144,10 +143,11 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     return questionWords.some(word => lowerText.includes(word));
   };
 
+  // Reset state when the active slide changes
   useEffect(() => {
-    // Reset state when the active slide changes
     if (isActive) {
-      setZoomedIn(false);
+      setIsPlaying(false);
+      setIsMuted(false);
     }
   }, [isActive]);
 
@@ -177,49 +177,31 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     
     if (isImage) {
       return (
-        <div className={`relative overflow-hidden transition-all duration-300 ease-in-out ${zoomedIn ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}>
+        <div className="relative overflow-hidden transition-all duration-300 ease-in-out px-3">
           {!imageLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 h-[50vh]">
+            <div className="flex items-center justify-center bg-gray-100 h-[50vh] rounded-lg">
               <div className="w-full max-w-md p-4">
                 <div className="animate-pulse space-y-4">
                   <div className="h-40 bg-gray-300 rounded-md mx-auto"></div>
                   <div className="h-3 bg-gray-300 rounded w-3/4 mx-auto"></div>
                   <div className="h-3 bg-gray-300 rounded w-1/2 mx-auto"></div>
-                  <div className="flex justify-center space-x-2">
-                    <div className="rounded-full bg-gray-300 h-6 w-6"></div>
-                    <div className="rounded-full bg-gray-300 h-6 w-6"></div>
-                  </div>
                 </div>
               </div>
             </div>
           )}
           <motion.img
             src={getS3Url()}
-            alt={material.title}
-            className={`max-w-full max-h-[70vh] mx-auto object-contain transition-all duration-300 ${zoomedIn ? 'scale-150' : 'scale-100'}`}
-            onClick={() => setZoomedIn(!zoomedIn)}
+            alt={material.title || "Educational content"}
+            className="max-w-[90%] max-h-[50vh] mx-auto object-contain transition-all duration-300 rounded-lg"
             onLoad={handleImageLoad}
             onError={handleImageError}
             initial={{ opacity: 0 }}
             animate={{ opacity: imageLoaded ? 1 : 0 }}
             transition={{ duration: 0.3 }}
+            style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
           />
-          {imageLoaded && !isError && (
-            <Button
-              variant="secondary"
-              size="sm"
-              className="absolute bottom-2 right-2 bg-white/80 backdrop-blur-sm shadow-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                setZoomedIn(!zoomedIn);
-              }}
-            >
-              {zoomedIn ? <Minimize className="h-4 w-4 mr-1" /> : <Maximize className="h-4 w-4 mr-1" />}
-              {zoomedIn ? 'Zoom Out' : 'Zoom In'}
-            </Button>
-          )}
           {isError && (
-            <div className="text-center text-red-500 p-4">
+            <div className="text-center text-red-500 p-4 mt-2">
               <p>Failed to load image. Please try again later.</p>
             </div>
           )}
@@ -229,40 +211,23 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         
     if (contentType === 'video') {
       return (
-        <div className="relative">
-          <video
-            src={getS3Url()}
-            controls={isActive}
-            className="max-w-full max-h-[70vh] mx-auto"
-            autoPlay={isActive && isPlaying}
-            muted={isMuted}
-            playsInline
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onError={() => setIsError(true)}
-          />
-          <div className="absolute bottom-2 right-2 flex space-x-2">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="bg-white/80 backdrop-blur-sm shadow-md"
-              onClick={() => setIsPlaying(!isPlaying)}
-            >
-              {isPlaying ? <Pause className="h-4 w-4 mr-1" /> : <Play className="h-4 w-4 mr-1" />}
-              {isPlaying ? 'Pause' : 'Play'}
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="bg-white/80 backdrop-blur-sm shadow-md"
-              onClick={() => setIsMuted(!isMuted)}
-            >
-              {isMuted ? <VolumeX className="h-4 w-4 mr-1" /> : <Volume2 className="h-4 w-4 mr-1" />}
-              {isMuted ? 'Unmute' : 'Mute'}
-            </Button>
+        <div className="relative px-4">
+          <div className="bg-black/5 rounded-lg overflow-hidden shadow-lg">
+            <video
+              src={getS3Url()}
+              controls={true}
+              className="max-w-[90%] max-h-[50vh] mx-auto"
+              autoPlay={isActive && isPlaying}
+              muted={isMuted}
+              playsInline
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              onError={() => setIsError(true)}
+              style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+            />
           </div>
           {isError && (
-            <div className="text-center text-red-500 p-4">
+            <div className="text-center text-red-500 p-4 mt-2">
               <p>Failed to load video. Please try again later.</p>
             </div>
           )}
