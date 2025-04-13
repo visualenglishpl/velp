@@ -97,20 +97,26 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       }
     }
     
-    // Specific answer patterns requested by the user
-    if (normalizedQuestion === "is it lion or tiger pen?" || 
-        normalizedQuestion.includes("lion or tiger pen")) {
+    // Specific answer patterns requested by the user - applied to entire units
+    
+    // Handle specific color questions for all objects (pens, scissors, etc.)
+    if (normalizedQuestion.startsWith("what colour is")) {
+      // Extract the object being asked about
+      const match = normalizedQuestion.match(/what colour is (?:the|a) ([^?]+)/i);
+      const object = match ? match[1].trim() : "pen";
+      return `The ${object} is ..............`;
+    }
+    
+    if (normalizedQuestion.startsWith("what colour are")) {
+      // Extract the objects being asked about
+      const match = normalizedQuestion.match(/what colour are (?:the|these) ([^?]+)/i);
+      const objects = match ? match[1].trim() : "pens";
+      return `The ${objects} are ..........`;
+    }
+    
+    // Handle "is it X or Y" type questions
+    if (normalizedQuestion.startsWith("is it") && normalizedQuestion.includes(" or ")) {
       return "It is a ............";
-    }
-    
-    if (normalizedQuestion === "what colour is the pen?" || 
-        normalizedQuestion.includes("what colour is the pen")) {
-      return "The pen is ..............";
-    }
-    
-    if (normalizedQuestion === "what colour are the pens?" || 
-        normalizedQuestion.includes("what colour are the pens")) {
-      return "The pens are ..........";
     }
     
     // Special handling for Book 7 crime-related content
