@@ -125,10 +125,13 @@ export default function UnitsPage() {
                       {/* Try multiple image patterns in order */}
                       <img 
                         src={
-                          // Special case for problematic units 5, 8, 13
-                          ["5", "8", "13"].includes(unit.unitNumber) 
-                            ? `/api/direct/book${bookId}/unit${unit.unitNumber}/unit.png`
-                            : `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`
+                          // For Book 4, use a different format
+                          bookId === "4" 
+                            ? `/api/direct/book${bookId}/unit${unit.unitNumber}/00.png`
+                            : // Special case for problematic units 5, 8, 13
+                              ["5", "8", "13"].includes(unit.unitNumber) 
+                                ? `/api/direct/book${bookId}/unit${unit.unitNumber}/unit.png`
+                                : `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`
                         } 
                         alt={`Thumbnail for ${unit.title}`}
                         className="h-full w-full object-contain relative z-10"
@@ -190,7 +193,7 @@ export default function UnitsPage() {
                   {/* Free Sample button - always visible */}
                   <Link href={`/book${bookId}/unit${unit.unitNumber}`} className="w-full">
                     <Button className="w-full" variant={index === 0 || hasPurchased ? "default" : "secondary"}>
-                      {index === 0 ? 'Free Preview' : hasPurchased ? 'View Content' : 'Free Sample'}
+                      {hasPurchased ? 'View Content' : 'Free Sample'}
                     </Button>
                   </Link>
                   
