@@ -176,40 +176,83 @@ export default function DirectContentViewer() {
     }
   });
   
-  // Effect to set the initial slide to "00 A.png" when content loads
+  // Effect to set the initial slide to prioritize "00 E.png" or other "00 X.png" files when content loads
   useEffect(() => {
     if (!materialsData || !emblaApi || initialSlideSet) return;
     
-    // First filter out PDFs
+    // First filter out PDFs and SWF files
     const filteredMaterials = materialsData.filter(material => {
       const isPDF = 
         material.contentType === "PDF" || 
         material.content.toLowerCase().endsWith('.pdf');
       
+      const isSWF = 
+        material.contentType === "SWF" || 
+        material.content.toLowerCase().endsWith('.swf');
+      
       if (isPDF) {
         console.log(`Filtering out PDF: ${material.content}`);
       }
       
-      return !isPDF;
+      if (isSWF) {
+        console.log(`Filtering out SWF: ${material.content}`);
+      }
+      
+      return !isPDF && !isSWF;
     });
     
     if (filteredMaterials.length === 0) return;
     
-    // Look for the exact "00 A.png" file first
-    let startingIndex = filteredMaterials.findIndex(
-      material => material.content === "00 A.png"
-    );
+    // Define priority order for starting slides
+    const priorityPrefixes = [
+      "00 E", // User specified to start with 00 E first
+      "00 C", 
+      "00 A",
+      "00 B", 
+      "00 D"
+    ];
     
-    // If not found, look for any content that starts with "00 A"
+    // Try each priority prefix in order
+    let startingIndex = -1;
+    
+    for (const prefix of priorityPrefixes) {
+      // Try exact filename match first
+      const exactMatch = filteredMaterials.findIndex(
+        material => material.content === `${prefix}.png`
+      );
+      
+      if (exactMatch !== -1) {
+        startingIndex = exactMatch;
+        console.log(`Found starting slide with exact match: ${prefix}.png`);
+        break;
+      }
+      
+      // If no exact match, try prefix match
+      const prefixMatch = filteredMaterials.findIndex(
+        material => material.content.startsWith(prefix)
+      );
+      
+      if (prefixMatch !== -1) {
+        startingIndex = prefixMatch;
+        console.log(`Found starting slide with prefix: ${prefix}`);
+        break;
+      }
+    }
+    
+    // If no priority files were found, try any files that start with "00"
     if (startingIndex === -1) {
       startingIndex = filteredMaterials.findIndex(
-        material => material.content.startsWith("00 A")
+        material => material.content.startsWith("00")
       );
+      
+      if (startingIndex !== -1) {
+        console.log(`Found starting slide with generic "00" prefix at index ${startingIndex}`);
+      }
     }
     
     // If we found a matching slide, scroll to it
     if (startingIndex !== -1) {
-      console.log(`Found starting slide (00 A.png) at index ${startingIndex}`);
+      console.log(`Starting with slide at index ${startingIndex}: ${filteredMaterials[startingIndex].content}`);
       emblaApi.scrollTo(startingIndex);
       setCurrentSlideIndex(startingIndex);
       // Add to viewed slides
