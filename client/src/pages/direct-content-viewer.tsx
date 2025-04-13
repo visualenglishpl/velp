@@ -545,7 +545,16 @@ export default function DirectContentViewer() {
         <header className="bg-white border-b sticky top-0 z-10">
           <div className="container mx-auto px-4 py-2 flex items-center justify-between">
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => navigate(`/book/${bookPath}/units`)}
+                  className="flex items-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4"><path d="m15 18-6-6 6-6"/></svg>
+                  Back to Units
+                </Button>
                 <h1 className="text-lg font-semibold uppercase">
                   BOOK {bookPath ? bookPath.replace(/[^\d]/g, '') : ''} /
                   UNIT {unitPath ? unitPath.replace(/[^\d]/g, '') : ''}
