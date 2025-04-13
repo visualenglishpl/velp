@@ -327,18 +327,39 @@ export default function DirectContentViewer() {
     );
   }
 
-  // Filter out PDFs from materials and prepare for rendering
+  // Filter out PDFs and SWF files from materials and prepare for rendering
   const filteredMaterials = materialsData.filter(material => {
-    // Filter out PDF files
-    const isPDF = 
+    // Filter out PDF and SWF files
+    const excludedExtensions = ['.pdf', '.swf'];
+    const content = material.content.toLowerCase();
+    const shouldExclude = 
       material.contentType === "PDF" || 
-      material.content.toLowerCase().endsWith('.pdf');
+      material.contentType === "SWF" || 
+      excludedExtensions.some(ext => content.endsWith(ext));
     
-    return !isPDF;
+    return !shouldExclude;
+  });
+  
+  // Sort to ensure 00 A.png, 00 B.png, etc. files come first
+  const sortedMaterials = [...filteredMaterials].sort((a, b) => {
+    const aContent = a.content.toLowerCase();
+    const bContent = b.content.toLowerCase();
+    
+    // Check if content starts with "00"
+    const aStarts00 = aContent.startsWith("00");
+    const bStarts00 = bContent.startsWith("00");
+    
+    // If both start with 00 or both don't start with 00, sort alphabetically
+    if (aStarts00 === bStarts00) {
+      return aContent.localeCompare(bContent);
+    }
+    
+    // If only one starts with 00, prioritize it
+    return aStarts00 ? -1 : 1;
   });
   
   // Format for ContentSlide component
-  const materials = filteredMaterials.map((material: DirectMaterial) => ({
+  const materials = sortedMaterials.map((material: DirectMaterial) => ({
     ...material,
     // For ContentSlide component compatibility
     unitId: 0, // Not needed for direct access

@@ -364,23 +364,13 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Content comes first for questions with images */}
-      <motion.div 
-        className="flex-1 flex items-center justify-center"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.1, duration: 0.4 }}
-      >
-        {renderContent()}
-      </motion.div>
-      
-      {/* Display formatted question if available - AFTER the content for visual flow */}
+      {/* Display formatted question if available - BEFORE the content for visual flow */}
       {question && (
         <motion.div 
-          className="mt-6 text-center"
-          initial={{ y: 10, opacity: 0 }}
+          className="mb-6 text-center"
+          initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
+          transition={{ delay: 0.1, duration: 0.3 }}
         >
           <h2 className="text-2xl font-bold mb-3">{question}</h2>
           {answer && (
@@ -392,10 +382,10 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       {/* Fallback to original title if question formatting failed */}
       {!question && material.title && (
         <motion.h2 
-          className="text-xl font-semibold text-center mb-4 mt-4"
-          initial={{ y: 10, opacity: 0 }}
+          className="text-xl font-semibold text-center mb-4"
+          initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
+          transition={{ delay: 0.1, duration: 0.3 }}
         >
           {material.title}
         </motion.h2>
@@ -404,13 +394,23 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       {material.description && !question && (
         <motion.p 
           className="text-gray-600 text-center mb-6"
-          initial={{ y: 5, opacity: 0 }}
+          initial={{ y: -5, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.3 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
         >
           {material.description}
         </motion.p>
       )}
+      
+      {/* Content comes after the question/title */}
+      <motion.div 
+        className="flex-1 flex items-center justify-center"
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.4 }}
+      >
+        {renderContent()}
+      </motion.div>
     </motion.div>
   );
 }
