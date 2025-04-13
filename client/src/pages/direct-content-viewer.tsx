@@ -327,15 +327,24 @@ export default function DirectContentViewer() {
     );
   }
 
-  // Filter out PDFs and SWF files from materials and prepare for rendering
+  // Filter out PDFs, SWF files, and content that doesn't make sense
   const filteredMaterials = materialsData.filter(material => {
     // Filter out PDF and SWF files
     const excludedExtensions = ['.pdf', '.swf'];
     const content = material.content.toLowerCase();
+    
+    // Filter out anything that doesn't make sense
+    const nonsensePatterns = [
+      /nit\s*\d+\_page\_\d+/i,  // Pattern for "Nit 4_Page_1" etc.
+      /page\_\d+/i,             // Just "Page_1" etc.
+      /^\d+$/                   // Just numbers
+    ];
+    
     const shouldExclude = 
       material.contentType === "PDF" || 
       material.contentType === "SWF" || 
-      excludedExtensions.some(ext => content.endsWith(ext));
+      excludedExtensions.some(ext => content.endsWith(ext)) ||
+      nonsensePatterns.some(pattern => pattern.test(material.content));
     
     return !shouldExclude;
   });

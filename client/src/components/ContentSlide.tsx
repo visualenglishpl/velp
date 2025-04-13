@@ -53,6 +53,14 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     try {
       const content = material.content;
       
+      // Skip content that doesn't make sense for display
+      if (content.includes("Nit") || content.match(/Page_\d+/)) {
+        return {
+          question: null,
+          answer: null
+        };
+      }
+      
       // Remove file extension
       const withoutExtension = content.replace(/\.[^/.]+$/, "");
       
@@ -131,9 +139,9 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         answer: answerPrompt
       };
     } catch (error) {
-      // If any error, just return the content as is
+      // If any error, return null to hide unnecessary content
       return {
-        question: material.content,
+        question: null,
         answer: null
       };
     }
