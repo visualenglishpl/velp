@@ -15,9 +15,22 @@ interface ContentSlideProps {
   isActive: boolean;
   bookId: string;
   unitNumber: number;
+  slideIndex: number;
+  isPremium?: boolean;
+  hasPurchasedAccess?: boolean;
+  onPurchaseClick?: () => void;
 }
 
-export default function ContentSlide({ material, isActive, bookId, unitNumber }: ContentSlideProps) {
+export default function ContentSlide({ 
+  material, 
+  isActive, 
+  bookId, 
+  unitNumber, 
+  slideIndex, 
+  isPremium = false,
+  hasPurchasedAccess = false,
+  onPurchaseClick 
+}: ContentSlideProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -1053,14 +1066,33 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         </motion.div>
       )}
       
-      {/* Simple content display */}
+      {/* Content display with premium overlay if needed */}
       <motion.div 
-        className="flex-1 flex items-center justify-center p-4 bg-white shadow-sm border border-gray-200 mt-3"
+        className="flex-1 flex items-center justify-center p-4 bg-white shadow-sm border border-gray-200 mt-3 relative"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        {renderContent()}
+        {/* Main content rendering */}
+        <div className={isPremium && !hasPurchasedAccess ? "filter blur-md" : ""}>
+          {renderContent()}
+        </div>
+
+        {/* Premium content overlay */}
+        {isPremium && !hasPurchasedAccess && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm z-10 p-4 text-center">
+            <div className="bg-white/90 p-6 rounded-lg shadow-lg max-w-md">
+              <h3 className="text-xl font-bold mb-2 text-primary">Premium Content</h3>
+              <p className="mb-4">This slide is part of premium content. Purchase access to view all materials.</p>
+              <button 
+                onClick={onPurchaseClick}
+                className="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded transition duration-200"
+              >
+                Purchase Access
+              </button>
+            </div>
+          </div>
+        )}
       </motion.div>
     </motion.div>
   );

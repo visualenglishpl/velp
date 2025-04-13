@@ -57,7 +57,15 @@ export default function DirectContentViewer() {
   
   // State for access control
   const [hasPurchasedAccess, setHasPurchasedAccess] = useState(false);
+  const [showAccessDialog, setShowAccessDialog] = useState(false);
   const FREE_SLIDES_LIMIT = 10; // First 10 slides are free
+  
+  // Purchase handler function
+  const handlePurchaseClick = useCallback(() => {
+    setShowAccessDialog(true);
+    // Navigate to checkout page with the relevant plan details
+    navigate(`/checkout/unit?bookId=${bookPath}&unitId=${unitPath}`);
+  }, [bookPath, unitPath, navigate]);
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "center",
