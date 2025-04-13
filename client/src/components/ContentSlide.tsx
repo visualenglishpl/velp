@@ -379,6 +379,18 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     try {
       const content = material.content;
       
+      // Special handling for direct "What is it" files (one of the most important patterns)
+      if (content.includes("What is It") || content.toLowerCase().includes("what is it")) {
+        // Extract the answer part if available (after "–" or "-")
+        const answerMatch = content.match(/(?:–|-)(.+?)\.(?:jpg|jpeg|png|gif)$/i);
+        const answer = answerMatch ? answerMatch[1].trim() : "It is a pen";
+        
+        return {
+          question: "What is it?",
+          answer: answer
+        };
+      }
+      
       // Skip content that doesn't make sense for display
       if (content.includes("Nit") || content.match(/Page_\d+/)) {
         return {
