@@ -1390,6 +1390,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // New direct route that matches S3 path structure
+  app.get("/api/viewer/book7/unit12", isAuthenticated, async (req, res) => {
+    try {
+      console.log("Direct access to book7/unit12 viewer");
+      
+      // Return the unit information for Book 7 Unit 12
+      const unit = {
+        id: 178,
+        bookId: 10,
+        unitNumber: 12,
+        title: "HEALTHY LIFESTYLE", 
+        description: "Unit about healthy lifestyles"
+      };
+      
+      return res.json(unit);
+    } catch (err) {
+      console.error("Error fetching book7/unit12:", err);
+      res.status(500).json({ error: "Failed to fetch unit" });
+    }
+  });
+  
+  // Direct materials endpoint for book7/unit12
+  app.get("/api/viewer/book7/unit12/materials", isAuthenticated, async (req, res) => {
+    try {
+      console.log("Direct access to book7/unit12 materials");
+      
+      // Return sample materials for book7/unit12
+      const materials = [
+        {
+          id: 1781,
+          unitId: 178,
+          title: "Slide 1",
+          description: "Introduction slide",
+          contentType: "IMAGE",
+          content: "01.jpg",
+          orderIndex: 1,
+          isPublished: true,
+          isLocked: false,
+          order: 1,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 1782,
+          unitId: 178,
+          title: "Slide 2",
+          description: "Second slide",
+          contentType: "IMAGE",
+          content: "02.jpg",
+          orderIndex: 2,
+          isPublished: true,
+          isLocked: false,
+          order: 2,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 1783,
+          unitId: 178,
+          title: "Vocabulary",
+          description: null,
+          contentType: "lesson",
+          content: `<h2>Key Vocabulary for Unit 12</h2>
+          <ul>
+            <li><strong>Health</strong> - Physical and mental well-being</li>
+            <li><strong>Lifestyle</strong> - The way a person lives</li>
+            <li><strong>Exercise</strong> - Physical activity for fitness</li>
+            <li><strong>Nutrition</strong> - The process of consuming food for health</li>
+            <li><strong>Balance</strong> - Having the right amount of different activities</li>
+          </ul>`,
+          orderIndex: 3,
+          isPublished: true,
+          isLocked: false,
+          order: 3,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ];
+      
+      console.log(`Returning ${materials.length} materials for direct book7/unit12 path`);
+      return res.json(materials);
+    } catch (err) {
+      console.error("Error fetching direct book7/unit12 materials:", err);
+      res.status(500).json({ error: "Failed to fetch materials" });
+    }
+  });
+  
   // Generic asset endpoint for content viewer
   app.get("/api/assets/:bookId/:unitPath/:filename", isAuthenticated, async (req, res) => {
     try {
