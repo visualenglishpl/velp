@@ -290,6 +290,8 @@ export default function DirectContentViewer() {
     unitId: 0, // Not needed for direct access
   }));
   
+  // Keyboard navigation code below
+  
   // Add keyboard navigation - added after materials is defined
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -344,94 +346,94 @@ export default function DirectContentViewer() {
       {/* Header with navigation - hidden in fullscreen mode */}
       {!isFullscreen && (
         <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-          <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
-            <div>
-              <h1 className="text-2xl font-bold uppercase">
-                Book {bookPath ? bookPath.replace(/[^\d]/g, '') : ''}
-              </h1>
-              <h2 className="text-lg text-gray-600 uppercase">
-                Unit {unitPath ? unitPath.replace(/[^\d]/g, '') : ''} {unitData?.title ? `- ${unitData.title}` : ''}
-              </h2>
-              
-              {/* Progress indicator */}
-              <div className="flex items-center gap-2 mt-1">
-                <div className="text-sm text-gray-500 flex items-center">
-                  <span>Slide {currentSlideIndex + 1} of {materials.length}</span>
-                  <span className="mx-2">•</span>
-                  <span className="text-green-600">{slidesInView.length} viewed</span>
-                </div>
-              </div>
-              
-              {/* Progress bar */}
-              <div className="mt-2 w-full md:w-80">
-                <Progress 
-                  value={(slidesInView.length / (materials?.length || 1)) * 100} 
-                  className="h-2"
-                  aria-label="Progress through unit"
-                />
+        <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+          <div>
+            <h1 className="text-2xl font-bold uppercase">
+              Book {bookPath ? bookPath.replace(/[^\d]/g, '') : ''}
+            </h1>
+            <h2 className="text-lg text-gray-600 uppercase">
+              Unit {unitPath ? unitPath.replace(/[^\d]/g, '') : ''} {unitData?.title ? `- ${unitData.title}` : ''}
+            </h2>
+            
+            {/* Progress indicator */}
+            <div className="flex items-center gap-2 mt-1">
+              <div className="text-sm text-gray-500 flex items-center">
+                <span>Slide {currentSlideIndex + 1} of {materials.length}</span>
+                <span className="mx-2">•</span>
+                <span className="text-green-600">{slidesInView.length} viewed</span>
               </div>
             </div>
             
-            <div className="flex gap-2 items-center">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      onClick={() => setIsFullscreen(!isFullscreen)}
-                      variant="outline" 
-                      size="icon"
-                      className="h-8 w-8"
-                    >
-                      {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{isFullscreen ? "Exit fullscreen (F)" : "Enter fullscreen (F)"}</p>
-                  </TooltipContent>
-                </Tooltip>
-                
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="icon"
-                      className="h-8 w-8"
-                      asChild
-                    >
-                      <div>
-                        <Info className="h-4 w-4" />
-                      </div>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <div className="space-y-2 max-w-xs">
-                      <p className="font-medium">Keyboard shortcuts:</p>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                        <span>← / →</span>
-                        <span>Previous / Next</span>
-                        <span>Home / End</span>
-                        <span>First / Last slide</span>
-                        <span>F</span>
-                        <span>Toggle fullscreen</span>
-                      </div>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              
-              <Button onClick={() => navigate("/admin/books")} variant="outline" size="sm">
-                <Book className="mr-2 h-4 w-4" />
-                Books List
-              </Button>
-              <Button onClick={() => navigate("/")} variant="ghost" size="sm">
-                <Home className="mr-2 h-4 w-4" />
-                Home
-              </Button>
+            {/* Progress bar */}
+            <div className="mt-2 w-full md:w-80">
+              <Progress 
+                value={(slidesInView.length / (materials?.length || 1)) * 100} 
+                className="h-2"
+                aria-label="Progress through unit"
+              />
             </div>
           </div>
-        </header>
-      )}
+          
+          <div className="flex gap-2 items-center">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    onClick={() => setIsFullscreen(!isFullscreen)}
+                    variant="outline" 
+                    size="icon"
+                    className="h-8 w-8"
+                  >
+                    {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{isFullscreen ? "Exit fullscreen (F)" : "Enter fullscreen (F)"}</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="icon"
+                    className="h-8 w-8"
+                    asChild
+                  >
+                    <div>
+                      <Info className="h-4 w-4" />
+                    </div>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="space-y-2 max-w-xs">
+                    <p className="font-medium">Keyboard shortcuts:</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                      <span>← / →</span>
+                      <span>Previous / Next</span>
+                      <span>Home / End</span>
+                      <span>First / Last slide</span>
+                      <span>F</span>
+                      <span>Toggle fullscreen</span>
+                    </div>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
+            <Button onClick={() => navigate("/admin/books")} variant="outline" size="sm">
+              <Book className="mr-2 h-4 w-4" />
+              Books List
+            </Button>
+            <Button onClick={() => navigate("/")} variant="ghost" size="sm">
+              <Home className="mr-2 h-4 w-4" />
+              Home
+            </Button>
+          </div>
+        </div>
+      </header>
 
+      {/* Main content */}
       <main className="flex-grow container mx-auto px-4 pb-12 pt-4">
         {/* Carousel wrapper */}
         <div className={`relative bg-white shadow rounded-lg overflow-hidden mb-8 transition-all duration-300
@@ -448,7 +450,6 @@ export default function DirectContentViewer() {
               <Minimize2 className="h-4 w-4 text-white" />
             </Button>
           )}
-          
           {/* Sliding progress indicator */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 z-10">
             <motion.div 
