@@ -1,11 +1,14 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from "embla-carousel-react";
 import ContentSlide from "@/components/ContentSlide";
 import ThumbnailsBar from "@/components/ThumbnailsBar";
-import { Loader2, ChevronLeft, ChevronRight, Book, Home } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, AlertCircle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { Progress } from "@/components/ui/progress";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 // Direct material type from the new S3 direct paths
 type DirectMaterial = {
@@ -49,6 +52,7 @@ export default function DirectContentViewer() {
   const [slidesInView, setSlidesInView] = useState<number[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [initialSlideSet, setInitialSlideSet] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "center",
@@ -99,6 +103,29 @@ export default function DirectContentViewer() {
       emblaApi.off("select", onSelect);
     };
   }, [emblaApi]);
+  
+  // Handle fullscreen mode
+  const contentContainerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    if (!contentContainerRef.current) return;
+    
+    if (isFullscreen) {
+      try {
+        if (contentContainerRef.current.requestFullscreen) {
+          contentContainerRef.current.requestFullscreen();
+        }
+      } catch (error) {
+        console.error("Error attempting to enable fullscreen:", error);
+      }
+    } else if (document.fullscreenElement) {
+      try {
+        document.exitFullscreen();
+      } catch (error) {
+        console.error("Error attempting to exit fullscreen:", error);
+      }
+    }
+  }, [isFullscreen]);
 
   // Use more robust custom queries with better error handling
   const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery<DirectUnit>({
@@ -263,7 +290,7 @@ export default function DirectContentViewer() {
   }));
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-gray-50" ref={contentContainerRef}>
       {/* Header with navigation */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
@@ -274,11 +301,73 @@ export default function DirectContentViewer() {
             <h2 className="text-lg text-gray-600 uppercase">
               Unit {unitPath ? unitPath.replace(/[^\d]/g, '') : ''} {unitData?.title ? `- ${unitData.title}` : ''}
             </h2>
-            <p className="text-sm text-gray-500">
-              Slide {currentSlideIndex + 1} of {materials.length}
-            </p>
+            
+            {/* Progress indicator */}
+            <div className="flex items-center gap-2 mt-1">
+              <div className="text-sm text-gray-500 flex items-center">
+                <span>Slide {currentSlideIndex + 1} of {materials.length}</span>
+                <span className="mx-2">•</span>
+                <span className="text-green-600">{slidesInView.length} viewed</span>
+              </div>
+            </div>
+            
+            {/* Progress bar */}
+            <div className="mt-2 w-full md:w-80">
+              <Progress 
+                value={(slidesInView.length / (materials?.length || 1)) * 100} 
+                className="h-2"
+                aria-label="Progress through unit"
+              />
+            </div>
           </div>
-          <div className="flex gap-2">
+          
+          <div className="flex gap-2 items-center">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    onClick={() => setIsFullscreen(!isFullscreen)}
+                    variant="outline" 
+                    size="icon"
+                    className="h-8 w-8"
+                  >
+                    {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{isFullscreen ? "Exit fullscreen (F)" : "Enter fullscreen (F)"}</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="icon"
+                    className="h-8 w-8"
+                    asChild
+                  >
+                    <div>
+                      <Info className="h-4 w-4" />
+                    </div>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="space-y-2 max-w-xs">
+                    <p className="font-medium">Keyboard shortcuts:</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                      <span>← / →</span>
+                      <span>Previous / Next</span>
+                      <span>Home / End</span>
+                      <span>First / Last slide</span>
+                      <span>F</span>
+                      <span>Toggle fullscreen</span>
+                    </div>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
             <Button onClick={() => navigate("/admin/books")} variant="outline" size="sm">
               <Book className="mr-2 h-4 w-4" />
               Books List
@@ -294,7 +383,19 @@ export default function DirectContentViewer() {
       {/* Main content */}
       <main className="flex-grow container mx-auto px-4 pb-12 pt-4">
         {/* Carousel wrapper */}
-        <div className="relative bg-white shadow rounded-lg overflow-hidden mb-8">
+        <div className={`relative bg-white shadow rounded-lg overflow-hidden mb-8 ${isFullscreen ? 'fullscreen-content' : ''}`}>
+          {/* Sliding progress indicator */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 z-10">
+            <motion.div 
+              className="h-full bg-primary"
+              initial={{ width: 0 }}
+              animate={{ 
+                width: `${((currentSlideIndex + 1) / materials.length) * 100}%` 
+              }}
+              transition={{ type: "spring", stiffness: 100 }}
+            />
+          </div>
+          
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {materials.map((material, index) => (
@@ -334,6 +435,11 @@ export default function DirectContentViewer() {
               <ChevronRight className="h-6 w-6" />
             </Button>
           </div>
+          
+          {/* Current slide indicator */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full shadow-md text-sm">
+            {currentSlideIndex + 1} / {materials.length}
+          </div>
         </div>
 
         {/* Thumbnails bar */}
@@ -345,7 +451,25 @@ export default function DirectContentViewer() {
             viewedSlides={slidesInView}
           />
         </div>
+        
+        {/* Keyboard shortcuts info */}
+        <div className="mt-4 text-center text-sm text-gray-500">
+          <p>Use keyboard arrow keys ← → to navigate between slides</p>
+        </div>
       </main>
+      
+      {/* Fullscreen style */}
+      <style jsx>{`
+        .fullscreen-content {
+          background-color: black;
+          height: 100vh;
+          max-height: 100vh;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      `}</style>
     </div>
   );
 }

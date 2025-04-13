@@ -145,9 +145,17 @@ export default function ThumbnailsBar({
         content.endsWith('.jpg') || 
         content.endsWith('.jpeg') || 
         content.endsWith('.gif')) {
-      // For image content, we can use the actual image as thumbnail
-      // This path needs to match how ContentSlide component gets its URLs
-      return `/api/direct/book3/unit1/assets/${encodeURIComponent(material.content)}`;
+      // Extract bookId and unitNumber from props - these were missing before!
+      const bookMatch = window.location.pathname.match(/\/([^\/]+)\/([^\/]+)/);
+      
+      if (bookMatch && bookMatch.length >= 3) {
+        const bookId = bookMatch[1]; // e.g., "book3"
+        const unitPath = bookMatch[2]; // e.g., "unit12"
+        
+        // For image content, we can use the actual image as thumbnail
+        // This path needs to match how ContentSlide component gets its URLs
+        return `/api/direct/${bookId}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+      }
     }
     
     return null; // No thumbnail available
