@@ -663,6 +663,25 @@ export default function DirectContentViewer() {
                 />
               </div>
               
+              {/* Large side navigation arrows */}
+              <button 
+                onClick={scrollPrev}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white/90 rounded-full p-2 shadow-lg z-20"
+                aria-label="Previous slide"
+                disabled={currentSlideIndex === 0}
+              >
+                <ChevronLeft className="h-6 w-6 text-gray-800" />
+              </button>
+              
+              <button 
+                onClick={scrollNext}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white/90 rounded-full p-2 shadow-lg z-20"
+                aria-label="Next slide"
+                disabled={currentSlideIndex === materials.length - 1}
+              >
+                <ChevronRight className="h-6 w-6 text-gray-800" />
+              </button>
+              
               <div className="overflow-hidden h-full" ref={emblaRef}>
                 <div className="flex h-full">
                   {materials.map((material, index) => (

@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Image as ImageIcon, FileText, Video, MessageSquare, Check, AlertCircle } from 'lucide-react';
+import { Image as ImageIcon, FileText, Video, MessageSquare, Check, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
@@ -184,100 +184,121 @@ export default function ThumbnailsBar({
 
   return (
     <div className="flex-1 flex flex-col">
-      {/* Thumbnail grid/list */}
-      <ScrollArea className="flex-1">
-        <div 
-          className={`p-2 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-2' : 'flex flex-row space-x-2'}`}
-          ref={scrollRef}
+      {/* Thumbnail grid/list with side navigation */}
+      <div className="relative">
+        <button 
+          onClick={() => onSelectSlide(Math.max(0, currentIndex - 1))}
+          className="absolute -left-2 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-md rounded-full p-1.5 z-20 border border-gray-200"
+          aria-label="Previous thumbnail"
+          disabled={currentIndex === 0}
         >
-          {materials.map((material, index) => {
-            const isActive = index === currentIndex;
-            const isViewed = viewedSlides.includes(index);
-            const thumbnailUrl = getThumbnailUrl(material);
-            const formattedTitle = formatTitle(material.content);
-            
-            return (
-              <motion.div
-                key={index} // Using index as key since material.id might not be reliable
-                className={`
-                  relative p-2 rounded-md cursor-pointer 
-                  ${isActive ? 'active-thumbnail bg-primary/10 border border-primary/30' : 'hover:bg-gray-100'}
-                  ${isVerticalLayout ? 'w-full' : 'w-24'}
-                `}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.01 }}
-                onClick={() => onSelectSlide(index)}
-              >
-                <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'}`}>
-                  <div className={`
-                    ${isVerticalLayout ? 'h-12 w-12 mr-3' : 'h-16 w-16'} 
-                    rounded flex items-center justify-center overflow-hidden
-                    ${isActive ? 'bg-primary/5 ring-2 ring-primary' : 'bg-gray-100'}
-                    ${document.fullscreenElement ? 'h-14 w-14 border border-white/30' : ''}
-                  `}>
-                    {thumbnailUrl ? (
-                      <>
-                        <img 
-                          src={thumbnailUrl} 
-                          alt={formattedTitle}
-                          className="h-full w-full object-cover"
-                          loading="lazy"
-                          onError={(e) => {
-                            // On error, fall back to icon
-                            (e.target as HTMLElement).classList.add('hidden');
-                            const fallback = e.currentTarget.parentElement?.querySelector('.thumbnail-fallback');
-                            if (fallback) {
-                              fallback.classList.remove('hidden');
-                              fallback.classList.add('flex');
-                            }
-                          }}
-                        />
-                        <div 
-                          className="h-full w-full items-center justify-center hidden thumbnail-fallback"
-                        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
+        
+        <button 
+          onClick={() => onSelectSlide(Math.min(materials.length - 1, currentIndex + 1))}
+          className="absolute -right-2 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-md rounded-full p-1.5 z-20 border border-gray-200"
+          aria-label="Next thumbnail"
+          disabled={currentIndex === materials.length - 1}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </button>
+        
+        {/* Thumbnail grid/list */}
+        <ScrollArea className="flex-1">
+          <div 
+            className={`p-2 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-2' : 'flex flex-row space-x-2'}`}
+            ref={scrollRef}
+          >
+            {materials.map((material, index) => {
+              const isActive = index === currentIndex;
+              const isViewed = viewedSlides.includes(index);
+              const thumbnailUrl = getThumbnailUrl(material);
+              const formattedTitle = formatTitle(material.content);
+              
+              return (
+                <motion.div
+                  key={index} // Using index as key since material.id might not be reliable
+                  className={`
+                    relative p-2 rounded-md cursor-pointer 
+                    ${isActive ? 'active-thumbnail bg-primary/10 border border-primary/30' : 'hover:bg-gray-100'}
+                    ${isVerticalLayout ? 'w-full' : 'w-24'}
+                  `}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.01 }}
+                  onClick={() => onSelectSlide(index)}
+                >
+                  <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'}`}>
+                    <div className={`
+                      ${isVerticalLayout ? 'h-12 w-12 mr-3' : 'h-16 w-16'} 
+                      rounded flex items-center justify-center overflow-hidden
+                      ${isActive ? 'bg-primary/5 ring-2 ring-primary' : 'bg-gray-100'}
+                      ${document.fullscreenElement ? 'h-14 w-14 border border-white/30' : ''}
+                    `}>
+                      {thumbnailUrl ? (
+                        <>
+                          <img 
+                            src={thumbnailUrl} 
+                            alt={formattedTitle}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                            onError={(e) => {
+                              // On error, fall back to icon
+                              (e.target as HTMLElement).classList.add('hidden');
+                              const fallback = e.currentTarget.parentElement?.querySelector('.thumbnail-fallback');
+                              if (fallback) {
+                                fallback.classList.remove('hidden');
+                                fallback.classList.add('flex');
+                              }
+                            }}
+                          />
+                          <div 
+                            className="h-full w-full items-center justify-center hidden thumbnail-fallback"
+                          >
+                            {getContentTypeIcon(material.contentType)}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="h-full w-full flex items-center justify-center">
                           {getContentTypeIcon(material.contentType)}
                         </div>
-                      </>
-                    ) : (
-                      <div className="h-full w-full flex items-center justify-center">
-                        {getContentTypeIcon(material.contentType)}
+                      )}
+                    </div>
+                    
+                    <div className={isVerticalLayout ? 'flex-1' : 'w-full text-center'}>
+                      <div className={`text-xs mt-1 font-medium ${document.fullscreenElement ? 'text-white' : ''}`}>
+                        {truncateTitle(formattedTitle, isVerticalLayout ? 30 : 20)}
+                      </div>
+                      <div className={`text-xs ${document.fullscreenElement ? 'text-gray-300' : 'text-gray-500'}`}>
+                        {index + 1}/{materials.length}
+                      </div>
+                    </div>
+                    
+                    {/* Viewed indicator */}
+                    {isViewed && !isActive && (
+                      <div className="absolute top-1 right-1 h-4 w-4 bg-green-500 rounded-full flex items-center justify-center">
+                        <Check className="h-3 w-3 text-white" />
                       </div>
                     )}
+                    
+                    {/* Active indicator */}
+                    {isActive && (
+                      <motion.div 
+                        className={`absolute ${isVerticalLayout ? 'left-0 top-0 bottom-0 w-1' : 'bottom-0 left-0 right-0 h-1'} bg-primary rounded-full`}
+                        layoutId="activeIndicator"
+                      />
+                    )}
                   </div>
-                  
-                  <div className={isVerticalLayout ? 'flex-1' : 'w-full text-center'}>
-                    <div className={`text-xs mt-1 font-medium ${document.fullscreenElement ? 'text-white' : ''}`}>
-                      {truncateTitle(formattedTitle, isVerticalLayout ? 30 : 20)}
-                    </div>
-                    <div className={`text-xs ${document.fullscreenElement ? 'text-gray-300' : 'text-gray-500'}`}>
-                      {index + 1}/{materials.length}
-                    </div>
-                  </div>
-                  
-                  {/* Viewed indicator */}
-                  {isViewed && !isActive && (
-                    <div className="absolute top-1 right-1 h-4 w-4 bg-green-500 rounded-full flex items-center justify-center">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  )}
-                  
-                  {/* Active indicator */}
-                  {isActive && (
-                    <motion.div 
-                      className={`absolute ${isVerticalLayout ? 'left-0 top-0 bottom-0 w-1' : 'bottom-0 left-0 right-0 h-1'} bg-primary rounded-full`}
-                      layoutId="activeIndicator"
-                    />
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-        <ScrollBar orientation={isVerticalLayout ? "vertical" : "horizontal"} />
-      </ScrollArea>
+                </motion.div>
+              );
+            })}
+          </div>
+          <ScrollBar orientation={isVerticalLayout ? "vertical" : "horizontal"} />
+        </ScrollArea>
+      </div>
       
-      {/* Navigation controls */}
+      {/* Simple navigation controls - First/Previous/Next/Last */}
       <div className="mt-4 flex justify-between">
         <Button
           variant="outline"
@@ -315,13 +336,6 @@ export default function ThumbnailsBar({
         >
           Last
         </Button>
-      </div>
-      
-      {/* Progress indicator */}
-      <div className="mt-4 flex justify-center">
-        <div className="text-sm text-gray-500">
-          Viewed: {viewedSlides.length} of {materials.length} slides
-        </div>
       </div>
     </div>
   );
