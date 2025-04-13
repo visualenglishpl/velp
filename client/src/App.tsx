@@ -6,58 +6,77 @@ import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import ContentViewer from "@/pages/content-viewer";
-import Book7Unit12Viewer from "@/pages/book7-unit12-viewer"; // Direct path to Book 7 Unit 12
-import DirectContentViewer from "@/pages/direct-content-viewer"; // New direct content viewer
-import S3Test from "@/pages/s3-test";
+import DirectContentViewer from "@/pages/direct-content-viewer";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/use-auth";
+
+// Protected Route Component - redirects to login if not authenticated
+function ProtectedRoute({ component: Component, adminOnly = false }: { component: React.ComponentType, adminOnly?: boolean }) {
+  const { user, isLoading } = useAuth();
+  const [, navigate] = useLocation();
+  
+  // If loading, show nothing yet
+  if (isLoading) return null;
+  
+  // If not logged in, redirect to auth page
+  if (!user) {
+    console.log("User not authenticated, redirecting to login");
+    navigate("/auth");
+    return null;
+  }
+  
+  // If admin only and user is not admin, redirect to home
+  if (adminOnly && user.role !== "admin") {
+    console.log("User role:", user.role);
+    console.log("Admin access required, redirecting to home");
+    navigate("/");
+    return null;
+  }
+  
+  // User is authenticated (and has admin role if required)
+  return <Component />;
+}
 
 function Router() {
   return (
     <Switch>
+      {/* Public Routes */}
       <Route path="/" component={Home} />
       <Route path="/auth" component={AuthPage} />
-      <Route path="/admin" component={AdminDashboard} />
-      <Route path="/admin/books" component={BooksManagement} />
-      {/* Redirect book detail page directly to books management */}
-      <Route path="/admin/books/:id">
-        {() => {
-          window.location.href = "/admin/books";
-          return null;
-        }}
+      
+      {/* Admin Dashboard - Protected Admin Route */}
+      <Route path="/admin">
+        {() => <ProtectedRoute component={AdminDashboard} adminOnly={true} />}
       </Route>
-      {/* Content viewer routes */}
+      
+      {/* Books Management - Protected Admin Route */}
+      <Route path="/admin/books">
+        {() => <ProtectedRoute component={BooksManagement} adminOnly={true} />}
+      </Route>
+      
+      {/* Content Viewer for Units Database Path */}
       <Route path="/units/:unitId/materials/:materialId">
-        {(params) => <ContentViewer />}
+        {() => <ProtectedRoute component={ContentViewer} />}
       </Route>
+      
       <Route path="/units/:unitId">
-        {(params) => <ContentViewer />}
+        {() => <ProtectedRoute component={ContentViewer} />}
       </Route>
       
-      {/* Direct paths matching S3 structure - specific book/unit routes first */}
-      <Route path="/book7/unit12" component={Book7Unit12Viewer} />
-      
-      {/* Generic direct content viewer - works with ANY book/unit path that matches S3 pattern */}
+      {/* Direct S3 Content Viewer - works with ANY book/unit path that matches S3 pattern */}
       <Route path="/:bookPath/:unitPath">
         {(params) => {
           // Only match book/unit pattern (e.g., book3/unit12)
           if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
-            return <DirectContentViewer />;
+            return <ProtectedRoute component={DirectContentViewer} />;
           }
           return <NotFound />;
         }}
       </Route>
       
-      {/* S3 Testing route */}
-      <Route path="/s3-test" component={S3Test} />
-      {/* Redirect from old content management page to new unified books management */}
-      <Route path="/admin/content">
-        {() => {
-          window.location.href = "/admin/books";
-          return null;
-        }}
-      </Route>
+      {/* Fallback for any other routes */}
       <Route component={NotFound} />
     </Switch>
   );

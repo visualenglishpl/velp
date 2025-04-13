@@ -5,7 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ChevronLeft, ChevronRight, Image as ImageIcon, Video, FileText, Check } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Image as ImageIcon, Video, FileText, Check, Book, Home } from 'lucide-react';
 import ContentSlide from '@/components/ContentSlide';
 import ThumbnailsBar from '@/components/ThumbnailsBar';
 
@@ -210,87 +210,103 @@ export default function ContentViewer() {
   const currentMaterial = materials[currentIndex];
 
   return (
-    <div className="container mx-auto p-4">
-      {/* Header */}
-      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">{book?.title || 'Book'}: {unit?.title || 'Unit'}</h1>
-          <p className="text-gray-500">Slide {currentIndex + 1} of {materials.length}</p>
-        </div>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="mt-2 md:mt-0"
-          onClick={() => window.location.href = '/admin/books'}
-        >
-          <ChevronLeft className="h-4 w-4 mr-2" /> Back to Books
-        </Button>
-      </div>
-      
-      {/* Main Carousel */}
-      <div className="relative overflow-hidden rounded-lg border bg-background">
-        <div className="embla" ref={emblaRef}>
-          <div className="embla__container">
-            {materials.map((material, index) => (
-              <div className="embla__slide" key={material.id}>
-                <ContentSlide 
-                  material={material} 
-                  isActive={index === currentIndex}
-                  bookId={book?.bookId || ''}
-                  unitNumber={unit?.unitNumber || 0}
-                />
-              </div>
-            ))}
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      {/* Header with navigation */}
+      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+          <div>
+            <h1 className="text-2xl font-bold uppercase">
+              {book?.title || 'Book'}
+            </h1>
+            <h2 className="text-lg text-gray-600 uppercase">
+              Unit {unit?.unitNumber || ''} {unit?.title ? `- ${unit?.title}` : ''}
+            </h2>
+            <p className="text-sm text-gray-500">
+              Slide {currentIndex + 1} of {materials.length}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button onClick={() => window.location.href = "/admin/books"} variant="outline" size="sm">
+              <Book className="mr-2 h-4 w-4" />
+              Books List
+            </Button>
+            <Button onClick={() => window.location.href = "/"} variant="ghost" size="sm">
+              <Home className="mr-2 h-4 w-4" />
+              Home
+            </Button>
           </div>
         </div>
-        
-        {/* Navigation Buttons */}
-        <AnimatePresence>
-          {currentIndex > 0 && (
-            <motion.div 
-              className="absolute left-4 top-1/2 transform -translate-y-1/2"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-            >
-              <Button 
-                variant="secondary" 
-                size="icon" 
-                onClick={() => scrollToSlide(currentIndex - 1)}
-                className="rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-            </motion.div>
-          )}
+      </header>
+
+      {/* Main content */}
+      <main className="flex-grow container mx-auto px-4 pb-12 pt-4">
+        {/* Carousel wrapper */}
+        <div className="relative bg-white shadow rounded-lg overflow-hidden mb-8">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="embla__container">
+              {materials.map((material, index) => (
+                <div className="embla__slide" key={material.id}>
+                  <ContentSlide 
+                    material={material} 
+                    isActive={index === currentIndex}
+                    bookId={book?.bookId || ''}
+                    unitNumber={unit?.unitNumber || 0}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
           
-          {currentIndex < materials.length - 1 && (
-            <motion.div 
-              className="absolute right-4 top-1/2 transform -translate-y-1/2"
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-            >
-              <Button 
-                variant="secondary" 
-                size="icon" 
-                onClick={() => scrollToSlide(currentIndex + 1)}
-                className="rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md"
+          {/* Navigation controls */}
+          <AnimatePresence>
+            {currentIndex > 0 && (
+              <motion.div 
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 p-4"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
               >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      
-      {/* Thumbnails/Pagination */}
-      <ThumbnailsBar 
-        materials={materials} 
-        currentIndex={currentIndex} 
-        onSelectSlide={scrollToSlide}
-        viewedSlides={viewedSlides}
-      />
+                <Button 
+                  onClick={() => scrollToSlide(currentIndex - 1)} 
+                  variant="secondary" 
+                  size="icon" 
+                  className="rounded-full shadow-md"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
+              </motion.div>
+            )}
+            
+            {currentIndex < materials.length - 1 && (
+              <motion.div 
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 p-4"
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 10 }}
+              >
+                <Button 
+                  onClick={() => scrollToSlide(currentIndex + 1)} 
+                  variant="secondary" 
+                  size="icon" 
+                  className="rounded-full shadow-md"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Thumbnails bar */}
+        <div className="bg-white shadow rounded-lg p-4">
+          <ThumbnailsBar
+            materials={materials}
+            currentIndex={currentIndex}
+            onSelectSlide={scrollToSlide}
+            viewedSlides={viewedSlides}
+          />
+        </div>
+      </main>
     </div>
   );
 }
