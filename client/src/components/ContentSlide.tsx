@@ -64,6 +64,10 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       // Remove file extension
       const withoutExtension = content.replace(/\.[^/.]+$/, "");
       
+      // Special handling for Book 7 content - ensure questions are properly formatted
+      // Book 7 content follows a specific format with codes like "05 Y Xb"
+      const isBook7Format = /^\d+\s+[A-Z]\s+[A-Za-z]+/.test(content);
+      
       // Check if it contains a question or a dash for the question-answer format
       if (withoutExtension.includes(" – ")) {
         const parts = withoutExtension.split(" – ");
@@ -71,8 +75,8 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
           // Extract the question (first part)
           let question = parts[0];
           
-          // Remove the leading number codes (like "01 N A ")
-          question = question.replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+)?/, "");
+          // Remove the leading number codes (like "01 N A " or "05 Y Xb ")
+          question = question.replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+[A-Za-z])?(\s+)?/, "");
           
           // Format the question: remove unnecessary words, fix "A/An" articles, proper spacing
           question = question
@@ -116,9 +120,41 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
         }
       }
       
+      // For Book 7 specific content without dashes but containing questions
+      if (isBook7Format) {
+        // Extract possible question from the content directly
+        let cleanedTitle = withoutExtension
+          .replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+[A-Za-z])?(\s+)?/, "") // Remove leading codes like "05 Y Xb"
+          .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove standalone "A" before uppercase words
+          .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
+          .trim();
+        
+        // Book 7 specific patterns
+        if (cleanedTitle.includes("Do You Use") || 
+            cleanedTitle.includes("are Important or Unimportant") ||
+            cleanedTitle.includes("What Facility Can You See")) {
+          
+          // Ensure question has a question mark if it's a question
+          if (isQuestion(cleanedTitle) && !cleanedTitle.endsWith("?")) {
+            cleanedTitle = cleanedTitle + "?";
+          }
+          
+          // Make first letter uppercase
+          cleanedTitle = cleanedTitle.charAt(0).toUpperCase() + cleanedTitle.slice(1);
+          
+          // Generate appropriate answer prompts based on question structure
+          const answerPrompt = generateAnswerPrompt(cleanedTitle);
+          
+          return {
+            question: cleanedTitle,
+            answer: answerPrompt
+          };
+        }
+      }
+      
       // If not a question-answer format, just clean up the content name
       let cleanedTitle = withoutExtension
-        .replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+)?/, "") // Remove leading codes
+        .replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+[A-Za-z])?(\s+)?/, "") // Remove leading codes
         .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove "A" before uppercase words
         .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
         .trim();
@@ -152,112 +188,182 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     // Normalize the question for pattern matching
     const normalizedQuestion = question.toLowerCase();
     
-    // Do you...? pattern
+    // Do you...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("do you")) {
       return "Yes, I do / No, I don't";
     }
     
-    // Does he/she...? pattern
+    // Does he/she...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("does he") || normalizedQuestion.startsWith("does she")) {
       return normalizedQuestion.includes("she") 
         ? "Yes, she does / No, she doesn't" 
         : "Yes, he does / No, he doesn't";
     }
     
-    // Do they...? pattern
+    // Do they...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("do they")) {
       return "Yes, they do / No, they don't";
     }
     
-    // Are you...? pattern
+    // Are you...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("are you")) {
       return "Yes, I am / No, I'm not";
     }
     
-    // Is he/she...? pattern
+    // Are there...? pattern (Books 1-7)
+    if (normalizedQuestion.startsWith("are there")) {
+      return "Yes, there are / No, there aren't";
+    }
+    
+    // Is he/she...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("is he") || normalizedQuestion.startsWith("is she")) {
       return normalizedQuestion.includes("she") 
         ? "Yes, she is / No, she isn't" 
         : "Yes, he is / No, he isn't";
     }
     
-    // Can you...? pattern
+    // Is there...? pattern (Books 1-7)
+    if (normalizedQuestion.startsWith("is there")) {
+      return "Yes, there is / No, there isn't";
+    }
+    
+    // Is this...? pattern (Books 1-7)
+    if (normalizedQuestion.startsWith("is this")) {
+      return "Yes, it is / No, it isn't";
+    }
+    
+    // Can you...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("can you")) {
       return "Yes, I can / No, I can't";
     }
     
-    // Could you...? pattern
+    // Could you...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("could you")) {
       return "Yes, I could / No, I couldn't";
     }
     
-    // Have you...? pattern
+    // Have you...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("have you")) {
       return "Yes, I have / No, I haven't";
     }
     
-    // Did you...? pattern
+    // Did you...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("did you")) {
       return "Yes, I did / No, I didn't";
     }
     
-    // Will you...? pattern
+    // Will you...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("will you")) {
       return "Yes, I will / No, I won't";
     }
     
-    // Would you...? pattern
+    // Would you...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("would you")) {
       return "Yes, I would / No, I wouldn't";
     }
     
-    // Where does...? pattern
+    // Where does...? pattern (Book 3-7 job-related questions)
     if (normalizedQuestion.startsWith("where does")) {
       // For specific responses like: "Where Does Babysitter Work?"
       if (normalizedQuestion.includes("babysitter") || normalizedQuestion.includes("baby sitter")) {
         return "A baby sitter works...";
       }
+      if (normalizedQuestion.includes("chef")) {
+        return "A chef works...";
+      }
+      if (normalizedQuestion.includes("doctor")) {
+        return "A doctor works...";
+      }
+      if (normalizedQuestion.includes("teacher")) {
+        return "A teacher works...";
+      }
       return "They work at...";
     }
     
-    // What does...? pattern
+    // What does...? pattern (Book 3-7 job-related questions)
     if (normalizedQuestion.startsWith("what does")) {
       // For specific responses like: "What Does Chef Do?"
       if (normalizedQuestion.includes("chef")) {
         return "A chef...";
       }
+      if (normalizedQuestion.includes("doctor")) {
+        return "A doctor...";
+      }
+      if (normalizedQuestion.includes("teacher")) {
+        return "A teacher...";
+      }
       return "They...";
     }
     
-    // What is...? pattern
+    // What is...? pattern (Books 1-7)
     if (normalizedQuestion.startsWith("what is")) {
       return "It is...";
     }
     
-    // Would you like...? pattern
+    // What are...? pattern (Books 1-7)
+    if (normalizedQuestion.startsWith("what are")) {
+      return "They are...";
+    }
+    
+    // Would you like...? pattern (Books 1-7)
     if (normalizedQuestion.includes("would you like")) {
       return "Yes, I would like / No, I wouldn't like";
     }
     
-    // Is [job/thing]...? pattern
+    // Is [job/thing]...? pattern (Book 3-7 job-related questions)
     if (normalizedQuestion.startsWith("is") && 
         (normalizedQuestion.includes("job") || 
          normalizedQuestion.includes("babysitter") ||
-         normalizedQuestion.includes("chef"))) {
+         normalizedQuestion.includes("chef") ||
+         normalizedQuestion.includes("doctor") ||
+         normalizedQuestion.includes("teacher"))) {
       if (normalizedQuestion.includes("easy or difficult")) {
-        return "A babysitter's job is...";
+        return "It is...";
       }
       if (normalizedQuestion.includes("well or badly paying")) {
-        return "A babysitter's job is...";
+        return "It is...";
       }
       return "It is...";
     }
     
-    // Dream job pattern
+    // Dream job pattern (Books 3-7)
     if (normalizedQuestion.includes("dream job")) {
       return "My dream job is...";
     }
-
+    
+    // "important or unimportant" pattern (Book 7 vacation questions)
+    if (normalizedQuestion.includes("important or unimportant")) {
+      return "I think it is...";
+    }
+    
+    // "do you use" pattern (Book 7 vacation questions)
+    if (normalizedQuestion.includes("do you use") && 
+        (normalizedQuestion.includes("holiday") || normalizedQuestion.includes("vacation"))) {
+      return "Yes, I do / No, I don't";
+    }
+    
+    // Book 7 vacation specific patterns
+    if (normalizedQuestion.includes("vacation") || normalizedQuestion.includes("holiday")) {
+      if (normalizedQuestion.startsWith("what")) {
+        return "It is...";
+      }
+      if (normalizedQuestion.includes("been to")) {
+        return "I have been to...";
+      }
+      if (normalizedQuestion.includes("interesting or boring")) {
+        return "I think they are...";
+      }
+    }
+    
+    // Books 1-2 basic patterns
+    if (normalizedQuestion.includes("how many")) {
+      return "There are...";
+    }
+    
+    if (normalizedQuestion.includes("how much")) {
+      return "It costs...";
+    }
+    
     // For other question types or non-questions
     return null;
   };

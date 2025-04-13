@@ -382,10 +382,10 @@ export default function DirectContentViewer() {
           <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
             <div>
               <h1 className="text-2xl font-bold uppercase">
-                Book {bookPath ? bookPath.replace(/[^\d]/g, '') : ''}
+                BOOK {bookPath ? bookPath.replace(/[^\d]/g, '') : ''}
               </h1>
               <h2 className="text-lg text-gray-600 uppercase">
-                Unit {unitPath ? unitPath.replace(/[^\d]/g, '') : ''} {unitData?.title ? `- ${unitData.title}` : ''}
+                UNIT {unitPath ? unitPath.replace(/[^\d]/g, '') : ''} {unitData?.title ? `- ${unitData.title}` : ''}
               </h2>
               
               {/* Progress indicator */}
