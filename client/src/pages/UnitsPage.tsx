@@ -82,10 +82,10 @@ export default function UnitsPage() {
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
             {[...Array(8)].map((_, i) => (
-              <Card key={i} className="overflow-hidden flex flex-col">
-                <div className="aspect-video bg-gray-100 w-full">
+              <Card key={i} className="overflow-hidden flex flex-col shadow-md">
+                <div className="aspect-[4/3] bg-gray-100 w-full rounded-t-md">
                   <Skeleton className="h-full w-full" />
                 </div>
                 <CardHeader className="py-3 px-4">
@@ -102,10 +102,10 @@ export default function UnitsPage() {
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
             {units.map((unit, index) => (
-              <Card key={unit.unitNumber} className="overflow-hidden flex flex-col">
-                <div className="aspect-video bg-gray-100 relative overflow-hidden">
+              <Card key={unit.unitNumber} className="overflow-hidden flex flex-col shadow-md hover:shadow-lg transition-shadow">
+                <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden rounded-t-md">
                   {!hasPurchased && index > 0 && (
                     <div className="absolute top-2 right-2 bg-primary/90 rounded-full p-1 z-10">
                       <LockIcon className="h-4 w-4 text-white" />
@@ -124,9 +124,15 @@ export default function UnitsPage() {
                       
                       {/* Try multiple image patterns in order */}
                       <img 
-                        src={`/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`} 
+                        src={
+                          // Special case for problematic units 5, 8, 13
+                          ["5", "8", "13"].includes(unit.unitNumber) 
+                            ? `/api/direct/book${bookId}/unit${unit.unitNumber}/unit.png`
+                            : `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`
+                        } 
                         alt={`Thumbnail for ${unit.title}`}
-                        className="h-full w-full object-cover relative z-10"
+                        className="h-full w-full object-contain relative z-10"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
                         onError={(e) => {
                           // Try different common filenames in sequence
                           const img = e.target as HTMLImageElement;
@@ -136,7 +142,13 @@ export default function UnitsPage() {
                             "00 B.png",
                             "00 C.png",
                             "01 A.png",
-                            "01.png"
+                            "01.png",
+                            "001.png",
+                            "01.png",
+                            "1.png",
+                            "unit.png",
+                            "title.png",
+                            "cover.png"
                           ];
                           
                           // Try next filename or hide if all fail
@@ -147,8 +159,13 @@ export default function UnitsPage() {
                               return;
                             }
                             
+                            // Try in assets folder first, then directly in unit folder
                             img.src = `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/${tryFilenames[index]}`;
-                            img.onerror = () => tryNextOrHide(index + 1);
+                            img.onerror = () => {
+                              // If assets folder fails, try directly in the unit folder
+                              img.src = `/api/direct/book${bookId}/unit${unit.unitNumber}/${tryFilenames[index]}`;
+                              img.onerror = () => tryNextOrHide(index + 1);
+                            };
                           };
                           
                           tryNextOrHide(0);
