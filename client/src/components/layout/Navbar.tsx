@@ -42,6 +42,12 @@ const Navbar = () => {
                 FAQ
               </a>
             </Link>
+            
+            <Link href="/book7/unit12">
+              <a className="text-blue-600 hover:text-blue-800 px-3 py-2 text-sm font-bold">
+                Book7/Unit12
+              </a>
+            </Link>
 
             <a href="https://www.visualenglish.pl" target="_blank" rel="noopener noreferrer">
               <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
@@ -85,6 +91,12 @@ const Navbar = () => {
             <Link href="#faq">
               <a className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
                 FAQ
+              </a>
+            </Link>
+            
+            <Link href="/book7/unit12">
+              <a className="text-blue-600 hover:text-blue-800 block px-3 py-2 text-base font-bold">
+                Book7/Unit12
               </a>
             </Link>
 
