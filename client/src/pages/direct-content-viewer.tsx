@@ -516,11 +516,11 @@ export default function DirectContentViewer() {
     unitId: 0, // Not needed for direct access
   }));
   
-  // Generate unit description after sortedMaterials is available
-  const unitDescription = useMemo(() => {
-    if (!sortedMaterials.length) return "";
-    return generateUnitDescription(sortedMaterials);
-  }, [sortedMaterials, bookPath, unitNumber]);
+  // Generate unit description without using hooks
+  let unitDescription = "";
+  if (sortedMaterials.length > 0) {
+    unitDescription = generateUnitDescription(sortedMaterials);
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50" ref={contentContainerRef}>
