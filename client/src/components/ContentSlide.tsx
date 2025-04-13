@@ -97,6 +97,22 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
       }
     }
     
+    // Specific answer patterns requested by the user
+    if (normalizedQuestion === "is it lion or tiger pen?" || 
+        normalizedQuestion.includes("lion or tiger pen")) {
+      return "It is a ............";
+    }
+    
+    if (normalizedQuestion === "what colour is the pen?" || 
+        normalizedQuestion.includes("what colour is the pen")) {
+      return "The pen is ..............";
+    }
+    
+    if (normalizedQuestion === "what colour are the pens?" || 
+        normalizedQuestion.includes("what colour are the pens")) {
+      return "The pens are ..........";
+    }
+    
     // Special handling for Book 7 crime-related content
     if (bookId === "book7") {
       // Crime pattern detection
