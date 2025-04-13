@@ -115,12 +115,28 @@ export default function BooksPage() {
                 <CardHeader className="py-3 px-4">
                   <CardTitle className="text-center text-lg">{book.title}</CardTitle>
                 </CardHeader>
-                <CardFooter className="py-3 px-4">
+                <CardFooter className="py-3 px-4 flex flex-col gap-2">
                   <Link href={`/book${book.bookId}/unit1`} className="w-full">
-                    <Button className="w-full" variant="default">
-                      View Content
+                    <Button className="w-full" variant="outline">
+                      View Sample
                     </Button>
                   </Link>
+                  <div className="flex gap-2 w-full">
+                    <Button 
+                      className="w-1/2" 
+                      variant="default"
+                      onClick={() => window.location.href = `/checkout/whole_book?book=${book.bookId}`}
+                    >
+                      Buy Book
+                    </Button>
+                    <Button 
+                      className="w-1/2" 
+                      variant="secondary"
+                      onClick={() => window.location.href = `/checkout/single_lesson?book=${book.bookId}`}
+                    >
+                      Buy Lesson
+                    </Button>
+                  </div>
                 </CardFooter>
               </Card>
             ))}

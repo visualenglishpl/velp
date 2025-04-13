@@ -151,13 +151,26 @@ function CheckoutForm({
 }
 
 export default function CheckoutPage() {
-  // Get the planId from the URL
+  // Get the planId and query parameters from the URL
   const [, params] = useRoute('/checkout/:planId?');
   const planId = params?.planId || 'single_lesson';
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const { toast } = useToast();
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [planType, setPlanType] = useState<PlanType>(planId as PlanType || 'single_lesson');
+  
+  // Parse the URL query parameters to get the book ID
+  const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // Parse URL query parameters
+    const searchParams = new URLSearchParams(location.split('?')[1]);
+    const bookParam = searchParams.get('book');
+    if (bookParam) {
+      setSelectedBookId(bookParam);
+      console.log(`Selected book: ${bookParam}`);
+    }
+  }, [location]);
   
   // Customer information state
   const [customerInfo, setCustomerInfo] = useState({
@@ -234,7 +247,8 @@ export default function CheckoutPage() {
       try {
         const response = await apiRequest("POST", "/api/create-payment-intent", { 
           planType, 
-          billingCycle 
+          billingCycle,
+          bookId: selectedBookId || undefined
         });
         
         const data = await response.json();
@@ -433,6 +447,13 @@ export default function CheckoutPage() {
                       ? '7-day free trial, then regular pricing applies'
                       : `Billed ${billingCycle} (${billingCycle === 'monthly' ? 'monthly' : 'annually'})`}
                 </div>
+                
+                {selectedBookId && (
+                  <div className="mt-2 p-3 bg-gray-50 rounded-md">
+                    <div className="font-medium text-sm">Selected Book:</div>
+                    <div className="text-primary font-bold">BOOK {selectedBookId.toUpperCase()}</div>
+                  </div>
+                )}
                 
                 {planType === 'free_trial' && (
                   <div className="text-sm text-amber-600 mt-2 font-medium">

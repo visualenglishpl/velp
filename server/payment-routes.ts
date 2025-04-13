@@ -26,7 +26,7 @@ export function setupPaymentRoutes(app: Express) {
   // Create payment intent for one-time payments
   app.post('/api/create-payment-intent', async (req: Request, res: Response) => {
     try {
-      const { planType, billingCycle = 'monthly' } = req.body;
+      const { planType, billingCycle = 'monthly', bookId } = req.body;
       
       if (!planType) {
         return res.status(400).json({ error: 'Plan type is required' });
@@ -54,15 +54,22 @@ export function setupPaymentRoutes(app: Express) {
         return res.status(400).json({ error: 'Invalid plan type' });
       }
       
+      const metadata: Record<string, string> = {
+        planType,
+        billingCycle: billingCycle || 'one-time',
+      };
+      
+      // Add book ID to metadata if provided
+      if (bookId) {
+        metadata.bookId = bookId;
+      }
+      
       // Create a PaymentIntent with the order amount and currency
       const paymentIntent = await stripe.paymentIntents.create({
         amount,
         currency: 'eur',
         payment_method_types: ['card'],
-        metadata: {
-          planType,
-          billingCycle: billingCycle || 'one-time',
-        },
+        metadata,
       });
       
       res.json({
@@ -78,7 +85,7 @@ export function setupPaymentRoutes(app: Express) {
   // Handle subscription creation for recurring payments
   app.post('/api/create-subscription', async (req: Request, res: Response) => {
     try {
-      const { planType, billingCycle, paymentMethodId, customerId, email, name } = req.body;
+      const { planType, billingCycle, paymentMethodId, customerId, email, name, bookId } = req.body;
       
       if (!planType || !billingCycle || !paymentMethodId) {
         return res.status(400).json({
@@ -136,6 +143,17 @@ export function setupPaymentRoutes(app: Express) {
         },
       });
       
+      // Create metadata for the subscription
+      const metadata: Record<string, string> = {
+        planType,
+        billingCycle
+      };
+      
+      // Add book ID to metadata if provided
+      if (bookId) {
+        metadata.bookId = bookId;
+      }
+      
       // Create subscription
       const subscription = await stripe.subscriptions.create({
         customer: customer.id,
@@ -148,6 +166,7 @@ export function setupPaymentRoutes(app: Express) {
           payment_method_types: ['card'],
           save_default_payment_method: 'on_subscription',
         },
+        metadata,
         expand: ['latest_invoice.payment_intent'],
       });
       
