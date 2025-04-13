@@ -61,7 +61,10 @@ export default function DirectContentViewer() {
   // State for access control
   const [hasPurchasedAccess, setHasPurchasedAccess] = useState(false);
   const [showAccessDialog, setShowAccessDialog] = useState(false);
-  const FREE_SLIDES_LIMIT = 10; // First 10 slides are free
+  // Set different free slide limits based on book series
+  // Books 0a, 0b, 0c should blur from the 3rd image (first 2 slides are free)
+  // Other books still use 10 free slides
+  const FREE_SLIDES_LIMIT = bookPath?.startsWith('book0') ? 2 : 10;
   
   // Purchase handler function
   const handlePurchaseClick = useCallback(() => {
