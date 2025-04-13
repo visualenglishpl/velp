@@ -1,44 +1,32 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Maximize, Minimize, ExternalLink, Play, Pause, Volume2, VolumeX } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-
-// Define type for material
-type Material = {
-  id: number;
-  unitId: number;
-  title: string;
-  description: string | null;
-  contentType: string;
-  content: string;
-  order: number;
-  isLocked: boolean;
-};
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { ExternalLink } from "lucide-react";
 
 interface ContentSlideProps {
-  material: Material;
+  material: {
+    id?: number;
+    title?: string;
+    description?: string;
+    contentType: string;
+    content: string;
+    bookId?: string;
+  };
   isActive: boolean;
   bookId: string;
   unitNumber: number;
 }
 
 export default function ContentSlide({ material, isActive, bookId, unitNumber }: ContentSlideProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  // Format the S3 URL based on content path
+  // Get the formatted S3 URL for the material
   const getS3Url = () => {
-    console.log(`Getting URL for material: bookId=${bookId}, unitNumber=${unitNumber}, contentType=${material.contentType}, content=${material.content}`);
-    
-    // Always convert numeric bookId to "book" format
-    const formattedBookId = bookId.startsWith('book') 
-      ? bookId 
-      : `book${bookId}`;
-    
-    // Always format unit number consistently
+    // Format to ensure consistent patterns
+    const formattedBookId = bookId || "book1";
     const unitPath = `unit${unitNumber}`;
     
     // IMPORTANT: Always use the direct path which we fixed in the backend
@@ -48,141 +36,23 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     return directPath;
   };
   
-  // Format the title/question text by cleaning up the filename
-  const formatContentTitle = () => {
-    try {
-      const content = material.content;
-      
-      // Skip content that doesn't make sense for display
-      if (content.includes("Nit") || content.match(/Page_\d+/)) {
-        return {
-          question: null,
-          answer: null
-        };
-      }
-      
-      // Remove file extension
-      const withoutExtension = content.replace(/\.[^/.]+$/, "");
-      
-      // Special handling for Book 7 content - ensure questions are properly formatted
-      // Book 7 content follows a specific format with codes like "05 Y Xb"
-      const isBook7Format = /^\d+\s+[A-Z]\s+[A-Za-z]+/.test(content);
-      
-      // Check if it contains a question or a dash for the question-answer format
-      if (withoutExtension.includes(" – ")) {
-        const parts = withoutExtension.split(" – ");
-        if (parts.length >= 2) {
-          // Extract the question (first part)
-          let question = parts[0];
-          
-          // Remove the leading number codes (like "01 N A " or "05 Y Xb ")
-          question = question.replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+[A-Za-z])?(\s+)?/, "");
-          
-          // Format the question: remove unnecessary words, fix "A/An" articles, proper spacing
-          question = question
-            .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove standalone "A" before uppercase words
-            .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
-            .trim();
-          
-          // Ensure question has a question mark if it's a question
-          if (isQuestion(question) && !question.endsWith("?")) {
-            question = question + "?";
-          }
-          
-          // Make first letter uppercase for better presentation
-          question = question.charAt(0).toUpperCase() + question.slice(1);
-          
-          // Extract and clean the answer (second part)
-          let answer = parts[1].trim();
-          
-          // Handle specific article formatting in answers
-          answer = answer
-            .replace(/\bit is\s+a\b/i, "It is a")
-            .replace(/\b([Aa])\s+(?=[A-Z])/g, "a "); // Fix article placement
-          
-          // Make first letter uppercase for consistency
-          answer = answer.charAt(0).toUpperCase() + answer.slice(1);
-          
-          // Generate appropriate answer prompts based on question structure
-          let answerPrompt = generateAnswerPrompt(question);
-          
-          // If we have both a standard answer and a generated prompt, combine them
-          if (answerPrompt && answer) {
-            answer = `${answer} ${answerPrompt}`;
-          } else if (answerPrompt && !answer) {
-            answer = answerPrompt;
-          }
-          
-          return {
-            question,
-            answer
-          };
-        }
-      }
-      
-      // For Book 7 specific content without dashes but containing questions
-      if (isBook7Format) {
-        // Extract possible question from the content directly
-        let cleanedTitle = withoutExtension
-          .replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+[A-Za-z])?(\s+)?/, "") // Remove leading codes like "05 Y Xb"
-          .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove standalone "A" before uppercase words
-          .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
-          .trim();
-        
-        // Book 7 specific patterns
-        if (cleanedTitle.includes("Do You Use") || 
-            cleanedTitle.includes("are Important or Unimportant") ||
-            cleanedTitle.includes("What Facility Can You See")) {
-          
-          // Ensure question has a question mark if it's a question
-          if (isQuestion(cleanedTitle) && !cleanedTitle.endsWith("?")) {
-            cleanedTitle = cleanedTitle + "?";
-          }
-          
-          // Make first letter uppercase
-          cleanedTitle = cleanedTitle.charAt(0).toUpperCase() + cleanedTitle.slice(1);
-          
-          // Generate appropriate answer prompts based on question structure
-          const answerPrompt = generateAnswerPrompt(cleanedTitle);
-          
-          return {
-            question: cleanedTitle,
-            answer: answerPrompt
-          };
-        }
-      }
-      
-      // If not a question-answer format, just clean up the content name
-      let cleanedTitle = withoutExtension
-        .replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+[A-Za-z])?(\s+)?/, "") // Remove leading codes
-        .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove "A" before uppercase words
-        .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
-        .trim();
-      
-      // Add question mark for questions
-      if (isQuestion(cleanedTitle) && !cleanedTitle.endsWith("?")) {
-        cleanedTitle = cleanedTitle + "?";
-      }
-      
-      // Make first letter uppercase
-      cleanedTitle = cleanedTitle.charAt(0).toUpperCase() + cleanedTitle.slice(1);
-      
-      // See if we can generate an answer prompt for this title
-      const answerPrompt = generateAnswerPrompt(cleanedTitle);
-      
-      return {
-        question: cleanedTitle,
-        answer: answerPrompt
-      };
-    } catch (error) {
-      // If any error, return null to hide unnecessary content
-      return {
-        question: null,
-        answer: null
-      };
+  // Enhanced check if text is likely a question
+  const isQuestion = (text: string) => {
+    const questionWords = [
+      'what', 'where', 'when', 'why', 'how', 'which', 'who', 'whose', 
+      'is it', 'are they', 'do you', 'can you', 'does it', 'is this', 
+      'are these', 'how many', 'how much', 'how long', 'how often'
+    ];
+    const lowerText = text.toLowerCase();
+    
+    // Special case handling: begins with "is" or another auxiliary verb (common question pattern)
+    if (/^(is|are|do|does|can|could|will|would|should|has|have)\b/i.test(lowerText)) {
+      return true;
     }
+    
+    return questionWords.some(word => lowerText.includes(word));
   };
-  
+
   // Generate appropriate answer prompts based on question structure
   const generateAnswerPrompt = (question: string): string | null => {
     // Normalize the question for pattern matching
@@ -367,24 +237,155 @@ export default function ContentSlide({ material, isActive, bookId, unitNumber }:
     // For other question types or non-questions
     return null;
   };
-  
-  // Enhanced check if text is likely a question
-  const isQuestion = (text: string) => {
-    const questionWords = [
-      'what', 'where', 'when', 'why', 'how', 'which', 'who', 'whose', 
-      'is it', 'are they', 'do you', 'can you', 'does it', 'is this', 
-      'are these', 'how many', 'how much', 'how long', 'how often'
-    ];
-    const lowerText = text.toLowerCase();
-    
-    // Special case handling: begins with "is" or another auxiliary verb (common question pattern)
-    if (/^(is|are|do|does|can|could|will|would|should|has|have)\b/i.test(lowerText)) {
-      return true;
-    }
-    
-    return questionWords.some(word => lowerText.includes(word));
-  };
 
+  // Format the title/question text by cleaning up the filename
+  const formatContentTitle = () => {
+    try {
+      const content = material.content;
+      
+      // Skip content that doesn't make sense for display
+      if (content.includes("Nit") || content.match(/Page_\d+/)) {
+        return {
+          question: null,
+          answer: null
+        };
+      }
+      
+      // Special handling for 00 X pattern files - prioritize these for all books
+      if (/^00\s+[A-Z]/.test(content)) {
+        // For files like "00 E.png" (just a letter), display a contextual title
+        if (/^00\s+[A-Z]\.[^.]+$/.test(content)) {
+          const mainLetter = content.match(/^00\s+([A-Z])\./)?.[1];
+          
+          // Custom titles based on unit content
+          if (mainLetter === 'E' && bookId?.includes('5')) {
+            return {
+              question: "Household Chores",
+              answer: null
+            };
+          } else if (mainLetter === 'C' && bookId?.includes('1')) {
+            return {
+              question: "Let's Say Hello",
+              answer: null
+            };
+          } else {
+            // For other units, use a generic intro title
+            return {
+              question: "Unit Introduction",
+              answer: null
+            };
+          }
+        }
+      }
+      
+      // Remove file extension
+      const withoutExtension = content.replace(/\.[^/.]+$/, "");
+      
+      // Check if it contains a question or a dash for the question-answer format
+      if (withoutExtension.includes(" – ")) {
+        const parts = withoutExtension.split(" – ");
+        if (parts.length >= 2) {
+          // Extract the question (first part)
+          let question = parts[0];
+          
+          // Remove the leading number codes (like "01 N A " or "05 Y Xb " or "00 E C ")
+          question = question.replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+[A-Za-z])?(\s+)?/, "");
+          
+          // Format the question: remove unnecessary words, fix "A/An" articles, proper spacing
+          question = question
+            .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove standalone "A" before uppercase words
+            .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
+            .trim();
+          
+          // Special handling for various grammatical errors
+          if (question.toLowerCase().startsWith("hat is")) {
+            question = "What is" + question.substring(6);
+          }
+          
+          // Ensure question has a question mark if it's a question
+          if (isQuestion(question) && !question.endsWith("?")) {
+            question = question + "?";
+          }
+          
+          // Make first letter uppercase for better presentation
+          question = question.charAt(0).toUpperCase() + question.slice(1);
+          
+          // Extract and clean the answer (second part)
+          let answer = parts[1].trim();
+          
+          // Handle specific article formatting in answers
+          answer = answer
+            .replace(/\bit is\s+a\b/i, "It is a")
+            .replace(/\b([Aa])\s+(?=[A-Z])/g, "a "); // Fix article placement
+          
+          // Make first letter uppercase for consistency
+          answer = answer.charAt(0).toUpperCase() + answer.slice(1);
+          
+          // Generate appropriate answer prompts based on question structure
+          let answerPrompt = generateAnswerPrompt(question);
+          
+          // If we have both a standard answer and a generated prompt, combine them
+          if (answerPrompt && answer) {
+            answer = `${answer} ${answerPrompt}`;
+          } else if (answerPrompt && !answer) {
+            answer = answerPrompt;
+          }
+          
+          return {
+            question,
+            answer
+          };
+        }
+      }
+      
+      // For non-dash content, clean up the title
+      let cleanedTitle = withoutExtension
+        .replace(/^\d+\s+[A-Z](\s+[A-Z])?(\s+[A-Za-z])?(\s+)?/, "") // Remove leading codes
+        .replace(/\b([Aa])\s+(?=[A-Z])/g, "") // Remove "A" before uppercase words
+        .replace(/\s{2,}/g, ' ') // Clean up multiple spaces
+        .trim();
+      
+      // Special handling for various patterns
+      
+      // Book 5 household chores specific patterns
+      if (cleanedTitle.includes("Opinion on House Chores")) {
+        cleanedTitle = "What is your opinion on household chores?";
+      }
+      
+      if (cleanedTitle.toLowerCase().includes("are chores relaxing")) {
+        cleanedTitle = "Are chores relaxing?";
+      }
+      
+      // Special handling for grammatical errors
+      if (cleanedTitle.toLowerCase().startsWith("hat is")) {
+        cleanedTitle = "What is" + cleanedTitle.substring(6);
+      }
+      
+      // Add question mark for questions
+      if (isQuestion(cleanedTitle) && !cleanedTitle.endsWith("?")) {
+        cleanedTitle = cleanedTitle + "?";
+      }
+      
+      // Make first letter uppercase
+      cleanedTitle = cleanedTitle.charAt(0).toUpperCase() + cleanedTitle.slice(1);
+      
+      // Generate appropriate answer prompts based on question structure
+      const answerPrompt = generateAnswerPrompt(cleanedTitle);
+      
+      return {
+        question: cleanedTitle,
+        answer: answerPrompt
+      };
+    } catch (error) {
+      // If any error, return null to hide unnecessary content
+      console.error("Error formatting content title:", error);
+      return {
+        question: null,
+        answer: null
+      };
+    }
+  };
+  
   // Reset state when the active slide changes
   useEffect(() => {
     if (isActive) {
