@@ -39,8 +39,14 @@ function Router() {
       <Route path="/book7/unit12" component={Book7Unit12Viewer} />
       
       {/* Generic direct content viewer - works with ANY book/unit path that matches S3 pattern */}
-      <Route path="/book:bookNumber/unit:unitNumber">
-        {(params) => <DirectContentViewer />}
+      <Route path="/:bookPath/:unitPath">
+        {(params) => {
+          // Only match book/unit pattern (e.g., book3/unit12)
+          if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
+            return <DirectContentViewer />;
+          }
+          return <NotFound />;
+        }}
       </Route>
       
       {/* S3 Testing route */}
