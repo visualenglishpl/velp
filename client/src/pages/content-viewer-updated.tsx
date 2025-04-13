@@ -312,11 +312,7 @@ export default function ContentViewer() {
               {currentMaterial.contentType === 'IMAGE' && (
                 <div className="max-w-full text-center">
                   <img 
-                    src={
-                      book && unit
-                        ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.png`
-                        : currentMaterial.content
-                    }
+                    src={currentMaterial.content}
                     alt={currentMaterial.title === "Unit Introduction" ? "Slide Content" : currentMaterial.title.replace(/^[A-Z]\s+/, '')}
                     className="max-w-full max-h-[50vh] mx-auto object-contain"
                     onError={(e) => {
@@ -500,13 +496,7 @@ export default function ContentViewer() {
                       tryAlternateVideoFormats(possibleVideoFormats);
                     }}
                   >
-                    <source 
-                      src={
-                        book && unit
-                          ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.mp4`
-                          : currentMaterial.content
-                      }
-                    />
+                    <source src={currentMaterial.content} />
                     Your browser does not support video playback.
                   </video>
                 </div>
@@ -516,11 +506,7 @@ export default function ContentViewer() {
               
               {currentMaterial.contentType === 'GAME' && (
                 <iframe
-                  src={
-                    book && unit
-                      ? `/api/content/${book.bookId}/unit${unit.unitNumber}/${currentIndex+1 < 10 ? '0' : ''}${currentIndex+1} A.html`
-                      : currentMaterial.content
-                  }
+                  src={currentMaterial.content}
                   className="w-full h-[50vh] border-0"
                 />
               )}
