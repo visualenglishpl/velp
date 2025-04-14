@@ -87,7 +87,6 @@ export default function UnitsPage() {
               </Link>
               <h1 className="text-3xl font-bold">BOOK {bookId.toUpperCase()} - Units</h1>
             </div>
-            <p className="text-gray-600">Browse all units in this book</p>
           </div>
           
           {!hasPurchased && (
