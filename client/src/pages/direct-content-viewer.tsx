@@ -117,10 +117,19 @@ export default function DirectContentViewer() {
   
   // Purchase handler function
   const handlePurchaseClick = useCallback(() => {
+    // Check if user is admin - don't redirect to purchase page
+    if (isAdmin || document.cookie.includes('isContentManager=true') || document.cookie.includes('role=admin')) {
+      console.log("Admin user attempted to purchase - granting access instead");
+      // For admin users, just grant access directly
+      setHasPurchasedAccess(true);
+      return;
+    }
+    
+    // For regular users, show dialog and navigate to checkout
     setShowAccessDialog(true);
     // Navigate to checkout page with the relevant plan details
     navigate(`/checkout/unit?bookId=${bookPath}&unitId=${unitPath}`);
-  }, [bookPath, unitPath, navigate]);
+  }, [bookPath, unitPath, navigate, isAdmin]);
   
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,

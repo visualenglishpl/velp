@@ -14,7 +14,10 @@ type GuidanceType = {
 } | null | undefined;
 
 interface TeachingGuidanceProps {
-  guidance: GuidanceType;
+  guidance?: GuidanceType;
+  bookId?: string;
+  unitNumber?: number;
+  onHide?: () => void;
 }
 
 interface GuidancePoint {
@@ -92,13 +95,7 @@ const resourcesData: Resource[] = [
   }
 ];
 
-// Update the TeachingGuidanceProps interface
-interface TeachingGuidanceProps {
-  guidance: GuidanceType;
-  onHide?: () => void;
-}
-
-export default function TeachingGuidance({ guidance, onHide }: TeachingGuidanceProps) {
+export default function TeachingGuidance({ guidance, bookId, unitNumber, onHide }: TeachingGuidanceProps) {
   // In a real implementation, we would fetch the teaching guidance data from the API
   // const { data } = useQuery({ queryKey: ['/api/teaching-guidance', bookId, unitNumber] });
   

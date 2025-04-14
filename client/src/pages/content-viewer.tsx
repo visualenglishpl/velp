@@ -10,6 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import ContentSlide from '@/components/ContentSlide';
 import ThumbnailsBar from '@/components/ThumbnailsBar';
 import TeachingGuidance from '@/components/TeachingGuidance';
+import { useAuth } from '@/hooks/use-auth';
 
 // Define types for our data model
 type Material = {
@@ -48,10 +49,24 @@ export default function ContentViewer() {
   const unitId = parseInt(urlParts[2] || '0', 10);
   const initialMaterialIndex = parseInt(urlParts[4] || '0', 10) || 0;
   
+  // Get auth information
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
+  console.log("Content viewer user:", user?.username, "Admin role:", isAdmin);
+  
   // State
   const [currentIndex, setCurrentIndex] = useState(initialMaterialIndex);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
   const [showTeacherGuidance, setShowTeacherGuidance] = useState(false);
+  
+  // For admin users, set necessary cookies
+  useEffect(() => {
+    if (isAdmin) {
+      console.log("Setting admin cookies for content access");
+      document.cookie = "isContentManager=true; path=/";
+      document.cookie = "role=admin; path=/";
+    }
+  }, [isAdmin]);
   
   // Initialize Embla Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({
