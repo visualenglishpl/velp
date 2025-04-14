@@ -124,12 +124,6 @@ const PricingPlans = () => {
             </div>
           ))}
         </div>
-
-        <div className="mt-12 text-center mb-10">
-          <p className="text-gray-800 font-medium flex items-center justify-center text-xl bg-amber-50 rounded-md p-5 max-w-2xl mx-auto border border-amber-200 shadow-sm">
-            Contact us for bulk pricing and additional discounts.
-          </p>
-        </div>
       </div>
     </section>
   );
