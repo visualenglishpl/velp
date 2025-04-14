@@ -244,9 +244,10 @@ export default function ContentSlide({
             <motion.div 
               className="relative flex justify-center items-center w-full h-full"
               style={{ 
+                minHeight: '600px', // Set minimum height to ensure content has space
                 maxHeight: document.querySelector('.fixed.inset-0.z-50.bg-black') 
-                  ? 'calc(100vh - 200px)' // Adjusted for fullscreen mode thumbnails
-                  : 'calc(100vh - 160px)',
+                  ? 'calc(100vh - 180px)' // Better adjusted for fullscreen mode thumbnails
+                  : 'calc(100vh - 140px)',
                 padding: '0',
                 display: 'flex',
                 alignItems: 'center',
@@ -266,6 +267,12 @@ export default function ContentSlide({
                 }}
                 transition={{ duration: 0.4 }}
                 style={{ 
+                  width: 'auto',         // Let width be determined by the aspect ratio
+                  height: 'auto',        // Let height be determined by the aspect ratio
+                  maxWidth: '100%',      // Ensure image doesn't overflow container width
+                  maxHeight: '100%',     // Ensure image doesn't overflow container height
+                  objectFit: 'contain',  // Maintain aspect ratio
+                  objectPosition: 'center',
                   boxShadow: document.querySelector('.fixed.inset-0.z-50.bg-black') 
                     ? '0 4px 30px rgba(0,0,0,0.2)' 
                     : '0 4px 20px rgba(0,0,0,0.06)',
@@ -391,39 +398,48 @@ export default function ContentSlide({
         overflow: 'hidden'
       }}
     >
-      {/* Question & Answer Display at the top */}
-      {exactFormatQuestion ? (
-        <div className="bg-blue-50 py-3 text-center border-b border-blue-100 transition-all">
-          {/* Display question in exact format: "Q: Question → A: Answer" */}
-          <div className="text-xl px-4">
-            {exactFormatQuestion.includes('→') ? (
-              <>
-                <span className="font-semibold text-blue-900">
-                  {exactFormatQuestion.split('→')[0].trim()}
-                </span>
-                <span className="text-blue-700 mx-2">→</span>
-                <span className="text-blue-500 font-normal">
-                  {exactFormatQuestion.split('→')[1].trim()}
-                </span>
-              </>
-            ) : (
-              <span className="font-semibold text-blue-900">{exactFormatQuestion}</span>
-            )}
+      {/* Question & Answer Display at the top - Callan Method Style */}
+      {exactFormatQuestion || (formattedQuestion && answer) ? (
+        <div className="bg-blue-50 py-4 text-center border-b border-blue-100 transition-all">
+          {/* Display question in Callan Method format: "What language does she speak? → She speaks Polish." */}
+          <div className="text-xl px-4 flex flex-col items-center">
+            {exactFormatQuestion ? (
+              exactFormatQuestion.includes('→') ? (
+                <div className="flex flex-col items-center">
+                  <div className="mb-2">
+                    <span className="font-bold text-blue-900 text-2xl">
+                      {exactFormatQuestion.split('→')[0].trim().replace(/^Q:\s*/, '')}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-blue-600 font-medium text-xl">
+                      {exactFormatQuestion.split('→')[1].trim().replace(/^A:\s*/, '')}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <span className="font-bold text-blue-900 text-2xl">{exactFormatQuestion}</span>
+              )
+            ) : formattedQuestion && answer ? (
+              <div className="flex flex-col items-center">
+                <div className="mb-2">
+                  <span className="font-bold text-blue-900 text-2xl">{formattedQuestion}</span>
+                </div>
+                <div>
+                  <span className="text-blue-600 font-medium text-xl">{answer.positive}</span>
+                  {answer.negative && (
+                    <div className="mt-1">
+                      <span className="text-blue-500 font-normal text-xl opacity-85">
+                        {answer.negative}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
-      ) : formattedQuestion && answer && (
-        <div className="bg-blue-50 py-3 text-center border-b border-blue-100 transition-all">
-          {/* Fallback to old format if the exact format is not available */}
-          <p className="font-semibold text-xl text-blue-900 mb-2">
-            {formattedQuestion}
-          </p>
-          {/* Answer displayed in a lighter shade below */}
-          <p className="text-blue-500 font-normal text-lg">
-            {answer.positive}
-            {answer.negative && <span className="ml-1 text-blue-400 opacity-75">/ {answer.negative}</span>}
-          </p>
-        </div>
-      )}
+      ) : null}
       
       {/* Main content area */}
       <div className="w-full h-full flex flex-col md:flex-row">
