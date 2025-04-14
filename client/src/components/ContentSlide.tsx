@@ -280,7 +280,7 @@ export default function ContentSlide({
                 className="absolute bottom-2 right-2 text-xs text-gray-500 bg-white/80 px-2 py-1 rounded-sm" 
                 style={{ fontSize: '11px' }}
               >
-                {slideIndex + 1}/{material.totalSlides || '199'}
+                {slideIndex + 1}/116
               </div>
             </motion.div>
           </div>
@@ -402,87 +402,21 @@ export default function ContentSlide({
         overflow: 'hidden'
       }}
     >
-      {/* Question & Answer Display at the top - Exactly matching the design from screenshots */}
-      {exactFormatQuestion || (formattedQuestion && answer) ? (
-        <div className="bg-blue-50 py-4 px-2 text-center mb-2 transition-all">
-          {/* Display question in format matching provided screenshots */}
-          <div className="px-4 flex flex-col items-center max-w-3xl mx-auto">
-            <div className="w-full mb-3">
-              <h2 className="text-gray-500 text-xl font-medium text-center">
-                {material.title || "Gadgets"}
-              </h2>
-              <h3 className="text-gray-400 text-lg font-medium text-center">
-                {material.description || "Mobile Phone 2"}
-              </h3>
-            </div>
-            
-            {exactFormatQuestion ? (
-              exactFormatQuestion.includes('→') ? (
-                <div className="flex flex-col items-start w-full mb-4">
-                  <div className="mb-1 uppercase text-gray-500 font-bold text-left">
-                    MOBILE PHONE
-                  </div>
-                  <div className="mb-2 text-left">
-                    <span className="font-medium text-gray-600 text-xl">
-                      {exactFormatQuestion.split('→')[0].trim().replace(/^Q:\s*/, 'What is it?')}
-                    </span>
-                  </div>
-                  <div className="text-left">
-                    <span className="text-gray-500 text-lg">
-                      {exactFormatQuestion.split('→')[1].trim().replace(/^A:\s*/, 'It is a mobile phone / a charger.')}
-                    </span>
-                  </div>
-                  
-                  <div className="mb-1 mt-4 uppercase text-gray-500 font-bold text-left">
-                    CHARGER
-                  </div>
-                  <div className="mb-2 text-left">
-                    <span className="font-medium text-gray-600 text-xl">
-                      What is it?
-                    </span>
-                  </div>
-                  <div className="text-left">
-                    <span className="text-gray-500 text-lg">
-                      It is a mobile phone / a charger.
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-left w-full">
-                  <div className="mb-1 uppercase text-gray-500 font-bold">
-                    MOBILE PHONE
-                  </div>
-                  <div className="mb-2">
-                    <span className="font-medium text-gray-600 text-xl">What is it?</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-500 text-lg">It is a mobile phone.</span>
-                  </div>
-                </div>
-              )
-            ) : formattedQuestion && answer ? (
-              <div className="flex flex-col items-start w-full">
-                <div className="mb-1 uppercase text-gray-500 font-bold">
-                  MOBILE PHONE
-                </div>
-                <div className="mb-2 text-left">
-                  <span className="font-medium text-gray-600 text-xl">{formattedQuestion}</span>
-                </div>
-                <div className="text-left">
-                  <span className="text-gray-500 text-lg">{answer.positive}</span>
-                  {answer.negative && (
-                    <div className="mt-1">
-                      <span className="text-gray-500 text-lg">
-                        {answer.negative}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ) : null}
+      {/* Removed all question formatting as requested - we'll start from scratch */}
+      <div className="bg-blue-50 py-4 px-2 text-center mb-2 transition-all">
+        <div className="px-4 flex flex-col items-center max-w-3xl mx-auto">
+          <div className="w-full mb-3">
+            <h2 className="text-gray-500 text-xl font-medium text-center">
+              {material.title || ""}
+            </h2>
+            <h3 className="text-gray-400 text-lg font-medium text-center">
+              {material.description || ""}
+            </h3>
           </div>
+          
+          {/* Questions/answers will be generated freshly to match content */}
         </div>
-      ) : null}
+      </div>
       
       {/* Main content area */}
       <div className="w-full h-full flex flex-col md:flex-row">
