@@ -119,9 +119,9 @@ export default function TeachingGuidance({ bookId, unitNumber, onHide }: Teachin
         <TabsContent value="guidance" className="p-4 space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
             {/* Presenting Questions Panel */}
-            <Card>
+            <Card className="border-l-4 border-[#00BE68] bg-green-50 shadow-sm">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Presenting Questions</CardTitle>
+                <CardTitle className="text-lg text-green-700">Presenting Questions</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="list-disc pl-5 space-y-2">
@@ -133,9 +133,9 @@ export default function TeachingGuidance({ bookId, unitNumber, onHide }: Teachin
             </Card>
             
             {/* Check Vocabulary Panel */}
-            <Card>
+            <Card className="border-l-4 border-[#3B82F6] bg-blue-50 shadow-sm">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Check Vocabulary Understanding</CardTitle>
+                <CardTitle className="text-lg text-blue-700">Check Vocabulary Understanding</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="list-disc pl-5 space-y-2">
@@ -147,15 +147,18 @@ export default function TeachingGuidance({ bookId, unitNumber, onHide }: Teachin
             </Card>
             
             {/* Prompt Student Answers Panel */}
-            <Card>
+            <Card className="border-l-4 border-[#8B5CF6] bg-purple-50 shadow-sm relative">
+              <div className="absolute -top-2 right-4 text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-sm">
+                Most Popular
+              </div>
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Prompt Student Answers</CardTitle>
+                <CardTitle className="text-lg text-purple-700">Prompt Student Answers</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="mb-2 font-medium">Use structured sentence frames:</p>
-                <div className="space-y-2 p-3 bg-gray-50 rounded-md">
+                <div className="space-y-2 p-3 bg-white rounded-md border border-purple-200">
                   {guidanceData.sentenceFrames.map((frame, i) => (
-                    <div key={i} className="pb-2 border-b border-gray-200 last:border-0">
+                    <div key={i} className="pb-2 border-b border-purple-100 last:border-0">
                       <div className="text-gray-700">"{frame.question}" → "{frame.answer}"</div>
                     </div>
                   ))}
@@ -164,9 +167,9 @@ export default function TeachingGuidance({ bookId, unitNumber, onHide }: Teachin
             </Card>
             
             {/* Follow-up Questions Panel */}
-            <Card>
+            <Card className="border-l-4 border-[#F59E0B] bg-amber-50 shadow-sm">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Ask Follow-up Questions</CardTitle>
+                <CardTitle className="text-lg text-amber-700">Ask Follow-up Questions</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="mb-2">To reinforce comprehension:</p>
