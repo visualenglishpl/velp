@@ -1,0 +1,72 @@
+BODY TYPE (SLIM, WELL-BUILT, PLUMP, FAT)
+Q: Is the man slim, well-built, plump, or fat? → A: He is [slim/well-built/plump/fat].
+
+Q: Is the woman slim, well-built, plump, or fat? → A: She is [slim/well-built/plump/fat].
+
+Q: Is the cat slim, well-built, plump, or fat? → A: The cat is [slim/well-built/plump/fat].
+
+Q: Is Santa slim, well-built, plump, or fat? → A: Santa is [slim/well-built/plump/fat].
+
+Q: Is the dog slim, well-built, plump, or fat? → A: The dog is [slim/well-built/plump/fat].
+
+Q: Are the men slim, well-built, plump, or fat? → A: They are [slim/well-built/plump/fat].
+
+Q: Is the monster slim, well-built, plump, or fat? → A: The monster is [slim/well-built/plump/fat].
+
+HAIR DESCRIPTION
+Q: Does he have short, long, fair, or dark hair? → A: He has [short/long/fair/dark] hair.
+
+Q: Does she have short, long, curly, or straight hair? → A: She has [short/long/curly/straight] hair.
+
+Q: Does the baby have short, long, dark, or fair hair? → A: The baby has [short/long/dark/fair] hair.
+
+Q: Does the girl have straight or curly hair? → A: She has [straight/curly] hair.
+
+Q: Does the woman have straight, curly, fair, or dark hair? → A: She has [straight/curly/fair/dark] hair.
+
+FACIAL FEATURES
+Q: Does the man have a beard, moustache, glasses, freckles, or is he bald? → A: He has a [beard/moustache/glasses/freckles] / He is bald.
+
+Q: Does the woman have sunglasses or glasses? → A: She has [sunglasses/glasses].
+
+Q: Does the baby have a beard, moustache, glasses, freckles, or is he bald? → A: The baby has [none of these].
+
+Q: Does the cat have a beard, moustache, hat, glasses, freckles, or is it bald? → A: The cat has a [beard/moustache/hat/glasses/freckles] / It is bald.
+
+Q: Does Santa have a beard, moustache, glasses, or freckles? → A: Santa has a [beard/moustache/glasses/freckles].
+
+AGE (YOUNG, MIDDLE-AGED, OLD)
+Q: Is the baby young, middle-aged, or old? → A: The baby is young.
+
+Q: Is the woman young, middle-aged, or old? → A: She is [young/middle-aged/old].
+
+Q: Is the man young, middle-aged, or old? → A: He is [young/middle-aged/old].
+
+Q: Is the chick young, middle-aged, or old? → A: The chick is young.
+
+Q: Is the zombie short or tall? → A: The zombie is [short/tall].
+
+HEIGHT (SHORT OR TALL)
+Q: Is the girl short or tall? → A: She is [short/tall].
+
+Q: Is the man short or tall? → A: He is [short/tall].
+
+Q: Is the giant short or tall? → A: The giant is tall.
+
+Q: Is the giraffe short or tall? → A: The giraffe is tall.
+
+Q: Is the elf short or tall? → A: The elf is [short/tall].
+
+EYE COLOR
+Q: What color are your eyes? → A: My eyes are [blue/brown/green].
+
+Q: What color are the eyes in the picture? → A: They are [blue/brown/green/hazel].
+
+FAMILY
+Q: Who are they? → A: They are a family.
+
+Q: How many people are in your close family? → A: There are [number] people.
+
+Q: Is your family small or big? → A: It is [small/big].
+
+Q: Do you spend Christmas with close family and relatives? → A: Yes, I do. / No, I don’t.

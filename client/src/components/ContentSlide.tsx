@@ -70,7 +70,7 @@ export default function ContentSlide({
     return directPath;
   };
 
-  // Simple function to extract raw question and answer from filename
+  // Extremely basic function to just split the filename by dash or en dash
   const formatContentTitle = () => {
     if (!material.content) {
       return { question: null, answer: null };
@@ -82,36 +82,50 @@ export default function ContentSlide({
       const withoutExtension = filename.split('.')[0];
       
       // Skip processing for certain types of content
-      if (!withoutExtension || withoutExtension.includes("Video") || withoutExtension.includes("Online Games")) {
+      if (!withoutExtension || 
+          withoutExtension.includes("Video") || 
+          withoutExtension.includes("Online Games") ||
+          withoutExtension.includes("Match") || 
+          withoutExtension.includes("Quiz")) {
         return { question: null, answer: null };
       }
       
-      // Split by dash or hyphen, which usually separates question and answer
-      const parts = withoutExtension.split(/\s*[-–]\s*/);
+      // Remove numeric prefixes (like "01 R A")
+      const cleanedFilename = withoutExtension.replace(/^\d+\s*[A-Z](\s+[A-Z])?\s+/, '');
       
-      // Need at least two parts (question and answer)
-      if (parts.length < 2) {
+      // Look for question-answer pattern with either dash or en dash
+      const dashMatch = cleanedFilename.match(/(.*?)(?:\s*[-–]\s*)(.*)/);
+      
+      if (!dashMatch || dashMatch.length < 3) {
         return { question: null, answer: null };
       }
       
-      // Get the raw parts, which may include prefixes like "01 R A"
-      let rawQuestion = parts[0].trim();
-      let rawAnswer = parts.slice(1).join(' - ').trim();
+      // Format based on examples provided: "Q: What is it? → A: It is a phone."
+      let questionPart = dashMatch[1].trim();
+      let answerPart = dashMatch[2].trim();
       
-      // Remove numeric and letter prefixes that are common in content filenames
-      // Pattern like "01 R A" or "02 L B"
-      const prefixPattern = /^\d{1,2}\s+[A-Z](\s+[A-Z])?\s+/;
-      
-      if (prefixPattern.test(rawQuestion)) {
-        rawQuestion = rawQuestion.replace(prefixPattern, '');
+      // Add question mark if not present
+      if (!questionPart.endsWith('?')) {
+        questionPart += '?';
       }
       
-      // Return the raw question and answer
+      // For negative answers like "No, I don't"
+      let negativePart = null;
+      
+      // Check if the answer has alternatives (contains a slash)
+      if (answerPart.includes('/')) {
+        const answerParts = answerPart.split('/').map(part => part.trim());
+        if (answerParts.length >= 2) {
+          answerPart = answerParts[0];
+          negativePart = answerParts[1];
+        }
+      }
+      
       return {
-        question: rawQuestion,
+        question: questionPart,
         answer: {
-          positive: rawAnswer,
-          negative: null
+          positive: answerPart,
+          negative: negativePart
         }
       };
     } catch (error) {
@@ -339,10 +353,9 @@ export default function ContentSlide({
       {/* Question & Answer Display at the top */}
       {formattedQuestion && answer && (
         <div className="bg-blue-50 py-3 text-center border-b border-blue-100 transition-all">
-          <p className="font-medium text-lg text-blue-900 flex items-center justify-center">
-            <span>{formattedQuestion}</span>
-            <span className="mx-2">→</span>
-            <span className="font-normal">{answer.positive}</span>
+          <p className="font-medium text-lg text-blue-900">
+            Q: {formattedQuestion} → A: {answer.positive}
+            {answer.negative && <span className="block mt-1">/ {answer.negative}</span>}
           </p>
         </div>
       )}
