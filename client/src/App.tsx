@@ -32,11 +32,27 @@ function ProtectedRoute({ component: Component, adminOnly = false }: { component
     return null;
   }
   
-  // Always treat the user as admin for content management purposes
+  // Handle admin role for content management
   console.log("User role:", user.role);
-  if (adminOnly) {
-    console.log("Setting role to admin for content management");
-    user.role = "admin"; // Force admin role to allow access to all content management features
+  const isAdmin = user.role === "admin";
+  
+  // For admin-only routes, ensure the user is an admin
+  if (adminOnly && !isAdmin) {
+    console.log("Non-admin user trying to access admin-only area");
+    navigate("/");
+    return null;
+  }
+  
+  // For admin users, set a cookie to prevent content blurring
+  if (isAdmin) {
+    console.log("Setting admin cookies for content management");
+    document.cookie = "isContentManager=true; path=/";
+    document.cookie = "role=admin; path=/";
+    
+    // Also modify user role directly for component access
+    if (adminOnly) {
+      user.role = "admin"; // Ensure admin access to content management features
+    }
   }
   
   // User is authenticated (and has admin role if required)

@@ -345,13 +345,17 @@ export default function ContentSlide({
   
   // Determine if this content should be blurred
   const shouldBlurContent = () => {
-    // Special handling for different book series
-    const isBookZeroSeries = bookId === 'book0a' || bookId === 'book0b' || bookId === 'book0c';
-    
-    // For admin users (content managers) - don't blur anything
-    if (document.cookie.includes('isContentManager=true')) {
+    // Check if the user is an admin first
+    const isAdmin = document.cookie.includes('isContentManager=true') || 
+                    document.cookie.includes('role=admin');
+
+    // If admin user, never blur content
+    if (isAdmin) {
       return false;
     }
+    
+    // Special handling for different book series
+    const isBookZeroSeries = bookId === 'book0a' || bookId === 'book0b' || bookId === 'book0c';
     
     // Standard books: First 10 slides of any unit are free (preview)
     if (!isBookZeroSeries && slideIndex < 10) {
