@@ -15,8 +15,8 @@ const PricingPlans = () => {
         "No digital access included",
       ],
       price: "€20",
-      priceSubtext: "🛒 Free Delivery",
-      buttonText: "🛒 Order Printed Book",
+      priceSubtext: "+ delivery",
+      buttonText: "Order Printed Book",
       buttonColor: "bg-black hover:bg-gray-800",
       planId: "printed_book"
     },
@@ -28,13 +28,13 @@ const PricingPlans = () => {
       headerBg: "bg-blue-500",
       features: [
         "Access to one complete lesson",
-        "📄 Downloadable PDF of the unit",
+        "Downloadable PDF of the unit",
         "200+ images, games, and quizzes",
         "Progress tracking & videos",
       ],
       price: "€5",
-      priceSubtext: "per month or €40/year (🔥 Save 33%)",
-      buttonText: "🚀 Start Learning Now",
+      priceSubtext: "per month or €40/year (Save 33%)",
+      buttonText: "Start Learning Now",
       buttonColor: "bg-black hover:bg-gray-800",
       planId: "single_lesson"
     },
@@ -46,15 +46,14 @@ const PricingPlans = () => {
       headerBg: "bg-violet-600",
       features: [
         "Full access to one entire book",
-        "📄 Download PDFs for all units",
+        "Download PDFs for all units",
         "200+ interactive resources",
         "Certificates & advanced analytics",
       ],
       price: "€25",
-      priceSubtext: "per month or €180/year (✨ Save 40%)",
-      buttonText: "🎯 Get Full Access",
+      priceSubtext: "per month or €180/year (Save 40%)",
+      buttonText: "Get Full Access",
       buttonColor: "bg-black hover:bg-gray-800",
-      popular: true,
       planId: "whole_book"
     },
     {
@@ -70,8 +69,8 @@ const PricingPlans = () => {
         "Cancel anytime",
       ],
       price: "Free",
-      priceSubtext: "7-Day Trial | ⚠️ Credit card required",
-      buttonText: "✨ Start Free Trial",
+      priceSubtext: "7-Day Trial | Credit card required",
+      buttonText: "Start Free Trial",
       buttonColor: "bg-black hover:bg-gray-800",
       planId: "free_trial"
     },
@@ -92,11 +91,6 @@ const PricingPlans = () => {
             <div key={index} className="flex flex-col h-full bg-white rounded-lg shadow overflow-hidden border border-gray-100">
               {/* Header - Fixed height for all headers */}
               <div className={`${plan.headerBg} text-white py-5 px-4 text-center h-[100px] flex flex-col justify-center relative`}>
-                {plan.popular && (
-                  <div className="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-md shadow-md">
-                    🔥 Most Popular
-                  </div>
-                )}
                 <h3 className="text-xl font-bold leading-tight whitespace-pre-line">
                   {plan.title}
                 </h3>
