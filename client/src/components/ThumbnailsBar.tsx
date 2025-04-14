@@ -4,7 +4,8 @@ import { Image as ImageIcon, FileText, Video, MessageSquare, Check, AlertCircle,
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
-// Define type for material
+// Import Material type from content-viewer
+// This should match the Material type defined in content-viewer.tsx
 type Material = {
   id: number;
   unitId: number;
@@ -12,8 +13,12 @@ type Material = {
   description: string | null;
   contentType: string;
   content: string;
-  order: number;
-  isLocked: boolean;
+  order?: number;
+  orderIndex?: number;
+  isLocked?: boolean;
+  isPublished?: boolean;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 };
 
 interface ThumbnailsBarProps {

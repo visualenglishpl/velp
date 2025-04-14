@@ -3,29 +3,31 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { ExternalLink, PenTool } from "lucide-react";
 
+// Define type for material
+type Material = {
+  id: number;
+  unitId: number;
+  title: string;
+  description: string | null;
+  contentType: string;
+  content: string;
+  order?: number;
+  orderIndex?: number;
+  isLocked?: boolean;
+  isPublished?: boolean;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
+};
+
 interface ContentSlideProps {
-  material: {
-    id?: number;
-    title?: string;
-    description?: string;
-    contentType: string;
-    content: string;
-    bookId?: string;
-    unitId?: number;
-    path?: string;
-    orderIndex?: number;
-    order?: number;
-    isPublished?: boolean;
-    isLocked?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-  };
+  material: Material;
   isActive: boolean;
   bookId: string;
   unitNumber: number;
   slideIndex: number;
   isPremium?: boolean;
   hasPurchasedAccess?: boolean;
+  hasFreeTrial?: boolean;
   onPurchaseClick?: () => void;
 }
 
@@ -39,7 +41,7 @@ export default function ContentSlide({
   hasPurchasedAccess = false,
   hasFreeTrial = false,
   onPurchaseClick 
-}: ContentSlideProps & { hasFreeTrial?: boolean }) {
+}: ContentSlideProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);

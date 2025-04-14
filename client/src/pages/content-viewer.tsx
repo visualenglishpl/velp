@@ -265,6 +265,7 @@ export default function ContentViewer() {
                     isActive={index === currentIndex}
                     bookId={book?.bookId || ''}
                     unitNumber={unit?.unitNumber || 0}
+                    slideIndex={index}
                   />
                 </div>
               ))}
