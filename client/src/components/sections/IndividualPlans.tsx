@@ -1,4 +1,4 @@
-import { Star, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { Link } from "wouter";
 
 const PricingPlans = () => {
@@ -127,7 +127,6 @@ const PricingPlans = () => {
 
         <div className="mt-12 text-center mb-10">
           <p className="text-gray-800 font-medium flex items-center justify-center text-xl bg-amber-50 rounded-md p-5 max-w-2xl mx-auto border border-amber-200 shadow-sm">
-            <Star className="h-7 w-7 text-amber-500 mr-4" fill="currentColor" />
             Contact us for bulk pricing and additional discounts.
           </p>
         </div>
