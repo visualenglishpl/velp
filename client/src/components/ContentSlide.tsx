@@ -244,7 +244,9 @@ export default function ContentSlide({
             <motion.div 
               className="relative flex justify-center items-center w-full h-full"
               style={{ 
-                maxHeight: 'calc(100vh - 160px)', // Increased available height
+                maxHeight: document.querySelector('.fixed.inset-0.z-50.bg-black') 
+                  ? 'calc(100vh - 200px)' // Adjusted for fullscreen mode thumbnails
+                  : 'calc(100vh - 160px)',
                 padding: '0',
                 display: 'flex',
                 alignItems: 'center',
@@ -264,7 +266,9 @@ export default function ContentSlide({
                 }}
                 transition={{ duration: 0.4 }}
                 style={{ 
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                  boxShadow: document.querySelector('.fixed.inset-0.z-50.bg-black') 
+                    ? '0 4px 30px rgba(0,0,0,0.2)' 
+                    : '0 4px 20px rgba(0,0,0,0.06)',
                 }}
               />
             </motion.div>

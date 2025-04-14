@@ -221,21 +221,28 @@ export default function ThumbnailsBar({
               const thumbnailUrl = getThumbnailUrl(material);
               const formattedTitle = formatTitle(material.content);
               
+              // Check if we're in fullscreen mode by looking at the parent element's classes
+              const isFullscreenMode = scrollRef.current?.parentElement?.classList.contains('bg-black/80') || false;
+              
               return (
                 <div
                   key={index}
                   className={`
-                    relative cursor-pointer rounded-md
-                    ${isActive ? 'active-thumbnail border border-primary' : 'border border-transparent hover:border-gray-200'}
-                    ${isVerticalLayout ? 'w-full' : 'w-16'}
+                    relative cursor-pointer rounded-md transition-all duration-200
+                    ${isActive 
+                      ? 'active-thumbnail border-2 border-primary scale-105 shadow-lg z-10' 
+                      : 'border border-transparent hover:border-gray-200 hover:scale-105'}
+                    ${isVerticalLayout ? 'w-full' : isFullscreenMode ? 'w-20' : 'w-16'}
                   `}
                   onClick={() => onSelectSlide(index)}
                 >
                   <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'} p-1`}>
                     <div className={`
-                      ${isVerticalLayout ? 'h-8 w-8 mr-2' : 'h-10 w-10'} 
-                      rounded flex items-center justify-center overflow-hidden
-                      ${isActive ? 'bg-white shadow-sm' : 'bg-gray-50'}
+                      ${isVerticalLayout ? 'h-8 w-8 mr-2' : isFullscreenMode ? 'h-12 w-12' : 'h-10 w-10'} 
+                      rounded-md flex items-center justify-center overflow-hidden
+                      ${isActive 
+                        ? isFullscreenMode ? 'bg-white/90 shadow-md' : 'bg-white shadow-sm'
+                        : isFullscreenMode ? 'bg-gray-100/90' : 'bg-gray-50'}
                     `}>
                       {thumbnailUrl ? (
                         <img 
@@ -259,6 +266,14 @@ export default function ThumbnailsBar({
                     
                     {isActive && (
                       <div className="absolute inset-0 border-2 border-primary rounded-md"/>
+                    )}
+                    
+                    {/* Slide number indicator that appears in fullscreen */}
+                    {isFullscreenMode && (
+                      <div className={`absolute -top-2 -right-2 ${isActive ? 'bg-primary text-white' : 'bg-gray-200 text-gray-800'} 
+                          w-5 h-5 rounded-full text-xs flex items-center justify-center font-medium shadow-sm`}>
+                        {index + 1}
+                      </div>
                     )}
                   </div>
                 </div>

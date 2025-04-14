@@ -617,12 +617,21 @@ export default function DirectContentViewer() {
             <div className="flex gap-2 items-center">
               <Button 
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                variant="ghost" 
+                variant={isFullscreen ? "secondary" : "outline"}
                 size="sm"
-                className="h-8"
+                className={`h-8 transition-all duration-300 ${isFullscreen ? 'bg-primary/10' : ''}`}
               >
-                <Maximize2 className="h-4 w-4 mr-1" />
-                Fullscreen
+                {isFullscreen ? (
+                  <>
+                    <Minimize2 className="h-4 w-4 mr-1" />
+                    Exit Fullscreen
+                  </>
+                ) : (
+                  <>
+                    <Maximize2 className="h-4 w-4 mr-1" />
+                    Fullscreen
+                  </>
+                )}
               </Button>
               
               <Button onClick={() => navigate("/admin/books")} variant="ghost" size="sm">
@@ -762,8 +771,13 @@ export default function DirectContentViewer() {
             </div>
           </div>
 
-          {/* Minimalist thumbnails */}
-          <div className={`${isFullscreen ? 'mt-2 bg-black/70 p-2 absolute bottom-0 left-0 right-0 z-10' : 'mt-3 p-2'}`}>
+          {/* Enhanced thumbnails - always visible */}
+          <div className={`
+            ${isFullscreen 
+              ? 'mt-2 bg-black/80 p-3 absolute bottom-0 left-0 right-0 z-20 backdrop-blur-sm rounded-t-lg border-t border-gray-600' 
+              : 'mt-3 p-2 bg-white shadow rounded-lg'
+            }`}
+          >
             <ThumbnailsBar
               materials={materials}
               currentIndex={currentSlideIndex}
