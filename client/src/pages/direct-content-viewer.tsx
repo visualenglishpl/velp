@@ -67,16 +67,27 @@ export default function DirectContentViewer() {
   // Other books still use 10 free slides
   const FREE_SLIDES_LIMIT = bookPath?.startsWith('book0') ? 2 : 10;
   
+  // Define subscription response type for TypeScript
+  type SubscriptionStatusResponse = {
+    hasActiveSubscription: boolean;
+    hasFreeTrial: boolean;
+    subscriptionStatus?: string;
+    trialEnd?: number;
+  };
+  
   // Check if user has active free trial
-  const { data: userSubscription } = useQuery({
+  const { data: userSubscription } = useQuery<SubscriptionStatusResponse>({
     queryKey: ['/api/check-subscription-status'],
-    staleTime: 60000, // 1 minute
+    staleTime: 60000, // 1 minute,
+    // Default to no subscription/trial to avoid TypeScript errors
+    placeholderData: { hasActiveSubscription: false, hasFreeTrial: false }
   });
   
   // Set free trial status if user has an active free trial
   useEffect(() => {
     if (userSubscription?.hasFreeTrial) {
       setHasFreeTrial(true);
+      console.log("User has active free trial - providing full access");
       // Free trial gives full access to all content
       setHasPurchasedAccess(true);
     }

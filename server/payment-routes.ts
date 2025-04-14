@@ -281,6 +281,10 @@ export function setupPaymentRoutes(app: Express) {
           payment_method_types: ['card'],
           save_default_payment_method: 'on_subscription',
         },
+        metadata: {
+          isFreeTrial: 'true',
+          trialType: 'full_access',
+        },
       });
       
       res.json({
@@ -291,6 +295,60 @@ export function setupPaymentRoutes(app: Express) {
       });
     } catch (error: any) {
       console.error('Free trial setup error:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Check subscription status - returns if user has active subscription or free trial
+  app.get('/api/check-subscription-status', async (req: Request, res: Response) => {
+    try {
+      // Check if user is authenticated
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ error: 'Not authenticated' });
+      }
+      
+      const user = req.user as any;
+      
+      // If user doesn't have a stripe customer ID, they don't have a subscription
+      if (!user.stripeCustomerId) {
+        return res.json({
+          hasActiveSubscription: false,
+          hasFreeTrial: false,
+        });
+      }
+      
+      // If user has a subscription ID, check its status
+      if (user.stripeSubscriptionId) {
+        const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+        
+        // Check if subscription is active
+        const isActive = ['active', 'trialing'].includes(subscription.status);
+        
+        // Check if this is a free trial
+        const isFreeTrial = subscription.status === 'trialing' || 
+                           subscription.metadata?.isFreeTrial === 'true';
+        
+        // Check if trial is still valid
+        const now = Math.floor(Date.now() / 1000);
+        const trialEnd = subscription.trial_end || 0;
+        const isTrialActive = trialEnd > now;
+        
+        return res.json({
+          hasActiveSubscription: isActive,
+          hasFreeTrial: isFreeTrial && isTrialActive,
+          subscriptionStatus: subscription.status,
+          trialEnd: subscription.trial_end,
+        });
+      }
+      
+      // Default response if no subscription found
+      return res.json({
+        hasActiveSubscription: false,
+        hasFreeTrial: false,
+      });
+      
+    } catch (error: any) {
+      console.error('Error checking subscription status:', error);
       res.status(500).json({ error: error.message });
     }
   });
