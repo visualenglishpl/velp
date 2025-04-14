@@ -133,9 +133,9 @@ export default function UnitsPage() {
                   
                   <div className="h-full w-full">
                     {/* Generate direct S3 path to first image from the unit */}
-                    <div className="h-full w-full relative">
+                    <div className="h-full w-full relative p-2">
                       {/* Styled unit background with gradient */}
-                      <div className="h-full w-full bg-gradient-to-br from-primary/15 to-primary/35 flex flex-col items-center justify-center absolute inset-0">
+                      <div className="h-full w-full bg-gradient-to-br from-primary/10 to-primary/25 flex flex-col items-center justify-center absolute inset-0 z-0">
                         <span className="text-3xl font-bold text-primary/90 drop-shadow-md">
                           UNIT {unit.unitNumber}
                         </span>
@@ -171,8 +171,8 @@ export default function UnitsPage() {
                           })()
                         } 
                         alt={`Thumbnail for ${unit.title}`}
-                        className="h-full w-full object-cover relative z-10"
-                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
+                        className="h-full w-full object-contain object-center relative z-10"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
                         onError={(e) => {
                           // Try different common filenames in sequence
                           const img = e.target as HTMLImageElement;
