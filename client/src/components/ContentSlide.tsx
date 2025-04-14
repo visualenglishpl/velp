@@ -78,13 +78,20 @@ export default function ContentSlide({
     
     // Check for question starters like "is it", "do you", "can he", etc.
     const questionStarters = [
-      'is it', 'is he', 'is she', 'are they', 'are you',
+      'is it', 'is he', 'is she', 'are they', 'are you', 
+      'are adventure films', 'are comedy films', 'are action films',
       'do you', 'does he', 'does she', 'can you', 'can he', 'can she',
-      'have you', 'has he', 'has she', 'did you', 'would you', 'could you',
+      'have you', 'has he', 'has she', 'did you', 'would you', 'could you', 'would you like',
       'should we', 'what', 'where', 'when', 'why', 'how', 'who', 'which'
     ];
     
-    return questionStarters.some(starter => lowercaseText.startsWith(starter));
+    // Check for phrases that indicate questions
+    const questionPhrases = [
+      'what do you think of', 'what is the', 'which film is', 'is it an interesting'
+    ];
+    
+    return questionStarters.some(starter => lowercaseText.startsWith(starter)) ||
+           questionPhrases.some(phrase => lowercaseText.includes(phrase));
   };
 
   // Generate appropriate answer prompts based on question type
@@ -92,6 +99,22 @@ export default function ContentSlide({
     if (!question) return null;
     
     const lowercaseQuestion = question.toLowerCase().trim();
+    
+    // Special case for film opinion questions
+    if (lowercaseQuestion.includes("what do you think of")) {
+      return {
+        positive: "I enjoy it.",
+        negative: "I don't like it."
+      };
+    }
+    
+    // Special case for "boring or interesting" questions
+    if (lowercaseQuestion.includes("boring or interesting")) {
+      return {
+        positive: "They are interesting.",
+        negative: "They are boring."
+      };
+    }
     
     // Yes/No question patterns with appropriate responses
     const questionPatterns: Record<string, { positive: string, negative: string }> = {
@@ -139,6 +162,18 @@ export default function ContentSlide({
         positive: "Yes, they are.",
         negative: "No, they aren't."
       },
+      '^are action films': {
+        positive: "Yes, they are interesting.",
+        negative: "No, they are boring."
+      },
+      '^are adventure films': {
+        positive: "Yes, they are interesting.",
+        negative: "No, they are boring."
+      },
+      '^are comedy films': {
+        positive: "Yes, they are interesting.",
+        negative: "No, they are boring."
+      },
       '^have you': {
         positive: "Yes, I have.",
         negative: "No, I haven't."
@@ -156,6 +191,10 @@ export default function ContentSlide({
         negative: "No, I didn't."
       },
       '^would you': {
+        positive: "Yes, I would.",
+        negative: "No, I wouldn't."
+      },
+      '^would you like': {
         positive: "Yes, I would.",
         negative: "No, I wouldn't."
       },
@@ -177,20 +216,47 @@ export default function ContentSlide({
     }
     
     // Check for special WH-questions
+    const whQuestionPhrases = {
+      'what is the name': {
+        positive: "It's Scotland.",
+        negative: "I don't know."
+      },
+      'which film is': {
+        positive: "It's from Hunger Games.",
+        negative: "I don't know."
+      },
+      'what do prop masters do': {
+        positive: "They design props.",
+        negative: "I don't know."
+      },
+      'what do hair stylists do': {
+        positive: "They style hair.",
+        negative: "I don't know."
+      }
+    };
+    
+    // Check for specific WH-question phrases
+    for (const [phrase, answers] of Object.entries(whQuestionPhrases)) {
+      if (lowercaseQuestion.includes(phrase)) {
+        return answers;
+      }
+    }
+    
+    // General check for WH-questions
     const whQuestionStarters = ['what', 'where', 'when', 'why', 'how', 'who', 'which'];
     for (const starter of whQuestionStarters) {
       if (lowercaseQuestion.startsWith(starter)) {
         return {
-          positive: "[Open response]",
-          negative: "[Provide answer]"
+          positive: "I know the answer.",
+          negative: "I don't know."
         };
       }
     }
     
     // Default for unknown question types
     return {
-      positive: "[Yes answer]",
-      negative: "[No answer]"
+      positive: "Yes, I agree.",
+      negative: "No, I disagree."
     };
   };
 
@@ -233,7 +299,7 @@ export default function ContentSlide({
     // Remove extension
     let cleaned = filename.split('.')[0];
     
-    // Pattern 1: "01 A" or "05 C B" - numeric followed by letters with spaces at the beginning
+    // Pattern 1: "01 E Aa" or "01 E Bb" or "01 E C" - numeric followed by letters with spaces
     if (/^\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+/.test(cleaned)) {
       cleaned = cleaned.replace(/^\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+/, '');
     }
@@ -242,6 +308,8 @@ export default function ContentSlide({
     const patterns = [
       /^\d{1,2}_[A-Z]_/,     // matches "01_A_"
       /^\d{1,2}_[A-Z][A-Z]_/, // matches "01_AB_"
+      /^\d{1,2}\s+[A-Z]\s+[A-Za-z][a-z]/,  // matches "01 E Aa"
+      /^\d{1,2}\s+[A-Z]\s+[A-Za-z][a-z]\s+/, // matches "01 E Bb "
     ];
     
     for (const pattern of patterns) {
