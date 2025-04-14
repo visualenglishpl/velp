@@ -621,10 +621,29 @@ export default function ContentSlide({
         </div>
       )}
       
-      {/* No questions will be displayed as per user request */}
+      {/* Display generated question from filename */}
+      {formattedQuestion && (
+        <div className="text-center mb-5 mt-2">
+          <div className="bg-blue-50 border border-blue-100 rounded-lg py-3 px-5 inline-block shadow-sm">
+            <h3 className="text-xl font-semibold text-blue-800">
+              {formattedQuestion}
+            </h3>
+            {answer && (
+              <div className="mt-2 flex flex-col sm:flex-row justify-center gap-4 text-sm">
+                <span className="bg-green-50 text-green-700 px-3 py-1 rounded border border-green-200">
+                  {answer.positive}
+                </span>
+                <span className="bg-red-50 text-red-700 px-3 py-1 rounded border border-red-200">
+                  {answer.negative}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       
       {/* Centered title display */}
-      {material.title && (
+      {material.title && !formattedQuestion && (
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">
             {material.title}
