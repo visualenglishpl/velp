@@ -101,8 +101,8 @@ export default function UnitsPage() {
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {[...Array(8)].map((_, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {[...Array(10)].map((_, i) => (
               <Card key={i} className="overflow-hidden flex flex-col shadow-md">
                 <div className="aspect-video bg-gray-100 w-full rounded-t-md">
                   <Skeleton className="h-full w-full" />
@@ -121,7 +121,7 @@ export default function UnitsPage() {
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col shadow-md hover:shadow-lg transition-shadow h-full">
                 <div className="aspect-video bg-gray-100 relative overflow-hidden rounded-t-md">
