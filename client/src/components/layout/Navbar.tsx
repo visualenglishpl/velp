@@ -24,8 +24,17 @@ const Navbar = () => {
       // Get the position of the plans section from the top of the page
       const plansSection = document.getElementById(sectionId);
       if (plansSection) {
-        const offsetPosition = plansSection.offsetTop - 100; // Subtract 100px to show the header
+        // Calculate the top position of the plans section
+        const sectionTop = plansSection.getBoundingClientRect().top + window.pageYOffset;
         
+        // Get navbar height for offset calculation
+        const navbar = document.querySelector('nav');
+        const navbarHeight = navbar ? navbar.offsetHeight : 0;
+        
+        // Calculate scroll position (section top minus navbar height minus extra padding)
+        const offsetPosition = sectionTop - navbarHeight - 50;
+        
+        // Scroll to position with smooth animation
         window.scrollTo({
           top: offsetPosition,
           behavior: 'smooth'
