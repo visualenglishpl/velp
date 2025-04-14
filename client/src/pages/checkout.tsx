@@ -25,7 +25,9 @@ function CheckoutForm({
   planType,
   billingCycle,
   planDetails,
-  customerInfo
+  customerInfo,
+  selectedBookId,
+  bookTitles
 }: {
   planType: PlanType;
   billingCycle: BillingCycle;
@@ -39,6 +41,8 @@ function CheckoutForm({
     name: string;
     email: string;
   };
+  selectedBookId: string | null;
+  bookTitles: Record<string, string>;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -179,6 +183,20 @@ export default function CheckoutPage() {
     '6': 'BOOK 6 - PROFICIENCY ENGLISH',
     '7': 'BOOK 7 - MASTERS ENGLISH'
   };
+  
+  // All available books in order
+  const allBooks = [
+    {id: '0a', title: 'BOOK 0A - BEGINNERS ENGLISH'},
+    {id: '0b', title: 'BOOK 0B - BEGINNERS ENGLISH'},
+    {id: '0c', title: 'BOOK 0C - BEGINNERS ENGLISH'},
+    {id: '1', title: 'BOOK 1 - ELEMENTARY ENGLISH'},
+    {id: '2', title: 'BOOK 2 - PRE-INTERMEDIATE ENGLISH'},
+    {id: '3', title: 'BOOK 3 - INTERMEDIATE ENGLISH'},
+    {id: '4', title: 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH'},
+    {id: '5', title: 'BOOK 5 - ADVANCED ENGLISH'},
+    {id: '6', title: 'BOOK 6 - PROFICIENCY ENGLISH'},
+    {id: '7', title: 'BOOK 7 - MASTERS ENGLISH'}
+  ];
 
   useEffect(() => {
     // Parse URL query parameters
@@ -260,6 +278,12 @@ export default function CheckoutPage() {
       return;
     }
 
+    // For whole book checkout, we need a selected book
+    if (planType === 'whole_book' && !selectedBookId) {
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     const createPaymentIntent = async () => {
       try {
@@ -293,7 +317,7 @@ export default function CheckoutPage() {
     };
 
     createPaymentIntent();
-  }, [planType, billingCycle, toast, customerInfo.name, customerInfo.email]);
+  }, [planType, billingCycle, toast, customerInfo.name, customerInfo.email, selectedBookId]);
 
   // Create Stripe Elements options
   const stripeOptions: StripeElementsOptions = {
@@ -424,6 +448,8 @@ export default function CheckoutPage() {
               billingCycle={billingCycle} 
               planDetails={planDetails}
               customerInfo={customerInfo}
+              selectedBookId={selectedBookId}
+              bookTitles={bookTitles}
             />
           </Elements>
         )}
@@ -448,6 +474,38 @@ export default function CheckoutPage() {
             ? `${bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`} - Checkout` 
             : 'Checkout'}
         </h1>
+
+        {/* Show book selection grid when on whole book plan with no selection */}
+        {planType === 'whole_book' && !selectedBookId && (
+          <div className="md:col-span-2 mb-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Select a Book</CardTitle>
+                <CardDescription>Choose which book you want to purchase full access for</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+                  {allBooks.map((book) => (
+                    <Card 
+                      key={book.id}
+                      className={`overflow-hidden cursor-pointer hover:bg-gray-50 transition-colors border-2 ${
+                        selectedBookId === book.id ? 'border-primary' : 'border-transparent'
+                      }`}
+                      onClick={() => setSelectedBookId(book.id)}
+                    >
+                      <CardContent className="p-4">
+                        <div className="text-center">
+                          <div className="font-bold text-sm text-primary mb-1">BOOK {book.id.toUpperCase()}</div>
+                          <div className="text-xs text-gray-500">{book.title.split('-')[1].trim()}</div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Order Summary */}
