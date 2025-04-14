@@ -77,16 +77,16 @@ const PricingPlans = () => {
   ];
 
   return (
-    <section id="plans" className="py-16 bg-gray-50">
+    <section id="plans" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">Find Your Perfect Learning Path</h2>
           <p className="mt-4 text-lg text-gray-600">
             Choose the plan that fits your learning style and budget
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-[1200px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
             <div key={index} className="flex flex-col h-full bg-white rounded-lg shadow overflow-hidden border border-gray-100">
               {/* Header - Fixed height for all headers */}
@@ -125,9 +125,9 @@ const PricingPlans = () => {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
-          <p className="text-gray-600 flex items-center justify-center">
-            <Star className="h-5 w-5 text-amber-500 mr-2" fill="currentColor" />
+        <div className="mt-16 text-center">
+          <p className="text-gray-600 flex items-center justify-center text-lg">
+            <Star className="h-6 w-6 text-amber-500 mr-3" fill="currentColor" />
             Contact us for bulk pricing and additional discounts.
           </p>
         </div>
