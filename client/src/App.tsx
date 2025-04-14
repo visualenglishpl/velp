@@ -8,6 +8,7 @@ import BooksManagement from "@/pages/admin/BooksManagement";
 import ContentViewer from "@/pages/content-viewer";
 import DirectContentViewer from "@/pages/direct-content-viewer";
 import CheckoutPage from "@/pages/checkout";
+import PrintedBookCheckout from "@/pages/PrintedBookCheckout";
 import BooksPage from "@/pages/BooksPage";
 import UnitsPage from "@/pages/UnitsPage";
 import Navbar from "@/components/layout/Navbar";
@@ -48,6 +49,7 @@ function Router() {
       {/* Public Routes */}
       <Route path="/" component={Home} />
       <Route path="/auth" component={AuthPage} />
+      <Route path="/checkout/printed_book" component={PrintedBookCheckout} />
       <Route path="/checkout/:planId?" component={CheckoutPage} />
       
       {/* Books Catalog Page */}
