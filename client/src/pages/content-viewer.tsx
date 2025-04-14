@@ -341,6 +341,7 @@ export default function ContentViewer() {
         {/* Teaching guidance section - shown when teacher mode is active */}
         {showTeacherGuidance && (
           <TeachingGuidance 
+            guidance={null}
             bookId={book?.bookId || ''}
             unitNumber={unit?.unitNumber || 0}
             onHide={() => setShowTeacherGuidance(false)}

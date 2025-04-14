@@ -5,7 +5,7 @@ import { ExternalLink, Plus, FileEdit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
-// Types
+// Teaching guidance data type definition
 type GuidanceType = {
   presentingQuestions?: string;
   vocabularyChecks?: string;
@@ -13,7 +13,8 @@ type GuidanceType = {
   followUpQuestions?: string;
 } | null | undefined;
 
-interface TeachingGuidanceProps {
+// Component props interface
+export interface TeachingGuidanceProps {
   guidance?: GuidanceType;
   bookId?: string;
   unitNumber?: number;
