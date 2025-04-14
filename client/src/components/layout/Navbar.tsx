@@ -17,25 +17,26 @@ const Navbar = () => {
   
   const scrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
     e.preventDefault();
+    setMobileMenuOpen(false);
     
-    const element = document.getElementById(sectionId);
-    if (element) {
-      setMobileMenuOpen(false);
-      
-      // Add a larger offset to ensure the entire section is visible
-      const navbar = document.querySelector('nav');
-      const navbarHeight = navbar ? navbar.offsetHeight : 0;
-      
-      // Add additional offset (150px) to ensure the section is fully visible including the contact box
-      const extraOffset = 150;
-      
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - navbarHeight - extraOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    // For plans section, use window.scrollTo with a specific calculation
+    if (sectionId === 'plans') {
+      // Get the position of the plans section from the top of the page
+      const plansSection = document.getElementById(sectionId);
+      if (plansSection) {
+        const offsetPosition = plansSection.offsetTop - 100; // Subtract 100px to show the header
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      // For other sections, use default scrollIntoView
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 
