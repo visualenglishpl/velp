@@ -26,18 +26,36 @@ export function setupPaymentRoutes(app: Express) {
   // Create payment intent for one-time payments
   app.post('/api/create-payment-intent', async (req: Request, res: Response) => {
     try {
-      const { planType, billingCycle = 'monthly', bookId } = req.body;
+      const { planType, billingCycle = 'monthly', bookId, bookIds, multipleBooks } = req.body;
       
       if (!planType) {
         return res.status(400).json({ error: 'Plan type is required' });
       }
       
       let amount: number;
+      let applyDiscount = false;
+      let discountAmount = 0;
+      let originalAmount = 0;
       
       if (planType === 'single_lesson') {
         amount = PLAN_PRICES.single_lesson[billingCycle as 'monthly' | 'yearly'];
       } else if (planType === 'whole_book') {
-        amount = PLAN_PRICES.whole_book[billingCycle as 'monthly' | 'yearly'];
+        // Handle multiple books with discount
+        if (multipleBooks && bookIds && bookIds.length > 0) {
+          const basePrice = PLAN_PRICES.whole_book[billingCycle as 'monthly' | 'yearly'];
+          originalAmount = basePrice * bookIds.length;
+          
+          // Apply 10% discount for 3+ books on yearly plan
+          if (bookIds.length >= 3 && billingCycle === 'yearly') {
+            applyDiscount = true;
+            amount = Math.round(originalAmount * 0.9); // 10% discount
+            discountAmount = originalAmount - amount;
+          } else {
+            amount = originalAmount;
+          }
+        } else {
+          amount = PLAN_PRICES.whole_book[billingCycle as 'monthly' | 'yearly'];
+        }
       } else if (planType === 'printed_book') {
         amount = PLAN_PRICES.printed_book;
       } else if (planType === 'free_trial') {
@@ -64,6 +82,20 @@ export function setupPaymentRoutes(app: Express) {
         metadata.bookId = bookId;
       }
       
+      // Add book IDs to metadata if provided
+      if (bookIds && bookIds.length > 0) {
+        metadata.bookIds = JSON.stringify(bookIds);
+        metadata.multipleBooks = 'true';
+      }
+      
+      // Add discount info to metadata if applicable
+      if (applyDiscount) {
+        metadata.discountApplied = 'true';
+        metadata.discountPercentage = '10';
+        metadata.originalAmount = originalAmount.toString();
+        metadata.discountAmount = discountAmount.toString();
+      }
+      
       // Create a PaymentIntent with the order amount and currency
       const paymentIntent = await stripe.paymentIntents.create({
         amount,
@@ -72,10 +104,21 @@ export function setupPaymentRoutes(app: Express) {
         metadata,
       });
       
-      res.json({
+      // Include discount information in the response if applicable
+      const response: any = {
         clientSecret: paymentIntent.client_secret,
         amount,
-      });
+      };
+      
+      if (applyDiscount) {
+        response.discount = {
+          originalAmount,
+          discountAmount,
+          discountPercentage: 10,
+        };
+      }
+      
+      res.json(response);
     } catch (error: any) {
       console.error('Payment intent error:', error);
       res.status(500).json({ error: error.message });

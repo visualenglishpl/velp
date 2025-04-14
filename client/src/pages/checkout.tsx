@@ -323,7 +323,7 @@ export default function CheckoutPage() {
     };
 
     createPaymentIntent();
-  }, [planType, billingCycle, toast, customerInfo.name, customerInfo.email, selectedBookId]);
+  }, [planType, billingCycle, toast, customerInfo.name, customerInfo.email, selectedBookId, multipleBooks, selectedBooks]);
 
   // Create Stripe Elements options
   const stripeOptions: StripeElementsOptions = {
@@ -718,19 +718,49 @@ export default function CheckoutPage() {
 
               <Separator className="my-6" />
 
-              <div className="flex justify-between font-bold text-lg">
-                <span>Total</span>
-                <span>
-                  {multipleBooks && selectedBooks.length > 0 
-                    ? `€${selectedBooks.length * (billingCycle === 'monthly' ? 25 : 180)}`
-                    : `${planDetails.price}${planType === 'printed_book' ? ' + delivery' : ''}`
-                  }
-                </span>
-              </div>
+              {/* Calculate discount for yearly payments with 3+ books */}
+              {multipleBooks && selectedBooks.length >= 3 && billingCycle === 'yearly' ? (
+                <>
+                  <div className="flex justify-between items-baseline">
+                    <span className="font-medium">Subtotal</span>
+                    <span className="text-gray-500 line-through">€{selectedBooks.length * 180}</span>
+                  </div>
+                  <div className="flex justify-between items-baseline mt-2">
+                    <span className="font-medium text-green-600">Bulk Discount (10%)</span>
+                    <span className="text-green-600">-€{Math.round(selectedBooks.length * 180 * 0.10)}</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-lg mt-2">
+                    <span>Total</span>
+                    <span>€{Math.round(selectedBooks.length * 180 * 0.90)}</span>
+                  </div>
+                  <div className="text-xs text-green-600 text-right mt-1">
+                    You save €{Math.round(selectedBooks.length * 180 * 0.10)} with 10% bulk discount
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span>
+                      {multipleBooks && selectedBooks.length > 0 
+                        ? `€${selectedBooks.length * (billingCycle === 'monthly' ? 25 : 180)}`
+                        : `${planDetails.price}${planType === 'printed_book' ? ' + delivery' : ''}`
+                      }
+                    </span>
+                  </div>
+                  
+                  {multipleBooks && selectedBooks.length > 0 && (
+                    <div className="text-xs text-gray-500 text-right mt-1">
+                      {selectedBooks.length} {selectedBooks.length === 1 ? 'book' : 'books'} × {billingCycle === 'monthly' ? '€25' : '€180'} {billingCycle === 'monthly' ? 'monthly' : 'yearly'}
+                    </div>
+                  )}
+                </>
+              )}
               
-              {multipleBooks && selectedBooks.length > 0 && (
-                <div className="text-xs text-gray-500 text-right mt-1">
-                  {selectedBooks.length} {selectedBooks.length === 1 ? 'book' : 'books'} × {billingCycle === 'monthly' ? '€25' : '€180'} {billingCycle === 'monthly' ? 'monthly' : 'yearly'}
+              {/* Show special offer notice for yearly plans */}
+              {billingCycle === 'yearly' && multipleBooks && selectedBooks.length > 0 && selectedBooks.length < 3 && (
+                <div className="text-xs text-amber-600 text-right mt-2">
+                  Add {3 - selectedBooks.length} more {3 - selectedBooks.length === 1 ? 'book' : 'books'} to get a 10% bulk discount!
                 </div>
               )}
             </CardContent>
