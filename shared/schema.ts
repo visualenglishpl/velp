@@ -162,6 +162,7 @@ export const materials = pgTable("materials", {
   title: text("title").notNull(),
   contentType: contentTypeEnum("content_type").notNull(),
   content: jsonb("content").notNull(), // JSON structure for different content types
+  teachingGuidance: jsonb("teaching_guidance"), // Teaching guidance with presenting questions, vocabulary checks, etc.
   orderIndex: integer("order_index").notNull(),
   isPublished: boolean("is_published").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

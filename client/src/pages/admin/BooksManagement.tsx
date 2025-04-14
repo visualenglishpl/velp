@@ -24,6 +24,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -285,13 +291,21 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
   onSubmit: (data: any) => void; 
   onCancel: () => void 
 }) {
+  const [activeTab, setActiveTab] = useState('content');
   const [formData, setFormData] = useState({
     unitId,
     title: material?.title || "",
     contentType: material?.contentType || "lesson",
     content: material?.content ? JSON.stringify(material.content) : "{}",
     orderIndex: material?.orderIndex || 1,
-    isPublished: material?.isPublished || false
+    isPublished: material?.isPublished || false,
+    // New teaching guidance fields
+    teachingGuidance: material?.teachingGuidance ? JSON.stringify(material.teachingGuidance) : JSON.stringify({
+      presentingQuestions: "",
+      vocabularyChecks: "",
+      promptStructures: "",
+      followUpQuestions: ""
+    })
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -306,24 +320,54 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
     setFormData(prev => ({ ...prev, isPublished: checked }));
   };
 
+  const handleTeachingGuidanceChange = (field: string, value: string) => {
+    try {
+      const guidanceData = JSON.parse(formData.teachingGuidance);
+      guidanceData[field] = value;
+      setFormData(prev => ({ 
+        ...prev, 
+        teachingGuidance: JSON.stringify(guidanceData)
+      }));
+    } catch (error) {
+      console.error("Error updating teaching guidance:", error);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     try {
       // Validate JSON
       const contentJson = JSON.parse(formData.content);
+      const teachingGuidanceJson = JSON.parse(formData.teachingGuidance);
       
       onSubmit({
         ...formData,
-        content: contentJson
+        content: contentJson,
+        teachingGuidance: teachingGuidanceJson
       });
     } catch (error) {
       toast({
         title: "Invalid JSON",
-        description: "The content field must contain valid JSON",
+        description: "One of the fields contains invalid JSON",
         variant: "destructive"
       });
     }
   };
+
+  const parseTeachingGuidance = () => {
+    try {
+      return JSON.parse(formData.teachingGuidance);
+    } catch (error) {
+      return {
+        presentingQuestions: "",
+        vocabularyChecks: "",
+        promptStructures: "",
+        followUpQuestions: ""
+      };
+    }
+  };
+
+  const teachingGuidance = parseTeachingGuidance();
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -358,44 +402,119 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
           </select>
         </div>
       </div>
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-6">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="content" className="flex items-center">
+            <FileImage className="h-4 w-4 mr-2" />
+            Content
+          </TabsTrigger>
+          <TabsTrigger value="teaching_guidance" className="flex items-center">
+            <FileText className="h-4 w-4 mr-2" />
+            Teaching Guidance
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="content">
+          <div className="space-y-2 mt-4">
+            <Label htmlFor="content">Content (JSON)</Label>
+            <Textarea
+              id="content"
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
+              placeholder='{"text": "Content here", "images": ["image1.jpg"]}'
+              rows={6}
+              required
+            />
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="space-y-2">
+              <Label htmlFor="orderIndex">Display Order</Label>
+              <Input
+                id="orderIndex"
+                name="orderIndex"
+                type="number"
+                value={formData.orderIndex}
+                onChange={handleChange}
+                min={1}
+                required
+              />
+            </div>
+            <div className="flex items-center space-x-2 pt-8">
+              <Switch
+                id="isPublished"
+                checked={formData.isPublished}
+                onCheckedChange={handleSwitchChange}
+              />
+              <Label htmlFor="isPublished">Published</Label>
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="teaching_guidance">
+          <div className="space-y-6 mt-4">
+            <div>
+              <Label htmlFor="presentingQuestions" className="text-base font-medium">
+                Presenting Questions
+              </Label>
+              <Textarea
+                id="presentingQuestions"
+                value={teachingGuidance.presentingQuestions}
+                onChange={(e) => handleTeachingGuidanceChange('presentingQuestions', e.target.value)}
+                placeholder="How to present questions to students (e.g., Show the question and point to key image details...)"
+                rows={3}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="vocabularyChecks" className="text-base font-medium">
+                Vocabulary Checks
+              </Label>
+              <Textarea
+                id="vocabularyChecks"
+                value={teachingGuidance.vocabularyChecks}
+                onChange={(e) => handleTeachingGuidanceChange('vocabularyChecks', e.target.value)}
+                placeholder="How to check vocabulary understanding (e.g., Refer to textbook, explain unfamiliar words...)"
+                rows={3}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="promptStructures" className="text-base font-medium">
+                Student Answer Prompts
+              </Label>
+              <Textarea
+                id="promptStructures"
+                value={teachingGuidance.promptStructures}
+                onChange={(e) => handleTeachingGuidanceChange('promptStructures', e.target.value)}
+                placeholder="Sentence frames to prompt student answers (e.g., 'Is it a cat or a dog?' → 'It is a...')"
+                rows={3}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="followUpQuestions" className="text-base font-medium">
+                Follow-up Questions
+              </Label>
+              <Textarea
+                id="followUpQuestions"
+                value={teachingGuidance.followUpQuestions}
+                onChange={(e) => handleTeachingGuidanceChange('followUpQuestions', e.target.value)}
+                placeholder="Suggested follow-up questions (e.g., 'Why do you think so?', 'Can you describe it more?')"
+                rows={3}
+                className="mt-1"
+              />
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
       
-      <div className="space-y-2">
-        <Label htmlFor="content">Content (JSON)</Label>
-        <Textarea
-          id="content"
-          name="content"
-          value={formData.content}
-          onChange={handleChange}
-          placeholder='{"text": "Content here", "images": ["image1.jpg"]}'
-          rows={6}
-          required
-        />
-      </div>
-      
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="orderIndex">Display Order</Label>
-          <Input
-            id="orderIndex"
-            name="orderIndex"
-            type="number"
-            value={formData.orderIndex}
-            onChange={handleChange}
-            min={1}
-            required
-          />
-        </div>
-        <div className="flex items-center space-x-2 pt-8">
-          <Switch
-            id="isPublished"
-            checked={formData.isPublished}
-            onCheckedChange={handleSwitchChange}
-          />
-          <Label htmlFor="isPublished">Published</Label>
-        </div>
-      </div>
-      
-      <div className="flex justify-end space-x-2 pt-4">
+      <div className="flex justify-end space-x-2 pt-6">
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
