@@ -87,7 +87,9 @@ export default function ContentSlide({
     
     // Check for phrases that indicate questions
     const questionPhrases = [
-      'what do you think of', 'what is the', 'which film is', 'is it an interesting'
+      'what do you think of', 'what is the', 'which film is', 'is it an interesting',
+      'past tense', 'what is she baking', 'did you bake', 'where are they',
+      'what is she doing', 'where is he jogging to', 'who is he jogging'
     ];
     
     return questionStarters.some(starter => lowercaseText.startsWith(starter)) ||
@@ -232,6 +234,34 @@ export default function ContentSlide({
       'what do hair stylists do': {
         positive: "They style hair.",
         negative: "I don't know."
+      },
+      'what is the past tense of': {
+        positive: "The past tense is baked.",
+        negative: "I don't know the past tense."
+      },
+      'what is she baking': {
+        positive: "She is baking cookies.",
+        negative: "She is baking a cake."
+      },
+      'did you bake last weekend': {
+        positive: "Yes, I baked.",
+        negative: "No, I didn't bake."
+      },
+      'what is she doing': {
+        positive: "She is jogging.",
+        negative: "She is walking."
+      },
+      'where are they jogging': {
+        positive: "They are jogging in the park.",
+        negative: "They are jogging on the beach."
+      },
+      'where is he jogging to': {
+        positive: "He is jogging to the toilet.",
+        negative: "He is jogging to the park."
+      },
+      'who is he jogging': {
+        positive: "Santa is jogging.",
+        negative: "The teacher is jogging."
       }
     };
     
@@ -299,7 +329,7 @@ export default function ContentSlide({
     // Remove extension
     let cleaned = filename.split('.')[0];
     
-    // Pattern 1: "01 E Aa" or "01 E Bb" or "01 E C" - numeric followed by letters with spaces
+    // Pattern 1: "01 E Aa" or "01 E Bb" or "01 E C" or "02 M A" - numeric followed by letters with spaces
     if (/^\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+/.test(cleaned)) {
       cleaned = cleaned.replace(/^\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+/, '');
     }
@@ -310,6 +340,7 @@ export default function ContentSlide({
       /^\d{1,2}_[A-Z][A-Z]_/, // matches "01_AB_"
       /^\d{1,2}\s+[A-Z]\s+[A-Za-z][a-z]/,  // matches "01 E Aa"
       /^\d{1,2}\s+[A-Z]\s+[A-Za-z][a-z]\s+/, // matches "01 E Bb "
+      /^\d{1,2}\s+[A-Z]\s+[A-Z]\s+/, // matches "02 M A "
     ];
     
     for (const pattern of patterns) {
@@ -317,6 +348,84 @@ export default function ContentSlide({
         cleaned = cleaned.replace(pattern, '');
         break;
       }
+    }
+    
+    // Handle "What is the Past Tense of X – Y" pattern
+    // Extract both the question and answer for later use
+    const pastTensePattern = /What is the Past Tense of ([^–]*) – ([^?]*)/i;
+    const pastTenseMatch = cleaned.match(pastTensePattern);
+    if (pastTenseMatch) {
+      const verb = pastTenseMatch[1].trim();
+      const pastTense = pastTenseMatch[2].trim();
+      // Keep only the question part
+      cleaned = `What is the Past Tense of ${verb}`;
+    }
+    
+    // Handle "What is She Baking – X" pattern
+    const bakingPattern = /What is She Baking – ([^?]*)/i;
+    const bakingMatch = cleaned.match(bakingPattern);
+    if (bakingMatch) {
+      const item = bakingMatch[1].trim();
+      // Keep only the question part
+      cleaned = "What is She Baking";
+    }
+    
+    // Handle "Did You X Last Weekend – Yes I Xed – No I Didn't X" pattern
+    const weekendPattern = /Did You ([^Last]*) Last Weekend – ([^?]*)/i;
+    const weekendMatch = cleaned.match(weekendPattern);
+    if (weekendMatch) {
+      const verb = weekendMatch[1].trim();
+      // Keep only the question part
+      cleaned = `Did You ${verb} Last Weekend`;
+    }
+    
+    // Handle "What is She Doing – She is Jogging" pattern
+    const doingPattern = /What is She Doing – ([^?]*)/i;
+    const doingMatch = cleaned.match(doingPattern);
+    if (doingMatch) {
+      const activity = doingMatch[1].trim();
+      // Keep only the question part
+      cleaned = "What is She Doing";
+    }
+    
+    // Handle "Where are They Jogging - in the Park" pattern
+    const wherePattern = /Where are They ([^-]*)- ([^?]*)/i;
+    const whereMatch = cleaned.match(wherePattern);
+    if (whereMatch) {
+      const activity = whereMatch[1].trim();
+      const location = whereMatch[2].trim();
+      // Keep only the question part
+      cleaned = `Where are They ${activity}`;
+    }
+    
+    // Handle "Where is He Jogging to – the Toilet" pattern
+    const whereToPattern = /Where is He ([^to]*) to – ([^?]*)/i;
+    const whereToMatch = cleaned.match(whereToPattern);
+    if (whereToMatch) {
+      const activity = whereToMatch[1].trim();
+      const destination = whereToMatch[2].trim();
+      // Keep only the question part
+      cleaned = `Where is He ${activity} to`;
+    }
+    
+    // Handle "Who is He Jogging – Santa" pattern
+    const whoPattern = /Who is He ([^–]*) – ([^?]*)/i;
+    const whoMatch = cleaned.match(whoPattern);
+    if (whoMatch) {
+      const activity = whoMatch[1].trim();
+      const person = whoMatch[2].trim();
+      // Keep only the question part
+      cleaned = `Who is He ${activity}`;
+    }
+    
+    // Handle "How Often Do You Jog – Often – Sometimes Seldom – Never" pattern
+    const howOftenPattern = /How Often Do You ([^–]*) – ([^?]*)/i;
+    const howOftenMatch = cleaned.match(howOftenPattern);
+    if (howOftenMatch) {
+      const activity = howOftenMatch[1].trim();
+      const frequencyOptions = howOftenMatch[2].trim();
+      // Keep only the question part
+      cleaned = `How Often Do You ${activity}`;
     }
     
     // Replace underscores and hyphens with spaces
