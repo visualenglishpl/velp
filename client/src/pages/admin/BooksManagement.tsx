@@ -455,8 +455,8 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
 
         <TabsContent value="teaching_guidance">
           <div className="space-y-6 mt-4">
-            <div className="border-l-4 border-[#00BE68] pl-4 pb-4 rounded bg-green-50">
-              <Label htmlFor="presentingQuestions" className="text-base font-medium text-green-700">
+            <div className="border-l-4 border-[#0acf84] pl-4 pb-4 rounded bg-[#e0f8ed]">
+              <Label htmlFor="presentingQuestions" className="text-base font-medium text-[#0a8f5c]">
                 Presenting Questions
               </Label>
               <Textarea
@@ -465,12 +465,12 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
                 onChange={(e) => handleTeachingGuidanceChange('presentingQuestions', e.target.value)}
                 placeholder="How to present questions to students (e.g., Show the question and point to key image details...)"
                 rows={3}
-                className="mt-1 border-green-200 focus-visible:ring-green-500"
+                className="mt-1 border-[#a8e9cd] focus-visible:ring-[#0acf84]"
               />
             </div>
 
-            <div className="border-l-4 border-[#3B82F6] pl-4 pb-4 rounded bg-blue-50">
-              <Label htmlFor="vocabularyChecks" className="text-base font-medium text-blue-700">
+            <div className="border-l-4 border-[#4a89f3] pl-4 pb-4 rounded bg-[#e6f0ff]">
+              <Label htmlFor="vocabularyChecks" className="text-base font-medium text-[#3270de]">
                 Vocabulary Checks
               </Label>
               <Textarea
@@ -479,15 +479,15 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
                 onChange={(e) => handleTeachingGuidanceChange('vocabularyChecks', e.target.value)}
                 placeholder="How to check vocabulary understanding (e.g., Refer to textbook, explain unfamiliar words...)"
                 rows={3}
-                className="mt-1 border-blue-200 focus-visible:ring-blue-500"
+                className="mt-1 border-[#b6d0fa] focus-visible:ring-[#4a89f3]"
               />
             </div>
 
-            <div className="border-l-4 border-[#8B5CF6] pl-4 pb-4 rounded bg-purple-50 relative">
-              <div className="absolute -top-2 right-4 text-xs font-bold bg-purple-600 text-white px-2 py-1 rounded-sm">
+            <div className="border-l-4 border-[#a56cf5] pl-4 pb-4 rounded bg-[#f0e6ff] relative">
+              <div className="absolute -top-2 right-4 text-xs font-bold bg-[#8c42f4] text-white px-2 py-1 rounded-sm">
                 Most Popular
               </div>
-              <Label htmlFor="promptStructures" className="text-base font-medium text-purple-700">
+              <Label htmlFor="promptStructures" className="text-base font-medium text-[#7d35e5]">
                 Student Answer Prompts
               </Label>
               <Textarea
@@ -496,12 +496,12 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
                 onChange={(e) => handleTeachingGuidanceChange('promptStructures', e.target.value)}
                 placeholder="Sentence frames to prompt student answers (e.g., 'Is it a cat or a dog?' → 'It is a...')"
                 rows={3}
-                className="mt-1 border-purple-200 focus-visible:ring-purple-500"
+                className="mt-1 border-[#d8c2ff] focus-visible:ring-[#a56cf5]"
               />
             </div>
 
-            <div className="border-l-4 border-[#F59E0B] pl-4 pb-4 rounded bg-amber-50">
-              <Label htmlFor="followUpQuestions" className="text-base font-medium text-amber-700">
+            <div className="border-l-4 border-[#faa521] pl-4 pb-4 rounded bg-[#fff4e4]">
+              <Label htmlFor="followUpQuestions" className="text-base font-medium text-[#e87800]">
                 Follow-up Questions
               </Label>
               <Textarea
@@ -510,7 +510,7 @@ function MaterialForm({ material, unitId, onSubmit, onCancel }: {
                 onChange={(e) => handleTeachingGuidanceChange('followUpQuestions', e.target.value)}
                 placeholder="Suggested follow-up questions (e.g., 'Why do you think so?', 'Can you describe it more?')"
                 rows={3}
-                className="mt-1 border-amber-200 focus-visible:ring-amber-500"
+                className="mt-1 border-[#fad297] focus-visible:ring-[#faa521]"
               />
             </div>
           </div>

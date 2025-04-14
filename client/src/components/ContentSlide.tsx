@@ -418,7 +418,7 @@ export default function ContentSlide({
           <Button 
             variant={showTeacherMode ? "default" : "outline"} 
             size="sm" 
-            className={`flex items-center gap-2 ${showTeacherMode ? 'bg-[#8B5CF6] hover:bg-[#7c4ddd]' : 'border-[#8B5CF6] text-[#8B5CF6] hover:bg-purple-50'}`}
+            className={`flex items-center gap-2 ${showTeacherMode ? 'bg-[#a56cf5] hover:bg-[#8c42f4]' : 'border-[#a56cf5] text-[#a56cf5] hover:bg-[#f0e6ff]'}`}
             onClick={toggleTeacherMode}
           >
             {showTeacherMode ? (
