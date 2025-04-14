@@ -82,8 +82,8 @@ export default function BooksPage() {
         {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {[...Array(10)].map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <div className="aspect-square bg-gray-100 w-full">
+              <Card key={i} className="overflow-hidden border-0 shadow-none">
+                <div className="aspect-square w-full">
                   <Skeleton className="h-full w-full" />
                 </div>
                 <CardHeader className="py-3 px-4">
@@ -98,16 +98,16 @@ export default function BooksPage() {
         ) : books && books.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {books.map((book) => (
-              <Card key={book.bookId} className="overflow-hidden flex flex-col">
-                <div className="aspect-square bg-gray-100 relative overflow-hidden flex items-center justify-center">
+              <Card key={book.bookId} className="overflow-hidden flex flex-col border-0 shadow-none">
+                <div className="aspect-square relative overflow-hidden">
                   {book.gifUrl ? (
                     <img 
                       src={book.gifUrl} 
                       alt={`Cover of ${book.title}`} 
-                      className="object-contain w-full h-full p-4"
+                      className="object-cover w-full h-full"
                     />
                   ) : (
-                    <div className="flex items-center justify-center h-full w-full bg-gray-200 text-gray-500">
+                    <div className="flex items-center justify-center h-full w-full bg-gray-100 text-gray-500">
                       No image available
                     </div>
                   )}
