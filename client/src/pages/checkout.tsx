@@ -110,7 +110,11 @@ function CheckoutForm({
         // Payment successful
         toast({
           title: "Payment Successful",
-          description: `Thank you for your purchase of ${planDetails.name}!`,
+          description: `Thank you for your purchase of ${planDetails.name}${
+            selectedBookId 
+              ? ` for ${bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`}` 
+              : ''
+          }!`,
         });
         // Redirect to home page after successful payment
         setLocation('/');
@@ -439,7 +443,11 @@ export default function CheckoutPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl font-bold mb-10 text-center">Checkout</h1>
+        <h1 className="text-3xl font-bold mb-10 text-center">
+          {planType === 'whole_book' && selectedBookId 
+            ? `${bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`} - Checkout` 
+            : 'Checkout'}
+        </h1>
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Order Summary */}
@@ -465,7 +473,9 @@ export default function CheckoutPage() {
                 {selectedBookId && (
                   <div className="mt-2 p-3 bg-gray-50 rounded-md">
                     <div className="font-medium text-sm">Selected Book:</div>
-                    <div className="text-primary font-bold">BOOK {selectedBookId.toUpperCase()}</div>
+                    <div className="text-primary font-bold">
+                      {bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`}
+                    </div>
                   </div>
                 )}
                 
