@@ -4,10 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, Book, Truck, MinusCircle, PlusCircle } from 'lucide-react';
+import { ArrowLeft, Book, Truck, MinusCircle, PlusCircle, ShoppingCart } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 
 // Type for a book with thumbnail URL
 type BookWithThumbnail = {
@@ -17,12 +18,19 @@ type BookWithThumbnail = {
   description?: string;
 };
 
+// Type for selected book with quantity
+type SelectedBookWithQuantity = {
+  bookId: string;
+  title: string;
+  quantity: number;
+};
+
 export default function PrintedBookCheckout() {
-  const [selectedBook, setSelectedBook] = useState<string | null>(null);
-  const [quantity, setQuantity] = useState<number>(1);
-  const [totalPrice, setTotalPrice] = useState<number>(20);
+  const [selectedBooks, setSelectedBooks] = useState<SelectedBookWithQuantity[]>([]);
+  const [totalQuantity, setTotalQuantity] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
-  const [originalPrice, setOriginalPrice] = useState<number>(20);
+  const [originalPrice, setOriginalPrice] = useState<number>(0);
 
   // Query to get book thumbnails
   const { data: books, isLoading } = useQuery<BookWithThumbnail[]>({
@@ -56,48 +64,104 @@ export default function PrintedBookCheckout() {
     return { discountPercent, discountedTotal };
   };
 
-  // Update price when quantity changes
+  // Update prices and quantities
   useEffect(() => {
-    const basePrice = 20 * quantity;
+    if (selectedBooks.length === 0) {
+      setTotalQuantity(0);
+      setOriginalPrice(0);
+      setTotalPrice(0);
+      setDiscount(0);
+      return;
+    }
+    
+    // Calculate total quantity across all books
+    const total = selectedBooks.reduce((sum, book) => sum + book.quantity, 0);
+    setTotalQuantity(total);
+    
+    // Calculate original price
+    const basePrice = total * 20;
     setOriginalPrice(basePrice);
     
-    const { discountPercent, discountedTotal } = calculateDiscount(quantity);
+    // Apply discount
+    const { discountPercent, discountedTotal } = calculateDiscount(total);
     setDiscount(discountPercent);
     setTotalPrice(discountedTotal);
-  }, [quantity]);
+  }, [selectedBooks]);
 
-  // Handle book selection
-  const handleBookSelect = (bookId: string) => {
-    setSelectedBook(bookId);
+  // Handle book selection with quantity update
+  const handleBookQuantityChange = (bookId: string, title: string, newQuantity: number) => {
+    // Check if valid quantity
+    if (isNaN(newQuantity) || newQuantity < 0 || newQuantity > 100) {
+      return;
+    }
+    
+    // Make a copy of current selection
+    const updatedSelection = [...selectedBooks];
+    
+    // Find if book is already selected
+    const existingIndex = updatedSelection.findIndex(item => item.bookId === bookId);
+    
+    if (existingIndex >= 0) {
+      // Book is already in selection
+      if (newQuantity === 0) {
+        // Remove book if quantity is zero
+        updatedSelection.splice(existingIndex, 1);
+      } else {
+        // Update quantity
+        updatedSelection[existingIndex].quantity = newQuantity;
+      }
+    } else if (newQuantity > 0) {
+      // Add new book to selection
+      updatedSelection.push({
+        bookId,
+        title,
+        quantity: newQuantity
+      });
+    }
+    
+    // Update state
+    setSelectedBooks(updatedSelection);
   };
-
-  // Handle quantity change
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuantity = parseInt(e.target.value);
-    if (!isNaN(newQuantity) && newQuantity > 0 && newQuantity <= 100) {
-      setQuantity(newQuantity);
+  
+  // Increment book quantity
+  const incrementBookQuantity = (bookId: string, title: string) => {
+    const book = selectedBooks.find(b => b.bookId === bookId);
+    const currentQty = book ? book.quantity : 0;
+    
+    if (currentQty < 100) {
+      handleBookQuantityChange(bookId, title, currentQty + 1);
     }
   };
-
-  const incrementQuantity = () => {
-    if (quantity < 100) {
-      setQuantity(prev => prev + 1);
+  
+  // Decrement book quantity
+  const decrementBookQuantity = (bookId: string, title: string) => {
+    const book = selectedBooks.find(b => b.bookId === bookId);
+    const currentQty = book ? book.quantity : 0;
+    
+    if (currentQty > 0) {
+      handleBookQuantityChange(bookId, title, currentQty - 1);
     }
   };
-
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(prev => prev - 1);
-    }
+  
+  // Get current quantity for a book
+  const getBookQuantity = (bookId: string): number => {
+    const book = selectedBooks.find(b => b.bookId === bookId);
+    return book ? book.quantity : 0;
   };
 
   // Handle checkout button click
   const handleCheckout = () => {
-    if (selectedBook) {
-      window.location.href = `/checkout/printed_book?book=${selectedBook}&quantity=${quantity}`;
-    } else {
-      alert('Please select a book first');
+    if (selectedBooks.length === 0) {
+      alert('Please select at least one book');
+      return;
     }
+    
+    // Prepare selected books data for the URL
+    const booksParam = selectedBooks.map(book => 
+      `${book.bookId}:${book.quantity}`
+    ).join(',');
+    
+    window.location.href = `/checkout/printed_book?books=${booksParam}`;
   };
 
   return (
