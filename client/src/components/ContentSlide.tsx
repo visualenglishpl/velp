@@ -96,117 +96,124 @@ export default function ContentSlide({
            questionPhrases.some(phrase => lowercaseText.includes(phrase));
   };
 
-  // Generate appropriate answer prompts based on question type
+  // Generate appropriate answer prompts based on question type following Callan Method
   const generateAnswerPrompt = (question: string): { positive: string, negative: string } | null => {
     if (!question) return null;
     
     const lowercaseQuestion = question.toLowerCase().trim();
     
-    // Special case for film opinion questions
+    // Callan Method patterns for question-answer
+    // In Callan Method, answers should:
+    // 1. Repeat the key part of the question
+    // 2. Provide a complete grammatical sentence
+    // 3. Use the same tense as the question
+    // 4. Be direct and concise
+    
+    // Special case for opinion questions (What do you think)
     if (lowercaseQuestion.includes("what do you think of")) {
       return {
-        positive: "I enjoy it.",
-        negative: "I don't like it."
+        positive: "I think it's interesting. I enjoy it very much.",
+        negative: "I don't think much of it. I find it boring."
       };
     }
     
     // Special case for "boring or interesting" questions
     if (lowercaseQuestion.includes("boring or interesting")) {
       return {
-        positive: "They are interesting.",
-        negative: "They are boring."
+        positive: "They are interesting. I enjoy watching them.",
+        negative: "They are boring. I don't enjoy watching them."
       };
     }
     
-    // Yes/No question patterns with appropriate responses
+    // Yes/No question patterns with Callan Method style responses
     const questionPatterns: Record<string, { positive: string, negative: string }> = {
       '^do you': {
-        positive: "Yes, I do.",
-        negative: "No, I don't."
+        positive: "Yes, I do. I do it regularly.",
+        negative: "No, I don't. I never do it."
       },
       '^does he': {
-        positive: "Yes, he does.",
-        negative: "No, he doesn't."
+        positive: "Yes, he does. He does it often.",
+        negative: "No, he doesn't. He never does it."
       },
       '^does she': {
-        positive: "Yes, she does.",
-        negative: "No, she doesn't."
+        positive: "Yes, she does. She does it regularly.",
+        negative: "No, she doesn't. She never does it."
       },
       '^can you': {
-        positive: "Yes, I can.",
-        negative: "No, I can't."
+        positive: "Yes, I can. I can do it well.",
+        negative: "No, I can't. I can't do it at all."
       },
       '^can he': {
-        positive: "Yes, he can.",
-        negative: "No, he can't."
+        positive: "Yes, he can. He can do it very well.",
+        negative: "No, he can't. He can't do it at all."
       },
       '^can she': {
-        positive: "Yes, she can.",
-        negative: "No, she can't."
+        positive: "Yes, she can. She can do it perfectly.",
+        negative: "No, she can't. She can't do it at all."
       },
       '^is it': {
-        positive: "Yes, it is.",
-        negative: "No, it isn't."
+        positive: "Yes, it is. It's exactly that.",
+        negative: "No, it isn't. It's not like that at all."
       },
       '^is he': {
-        positive: "Yes, he is.",
-        negative: "No, he isn't."
+        positive: "Yes, he is. He is indeed.",
+        negative: "No, he isn't. He's not like that at all."
       },
       '^is she': {
-        positive: "Yes, she is.",
-        negative: "No, she isn't."
+        positive: "Yes, she is. She is certainly like that.",
+        negative: "No, she isn't. She's not like that at all."
       },
       '^are you': {
-        positive: "Yes, I am.",
-        negative: "No, I'm not."
+        positive: "Yes, I am. I am exactly that.",
+        negative: "No, I'm not. I'm not like that at all."
       },
       '^are they': {
-        positive: "Yes, they are.",
-        negative: "No, they aren't."
+        positive: "Yes, they are. They are exactly that.",
+        negative: "No, they aren't. They're not like that at all."
       },
       '^are action films': {
-        positive: "Yes, they are interesting.",
-        negative: "No, they are boring."
+        positive: "Yes, they are interesting. Action films are full of excitement.",
+        negative: "No, they are boring. Action films have too much violence."
       },
       '^are adventure films': {
-        positive: "Yes, they are interesting.",
-        negative: "No, they are boring."
+        positive: "Yes, they are interesting. Adventure films are full of excitement.",
+        negative: "No, they are boring. Adventure films are too predictable."
       },
       '^are comedy films': {
-        positive: "Yes, they are interesting.",
-        negative: "No, they are boring."
+        positive: "Yes, they are interesting. Comedy films make me laugh.",
+        negative: "No, they are boring. Comedy films aren't funny enough."
       },
       '^have you': {
-        positive: "Yes, I have.",
-        negative: "No, I haven't."
+        positive: "Yes, I have. I have done it many times.",
+        negative: "No, I haven't. I've never done it before."
       },
       '^has he': {
-        positive: "Yes, he has.",
-        negative: "No, he hasn't."
+        positive: "Yes, he has. He has done it recently.",
+        negative: "No, he hasn't. He's never done it before."
       },
       '^has she': {
-        positive: "Yes, she has.",
-        negative: "No, she hasn't."
+        positive: "Yes, she has. She has done it several times.",
+        negative: "No, she hasn't. She's never done it before."
       },
       '^did you': {
-        positive: "Yes, I did.",
-        negative: "No, I didn't."
+        positive: "Yes, I did. I did it yesterday.",
+        negative: "No, I didn't. I didn't do it at all."
       },
       '^would you': {
-        positive: "Yes, I would.",
-        negative: "No, I wouldn't."
+        positive: "Yes, I would. I would do it anytime.",
+        negative: "No, I wouldn't. I wouldn't ever do it."
       },
       '^would you like': {
-        positive: "Yes, I would.",
-        negative: "No, I wouldn't."
+        positive: "Yes, I would like that very much.",
+        negative: "No, I wouldn't like that at all."
       },
       '^could you': {
-        positive: "Yes, I could.",
-        negative: "No, I couldn't."
+        positive: "Yes, I could. I could do it easily.",
+        negative: "No, I couldn't. I couldn't do it at all."
       },
       '^should we': {
-        positive: "Yes, we should.",
-        negative: "No, we shouldn't."
+        positive: "Yes, we should. We should definitely do it.",
+        negative: "No, we shouldn't. We shouldn't do it at all."
       }
     };
     
@@ -217,59 +224,103 @@ export default function ContentSlide({
       }
     }
     
-    // Check for special WH-questions
+    // Check for special WH-questions with Callan Method style responses
     const whQuestionPhrases = {
       'what is the name': {
-        positive: "It's Scotland.",
-        negative: "I don't know."
+        positive: "The name is Scotland. Scotland is a country in the United Kingdom.",
+        negative: "I don't know the name. I've never heard of it before."
       },
       'which film is': {
-        positive: "It's from Hunger Games.",
-        negative: "I don't know."
+        positive: "The film is from Hunger Games. Hunger Games is a popular movie series.",
+        negative: "I don't know which film it is. I haven't seen it before."
       },
       'what do prop masters do': {
-        positive: "They design props.",
-        negative: "I don't know."
+        positive: "Prop masters design and prepare props. They ensure all objects used in films are ready.",
+        negative: "I don't know what prop masters do. I'm not familiar with film production."
       },
       'what do hair stylists do': {
-        positive: "They style hair.",
-        negative: "I don't know."
+        positive: "Hair stylists style actors' hair. They ensure everyone looks right for their role.",
+        negative: "I don't know what hair stylists do exactly. I've never worked in a salon."
       },
       'what is the past tense of': {
-        positive: "The past tense is baked.",
-        negative: "I don't know the past tense."
+        positive: "The past tense is 'baked'. Yesterday, she baked a cake.",
+        negative: "I don't know the past tense. English irregular verbs are difficult."
       },
       'what is she baking': {
-        positive: "She is baking cookies.",
-        negative: "She is baking a cake."
+        positive: "She is baking cookies. She's using flour, sugar, and chocolate chips.",
+        negative: "She is baking a cake. She's using flour, eggs, and sugar."
       },
       'did you bake last weekend': {
-        positive: "Yes, I baked.",
-        negative: "No, I didn't bake."
+        positive: "Yes, I baked last weekend. I baked some delicious cookies.",
+        negative: "No, I didn't bake last weekend. I didn't have time to bake."
       },
       'what is she doing': {
-        positive: "She is jogging.",
-        negative: "She is walking."
+        positive: "She is jogging. She is running at a steady pace for exercise.",
+        negative: "She is walking. She is moving at a normal pace down the street."
       },
       'where are they jogging': {
-        positive: "They are jogging in the park.",
-        negative: "They are jogging on the beach."
+        positive: "They are jogging in the park. The park has a nice jogging path.",
+        negative: "They are jogging on the beach. The sand makes jogging more difficult."
       },
       'where is he jogging to': {
-        positive: "He is jogging to the toilet.",
-        negative: "He is jogging to the park."
+        positive: "He is jogging to the station. The station is about two kilometers away.",
+        negative: "He is jogging to the park. The park has a nice lake in the center."
       },
       'who is he jogging': {
-        positive: "Santa is jogging.",
-        negative: "The teacher is jogging."
+        positive: "John is jogging. John jogs every morning before work.",
+        negative: "The teacher is jogging. The teacher stays fit by jogging regularly."
       },
       'how often do you jog': {
-        positive: "I often jog.",
-        negative: "I seldom jog."
+        positive: "I jog three times a week. I usually jog in the mornings before breakfast.",
+        negative: "I rarely jog. I prefer swimming or cycling for exercise."
       },
       'how often do you': {
-        positive: "I do it frequently.",
-        negative: "I rarely do it."
+        positive: "I do it frequently. I do it at least three times a week.",
+        negative: "I rarely do it. I might do it once a month at most."
+      },
+      'where is the flag from': {
+        positive: "The flag is from Poland. The Polish flag is red and white.",
+        negative: "The flag is not from Poland. It's from another European country."
+      },
+      'what colour is the polish flag': {
+        positive: "The Polish flag is red and white. The top half is white and the bottom half is red.",
+        negative: "The Polish flag is not red and white. You might be thinking of another country's flag."
+      },
+      'where are the clothes from': {
+        positive: "The clothes are from Poland. Poland has a strong textile industry.",
+        negative: "The clothes are not from Poland. They are from a different European country."
+      },
+      'where are the cities': {
+        positive: "The cities are in Poland. Poland has many beautiful cities like Warsaw and Kraków.",
+        negative: "The cities are not in Poland. They are in another European country."
+      },
+      'what is the biggest city in poland': {
+        positive: "The biggest city in Poland is Warsaw. Warsaw is Poland's capital and has over 1.7 million people.",
+        negative: "The biggest city in Poland is not Warsaw. Kraków is another large Polish city but not the biggest."
+      },
+      'what is the capital of poland': {
+        positive: "The capital of Poland is Warsaw. Warsaw has been Poland's capital since 1596.",
+        negative: "The capital of Poland is not Warsaw. Poland has had different capitals throughout its history."
+      },
+      'what is his nationality': {
+        positive: "His nationality is Polish. He is from Poland and speaks Polish.",
+        negative: "His nationality is not Polish. He is from another country and speaks a different language."
+      },
+      'what language does she speak': {
+        positive: "She speaks Polish. Polish is the official language of Poland.",
+        negative: "She doesn't speak Polish. She speaks a different European language."
+      },
+      'what is the nationality of people from poland': {
+        positive: "The nationality is Polish. People from Poland are Polish.",
+        negative: "The nationality is not Polish. I'm not sure about the correct nationality for Poland."
+      },
+      'what countries are on the british isles': {
+        positive: "The countries on the British Isles are England, Scotland, Wales, Northern Ireland, and the Republic of Ireland.",
+        negative: "I don't know what countries are on the British Isles. Geography isn't my strongest subject."
+      },
+      'what countries are in britain': {
+        positive: "The countries in Britain are England, Scotland, and Wales. These three countries form Great Britain.",
+        negative: "I'm not sure what countries are in Britain. I often confuse Britain with the United Kingdom."
       }
     };
     
@@ -434,6 +485,80 @@ export default function ContentSlide({
       const frequencyOptions = howOftenMatch[2].trim();
       // Keep only the question part
       cleaned = `How Often Do You ${activity}`;
+    }
+    
+    // Handle "Where is the Flag From – It is From Poland" pattern
+    const flagFromPattern = /Where is the Flag From – ([^?]*)/i;
+    const flagFromMatch = cleaned.match(flagFromPattern);
+    if (flagFromMatch) {
+      // Keep only the question part
+      cleaned = "Where is the Flag From";
+    }
+    
+    // Handle "What Colour is the Polish Flag" pattern
+    const flagColorPattern = /What Colour is the Polish Flag – ([^?]*)/i;
+    const flagColorMatch = cleaned.match(flagColorPattern);
+    if (flagColorMatch) {
+      // Keep only the question part
+      cleaned = "What Colour is the Polish Flag";
+    }
+    
+    // Handle "Where are the Clothes From" pattern
+    const clothesFromPattern = /Where are the Clothes From – ([^?]*)/i;
+    const clothesFromMatch = cleaned.match(clothesFromPattern);
+    if (clothesFromMatch) {
+      // Keep only the question part
+      cleaned = "Where are the Clothes From";
+    }
+    
+    // Handle "Where are the Cities" pattern
+    const citiesPattern = /Where are the Cities – ([^?]*)/i;
+    const citiesMatch = cleaned.match(citiesPattern);
+    if (citiesMatch) {
+      // Keep only the question part
+      cleaned = "Where are the Cities";
+    }
+    
+    // Handle "What is the Biggest City in Poland" pattern
+    const biggestCityPattern = /What is the Biggest City in Poland – ([^?]*)/i;
+    const biggestCityMatch = cleaned.match(biggestCityPattern);
+    if (biggestCityMatch) {
+      // Keep only the question part
+      cleaned = "What is the Biggest City in Poland";
+    }
+    
+    // Handle "What is the Capital of Poland" pattern
+    const capitalPattern = /What is the Capital of Poland – ([^?]*)/i;
+    const capitalMatch = cleaned.match(capitalPattern);
+    if (capitalMatch) {
+      // Keep only the question part
+      cleaned = "What is the Capital of Poland";
+    }
+    
+    // Handle "What is His Nationality" pattern
+    const nationalityPattern = /What is His Nationality – ([^?]*)/i;
+    const nationalityMatch = cleaned.match(nationalityPattern);
+    if (nationalityMatch) {
+      // Keep only the question part
+      cleaned = "What is His Nationality";
+    }
+    
+    // Handle "What Language Does She Speak" pattern
+    const languagePattern = /What Language Does She Speak – ([^?]*)/i;
+    const languageMatch = cleaned.match(languagePattern);
+    if (languageMatch) {
+      // Keep only the question part
+      cleaned = "What Language Does She Speak";
+    }
+    
+    // Handle "Nationality – Poland – Polish" pattern - direct format
+    const nationalityDirectPattern = /Nationality – ([^–]*) – ([^?]*)/i;
+    const nationalityDirectMatch = cleaned.match(nationalityDirectPattern);
+    if (nationalityDirectMatch) {
+      const country = nationalityDirectMatch[1].trim();
+      const adjective = nationalityDirectMatch[2].trim();
+      // Transform into a question
+      cleaned = `What is the nationality of people from ${country}`;
     }
     
     // Replace underscores and hyphens with spaces
