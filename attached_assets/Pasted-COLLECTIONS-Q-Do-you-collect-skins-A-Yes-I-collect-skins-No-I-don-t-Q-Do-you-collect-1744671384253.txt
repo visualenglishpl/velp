@@ -1,0 +1,158 @@
+COLLECTIONS
+Q: Do you collect skins? → A: Yes, I collect skins. / No, I don’t.
+
+Q: Do you collect autographs? → A: Yes, I collect autographs. / No, I don’t.
+
+Q: Do you collect badges? → A: Yes, I collect badges. / No, I don’t.
+
+Q: Do you collect Minecraft skins? → A: Yes, I collect Minecraft skins. / No, I don’t.
+
+Q: Do you collect Minecraft blocks? → A: Yes, I collect Minecraft blocks. / No, I don’t.
+
+Q: Do you collect trainers (shoes)? → A: Yes, I collect trainers. / No, I don’t.
+
+Q: Do you collect Fortnite/Roblox skins? → A: Yes, I do. / No, I don’t.
+
+Q: Do you collect postcards? → A: Yes, I collect postcards. / No, I don’t.
+
+COINS
+Q: What is this? → A: It is a coin.
+
+Q: Do you collect coins? → A: Yes, I collect coins. / No, I don’t.
+
+Q: Is collecting coins interesting or boring? → A: It is [interesting/boring].
+
+Q: Where are the coins from? (Canada/China/USA/Poland) → A: They are from [country].
+
+Q: Is the coin old or new? → A: It is [old/new].
+
+Q: Are the coins silver or gold? → A: They are [silver/gold].
+
+STICKERS
+Q: What are these? → A: They are stickers.
+
+Q: Do you collect stickers? → A: Yes, I collect stickers. / No, I don’t.
+
+Q: Do you have stickers on your car/phone/bag/laptop? → A: Yes, I do. / No, I don’t.
+
+Q: Do you have a sticker book? → A: Yes, I have a sticker book. / No, I don’t.
+
+Q: Do you put stickers on your face? → A: Yes, I do. / No, I don’t.
+
+PEBBLES
+Q: What are these? → A: They are pebbles.
+
+Q: Do you collect pebbles? → A: Yes, I collect pebbles. / No, I don’t.
+
+Q: Do you paint pebbles? → A: Yes, I paint pebbles. / No, I don’t.
+
+Q: Are the pebbles beautiful or ugly? → A: They are [beautiful/ugly].
+
+Q: Where are the pebbles? (garden/water/beach) → A: They are in/on the [location].
+
+KEY RINGS
+Q: What is this? → A: It is a key ring.
+
+Q: Do you collect key rings? → A: Yes, I collect key rings. / No, I don’t.
+
+Q: Do you collect Marvel key rings? → A: Yes, I do. / No, I don’t.
+
+Q: Where are the key rings from? (Paris/New York/London) → A: They are from [city].
+
+Q: Is it a Spiderman or Batman key ring? → A: It is [Spiderman/Batman].
+
+MAGNETS
+Q: What are these? → A: They are magnets.
+
+Q: Do you collect magnets? → A: Yes, I collect magnets. / No, I don’t.
+
+Q: Do you buy magnets on holiday? → A: Yes, I do. / No, I don’t.
+
+Q: Do you have magnets on your fridge/door? → A: Yes, I do. / No, I don’t.
+
+Q: Where are the magnets from? (Krakow/London/Sydney) → A: They are from [location].
+
+SHELLS
+Q: What is this? → A: It is a shell.
+
+Q: Do you collect shells? → A: Yes, I collect shells. / No, I don’t.
+
+Q: Do you have a shell collection? → A: Yes, I do. / No, I don’t.
+
+Q: What is inside the shell? → A: There is a [tortoise/crab] inside.
+
+Q: Where is the shell? → A: It is on the beach.
+
+PHONE CASES
+Q: What are these? → A: They are phone cases.
+
+Q: Do you collect phone cases? → A: Yes, I collect phone cases. / No, I don’t.
+
+Q: What color is your phone case? → A: My phone case is [color].
+
+Q: Do you prefer plain or colorful phone cases? → A: I prefer [plain/colorful] ones.
+
+Q: Which phone case do you like? → A: I like [description].
+
+STAMPS
+Q: What is this? → A: It is a stamp.
+
+Q: Do you collect stamps? → A: Yes, I collect stamps. / No, I don’t.
+
+Q: Where is the stamp from? (Australia/USA/Poland/Italy) → A: It is from [country].
+
+Q: How much is the stamp? → A: It is [amount] cents.
+
+Q: Where can you buy stamps? → A: At the post office.
+
+PLUSHIES
+Q: What is this? → A: It is a plushy.
+
+Q: Do you collect plushies? → A: Yes, I collect plushies. / No, I don’t.
+
+Q: How many plushies do you have? → A: I have [number] plushies.
+
+Q: Do you sleep with a plushy? → A: Yes, I do. / No, I don’t.
+
+Q: Do you collect Minecraft/Swojaki/Słodziaki plushies? → A: Yes, I do. / No, I don’t.
+
+TOY FIGURES
+Q: What are these? → A: They are toy figures.
+
+Q: Do you collect toy figures? → A: Yes, I collect toy figures. / No, I don’t.
+
+Q: Do you collect dinosaur/Minecraft/Kinder/Lego figures? → A: Yes, I do. / No, I don’t.
+
+Q: Do you play with toy figures? → A: Yes, I do. / No, I don’t.
+
+CARDS
+Q: What are these? → A: They are cards.
+
+Q: Do you collect cards? → A: Yes, I collect cards. / No, I don’t.
+
+Q: Do you collect football/Pokémon/baseball cards? → A: Yes, I do. / No, I don’t.
+
+Q: Who in your family collects cards? → A: [Family member] collects cards.
+
+MUGS
+Q: What is this? → A: It is a mug.
+
+Q: Do you collect mugs? → A: Yes, I collect mugs. / No, I don’t.
+
+Q: Is it a Christmas/Easter mug? → A: Yes, it is. / No, it isn’t.
+
+Q: Where is the mug from? → A: It is from the USA.
+
+BOOKS
+Q: Do you collect books? → A: Yes, I collect books. / No, I don’t.
+
+Q: Do you read Harry Potter/comic/dinosaur books? → A: Yes, I do. / No, I don’t.
+
+Q: Do you prefer ebooks or normal books? → A: I prefer [ebooks/normal books].
+
+BOARD GAMES
+Q: What are these? → A: They are board games.
+
+Q: What is your favorite board game? → A: My favorite is [Monopoly/Ludo/Chess].
+
+Q: Do you play board games with family/friends? → A: Yes, I do. / No, I don’t.

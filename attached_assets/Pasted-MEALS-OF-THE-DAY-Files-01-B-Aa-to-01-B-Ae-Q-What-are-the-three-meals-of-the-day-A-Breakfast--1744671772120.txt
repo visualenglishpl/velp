@@ -1,0 +1,112 @@
+MEALS OF THE DAY
+Files: 01 B Aa to 01 B Ae
+Q: What are the three meals of the day? → A: Breakfast, lunch, and dinner.
+Q: When do you have breakfast? → A: In the morning.
+Q: When do you have brunch? → A: Between breakfast and lunch.
+Q: When do you have dinner? → A: In the evening.
+
+BREAKFAST
+Files: 02 A a to 02 A p, 02 an
+Q: What do you eat for breakfast? → A: I eat [toast/cereal/eggs].
+Q: Do you drink tea or juice for breakfast? → A: I drink [tea/juice/milk].
+Q: Do you eat Nutella or peanut butter? → A: Yes, I do. / No, I don’t.
+Q: Do you have pancakes or waffles? → A: I prefer [pancakes/waffles].
+
+BRUNCH, LUNCH, DINNER
+Files: 02 B a to 02 D f
+Q: Do you eat brunch at home? → A: Yes, I do. / No, I don’t.
+Q: Do you prefer sweet or salty brunch? → A: I prefer [sweet/salty].
+Q: Do you eat school lunches? → A: Yes, I do. / No, I bring packed lunch.
+Q: What time do you have dinner? → A: At [time].
+Q: Do you eat fast food for dinner? → A: Yes, sometimes. / No, never.
+
+BRITISH vs. AMERICAN FOOD TERMS
+Files: 15 F A to 15 F E
+Q: In which country do they say "crisps"? → A: In the UK.
+Q: In which country do they say "chips"? → A: In the USA.
+Q: In which country do they say "sweets"? → A: In the UK.
+Q: In which country do they say "cookies"? → A: In the USA.
+
+HEALTHY vs. UNHEALTHY FOODS
+Files: 04 P A to 04 P O
+Q: Are nuts healthy? → A: Yes, they are.
+Q: Is chocolate healthy? → A: No, it’s unhealthy.
+Q: Are vegetables healthy? → A: Yes, they are.
+Q: Is mayonnaise healthy? → A: No, it’s unhealthy.
+
+BEVERAGES
+Files: 05 A B to 05 A G
+Q: What is your favorite juice? → A: I like [orange/apple] juice.
+Q: Do you prefer soda or water? → A: I prefer [soda/water].
+Q: Is wine made from grapes? → A: Yes, it is.
+Q: Can children drink beer? → A: No, they can’t.
+
+VEGETABLES
+Files: 06 A B to 06 A G
+Q: Do you eat lettuce salad? → A: Yes, I do. / No, I don’t.
+Q: Do you like grilled cucumbers? → A: Yes, I do. / No, I don’t.
+Q: Do you eat cabbage rolls? → A: Yes, I do. / No, I don’t.
+Q: Do you like mushroom pizza? → A: Yes, I do. / No, I don’t.
+
+FRUITS
+Files: 07 B to 07 G
+Q: Do you eat grape jam? → A: Yes, I do. / No, I don’t.
+Q: Do you like peach yogurt? → A: Yes, I do. / No, I don’t.
+Q: Do you drink watermelon juice? → A: Yes, I do. / No, I don’t.
+Q: Do you eat cherries with chocolate? → A: Yes, I do. / No, I don’t.
+
+BAKERY ITEMS
+Files: 08 A B to 08 A G
+Q: Do you bake bread at home? → A: Yes, I do. / No, I buy it.
+Q: What’s your favorite cake? → A: I like [chocolate/strawberry] cake.
+Q: Do you prefer cookies or donuts? → A: I prefer [cookies/donuts].
+Q: Do you eat meat pies? → A: Yes, I do. / No, I don’t.
+
+SNACKS
+Files: 09 G A to 09 G F
+Q: Do you eat dried fruit? → A: Yes, I do. / No, I don’t.
+Q: What’s your favorite candy bar? → A: I like [Snickers/KitKat].
+Q: Do you eat crisps every day? → A: Yes, sometimes. / No, never.
+Q: Would you eat kiwi-flavored crisps? → A: Yes, I would. / No, I wouldn’t.
+
+FAST FOOD
+Files: 10 F A to 10 F G
+Q: Do you eat fries with ketchup? → A: Yes, I do. / No, I prefer mayonnaise.
+Q: Do you like hamburgers? → A: Yes, I do. / No, I don’t.
+Q: What’s your favorite pizza topping? → A: I like [pepperoni/vegetables].
+Q: Do you eat hotdogs with mustard? → A: Yes, I do. / No, I don’t.
+
+DAIRY PRODUCTS
+Files: 11 E A to 11 E G
+Q: Do you eat cheese toast? → A: Yes, I do. / No, I don’t.
+Q: Do you prefer butter or margarine? → A: I prefer [butter/margarine].
+Q: What milk do you drink? → A: I drink [cow’s/almond] milk.
+Q: How many scoops of ice cream can you eat? → A: I can eat [number] scoops.
+
+MEATS
+Files: 12 F A to 12 F G
+Q: Do you eat pork at home? → A: Yes, I do. / No, I don’t.
+Q: Do you prefer chicken or turkey? → A: I prefer [chicken/turkey].
+Q: Do you eat grilled sausages? → A: Yes, I do. / No, I don’t.
+Q: What’s your favorite beef dish? → A: I like [steak/stew].
+
+NUTS
+Files: 13 G A to 13 G F
+Q: Do you drink coconut water? → A: Yes, I do. / No, I don’t.
+Q: Do you eat almond butter? → A: Yes, I do. / No, I don’t.
+Q: Do you like walnut cake? → A: Yes, I do. / No, I don’t.
+Q: Do you eat peanut butter? → A: Yes, I do. / No, I don’t.
+
+BERRIES
+Files: 14 H A to 14 H G
+Q: Do you like strawberries and cream? → A: Yes, I do. / No, I don’t.
+Q: Do you eat blueberry yogurt? → A: Yes, I do. / No, I don’t.
+Q: Do you drink cranberry juice? → A: Yes, I do. / No, I don’t.
+Q: Do you eat gooseberry jam? → A: Yes, I do. / No, I don’t.
+
+FOOD PYRAMID & INTERACTIVE ACTIVITIES
+Files: 16 H to 19 A, 17 A, 18 H
+Q: Name three dairy products. → A: Milk, cheese, yogurt.
+Q: Name three vegetables. → A: Carrots, lettuce, peppers.
+Q: Play the "Food Groups" Wordwall game. → A: [Student participates.]
+Q: Watch "What Japanese Breakfast is Like.mp4". → A: [Discuss the video.]

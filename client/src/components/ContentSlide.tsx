@@ -93,16 +93,35 @@ export default function ContentSlide({
       // Remove numeric prefixes (like "01 R A")
       const cleanedFilename = withoutExtension.replace(/^\d+\s*[A-Z](\s+[A-Z])?\s+/, '');
       
-      // Look for question-answer pattern with either dash or en dash
-      const dashMatch = cleanedFilename.match(/(.*?)(?:\s*[-–]\s*)(.*)/);
+      // First, check for the newer '→' arrow format from examples
+      let questionPart, answerPart;
       
-      if (!dashMatch || dashMatch.length < 3) {
-        return { question: null, answer: null };
+      // Handle "Q: What is this? → A: It is a phone." format
+      if (cleanedFilename.includes('→')) {
+        const parts = cleanedFilename.split('→');
+        if (parts.length >= 2) {
+          // Extract question (removing Q: prefix if present)
+          questionPart = parts[0].replace(/^Q:\s*/, '').trim();
+          
+          // Extract answer (removing A: prefix if present)
+          answerPart = parts[1].replace(/^A:\s*/, '').trim();
+        }
+      } else {
+        // Fallback to the old dash-based pattern
+        const dashMatch = cleanedFilename.match(/(.*?)(?:\s*[-–]\s*)(.*)/);
+        
+        if (!dashMatch || dashMatch.length < 3) {
+          return { question: null, answer: null };
+        }
+        
+        questionPart = dashMatch[1].trim();
+        answerPart = dashMatch[2].trim();
       }
       
-      // Format based on examples provided: "Q: What is it? → A: It is a phone."
-      let questionPart = dashMatch[1].trim();
-      let answerPart = dashMatch[2].trim();
+      // If we couldn't extract question or answer, return null
+      if (!questionPart || !answerPart) {
+        return { question: null, answer: null };
+      }
       
       // Add question mark if not present
       if (!questionPart.endsWith('?')) {

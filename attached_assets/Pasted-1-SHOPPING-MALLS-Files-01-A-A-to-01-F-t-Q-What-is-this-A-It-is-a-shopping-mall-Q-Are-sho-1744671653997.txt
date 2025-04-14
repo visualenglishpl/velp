@@ -1,0 +1,92 @@
+1. SHOPPING MALLS
+Files: 01 A A to 01 F t
+Q: What is this? → A: It is a shopping mall.
+Q: Are shopping malls big or small? → A: They are [big/small].
+Q: Do you like shopping malls? → A: Yes, I do. / No, I don’t.
+Q: What is the biggest shopping mall near your house? → A: The biggest mall near me is [name].
+Q: Is there a shopping mall near where you live? → A: Yes, there is. / No, there isn’t.
+Q: Do you go to the mall alone or with friends? → A: I go [alone/with friends].
+Q: Do you prefer shopping online or at the mall? → A: I prefer [online/mall] shopping.
+Q: Do you visit Bonarka/Krakowska shopping mall? → A: Yes, I do. / No, I don’t.
+Q: Do you shop in Adidas/Cropp/Nike/Zara? → A: Yes, I do. / No, I don’t.
+
+2. CLOTHING PATTERNS
+Files: 02 J A to 08 J I
+
+Spotted
+Q: What is this? → A: It is a spotted [dog/dress/umbrella/bowtie].
+Q: Do you like spotted clothes? → A: Yes, I do. / No, I don’t.
+
+Checked
+Q: What is she wearing? → A: She is wearing a checked [shirt/dress/shoes].
+Q: Are these trousers checked or plain? → A: They are checked.
+
+Striped
+Q: What pattern is this? → A: It is striped.
+Q: Do you prefer striped or plain shirts? → A: I prefer [striped/plain].
+
+Plain
+Q: Is this shirt plain or patterned? → A: It is plain.
+Q: Do you prefer plain or patterned clothes? → A: I prefer [plain/patterned].
+
+Flowery
+Q: What is this? → A: It is a flowery [blouse/phone case/hoodie].
+Q: Are flowery patterns elegant? → A: Yes, they are. / No, they aren’t.
+
+3. CLOTHING MATERIALS
+Files: 06 G A to 10 J I
+Q: What is this jacket made of? → A: It is made of [denim/leather/wool].
+Q: Do you own a leather bag? → A: Yes, I do. / No, I don’t.
+Q: Are woollen sweaters warm? → A: Yes, they are.
+Q: Do you wear denim jeans? → A: Yes, I do. / No, I don’t.
+
+4. TYPES OF CLOTHES
+Files: 11 W A to 11 W Vb
+
+Shirts/Blouses
+Q: Do you have shirts in your wardrobe? → A: Yes, I do. / No, I don’t.
+Q: Is this shirt elegant or casual? → A: It is [elegant/casual].
+Q: What pattern is on the shirt? → A: It is [plain/flowery/striped].
+
+Jackets/Coats
+Q: Is this a winter coat? → A: Yes, it is. / No, it isn’t.
+Q: Do you prefer denim jackets or leather jackets? → A: I prefer [denim/leather].
+
+Dresses/Skirts
+Q: Do you wear dresses to parties? → A: Yes, I do. / No, I don’t.
+Q: Is this skirt flowery or checked? → A: It is [flowery/checked].
+
+Shoes/Trainers
+Q: What shoe size are you? → A: My size is [number].
+Q: Do you wear Nike trainers? → A: Yes, I do. / No, I don’t.
+Q: Are these trainers cheap or expensive? → A: They are [cheap/expensive].
+
+Trousers/Shorts
+Q: Do you wear jeans to school? → A: Yes, I do. / No, I don’t.
+Q: Are these shorts summer or winter? → A: They are [summer/winter].
+
+5. ACCESSORIES
+Files: 11 W I to 11 W Oi
+Q: What is this? → A: It is a [belt/bowtie/scarf/hat].
+Q: Do you wear belts? → A: Yes, I do. / No, I don’t.
+Q: Is this tie silver or gold? → A: It is [silver/gold].
+Q: Do you wear hats in winter? → A: Yes, I do. / No, I don’t.
+
+6. SIZES
+Files: 13 E A to 14 E D
+Q: What is your clothing size? → A: My size is [small/medium/large].
+Q: Is this hoodie big or small? → A: It is [big/small].
+Q: Who has the biggest shoe size in your family? → A: [Family member] does.
+
+7. FORMAL vs. CASUAL
+Files: 15 J A to 15 J I
+Q: Is this outfit formal or casual? → A: It is [formal/casual].
+Q: Do you wear formal clothes to school? → A: No, I wear casual clothes.
+Q: What do you prefer for parties? → A: I prefer [formal/casual].
+
+8. TRENDY vs. OLD-FASHIONED
+Files: 16 J A to 16 J I
+Q: Are these jeans trendy? → A: Yes, they are. / No, they’re old-fashioned.
+Q: Is this outfit old-fashioned? → A: Yes, it is. / No, it isn’t.
+Q: Do you prefer trendy or comfortable clothes? → A: I prefer [trendy/comfortable].
+
