@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useLocation, useRoute } from 'wouter';
+import { Link, useLocation, useRoute } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { apiRequest } from '@/lib/queryClient';
+import { useQuery } from '@tanstack/react-query';
+import { Check, Book } from 'lucide-react';
 
 // Make sure to call loadStripe outside of a component's render to avoid
 // recreating the Stripe object on every render.
@@ -159,6 +164,16 @@ export default function CheckoutPage() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [planType, setPlanType] = useState<PlanType>(planId as PlanType || 'single_lesson');
   
+  // Query to get available books
+  const { data: availableBooks, isLoading: loadingBooks } = useQuery({
+    queryKey: ['/api/assets/book-thumbnails'],
+    queryFn: async () => {
+      const res = await apiRequest('GET', '/api/assets/book-thumbnails');
+      if (!res.ok) throw new Error('Failed to fetch books');
+      return await res.json();
+    }
+  });
+  
   // State for selected books
   const [selectedBookIds, setSelectedBookIds] = useState<string[]>([]);
   
@@ -176,6 +191,17 @@ export default function CheckoutPage() {
   
   // For backward compatibility - get first selected book if any
   const selectedBookId = selectedBookIds.length > 0 ? selectedBookIds[0] : null;
+  
+  // Handler for toggling book selection
+  const toggleBookSelection = (bookId: string) => {
+    setSelectedBookIds(prevIds => {
+      if (prevIds.includes(bookId)) {
+        return prevIds.filter(id => id !== bookId);
+      } else {
+        return [...prevIds, bookId];
+      }
+    });
+  };
   
   // Customer information state
   const [customerInfo, setCustomerInfo] = useState({

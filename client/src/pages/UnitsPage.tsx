@@ -101,27 +101,24 @@ export default function UnitsPage() {
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {[...Array(8)].map((_, i) => (
-              <Card key={i} className="overflow-hidden flex flex-col shadow-md">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+            {[...Array(10)].map((_, i) => (
+              <Card key={i} className="overflow-hidden shadow-md flex flex-col h-full">
                 <div className="aspect-video bg-gray-100 w-full rounded-t-md">
                   <Skeleton className="h-full w-full" />
                 </div>
                 <CardHeader className="py-3 px-4">
-                  <Skeleton className="h-6 w-2/3" />
+                  <Skeleton className="h-6 w-4/5 mx-auto" />
                 </CardHeader>
-                <CardContent className="py-0 px-4">
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-3/4" />
-                </CardContent>
-                <CardFooter className="py-3 px-4">
-                  <Skeleton className="h-9 w-full" />
+                <CardFooter className="pt-0 px-4 pb-4 mt-auto flex-col gap-2">
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-10 w-full" />
                 </CardFooter>
               </Card>
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col shadow-md hover:shadow-lg transition-shadow h-full">
                 <div className="aspect-video bg-gray-100 relative overflow-hidden rounded-t-md">
