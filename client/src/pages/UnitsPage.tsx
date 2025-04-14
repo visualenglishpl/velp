@@ -104,7 +104,7 @@ export default function UnitsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {[...Array(10)].map((_, i) => (
               <Card key={i} className="overflow-hidden flex flex-col">
-                <div className="aspect-video bg-gray-100 w-full rounded-t-md">
+                <div className="aspect-video w-full">
                   <Skeleton className="h-full w-full" />
                 </div>
                 <CardHeader className="py-3 px-4">
@@ -124,7 +124,7 @@ export default function UnitsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col h-full">
-                <div className="aspect-video bg-gray-100 relative overflow-hidden rounded-t-md">
+                <div className="aspect-video relative overflow-hidden">
                   {!hasPurchased && index > 0 && (
                     <div className="absolute top-2 right-2 bg-primary/90 rounded-full p-1 z-10">
                       <LockIcon className="h-4 w-4 text-white" />
@@ -133,9 +133,9 @@ export default function UnitsPage() {
                   
                   <div className="h-full w-full">
                     {/* Generate direct S3 path to first image from the unit */}
-                    <div className="h-full w-full relative p-2">
-                      {/* Styled unit background with gradient */}
-                      <div className="h-full w-full bg-gradient-to-br from-primary/10 to-primary/25 flex flex-col items-center justify-center absolute inset-0 z-0">
+                    <div className="h-full w-full relative">
+                      {/* Styled unit background with gradient - only shown if image fails to load */}
+                      <div className="h-full w-full bg-gradient-to-br from-primary/5 to-primary/15 flex flex-col items-center justify-center absolute inset-0 z-0">
                         <span className="text-3xl font-bold text-primary/90 drop-shadow-md">
                           UNIT {unit.unitNumber}
                         </span>
@@ -171,8 +171,7 @@ export default function UnitsPage() {
                           })()
                         } 
                         alt={`Thumbnail for ${unit.title}`}
-                        className="h-full w-full object-contain object-center relative z-10"
-                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+                        className="h-full w-full object-cover object-center relative z-10"
                         onError={(e) => {
                           // Try different common filenames in sequence
                           const img = e.target as HTMLImageElement;
