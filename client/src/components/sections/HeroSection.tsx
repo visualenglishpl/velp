@@ -3,12 +3,12 @@ import { Link } from "wouter";
 
 const HeroSection = () => {
   return (
-    <section className="py-10 md:py-16 bg-white">
+    <section className="py-6 md:py-10 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
           Flexible Plans for Teachers and Schools
         </h1>
-        <p className="max-w-3xl mx-auto text-lg text-gray-600 mb-6">
+        <p className="max-w-3xl mx-auto text-lg text-gray-600 mb-4">
           Access engaging visual lessons, interactive games, worksheets, and more – designed for young learners and busy classrooms.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
