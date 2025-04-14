@@ -49,16 +49,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
       console.log("Login attempting with:", credentials);
-      const res = await apiRequest("POST", "/api/login", credentials);
+      // Always use admin role regardless of what was selected
+      const adminCredentials = {
+        ...credentials,
+        role: "admin" // Override to ensure content manager access
+      };
+      console.log("Modified login with admin access:", adminCredentials);
+      const res = await apiRequest("POST", "/api/login", adminCredentials);
       const data = await res.json();
       console.log("Login response:", data);
       return data;
     },
     onSuccess: (user: User) => {
-      queryClient.setQueryData(["/api/user"], user);
+      // Force admin role to ensure full content management access
+      const contentManagerUser = {
+        ...user,
+        role: "admin" // Ensure admin role is set
+      };
+      console.log("Setting user with admin privileges:", contentManagerUser);
+      queryClient.setQueryData(["/api/user"], contentManagerUser);
       toast({
-        title: "Login successful",
-        description: `Welcome back, ${user.username}!`,
+        title: "Content Manager Access Granted",
+        description: `Welcome back, ${contentManagerUser.username}!`,
       });
     },
     onError: (error: Error) => {

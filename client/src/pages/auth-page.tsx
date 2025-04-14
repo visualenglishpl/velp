@@ -51,24 +51,18 @@ const AuthPage = () => {
   // For navigation
   const [, navigate] = useLocation();
 
-  // Redirect logged in users to appropriate page
+  // Redirect logged in users to content management page
   useEffect(() => {
     // Check if we're already on an admin page to avoid redirect loops
     const isAlreadyOnAdminPage = window.location.pathname.startsWith('/admin');
     const isAlreadyOnAuthPage = window.location.pathname === '/auth';
     
     if (user && !isLoading && isAlreadyOnAuthPage) {
-      console.log("User authenticated:", user);
-      console.log("User role:", user.role);
+      console.log("Content manager authenticated:", user);
       
-      // Navigate directly to the appropriate page
-      if (user.role === "admin") {
-        console.log("Redirecting admin to dashboard");
-        navigate("/admin");
-      } else if (user.role === "teacher" || user.role === "school") {
-        console.log("Redirecting to homepage");
-        navigate("/");
-      }
+      // Always redirect to admin books management for content managers
+      console.log("Redirecting to books management");
+      navigate("/admin/books");
     }
   }, [user, isLoading, navigate]);
 
