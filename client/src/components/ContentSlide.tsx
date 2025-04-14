@@ -240,36 +240,37 @@ export default function ContentSlide({
           )}
           
           {/* Enhanced image with optimized layout and proportional fitting */}
-          <div className="flex items-center justify-center w-full h-full py-6 px-4">
+          <div className="flex items-center justify-center w-full h-full py-2 px-4">
             <motion.div 
-              className="relative flex justify-center items-center w-full h-full"
+              className="relative flex justify-center items-center w-full h-full bg-white"
               style={{ 
-                minHeight: '500px', 
-                maxHeight: '80vh',
+                minHeight: '400px', 
+                maxHeight: '70vh',
                 padding: '0',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                borderRadius: '8px',
               }}
             >
               <motion.img
                 src={getS3Url()}
                 alt={material.title || "Educational content"}
-                className="rounded-lg"
+                className="p-2"
                 onLoad={handleImageLoad}
                 onError={handleImageError}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ 
                   opacity: imageLoaded ? 1 : 0,
-                  scale: imageLoaded ? 1 : 0.95,
+                  scale: imageLoaded ? 1 : 0.98,
                 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.3 }}
                 style={{ 
                   maxWidth: '100%',
                   maxHeight: '100%',
                   objectFit: 'contain',
                   filter: 'none',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                  background: 'white',
                 }}
               />
             </motion.div>
@@ -392,38 +393,58 @@ export default function ContentSlide({
         overflow: 'hidden'
       }}
     >
-      {/* Question & Answer Display at the top - Callan Method Style */}
+      {/* Question & Answer Display at the top - Matching the design from screenshots */}
       {exactFormatQuestion || (formattedQuestion && answer) ? (
-        <div className="bg-blue-100 py-5 text-center border-b border-blue-200 mb-2 shadow-sm transition-all">
-          {/* Display question in Callan Method format: "What language does she speak? → She speaks Polish." */}
-          <div className="px-4 flex flex-col items-center">
+        <div className="bg-blue-50 py-5 px-3 text-center border-b border-blue-100 mb-2 transition-all">
+          {/* Display question in format matching provided screenshots */}
+          <div className="px-4 flex flex-col items-center max-w-3xl mx-auto">
+            <div className="w-full text-left mb-2">
+              <h2 className="text-gray-500 text-xl font-medium text-center">
+                {material.title || "Gadgets"}
+              </h2>
+              <h3 className="text-gray-400 text-lg font-medium text-center mb-4">
+                {material.description || ""}
+              </h3>
+            </div>
+            
             {exactFormatQuestion ? (
               exactFormatQuestion.includes('→') ? (
-                <div className="flex flex-col items-center">
-                  <div className="mb-3">
-                    <span className="font-bold text-blue-900 text-2xl md:text-3xl">
+                <div className="flex flex-col items-start w-full mb-4">
+                  <div className="mb-2 uppercase text-gray-500 font-bold">
+                    {material.contentType === 'question' && "MOBILE PHONE"}
+                  </div>
+                  <div className="mb-3 text-left">
+                    <span className="font-medium text-gray-600 text-2xl">
                       {exactFormatQuestion.split('→')[0].trim().replace(/^Q:\s*/, '')}
                     </span>
                   </div>
-                  <div>
-                    <span className="text-blue-700 font-medium text-xl md:text-2xl">
+                  <div className="text-left">
+                    <span className="text-gray-500 text-xl">
                       {exactFormatQuestion.split('→')[1].trim().replace(/^A:\s*/, '')}
                     </span>
                   </div>
                 </div>
               ) : (
-                <span className="font-bold text-blue-900 text-2xl md:text-3xl">{exactFormatQuestion}</span>
+                <div className="text-left w-full">
+                  <div className="mb-2 uppercase text-gray-500 font-bold">
+                    {material.contentType === 'question' && "MOBILE PHONE"}
+                  </div>
+                  <span className="font-medium text-gray-600 text-2xl">{exactFormatQuestion}</span>
+                </div>
               )
             ) : formattedQuestion && answer ? (
-              <div className="flex flex-col items-center">
-                <div className="mb-3">
-                  <span className="font-bold text-blue-900 text-2xl md:text-3xl">{formattedQuestion}</span>
+              <div className="flex flex-col items-start w-full">
+                <div className="mb-2 uppercase text-gray-500 font-bold">
+                  {material.contentType === 'question' && "MOBILE PHONE"}
                 </div>
-                <div>
-                  <span className="text-blue-700 font-medium text-xl md:text-2xl">{answer.positive}</span>
+                <div className="mb-3 text-left">
+                  <span className="font-medium text-gray-600 text-2xl">{formattedQuestion}</span>
+                </div>
+                <div className="text-left">
+                  <span className="text-gray-500 text-xl">{answer.positive}</span>
                   {answer.negative && (
-                    <div className="mt-2">
-                      <span className="text-blue-600 font-normal text-xl md:text-2xl">
+                    <div className="mt-1">
+                      <span className="text-gray-500 text-xl">
                         {answer.negative}
                       </span>
                     </div>
