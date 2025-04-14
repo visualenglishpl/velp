@@ -646,24 +646,35 @@ export default function ContentSlide({
             </div>
           )}
           
-          {/* Enhanced image with improved layout matching the reference */}
+          {/* Enhanced image with improved layout and proportional fitting */}
           <div className="flex items-center justify-center w-full h-full py-2">
-            <motion.img
-              src={getS3Url()}
-              alt={material.title || "Educational content"}
-              className="w-auto h-auto max-w-[95%] max-h-[85vh] mx-auto object-contain transition-all duration-300 rounded-lg"
-              onLoad={handleImageLoad}
-              onError={handleImageError}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ 
-                opacity: imageLoaded ? 1 : 0,
-                scale: imageLoaded ? 1 : 0.95,
-              }}
-              transition={{ duration: 0.4 }}
+            <motion.div 
+              className="relative w-full max-w-[95%] mx-auto"
               style={{ 
-                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                maxHeight: 'calc(100vh - 180px)', // Ensure space for thumbnails bar
+                overflow: 'hidden',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
               }}
-            />
+            >
+              <motion.img
+                src={getS3Url()}
+                alt={material.title || "Educational content"}
+                className="w-auto h-auto max-w-full max-h-[calc(100vh-180px)] object-contain transition-all duration-300 rounded-lg"
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ 
+                  opacity: imageLoaded ? 1 : 0,
+                  scale: imageLoaded ? 1 : 0.95,
+                }}
+                transition={{ duration: 0.4 }}
+                style={{ 
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                }}
+              />
+            </motion.div>
           </div>
           
           {/* Styled error message */}
@@ -679,13 +690,13 @@ export default function ContentSlide({
     if (contentType === 'video') {
       return (
         <div className="relative">
-          {/* Modern video player with enhanced styling */}
+          {/* Modern video player with enhanced styling and thumbnail visibility */}
           <div className="bg-gradient-to-b from-blue-50 to-gray-50 rounded-xl overflow-hidden shadow-xl p-4">
-            <div className="rounded-lg overflow-hidden border border-gray-200 shadow-inner">
+            <div className="rounded-lg overflow-hidden border border-gray-200 shadow-inner flex justify-center items-center">
               <video
                 src={getS3Url()}
                 controls={true}
-                className="max-w-[95%] max-h-[55vh] mx-auto rounded-lg"
+                className="w-auto max-w-full max-h-[calc(100vh-180px)] mx-auto rounded-lg"
                 autoPlay={isActive && isPlaying}
                 muted={isMuted}
                 playsInline
