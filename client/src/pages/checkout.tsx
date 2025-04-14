@@ -169,6 +169,8 @@ export default function CheckoutPage() {
   
   // Parse the URL query parameters to get the book ID
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
+  const [selectedBooks, setSelectedBooks] = useState<string[]>([]);
+  const [multipleBooks, setMultipleBooks] = useState<boolean>(false);
   
   // Book title map for readable titles
   const bookTitles: Record<string, string> = {
@@ -184,18 +186,18 @@ export default function CheckoutPage() {
     '7': 'BOOK 7 - MASTERS ENGLISH'
   };
   
-  // All available books in order with thumbnail paths
+  // All available books in order with thumbnail paths and fallback image paths
   const allBooks = [
-    {id: '0a', title: 'BOOK 0A - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0a/unit1/thumbnail.jpg`},
-    {id: '0b', title: 'BOOK 0B - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0b/unit1/thumbnail.jpg`},
-    {id: '0c', title: 'BOOK 0C - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0c/unit1/thumbnail.jpg`},
-    {id: '1', title: 'BOOK 1 - ELEMENTARY ENGLISH', thumbnail: `/api/direct/book1/unit1/thumbnail.jpg`},
-    {id: '2', title: 'BOOK 2 - PRE-INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book2/unit1/thumbnail.jpg`},
-    {id: '3', title: 'BOOK 3 - INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book3/unit1/thumbnail.jpg`},
-    {id: '4', title: 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book4/unit1/thumbnail.jpg`},
-    {id: '5', title: 'BOOK 5 - ADVANCED ENGLISH', thumbnail: `/api/direct/book5/unit1/thumbnail.jpg`},
-    {id: '6', title: 'BOOK 6 - PROFICIENCY ENGLISH', thumbnail: `/api/direct/book6/unit1/thumbnail.jpg`},
-    {id: '7', title: 'BOOK 7 - MASTERS ENGLISH', thumbnail: `/api/direct/book7/unit1/thumbnail.jpg`}
+    {id: '0a', title: 'BOOK 0A - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0a/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book0a/icons/thumbnailsuni0a-1.png`},
+    {id: '0b', title: 'BOOK 0B - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0b/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book0b/icons/thumbnailsuni0b-1.png`},
+    {id: '0c', title: 'BOOK 0C - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0c/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book0c/icons/thumbnailsuni0c-1.png`},
+    {id: '1', title: 'BOOK 1 - ELEMENTARY ENGLISH', thumbnail: `/api/direct/book1/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book1/unit1/thumbnail.jpg`},
+    {id: '2', title: 'BOOK 2 - PRE-INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book2/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book2/unit1/assets/00 E.png`},
+    {id: '3', title: 'BOOK 3 - INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book3/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book3/unit1/assets/00 E.png`},
+    {id: '4', title: 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book4/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book4/unit1/assets/00 E.png`},
+    {id: '5', title: 'BOOK 5 - ADVANCED ENGLISH', thumbnail: `/api/direct/book5/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book5/unit1/assets/00 E.png`},
+    {id: '6', title: 'BOOK 6 - PROFICIENCY ENGLISH', thumbnail: `/api/direct/book6/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book6/unit1/assets/00 E.png`},
+    {id: '7', title: 'BOOK 7 - MASTERS ENGLISH', thumbnail: `/api/direct/book7/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book7/unit1/assets/00 E.png`}
   ];
 
   // Get book ID from URL parameters
@@ -280,8 +282,8 @@ export default function CheckoutPage() {
       return;
     }
 
-    // For whole book checkout, we need a selected book
-    if (planType === 'whole_book' && !selectedBookId) {
+    // For whole book checkout, we need either a selected book or multiple books
+    if (planType === 'whole_book' && !selectedBookId && (!multipleBooks || selectedBooks.length === 0)) {
       setIsLoading(false);
       return;
     }
@@ -292,7 +294,9 @@ export default function CheckoutPage() {
         const response = await apiRequest("POST", "/api/create-payment-intent", { 
           planType, 
           billingCycle,
-          bookId: selectedBookId || undefined
+          bookId: selectedBookId || undefined,
+          bookIds: multipleBooks ? selectedBooks : undefined,
+          multipleBooks: multipleBooks
         });
         
         const data = await response.json();
@@ -478,12 +482,38 @@ export default function CheckoutPage() {
         </h1>
 
         {/* Show book selection grid when on whole book plan with no selection */}
-        {planType === 'whole_book' && !selectedBookId && (
+        {planType === 'whole_book' && (
           <div className="md:col-span-2 mb-6">
             <Card>
               <CardHeader>
-                <CardTitle>Select a Book</CardTitle>
-                <CardDescription>Choose which book you want to purchase full access for</CardDescription>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Select Book(s)</CardTitle>
+                    <CardDescription>Choose which book(s) you want to purchase full access for</CardDescription>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Label htmlFor="multipleBooks" className="cursor-pointer">Buy multiple books</Label>
+                    <input 
+                      type="checkbox" 
+                      id="multipleBooks" 
+                      className="cursor-pointer form-checkbox h-5 w-5 text-primary" 
+                      checked={multipleBooks}
+                      onChange={(e) => {
+                        setMultipleBooks(e.target.checked);
+                        // When switching to single mode but multiple books are selected
+                        if (!e.target.checked && selectedBooks.length > 0) {
+                          setSelectedBookId(selectedBooks[0]);
+                          setSelectedBooks([]);
+                        }
+                        // When switching to multiple mode with a selected book
+                        if (e.target.checked && selectedBookId) {
+                          setSelectedBooks([selectedBookId]);
+                          setSelectedBookId(null);
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
@@ -491,19 +521,50 @@ export default function CheckoutPage() {
                     <Card 
                       key={book.id}
                       className={`overflow-hidden cursor-pointer hover:bg-gray-50 transition-colors border-2 ${
-                        selectedBookId === book.id ? 'border-primary' : 'border-transparent'
+                        multipleBooks 
+                          ? selectedBooks.includes(book.id) ? 'border-primary' : 'border-transparent'
+                          : selectedBookId === book.id ? 'border-primary' : 'border-transparent'
                       }`}
-                      onClick={() => setSelectedBookId(book.id)}
+                      onClick={() => {
+                        if (multipleBooks) {
+                          // Toggle book selection for multiple mode
+                          setSelectedBooks(prev => 
+                            prev.includes(book.id)
+                              ? prev.filter(id => id !== book.id)
+                              : [...prev, book.id]
+                          );
+                        } else {
+                          // Single book selection
+                          setSelectedBookId(book.id);
+                        }
+                      }}
                     >
-                      <div className="aspect-square w-full overflow-hidden">
+                      <div className="relative aspect-square w-full overflow-hidden">
+                        {multipleBooks && (
+                          <div className="absolute top-2 right-2 z-10">
+                            <input 
+                              type="checkbox" 
+                              className="form-checkbox h-5 w-5 text-primary border-2 border-primary rounded"
+                              checked={selectedBooks.includes(book.id)}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                if (e.target.checked) {
+                                  setSelectedBooks(prev => [...prev, book.id]);
+                                } else {
+                                  setSelectedBooks(prev => prev.filter(id => id !== book.id));
+                                }
+                              }}
+                            />
+                          </div>
+                        )}
                         <img 
                           src={book.thumbnail} 
                           alt={`Book ${book.id.toUpperCase()} thumbnail`}
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            // Fallback path for book thumbnails
+                            // Use the specific fallback path for each book
                             const img = e.target as HTMLImageElement;
-                            img.src = `/api/direct/book${book.id}/unit1/assets/00 E.png`;
+                            img.src = book.fallbackImage || `/api/direct/book${book.id}/unit1/assets/00 E.png`;
                           }}
                         />
                       </div>
@@ -541,7 +602,8 @@ export default function CheckoutPage() {
                       : `Billed ${billingCycle} (${billingCycle === 'monthly' ? 'monthly' : 'annually'})`}
                 </div>
                 
-                {selectedBookId && (
+                {/* Single book selection */}
+                {!multipleBooks && selectedBookId && (
                   <div className="mt-2 p-3 bg-gray-50 rounded-md">
                     <div className="font-medium text-sm">Selected Book:</div>
                     <div className="text-primary font-bold">
@@ -555,7 +617,8 @@ export default function CheckoutPage() {
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             const img = e.target as HTMLImageElement;
-                            img.src = `/api/direct/book${selectedBookId}/unit1/assets/00 E.png`;
+                            const book = allBooks.find(b => b.id === selectedBookId);
+                            img.src = book?.fallbackImage || `/api/direct/book${selectedBookId}/unit1/assets/00 E.png`;
                           }}
                         />
                       </div>
@@ -569,6 +632,50 @@ export default function CheckoutPage() {
                             'Unlimited access to all content'}
                         </div>
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Multiple books selection */}
+                {multipleBooks && selectedBooks.length > 0 && (
+                  <div className="mt-2 p-3 bg-gray-50 rounded-md">
+                    <div className="font-medium text-sm">Selected Books ({selectedBooks.length}):</div>
+                    <div className="space-y-2 mt-2 max-h-60 overflow-y-auto pr-1">
+                      {selectedBooks.map(bookId => (
+                        <div key={bookId} className="flex items-center py-2 border-b border-gray-100 last:border-b-0">
+                          <div className="w-12 h-12 overflow-hidden rounded">
+                            <img 
+                              src={allBooks.find(b => b.id === bookId)?.thumbnail || ''}
+                              alt={`${bookId.toUpperCase()} thumbnail`}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                const img = e.target as HTMLImageElement;
+                                const book = allBooks.find(b => b.id === bookId);
+                                img.src = book?.fallbackImage || `/api/direct/book${bookId}/unit1/assets/00 E.png`;
+                              }}
+                            />
+                          </div>
+                          <div className="ml-3 flex-1">
+                            <div className="text-sm text-primary font-bold">
+                              {bookTitles[bookId] || `BOOK ${bookId.toUpperCase()}`}
+                            </div>
+                            <div className="text-xs text-gray-600 mt-0.5">Complete book access</div>
+                          </div>
+                          <button 
+                            className="text-gray-400 hover:text-red-500"
+                            onClick={() => setSelectedBooks(prev => prev.filter(id => id !== bookId))}
+                            type="button"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M18 6L6 18"></path>
+                              <path d="M6 6l12 12"></path>
+                            </svg>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-2 text-xs text-gray-500">
+                      Each book includes all lessons and materials
                     </div>
                   </div>
                 )}
@@ -613,8 +720,19 @@ export default function CheckoutPage() {
 
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>{planDetails.price}{planType === 'printed_book' ? ' + delivery' : ''}</span>
+                <span>
+                  {multipleBooks && selectedBooks.length > 0 
+                    ? `€${selectedBooks.length * (billingCycle === 'monthly' ? 25 : 180)}`
+                    : `${planDetails.price}${planType === 'printed_book' ? ' + delivery' : ''}`
+                  }
+                </span>
               </div>
+              
+              {multipleBooks && selectedBooks.length > 0 && (
+                <div className="text-xs text-gray-500 text-right mt-1">
+                  {selectedBooks.length} {selectedBooks.length === 1 ? 'book' : 'books'} × {billingCycle === 'monthly' ? '€25' : '€180'} {billingCycle === 'monthly' ? 'monthly' : 'yearly'}
+                </div>
+              )}
             </CardContent>
           </Card>
 
