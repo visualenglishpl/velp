@@ -5,7 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ChevronLeft, ChevronRight, Image as ImageIcon, Video, FileText, Check, Book, Home, FileEdit } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Image as ImageIcon, Video, FileText, Check, Book, Home, FileEdit, Maximize, Minimize } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import ContentSlide from '@/components/ContentSlide';
 import ThumbnailsBar from '@/components/ThumbnailsBar';
@@ -58,6 +58,7 @@ export default function ContentViewer() {
   const [currentIndex, setCurrentIndex] = useState(initialMaterialIndex);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
   const [showTeacherGuidance, setShowTeacherGuidance] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   
   // For admin users, set necessary cookies
   useEffect(() => {
@@ -143,6 +144,12 @@ export default function ContentViewer() {
         scrollToSlide(currentIndex - 1);
       } else if (e.key === 'ArrowRight') {
         scrollToSlide(currentIndex + 1);
+      } else if (e.key === 'f' || e.key === 'F') {
+        // Toggle fullscreen with F key
+        setIsFullscreen(prev => !prev);
+      } else if (e.key === 'Escape' && isFullscreen) {
+        // Exit fullscreen with Escape key
+        setIsFullscreen(false);
       }
     };
     
@@ -150,7 +157,12 @@ export default function ContentViewer() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentIndex, scrollToSlide]);
+  }, [currentIndex, scrollToSlide, isFullscreen]);
+  
+  // Toggle fullscreen
+  const toggleFullscreen = () => {
+    setIsFullscreen(prev => !prev);
+  };
   
   // Initialize carousel to the initial index
   useEffect(() => {
@@ -228,51 +240,79 @@ export default function ContentViewer() {
   const currentMaterial = materials[currentIndex];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Header with navigation */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
-          <div>
-            <h1 className="text-2xl font-bold uppercase">
-              {book?.title || 'Book'}
-            </h1>
-            <h2 className="text-lg text-gray-600 uppercase">
-              Unit {unit?.unitNumber || ''} {unit?.title ? `- ${unit?.title}` : ''}
-            </h2>
-            <p className="text-sm text-gray-500">
-              Slide {currentIndex + 1} of {materials.length}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center mr-4 bg-gray-100 p-1 px-3 rounded-full">
-              <Switch
-                id="teacher-mode"
-                checked={showTeacherGuidance}
-                onCheckedChange={setShowTeacherGuidance}
-                className="mr-2"
-              />
-              <label htmlFor="teacher-mode" className="text-sm font-medium flex items-center">
-                <FileEdit className="h-4 w-4 mr-1" />
-                {showTeacherGuidance ? "Teacher Mode On" : "Teacher Mode Off"}
-              </label>
+    <div className={`flex flex-col min-h-screen ${isFullscreen ? 'bg-black' : 'bg-gray-50'}`}>
+      {/* Header with navigation - hidden in fullscreen mode */}
+      {!isFullscreen && (
+        <header className="bg-white shadow-sm border-b sticky top-0 z-10">
+          <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+            <div>
+              <h1 className="text-2xl font-bold uppercase">
+                {book?.title || 'Book'}
+              </h1>
+              <h2 className="text-lg text-gray-600 uppercase">
+                Unit {unit?.unitNumber || ''} {unit?.title ? `- ${unit?.title}` : ''}
+              </h2>
+              <p className="text-sm text-gray-500">
+                Slide {currentIndex + 1} of {materials.length}
+              </p>
             </div>
-            <Button onClick={() => window.location.href = "/admin/books"} variant="outline" size="sm">
-              <Book className="mr-2 h-4 w-4" />
-              Books List
-            </Button>
-            <Button onClick={() => window.location.href = "/"} variant="ghost" size="sm">
-              <Home className="mr-2 h-4 w-4" />
-              Home
-            </Button>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center mr-4 bg-gray-100 p-1 px-3 rounded-full">
+                <Switch
+                  id="teacher-mode"
+                  checked={showTeacherGuidance}
+                  onCheckedChange={setShowTeacherGuidance}
+                  className="mr-2"
+                />
+                <label htmlFor="teacher-mode" className="text-sm font-medium flex items-center">
+                  <FileEdit className="h-4 w-4 mr-1" />
+                  {showTeacherGuidance ? "Teacher Mode On" : "Teacher Mode Off"}
+                </label>
+              </div>
+              <Button onClick={toggleFullscreen} variant="outline" size="sm" className="flex items-center">
+                {isFullscreen ? (
+                  <>
+                    <Minimize className="h-4 w-4 mr-1" />
+                    Exit Fullscreen
+                  </>
+                ) : (
+                  <>
+                    <Maximize className="h-4 w-4 mr-1" />
+                    Fullscreen
+                  </>
+                )}
+              </Button>
+              <Button onClick={() => window.location.href = "/admin/books"} variant="outline" size="sm">
+                <Book className="mr-2 h-4 w-4" />
+                Books List
+              </Button>
+              <Button onClick={() => window.location.href = "/"} variant="ghost" size="sm">
+                <Home className="mr-2 h-4 w-4" />
+                Home
+              </Button>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Main content */}
-      <main className="flex-grow container mx-auto px-4 pb-4 pt-2">
+      <main className={`flex-grow ${isFullscreen ? '' : 'container mx-auto px-4 pb-4 pt-2'}`}>
         {/* Carousel wrapper */}
-        <div className="relative bg-white shadow-lg rounded-lg overflow-hidden mb-2">
-          <div className="overflow-hidden min-h-[90vh]" ref={emblaRef}>
+        <div className={`relative ${isFullscreen ? 'bg-black' : 'bg-white shadow-lg rounded-lg'} overflow-hidden ${isFullscreen ? '' : 'mb-2'}`}>
+          {/* Fullscreen toggle button - only visible in fullscreen mode */}
+          {isFullscreen && (
+            <Button 
+              onClick={toggleFullscreen}
+              variant="outline" 
+              size="sm"
+              className="absolute top-4 right-4 z-20 bg-black/60 hover:bg-black/80 text-white border-gray-600"
+            >
+              <Minimize className="h-4 w-4 mr-1" />
+              Exit Fullscreen
+            </Button>
+          )}
+          
+          <div className={`overflow-hidden ${isFullscreen ? 'h-screen' : 'min-h-[90vh]'}`} ref={emblaRef}>
             <div className="embla__container h-full">
               {materials.map((material, index) => (
                 <div className="embla__slide flex items-center justify-center h-full py-2" key={material.id}>
@@ -292,7 +332,7 @@ export default function ContentViewer() {
           <AnimatePresence>
             {currentIndex > 0 && (
               <motion.div 
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 p-4"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
@@ -301,7 +341,7 @@ export default function ContentViewer() {
                   onClick={() => scrollToSlide(currentIndex - 1)} 
                   variant="secondary" 
                   size="icon" 
-                  className="rounded-full shadow-md"
+                  className={`rounded-full ${isFullscreen ? 'bg-black/60 hover:bg-black/80 text-white border-gray-600' : 'shadow-md'}`}
                 >
                   <ChevronLeft className="h-6 w-6" />
                 </Button>
@@ -310,7 +350,7 @@ export default function ContentViewer() {
             
             {currentIndex < materials.length - 1 && (
               <motion.div 
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 p-4"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 10 }}
@@ -319,7 +359,7 @@ export default function ContentViewer() {
                   onClick={() => scrollToSlide(currentIndex + 1)} 
                   variant="secondary" 
                   size="icon" 
-                  className="rounded-full shadow-md"
+                  className={`rounded-full ${isFullscreen ? 'bg-black/60 hover:bg-black/80 text-white border-gray-600' : 'shadow-md'}`}
                 >
                   <ChevronRight className="h-6 w-6" />
                 </Button>
@@ -328,8 +368,14 @@ export default function ContentViewer() {
           </AnimatePresence>
         </div>
 
-        {/* Thumbnails bar */}
-        <div className="bg-white shadow rounded-lg p-2">
+        {/* Thumbnails bar - positioned at bottom in fullscreen mode */}
+        <div 
+          className={`
+            ${isFullscreen 
+              ? 'fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-gray-700 z-30' 
+              : 'bg-white shadow rounded-lg p-2'
+            }`}
+        >
           <ThumbnailsBar
             materials={materials}
             currentIndex={currentIndex}
@@ -339,7 +385,7 @@ export default function ContentViewer() {
         </div>
         
         {/* Teaching guidance section - shown when teacher mode is active */}
-        {showTeacherGuidance && (
+        {showTeacherGuidance && !isFullscreen && (
           <TeachingGuidance 
             guidance={null}
             bookId={book?.bookId || ''}
