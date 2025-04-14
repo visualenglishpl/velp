@@ -10,13 +10,13 @@ const PricingPlans = () => {
       checkColor: "text-emerald-500",
       headerBg: "bg-emerald-500",
       features: [
-        "One full-color Visual English book",
-        "Physical delivery",
-        "Choose any book level",
+        "Full-color physical book (your choice of level)",
+        "Delivered to your doorstep",
+        "No digital access included",
       ],
       price: "€20",
-      priceSubtext: "+ delivery",
-      buttonText: "Order Printed Book",
+      priceSubtext: "🛒 Free Delivery",
+      buttonText: "🛒 Order Printed Book",
       buttonColor: "bg-black hover:bg-gray-800",
       planId: "printed_book"
     },
@@ -27,14 +27,14 @@ const PricingPlans = () => {
       checkColor: "text-blue-500",
       headerBg: "bg-blue-500",
       features: [
-        "200+ images, interactive questions",
-        "Games and media content",
         "Access to one complete lesson",
-        "Monthly or yearly subscription",
+        "📄 Downloadable PDF of the unit",
+        "200+ images, games, and quizzes",
+        "Progress tracking & videos",
       ],
       price: "€5",
-      priceSubtext: "per month or €40/year",
-      buttonText: "Get Lesson Access",
+      priceSubtext: "per month or €40/year (🔥 Save 33%)",
+      buttonText: "🚀 Start Learning Now",
       buttonColor: "bg-black hover:bg-gray-800",
       planId: "single_lesson"
     },
@@ -45,14 +45,14 @@ const PricingPlans = () => {
       checkColor: "text-violet-600",
       headerBg: "bg-violet-600",
       features: [
-        "Full access to one Visual English book",
-        "200+ images, interactive questions",
-        "Games and media content",
-        "Monthly or yearly subscription",
+        "Full access to one entire book",
+        "📄 Download PDFs for all units",
+        "200+ interactive resources",
+        "Certificates & advanced analytics",
       ],
       price: "€25",
-      priceSubtext: "per month or €180/year",
-      buttonText: "Get Book Access",
+      priceSubtext: "per month or €180/year (✨ Save 40%)",
+      buttonText: "🎯 Get Full Access",
       buttonColor: "bg-black hover:bg-gray-800",
       popular: true,
       planId: "whole_book"
@@ -64,14 +64,14 @@ const PricingPlans = () => {
       checkColor: "text-amber-500",
       headerBg: "bg-amber-500",
       features: [
-        "7-day free trial",
-        "Full access to platform",
-        "Try before subscribing",
-        "Credit card required",
+        "Explore 3 sample lessons",
+        "Access to games and quizzes",
+        "No PDF downloads (available in paid plans)",
+        "Cancel anytime",
       ],
       price: "Free",
-      priceSubtext: "7-day trial",
-      buttonText: "Start Free Trial",
+      priceSubtext: "7-Day Trial | ⚠️ Credit card required",
+      buttonText: "✨ Start Free Trial",
       buttonColor: "bg-black hover:bg-gray-800",
       planId: "free_trial"
     },
@@ -81,9 +81,9 @@ const PricingPlans = () => {
     <section id="plans" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900">Flexible options to fit your needs</h2>
+          <h2 className="text-4xl font-bold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">Find Your Perfect Learning Path</h2>
           <p className="mt-4 text-lg text-gray-600">
-            Choose the plan that works best for you.
+            Choose the plan that fits your learning style and budget
           </p>
         </div>
 
@@ -91,10 +91,10 @@ const PricingPlans = () => {
           {plans.map((plan, index) => (
             <div key={index} className="flex flex-col h-full bg-white rounded-lg shadow overflow-hidden border border-gray-100">
               {/* Header - Fixed height for all headers */}
-              <div className={`${plan.headerBg} text-white py-5 px-4 text-center h-[100px] flex flex-col justify-center`}>
+              <div className={`${plan.headerBg} text-white py-5 px-4 text-center h-[100px] flex flex-col justify-center relative`}>
                 {plan.popular && (
-                  <div className="text-sm font-medium -mt-1 mb-1 whitespace-nowrap">
-                    Most Popular
+                  <div className="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-md shadow-md">
+                    🔥 Most Popular
                   </div>
                 )}
                 <h3 className="text-xl font-bold leading-tight whitespace-pre-line">
