@@ -77,7 +77,7 @@ const PricingPlans = () => {
   ];
 
   return (
-    <section id="plans" className="py-12 bg-gray-50">
+    <section id="plans" className="pt-12 pb-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">Find Your Perfect Learning Path</h2>
@@ -125,7 +125,7 @@ const PricingPlans = () => {
           ))}
         </div>
 
-        <div className="mt-10 text-center">
+        <div className="mt-10 text-center mb-8">
           <p className="text-gray-800 font-medium flex items-center justify-center text-lg bg-amber-50 rounded-md p-3 max-w-xl mx-auto border border-amber-200">
             <Star className="h-6 w-6 text-amber-500 mr-3" fill="currentColor" />
             Contact us for bulk pricing and additional discounts.
