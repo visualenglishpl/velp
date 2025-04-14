@@ -49,9 +49,9 @@ const guidanceData = {
   ],
   followUpQuestions: [
     { text: "To reinforce comprehension:" },
-    { text: ""Why do you think so?"" },
-    { text: ""Can you describe it more?"" },
-    { text: ""What else can you see?"" }
+    { text: "\"Why do you think so?\"" },
+    { text: "\"Can you describe it more?\"" },
+    { text: "\"What else can you see?\"" }
   ]
 };
 

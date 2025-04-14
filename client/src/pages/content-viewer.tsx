@@ -51,6 +51,7 @@ export default function ContentViewer() {
   // State
   const [currentIndex, setCurrentIndex] = useState(initialMaterialIndex);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
+  const [showTeacherGuidance, setShowTeacherGuidance] = useState(false);
   
   // Initialize Embla Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -227,7 +228,18 @@ export default function ContentViewer() {
               Slide {currentIndex + 1} of {materials.length}
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center mr-4 bg-gray-100 p-1 px-3 rounded-full">
+              <Switch
+                id="teacher-mode"
+                checked={showTeacherGuidance}
+                onCheckedChange={setShowTeacherGuidance}
+                className="mr-2"
+              />
+              <label htmlFor="teacher-mode" className="text-sm font-medium">
+                Teacher Mode
+              </label>
+            </div>
             <Button onClick={() => window.location.href = "/admin/books"} variant="outline" size="sm">
               <Book className="mr-2 h-4 w-4" />
               Books List
@@ -308,6 +320,14 @@ export default function ContentViewer() {
             viewedSlides={viewedSlides}
           />
         </div>
+        
+        {/* Teaching guidance section - shown when teacher mode is active */}
+        {showTeacherGuidance && (
+          <TeachingGuidance 
+            bookId={book?.bookId || ''}
+            unitNumber={unit?.unitNumber || 0}
+          />
+        )}
       </main>
     </div>
   );
