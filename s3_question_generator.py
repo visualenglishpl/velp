@@ -6,8 +6,25 @@ This script processes image files from an AWS S3 bucket or local directory, anal
 and generates appropriate ESL questions with answer prompts.
 
 Usage:
+  # Process images from S3 bucket
   python s3_question_generator.py --bucket visualenglishmaterial --folder book3/unit2
+  
+  # Process images from S3 with explicit AWS credentials
+  python s3_question_generator.py --bucket visualenglishmaterial --folder book3/unit2 --access-key YOUR_KEY --secret-key YOUR_SECRET
+  
+  # Process images from local directory
   python s3_question_generator.py --local-dir ./images
+  
+  # Output to JSON file with pretty formatting
+  python s3_question_generator.py --bucket visualenglishmaterial --folder book3/unit2 --output questions.json --pretty
+  
+AWS Authentication:
+  This script supports three ways to authenticate with AWS:
+  1. Environment variables: AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+  2. Command line arguments: --access-key and --secret-key
+  3. AWS credential file (~/.aws/credentials) and config file (~/.aws/config)
+  
+  For S3 access, we recommend using the Stockholm region (eu-north-1) where the Visual English materials are stored.
 """
 
 import os
@@ -132,7 +149,21 @@ class ESLQuestionGenerator:
     def _ensure_s3_client(self):
         """Ensure S3 client is initialized when needed"""
         if self.s3_client is None:
-            self.s3_client = boto3.client('s3', region_name=self.s3_region)
+            # Look for AWS credentials in environment variables
+            access_key = os.environ.get('AWS_ACCESS_KEY_ID')
+            secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+            
+            if access_key and secret_key:
+                logger.info(f"Creating S3 client with credentials from environment variables")
+                self.s3_client = boto3.client(
+                    's3',
+                    region_name=self.s3_region,
+                    aws_access_key_id=access_key,
+                    aws_secret_access_key=secret_key
+                )
+            else:
+                logger.info(f"Creating S3 client using default credential provider chain")
+                self.s3_client = boto3.client('s3', region_name=self.s3_region)
     
     def is_image_file(self, filename: str) -> bool:
         """Check if a file is an image based on its extension."""
@@ -146,9 +177,23 @@ class ESLQuestionGenerator:
         # Remove extension
         filename = os.path.splitext(filename)[0]
         
-        # Some files have prefixes like "01 A" or "05 C B" - remove these
-        # This pattern matches pattern like "XX Y " at the beginning where X is a digit and Y is a letter
-        filename = re.sub(r'^(\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+)', '', filename)
+        # Remove common prefixes, but be careful not to affect the question words
+        
+        # Pattern 1: "01 A" or "05 C B" - numeric followed by letters with spaces at the beginning
+        if re.match(r'^\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+', filename):
+            filename = re.sub(r'^\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+', '', filename)
+        
+        # Pattern 2: Only match exact patterns like "01_A_" or "14_D_" at the beginning
+        # This pattern matches specific format of number_letter_ without affecting question words
+        patterns = [
+            r'^\d{1,2}_[A-Z]_',     # matches "01_A_"
+            r'^\d{1,2}_[A-Z][A-Z]_', # matches "01_AB_"
+        ]
+        
+        for pattern in patterns:
+            if re.match(pattern, filename):
+                filename = re.sub(pattern, '', filename)
+                break
         
         # Replace underscores and hyphens with spaces
         filename = filename.replace('_', ' ').replace('-', ' ')
@@ -360,6 +405,8 @@ def parse_arguments():
     # S3 specific options
     parser.add_argument('--folder', type=str, help='S3 folder/prefix to process')
     parser.add_argument('--region', type=str, default='eu-north-1', help='AWS region (default: eu-north-1)')
+    parser.add_argument('--access-key', type=str, help='AWS access key ID (optional, can use AWS_ACCESS_KEY_ID env var)')
+    parser.add_argument('--secret-key', type=str, help='AWS secret access key (optional, can use AWS_SECRET_ACCESS_KEY env var)')
     
     # Output options
     parser.add_argument('--output', type=str, help='Output JSON file path (default: stdout)')
@@ -371,6 +418,12 @@ def parse_arguments():
 def main():
     """Main entry point of the script."""
     args = parse_arguments()
+    
+    # Set AWS credentials in environment variables if provided via command line
+    if args.access_key:
+        os.environ['AWS_ACCESS_KEY_ID'] = args.access_key
+    if args.secret_key:
+        os.environ['AWS_SECRET_ACCESS_KEY'] = args.secret_key
     
     # Initialize the question generator
     generator = ESLQuestionGenerator(s3_region=args.region)
