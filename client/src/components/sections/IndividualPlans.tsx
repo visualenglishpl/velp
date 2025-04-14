@@ -5,10 +5,10 @@ const PricingPlans = () => {
   const plans = [
     {
       title: "Printed Book Only",
-      color: "bg-primary",
-      textColor: "text-primary",
-      checkColor: "text-primary",
-      headerBg: "bg-primary",
+      color: "bg-[#00c06d]",
+      textColor: "text-[#00c06d]",
+      checkColor: "text-[#00c06d]",
+      headerBg: "bg-[#00c06d]",
       features: [
         "Full-color physical book (your choice of level)",
         "Delivered to your doorstep",
@@ -22,10 +22,10 @@ const PricingPlans = () => {
     },
     {
       title: "Single Lesson\nDigital Access",
-      color: "bg-primary",
-      textColor: "text-primary",
-      checkColor: "text-primary",
-      headerBg: "bg-primary",
+      color: "bg-[#3388ff]",
+      textColor: "text-[#3388ff]",
+      checkColor: "text-[#3388ff]",
+      headerBg: "bg-[#3388ff]",
       features: [
         "Access to one complete lesson",
         "Downloadable PDF of the unit",
@@ -40,10 +40,10 @@ const PricingPlans = () => {
     },
     {
       title: "Whole Book\nDigital Access",
-      color: "bg-primary",
-      textColor: "text-primary",
-      checkColor: "text-primary",
-      headerBg: "bg-primary",
+      color: "bg-[#8f41ff]",
+      textColor: "text-[#8f41ff]",
+      checkColor: "text-[#8f41ff]",
+      headerBg: "bg-[#8f41ff]",
       features: [
         "Full access to one entire book",
         "Download PDFs for all units",
@@ -58,10 +58,10 @@ const PricingPlans = () => {
     },
     {
       title: "Free Trial",
-      color: "bg-primary",
-      textColor: "text-primary",
-      checkColor: "text-primary",
-      headerBg: "bg-primary",
+      color: "bg-[#ff9f10]",
+      textColor: "text-[#ff9f10]",
+      checkColor: "text-[#ff9f10]",
+      headerBg: "bg-[#ff9f10]",
       features: [
         "Full free access for one week",
         "Browse all lessons and content",
