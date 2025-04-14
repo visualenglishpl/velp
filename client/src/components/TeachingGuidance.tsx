@@ -251,7 +251,7 @@ export default function TeachingGuidance({ guidance, onHide }: TeachingGuidanceP
         
         <TabsContent value="description" className="p-4">
           <div className="prose prose-sm max-w-none">
-            <h3 className="text-xl font-bold mb-4">Unit-Specific Guidance for Book {bookId}, Unit {unitNumber}</h3>
+            <h3 className="text-xl font-bold mb-4">Unit-Specific Teaching Guidance</h3>
             
             <div className="bg-gray-50 p-4 rounded-lg mb-6">
               <p className="mb-2">This unit not only teaches vocabulary related to school supplies but also provides practical language skills for everyday school interactions.</p>

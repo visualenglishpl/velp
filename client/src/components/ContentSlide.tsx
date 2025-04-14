@@ -353,12 +353,14 @@ export default function ContentSlide({
       {/* Question & Answer Display at the top */}
       {formattedQuestion && answer && (
         <div className="bg-blue-50 py-3 text-center border-b border-blue-100 transition-all">
-          <p className="font-medium text-lg text-blue-900 mb-1">
-            Q: {formattedQuestion}
+          {/* Question displayed prominently */}
+          <p className="font-semibold text-xl text-blue-900 mb-2">
+            {formattedQuestion}
           </p>
-          <p className="text-blue-600 font-normal text-lg">
-            A: {answer.positive}
-            {answer.negative && <span className="ml-1 text-blue-500">/ {answer.negative}</span>}
+          {/* Answer displayed in a lighter shade below */}
+          <p className="text-blue-500 font-normal text-lg">
+            {answer.positive}
+            {answer.negative && <span className="ml-1 text-blue-400 opacity-75">/ {answer.negative}</span>}
           </p>
         </div>
       )}
@@ -391,7 +393,7 @@ export default function ContentSlide({
         {/* Teacher guidance sidebar (conditionally shown) */}
         {hasTeachingGuidance && showTeacherMode && (
           <div className="w-full md:w-1/3 bg-gray-50 border-l border-gray-200 h-full overflow-auto">
-            <TeachingGuidance guidance={material.teachingGuidance} />
+            <TeachingGuidance guidance={material.teachingGuidance} onHide={() => setShowTeacherMode(false)} />
           </div>
         )}
       </div>
