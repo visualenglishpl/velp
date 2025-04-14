@@ -26,8 +26,8 @@ const Navbar = () => {
       const navbar = document.querySelector('nav');
       const navbarHeight = navbar ? navbar.offsetHeight : 0;
       
-      // Add additional offset (50px) to ensure the section is fully visible
-      const extraOffset = 50;
+      // Add additional offset (120px) to ensure the section is fully visible including the contact box
+      const extraOffset = 120;
       
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - navbarHeight - extraOffset;
