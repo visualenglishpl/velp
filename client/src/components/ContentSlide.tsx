@@ -647,21 +647,20 @@ export default function ContentSlide({
           )}
           
           {/* Enhanced image with improved layout and proportional fitting */}
-          <div className="flex items-center justify-center w-full h-full py-2">
+          <div className="flex items-center justify-center w-full py-2" style={{ height: 'calc(100vh - 180px)' }}>
             <motion.div 
-              className="relative w-full max-w-[95%] mx-auto"
+              className="relative w-full max-w-[95%] mx-auto h-full"
               style={{ 
-                maxHeight: 'calc(100vh - 180px)', // Ensure space for thumbnails bar
-                overflow: 'hidden',
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                paddingBottom: '10px'
               }}
             >
               <motion.img
                 src={getS3Url()}
                 alt={material.title || "Educational content"}
-                className="w-auto h-auto max-w-full max-h-[calc(100vh-180px)] object-contain transition-all duration-300 rounded-lg"
+                className="max-w-full max-h-full object-contain transition-all duration-300 rounded-lg"
                 onLoad={handleImageLoad}
                 onError={handleImageError}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -689,14 +688,14 @@ export default function ContentSlide({
         
     if (contentType === 'video') {
       return (
-        <div className="relative">
+        <div className="relative" style={{ height: 'calc(100vh - 180px)' }}>
           {/* Modern video player with enhanced styling and thumbnail visibility */}
-          <div className="bg-gradient-to-b from-blue-50 to-gray-50 rounded-xl overflow-hidden shadow-xl p-4">
-            <div className="rounded-lg overflow-hidden border border-gray-200 shadow-inner flex justify-center items-center">
+          <div className="bg-gradient-to-b from-blue-50 to-gray-50 rounded-xl overflow-hidden shadow-xl p-4 h-full flex flex-col">
+            <div className="rounded-lg overflow-hidden border border-gray-200 shadow-inner flex justify-center items-center flex-grow">
               <video
                 src={getS3Url()}
                 controls={true}
-                className="w-auto max-w-full max-h-[calc(100vh-180px)] mx-auto rounded-lg"
+                className="w-auto max-w-full max-h-[calc(100vh-240px)] mx-auto rounded-lg"
                 autoPlay={isActive && isPlaying}
                 muted={isMuted}
                 playsInline
