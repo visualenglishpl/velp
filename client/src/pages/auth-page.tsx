@@ -27,12 +27,11 @@ const AuthPage = () => {
     if (!loginData.username || !loginData.password) {
       return; // TODO: Add form validation
     }
-    // Use admin role by default if none selected
-    const role = selectedRole || "admin";
-    console.log("Logging in with:", { ...loginData, role });
+    // Always use admin role for content manager access
+    console.log("Logging in with admin role for content manager access");
     loginMutation.mutate({ 
       ...loginData,
-      role
+      role: "admin"
     });
   };
 
