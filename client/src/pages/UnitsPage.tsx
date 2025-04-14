@@ -53,7 +53,7 @@ export default function UnitsPage() {
       // - Others have 10 units by default
       let unitCount = 10;
       
-      if (bookId === '0a') {
+      if (['0a', '0b', '0c'].includes(bookId)) {
         unitCount = 20;
       } else if (['4', '5', '6', '7'].includes(bookId)) {
         unitCount = 16;
@@ -99,7 +99,7 @@ export default function UnitsPage() {
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {[...Array(8)].map((_, i) => (
               <Card key={i} className="overflow-hidden flex flex-col shadow-md">
                 <div className="aspect-[4/3] bg-gray-100 w-full rounded-t-md">
@@ -119,7 +119,7 @@ export default function UnitsPage() {
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col shadow-md hover:shadow-lg transition-shadow">
                 <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden rounded-t-md">
