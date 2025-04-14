@@ -444,7 +444,9 @@ export default function ContentSlide({
         } else if (questionText.toLowerCase().includes("capital")) {
           // "What is the capital of Poland? → The capital is Warsaw."
           positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
-          const capitalName = positiveAnswer.split(' ').pop().replace('.', '');
+          // Safely get the capital name
+          const parts = positiveAnswer.split(' ');
+          const capitalName = parts.length > 0 ? parts[parts.length - 1].replace(/\.$/, '') : 'it';
           negativeAnswer = `The capital is not ${capitalName}.`;
         } else if (questionText.toLowerCase().startsWith("what language")) {
           // "What language does she speak? → She speaks Polish."
@@ -1078,21 +1080,18 @@ export default function ContentSlide({
         </div>
       )}
       
-      {/* Display generated question from filename */}
+      {/* Display generated question from filename - Exact format matching examples */}
       {formattedQuestion && (
         <div className="text-center mb-5 mt-2">
           <div className="bg-blue-50 border border-blue-100 rounded-lg py-3 px-5 inline-block shadow-sm">
-            <h3 className="text-xl font-semibold text-blue-800">
-              {formattedQuestion}
+            <h3 className="text-xl font-medium text-blue-800">
+              {formattedQuestion} {answer && (
+                <span className="text-blue-600">→ {answer.positive}</span>
+              )}
             </h3>
-            {answer && (
-              <div className="mt-2 flex flex-col sm:flex-row justify-center gap-4 text-sm">
-                <span className="bg-green-50 text-green-700 px-3 py-1 rounded border border-green-200">
-                  {answer.positive}
-                </span>
-                <span className="bg-red-50 text-red-700 px-3 py-1 rounded border border-red-200">
-                  {answer.negative}
-                </span>
+            {answer && answer.negative && (
+              <div className="mt-2 text-gray-600 text-sm">
+                <span>/ {answer.negative}</span>
               </div>
             )}
           </div>
