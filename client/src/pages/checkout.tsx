@@ -186,18 +186,115 @@ export default function CheckoutPage() {
     '7': 'BOOK 7 - MASTERS ENGLISH'
   };
   
-  // All available books in order with thumbnail paths and fallback image paths
+  // All available books in order with thumbnail paths and multiple fallback image paths
   const allBooks = [
-    {id: '0a', title: 'BOOK 0A - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0a/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book0a/icons/thumbnailsuni0a-1.png`},
-    {id: '0b', title: 'BOOK 0B - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0b/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book0b/icons/thumbnailsuni0b-1.png`},
-    {id: '0c', title: 'BOOK 0C - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0c/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book0c/icons/thumbnailsuni0c-1.png`},
-    {id: '1', title: 'BOOK 1 - ELEMENTARY ENGLISH', thumbnail: `/api/direct/book1/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book1/unit1/thumbnail.jpg`},
-    {id: '2', title: 'BOOK 2 - PRE-INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book2/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book2/unit1/assets/00 E.png`},
-    {id: '3', title: 'BOOK 3 - INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book3/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book3/unit1/assets/00 E.png`},
-    {id: '4', title: 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book4/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book4/unit1/assets/00 E.png`},
-    {id: '5', title: 'BOOK 5 - ADVANCED ENGLISH', thumbnail: `/api/direct/book5/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book5/unit1/assets/00 E.png`},
-    {id: '6', title: 'BOOK 6 - PROFICIENCY ENGLISH', thumbnail: `/api/direct/book6/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book6/unit1/assets/00 E.png`},
-    {id: '7', title: 'BOOK 7 - MASTERS ENGLISH', thumbnail: `/api/direct/book7/unit1/thumbnail.jpg`, fallbackImage: `/api/direct/book7/unit1/assets/00 E.png`}
+    {
+      id: '0a', 
+      uniqueId: 'book-0a',
+      title: 'BOOK 0A - BEGINNERS ENGLISH', 
+      thumbnail: `/api/direct/book0a/icons/thumbnailsuni0a-1.png`, 
+      fallbackImages: [
+        `/api/direct/book0a/icons/thumbnailsuni0a-1.png`,
+        `/api/direct/book0a/unit1/thumbnail.jpg`
+      ]
+    },
+    {
+      id: '0b', 
+      uniqueId: 'book-0b',
+      title: 'BOOK 0B - BEGINNERS ENGLISH', 
+      thumbnail: `/api/direct/book0b/icons/thumbnailsuni0b-1.png`, 
+      fallbackImages: [
+        `/api/direct/book0b/icons/thumbnailsuni0b-1.png`,
+        `/api/direct/book0b/unit1/thumbnail.jpg`
+      ]
+    },
+    {
+      id: '0c', 
+      uniqueId: 'book-0c',
+      title: 'BOOK 0C - BEGINNERS ENGLISH', 
+      thumbnail: `/api/direct/book0c/icons/thumbnailsuni0c-1.png`, 
+      fallbackImages: [
+        `/api/direct/book0c/icons/thumbnailsuni0c-1.png`,
+        `/api/direct/book0c/unit1/thumbnail.jpg`
+      ]
+    },
+    {
+      id: '1', 
+      uniqueId: 'book-1',
+      title: 'BOOK 1 - ELEMENTARY ENGLISH', 
+      thumbnail: `/api/direct/book1/unit1/thumbnail.jpg`, 
+      fallbackImages: [
+        `/api/direct/book1/unit1/thumbnail.jpg`,
+        `/api/direct/book1/unit4/thumbnail.jpg`,
+        `/api/direct/book1/unit1/assets/00 E.png`
+      ]
+    },
+    {
+      id: '2', 
+      uniqueId: 'book-2',
+      title: 'BOOK 2 - PRE-INTERMEDIATE ENGLISH', 
+      thumbnail: `/api/direct/book2/unit1/thumbnail.jpg`, 
+      fallbackImages: [
+        `/api/direct/book2/unit4/thumbnail.jpg`,
+        `/api/direct/book2/unit8/thumbnail.jpg`,
+        `/api/direct/book2/unit1/assets/00 E.png`
+      ]
+    },
+    {
+      id: '3', 
+      uniqueId: 'book-3',
+      title: 'BOOK 3 - INTERMEDIATE ENGLISH', 
+      thumbnail: `/api/direct/book3/unit1/thumbnail.jpg`, 
+      fallbackImages: [
+        `/api/direct/book3/unit4/thumbnail.jpg`,
+        `/api/direct/book3/unit8/thumbnail.jpg`,
+        `/api/direct/book3/unit1/assets/00 E.png`
+      ]
+    },
+    {
+      id: '4', 
+      uniqueId: 'book-4',
+      title: 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH', 
+      thumbnail: `/api/direct/book4/unit14/thumbnail.png`, 
+      fallbackImages: [
+        `/api/direct/book4/unit14/thumbnail.png`,
+        `/api/direct/book4/unit1/thumbnail.jpg`,
+        `/api/direct/book4/unit1/assets/00 E.png`
+      ]
+    },
+    {
+      id: '5', 
+      uniqueId: 'book-5',
+      title: 'BOOK 5 - ADVANCED ENGLISH', 
+      thumbnail: `/api/direct/book5/unit8/00 A.png`, 
+      fallbackImages: [
+        `/api/direct/book5/unit8/00 A.png`,
+        `/api/direct/book5/unit13/00 A.png`,
+        `/api/direct/book5/unit1/assets/00 E.png`
+      ]
+    },
+    {
+      id: '6', 
+      uniqueId: 'book-6',
+      title: 'BOOK 6 - PROFICIENCY ENGLISH', 
+      thumbnail: `/api/direct/book6/unit8/title.png`, 
+      fallbackImages: [
+        `/api/direct/book6/unit8/title.png`,
+        `/api/direct/book6/unit13/title.png`,
+        `/api/direct/book6/unit1/assets/00 E.png`
+      ]
+    },
+    {
+      id: '7', 
+      uniqueId: 'book-7',
+      title: 'BOOK 7 - MASTERS ENGLISH', 
+      thumbnail: `/api/direct/book7/unit1/thumbnail.jpg`, 
+      fallbackImages: [
+        `/api/direct/book7/unit4/thumbnail.jpg`,
+        `/api/direct/book7/unit8/thumbnail.jpg`,
+        `/api/direct/book7/unit1/assets/00 E.png`
+      ]
+    }
   ];
 
   // Get book ID from URL parameters
@@ -562,9 +659,41 @@ export default function CheckoutPage() {
                           alt={`Book ${book.id.toUpperCase()} thumbnail`}
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            // Use the specific fallback path for each book
+                            // Try each fallback image in sequence
                             const img = e.target as HTMLImageElement;
-                            img.src = book.fallbackImage || `/api/direct/book${book.id}/unit1/assets/00 E.png`;
+                            const currentSrc = img.src;
+                            const fallbacks = book.fallbackImages || [];
+                            
+                            // Find the index of the current source in fallbacks
+                            const currentIndex = fallbacks.findIndex(src => currentSrc.includes(src));
+                            
+                            // If we found the current source and there are more fallbacks, try the next one
+                            if (currentIndex >= 0 && currentIndex < fallbacks.length - 1) {
+                              img.src = fallbacks[currentIndex + 1];
+                            } else if (currentIndex === -1 && fallbacks.length > 0) {
+                              // If not found in fallbacks but we have fallbacks, try the first one
+                              img.src = fallbacks[0];
+                            } else {
+                              // Last resort - use a solid color background with book ID text
+                              console.log('All fallbacks failed for book', book.id);
+                              img.onerror = null; // Prevent infinite error loop
+                              
+                              // Create a data URL for a colored rectangle with text
+                              const canvas = document.createElement('canvas');
+                              canvas.width = 200;
+                              canvas.height = 200;
+                              const ctx = canvas.getContext('2d');
+                              if (ctx) {
+                                ctx.fillStyle = '#f3f4f6'; // Light gray background
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                ctx.fillStyle = '#6366f1'; // Primary color text
+                                ctx.font = 'bold 24px Arial';
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText(`BOOK ${book.id.toUpperCase()}`, canvas.width/2, canvas.height/2);
+                                img.src = canvas.toDataURL();
+                              }
+                            }
                           }}
                         />
                       </div>
@@ -618,7 +747,27 @@ export default function CheckoutPage() {
                           onError={(e) => {
                             const img = e.target as HTMLImageElement;
                             const book = allBooks.find(b => b.id === selectedBookId);
-                            img.src = book?.fallbackImage || `/api/direct/book${selectedBookId}/unit1/assets/00 E.png`;
+                            
+                            if (book?.fallbackImages && book.fallbackImages.length > 0) {
+                              img.src = book.fallbackImages[0];
+                            } else {
+                              img.onerror = null; // Prevent infinite error loop
+                              // Create a data URL for a colored rectangle with text
+                              const canvas = document.createElement('canvas');
+                              canvas.width = 100;
+                              canvas.height = 100;
+                              const ctx = canvas.getContext('2d');
+                              if (ctx) {
+                                ctx.fillStyle = '#f3f4f6'; // Light gray background
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                ctx.fillStyle = '#6366f1'; // Primary color text
+                                ctx.font = 'bold 16px Arial';
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText(`BOOK ${selectedBookId.toUpperCase()}`, canvas.width/2, canvas.height/2);
+                                img.src = canvas.toDataURL();
+                              }
+                            }
                           }}
                         />
                       </div>
@@ -651,7 +800,26 @@ export default function CheckoutPage() {
                               onError={(e) => {
                                 const img = e.target as HTMLImageElement;
                                 const book = allBooks.find(b => b.id === bookId);
-                                img.src = book?.fallbackImage || `/api/direct/book${bookId}/unit1/assets/00 E.png`;
+                                
+                                if (book?.fallbackImages && book.fallbackImages.length > 0) {
+                                  img.src = book.fallbackImages[0];
+                                } else {
+                                  img.onerror = null; // Prevent infinite error loop
+                                  const canvas = document.createElement('canvas');
+                                  canvas.width = 60;
+                                  canvas.height = 60;
+                                  const ctx = canvas.getContext('2d');
+                                  if (ctx) {
+                                    ctx.fillStyle = '#f3f4f6'; // Light gray background
+                                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                    ctx.fillStyle = '#6366f1'; // Primary color text
+                                    ctx.font = 'bold 12px Arial';
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.fillText(`BOOK ${bookId.toUpperCase()}`, canvas.width/2, canvas.height/2);
+                                    img.src = canvas.toDataURL();
+                                  }
+                                }
                               }}
                             />
                           </div>
