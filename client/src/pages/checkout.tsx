@@ -505,10 +505,9 @@ export default function CheckoutPage() {
                           }}
                         />
                       </div>
-                      <CardContent className="p-4">
+                      <CardContent className="p-2">
                         <div className="text-center">
-                          <div className="font-bold text-sm text-primary mb-1">BOOK {book.id.toUpperCase()}</div>
-                          <div className="text-xs text-gray-500">{book.title.split('-')[1].trim()}</div>
+                          <div className="font-bold text-sm text-primary">BOOK {book.id.toUpperCase()}</div>
                         </div>
                       </CardContent>
                     </Card>
