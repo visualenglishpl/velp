@@ -143,12 +143,7 @@ function CheckoutForm({
       
       <Button 
         type="submit" 
-        disabled={
-          isProcessing || 
-          !stripe || 
-          !elements || 
-          ((planType === 'whole_book' || planType === 'single_lesson') && selectedBookIds.length === 0)
-        } 
+        disabled={isProcessing || !stripe || !elements} 
         className="w-full mt-4"
       >
         {isProcessing ? 'Processing...' : 
@@ -505,67 +500,6 @@ export default function CheckoutPage() {
                   </div>
                 )}
                 <p className="text-sm text-gray-600">{planDetails.description}</p>
-                
-                {/* Book Selection for whole_book plan */}
-                {(planType === 'whole_book' || planType === 'single_lesson') && (
-                  <div className="mt-4">
-                    <Label className="font-medium mb-2 block">
-                      {planType === 'whole_book' ? 'Select Books' : 'Select Book'}
-                    </Label>
-                    
-                    {loadingBooks ? (
-                      <div className="space-y-2 mt-2">
-                        <Skeleton className="h-10 w-full" />
-                        <Skeleton className="h-10 w-full" />
-                      </div>
-                    ) : availableBooks && availableBooks.length > 0 ? (
-                      <div className="mt-2">
-                        <ScrollArea className="h-44 rounded-md border p-2">
-                          <div className="space-y-2">
-                            {availableBooks.map((book: BookWithThumbnail) => (
-                              <div 
-                                key={book.bookId} 
-                                className={`
-                                  flex items-center justify-between p-2 rounded-md cursor-pointer
-                                  ${selectedBookIds.includes(book.bookId) 
-                                    ? 'bg-primary/10 border border-primary/30' 
-                                    : 'bg-gray-50 hover:bg-gray-100 border border-transparent'}
-                                `}
-                                onClick={() => toggleBookSelection(book.bookId)}
-                              >
-                                <div className="flex items-center space-x-3">
-                                  <div className="w-8 h-8 bg-primary/10 rounded-md flex items-center justify-center">
-                                    <Book size={16} className="text-primary" />
-                                  </div>
-                                  <div>
-                                    <div className="font-medium">{book.title}</div>
-                                  </div>
-                                </div>
-                                
-                                {selectedBookIds.includes(book.bookId) && (
-                                  <Badge variant="outline" className="bg-primary/5">
-                                    <Check size={14} className="mr-1 text-primary" />
-                                    Selected
-                                  </Badge>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </ScrollArea>
-                        
-                        {selectedBookIds.length === 0 && (
-                          <div className="text-amber-600 text-sm mt-2">
-                            Please select at least one book to continue.
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="text-gray-500 text-sm mt-2">
-                        No books available. Please try again later.
-                      </div>
-                    )}
-                  </div>
-                )}
                 
                 {(planType !== 'printed_book' && planType !== 'free_trial') && (
                   <div className="pt-4">
