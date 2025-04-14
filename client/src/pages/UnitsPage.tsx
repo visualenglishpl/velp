@@ -103,8 +103,8 @@ export default function UnitsPage() {
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {[...Array(10)].map((_, i) => (
-              <Card key={i} className="overflow-hidden flex flex-col">
-                <div className="aspect-video w-full">
+              <Card key={i} className="overflow-hidden flex flex-col border-0 shadow-none">
+                <div className="aspect-square w-full">
                   <Skeleton className="h-full w-full" />
                 </div>
                 <CardHeader className="py-3 px-4">
@@ -123,8 +123,8 @@ export default function UnitsPage() {
         ) : units && units.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {units.map((unit, index) => (
-              <Card key={unit.unitNumber} className="overflow-hidden flex flex-col h-full">
-                <div className="aspect-video relative overflow-hidden">
+              <Card key={unit.unitNumber} className="overflow-hidden flex flex-col h-full border-0 shadow-none">
+                <div className="aspect-square relative overflow-hidden">
                   {!hasPurchased && index > 0 && (
                     <div className="absolute top-2 right-2 bg-primary/90 rounded-full p-1 z-10">
                       <LockIcon className="h-4 w-4 text-white" />
@@ -282,12 +282,21 @@ export default function UnitsPage() {
                           else if (bookId === "4") {
                             // Special handling for unit 14
                             if (unit.unitNumber === "14") {
-                              tryFilenames = [
-                                "title.png",
-                                "unit.png",
-                                "cover.png",
-                                "00.png"
-                              ];
+                              // For Book 4 Unit 14, create a custom gradient background since image is missing
+                              img.style.opacity = "0";
+                              // Add a fallback check using direct path
+                              setTimeout(() => {
+                                // Try a direct path without the assets folder
+                                console.log("Trying direct path for Book 4 Unit 14");
+                                const directPath = `/api/direct/book4/unit14/thumbnail.png`;
+                                img.src = directPath;
+                                img.onerror = () => {
+                                  // Still failed, use the styled unit background
+                                  img.style.opacity = "0";
+                                };
+                              }, 300);
+                              
+                              return; // Skip normal file checks
                             } else {
                               tryFilenames = [
                                 "00.png",
