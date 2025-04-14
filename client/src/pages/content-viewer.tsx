@@ -6,8 +6,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ChevronLeft, ChevronRight, Image as ImageIcon, Video, FileText, Check, Book, Home } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 import ContentSlide from '@/components/ContentSlide';
 import ThumbnailsBar from '@/components/ThumbnailsBar';
+import TeachingGuidance from '@/components/TeachingGuidance';
 
 // Define types for our data model
 type Material = {
