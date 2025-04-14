@@ -152,24 +152,25 @@ export default function ContentSlide({
             </div>
           )}
           
-          {/* Enhanced image with modern styling */}
-          <motion.img
-            src={getS3Url()}
-            alt={material.title || "Educational content"}
-            className="max-w-[95%] max-h-[55vh] mx-auto object-contain transition-all duration-300 rounded-xl"
-            onLoad={handleImageLoad}
-            onError={handleImageError}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ 
-              opacity: imageLoaded ? 1 : 0,
-              scale: imageLoaded ? 1 : 0.95,
-            }}
-            transition={{ duration: 0.4 }}
-            style={{ 
-              boxShadow: '0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.06)',
-              border: '1px solid rgba(255,255,255,0.2)',
-            }}
-          />
+          {/* Enhanced image with improved layout matching the reference */}
+          <div className="flex items-center justify-center w-full h-full py-6">
+            <motion.img
+              src={getS3Url()}
+              alt={material.title || "Educational content"}
+              className="w-auto h-auto max-w-[90%] max-h-[80vh] mx-auto object-contain transition-all duration-300 rounded-lg"
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ 
+                opacity: imageLoaded ? 1 : 0,
+                scale: imageLoaded ? 1 : 0.95,
+              }}
+              transition={{ duration: 0.4 }}
+              style={{ 
+                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+              }}
+            />
+          </div>
           
           {/* Styled error message */}
           {isError && (
@@ -407,7 +408,7 @@ export default function ContentSlide({
   
   return (
     <motion.div 
-      className="p-2 min-h-[50vh] flex flex-col bg-white"
+      className="p-4 min-h-[60vh] flex flex-col bg-white rounded-lg"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}

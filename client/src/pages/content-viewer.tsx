@@ -254,13 +254,13 @@ export default function ContentViewer() {
       </header>
 
       {/* Main content */}
-      <main className="flex-grow container mx-auto px-4 pb-12 pt-4">
+      <main className="flex-grow container mx-auto px-4 pb-8 pt-4">
         {/* Carousel wrapper */}
-        <div className="relative bg-white shadow rounded-lg overflow-hidden mb-8">
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="embla__container">
+        <div className="relative bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+          <div className="overflow-hidden min-h-[70vh]" ref={emblaRef}>
+            <div className="embla__container h-full">
               {materials.map((material, index) => (
-                <div className="embla__slide" key={material.id}>
+                <div className="embla__slide flex items-center justify-center h-full" key={material.id}>
                   <ContentSlide 
                     material={material} 
                     isActive={index === currentIndex}
