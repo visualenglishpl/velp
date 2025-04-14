@@ -85,7 +85,7 @@ export default function UnitsPage() {
                   Back to Books
                 </Button>
               </Link>
-              <h1 className="text-3xl font-bold">BOOK {bookId.toUpperCase()} - Units</h1>
+              <h1 className="text-3xl font-bold">{bookId.toUpperCase()} - Units</h1>
             </div>
           </div>
           
@@ -124,7 +124,7 @@ export default function UnitsPage() {
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col h-full border-0 shadow-none">
                 <div className="aspect-square relative overflow-hidden">
-                  {!hasPurchased && index > 0 && (
+                  {!hasPurchased && (
                     <div className="absolute top-2 right-2 bg-primary/90 rounded-full p-1 z-10">
                       <LockIcon className="h-4 w-4 text-white" />
                     </div>

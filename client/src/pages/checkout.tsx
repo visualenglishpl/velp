@@ -162,6 +162,20 @@ export default function CheckoutPage() {
   // Parse the URL query parameters to get the book ID
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   
+  // Book title map for readable titles
+  const bookTitles: Record<string, string> = {
+    '0a': 'BOOK 0A - BEGINNERS ENGLISH',
+    '0b': 'BOOK 0B - BEGINNERS ENGLISH', 
+    '0c': 'BOOK 0C - BEGINNERS ENGLISH',
+    '1': 'BOOK 1 - ELEMENTARY ENGLISH',
+    '2': 'BOOK 2 - PRE-INTERMEDIATE ENGLISH',
+    '3': 'BOOK 3 - INTERMEDIATE ENGLISH',
+    '4': 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH',
+    '5': 'BOOK 5 - ADVANCED ENGLISH',
+    '6': 'BOOK 6 - PROFICIENCY ENGLISH',
+    '7': 'BOOK 7 - MASTERS ENGLISH'
+  };
+
   useEffect(() => {
     // Parse URL query parameters
     const searchParams = new URLSearchParams(location.split('?')[1]);
