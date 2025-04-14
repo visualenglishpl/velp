@@ -33,7 +33,7 @@ const PricingPlans = () => {
         "Progress tracking & videos",
       ],
       price: "€5",
-      priceSubtext: "per month | €40/year (33% savings)",
+      priceSubtext: "per month\n€40/year (33% savings)",
       buttonText: "Start Learning Now",
       buttonColor: "bg-black hover:bg-gray-800",
       planId: "single_lesson"
@@ -51,7 +51,7 @@ const PricingPlans = () => {
         "Certificates & advanced analytics",
       ],
       price: "€25",
-      priceSubtext: "per month | €180/year (40% savings)",
+      priceSubtext: "per month\n€180/year (40% savings)",
       buttonText: "Get Full Access",
       buttonColor: "bg-black hover:bg-gray-800",
       planId: "whole_book"
@@ -110,7 +110,7 @@ const PricingPlans = () => {
                 {/* Fixed height pricing section */}
                 <div className="mt-8 pt-6 text-center h-[170px] flex flex-col justify-end border-t border-gray-100">
                   <div className="text-4xl font-bold mb-2">{plan.price}</div>
-                  <div className="text-sm text-gray-500 mb-8">{plan.priceSubtext}</div>
+                  <div className="text-sm text-gray-500 mb-8 whitespace-pre-line">{plan.priceSubtext}</div>
                   
                   <Link href={index === 0 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
