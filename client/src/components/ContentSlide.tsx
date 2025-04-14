@@ -37,8 +37,9 @@ export default function ContentSlide({
   slideIndex, 
   isPremium = false,
   hasPurchasedAccess = false,
+  hasFreeTrial = false,
   onPurchaseClick 
-}: ContentSlideProps) {
+}: ContentSlideProps & { hasFreeTrial?: boolean }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -424,12 +425,12 @@ export default function ContentSlide({
         transition={{ duration: 0.3 }}
       >
         {/* Main content rendering */}
-        <div className={isPremium && !hasPurchasedAccess ? "filter blur-md" : ""}>
+        <div className={isPremium && !hasPurchasedAccess && !hasFreeTrial ? "filter blur-md" : ""}>
           {renderContent()}
         </div>
 
         {/* Premium content overlay */}
-        {isPremium && !hasPurchasedAccess && (
+        {isPremium && !hasPurchasedAccess && !hasFreeTrial && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm z-10 p-4 text-center">
             <div className="bg-white/90 p-6 rounded-lg shadow-lg max-w-md">
               <h3 className="text-xl font-bold mb-2 text-primary">Premium Content</h3>
