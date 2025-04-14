@@ -112,7 +112,7 @@ const PricingPlans = () => {
                   <div className="text-4xl font-bold mb-2">{plan.price}</div>
                   <div className="text-sm text-gray-500 mb-8">{plan.priceSubtext}</div>
                   
-                  <Link href={`/checkout/${plan.planId}`}>
+                  <Link href={index === 0 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
                       className={`w-full h-11 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out flex items-center justify-center`}
                     >
