@@ -198,10 +198,12 @@ export default function CheckoutPage() {
     {id: '7', title: 'BOOK 7 - MASTERS ENGLISH', thumbnail: `/api/direct/book7/unit1/thumbnail.jpg`}
   ];
 
+  // Get book ID from URL parameters
   useEffect(() => {
     // Parse URL query parameters
     const searchParams = new URLSearchParams(location.split('?')[1]);
     const bookParam = searchParams.get('book');
+    
     if (bookParam) {
       setSelectedBookId(bookParam);
       console.log(`Selected book: ${bookParam}`);
