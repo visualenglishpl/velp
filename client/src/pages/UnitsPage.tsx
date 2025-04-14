@@ -76,11 +76,11 @@ export default function UnitsPage() {
   return (
     <div className="container py-10">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <div className="flex items-center mb-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-2">
               <Link href="/books">
-                <Button variant="outline" className="mr-4">
+                <Button variant="outline" className="mb-2 sm:mb-0">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4"><path d="m15 18-6-6 6-6"/></svg>
                   Back to Books
                 </Button>
@@ -93,7 +93,7 @@ export default function UnitsPage() {
           {!hasPurchased && (
             <Button 
               onClick={() => window.location.href = `/checkout/whole_book?book=${bookId}`}
-              className="bg-gradient-to-r from-primary to-primary/80"
+              className="bg-gradient-to-r from-primary to-primary/80 whitespace-nowrap"
             >
               Purchase Full Access
             </Button>
@@ -123,7 +123,7 @@ export default function UnitsPage() {
         ) : units && units.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {units.map((unit, index) => (
-              <Card key={unit.unitNumber} className="overflow-hidden flex flex-col shadow-md hover:shadow-lg transition-shadow">
+              <Card key={unit.unitNumber} className="overflow-hidden flex flex-col shadow-md hover:shadow-lg transition-shadow h-full">
                 <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden rounded-t-md">
                   {!hasPurchased && index > 0 && (
                     <div className="absolute top-2 right-2 bg-primary/90 rounded-full p-1 z-10">
@@ -135,8 +135,8 @@ export default function UnitsPage() {
                     {/* Generate direct S3 path to first image from the unit */}
                     <div className="h-full w-full relative">
                       {/* Styled unit background with gradient */}
-                      <div className="h-full w-full bg-gradient-to-br from-primary/10 to-primary/30 flex flex-col items-center justify-center absolute inset-0">
-                        <span className="text-3xl font-bold text-primary/80 drop-shadow-sm">
+                      <div className="h-full w-full bg-gradient-to-br from-primary/15 to-primary/35 flex flex-col items-center justify-center absolute inset-0">
+                        <span className="text-3xl font-bold text-primary/90 drop-shadow-md">
                           UNIT {unit.unitNumber}
                         </span>
                       </div>
@@ -171,7 +171,7 @@ export default function UnitsPage() {
                           })()
                         } 
                         alt={`Thumbnail for ${unit.title}`}
-                        className="h-full w-full object-contain relative z-10"
+                        className="h-full w-full object-cover relative z-10"
                         style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
                         onError={(e) => {
                           // Try different common filenames in sequence
@@ -381,11 +381,11 @@ export default function UnitsPage() {
                 </div>
                 
                 <CardHeader className="py-3 px-4">
-                  <CardTitle className="text-base">
+                  <CardTitle className="text-base font-bold text-center">
                     {unit.title}
                   </CardTitle>
                   {unit.description && (
-                    <CardDescription className="text-xs">
+                    <CardDescription className="text-xs text-center">
                       {unit.description}
                     </CardDescription>
                   )}
@@ -394,7 +394,10 @@ export default function UnitsPage() {
                 <CardFooter className="pt-0 px-4 pb-4 mt-auto flex-col gap-2">
                   {/* Free Sample button - always visible */}
                   <Link href={`/book${bookId}/unit${unit.unitNumber}`} className="w-full">
-                    <Button className="w-full" variant={index === 0 || hasPurchased ? "default" : "secondary"}>
+                    <Button 
+                      className="w-full h-10" 
+                      variant={index === 0 || hasPurchased ? "default" : "secondary"}
+                    >
                       {hasPurchased ? 'View Content' : 'Free Sample'}
                     </Button>
                   </Link>
@@ -403,7 +406,7 @@ export default function UnitsPage() {
                   {!hasPurchased && (
                     <Button
                       variant="outline"
-                      className="w-full"
+                      className="w-full h-10"
                       onClick={() => window.location.href = `/checkout/single_lesson?book=${bookId}&unit=${unit.unitNumber}`}
                     >
                       Buy Lesson
