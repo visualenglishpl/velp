@@ -538,10 +538,7 @@ export default function ContentSlide({
     );
   };
 
-  // Parse the content title to extract questions and answers
-  const { question, answer } = formatContentTitle();
-
-  // Ensure proper capitalization for questions
+  // Function to capitalize questions properly
   const capitalizeQuestion = (q: string): string => {
     if (!q) return "";
     
@@ -587,7 +584,10 @@ export default function ContentSlide({
       .join('. ');
   };
   
-  // If we have a question, make sure it's properly capitalized
+  // Parse the content title to extract questions and answers
+  const { question, answer } = formatContentTitle();
+  
+  // Create the formatted question for display
   const formattedQuestion = question ? capitalizeQuestion(question) : null;
   
   return (
