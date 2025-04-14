@@ -24,6 +24,10 @@ const AdminDashboard = () => {
   const navigateToBooksAndContent = () => {
     navigate("/admin/books");
   };
+  
+  const navigateToShopManagement = () => {
+    navigate("/admin/shop");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -106,6 +110,28 @@ const AdminDashboard = () => {
               </div>
             </div>
 
+            {/* Shop Management Card */}
+            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
+              <div className="flex items-start mb-4">
+                <div className="p-2 bg-rose-50 rounded-md mr-4">
+                  <ShoppingBag className="h-6 w-6 text-rose-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">Shop Management</h3>
+                  <p className="text-sm text-gray-500">Manage products, subscriptions, and printed books</p>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <Button 
+                  className="w-full py-2 text-white hover:bg-opacity-90 border-0"
+                  style={{ backgroundColor: '#e11d48' }} 
+                  onClick={navigateToShopManagement}
+                >
+                  Manage Shop
+                </Button>
+              </div>
+            </div>
+            
             {/* System Settings Card */}
             <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
               <div className="flex items-start mb-4">

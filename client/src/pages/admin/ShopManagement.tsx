@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -51,31 +51,24 @@ export default function ShopManagement() {
 
   // Fetch shop items
   const { data: shopItems, isLoading } = useQuery<ShopItem[]>({
-    queryKey: ['/api/admin/shop-items'],
-    onError: (error) => {
-      toast({
-        title: 'Error loading shop items',
-        description: error instanceof Error ? error.message : 'Unknown error',
-        variant: 'destructive',
-      });
-    },
+    queryKey: ['/api/admin/shop-items']
   });
 
   // Fetch plans for the pricing page
   const { data: pricingPlans } = useQuery<Plan[]>({
-    queryKey: ['/api/plans'],
-    onError: (error) => {
-      toast({
-        title: 'Error loading pricing plans',
-        description: error instanceof Error ? error.message : 'Unknown error',
-        variant: 'destructive',
-      });
-    },
+    queryKey: ['/api/plans']
   });
-
-  // Set plans when data is loaded
+  
+  // Handle data loading effects separately
+  useEffect(() => {
+    if (shopItems) {
+      console.log('Shop items loaded:', shopItems);
+    }
+  }, [shopItems]);
+  
   useEffect(() => {
     if (pricingPlans) {
+      console.log('Plans loaded:', pricingPlans);
       setPlans(pricingPlans);
     }
   }, [pricingPlans]);
@@ -107,10 +100,10 @@ export default function ShopManagement() {
       });
       setIsDialogOpen(false);
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast({
         title: 'Error updating shop item',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        description: error.message,
         variant: 'destructive',
       });
     },
@@ -143,10 +136,10 @@ export default function ShopManagement() {
       });
       setIsDialogOpen(false);
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast({
         title: 'Error creating shop item',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        description: error.message,
         variant: 'destructive',
       });
     },
@@ -174,10 +167,10 @@ export default function ShopManagement() {
         description: 'Shop item deleted successfully',
       });
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast({
         title: 'Error deleting shop item',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        description: error.message,
         variant: 'destructive',
       });
     },
@@ -208,10 +201,10 @@ export default function ShopManagement() {
         description: 'Pricing display updated successfully',
       });
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast({
         title: 'Error updating pricing display',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        description: error.message,
         variant: 'destructive',
       });
     },
@@ -273,9 +266,152 @@ export default function ShopManagement() {
     setPlans(updatedPlans);
   };
 
-  // Filter items by type for each tab
-  const subscriptions = shopItems?.filter(item => item.type === 'subscription') || [];
-  const printedBooks = shopItems?.filter(item => item.type === 'printed_book') || [];
+  // Mock data for initial development
+  const mockSubscriptions: ShopItem[] = [
+    {
+      id: 1,
+      type: 'subscription',
+      name: 'Single Lesson Access',
+      description: 'Access to all materials for a specific lesson/unit',
+      price: 5,
+      discountedPrice: 0,
+      isActive: true,
+      duration: 'monthly'
+    },
+    {
+      id: 2,
+      type: 'subscription',
+      name: 'Single Lesson Access (Annual)',
+      description: 'Annual access to all materials for a specific lesson/unit',
+      price: 40,
+      discountedPrice: 60,
+      isActive: true,
+      duration: 'yearly'
+    },
+    {
+      id: 3,
+      type: 'subscription',
+      name: 'Whole Book Access',
+      description: 'Access to all lessons and materials for an entire book',
+      price: 25,
+      discountedPrice: 0,
+      isActive: true,
+      duration: 'monthly'
+    },
+    {
+      id: 4,
+      type: 'subscription',
+      name: 'Whole Book Access (Annual)',
+      description: 'Annual access to all lessons and materials for an entire book',
+      price: 180,
+      discountedPrice: 300,
+      isActive: true,
+      duration: 'yearly'
+    }
+  ];
+
+  const mockBooks: ShopItem[] = [
+    {
+      id: 5,
+      type: 'printed_book',
+      name: 'Visual English Book 1',
+      description: 'Physical printed copy of Visual English Book 1',
+      price: 20,
+      isActive: true,
+      bookId: 'book1',
+      inventory: 50
+    },
+    {
+      id: 6,
+      type: 'printed_book',
+      name: 'Visual English Book 2',
+      description: 'Physical printed copy of Visual English Book 2',
+      price: 20,
+      isActive: true,
+      bookId: 'book2',
+      inventory: 75
+    },
+    {
+      id: 7,
+      type: 'printed_book',
+      name: 'Visual English Book 3',
+      description: 'Physical printed copy of Visual English Book 3',
+      price: 20,
+      isActive: true,
+      bookId: 'book3',
+      inventory: 30
+    }
+  ];
+
+  const mockPlans: Plan[] = [
+    {
+      id: 'single-lesson',
+      name: 'Single Lesson Access',
+      description: 'Access to all materials for a specific lesson/unit',
+      monthlyPrice: 5,
+      yearlyPrice: 40,
+      features: [
+        'Access to all slides in a single unit',
+        'Detailed teaching guidance',
+        'Printable worksheets',
+        'Interactive exercises'
+      ]
+    },
+    {
+      id: 'whole-book',
+      name: 'Whole Book Access',
+      description: 'Access to all lessons and materials for an entire book',
+      monthlyPrice: 25,
+      yearlyPrice: 180,
+      isPopular: true,
+      featuredBadge: 'MOST POPULAR',
+      features: [
+        'Access to all units in a book series',
+        'Detailed teaching guidance for every unit',
+        'All downloadable resources',
+        'Interactive exercises for all units',
+        'Progress tracking features'
+      ]
+    },
+    {
+      id: 'printed-book',
+      name: 'Printed Book Only',
+      description: 'Physical printed copy without digital access',
+      monthlyPrice: 0,
+      yearlyPrice: 20,
+      features: [
+        'Physical printed copy of the book',
+        'High-quality printing',
+        'Durable binding',
+        'Colorful illustrations',
+        'No digital access included'
+      ]
+    }
+  ];
+
+  useEffect(() => {
+    // Set mock data if no data returned from API yet
+    if (!shopItems && !isLoading) {
+      console.log('Using mock shop items for development');
+      const mockItems = [...mockSubscriptions, ...mockBooks];
+      queryClient.setQueryData(['/api/admin/shop-items'], mockItems);
+    }
+
+    if (!pricingPlans && plans.length === 0) {
+      console.log('Using mock pricing plans for development');
+      setPlans(mockPlans);
+      queryClient.setQueryData(['/api/plans'], mockPlans);
+    }
+  }, [shopItems, pricingPlans, isLoading, plans.length]);
+
+  // Filter items by type for each tab - handle undefined data
+  const subscriptions = shopItems 
+    ? (shopItems as ShopItem[]).filter((item: ShopItem) => item.type === 'subscription') 
+    : mockSubscriptions;
+    
+  const printedBooks = shopItems 
+    ? (shopItems as ShopItem[]).filter((item: ShopItem) => item.type === 'printed_book') 
+    : mockBooks;
 
   return (
     <div className="container mx-auto py-8">
@@ -333,7 +469,7 @@ export default function ShopManagement() {
                   </Button>
                 </div>
               ) : (
-                subscriptions.map(subscription => (
+                subscriptions.map((subscription: ShopItem) => (
                   <Card key={subscription.id} className={subscription.isActive ? "" : "border-dashed opacity-70"}>
                     <CardHeader className="pb-3">
                       <div className="flex justify-between items-start">
@@ -373,7 +509,7 @@ export default function ShopManagement() {
                       <p className="text-sm text-muted-foreground mb-4">{subscription.description}</p>
                       <div className="flex items-baseline space-x-2">
                         <span className="text-3xl font-bold">€{subscription.price.toFixed(2)}</span>
-                        {subscription.discountedPrice && (
+                        {subscription.discountedPrice && subscription.discountedPrice > 0 && (
                           <>
                             <span className="text-xl line-through text-muted-foreground">€{subscription.discountedPrice.toFixed(2)}</span>
                             <Badge variant="secondary" className="ml-auto">
@@ -421,7 +557,7 @@ export default function ShopManagement() {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    printedBooks.map(book => (
+                    printedBooks.map((book: ShopItem) => (
                       <TableRow key={book.id} className={!book.isActive ? "opacity-60" : ""}>
                         <TableCell className="font-medium">{book.name}</TableCell>
                         <TableCell>{book.bookId}</TableCell>
@@ -481,134 +617,150 @@ export default function ShopManagement() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {plans.map((plan, planIndex) => (
-                  <div key={planIndex} className="border rounded-lg p-4 space-y-4">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="text-lg font-medium">{plan.name}</h3>
-                        <p className="text-sm text-muted-foreground">{plan.description}</p>
-                      </div>
-                      <div className="flex items-center space-x-2">
+                {plans.length > 0 ? (
+                  plans.map((plan, planIndex) => (
+                    <div key={planIndex} className="border rounded-lg p-4 space-y-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="text-lg font-medium">{plan.name}</h3>
+                          <p className="text-sm text-muted-foreground">{plan.description}</p>
+                        </div>
                         <div className="flex items-center space-x-2">
-                          <Switch 
-                            id={`popular-${planIndex}`}
-                            checked={plan.isPopular || false}
-                            onCheckedChange={(checked) => {
+                          <div className="flex items-center space-x-2">
+                            <Switch 
+                              id={`popular-${planIndex}`}
+                              checked={plan.isPopular || false}
+                              onCheckedChange={(checked) => {
+                                const updatedPlans = [...plans];
+                                updatedPlans[planIndex].isPopular = checked;
+                                setPlans(updatedPlans);
+                              }}
+                            />
+                            <Label htmlFor={`popular-${planIndex}`}>Popular</Label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor={`plan-name-${planIndex}`}>Plan Name</Label>
+                          <Input 
+                            id={`plan-name-${planIndex}`}
+                            value={plan.name}
+                            onChange={(e) => {
                               const updatedPlans = [...plans];
-                              updatedPlans[planIndex].isPopular = checked;
+                              updatedPlans[planIndex].name = e.target.value;
                               setPlans(updatedPlans);
                             }}
                           />
-                          <Label htmlFor={`popular-${planIndex}`}>Popular</Label>
+                        </div>
+                        <div>
+                          <Label htmlFor={`badge-text-${planIndex}`}>Featured Badge (optional)</Label>
+                          <Input 
+                            id={`badge-text-${planIndex}`}
+                            value={plan.featuredBadge || ''}
+                            placeholder="e.g. Most Popular"
+                            onChange={(e) => {
+                              const updatedPlans = [...plans];
+                              updatedPlans[planIndex].featuredBadge = e.target.value;
+                              setPlans(updatedPlans);
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor={`monthly-price-${planIndex}`}>Monthly Price (€)</Label>
+                          <Input 
+                            id={`monthly-price-${planIndex}`}
+                            type="number"
+                            value={plan.monthlyPrice}
+                            onChange={(e) => {
+                              const updatedPlans = [...plans];
+                              updatedPlans[planIndex].monthlyPrice = parseFloat(e.target.value);
+                              setPlans(updatedPlans);
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor={`yearly-price-${planIndex}`}>Yearly Price (€)</Label>
+                          <Input 
+                            id={`yearly-price-${planIndex}`}
+                            type="number"
+                            value={plan.yearlyPrice}
+                            onChange={(e) => {
+                              const updatedPlans = [...plans];
+                              updatedPlans[planIndex].yearlyPrice = parseFloat(e.target.value);
+                              setPlans(updatedPlans);
+                            }}
+                          />
+                        </div>
+                        <div className="col-span-2">
+                          <Label htmlFor={`description-${planIndex}`}>Description</Label>
+                          <Textarea 
+                            id={`description-${planIndex}`}
+                            value={plan.description}
+                            onChange={(e) => {
+                              const updatedPlans = [...plans];
+                              updatedPlans[planIndex].description = e.target.value;
+                              setPlans(updatedPlans);
+                            }}
+                          />
                         </div>
                       </div>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor={`plan-name-${planIndex}`}>Plan Name</Label>
-                        <Input 
-                          id={`plan-name-${planIndex}`}
-                          value={plan.name}
-                          onChange={(e) => {
-                            const updatedPlans = [...plans];
-                            updatedPlans[planIndex].name = e.target.value;
-                            setPlans(updatedPlans);
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`badge-text-${planIndex}`}>Featured Badge (optional)</Label>
-                        <Input 
-                          id={`badge-text-${planIndex}`}
-                          value={plan.featuredBadge || ''}
-                          placeholder="e.g. Most Popular"
-                          onChange={(e) => {
-                            const updatedPlans = [...plans];
-                            updatedPlans[planIndex].featuredBadge = e.target.value;
-                            setPlans(updatedPlans);
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`monthly-price-${planIndex}`}>Monthly Price (€)</Label>
-                        <Input 
-                          id={`monthly-price-${planIndex}`}
-                          type="number"
-                          value={plan.monthlyPrice}
-                          onChange={(e) => {
-                            const updatedPlans = [...plans];
-                            updatedPlans[planIndex].monthlyPrice = parseFloat(e.target.value);
-                            setPlans(updatedPlans);
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`yearly-price-${planIndex}`}>Yearly Price (€)</Label>
-                        <Input 
-                          id={`yearly-price-${planIndex}`}
-                          type="number"
-                          value={plan.yearlyPrice}
-                          onChange={(e) => {
-                            const updatedPlans = [...plans];
-                            updatedPlans[planIndex].yearlyPrice = parseFloat(e.target.value);
-                            setPlans(updatedPlans);
-                          }}
-                        />
-                      </div>
-                      <div className="col-span-2">
-                        <Label htmlFor={`description-${planIndex}`}>Description</Label>
-                        <Textarea 
-                          id={`description-${planIndex}`}
-                          value={plan.description}
-                          onChange={(e) => {
-                            const updatedPlans = [...plans];
-                            updatedPlans[planIndex].description = e.target.value;
-                            setPlans(updatedPlans);
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between items-center mb-2">
-                        <Label>Features</Label>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => handleAddFeature(planIndex)}
-                        >
-                          <Plus className="h-3 w-3 mr-1" /> Add Feature
-                        </Button>
-                      </div>
-
-                      {plan.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center mb-2">
-                          <CheckCircle2 className="h-4 w-4 mr-2 text-green-500 flex-shrink-0" />
-                          <Input 
-                            value={feature}
-                            onChange={(e) => handleUpdatePlanFeature(planIndex, featureIndex, e.target.value)}
-                            className="flex-grow"
-                          />
+                        <div className="flex justify-between items-center mb-2">
+                          <Label>Features</Label>
                           <Button 
-                            variant="ghost" 
-                            size="icon"
-                            onClick={() => handleRemoveFeature(planIndex, featureIndex)}
-                            className="ml-2 text-destructive h-8 w-8"
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleAddFeature(planIndex)}
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Plus className="h-3 w-3 mr-1" /> Add Feature
                           </Button>
                         </div>
-                      ))}
+
+                        {plan.features.map((feature, featureIndex) => (
+                          <div key={featureIndex} className="flex items-center mb-2">
+                            <CheckCircle2 className="h-4 w-4 mr-2 text-green-500 flex-shrink-0" />
+                            <Input 
+                              value={feature}
+                              onChange={(e) => handleUpdatePlanFeature(planIndex, featureIndex, e.target.value)}
+                              className="flex-grow"
+                            />
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              onClick={() => handleRemoveFeature(planIndex, featureIndex)}
+                              className="ml-2 text-destructive h-8 w-8"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8">
+                    <p>No pricing plans found. Use the button below to create default plans.</p>
+                    <Button 
+                      onClick={() => {
+                        setPlans(mockPlans);
+                      }}
+                      className="mt-4"
+                    >
+                      Create Default Plans
+                    </Button>
                   </div>
-                ))}
+                )}
               </CardContent>
               <CardFooter className="flex justify-between">
                 <Button variant="outline" onClick={() => {
                   // Reset to original values
                   if (pricingPlans) {
                     setPlans([...pricingPlans]);
+                  } else {
+                    setPlans(mockPlans);
                   }
                 }}>
                   Reset
@@ -640,7 +792,7 @@ export default function ShopManagement() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>
-              {editItem && 'id' in editItem ? 'Edit' : 'Create'} {editItem?.type === 'subscription' ? 'Subscription' : 'Printed Book'}
+              {editItem && 'id' in editItem && editItem.id ? 'Edit' : 'Create'} {editItem?.type === 'subscription' ? 'Subscription' : 'Printed Book'}
             </DialogTitle>
           </DialogHeader>
 
