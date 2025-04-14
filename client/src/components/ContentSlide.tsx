@@ -359,15 +359,152 @@ export default function ContentSlide({
       // Get the filename without path
       const filename = material.content.split('/').pop() || material.content;
       
+      // Special handling for "Nationality" pattern: "Nationality – Country – Demonym"
+      if (filename.includes("Nationality")) {
+        const parts = filename.split(/[-–]/);
+        if (parts.length >= 3) {
+          const country = parts[1].trim();
+          const nationality = parts[2].split('.')[0].trim();
+          
+          return {
+            question: `What is the nationality of people from ${country}?`,
+            answer: {
+              positive: `They are ${nationality}.`,
+              negative: `They are not ${nationality}.`
+            }
+          };
+        }
+      }
+      
       // Clean the filename by removing extension and prefixes
       const cleaned = cleanFilename(filename);
       
-      // Format as a proper question
-      let question = cleaned;
+      // Check for Q&A pattern with dash/hyphen: "Question – Answer"
+      const dashPattern = cleaned.match(/(.*?)\s*[-–]\s*(.+)$/);
+      if (dashPattern) {
+        const leftSide = dashPattern[1].trim();
+        const rightSide = dashPattern[2].trim();
+        
+        // Format question based on the pattern
+        let questionText = leftSide;
+        if (!questionText.endsWith('?')) {
+          questionText += '?';
+        }
+        
+        // Format the question with proper capitalization
+        questionText = formatQuestion(questionText);
+        
+        // Format answer based on the pattern in the provided examples
+        // Generate answers following the Callan method style
+        let positiveAnswer = rightSide;
+        let negativeAnswer = "";
+        
+        if (questionText.toLowerCase().startsWith("what is the name")) {
+          // "What is the name of the country? → The country is Poland."
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          negativeAnswer = positiveAnswer.replace(/is\s+(\w+)\.?$/i, "is not $1.");
+        } else if (questionText.toLowerCase().startsWith("where is")) {
+          // "Where is the flag from? → The flag is from Poland."
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          
+          if (positiveAnswer.toLowerCase().includes("from")) {
+            const location = positiveAnswer.match(/from\s+([^\.]+)\.?$/i);
+            if (location && location[1]) {
+              negativeAnswer = positiveAnswer.replace(/from\s+([^\.]+)\.?$/i, "not from $1.");
+            } else {
+              negativeAnswer = "It is not there.";
+            }
+          } else {
+            negativeAnswer = "It is not there.";
+          }
+        } else if (questionText.toLowerCase().includes("color") || questionText.toLowerCase().includes("colour")) {
+          // "What color is the Polish flag? → The Polish flag is red and white."
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          negativeAnswer = positiveAnswer.replace(/is\s+([^\.]+)\.?$/i, "is not $1.");
+        } else if (questionText.toLowerCase().startsWith("where are")) {
+          // "Where are they from? → They are from Poland."
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          
+          if (positiveAnswer.toLowerCase().includes("from")) {
+            negativeAnswer = positiveAnswer.replace(/from\s+([^\.]+)\.?$/i, "not from $1.");
+          } else if (positiveAnswer.toLowerCase().includes("in")) {
+            negativeAnswer = positiveAnswer.replace(/in\s+([^\.]+)\.?$/i, "not in $1.");
+          } else {
+            negativeAnswer = "They are not there.";
+          }
+        } else if (questionText.toLowerCase().startsWith("what is their nationality")) {
+          // "What is their nationality? → They are Polish."
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          const nationality = positiveAnswer.match(/are\s+(\w+)\.?$/i);
+          if (nationality && nationality[1]) {
+            negativeAnswer = positiveAnswer.replace(/are\s+(\w+)\.?$/i, "are not $1.");
+          } else {
+            negativeAnswer = "They have a different nationality.";
+          }
+        } else if (questionText.toLowerCase().includes("capital")) {
+          // "What is the capital of Poland? → The capital is Warsaw."
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          const capitalName = positiveAnswer.split(' ').pop().replace('.', '');
+          negativeAnswer = `The capital is not ${capitalName}.`;
+        } else if (questionText.toLowerCase().startsWith("what language")) {
+          // "What language does she speak? → She speaks Polish."
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          const language = positiveAnswer.match(/speaks\s+(\w+)\.?$/i);
+          if (language && language[1]) {
+            negativeAnswer = positiveAnswer.replace(/speaks\s+(\w+)\.?$/i, "doesn't speak " + language[1] + ".");
+          } else {
+            negativeAnswer = positiveAnswer.replace(/speaks/i, "doesn't speak") + ".";
+          }
+        } else if (questionText.toLowerCase().startsWith("do you have")) {
+          // "Do you have a phone? → Yes, I have a phone. / No, I don't have a phone."
+          const item = questionText.match(/have\s+a\s+(\w+)/i);
+          if (item && item[1]) {
+            positiveAnswer = `Yes, I have a ${item[1]}.`;
+            negativeAnswer = `No, I don't have a ${item[1]}.`;
+          } else {
+            positiveAnswer = "Yes, I do.";
+            negativeAnswer = "No, I don't.";
+          }
+        } else if (questionText.toLowerCase().startsWith("do you")) {
+          // "Do you listen to music with your phone? → Yes, I do. / No, I don't."
+          positiveAnswer = "Yes, I do.";
+          negativeAnswer = "No, I don't.";
+        } else if (questionText.toLowerCase().startsWith("is the man") || questionText.toLowerCase().startsWith("is the woman")) {
+          // "Is the man slim, well-built, plump, or fat? → He is slim."
+          const pronoun = questionText.toLowerCase().includes("man") ? "He" : "She";
+          const trait = rightSide.replace(/^(he|she)\s+is\s+/i, "").trim();
+          positiveAnswer = `${pronoun} is ${trait}.`;
+          negativeAnswer = `${pronoun} is not ${trait}.`;
+        } else if (questionText.toLowerCase().startsWith("what is it")) {
+          // "What is it? → It is a village."
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          const item = positiveAnswer.match(/it is a(n)?\s+(\w+)\.?$/i);
+          if (item && item[2]) {
+            negativeAnswer = `It is not a ${item[2]}.`;
+          } else {
+            negativeAnswer = `It is not ${positiveAnswer.replace(/it is\s+/i, "").trim()}.`;
+          }
+        } else {
+          // Generic case - ensure answer starts with capital letter and ends with period
+          positiveAnswer = rightSide.charAt(0).toUpperCase() + rightSide.slice(1);
+          if (!positiveAnswer.endsWith('.')) {
+            positiveAnswer += '.';
+          }
+          negativeAnswer = "Not " + rightSide.toLowerCase() + ".";
+        }
+        
+        return {
+          question: questionText,
+          answer: {
+            positive: positiveAnswer,
+            negative: negativeAnswer
+          }
+        };
+      }
       
-      // Only capitalize and add question mark if it looks like a question
-      if (isQuestion(question)) {
-        question = formatQuestion(question);
+      // If it looks like a question, use the default question handling
+      if (isQuestion(cleaned)) {
+        const question = formatQuestion(cleaned);
         const answers = generateAnswerPrompt(question);
         
         return {

@@ -1,0 +1,139 @@
+VILLAGES, TOWNS, AND CITIES
+Q: What is it? → A: It is a village.
+
+Q: Do you live in a village? → A: Yes, I live in a village. / No, I don’t.
+
+Q: Can you name some villages in Poland? → A: Examples are [Liszki, Skawina].
+
+Q: Is village life noisy or quiet? → A: Village life is quiet.
+
+Q: Are there few or many people in a village? → A: There are few people.
+
+Q: What is it? → A: It is a town.
+
+Q: Can you name some towns in Poland? → A: Examples are [Wadowice, Myślenice].
+
+Q: What is it? → A: It is a city.
+
+Q: What is the biggest city in Poland? → A: Warsaw is the biggest city.
+
+Q: Can you name some cities in Poland? → A: Examples are [Kraków, Gdańsk].
+
+Q: Where do you live? → A: I live in a [village/town/city].
+
+Q: Do you prefer a small village or a big city? → A: I prefer [a village/a city].
+
+Q: Where is your school? → A: It is in a [village/town/city].
+
+Q: What is your home address? → A: My address is [street name and number].
+
+TYPES OF HOUSES
+Q: What type of house is it? → A: It is a detached house.
+
+Q: Do you live in a detached house? → A: Yes, I do. / No, I don’t.
+
+Q: Are there many detached houses near you? → A: Yes, there are. / No, there aren’t.
+
+Q: What type of house is it? → A: It is a semi-detached house.
+
+Q: Do you live in a semi-detached house? → A: Yes, I do. / No, I don’t.
+
+Q: What type of house is it? → A: It is a terraced house.
+
+Q: Do you live in a terraced house? → A: Yes, I do. / No, I don’t.
+
+Q: What type of house is it? → A: It is a block of flats.
+
+Q: Do you live in a block of flats? → A: Yes, I do. / No, I don’t.
+
+Q: What type of house is it? → A: It is a bungalow.
+
+Q: Do you live in a bungalow? → A: Yes, I do. / No, I don’t.
+
+BATHROOM
+Q: What is it? → A: It is a bathroom.
+
+Q: How many bathrooms are in your house? → A: There are [one/two] bathrooms.
+
+Q: What is it? → A: It is a toilet.
+
+Q: Where is the boy? → A: He is on the toilet.
+
+Q: What is it? → A: It is a wash basin.
+
+Q: Where is the cat? → A: It is on the wash basin.
+
+Q: What is it? → A: It is a shower.
+
+Q: What is he doing? → A: He is having a shower.
+
+Q: What do you prefer: a bath or a shower? → A: I prefer [a bath/a shower].
+
+BEDROOM
+Q: What is it? → A: It is a bedroom.
+
+Q: How many bedrooms are in your home? → A: There are [two/three] bedrooms.
+
+Q: Is your bedroom tidy or untidy? → A: It is [tidy/untidy].
+
+Q: What is she doing in the bedroom? → A: She is [sleeping/eating/exercising/reading].
+
+Q: Have you got a TV in your bedroom? → A: Yes, I have. / No, I haven’t.
+
+Q: What can you see in a bedroom? → A: A bed, wardrobe, chest of drawers, book shelves.
+
+Q: Is your bed big or small? → A: It is [big/small].
+
+Q: Have you got a wardrobe in your bedroom? → A: Yes, I have. / No, I haven’t.
+
+Q: Can you point to the bed/desk/mirror? → A: [Student points and names the item.]
+
+LIVING ROOM
+Q: What is it? → A: It is a living room.
+
+Q: Have you got a TV in your living room? → A: Yes, I have. / No, I haven’t.
+
+Q: What can you see in a living room? → A: A sofa, armchair, coffee table, bookcase.
+
+Q: What color is your sofa? → A: It is [red/blue/grey].
+
+Q: Have you got a coffee table? → A: Yes, I have. / No, I haven’t.
+
+Q: How many armchairs are there? → A: There are [two/three] armchairs.
+
+KITCHEN
+Q: Have you got a kitchen? → A: Yes, I have. / No, I haven’t.
+
+Q: What can you see in a kitchen? → A: A fridge, dishwasher, cooker.
+
+Q: Have you got a fridge? → A: Yes, I have. / No, I haven’t.
+
+Q: What type of cooker do you have? → A: It is [gas/electric/induction].
+
+GARAGE
+Q: What is it? → A: It is a garage.
+
+Q: Have you got a garage? → A: Yes, I have. / No, I haven’t.
+
+Q: How many cars are in the garage? → A: There are [one/two] cars.
+
+Q: Are there tools in your garage? → A: Yes, there are. / No, there aren’t.
+
+BASEMENT
+Q: What is it? → A: It is a basement.
+
+Q: Have you got a basement? → A: Yes, I have. / No, I haven’t.
+
+Q: Is there a washing machine in your basement? → A: Yes, there is. / No, there isn’t.
+
+Q: Is there a boiler in your home? → A: Yes, there is. / No, there isn’t.
+
+OFFICE
+Q: What is it? → A: It is an office.
+
+Q: Have you got an office in your home? → A: Yes, I have. / No, I haven’t.
+
+Q: What can you see in the office? → A: A plant, desk, bookcase.
+
+Q: Is there a desk in your home? → A: Yes, there is. / No, there isn’t.
+
