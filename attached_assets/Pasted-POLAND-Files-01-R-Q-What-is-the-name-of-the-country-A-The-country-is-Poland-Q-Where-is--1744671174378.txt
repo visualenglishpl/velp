@@ -1,0 +1,203 @@
+POLAND (Files 01 R)
+Q: What is the name of the country? → A: The country is Poland.
+
+Q: Where is the flag from? → A: The flag is from Poland.
+
+Q: What color is the Polish flag? → A: The Polish flag is red and white.
+
+Q: Where are they from? → A: They are from Poland.
+
+Q: Where are the clothes from? → A: The clothes are from Poland.
+
+Q: What is their nationality? → A: They are Polish.
+
+Q: Where are the cities? → A: The cities are in Poland.
+
+Q: What is the biggest city in Poland? → A: The biggest city is Warsaw.
+
+Q: What is the capital of Poland? → A: The capital is Warsaw.
+
+Q: What is his nationality? → A: He is Polish.
+
+Q: What language does she speak? → A: She speaks Polish.
+
+Q: Where is the building from? → A: The building is from Poland.
+
+Q: Where is the chocolate from? → A: The chocolate is from Poland.
+
+Q: Where is the food from? → A: The food is from Poland.
+
+Q: Where is the stamp from? → A: The stamp is from Poland.
+
+Q: Where is the passport from? → A: The passport is from Poland.
+
+Q: What is your favorite Polish food? → A: My favorite Polish food is [pierogi/żurek/etc.].
+
+BRITAIN / UK (Files 02 N, 09-10, 14)
+Q: What countries are in Britain? → A: England, Scotland, Wales, and Northern Ireland.
+
+Q: What countries are in the UK? → A: The UK includes England, Scotland, Wales, and Northern Ireland.
+
+Q: Where is the British flag from? → A: The flag is from Britain.
+
+Q: What is his nationality? → A: He is British.
+
+Q: Where is he from? → A: He is from Britain.
+
+Q: Where are they from? → A: They are from Britain.
+
+Q: Who is the British leader now? → A: King Charles.
+
+Q: What language does she speak? → A: She speaks English.
+
+Q: Where is the passport from? → A: The passport is from Britain.
+
+Q: Where is the food from? → A: The food is from Britain.
+
+Q: Where is the plane from? → A: The plane is from Britain.
+
+Q: Where is the money from? → A: The money is from the UK.
+
+Q: Where is the army from? → A: The army is from the UK.
+
+Q: What countries are on the British flag? → A: England, Scotland, and Northern Ireland.
+
+Q: What is the name of the British flag? → A: The Union Jack.
+
+Q: What countries are on the British Isles? → A: The British Isles include the UK and Ireland.
+
+Q: Match capital cities to countries:
+
+England → London
+
+Scotland → Edinburgh
+
+Wales → Cardiff
+
+Northern Ireland → Belfast
+
+NORTHERN IRELAND (Files 03 G)
+Q: What country is highlighted in pink? → A: Northern Ireland.
+
+Q: Where is the flag from? → A: The flag is from Northern Ireland.
+
+Q: What is the capital of Northern Ireland? → A: Belfast.
+
+Q: What is his nationality? → A: He is Northern Irish.
+
+Q: Where are they from? → A: They are from Northern Ireland.
+
+Q: What religion is in Northern Ireland? → A: Protestant and Catholic communities.
+
+SCOTLAND (Files 04 L)
+Q: What is the name of this country? → A: Scotland.
+
+Q: Where is the flag from? → A: The flag is from Scotland.
+
+Q: What is the capital of Scotland? → A: Edinburgh.
+
+Q: What is his nationality? → A: He is Scottish.
+
+Q: Where is he from? → A: He is from Scotland.
+
+Q: Where is the horse from? → A: The horse is from Scotland.
+
+Q: Where is the army from? → A: The army is from Scotland.
+
+Q: What type of food is this? → A: Scottish food.
+
+Q: Where is the Loch Ness Monster from? → A: It is from Scotland.
+
+Q: Where are they from? → A: They are from Scotland.
+
+Q: What type of music is he playing? → A: Scottish music.
+
+ENGLAND (Files 05 L)
+Q: What is the name of this country? → A: England.
+
+Q: Where is the flag from? → A: The flag is from England.
+
+Q: What is the capital of England? → A: London.
+
+Q: What is his nationality? → A: He is English.
+
+Q: Where is he from? → A: He is from England.
+
+Q: Where are they from? → A: They are from England.
+
+Q: Is an English breakfast big or small? → A: It is big.
+
+Q: What type of food is this? → A: English food.
+
+Q: Where is this building from? → A: It is from England.
+
+Q: Where is Buckingham Palace? → A: In London, England.
+
+Q: Where is the English player? → A: On the left/right.
+
+WALES (Files 06 H)
+Q: What is the name of this country? → A: Wales.
+
+Q: Where is the flag from? → A: The flag is from Wales.
+
+Q: Describe the Welsh flag. → A: It is white, green, and has a red dragon.
+
+Q: What is the capital of Wales? → A: Cardiff.
+
+Q: Where are they from? → A: They are from Wales.
+
+Q: What is his nationality? → A: He is Welsh.
+
+Q: Where is the man from? → A: He is from Wales.
+
+Q: Where is this village? → A: In Wales.
+
+Q: What language is this? → A: Welsh.
+
+AUSTRALIA (Files 07 L)
+Q: What is the name of this country? → A: Australia.
+
+Q: Where is the flag from? → A: The flag is from Australia.
+
+Q: What is the capital of Australia? → A: Canberra.
+
+Q: What is his nationality? → A: He is Australian.
+
+Q: What is her nationality? → A: She is Australian.
+
+Q: Where are they from? → A: They are from Australia.
+
+Q: Where is the food from? → A: The food is from Australia.
+
+Q: Name three Australian animals. → A: Kangaroo, koala, wombat.
+
+Q: Where is the building from? → A: Sydney, Australia.
+
+Q: Where is the boomerang from? → A: Australia.
+
+Q: Where is the money from? → A: Australia.
+
+USA (Files 08 M)
+Q: What is the name of this country? → A: The USA.
+
+Q: Where is the flag from? → A: The flag is from the USA.
+
+Q: How many stars are on the American flag? → A: There are 50 stars.
+
+Q: What is the capital of the USA? → A: Washington, D.C.
+
+Q: What is his nationality? → A: He is American.
+
+Q: What is their nationality? → A: They are American.
+
+Q: Where are they from? → A: They are from the USA.
+
+Q: What type of passport is it? → A: An American passport.
+
+Q: Where is the lighthouse from? → A: The USA.
+
+Q: Where is the mug from? → A: The USA.
+
+Q: What type of snacks are these? → A: American snacks.
+
+Q: What type of food is this? → A: American food.

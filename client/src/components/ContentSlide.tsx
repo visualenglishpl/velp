@@ -353,9 +353,12 @@ export default function ContentSlide({
       {/* Question & Answer Display at the top */}
       {formattedQuestion && answer && (
         <div className="bg-blue-50 py-3 text-center border-b border-blue-100 transition-all">
-          <p className="font-medium text-lg text-blue-900">
-            Q: {formattedQuestion} → A: {answer.positive}
-            {answer.negative && <span className="block mt-1">/ {answer.negative}</span>}
+          <p className="font-medium text-lg text-blue-900 mb-1">
+            Q: {formattedQuestion}
+          </p>
+          <p className="text-blue-600 font-normal text-lg">
+            A: {answer.positive}
+            {answer.negative && <span className="ml-1 text-blue-500">/ {answer.negative}</span>}
           </p>
         </div>
       )}

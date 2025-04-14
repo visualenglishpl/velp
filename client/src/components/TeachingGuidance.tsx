@@ -6,9 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 // Types
+type GuidanceType = {
+  presentingQuestions?: string;
+  vocabularyChecks?: string;
+  promptStructures?: string;
+  followUpQuestions?: string;
+} | null | undefined;
+
 interface TeachingGuidanceProps {
-  bookId: string;
-  unitNumber: number;
+  guidance: GuidanceType;
 }
 
 interface GuidancePoint {
@@ -86,13 +92,13 @@ const resourcesData: Resource[] = [
   }
 ];
 
+// Update the TeachingGuidanceProps interface
 interface TeachingGuidanceProps {
-  bookId: string;
-  unitNumber: number;
+  guidance: GuidanceType;
   onHide?: () => void;
 }
 
-export default function TeachingGuidance({ bookId, unitNumber, onHide }: TeachingGuidanceProps) {
+export default function TeachingGuidance({ guidance, onHide }: TeachingGuidanceProps) {
   // In a real implementation, we would fetch the teaching guidance data from the API
   // const { data } = useQuery({ queryKey: ['/api/teaching-guidance', bookId, unitNumber] });
   
