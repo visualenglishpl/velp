@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useLocation, useRoute } from 'wouter';
+import { useLocation, useRoute } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { apiRequest } from '@/lib/queryClient';
-import { useQuery } from '@tanstack/react-query';
-import { Check, Book } from 'lucide-react';
 
 // Make sure to call loadStripe outside of a component's render to avoid
 // recreating the Stripe object on every render.
@@ -164,44 +159,18 @@ export default function CheckoutPage() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [planType, setPlanType] = useState<PlanType>(planId as PlanType || 'single_lesson');
   
-  // Query to get available books
-  const { data: availableBooks, isLoading: loadingBooks } = useQuery({
-    queryKey: ['/api/assets/book-thumbnails'],
-    queryFn: async () => {
-      const res = await apiRequest('GET', '/api/assets/book-thumbnails');
-      if (!res.ok) throw new Error('Failed to fetch books');
-      return await res.json();
-    }
-  });
-  
-  // State for selected books
-  const [selectedBookIds, setSelectedBookIds] = useState<string[]>([]);
+  // Parse the URL query parameters to get the book ID
+  const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   
   useEffect(() => {
     // Parse URL query parameters
     const searchParams = new URLSearchParams(location.split('?')[1]);
     const bookParam = searchParams.get('book');
     if (bookParam) {
-      // Handle either single book or comma-separated list of books
-      const bookIds = bookParam.split(',').filter(id => id.trim() !== '');
-      setSelectedBookIds(bookIds);
-      console.log(`Selected books: ${bookIds.join(', ')}`);
+      setSelectedBookId(bookParam);
+      console.log(`Selected book: ${bookParam}`);
     }
   }, [location]);
-  
-  // For backward compatibility - get first selected book if any
-  const selectedBookId = selectedBookIds.length > 0 ? selectedBookIds[0] : null;
-  
-  // Handler for toggling book selection
-  const toggleBookSelection = (bookId: string) => {
-    setSelectedBookIds(prevIds => {
-      if (prevIds.includes(bookId)) {
-        return prevIds.filter(id => id !== bookId);
-      } else {
-        return [...prevIds, bookId];
-      }
-    });
-  };
   
   // Customer information state
   const [customerInfo, setCustomerInfo] = useState({
@@ -279,7 +248,7 @@ export default function CheckoutPage() {
         const response = await apiRequest("POST", "/api/create-payment-intent", { 
           planType, 
           billingCycle,
-          bookIds: selectedBookIds.length > 0 ? selectedBookIds : undefined
+          bookId: selectedBookId || undefined
         });
         
         const data = await response.json();
@@ -479,18 +448,10 @@ export default function CheckoutPage() {
                       : `Billed ${billingCycle} (${billingCycle === 'monthly' ? 'monthly' : 'annually'})`}
                 </div>
                 
-                {selectedBookIds.length > 0 && (
+                {selectedBookId && (
                   <div className="mt-2 p-3 bg-gray-50 rounded-md">
-                    <div className="font-medium text-sm">
-                      {selectedBookIds.length === 1 ? "Selected Book:" : "Selected Books:"}
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {selectedBookIds.map(bookId => (
-                        <div key={bookId} className="text-primary font-bold bg-primary/10 px-2 py-1 rounded">
-                          BOOK {bookId.toUpperCase()}
-                        </div>
-                      ))}
-                    </div>
+                    <div className="font-medium text-sm">Selected Book:</div>
+                    <div className="text-primary font-bold">BOOK {selectedBookId.toUpperCase()}</div>
                   </div>
                 )}
                 
