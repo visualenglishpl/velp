@@ -60,11 +60,27 @@ export default function DirectContentViewer() {
   
   // State for access control
   const [hasPurchasedAccess, setHasPurchasedAccess] = useState(false);
+  const [hasFreeTrial, setHasFreeTrial] = useState(false);
   const [showAccessDialog, setShowAccessDialog] = useState(false);
   // Set different free slide limits based on book series
   // Books 0a, 0b, 0c should blur from the 3rd image (first 2 slides are free)
   // Other books still use 10 free slides
   const FREE_SLIDES_LIMIT = bookPath?.startsWith('book0') ? 2 : 10;
+  
+  // Check if user has active free trial
+  const { data: userSubscription } = useQuery({
+    queryKey: ['/api/check-subscription-status'],
+    staleTime: 60000, // 1 minute
+  });
+  
+  // Set free trial status if user has an active free trial
+  useEffect(() => {
+    if (userSubscription?.hasFreeTrial) {
+      setHasFreeTrial(true);
+      // Free trial gives full access to all content
+      setHasPurchasedAccess(true);
+    }
+  }, [userSubscription]);
   
   // Purchase handler function
   const handlePurchaseClick = useCallback(() => {
