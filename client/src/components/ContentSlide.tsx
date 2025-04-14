@@ -70,25 +70,209 @@ export default function ContentSlide({
     return directPath;
   };
   
-  // Placeholder for future question detection logic
+  // Question detection logic
   const isQuestion = (text: string): boolean => {
-    // Will be implemented later as per user requirements
-    return false;
+    if (!text) return false;
+    
+    const lowercaseText = text.toLowerCase();
+    
+    // Check for question starters like "is it", "do you", "can he", etc.
+    const questionStarters = [
+      'is it', 'is he', 'is she', 'are they', 'are you',
+      'do you', 'does he', 'does she', 'can you', 'can he', 'can she',
+      'have you', 'has he', 'has she', 'did you', 'would you', 'could you',
+      'should we', 'what', 'where', 'when', 'why', 'how', 'who', 'which'
+    ];
+    
+    return questionStarters.some(starter => lowercaseText.startsWith(starter));
   };
 
-  // Placeholder for future answer generation logic
-  const generateAnswerPrompt = (question: string): string | null => {
-    // Will be implemented later as per user requirements
-    return null;
-  };
-
-  // Empty formatter that returns no questions or answers
-  // Will be replaced with proper question formatting later
-  const formatContentTitle = () => {
-    return {
-      question: null,
-      answer: null
+  // Generate appropriate answer prompts based on question type
+  const generateAnswerPrompt = (question: string): { positive: string, negative: string } | null => {
+    if (!question) return null;
+    
+    const lowercaseQuestion = question.toLowerCase().trim();
+    
+    // Yes/No question patterns with appropriate responses
+    const questionPatterns: Record<string, { positive: string, negative: string }> = {
+      '^do you': {
+        positive: "Yes, I do.",
+        negative: "No, I don't."
+      },
+      '^does he': {
+        positive: "Yes, he does.",
+        negative: "No, he doesn't."
+      },
+      '^does she': {
+        positive: "Yes, she does.",
+        negative: "No, she doesn't."
+      },
+      '^can you': {
+        positive: "Yes, I can.",
+        negative: "No, I can't."
+      },
+      '^can he': {
+        positive: "Yes, he can.",
+        negative: "No, he can't."
+      },
+      '^can she': {
+        positive: "Yes, she can.",
+        negative: "No, she can't."
+      },
+      '^is it': {
+        positive: "Yes, it is.",
+        negative: "No, it isn't."
+      },
+      '^is he': {
+        positive: "Yes, he is.",
+        negative: "No, he isn't."
+      },
+      '^is she': {
+        positive: "Yes, she is.",
+        negative: "No, she isn't."
+      },
+      '^are you': {
+        positive: "Yes, I am.",
+        negative: "No, I'm not."
+      },
+      '^are they': {
+        positive: "Yes, they are.",
+        negative: "No, they aren't."
+      },
+      '^have you': {
+        positive: "Yes, I have.",
+        negative: "No, I haven't."
+      },
+      '^has he': {
+        positive: "Yes, he has.",
+        negative: "No, he hasn't."
+      },
+      '^has she': {
+        positive: "Yes, she has.",
+        negative: "No, she hasn't."
+      },
+      '^did you': {
+        positive: "Yes, I did.",
+        negative: "No, I didn't."
+      },
+      '^would you': {
+        positive: "Yes, I would.",
+        negative: "No, I wouldn't."
+      },
+      '^could you': {
+        positive: "Yes, I could.",
+        negative: "No, I couldn't."
+      },
+      '^should we': {
+        positive: "Yes, we should.",
+        negative: "No, we shouldn't."
+      }
     };
+    
+    // Check for yes/no question patterns
+    for (const [pattern, answers] of Object.entries(questionPatterns)) {
+      if (new RegExp(pattern, 'i').test(lowercaseQuestion)) {
+        return answers;
+      }
+    }
+    
+    // Check for special WH-questions
+    const whQuestionStarters = ['what', 'where', 'when', 'why', 'how', 'who', 'which'];
+    for (const starter of whQuestionStarters) {
+      if (lowercaseQuestion.startsWith(starter)) {
+        return {
+          positive: "[Open response]",
+          negative: "[Provide answer]"
+        };
+      }
+    }
+    
+    // Default for unknown question types
+    return {
+      positive: "[Yes answer]",
+      negative: "[No answer]"
+    };
+  };
+
+  // Extract question from filename for display
+  const formatContentTitle = () => {
+    if (!material.content) {
+      return { question: null, answer: null };
+    }
+    
+    try {
+      // Get the filename without path
+      const filename = material.content.split('/').pop() || material.content;
+      
+      // Clean the filename by removing extension and prefixes
+      const cleaned = cleanFilename(filename);
+      
+      // Format as a proper question
+      let question = cleaned;
+      
+      // Only capitalize and add question mark if it looks like a question
+      if (isQuestion(question)) {
+        question = formatQuestion(question);
+        const answers = generateAnswerPrompt(question);
+        
+        return {
+          question,
+          answer: answers
+        };
+      }
+      
+      return { question: null, answer: null };
+    } catch (error) {
+      console.error("Error formatting content title:", error);
+      return { question: null, answer: null };
+    }
+  };
+  
+  // Clean filename by removing extension and special prefixes
+  const cleanFilename = (filename: string): string => {
+    // Remove extension
+    let cleaned = filename.split('.')[0];
+    
+    // Pattern 1: "01 A" or "05 C B" - numeric followed by letters with spaces at the beginning
+    if (/^\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+/.test(cleaned)) {
+      cleaned = cleaned.replace(/^\d{1,2}\s+[A-Za-z]+(\s+[A-Za-z]+)?\s+/, '');
+    }
+    
+    // Pattern 2: Specific patterns like "01_A_" or "14_D_" at the beginning
+    const patterns = [
+      /^\d{1,2}_[A-Z]_/,     // matches "01_A_"
+      /^\d{1,2}_[A-Z][A-Z]_/, // matches "01_AB_"
+    ];
+    
+    for (const pattern of patterns) {
+      if (pattern.test(cleaned)) {
+        cleaned = cleaned.replace(pattern, '');
+        break;
+      }
+    }
+    
+    // Replace underscores and hyphens with spaces
+    cleaned = cleaned.replace(/_/g, ' ').replace(/-/g, ' ');
+    
+    // Remove extra spaces
+    cleaned = cleaned.split(' ').filter(Boolean).join(' ');
+    
+    return cleaned;
+  };
+  
+  // Format text as proper question
+  const formatQuestion = (text: string): string => {
+    if (!text) return "";
+    
+    // Make first letter uppercase
+    let formatted = text.charAt(0).toUpperCase() + text.slice(1);
+    
+    // Add question mark if not present
+    if (!formatted.endsWith('?')) {
+      formatted += '?';
+    }
+    
+    return formatted;
   };
   
   // Reset state when the active slide changes
