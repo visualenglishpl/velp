@@ -109,8 +109,8 @@ const PricingPlans = () => {
                 
                 {/* Fixed height pricing section */}
                 <div className="mt-8 pt-6 text-center h-[170px] flex flex-col justify-end border-t border-gray-100">
-                  <div className="text-base text-gray-500 mb-4">{plan.priceSubtext}</div>
-                  <div className="text-5xl font-bold mb-8">{plan.price}</div>
+                  <div className="text-5xl font-bold mb-2">{plan.price}</div>
+                  <div className="text-base text-gray-500 mb-8">{plan.priceSubtext}</div>
                   
                   <Link href={`/checkout/${plan.planId}`}>
                     <button 
