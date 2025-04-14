@@ -74,7 +74,7 @@ export default function UnitsPage() {
   });
 
   return (
-    <div className="container py-10">
+    <div className="container mx-auto px-4 py-10">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
