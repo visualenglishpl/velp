@@ -89,7 +89,7 @@ export default function ContentSlide({
     const questionPhrases = [
       'what do you think of', 'what is the', 'which film is', 'is it an interesting',
       'past tense', 'what is she baking', 'did you bake', 'where are they',
-      'what is she doing', 'where is he jogging to', 'who is he jogging'
+      'what is she doing', 'where is he jogging to', 'who is he jogging', 'how often do you'
     ];
     
     return questionStarters.some(starter => lowercaseText.startsWith(starter)) ||
@@ -262,6 +262,14 @@ export default function ContentSlide({
       'who is he jogging': {
         positive: "Santa is jogging.",
         negative: "The teacher is jogging."
+      },
+      'how often do you jog': {
+        positive: "I often jog.",
+        negative: "I seldom jog."
+      },
+      'how often do you': {
+        positive: "I do it frequently.",
+        negative: "I rarely do it."
       }
     };
     
