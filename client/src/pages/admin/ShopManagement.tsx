@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, Plus, Save, PackageOpen, CreditCard, Book, CheckCircle2 } from 'lucide-react';
+import { Pencil, Trash2, Plus, Save, PackageOpen, CreditCard, Book, CheckCircle2, FileText, School, BookOpen } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
@@ -437,7 +437,7 @@ export default function ShopManagement() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="subscriptions" className="flex items-center">
             <CreditCard className="h-4 w-4 mr-2" />
             Subscriptions
@@ -449,6 +449,10 @@ export default function ShopManagement() {
           <TabsTrigger value="pricing_display" className="flex items-center">
             <PackageOpen className="h-4 w-4 mr-2" />
             Pricing Display
+          </TabsTrigger>
+          <TabsTrigger value="teaching_resources" className="flex items-center">
+            <FileText className="h-4 w-4 mr-2" />
+            Teaching Resources
           </TabsTrigger>
         </TabsList>
 
@@ -606,6 +610,208 @@ export default function ShopManagement() {
           )}
         </TabsContent>
 
+        {/* Teaching Resources Tab */}
+        <TabsContent value="teaching_resources">
+          <div className="space-y-8">
+            <Card className="overflow-hidden">
+              <CardHeader className="bg-slate-50">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Teaching Guidance</CardTitle>
+                    <CardDescription>Unit-specific guidance for Book 3, Unit 1 - Unit 1</CardDescription>
+                  </div>
+                  <Button variant="outline" className="flex items-center">
+                    <FileText className="h-4 w-4 mr-2" />
+                    Edit Template
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="border rounded-md p-4 bg-white shadow-sm">
+                    <h3 className="text-lg font-semibold mb-3">Presenting Questions</h3>
+                    <ul className="space-y-2 list-disc list-inside text-sm">
+                      <li>Show the question on the slide and point to any key image details (e.g. facial expressions, actions, background objects).</li>
+                      <li>Clearly read the question aloud to the class — say it twice to help students process the language.</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border rounded-md p-4 bg-white shadow-sm">
+                    <h3 className="text-lg font-semibold mb-3">Check Vocabulary Understanding</h3>
+                    <ul className="space-y-2 list-disc list-inside text-sm">
+                      <li>Refer back to the textbook vocabulary section if available.</li>
+                      <li>Pause and explain any unfamiliar words using visuals, gestures, or simple definitions.</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border rounded-md p-4 bg-white shadow-sm">
+                    <h3 className="text-lg font-semibold mb-3">Prompt Student Answers</h3>
+                    <p className="text-sm mb-2">Use structured sentence frames:</p>
+                    <ul className="space-y-1 list-disc list-inside text-sm">
+                      <li>"Is it a cat or a dog?" → "It is a..."</li>
+                      <li>"Are they sitting or standing?" → "They are..."</li>
+                      <li>"Is he eating or sleeping?" → "He is..."</li>
+                      <li>"Is she happy or sad?" → "She is..."</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border rounded-md p-4 bg-white shadow-sm">
+                    <h3 className="text-lg font-semibold mb-3">Ask Follow-up Questions</h3>
+                    <p className="text-sm mb-2">To reinforce comprehension:</p>
+                    <ul className="space-y-1 list-disc list-inside text-sm">
+                      <li>"Why do you think so?"</li>
+                      <li>"Can you describe it more?"</li>
+                      <li>"What else can you see?"</li>
+                    </ul>
+                    <p className="text-sm mt-2 italic">Encourage full-sentence answers — especially with more advanced learners — and guide them toward more complete responses.</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8 border-t pt-6">
+                  <h3 className="text-lg font-semibold mb-4">Example Content Slide</h3>
+                  <div className="aspect-video max-w-2xl mx-auto bg-white rounded-lg overflow-hidden shadow-md border">
+                    <div className="p-4 border-b bg-slate-50 flex items-center">
+                      <Button variant="ghost" size="sm" className="p-1">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </Button>
+                      <span className="ml-2 font-medium">BOOK 3 / UNIT 1</span>
+                      <span className="ml-4 text-sm text-gray-500">Slide 1/201</span>
+                      <div className="ml-auto flex items-center space-x-2">
+                        <Button variant="ghost" size="sm" className="p-1">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 14H10V20M20 10H14V4M14 10L21 3M3 21L10 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </Button>
+                        <Button variant="ghost" size="sm" className="p-1">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 3H6C4.89543 3 4 3.89543 4 5V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V5C20 3.89543 19.1046 3 18 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M9 3V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <div className="text-center mb-4">
+                        <div className="font-bold">00 A.png</div>
+                        <div className="text-sm text-gray-500">Content from book3/unit1/00 A.png</div>
+                      </div>
+                      <div className="relative aspect-[4/3] max-w-md mx-auto bg-[#4BACC6] rounded-md overflow-hidden">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
+                          <div className="text-sm">VISUAL<span className="inline-flex items-center">👁</span></div>
+                          <div className="text-2xl font-bold">ENGLISH</div>
+                          <div className="mt-4 text-xl font-bold">BACK TO SCHOOL</div>
+                          <div className="text-xl font-bold">SCHOOL OBJECTS</div>
+                          <div className="mt-4">
+                            <img 
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzBGQzc0RDczQTc5MTFFQThENjhDMjQ0MzU5ODhGNDQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzBGQzc0RDgzQTc5MTFFQThENjhDMjQ0MzU5ODhGNDQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3MEZDNzRENTNBNzkxMUVBOEQ2OEMyNDQzNTk4OEY0NCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3MEZDNzRENjNBNzkxMUVBOEQ2OEMyNDQzNTk4OEY0NCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjteADMAAA1tSURBVHja7FwNdFNV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" 
+                              alt="School supplies illustration"
+                              className="w-36 h-36 object-contain mx-auto"
+                            />
+                          </div>
+                          <div className="absolute bottom-2 right-2 text-xs">1/201</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-center mt-6 space-x-1">
+                        <div className="w-4 h-4 rounded-full bg-blue-500"></div>
+                        <div className="w-4 h-4 rounded-full bg-gray-300"></div>
+                        <div className="w-4 h-4 rounded-full bg-gray-300"></div>
+                        <div className="w-4 h-4 rounded-full bg-gray-300"></div>
+                        <div className="w-4 h-4 rounded-full bg-gray-300"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Unit Description</CardTitle>
+                    <CardDescription>Additional information for teaching this unit</CardDescription>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button variant="outline" className="flex items-center">
+                      <School className="h-4 w-4 mr-2" />
+                      Add Resources
+                    </Button>
+                    <Button variant="outline" className="flex items-center">
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      Add Activities
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="border rounded-md p-4 bg-white shadow-sm">
+                    <h3 className="text-lg font-semibold mb-3 flex items-center">
+                      <span className="mr-2">📚</span> Learning Content
+                    </h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start">
+                        <span className="mr-2">🎒</span>
+                        <span>School objects and classroom vocabulary</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">🗣️</span>
+                        <span>Basic question structures for school objects</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">🔤</span>
+                        <span>Colors, shapes, and sizes of objects</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border rounded-md p-4 bg-white shadow-sm">
+                    <h3 className="text-lg font-semibold mb-3 flex items-center">
+                      <span className="mr-2">🎮</span> Interactive Activities
+                    </h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start">
+                        <span className="mr-2">🎲</span>
+                        <span>School objects bingo game</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">🎯</span>
+                        <span>Object identification racing game</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">🎭</span>
+                        <span>Role play: school shopping dialogue</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border rounded-md p-4 bg-white shadow-sm">
+                    <h3 className="text-lg font-semibold mb-3 flex items-center">
+                      <span className="mr-2">🔗</span> Additional Resources
+                    </h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start">
+                        <span className="mr-2">🎵</span>
+                        <span>School objects song (video link)</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">📝</span>
+                        <span>Printable worksheets for classroom practice</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">🎪</span>
+                        <span>Kahoot quiz for vocabulary review</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+        
         {/* Pricing Display Tab */}
         <TabsContent value="pricing_display">
           <div className="space-y-8">
