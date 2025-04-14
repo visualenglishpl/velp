@@ -109,12 +109,12 @@ const PricingPlans = () => {
                 
                 {/* Fixed height pricing section */}
                 <div className="mt-8 pt-6 text-center h-[170px] flex flex-col justify-end border-t border-gray-100">
-                  <div className="text-5xl font-bold mb-2">{plan.price}</div>
-                  <div className="text-base text-gray-500 mb-8">{plan.priceSubtext}</div>
+                  <div className="text-4xl font-bold mb-2">{plan.price}</div>
+                  <div className="text-sm text-gray-500 mb-8">{plan.priceSubtext}</div>
                   
                   <Link href={`/checkout/${plan.planId}`}>
                     <button 
-                      className={`w-full py-3 px-4 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out`}
+                      className={`w-full h-11 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out flex items-center justify-center`}
                     >
                       {plan.buttonText}
                     </button>
