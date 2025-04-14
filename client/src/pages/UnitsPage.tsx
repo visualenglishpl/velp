@@ -48,13 +48,15 @@ export default function UnitsPage() {
       const demoUnits: UnitInfo[] = [];
       
       // Special cases for unit counts by book:
-      // - Book 0a has 20 units
+      // - Book 0a, 0b, 0c have 20 units
+      // - Books 1, 2, 3 have 18 units
       // - Books 4-7 have 16 units
-      // - Others have 10 units by default
       let unitCount = 10;
       
       if (['0a', '0b', '0c'].includes(bookId)) {
         unitCount = 20;
+      } else if (['1', '2', '3'].includes(bookId)) {
+        unitCount = 18;
       } else if (['4', '5', '6', '7'].includes(bookId)) {
         unitCount = 16;
       }
