@@ -5,7 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ChevronLeft, ChevronRight, Image as ImageIcon, Video, FileText, Check, Book, Home } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Image as ImageIcon, Video, FileText, Check, Book, Home, FileEdit } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import ContentSlide from '@/components/ContentSlide';
 import ThumbnailsBar from '@/components/ThumbnailsBar';
@@ -236,8 +236,9 @@ export default function ContentViewer() {
                 onCheckedChange={setShowTeacherGuidance}
                 className="mr-2"
               />
-              <label htmlFor="teacher-mode" className="text-sm font-medium">
-                Teacher Mode
+              <label htmlFor="teacher-mode" className="text-sm font-medium flex items-center">
+                <FileEdit className="h-4 w-4 mr-1" />
+                {showTeacherGuidance ? "Teacher Mode On" : "Teacher Mode Off"}
               </label>
             </div>
             <Button onClick={() => window.location.href = "/admin/books"} variant="outline" size="sm">
@@ -327,6 +328,7 @@ export default function ContentViewer() {
           <TeachingGuidance 
             bookId={book?.bookId || ''}
             unitNumber={unit?.unitNumber || 0}
+            onHide={() => setShowTeacherGuidance(false)}
           />
         )}
       </main>

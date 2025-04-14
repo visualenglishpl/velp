@@ -49,9 +49,9 @@ const guidanceData = {
   ],
   followUpQuestions: [
     { text: "To reinforce comprehension:" },
-    { text: "\"Why do you think so?\"" },
-    { text: "\"Can you describe it more?\"" },
-    { text: "\"What else can you see?\"" }
+    { text: "Why do you think so?" },
+    { text: "Can you describe it more?" },
+    { text: "What else can you see?" }
   ]
 };
 
@@ -86,7 +86,13 @@ const resourcesData: Resource[] = [
   }
 ];
 
-export default function TeachingGuidance({ bookId, unitNumber }: TeachingGuidanceProps) {
+interface TeachingGuidanceProps {
+  bookId: string;
+  unitNumber: number;
+  onHide?: () => void;
+}
+
+export default function TeachingGuidance({ bookId, unitNumber, onHide }: TeachingGuidanceProps) {
   // In a real implementation, we would fetch the teaching guidance data from the API
   // const { data } = useQuery({ queryKey: ['/api/teaching-guidance', bookId, unitNumber] });
   
@@ -99,7 +105,7 @@ export default function TeachingGuidance({ bookId, unitNumber }: TeachingGuidanc
         </h2>
         <div className="flex items-center">
           <Badge variant="outline" className="mr-2">Teacher View</Badge>
-          <Button size="sm" variant="outline">Hide</Button>
+          <Button size="sm" variant="outline" onClick={onHide}>Hide</Button>
         </div>
       </div>
       
