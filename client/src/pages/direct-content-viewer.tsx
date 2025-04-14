@@ -39,13 +39,27 @@ export default function DirectContentViewer() {
   const [location] = useLocation();
   const pathParts = location.split('/').filter(Boolean);
   
-  // Extract bookPath and unitPath from URL
-  const bookPath = pathParts[0]; // e.g., "book3"
-  const unitPath = pathParts[1]; // e.g., "unit12"
+  // Extract bookPath and unitPath from URL - handle both formats:
+  // 1. /book3/unit12 (old format)
+  // 2. /book3/unit12 (new format with colons, params will be handled by wouter)
+  let bookPath, unitPath;
   
-  console.log(`Direct Content Viewer: Book path=${bookPath}, Unit path=${unitPath}`);
+  // Check if we have the new format with colons
+  if (pathParts[0].startsWith('book')) {
+    bookPath = pathParts[0];  // e.g., "book3"
+    unitPath = pathParts[1];  // e.g., "unit12"
+  } else {
+    // For any other path format
+    bookPath = pathParts[0];
+    unitPath = pathParts[1];
+  }
   
-  // Extract unit number for API calls
+  console.log(`Direct Content Viewer: Book path=${bookPath}, Unit path=${unitPath}, Full location=${location}`);
+  
+  // Extract bookId (e.g., "3" from "book3")
+  const bookId = bookPath ? bookPath.replace(/\D/g, '') : "";
+  
+  // Extract unit number for API calls (e.g., "12" from "unit12")
   const unitNumber = unitPath ? parseInt(unitPath.replace(/\D/g, '')) : 0;
   
   // State for carousel management

@@ -78,6 +78,11 @@ function Router() {
       </Route>
       
       {/* Direct S3 Content Viewer - works with ANY book/unit path that matches S3 pattern */}
+      <Route path="/book:bookId/unit:unitNumber">
+        {(params) => <ProtectedRoute component={DirectContentViewer} />}
+      </Route>
+      
+      {/* Fallback for any other book/unit pattern */}
       <Route path="/:bookPath/:unitPath">
         {(params) => {
           // Only match book/unit pattern (e.g., book3/unit12)
