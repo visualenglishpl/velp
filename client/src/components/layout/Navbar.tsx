@@ -22,12 +22,15 @@ const Navbar = () => {
     if (element) {
       setMobileMenuOpen(false);
       
-      // Add a small offset to account for the fixed navbar height
+      // Add a larger offset to ensure the entire section is visible
       const navbar = document.querySelector('nav');
       const navbarHeight = navbar ? navbar.offsetHeight : 0;
       
+      // Add additional offset (20px) to ensure the section is fully visible
+      const extraOffset = 20;
+      
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - navbarHeight;
+      const offsetPosition = elementPosition - navbarHeight - extraOffset;
       
       window.scrollTo({
         top: offsetPosition,
@@ -68,7 +71,7 @@ const Navbar = () => {
               Books
             </Link>
 
-            <Link href="#plans">
+            <Link href="/books">
               <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
                 Store
               </Button>
@@ -113,7 +116,7 @@ const Navbar = () => {
               Books
             </Link>
 
-            <Link href="#plans">
+            <Link href="/books">
               <Button 
                 variant="default" 
                 className="bg-black hover:bg-gray-800 text-white w-full justify-start"
