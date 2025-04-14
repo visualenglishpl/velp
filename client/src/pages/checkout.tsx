@@ -159,18 +159,23 @@ export default function CheckoutPage() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [planType, setPlanType] = useState<PlanType>(planId as PlanType || 'single_lesson');
   
-  // Parse the URL query parameters to get the book ID
-  const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
+  // State for selected books
+  const [selectedBookIds, setSelectedBookIds] = useState<string[]>([]);
   
   useEffect(() => {
     // Parse URL query parameters
     const searchParams = new URLSearchParams(location.split('?')[1]);
     const bookParam = searchParams.get('book');
     if (bookParam) {
-      setSelectedBookId(bookParam);
-      console.log(`Selected book: ${bookParam}`);
+      // Handle either single book or comma-separated list of books
+      const bookIds = bookParam.split(',').filter(id => id.trim() !== '');
+      setSelectedBookIds(bookIds);
+      console.log(`Selected books: ${bookIds.join(', ')}`);
     }
   }, [location]);
+  
+  // For backward compatibility - get first selected book if any
+  const selectedBookId = selectedBookIds.length > 0 ? selectedBookIds[0] : null;
   
   // Customer information state
   const [customerInfo, setCustomerInfo] = useState({
@@ -248,7 +253,7 @@ export default function CheckoutPage() {
         const response = await apiRequest("POST", "/api/create-payment-intent", { 
           planType, 
           billingCycle,
-          bookId: selectedBookId || undefined
+          bookIds: selectedBookIds.length > 0 ? selectedBookIds : undefined
         });
         
         const data = await response.json();
@@ -448,10 +453,18 @@ export default function CheckoutPage() {
                       : `Billed ${billingCycle} (${billingCycle === 'monthly' ? 'monthly' : 'annually'})`}
                 </div>
                 
-                {selectedBookId && (
+                {selectedBookIds.length > 0 && (
                   <div className="mt-2 p-3 bg-gray-50 rounded-md">
-                    <div className="font-medium text-sm">Selected Book:</div>
-                    <div className="text-primary font-bold">BOOK {selectedBookId.toUpperCase()}</div>
+                    <div className="font-medium text-sm">
+                      {selectedBookIds.length === 1 ? "Selected Book:" : "Selected Books:"}
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {selectedBookIds.map(bookId => (
+                        <div key={bookId} className="text-primary font-bold bg-primary/10 px-2 py-1 rounded">
+                          BOOK {bookId.toUpperCase()}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
                 

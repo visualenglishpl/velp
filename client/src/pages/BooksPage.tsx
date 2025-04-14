@@ -80,50 +80,66 @@ export default function BooksPage() {
         <p className="mb-8 text-lg text-gray-600">Browse our collection of educational materials.</p>
         
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {[...Array(10)].map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <div className="aspect-square bg-gray-100 w-full">
+              <Card key={i} className="overflow-hidden shadow-md flex flex-col h-full">
+                <div className="aspect-video bg-gray-100 w-full rounded-t-md">
                   <Skeleton className="h-full w-full" />
                 </div>
                 <CardHeader className="py-3 px-4">
-                  <Skeleton className="h-6 w-2/3" />
+                  <Skeleton className="h-6 w-4/5 mx-auto" />
                 </CardHeader>
-                <CardFooter className="py-3 px-4">
-                  <Skeleton className="h-8 w-full" />
+                <CardFooter className="pt-0 px-4 pb-4 mt-auto flex-col gap-2">
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-10 w-full" />
                 </CardFooter>
               </Card>
             ))}
           </div>
         ) : books && books.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {books.map((book) => (
-              <Card key={book.bookId} className="overflow-hidden flex flex-col">
-                <div className="aspect-square bg-gray-100 relative overflow-hidden flex items-center justify-center">
-                  {book.gifUrl ? (
-                    <img 
-                      src={book.gifUrl} 
-                      alt={`Cover of ${book.title}`} 
-                      className="object-contain w-full h-full p-4"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center h-full w-full bg-gray-200 text-gray-500">
-                      No image available
+              <Card key={book.bookId} className="overflow-hidden flex flex-col shadow-md hover:shadow-lg transition-shadow h-full">
+                <div className="aspect-video bg-gray-100 relative overflow-hidden rounded-t-md">
+                  <div className="h-full w-full">
+                    <div className="h-full w-full relative p-2">
+                      {/* Styled book background with gradient */}
+                      <div className="h-full w-full bg-gradient-to-br from-primary/10 to-primary/25 flex flex-col items-center justify-center absolute inset-0 z-0">
+                        <span className="text-3xl font-bold text-primary/90 drop-shadow-md">
+                          BOOK {book.bookId.toUpperCase()}
+                        </span>
+                      </div>
+                      
+                      {/* Book cover image */}
+                      {book.gifUrl ? (
+                        <img 
+                          src={book.gifUrl} 
+                          alt={`Cover of ${book.title}`} 
+                          className="h-full w-full object-contain object-center relative z-10"
+                          style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full w-full bg-gray-200 text-gray-500 relative z-10">
+                          No image available
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
                 <CardHeader className="py-3 px-4">
-                  <CardTitle className="text-center text-lg">{book.title}</CardTitle>
+                  <CardTitle className="text-base font-bold text-center">
+                    {book.title}
+                  </CardTitle>
                 </CardHeader>
-                <CardFooter className="py-3 px-4 flex flex-col gap-2">
+                <CardFooter className="pt-0 px-4 pb-4 mt-auto flex-col gap-2">
                   <Link href={`/book/${book.bookId}/units`} className="w-full">
-                    <Button className="w-full" variant="default">
+                    <Button className="w-full h-10" variant="default">
                       View Units
                     </Button>
                   </Link>
                   <Button 
-                    className="w-full" 
-                    variant="secondary"
+                    className="w-full h-10" 
+                    variant="outline"
                     onClick={() => window.location.href = `/checkout/whole_book?book=${book.bookId}`}
                   >
                     Buy Whole Book Access
