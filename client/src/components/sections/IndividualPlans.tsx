@@ -90,31 +90,31 @@ const PricingPlans = () => {
           {plans.map((plan, index) => (
             <div key={index} className="flex flex-col h-full bg-white rounded-lg shadow overflow-hidden border border-gray-100">
               {/* Header - Fixed height for all headers */}
-              <div className={`${plan.headerBg} text-white py-3 px-3 text-center h-[70px] flex flex-col justify-center relative`}>
-                <h3 className="text-xl font-bold leading-tight whitespace-pre-line">
+              <div className={`${plan.headerBg} text-white py-8 px-6 text-center h-[130px] flex flex-col justify-center relative`}>
+                <h3 className="text-2xl font-bold leading-tight whitespace-pre-line">
                   {plan.title}
                 </h3>
               </div>
               
               {/* Content - Fixed height list section */}
-              <div className="flex-grow p-4 flex flex-col justify-between">
-                <ul className="space-y-2 min-h-[120px]">
+              <div className="flex-grow p-6 flex flex-col justify-between">
+                <ul className="space-y-4 min-h-[160px]">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
-                      <Check className={`h-4 w-4 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
-                      <span className="text-gray-600 text-sm">{feature}</span>
+                      <Check className={`h-6 w-6 ${plan.checkColor} mr-3 flex-shrink-0 mt-0.5`} />
+                      <span className="text-gray-600">{feature}</span>
                     </li>
                   ))}
                 </ul>
                 
                 {/* Fixed height pricing section */}
-                <div className="mt-4 pt-4 text-center h-[105px] flex flex-col justify-end border-t border-gray-100">
-                  <div className="text-xs text-gray-500 mb-1">{plan.priceSubtext}</div>
-                  <div className="text-3xl font-bold mb-3">{plan.price}</div>
+                <div className="mt-8 pt-6 text-center h-[170px] flex flex-col justify-end border-t border-gray-100">
+                  <div className="text-base text-gray-500 mb-4">{plan.priceSubtext}</div>
+                  <div className="text-5xl font-bold mb-8">{plan.price}</div>
                   
                   <Link href={`/checkout/${plan.planId}`}>
                     <button 
-                      className={`w-full py-2 px-3 rounded-md text-sm font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out`}
+                      className={`w-full py-3 px-4 rounded-md font-medium ${plan.buttonColor} text-white transition-all duration-200 ease-in-out`}
                     >
                       {plan.buttonText}
                     </button>
