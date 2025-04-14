@@ -212,7 +212,7 @@ export default function ThumbnailsBar({
         {/* Thumbnail grid/list */}
         <ScrollArea className="flex-1">
           <div 
-            className={`p-2 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-2' : 'flex flex-row space-x-2'}`}
+            className={`p-1 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-1' : 'flex flex-row space-x-1'}`}
             ref={scrollRef}
           >
             {materials.map((material, index) => {
@@ -233,7 +233,7 @@ export default function ThumbnailsBar({
                 >
                   <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'} p-1`}>
                     <div className={`
-                      ${isVerticalLayout ? 'h-10 w-10 mr-2' : 'h-12 w-12'} 
+                      ${isVerticalLayout ? 'h-8 w-8 mr-2' : 'h-10 w-10'} 
                       rounded flex items-center justify-center overflow-hidden
                       ${isActive ? 'bg-white shadow-sm' : 'bg-gray-50'}
                     `}>

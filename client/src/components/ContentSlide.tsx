@@ -153,11 +153,11 @@ export default function ContentSlide({
           )}
           
           {/* Enhanced image with improved layout matching the reference */}
-          <div className="flex items-center justify-center w-full h-full py-6">
+          <div className="flex items-center justify-center w-full h-full py-2">
             <motion.img
               src={getS3Url()}
               alt={material.title || "Educational content"}
-              className="w-auto h-auto max-w-[90%] max-h-[80vh] mx-auto object-contain transition-all duration-300 rounded-lg"
+              className="w-auto h-auto max-w-[95%] max-h-[85vh] mx-auto object-contain transition-all duration-300 rounded-lg"
               onLoad={handleImageLoad}
               onError={handleImageError}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -408,7 +408,7 @@ export default function ContentSlide({
   
   return (
     <motion.div 
-      className="p-4 min-h-[60vh] flex flex-col bg-white rounded-lg"
+      className="p-4 min-h-[75vh] flex flex-col bg-white rounded-lg w-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
