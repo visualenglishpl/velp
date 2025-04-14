@@ -372,9 +372,12 @@ export default function ContentViewer() {
         <div 
           className={`
             ${isFullscreen 
-              ? 'fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-gray-700 z-30' 
-              : 'bg-white shadow rounded-lg p-2'
+              ? 'fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-sm p-3 pt-4 border-t border-gray-700 z-30 transition-all duration-300' 
+              : 'bg-white shadow rounded-lg p-2 transition-all duration-300'
             }`}
+          style={{
+            minHeight: '90px'
+          }}
         >
           <ThumbnailsBar
             materials={materials}
