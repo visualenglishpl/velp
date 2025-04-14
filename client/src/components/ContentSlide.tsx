@@ -95,16 +95,26 @@ export default function ContentSlide({
       
       // First, check for the newer '→' arrow format from examples
       let questionPart, answerPart;
+      let fullQuestionFormat = "";
       
       // Handle "Q: What is this? → A: It is a phone." format
       if (cleanedFilename.includes('→')) {
+        // Keep the full format including 'Q:' and 'A:' parts
         const parts = cleanedFilename.split('→');
         if (parts.length >= 2) {
-          // Extract question (removing Q: prefix if present)
-          questionPart = parts[0].replace(/^Q:\s*/, '').trim();
+          fullQuestionFormat = cleanedFilename;
           
-          // Extract answer (removing A: prefix if present)
-          answerPart = parts[1].replace(/^A:\s*/, '').trim();
+          // Also extract the parts for the alternative answer formatting
+          questionPart = parts[0].trim();
+          if (questionPart.startsWith('Q:')) {
+            questionPart = questionPart.substring(2).trim();
+          }
+          
+          // Extract answer
+          answerPart = parts[1].trim();
+          if (answerPart.startsWith('A:')) {
+            answerPart = answerPart.substring(2).trim();
+          }
         }
       } else {
         // Fallback to the old dash-based pattern
@@ -116,6 +126,7 @@ export default function ContentSlide({
         
         questionPart = dashMatch[1].trim();
         answerPart = dashMatch[2].trim();
+        fullQuestionFormat = `Q: ${questionPart} → A: ${answerPart}`;
       }
       
       // If we couldn't extract question or answer, return null
@@ -142,6 +153,7 @@ export default function ContentSlide({
       
       return {
         question: questionPart,
+        fullFormat: fullQuestionFormat,
         answer: {
           positive: answerPart,
           negative: negativePart
@@ -160,10 +172,11 @@ export default function ContentSlide({
   };
   
   // Parse the content title to extract questions and answers
-  const { question, answer } = formatContentTitle();
+  const { question, answer, fullFormat } = formatContentTitle();
   
   // Create the formatted question for display
   const formattedQuestion = question ? capitalizeQuestion(question) : null;
+  const exactFormatQuestion = fullFormat || null;
   
   // Reset state when the active slide changes
   useEffect(() => {
@@ -226,21 +239,19 @@ export default function ContentSlide({
             </div>
           )}
           
-          {/* Enhanced image with improved layout and proportional fitting */}
-          <div className="flex items-center justify-center w-full py-2" style={{ height: 'calc(100vh - 180px)' }}>
+          {/* Enhanced image with optimized layout and proportional fitting */}
+          <div className="flex items-center justify-center w-full h-full py-2 px-4">
             <motion.div 
-              className="relative w-full max-w-[95%] mx-auto h-full"
+              className="relative flex justify-center items-center w-full h-full"
               style={{ 
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingBottom: '10px'
+                maxHeight: 'calc(100vh - 200px)',
+                padding: '0 10px 10px'
               }}
             >
               <motion.img
                 src={getS3Url()}
                 alt={material.title || "Educational content"}
-                className="max-w-full max-h-full object-contain transition-all duration-300 rounded-lg"
+                className="max-w-full max-h-full object-contain transition-all duration-300 rounded-lg shadow-md"
                 onLoad={handleImageLoad}
                 onError={handleImageError}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -370,9 +381,28 @@ export default function ContentSlide({
       }}
     >
       {/* Question & Answer Display at the top */}
-      {formattedQuestion && answer && (
+      {exactFormatQuestion ? (
         <div className="bg-blue-50 py-3 text-center border-b border-blue-100 transition-all">
-          {/* Question displayed prominently */}
+          {/* Display question in exact format: "Q: Question → A: Answer" */}
+          <div className="text-xl px-4">
+            {exactFormatQuestion.includes('→') ? (
+              <>
+                <span className="font-semibold text-blue-900">
+                  {exactFormatQuestion.split('→')[0].trim()}
+                </span>
+                <span className="text-blue-700 mx-2">→</span>
+                <span className="text-blue-500 font-normal">
+                  {exactFormatQuestion.split('→')[1].trim()}
+                </span>
+              </>
+            ) : (
+              <span className="font-semibold text-blue-900">{exactFormatQuestion}</span>
+            )}
+          </div>
+        </div>
+      ) : formattedQuestion && answer && (
+        <div className="bg-blue-50 py-3 text-center border-b border-blue-100 transition-all">
+          {/* Fallback to old format if the exact format is not available */}
           <p className="font-semibold text-xl text-blue-900 mb-2">
             {formattedQuestion}
           </p>
