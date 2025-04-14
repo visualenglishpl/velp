@@ -3,15 +3,15 @@ import { Link } from "wouter";
 
 const HeroSection = () => {
   return (
-    <section className="py-6 md:py-10 bg-white">
+    <section className="py-4 md:py-6 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">
           Flexible Plans for Teachers and Schools
         </h1>
-        <p className="max-w-3xl mx-auto text-lg text-gray-600 mb-4">
+        <p className="max-w-3xl mx-auto text-lg text-gray-600 mb-3">
           Access engaging visual lessons, interactive games, worksheets, and more – designed for young learners and busy classrooms.
         </p>
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-3 mb-2">
           <Link href="/checkout/free_trial">
             <Button className="bg-black hover:bg-gray-800 text-white px-4 py-2 text-sm">
               Try a Free Sample
