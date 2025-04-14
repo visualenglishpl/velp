@@ -240,12 +240,15 @@ export default function ContentSlide({
           )}
           
           {/* Enhanced image with optimized layout and proportional fitting */}
-          <div className="flex items-center justify-center w-full h-full py-2 px-4">
+          <div className="flex items-center justify-center w-full h-full py-2 px-1">
             <motion.div 
               className="relative flex justify-center items-center w-full h-full"
               style={{ 
-                maxHeight: 'calc(100vh - 200px)',
-                padding: '0 10px 10px'
+                maxHeight: 'calc(100vh - 160px)', // Increased available height
+                padding: '0',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
               <motion.img
