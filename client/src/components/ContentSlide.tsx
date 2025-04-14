@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { ExternalLink, PenTool } from "lucide-react";
+import { ExternalLink, PenTool, BookOpen, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import TeachingGuidance from "@/components/TeachingGuidance";
 
 // Define type for material
 type Material = {
@@ -11,6 +14,12 @@ type Material = {
   description: string | null;
   contentType: string;
   content: string;
+  teachingGuidance?: {
+    presentingQuestions?: string;
+    vocabularyChecks?: string;
+    promptStructures?: string;
+    followUpQuestions?: string;
+  } | null;
   order?: number;
   orderIndex?: number;
   isLocked?: boolean;
@@ -46,6 +55,7 @@ export default function ContentSlide({
   const [isMuted, setIsMuted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [showTeacherMode, setShowTeacherMode] = useState(false);
 
   // Get the formatted S3 URL for the material
   const getS3Url = () => {
@@ -100,6 +110,19 @@ export default function ContentSlide({
     setIsError(true);
     setImageLoaded(true); // Still mark as loaded to remove skeleton
   };
+
+  // Toggle teacher mode
+  const toggleTeacherMode = () => {
+    setShowTeacherMode(!showTeacherMode);
+  };
+
+  // Check if teaching guidance is available
+  const hasTeachingGuidance = material.teachingGuidance && (
+    material.teachingGuidance.presentingQuestions || 
+    material.teachingGuidance.vocabularyChecks || 
+    material.teachingGuidance.promptStructures || 
+    material.teachingGuidance.followUpQuestions
+  );
 
   // Render based on content type
   const renderContent = () => {
@@ -389,64 +412,70 @@ export default function ContentSlide({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
     >
+      {/* Teacher Mode Toggle - Only show if teaching guidance is available */}
+      {hasTeachingGuidance && (
+        <div className="flex justify-end mb-2">
+          <Button 
+            variant={showTeacherMode ? "default" : "outline"} 
+            size="sm" 
+            className="flex items-center gap-2"
+            onClick={toggleTeacherMode}
+          >
+            {showTeacherMode ? (
+              <>
+                <EyeOff className="h-4 w-4" />
+                <span>Hide Teaching Resources</span>
+              </>
+            ) : (
+              <>
+                <BookOpen className="h-4 w-4" />
+                <span>Teacher Mode</span>
+              </>
+            )}
+          </Button>
+        </div>
+      )}
+      
       {/* No questions will be displayed as per user request */}
       
       {/* Centered title display */}
       {material.title && (
-        <motion.div
-          className="mb-4 z-10 text-center"
-          initial={{ y: -5, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200 inline-block">
-            <h2 className="text-xl font-semibold text-gray-800">{material.title}</h2>
-          </div>
-        </motion.div>
-      )}
-      
-      {/* Centered description display */}
-      {material.description && (
-        <motion.div
-          className="mb-4 z-10 text-center"
-          initial={{ y: -5, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="bg-white py-3 px-4 rounded-lg shadow-sm border border-gray-200 inline-block">
-            <p className="text-gray-700">{material.description}</p>
-          </div>
-        </motion.div>
-      )}
-      
-      {/* Content display with premium overlay if needed */}
-      <motion.div 
-        className="flex-1 flex items-center justify-center p-4 bg-white shadow-sm border border-gray-200 mt-3 relative"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        {/* Main content rendering */}
-        <div className={isPremium && !hasPurchasedAccess && !hasFreeTrial ? "filter blur-md" : ""}>
-          {renderContent()}
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {material.title}
+          </h2>
         </div>
-
-        {/* Premium content overlay */}
-        {isPremium && !hasPurchasedAccess && !hasFreeTrial && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm z-10 p-4 text-center">
-            <div className="bg-white/90 p-6 rounded-lg shadow-lg max-w-md">
-              <h3 className="text-xl font-bold mb-2 text-primary">Premium Content</h3>
-              <p className="mb-4">This slide is part of premium content. Purchase access to view all materials.</p>
-              <button 
-                onClick={onPurchaseClick}
-                className="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded transition duration-200"
-              >
-                Purchase Access
-              </button>
-            </div>
+      )}
+      
+      {/* Main content */}
+      <div className="flex-grow mt-2 mb-4">
+        {renderContent()}
+      </div>
+      
+      {/* Teaching Guidance Section - Only shown when teaching mode is active */}
+      {showTeacherMode && hasTeachingGuidance && (
+        <TeachingGuidance 
+          bookId={bookId} 
+          unitNumber={unitNumber}
+          onHide={() => setShowTeacherMode(false)}
+        />
+      )}
+      
+      {/* Premium content indicator */}
+      {isPremium && !hasPurchasedAccess && !hasFreeTrial && (
+        <div className="mt-4 w-full">
+          <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-xl text-center shadow-lg">
+            <h3 className="text-xl font-bold text-white mb-3">Premium Content</h3>
+            <p className="text-white mb-4">This content is available with a premium subscription.</p>
+            <button 
+              onClick={onPurchaseClick}
+              className="bg-white text-blue-600 font-bold px-5 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+            >
+              Upgrade to Premium
+            </button>
           </div>
-        )}
-      </motion.div>
+        </div>
+      )}
     </motion.div>
   );
 }
