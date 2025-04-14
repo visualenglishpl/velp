@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from "embla-carousel-react";
 import ContentSlide from "@/components/ContentSlide";
 import ThumbnailsBar from "@/components/ThumbnailsBar";
+import { useAuth } from "@/hooks/use-auth";
 import { Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Book, Home, Maximize2, Minimize2, AlertCircle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -72,13 +73,20 @@ export default function DirectContentViewer() {
   // Navigate hook for routing
   const [_, navigate] = useLocation();
   
+  // Get authentication user info
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
+  console.log("Content viewer user:", user?.username, "Admin role:", isAdmin);
+  
   // State for access control
-  const [hasPurchasedAccess, setHasPurchasedAccess] = useState(false);
-  const [hasFreeTrial, setHasFreeTrial] = useState(false);
+  const [hasPurchasedAccess, setHasPurchasedAccess] = useState(isAdmin); // Auto-grant access for admins
+  const [hasFreeTrial, setHasFreeTrial] = useState(isAdmin); // Auto-grant free trial for admins
   const [showAccessDialog, setShowAccessDialog] = useState(false);
+  
   // Set different free slide limits based on book series
   // Books 0a, 0b, 0c should blur from the 3rd image (first 2 slides are free)
   // Other books still use 10 free slides
+  // Admins effectively bypass this with hasPurchasedAccess set to true
   const FREE_SLIDES_LIMIT = bookPath?.startsWith('book0') ? 2 : 10;
   
   // Define subscription response type for TypeScript
