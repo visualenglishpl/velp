@@ -184,18 +184,18 @@ export default function CheckoutPage() {
     '7': 'BOOK 7 - MASTERS ENGLISH'
   };
   
-  // All available books in order
+  // All available books in order with thumbnail paths
   const allBooks = [
-    {id: '0a', title: 'BOOK 0A - BEGINNERS ENGLISH'},
-    {id: '0b', title: 'BOOK 0B - BEGINNERS ENGLISH'},
-    {id: '0c', title: 'BOOK 0C - BEGINNERS ENGLISH'},
-    {id: '1', title: 'BOOK 1 - ELEMENTARY ENGLISH'},
-    {id: '2', title: 'BOOK 2 - PRE-INTERMEDIATE ENGLISH'},
-    {id: '3', title: 'BOOK 3 - INTERMEDIATE ENGLISH'},
-    {id: '4', title: 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH'},
-    {id: '5', title: 'BOOK 5 - ADVANCED ENGLISH'},
-    {id: '6', title: 'BOOK 6 - PROFICIENCY ENGLISH'},
-    {id: '7', title: 'BOOK 7 - MASTERS ENGLISH'}
+    {id: '0a', title: 'BOOK 0A - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0a/unit1/thumbnail.jpg`},
+    {id: '0b', title: 'BOOK 0B - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0b/unit1/thumbnail.jpg`},
+    {id: '0c', title: 'BOOK 0C - BEGINNERS ENGLISH', thumbnail: `/api/direct/book0c/unit1/thumbnail.jpg`},
+    {id: '1', title: 'BOOK 1 - ELEMENTARY ENGLISH', thumbnail: `/api/direct/book1/unit1/thumbnail.jpg`},
+    {id: '2', title: 'BOOK 2 - PRE-INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book2/unit1/thumbnail.jpg`},
+    {id: '3', title: 'BOOK 3 - INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book3/unit1/thumbnail.jpg`},
+    {id: '4', title: 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH', thumbnail: `/api/direct/book4/unit1/thumbnail.jpg`},
+    {id: '5', title: 'BOOK 5 - ADVANCED ENGLISH', thumbnail: `/api/direct/book5/unit1/thumbnail.jpg`},
+    {id: '6', title: 'BOOK 6 - PROFICIENCY ENGLISH', thumbnail: `/api/direct/book6/unit1/thumbnail.jpg`},
+    {id: '7', title: 'BOOK 7 - MASTERS ENGLISH', thumbnail: `/api/direct/book7/unit1/thumbnail.jpg`}
   ];
 
   useEffect(() => {
@@ -493,6 +493,18 @@ export default function CheckoutPage() {
                       }`}
                       onClick={() => setSelectedBookId(book.id)}
                     >
+                      <div className="aspect-square w-full overflow-hidden">
+                        <img 
+                          src={book.thumbnail} 
+                          alt={`Book ${book.id.toUpperCase()} thumbnail`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // Fallback path for book thumbnails
+                            const img = e.target as HTMLImageElement;
+                            img.src = `/api/direct/book${book.id}/unit1/assets/00 E.png`;
+                          }}
+                        />
+                      </div>
                       <CardContent className="p-4">
                         <div className="text-center">
                           <div className="font-bold text-sm text-primary mb-1">BOOK {book.id.toUpperCase()}</div>
@@ -533,6 +545,29 @@ export default function CheckoutPage() {
                     <div className="font-medium text-sm">Selected Book:</div>
                     <div className="text-primary font-bold">
                       {bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="w-16 h-16 overflow-hidden rounded">
+                        <img 
+                          src={allBooks.find(b => b.id === selectedBookId)?.thumbnail || ''}
+                          alt={`${selectedBookId.toUpperCase()} thumbnail`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const img = e.target as HTMLImageElement;
+                            img.src = `/api/direct/book${selectedBookId}/unit1/assets/00 E.png`;
+                          }}
+                        />
+                      </div>
+                      <div className="ml-3">
+                        <div className="text-xs text-gray-700 font-medium">
+                          {planType === 'whole_book' ? 'Complete book access' : 'Access to all lessons'}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          {planType === 'whole_book' ? 
+                            'Includes all lessons and materials' : 
+                            'Unlimited access to all content'}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
