@@ -315,7 +315,11 @@ export default function ContentViewer() {
           <div className={`overflow-hidden ${isFullscreen ? 'h-screen' : 'min-h-[90vh]'}`} ref={emblaRef}>
             <div className="embla__container h-full">
               {materials.map((material, index) => (
-                <div className="embla__slide flex items-center justify-center h-full py-2" key={material.id}>
+                <div 
+                  className="embla__slide flex items-center justify-center h-full py-2 bg-gray-50" 
+                  key={material.id}
+                  style={{ height: isFullscreen ? '100vh' : '90vh' }}
+                >
                   <ContentSlide 
                     material={material} 
                     isActive={index === currentIndex}
