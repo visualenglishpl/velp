@@ -6,6 +6,7 @@ import AuthPage from "@/pages/auth-page";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import ShopManagement from "@/pages/admin/ShopManagement";
+import ContentOrganizer from "@/pages/admin/ContentOrganizer";
 import ContentViewer from "@/pages/content-viewer";
 import SimpleContentViewer from "@/pages/SimpleContentViewer";
 import CheckoutPage from "@/pages/checkout";
@@ -87,6 +88,11 @@ function Router() {
       {/* Shop Management - Protected Admin Route */}
       <Route path="/admin/shop">
         {() => <ProtectedRoute component={ShopManagement} adminOnly={true} />}
+      </Route>
+      
+      {/* Content Organizer - Protected Admin Route */}
+      <Route path="/admin/content-organizer">
+        {() => <ProtectedRoute component={ContentOrganizer} adminOnly={true} />}
       </Route>
       
       {/* Content Viewer for Units Database Path */}
