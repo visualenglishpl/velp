@@ -161,6 +161,79 @@ export default function DirectContentViewer() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
+  // Removed the tracking effect - will add it after materialsData is defined
+  
+  // Handle fullscreen mode
+  const contentContainerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    if (!contentContainerRef.current) return;
+    
+    if (isFullscreen) {
+      try {
+        if (contentContainerRef.current.requestFullscreen) {
+          contentContainerRef.current.requestFullscreen();
+        }
+      } catch (error) {
+        console.error("Error attempting to enable fullscreen:", error);
+      }
+    } else if (document.fullscreenElement) {
+      try {
+        document.exitFullscreen();
+      } catch (error) {
+        console.error("Error attempting to exit fullscreen:", error);
+      }
+    }
+  }, [isFullscreen]);
+
+  // Use more robust custom queries with better error handling
+  const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery<DirectUnit>({
+    queryKey: [`/api/direct/${bookPath}/${unitPath}`],
+    enabled: !!bookPath && !!unitPath,
+    queryFn: async () => {
+      console.log(`Fetching unit data from: /api/direct/${bookPath}/${unitPath}`);
+      const res = await fetch(`/api/direct/${bookPath}/${unitPath}`);
+      
+      if (!res.ok) {
+        console.error(`Failed to load unit: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to load unit: ${res.status}`);
+      }
+      
+      try {
+        const data = await res.json();
+        console.log("Unit data received:", data);
+        return data;
+      } catch (err) {
+        console.error("Invalid JSON in unit response:", err);
+        throw new Error("Invalid response format");
+      }
+    }
+  });
+
+  // Query for direct materials data with improved error handling
+  const { data: materialsData, error: materialsError, isLoading: materialsLoading } = useQuery<DirectMaterial[]>({
+    queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
+    enabled: !!bookPath && !!unitPath,
+    queryFn: async () => {
+      console.log(`Fetching materials from: /api/direct/${bookPath}/${unitPath}/materials`);
+      const res = await fetch(`/api/direct/${bookPath}/${unitPath}/materials`);
+      
+      if (!res.ok) {
+        console.error(`Failed to load materials: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to load materials: ${res.status}`);
+      }
+      
+      try {
+        const data = await res.json();
+        console.log(`Materials received: ${data.length} items`);
+        return data;
+      } catch (err) {
+        console.error("Invalid JSON in materials response:", err);
+        throw new Error("Invalid response format");
+      }
+    }
+  });
+  
   // Track which slides have been viewed and actively preload surrounding slides
   useEffect(() => {
     if (!emblaApi || !materialsData) return;
@@ -239,77 +312,6 @@ export default function DirectContentViewer() {
       emblaApi.off("select", onSelect);
     };
   }, [emblaApi, materialsData, preloadedSlides, preloadInProgress, preloadRange, bookPath, unitNumber]);
-  
-  // Handle fullscreen mode
-  const contentContainerRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    if (!contentContainerRef.current) return;
-    
-    if (isFullscreen) {
-      try {
-        if (contentContainerRef.current.requestFullscreen) {
-          contentContainerRef.current.requestFullscreen();
-        }
-      } catch (error) {
-        console.error("Error attempting to enable fullscreen:", error);
-      }
-    } else if (document.fullscreenElement) {
-      try {
-        document.exitFullscreen();
-      } catch (error) {
-        console.error("Error attempting to exit fullscreen:", error);
-      }
-    }
-  }, [isFullscreen]);
-
-  // Use more robust custom queries with better error handling
-  const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery<DirectUnit>({
-    queryKey: [`/api/direct/${bookPath}/${unitPath}`],
-    enabled: !!bookPath && !!unitPath,
-    queryFn: async () => {
-      console.log(`Fetching unit data from: /api/direct/${bookPath}/${unitPath}`);
-      const res = await fetch(`/api/direct/${bookPath}/${unitPath}`);
-      
-      if (!res.ok) {
-        console.error(`Failed to load unit: ${res.status} ${res.statusText}`);
-        throw new Error(`Failed to load unit: ${res.status}`);
-      }
-      
-      try {
-        const data = await res.json();
-        console.log("Unit data received:", data);
-        return data;
-      } catch (err) {
-        console.error("Invalid JSON in unit response:", err);
-        throw new Error("Invalid response format");
-      }
-    }
-  });
-
-  // Query for direct materials data with improved error handling
-  const { data: materialsData, error: materialsError, isLoading: materialsLoading } = useQuery<DirectMaterial[]>({
-    queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
-    enabled: !!bookPath && !!unitPath,
-    queryFn: async () => {
-      console.log(`Fetching materials from: /api/direct/${bookPath}/${unitPath}/materials`);
-      const res = await fetch(`/api/direct/${bookPath}/${unitPath}/materials`);
-      
-      if (!res.ok) {
-        console.error(`Failed to load materials: ${res.status} ${res.statusText}`);
-        throw new Error(`Failed to load materials: ${res.status}`);
-      }
-      
-      try {
-        const data = await res.json();
-        console.log(`Materials received: ${data.length} items`);
-        return data;
-      } catch (err) {
-        console.error("Invalid JSON in materials response:", err);
-        throw new Error("Invalid response format");
-      }
-    }
-  });
   
   // Effect to set the initial slide to prioritize "00 E.png" or other "00 X.png" files when content loads
   useEffect(() => {
