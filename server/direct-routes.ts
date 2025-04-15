@@ -296,7 +296,7 @@ export function registerDirectRoutes(app: Express) {
           id: index + 1, // Simple sequential ID
           path: filePath,
           title: filename,
-          description: `Content from ${filePath}`,
+          description: filename, // Changed from "Content from ${filePath}" to just the filename
           contentType: getContentTypeFromPath(filePath),
           content: filename,
           orderIndex: index,
@@ -410,14 +410,14 @@ export function registerDirectRoutes(app: Express) {
       
       // In a production environment, you would save this order to a database
       // For now, we'll store it in memory (this will reset on server restart)
-      if (!global.materialOrders) {
-        global.materialOrders = {};
+      if (!(global as any).materialOrders) {
+        (global as any).materialOrders = {};
       }
       
       const orderKey = `${bookPath}/${unitPath}`;
-      global.materialOrders[orderKey] = materials.map(m => m.id);
+      (global as any).materialOrders[orderKey] = materials.map(m => m.id);
       
-      console.log(`Saved order for ${orderKey}:`, global.materialOrders[orderKey]);
+      console.log(`Saved order for ${orderKey}:`, (global as any).materialOrders[orderKey]);
       
       return res.json({ 
         success: true, 
@@ -437,7 +437,7 @@ export function registerDirectRoutes(app: Express) {
       const orderKey = `${bookPath}/${unitPath}`;
       
       // Get the saved order from memory
-      const savedOrder = global.materialOrders?.[orderKey] || null;
+      const savedOrder = (global as any).materialOrders?.[orderKey] || null;
       
       return res.json({
         success: true,

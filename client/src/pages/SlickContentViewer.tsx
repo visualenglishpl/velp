@@ -113,6 +113,43 @@ export default function SlickContentViewer() {
     enabled: Boolean(bookPath && unitPath)
   });
   
+  // Fetch saved order
+  const {
+    data: savedOrderData,
+    isLoading: isSavedOrderLoading
+  } = useQuery<{ success: boolean, hasCustomOrder: boolean, order: number[] }>({
+    queryKey: [`/api/direct/${bookPath}/${unitPath}/savedOrder`],
+    enabled: Boolean(bookPath && unitPath)
+  });
+  
+  // Save order mutation
+  const { mutate: saveOrder, isPending: isSaving } = useMutation({
+    mutationFn: async (materialsToSave: S3Material[]) => {
+      return await apiRequest("POST", `/api/direct/${bookPath}/${unitPath}/saveOrder`, {
+        materials: materialsToSave
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Order saved",
+        description: "The slide order has been saved successfully.",
+      });
+      queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/savedOrder`] });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error saving order",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  });
+  
+  // Handle save button click
+  const handleSaveOrder = () => {
+    saveOrder(materials);
+  };
+  
   // Process materials when fetched
   useEffect(() => {
     if (!fetchedMaterials) return;
@@ -128,8 +165,8 @@ export default function SlickContentViewer() {
       );
     });
     
-    // Sort materials to prioritize "00" prefix files
-    const sortedMaterials = [...filteredMaterials].sort((a, b) => {
+    // First sort materials by default order
+    let sortedMaterials = [...filteredMaterials].sort((a, b) => {
       const aContent = a.content.toLowerCase();
       const bContent = b.content.toLowerCase();
       
@@ -149,8 +186,33 @@ export default function SlickContentViewer() {
       return aContent.localeCompare(bContent);
     });
     
+    // Apply saved order if available
+    if (savedOrderData?.hasCustomOrder && savedOrderData.order) {
+      // Create a map for quick lookup of materials
+      const materialsMap = new Map(sortedMaterials.map(m => [m.id, m]));
+      
+      // Create a new array following the saved order
+      const orderedMaterials: S3Material[] = [];
+      
+      // First add materials that exist in the saved order
+      savedOrderData.order.forEach(id => {
+        const material = materialsMap.get(id);
+        if (material) {
+          orderedMaterials.push(material);
+          materialsMap.delete(id);
+        }
+      });
+      
+      // Then add any materials that weren't in the saved order
+      materialsMap.forEach(material => {
+        orderedMaterials.push(material);
+      });
+      
+      sortedMaterials = orderedMaterials;
+    }
+    
     setMaterials(sortedMaterials);
-  }, [fetchedMaterials]);
+  }, [fetchedMaterials, savedOrderData]);
   
   // Set up sensors for drag and drop
   const sensors = useSensors(
@@ -422,6 +484,20 @@ export default function SlickContentViewer() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          {user?.role === 'admin' && (
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={handleSaveOrder}
+              disabled={isSaving}
+              className="border-green-200 hover:bg-green-50 transition-colors"
+            >
+              <Save size={16} className={isSaving ? 'animate-spin' : ''} />
+              <span className="ml-1 hidden sm:inline">
+                {isSaving ? 'Saving...' : 'Save Order'}
+              </span>
+            </Button>
+          )}
           <Button 
             variant="outline" 
             size="sm" 
