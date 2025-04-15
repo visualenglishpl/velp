@@ -48,6 +48,7 @@ export default function ContentSlide({
   bookId, 
   unitNumber, 
   slideIndex, 
+  totalSlides,
   isPremium = false,
   hasPurchasedAccess = false,
   hasFreeTrial = false,
@@ -360,7 +361,7 @@ export default function ContentSlide({
                 className="absolute bottom-2 right-2 text-xs text-gray-500 bg-white/80 px-2 py-1 rounded-sm" 
                 style={{ fontSize: '11px' }}
               >
-                {slideIndex + 1}/116
+                {slideIndex + 1}/{totalSlides || 'N/A'}
               </div>
             </motion.div>
           </div>
@@ -532,7 +533,7 @@ export default function ContentSlide({
             <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-blue-500 rounded-full transition-all duration-300"
-                style={{ width: `${((slideIndex + 1) / 116) * 100}%` }}
+                style={{ width: `${((slideIndex + 1) / (totalSlides || 100)) * 100}%` }}
               />
             </div>
             <div className="flex justify-between text-xs text-gray-500 mt-1">

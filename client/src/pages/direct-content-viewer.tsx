@@ -730,6 +730,7 @@ export default function DirectContentViewer() {
                         bookId={bookPath || ""}
                         unitNumber={unitNumber}
                         slideIndex={index}
+                        totalSlides={sortedMaterials?.length || 0}
                         isPremium={index >= FREE_SLIDES_LIMIT}
                         hasPurchasedAccess={hasPurchasedAccess}
                         onPurchaseClick={handlePurchaseClick}
