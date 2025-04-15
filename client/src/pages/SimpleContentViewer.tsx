@@ -79,7 +79,11 @@ export default function SimpleContentViewer() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "center",
-    containScroll: "keepSnaps"
+    containScroll: "keepSnaps",
+    dragFree: false,
+    skipSnaps: false,
+    watchDrag: false,
+    watchResize: true
   });
   
   // Fetch unit data
@@ -118,24 +122,40 @@ export default function SimpleContentViewer() {
     return aStarts00 ? -1 : 1;
   });
   
-  // Navigation functions with improved logging
+  // Navigation functions with direct index control for reliability
   const scrollPrev = useCallback(() => {
     console.log("Scrolling to previous slide");
-    if (emblaApi) {
-      emblaApi.scrollPrev();
+    if (emblaApi && sortedMaterials.length > 0) {
+      const prevIndex = Math.max(0, currentSlideIndex - 1);
+      console.log(`scrollPrev: Moving from slide ${currentSlideIndex} to ${prevIndex}`);
+      
+      // Create a manual scroll animation for reliability
+      try {
+        emblaApi.scrollTo(prevIndex, true);
+      } catch (err) {
+        console.error("Error scrolling to previous slide:", err);
+      }
     } else {
-      console.error("Carousel API not initialized");
+      console.error("Carousel API not initialized or no slides available");
     }
-  }, [emblaApi]);
+  }, [emblaApi, currentSlideIndex, sortedMaterials.length]);
   
   const scrollNext = useCallback(() => {
     console.log("Scrolling to next slide");
-    if (emblaApi) {
-      emblaApi.scrollNext();
+    if (emblaApi && sortedMaterials.length > 0) {
+      const nextIndex = Math.min(sortedMaterials.length - 1, currentSlideIndex + 1);
+      console.log(`scrollNext: Moving from slide ${currentSlideIndex} to ${nextIndex}`);
+      
+      // Create a manual scroll animation for reliability
+      try {
+        emblaApi.scrollTo(nextIndex, true);
+      } catch (err) {
+        console.error("Error scrolling to next slide:", err);
+      }
     } else {
-      console.error("Carousel API not initialized");
+      console.error("Carousel API not initialized or no slides available");
     }
-  }, [emblaApi]);
+  }, [emblaApi, currentSlideIndex, sortedMaterials.length]);
   
   // Handle thumbnail click
   const handleThumbnailClick = useCallback((index: number) => {
@@ -221,22 +241,20 @@ export default function SimpleContentViewer() {
       switch (event.key) {
         case "ArrowLeft": 
           console.log("Left arrow key pressed");
-          if (emblaApi) {
-            const prevIndex = Math.max(0, currentSlideIndex - 1);
-            console.log(`Keyboard navigation: Moving from slide ${currentSlideIndex} to ${prevIndex}`);
-            emblaApi.scrollTo(prevIndex);
-          }
+          scrollPrev();
           break;
         case "ArrowRight": 
           console.log("Right arrow key pressed");
-          if (emblaApi) {
-            const nextIndex = Math.min(sortedMaterials.length - 1, currentSlideIndex + 1);
-            console.log(`Keyboard navigation: Moving from slide ${currentSlideIndex} to ${nextIndex}`);
-            emblaApi.scrollTo(nextIndex);
-          }
+          scrollNext();
           break;
-        case "Home": emblaApi.scrollTo(0); break;
-        case "End": emblaApi.scrollTo(sortedMaterials.length - 1); break;
+        case "Home": 
+          console.log("Home key pressed - going to first slide");
+          if (emblaApi) emblaApi.scrollTo(0, true); 
+          break;
+        case "End": 
+          console.log("End key pressed - going to last slide");
+          if (emblaApi) emblaApi.scrollTo(sortedMaterials.length - 1, true); 
+          break;
         case "f": case "F": setIsFullscreen(!isFullscreen); break;
         case "t": case "T": setShowThumbnails(!showThumbnails); break;
       }
@@ -424,18 +442,10 @@ export default function SimpleContentViewer() {
                             // If clicked on left side, go to previous slide; if right side, go to next slide
                             if (x < width / 2) {
                               console.log("Left side of image clicked - previous slide");
-                              if (emblaApi) {
-                                // Use direct API call instead of scroll function
-                                const prevIndex = Math.max(0, currentSlideIndex - 1);
-                                emblaApi.scrollTo(prevIndex);
-                              }
+                              scrollPrev();
                             } else {
                               console.log("Right side of image clicked - next slide");
-                              if (emblaApi) {
-                                // Use direct API call instead of scroll function
-                                const nextIndex = Math.min(sortedMaterials.length - 1, currentSlideIndex + 1);
-                                emblaApi.scrollTo(nextIndex);
-                              }
+                              scrollNext();
                             }
                           }}
                         />
@@ -457,14 +467,7 @@ export default function SimpleContentViewer() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button 
-                  onClick={() => {
-                    console.log("Previous button clicked");
-                    if (emblaApi) {
-                      const prevIndex = Math.max(0, currentSlideIndex - 1);
-                      console.log(`Moving from slide ${currentSlideIndex} to ${prevIndex}`);
-                      emblaApi.scrollTo(prevIndex);
-                    }
-                  }}
+                  onClick={scrollPrev}
                   className="absolute left-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20"
                 >
                   <ChevronLeft size={28} />
@@ -478,14 +481,7 @@ export default function SimpleContentViewer() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button 
-                  onClick={() => {
-                    console.log("Next button clicked");
-                    if (emblaApi) {
-                      const nextIndex = Math.min(sortedMaterials.length - 1, currentSlideIndex + 1);
-                      console.log(`Moving from slide ${currentSlideIndex} to ${nextIndex}`);
-                      emblaApi.scrollTo(nextIndex);
-                    }
-                  }}
+                  onClick={scrollNext}
                   className="absolute right-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20"
                 >
                   <ChevronRight size={28} />
