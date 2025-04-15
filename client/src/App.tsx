@@ -7,8 +7,6 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import ShopManagement from "@/pages/admin/ShopManagement";
 import ContentOrganizer from "@/pages/admin/ContentOrganizer";
-import ContentViewer from "@/pages/content-viewer";
-import SimpleContentViewer from "@/pages/SimpleContentViewer";
 import CheckoutPage from "@/pages/checkout";
 import PrintedBookCheckout from "@/pages/PrintedBookCheckout";
 import BooksPage from "@/pages/BooksPage";
@@ -95,18 +93,22 @@ function Router() {
         {() => <ProtectedRoute component={ContentOrganizer} adminOnly={true} />}
       </Route>
       
-      {/* Content Viewer for Units Database Path */}
-      <Route path="/units/:unitId/materials/:materialId">
-        {() => <ProtectedRoute component={ContentViewer} />}
-      </Route>
-      
-      <Route path="/units/:unitId">
-        {() => <ProtectedRoute component={ContentViewer} />}
-      </Route>
-      
-      {/* Main content viewer path using SimpleContentViewer for better stability */}
+      {/* Placeholder for Content Viewer - to be rebuilt */}
       <Route path="/book:bookId/unit:unitNumber">
-        {(params) => <ProtectedRoute component={SimpleContentViewer} />}
+        {() => (
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="bg-white p-8 rounded-lg shadow-lg max-w-md text-center">
+              <h1 className="text-2xl font-bold mb-4">Content Viewer Removed</h1>
+              <p className="mb-4">The content viewer is being rebuilt from scratch.</p>
+              <button 
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={() => window.history.back()}
+              >
+                Go Back
+              </button>
+            </div>
+          </div>
+        )}
       </Route>
       
       {/* Fallback for any other book/unit pattern */}
@@ -114,7 +116,20 @@ function Router() {
         {(params) => {
           // Only match book/unit pattern (e.g., book3/unit12)
           if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
-            return <ProtectedRoute component={SimpleContentViewer} />;
+            return (
+              <div className="flex items-center justify-center min-h-screen">
+                <div className="bg-white p-8 rounded-lg shadow-lg max-w-md text-center">
+                  <h1 className="text-2xl font-bold mb-4">Content Viewer Removed</h1>
+                  <p className="mb-4">The content viewer is being rebuilt from scratch.</p>
+                  <button 
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={() => window.history.back()}
+                  >
+                    Go Back
+                  </button>
+                </div>
+              </div>
+            );
           }
           return <NotFound />;
         }}
