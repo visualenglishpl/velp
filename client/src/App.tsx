@@ -7,6 +7,7 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import ShopManagement from "@/pages/admin/ShopManagement";
 import ContentOrganizer from "@/pages/admin/ContentOrganizer";
+import SlickContentViewer from "@/pages/SlickContentViewer";
 import CheckoutPage from "@/pages/checkout";
 import PrintedBookCheckout from "@/pages/PrintedBookCheckout";
 import BooksPage from "@/pages/BooksPage";
@@ -93,22 +94,9 @@ function Router() {
         {() => <ProtectedRoute component={ContentOrganizer} adminOnly={true} />}
       </Route>
       
-      {/* Placeholder for Content Viewer - to be rebuilt */}
+      {/* Content Viewer Routes */}
       <Route path="/book:bookId/unit:unitNumber">
-        {() => (
-          <div className="flex items-center justify-center min-h-screen">
-            <div className="bg-white p-8 rounded-lg shadow-lg max-w-md text-center">
-              <h1 className="text-2xl font-bold mb-4">Content Viewer Removed</h1>
-              <p className="mb-4">The content viewer is being rebuilt from scratch.</p>
-              <button 
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-                onClick={() => window.history.back()}
-              >
-                Go Back
-              </button>
-            </div>
-          </div>
-        )}
+        {() => <ProtectedRoute component={SlickContentViewer} />}
       </Route>
       
       {/* Fallback for any other book/unit pattern */}
@@ -116,20 +104,7 @@ function Router() {
         {(params) => {
           // Only match book/unit pattern (e.g., book3/unit12)
           if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
-            return (
-              <div className="flex items-center justify-center min-h-screen">
-                <div className="bg-white p-8 rounded-lg shadow-lg max-w-md text-center">
-                  <h1 className="text-2xl font-bold mb-4">Content Viewer Removed</h1>
-                  <p className="mb-4">The content viewer is being rebuilt from scratch.</p>
-                  <button 
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={() => window.history.back()}
-                  >
-                    Go Back
-                  </button>
-                </div>
-              </div>
-            );
+            return <ProtectedRoute component={SlickContentViewer} />;
           }
           return <NotFound />;
         }}

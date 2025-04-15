@@ -159,14 +159,8 @@ const ContentOrganizer: React.FC = () => {
   const handleViewContent = (id: string) => {
     const item = contentItems.find(item => item.id === id);
     if (item) {
-      // Content viewer is currently being rebuilt
-      toast({
-        title: "Content Viewer Unavailable",
-        description: "The content viewer is currently being rebuilt from scratch.",
-        variant: "destructive"
-      });
-      // Return to the units page instead
-      // navigate(`/book${bookId}/units`);
+      // Navigate to the new SlickContentViewer
+      navigate(`/book${bookId}/unit${unitNumber}`);
     }
   };
 
