@@ -75,15 +75,18 @@ export default function SimpleContentViewer() {
   // Navigation
   const [_, navigate] = useLocation();
   
-  // Carousel setup
+  // Carousel setup with strict configuration - rebuilt for reliable navigation
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "center",
     containScroll: "keepSnaps",
     dragFree: false,
     skipSnaps: false,
-    watchDrag: false,
-    watchResize: true
+    watchDrag: true,
+    watchResize: true,
+    speed: 10, // Make navigation snappy
+    startIndex: 0,
+    inViewThreshold: 1
   });
   
   // Fetch unit data
@@ -157,9 +160,27 @@ export default function SimpleContentViewer() {
     }
   }, [emblaApi, currentSlideIndex, sortedMaterials.length]);
   
-  // Handle thumbnail click
+  // Handle thumbnail click with forced focus for reliable navigation
   const handleThumbnailClick = useCallback((index: number) => {
-    if (emblaApi) emblaApi.scrollTo(index);
+    if (emblaApi) {
+      console.log(`Thumbnail clicked: Moving to slide ${index}`);
+      try {
+        // Force a reflow of the carousel to make navigation more reliable
+        emblaApi.reInit();
+        emblaApi.scrollTo(index, true);
+        
+        // Update current slide index manually for immediate UI update
+        setCurrentSlideIndex(index);
+        
+        // Add to viewed slides
+        setViewedSlides(prev => {
+          if (prev.includes(index)) return prev;
+          return [...prev, index];
+        });
+      } catch (err) {
+        console.error("Error navigating to thumbnail:", err);
+      }
+    }
   }, [emblaApi]);
   
   // Track current slide and preload adjacent images
