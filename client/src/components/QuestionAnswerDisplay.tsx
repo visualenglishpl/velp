@@ -161,8 +161,8 @@ function getQuestionAnswerFromData(material: any): QAData {
     { code: "10 a b", country: "BRITAIN / UK", question: "What countries are in the British Isles?", answer: "They are the UK and Ireland." },
     
     // MOBILE PHONES
-    { code: "01 a a", category: "MOBILE PHONES", question: "What is this?", answer: "It is a phone." },
-    { code: "01 a b", category: "MOBILE PHONES", question: "Do you have a phone?", answer: "Yes, I have a phone / No, I do not have a phone." },
+    { code: "01 a a", category: "MOBILE PHONE", question: "What is it?", answer: "It is a mobile phone / a charger." },
+    { code: "01 a b", category: "MOBILE PHONE", question: "Do you have a mobile phone?", answer: "Yes, I do. / No, I don't." },
     { code: "01 a c", category: "MOBILE PHONES", question: "What phone do you have?", answer: "I have a [iPhone/Samsung/Android]." },
     { code: "01 a d", category: "MOBILE PHONES", question: "Who has a phone in your house?", answer: "My [mother/father/sister] has a phone." },
     { code: "01 a e", category: "MOBILE PHONES", question: "Are these old or new phones?", answer: "They are old/new phones." },
@@ -174,8 +174,8 @@ function getQuestionAnswerFromData(material: any): QAData {
     { code: "01 a k", category: "MOBILE PHONES", question: "Do you take photos with your phone?", answer: "Yes, I take photos / No, I do not." },
     
     // CHARGERS & BATTERIES
-    { code: "02 a a", category: "CHARGERS & BATTERIES", question: "What is this?", answer: "It is a charger." },
-    { code: "02 a b", category: "CHARGERS & BATTERIES", question: "Do you have a charger?", answer: "Yes, I have a charger / No, I do not." },
+    { code: "02 a a", category: "CHARGER", question: "What is it?", answer: "It is a mobile phone / a charger." },
+    { code: "02 a b", category: "CHARGER", question: "Do you have a charger?", answer: "Yes, I do. / No, I don't." },
     { code: "02 a c", category: "CHARGERS & BATTERIES", question: "Do you have a wireless charger?", answer: "Yes, I do / No, I do not." },
     { code: "02 a d", category: "CHARGERS & BATTERIES", question: "How long does your battery last?", answer: "It lasts [1 hour/5 hours]." },
     { code: "02 a e", category: "CHARGERS & BATTERIES", question: "What color is your charger?", answer: "It is [red/black/white]." },
