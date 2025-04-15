@@ -9,10 +9,12 @@ interface QAData {
 
 interface QuestionAnswerDisplayProps {
   material: {
+    id: number;
     description: string;
     content: string;
     title: string;
   };
+  isEditMode?: boolean;
 }
 
 // Simple function to determine the content's country based on filename
@@ -180,38 +182,95 @@ export const getQuestionAnswer = (material: any): QAData => {
   };
 };
 
-export const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ material }) => {
+export const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ material, isEditMode }) => {
   // Get question and answer data
   const qaData = getQuestionAnswer(material);
+  const [editedQuestion, setEditedQuestion] = React.useState<string>(qaData.question);
+  const [editedAnswer, setEditedAnswer] = React.useState<string>(qaData.answer);
+  const [editedCountry, setEditedCountry] = React.useState<string>(qaData.country);
+  
+  // Update state when material changes
+  React.useEffect(() => {
+    setEditedQuestion(qaData.question);
+    setEditedAnswer(qaData.answer);
+    setEditedCountry(qaData.country);
+  }, [material.id, qaData.question, qaData.answer, qaData.country]);
+  
+  // Save custom questions locally
+  React.useEffect(() => {
+    if (!isEditMode) return;
+    
+    // Save to localStorage
+    const customQA = JSON.parse(localStorage.getItem('customQA') || '{}');
+    customQA[material.id] = {
+      question: editedQuestion,
+      answer: editedAnswer,
+      country: editedCountry
+    };
+    localStorage.setItem('customQA', JSON.stringify(customQA));
+  }, [isEditMode, material.id, editedQuestion, editedAnswer, editedCountry]);
+  
+  // Load custom questions if available
+  React.useEffect(() => {
+    const customQA = JSON.parse(localStorage.getItem('customQA') || '{}');
+    if (customQA[material.id]) {
+      setEditedQuestion(customQA[material.id].question);
+      setEditedAnswer(customQA[material.id].answer);
+      setEditedCountry(customQA[material.id].country);
+    }
+  }, [material.id]);
 
-  if (qaData.hasData) {
+  if (qaData.hasData || editedQuestion || editedAnswer) {
     return (
       <div className="mb-3 bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
         {/* Show country name if available */}
-        {qaData.country && (
+        {(qaData.country || editedCountry) && (
           <div className="mb-1 flex items-center justify-center">
-            <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-              {qaData.country}
-            </h3>
+            {isEditMode ? (
+              <input
+                type="text"
+                value={editedCountry}
+                onChange={(e) => setEditedCountry(e.target.value)}
+                className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200 text-center focus:ring-2 focus:ring-blue-300 outline-none"
+              />
+            ) : (
+              <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
+                {editedCountry || qaData.country}
+              </h3>
+            )}
           </div>
         )}
         
         <div className="flex flex-col gap-1">
           {/* Show question */}
-          {qaData.question && (
-            <div className="flex gap-2">
-              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-              <span className="text-gray-800 text-base">{qaData.question}</span>
-            </div>
-          )}
+          <div className="flex gap-2">
+            <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+            {isEditMode ? (
+              <textarea
+                value={editedQuestion}
+                onChange={(e) => setEditedQuestion(e.target.value)}
+                className="text-gray-800 text-base bg-white p-1 rounded flex-1 border-blue-200 border focus:ring-2 focus:ring-blue-300 outline-none"
+                rows={2}
+              />
+            ) : (
+              <span className="text-gray-800 text-base">{editedQuestion || qaData.question}</span>
+            )}
+          </div>
           
           {/* Show answer */}
-          {qaData.answer && (
-            <div className="flex gap-2 mt-2">
-              <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-              <span className="font-medium text-indigo-900 text-base">{qaData.answer}</span>
-            </div>
-          )}
+          <div className="flex gap-2 mt-2">
+            <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+            {isEditMode ? (
+              <textarea
+                value={editedAnswer}
+                onChange={(e) => setEditedAnswer(e.target.value)}
+                className="font-medium text-indigo-900 text-base bg-white p-1 rounded flex-1 border-indigo-200 border focus:ring-2 focus:ring-indigo-300 outline-none"
+                rows={2}
+              />
+            ) : (
+              <span className="font-medium text-indigo-900 text-base">{editedAnswer || qaData.answer}</span>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -221,9 +280,17 @@ export const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ ma
   if (material.title) {
     return (
       <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
-        <div className="font-medium text-gray-700">
-          {material.title}
-        </div>
+        {isEditMode ? (
+          <textarea
+            value={material.title}
+            readOnly
+            className="font-medium text-gray-700 bg-white p-1 rounded w-full border-gray-200 border"
+          />
+        ) : (
+          <div className="font-medium text-gray-700">
+            {material.title}
+          </div>
+        )}
       </div>
     );
   }

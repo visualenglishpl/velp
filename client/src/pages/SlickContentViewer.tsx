@@ -734,7 +734,7 @@ export default function SlickContentViewer() {
               return (
                 <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
                   {/* Question-Answer section above image */}
-                  <QuestionAnswerDisplay material={material} />
+                  <QuestionAnswerDisplay material={material} isEditMode={isEditMode} />
                   
                   {/* Main image - Only show image if it's not a PDF or SWF */}
                   <div 
