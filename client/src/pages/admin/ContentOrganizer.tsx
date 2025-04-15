@@ -159,8 +159,14 @@ const ContentOrganizer: React.FC = () => {
   const handleViewContent = (id: string) => {
     const item = contentItems.find(item => item.id === id);
     if (item) {
-      // Create a URL for the SimpleContentViewer with the specific item
-      navigate(`/content-viewer?bookId=${bookId}&unitNumber=${unitNumber}&contentId=${id}`);
+      // Content viewer is currently being rebuilt
+      toast({
+        title: "Content Viewer Unavailable",
+        description: "The content viewer is currently being rebuilt from scratch.",
+        variant: "destructive"
+      });
+      // Return to the units page instead
+      // navigate(`/book${bookId}/units`);
     }
   };
 
