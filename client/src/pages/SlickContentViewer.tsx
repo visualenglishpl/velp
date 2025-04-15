@@ -327,10 +327,10 @@ export default function SlickContentViewer() {
         ref={setNodeRef}
         style={style}
         className={`
-          cursor-grab border-2 h-24 w-24 flex-shrink-0 overflow-hidden rounded-md
+          cursor-grab border-2 h-16 w-16 flex-shrink-0 overflow-hidden rounded-md
           transition-all duration-200 hover:scale-105 transform
           ${index === currentIndex 
-            ? 'border-blue-500 ring-2 ring-blue-300 scale-105 shadow-md' 
+            ? 'border-blue-500 ring-1 ring-blue-300 scale-105 shadow-md' 
             : 'border-gray-200 opacity-80 hover:opacity-100'
           }
           ${isDragging ? 'shadow-xl scale-105' : ''}
@@ -350,9 +350,9 @@ export default function SlickContentViewer() {
           </div>
           
           <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center">
-            <div className="bg-black/60 text-white text-xs text-center py-0.5 px-1 w-full flex justify-between items-center">
+            <div className="bg-black/60 text-white text-[10px] text-center py-0.5 px-1 w-full flex justify-between items-center">
               <span>{index + 1}</span>
-              <GripVertical className="h-3 w-3 text-gray-300" />
+              <GripVertical className="h-2 w-2 text-gray-300" />
             </div>
           </div>
         </div>
@@ -451,11 +451,11 @@ export default function SlickContentViewer() {
               const isPremiumContent = index >= freeSlideLimit && !hasPaidAccess;
               
               return (
-                <div key={index} className="outline-none h-[80vh] w-full flex flex-col justify-center relative px-4">
+                <div key={index} className="outline-none h-[60vh] w-full flex flex-col justify-center relative px-4">
                   {/* Question-Answer section above image */}
                   {material.title && (
-                    <div className="mb-4 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl shadow-md mx-auto z-10 max-w-2xl border border-blue-100">
-                      <div className="flex flex-col gap-2">
+                    <div className="mb-2 bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-xl shadow-md mx-auto z-10 max-w-2xl border border-blue-100">
+                      <div className="flex flex-col gap-1">
                         {/* Handle extracted question format with arrow → */}
                         {material.title.includes('→') ? (
                           <>
@@ -688,14 +688,14 @@ export default function SlickContentViewer() {
       </div>
       
       {/* Thumbnails navigation with drag and drop */}
-      <div className="border-t p-4 bg-gray-50">
+      <div className="border-t p-2 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <div className="flex justify-between items-center mb-2">
-            <p className="text-sm text-gray-500">Navigate or drag to reorder:</p>
-            <p className="text-xs text-blue-500">Drag thumbnails to reorder slides</p>
+          <div className="flex justify-between items-center mb-1">
+            <p className="text-xs text-gray-500">Navigate or drag to reorder</p>
+            <p className="text-xs text-blue-500 hidden sm:block">Drag thumbnails to reorder slides</p>
           </div>
           
-          <div className="overflow-x-auto pb-2">
+          <div className="overflow-x-auto">
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
@@ -707,7 +707,7 @@ export default function SlickContentViewer() {
                 items={materials.map(item => `thumbnail-${item.id}`)} 
                 strategy={horizontalListSortingStrategy}
               >
-                <div className="flex space-x-3 min-w-max px-2 py-1">
+                <div className="flex space-x-2 min-w-max px-1">
                   {materials.map((material, index) => (
                     <SortableThumbnail 
                       key={`thumbnail-${material.id}`} 
@@ -720,7 +720,7 @@ export default function SlickContentViewer() {
               
               <DragOverlay>
                 {activeItem ? (
-                  <div className="h-24 w-24 rounded-md overflow-hidden shadow-2xl rotate-3 border-2 border-blue-500">
+                  <div className="h-16 w-16 rounded-md overflow-hidden shadow-2xl rotate-3 border-2 border-blue-500">
                     <img 
                       src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(activeItem.content)}`}
                       alt={activeItem.title || "Dragging thumbnail"}
