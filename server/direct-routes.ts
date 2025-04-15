@@ -291,12 +291,24 @@ export function registerDirectRoutes(app: Express) {
         // Get the filename without the path
         const filename = filePath.split('/').pop() || filePath;
         
+        // Extract question info from the filename, if possible
+        let extractedTitle = "";
+        let extractedDescription = "";
+        
+        // Look for patterns like "01 R A" in the filename
+        const fileCodeMatch = filename.match(/(\d+)\s+([A-Z])\s+([A-Z])/);
+        if (fileCodeMatch) {
+          // Store the file code (e.g., "01 R A") in the description field
+          // This helps us identify which question to show without showing the whole filename
+          extractedDescription = fileCodeMatch[0];
+        }
+        
         // Create a material object
         return {
           id: index + 1, // Simple sequential ID
           path: filePath,
-          title: "", // We'll fill this with proper Q&A in the client
-          description: "", // Empty description to avoid showing filenames in UI
+          title: extractedTitle, // Will be set by client
+          description: extractedDescription, // Contains file code for question mapping
           contentType: getContentTypeFromPath(filePath),
           content: filename,
           orderIndex: index,
