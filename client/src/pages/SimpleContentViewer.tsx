@@ -37,9 +37,21 @@ export default function SimpleContentViewer() {
   const [location] = useLocation();
   const pathParts = location.split('/').filter(Boolean);
   
-  // Extract from /simple/book#/unit# format
-  const bookPath = pathParts[1]?.startsWith('book') ? pathParts[1] : "";
-  const unitPath = pathParts[2]?.startsWith('unit') ? pathParts[2] : "";
+  // Try different path formats to extract bookId and unitNumber
+  let bookPath = "";
+  let unitPath = "";
+  
+  // Check for /book4/unit1 format
+  if (location.match(/\/book[0-9a-z]+\/unit[0-9]+/)) {
+    bookPath = pathParts[0];
+    unitPath = pathParts[1];
+  }
+  // Check for /simple/book4/unit1 format (for backward compatibility)
+  else if (pathParts[0] === "simple" && pathParts.length >= 3) {
+    bookPath = pathParts[1];
+    unitPath = pathParts[2];
+  }
+  
   const bookId = bookPath ? bookPath.replace(/\D/g, '') : "";
   const unitNumber = unitPath ? parseInt(unitPath.replace(/\D/g, '')) : 0;
   

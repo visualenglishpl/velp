@@ -7,7 +7,6 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import BooksManagement from "@/pages/admin/BooksManagement";
 import ShopManagement from "@/pages/admin/ShopManagement";
 import ContentViewer from "@/pages/content-viewer";
-import DirectContentViewer from "@/pages/direct-content-viewer";
 import SimpleContentViewer from "@/pages/SimpleContentViewer";
 import CheckoutPage from "@/pages/checkout";
 import PrintedBookCheckout from "@/pages/PrintedBookCheckout";
@@ -99,19 +98,9 @@ function Router() {
         {() => <ProtectedRoute component={ContentViewer} />}
       </Route>
       
-      {/* Simple Content Viewer with improved stability */}
-      <Route path="/simple/:bookPath/:unitPath">
-        {(params) => {
-          if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
-            return <ProtectedRoute component={SimpleContentViewer} />;
-          }
-          return <NotFound />;
-        }}
-      </Route>
-      
-      {/* Direct S3 Content Viewer - works with ANY book/unit path that matches S3 pattern */}
+      {/* Main content viewer path using SimpleContentViewer for better stability */}
       <Route path="/book:bookId/unit:unitNumber">
-        {(params) => <ProtectedRoute component={DirectContentViewer} />}
+        {(params) => <ProtectedRoute component={SimpleContentViewer} />}
       </Route>
       
       {/* Fallback for any other book/unit pattern */}
@@ -119,7 +108,7 @@ function Router() {
         {(params) => {
           // Only match book/unit pattern (e.g., book3/unit12)
           if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
-            return <ProtectedRoute component={DirectContentViewer} />;
+            return <ProtectedRoute component={SimpleContentViewer} />;
           }
           return <NotFound />;
         }}
