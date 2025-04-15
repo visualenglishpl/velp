@@ -6,6 +6,8 @@ import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, L
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import ThumbnailsBar from "@/components/ThumbnailsBar";
+import TeachingGuidance from "@/components/TeachingGuidance";
 
 type Material = {
   id: number;
@@ -30,10 +32,27 @@ type Unit = {
 };
 
 export default function SimpleContentViewer() {
-  // Logging path for debug
-  const params = new URLSearchParams(window.location.search);
-  const bookId = params.get("bookId");
-  const unitNumber = params.get("unitNumber");
+  const [location, navigate] = useLocation();
+  
+  // Extract bookId and unitNumber from the URL path
+  let bookId: string | null = null;
+  let unitNumber: string | null = null;
+  
+  // Try to extract from path pattern like /book4/unit3
+  const pathRegex = /\/book(\d+)\/unit(\d+)/;
+  const pathMatch = location.match(pathRegex);
+  
+  if (pathMatch) {
+    bookId = pathMatch[1];
+    unitNumber = pathMatch[2];
+    console.log(`Path match: Book ${bookId}, Unit ${unitNumber}`);
+  } else {
+    // Fallback to URL query parameters
+    const params = new URLSearchParams(window.location.search);
+    bookId = params.get("bookId");
+    unitNumber = params.get("unitNumber");
+    console.log(`Query params: Book ${bookId}, Unit ${unitNumber}`);
+  }
   
   // Additional state setup
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -55,9 +74,6 @@ export default function SimpleContentViewer() {
 
   console.log(`Simple Content Viewer: Book=${bookPath}, Unit=${unitPath}, Full path=/${bookPath}/${unitPath}`);
   console.log(`Content Viewer: Book=${bookPath}, Unit=${unitPath}`);
-  
-  // Navigation
-  const [_, navigate] = useLocation();
   
   // Fetch unit data
   const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery<Unit>({
@@ -426,35 +442,29 @@ export default function SimpleContentViewer() {
             </Tooltip>
           </TooltipProvider>
         </div>
-      </div>
-      
-      {/* Thumbnails - conditionally rendered */}
-      {showThumbnails && (
-        <div className="bg-gray-50 border-t p-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-flow-col auto-cols-max gap-2 overflow-x-auto pb-2">
-              {sortedMaterials.map((material, index) => (
-                <button
-                  key={material.id}
-                  onClick={() => handleThumbnailClick(index)}
-                  className={`flex-shrink-0 w-16 h-16 overflow-hidden rounded border-2 ${
-                    index === currentSlideIndex 
-                      ? 'border-blue-500 shadow-md' 
-                      : 'border-transparent hover:border-gray-300'
-                  }`}
-                >
-                  <img
-                    src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                  />
-                </button>
-              ))}
-            </div>
+        
+        {/* Thumbnails bar */}
+        {showThumbnails && (
+          <div className="mt-4 px-4">
+            <ThumbnailsBar 
+              materials={sortedMaterials} 
+              currentIndex={currentSlideIndex}
+              bookPath={bookPath}
+              unitPath={unitPath}
+              onThumbnailClick={handleThumbnailClick}
+            />
           </div>
+        )}
+        
+        {/* Teaching guidance section */}
+        <div className="mt-8 px-4">
+          <TeachingGuidance 
+            title={unitData.title}
+            bookId={bookId}
+            unitNumber={unitNumber}
+          />
         </div>
-      )}
+      </div>
     </div>
   );
 }
