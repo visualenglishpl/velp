@@ -17,40 +17,60 @@ interface QuestionAnswerDisplayProps {
   isEditMode?: boolean;
 }
 
-// Simple function to determine the content's country based on filename
-const determineCountry = (content: string): string => {
-  const contentLower = content.toLowerCase();
+// Utility functions
+const formatText = {
+  // Remove file extensions and code patterns, properly capitalize text
+  cleanFileName: (filename: string): string => {
+    if (!filename) return '';
+    // Remove file extensions
+    let cleaned = filename.replace(/\.(png|jpg|jpeg|gif|webp)$/i, '');
+    // Remove technical codes like "01 RA" or "05 LC"
+    cleaned = cleaned.replace(/\d+\s+[a-z]\s+[a-z]/i, '');
+    // Properly capitalize first letter of each word
+    cleaned = cleaned.split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
+      .trim();
+    return cleaned;
+  },
   
-  if (contentLower.includes('poland') || contentLower.includes('01 r')) {
-    return 'POLAND';
-  } else if (contentLower.includes('britain') || contentLower.includes('uk') || contentLower.includes('02 n')) {
-    return 'BRITAIN / UK';
-  } else if (contentLower.includes('ireland') || contentLower.includes('03 g')) {
-    return 'NORTHERN IRELAND';
-  } else if (contentLower.includes('scotland') || contentLower.includes('04 l')) {
-    return 'SCOTLAND';
-  } else if (contentLower.includes('england') || contentLower.includes('05 l')) {
-    return 'ENGLAND';
-  } else if (contentLower.includes('wales') || contentLower.includes('06 h')) {
-    return 'WALES';
-  } else if (contentLower.includes('australia') || contentLower.includes('07 l')) {
-    return 'AUSTRALIA';
-  } else if (contentLower.includes('usa') || contentLower.includes('america') || contentLower.includes('08 m')) {
-    return 'USA';
+  // Determine country from content
+  determineCountry: (content: string): string => {
+    const contentLower = content.toLowerCase();
+    
+    if (contentLower.includes('poland') || contentLower.includes('01 r')) {
+      return 'POLAND';
+    } else if (contentLower.includes('britain') || contentLower.includes('uk') || contentLower.includes('02 n')) {
+      return 'BRITAIN / UK';
+    } else if (contentLower.includes('ireland') || contentLower.includes('03 g')) {
+      return 'NORTHERN IRELAND';
+    } else if (contentLower.includes('scotland') || contentLower.includes('04 l')) {
+      return 'SCOTLAND';
+    } else if (contentLower.includes('england') || contentLower.includes('05 l')) {
+      return 'ENGLAND';
+    } else if (contentLower.includes('wales') || contentLower.includes('06 h')) {
+      return 'WALES';
+    } else if (contentLower.includes('australia') || contentLower.includes('07 l')) {
+      return 'AUSTRALIA';
+    } else if (contentLower.includes('usa') || contentLower.includes('america') || contentLower.includes('08 m')) {
+      return 'USA';
+    }
+    
+    return '';
   }
-  
-  return '';
 };
 
 // Helper function to get question and answer for a material
-export const getQuestionAnswer = (material: any): QAData => {
+function getQuestionAnswerFromData(material: any): QAData {
   const content = material.content.toLowerCase();
-  const title = material.title || '';
+  
+  // Clean the title
+  const title = material.title ? formatText.cleanFileName(material.title) : '';
   const description = material.description || '';
   
   // Try to extract from filename patterns
   if (content.match(/\d+\s+[a-z]\s+[a-z]/i)) {
-    const country = determineCountry(content);
+    const country = formatText.determineCountry(content);
     
     // England questions
     if (country === 'ENGLAND' || content.includes('05 l')) {
@@ -180,11 +200,11 @@ export const getQuestionAnswer = (material: any): QAData => {
     answer: "",
     hasData: false
   };
-};
+}
 
-export const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ material, isEditMode }) => {
+function QuestionAnswerDisplay({ material, isEditMode }: QuestionAnswerDisplayProps) {
   // Get question and answer data
-  const qaData = getQuestionAnswer(material);
+  const qaData = React.useMemo(() => getQuestionAnswerFromData(material), [material]);
   const [editedQuestion, setEditedQuestion] = React.useState<string>(qaData.question);
   const [editedAnswer, setEditedAnswer] = React.useState<string>(qaData.answer);
   const [editedCountry, setEditedCountry] = React.useState<string>(qaData.country);
@@ -278,17 +298,19 @@ export const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ ma
   
   // For materials with no data but with title
   if (material.title) {
+    const cleanedTitle = formatText.cleanFileName(material.title);
+    
     return (
       <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
         {isEditMode ? (
           <textarea
-            value={material.title}
+            value={cleanedTitle}
             readOnly
             className="font-medium text-gray-700 bg-white p-1 rounded w-full border-gray-200 border"
           />
         ) : (
           <div className="font-medium text-gray-700">
-            {material.title}
+            {cleanedTitle}
           </div>
         )}
       </div>
@@ -296,6 +318,6 @@ export const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ ma
   }
   
   return null;
-};
+}
 
 export default QuestionAnswerDisplay;
