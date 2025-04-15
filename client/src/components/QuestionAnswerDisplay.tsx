@@ -230,14 +230,14 @@ function getQuestionAnswerFromData(material: any): QAData {
     { code: "03 c d", category: "HEADPHONES & EARPHONES", question: "Do you listen to music with headphones every day?", answer: "Yes, I do / No, I do not." },
     { code: "03 c e", category: "HEADPHONES & EARPHONES", question: "Do you listen to music while studying?", answer: "Yes, I do / No, I do not." },
     { code: "03 c h", category: "HEADPHONES & EARPHONES", question: "What music do you listen to?", answer: "I listen to [pop/rock/classical] music." },
-    
+
     // SPEAKERS
     { code: "04 a a", category: "SPEAKERS", question: "What are these?", answer: "They are speakers." },
     { code: "04 a c", category: "SPEAKERS", question: "Do you have a mini speaker at home?", answer: "Yes, I do / No, I do not." },
     { code: "04 a h", category: "SPEAKERS", question: "Do you prefer speakers or headphones?", answer: "I prefer speakers/headphones." },
     { code: "04 a j", category: "SPEAKERS", question: "Does your phone have speakers?", answer: "Yes, it does / No, it does not." },
     { code: "04 a m", category: "SPEAKERS", question: "Where are the speakers in a car?", answer: "They are [in the doors/on the dashboard]." },
-    
+
     // COMPUTERS & LAPTOPS
     { code: "05 a a", category: "COMPUTERS & LAPTOPS", question: "What is this?", answer: "It is a laptop." },
     { code: "05 a c", category: "COMPUTERS & LAPTOPS", question: "Do you have a laptop in your bedroom?", answer: "Yes, I do / No, I do not." },
@@ -246,6 +246,34 @@ function getQuestionAnswerFromData(material: any): QAData {
     { code: "05 a l", category: "COMPUTERS & LAPTOPS", question: "Do you watch films on your laptop?", answer: "Yes, I do / No, I do not." },
     { code: "05 b b", category: "COMPUTERS & LAPTOPS", question: "Do you surf the internet every day?", answer: "Yes, I do / No, I do not." },
     { code: "05 b g", category: "COMPUTERS & LAPTOPS", question: "Do you surf the internet with your phone?", answer: "Yes, I do / No, I do not." },
+
+    // GAME CONSOLES
+    { code: "06 a b", category: "GAME CONSOLES", question: "What is this?", answer: "It is a game console." },
+    { code: "06 a e", category: "GAME CONSOLES", question: "Do you have a game console at home?", answer: "Yes, I do / No, I do not." },
+    { code: "06 b b", category: "GAME CONSOLES", question: "What games do you play?", answer: "I play [Fortnite/Minecraft/Roblox]." },
+    { code: "06 b d", category: "GAME CONSOLES", question: "Do you prefer gaming on a console or laptop?", answer: "I prefer a console/laptop." },
+
+    // CAMERAS
+    { code: "07 a b", category: "CAMERAS", question: "What type of camera is this?", answer: "It is a digital camera." },
+    { code: "07 a g", category: "CAMERAS", question: "Do you prefer a digital or phone camera?", answer: "I prefer a digital/phone camera." },
+    { code: "07 b a", category: "CAMERAS", question: "What is he doing?", answer: "He is taking photos." },
+    { code: "07 b d", category: "CAMERAS", question: "Are you good at taking photos?", answer: "Yes, I am / No, I am not." },
+
+    // OTHER GADGETS
+    { code: "08 a a", category: "OTHER GADGETS", question: "What is this?", answer: "It is a USB drive." },
+    { code: "08 a c", category: "OTHER GADGETS", question: "How big is your USB drive?", answer: "It is [32GB/64GB]." },
+    { code: "09 a a", category: "OTHER GADGETS", question: "What is this?", answer: "It is an e-book reader." },
+    { code: "09 a c", category: "OTHER GADGETS", question: "Do you prefer e-books or paper books?", answer: "I prefer e-books/paper books." },
+    { code: "10 c aa", category: "OTHER GADGETS", question: "What is this?", answer: "It is a printer." },
+    
+    // TV & REMOTE CONTROL
+    { code: "11 c aa", category: "TV & REMOTE CONTROL", question: "What is it?", answer: "It is a TV." },
+    { code: "11 c ac", category: "TV & REMOTE CONTROL", question: "Is it an old or new TV?", answer: "It is an old/new TV." },
+    { code: "11 c bb", category: "TV & REMOTE CONTROL", question: "How many hours do you watch TV on your phone?", answer: "I watch TV for [1/2/3] hours." },
+    { code: "11 c bd", category: "TV & REMOTE CONTROL", question: "Do you watch sports on TV?", answer: "Yes, I do / No, I do not." },
+    { code: "12 a", category: "TV & REMOTE CONTROL", question: "What is this?", answer: "It is a remote control." },
+    { code: "12 c aa", category: "TV & REMOTE CONTROL", question: "What is this?", answer: "It is a remote control." },
+    { code: "12 c ba", category: "TV & REMOTE CONTROL", question: "What is he doing?", answer: "He is changing the channels with the remote control." },
     
     // GAME CONSOLES
     { code: "06 a b", category: "GAME CONSOLES", question: "What is this?", answer: "It is a game console." },

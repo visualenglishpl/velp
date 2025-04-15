@@ -74,6 +74,76 @@ HEADPHONES & EARPHONES
 (03 C e) Do you listen to music while studying? → Yes, I do / No, I do not.
 
 (03 C h) What music do you listen to? → I listen to [pop/rock/classical] music.
+
+SPEAKERS
+(04 A a) What are these? → They are speakers.
+
+(04 A c) Do you have a mini speaker at home? → Yes, I do / No, I do not.
+
+(04 A h) Do you prefer speakers or headphones? → I prefer speakers/headphones.
+
+(04 A j) Does your phone have speakers? → Yes, it does / No, it does not.
+
+(04 A m) Where are the speakers in a car? → They are [in the doors/on the dashboard].
+
+COMPUTERS & LAPTOPS
+(05 A a) What is this? → It is a laptop.
+
+(05 A c) Do you have a laptop in your bedroom? → Yes, I do / No, I do not.
+
+(05 A e) Do you have a gaming laptop? → Yes, I do / No, I do not.
+
+(05 A f) Do you prefer a laptop or a computer? → I prefer a laptop/computer.
+
+(05 A l) Do you watch films on your laptop? → Yes, I do / No, I do not.
+
+(05 B b) Do you surf the internet every day? → Yes, I do / No, I do not.
+
+(05 B g) Do you surf the internet with your phone? → Yes, I do / No, I do not.
+
+GAME CONSOLES
+(06 A b) What is this? → It is a game console.
+
+(06 A e) Do you have a game console at home? → Yes, I do / No, I do not.
+
+(06 B b) What games do you play? → I play [Fortnite/Minecraft/Roblox].
+
+(06 B d) Do you prefer gaming on a console or laptop? → I prefer a console/laptop.
+
+CAMERAS
+(07 A b) What type of camera is this? → It is a digital camera.
+
+(07 A g) Do you prefer a digital or phone camera? → I prefer a digital/phone camera.
+
+(07 B a) What is he doing? → He is taking photos.
+
+(07 B d) Are you good at taking photos? → Yes, I am / No, I am not.
+
+OTHER GADGETS
+(08 A a) What is this? → It is a USB drive.
+
+(08 A c) How big is your USB drive? → It is [32GB/64GB].
+
+(09 A a) What is this? → It is an e-book reader.
+
+(09 A c) Do you prefer e-books or paper books? → I prefer e-books/paper books.
+
+(10 C Aa) What is this? → It is a printer.
+
+(12 C Aa) What is this? → It is a remote control.
+
+TV & REMOTE CONTROL
+(11 C Aa) What is it? → It is a TV.
+
+(11 C Ac) Is it an old or new TV? → It is an old/new TV.
+
+(11 C Bb) How many hours do you watch TV on your phone? → I watch TV for [1/2/3] hours.
+
+(11 C Bd) Do you watch sports on TV? → Yes, I do / No, I do not.
+
+(12 A) What is this? → It is a remote control.
+
+(12 C Ba) What is he doing? → He is changing the channels with the remote control.
 `;
 
 // Process the input text
