@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from "embla-carousel-react";
 import { useAuth } from "@/hooks/use-auth";
-import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2 } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, List, Images, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -64,6 +64,7 @@ export default function SimpleContentViewer() {
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
+  const [showThumbnails, setShowThumbnails] = useState(true);
   
   // User info and access control
   const { user } = useAuth();
@@ -301,6 +302,10 @@ export default function SimpleContentViewer() {
             {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
             <span className="ml-1 hidden sm:inline">{isFullscreen ? "Exit" : "Fullscreen"}</span>
           </Button>
+          <Button variant="outline" size="sm" onClick={() => navigate(`/book${bookId}/units`)}>
+            <List size={16} />
+            <span className="ml-1 hidden sm:inline">Units</span>
+          </Button>
           <Button variant="outline" size="sm" onClick={() => navigate("/admin/books")}>
             <Book size={16} />
             <span className="ml-1 hidden sm:inline">Books</span>
@@ -310,11 +315,22 @@ export default function SimpleContentViewer() {
       
       {/* Content area */}
       <div className="flex-1 overflow-hidden">
-        {/* Progress bar */}
+        {/* Progress bar and toggle */}
         <div className="px-4 py-2">
           <div className="flex items-center justify-between mb-1">
-            <p className="text-sm text-muted-foreground">Progress</p>
-            <p className="text-sm font-medium">{Math.round(progressPercentage)}%</p>
+            <div className="flex items-center">
+              <p className="text-sm text-muted-foreground mr-4">Progress</p>
+              <p className="text-sm font-medium">{Math.round(progressPercentage)}%</p>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setShowThumbnails(!showThumbnails)}
+              className="text-xs flex items-center"
+            >
+              {showThumbnails ? <EyeOff size={14} className="mr-1" /> : <Images size={14} className="mr-1" />}
+              {showThumbnails ? "Hide Thumbnails" : "Show Thumbnails"}
+            </Button>
           </div>
           <Progress value={progressPercentage} className="h-2" />
         </div>
@@ -395,31 +411,33 @@ export default function SimpleContentViewer() {
         </div>
       </div>
       
-      {/* Thumbnails */}
-      <div className="bg-gray-50 border-t p-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-flow-col auto-cols-max gap-2 overflow-x-auto pb-2">
-            {sortedMaterials.map((material, index) => (
-              <button
-                key={material.id}
-                onClick={() => handleThumbnailClick(index)}
-                className={`flex-shrink-0 w-16 h-16 overflow-hidden rounded border-2 ${
-                  index === currentSlideIndex 
-                    ? 'border-blue-500 shadow-md' 
-                    : 'border-transparent hover:border-gray-300'
-                }`}
-              >
-                <img
-                  src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`}
-                  alt={`Thumbnail ${index + 1}`}
-                  className="w-full h-full object-contain"
-                  loading="lazy"
-                />
-              </button>
-            ))}
+      {/* Thumbnails - conditionally rendered */}
+      {showThumbnails && (
+        <div className="bg-gray-50 border-t p-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-flow-col auto-cols-max gap-2 overflow-x-auto pb-2">
+              {sortedMaterials.map((material, index) => (
+                <button
+                  key={material.id}
+                  onClick={() => handleThumbnailClick(index)}
+                  className={`flex-shrink-0 w-16 h-16 overflow-hidden rounded border-2 ${
+                    index === currentSlideIndex 
+                      ? 'border-blue-500 shadow-md' 
+                      : 'border-transparent hover:border-gray-300'
+                  }`}
+                >
+                  <img
+                    src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`}
+                    alt={`Thumbnail ${index + 1}`}
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
