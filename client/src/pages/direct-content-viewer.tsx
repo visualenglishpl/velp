@@ -654,43 +654,7 @@ export default function DirectContentViewer() {
     });
   }, [filteredMaterials]);
   
-  // Handler for admin slide reordering
-  const handleReorderSlides = useCallback((startIndex: number, endIndex: number) => {
-    if (!isAdmin) return;
-    
-    setReorderedMaterials(prevMaterials => {
-      const result = Array.from(prevMaterials.length ? prevMaterials : filteredMaterials as DirectMaterial[]);
-      const [removed] = result.splice(startIndex, 1);
-      result.splice(endIndex, 0, removed);
-      
-      console.log(`Admin reordered slide from position ${startIndex + 1} to ${endIndex + 1}`);
-      
-      // Save the new order to localStorage for persistence
-      try {
-        localStorage.setItem(
-          `slide-order-${bookPath}-${unitPath}`, 
-          JSON.stringify(result.map(material => material.id))
-        );
-      } catch (error) {
-        console.error("Could not save slide order to localStorage:", error);
-      }
-      
-      return result;
-    });
-    
-    // If we reordered the current slide, update the current slide index
-    if (currentSlideIndex === startIndex) {
-      setCurrentSlideIndex(endIndex);
-    } 
-    // If current slide was shifted due to reordering, adjust its index
-    else if (
-      (startIndex < currentSlideIndex && endIndex >= currentSlideIndex) ||
-      (startIndex > currentSlideIndex && endIndex <= currentSlideIndex)
-    ) {
-      const newIndex = startIndex < currentSlideIndex ? currentSlideIndex - 1 : currentSlideIndex + 1;
-      setCurrentSlideIndex(newIndex);
-    }
-  }, [currentSlideIndex, isAdmin, bookPath, unitPath, filteredMaterials]);
+  // Removed handler for admin slide reordering - no longer needed
   
   // Format for ContentSlide component
   const materials = (sortedMaterials as DirectMaterial[]).map((material: DirectMaterial) => ({
@@ -699,40 +663,7 @@ export default function DirectContentViewer() {
     unitId: 0, // Not needed for direct access
   }));
   
-  // Effect to load saved slide order from localStorage (for admin reordering)
-  useEffect(() => {
-    // Make sure materialsData is loaded before trying to work with it
-    if (!isAdmin || !bookPath || !unitPath || !materialsData || materialsData.length === 0) return;
-    
-    try {
-      const savedOrderString = localStorage.getItem(`slide-order-${bookPath}-${unitPath}`);
-      
-      if (savedOrderString) {
-        const savedOrderIds = JSON.parse(savedOrderString);
-        
-        // If we have a saved order, use it to reorder the materials
-        if (Array.isArray(savedOrderIds) && savedOrderIds.length > 0) {
-          // Create a map of id -> material for quick lookup
-          const materialsMap = new Map(
-            materialsData.map(material => [material.id, material])
-          );
-          
-          // Recreate the array in the saved order
-          const orderedMaterials = savedOrderIds
-            .map(id => materialsMap.get(id))
-            .filter(Boolean) as DirectMaterial[];
-          
-          // If we have all the materials, set the reordered array
-          if (orderedMaterials.length === materialsData.length) {
-            console.log("Loaded saved slide order from localStorage");
-            setReorderedMaterials(orderedMaterials);
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Error loading saved slide order:", error);
-    }
-  }, [isAdmin, bookPath, unitPath, materialsData]);
+  // Removed effect to load saved slide order from localStorage - no longer needed
   
   // Generate unit description without using hooks
   let unitDescription = "";
@@ -938,7 +869,6 @@ export default function DirectContentViewer() {
               onSelectSlide={onThumbnailClick}
               viewedSlides={slidesInView}
               isAdmin={isAdmin}
-              onReorderSlides={handleReorderSlides}
             />
           </div>
         </div>
