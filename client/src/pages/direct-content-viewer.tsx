@@ -594,8 +594,14 @@ export default function DirectContentViewer() {
     );
   }
 
+  // State for admin-reordered slides
+  const [reorderedMaterials, setReorderedMaterials] = useState<DirectMaterial[]>([]);
+  
   // Filter out PDFs, SWF files, and content that doesn't make sense
-  const filteredMaterials = materialsData.filter(material => {
+  const filteredMaterials = useMemo(() => {
+    if (!materialsData) return [];
+    
+    return materialsData.filter(material => {
     // Filter out PDF and SWF files
     const excludedExtensions = ['.pdf', '.swf'];
     const content = material.content.toLowerCase();
@@ -625,9 +631,16 @@ export default function DirectContentViewer() {
     
     return !shouldExclude;
   });
-  
+  }, [materialsData]);
   // Sort to ensure 00 A.png, 00 B.png, etc. files come first
-  const sortedMaterials = [...filteredMaterials].sort((a, b) => {
+  const sortedMaterials = useMemo(() => {
+    // Use reorderedMaterials if admin has reordered slides
+    if (reorderedMaterials.length > 0) {
+      return reorderedMaterials;
+    }
+    
+    // Otherwise use default sorting
+    return (filteredMaterials as DirectMaterial[]).sort((a, b) => {
     const aContent = a.content.toLowerCase();
     const bContent = b.content.toLowerCase();
     
@@ -643,9 +656,48 @@ export default function DirectContentViewer() {
     // If only one starts with 00, prioritize it
     return aStarts00 ? -1 : 1;
   });
+  }, [filteredMaterials, reorderedMaterials]);
+  
+  // Handler for admin slide reordering
+  const handleReorderSlides = useCallback((startIndex: number, endIndex: number) => {
+    if (!isAdmin) return;
+    
+    setReorderedMaterials(prevMaterials => {
+      const result = Array.from(prevMaterials.length ? prevMaterials : filteredMaterials as DirectMaterial[]);
+      const [removed] = result.splice(startIndex, 1);
+      result.splice(endIndex, 0, removed);
+      
+      console.log(`Admin reordered slide from position ${startIndex + 1} to ${endIndex + 1}`);
+      
+      // Save the new order to localStorage for persistence
+      try {
+        localStorage.setItem(
+          `slide-order-${bookPath}-${unitPath}`, 
+          JSON.stringify(result.map(material => material.id))
+        );
+      } catch (error) {
+        console.error("Could not save slide order to localStorage:", error);
+      }
+      
+      return result;
+    });
+    
+    // If we reordered the current slide, update the current slide index
+    if (currentSlideIndex === startIndex) {
+      setCurrentSlideIndex(endIndex);
+    } 
+    // If current slide was shifted due to reordering, adjust its index
+    else if (
+      (startIndex < currentSlideIndex && endIndex >= currentSlideIndex) ||
+      (startIndex > currentSlideIndex && endIndex <= currentSlideIndex)
+    ) {
+      const newIndex = startIndex < currentSlideIndex ? currentSlideIndex - 1 : currentSlideIndex + 1;
+      setCurrentSlideIndex(newIndex);
+    }
+  }, [currentSlideIndex, isAdmin, bookPath, unitPath, filteredMaterials]);
   
   // Format for ContentSlide component
-  const materials = sortedMaterials.map((material: DirectMaterial) => ({
+  const materials = (sortedMaterials as DirectMaterial[]).map((material: DirectMaterial) => ({
     ...material,
     // For ContentSlide component compatibility
     unitId: 0, // Not needed for direct access
@@ -854,6 +906,8 @@ export default function DirectContentViewer() {
               currentIndex={currentSlideIndex}
               onSelectSlide={onThumbnailClick}
               viewedSlides={slidesInView}
+              isAdmin={isAdmin}
+              onReorderSlides={handleReorderSlides}
             />
           </div>
         </div>
