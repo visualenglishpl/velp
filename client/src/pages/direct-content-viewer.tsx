@@ -70,6 +70,11 @@ export default function DirectContentViewer() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [keyboardFeedback, setKeyboardFeedback] = useState<string | null>(null);
   
+  // Advanced preloading configuration
+  const [preloadedSlides, setPreloadedSlides] = useState<number[]>([]);
+  const [preloadRange, setPreloadRange] = useState(3); // Number of slides to preload in each direction
+  const [preloadInProgress, setPreloadInProgress] = useState(false);
+  
   // Navigate hook for routing
   const [_, navigate] = useLocation();
   
