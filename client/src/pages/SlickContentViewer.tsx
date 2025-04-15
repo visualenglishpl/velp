@@ -124,22 +124,29 @@ export default function SlickContentViewer() {
   // Navigation functions
   const goToSlide = useCallback((index: number) => {
     if (sliderRef.current) {
+      console.log(`Manually going to slide ${index}`);
       sliderRef.current.slickGoTo(index);
       setCurrentIndex(index);
     }
   }, []);
   
-  const goToPrevSlide = useCallback(() => {
-    if (sliderRef.current) {
+  const goToPrevSlide = useCallback((e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    if (sliderRef.current && currentIndex > 0) {
+      console.log(`Going to previous slide from ${currentIndex}`);
       sliderRef.current.slickPrev();
+      // Don't set index here, let the beforeChange/afterChange handlers do it
     }
-  }, []);
+  }, [currentIndex]);
   
-  const goToNextSlide = useCallback(() => {
-    if (sliderRef.current) {
+  const goToNextSlide = useCallback((e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    if (sliderRef.current && currentIndex < sortedMaterials.length - 1) {
+      console.log(`Going to next slide from ${currentIndex}`);
       sliderRef.current.slickNext();
+      // Don't set index here, let the beforeChange/afterChange handlers do it
     }
-  }, []);
+  }, [currentIndex, sortedMaterials.length]);
   
   // Keyboard navigation
   useEffect(() => {
@@ -208,11 +215,15 @@ export default function SlickContentViewer() {
     speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false,
+    arrows: false, // We're using custom arrows
     swipe: true,
     adaptiveHeight: false,
     afterChange: handleAfterChange,
     lazyLoad: 'ondemand' as 'ondemand',
+    beforeChange: (current: number, next: number) => {
+      console.log(`Slide changing from ${current} to ${next}`);
+      setCurrentIndex(next);
+    }
   };
   
   // Loading state
@@ -324,7 +335,11 @@ export default function SlickContentViewer() {
           
           {/* Navigation buttons */}
           <button
-            onClick={goToPrevSlide}
+            onClick={() => {
+              if (currentIndex > 0) {
+                goToSlide(currentIndex - 1);
+              }
+            }}
             disabled={currentIndex === 0}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-3 shadow-md disabled:opacity-50 z-20"
             aria-label="Previous slide"
@@ -333,7 +348,11 @@ export default function SlickContentViewer() {
           </button>
           
           <button
-            onClick={goToNextSlide}
+            onClick={() => {
+              if (currentIndex < sortedMaterials.length - 1) {
+                goToSlide(currentIndex + 1);
+              }
+            }}
             disabled={currentIndex === sortedMaterials.length - 1}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-3 shadow-md disabled:opacity-50 z-20"
             aria-label="Next slide"
