@@ -202,7 +202,7 @@ export function registerDirectRoutes(app: Express) {
   const isAuthenticated = (req: Request, res: Response, next: Function) => {
     // For development and testing, allow access even if not authenticated
     // In production, this should be properly secured
-    console.log("Authentication check for direct routes - allowing access");
+    console.log(`Authentication check for ${req.path} - allowing access`);
     return next();
     
     // Original authentication check (commented out for now)
@@ -304,11 +304,11 @@ export function registerDirectRoutes(app: Express) {
         }
         
         // Create a material object
-        // Fix path to avoid duplicate bookPath in URL by creating a direct path
-        // instead of bookPath/bookPath/unitPath/file.jpg it will be /bookPath/unitPath/file.jpg
+        // Instead of returning a relative path, generate a direct API endpoint URL
+        // that will proxy the S3 content through our server avoiding CORS issues
         return {
           id: index + 1, // Simple sequential ID
-          path: `/${bookPath}/${unitPath}/${filename}`, // Correct path format with leading slash
+          path: `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(filename)}`, // API endpoint path
           title: extractedTitle, // Will be set by client
           description: extractedDescription, // Contains file code for question mapping
           contentType: getContentTypeFromPath(filePath),
