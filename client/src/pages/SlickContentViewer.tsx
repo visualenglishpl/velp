@@ -278,19 +278,31 @@ export default function SlickContentViewer() {
       className={`flex flex-col min-h-screen bg-white ${isFullscreen ? 'fixed inset-0 z-50' : ''}`}
     >
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-white border-b p-4 flex items-center justify-between">
+      <div className="sticky top-0 z-10 bg-white border-b shadow-sm p-4 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold">{unitData.title}</h1>
-          <p className="text-sm text-muted-foreground">Book {bookId} • Unit {unitNumber}</p>
+          <h1 className="text-xl font-bold text-gray-800">{unitData.title}</h1>
+          <p className="text-sm text-blue-600 font-medium">
+            <span className="font-semibold">Book {bookId}</span> • Unit {unitNumber}
+          </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => setIsFullscreen(!isFullscreen)}>
+        <div className="flex items-center gap-3">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setIsFullscreen(!isFullscreen)}
+            className="border-blue-200 hover:bg-blue-50 transition-colors"
+          >
             {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
             <span className="ml-1 hidden sm:inline">{isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}</span>
           </Button>
-          <Button variant="outline" size="sm" onClick={() => navigate('/books')}>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => navigate('/books')}
+            className="border-blue-200 hover:bg-blue-50 transition-colors"
+          >
             <Book size={16} />
-            <span className="ml-1 hidden sm:inline">Books</span>
+            <span className="ml-1 hidden sm:inline">Back to Books</span>
           </Button>
         </div>
       </div>
@@ -298,14 +310,14 @@ export default function SlickContentViewer() {
       {/* Main content area with Slick Slider */}
       <div className="flex-1 flex flex-col items-center justify-center p-4 relative">
         {/* Image slider */}
-        <div className="w-full max-w-4xl flex-1 relative">
-          <Slider ref={sliderRef} {...slickSettings} className="h-full">
+        <div className="w-full max-w-5xl mx-auto flex-1 relative flex flex-col items-center justify-center">
+          <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
             {sortedMaterials.map((material, index) => {
               const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
               const isPremiumContent = index >= freeSlideLimit && !hasPaidAccess;
               
               return (
-                <div key={index} className="outline-none h-[60vh] flex items-center justify-center relative">
+                <div key={index} className="outline-none h-[70vh] w-full flex items-center justify-center relative px-4">
                   {/* Premium content overlay */}
                   {isPremiumContent && (
                     <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center">
@@ -322,12 +334,15 @@ export default function SlickContentViewer() {
                     </div>
                   )}
                   
-                  {/* Actual image */}
-                  <img 
-                    src={imagePath}
-                    alt={material.title || `Slide ${index + 1}`}
-                    className="max-h-full max-w-full object-contain"
-                  />
+                  {/* Centered content container */}
+                  <div className="flex items-center justify-center w-full h-full">
+                    {/* Actual image */}
+                    <img 
+                      src={imagePath}
+                      alt={material.title || `Slide ${index + 1}`}
+                      className="max-h-full max-w-full object-contain mx-auto shadow-lg"
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -341,10 +356,10 @@ export default function SlickContentViewer() {
               }
             }}
             disabled={currentIndex === 0}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-3 shadow-md disabled:opacity-50 z-20"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-4 shadow-lg hover:shadow-xl disabled:opacity-40 z-20 transition-all duration-200"
             aria-label="Previous slide"
           >
-            <ChevronLeft />
+            <ChevronLeft size={24} />
           </button>
           
           <button
@@ -354,39 +369,55 @@ export default function SlickContentViewer() {
               }
             }}
             disabled={currentIndex === sortedMaterials.length - 1}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-3 shadow-md disabled:opacity-50 z-20"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-4 shadow-lg hover:shadow-xl disabled:opacity-40 z-20 transition-all duration-200"
             aria-label="Next slide"
           >
-            <ChevronRight />
+            <ChevronRight size={24} />
           </button>
           
           {/* Slide number indicator */}
-          <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full z-20">
-            {currentIndex + 1} / {sortedMaterials.length}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full z-20 shadow-lg flex items-center gap-1">
+            <span className="font-bold text-sm">{currentIndex + 1}</span>
+            <span className="text-blue-200">/</span>
+            <span className="text-sm">{sortedMaterials.length}</span>
           </div>
         </div>
       </div>
       
-      {/* Simple thumbnails */}
-      <div className="border-t p-4 overflow-x-auto">
-        <div className="flex space-x-2 min-w-max">
-          {sortedMaterials.map((material, index) => (
-            <div 
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`
-                cursor-pointer border-2 h-16 w-16 flex-shrink-0 overflow-hidden rounded-md
-                ${index === currentIndex ? 'border-blue-500 ring-2 ring-blue-300' : 'border-gray-200'}
-              `}
-            >
-              <img 
-                src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`}
-                alt={material.title || `Thumbnail ${index + 1}`}
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
+      {/* Thumbnails navigation */}
+      <div className="border-t p-4 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-sm text-gray-500 mb-2">Navigate to slide:</p>
+          <div className="overflow-x-auto pb-2">
+            <div className="flex space-x-3 min-w-max">
+              {sortedMaterials.map((material, index) => (
+                <div 
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`
+                    cursor-pointer border-2 h-20 w-20 flex-shrink-0 overflow-hidden rounded-md
+                    transition-all duration-200 hover:scale-105 transform
+                    ${index === currentIndex 
+                      ? 'border-blue-500 ring-2 ring-blue-300 scale-105 shadow-md' 
+                      : 'border-gray-200 opacity-80 hover:opacity-100'
+                    }
+                  `}
+                >
+                  <div className="relative h-full w-full">
+                    <img 
+                      src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`}
+                      alt={material.title || `Thumbnail ${index + 1}`}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                    <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs text-center py-0.5">
+                      {index + 1}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>
