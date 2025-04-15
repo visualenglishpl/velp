@@ -285,19 +285,37 @@ function getQuestionAnswerFromData(material: any): QAData {
     
     // Prioritize gadget questions over country detection
     if (contentLower.includes('what is it') || contentLower.includes('what is this')) {
+      if (contentLower.includes('charger')) {
+        return { 
+          country: "CHARGERS & BATTERIES",
+          question: "What is this?", 
+          answer: "It is a charger.", 
+          hasData: true 
+        };
+      } else {
+        return { 
+          country: "MOBILE PHONES",
+          question: "What is this?", 
+          answer: "It is a phone.", 
+          hasData: true 
+        };
+      }
+    }
+    
+    if (contentLower.includes('do you have a phone') || contentLower.includes('have a phone')) {
       return { 
-        country: "MOBILE PHONE",
-        question: "What is it?", 
-        answer: "It is a mobile phone / a charger.", 
+        country: "MOBILE PHONES",
+        question: "Do you have a phone?", 
+        answer: "Yes, I have a phone / No, I do not have a phone.", 
         hasData: true 
       };
     }
-    
-    if (contentLower.includes('do you have a phone') || contentLower.includes('have a mobile')) {
+
+    if (contentLower.includes('do you have a charger') || contentLower.includes('have a charger')) {
       return { 
-        country: "MOBILE PHONE",
-        question: "Do you have a mobile phone?", 
-        answer: "Yes, I do. / No, I don't.", 
+        country: "CHARGERS & BATTERIES",
+        question: "Do you have a charger?", 
+        answer: "Yes, I have a charger / No, I do not.", 
         hasData: true 
       };
     }
