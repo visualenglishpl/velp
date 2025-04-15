@@ -331,12 +331,12 @@ function QuestionAnswerDisplay({ material, isEditMode }: QuestionAnswerDisplayPr
         
         <div className="flex flex-col gap-1">
           {/* Show question */}
-          <div>
+          <div className="text-center">
             {isEditMode ? (
               <textarea
                 value={editedQuestion}
                 onChange={(e) => setEditedQuestion(e.target.value)}
-                className="text-gray-800 text-base bg-white p-1 rounded w-full border-blue-200 border focus:ring-2 focus:ring-blue-300 outline-none"
+                className="text-gray-800 text-base bg-white p-1 rounded w-full border-blue-200 border focus:ring-2 focus:ring-blue-300 outline-none text-center"
                 rows={2}
                 placeholder="Question"
               />
@@ -346,12 +346,12 @@ function QuestionAnswerDisplay({ material, isEditMode }: QuestionAnswerDisplayPr
           </div>
           
           {/* Show answer */}
-          <div className="mt-2">
+          <div className="mt-2 text-center">
             {isEditMode ? (
               <textarea
                 value={editedAnswer}
                 onChange={(e) => setEditedAnswer(e.target.value)}
-                className="font-medium text-indigo-900 text-base bg-white p-1 rounded w-full border-indigo-200 border focus:ring-2 focus:ring-indigo-300 outline-none"
+                className="font-medium text-indigo-900 text-base bg-white p-1 rounded w-full border-indigo-200 border focus:ring-2 focus:ring-indigo-300 outline-none text-center"
                 rows={2}
                 placeholder="Answer"
               />
