@@ -1,0 +1,95 @@
+POLAND (Files 01 R)
+What country is this? → This country is Poland.
+
+Where is this flag from? → This flag is from Poland.
+
+What colors are the Polish flag? → The Polish flag is red and white.
+
+Where are these people from? → These people are from Poland.
+
+What nationality are they? → Their nationality is Polish.
+
+What’s the capital of Poland? → The capital of Poland is Warsaw.
+
+What language does she speak? → She speaks Polish.
+
+Where is this chocolate from? → This chocolate is from Poland.
+
+What’s your favorite Polish food? → My favorite Polish food is [pierogi/żurek/etc.].
+
+BRITAIN / UK (Files 02 N, 09-10, 14)
+What countries are in the UK? → The UK includes England, Scotland, Wales, and Northern Ireland.
+
+What’s the British flag called? → The British flag is called the Union Jack.
+
+Who is the British leader? → The British leader is King Charles.
+
+What language do they speak? → They speak English.
+
+Where is this passport from? → This passport is from the UK.
+
+What countries are on the British flag? → The Union Jack represents England, Scotland, and Northern Ireland. (Correction: Ireland → Northern Ireland)
+
+What’s the capital of the UK? → The capital of the UK is London.
+
+Match the capital cities: England, Scotland, Wales, Northern Ireland. → London is the capital of England. Edinburgh is the capital of Scotland. Cardiff is the capital of Wales. Belfast is the capital of Northern Ireland.
+
+NORTHERN IRELAND (Files 03 G)
+What country is highlighted in pink? → The country highlighted in pink is Northern Ireland.
+
+Where is this flag from? → This flag is from Northern Ireland.
+
+What’s the capital of Northern Ireland? → The capital of Northern Ireland is Belfast.
+
+What’s his nationality? → His nationality is Northern Irish.
+
+Where are they from? → They are from Northern Ireland.
+
+SCOTLAND (Files 04 L)
+What country is this? → This country is Scotland.
+
+Where is this flag from? → This flag is from Scotland.
+
+What’s the capital of Scotland? → The capital of Scotland is Edinburgh.
+
+What’s his nationality? → His nationality is Scottish.
+
+Where is Loch Ness Monster from? → The Loch Ness Monster is from Scotland.
+
+ENGLAND (Files 05 L)
+What country is this? → This country is England.
+
+Where is this flag from? → This flag is from England.
+
+What’s the capital of England? → The capital of England is London.
+
+What’s his nationality? → His nationality is English.
+
+Is an English breakfast big or small? → An English breakfast is big.
+
+WALES (Files 06 H)
+What country is this? → This country is Wales.
+
+Describe the Welsh flag. → The Welsh flag is white and green with a red dragon.
+
+What’s the capital of Wales? → The capital of Wales is Cardiff.
+
+What language is this? → This language is Welsh.
+
+AUSTRALIA (Files 07 L)
+What country is this? → This country is Australia.
+
+What’s the capital of Australia? → The capital of Australia is Canberra.
+
+What’s his nationality? → His nationality is Australian.
+
+Name three Australian animals. → Three Australian animals are kangaroos, koalas, and wombats.
+
+USA (Files 08 M)
+What country is this? → This country is the USA.
+
+How many stars are on the American flag? → There are 50 stars on the American flag.
+
+What’s the capital of the USA? → The capital of the USA is Washington, D.C.
+
+What type of food is this? → This is American food.

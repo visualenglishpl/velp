@@ -468,6 +468,60 @@ export default function SlickContentViewer() {
                     </div>
                   )}
                   
+                  {/* Question-Answer section above image */}
+                  {material.title && (
+                    <div className="absolute top-6 left-0 right-0 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl shadow-md mx-auto z-10 max-w-2xl border border-blue-100">
+                      <div className="flex flex-col gap-2">
+                        {/* Handle question format with arrow → */}
+                        {material.title.includes('→') ? (
+                          <>
+                            <div className="flex gap-2">
+                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                              <span className="text-gray-800 text-base">{material.title.split('→')[0].trim()}</span>
+                            </div>
+                            <div className="flex gap-2 mt-2">
+                              <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                              <span className="font-medium text-indigo-900 text-base">{material.title.split('→')[1].trim()}</span>
+                            </div>
+                          </>
+                        ) : 
+                        /* Handle country title format */
+                        material.title.match(/^[A-Z\s]+\s\(Files/) ? (
+                          <div className="flex items-center justify-center mb-1">
+                            <h3 className="text-lg font-bold text-blue-800 bg-white py-2 px-4 rounded-full shadow-sm border border-blue-200">
+                              {material.title.split('(')[0].trim()}
+                            </h3>
+                          </div>
+                        ) :
+                        /* Handle normal question format with question mark */
+                        material.title.includes('?') ? (
+                          <>
+                            <div className="flex gap-2">
+                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                              <span className="text-gray-800 text-base">{material.title.split('?')[0].trim()}?</span>
+                            </div>
+                            {material.description && (
+                              <div className="flex gap-2 mt-2">
+                                <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                <span className="font-medium text-indigo-900 text-base">{material.description}</span>
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          /* Default case */
+                          <div className="flex gap-2">
+                            <span className="font-medium text-gray-800 text-base">{material.title}</span>
+                          </div>
+                        )}
+                        
+                        {/* Show description only if not already shown as answer */}
+                        {material.description && !material.title.includes('?') && !material.title.includes('→') && (
+                          <div className="mt-2 text-sm text-gray-600">{material.description}</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  
                   {/* Centered content container */}
                   <div className="flex items-center justify-center w-full h-full">
                     {/* Actual image */}
