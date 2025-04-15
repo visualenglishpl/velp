@@ -1,12 +1,30 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
-import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2 } from 'lucide-react';
+import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { 
+  DndContext, 
+  DragEndEvent,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragStartEvent,
+  DragOverlay,
+  UniqueIdentifier
+} from '@dnd-kit/core';
+import { 
+  SortableContext, 
+  horizontalListSortingStrategy,
+  useSortable
+} from '@dnd-kit/sortable';
+import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 
 type S3Material = {
   id: number;
@@ -38,6 +56,10 @@ export default function SlickContentViewer() {
   // State for the viewer
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  
+  // State for drag and drop
+  const [materials, setMaterials] = useState<S3Material[]>([]);
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   
   // Extract bookId and unitNumber from URL path
   let bookId: string | null = null;
@@ -81,7 +103,7 @@ export default function SlickContentViewer() {
   
   // Fetch materials from S3
   const {
-    data: materials, 
+    data: fetchedMaterials, 
     error: materialsError,
     isLoading: materialsLoading
   } = useQuery<S3Material[]>({
@@ -89,37 +111,54 @@ export default function SlickContentViewer() {
     enabled: Boolean(bookPath && unitPath)
   });
   
-  // Filter out PDFs and SWFs
-  const filteredMaterials = materials?.filter(material => {
-    const content = material.content.toLowerCase();
-    return !(
-      material.contentType === 'PDF' || 
-      material.contentType === 'SWF' || 
-      content.endsWith('.pdf') || 
-      content.endsWith('.swf')
-    );
-  }) || [];
+  // Process materials when fetched
+  useEffect(() => {
+    if (!fetchedMaterials) return;
+    
+    // Filter out PDFs and SWFs
+    const filteredMaterials = fetchedMaterials.filter(material => {
+      const content = material.content.toLowerCase();
+      return !(
+        material.contentType === 'PDF' || 
+        material.contentType === 'SWF' || 
+        content.endsWith('.pdf') || 
+        content.endsWith('.swf')
+      );
+    });
+    
+    // Sort materials to prioritize "00" prefix files
+    const sortedMaterials = [...filteredMaterials].sort((a, b) => {
+      const aContent = a.content.toLowerCase();
+      const bContent = b.content.toLowerCase();
+      
+      // Sort by numeric prefix if both have them
+      const aNumMatch = aContent.match(/^(\d+)/);
+      const bNumMatch = bContent.match(/^(\d+)/);
+      
+      if (aNumMatch && bNumMatch) {
+        return parseInt(aNumMatch[1]) - parseInt(bNumMatch[1]);
+      }
+      
+      // If only one has numeric prefix, prioritize it
+      if (aNumMatch) return -1;
+      if (bNumMatch) return 1;
+      
+      // Otherwise sort alphabetically
+      return aContent.localeCompare(bContent);
+    });
+    
+    setMaterials(sortedMaterials);
+  }, [fetchedMaterials]);
   
-  // Sort materials to prioritize "00" prefix files
-  const sortedMaterials = [...filteredMaterials].sort((a, b) => {
-    const aContent = a.content.toLowerCase();
-    const bContent = b.content.toLowerCase();
-    
-    // Sort by numeric prefix if both have them
-    const aNumMatch = aContent.match(/^(\d+)/);
-    const bNumMatch = bContent.match(/^(\d+)/);
-    
-    if (aNumMatch && bNumMatch) {
-      return parseInt(aNumMatch[1]) - parseInt(bNumMatch[1]);
-    }
-    
-    // If only one has numeric prefix, prioritize it
-    if (aNumMatch) return -1;
-    if (bNumMatch) return 1;
-    
-    // Otherwise sort alphabetically
-    return aContent.localeCompare(bContent);
-  });
+  // Set up sensors for drag and drop
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor)
+  );
   
   // Navigation functions
   const goToSlide = useCallback((index: number) => {
@@ -141,12 +180,12 @@ export default function SlickContentViewer() {
   
   const goToNextSlide = useCallback((e?: React.MouseEvent) => {
     if (e) e.preventDefault();
-    if (sliderRef.current && currentIndex < sortedMaterials.length - 1) {
+    if (sliderRef.current && currentIndex < materials.length - 1) {
       console.log(`Going to next slide from ${currentIndex}`);
       sliderRef.current.slickNext();
       // Don't set index here, let the beforeChange/afterChange handlers do it
     }
-  }, [currentIndex, sortedMaterials.length]);
+  }, [currentIndex, materials.length]);
   
   // Keyboard navigation
   useEffect(() => {
@@ -189,10 +228,10 @@ export default function SlickContentViewer() {
   
   // Initialize with first slide
   useEffect(() => {
-    if (!sortedMaterials.length) return;
+    if (!materials.length) return;
     
     // Try to find a "00" prefixed slide to start with
-    const startIndex = sortedMaterials.findIndex(
+    const startIndex = materials.findIndex(
       material => material.content.startsWith('00')
     );
     
@@ -201,7 +240,7 @@ export default function SlickContentViewer() {
     } else {
       goToSlide(0);
     }
-  }, [sortedMaterials, goToSlide]);
+  }, [materials, goToSlide]);
   
   // Custom after change handler for Slick
   const handleAfterChange = (current: number) => {
@@ -226,6 +265,101 @@ export default function SlickContentViewer() {
     }
   };
   
+  // Handle drag start
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id);
+  };
+  
+  // Handle drag end
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (over && active.id !== over.id) {
+      // Find the indices
+      const oldIndex = materials.findIndex(item => `thumbnail-${item.id}` === active.id);
+      const newIndex = materials.findIndex(item => `thumbnail-${item.id}` === over.id);
+      
+      // Create a new array with the updated order
+      const newMaterials = [...materials];
+      const [movedItem] = newMaterials.splice(oldIndex, 1);
+      newMaterials.splice(newIndex, 0, movedItem);
+      
+      // Update state
+      setMaterials(newMaterials);
+      
+      // Go to the selected slide
+      goToSlide(newIndex);
+    }
+    
+    setActiveId(null);
+  };
+  
+  // Find the active item for drag overlay
+  const activeItem = activeId 
+    ? materials.find(item => `thumbnail-${item.id}` === activeId) 
+    : null;
+  
+  // Sortable thumbnail component
+  const SortableThumbnail = ({ material, index }: { material: S3Material, index: number }) => {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      isDragging
+    } = useSortable({
+      id: `thumbnail-${material.id}`,
+    });
+    
+    const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+    
+    const style = {
+      transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+      transition,
+      zIndex: isDragging ? 50 : 0,
+      opacity: isDragging ? 0.5 : 1,
+      position: isDragging ? 'relative' : 'static' as any,
+    };
+    
+    return (
+      <div 
+        ref={setNodeRef}
+        style={style}
+        className={`
+          cursor-grab border-2 h-24 w-24 flex-shrink-0 overflow-hidden rounded-md
+          transition-all duration-200 hover:scale-105 transform
+          ${index === currentIndex 
+            ? 'border-blue-500 ring-2 ring-blue-300 scale-105 shadow-md' 
+            : 'border-gray-200 opacity-80 hover:opacity-100'
+          }
+          ${isDragging ? 'shadow-xl scale-105' : ''}
+        `}
+        onClick={() => goToSlide(index)}
+        {...attributes}
+        {...listeners}
+      >
+        <div className="relative h-full w-full">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img 
+              src={imagePath}
+              alt={material.title || `Thumbnail ${index + 1}`}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          
+          <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center">
+            <div className="bg-black/60 text-white text-xs text-center py-0.5 px-1 w-full flex justify-between items-center">
+              <span>{index + 1}</span>
+              <GripVertical className="h-3 w-3 text-gray-300" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
   // Loading state
   if (unitLoading || materialsLoading) {
     return (
@@ -237,7 +371,7 @@ export default function SlickContentViewer() {
   }
   
   // Error state
-  if (unitError || materialsError || !unitData || !materials) {
+  if (unitError || materialsError || !unitData || !fetchedMaterials) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold mb-4 text-red-600">Error Loading Content</h1>
@@ -255,7 +389,7 @@ export default function SlickContentViewer() {
   }
   
   // Empty state
-  if (!sortedMaterials.length) {
+  if (!materials.length) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold mb-4">No Content Available</h1>
@@ -312,7 +446,7 @@ export default function SlickContentViewer() {
         {/* Image slider */}
         <div className="w-full max-w-5xl mx-auto flex-1 relative flex flex-col items-center justify-center">
           <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
-            {sortedMaterials.map((material, index) => {
+            {materials.map((material, index) => {
               const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
               const isPremiumContent = index >= freeSlideLimit && !hasPaidAccess;
               
@@ -364,11 +498,11 @@ export default function SlickContentViewer() {
           
           <button
             onClick={() => {
-              if (currentIndex < sortedMaterials.length - 1) {
+              if (currentIndex < materials.length - 1) {
                 goToSlide(currentIndex + 1);
               }
             }}
-            disabled={currentIndex === sortedMaterials.length - 1}
+            disabled={currentIndex === materials.length - 1}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-4 shadow-lg hover:shadow-xl disabled:opacity-40 z-20 transition-all duration-200"
             aria-label="Next slide"
           >
@@ -379,44 +513,54 @@ export default function SlickContentViewer() {
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full z-20 shadow-lg flex items-center gap-1">
             <span className="font-bold text-sm">{currentIndex + 1}</span>
             <span className="text-blue-200">/</span>
-            <span className="text-sm">{sortedMaterials.length}</span>
+            <span className="text-sm">{materials.length}</span>
           </div>
         </div>
       </div>
       
-      {/* Thumbnails navigation */}
+      {/* Thumbnails navigation with drag and drop */}
       <div className="border-t p-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <p className="text-sm text-gray-500 mb-2">Navigate to slide:</p>
+          <div className="flex justify-between items-center mb-2">
+            <p className="text-sm text-gray-500">Navigate or drag to reorder:</p>
+            <p className="text-xs text-blue-500">Drag thumbnails to reorder slides</p>
+          </div>
+          
           <div className="overflow-x-auto pb-2">
-            <div className="flex space-x-3 min-w-max">
-              {sortedMaterials.map((material, index) => (
-                <div 
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`
-                    cursor-pointer border-2 h-20 w-20 flex-shrink-0 overflow-hidden rounded-md
-                    transition-all duration-200 hover:scale-105 transform
-                    ${index === currentIndex 
-                      ? 'border-blue-500 ring-2 ring-blue-300 scale-105 shadow-md' 
-                      : 'border-gray-200 opacity-80 hover:opacity-100'
-                    }
-                  `}
-                >
-                  <div className="relative h-full w-full">
-                    <img 
-                      src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`}
-                      alt={material.title || `Thumbnail ${index + 1}`}
-                      className="h-full w-full object-cover"
-                      loading="lazy"
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              modifiers={[restrictToHorizontalAxis]}
+            >
+              <SortableContext 
+                items={materials.map(item => `thumbnail-${item.id}`)} 
+                strategy={horizontalListSortingStrategy}
+              >
+                <div className="flex space-x-3 min-w-max px-2 py-1">
+                  {materials.map((material, index) => (
+                    <SortableThumbnail 
+                      key={`thumbnail-${material.id}`} 
+                      material={material} 
+                      index={index} 
                     />
-                    <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs text-center py-0.5">
-                      {index + 1}
-                    </span>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </SortableContext>
+              
+              <DragOverlay>
+                {activeItem ? (
+                  <div className="h-24 w-24 rounded-md overflow-hidden shadow-2xl rotate-3 border-2 border-blue-500">
+                    <img 
+                      src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(activeItem.content)}`}
+                      alt={activeItem.title || "Dragging thumbnail"}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ) : null}
+              </DragOverlay>
+            </DndContext>
           </div>
         </div>
       </div>
