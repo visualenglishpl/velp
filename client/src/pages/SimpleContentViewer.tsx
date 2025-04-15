@@ -84,9 +84,7 @@ export default function SimpleContentViewer() {
     skipSnaps: false,
     watchDrag: true,
     watchResize: true,
-    speed: 10, // Make navigation snappy
-    startIndex: 0,
-    inViewThreshold: 1
+    startIndex: 0
   });
   
   // Fetch unit data
@@ -125,15 +123,18 @@ export default function SimpleContentViewer() {
     return aStarts00 ? -1 : 1;
   });
   
-  // Navigation functions with direct index control for reliability
+  // Navigation functions using currentIndexRef for up-to-date values
   const scrollPrev = useCallback(() => {
     console.log("Scrolling to previous slide");
     if (emblaApi && sortedMaterials.length > 0) {
-      const prevIndex = Math.max(0, currentSlideIndex - 1);
-      console.log(`scrollPrev: Moving from slide ${currentSlideIndex} to ${prevIndex}`);
+      // Always use ref for the latest value
+      const currentIndex = currentIndexRef.current;
+      const prevIndex = Math.max(0, currentIndex - 1);
+      console.log(`scrollPrev: Moving from slide ${currentIndex} to ${prevIndex}`);
       
-      // Create a manual scroll animation for reliability
       try {
+        // Force reInit before scrolling for reliability
+        emblaApi.reInit();
         emblaApi.scrollTo(prevIndex, true);
       } catch (err) {
         console.error("Error scrolling to previous slide:", err);
@@ -141,16 +142,19 @@ export default function SimpleContentViewer() {
     } else {
       console.error("Carousel API not initialized or no slides available");
     }
-  }, [emblaApi, currentSlideIndex, sortedMaterials.length]);
+  }, [emblaApi, sortedMaterials.length]);
   
   const scrollNext = useCallback(() => {
     console.log("Scrolling to next slide");
     if (emblaApi && sortedMaterials.length > 0) {
-      const nextIndex = Math.min(sortedMaterials.length - 1, currentSlideIndex + 1);
-      console.log(`scrollNext: Moving from slide ${currentSlideIndex} to ${nextIndex}`);
+      // Always use ref for the latest value
+      const currentIndex = currentIndexRef.current;
+      const nextIndex = Math.min(sortedMaterials.length - 1, currentIndex + 1);
+      console.log(`scrollNext: Moving from slide ${currentIndex} to ${nextIndex}`);
       
-      // Create a manual scroll animation for reliability
       try {
+        // Force reInit before scrolling for reliability
+        emblaApi.reInit();
         emblaApi.scrollTo(nextIndex, true);
       } catch (err) {
         console.error("Error scrolling to next slide:", err);
@@ -158,7 +162,7 @@ export default function SimpleContentViewer() {
     } else {
       console.error("Carousel API not initialized or no slides available");
     }
-  }, [emblaApi, currentSlideIndex, sortedMaterials.length]);
+  }, [emblaApi, sortedMaterials.length]);
   
   // Handle thumbnail click with forced focus for reliable navigation
   const handleThumbnailClick = useCallback((index: number) => {
@@ -183,46 +187,63 @@ export default function SimpleContentViewer() {
     }
   }, [emblaApi]);
   
-  // Track current slide and preload adjacent images
+  // Track current slide with a ref to prevent stale closures
+  const currentIndexRef = useRef(0);
+  
   useEffect(() => {
     if (!emblaApi || !sortedMaterials.length) return;
     
     const onSelect = () => {
-      const index = emblaApi.selectedScrollSnap();
-      setCurrentSlideIndex(index);
-      
-      // Add to viewed slides
-      setViewedSlides(prev => {
-        if (prev.includes(index)) return prev;
-        return [...prev, index];
-      });
-      
-      // Preload adjacent slides (one before and one after)
-      const preloadIndices = [index - 1, index + 1].filter(
-        i => i >= 0 && i < sortedMaterials.length
-      );
-      
-      preloadIndices.forEach(i => {
-        const material = sortedMaterials[i];
-        if (!material) return;
+      try {
+        const index = emblaApi.selectedScrollSnap();
+        console.log(`Carousel selected slide: ${index}`);
         
-        const directPath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+        // Store in both state and ref
+        setCurrentSlideIndex(index);
+        currentIndexRef.current = index;
         
-        if (!preloadedImages.includes(directPath)) {
-          const img = new Image();
-          img.src = directPath;
-          img.onload = () => {
-            setPreloadedImages(prev => [...prev, directPath]);
-          };
-        }
-      });
+        // Add to viewed slides
+        setViewedSlides(prev => {
+          if (prev.includes(index)) return prev;
+          return [...prev, index];
+        });
+        
+        // Preload adjacent slides (one before and one after)
+        const preloadIndices = [index - 1, index + 1].filter(
+          i => i >= 0 && i < sortedMaterials.length
+        );
+        
+        preloadIndices.forEach(i => {
+          const material = sortedMaterials[i];
+          if (!material) return;
+          
+          const directPath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+          
+          if (!preloadedImages.includes(directPath)) {
+            const img = new Image();
+            img.src = directPath;
+            img.onload = () => {
+              setPreloadedImages(prev => [...prev, directPath]);
+            };
+          }
+        });
+      } catch (err) {
+        console.error("Error in onSelect:", err);
+      }
     };
     
+    // Register for all relevant carousel events
     emblaApi.on("select", onSelect);
-    onSelect(); // Execute once on mount
+    emblaApi.on("settle", onSelect);
+    emblaApi.on("reInit", onSelect);
+    
+    // Force an initial selection to sync index
+    onSelect();
     
     return () => {
       emblaApi.off("select", onSelect);
+      emblaApi.off("settle", onSelect);
+      emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, sortedMaterials, bookPath, unitPath, preloadedImages]);
   
