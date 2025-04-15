@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Image as ImageIcon, FileText, Video, MessageSquare, Check, AlertCircle, ChevronLeft, ChevronRight, GripVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -39,12 +39,22 @@ export default function ThumbnailsBar({
   isAdmin = false,
   onReorderSlides,
 }: ThumbnailsBarProps) {
+  // Create a separate state to store the DOM element
+  const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(null);
+  // Use the ref for react-beautiful-dnd
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Effect to sync the scroll element with the ref
+  useEffect(() => {
+    if (scrollRef.current) {
+      setScrollElement(scrollRef.current);
+    }
+  }, []);
   
   // Scroll to the active thumbnail
   useEffect(() => {
-    if (scrollRef.current) {
-      const container = scrollRef.current;
+    if (scrollElement) {
+      const container = scrollElement;
       const activeThumb = container.querySelector('.active-thumbnail');
       
       if (activeThumb) {
@@ -56,7 +66,7 @@ export default function ThumbnailsBar({
         container.scrollLeft = thumbLeft - containerWidth / 2 + thumbWidth / 2;
       }
     }
-  }, [currentIndex]);
+  }, [currentIndex, scrollElement]);
   
   // Get icon based on content type
   const getContentTypeIcon = (contentType: string) => {
@@ -175,22 +185,24 @@ export default function ThumbnailsBar({
   // We'll detect this by checking the parent element's width vs height
   const [isVerticalLayout, setIsVerticalLayout] = useState(false);
 
-  useEffect(() => {
-    const checkLayout = () => {
-      if (scrollRef.current) {
-        const parent = scrollRef.current.parentElement;
-        if (parent) {
-          // If parent is taller than it is wide, we'll use vertical layout
-          const isVertical = parent.clientHeight > parent.clientWidth * 1.2; 
-          setIsVerticalLayout(isVertical);
-        }
+  // Use callback to update layout state when scrollElement changes
+  const checkLayout = useCallback(() => {
+    if (scrollElement) {
+      const parent = scrollElement.parentElement;
+      if (parent) {
+        // If parent is taller than it is wide, we'll use vertical layout
+        const isVertical = parent.clientHeight > parent.clientWidth * 1.2; 
+        setIsVerticalLayout(isVertical);
       }
-    };
+    }
+  }, [scrollElement]);
 
+  // Effect to check layout when scrollElement changes
+  useEffect(() => {
     checkLayout();
     window.addEventListener('resize', checkLayout);
     return () => window.removeEventListener('resize', checkLayout);
-  }, []);
+  }, [checkLayout]);
 
   // Handle drag end event
   const handleDragEnd = (result: DropResult) => {
@@ -206,7 +218,7 @@ export default function ThumbnailsBar({
   };
   
   // Check if we're in fullscreen mode by looking at the parent element's classes
-  const isFullscreenMode = scrollRef.current?.parentElement?.classList.contains('bg-black/80') || false;
+  const isFullscreenMode = scrollElement?.parentElement?.classList.contains('bg-black/80') || false;
   
   return (
     <div className="flex-1 flex flex-col">
@@ -249,11 +261,7 @@ export default function ThumbnailsBar({
                 {(provided) => (
                   <div 
                     className={`p-1 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-1' : 'flex flex-row space-x-1'}`}
-                    ref={(el) => {
-                      // Connect both refs - the scroll ref and the droppable ref
-                      scrollRef.current = el;
-                      provided.innerRef(el);
-                    }}
+                    ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
                     {materials.map((material, index) => {
@@ -343,7 +351,12 @@ export default function ThumbnailsBar({
           ) : (
             <div 
               className={`p-1 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-1' : 'flex flex-row space-x-1'}`}
-              ref={scrollRef}
+              ref={(el) => {
+                if (el) {
+                  scrollRef.current = el;
+                  setScrollElement(el);
+                }
+              }}
             >
               {materials.map((material, index) => {
                 const isActive = index === currentIndex;
