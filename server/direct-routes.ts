@@ -68,7 +68,7 @@ const s3Client = new S3Client({
 })();
 
 // Log S3 configuration
-console.log(`S3 configuration: Bucket=${S3_BUCKET}, Region=${process.env.AWS_REGION || "eu-central-1"}`);
+console.log(`S3 configuration: Bucket=${S3_BUCKET}, Region=eu-north-1`);
 
 // Helper function to list objects in S3
 async function listS3Objects(prefix: string): Promise<string[]> {
