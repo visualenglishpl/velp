@@ -396,6 +396,60 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
+  // Endpoint to save reordered materials
+  app.post("/api/direct/:bookPath/:unitPath/saveOrder", isAuthenticated, async (req, res) => {
+    try {
+      const { bookPath, unitPath } = req.params;
+      const { materials } = req.body;
+      
+      if (!Array.isArray(materials)) {
+        return res.status(400).json({ error: "Invalid materials data" });
+      }
+      
+      console.log(`Saving reordered materials for ${bookPath}/${unitPath}`);
+      
+      // In a production environment, you would save this order to a database
+      // For now, we'll store it in memory (this will reset on server restart)
+      if (!global.materialOrders) {
+        global.materialOrders = {};
+      }
+      
+      const orderKey = `${bookPath}/${unitPath}`;
+      global.materialOrders[orderKey] = materials.map(m => m.id);
+      
+      console.log(`Saved order for ${orderKey}:`, global.materialOrders[orderKey]);
+      
+      return res.json({ 
+        success: true, 
+        message: "Order saved successfully",
+        orderKey
+      });
+    } catch (error) {
+      console.error(`Error saving material order:`, error);
+      res.status(500).json({ error: "Failed to save material order" });
+    }
+  });
+
+  // Get the saved order for materials
+  app.get("/api/direct/:bookPath/:unitPath/savedOrder", isAuthenticated, async (req, res) => {
+    try {
+      const { bookPath, unitPath } = req.params;
+      const orderKey = `${bookPath}/${unitPath}`;
+      
+      // Get the saved order from memory
+      const savedOrder = global.materialOrders?.[orderKey] || null;
+      
+      return res.json({
+        success: true,
+        hasCustomOrder: !!savedOrder,
+        order: savedOrder
+      });
+    } catch (error) {
+      console.error(`Error getting saved order:`, error);
+      res.status(500).json({ error: "Failed to get saved order" });
+    }
+  });
+  
   // Special endpoint for Book 0 icons folder access
   app.get("/api/direct/:bookPath/icons/:filename", isAuthenticated, async (req, res) => {
     try {
