@@ -77,10 +77,18 @@ function getQuestionAnswerFromData(material: any): QAData {
   // Clean the title
   const title = material.title ? formatText.cleanFileName(material.title) : '';
   
-  // Function to extract code pattern from filename (like "01 R A" from various formats)
+  // Function to extract code pattern from filename (like "01 R A", "01 A b", "02 B c", etc.)
   const extractCodePattern = (text: string): string => {
+    // Try to match patterns like "(01 A a)" from the pasted document format 
+    const parenMatch = text.match(/\((\d{2})\s*([a-z])\s*([a-z])\)/i);
+    if (parenMatch) {
+      const result = `${parenMatch[1]} ${parenMatch[2].toLowerCase()} ${parenMatch[3].toLowerCase()}`;
+      console.log("Extracted parenthesized code pattern:", result, "from text:", text);
+      return result;
+    }
+    
     // Try to extract from more specific patterns first (look for code pattern at the beginning)
-    const specificMatch = text.match(/^(\d{2})\s+([a-z])\s+([a-z])\s/i);
+    const specificMatch = text.match(/^(\d{2})\s+([a-z])\s+([a-z](?:a)?)\s/i);
     if (specificMatch) {
       const result = `${specificMatch[1]} ${specificMatch[2].toLowerCase()} ${specificMatch[3].toLowerCase()}`;
       console.log("Extracted specific code pattern:", result, "from text:", text);
@@ -89,13 +97,14 @@ function getQuestionAnswerFromData(material: any): QAData {
 
     // Match patterns like "01 R A" or "05 L C" anywhere in the text
     // Be more restrictive - require it to be followed by specific keywords or be at the start
-    const codeMatch = text.match(/(\d{2})\s+([a-z])\s+([a-z])(\s|$|\s+what|\s+do|\s+is|\s+are|\s+how|\s+where|\s+who)/i);
+    const codeMatch = text.match(/(\d{2})\s+([a-z])\s+([a-z](?:a)?)(\s|$|\s+what|\s+do|\s+is|\s+are|\s+how|\s+where|\s+who)/i);
     if (codeMatch) {
       // Return standardized format for matching: "01 r a"
       const result = `${codeMatch[1]} ${codeMatch[2].toLowerCase()} ${codeMatch[3].toLowerCase()}`;
       console.log("Extracted code pattern:", result, "from text:", text);
       return result;
     }
+    
     return '';
   };
   
