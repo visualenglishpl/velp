@@ -161,28 +161,84 @@ export default function DirectContentViewer() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  // Track which slides have been viewed
+  // Track which slides have been viewed and actively preload surrounding slides
   useEffect(() => {
-    if (!emblaApi) return;
+    if (!emblaApi || !materialsData) return;
     
     const onSelect = () => {
       const currentSlide = emblaApi.selectedScrollSnap();
       setCurrentSlideIndex(currentSlide);
       
-      // Add current slide to viewed slides
+      // Add current slide to viewed slides for progress tracking
       setSlidesInView((prev) => {
         if (prev.includes(currentSlide)) return prev;
         return [...prev, currentSlide];
       });
+      
+      // Advanced preloading: Load slides before and after current slide
+      if (!preloadInProgress && materialsData) {
+        setPreloadInProgress(true);
+        
+        // Calculate range of slides to preload (current ± preloadRange)
+        const slidesToPreload = [];
+        const totalSlides = materialsData.length;
+        
+        // Add slides before current
+        for (let i = Math.max(0, currentSlide - preloadRange); i < currentSlide; i++) {
+          if (!preloadedSlides.includes(i)) {
+            slidesToPreload.push(i);
+          }
+        }
+        
+        // Add slides after current
+        for (let i = currentSlide + 1; i <= Math.min(totalSlides - 1, currentSlide + preloadRange); i++) {
+          if (!preloadedSlides.includes(i)) {
+            slidesToPreload.push(i);
+          }
+        }
+        
+        // Perform preloading for image content
+        if (slidesToPreload.length > 0) {
+          console.log(`Preloading ${slidesToPreload.length} adjacent slides around slide ${currentSlide+1}`);
+          
+          // Create and load images for preloading
+          slidesToPreload.forEach(slideIndex => {
+            const material = materialsData[slideIndex];
+            if (material && (material.contentType.toLowerCase() === 'image' || 
+                /\.(jpg|jpeg|png|gif|svg)$/i.test(material.content))) {
+              
+              // Create direct URL path
+              const formattedBookId = bookPath || "book1";
+              const unitPath = `unit${unitNumber}`;
+              const directPath = `/api/direct/${formattedBookId}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+              
+              // Create and load image
+              const img = new Image();
+              img.src = directPath;
+              
+              img.onload = () => {
+                setPreloadedSlides(prev => [...prev, slideIndex]);
+                console.log(`Successfully preloaded slide ${slideIndex+1}: ${material.content}`);
+              };
+              
+              img.onerror = () => {
+                console.error(`Failed to preload slide ${slideIndex+1}: ${material.content}`);
+              };
+            }
+          });
+        }
+        
+        setPreloadInProgress(false);
+      }
     };
 
     emblaApi.on("select", onSelect);
-    onSelect();
+    onSelect(); // Execute once on mount
 
     return () => {
       emblaApi.off("select", onSelect);
     };
-  }, [emblaApi]);
+  }, [emblaApi, materialsData, preloadedSlides, preloadInProgress, preloadRange, bookPath, unitNumber]);
   
   // Handle fullscreen mode
   const contentContainerRef = useRef<HTMLDivElement>(null);
