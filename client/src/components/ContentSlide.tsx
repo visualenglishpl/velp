@@ -319,7 +319,7 @@ export default function ContentSlide({
           )}
           
           {/* Enhanced image with optimized layout and proportional fitting */}
-          <div className="flex items-center justify-center w-full h-full py-2 px-4">
+          <div className="flex items-center justify-center w-full h-full py-4 px-4 bg-white">
             <motion.div 
               className="relative flex justify-center items-center w-full h-full bg-white shadow-sm rounded-md"
               style={{ 
@@ -330,12 +330,13 @@ export default function ContentSlide({
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: '8px',
+                overflow: 'hidden',
               }}
             >
               <motion.img
                 src={getS3Url()}
                 alt={material.title || "Educational content"}
-                className="p-0 m-0"
+                className="p-0 m-0 max-w-full max-h-full object-contain"
                 onLoad={handleImageLoad}
                 onError={handleImageError}
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -350,7 +351,6 @@ export default function ContentSlide({
                   width: 'auto',
                   height: 'auto',
                   objectFit: 'contain',
-                  filter: 'none',
                   background: 'white',
                   display: 'block',
                   margin: '0 auto'
