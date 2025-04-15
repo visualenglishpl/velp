@@ -503,14 +503,56 @@ export default function SlickContentViewer() {
                                     POLAND
                                   </h3>
                                 </div>
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">What country is this?</span>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">It is Poland.</span>
-                                </div>
+                                {material.content.toLowerCase().includes('01 r a') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What country is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Poland.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('01 r b') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is from Poland.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('01 r c') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What colors are the Polish flag?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">They are red and white.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {!material.content.toLowerCase().includes('01 r a') && 
+                                 !material.content.toLowerCase().includes('01 r b') && 
+                                 !material.content.toLowerCase().includes('01 r c') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What country is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Poland.</span>
+                                    </div>
+                                  </>
+                                )}
                               </>
                             ) : material.content.toLowerCase().includes('uk') || material.content.toLowerCase().includes('britain') ? (
                               <>
@@ -519,14 +561,56 @@ export default function SlickContentViewer() {
                                     BRITAIN / UK
                                   </h3>
                                 </div>
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">(02 N A) Which countries are in Britain?</span>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">They are England, Scotland, and Wales.</span>
-                                </div>
+                                {material.content.toLowerCase().includes('02 n a') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Which countries are in Britain?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">They are England, Scotland, and Wales.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('02 n c') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is from Britain.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('02 n d') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What nationality is he?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">He is British.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {!material.content.toLowerCase().includes('02 n a') && 
+                                 !material.content.toLowerCase().includes('02 n c') && 
+                                 !material.content.toLowerCase().includes('02 n d') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Which countries are in Britain?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">They are England, Scotland, and Wales.</span>
+                                    </div>
+                                  </>
+                                )}
                               </>
                             ) : material.content.toLowerCase().includes('ireland') ? (
                               <>
@@ -535,14 +619,56 @@ export default function SlickContentViewer() {
                                     NORTHERN IRELAND
                                   </h3>
                                 </div>
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">(03 G C) What is the capital of Northern Ireland?</span>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">It is Belfast.</span>
-                                </div>
+                                {material.content.toLowerCase().includes('03 g a') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Which country is colored pink?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Northern Ireland.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('03 g c') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What is the capital of Northern Ireland?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Belfast.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('03 g d') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What nationality is he?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">He is Northern Irish.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {!material.content.toLowerCase().includes('03 g a') && 
+                                 !material.content.toLowerCase().includes('03 g c') && 
+                                 !material.content.toLowerCase().includes('03 g d') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What is the capital of Northern Ireland?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Belfast.</span>
+                                    </div>
+                                  </>
+                                )}
                               </>
                             ) : material.content.toLowerCase().includes('scotland') ? (
                               <>
@@ -551,14 +677,82 @@ export default function SlickContentViewer() {
                                     SCOTLAND
                                   </h3>
                                 </div>
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">(04 L C) What is Scotland's capital?</span>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">It is Edinburgh.</span>
-                                </div>
+                                {material.content.toLowerCase().includes('04 l a') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What country is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Scotland.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('04 l b') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is from Scotland.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('04 l c') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What is Scotland's capital?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Edinburgh.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('04 l d') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What nationality is he?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">He is Scottish.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('04 l i') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Where is the Loch Ness Monster from?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is from Scotland.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {!material.content.toLowerCase().includes('04 l a') && 
+                                 !material.content.toLowerCase().includes('04 l b') && 
+                                 !material.content.toLowerCase().includes('04 l c') && 
+                                 !material.content.toLowerCase().includes('04 l d') && 
+                                 !material.content.toLowerCase().includes('04 l i') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What country is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Scotland.</span>
+                                    </div>
+                                  </>
+                                )}
                               </>
                             ) : material.content.toLowerCase().includes('usa') || material.content.toLowerCase().includes('america') ? (
                               <>
@@ -567,30 +761,153 @@ export default function SlickContentViewer() {
                                     USA
                                   </h3>
                                 </div>
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">(08 M A) What country is this?</span>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">It is the USA.</span>
-                                </div>
+                                {material.content.toLowerCase().includes('08 m a') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What country is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is the USA.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('08 m b') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is from the USA.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('08 m c') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">How many stars are on the American flag?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">There are 50 stars.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('08 m e') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What nationality is he?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">He is American.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('08 m k') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What type of food is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is American food.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {!material.content.toLowerCase().includes('08 m a') && 
+                                 !material.content.toLowerCase().includes('08 m b') && 
+                                 !material.content.toLowerCase().includes('08 m c') && 
+                                 !material.content.toLowerCase().includes('08 m e') && 
+                                 !material.content.toLowerCase().includes('08 m k') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What country is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is the USA.</span>
+                                    </div>
+                                  </>
+                                )}
                               </>
                             ) : material.content.toLowerCase().includes('australia') ? (
                               <>
-                                <div className="mb-2 flex items-center justify-center">
-                                  <h3 className="text-lg font-bold text-blue-800 bg-white py-1 px-3 rounded-full shadow-sm border border-blue-200">
+                                <div className="mb-1 flex items-center justify-center">
+                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
                                     AUSTRALIA
                                   </h3>
                                 </div>
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">What's the capital of Australia?</span>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">The capital of Australia is Canberra.</span>
-                                </div>
+                                {material.content.toLowerCase().includes('07 l a') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What country is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Australia.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('07 l b') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is from Australia.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('07 l d') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What nationality is he?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">He is Australian.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {material.content.toLowerCase().includes('07 l h') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">Name three Australian animals.</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">They are kangaroos, koalas, and wombats.</span>
+                                    </div>
+                                  </>
+                                )}
+                                {!material.content.toLowerCase().includes('07 l a') && 
+                                 !material.content.toLowerCase().includes('07 l b') && 
+                                 !material.content.toLowerCase().includes('07 l d') && 
+                                 !material.content.toLowerCase().includes('07 l h') && (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">What country is this?</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">It is Australia.</span>
+                                    </div>
+                                  </>
+                                )}
                               </>
                             ) : (
                               // Default questions if no specific country identified
