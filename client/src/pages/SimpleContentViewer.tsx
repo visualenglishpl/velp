@@ -118,9 +118,24 @@ export default function SimpleContentViewer() {
     return aStarts00 ? -1 : 1;
   });
   
-  // Navigation functions
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  // Navigation functions with improved logging
+  const scrollPrev = useCallback(() => {
+    console.log("Scrolling to previous slide");
+    if (emblaApi) {
+      emblaApi.scrollPrev();
+    } else {
+      console.error("Carousel API not initialized");
+    }
+  }, [emblaApi]);
+  
+  const scrollNext = useCallback(() => {
+    console.log("Scrolling to next slide");
+    if (emblaApi) {
+      emblaApi.scrollNext();
+    } else {
+      console.error("Carousel API not initialized");
+    }
+  }, [emblaApi]);
   
   // Handle thumbnail click
   const handleThumbnailClick = useCallback((index: number) => {
@@ -322,15 +337,18 @@ export default function SimpleContentViewer() {
               <p className="text-sm text-muted-foreground mr-4">Progress</p>
               <p className="text-sm font-medium">{Math.round(progressPercentage)}%</p>
             </div>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={() => setShowThumbnails(!showThumbnails)}
-              className="text-xs flex items-center"
-            >
-              {showThumbnails ? <EyeOff size={14} className="mr-1" /> : <Images size={14} className="mr-1" />}
-              {showThumbnails ? "Hide Thumbnails" : "Show Thumbnails"}
-            </Button>
+            <div className="flex items-center gap-3">
+              <p className="text-xs text-muted-foreground hidden sm:inline-block">Click on image to navigate</p>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setShowThumbnails(!showThumbnails)}
+                className="text-xs flex items-center"
+              >
+                {showThumbnails ? <EyeOff size={14} className="mr-1" /> : <Images size={14} className="mr-1" />}
+                {showThumbnails ? "Hide Thumbnails" : "Show Thumbnails"}
+              </Button>
+            </div>
           </div>
           <Progress value={progressPercentage} className="h-2" />
         </div>
@@ -362,12 +380,39 @@ export default function SimpleContentViewer() {
                         </div>
                       )}
                       
-                      {/* Content image */}
-                      <img 
-                        src={imagePath}
-                        alt={material.title || `Slide ${index + 1}`}
-                        className="max-h-[70vh] object-contain"
-                      />
+                      {/* Content image with click navigation */}
+                      <div className="relative w-full h-full flex justify-center group">
+                        {/* Left side navigation hint */}
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-0 group-hover:bg-opacity-10 p-3 rounded-full transition-all duration-200 z-10">
+                          <ChevronLeft size={24} className="text-black opacity-0 group-hover:opacity-50" />
+                        </div>
+                        
+                        {/* Right side navigation hint */}
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-0 group-hover:bg-opacity-10 p-3 rounded-full transition-all duration-200 z-10">
+                          <ChevronRight size={24} className="text-black opacity-0 group-hover:opacity-50" />
+                        </div>
+                        
+                        <img 
+                          src={imagePath}
+                          alt={material.title || `Slide ${index + 1}`}
+                          className="max-h-[70vh] object-contain cursor-pointer"
+                          onClick={(e) => {
+                            // Determine which side of the image was clicked
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const width = rect.width;
+                            
+                            // If clicked on left side, go to previous slide; if right side, go to next slide
+                            if (x < width / 2) {
+                              console.log("Left side of image clicked - previous slide");
+                              scrollPrev();
+                            } else {
+                              console.log("Right side of image clicked - next slide");
+                              scrollNext();
+                            }
+                          }}
+                        />
+                      </div>
                       
                       {/* Slide number indicator */}
                       <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white rounded-full px-3 py-1 text-sm">
@@ -386,9 +431,9 @@ export default function SimpleContentViewer() {
               <TooltipTrigger asChild>
                 <button 
                   onClick={scrollPrev}
-                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md"
+                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all"
                 >
-                  <ChevronLeft size={24} />
+                  <ChevronLeft size={28} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>Previous (←)</TooltipContent>
@@ -400,9 +445,9 @@ export default function SimpleContentViewer() {
               <TooltipTrigger asChild>
                 <button 
                   onClick={scrollNext}
-                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md"
+                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all"
                 >
-                  <ChevronRight size={24} />
+                  <ChevronRight size={28} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>Next (→)</TooltipContent>
