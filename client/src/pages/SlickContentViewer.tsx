@@ -9,119 +9,7 @@ import { apiRequest, queryClient } from '@/lib/queryClient';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
-// Structured question data reference for various countries and their codes
-const QUESTION_DATA = {
-  // POLAND - File code "01 R"
-  "01 R": {
-    country: "POLAND",
-    questions: {
-      "A": { question: "What country is this?", answer: "It is Poland." },
-      "B": { question: "Where is this flag from?", answer: "It is from Poland." },
-      "C": { question: "What colors are the Polish flag?", answer: "They are red and white." },
-      "D": { question: "Where are these people from?", answer: "They are from Poland." },
-      "F": { question: "What nationality are they?", answer: "They are Polish." },
-      "I": { question: "What is the capital of Poland?", answer: "It is Warsaw." },
-      "K": { question: "What language does she speak?", answer: "She speaks Polish." }
-    }
-  },
-  
-  // BRITAIN/UK - File code "02 N"
-  "02 N": {
-    country: "BRITAIN / UK",
-    questions: {
-      "A": { question: "Which countries are in Britain?", answer: "They are England, Scotland, and Wales." },
-      "C": { question: "Where is this flag from?", answer: "It is from Britain." },
-      "D": { question: "What nationality is he?", answer: "He is British." },
-      "G": { question: "Who is Britain's leader?", answer: "He is King Charles." },
-      "L": { question: "Where is this money from?", answer: "It is from the UK." }
-    }
-  },
-  
-  // NORTHERN IRELAND - File code "03 G"
-  "03 G": {
-    country: "NORTHERN IRELAND",
-    questions: {
-      "A": { question: "Which country is colored pink?", answer: "It is Northern Ireland." },
-      "C": { question: "What is the capital of Northern Ireland?", answer: "It is Belfast." },
-      "D": { question: "What nationality is he?", answer: "He is Northern Irish." }
-    }
-  },
-  
-  // SCOTLAND - File code "04 L"
-  "04 L": {
-    country: "SCOTLAND",
-    questions: {
-      "A": { question: "What country is this?", answer: "It is Scotland." },
-      "B": { question: "Where is this flag from?", answer: "It is from Scotland." },
-      "C": { question: "What is Scotland's capital?", answer: "It is Edinburgh." },
-      "D": { question: "What nationality is he?", answer: "He is Scottish." },
-      "I": { question: "Where is the Loch Ness Monster from?", answer: "It is from Scotland." }
-    }
-  },
-  
-  // ENGLAND - File code "05 L"
-  "05 L": {
-    country: "ENGLAND",
-    questions: {
-      "A": { question: "What country is this?", answer: "It is England." },
-      "B": { question: "Where is this flag from?", answer: "It is from England." },
-      "C": { question: "What is England's capital?", answer: "It is London." },
-      "D": { question: "What nationality is he?", answer: "He is English." },
-      "G": { question: "Is an English breakfast big?", answer: "Yes, it is big." }
-    }
-  },
-  
-  // WALES - File code "06 H"
-  "06 H": {
-    country: "WALES",
-    questions: {
-      "A": { question: "What country is this?", answer: "It is Wales." },
-      "B": { question: "Where is this flag from?", answer: "It is from Wales." },
-      "C": { question: "Describe the Welsh flag.", answer: "It is white, green, and has a dragon." },
-      "D": { question: "What is Wales's capital?", answer: "It is Cardiff." },
-      "F": { question: "What nationality is he?", answer: "He is Welsh." }
-    }
-  },
-  
-  // AUSTRALIA - File code "07 L"
-  "07 L": {
-    country: "AUSTRALIA",
-    questions: {
-      "A": { question: "What country is this?", answer: "It is Australia." },
-      "B": { question: "Where is this flag from?", answer: "It is from Australia." },
-      "D": { question: "What nationality is he?", answer: "He is Australian." },
-      "H": { question: "Name three Australian animals.", answer: "They are kangaroos, koalas, and wombats." }
-    }
-  },
-  
-  // USA - File code "08 M"
-  "08 M": {
-    country: "USA",
-    questions: {
-      "A": { question: "What country is this?", answer: "It is the USA." },
-      "B": { question: "Where is this flag from?", answer: "It is from the USA." },
-      "C": { question: "How many stars are on the American flag?", answer: "There are 50 stars." },
-      "E": { question: "What nationality is he?", answer: "He is American." },
-      "K": { question: "What type of food is this?", answer: "It is American food." }
-    }
-  },
-  
-  // UK/British Isles Review
-  "09 A": {
-    country: "UK/BRITISH ISLES REVIEW",
-    questions: {
-      "B": { question: "Which countries are on the British flag?", answer: "They are England, Scotland, and Northern Ireland." }
-    }
-  },
-  
-  "10 A": {
-    country: "UK/BRITISH ISLES REVIEW",
-    questions: {
-      "B": { question: "What countries are in the British Isles?", answer: "They are the UK and Ireland." }
-    }
-  }
-};
+import QuestionAnswerDisplay from '@/components/QuestionAnswerDisplay';
 import { 
   DndContext, 
   DragEndEvent,
@@ -474,71 +362,6 @@ export default function SlickContentViewer() {
     setActiveId(null);
   };
   
-  // Helper function to get question and answer for a material
-  const getQuestionAnswer = (material: S3Material) => {
-    // First try to use the file code from the description field
-    if (material.description) {
-      // The description contains the file code like "01 R A"
-      const codeBase = material.description.substring(0, 4); // Get "01 R"
-      const letterCode = material.description.substring(5, 6); // Get "A"
-      
-      // Check if we have data for this code
-      if (QUESTION_DATA[codeBase] && QUESTION_DATA[codeBase].questions[letterCode]) {
-        return {
-          country: QUESTION_DATA[codeBase].country,
-          question: QUESTION_DATA[codeBase].questions[letterCode].question,
-          answer: QUESTION_DATA[codeBase].questions[letterCode].answer,
-          hasData: true
-        };
-      }
-    }
-    
-    // Try to extract from filename
-    const content = material.content.toLowerCase();
-    
-    // Check each country code in our data
-    for (const codeBase in QUESTION_DATA) {
-      if (content.includes(codeBase.toLowerCase())) {
-        // For each letter code
-        const country = QUESTION_DATA[codeBase].country;
-        for (const letterCode in QUESTION_DATA[codeBase].questions) {
-          if (content.includes(`${codeBase.toLowerCase()} ${letterCode.toLowerCase()}`)) {
-            return {
-              country,
-              question: QUESTION_DATA[codeBase].questions[letterCode].question,
-              answer: QUESTION_DATA[codeBase].questions[letterCode].answer,
-              hasData: true
-            };
-          }
-        }
-        
-        // If we found the country but not a specific question, return the first question
-        const firstLetter = Object.keys(QUESTION_DATA[codeBase].questions)[0];
-        if (firstLetter) {
-          return {
-            country,
-            question: QUESTION_DATA[codeBase].questions[firstLetter].question,
-            answer: QUESTION_DATA[codeBase].questions[firstLetter].answer,
-            hasData: true
-          };
-        }
-      }
-    }
-    
-    // Default fallback if no matching question is found
-    return { 
-      country: "",
-      question: "", 
-      answer: "",
-      hasData: false
-    };
-  };
-  
-  // Find the active item for drag overlay
-  const activeItem = activeId 
-    ? materials.find(item => `thumbnail-${item.id}` === activeId) 
-    : null;
-  
   // Sortable thumbnail component
   const SortableThumbnail = ({ material, index }: { material: S3Material, index: number }) => {
     const {
@@ -547,768 +370,293 @@ export default function SlickContentViewer() {
       setNodeRef,
       transform,
       transition,
-      isDragging
-    } = useSortable({
+    } = useSortable({ 
       id: `thumbnail-${material.id}`,
+      data: { index }
     });
-    
-    const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
     
     const style = {
       transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
       transition,
-      zIndex: isDragging ? 50 : 0,
-      opacity: isDragging ? 0.5 : 1,
-      position: isDragging ? 'relative' : 'static' as any,
     };
+    
+    const isActive = currentIndex === index;
     
     return (
       <div 
         ref={setNodeRef}
         style={style}
-        className={`
-          cursor-grab border-2 h-16 w-16 flex-shrink-0 overflow-hidden rounded-md
-          transition-all duration-200 hover:scale-105 transform
-          ${index === currentIndex 
-            ? 'border-blue-500 ring-1 ring-blue-300 scale-105 shadow-md' 
-            : 'border-gray-200 opacity-80 hover:opacity-100'
-          }
-          ${isDragging ? 'shadow-xl scale-105' : ''}
-        `}
+        className={`group cursor-grab relative h-12 w-12 md:h-16 md:w-16 flex-shrink-0 overflow-hidden rounded-md border ${isActive ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-gray-50 hover:bg-gray-100'}`}
         onClick={() => goToSlide(index)}
+        data-slide-index={index}
         {...attributes}
         {...listeners}
       >
-        <div className="relative h-full w-full">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <img 
-              src={imagePath}
-              alt={material.title || `Thumbnail ${index + 1}`}
-              className="h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          
-          <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center">
-            <div className="bg-black/60 text-white text-[10px] text-center py-0.5 px-1 w-full flex justify-between items-center">
-              <span>{index + 1}</span>
-              <GripVertical className="h-2 w-2 text-gray-300" />
-            </div>
-          </div>
+        <img 
+          src={material.path} 
+          alt={`Thumbnail ${index + 1}`}
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+        <div className="pointer-events-none absolute inset-0 flex items-start justify-end p-1">
+          <GripVertical className="h-3 w-3 text-gray-400 opacity-50 group-hover:opacity-100" />
         </div>
       </div>
     );
   };
   
-  // Loading state
-  if (unitLoading || materialsLoading) {
+  // Show loading while data is being fetched
+  if (materialsLoading || unitLoading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <Loader2 className="h-10 w-10 animate-spin mb-4" />
-        <p>Loading content from {bookPath}/{unitPath}...</p>
-      </div>
-    );
-  }
-  
-  // Error state
-  if (unitError || materialsError || !unitData || !fetchedMaterials) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold mb-4 text-red-600">Error Loading Content</h1>
-        <p className="mb-4">There was a problem loading this content.</p>
-        <div className="flex gap-4">
-          <Button onClick={() => navigate('/books')}>
-            <Book className="mr-2 h-4 w-4" />Books
-          </Button>
-          <Button onClick={() => navigate('/')} variant="outline">
-            <Home className="mr-2 h-4 w-4" />Home
-          </Button>
+      <div className="flex min-h-[80vh] w-full items-center justify-center">
+        <div className="flex flex-col items-center gap-2">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+          <p className="text-muted-foreground">Loading learning materials...</p>
         </div>
       </div>
     );
   }
   
-  // Empty state
-  if (!materials.length) {
+  // Show error message if data fetch failed
+  if (materialsError || unitError) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">No Content Available</h1>
-        <p className="mb-4">This unit doesn't have any content yet.</p>
-        <div className="flex gap-4">
-          <Button onClick={() => navigate('/books')}>
-            <Book className="mr-2 h-4 w-4" />Books
-          </Button>
-          <Button onClick={() => navigate('/')} variant="outline">
-            <Home className="mr-2 h-4 w-4" />Home
-          </Button>
-        </div>
-      </div>
-    );
-  }
-  
-  return (
-    <div 
-      ref={containerRef}
-      className={`flex flex-col min-h-screen bg-white ${isFullscreen ? 'fixed inset-0 z-50' : ''}`}
-    >
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-white border-b shadow-sm p-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-gray-800">{unitData.title}</h1>
-          <p className="text-sm text-blue-600 font-medium">
-            <span className="font-semibold">Book {bookId}</span> • Unit {unitNumber}
+      <div className="flex min-h-[80vh] w-full items-center justify-center">
+        <div className="max-w-md rounded-lg bg-red-50 p-6 text-center">
+          <h2 className="mb-4 text-xl font-semibold text-red-600">Error Loading Content</h2>
+          <p className="text-red-700">
+            {materialsError 
+              ? `Failed to load materials: ${materialsError.message}` 
+              : `Failed to load unit data: ${unitError?.message}`}
           </p>
+          <div className="mt-6 flex justify-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => navigate('/')}
+              className="gap-2"
+            >
+              <Home className="h-4 w-4" /> Home
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.location.reload()}
+              className="gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21h5v-5"></path></svg>
+              Retry
+            </Button>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          {user?.role === 'admin' && (
-            <Button 
-              variant="outline" 
+      </div>
+    );
+  }
+  
+  // If no materials found
+  if (!materials || materials.length === 0) {
+    return (
+      <div className="flex min-h-[80vh] w-full items-center justify-center">
+        <div className="max-w-md rounded-lg bg-yellow-50 p-6 text-center">
+          <h2 className="mb-4 text-xl font-semibold text-yellow-600">No Content Found</h2>
+          <p className="text-yellow-700">
+            There are no learning materials available for this unit yet.
+          </p>
+          <div className="mt-6 flex justify-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => navigate(`/book${bookId}`)}
+              className="gap-2"
+            >
+              <Book className="h-4 w-4" /> Back to Units
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.location.reload()}
+              className="gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21h5v-5"></path></svg>
+              Refresh
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Main content viewer
+  return (
+    <div ref={containerRef} className={`flex flex-col ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'min-h-[80vh] mt-2'}`}>
+      {/* Header / Navigation */}
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate(`/book${bookId}`)}
+          >
+            <Book className="mr-2 h-4 w-4" />
+            <span className="hidden sm:inline">Back to Units</span>
+          </Button>
+          
+          <h1 className="text-lg font-semibold text-blue-700">
+            {unitData ? unitData.title : `${bookPath}/${unitPath}`}
+          </h1>
+        </div>
+        
+        {/* Admin controls */}
+        {user && user.username === 'admin' && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
               size="sm"
               onClick={handleSaveOrder}
               disabled={isSaving}
-              className="border-green-200 hover:bg-green-50 transition-colors"
+              className="bg-blue-50 hover:bg-blue-100"
             >
-              <Save size={16} className={isSaving ? 'animate-spin' : ''} />
-              <span className="ml-1 hidden sm:inline">
-                {isSaving ? 'Saving...' : 'Save Order'}
-              </span>
+              {isSaving ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="mr-2 h-4 w-4" />
+              )}
+              Save Order
             </Button>
-          )}
-          <Button 
-            variant="outline" 
-            size="sm" 
+          </div>
+        )}
+        
+        <div className="flex items-center gap-2">
+          {/* Fullscreen toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="border-blue-200 hover:bg-blue-50 transition-colors"
+            className="aspect-square p-2"
           >
-            {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-            <span className="ml-1 hidden sm:inline">{isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}</span>
+            {isFullscreen ? (
+              <Minimize2 className="h-4 w-4" />
+            ) : (
+              <Maximize2 className="h-4 w-4" />
+            )}
           </Button>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => navigate('/books')}
-            className="border-blue-200 hover:bg-blue-50 transition-colors"
-          >
-            <Book size={16} />
-            <span className="ml-1 hidden sm:inline">Back to Books</span>
-          </Button>
+          
+          {/* Slide counter */}
+          <div className="rounded-md bg-gray-100 px-2 py-1 text-xs font-medium">
+            {currentIndex + 1} / {materials.length}
+          </div>
         </div>
       </div>
       
-      {/* Main content area with Slick Slider */}
-      <div className="flex-1 flex flex-col items-center justify-center p-4 relative">
-        {/* Image slider */}
-        <div className="w-full max-w-5xl mx-auto flex-1 relative flex flex-col items-center justify-center">
-          <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
+      {/* Main content area */}
+      <div className="relative flex flex-1 flex-col">
+        {/* Content viewer */}
+        <div className="relative flex-1">
+          <Slider ref={sliderRef} {...slickSettings} className="h-full">
             {materials.map((material, index) => {
-              const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
-              const isPremiumContent = index >= freeSlideLimit && !hasPaidAccess;
+              // For premium content, blur or hide based on free slide limit
+              const shouldBlur = !hasPaidAccess && index >= freeSlideLimit;
               
               return (
                 <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
                   {/* Question-Answer section above image */}
-                  {material.title && (
-                    <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
-                      <div className="flex flex-col gap-0.5">
-                        {/* Handle extracted question format with arrow → */}
-                        {material.title.includes('→') ? (
-                          <>
-                            <div className="flex gap-2">
-                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                              <span className="text-gray-800 text-base">{material.title.split('→')[0].trim()}</span>
-                            </div>
-                            <div className="flex gap-2 mt-2">
-                              <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                              <span className="font-medium text-indigo-900 text-base">{material.title.split('→')[1].trim()}</span>
-                            </div>
-                          </>
-                        ) : 
-                        /* Handle country title format */
-                        material.title.match(/^[A-Z\s]+\s\(Files/) ? (
-                          <div className="flex items-center justify-center mb-1">
-                            <h3 className="text-lg font-bold text-blue-800 bg-white py-2 px-4 rounded-full shadow-sm border border-blue-200">
-                              {material.title.split('(')[0].trim()}
-                            </h3>
-                          </div>
-                        ) :
-                        /* Handle normal question format with question mark */
-                        material.title.includes('?') ? (
-                          <>
-                            <div className="flex gap-2">
-                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                              <span className="text-gray-800 text-base">{material.title.split('?')[0].trim()}?</span>
-                            </div>
-                            {material.description && (
-                              <div className="flex gap-2 mt-2">
-                                <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                <span className="font-medium text-indigo-900 text-base">{material.description}</span>
-                              </div>
-                            )}
-                          </>
-                        ) : 
-                        /* Replace filename with actual content for country learning materials */
-                        material.content.match(/\d+\s+[A-Z]\s+/) ? (
-                          <>
-                            {/* Extract content info from filename to decide which Q&A to show */}
-                            {material.content.toLowerCase().includes('poland') || 
-                             material.content.toLowerCase().includes('01 r ') ? (
-                              <>
-                                <div className="mb-1 flex items-center justify-center">
-                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                                    POLAND
-                                  </h3>
-                                </div>
-                                {(material.content.toLowerCase().includes('01 r a') || 
-                                  (material.content.toLowerCase().includes('what country is this') && 
-                                   material.content.toLowerCase().includes('poland'))) && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What country is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Poland.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('01 r b') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is from Poland.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('01 r c') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What colors are the Polish flag?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">They are red and white.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {!material.content.toLowerCase().includes('01 r a') && 
-                                 !material.content.toLowerCase().includes('01 r b') && 
-                                 !material.content.toLowerCase().includes('01 r c') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What country is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Poland.</span>
-                                    </div>
-                                  </>
-                                )}
-                              </>
-                            ) : material.content.toLowerCase().includes('uk') || material.content.toLowerCase().includes('britain') ? (
-                              <>
-                                <div className="mb-1 flex items-center justify-center">
-                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                                    BRITAIN / UK
-                                  </h3>
-                                </div>
-                                {material.content.toLowerCase().includes('02 n a') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Which countries are in Britain?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">They are England, Scotland, and Wales.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('02 n c') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is from Britain.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('02 n d') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What nationality is he?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">He is British.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {!material.content.toLowerCase().includes('02 n a') && 
-                                 !material.content.toLowerCase().includes('02 n c') && 
-                                 !material.content.toLowerCase().includes('02 n d') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Which countries are in Britain?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">They are England, Scotland, and Wales.</span>
-                                    </div>
-                                  </>
-                                )}
-                              </>
-                            ) : material.content.toLowerCase().includes('ireland') ? (
-                              <>
-                                <div className="mb-1 flex items-center justify-center">
-                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                                    NORTHERN IRELAND
-                                  </h3>
-                                </div>
-                                {material.content.toLowerCase().includes('03 g a') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Which country is colored pink?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Northern Ireland.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('03 g c') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What is the capital of Northern Ireland?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Belfast.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('03 g d') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What nationality is he?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">He is Northern Irish.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {!material.content.toLowerCase().includes('03 g a') && 
-                                 !material.content.toLowerCase().includes('03 g c') && 
-                                 !material.content.toLowerCase().includes('03 g d') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What is the capital of Northern Ireland?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Belfast.</span>
-                                    </div>
-                                  </>
-                                )}
-                              </>
-                            ) : material.content.toLowerCase().includes('scotland') ? (
-                              <>
-                                <div className="mb-1 flex items-center justify-center">
-                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                                    SCOTLAND
-                                  </h3>
-                                </div>
-                                {material.content.toLowerCase().includes('04 l a') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What country is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Scotland.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('04 l b') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is from Scotland.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('04 l c') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What is Scotland's capital?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Edinburgh.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('04 l d') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What nationality is he?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">He is Scottish.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('04 l i') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Where is the Loch Ness Monster from?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is from Scotland.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {!material.content.toLowerCase().includes('04 l a') && 
-                                 !material.content.toLowerCase().includes('04 l b') && 
-                                 !material.content.toLowerCase().includes('04 l c') && 
-                                 !material.content.toLowerCase().includes('04 l d') && 
-                                 !material.content.toLowerCase().includes('04 l i') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What country is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Scotland.</span>
-                                    </div>
-                                  </>
-                                )}
-                              </>
-                            ) : material.content.toLowerCase().includes('usa') || material.content.toLowerCase().includes('america') ? (
-                              <>
-                                <div className="mb-1 flex items-center justify-center">
-                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                                    USA
-                                  </h3>
-                                </div>
-                                {material.content.toLowerCase().includes('08 m a') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What country is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is the USA.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('08 m b') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is from the USA.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('08 m c') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">How many stars are on the American flag?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">There are 50 stars.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('08 m e') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What nationality is he?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">He is American.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('08 m k') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What type of food is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is American food.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {!material.content.toLowerCase().includes('08 m a') && 
-                                 !material.content.toLowerCase().includes('08 m b') && 
-                                 !material.content.toLowerCase().includes('08 m c') && 
-                                 !material.content.toLowerCase().includes('08 m e') && 
-                                 !material.content.toLowerCase().includes('08 m k') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What country is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is the USA.</span>
-                                    </div>
-                                  </>
-                                )}
-                              </>
-                            ) : material.content.toLowerCase().includes('australia') ? (
-                              <>
-                                <div className="mb-1 flex items-center justify-center">
-                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                                    AUSTRALIA
-                                  </h3>
-                                </div>
-                                {(material.content.toLowerCase().includes('07 l a') ||
-                                  material.content.toLowerCase().includes('boomerang') ||
-                                  (material.content.toLowerCase().includes('australia') && material.content.toLowerCase().includes('what country'))) && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What country is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Australia.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('07 l b') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Where is this flag from?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is from Australia.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('07 l d') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What nationality is he?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">He is Australian.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {material.content.toLowerCase().includes('07 l h') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">Name three Australian animals.</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">They are kangaroos, koalas, and wombats.</span>
-                                    </div>
-                                  </>
-                                )}
-                                {!material.content.toLowerCase().includes('07 l a') && 
-                                 !material.content.toLowerCase().includes('07 l b') && 
-                                 !material.content.toLowerCase().includes('07 l d') && 
-                                 !material.content.toLowerCase().includes('07 l h') && (
-                                  <>
-                                    <div className="flex gap-2">
-                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                      <span className="text-gray-800 text-base">What country is this?</span>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">It is Australia.</span>
-                                    </div>
-                                  </>
-                                )}
-                              </>
-                            ) : (
-                              // Default questions if no specific country identified
-                              <>
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">What country is this?</span>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">Let's learn about this country.</span>
-                                </div>
-                              </>
-                            )}
-                          </>
-                        ) : (
-                          /* Default case - but don't show "Content from..." text */
-                          !material.title.startsWith('Content from') && (
-                            <div className="flex gap-2">
-                              <span className="font-medium text-gray-800 text-base">{material.title}</span>
-                            </div>
-                          )
-                        )}
-                        
-                        {/* Show description only if not already shown as answer */}
-                        {material.description && !material.title.includes('?') && !material.title.includes('→') && (
-                          <div className="mt-2 text-sm text-gray-600">{material.description}</div>
-                        )}
-                      </div>
-                    </div>
-                  )}
+                  <QuestionAnswerDisplay material={material} />
                   
-                  {/* Premium content overlay */}
-                  {isPremiumContent && (
-                    <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center">
-                      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md text-center">
-                        <h3 className="text-xl font-bold mb-2">Premium Content</h3>
-                        <p className="mb-4">This slide requires a subscription to view.</p>
-                        <Button 
-                          onClick={() => navigate('/checkout')}
-                          className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-                        >
-                          Get Premium Access
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Centered content container */}
-                  <div className="flex items-center justify-center w-full h-full">
-                    {/* Actual image */}
+                  {/* Main image */}
+                  <div className={`w-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''}`}>
                     <img 
-                      src={imagePath}
-                      alt={material.title || `Slide ${index + 1}`}
-                      className="max-h-full max-w-full object-contain mx-auto shadow-lg"
+                      src={material.path}
+                      alt={`Learning material slide ${index + 1}`}
+                      className="h-auto max-h-[calc(55vh-100px)] w-auto max-w-full object-contain"
+                      loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
                     />
                   </div>
+                  
+                  {/* Premium content overlay */}
+                  {shouldBlur && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                      <div className="rounded-lg bg-white p-4 text-center shadow-lg">
+                        <h3 className="text-lg font-semibold text-blue-700">Premium Content</h3>
+                        <p className="mb-4 text-sm text-gray-700">Sign in to access all slides in this unit.</p>
+                        <Button onClick={() => navigate('/auth')}>Sign In</Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
           </Slider>
-          
-          {/* Navigation buttons */}
-          <button
-            onClick={() => {
-              if (currentIndex > 0) {
-                goToSlide(currentIndex - 1);
-              }
-            }}
+        </div>
+        
+        {/* Navigation arrows */}
+        <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-3">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goToPrevSlide}
             disabled={currentIndex === 0}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-4 shadow-lg hover:shadow-xl disabled:opacity-40 z-20 transition-all duration-200"
-            aria-label="Previous slide"
+            className="h-8 w-8 rounded-full bg-white/80 shadow-md hover:bg-white"
           >
-            <ChevronLeft size={24} />
-          </button>
-          
-          <button
-            onClick={() => {
-              if (currentIndex < materials.length - 1) {
-                goToSlide(currentIndex + 1);
-              }
-            }}
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goToNextSlide}
             disabled={currentIndex === materials.length - 1}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-4 shadow-lg hover:shadow-xl disabled:opacity-40 z-20 transition-all duration-200"
-            aria-label="Next slide"
+            className="h-8 w-8 rounded-full bg-white/80 shadow-md hover:bg-white"
           >
-            <ChevronRight size={24} />
-          </button>
-          
-          {/* Slide number indicator */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full z-20 shadow-lg flex items-center gap-1">
-            <span className="font-bold text-sm">{currentIndex + 1}</span>
-            <span className="text-blue-200">/</span>
-            <span className="text-sm">{materials.length}</span>
-          </div>
+            <ChevronRight className="h-4 w-4" />
+          </Button>
         </div>
       </div>
       
-      {/* Thumbnails navigation with drag and drop */}
-      <div className="border-t p-2 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex justify-between items-center mb-1">
-            <p className="text-xs text-gray-500">Navigate or drag to reorder</p>
-            <p className="text-xs text-blue-500 hidden sm:block">Drag thumbnails to reorder slides</p>
-          </div>
-          
-          <div className="overflow-x-auto">
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              modifiers={[restrictToHorizontalAxis]}
+      {/* Thumbnail navigation */}
+      <div className="mt-4 px-4">
+        <div className="relative overflow-hidden">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToHorizontalAxis]}
+          >
+            <SortableContext
+              items={materials.map(m => `thumbnail-${m.id}`)}
+              strategy={horizontalListSortingStrategy}
             >
-              <SortableContext 
-                items={materials.map(item => `thumbnail-${item.id}`)} 
-                strategy={horizontalListSortingStrategy}
-              >
-                <div className="flex space-x-2 min-w-max px-1">
+              <div className="flex gap-1 overflow-x-auto pb-2 items-center">
+                {/* Current position indicator */}
+                <div className="min-w-[28px] text-xs font-medium text-gray-500 text-center">
+                  {currentIndex + 1}
+                </div>
+                
+                {/* Thumbnails */}
+                <div className="flex gap-2 overflow-x-auto pb-1">
                   {materials.map((material, index) => (
                     <SortableThumbnail 
-                      key={`thumbnail-${material.id}`} 
-                      material={material} 
-                      index={index} 
+                      key={`thumbnail-${material.id}`}
+                      material={material}
+                      index={index}
                     />
                   ))}
                 </div>
-              </SortableContext>
-              
-              <DragOverlay>
-                {activeItem ? (
-                  <div className="h-16 w-16 rounded-md overflow-hidden shadow-2xl rotate-3 border-2 border-blue-500">
-                    <img 
-                      src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(activeItem.content)}`}
-                      alt={activeItem.title || "Dragging thumbnail"}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                ) : null}
-              </DragOverlay>
-            </DndContext>
-          </div>
+                
+                {/* Total slides indicator */}
+                <div className="min-w-[28px] text-xs font-medium text-gray-500 text-center">
+                  {materials.length}
+                </div>
+              </div>
+            </SortableContext>
+            
+            {/* Drag overlay */}
+            <DragOverlay>
+              {activeId ? (
+                <div className="h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-md border-2 border-blue-500 shadow-lg">
+                  <img 
+                    src={materials.find(m => `thumbnail-${m.id}` === activeId)?.path} 
+                    alt="Dragging thumbnail"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ) : null}
+            </DragOverlay>
+          </DndContext>
         </div>
       </div>
     </div>
