@@ -81,7 +81,7 @@ export default function SlickContentViewer() {
   } | null>(null);
   
   // State for saving annotations
-  const [isSavingAnnotations, setIsSavingAnnotations] = useState(false);
+  // Note: We use the isPending from the useMutation hook instead
   
   // State for drag and drop
   const [materials, setMaterials] = useState<S3Material[]>([]);
@@ -170,6 +170,45 @@ export default function SlickContentViewer() {
         variant: "destructive",
       });
     }
+  });
+  
+  // Save annotations mutation
+  const { mutate: saveAnnotations, isPending: isSavingAnnotations } = useMutation({
+    mutationFn: async (annotationsToSave: Record<number, Array<any>>) => {
+      return await apiRequest("POST", `/api/direct/${bookPath}/${unitPath}/saveAnnotations`, {
+        annotations: annotationsToSave
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Annotations saved",
+        description: "Your annotations have been saved successfully.",
+      });
+      queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/annotations`] });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error saving annotations",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  });
+  
+  // Fetch saved annotations
+  const { data: savedAnnotations } = useQuery<{ 
+    success: boolean, 
+    annotations: Record<number, Array<{
+      id: string;
+      type: 'text' | 'highlight' | 'arrow';
+      content?: string;
+      position: { x: number; y: number };
+      color: string;
+      slideId: number;
+    }>> 
+  }>({
+    queryKey: [`/api/direct/${bookPath}/${unitPath}/annotations`],
+    enabled: Boolean(bookPath && unitPath && isEditMode)
   });
   
   // Handle save button click
@@ -332,6 +371,13 @@ export default function SlickContentViewer() {
       goToSlide(0);
     }
   }, [materials, goToSlide]);
+  
+  // Load saved annotations
+  useEffect(() => {
+    if (savedAnnotations?.annotations && Object.keys(savedAnnotations.annotations).length > 0) {
+      setAnnotations(savedAnnotations.annotations);
+    }
+  }, [savedAnnotations]);
   
   // Custom after change handler for Slick
   const handleAfterChange = (current: number) => {
@@ -573,6 +619,23 @@ export default function SlickContentViewer() {
             </Button>
             
             {isEditMode && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => saveAnnotations(annotations)}
+                disabled={isSavingAnnotations}
+                className="bg-green-50 hover:bg-green-100"
+              >
+                {isSavingAnnotations ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="mr-2 h-4 w-4" />
+                )}
+                Save Annotations
+              </Button>
+            )}
+            
+            {isEditMode && (
               <div className="flex items-center gap-1 border rounded-md p-1 bg-white">
                 <Button
                   variant="ghost"
@@ -674,20 +737,135 @@ export default function SlickContentViewer() {
                   <QuestionAnswerDisplay material={material} />
                   
                   {/* Main image - Only show image if it's not a PDF or SWF */}
-                  <div className={`w-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''}`}>
+                  <div 
+                    className={`w-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
+                    onClick={(e) => {
+                      // Only handle clicks in edit mode and when user is admin
+                      if (isEditMode && user && user.username === 'admin' && activeAnnotation && index === currentIndex) {
+                        // Get click position relative to the container
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        // Create a new annotation
+                        const newAnnotation = {
+                          id: `annotation-${Date.now()}`,
+                          type: activeAnnotation.type,
+                          content: activeAnnotation.content,
+                          position: { x, y },
+                          color: activeAnnotation.color,
+                          slideId: material.id
+                        };
+                        
+                        // Add the annotation to the current slide's annotations
+                        const updatedAnnotations = { ...annotations };
+                        if (!updatedAnnotations[material.id]) {
+                          updatedAnnotations[material.id] = [];
+                        }
+                        updatedAnnotations[material.id].push(newAnnotation);
+                        setAnnotations(updatedAnnotations);
+                        
+                        // Reset active annotation if it's not text (to allow multiple annotations)
+                        if (activeAnnotation.type !== 'text') {
+                          setActiveAnnotation(null);
+                        }
+                      }
+                    }}
+                  >
                     {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
-                      <img 
-                        src={material.path}
-                        alt={`Learning material slide ${index + 1}`}
-                        className="h-auto max-h-[calc(55vh-100px)] w-auto max-w-full object-contain"
-                        loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
-                        onError={(e) => {
-                          console.error(`Error loading image at ${material.path}`, e);
-                          // Set a fallback or placeholder
-                          e.currentTarget.src = `/placeholder.png`;
-                          e.currentTarget.classList.add('error-image');
-                        }}
-                      />
+                      <div className="relative">
+                        <img 
+                          src={material.path}
+                          alt={`Learning material slide ${index + 1}`}
+                          className={`h-auto max-h-[calc(55vh-100px)] w-auto max-w-full object-contain ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
+                          onError={(e) => {
+                            console.error(`Error loading image at ${material.path}`, e);
+                            // Set a fallback or placeholder
+                            e.currentTarget.src = `/placeholder.png`;
+                            e.currentTarget.classList.add('error-image');
+                          }}
+                        />
+                        
+                        {/* Render annotations for this slide */}
+                        {isEditMode && index === currentIndex && annotations[material.id]?.map((annotation, i) => (
+                          <div 
+                            key={annotation.id}
+                            className="absolute pointer-events-auto"
+                            style={{ 
+                              left: `${annotation.position.x}px`, 
+                              top: `${annotation.position.y}px`,
+                              zIndex: 50 + i
+                            }}
+                          >
+                            {annotation.type === 'text' && (
+                              <div 
+                                className="min-w-[100px] min-h-[24px] px-2 py-1 text-sm rounded shadow-sm"
+                                style={{ backgroundColor: annotation.color === '#000000' ? 'white' : annotation.color, borderColor: annotation.color }}
+                                contentEditable={true}
+                                suppressContentEditableWarning={true}
+                                onBlur={(e) => {
+                                  // Update text content when edited
+                                  const updatedAnnotations = { ...annotations };
+                                  const annotationIndex = updatedAnnotations[material.id].findIndex(a => a.id === annotation.id);
+                                  if (annotationIndex !== -1) {
+                                    updatedAnnotations[material.id][annotationIndex].content = e.currentTarget.textContent || '';
+                                    setAnnotations(updatedAnnotations);
+                                  }
+                                }}
+                              >
+                                {annotation.content}
+                              </div>
+                            )}
+                            
+                            {annotation.type === 'highlight' && (
+                              <div 
+                                className="w-16 h-16 rounded opacity-50 border-2 resize cursor-move"
+                                style={{ 
+                                  backgroundColor: annotation.color,
+                                  borderColor: annotation.color === '#ffff00' ? '#ffcc00' : annotation.color
+                                }}
+                              />
+                            )}
+                            
+                            {annotation.type === 'arrow' && (
+                              <div className="relative h-12 w-12">
+                                <div
+                                  className="absolute inset-0"
+                                  style={{
+                                    transform: 'rotate(45deg)',
+                                    borderLeft: `2px solid ${annotation.color}`,
+                                    borderBottom: `2px solid ${annotation.color}`
+                                  }}
+                                />
+                                <div
+                                  className="absolute right-0 top-0 h-3 w-3"
+                                  style={{
+                                    borderRight: `2px solid ${annotation.color}`,
+                                    borderTop: `2px solid ${annotation.color}`,
+                                    transform: 'rotate(45deg) translate(70%, -70%)'
+                                  }}
+                                />
+                              </div>
+                            )}
+                            
+                            {isEditMode && (
+                              <button
+                                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Remove this annotation
+                                  const updatedAnnotations = { ...annotations };
+                                  updatedAnnotations[material.id] = updatedAnnotations[material.id].filter(a => a.id !== annotation.id);
+                                  setAnnotations(updatedAnnotations);
+                                }}
+                              >
+                                ×
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     ) : material.contentType === 'PDF' || material.path.endsWith('.pdf') ? (
                       <div className="flex flex-col items-center justify-center p-4 rounded bg-blue-50 text-blue-700">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -708,6 +886,17 @@ export default function SlickContentViewer() {
                       </div>
                     )}
                   </div>
+                  
+                  {/* Edit mode indicator */}
+                  {isEditMode && index === currentIndex && (
+                    <div className="absolute top-2 right-2 px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">
+                      Edit Mode: {activeAnnotation ? (
+                        activeAnnotation.type === 'text' ? 'Adding Text' :
+                        activeAnnotation.type === 'highlight' ? 'Adding Highlight' :
+                        'Adding Arrow'
+                      ) : 'Select Tool'}
+                    </div>
+                  )}
                   
                   {/* Premium content overlay */}
                   {shouldBlur && (

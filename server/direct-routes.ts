@@ -443,6 +443,64 @@ export function registerDirectRoutes(app: Express) {
       res.status(500).json({ error: "Failed to save material order" });
     }
   });
+  
+  // Endpoint to save annotations for materials
+  app.post("/api/direct/:bookPath/:unitPath/saveAnnotations", isAuthenticated, async (req, res) => {
+    try {
+      const { bookPath, unitPath } = req.params;
+      const { annotations } = req.body;
+      
+      if (!annotations || typeof annotations !== 'object') {
+        return res.status(400).json({ error: "Invalid annotations data" });
+      }
+      
+      console.log(`Saving annotations for ${bookPath}/${unitPath}`);
+      
+      // In a production environment, you would save this in a database
+      // For now, we'll store it in memory (this will reset on server restart)
+      if (!(global as any).slidesAnnotations) {
+        (global as any).slidesAnnotations = {};
+      }
+      
+      const annotationsKey = `${bookPath}/${unitPath}`;
+      (global as any).slidesAnnotations[annotationsKey] = annotations;
+      
+      console.log(`Saved annotations for ${annotationsKey}`);
+      
+      return res.json({ 
+        success: true, 
+        message: "Annotations saved successfully"
+      });
+    } catch (error) {
+      console.error(`Error saving annotations:`, error);
+      res.status(500).json({ error: "Failed to save annotations" });
+    }
+  });
+  
+  // Endpoint to get saved annotations
+  app.get("/api/direct/:bookPath/:unitPath/annotations", isAuthenticated, async (req, res) => {
+    try {
+      const { bookPath, unitPath } = req.params;
+      const annotationsKey = `${bookPath}/${unitPath}`;
+      
+      // Check if we have saved annotations for this unit
+      if (!(global as any).slidesAnnotations || !(global as any).slidesAnnotations[annotationsKey]) {
+        // Return empty annotations object if none are saved yet
+        return res.json({ 
+          success: true, 
+          annotations: {}
+        });
+      }
+      
+      return res.json({ 
+        success: true, 
+        annotations: (global as any).slidesAnnotations[annotationsKey]
+      });
+    } catch (error) {
+      console.error(`Error fetching annotations:`, error);
+      res.status(500).json({ error: "Failed to fetch annotations" });
+    }
+  });
 
   // Get the saved order for materials
   app.get("/api/direct/:bookPath/:unitPath/savedOrder", isAuthenticated, async (req, res) => {
