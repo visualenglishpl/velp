@@ -5,6 +5,15 @@ interface QAData {
   question: string;
   answer: string;
   hasData: boolean;
+  category?: string;
+}
+
+interface QADatabaseEntry {
+  code: string;
+  question: string;
+  answer: string;
+  country?: string;
+  category?: string;
 }
 
 interface QuestionAnswerDisplayProps {
@@ -87,7 +96,7 @@ function getQuestionAnswerFromData(material: any): QAData {
   const codePattern = contentCode || descriptionCode;
   
   // Map of code patterns to exact questions and answers
-  const qaDatabase = [
+  const qaDatabase: QADatabaseEntry[] = [
     // POLAND
     { code: "01 r a", country: "POLAND", question: "What country is this?", answer: "It is Poland." },
     { code: "01 r b", country: "POLAND", question: "Where is this flag from?", answer: "It is from Poland." },
@@ -149,7 +158,79 @@ function getQuestionAnswerFromData(material: any): QAData {
     
     // UK/British Isles Review
     { code: "09 a b", country: "BRITAIN / UK", question: "Which countries are on the British flag?", answer: "They are England, Scotland, and Northern Ireland." },
-    { code: "10 a b", country: "BRITAIN / UK", question: "What countries are in the British Isles?", answer: "They are the UK and Ireland." }
+    { code: "10 a b", country: "BRITAIN / UK", question: "What countries are in the British Isles?", answer: "They are the UK and Ireland." },
+    
+    // MOBILE PHONES
+    { code: "01 a a", category: "MOBILE PHONES", question: "What is this?", answer: "It is a phone." },
+    { code: "01 a b", category: "MOBILE PHONES", question: "Do you have a phone?", answer: "Yes, I have a phone / No, I do not have a phone." },
+    { code: "01 a c", category: "MOBILE PHONES", question: "What phone do you have?", answer: "I have a [iPhone/Samsung/Android]." },
+    { code: "01 a d", category: "MOBILE PHONES", question: "Who has a phone in your house?", answer: "My [mother/father/sister] has a phone." },
+    { code: "01 a e", category: "MOBILE PHONES", question: "Are these old or new phones?", answer: "They are old/new phones." },
+    { code: "01 a f", category: "MOBILE PHONES", question: "Do you shop using your phone?", answer: "Yes, I shop using my phone / No, I do not." },
+    { code: "01 a g", category: "MOBILE PHONES", question: "Do you play games on your phone?", answer: "Yes, I play games / No, I do not." },
+    { code: "01 a h", category: "MOBILE PHONES", question: "Are mobile phones cheap or expensive?", answer: "They are cheap/expensive." },
+    { code: "01 a i", category: "MOBILE PHONES", question: "Do you take selfies with your phone?", answer: "Yes, I take selfies / No, I do not." },
+    { code: "01 a j", category: "MOBILE PHONES", question: "Do you listen to music with your phone?", answer: "Yes, I listen to music / No, I do not." },
+    { code: "01 a k", category: "MOBILE PHONES", question: "Do you take photos with your phone?", answer: "Yes, I take photos / No, I do not." },
+    
+    // CHARGERS & BATTERIES
+    { code: "02 a a", category: "CHARGERS & BATTERIES", question: "What is this?", answer: "It is a charger." },
+    { code: "02 a b", category: "CHARGERS & BATTERIES", question: "Do you have a charger?", answer: "Yes, I have a charger / No, I do not." },
+    { code: "02 a c", category: "CHARGERS & BATTERIES", question: "Do you have a wireless charger?", answer: "Yes, I do / No, I do not." },
+    { code: "02 a d", category: "CHARGERS & BATTERIES", question: "How long does your battery last?", answer: "It lasts [1 hour/5 hours]." },
+    { code: "02 a e", category: "CHARGERS & BATTERIES", question: "What color is your charger?", answer: "It is [red/black/white]." },
+    { code: "02 a f", category: "CHARGERS & BATTERIES", question: "Is your phone battery full or empty?", answer: "It is full/empty." },
+    { code: "02 a i", category: "CHARGERS & BATTERIES", question: "How long does it take to charge your phone?", answer: "It takes [30 minutes/2 hours]." },
+    { code: "02 b b", category: "CHARGERS & BATTERIES", question: "How often do you charge your phone?", answer: "I charge it [once/twice] a day." },
+    { code: "02 b c", category: "CHARGERS & BATTERIES", question: "Is your charger fast or slow?", answer: "It is fast/slow." },
+    
+    // HEADPHONES & EARPHONES
+    { code: "03 a a", category: "HEADPHONES & EARPHONES", question: "What are these?", answer: "They are headphones." },
+    { code: "03 a c", category: "HEADPHONES & EARPHONES", question: "What are these?", answer: "They are earphones." },
+    { code: "03 a e", category: "HEADPHONES & EARPHONES", question: "Do you prefer headphones, earbuds, or earphones?", answer: "I prefer [headphones/earbuds/earphones]." },
+    { code: "03 a f", category: "HEADPHONES & EARPHONES", question: "Do you prefer wireless or wired earphones?", answer: "I prefer wireless/wired earphones." },
+    { code: "03 a h", category: "HEADPHONES & EARPHONES", question: "What color headphones do you like?", answer: "I like [blue/red/black] headphones." },
+    { code: "03 a i", category: "HEADPHONES & EARPHONES", question: "Are these headphones big or small?", answer: "They are big/small." },
+    { code: "03 c a", category: "HEADPHONES & EARPHONES", question: "What is he doing?", answer: "He is listening to music with headphones." },
+    { code: "03 c d", category: "HEADPHONES & EARPHONES", question: "Do you listen to music with headphones every day?", answer: "Yes, I do / No, I do not." },
+    { code: "03 c e", category: "HEADPHONES & EARPHONES", question: "Do you listen to music while studying?", answer: "Yes, I do / No, I do not." },
+    { code: "03 c h", category: "HEADPHONES & EARPHONES", question: "What music do you listen to?", answer: "I listen to [pop/rock/classical] music." },
+    
+    // SPEAKERS
+    { code: "04 a a", category: "SPEAKERS", question: "What are these?", answer: "They are speakers." },
+    { code: "04 a c", category: "SPEAKERS", question: "Do you have a mini speaker at home?", answer: "Yes, I do / No, I do not." },
+    { code: "04 a h", category: "SPEAKERS", question: "Do you prefer speakers or headphones?", answer: "I prefer speakers/headphones." },
+    { code: "04 a j", category: "SPEAKERS", question: "Does your phone have speakers?", answer: "Yes, it does / No, it does not." },
+    { code: "04 a m", category: "SPEAKERS", question: "Where are the speakers in a car?", answer: "They are [in the doors/on the dashboard]." },
+    
+    // COMPUTERS & LAPTOPS
+    { code: "05 a a", category: "COMPUTERS & LAPTOPS", question: "What is this?", answer: "It is a laptop." },
+    { code: "05 a c", category: "COMPUTERS & LAPTOPS", question: "Do you have a laptop in your bedroom?", answer: "Yes, I do / No, I do not." },
+    { code: "05 a e", category: "COMPUTERS & LAPTOPS", question: "Do you have a gaming laptop?", answer: "Yes, I do / No, I do not." },
+    { code: "05 a f", category: "COMPUTERS & LAPTOPS", question: "Do you prefer a laptop or a computer?", answer: "I prefer a laptop/computer." },
+    { code: "05 a l", category: "COMPUTERS & LAPTOPS", question: "Do you watch films on your laptop?", answer: "Yes, I do / No, I do not." },
+    { code: "05 b b", category: "COMPUTERS & LAPTOPS", question: "Do you surf the internet every day?", answer: "Yes, I do / No, I do not." },
+    { code: "05 b g", category: "COMPUTERS & LAPTOPS", question: "Do you surf the internet with your phone?", answer: "Yes, I do / No, I do not." },
+    
+    // GAME CONSOLES
+    { code: "06 a b", category: "GAME CONSOLES", question: "What is this?", answer: "It is a game console." },
+    { code: "06 a e", category: "GAME CONSOLES", question: "Do you have a game console at home?", answer: "Yes, I do / No, I do not." },
+    { code: "06 b b", category: "GAME CONSOLES", question: "What games do you play?", answer: "I play [Fortnite/Minecraft/Roblox]." },
+    { code: "06 b d", category: "GAME CONSOLES", question: "Do you prefer gaming on a console or laptop?", answer: "I prefer a console/laptop." },
+    
+    // CAMERAS
+    { code: "07 a b", category: "CAMERAS", question: "What type of camera is this?", answer: "It is a digital camera." },
+    { code: "07 a g", category: "CAMERAS", question: "Do you prefer a digital or phone camera?", answer: "I prefer a digital/phone camera." },
+    { code: "07 b a", category: "CAMERAS", question: "What is he doing?", answer: "He is taking photos." },
+    { code: "07 b d", category: "CAMERAS", question: "Are you good at taking photos?", answer: "Yes, I am / No, I am not." },
+    
+    // OTHER GADGETS
+    { code: "08 a a", category: "OTHER GADGETS", question: "What is this?", answer: "It is a USB drive." },
+    { code: "08 a c", category: "OTHER GADGETS", question: "How big is your USB drive?", answer: "It is [32GB/64GB]." },
+    { code: "09 a a", category: "OTHER GADGETS", question: "What is this?", answer: "It is an e-book reader." },
+    { code: "09 a c", category: "OTHER GADGETS", question: "Do you prefer e-books or paper books?", answer: "I prefer e-books/paper books." },
+    { code: "10 c aa", category: "OTHER GADGETS", question: "What is this?", answer: "It is a printer." },
+    { code: "12 c aa", category: "OTHER GADGETS", question: "What is this?", answer: "It is a remote control." }
   ];
   
   // Check for an exact match in our database using the code pattern
@@ -158,7 +239,7 @@ function getQuestionAnswerFromData(material: any): QAData {
     const matchedQA = qaDatabase.find(qa => qa.code === codePattern);
     if (matchedQA) {
       return { 
-        country: matchedQA.country,
+        country: matchedQA.country || matchedQA.category || "",
         question: matchedQA.question, 
         answer: matchedQA.answer, 
         hasData: true 
@@ -177,7 +258,7 @@ function getQuestionAnswerFromData(material: any): QAData {
     if (countryQAs.length > 0) {
       // Use the first question for this country
       return { 
-        country: countryQAs[0].country,
+        country: countryQAs[0].country || countryQAs[0].category || "",
         question: countryQAs[0].question, 
         answer: countryQAs[0].answer, 
         hasData: true 
