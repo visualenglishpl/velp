@@ -596,8 +596,7 @@ export default function DirectContentViewer() {
     );
   }
 
-  // State for admin-reordered slides
-  const [reorderedMaterials, setReorderedMaterials] = useState<DirectMaterial[]>([]);
+  // No reordering functionality needed
   
   // Filter out PDFs, SWF files, and content that doesn't make sense
   const filteredMaterials = useMemo(() => {
@@ -636,29 +635,24 @@ export default function DirectContentViewer() {
   }, [materialsData]);
   // Sort to ensure 00 A.png, 00 B.png, etc. files come first
   const sortedMaterials = useMemo(() => {
-    // Use reorderedMaterials if admin has reordered slides
-    if (reorderedMaterials.length > 0) {
-      return reorderedMaterials;
-    }
-    
-    // Otherwise use default sorting
+    // Use default sorting
     return (filteredMaterials as DirectMaterial[]).sort((a, b) => {
-    const aContent = a.content.toLowerCase();
-    const bContent = b.content.toLowerCase();
-    
-    // Check if content starts with "00"
-    const aStarts00 = aContent.startsWith("00");
-    const bStarts00 = bContent.startsWith("00");
-    
-    // If both start with 00 or both don't start with 00, sort alphabetically
-    if (aStarts00 === bStarts00) {
-      return aContent.localeCompare(bContent);
-    }
-    
-    // If only one starts with 00, prioritize it
-    return aStarts00 ? -1 : 1;
-  });
-  }, [filteredMaterials, reorderedMaterials]);
+      const aContent = a.content.toLowerCase();
+      const bContent = b.content.toLowerCase();
+      
+      // Check if content starts with "00"
+      const aStarts00 = aContent.startsWith("00");
+      const bStarts00 = bContent.startsWith("00");
+      
+      // If both start with 00 or both don't start with 00, sort alphabetically
+      if (aStarts00 === bStarts00) {
+        return aContent.localeCompare(bContent);
+      }
+      
+      // If only one starts with 00, prioritize it
+      return aStarts00 ? -1 : 1;
+    });
+  }, [filteredMaterials]);
   
   // Handler for admin slide reordering
   const handleReorderSlides = useCallback((startIndex: number, endIndex: number) => {
