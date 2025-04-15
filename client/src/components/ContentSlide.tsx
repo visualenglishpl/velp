@@ -35,6 +35,7 @@ interface ContentSlideProps {
   bookId: string;
   unitNumber: number;
   slideIndex: number;
+  totalSlides?: number;
   isPremium?: boolean;
   hasPurchasedAccess?: boolean;
   hasFreeTrial?: boolean;
@@ -210,6 +211,50 @@ export default function ContentSlide({
       );
     }
   }, [isActive, material.content]);
+  
+  // For keyboard navigation
+  const [keyboardFeedback, setKeyboardFeedback] = useState<string | null>(null);
+  
+  // Add keyboard navigation - only active when slide is active
+  useEffect(() => {
+    if (!isActive) return;
+    
+    const handleKeyDown = (event: KeyboardEvent) => {
+      let feedbackText = null;
+      
+      switch (event.key) {
+        case "ArrowLeft":
+          // This will be handled by the parent component
+          feedbackText = "Previous slide";
+          break;
+        case "ArrowRight":
+          // This will be handled by the parent component
+          feedbackText = "Next slide";
+          break;
+        case "Home":
+          // This will be handled by the parent component
+          feedbackText = "First slide";
+          break;
+        case "End":
+          // This will be handled by the parent component
+          feedbackText = "Last slide";
+          break;
+        case "f":
+          // Fullscreen toggle will be handled by the parent component
+          feedbackText = "Toggle fullscreen";
+          break;
+      }
+      
+      // Show feedback briefly
+      if (feedbackText) {
+        setKeyboardFeedback(feedbackText);
+        setTimeout(() => setKeyboardFeedback(null), 1000);
+      }
+    };
+    
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isActive]);
   
   // Reset state when the active slide changes
   useEffect(() => {
@@ -531,6 +576,15 @@ export default function ContentSlide({
           </div>
         )}
       </div>
+      
+      {/* Keyboard feedback indicator */}
+      {keyboardFeedback && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+          <div className="bg-black/70 text-white px-4 py-2 rounded-lg shadow-lg text-lg font-medium animate-fadeInOut">
+            {keyboardFeedback}
+          </div>
+        </div>
+      )}
       
       {/* Teacher mode toggle */}
       {hasTeachingGuidance && (

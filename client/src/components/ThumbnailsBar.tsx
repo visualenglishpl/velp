@@ -230,8 +230,8 @@ export default function ThumbnailsBar({
                   className={`
                     relative cursor-pointer rounded-md transition-all duration-200
                     ${isActive 
-                      ? 'active-thumbnail border-2 border-primary scale-105 shadow-lg z-10' 
-                      : 'border border-transparent hover:border-gray-200 hover:scale-105'}
+                      ? 'active-thumbnail border-3 border-blue-500 scale-110 shadow-lg z-10 bg-white/90' 
+                      : 'border border-transparent hover:border-gray-300 hover:scale-105'}
                     ${isVerticalLayout ? 'w-full' : isFullscreenMode ? 'w-20' : 'w-16'}
                   `}
                   onClick={() => onSelectSlide(index)}
@@ -264,9 +264,7 @@ export default function ThumbnailsBar({
                       )}
                     </div>
                     
-                    {isActive && (
-                      <div className="absolute inset-0 border-2 border-primary rounded-md"/>
-                    )}
+                    {/* Active indicator removed as we're using the border around the thumbnail instead */}
                     
                     {/* Slide number indicator that appears in fullscreen */}
                     {isFullscreenMode && (
