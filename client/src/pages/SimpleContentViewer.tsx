@@ -219,17 +219,32 @@ export default function SimpleContentViewer() {
     
     const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.key) {
-        case "ArrowLeft": scrollPrev(); break;
-        case "ArrowRight": scrollNext(); break;
+        case "ArrowLeft": 
+          console.log("Left arrow key pressed");
+          if (emblaApi) {
+            const prevIndex = Math.max(0, currentSlideIndex - 1);
+            console.log(`Keyboard navigation: Moving from slide ${currentSlideIndex} to ${prevIndex}`);
+            emblaApi.scrollTo(prevIndex);
+          }
+          break;
+        case "ArrowRight": 
+          console.log("Right arrow key pressed");
+          if (emblaApi) {
+            const nextIndex = Math.min(sortedMaterials.length - 1, currentSlideIndex + 1);
+            console.log(`Keyboard navigation: Moving from slide ${currentSlideIndex} to ${nextIndex}`);
+            emblaApi.scrollTo(nextIndex);
+          }
+          break;
         case "Home": emblaApi.scrollTo(0); break;
         case "End": emblaApi.scrollTo(sortedMaterials.length - 1); break;
         case "f": case "F": setIsFullscreen(!isFullscreen); break;
+        case "t": case "T": setShowThumbnails(!showThumbnails); break;
       }
     };
     
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [emblaApi, scrollNext, scrollPrev, sortedMaterials.length, isFullscreen]);
+  }, [emblaApi, currentSlideIndex, sortedMaterials.length, isFullscreen, showThumbnails]);
   
   // Handle fullscreen mode
   const containerRef = useRef<HTMLDivElement>(null);
@@ -397,6 +412,10 @@ export default function SimpleContentViewer() {
                           alt={material.title || `Slide ${index + 1}`}
                           className="max-h-[70vh] object-contain cursor-pointer"
                           onClick={(e) => {
+                            // Prevent default behavior
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
                             // Determine which side of the image was clicked
                             const rect = e.currentTarget.getBoundingClientRect();
                             const x = e.clientX - rect.left;
@@ -405,10 +424,18 @@ export default function SimpleContentViewer() {
                             // If clicked on left side, go to previous slide; if right side, go to next slide
                             if (x < width / 2) {
                               console.log("Left side of image clicked - previous slide");
-                              scrollPrev();
+                              if (emblaApi) {
+                                // Use direct API call instead of scroll function
+                                const prevIndex = Math.max(0, currentSlideIndex - 1);
+                                emblaApi.scrollTo(prevIndex);
+                              }
                             } else {
                               console.log("Right side of image clicked - next slide");
-                              scrollNext();
+                              if (emblaApi) {
+                                // Use direct API call instead of scroll function
+                                const nextIndex = Math.min(sortedMaterials.length - 1, currentSlideIndex + 1);
+                                emblaApi.scrollTo(nextIndex);
+                              }
                             }
                           }}
                         />
@@ -430,8 +457,15 @@ export default function SimpleContentViewer() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button 
-                  onClick={scrollPrev}
-                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all"
+                  onClick={() => {
+                    console.log("Previous button clicked");
+                    if (emblaApi) {
+                      const prevIndex = Math.max(0, currentSlideIndex - 1);
+                      console.log(`Moving from slide ${currentSlideIndex} to ${prevIndex}`);
+                      emblaApi.scrollTo(prevIndex);
+                    }
+                  }}
+                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20"
                 >
                   <ChevronLeft size={28} />
                 </button>
@@ -444,8 +478,15 @@ export default function SimpleContentViewer() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button 
-                  onClick={scrollNext}
-                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all"
+                  onClick={() => {
+                    console.log("Next button clicked");
+                    if (emblaApi) {
+                      const nextIndex = Math.min(sortedMaterials.length - 1, currentSlideIndex + 1);
+                      console.log(`Moving from slide ${currentSlideIndex} to ${nextIndex}`);
+                      emblaApi.scrollTo(nextIndex);
+                    }
+                  }}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20"
                 >
                   <ChevronRight size={28} />
                 </button>
