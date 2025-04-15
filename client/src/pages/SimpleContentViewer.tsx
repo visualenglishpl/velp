@@ -1,14 +1,12 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import useEmblaCarousel from "embla-carousel-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, List, Images, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-// Material type from S3 direct paths
 type Material = {
   id: number;
   path: string;
@@ -24,7 +22,6 @@ type Material = {
   updatedAt: Date;
 };
 
-// Unit type for direct access
 type Unit = {
   path: string;
   bookId: string;
@@ -33,59 +30,34 @@ type Unit = {
 };
 
 export default function SimpleContentViewer() {
-  // Extract path info from URL
-  const [location] = useLocation();
-  const pathParts = location.split('/').filter(Boolean);
+  // Logging path for debug
+  const params = new URLSearchParams(window.location.search);
+  const bookId = params.get("bookId");
+  const unitNumber = params.get("unitNumber");
   
-  // Try different path formats to extract bookId and unitNumber
-  let bookPath = "";
-  let unitPath = "";
-  
-  // Check for /book4/unit1 format
-  if (location.match(/\/book[0-9a-z]+\/unit[0-9]+/)) {
-    bookPath = pathParts[0];
-    unitPath = pathParts[1];
-  }
-  // Check for /simple/book4/unit1 format (for backward compatibility)
-  else if (pathParts[0] === "simple" && pathParts.length >= 3) {
-    bookPath = pathParts[1];
-    unitPath = pathParts[2];
-  }
-  
-  const bookId = bookPath ? bookPath.replace(/\D/g, '') : "";
-  const unitNumber = unitPath ? parseInt(unitPath.replace(/\D/g, '')) : 0;
-  
-  console.log(`Simple Content Viewer: Book=${bookPath}, Unit=${unitPath}, Full path=${location}`);
-  
-  console.log(`Content Viewer: Book=${bookPath}, Unit=${unitPath}`);
-  
-  // Basic state
+  // Additional state setup
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [viewedSlides, setViewedSlides] = useState<number[]>([]);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(true);
   
-  // User info and access control
+  // Access control - can be customized based on book series
   const { user } = useAuth();
-  const isAdmin = user?.role === 'admin';
-  const hasPurchasedAccess = isAdmin; // Auto-grant access for admins
-  const freeSlideLimit = bookPath?.startsWith('book0') ? 2 : 10;
+  const hasPurchasedAccess = Boolean(user); // Simplified for now
+  
+  // Set free slide limit based on book ID
+  const freeSlideLimit = /^0[a-c]$/i.test(bookId || "") ? 2 : 10;
+  
+  // Path for accessing content
+  const bookPath = `book${bookId}`;
+  const unitPath = `unit${unitNumber}`;
+
+  console.log(`Simple Content Viewer: Book=${bookPath}, Unit=${unitPath}, Full path=/${bookPath}/${unitPath}`);
+  console.log(`Content Viewer: Book=${bookPath}, Unit=${unitPath}`);
   
   // Navigation
   const [_, navigate] = useLocation();
-  
-  // Carousel setup with strict configuration - rebuilt for reliable navigation
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: false,
-    align: "center",
-    containScroll: "keepSnaps",
-    dragFree: false,
-    skipSnaps: false,
-    watchDrag: true,
-    watchResize: true,
-    startIndex: 0
-  });
   
   // Fetch unit data
   const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery<Unit>({
@@ -123,135 +95,62 @@ export default function SimpleContentViewer() {
     return aStarts00 ? -1 : 1;
   });
   
-  // Navigation functions using currentIndexRef for up-to-date values
-  const scrollPrev = useCallback(() => {
-    console.log("Scrolling to previous slide");
-    if (emblaApi && sortedMaterials.length > 0) {
-      // Always use ref for the latest value
-      const currentIndex = currentIndexRef.current;
-      const prevIndex = Math.max(0, currentIndex - 1);
-      console.log(`scrollPrev: Moving from slide ${currentIndex} to ${prevIndex}`);
+  // Simple navigation functions for direct control
+  const goToSlide = useCallback((index: number) => {
+    // Bound the index to valid range
+    const targetIndex = Math.max(0, Math.min(sortedMaterials.length - 1, index));
+    
+    console.log(`Going directly to slide ${targetIndex}`);
+    setCurrentSlideIndex(targetIndex);
+
+    // Add to viewed slides
+    setViewedSlides(prev => {
+      if (prev.includes(targetIndex)) return prev;
+      return [...prev, targetIndex];
+    });
+
+    // Preload adjacent slides
+    const preloadIndices = [targetIndex - 1, targetIndex + 1].filter(
+      i => i >= 0 && i < sortedMaterials.length
+    );
+    
+    preloadIndices.forEach(i => {
+      const material = sortedMaterials[i];
+      if (!material) return;
       
-      try {
-        // Force reInit before scrolling for reliability
-        emblaApi.reInit();
-        emblaApi.scrollTo(prevIndex, true);
-      } catch (err) {
-        console.error("Error scrolling to previous slide:", err);
-      }
-    } else {
-      console.error("Carousel API not initialized or no slides available");
-    }
-  }, [emblaApi, sortedMaterials.length]);
-  
-  const scrollNext = useCallback(() => {
-    console.log("Scrolling to next slide");
-    if (emblaApi && sortedMaterials.length > 0) {
-      // Always use ref for the latest value
-      const currentIndex = currentIndexRef.current;
-      const nextIndex = Math.min(sortedMaterials.length - 1, currentIndex + 1);
-      console.log(`scrollNext: Moving from slide ${currentIndex} to ${nextIndex}`);
+      const directPath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
       
-      try {
-        // Force reInit before scrolling for reliability
-        emblaApi.reInit();
-        emblaApi.scrollTo(nextIndex, true);
-      } catch (err) {
-        console.error("Error scrolling to next slide:", err);
+      if (!preloadedImages.includes(directPath)) {
+        const img = new Image();
+        img.src = directPath;
+        img.onload = () => {
+          setPreloadedImages(prev => [...prev, directPath]);
+        };
       }
-    } else {
-      console.error("Carousel API not initialized or no slides available");
-    }
-  }, [emblaApi, sortedMaterials.length]);
-  
-  // Handle thumbnail click with forced focus for reliable navigation
+    });
+  }, [sortedMaterials.length, sortedMaterials, bookPath, unitPath, preloadedImages]);
+
+  const goToPrevSlide = useCallback(() => {
+    goToSlide(currentSlideIndex - 1);
+  }, [currentSlideIndex, goToSlide]);
+
+  const goToNextSlide = useCallback(() => {
+    goToSlide(currentSlideIndex + 1);
+  }, [currentSlideIndex, goToSlide]);
+
+  // Handle thumbnail click
   const handleThumbnailClick = useCallback((index: number) => {
-    if (emblaApi) {
-      console.log(`Thumbnail clicked: Moving to slide ${index}`);
-      try {
-        // Force a reflow of the carousel to make navigation more reliable
-        emblaApi.reInit();
-        emblaApi.scrollTo(index, true);
-        
-        // Update current slide index manually for immediate UI update
-        setCurrentSlideIndex(index);
-        
-        // Add to viewed slides
-        setViewedSlides(prev => {
-          if (prev.includes(index)) return prev;
-          return [...prev, index];
-        });
-      } catch (err) {
-        console.error("Error navigating to thumbnail:", err);
-      }
-    }
-  }, [emblaApi]);
+    goToSlide(index);
+  }, [goToSlide]);
   
-  // Track current slide with a ref to prevent stale closures
-  const currentIndexRef = useRef(0);
-  
+  // Initialize with proper starting slide
   useEffect(() => {
-    if (!emblaApi || !sortedMaterials.length) return;
+    if (!sortedMaterials.length) return;
     
-    const onSelect = () => {
-      try {
-        const index = emblaApi.selectedScrollSnap();
-        console.log(`Carousel selected slide: ${index}`);
-        
-        // Store in both state and ref
-        setCurrentSlideIndex(index);
-        currentIndexRef.current = index;
-        
-        // Add to viewed slides
-        setViewedSlides(prev => {
-          if (prev.includes(index)) return prev;
-          return [...prev, index];
-        });
-        
-        // Preload adjacent slides (one before and one after)
-        const preloadIndices = [index - 1, index + 1].filter(
-          i => i >= 0 && i < sortedMaterials.length
-        );
-        
-        preloadIndices.forEach(i => {
-          const material = sortedMaterials[i];
-          if (!material) return;
-          
-          const directPath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
-          
-          if (!preloadedImages.includes(directPath)) {
-            const img = new Image();
-            img.src = directPath;
-            img.onload = () => {
-              setPreloadedImages(prev => [...prev, directPath]);
-            };
-          }
-        });
-      } catch (err) {
-        console.error("Error in onSelect:", err);
-      }
-    };
+    // Initialize viewed slides with first slide
+    setViewedSlides([0]);
     
-    // Register for all relevant carousel events
-    emblaApi.on("select", onSelect);
-    emblaApi.on("settle", onSelect);
-    emblaApi.on("reInit", onSelect);
-    
-    // Force an initial selection to sync index
-    onSelect();
-    
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("settle", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, sortedMaterials, bookPath, unitPath, preloadedImages]);
-  
-  // Set initial slide to one that starts with "00 E" if available
-  useEffect(() => {
-    if (!emblaApi || !sortedMaterials.length) return;
-    
-    // Look for 00 E.png first
+    // Try to find "00 E.png" first, then others
     const priorityPrefixes = ["00 E", "00 C", "00 A", "00 B", "00 D"];
     
     for (const prefix of priorityPrefixes) {
@@ -260,7 +159,7 @@ export default function SimpleContentViewer() {
       );
       
       if (index !== -1) {
-        emblaApi.scrollTo(index);
+        goToSlide(index);
         return;
       }
     }
@@ -271,31 +170,29 @@ export default function SimpleContentViewer() {
     );
     
     if (index !== -1) {
-      emblaApi.scrollTo(index);
+      goToSlide(index);
     }
-  }, [emblaApi, sortedMaterials]);
+  }, [sortedMaterials, goToSlide]);
   
   // Add keyboard navigation
   useEffect(() => {
-    if (!emblaApi) return;
-    
     const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.key) {
         case "ArrowLeft": 
           console.log("Left arrow key pressed");
-          scrollPrev();
+          goToPrevSlide();
           break;
         case "ArrowRight": 
           console.log("Right arrow key pressed");
-          scrollNext();
+          goToNextSlide();
           break;
         case "Home": 
           console.log("Home key pressed - going to first slide");
-          if (emblaApi) emblaApi.scrollTo(0, true); 
+          goToSlide(0);
           break;
         case "End": 
           console.log("End key pressed - going to last slide");
-          if (emblaApi) emblaApi.scrollTo(sortedMaterials.length - 1, true); 
+          goToSlide(sortedMaterials.length - 1);
           break;
         case "f": case "F": setIsFullscreen(!isFullscreen); break;
         case "t": case "T": setShowThumbnails(!showThumbnails); break;
@@ -304,7 +201,7 @@ export default function SimpleContentViewer() {
     
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [emblaApi, currentSlideIndex, sortedMaterials.length, isFullscreen, showThumbnails]);
+  }, [sortedMaterials.length, isFullscreen, showThumbnails, goToPrevSlide, goToNextSlide, goToSlide]);
   
   // Handle fullscreen mode
   const containerRef = useRef<HTMLDivElement>(null);
@@ -373,6 +270,11 @@ export default function SimpleContentViewer() {
     );
   }
   
+  // Get current material
+  const currentMaterial = sortedMaterials[currentSlideIndex] || sortedMaterials[0];
+  const isPremium = currentSlideIndex >= freeSlideLimit && !hasPurchasedAccess;
+  const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(currentMaterial.content)}`;
+  
   // Calculate progress percentage
   const progressPercentage = (viewedSlides.length / sortedMaterials.length) * 100;
   
@@ -428,79 +330,68 @@ export default function SimpleContentViewer() {
           <Progress value={progressPercentage} className="h-2" />
         </div>
         
-        {/* Main carousel */}
+        {/* Main content slide */}
         <div className="relative mx-auto max-w-5xl px-4">
-          <div ref={emblaRef} className="overflow-hidden">
-            <div className="flex">
-              {sortedMaterials.map((material, index) => {
-                const isPremium = index >= freeSlideLimit && !hasPurchasedAccess;
-                const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
-                
-                return (
-                  <div key={material.id} className="flex-grow-0 flex-shrink-0 w-full">
-                    <div className="relative mx-auto p-4 flex items-center justify-center">
-                      {/* Premium overlay */}
-                      {isPremium && (
-                        <div className="absolute inset-0 z-10 bg-white bg-opacity-80 backdrop-blur-sm flex flex-col items-center justify-center">
-                          <div className="max-w-md text-center p-6 rounded-lg">
-                            <h3 className="text-xl font-bold mb-2">Premium Content</h3>
-                            <p className="mb-4">This content is available with a subscription.</p>
-                            <Button 
-                              onClick={() => navigate(`/checkout/unit?bookId=${bookPath}&unitId=${unitPath}`)}
-                              className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-                            >
-                              Get Access
-                            </Button>
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* Content image with click navigation */}
-                      <div className="relative w-full h-full flex justify-center group">
-                        {/* Left side navigation hint */}
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-0 group-hover:bg-opacity-10 p-3 rounded-full transition-all duration-200 z-10">
-                          <ChevronLeft size={24} className="text-black opacity-0 group-hover:opacity-50" />
-                        </div>
-                        
-                        {/* Right side navigation hint */}
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-0 group-hover:bg-opacity-10 p-3 rounded-full transition-all duration-200 z-10">
-                          <ChevronRight size={24} className="text-black opacity-0 group-hover:opacity-50" />
-                        </div>
-                        
-                        <img 
-                          src={imagePath}
-                          alt={material.title || `Slide ${index + 1}`}
-                          className="max-h-[70vh] object-contain cursor-pointer"
-                          onClick={(e) => {
-                            // Prevent default behavior
-                            e.preventDefault();
-                            e.stopPropagation();
-                            
-                            // Determine which side of the image was clicked
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const width = rect.width;
-                            
-                            // If clicked on left side, go to previous slide; if right side, go to next slide
-                            if (x < width / 2) {
-                              console.log("Left side of image clicked - previous slide");
-                              scrollPrev();
-                            } else {
-                              console.log("Right side of image clicked - next slide");
-                              scrollNext();
-                            }
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Slide number indicator */}
-                      <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white rounded-full px-3 py-1 text-sm">
-                        {index + 1} / {sortedMaterials.length}
-                      </div>
-                    </div>
+          <div className="overflow-hidden">
+            <div className="relative mx-auto p-4 flex items-center justify-center">
+              {/* Premium overlay */}
+              {isPremium && (
+                <div className="absolute inset-0 z-10 bg-white bg-opacity-80 backdrop-blur-sm flex flex-col items-center justify-center">
+                  <div className="max-w-md text-center p-6 rounded-lg">
+                    <h3 className="text-xl font-bold mb-2">Premium Content</h3>
+                    <p className="mb-4">This content is available with a subscription.</p>
+                    <Button 
+                      onClick={() => navigate(`/checkout/unit?bookId=${bookPath}&unitId=${unitPath}`)}
+                      className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                    >
+                      Get Access
+                    </Button>
                   </div>
-                );
-              })}
+                </div>
+              )}
+              
+              {/* Content image with click navigation */}
+              <div className="relative w-full h-full flex justify-center group min-h-[300px]">
+                {/* Left side navigation hint */}
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-0 group-hover:bg-opacity-10 p-3 rounded-full transition-all duration-200 z-10">
+                  <ChevronLeft size={24} className="text-black opacity-0 group-hover:opacity-50" />
+                </div>
+                
+                {/* Right side navigation hint */}
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-0 group-hover:bg-opacity-10 p-3 rounded-full transition-all duration-200 z-10">
+                  <ChevronRight size={24} className="text-black opacity-0 group-hover:opacity-50" />
+                </div>
+                
+                <img 
+                  src={imagePath}
+                  alt={currentMaterial.title || `Slide ${currentSlideIndex + 1}`}
+                  className="max-h-[70vh] object-contain cursor-pointer"
+                  onClick={(e) => {
+                    // Prevent default behavior
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Determine which side of the image was clicked
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const width = rect.width;
+                    
+                    // If clicked on left side, go to previous slide; if right side, go to next slide
+                    if (x < width / 2) {
+                      console.log("Left side of image clicked - previous slide");
+                      goToPrevSlide();
+                    } else {
+                      console.log("Right side of image clicked - next slide");
+                      goToNextSlide();
+                    }
+                  }}
+                />
+              </div>
+              
+              {/* Slide number indicator */}
+              <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white rounded-full px-3 py-1 text-sm">
+                {currentSlideIndex + 1} / {sortedMaterials.length}
+              </div>
             </div>
           </div>
           
@@ -509,8 +400,9 @@ export default function SimpleContentViewer() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button 
-                  onClick={scrollPrev}
-                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20"
+                  onClick={goToPrevSlide}
+                  disabled={currentSlideIndex === 0}
+                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft size={28} />
                 </button>
@@ -523,8 +415,9 @@ export default function SimpleContentViewer() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button 
-                  onClick={scrollNext}
-                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20"
+                  onClick={goToNextSlide}
+                  disabled={currentSlideIndex === sortedMaterials.length - 1}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronRight size={28} />
                 </button>
