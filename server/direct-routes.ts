@@ -295,8 +295,8 @@ export function registerDirectRoutes(app: Express) {
         return {
           id: index + 1, // Simple sequential ID
           path: filePath,
-          title: filename,
-          description: filename, // Changed from "Content from ${filePath}" to just the filename
+          title: "", // We'll fill this with proper Q&A in the client
+          description: "", // Empty description to avoid showing filenames in UI
           contentType: getContentTypeFromPath(filePath),
           content: filename,
           orderIndex: index,
@@ -308,10 +308,10 @@ export function registerDirectRoutes(app: Express) {
         };
       });
       
-      // Sort the materials by filename numeric prefix if possible
+      // Sort the materials by content filename numeric prefix if possible
       materials.sort((a, b) => {
-        const aMatch = a.title.match(/^(\d+)/);
-        const bMatch = b.title.match(/^(\d+)/);
+        const aMatch = a.content.match(/^(\d+)/);
+        const bMatch = b.content.match(/^(\d+)/);
         
         if (aMatch && bMatch) {
           return parseInt(aMatch[1]) - parseInt(bMatch[1]);
