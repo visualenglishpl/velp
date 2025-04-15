@@ -8,6 +8,7 @@ import BooksManagement from "@/pages/admin/BooksManagement";
 import ShopManagement from "@/pages/admin/ShopManagement";
 import ContentViewer from "@/pages/content-viewer";
 import DirectContentViewer from "@/pages/direct-content-viewer";
+import SimpleContentViewer from "@/pages/SimpleContentViewer";
 import CheckoutPage from "@/pages/checkout";
 import PrintedBookCheckout from "@/pages/PrintedBookCheckout";
 import BooksPage from "@/pages/BooksPage";
@@ -96,6 +97,16 @@ function Router() {
       
       <Route path="/units/:unitId">
         {() => <ProtectedRoute component={ContentViewer} />}
+      </Route>
+      
+      {/* Simple Content Viewer with improved stability */}
+      <Route path="/simple/:bookPath/:unitPath">
+        {(params) => {
+          if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
+            return <ProtectedRoute component={SimpleContentViewer} />;
+          }
+          return <NotFound />;
+        }}
       </Route>
       
       {/* Direct S3 Content Viewer - works with ANY book/unit path that matches S3 pattern */}

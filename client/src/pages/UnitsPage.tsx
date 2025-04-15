@@ -399,15 +399,26 @@ export default function UnitsPage() {
                 </CardHeader>
                 
                 <CardFooter className="pt-0 px-4 pb-4 mt-auto flex-col gap-2">
-                  {/* Free Sample button - always visible */}
-                  <Link href={`/book${bookId}/unit${unit.unitNumber}`} className="w-full">
-                    <Button 
-                      className="w-full h-10" 
-                      variant={index === 0 || hasPurchased ? "default" : "secondary"}
-                    >
-                      {hasPurchased ? 'View Content' : 'Free Sample'}
-                    </Button>
-                  </Link>
+                  {/* View Content options */}
+                  <div className="w-full grid grid-cols-2 gap-2">
+                    <Link href={`/book${bookId}/unit${unit.unitNumber}`} className="w-full">
+                      <Button 
+                        className="w-full h-10" 
+                        variant={index === 0 || hasPurchased ? "default" : "secondary"}
+                      >
+                        {hasPurchased ? 'View Content' : 'Free Sample'}
+                      </Button>
+                    </Link>
+                    
+                    <Link href={`/simple/book${bookId}/unit${unit.unitNumber}`} className="w-full">
+                      <Button 
+                        className="w-full h-10" 
+                        variant="outline"
+                      >
+                        Simple Viewer
+                      </Button>
+                    </Link>
+                  </div>
                   
                   {/* Buy Access button - visible if not purchased and not the first unit */}
                   {!hasPurchased && (

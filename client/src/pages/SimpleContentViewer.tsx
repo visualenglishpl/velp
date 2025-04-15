@@ -37,10 +37,13 @@ export default function SimpleContentViewer() {
   const [location] = useLocation();
   const pathParts = location.split('/').filter(Boolean);
   
-  const bookPath = pathParts[0].startsWith('book') ? pathParts[0] : "";
-  const unitPath = pathParts[1]?.startsWith('unit') ? pathParts[1] : "";
+  // Extract from /simple/book#/unit# format
+  const bookPath = pathParts[1]?.startsWith('book') ? pathParts[1] : "";
+  const unitPath = pathParts[2]?.startsWith('unit') ? pathParts[2] : "";
   const bookId = bookPath ? bookPath.replace(/\D/g, '') : "";
   const unitNumber = unitPath ? parseInt(unitPath.replace(/\D/g, '')) : 0;
+  
+  console.log(`Simple Content Viewer: Book=${bookPath}, Unit=${unitPath}, Full path=${location}`);
   
   console.log(`Content Viewer: Book=${bookPath}, Unit=${unitPath}`);
   
