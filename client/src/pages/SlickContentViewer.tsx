@@ -392,12 +392,32 @@ export default function SlickContentViewer() {
         {...attributes}
         {...listeners}
       >
-        <img 
-          src={material.path} 
-          alt={`Thumbnail ${index + 1}`}
-          className="h-full w-full object-cover"
-          loading="lazy"
-        />
+        {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
+          <img 
+            src={material.path} 
+            alt={`Thumbnail ${index + 1}`}
+            className="h-full w-full object-cover"
+            loading="lazy"
+            onError={(e) => {
+              console.error(`Error loading thumbnail at ${material.path}`);
+              // Replace with an icon or placeholder based on file type
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.parentElement?.classList.add('flex', 'items-center', 'justify-center', 'bg-gray-100');
+            }}
+          />
+        ) : material.contentType === 'PDF' || material.path.endsWith('.pdf') ? (
+          <div className="flex h-full w-full items-center justify-center bg-blue-50 text-blue-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+        ) : material.path.endsWith('.swf') ? (
+          <div className="flex h-full w-full items-center justify-center bg-yellow-50 text-yellow-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          </div>
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7"/></svg>
+          </div>
+        )}
         <div className="pointer-events-none absolute inset-0 flex items-start justify-end p-1">
           <GripVertical className="h-3 w-3 text-gray-400 opacity-50 group-hover:opacity-100" />
         </div>
@@ -557,14 +577,40 @@ export default function SlickContentViewer() {
                   {/* Question-Answer section above image */}
                   <QuestionAnswerDisplay material={material} />
                   
-                  {/* Main image */}
+                  {/* Main image - Only show image if it's not a PDF or SWF */}
                   <div className={`w-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''}`}>
-                    <img 
-                      src={material.path}
-                      alt={`Learning material slide ${index + 1}`}
-                      className="h-auto max-h-[calc(55vh-100px)] w-auto max-w-full object-contain"
-                      loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
-                    />
+                    {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
+                      <img 
+                        src={material.path}
+                        alt={`Learning material slide ${index + 1}`}
+                        className="h-auto max-h-[calc(55vh-100px)] w-auto max-w-full object-contain"
+                        loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
+                        onError={(e) => {
+                          console.error(`Error loading image at ${material.path}`, e);
+                          // Set a fallback or placeholder
+                          e.currentTarget.src = `/placeholder.png`;
+                          e.currentTarget.classList.add('error-image');
+                        }}
+                      />
+                    ) : material.contentType === 'PDF' || material.path.endsWith('.pdf') ? (
+                      <div className="flex flex-col items-center justify-center p-4 rounded bg-blue-50 text-blue-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <p className="mt-2 font-medium">PDF Document</p>
+                        <a href={material.path} target="_blank" rel="noopener noreferrer" className="mt-2 px-4 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">Open PDF</a>
+                      </div>
+                    ) : material.path.endsWith('.swf') ? (
+                      <div className="flex flex-col items-center justify-center p-4 rounded bg-yellow-50 text-yellow-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 5-5 5 5 5"/><path d="M4 5v5h5"/><path d="M4 14h5v5"/><path d="M9 9h5v5"/><path d="M14 9h1v1"/><path d="M19 9h1v1"/><path d="M19 4v5h-5"/><path d="M14 14h5v5"/></svg>
+                        <p className="mt-2 font-medium">Flash SWF File</p>
+                        <p className="text-xs text-center mt-1">Flash content is no longer supported in modern browsers</p>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center p-4 rounded bg-gray-50 text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        <p className="mt-2 font-medium">Unknown File Type</p>
+                        <p className="text-xs text-center mt-1">This content type cannot be displayed</p>
+                      </div>
+                    )}
                   </div>
                   
                   {/* Premium content overlay */}
@@ -648,11 +694,38 @@ export default function SlickContentViewer() {
             <DragOverlay>
               {activeId ? (
                 <div className="h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-md border-2 border-blue-500 shadow-lg">
-                  <img 
-                    src={materials.find(m => `thumbnail-${m.id}` === activeId)?.path} 
-                    alt="Dragging thumbnail"
-                    className="h-full w-full object-cover"
-                  />
+                  {(() => {
+                    const material = materials.find(m => `thumbnail-${m.id}` === activeId);
+                    if (!material) return null;
+                    
+                    if (material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif')) {
+                      return (
+                        <img 
+                          src={material.path} 
+                          alt="Dragging thumbnail"
+                          className="h-full w-full object-cover"
+                        />
+                      );
+                    } else if (material.contentType === 'PDF' || material.path.endsWith('.pdf')) {
+                      return (
+                        <div className="flex h-full w-full items-center justify-center bg-blue-50 text-blue-700">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        </div>
+                      );
+                    } else if (material.path.endsWith('.swf')) {
+                      return (
+                        <div className="flex h-full w-full items-center justify-center bg-yellow-50 text-yellow-700">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-700">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7"/></svg>
+                        </div>
+                      );
+                    }
+                  })()}
                 </div>
               ) : null}
             </DragOverlay>
