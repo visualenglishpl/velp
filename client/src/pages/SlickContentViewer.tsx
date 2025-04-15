@@ -451,11 +451,11 @@ export default function SlickContentViewer() {
               const isPremiumContent = index >= freeSlideLimit && !hasPaidAccess;
               
               return (
-                <div key={index} className="outline-none h-[60vh] w-full flex flex-col justify-center relative px-4">
+                <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
                   {/* Question-Answer section above image */}
                   {material.title && (
-                    <div className="mb-2 bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-xl shadow-md mx-auto z-10 max-w-2xl border border-blue-100">
-                      <div className="flex flex-col gap-1">
+                    <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
+                      <div className="flex flex-col gap-0.5">
                         {/* Handle extracted question format with arrow → */}
                         {material.title.includes('→') ? (
                           <>
@@ -498,8 +498,8 @@ export default function SlickContentViewer() {
                             {/* Extract content info from filename to decide which Q&A to show */}
                             {material.content.toLowerCase().includes('poland') ? (
                               <>
-                                <div className="mb-2 flex items-center justify-center">
-                                  <h3 className="text-lg font-bold text-blue-800 bg-white py-1 px-3 rounded-full shadow-sm border border-blue-200">
+                                <div className="mb-1 flex items-center justify-center">
+                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
                                     POLAND
                                   </h3>
                                 </div>
@@ -509,71 +509,71 @@ export default function SlickContentViewer() {
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                   <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">This country is Poland.</span>
+                                  <span className="font-medium text-indigo-900 text-base">It is Poland.</span>
                                 </div>
                               </>
                             ) : material.content.toLowerCase().includes('uk') || material.content.toLowerCase().includes('britain') ? (
                               <>
-                                <div className="mb-2 flex items-center justify-center">
-                                  <h3 className="text-lg font-bold text-blue-800 bg-white py-1 px-3 rounded-full shadow-sm border border-blue-200">
+                                <div className="mb-1 flex items-center justify-center">
+                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
                                     BRITAIN / UK
                                   </h3>
                                 </div>
                                 <div className="flex gap-2">
                                   <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">What countries are in the UK?</span>
+                                  <span className="text-gray-800 text-base">(02 N A) Which countries are in Britain?</span>
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                   <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">The UK includes England, Scotland, Wales, and Northern Ireland.</span>
+                                  <span className="font-medium text-indigo-900 text-base">They are England, Scotland, and Wales.</span>
                                 </div>
                               </>
                             ) : material.content.toLowerCase().includes('ireland') ? (
                               <>
-                                <div className="mb-2 flex items-center justify-center">
-                                  <h3 className="text-lg font-bold text-blue-800 bg-white py-1 px-3 rounded-full shadow-sm border border-blue-200">
+                                <div className="mb-1 flex items-center justify-center">
+                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
                                     NORTHERN IRELAND
                                   </h3>
                                 </div>
                                 <div className="flex gap-2">
                                   <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">What's the capital of Northern Ireland?</span>
+                                  <span className="text-gray-800 text-base">(03 G C) What is the capital of Northern Ireland?</span>
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                   <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">The capital of Northern Ireland is Belfast.</span>
+                                  <span className="font-medium text-indigo-900 text-base">It is Belfast.</span>
                                 </div>
                               </>
                             ) : material.content.toLowerCase().includes('scotland') ? (
                               <>
-                                <div className="mb-2 flex items-center justify-center">
-                                  <h3 className="text-lg font-bold text-blue-800 bg-white py-1 px-3 rounded-full shadow-sm border border-blue-200">
+                                <div className="mb-1 flex items-center justify-center">
+                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
                                     SCOTLAND
                                   </h3>
                                 </div>
                                 <div className="flex gap-2">
                                   <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">What's the capital of Scotland?</span>
+                                  <span className="text-gray-800 text-base">(04 L C) What is Scotland's capital?</span>
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                   <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">The capital of Scotland is Edinburgh.</span>
+                                  <span className="font-medium text-indigo-900 text-base">It is Edinburgh.</span>
                                 </div>
                               </>
                             ) : material.content.toLowerCase().includes('usa') || material.content.toLowerCase().includes('america') ? (
                               <>
-                                <div className="mb-2 flex items-center justify-center">
-                                  <h3 className="text-lg font-bold text-blue-800 bg-white py-1 px-3 rounded-full shadow-sm border border-blue-200">
+                                <div className="mb-1 flex items-center justify-center">
+                                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
                                     USA
                                   </h3>
                                 </div>
                                 <div className="flex gap-2">
                                   <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">What's the capital of the USA?</span>
+                                  <span className="text-gray-800 text-base">(08 M A) What country is this?</span>
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                   <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">The capital of the USA is Washington, D.C.</span>
+                                  <span className="font-medium text-indigo-900 text-base">It is the USA.</span>
                                 </div>
                               </>
                             ) : material.content.toLowerCase().includes('australia') ? (
