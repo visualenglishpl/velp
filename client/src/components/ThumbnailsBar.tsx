@@ -1,9 +1,8 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Image as ImageIcon, FileText, Video, MessageSquare, Check, AlertCircle, ChevronLeft, ChevronRight, GripVertical } from 'lucide-react';
+import { Image as ImageIcon, FileText, Video, MessageSquare, Check, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 
 // Import Material type from content-viewer
 // This should match the Material type defined in content-viewer.tsx
@@ -28,7 +27,6 @@ interface ThumbnailsBarProps {
   onSelectSlide: (index: number) => void;
   viewedSlides: number[];
   isAdmin?: boolean;
-  onReorderSlides?: (startIndex: number, endIndex: number) => void;
 }
 
 export default function ThumbnailsBar({
@@ -36,14 +34,13 @@ export default function ThumbnailsBar({
   currentIndex,
   onSelectSlide,
   viewedSlides,
-  isAdmin = false,
-  onReorderSlides,
+  isAdmin = false
 }: ThumbnailsBarProps) {
-  // Create a separate state to store the DOM element
+  // Create a ref for scrolling
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  // State to track the scroll element
   const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(null);
-  // Use the ref for react-beautiful-dnd
-  const scrollRef = useRef<HTMLDivElement>(null);
-
+  
   // Effect to sync the scroll element with the ref
   useEffect(() => {
     if (scrollRef.current) {
@@ -203,33 +200,12 @@ export default function ThumbnailsBar({
     window.addEventListener('resize', checkLayout);
     return () => window.removeEventListener('resize', checkLayout);
   }, [checkLayout]);
-
-  // Handle drag end event
-  const handleDragEnd = (result: DropResult) => {
-    if (!result.destination || !onReorderSlides) return;
-    
-    const sourceIndex = result.source.index;
-    const destinationIndex = result.destination.index;
-    
-    // Only call reordering if indices are different
-    if (sourceIndex !== destinationIndex) {
-      onReorderSlides(sourceIndex, destinationIndex);
-    }
-  };
   
   // Check if we're in fullscreen mode by looking at the parent element's classes
   const isFullscreenMode = scrollElement?.parentElement?.classList.contains('bg-black/80') || false;
   
   return (
     <div className="flex-1 flex flex-col">
-      {/* Admin indicator - only shown for admin users */}
-      {isAdmin && (
-        <div className="bg-amber-100 text-amber-800 py-1 px-3 mb-2 rounded-md text-xs font-medium flex items-center justify-center">
-          <GripVertical className="h-3 w-3 mr-1" />
-          Admin Mode: Drag slides to reorder
-        </div>
-      )}
-      
       {/* Thumbnail grid/list with side navigation */}
       <div className="relative">
         <button 
@@ -250,176 +226,91 @@ export default function ThumbnailsBar({
           <ChevronRight className="h-4 w-4" />
         </button>
         
-        {/* Thumbnail grid/list with optional drag-and-drop for admin users */}
+        {/* Thumbnail grid/list */}
         <ScrollArea className="flex-1">
-          {isAdmin && onReorderSlides ? (
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <Droppable 
-                droppableId="thumbnails" 
-                direction={isVerticalLayout ? "vertical" : "horizontal"}
-              >
-                {(provided) => (
-                  <div 
-                    className={`p-1 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-1' : 'flex flex-row space-x-1'}`}
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
-                    {materials.map((material, index) => {
-                      const isActive = index === currentIndex;
-                      const isViewed = viewedSlides.includes(index);
-                      const thumbnailUrl = getThumbnailUrl(material);
-                      const formattedTitle = formatTitle(material.content);
-                      
-                      return (
-                        <Draggable 
-                          key={`slide-${index}`} 
-                          draggableId={`slide-${index}`} 
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className={`
-                                relative cursor-pointer rounded-md transition-all duration-200
-                                ${isActive 
-                                  ? 'active-thumbnail border-3 border-blue-500 shadow-lg z-10 bg-white/90' 
-                                  : 'border border-transparent hover:border-gray-300'}
-                                ${snapshot.isDragging ? 'shadow-2xl scale-105 z-20' : ''}
-                                ${isVerticalLayout ? 'w-full' : isFullscreenMode ? 'w-20' : 'w-16'}
-                              `}
-                              onClick={() => {
-                                if (!snapshot.isDragging) onSelectSlide(index);
-                              }}
-                            >
-                              <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'} p-1`}>
-                                <div className={`
-                                  ${isVerticalLayout ? 'h-8 w-8 mr-2' : isFullscreenMode ? 'h-12 w-12' : 'h-10 w-10'} 
-                                  rounded-md flex items-center justify-center overflow-hidden
-                                  ${isActive 
-                                    ? isFullscreenMode ? 'bg-white/90 shadow-md' : 'bg-white shadow-sm'
-                                    : isFullscreenMode ? 'bg-gray-100/90' : 'bg-gray-50'}
-                                `}>
-                                  {thumbnailUrl ? (
-                                    <img 
-                                      src={thumbnailUrl} 
-                                      alt={formattedTitle}
-                                      className="h-full w-full object-cover"
-                                      loading="lazy"
-                                      onError={(e) => {
-                                        (e.target as HTMLElement).style.display = 'none';
-                                        (e.currentTarget.parentElement as HTMLElement).innerHTML = 
-                                          material.contentType === 'video' ? 
-                                            '<div class="flex items-center justify-center w-full h-full"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-video"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg></div>' : 
-                                            '<div class="flex items-center justify-center w-full h-full"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>';
-                                      }}
-                                    />
-                                  ) : (
-                                    <div className="h-full w-full flex items-center justify-center">
-                                      {getContentTypeIcon(material.contentType)}
-                                    </div>
-                                  )}
-                                </div>
-                                
-                                {/* Slide number indicator for all thumbnails */}
-                                <div className={`
-                                  ${isFullscreenMode ? 'absolute -top-2 -right-2' : 'mt-1'} 
-                                  ${isActive ? 'bg-primary text-white' : 'bg-gray-200 text-gray-800'} 
-                                  w-5 h-5 rounded-full text-xs flex items-center justify-center font-medium shadow-sm
-                                `}>
-                                  {index + 1}
-                                </div>
-                                
-                                {/* Drag indicator for admin mode */}
-                                {isAdmin && (
-                                  <div className="absolute bottom-0 left-0 right-0 bg-amber-50 py-0.5 opacity-60 flex justify-center items-center">
-                                    <GripVertical className="h-3 w-3 text-amber-800" />
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                        </Draggable>
-                      );
-                    })}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          ) : (
-            <div 
-              className={`p-1 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-1' : 'flex flex-row space-x-1'}`}
-              ref={(el) => {
-                if (el) {
-                  scrollRef.current = el;
-                  setScrollElement(el);
-                }
-              }}
-            >
-              {materials.map((material, index) => {
-                const isActive = index === currentIndex;
-                const isViewed = viewedSlides.includes(index);
-                const thumbnailUrl = getThumbnailUrl(material);
-                const formattedTitle = formatTitle(material.content);
-                
-                return (
-                  <div
-                    key={index}
-                    className={`
-                      relative cursor-pointer rounded-md transition-all duration-200
+          <div 
+            className={`p-1 bg-gray-50 rounded-lg ${isVerticalLayout ? 'flex flex-col space-y-1' : 'flex flex-row space-x-1'}`}
+            ref={scrollRef}
+          >
+            {materials.map((material, index) => {
+              const isActive = index === currentIndex;
+              const isViewed = viewedSlides.includes(index);
+              const thumbnailUrl = getThumbnailUrl(material);
+              const formattedTitle = formatTitle(material.content);
+              
+              return (
+                <div
+                  key={index}
+                  className={`
+                    relative cursor-pointer rounded-md transition-all duration-200
+                    ${isActive 
+                      ? 'active-thumbnail border-3 border-blue-500 scale-110 shadow-lg z-10 bg-white/90' 
+                      : 'border border-transparent hover:border-gray-300 hover:scale-105'}
+                    ${isVerticalLayout ? 'w-full' : isFullscreenMode ? 'w-20' : 'w-16'}
+                  `}
+                  onClick={() => onSelectSlide(index)}
+                >
+                  <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'} p-1`}>
+                    <div className={`
+                      ${isVerticalLayout ? 'h-8 w-8 mr-2' : isFullscreenMode ? 'h-12 w-12' : 'h-10 w-10'} 
+                      rounded-md flex items-center justify-center overflow-hidden
                       ${isActive 
-                        ? 'active-thumbnail border-3 border-blue-500 scale-110 shadow-lg z-10 bg-white/90' 
-                        : 'border border-transparent hover:border-gray-300 hover:scale-105'}
-                      ${isVerticalLayout ? 'w-full' : isFullscreenMode ? 'w-20' : 'w-16'}
-                    `}
-                    onClick={() => onSelectSlide(index)}
-                  >
-                    <div className={`flex ${isVerticalLayout ? 'flex-row items-center' : 'flex-col items-center'} p-1`}>
-                      <div className={`
-                        ${isVerticalLayout ? 'h-8 w-8 mr-2' : isFullscreenMode ? 'h-12 w-12' : 'h-10 w-10'} 
-                        rounded-md flex items-center justify-center overflow-hidden
-                        ${isActive 
-                          ? isFullscreenMode ? 'bg-white/90 shadow-md' : 'bg-white shadow-sm'
-                          : isFullscreenMode ? 'bg-gray-100/90' : 'bg-gray-50'}
-                      `}>
-                        {thumbnailUrl ? (
-                          <img 
-                            src={thumbnailUrl} 
-                            alt={formattedTitle}
-                            className="h-full w-full object-cover"
-                            loading="lazy"
-                            onError={(e) => {
-                              (e.target as HTMLElement).style.display = 'none';
-                              (e.currentTarget.parentElement as HTMLElement).innerHTML = material.contentType === 'video' ? 
+                        ? isFullscreenMode ? 'bg-white/90 shadow-md' : 'bg-white shadow-sm'
+                        : isFullscreenMode ? 'bg-gray-100/90' : 'bg-gray-50'}
+                    `}>
+                      {thumbnailUrl ? (
+                        <img 
+                          src={thumbnailUrl} 
+                          alt={formattedTitle}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                          onError={(e) => {
+                            (e.target as HTMLElement).style.display = 'none';
+                            (e.currentTarget.parentElement as HTMLElement).innerHTML = 
+                              material.contentType === 'video' ? 
                                 '<div class="flex items-center justify-center w-full h-full"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-video"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg></div>' : 
                                 '<div class="flex items-center justify-center w-full h-full"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>';
-                            }}
-                          />
-                        ) : (
-                          <div className="h-full w-full flex items-center justify-center">
-                            {getContentTypeIcon(material.contentType)}
-                          </div>
-                        )}
-                      </div>
-                      
-                      {/* Slide number indicator that appears in all modes */}
-                      <div className={`
-                        ${isFullscreenMode ? 'absolute -top-2 -right-2' : 'mt-1'} 
-                        ${isActive ? 'bg-primary text-white' : 'bg-gray-200 text-gray-800'} 
-                        w-5 h-5 rounded-full text-xs flex items-center justify-center font-medium shadow-sm
-                      `}>
-                        {index + 1}
-                      </div>
+                          }}
+                        />
+                      ) : (
+                        <div className="h-full w-full flex items-center justify-center">
+                          {getContentTypeIcon(material.contentType)}
+                        </div>
+                      )}
                     </div>
+                    
+                    {/* Slide number indicator for all thumbnails */}
+                    <div className={`
+                      ${isFullscreenMode ? 'absolute -top-2 -right-2' : 'mt-1'} 
+                      ${isActive ? 'bg-primary text-white' : 'bg-gray-200 text-gray-800'} 
+                      w-5 h-5 rounded-full text-xs flex items-center justify-center font-medium shadow-sm
+                    `}>
+                      {index + 1}
+                    </div>
+                    
+                    {/* Viewed indicator */}
+                    {isViewed && !isActive && (
+                      <div className="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full w-4 h-4 flex items-center justify-center shadow-sm">
+                        <Check className="h-3 w-3" />
+                      </div>
+                    )}
                   </div>
-                );
-              })}
-            </div>
-          )}
+                </div>
+              );
+            })}
+          </div>
           <ScrollBar orientation={isVerticalLayout ? "vertical" : "horizontal"} />
         </ScrollArea>
+      </div>
+      
+      {/* Slide count */}
+      <div className="text-xs text-center text-gray-500 mt-2">
+        Slide {currentIndex + 1} of {materials.length}
+        {viewedSlides.length > 0 && (
+          <span className="ml-2">
+            ({viewedSlides.length} viewed)
+          </span>
+        )}
       </div>
     </div>
   );
