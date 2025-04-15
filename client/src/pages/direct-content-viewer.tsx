@@ -707,7 +707,8 @@ export default function DirectContentViewer() {
   
   // Effect to load saved slide order from localStorage (for admin reordering)
   useEffect(() => {
-    if (!isAdmin || !bookPath || !unitPath || !materialsData?.length) return;
+    // Make sure materialsData is loaded before trying to work with it
+    if (!isAdmin || !bookPath || !unitPath || !materialsData || materialsData.length === 0) return;
     
     try {
       const savedOrderString = localStorage.getItem(`slide-order-${bookPath}-${unitPath}`);
