@@ -304,9 +304,11 @@ export function registerDirectRoutes(app: Express) {
         }
         
         // Create a material object
+        // Fix path to avoid duplicate bookPath in URL by creating a direct path
+        // instead of bookPath/bookPath/unitPath/file.jpg it will be /bookPath/unitPath/file.jpg
         return {
           id: index + 1, // Simple sequential ID
-          path: filePath,
+          path: `/${bookPath}/${unitPath}/${filename}`, // Correct path format with leading slash
           title: extractedTitle, // Will be set by client
           description: extractedDescription, // Contains file code for question mapping
           contentType: getContentTypeFromPath(filePath),
@@ -569,6 +571,63 @@ export function registerDirectRoutes(app: Express) {
     } catch (error) {
       console.error("Error fetching asset:", error);
       res.status(500).json({ error: "Error fetching asset" });
+    }
+  });
+  
+  // Add a public handler for direct material access through plain URLs
+  // This route will handle the image URLs created above like /book4/unit1/image.jpg
+  // Only match paths that start with book followed by digits to avoid interfering with other routes
+  app.get("/book:bookId/unit:unitId/:filename", async (req, res) => {
+    try {
+      const { bookId, unitId, filename } = req.params;
+      const bookPath = `book${bookId}`;
+      const unitPath = `unit${unitId}`;
+      
+      // Clean filename
+      const cleanFilename = decodeURIComponent(filename);
+      
+      // Construct the exact S3 path
+      const key = `${bookPath}/${unitPath}/${cleanFilename}`;
+      
+      console.log(`Public direct access - trying to fetch: ${key}`);
+      
+      // Get the presigned URL
+      const presignedUrl = await getS3PresignedUrl(key);
+      
+      if (!presignedUrl) {
+        console.error(`Content not found: ${key}`);
+        return res.status(404).send("Content not found");
+      }
+      
+      // Use fetch to get the content directly
+      const response = await fetch(presignedUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': '*/*',
+        },
+      });
+      
+      if (!response.ok) {
+        console.error(`Error fetching from presigned URL: ${response.status} ${response.statusText}`);
+        return res.status(response.status).send("Error fetching content");
+      }
+      
+      // Get the content type from the response
+      const contentType = response.headers.get('content-type');
+      if (contentType) {
+        res.setHeader('Content-Type', contentType);
+      }
+      
+      // Set cache headers
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      
+      // Stream the response back to the client
+      const buffer = await response.arrayBuffer();
+      return res.send(Buffer.from(buffer));
+      
+    } catch (error) {
+      console.error(`Error fetching public content: ${error}`);
+      res.status(500).send("Error fetching content");
     }
   });
   
