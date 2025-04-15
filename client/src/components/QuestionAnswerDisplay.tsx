@@ -79,11 +79,22 @@ function getQuestionAnswerFromData(material: any): QAData {
   
   // Function to extract code pattern from filename (like "01 R A" from various formats)
   const extractCodePattern = (text: string): string => {
+    // Try to extract from more specific patterns first (look for code pattern at the beginning)
+    const specificMatch = text.match(/^(\d{2})\s+([a-z])\s+([a-z])\s/i);
+    if (specificMatch) {
+      const result = `${specificMatch[1]} ${specificMatch[2].toLowerCase()} ${specificMatch[3].toLowerCase()}`;
+      console.log("Extracted specific code pattern:", result, "from text:", text);
+      return result;
+    }
+
     // Match patterns like "01 R A" or "05 L C" anywhere in the text
-    const codeMatch = text.match(/(\d{2})\s+([a-z])\s+([a-z])/i);
+    // Be more restrictive - require it to be followed by specific keywords or be at the start
+    const codeMatch = text.match(/(\d{2})\s+([a-z])\s+([a-z])(\s|$|\s+what|\s+do|\s+is|\s+are|\s+how|\s+where|\s+who)/i);
     if (codeMatch) {
       // Return standardized format for matching: "01 r a"
-      return `${codeMatch[1]} ${codeMatch[2].toLowerCase()} ${codeMatch[3].toLowerCase()}`;
+      const result = `${codeMatch[1]} ${codeMatch[2].toLowerCase()} ${codeMatch[3].toLowerCase()}`;
+      console.log("Extracted code pattern:", result, "from text:", text);
+      return result;
     }
     return '';
   };
@@ -94,6 +105,21 @@ function getQuestionAnswerFromData(material: any): QAData {
   
   // Use the first code pattern found
   const codePattern = contentCode || descriptionCode;
+  
+  // For debugging - log the source of the code pattern
+  if (contentCode) console.log("Using code pattern from content:", contentCode);
+  if (descriptionCode) console.log("Using code pattern from description:", descriptionCode);
+  
+  // If in filename, we may need to check if there's an actual country or subject match
+  if (contentCode && (content.includes("Gadgets") || content.toLowerCase().includes("phone") || 
+      content.toLowerCase().includes("charger") || content.toLowerCase().includes("gadget"))) {
+    console.log("Found gadgets in content, prioritizing mobile phone category");
+    
+    // Clear any country detection from the material content to avoid showing Poland question
+    if (formatText.determineCountry(content)) {
+      console.log("Overriding country detection because this is a gadget slide");
+    }
+  }
   
   // Map of code patterns to exact questions and answers
   const qaDatabase: QADatabaseEntry[] = [
@@ -161,8 +187,8 @@ function getQuestionAnswerFromData(material: any): QAData {
     { code: "10 a b", country: "BRITAIN / UK", question: "What countries are in the British Isles?", answer: "They are the UK and Ireland." },
     
     // MOBILE PHONES
-    { code: "01 a a", category: "MOBILE PHONE", question: "What is it?", answer: "It is a mobile phone / a charger." },
-    { code: "01 a b", category: "MOBILE PHONE", question: "Do you have a mobile phone?", answer: "Yes, I do. / No, I don't." },
+    { code: "01 a a", category: "MOBILE PHONES", question: "What is this?", answer: "It is a phone." },
+    { code: "01 a b", category: "MOBILE PHONES", question: "Do you have a phone?", answer: "Yes, I have a phone / No, I do not have a phone." },
     { code: "01 a c", category: "MOBILE PHONES", question: "What phone do you have?", answer: "I have a [iPhone/Samsung/Android]." },
     { code: "01 a d", category: "MOBILE PHONES", question: "Who has a phone in your house?", answer: "My [mother/father/sister] has a phone." },
     { code: "01 a e", category: "MOBILE PHONES", question: "Are these old or new phones?", answer: "They are old/new phones." },
@@ -174,8 +200,8 @@ function getQuestionAnswerFromData(material: any): QAData {
     { code: "01 a k", category: "MOBILE PHONES", question: "Do you take photos with your phone?", answer: "Yes, I take photos / No, I do not." },
     
     // CHARGERS & BATTERIES
-    { code: "02 a a", category: "CHARGER", question: "What is it?", answer: "It is a mobile phone / a charger." },
-    { code: "02 a b", category: "CHARGER", question: "Do you have a charger?", answer: "Yes, I do. / No, I don't." },
+    { code: "02 a a", category: "CHARGERS & BATTERIES", question: "What is this?", answer: "It is a charger." },
+    { code: "02 a b", category: "CHARGERS & BATTERIES", question: "Do you have a charger?", answer: "Yes, I have a charger / No, I do not." },
     { code: "02 a c", category: "CHARGERS & BATTERIES", question: "Do you have a wireless charger?", answer: "Yes, I do / No, I do not." },
     { code: "02 a d", category: "CHARGERS & BATTERIES", question: "How long does your battery last?", answer: "It lasts [1 hour/5 hours]." },
     { code: "02 a e", category: "CHARGERS & BATTERIES", question: "What color is your charger?", answer: "It is [red/black/white]." },
@@ -249,6 +275,34 @@ function getQuestionAnswerFromData(material: any): QAData {
   
   // Try to extract question directly from content/description
   const contentLower = content.toLowerCase();
+  
+  // Check if content contains phone-related keywords 
+  if (contentLower.includes('phone') || 
+      contentLower.includes('charger') || 
+      contentLower.includes('gadget') || 
+      content.includes('Gadgets')) {
+    console.log("Detected phone-related content, using phone questions");
+    
+    // Prioritize gadget questions over country detection
+    if (contentLower.includes('what is it') || contentLower.includes('what is this')) {
+      return { 
+        country: "MOBILE PHONE",
+        question: "What is it?", 
+        answer: "It is a mobile phone / a charger.", 
+        hasData: true 
+      };
+    }
+    
+    if (contentLower.includes('do you have a phone') || contentLower.includes('have a mobile')) {
+      return { 
+        country: "MOBILE PHONE",
+        question: "Do you have a mobile phone?", 
+        answer: "Yes, I do. / No, I don't.", 
+        hasData: true 
+      };
+    }
+  }
+  
   const country = formatText.determineCountry(content);
   
   // Try to match by the first part of the code (e.g., "01 r")
