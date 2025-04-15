@@ -5,7 +5,6 @@ import { ExternalLink, PenTool, BookOpen, EyeOff, ZoomIn, ZoomOut } from "lucide
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import TeachingGuidance from "@/components/TeachingGuidance";
-import { extractQuestionFromFilename, extractQuestionsFromText } from "@/lib/questionExtractor";
 
 // Define type for material
 type Material = {
@@ -73,122 +72,12 @@ export default function ContentSlide({
     return directPath;
   };
 
-  // Extremely basic function to just split the filename by dash or en dash
-  const formatContentTitle = () => {
-    if (!material.content) {
-      return { question: null, answer: null };
-    }
-    
-    try {
-      // Get the filename without path and extension
-      const filename = material.content.split('/').pop() || material.content;
-      const withoutExtension = filename.split('.')[0];
-      
-      // Skip processing for certain types of content
-      if (!withoutExtension || 
-          withoutExtension.includes("Video") || 
-          withoutExtension.includes("Online Games") ||
-          withoutExtension.includes("Match") || 
-          withoutExtension.includes("Quiz")) {
-        return { question: null, answer: null };
-      }
-      
-      // Remove numeric prefixes (like "01 R A")
-      const cleanedFilename = withoutExtension.replace(/^\d+\s*[A-Z](\s+[A-Z])?\s+/, '');
-      
-      // First, check for the newer '→' arrow format from examples
-      let questionPart, answerPart;
-      let fullQuestionFormat = "";
-      
-      // Handle "Q: What is this? → A: It is a phone." format
-      if (cleanedFilename.includes('→')) {
-        // Keep the full format including 'Q:' and 'A:' parts
-        const parts = cleanedFilename.split('→');
-        if (parts.length >= 2) {
-          fullQuestionFormat = cleanedFilename;
-          
-          // Also extract the parts for the alternative answer formatting
-          questionPart = parts[0].trim();
-          if (questionPart.startsWith('Q:')) {
-            questionPart = questionPart.substring(2).trim();
-          }
-          
-          // Extract answer
-          answerPart = parts[1].trim();
-          if (answerPart.startsWith('A:')) {
-            answerPart = answerPart.substring(2).trim();
-          }
-        }
-      } else {
-        // Fallback to the old dash-based pattern
-        const dashMatch = cleanedFilename.match(/(.*?)(?:\s*[-–]\s*)(.*)/);
-        
-        if (!dashMatch || dashMatch.length < 3) {
-          return { question: null, answer: null };
-        }
-        
-        questionPart = dashMatch[1].trim();
-        answerPart = dashMatch[2].trim();
-        fullQuestionFormat = `Q: ${questionPart} → A: ${answerPart}`;
-      }
-      
-      // If we couldn't extract question or answer, return null
-      if (!questionPart || !answerPart) {
-        return { question: null, answer: null };
-      }
-      
-      // Add question mark if not present
-      if (!questionPart.endsWith('?')) {
-        questionPart += '?';
-      }
-      
-      // For negative answers like "No, I don't"
-      let negativePart = null;
-      
-      // Check if the answer has alternatives (contains a slash)
-      if (answerPart.includes('/')) {
-        const answerParts = answerPart.split('/').map(part => part.trim());
-        if (answerParts.length >= 2) {
-          answerPart = answerParts[0];
-          negativePart = answerParts[1];
-        }
-      }
-      
-      return {
-        question: questionPart,
-        fullFormat: fullQuestionFormat,
-        answer: {
-          positive: answerPart,
-          negative: negativePart
-        }
-      };
-    } catch (error) {
-      console.error("Error extracting content title:", error);
-      return { question: null, answer: null };
-    }
-  };
+  // Question extraction logic removed as requested
   
-  // Simple capitalize helper
-  const capitalizeQuestion = (q: string): string => {
-    if (!q) return "";
-    return q.charAt(0).toUpperCase() + q.slice(1);
-  };
-  
-  // Import and use our new question extractor function
-  const extractedQuestionAnswer = material.content ? 
-    extractQuestionFromFilename(material.content) : null;
-  
-  // Parse the content title to extract questions and answers using both methods
-  const { question, answer, fullFormat } = formatContentTitle();
-  
-  // Create the formatted question for display
-  const formattedQuestion = question ? capitalizeQuestion(question) : null;
-  const exactFormatQuestion = fullFormat || null;
-  
-  // Use the new extractor function's result if available
-  const betterFormattedQuestion = extractedQuestionAnswer?.question || formattedQuestion;
-  const betterFormattedAnswer = extractedQuestionAnswer?.answer || (answer?.positive || null);
-  const betterFormattedCategory = extractedQuestionAnswer?.category;
+  // Dummy variables to prevent errors elsewhere in the code
+  const betterFormattedQuestion = null;
+  const betterFormattedAnswer = null;
+  const betterFormattedCategory = null;
   
   // For image preloading
   const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
@@ -483,50 +372,19 @@ export default function ContentSlide({
         overflow: 'hidden'
       }}
     >
-      {/* Question/Answer section with fresh formatting */}
-      <div className="bg-blue-50 py-4 px-2 text-center mb-2 transition-all">
+      {/* Simplified header with just title and progress indicator */}
+      <div className="bg-blue-50 py-3 px-2 text-center mb-2 transition-all">
         <div className="px-4 flex flex-col items-center max-w-3xl mx-auto">
-          <div className="w-full mb-3">
-            <h2 className="text-gray-500 text-xl font-medium text-center">
+          <div className="w-full mb-2">
+            <h2 className="text-gray-700 text-xl font-medium text-center">
               {material.title || ""}
             </h2>
-            <h3 className="text-gray-400 text-lg font-medium text-center">
-              {material.description || ""}
-            </h3>
+            {material.description && (
+              <h3 className="text-gray-500 text-lg font-medium text-center">
+                {material.description || ""}
+              </h3>
+            )}
           </div>
-          
-          {/* Auto-extracted questions from filename */}
-          {betterFormattedQuestion && (
-            <div className="w-full">
-              {/* Category badge if available */}
-              {betterFormattedCategory && (
-                <div className="mb-2">
-                  <Badge 
-                    className="bg-blue-100 text-blue-800 hover:bg-blue-200"
-                  >
-                    {betterFormattedCategory}
-                  </Badge>
-                </div>
-              )}
-              
-              {/* Question and answer display */}
-              <div className="rounded-lg overflow-hidden mb-3">
-                <div className="bg-white p-3 text-center shadow-sm">
-                  <p className="text-lg font-semibold text-gray-800">
-                    {betterFormattedQuestion}
-                  </p>
-                </div>
-                
-                {betterFormattedAnswer && (
-                  <div className="bg-gray-50 p-3 text-center">
-                    <p className="text-md text-gray-600">
-                      {betterFormattedAnswer}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
           
           {/* Progress indicator */}
           <div className="w-full mt-2">
