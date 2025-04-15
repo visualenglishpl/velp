@@ -395,6 +395,8 @@ export default function DirectContentViewer() {
       setInitialSlideSet(true);
     }
   }, [materialsData, emblaApi, initialSlideSet]);
+  
+
 
   // Analyze materials to generate unit description
   const generateUnitDescription = (materials: DirectMaterial[]): string => {
@@ -702,6 +704,40 @@ export default function DirectContentViewer() {
     // For ContentSlide component compatibility
     unitId: 0, // Not needed for direct access
   }));
+  
+  // Effect to load saved slide order from localStorage (for admin reordering)
+  useEffect(() => {
+    if (!isAdmin || !bookPath || !unitPath || !materialsData?.length) return;
+    
+    try {
+      const savedOrderString = localStorage.getItem(`slide-order-${bookPath}-${unitPath}`);
+      
+      if (savedOrderString) {
+        const savedOrderIds = JSON.parse(savedOrderString);
+        
+        // If we have a saved order, use it to reorder the materials
+        if (Array.isArray(savedOrderIds) && savedOrderIds.length > 0) {
+          // Create a map of id -> material for quick lookup
+          const materialsMap = new Map(
+            materialsData.map(material => [material.id, material])
+          );
+          
+          // Recreate the array in the saved order
+          const orderedMaterials = savedOrderIds
+            .map(id => materialsMap.get(id))
+            .filter(Boolean) as DirectMaterial[];
+          
+          // If we have all the materials, set the reordered array
+          if (orderedMaterials.length === materialsData.length) {
+            console.log("Loaded saved slide order from localStorage");
+            setReorderedMaterials(orderedMaterials);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error loading saved slide order:", error);
+    }
+  }, [isAdmin, bookPath, unitPath, materialsData]);
   
   // Generate unit description without using hooks
   let unitDescription = "";
