@@ -496,14 +496,17 @@ export default function SlickContentViewer() {
                         material.content.match(/\d+\s+[A-Z]\s+/) ? (
                           <>
                             {/* Extract content info from filename to decide which Q&A to show */}
-                            {material.content.toLowerCase().includes('poland') ? (
+                            {material.content.toLowerCase().includes('poland') || 
+                             material.content.toLowerCase().includes('01 r ') ? (
                               <>
                                 <div className="mb-1 flex items-center justify-center">
                                   <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
                                     POLAND
                                   </h3>
                                 </div>
-                                {material.content.toLowerCase().includes('01 r a') && (
+                                {(material.content.toLowerCase().includes('01 r a') || 
+                                  (material.content.toLowerCase().includes('what country is this') && 
+                                   material.content.toLowerCase().includes('poland'))) && (
                                   <>
                                     <div className="flex gap-2">
                                       <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
@@ -845,7 +848,9 @@ export default function SlickContentViewer() {
                                     AUSTRALIA
                                   </h3>
                                 </div>
-                                {material.content.toLowerCase().includes('07 l a') && (
+                                {(material.content.toLowerCase().includes('07 l a') ||
+                                  material.content.toLowerCase().includes('boomerang') ||
+                                  (material.content.toLowerCase().includes('australia') && material.content.toLowerCase().includes('what country'))) && (
                                   <>
                                     <div className="flex gap-2">
                                       <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
@@ -924,10 +929,12 @@ export default function SlickContentViewer() {
                             )}
                           </>
                         ) : (
-                          /* Default case */
-                          <div className="flex gap-2">
-                            <span className="font-medium text-gray-800 text-base">{material.title}</span>
-                          </div>
+                          /* Default case - but don't show "Content from..." text */
+                          !material.title.startsWith('Content from') && (
+                            <div className="flex gap-2">
+                              <span className="font-medium text-gray-800 text-base">{material.title}</span>
+                            </div>
+                          )
                         )}
                         
                         {/* Show description only if not already shown as answer */}
