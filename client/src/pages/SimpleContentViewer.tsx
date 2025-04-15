@@ -1,20 +1,16 @@
-import { useEffect, useState, useCallback, useRef } from "react";
-import { useLocation } from "wouter";
-import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/use-auth";
-import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, List, Images, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import ThumbnailsBar from "@/components/ThumbnailsBar";
-import TeachingGuidance from "@/components/TeachingGuidance";
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useLocation } from 'wouter';
+import { useQuery } from '@tanstack/react-query';
+import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/use-auth';
 
-type Material = {
+type S3Material = {
   id: number;
   path: string;
   title: string;
   description: string;
-  contentType: string;
+  contentType: string; 
   content: string;
   orderIndex: number;
   order: number;
@@ -24,7 +20,7 @@ type Material = {
   updatedAt: Date;
 };
 
-type Unit = {
+type UnitInfo = {
   path: string;
   bookId: string;
   unitNumber: number;
@@ -34,11 +30,11 @@ type Unit = {
 export default function SimpleContentViewer() {
   const [location, navigate] = useLocation();
   
-  // Extract bookId and unitNumber from the URL path
+  // Extract bookId and unitNumber from URL path
   let bookId: string | null = null;
   let unitNumber: string | null = null;
   
-  // Try to extract from path pattern like /book4/unit3
+  // Parse from /book4/unit3 format
   const pathRegex = /\/book(\d+)\/unit(\d+)/;
   const pathMatch = location.match(pathRegex);
   
@@ -47,52 +43,54 @@ export default function SimpleContentViewer() {
     unitNumber = pathMatch[2];
     console.log(`Path match: Book ${bookId}, Unit ${unitNumber}`);
   } else {
-    // Fallback to URL query parameters
+    // Fallback to URL parameters
     const params = new URLSearchParams(window.location.search);
-    bookId = params.get("bookId");
-    unitNumber = params.get("unitNumber");
-    console.log(`Query params: Book ${bookId}, Unit ${unitNumber}`);
+    bookId = params.get('bookId');
+    unitNumber = params.get('unitNumber');
   }
   
-  // Additional state setup
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [viewedSlides, setViewedSlides] = useState<number[]>([]);
-  const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showThumbnails, setShowThumbnails] = useState(true);
-  
-  // Access control - can be customized based on book series
-  const { user } = useAuth();
-  const hasPurchasedAccess = Boolean(user); // Simplified for now
-  
-  // Set free slide limit based on book ID
-  const freeSlideLimit = /^0[a-c]$/i.test(bookId || "") ? 2 : 10;
-  
-  // Path for accessing content
+  // Build paths for API requests
   const bookPath = `book${bookId}`;
   const unitPath = `unit${unitNumber}`;
-
-  console.log(`Simple Content Viewer: Book=${bookPath}, Unit=${unitPath}, Full path=/${bookPath}/${unitPath}`);
-  console.log(`Content Viewer: Book=${bookPath}, Unit=${unitPath}`);
   
-  // Fetch unit data
-  const { data: unitData, error: unitError, isLoading: unitLoading } = useQuery<Unit>({
+  console.log(`ContentViewer: Book=${bookPath}, Unit=${unitPath}`);
+  
+  // State for the viewer
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Authentication
+  const { user } = useAuth();
+  const hasPaidAccess = Boolean(user);
+  const freeSlideLimit = /^0[a-c]$/i.test(bookId || '') ? 2 : 10;
+  
+  // Fetch unit information
+  const { 
+    data: unitData,
+    error: unitError,
+    isLoading: unitLoading
+  } = useQuery<UnitInfo>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}`],
     enabled: Boolean(bookPath && unitPath)
   });
   
-  // Fetch materials
-  const { data: materials, error: materialsError, isLoading: materialsLoading } = useQuery<Material[]>({
+  // Fetch materials from S3
+  const {
+    data: materials, 
+    error: materialsError,
+    isLoading: materialsLoading
+  } = useQuery<S3Material[]>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
     enabled: Boolean(bookPath && unitPath)
   });
   
-  // Filter materials - remove PDFs and SWFs
+  // Filter out PDFs and SWFs
   const filteredMaterials = materials?.filter(material => {
     const content = material.content.toLowerCase();
     return !(
-      material.contentType === "PDF" || 
-      material.contentType === "SWF" || 
+      material.contentType === 'PDF' || 
+      material.contentType === 'SWF' || 
       content.endsWith('.pdf') || 
       content.endsWith('.swf')
     );
@@ -103,125 +101,55 @@ export default function SimpleContentViewer() {
     const aContent = a.content.toLowerCase();
     const bContent = b.content.toLowerCase();
     
-    // If both start with 00 or both don't, sort alphabetically
-    const aStarts00 = aContent.startsWith("00");
-    const bStarts00 = bContent.startsWith("00");
+    // Sort by numeric prefix if both have them
+    const aNumMatch = aContent.match(/^(\d+)/);
+    const bNumMatch = bContent.match(/^(\d+)/);
     
-    if (aStarts00 === bStarts00) return aContent.localeCompare(bContent);
-    return aStarts00 ? -1 : 1;
+    if (aNumMatch && bNumMatch) {
+      return parseInt(aNumMatch[1]) - parseInt(bNumMatch[1]);
+    }
+    
+    // If only one has numeric prefix, prioritize it
+    if (aNumMatch) return -1;
+    if (bNumMatch) return 1;
+    
+    // Otherwise sort alphabetically
+    return aContent.localeCompare(bContent);
   });
   
-  // Simple navigation functions for direct control
+  // Navigation functions
   const goToSlide = useCallback((index: number) => {
-    // Bound the index to valid range
-    const targetIndex = Math.max(0, Math.min(sortedMaterials.length - 1, index));
-    
-    console.log(`Going directly to slide ${targetIndex}`);
-    setCurrentSlideIndex(targetIndex);
-
-    // Add to viewed slides
-    setViewedSlides(prev => {
-      if (prev.includes(targetIndex)) return prev;
-      return [...prev, targetIndex];
-    });
-
-    // Preload adjacent slides
-    const preloadIndices = [targetIndex - 1, targetIndex + 1].filter(
-      i => i >= 0 && i < sortedMaterials.length
-    );
-    
-    preloadIndices.forEach(i => {
-      const material = sortedMaterials[i];
-      if (!material) return;
-      
-      const directPath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
-      
-      if (!preloadedImages.includes(directPath)) {
-        const img = new Image();
-        img.src = directPath;
-        img.onload = () => {
-          setPreloadedImages(prev => [...prev, directPath]);
-        };
-      }
-    });
-  }, [sortedMaterials.length, sortedMaterials, bookPath, unitPath, preloadedImages]);
-
+    const validIndex = Math.max(0, Math.min(index, sortedMaterials.length - 1));
+    setCurrentIndex(validIndex);
+  }, [sortedMaterials.length]);
+  
   const goToPrevSlide = useCallback(() => {
-    goToSlide(currentSlideIndex - 1);
-  }, [currentSlideIndex, goToSlide]);
-
+    goToSlide(currentIndex - 1);
+  }, [currentIndex, goToSlide]);
+  
   const goToNextSlide = useCallback(() => {
-    goToSlide(currentSlideIndex + 1);
-  }, [currentSlideIndex, goToSlide]);
-
-  // Handle thumbnail click
-  const handleThumbnailClick = useCallback((index: number) => {
-    goToSlide(index);
-  }, [goToSlide]);
+    goToSlide(currentIndex + 1);
+  }, [currentIndex, goToSlide]);
   
-  // Initialize with proper starting slide
+  // Keyboard navigation
   useEffect(() => {
-    if (!sortedMaterials.length) return;
-    
-    // Initialize viewed slides with first slide
-    setViewedSlides([0]);
-    
-    // Try to find "00 E.png" first, then others
-    const priorityPrefixes = ["00 E", "00 C", "00 A", "00 B", "00 D"];
-    
-    for (const prefix of priorityPrefixes) {
-      const index = sortedMaterials.findIndex(material => 
-        material.content === `${prefix}.png` || material.content.startsWith(prefix)
-      );
-      
-      if (index !== -1) {
-        goToSlide(index);
-        return;
-      }
-    }
-    
-    // Fall back to any file starting with "00"
-    const index = sortedMaterials.findIndex(material => 
-      material.content.startsWith("00")
-    );
-    
-    if (index !== -1) {
-      goToSlide(index);
-    }
-  }, [sortedMaterials, goToSlide]);
-  
-  // Add keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      switch (event.key) {
-        case "ArrowLeft": 
-          console.log("Left arrow key pressed");
-          goToPrevSlide();
-          break;
-        case "ArrowRight": 
-          console.log("Right arrow key pressed");
-          goToNextSlide();
-          break;
-        case "Home": 
-          console.log("Home key pressed - going to first slide");
-          goToSlide(0);
-          break;
-        case "End": 
-          console.log("End key pressed - going to last slide");
-          goToSlide(sortedMaterials.length - 1);
-          break;
-        case "f": case "F": setIsFullscreen(!isFullscreen); break;
-        case "t": case "T": setShowThumbnails(!showThumbnails); break;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        goToPrevSlide();
+      } else if (e.key === 'ArrowRight') {
+        goToNextSlide();
+      } else if (e.key === 'Escape' && isFullscreen) {
+        setIsFullscreen(false);
+      } else if (e.key === 'f' || e.key === 'F') {
+        setIsFullscreen(!isFullscreen);
       }
     };
     
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [sortedMaterials.length, isFullscreen, showThumbnails, goToPrevSlide, goToNextSlide, goToSlide]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [goToPrevSlide, goToNextSlide, isFullscreen]);
   
-  // Handle fullscreen mode
-  const containerRef = useRef<HTMLDivElement>(null);
-  
+  // Handle fullscreen
   useEffect(() => {
     if (!containerRef.current) return;
     
@@ -229,16 +157,32 @@ export default function SimpleContentViewer() {
       try {
         containerRef.current.requestFullscreen();
       } catch (error) {
-        console.error("Error entering fullscreen:", error);
+        console.error('Error entering fullscreen:', error);
       }
     } else if (document.fullscreenElement) {
       try {
         document.exitFullscreen();
       } catch (error) {
-        console.error("Error exiting fullscreen:", error);
+        console.error('Error exiting fullscreen:', error);
       }
     }
   }, [isFullscreen]);
+  
+  // Initialize with first slide
+  useEffect(() => {
+    if (!sortedMaterials.length) return;
+    
+    // Try to find a "00" prefixed slide to start with
+    const startIndex = sortedMaterials.findIndex(
+      material => material.content.startsWith('00')
+    );
+    
+    if (startIndex !== -1) {
+      setCurrentIndex(startIndex);
+    } else {
+      setCurrentIndex(0);
+    }
+  }, [sortedMaterials]);
   
   // Loading state
   if (unitLoading || materialsLoading) {
@@ -253,14 +197,14 @@ export default function SimpleContentViewer() {
   // Error state
   if (unitError || materialsError || !unitData || !materials) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen text-center max-w-xl mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-4 text-red-600">Content Not Available</h1>
-        <p className="mb-4">We couldn't load the content for this unit.</p>
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold mb-4 text-red-600">Error Loading Content</h1>
+        <p className="mb-4">There was a problem loading this content.</p>
         <div className="flex gap-4">
-          <Button onClick={() => navigate("/admin/books")}>
+          <Button onClick={() => navigate('/books')}>
             <Book className="mr-2 h-4 w-4" />Books
           </Button>
-          <Button onClick={() => navigate("/")} variant="outline">
+          <Button onClick={() => navigate('/')} variant="outline">
             <Home className="mr-2 h-4 w-4" />Home
           </Button>
         </div>
@@ -268,17 +212,17 @@ export default function SimpleContentViewer() {
     );
   }
   
-  // No materials state
+  // Empty state
   if (!sortedMaterials.length) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen text-center max-w-xl mx-auto px-4">
+      <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold mb-4">No Content Available</h1>
-        <p className="mb-6">There is no content available for {unitData.title}.</p>
+        <p className="mb-4">This unit doesn't have any content yet.</p>
         <div className="flex gap-4">
-          <Button onClick={() => navigate("/admin/books")}>
+          <Button onClick={() => navigate('/books')}>
             <Book className="mr-2 h-4 w-4" />Books
           </Button>
-          <Button onClick={() => navigate("/")} variant="outline">
+          <Button onClick={() => navigate('/')} variant="outline">
             <Home className="mr-2 h-4 w-4" />Home
           </Button>
         </div>
@@ -286,21 +230,18 @@ export default function SimpleContentViewer() {
     );
   }
   
-  // Get current material
-  const currentMaterial = sortedMaterials[currentSlideIndex] || sortedMaterials[0];
-  const isPremium = currentSlideIndex >= freeSlideLimit && !hasPurchasedAccess;
+  // Get current material and image path
+  const currentMaterial = sortedMaterials[currentIndex];
+  const isPremiumContent = currentIndex >= freeSlideLimit && !hasPaidAccess;
   const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(currentMaterial.content)}`;
-  
-  // Calculate progress percentage
-  const progressPercentage = (viewedSlides.length / sortedMaterials.length) * 100;
   
   return (
     <div 
       ref={containerRef}
-      className={`flex flex-col min-h-screen bg-white ${isFullscreen ? 'fixed inset-0 z-50' : ''}`}
+      className={`flex flex-col min-h-screen ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : ''}`}
     >
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-white border-b px-4 py-2 flex items-center justify-between">
+      <div className="sticky top-0 z-10 bg-white border-b p-4 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold">{unitData.title}</h1>
           <p className="text-sm text-muted-foreground">Book {bookId} • Unit {unitNumber}</p>
@@ -308,161 +249,97 @@ export default function SimpleContentViewer() {
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={() => setIsFullscreen(!isFullscreen)}>
             {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-            <span className="ml-1 hidden sm:inline">{isFullscreen ? "Exit" : "Fullscreen"}</span>
+            <span className="ml-1 hidden sm:inline">{isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}</span>
           </Button>
-          <Button variant="outline" size="sm" onClick={() => navigate(`/book${bookId}/units`)}>
-            <List size={16} />
-            <span className="ml-1 hidden sm:inline">Units</span>
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => navigate("/admin/books")}>
+          <Button variant="outline" size="sm" onClick={() => navigate('/books')}>
             <Book size={16} />
             <span className="ml-1 hidden sm:inline">Books</span>
           </Button>
         </div>
       </div>
       
-      {/* Content area */}
-      <div className="flex-1 overflow-hidden">
-        {/* Progress bar and toggle */}
-        <div className="px-4 py-2">
-          <div className="flex items-center justify-between mb-1">
-            <div className="flex items-center">
-              <p className="text-sm text-muted-foreground mr-4">Progress</p>
-              <p className="text-sm font-medium">{Math.round(progressPercentage)}%</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <p className="text-xs text-muted-foreground hidden sm:inline-block">Click on image to navigate</p>
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col items-center justify-center p-4 relative">
+        {/* Premium content overlay */}
+        {isPremiumContent && (
+          <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-md text-center">
+              <h3 className="text-xl font-bold mb-2">Premium Content</h3>
+              <p className="mb-4">This slide requires a subscription to view.</p>
               <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => setShowThumbnails(!showThumbnails)}
-                className="text-xs flex items-center"
+                onClick={() => navigate('/checkout')}
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
               >
-                {showThumbnails ? <EyeOff size={14} className="mr-1" /> : <Images size={14} className="mr-1" />}
-                {showThumbnails ? "Hide Thumbnails" : "Show Thumbnails"}
+                Get Premium Access
               </Button>
             </div>
           </div>
-          <Progress value={progressPercentage} className="h-2" />
-        </div>
-        
-        {/* Main content slide */}
-        <div className="relative mx-auto max-w-5xl px-4">
-          <div className="overflow-hidden">
-            <div className="relative mx-auto p-4 flex items-center justify-center">
-              {/* Premium overlay */}
-              {isPremium && (
-                <div className="absolute inset-0 z-10 bg-white bg-opacity-80 backdrop-blur-sm flex flex-col items-center justify-center">
-                  <div className="max-w-md text-center p-6 rounded-lg">
-                    <h3 className="text-xl font-bold mb-2">Premium Content</h3>
-                    <p className="mb-4">This content is available with a subscription.</p>
-                    <Button 
-                      onClick={() => navigate(`/checkout/unit?bookId=${bookPath}&unitId=${unitPath}`)}
-                      className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-                    >
-                      Get Access
-                    </Button>
-                  </div>
-                </div>
-              )}
-              
-              {/* Content image with click navigation */}
-              <div className="relative w-full h-full flex justify-center group min-h-[300px]">
-                {/* Left side navigation hint */}
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-0 group-hover:bg-opacity-10 p-3 rounded-full transition-all duration-200 z-10">
-                  <ChevronLeft size={24} className="text-black opacity-0 group-hover:opacity-50" />
-                </div>
-                
-                {/* Right side navigation hint */}
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-0 group-hover:bg-opacity-10 p-3 rounded-full transition-all duration-200 z-10">
-                  <ChevronRight size={24} className="text-black opacity-0 group-hover:opacity-50" />
-                </div>
-                
-                <img 
-                  src={imagePath}
-                  alt={currentMaterial.title || `Slide ${currentSlideIndex + 1}`}
-                  className="max-h-[70vh] object-contain cursor-pointer"
-                  onClick={(e) => {
-                    // Prevent default behavior
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Determine which side of the image was clicked
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const width = rect.width;
-                    
-                    // If clicked on left side, go to previous slide; if right side, go to next slide
-                    if (x < width / 2) {
-                      console.log("Left side of image clicked - previous slide");
-                      goToPrevSlide();
-                    } else {
-                      console.log("Right side of image clicked - next slide");
-                      goToNextSlide();
-                    }
-                  }}
-                />
-              </div>
-              
-              {/* Slide number indicator */}
-              <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white rounded-full px-3 py-1 text-sm">
-                {currentSlideIndex + 1} / {sortedMaterials.length}
-              </div>
-            </div>
-          </div>
-          
-          {/* Navigation buttons */}
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button 
-                  onClick={goToPrevSlide}
-                  disabled={currentSlideIndex === 0}
-                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <ChevronLeft size={28} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>Previous (←)</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button 
-                  onClick={goToNextSlide}
-                  disabled={currentSlideIndex === sortedMaterials.length - 1}
-                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 hover:bg-blue-50 p-3 rounded-full shadow-md border border-gray-200 hover:border-blue-300 transition-all z-20 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <ChevronRight size={28} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>Next (→)</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-        
-        {/* Thumbnails bar */}
-        {showThumbnails && (
-          <div className="mt-4 px-4">
-            <ThumbnailsBar 
-              materials={sortedMaterials} 
-              currentIndex={currentSlideIndex}
-              bookPath={bookPath}
-              unitPath={unitPath}
-              onThumbnailClick={handleThumbnailClick}
-            />
-          </div>
         )}
         
-        {/* Teaching guidance section */}
-        <div className="mt-8 px-4">
-          <TeachingGuidance 
-            title={unitData.title}
-            bookId={bookId}
-            unitNumber={unitNumber}
+        {/* Image Container */}
+        <div className="relative max-w-4xl w-full flex-1 flex items-center justify-center">
+          <img 
+            src={imagePath}
+            alt={currentMaterial.title || `Slide ${currentIndex + 1}`}
+            className="max-h-[70vh] max-w-full object-contain"
+            onClick={(e) => {
+              // Navigate left/right based on which side of the image was clicked
+              const rect = e.currentTarget.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              if (x < rect.width / 2) {
+                goToPrevSlide();
+              } else {
+                goToNextSlide();
+              }
+            }}
           />
+          
+          {/* Navigation buttons */}
+          <button
+            onClick={goToPrevSlide}
+            disabled={currentIndex === 0}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-3 shadow-md disabled:opacity-50"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft />
+          </button>
+          
+          <button
+            onClick={goToNextSlide}
+            disabled={currentIndex === sortedMaterials.length - 1}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-3 shadow-md disabled:opacity-50"
+            aria-label="Next slide"
+          >
+            <ChevronRight />
+          </button>
+          
+          {/* Slide number indicator */}
+          <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full">
+            {currentIndex + 1} / {sortedMaterials.length}
+          </div>
+        </div>
+      </div>
+      
+      {/* Simple thumbnails */}
+      <div className="border-t p-4 overflow-x-auto">
+        <div className="flex space-x-2 min-w-max">
+          {sortedMaterials.map((material, index) => (
+            <div 
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`
+                cursor-pointer border-2 h-16 w-16 flex-shrink-0 overflow-hidden rounded-md
+                ${index === currentIndex ? 'border-blue-500 ring-2 ring-blue-300' : 'border-gray-200'}
+              `}
+            >
+              <img 
+                src={`/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`}
+                alt={material.title || `Thumbnail ${index + 1}`}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
