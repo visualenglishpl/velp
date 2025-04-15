@@ -50,36 +50,95 @@ export const getQuestionAnswer = (material: any): QAData => {
   if (content.match(/\d+\s+[a-z]\s+[a-z]/i)) {
     const country = determineCountry(content);
     
-    if (country === 'POLAND') {
-      if (content.includes('a')) {
-        return {
-          country,
-          question: "What country is this?",
-          answer: "It is Poland.",
-          hasData: true
-        };
-      } else if (content.includes('b')) {
-        return {
-          country,
-          question: "Where is this flag from?",
-          answer: "It is from Poland.",
-          hasData: true
-        };
-      } else {
-        return {
-          country,
-          question: "What can you see in this image?",
-          answer: "It shows something from Poland.",
-          hasData: true
-        };
+    // England questions
+    if (country === 'ENGLAND' || content.includes('05 l')) {
+      if (content.includes('05 l a')) {
+        return { country, question: "What country is this?", answer: "It is England.", hasData: true };
+      } else if (content.includes('05 l b')) {
+        return { country, question: "Where is this flag from?", answer: "It is from England.", hasData: true };
+      } else if (content.includes('05 l c')) {
+        return { country, question: "What is England's capital?", answer: "It is London.", hasData: true };
+      } else if (content.includes('05 l d')) {
+        return { country, question: "What is his nationality?", answer: "He is English.", hasData: true };
+      } else if (content.includes('05 l e')) {
+        return { country, question: "Where is he from?", answer: "He is from England.", hasData: true };
+      } else if (content.includes('05 l f')) {
+        return { country, question: "Where are they from?", answer: "They are from England.", hasData: true };
+      } else if (content.includes('05 l g')) {
+        return { country, question: "Is an English breakfast big or small?", answer: "It is big.", hasData: true };
+      } else if (content.includes('05 l h')) {
+        return { country, question: "What type of food is it?", answer: "It is English food.", hasData: true };
       }
     }
     
+    // Scotland questions
+    else if (country === 'SCOTLAND' || content.includes('04 l')) {
+      if (content.includes('04 l a')) {
+        return { country, question: "What country is this?", answer: "It is Scotland.", hasData: true };
+      } else if (content.includes('04 l b')) {
+        return { country, question: "Where is this flag from?", answer: "It is from Scotland.", hasData: true };
+      } else if (content.includes('04 l c')) {
+        return { country, question: "What is Scotland's capital?", answer: "It is Edinburgh.", hasData: true };
+      } else if (content.includes('04 l d')) {
+        return { country, question: "What nationality is he?", answer: "He is Scottish.", hasData: true };
+      } else if (content.includes('04 l i')) {
+        return { country, question: "Where is the Loch Ness Monster from?", answer: "It is from Scotland.", hasData: true };
+      }
+    }
+    
+    // Poland questions
+    else if (country === 'POLAND' || content.includes('01 r')) {
+      if (content.includes('01 r a')) {
+        return { country, question: "What country is this?", answer: "It is Poland.", hasData: true };
+      } else if (content.includes('01 r b')) {
+        return { country, question: "Where is this flag from?", answer: "It is from Poland.", hasData: true };
+      } else if (content.includes('01 r c')) {
+        return { country, question: "What colors are the Polish flag?", answer: "They are red and white.", hasData: true };
+      } else if (content.includes('01 r d')) {
+        return { country, question: "Where are these people from?", answer: "They are from Poland.", hasData: true };
+      } else if (content.includes('01 r f')) {
+        return { country, question: "What nationality are they?", answer: "They are Polish.", hasData: true };
+      } else if (content.includes('01 r i')) {
+        return { country, question: "What is the capital of Poland?", answer: "It is Warsaw.", hasData: true };
+      } else if (content.includes('01 r k')) {
+        return { country, question: "What language does she speak?", answer: "She speaks Polish.", hasData: true };
+      }
+    }
+    
+    // USA questions
+    else if (country === 'USA' || content.includes('08 m')) {
+      if (content.includes('08 m a')) {
+        return { country, question: "What country is this?", answer: "It is the USA.", hasData: true };
+      } else if (content.includes('08 m b')) {
+        return { country, question: "Where is this flag from?", answer: "It is from the USA.", hasData: true };
+      } else if (content.includes('08 m c')) {
+        return { country, question: "How many stars are on the American flag?", answer: "There are 50 stars.", hasData: true };
+      } else if (content.includes('08 m e')) {
+        return { country, question: "What nationality is he?", answer: "He is American.", hasData: true };
+      } else if (content.includes('08 m k')) {
+        return { country, question: "What type of food is this?", answer: "It is American food.", hasData: true };
+      }
+    }
+    
+    // Default country question if we have a country but no specific match
     if (country) {
+      // We can try to extract question from the filename if it follows a pattern
+      if (content.includes('what')) {
+        return { country, question: `What ${content.split('what')[1].split('–')[0].trim()}?`, 
+                 answer: content.split('–')[1]?.trim() || `It is from ${country}.`, hasData: true };
+      } else if (content.includes('where')) {
+        return { country, question: `Where ${content.split('where')[1].split('–')[0].trim()}?`, 
+                 answer: content.split('–')[1]?.trim() || `It is from ${country}.`, hasData: true };
+      } else if (content.includes('how')) {
+        return { country, question: `How ${content.split('how')[1].split('–')[0].trim()}?`, 
+                 answer: content.split('–')[1]?.trim() || `It is from ${country}.`, hasData: true };
+      }
+      
+      // If nothing specific was found, return a default question
       return {
         country,
-        question: "What country is this?",
-        answer: `It is ${country}.`,
+        question: "What can you see in this image?",
+        answer: `Something from ${country}.`,
         hasData: true
       };
     }
