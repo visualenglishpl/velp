@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { ExternalLink, PenTool, BookOpen, EyeOff } from "lucide-react";
+import { ExternalLink, PenTool, BookOpen, EyeOff, ZoomIn, ZoomOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import TeachingGuidance from "@/components/TeachingGuidance";
+import { extractQuestionFromFilename, extractQuestionsFromText } from "@/lib/questionExtractor";
 
 // Define type for material
 type Material = {
@@ -171,12 +172,44 @@ export default function ContentSlide({
     return q.charAt(0).toUpperCase() + q.slice(1);
   };
   
-  // Parse the content title to extract questions and answers
+  // Import and use our new question extractor function
+  const extractedQuestionAnswer = material.content ? 
+    extractQuestionFromFilename(material.content) : null;
+  
+  // Parse the content title to extract questions and answers using both methods
   const { question, answer, fullFormat } = formatContentTitle();
   
   // Create the formatted question for display
   const formattedQuestion = question ? capitalizeQuestion(question) : null;
   const exactFormatQuestion = fullFormat || null;
+  
+  // Use the new extractor function's result if available
+  const betterFormattedQuestion = extractedQuestionAnswer?.question || formattedQuestion;
+  const betterFormattedAnswer = extractedQuestionAnswer?.answer || (answer?.positive || null);
+  const betterFormattedCategory = extractedQuestionAnswer?.category;
+  
+  // For image preloading
+  const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
+  
+  // Preload images for smoother navigation
+  useEffect(() => {
+    if (isActive && material.contentType.toLowerCase() === 'image' && material.content) {
+      // Preload current image
+      const currentImageUrl = getS3Url();
+      const img = new Image();
+      img.src = currentImageUrl;
+      
+      // Try to preload next few images if possible
+      // This would require knowing the next few images in the sequence
+      // In a real implementation, this would come from props
+      
+      setPreloadedImages(prev => 
+        prev.includes(currentImageUrl) 
+          ? prev 
+          : [...prev, currentImageUrl]
+      );
+    }
+  }, [isActive, material.content]);
   
   // Reset state when the active slide changes
   useEffect(() => {
@@ -273,6 +306,8 @@ export default function ContentSlide({
                   objectFit: 'contain',
                   filter: 'none',
                   background: 'white',
+                  display: 'block',
+                  margin: '0 auto'
                 }}
               />
               {/* Slide number indicator - exactly like in screenshots */}
@@ -402,7 +437,7 @@ export default function ContentSlide({
         overflow: 'hidden'
       }}
     >
-      {/* Removed all question formatting as requested - we'll start from scratch */}
+      {/* Question/Answer section with fresh formatting */}
       <div className="bg-blue-50 py-4 px-2 text-center mb-2 transition-all">
         <div className="px-4 flex flex-col items-center max-w-3xl mx-auto">
           <div className="w-full mb-3">
@@ -414,7 +449,53 @@ export default function ContentSlide({
             </h3>
           </div>
           
-          {/* Questions/answers will be generated freshly to match content */}
+          {/* Auto-extracted questions from filename */}
+          {betterFormattedQuestion && (
+            <div className="w-full">
+              {/* Category badge if available */}
+              {betterFormattedCategory && (
+                <div className="mb-2">
+                  <Badge 
+                    className="bg-blue-100 text-blue-800 hover:bg-blue-200"
+                  >
+                    {betterFormattedCategory}
+                  </Badge>
+                </div>
+              )}
+              
+              {/* Question and answer display */}
+              <div className="rounded-lg overflow-hidden mb-3">
+                <div className="bg-white p-3 text-center shadow-sm">
+                  <p className="text-lg font-semibold text-gray-800">
+                    {betterFormattedQuestion}
+                  </p>
+                </div>
+                
+                {betterFormattedAnswer && (
+                  <div className="bg-gray-50 p-3 text-center">
+                    <p className="text-md text-gray-600">
+                      {betterFormattedAnswer}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          
+          {/* Progress indicator */}
+          <div className="w-full mt-2">
+            <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-blue-500 rounded-full transition-all duration-300"
+                style={{ width: `${((slideIndex + 1) / 116) * 100}%` }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Start</span>
+              <span>Unit {unitNumber}</span>
+              <span>End</span>
+            </div>
+          </div>
         </div>
       </div>
       
