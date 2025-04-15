@@ -122,6 +122,9 @@ export default function SlickContentViewer() {
     enabled: Boolean(bookPath && unitPath)
   });
   
+  // Get toast for notifications
+  const { toast } = useToast();
+  
   // Save order mutation
   const { mutate: saveOrder, isPending: isSaving } = useMutation({
     mutationFn: async (materialsToSave: S3Material[]) => {
