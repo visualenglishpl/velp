@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical, Save } from 'lucide-react';
+import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical, Save, Pencil, Type, Square, ArrowUpRight, Eraser } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
@@ -59,6 +59,29 @@ export default function SlickContentViewer() {
   // State for the viewer
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  
+  // State for slide annotations (when in edit mode)
+  const [annotations, setAnnotations] = useState<Record<number, Array<{
+    id: string;
+    type: 'text' | 'highlight' | 'arrow';
+    content?: string;
+    position: { x: number; y: number };
+    size?: { width: number; height: number };
+    color: string;
+    slideId: number;
+  }>>>({});
+  
+  // Current annotation being created
+  const [activeAnnotation, setActiveAnnotation] = useState<{
+    type: 'text' | 'highlight' | 'arrow';
+    position: { x: number; y: number } | null;
+    content?: string;
+    color: string;
+  } | null>(null);
+  
+  // State for saving annotations
+  const [isSavingAnnotations, setIsSavingAnnotations] = useState(false);
   
   // State for drag and drop
   const [materials, setMaterials] = useState<S3Material[]>([]);
@@ -538,6 +561,79 @@ export default function SlickContentViewer() {
               )}
               Save Order
             </Button>
+            
+            <Button
+              variant={isEditMode ? "secondary" : "outline"}
+              size="sm"
+              onClick={() => setIsEditMode(!isEditMode)}
+              className={isEditMode ? "bg-orange-100 hover:bg-orange-200" : ""}
+            >
+              <Pencil className="mr-2 h-4 w-4" />
+              {isEditMode ? "Exit Edit Mode" : "Edit Slides"}
+            </Button>
+            
+            {isEditMode && (
+              <div className="flex items-center gap-1 border rounded-md p-1 bg-white">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0"
+                  onClick={() => setActiveAnnotation({
+                    type: 'text',
+                    position: null,
+                    content: 'New text',
+                    color: '#000000'
+                  })}
+                  title="Add Text"
+                >
+                  <Type className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0"
+                  onClick={() => setActiveAnnotation({
+                    type: 'highlight',
+                    position: null,
+                    color: '#ffff00'
+                  })}
+                  title="Add Highlight"
+                >
+                  <Square className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0"
+                  onClick={() => setActiveAnnotation({
+                    type: 'arrow',
+                    position: null,
+                    color: '#ff0000'
+                  })}
+                  title="Add Arrow"
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                </Button>
+                <div className="h-5 border-l mx-1"></div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0"
+                  onClick={() => {
+                    // Clear all annotations for current slide
+                    const newAnnotations = { ...annotations };
+                    const currentMaterialId = materials[currentIndex]?.id;
+                    if (currentMaterialId) {
+                      newAnnotations[currentMaterialId] = [];
+                      setAnnotations(newAnnotations);
+                    }
+                  }}
+                  title="Clear Annotations"
+                >
+                  <Eraser className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
           </div>
         )}
         
