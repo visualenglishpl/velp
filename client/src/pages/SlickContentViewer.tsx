@@ -766,13 +766,15 @@ export default function SlickContentViewer() {
               const shouldBlur = !hasPaidAccess && index >= freeSlideLimit;
               
               return (
-                <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-between relative px-3">
-                  {/* Question-Answer section above image */}
-                  <QuestionAnswerDisplay material={material} isEditMode={isEditMode} />
+                <div key={index} className="outline-none h-[55vh] w-full flex flex-col items-center justify-center relative px-3">
+                  <div className="flex flex-col w-full">
+                    {/* Question-Answer section above image */}
+                    <QuestionAnswerDisplay material={material} isEditMode={isEditMode} />
+                  </div>
                   
-                  {/* Main image - Only show image if it's not a PDF or SWF */}
+                  {/* Main image container - centered in available space */}
                   <div 
-                    className={`w-full flex-1 flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
+                    className={`w-full flex justify-center items-center my-auto py-4 ${shouldBlur ? 'filter blur-md' : ''} relative`}
                     onClick={(e) => {
                       // Only handle clicks in edit mode and when user is admin
                       if (isEditMode && user && user.username === 'admin' && activeAnnotation && index === currentIndex) {
