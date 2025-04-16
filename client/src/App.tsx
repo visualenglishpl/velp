@@ -110,7 +110,12 @@ function Router() {
             return <AdminDashboard />;
           }
           
-          return <Redirect to="/auth" />;
+          // Manually navigate if not admin
+          const [, navigate] = useLocation();
+          useEffect(() => {
+            navigate("/auth");
+          }, [navigate]);
+          return null;
         }}
       </Route>
       
