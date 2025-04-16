@@ -72,7 +72,9 @@ function Router() {
       <Route path="/books" component={BooksPage} />
       
       {/* Units Page for a Book */}
-      <Route path="/book/:bookId/units" component={UnitsPage} />
+      <Route path="/book/:bookId/units">
+        {(params) => <UnitsPage bookIdParam={params.bookId} />}
+      </Route>
       
       {/* Admin Dashboard - Protected Admin Route */}
       <Route path="/admin">
@@ -104,8 +106,13 @@ function Router() {
         {(params) => {
           const bookId = params.bookId;
           console.log(`Direct book route handler for bookId: ${bookId}`);
+          
+          // Handle both numeric IDs and full paths like "book3"
+          const processedBookId = bookId.startsWith('book') ? bookId : `book${bookId}`;
+          console.log(`Processed book ID: ${processedBookId}`);
+          
           return <ProtectedRoute component={() => {
-            const BookPageWithParams = () => <UnitsPage bookIdParam={bookId} />;
+            const BookPageWithParams = () => <UnitsPage bookIdParam={processedBookId} />;
             return <BookPageWithParams />;
           }} />;
         }}

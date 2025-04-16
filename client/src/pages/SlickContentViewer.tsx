@@ -462,30 +462,54 @@ export default function SlickContentViewer() {
         {...listeners}
       >
         {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
-          <img 
-            src={material.path} 
-            alt={`Thumbnail ${index + 1}`}
-            className="h-full w-full object-cover"
-            loading="lazy"
-            onError={(e) => {
-              console.error(`Error loading thumbnail at ${material.path}`);
-              // Replace with an icon or placeholder based on file type
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.parentElement?.classList.add('flex', 'items-center', 'justify-center', 'bg-gray-100');
-            }}
-          />
+          <>
+            <img 
+              src={material.path} 
+              alt={`Thumbnail ${index + 1}`}
+              className="h-full w-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                console.error(`Error loading thumbnail at ${material.path}`);
+                // Replace with an icon or placeholder based on file type
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.parentElement?.classList.add('flex', 'items-center', 'justify-center', 'bg-gray-100');
+              }}
+            />
+            {/* File extension badge */}
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              {material.path.toLowerCase().endsWith('.jpg') ? 'JPG' : 
+               material.path.toLowerCase().endsWith('.png') ? 'PNG' : 
+               material.path.toLowerCase().endsWith('.gif') ? 'GIF' : 'IMG'}
+            </div>
+          </>
         ) : material.contentType === 'PDF' || material.path.endsWith('.pdf') ? (
-          <div className="flex h-full w-full items-center justify-center bg-blue-50 text-blue-700">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-          </div>
+          <>
+            <div className="flex h-full w-full items-center justify-center bg-blue-50 text-blue-700">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              PDF
+            </div>
+          </>
         ) : material.path.endsWith('.swf') ? (
-          <div className="flex h-full w-full items-center justify-center bg-yellow-50 text-yellow-700">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-          </div>
+          <>
+            <div className="flex h-full w-full items-center justify-center bg-yellow-50 text-yellow-700">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              SWF
+            </div>
+          </>
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7"/></svg>
-          </div>
+          <>
+            <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7"/></svg>
+            </div>
+            {/* Extract extension from path if possible */}
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              {material.path.split('.').pop()?.toUpperCase() || 'FILE'}
+            </div>
+          </>
         )}
         <div className="pointer-events-none absolute inset-0 flex items-start justify-end p-1">
           <GripVertical className="h-3 w-3 text-gray-400 opacity-50 group-hover:opacity-100" />
