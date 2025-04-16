@@ -111,10 +111,8 @@ function Router() {
           const processedBookId = bookId.startsWith('book') ? bookId : `book${bookId}`;
           console.log(`Processed book ID: ${processedBookId}`);
           
-          return <ProtectedRoute component={() => {
-            const BookPageWithParams = () => <UnitsPage bookIdParam={processedBookId} />;
-            return <BookPageWithParams />;
-          }} />;
+          // Directly use UnitsPage with the bookId parameter
+          return <UnitsPage bookIdParam={processedBookId} />;
         }}
       </Route>
       
