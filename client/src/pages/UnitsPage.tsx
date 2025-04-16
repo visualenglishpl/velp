@@ -19,8 +19,21 @@ type UnitInfo = {
 };
 
 export default function UnitsPage() {
-  const [, params] = useRoute('/book/:bookId/units');
-  const bookId = params?.bookId || '';
+  // Match both '/book/:bookId/units' and '/book:bookId' patterns
+  const [matchUnits, paramsUnits] = useRoute('/book/:bookId/units');
+  const [matchDirect, paramsDirect] = useRoute('/book:bookId');
+  
+  // Determine which route matched and extract the bookId
+  let bookId = '';
+  if (matchUnits) {
+    bookId = paramsUnits?.bookId || '';
+    console.log("Units page matched standard route with bookId:", bookId);
+  } else if (matchDirect) {
+    bookId = paramsDirect?.bookId || '';
+    console.log("Units page matched direct book route with bookId:", bookId);
+  } else {
+    console.log("Units page couldn't match any route pattern");
+  }
   const { toast } = useToast();
   
   // Determine if the user has purchased access (in a real app, this would come from authentication/subscription data)

@@ -71,6 +71,18 @@ function Router() {
       {/* Books Catalog Page */}
       <Route path="/books" component={BooksPage} />
       
+      {/* Direct Book Path - Redirect to Units Page */}
+      <Route path="/book:bookId">
+        {(params) => {
+          // Only match direct book paths (e.g., /book4)
+          if (!params.bookId.includes('/')) {
+            console.log("Navigating to book units:", params.bookId);
+            return <UnitsPage />;
+          }
+          return <NotFound />;
+        }}
+      </Route>
+      
       {/* Units Page for a Book */}
       <Route path="/book/:bookId/units" component={UnitsPage} />
       
