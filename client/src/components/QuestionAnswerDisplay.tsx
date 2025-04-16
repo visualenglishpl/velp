@@ -66,6 +66,91 @@ const formatText = {
     }
     
     return '';
+  },
+  
+  // Extract question and answer directly from filename
+  extractQuestionsFromFilename: (filename: string): { question: string, answer: string } | null => {
+    if (!filename) return null;
+    
+    const lowerFilename = filename.toLowerCase();
+    // Try to extract format like "What is it - it is a pencil"
+    const dashMatch = filename.match(/([^-]+)\s*[\–\-]\s*(.+?)(\.jpg|\.png|\.gif|$)/i);
+    
+    if (dashMatch) {
+      const beforeDash = dashMatch[1].trim();
+      const afterDash = dashMatch[2].trim();
+      
+      // Check if it looks like a question and answer
+      if (
+        beforeDash.match(/^(what|where|how|why|when|who|which|is|are|do|does|can|could|has|have)/i) && 
+        afterDash.length > 0
+      ) {
+        // Format as proper question
+        let question = beforeDash;
+        if (!question.endsWith('?')) {
+          question += '?';
+        }
+        
+        // Capitalize first letter
+        question = question.charAt(0).toUpperCase() + question.slice(1);
+        
+        // Format answer with proper capitalization
+        let answer = afterDash.charAt(0).toUpperCase() + afterDash.slice(1);
+        if (!answer.endsWith('.')) {
+          answer += '.';
+        }
+        
+        return {
+          question,
+          answer
+        };
+      }
+    }
+    
+    // For files with common question patterns without dashes
+    // Examples: "Do You Have A Pen in Your Pencil Case.gif"
+    
+    const questionPatterns = [
+      { regex: /^do you have (.+?)(\.|\?|$)/i, answerPositive: "Yes, I have $1.", answerNegative: "No, I don't have $1." },
+      { regex: /^does (he|she) have (.+?)(\.|\?|$)/i, answerPositive: "Yes, $1 has $2.", answerNegative: "No, $1 doesn't have $2." },
+      { regex: /^is (it|he|she|this) (.+?)(\.|\?|$)/i, answerPositive: "Yes, $1 is $2.", answerNegative: "No, $1 isn't $2." },
+      { regex: /^are (you|they|these) (.+?)(\.|\?|$)/i, answerPositive: "Yes, $1 are $2.", answerNegative: "No, $1 aren't $2." },
+      { regex: /^what is (.+?)(\.|\?|$)/i, answer: "It is $1." },
+      { regex: /^what are (.+?)(\.|\?|$)/i, answer: "They are $1." },
+      { regex: /^where is (.+?)(\.|\?|$)/i, answer: "It is in $1." },
+      { regex: /^which (.+?) is (.+?)(\.|\?|$)/i, answer: "It is $2." }
+    ];
+    
+    for (const pattern of questionPatterns) {
+      const match = lowerFilename.match(pattern.regex);
+      if (match) {
+        // Format as proper question
+        let question = match[0];
+        if (!question.endsWith('?')) {
+          question = question.replace(/\..*$/, '?');
+        }
+        question = question.charAt(0).toUpperCase() + question.slice(1);
+        
+        let answer;
+        if ('answer' in pattern && pattern.answer) {
+          // For single-answer patterns like "what is"
+          answer = pattern.answer.replace(/\$(\d+)/g, (_, n) => match[parseInt(n)]);
+        } else if ('answerPositive' in pattern && pattern.answerPositive) {
+          // For yes/no questions
+          answer = pattern.answerPositive.replace(/\$(\d+)/g, (_, n) => match[parseInt(n)]);
+        } else {
+          // Fallback
+          answer = "It is " + match[0] + ".";
+        }
+        
+        return {
+          question,
+          answer
+        };
+      }
+    }
+    
+    return null;
   }
 };
 
@@ -310,6 +395,19 @@ function getQuestionAnswerFromData(material: any): QAData {
         hasData: true 
       };
     }
+  }
+  
+  // Try to extract question and answer directly from the filename using dash patterns
+  // Examples: "What is it – It is a pencil.gif", "Where is this flag from – It is from Poland.jpg"
+  const extractedFromFilename = formatText.extractQuestionsFromFilename(content);
+  if (extractedFromFilename) {
+    console.log("Extracted question/answer from filename:", extractedFromFilename);
+    return {
+      country: formatText.determineCountry(content),
+      question: extractedFromFilename.question,
+      answer: extractedFromFilename.answer,
+      hasData: true
+    };
   }
   
   // Try to extract question directly from content/description
