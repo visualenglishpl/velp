@@ -806,7 +806,37 @@ export default function SlickContentViewer() {
                       }
                     }}
                   >
-                    {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
+                    {material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
+                      <div className="relative">
+                        <video 
+                          src={material.path}
+                          controls
+                          className={`h-auto max-h-[calc(55vh-100px)] w-auto max-w-full ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          onError={(e) => {
+                            console.error(`Error loading video at ${material.path}`, e);
+                          }}
+                          autoPlay={index === currentIndex}
+                          playsInline
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                        
+                        {/* Render annotations for this slide */}
+                        {isEditMode && index === currentIndex && annotations[material.id]?.map((annotation, i) => (
+                          <div 
+                            key={annotation.id}
+                            className="absolute pointer-events-auto"
+                            style={{ 
+                              left: `${annotation.position.x}px`, 
+                              top: `${annotation.position.y}px`,
+                              zIndex: 50 + i
+                            }}
+                          >
+                            {/* Annotation content here */}
+                          </div>
+                        ))}
+                      </div>
+                    ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
                       <div className="relative">
                         <img 
                           src={material.path}
