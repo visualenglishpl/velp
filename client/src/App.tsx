@@ -99,9 +99,9 @@ function Router() {
       {/* Units Page for a Book */}
       <Route path="/book/:bookId/units" component={UnitsPage} />
       
-      {/* Admin Dashboard - Protected Admin Route */}
+      {/* Admin Dashboard - Direct Rendering */}
       <Route path="/admin">
-        {() => <ProtectedRoute component={AdminDashboard} adminOnly={true} />}
+        <AdminDashboard />
       </Route>
       
       {/* Books Management - Protected Admin Route */}

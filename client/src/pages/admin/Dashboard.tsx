@@ -8,6 +8,9 @@ const AdminDashboard = () => {
   const { user, logoutMutation } = useAuth();
   const [, navigate] = useLocation();
 
+  // Debug Admin Dashboard rendering
+  console.log("Admin Dashboard rendering, user:", user);
+
   // User auth check moved to useEffect to prevent constant redirects
   useEffect(() => {
     if (!user && !logoutMutation.isPending) {
