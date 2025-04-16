@@ -130,6 +130,80 @@ function getQuestionAnswerFromData(material: any): QAData {
     }
   }
   
+  // Callan-style Q&A helper function - builds full sentence answers based on question format
+  const formatCallanAnswer = (question: string, shortAnswer: string): string => {
+    // Standardize question for matching
+    const q = question.trim().toLowerCase();
+    
+    // Handle Yes/No questions with Callan-style full answers
+    if (q.startsWith('do you')) {
+      // Special case for dog question
+      if (q.includes('dog')) {
+        if (shortAnswer.startsWith('Yes')) return "Yes, I do. I have a dog.";
+        if (shortAnswer.startsWith('No')) return "No, I don't. I don't have a dog.";
+      }
+      
+      if (shortAnswer.startsWith('Yes')) return `Yes, I do${shortAnswer.slice(4)}`;
+      if (shortAnswer.startsWith('No')) return `No, I don't${shortAnswer.slice(3)}`;
+    }
+    
+    if (q.startsWith('does he')) {
+      if (shortAnswer.startsWith('Yes')) return `Yes, he does${shortAnswer.slice(4)}`;
+      if (shortAnswer.startsWith('No')) return `No, he doesn't${shortAnswer.slice(3)}`;
+    }
+    
+    if (q.startsWith('does she')) {
+      if (shortAnswer.startsWith('Yes')) return `Yes, she does${shortAnswer.slice(4)}`;
+      if (shortAnswer.startsWith('No')) return `No, she doesn't${shortAnswer.slice(3)}`;
+    }
+    
+    if (q.startsWith('can you')) {
+      if (shortAnswer.startsWith('Yes')) return `Yes, I can${shortAnswer.slice(4)}`;
+      if (shortAnswer.startsWith('No')) return `No, I can't${shortAnswer.slice(3)}`;
+    }
+    
+    if (q.startsWith('is it')) {
+      if (shortAnswer.startsWith('Yes')) return `Yes, it is${shortAnswer.slice(4)}`;
+      if (shortAnswer.startsWith('No')) return `No, it isn't${shortAnswer.slice(3)}`;
+    }
+    
+    if (q.startsWith('are you')) {
+      if (shortAnswer.startsWith('Yes')) return `Yes, I am${shortAnswer.slice(4)}`;
+      if (shortAnswer.startsWith('No')) return `No, I'm not${shortAnswer.slice(3)}`;
+    }
+    
+    if (q.startsWith('have you')) {
+      if (shortAnswer.startsWith('Yes')) return `Yes, I have${shortAnswer.slice(4)}`;
+      if (shortAnswer.startsWith('No')) return `No, I haven't${shortAnswer.slice(3)}`;
+    }
+    
+    if (q.startsWith('did you')) {
+      if (shortAnswer.startsWith('Yes')) return `Yes, I did. I did it yesterday.`;
+      if (shortAnswer.startsWith('No')) return `No, I didn't. I didn't do it.`;
+    }
+    
+    // Handle "what do you like" question
+    if (q.startsWith('what do you like')) {
+      return `I like ${shortAnswer || 'books, sports, and music'}. I especially enjoy reading.`;
+    }
+    
+    // What/Where/Why/How questions with proper sentence structure
+    if (q.startsWith('what') && !shortAnswer.includes("It is") && !shortAnswer.includes("They are")) {
+      if (!shortAnswer.includes(" is ") && !shortAnswer.includes(" are ")) {
+        return shortAnswer.charAt(0).toUpperCase() + shortAnswer.slice(1);
+      }
+    }
+    
+    if (q.startsWith('where') && !shortAnswer.includes("It is")) {
+      if (!shortAnswer.includes(" is ")) {
+        return `It is in ${shortAnswer}`;
+      }
+    }
+    
+    // Return the original answer if no special formatting applies
+    return shortAnswer;
+  };
+  
   // Map of code patterns to exact questions and answers
   const qaDatabase: QADatabaseEntry[] = [
     // POLAND
@@ -460,9 +534,89 @@ function getQuestionAnswerFromData(material: any): QAData {
   };
 }
 
+// Helper function to format Callan-style answers at the component level
+function formatFullAnswer(question: string, answer: string): string {
+  // Standardize question for matching
+  const q = question.trim().toLowerCase();
+  
+  // Handle Yes/No questions with Callan-style full answers
+  if (q.startsWith('do you')) {
+    // Special case for dog question
+    if (q.includes('dog')) {
+      if (answer.startsWith('Yes')) return "Yes, I do. I have a dog.";
+      if (answer.startsWith('No')) return "No, I don't. I don't have a dog.";
+    }
+    
+    if (answer.startsWith('Yes')) return `Yes, I do${answer.slice(4)}`;
+    if (answer.startsWith('No')) return `No, I don't${answer.slice(3)}`;
+  }
+  
+  if (q.startsWith('does he')) {
+    if (answer.startsWith('Yes')) return `Yes, he does${answer.slice(4)}`;
+    if (answer.startsWith('No')) return `No, he doesn't${answer.slice(3)}`;
+  }
+  
+  if (q.startsWith('does she')) {
+    if (answer.startsWith('Yes')) return `Yes, she does${answer.slice(4)}`;
+    if (answer.startsWith('No')) return `No, she doesn't${answer.slice(3)}`;
+  }
+  
+  if (q.startsWith('can you')) {
+    if (answer.startsWith('Yes')) return `Yes, I can${answer.slice(4)}`;
+    if (answer.startsWith('No')) return `No, I can't${answer.slice(3)}`;
+  }
+  
+  if (q.startsWith('is it')) {
+    if (answer.startsWith('Yes')) return `Yes, it is${answer.slice(4)}`;
+    if (answer.startsWith('No')) return `No, it isn't${answer.slice(3)}`;
+  }
+  
+  if (q.startsWith('are you')) {
+    if (answer.startsWith('Yes')) return `Yes, I am${answer.slice(4)}`;
+    if (answer.startsWith('No')) return `No, I'm not${answer.slice(3)}`;
+  }
+  
+  if (q.startsWith('have you')) {
+    if (answer.startsWith('Yes')) return `Yes, I have${answer.slice(4)}`;
+    if (answer.startsWith('No')) return `No, I haven't${answer.slice(3)}`;
+  }
+  
+  if (q.startsWith('did you')) {
+    if (answer.startsWith('Yes')) return `Yes, I did. I did it yesterday.`;
+    if (answer.startsWith('No')) return `No, I didn't. I didn't do it.`;
+  }
+  
+  // Handle "what do you like" question
+  if (q.startsWith('what do you like')) {
+    return `I like ${answer || 'books, sports, and music'}. I especially enjoy reading.`;
+  }
+  
+  // What/Where/Why/How questions with proper sentence structure
+  if (q.startsWith('what') && !answer.includes("It is") && !answer.includes("They are")) {
+    if (!answer.includes(" is ") && !answer.includes(" are ")) {
+      return answer.charAt(0).toUpperCase() + answer.slice(1);
+    }
+  }
+  
+  if (q.startsWith('where') && !answer.includes("It is")) {
+    if (!answer.includes(" is ")) {
+      return `It is in ${answer}`;
+    }
+  }
+  
+  // Return the original answer if no special formatting applies
+  return answer;
+}
+
 function QuestionAnswerDisplay({ material, isEditMode }: QuestionAnswerDisplayProps) {
   // Get question and answer data
-  const qaData = React.useMemo(() => getQuestionAnswerFromData(material), [material]);
+  const qaData = React.useMemo(() => {
+    const data = getQuestionAnswerFromData(material);
+    // Apply Callan-style formatting to all answers
+    data.answer = formatFullAnswer(data.question, data.answer);
+    return data;
+  }, [material]);
+  
   const [editedQuestion, setEditedQuestion] = React.useState<string>(qaData.question);
   const [editedAnswer, setEditedAnswer] = React.useState<string>(qaData.answer);
   const [editedCountry, setEditedCountry] = React.useState<string>(qaData.country);
