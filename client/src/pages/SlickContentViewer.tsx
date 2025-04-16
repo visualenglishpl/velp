@@ -766,16 +766,17 @@ export default function SlickContentViewer() {
               const shouldBlur = !hasPaidAccess && index >= freeSlideLimit;
               
               return (
-                <div key={index} className="outline-none h-[55vh] w-full flex flex-col items-center justify-center relative px-3">
-                  <div className="flex flex-col w-full">
-                    {/* Question-Answer section above image */}
+                <div key={index} className="outline-none h-[55vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
+                  {/* Top section with question-answer */}
+                  <div className="w-full mb-2">
                     <QuestionAnswerDisplay material={material} isEditMode={isEditMode} />
                   </div>
                   
-                  {/* Main image container - centered in available space */}
-                  <div 
-                    className={`w-full flex justify-center items-center my-auto py-4 ${shouldBlur ? 'filter blur-md' : ''} relative`}
-                    onClick={(e) => {
+                  {/* Middle section with centered image - symmetrical layout */}
+                  <div className="flex items-center justify-center">
+                    <div 
+                      className={`w-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
+                      onClick={(e) => {
                       // Only handle clicks in edit mode and when user is admin
                       if (isEditMode && user && user.username === 'admin' && activeAnnotation && index === currentIndex) {
                         // Get click position relative to the container
@@ -936,6 +937,7 @@ export default function SlickContentViewer() {
                         <p className="text-xs text-center mt-1">This content type cannot be displayed</p>
                       </div>
                     )}
+                  </div>
                   </div>
                   
                   {/* Edit mode indicator */}
