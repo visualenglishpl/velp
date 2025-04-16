@@ -42,12 +42,12 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
 
       {/* Main Content */}
-      <div>
+      <div className="py-10">
         {/* Main Content Area */}
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold mb-2">Welcome, Admin</h2>
           <p className="text-gray-600 mb-8">Manage all aspects of the Visual English Learning Platform</p>
 

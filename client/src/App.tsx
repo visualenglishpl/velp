@@ -106,15 +106,23 @@ function Router() {
           const { user } = useAuth();
           console.log("Admin route, user:", user);
           
-          if (user && user.role === "admin") {
-            return <AdminDashboard />;
+          if (!user) {
+            console.log("No user found, redirecting to auth");
+            const [, navigate] = useLocation();
+            setTimeout(() => navigate("/auth"), 0);
+            return <div className="min-h-screen flex items-center justify-center bg-white">
+              <div className="animate-spin w-10 h-10 border-4 border-primary border-t-transparent rounded-full" />
+            </div>;
           }
           
-          // Manually navigate if not admin
-          const [, navigate] = useLocation();
-          // Use window.location to redirect instead of useEffect
-          setTimeout(() => navigate("/auth"), 0);
-          return null;
+          if (user.role !== "admin") {
+            console.log("Non-admin user, redirecting to homepage");
+            const [, navigate] = useLocation();
+            setTimeout(() => navigate("/"), 0);
+            return null;
+          }
+          
+          return <AdminDashboard />;
         }}
       </Route>
       
