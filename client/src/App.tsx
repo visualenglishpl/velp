@@ -99,6 +99,15 @@ function Router() {
         {() => <ProtectedRoute component={SlickContentViewer} />}
       </Route>
       
+      {/* Direct book route (e.g., /book4) - redirects to the units page */}
+      <Route path="/book:bookId">
+        {(params) => {
+          const bookId = params.bookId;
+          console.log(`Direct book route handler for bookId: ${bookId}`);
+          return <ProtectedRoute component={() => <UnitsPage bookIdParam={bookId} />} />;
+        }}
+      </Route>
+      
       {/* Fallback for any other book/unit pattern */}
       <Route path="/:bookPath/:unitPath">
         {(params) => {
