@@ -83,6 +83,19 @@ function Router() {
         }}
       </Route>
       
+      {/* Legacy book path format support */}
+      <Route path="/:bookPath">
+        {(params) => {
+          // Check if path is a book identifier (book1, book2, etc.)
+          if (params.bookPath.match(/^book\d+[a-c]?$/i)) {
+            console.log("Legacy book path detected:", params.bookPath);
+            return <UnitsPage />;
+          }
+          // Not a book path, continue to next route
+          return null;
+        }}
+      </Route>
+      
       {/* Units Page for a Book */}
       <Route path="/book/:bookId/units" component={UnitsPage} />
       
