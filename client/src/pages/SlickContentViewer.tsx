@@ -482,6 +482,16 @@ export default function SlickContentViewer() {
                material.path.toLowerCase().endsWith('.gif') ? 'GIF' : 'IMG'}
             </div>
           </>
+        ) : material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
+          <>
+            <div className="relative h-full w-full bg-gray-800 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </div>
+            {/* File extension badge */}
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              MP4
+            </div>
+          </>
         ) : material.contentType === 'PDF' || material.path.endsWith('.pdf') ? (
           <>
             <div className="flex h-full w-full items-center justify-center bg-blue-50 text-blue-700">
