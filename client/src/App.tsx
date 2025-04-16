@@ -99,9 +99,19 @@ function Router() {
       {/* Units Page for a Book */}
       <Route path="/book/:bookId/units" component={UnitsPage} />
       
-      {/* Admin Dashboard - Direct Rendering */}
+      {/* Admin Dashboard - Protected Admin Route */}
       <Route path="/admin">
-        <AdminDashboard />
+        {() => {
+          console.log("Admin dashboard route rendering");
+          const { user } = useAuth();
+          console.log("Admin route, user:", user);
+          
+          if (user && user.role === "admin") {
+            return <AdminDashboard />;
+          }
+          
+          return <Redirect to="/auth" />;
+        }}
       </Route>
       
       {/* Books Management - Protected Admin Route */}
