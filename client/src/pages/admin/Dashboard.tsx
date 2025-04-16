@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag } from "lucide-react";
+import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const AdminDashboard = () => {
   const { user, logoutMutation } = useAuth();
@@ -34,6 +35,10 @@ const AdminDashboard = () => {
   
   const navigateToShopManagement = () => {
     navigate("/admin/shop");
+  };
+  
+  const navigateToContentOrganizer = () => {
+    navigate("/admin/content-organizer?bookId=1&unitNumber=1");
   };
 
   return (
@@ -95,65 +100,80 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            {/* Content Management Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-purple-50 rounded-md mr-4">
-                  <BookOpen className="h-6 w-6 text-purple-600" />
+            {/* Books Management Card */}
+            <Card className="shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <BookOpen className="h-5 w-5 text-purple-600" />
+                  <CardTitle>Books Management</CardTitle>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold">Books</h3>
-                  <p className="text-sm text-gray-500">Organize books, units, and learning materials</p>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
+                <CardDescription>Organize books, units, and materials</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-500">
+                  Create, edit, and organize books, units, and teaching materials. Manage your educational content collection.
+                </p>
+              </CardContent>
+              <CardFooter className="bg-purple-50 text-purple-700 text-sm pt-2 pb-3 px-6 flex justify-between items-center">
+                <span>View Books</span>
                 <Button 
-                  className="w-full py-2 text-white hover:bg-opacity-90 border-0"
-                  style={{ backgroundColor: '#9333ea' }} // Bright purple color to match screenshot
+                  className="bg-purple-600 hover:bg-purple-700 text-white"
                   onClick={navigateToBooksAndContent}
                 >
-                  Books
+                  Manage Books
                 </Button>
-              </div>
-            </div>
+              </CardFooter>
+            </Card>
 
             {/* Shop Management Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-rose-50 rounded-md mr-4">
-                  <ShoppingBag className="h-6 w-6 text-rose-600" />
+            <Card className="shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <ShoppingBag className="h-5 w-5 text-rose-600" />
+                  <CardTitle>Shop Management</CardTitle>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold">Shop Management</h3>
-                  <p className="text-sm text-gray-500">Manage products, subscriptions, and printed books</p>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
+                <CardDescription>Manage products and subscriptions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-500">
+                  Manage subscription plans, printed book orders, and configure pricing for your educational products.
+                </p>
+              </CardContent>
+              <CardFooter className="bg-rose-50 text-rose-700 text-sm pt-2 pb-3 px-6 flex justify-between items-center">
+                <span>View Shop</span>
                 <Button 
-                  className="w-full py-2 text-white hover:bg-opacity-90 border-0"
-                  style={{ backgroundColor: '#e11d48' }} 
+                  className="bg-rose-600 hover:bg-rose-700 text-white"
                   onClick={navigateToShopManagement}
                 >
                   Manage Shop
                 </Button>
-              </div>
-            </div>
+              </CardFooter>
+            </Card>
             
-            {/* System Settings Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-gray-50 rounded-md mr-4">
-                  <Settings className="h-6 w-6 text-gray-600" />
+            {/* Content Organizer Card */}
+            <Card className="shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <LayoutGrid className="h-5 w-5 text-blue-600" />
+                  <CardTitle>Content Organizer</CardTitle>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold">System Settings</h3>
-                  <p className="text-sm text-gray-500">Configure system preferences and global settings</p>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button className="w-full py-2 text-white hover:bg-opacity-90 border-0" style={{ backgroundColor: '#474e59' }}>System Settings</Button>
-              </div>
-            </div>
+                <CardDescription>Arrange and organize slides</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-500">
+                  Rearrange slides, manage questions and answers, and organize the flow of content for each unit.
+                </p>
+              </CardContent>
+              <CardFooter className="bg-blue-50 text-blue-700 text-sm pt-2 pb-3 px-6 flex justify-between items-center">
+                <span>Edit Content</span>
+                <Button 
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  onClick={navigateToContentOrganizer}
+                >
+                  Open Organizer
+                </Button>
+              </CardFooter>
+            </Card>
           </div>
         </div>
       </div>
