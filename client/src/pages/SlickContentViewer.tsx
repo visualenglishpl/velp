@@ -766,13 +766,13 @@ export default function SlickContentViewer() {
               const shouldBlur = !hasPaidAccess && index >= freeSlideLimit;
               
               return (
-                <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
+                <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-between relative px-3">
                   {/* Question-Answer section above image */}
                   <QuestionAnswerDisplay material={material} isEditMode={isEditMode} />
                   
                   {/* Main image - Only show image if it's not a PDF or SWF */}
                   <div 
-                    className={`w-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
+                    className={`w-full flex-1 flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
                     onClick={(e) => {
                       // Only handle clicks in edit mode and when user is admin
                       if (isEditMode && user && user.username === 'admin' && activeAnnotation && index === currentIndex) {
@@ -811,7 +811,7 @@ export default function SlickContentViewer() {
                         <video 
                           src={material.path}
                           controls
-                          className={`h-auto max-h-[calc(55vh-100px)] w-auto max-w-full ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          className={`h-auto max-h-[calc(40vh)] w-auto max-w-full mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
                           onError={(e) => {
                             console.error(`Error loading video at ${material.path}`, e);
                           }}
@@ -826,7 +826,7 @@ export default function SlickContentViewer() {
                         <img 
                           src={material.path}
                           alt={`Learning material slide ${index + 1}`}
-                          className={`h-auto max-h-[calc(55vh-100px)] w-auto max-w-full object-contain ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          className={`h-auto max-h-[calc(40vh)] w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
                           loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
                           onError={(e) => {
                             console.error(`Error loading image at ${material.path}`, e);
