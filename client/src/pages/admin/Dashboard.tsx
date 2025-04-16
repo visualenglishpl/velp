@@ -1,18 +1,19 @@
 import { useLocation } from "wouter";
-import { FileText, Users, School, BookOpen, ShoppingBag, LayoutGrid } from "lucide-react";
+import { FileText, Users, School, BookOpen, ShoppingBag, LayoutGrid, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
+  const { user, logoutMutation } = useAuth();
   const [, navigate] = useLocation();
 
-  console.log("Admin Dashboard rendering simplified version");
-  // Removed authentication checks to simplify rendering
+  console.log("Admin Dashboard rendering - user:", user);
 
   const handleLogout = () => {
-    // Simplified without mutation
+    if (logoutMutation) {
+      logoutMutation.mutate();
+    }
     navigate("/auth");
   };
 
@@ -30,6 +31,23 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Admin Header with Logout */}
+      <div className="bg-gray-100 border-b border-gray-200">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Admin Panel</h1>
+            <p className="text-sm text-gray-600">Visual English Learning Platform</p>
+          </div>
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2" 
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
+        </div>
+      </div>
 
       {/* Main Content */}
       <div className="py-10">
