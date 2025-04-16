@@ -837,6 +837,11 @@ const BooksManagementPage = () => {
     setIsBookDialogOpen(true);
   };
   
+  // Direct access to content organizer
+  const navigateToContentOrganizer = (bookId: string, unitNumber: number) => {
+    navigate(`/admin/content-organizer?bookId=${bookId}&unitNumber=${unitNumber}`);
+  };
+  
   const handleEditUnit = (unit: Unit) => {
     setEditingUnit(unit);
     setIsUnitDialogOpen(true);
@@ -1162,7 +1167,12 @@ const BooksManagementPage = () => {
                         View Unit <span className="ml-1">→</span>
                       </Button>
                       
-
+                      <Button 
+                        onClick={() => navigateToContentOrganizer(currentBook?.bookId!, unit.unitNumber)}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                      >
+                        Content Organizer <span className="ml-1">→</span>
+                      </Button>
                     </div>
                   </div>
                 ))}

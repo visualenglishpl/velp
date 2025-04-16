@@ -112,9 +112,8 @@ function Router() {
           
           // Manually navigate if not admin
           const [, navigate] = useLocation();
-          useEffect(() => {
-            navigate("/auth");
-          }, [navigate]);
+          // Use window.location to redirect instead of useEffect
+          setTimeout(() => navigate("/auth"), 0);
           return null;
         }}
       </Route>
