@@ -71,36 +71,13 @@ function Router() {
       {/* Books Catalog Page */}
       <Route path="/books" component={BooksPage} />
       
-      {/* Direct Book Path - Redirect to Units Page */}
-      <Route path="/book:bookId">
-        {(params) => {
-          // Only match direct book paths (e.g., /book4)
-          if (!params.bookId.includes('/')) {
-            console.log("Navigating to book units:", params.bookId);
-            return <UnitsPage />;
-          }
-          return <NotFound />;
-        }}
-      </Route>
-      
-      {/* Legacy book path format support */}
-      <Route path="/:bookPath">
-        {(params) => {
-          // Check if path is a book identifier (book1, book2, etc.)
-          if (params.bookPath.match(/^book\d+[a-c]?$/i)) {
-            console.log("Legacy book path detected:", params.bookPath);
-            return <UnitsPage />;
-          }
-          // Not a book path, continue to next route
-          return null;
-        }}
-      </Route>
-      
       {/* Units Page for a Book */}
       <Route path="/book/:bookId/units" component={UnitsPage} />
       
-      {/* Admin Dashboard - Direct access for debugging */}
-      <Route path="/admin" component={AdminDashboard} />
+      {/* Admin Dashboard - Protected Admin Route */}
+      <Route path="/admin">
+        {() => <ProtectedRoute component={AdminDashboard} adminOnly={true} />}
+      </Route>
       
       {/* Books Management - Protected Admin Route */}
       <Route path="/admin/books">

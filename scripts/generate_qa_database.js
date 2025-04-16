@@ -12,111 +12,6 @@ import fs from 'fs';
 
 // Paste the text content here
 const INPUT_TEXT = `
-UNIT 1: NATIONALITIES
-(Organized by file number and topic)
-
-POLAND
-(01 R A) What country is this? → It is Poland.
-
-(01 R B) Where is this flag from? → It is from Poland.
-
-(01 R C) What colors are the Polish flag? → They are red and white.
-
-(01 R D) Where are these people from? → They are from Poland.
-
-(01 R F) What nationality are they? → They are Polish.
-
-(01 R I) What is the capital of Poland? → It is Warsaw.
-
-(01 R K) What language does she speak? → She speaks Polish.
-
-BRITAIN / UK
-(02 N A) Which countries are in Britain? → They are England, Scotland, and Wales.
-
-(02 N C) Where is this flag from? → It is from Britain.
-
-(02 N D) What nationality is he? → He is British.
-
-(02 N G) Who is Britain's leader? → He is King Charles.
-
-(02 N L) Where is this money from? → It is from the UK.
-
-NORTHERN IRELAND
-(03 G A) Which country is colored pink? → It is Northern Ireland.
-
-(03 G C) What is the capital of Northern Ireland? → It is Belfast.
-
-(03 G D) What nationality is he? → He is Northern Irish.
-
-SCOTLAND
-(04 L A) What country is this? → It is Scotland.
-
-(04 L B) Where is this flag from? → It is from Scotland.
-
-(04 L C) What is Scotland's capital? → It is Edinburgh.
-
-(04 L D) What nationality is he? → He is Scottish.
-
-(04 L I) Where is the Loch Ness Monster from? → It is from Scotland.
-
-ENGLAND
-(05 L A) What country is this? → It is England.
-
-(05 L B) Where is this flag from? → It is from England.
-
-(05 L C) What is England's capital? → It is London.
-
-(05 L D) What nationality is he? → He is English.
-
-(05 L E) Where is he from? → He is from England.
-
-(05 L F) Where are they from? → They are from England.
-
-(05 L G) Is an English breakfast big? → Yes, it is big.
-
-(05 L H) What type of food is it? → It is English food.
-
-WALES
-(06 H A) What country is this? → It is Wales.
-
-(06 H B) Where is this flag from? → It is from Wales.
-
-(06 H C) Describe the Welsh flag. → It is white, green, and has a dragon.
-
-(06 H D) What is Wales's capital? → It is Cardiff.
-
-(06 H F) What nationality is he? → He is Welsh.
-
-(06 H) What language is this? → It is Welsh.
-
-AUSTRALIA
-(07 L A) What country is this? → It is Australia.
-
-(07 L B) Where is this flag from? → It is from Australia.
-
-(07 L D) What nationality is he? → He is Australian.
-
-(07 L H) Name three Australian animals. → They are kangaroos, koalas, and wombats.
-
-USA
-(08 M A) What country is this? → It is the USA.
-
-(08 M B) Where is this flag from? → It is from the USA.
-
-(08 M C) How many stars are on the American flag? → There are 50 stars.
-
-(08 M E) What nationality is he? → He is American.
-
-(08 M K) What type of food is this? → It is American food.
-
-UK/British Isles Review
-(09 A B) Which countries are on the British flag? → They are England, Scotland, and Northern Ireland.
-
-(10 A B) What countries are in the British Isles? → They are the UK and Ireland.
-
-UNIT 2: GADGETS
-(Organized by file number and topic)
-
 MOBILE PHONES
 (01 A a) What is this? → It is a phone.
 
@@ -255,46 +150,18 @@ TV & REMOTE CONTROL
 function processText(text) {
   const lines = text.split('\n');
   let currentCategory = '';
-  let currentUnit = '';
   const entries = [];
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     
-    // Check if this is a unit heading (e.g., "UNIT 1: NATIONALITIES")
-    if (line.startsWith('UNIT')) {
-      currentUnit = line;
-      continue;
-    }
-    
     // Check if this is a category heading
     if (line && !line.startsWith('(') && !line.includes('→')) {
-      // Special case for "BRITAIN / UK" and similar categories
-      if (line !== '(Organized by file number and topic)') {
-        currentCategory = line;
-      }
+      currentCategory = line;
       continue;
     }
     
-    // Handle special case for codes with lowercase letter like "(6h)"
-    const specialMatch = line.match(/^\((\d+)([a-z])\)\s*(.*?)\s*→\s*(.*)/i);
-    if (specialMatch) {
-      const [_, num, letter, question, answer] = specialMatch;
-      // Format as "06 h" for consistent matching
-      const formattedNum = num.padStart(2, '0');
-      const code = `${formattedNum} ${letter.toLowerCase()}`;
-      
-      entries.push({
-        code,
-        category: currentCategory,
-        unit: currentUnit,
-        question: question.trim(),
-        answer: answer.trim()
-      });
-      continue;
-    }
-    
-    // Try to match a standard question-answer pair like "(01 R A)"
+    // Try to match a question-answer pair
     const match = line.match(/\((\d{2})\s*([A-Za-z])\s*([A-Za-z](?:a)?)\)\s*(.*?)\s*→\s*(.*)/);
     if (match) {
       const [_, num, letter1, letter2, question, answer] = match;
@@ -303,7 +170,6 @@ function processText(text) {
       entries.push({
         code,
         category: currentCategory,
-        unit: currentUnit,
         question: question.trim(),
         answer: answer.trim()
       });
@@ -316,31 +182,15 @@ function processText(text) {
 // Generate the code
 function generateCode(entries) {
   let output = '';
-  let currentUnit = '';
   let currentCategory = '';
   
   for (const entry of entries) {
-    // Add unit header if needed
-    if (entry.unit !== currentUnit) {
-      currentUnit = entry.unit;
-      output += `\n    // ${currentUnit}\n`;
-    }
-    
-    // Add category header if needed
     if (entry.category !== currentCategory) {
       currentCategory = entry.category;
       output += `\n    // ${currentCategory}\n`;
     }
     
-    // Determine if we should use 'country' or 'category' property
-    const isCountry = ["POLAND", "BRITAIN / UK", "NORTHERN IRELAND", "SCOTLAND", "ENGLAND", 
-                       "WALES", "AUSTRALIA", "USA"].includes(currentCategory);
-    
-    if (isCountry) {
-      output += `    { code: "${entry.code}", country: "${currentCategory}", question: "${entry.question}", answer: "${entry.answer}" },\n`;
-    } else {
-      output += `    { code: "${entry.code}", category: "${currentCategory}", question: "${entry.question}", answer: "${entry.answer}" },\n`;
-    }
+    output += `    { code: "${entry.code}", category: "${currentCategory}", question: "${entry.question}", answer: "${entry.answer}" },\n`;
   }
   
   return output;

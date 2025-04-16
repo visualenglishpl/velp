@@ -60,9 +60,9 @@ const AuthPage = () => {
     if (user && !isLoading && isAlreadyOnAuthPage) {
       console.log("Content manager authenticated:", user);
       
-      // Redirect to main admin dashboard for content managers
-      console.log("Redirecting to admin dashboard");
-      navigate("/admin");
+      // Always redirect to admin books management for content managers
+      console.log("Redirecting to books management");
+      navigate("/admin/books");
     }
   }, [user, isLoading, navigate]);
 
