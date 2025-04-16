@@ -104,7 +104,10 @@ function Router() {
         {(params) => {
           const bookId = params.bookId;
           console.log(`Direct book route handler for bookId: ${bookId}`);
-          return <ProtectedRoute component={() => <UnitsPage bookIdParam={bookId} />} />;
+          return <ProtectedRoute component={() => {
+            const BookPageWithParams = () => <UnitsPage bookIdParam={bookId} />;
+            return <BookPageWithParams />;
+          }} />;
         }}
       </Route>
       

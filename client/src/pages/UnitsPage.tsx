@@ -18,9 +18,20 @@ type UnitInfo = {
   thumbnailUrl?: string;
 };
 
-export default function UnitsPage() {
+// Interface for the component props when used directly with a bookId parameter
+interface UnitsPageBaseProps {
+  bookIdParam?: string;
+}
+
+// Main component that accepts standard route props or a direct bookId
+export default function UnitsPage(props: UnitsPageBaseProps = {}) {
   const [, params] = useRoute('/book/:bookId/units');
-  const bookId = params?.bookId || '';
+  
+  // Extract bookIdParam from props if it exists
+  const { bookIdParam } = props;
+  
+  // Use the direct bookIdParam if available, otherwise use route params
+  const bookId = bookIdParam || params?.bookId || '';
   const { toast } = useToast();
   
   // Determine if the user has purchased access (in a real app, this would come from authentication/subscription data)
