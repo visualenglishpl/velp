@@ -820,21 +820,6 @@ export default function SlickContentViewer() {
                         >
                           Your browser does not support the video tag.
                         </video>
-                        
-                        {/* Render annotations for this slide */}
-                        {isEditMode && index === currentIndex && annotations[material.id]?.map((annotation, i) => (
-                          <div 
-                            key={annotation.id}
-                            className="absolute pointer-events-auto"
-                            style={{ 
-                              left: `${annotation.position.x}px`, 
-                              top: `${annotation.position.y}px`,
-                              zIndex: 50 + i
-                            }}
-                          >
-                            {/* Annotation content here */}
-                          </div>
-                        ))}
                       </div>
                     ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
                       <div className="relative">
@@ -1054,6 +1039,12 @@ export default function SlickContentViewer() {
                           alt="Dragging thumbnail"
                           className="h-full w-full object-cover"
                         />
+                      );
+                    } else if (material.contentType === 'VIDEO' || material.path.endsWith('.mp4')) {
+                      return (
+                        <div className="flex h-full w-full items-center justify-center bg-gray-800 text-white">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        </div>
                       );
                     } else if (material.contentType === 'PDF' || material.path.endsWith('.pdf')) {
                       return (
