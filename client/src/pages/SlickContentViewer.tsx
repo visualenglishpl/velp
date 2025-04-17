@@ -585,7 +585,7 @@ export default function SlickContentViewer() {
           <div className="mt-6 flex justify-center gap-4">
             <Button
               variant="outline"
-              onClick={() => navigate(`/book${bookId}/units`)}
+              onClick={() => navigate(`/book/${bookId}/units`)}
               className="gap-2"
             >
               <Book className="h-4 w-4" /> Back to Units
@@ -613,7 +613,7 @@ export default function SlickContentViewer() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => navigate(`/book${bookId}/units`)}
+            onClick={() => navigate(`/book/${bookId}/units`)}
           >
             <Book className="mr-2 h-4 w-4" />
             <span className="hidden sm:inline">Back to Units</span>
