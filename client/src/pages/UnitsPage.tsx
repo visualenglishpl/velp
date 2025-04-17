@@ -414,7 +414,7 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
                   <Link href={`/book${bookId}/unit${unit.unitNumber}`} className="w-full">
                     <Button 
                       className="w-full h-10" 
-                      variant={index === 0 || hasPurchased ? "default" : "secondary"}
+                      variant={hasPurchased ? "default" : "secondary"}
                     >
                       {hasPurchased ? 'View Content' : 'Free Sample'}
                     </Button>
