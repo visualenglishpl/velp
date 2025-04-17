@@ -91,8 +91,8 @@ export default function SlickContentViewer() {
   let bookId: string | null = null;
   let unitNumber: string | null = null;
   
-  // Parse from /book4/unit3 format
-  const pathRegex = /\/book(\d+)\/unit(\d+)/;
+  // Parse from /book4/unit3 or /book0a/unit3 format (supporting alphanumeric book IDs)
+  const pathRegex = /\/book([a-zA-Z0-9]+)\/unit(\d+)/;
   const pathMatch = location.match(pathRegex);
   
   if (pathMatch) {
