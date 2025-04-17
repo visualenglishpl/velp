@@ -773,9 +773,9 @@ export default function SlickContentViewer() {
                   </div>
                   
                   {/* Middle section with centered image - symmetrical layout */}
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-center h-full">
                     <div 
-                      className={`w-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
+                      className={`w-full h-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
                       onClick={(e) => {
                       // Only handle clicks in edit mode and when user is admin
                       if (isEditMode && user && user.username === 'admin' && activeAnnotation && index === currentIndex) {
@@ -810,11 +810,12 @@ export default function SlickContentViewer() {
                     }}
                   >
                     {material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
-                      <div className="relative">
+                      <div className="relative h-full flex items-center justify-center">
                         <video 
                           src={material.path}
                           controls
-                          className={`h-auto max-h-[calc(45vh)] w-auto max-w-full mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          className={`h-auto w-auto max-w-full mx-auto object-contain ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          style={{ maxHeight: '100%' }}
                           onError={(e) => {
                             console.error(`Error loading video at ${material.path}`, e);
                           }}
@@ -825,11 +826,12 @@ export default function SlickContentViewer() {
                         </video>
                       </div>
                     ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
-                      <div className="relative">
+                      <div className="relative h-full flex items-center justify-center">
                         <img 
                           src={material.path}
                           alt={`Learning material slide ${index + 1}`}
-                          className={`h-auto max-h-[calc(45vh)] w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          className={`h-auto w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          style={{ maxHeight: '100%' }}
                           loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
                           onError={(e) => {
                             console.error(`Error loading image at ${material.path}`, e);
