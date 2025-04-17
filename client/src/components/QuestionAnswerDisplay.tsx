@@ -682,7 +682,26 @@ function QuestionAnswerDisplay({
     setEditedQuestion(qaData.question);
     setEditedAnswer(qaData.answer);
     setEditedCountry(qaData.country);
+    
+    // Reset flagging state when material changes
+    setIsFlagging(false);
   }, [material.id, qaData.question, qaData.answer, qaData.country]);
+  
+  // Check if this material's question has been flagged before
+  React.useEffect(() => {
+    // For a real app, we would check the database
+    // For now, we'll use localStorage to remember flagged questions
+    const flaggedItems = localStorage.getItem('flaggedQuestions');
+    if (flaggedItems) {
+      try {
+        const parsedItems = JSON.parse(flaggedItems);
+        const isAlreadyFlagged = parsedItems.some((item: number) => item === material.id);
+        setIsFlagged(isAlreadyFlagged);
+      } catch (error) {
+        console.error('Error parsing flagged questions from localStorage', error);
+      }
+    }
+  }, [material.id]);
   
   // Save custom questions locally
   React.useEffect(() => {
@@ -739,6 +758,17 @@ function QuestionAnswerDisplay({
         variant: "default"
       });
 
+      // Save to localStorage to remember this item was flagged
+      try {
+        const flaggedItems = JSON.parse(localStorage.getItem('flaggedQuestions') || '[]');
+        if (!flaggedItems.includes(material.id)) {
+          flaggedItems.push(material.id);
+          localStorage.setItem('flaggedQuestions', JSON.stringify(flaggedItems));
+        }
+      } catch (error) {
+        console.error('Error saving flagged questions to localStorage', error);
+      }
+      
       setIsFlagged(true);
       setIsFlagging(false);
       setSuggestedQuestion("");
