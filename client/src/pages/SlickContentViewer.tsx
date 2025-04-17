@@ -87,6 +87,10 @@ export default function SlickContentViewer() {
   const [materials, setMaterials] = useState<S3Material[]>([]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   
+  // State for slide removal
+  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
+  const [slideToRemove, setSlideToRemove] = useState<S3Material | null>(null);
+  
   // Extract bookId and unitNumber from URL path
   let bookId: string | null = null;
   let unitNumber: string | null = null;
@@ -171,6 +175,40 @@ export default function SlickContentViewer() {
       });
     }
   });
+  
+  // Remove slide mutation
+  const { mutate: removeSlide, isPending: isRemoving } = useMutation({
+    mutationFn: async (slideId: number) => {
+      return await apiRequest("POST", `/api/direct/${bookPath}/${unitPath}/removeSlide`, {
+        slideId
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Slide removed",
+        description: "The slide has been removed from this unit.",
+      });
+      queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`] });
+      setShowRemoveDialog(false);
+      setSlideToRemove(null);
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error removing slide",
+        description: error.message,
+        variant: "destructive",
+      });
+      setShowRemoveDialog(false);
+      setSlideToRemove(null);
+    }
+  });
+  
+  // Handler for slide removal confirmation
+  const confirmRemoveSlide = () => {
+    if (slideToRemove) {
+      removeSlide(slideToRemove.id);
+    }
+  };
   
   // Save annotations mutation
   const { mutate: saveAnnotations, isPending: isSavingAnnotations } = useMutation({
@@ -461,7 +499,22 @@ export default function SlickContentViewer() {
         {...attributes}
         {...listeners}
       >
-        {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
+        {/* Admin delete button */}
+        {user && user.username === 'admin' && (
+          <button
+            className="absolute top-1 right-1 z-10 h-5 w-5 rounded-full bg-red-500 text-white opacity-0 hover:opacity-100 flex items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSlideToRemove(material);
+              setShowRemoveDialog(true);
+            }}
+            title="Remove slide"
+          >
+            ×
+          </button>
+        )}
+        
+        {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
           <>
             <img 
               src={material.path} 
@@ -479,7 +532,8 @@ export default function SlickContentViewer() {
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
               {material.path.toLowerCase().endsWith('.jpg') ? 'JPG' : 
                material.path.toLowerCase().endsWith('.png') ? 'PNG' : 
-               material.path.toLowerCase().endsWith('.gif') ? 'GIF' : 'IMG'}
+               material.path.toLowerCase().endsWith('.gif') ? 'GIF' :
+               material.path.toLowerCase().endsWith('.avif') ? 'AVIF' : 'IMG'}
             </div>
           </>
         ) : material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
@@ -825,7 +879,7 @@ export default function SlickContentViewer() {
                           Your browser does not support the video tag.
                         </video>
                       </div>
-                    ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') ? (
+                    ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
                       <div className="relative h-full flex items-center justify-center">
                         <img 
                           src={material.path}
@@ -1038,7 +1092,7 @@ export default function SlickContentViewer() {
                     const material = materials.find(m => `thumbnail-${m.id}` === activeId);
                     if (!material) return null;
                     
-                    if (material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif')) {
+                    if (material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif')) {
                       return (
                         <img 
                           src={material.path} 
