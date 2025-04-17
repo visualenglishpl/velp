@@ -766,9 +766,9 @@ export default function SlickContentViewer() {
               const shouldBlur = !hasPaidAccess && index >= freeSlideLimit;
               
               return (
-                <div key={index} className="outline-none h-[55vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
+                <div key={index} className="outline-none h-[60vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
                   {/* Top section with question-answer */}
-                  <div className="w-full mb-2">
+                  <div className="w-full mb-4">
                     <QuestionAnswerDisplay material={material} isEditMode={isEditMode} />
                   </div>
                   
@@ -814,7 +814,7 @@ export default function SlickContentViewer() {
                         <video 
                           src={material.path}
                           controls
-                          className={`h-auto max-h-[calc(40vh)] w-auto max-w-full mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          className={`h-auto max-h-[calc(45vh)] w-auto max-w-full mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
                           onError={(e) => {
                             console.error(`Error loading video at ${material.path}`, e);
                           }}
@@ -829,7 +829,7 @@ export default function SlickContentViewer() {
                         <img 
                           src={material.path}
                           alt={`Learning material slide ${index + 1}`}
-                          className={`h-auto max-h-[calc(40vh)] w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          className={`h-auto max-h-[calc(45vh)] w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
                           loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
                           onError={(e) => {
                             console.error(`Error loading image at ${material.path}`, e);
@@ -991,7 +991,7 @@ export default function SlickContentViewer() {
       </div>
       
       {/* Thumbnail navigation */}
-      <div className="mt-4 px-4">
+      <div className="mt-6 px-4">
         <div className="relative overflow-hidden">
           <DndContext
             sensors={sensors}
