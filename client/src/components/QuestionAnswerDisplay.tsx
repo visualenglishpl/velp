@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
+import { Flag, Check, X } from "lucide-react";
 
 interface QAData {
   country: string;
@@ -16,6 +19,18 @@ interface QADatabaseEntry {
   category?: string;
 }
 
+interface FlaggedQuestion {
+  materialId: number;
+  questionText: string;
+  answerText: string;
+  suggestedQuestion?: string;
+  suggestedAnswer?: string;
+  reason?: string;
+  status: 'pending' | 'reviewed' | 'approved' | 'rejected';
+  createdAt: Date;
+  reviewedAt?: Date;
+}
+
 interface QuestionAnswerDisplayProps {
   material: {
     id: number;
@@ -24,6 +39,9 @@ interface QuestionAnswerDisplayProps {
     title: string;
   };
   isEditMode?: boolean;
+  showQuestions?: boolean;
+  bookId?: string;
+  unitId?: string;
 }
 
 // Utility functions

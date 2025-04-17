@@ -95,6 +95,9 @@ export default function SlickContentViewer() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isZoomed, setIsZoomed] = useState(false);
   
+  // State for question visibility
+  const [showQuestions, setShowQuestions] = useState(true);
+  
   // Extract bookId and unitNumber from URL path
   let bookId: string | null = null;
   let unitNumber: string | null = null;
