@@ -606,7 +606,7 @@ export default function SlickContentViewer() {
   
   // Main content viewer
   return (
-    <div ref={containerRef} className={`flex flex-col ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'min-h-[80vh] mt-2'}`}>
+    <div ref={containerRef} className={`flex flex-col ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'min-h-[75vh] mt-2'}`}>
       {/* Header / Navigation */}
       <div className="flex flex-wrap items-center justify-between gap-2 p-2">
         <div className="flex items-center gap-2">
@@ -766,7 +766,7 @@ export default function SlickContentViewer() {
               const shouldBlur = !hasPaidAccess && index >= freeSlideLimit;
               
               return (
-                <div key={index} className="outline-none h-[60vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
+                <div key={index} className="outline-none h-[50vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
                   {/* Top section with question-answer */}
                   <div className="w-full mb-4">
                     <QuestionAnswerDisplay material={material} isEditMode={isEditMode} />
@@ -993,7 +993,7 @@ export default function SlickContentViewer() {
       </div>
       
       {/* Thumbnail navigation */}
-      <div className="mt-6 px-4">
+      <div className="mt-4 px-4">
         <div className="relative overflow-hidden">
           <DndContext
             sensors={sensors}
