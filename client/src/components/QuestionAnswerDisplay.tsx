@@ -652,7 +652,13 @@ function formatFullAnswer(question: string, answer: string): string {
   return answer;
 }
 
-function QuestionAnswerDisplay({ material, isEditMode }: QuestionAnswerDisplayProps) {
+function QuestionAnswerDisplay({ 
+  material, 
+  isEditMode, 
+  showQuestions = true, 
+  bookId, 
+  unitId 
+}: QuestionAnswerDisplayProps) {
   // Get question and answer data
   const qaData = React.useMemo(() => {
     const data = getQuestionAnswerFromData(material);
@@ -664,6 +670,12 @@ function QuestionAnswerDisplay({ material, isEditMode }: QuestionAnswerDisplayPr
   const [editedQuestion, setEditedQuestion] = React.useState<string>(qaData.question);
   const [editedAnswer, setEditedAnswer] = React.useState<string>(qaData.answer);
   const [editedCountry, setEditedCountry] = React.useState<string>(qaData.country);
+  const [isFlagging, setIsFlagging] = useState(false);
+  const [suggestedQuestion, setSuggestedQuestion] = useState("");
+  const [suggestedAnswer, setSuggestedAnswer] = useState("");
+  const [flagReason, setFlagReason] = useState("");
+  const [isFlagged, setIsFlagged] = useState(false);
+  const { toast } = useToast();
   
   // Update state when material changes
   React.useEffect(() => {
@@ -696,59 +708,211 @@ function QuestionAnswerDisplay({ material, isEditMode }: QuestionAnswerDisplayPr
     }
   }, [material.id]);
 
+  // Function to handle flagging a question
+  const handleFlagQuestion = async () => {
+    if (!suggestedQuestion && !suggestedAnswer && !flagReason) {
+      toast({
+        title: "Missing information",
+        description: "Please provide at least one suggestion or reason for flagging this question.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      await apiRequest("POST", "/api/direct/flag-question", {
+        materialId: material.id,
+        questionText: editedQuestion || qaData.question,
+        answerText: editedAnswer || qaData.answer,
+        suggestedQuestion,
+        suggestedAnswer,
+        reason: flagReason,
+        status: 'pending',
+        bookId,
+        unitId,
+        createdAt: new Date()
+      });
+
+      toast({
+        title: "Question flagged",
+        description: "Thank you for your feedback. An administrator will review this question.",
+        variant: "default"
+      });
+
+      setIsFlagged(true);
+      setIsFlagging(false);
+      setSuggestedQuestion("");
+      setSuggestedAnswer("");
+      setFlagReason("");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your feedback. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   if (qaData.hasData || editedQuestion || editedAnswer) {
     return (
-      <div className="mb-3 bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
-        {/* Show country name if available */}
-        {(qaData.country || editedCountry) && (
-          <div className="mb-1 flex items-center justify-center">
-            {isEditMode ? (
-              <input
-                type="text"
-                value={editedCountry}
-                onChange={(e) => setEditedCountry(e.target.value)}
-                className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200 text-center focus:ring-2 focus:ring-blue-300 outline-none"
-              />
-            ) : (
-              <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                {editedCountry || qaData.country}
-              </h3>
+      <>
+        {showQuestions && (
+          <div className="mb-3 bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100 relative">
+            {/* Flag button - only for non-edit mode and when questions are shown */}
+            {!isEditMode && !isFlagged && (
+              <button 
+                onClick={() => setIsFlagging(true)}
+                className="absolute top-2 right-2 text-gray-400 hover:text-amber-500 transition-colors"
+                title="Flag this question as incorrect"
+              >
+                <Flag className="h-4 w-4" />
+              </button>
             )}
+            
+            {/* Already flagged indicator */}
+            {!isEditMode && isFlagged && (
+              <div className="absolute top-2 right-2 text-amber-500" title="This question has been flagged">
+                <Check className="h-4 w-4" />
+              </div>
+            )}
+            
+            {/* Show country name if available */}
+            {(qaData.country || editedCountry) && (
+              <div className="mb-1 flex items-center justify-center">
+                {isEditMode ? (
+                  <input
+                    type="text"
+                    value={editedCountry}
+                    onChange={(e) => setEditedCountry(e.target.value)}
+                    className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200 text-center focus:ring-2 focus:ring-blue-300 outline-none"
+                  />
+                ) : (
+                  <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
+                    {editedCountry || qaData.country}
+                  </h3>
+                )}
+              </div>
+            )}
+            
+            <div className="flex flex-col gap-1">
+              {/* Show question */}
+              <div className="text-center">
+                {isEditMode ? (
+                  <textarea
+                    value={editedQuestion}
+                    onChange={(e) => setEditedQuestion(e.target.value)}
+                    className="text-gray-800 text-base bg-white p-1 rounded w-full border-blue-200 border focus:ring-2 focus:ring-blue-300 outline-none text-center"
+                    rows={2}
+                    placeholder="Question"
+                  />
+                ) : (
+                  <span className="text-gray-800 text-base font-medium block">{editedQuestion || qaData.question}</span>
+                )}
+              </div>
+              
+              {/* Show answer */}
+              <div className="mt-2 text-center">
+                {isEditMode ? (
+                  <textarea
+                    value={editedAnswer}
+                    onChange={(e) => setEditedAnswer(e.target.value)}
+                    className="font-medium text-indigo-900 text-base bg-white p-1 rounded w-full border-indigo-200 border focus:ring-2 focus:ring-indigo-300 outline-none text-center"
+                    rows={2}
+                    placeholder="Answer"
+                  />
+                ) : (
+                  <span className="font-medium text-indigo-900 text-base block">{editedAnswer || qaData.answer}</span>
+                )}
+              </div>
+            </div>
           </div>
         )}
         
-        <div className="flex flex-col gap-1">
-          {/* Show question */}
-          <div className="text-center">
-            {isEditMode ? (
-              <textarea
-                value={editedQuestion}
-                onChange={(e) => setEditedQuestion(e.target.value)}
-                className="text-gray-800 text-base bg-white p-1 rounded w-full border-blue-200 border focus:ring-2 focus:ring-blue-300 outline-none text-center"
-                rows={2}
-                placeholder="Question"
-              />
-            ) : (
-              <span className="text-gray-800 text-base font-medium block">{editedQuestion || qaData.question}</span>
-            )}
+        {/* Flag question dialog */}
+        {isFlagging && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">Flag Incorrect Question</h3>
+                <button 
+                  onClick={() => setIsFlagging(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="mb-4">
+                <p className="text-sm text-gray-600 mb-2">Current Question:</p>
+                <div className="bg-gray-50 p-2 rounded border border-gray-200 text-sm">
+                  {editedQuestion || qaData.question}
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <p className="text-sm text-gray-600 mb-2">Current Answer:</p>
+                <div className="bg-gray-50 p-2 rounded border border-gray-200 text-sm">
+                  {editedAnswer || qaData.answer}
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Suggest Correct Question (optional)
+                </label>
+                <textarea
+                  value={suggestedQuestion}
+                  onChange={(e) => setSuggestedQuestion(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  rows={2}
+                  placeholder="Enter the correct question"
+                />
+              </div>
+              
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Suggest Correct Answer (optional)
+                </label>
+                <textarea
+                  value={suggestedAnswer}
+                  onChange={(e) => setSuggestedAnswer(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  rows={2}
+                  placeholder="Enter the correct answer"
+                />
+              </div>
+              
+              <div className="mb-5">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Reason for Flagging
+                </label>
+                <textarea
+                  value={flagReason}
+                  onChange={(e) => setFlagReason(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  rows={3}
+                  placeholder="Describe why this question or answer is incorrect"
+                />
+              </div>
+              
+              <div className="flex justify-end gap-2">
+                <button
+                  onClick={() => setIsFlagging(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleFlagQuestion}
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Submit Flag
+                </button>
+              </div>
+            </div>
           </div>
-          
-          {/* Show answer */}
-          <div className="mt-2 text-center">
-            {isEditMode ? (
-              <textarea
-                value={editedAnswer}
-                onChange={(e) => setEditedAnswer(e.target.value)}
-                className="font-medium text-indigo-900 text-base bg-white p-1 rounded w-full border-indigo-200 border focus:ring-2 focus:ring-indigo-300 outline-none text-center"
-                rows={2}
-                placeholder="Answer"
-              />
-            ) : (
-              <span className="font-medium text-indigo-900 text-base block">{editedAnswer || qaData.answer}</span>
-            )}
-          </div>
-        </div>
-      </div>
+        )}
+      </>
     );
   }
   

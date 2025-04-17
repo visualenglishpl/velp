@@ -799,6 +799,32 @@ export default function SlickContentViewer() {
         )}
         
         <div className="flex items-center gap-2">
+          {/* Question visibility toggle */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowQuestions(!showQuestions)}
+            className={`rounded-full w-8 h-8 p-0 ${showQuestions ? 'bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-600' : 'bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-500'} shadow-sm transition-all`}
+            title={showQuestions ? "Hide questions" : "Show questions"}
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-4 w-4" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor" 
+              strokeWidth={2}
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                d={showQuestions 
+                  ? "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" 
+                  : "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"}
+              />
+            </svg>
+          </Button>
+
           {/* Fullscreen toggle */}
           <Button
             variant="outline"
@@ -834,7 +860,13 @@ export default function SlickContentViewer() {
                 <div key={index} className="outline-none h-[50vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
                   {/* Top section with question-answer */}
                   <div className="w-full mb-4">
-                    <QuestionAnswerDisplay material={material} isEditMode={isEditMode} />
+                    <QuestionAnswerDisplay 
+                      material={material} 
+                      isEditMode={isEditMode} 
+                      showQuestions={showQuestions}
+                      bookId={bookId || undefined}
+                      unitId={unitNumber?.toString() || undefined}
+                    />
                   </div>
                   
                   {/* Middle section with centered image - symmetrical layout */}
