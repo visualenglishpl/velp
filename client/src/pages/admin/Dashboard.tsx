@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag } from "lucide-react";
+import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag, Flag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -27,6 +27,10 @@ const AdminDashboard = () => {
   
   const navigateToShopManagement = () => {
     navigate("/admin/shop");
+  };
+  
+  const navigateToFlaggedQuestions = () => {
+    navigate("/admin/flagged-questions");
   };
 
   return (

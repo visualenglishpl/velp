@@ -689,5 +689,159 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
+  // Endpoint to store flagged questions
+  app.post("/api/direct/flag-question", isAuthenticated, async (req, res) => {
+    try {
+      const { 
+        materialId, 
+        questionText, 
+        answerText, 
+        suggestedQuestion, 
+        suggestedAnswer, 
+        reason, 
+        status, 
+        bookId, 
+        unitId, 
+        createdAt 
+      } = req.body;
+      
+      // Validate required fields
+      if (!materialId || !questionText || !answerText) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Missing required fields" 
+        });
+      }
+      
+      // In a production app, you would save this to a database
+      // For this implementation, we'll save it to memory
+      const flaggedQuestion = {
+        id: Date.now(), // Generate a unique ID
+        materialId,
+        questionText,
+        answerText,
+        suggestedQuestion: suggestedQuestion || null,
+        suggestedAnswer: suggestedAnswer || null,
+        reason: reason || null,
+        status: status || 'pending',
+        bookId,
+        unitId,
+        createdAt: createdAt || new Date(),
+        reviewedAt: null
+      };
+      
+      // Initialize or get the existing flagged questions
+      if (!(global as any).flaggedQuestions) {
+        (global as any).flaggedQuestions = [];
+      }
+      
+      // Add the new flagged question
+      (global as any).flaggedQuestions.push(flaggedQuestion);
+      
+      console.log(`Flagged question for material ID ${materialId} in ${bookId}/${unitId} saved`);
+      
+      return res.json({
+        success: true,
+        message: "Question flagged successfully",
+        questionId: flaggedQuestion.id
+      });
+    } catch (error) {
+      console.error(`Error flagging question:`, error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to flag question" 
+      });
+    }
+  });
+  
+  // Endpoint to get flagged questions - for admin use
+  app.get("/api/direct/flagged-questions", isAuthenticated, async (req, res) => {
+    try {
+      // Get the status filter from query params, default to 'all'
+      const statusFilter = req.query.status as string || 'all';
+      const bookId = req.query.bookId as string;
+      const unitId = req.query.unitId as string;
+      
+      // Get all flagged questions
+      const allFlaggedQuestions = (global as any).flaggedQuestions || [];
+      
+      // Apply filters
+      let filteredQuestions = [...allFlaggedQuestions];
+      
+      if (statusFilter !== 'all') {
+        filteredQuestions = filteredQuestions.filter(q => q.status === statusFilter);
+      }
+      
+      if (bookId) {
+        filteredQuestions = filteredQuestions.filter(q => q.bookId === bookId);
+      }
+      
+      if (unitId) {
+        filteredQuestions = filteredQuestions.filter(q => q.unitId === unitId);
+      }
+      
+      // Sort by createdAt in descending order (newest first)
+      filteredQuestions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      
+      return res.json({
+        success: true,
+        questions: filteredQuestions,
+        total: filteredQuestions.length
+      });
+    } catch (error) {
+      console.error(`Error getting flagged questions:`, error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to get flagged questions" 
+      });
+    }
+  });
+  
+  // Endpoint to update a flagged question's status - for admin use
+  app.patch("/api/direct/flagged-questions/:id", isAuthenticated, async (req, res) => {
+    try {
+      const questionId = parseInt(req.params.id, 10);
+      const { status, adminNotes } = req.body;
+      
+      if (!questionId || !status) {
+        return res.status(400).json({
+          success: false,
+          error: "Missing required fields"
+        });
+      }
+      
+      // Find the flagged question
+      const allFlaggedQuestions = (global as any).flaggedQuestions || [];
+      const questionIndex = allFlaggedQuestions.findIndex(q => q.id === questionId);
+      
+      if (questionIndex === -1) {
+        return res.status(404).json({
+          success: false,
+          error: "Flagged question not found"
+        });
+      }
+      
+      // Update the question
+      allFlaggedQuestions[questionIndex] = {
+        ...allFlaggedQuestions[questionIndex],
+        status,
+        adminNotes: adminNotes || null,
+        reviewedAt: new Date()
+      };
+      
+      return res.json({
+        success: true,
+        message: "Flagged question updated successfully",
+        question: allFlaggedQuestions[questionIndex]
+      });
+    } catch (error) {
+      console.error(`Error updating flagged question:`, error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to update flagged question"
+      });
+    }
+  });
+
   console.log("Direct routes registered successfully");
 }
