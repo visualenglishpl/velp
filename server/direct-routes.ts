@@ -769,19 +769,20 @@ export function registerDirectRoutes(app: Express) {
       let filteredQuestions = [...allFlaggedQuestions];
       
       if (statusFilter !== 'all') {
-        filteredQuestions = filteredQuestions.filter(q => q.status === statusFilter);
+        filteredQuestions = filteredQuestions.filter((q: { status: string }) => q.status === statusFilter);
       }
       
       if (bookId) {
-        filteredQuestions = filteredQuestions.filter(q => q.bookId === bookId);
+        filteredQuestions = filteredQuestions.filter((q: { bookId?: string }) => q.bookId === bookId);
       }
       
       if (unitId) {
-        filteredQuestions = filteredQuestions.filter(q => q.unitId === unitId);
+        filteredQuestions = filteredQuestions.filter((q: { unitId?: string }) => q.unitId === unitId);
       }
       
       // Sort by createdAt in descending order (newest first)
-      filteredQuestions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      filteredQuestions.sort((a: { createdAt: string | Date }, b: { createdAt: string | Date }) => 
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       
       return res.json({
         success: true,
@@ -812,7 +813,7 @@ export function registerDirectRoutes(app: Express) {
       
       // Find the flagged question
       const allFlaggedQuestions = (global as any).flaggedQuestions || [];
-      const questionIndex = allFlaggedQuestions.findIndex(q => q.id === questionId);
+      const questionIndex = allFlaggedQuestions.findIndex((q: { id: number }) => q.id === questionId);
       
       if (questionIndex === -1) {
         return res.status(404).json({

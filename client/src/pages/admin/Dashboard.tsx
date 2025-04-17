@@ -136,6 +136,28 @@ const AdminDashboard = () => {
               </div>
             </div>
             
+            {/* Flagged Questions Card */}
+            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
+              <div className="flex items-start mb-4">
+                <div className="p-2 bg-orange-50 rounded-md mr-4">
+                  <Flag className="h-6 w-6 text-orange-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">Flagged Questions</h3>
+                  <p className="text-sm text-gray-500">Review and manage user feedback on questions</p>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <Button 
+                  className="w-full py-2 text-white hover:bg-opacity-90 border-0"
+                  style={{ backgroundColor: '#f97316' }} 
+                  onClick={navigateToFlaggedQuestions}
+                >
+                  Review Flagged Items
+                </Button>
+              </div>
+            </div>
+            
             {/* System Settings Card */}
             <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
               <div className="flex items-start mb-4">

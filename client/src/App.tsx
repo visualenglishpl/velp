@@ -12,6 +12,7 @@ import CheckoutPage from "@/pages/checkout";
 import PrintedBookCheckout from "@/pages/PrintedBookCheckout";
 import BooksPage from "@/pages/BooksPage";
 import UnitsPage from "@/pages/UnitsPage";
+import FlaggedQuestions from "@/pages/admin/FlaggedQuestions";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -94,6 +95,11 @@ function Router() {
       {/* Content Organizer - Protected Admin Route */}
       <Route path="/admin/content-organizer">
         {() => <ProtectedRoute component={ContentOrganizer} adminOnly={true} />}
+      </Route>
+      
+      {/* Flagged Questions - Protected Admin Route */}
+      <Route path="/admin/flagged-questions">
+        {() => <ProtectedRoute component={FlaggedQuestions} adminOnly={true} />}
       </Route>
       
       {/* Content Viewer Routes */}
