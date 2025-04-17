@@ -91,6 +91,10 @@ export default function SlickContentViewer() {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
   const [slideToRemove, setSlideToRemove] = useState<S3Material | null>(null);
   
+  // State for image zoom
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [isZoomed, setIsZoomed] = useState(false);
+  
   // Extract bookId and unitNumber from URL path
   let bookId: string | null = null;
   let unitNumber: string | null = null;
@@ -662,12 +666,13 @@ export default function SlickContentViewer() {
   return (
     <div ref={containerRef} className={`flex flex-col ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'min-h-[75vh] mt-2'}`}>
       {/* Header / Navigation */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2 bg-white shadow-sm rounded-md mb-2">
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
             onClick={() => navigate(`/book/${bookId}/units`)}
+            className="rounded-full bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700 transition-all shadow-sm"
           >
             <Book className="mr-2 h-4 w-4" />
             <span className="hidden sm:inline">Back to Units</span>
@@ -686,7 +691,7 @@ export default function SlickContentViewer() {
               size="sm"
               onClick={handleSaveOrder}
               disabled={isSaving}
-              className="bg-blue-50 hover:bg-blue-100"
+              className="rounded-full shadow-sm bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-600 transition-all"
             >
               {isSaving ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -700,7 +705,9 @@ export default function SlickContentViewer() {
               variant={isEditMode ? "secondary" : "outline"}
               size="sm"
               onClick={() => setIsEditMode(!isEditMode)}
-              className={isEditMode ? "bg-orange-100 hover:bg-orange-200" : ""}
+              className={`rounded-full shadow-sm transition-all ${isEditMode 
+                ? "bg-orange-100 hover:bg-orange-200 border-orange-200 text-orange-700" 
+                : "bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700"}`}
             >
               <Pencil className="mr-2 h-4 w-4" />
               {isEditMode ? "Exit Edit Mode" : "Edit Slides"}
@@ -712,7 +719,7 @@ export default function SlickContentViewer() {
                 size="sm"
                 onClick={() => saveAnnotations(annotations)}
                 disabled={isSavingAnnotations}
-                className="bg-green-50 hover:bg-green-100"
+                className="rounded-full shadow-sm bg-green-50 hover:bg-green-100 border-green-200 text-green-600 transition-all"
               >
                 {isSavingAnnotations ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -724,11 +731,11 @@ export default function SlickContentViewer() {
             )}
             
             {isEditMode && (
-              <div className="flex items-center gap-1 border rounded-md p-1 bg-white">
+              <div className="flex items-center gap-1 border rounded-full p-1 bg-white shadow-sm">
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-8 w-8 p-0"
+                  className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
                   onClick={() => setActiveAnnotation({
                     type: 'text',
                     position: null,
@@ -742,7 +749,7 @@ export default function SlickContentViewer() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-8 w-8 p-0"
+                  className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
                   onClick={() => setActiveAnnotation({
                     type: 'highlight',
                     position: null,
@@ -755,7 +762,7 @@ export default function SlickContentViewer() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-8 w-8 p-0"
+                  className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
                   onClick={() => setActiveAnnotation({
                     type: 'arrow',
                     position: null,
@@ -769,7 +776,7 @@ export default function SlickContentViewer() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-8 w-8 p-0"
+                  className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
                   onClick={() => {
                     // Clear all annotations for current slide
                     const newAnnotations = { ...annotations };
@@ -791,10 +798,11 @@ export default function SlickContentViewer() {
         <div className="flex items-center gap-2">
           {/* Fullscreen toggle */}
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="aspect-square p-2"
+            className="rounded-full w-8 h-8 p-0 bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700 shadow-sm transition-all"
+            title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
           >
             {isFullscreen ? (
               <Minimize2 className="h-4 w-4" />
@@ -804,7 +812,7 @@ export default function SlickContentViewer() {
           </Button>
           
           {/* Slide counter */}
-          <div className="rounded-md bg-gray-100 px-2 py-1 text-xs font-medium">
+          <div className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium border border-gray-200 shadow-sm">
             {currentIndex + 1} / {materials.length}
           </div>
         </div>
@@ -881,19 +889,82 @@ export default function SlickContentViewer() {
                       </div>
                     ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
                       <div className="relative h-full flex items-center justify-center">
-                        <img 
-                          src={material.path}
-                          alt={`Learning material slide ${index + 1}`}
-                          className={`h-auto w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''}`}
-                          style={{ maxHeight: '100%' }}
-                          loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
-                          onError={(e) => {
-                            console.error(`Error loading image at ${material.path}`, e);
-                            // Set a fallback or placeholder
-                            e.currentTarget.src = `/placeholder.png`;
-                            e.currentTarget.classList.add('error-image');
+                        <div 
+                          className={`relative ${isZoomed ? 'cursor-zoom-out overflow-auto' : 'cursor-zoom-in'}`} 
+                          style={{ 
+                            width: '100%', 
+                            height: '100%',
+                            overflowX: isZoomed ? 'auto' : 'hidden',
+                            overflowY: isZoomed ? 'auto' : 'hidden',
                           }}
-                        />
+                          onClick={() => {
+                            if (!isEditMode) {
+                              setIsZoomed(!isZoomed);
+                              setZoomLevel(isZoomed ? 1 : 2);
+                            }
+                          }}
+                        >
+                          <img 
+                            src={material.path}
+                            alt={`Learning material slide ${index + 1}`}
+                            className={`h-auto w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''} transition-transform duration-200`}
+                            style={{ 
+                              maxHeight: isZoomed ? 'none' : '100%',
+                              transform: `scale(${isZoomed ? zoomLevel : 1})`,
+                              transformOrigin: 'center center'
+                            }}
+                            loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
+                            onError={(e) => {
+                              console.error(`Error loading image at ${material.path}`, e);
+                              // Set a fallback or placeholder
+                              e.currentTarget.src = `/placeholder.png`;
+                              e.currentTarget.classList.add('error-image');
+                            }}
+                          />
+                          
+                          {/* Zoom controls - only show when current slide is active */}
+                          {index === currentIndex && !isEditMode && (
+                            <div className="absolute bottom-2 right-2 bg-white/80 rounded-lg shadow-md flex items-center p-1 z-10">
+                              <button 
+                                className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (zoomLevel > 1) {
+                                    setZoomLevel(prev => Math.max(1, prev - 0.5));
+                                  } else {
+                                    setIsZoomed(false);
+                                  }
+                                }}
+                                title="Zoom out"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                              </button>
+                              <button 
+                                className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setIsZoomed(true);
+                                  setZoomLevel(prev => Math.min(4, prev + 0.5));
+                                }}
+                                title="Zoom in"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                              </button>
+                              <div className="mx-1 text-xs font-medium text-gray-700">{Math.round(zoomLevel * 100)}%</div>
+                              <button 
+                                className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setIsZoomed(false);
+                                  setZoomLevel(1);
+                                }}
+                                title="Reset zoom"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"></path><path d="m19 19-3.5-3.5"></path><path d="M2 12h10"></path><path d="M12 2v10"></path></svg>
+                              </button>
+                            </div>
+                          )}
+                        </div>
                         
                         {/* Render annotations for this slide */}
                         {isEditMode && index === currentIndex && annotations[material.id]?.map((annotation, i) => (
@@ -1030,18 +1101,18 @@ export default function SlickContentViewer() {
             size="icon"
             onClick={goToPrevSlide}
             disabled={currentIndex === 0}
-            className="h-8 w-8 rounded-full bg-white/80 shadow-md hover:bg-white"
+            className="h-12 w-12 rounded-full bg-white/90 shadow-lg hover:bg-white hover:shadow-xl border-gray-100 transition-all transform hover:-translate-x-1 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-6 w-6 text-gray-700" />
           </Button>
           <Button
             variant="outline"
             size="icon"
             onClick={goToNextSlide}
             disabled={currentIndex === materials.length - 1}
-            className="h-8 w-8 rounded-full bg-white/80 shadow-md hover:bg-white"
+            className="h-12 w-12 rounded-full bg-white/90 shadow-lg hover:bg-white hover:shadow-xl border-gray-100 transition-all transform hover:translate-x-1 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-6 w-6 text-gray-700" />
           </Button>
         </div>
       </div>
