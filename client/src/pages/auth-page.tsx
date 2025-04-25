@@ -58,24 +58,23 @@ const AuthPage = () => {
 
   // Redirect logged in users based on their role
   useEffect(() => {
-    // Check if we're already on an admin page to avoid redirect loops
-    const isAlreadyOnAuthPage = window.location.pathname === '/auth';
-    
-    if (user && !isLoading && isAlreadyOnAuthPage) {
-      console.log("User authenticated:", user);
+    // Check if user is already logged in
+    if (user && !isLoading) {
+      console.log("User already authenticated:", user);
       
       // Admin redirects to admin page
       if (user.role === 'admin') {
         console.log("Admin user detected, redirecting to admin dashboard");
-        navigate("/admin");
+        // Use window.location for a full page reload to ensure proper routing
+        window.location.href = "/admin";
       } 
       // Teacher or other users redirect to books page
       else {
         console.log("Teacher/user detected, redirecting to bookstore");
-        navigate("/books");
+        window.location.href = "/books";
       }
     }
-  }, [user, isLoading, navigate]);
+  }, [user, isLoading]);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">

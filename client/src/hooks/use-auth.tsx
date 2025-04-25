@@ -72,6 +72,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: "Content Manager Access Granted",
         description: `Welcome back, ${contentManagerUser.username}!`,
       });
+      
+      // Immediately redirect to admin dashboard after successful login
+      console.log("Login successful, redirecting to admin dashboard");
+      window.location.href = "/admin";
     },
     onError: (error: Error) => {
       toast({

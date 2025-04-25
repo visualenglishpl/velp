@@ -64,7 +64,18 @@ function Router() {
   return (
     <Switch>
       {/* Public Routes */}
-      <Route path="/" component={Home} />
+      <Route path="/">
+        {() => {
+          const { user, isLoading } = useAuth();
+          if (isLoading) return null;
+          if (user && user.role === "admin") {
+            console.log("Admin user detected on homepage, redirecting to admin dashboard");
+            window.location.href = "/admin";
+            return null;
+          }
+          return <Home />;
+        }}
+      </Route>
       <Route path="/auth" component={AuthPage} />
       <Route path="/checkout/printed_book" component={PrintedBookCheckout} />
       <Route path="/checkout/:planId?" component={CheckoutPage} />
