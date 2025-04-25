@@ -3,106 +3,82 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * Extract the meaningful part of the filename to match with questions and answers
- * This attempts to extract the Q&A indicator and question text from the file path
+ * Process an Excel file and generate TypeScript mapping code
+ * @param excelFilePath Path to the Excel file to process
+ * @param outputPath Path to save the generated TypeScript file (optional)
+ * @returns Record<string, {question: string, answer: string}>
  */
-function extractMatchingKey(filePath: string): string {
-  // Convert backslashes to forward slashes for consistency
-  const normalizedPath = filePath.replace(/\\/g, '/');
-  
-  // Extract the filename without extension
-  const filename = path.basename(normalizedPath, path.extname(normalizedPath));
-  
-  // Handle different file naming patterns
-  
-  // Pattern 1: Extract codes like "01 I A" or "05 M E" followed by the question text
-  const match = filename.match(/\d{2}\s+[A-Z]\s+[A-Z](.+)/);
-  if (match) {
-    return match[0].trim();
-  }
-  
-  // Pattern 2: Extract anything after the last slash that contains a question pattern
-  const parts = normalizedPath.split('/');
-  const lastPart = parts[parts.length - 1];
-  
-  if (lastPart.includes('?') || 
-      lastPart.toLowerCase().includes('what') || 
-      lastPart.toLowerCase().includes('where') || 
-      lastPart.toLowerCase().includes('who') || 
-      lastPart.toLowerCase().includes('how') ||
-      lastPart.toLowerCase().includes('can you')) {
-    return lastPart.trim();
-  }
-  
-  // Pattern 3: Use the full filename as a fallback
-  return filename.trim();
-}
-
-/**
- * Process Excel file and generate a mapping between file paths and Q&A
- * @param excelFilePath Path to the Excel file
- * @param outputPath Path where the generated TypeScript file will be saved
- * @returns Object containing the mapping
- */
-export function processExcelAndGenerateTS(excelFilePath: string, outputPath: string): Record<string, { question: string; answer: string }> {
-  console.log(`Processing Excel file: ${excelFilePath}`);
+export function processExcelAndGenerateTS(
+  excelFilePath: string, 
+  outputPath?: string
+): Record<string, {question: string, answer: string}> {
+  console.log(`Processing Excel file from: ${excelFilePath}`);
   
   // Read the Excel file
   const workbook = XLSX.readFile(excelFilePath);
-  const sheetName = workbook.SheetNames[0]; // Assume first sheet
-  const worksheet = workbook.Sheets[sheetName];
+  
+  // Assume first sheet unless specified
+  const firstSheetName = workbook.SheetNames[0];
+  const worksheet = workbook.Sheets[firstSheetName];
   
   // Convert to JSON
-  const data: any[] = XLSX.utils.sheet_to_json(worksheet, { header: ["filePath", "question", "answer"] });
+  const jsonData = XLSX.utils.sheet_to_json(worksheet);
   
-  // Skip header row if present
-  const startIndex = typeof data[0].filePath === 'string' && 
-                   (data[0].filePath.toLowerCase().includes('file') || 
-                    data[0].filePath.toLowerCase().includes('path')) ? 1 : 0;
+  console.log(`Found ${jsonData.length} rows in Excel sheet`);
   
-  // Create mapping between file paths (keys) and Q&A (values)
-  const qaMapping: Record<string, { question: string; answer: string }> = {};
+  // Create mapping object
+  const mapping: Record<string, {question: string, answer: string}> = {};
   
-  for (let i = startIndex; i < data.length; i++) {
-    const row = data[i];
+  // Process each row
+  for (const row of jsonData) {
+    // Skip rows without required data
+    if (!row['File Path'] || !row['Question'] || !row['Answer']) {
+      continue;
+    }
     
-    // Skip empty rows
-    if (!row.filePath) continue;
+    // Get the filename from the path
+    const filePath = String(row['File Path']);
+    const fileName = path.basename(filePath);
     
-    // Extract matching key from file path
-    const matchingKey = extractMatchingKey(row.filePath);
-    
-    // Create mapping entry
-    qaMapping[matchingKey] = {
-      question: row.question || '',
-      answer: row.answer || ''
+    // Store the mapping with the filename as key
+    mapping[fileName] = {
+      question: String(row['Question']),
+      answer: String(row['Answer'])
     };
-    
-    // Also create variations of the key for better matching
-    // For example, if the key is "01 I A What is your name",
-    // also create entries for "What is your name", "01 I A", etc.
-    
-    // Variant 1: Numbers and codes only (e.g., "01 I A")
-    const codeMatch = matchingKey.match(/^\d{2}\s+[A-Z]\s+[A-Z]/);
-    if (codeMatch) {
-      qaMapping[codeMatch[0].trim()] = {
-        question: row.question || '',
-        answer: row.answer || ''
-      };
-    }
-    
-    // Variant 2: Question text only
-    const questionTextMatch = matchingKey.match(/\d{2}\s+[A-Z]\s+[A-Z]\s+(.*)/);
-    if (questionTextMatch && questionTextMatch[1]) {
-      qaMapping[questionTextMatch[1].trim()] = {
-        question: row.question || '',
-        answer: row.answer || ''
-      };
-    }
   }
   
-  // Generate TypeScript file
-  const tsContent = `// Auto-generated file from Excel data
+  console.log(`Generated mapping for ${Object.keys(mapping).length} files`);
+  
+  // Generate TypeScript file if outputPath is provided
+  if (outputPath) {
+    const tsCode = generateTypescriptCode(mapping);
+    fs.writeFileSync(outputPath, tsCode);
+    console.log(`TypeScript file generated at: ${outputPath}`);
+  }
+  
+  return mapping;
+}
+
+/**
+ * Generate TypeScript code for the mapping
+ * @param mapping The mapping object to convert to TypeScript
+ * @returns TypeScript code as a string
+ */
+function generateTypescriptCode(mapping: Record<string, {question: string, answer: string}>): string {
+  // Format the mapping as a TypeScript object
+  const entries = Object.entries(mapping)
+    .map(([key, {question, answer}]) => {
+      // Escape any quotes in the strings
+      const escapedKey = key.replace(/"/g, '\\"');
+      const escapedQuestion = question.replace(/"/g, '\\"');
+      const escapedAnswer = answer.replace(/"/g, '\\"');
+      
+      return `  "${escapedKey}": {\n    question: "${escapedQuestion}",\n    answer: "${escapedAnswer}"\n  }`;
+    })
+    .join(',\n');
+  
+  // Generate the full TypeScript file content
+  const tsCode = `// This file is auto-generated by excel-processor.ts
 // Generated on ${new Date().toISOString()}
 
 export interface QuestionAnswer {
@@ -110,7 +86,9 @@ export interface QuestionAnswer {
   answer: string;
 }
 
-export const questionAnswerMapping: Record<string, QuestionAnswer> = ${JSON.stringify(qaMapping, null, 2)};
+export const questionAnswerMapping: Record<string, QuestionAnswer> = {
+${entries}
+};
 
 /**
  * Find the closest matching Q&A for a given filename
@@ -118,23 +96,30 @@ export const questionAnswerMapping: Record<string, QuestionAnswer> = ${JSON.stri
  * @returns The matching Q&A or undefined if no match
  */
 export function findMatchingQA(filename: string): QuestionAnswer | undefined {
-  // Normalize filename
-  const normalizedFilename = filename.replace(/\\\\/g, '/');
-  const baseFilename = normalizedFilename.split('/').pop() || '';
+  // First, try an exact match
+  if (questionAnswerMapping[filename]) {
+    return questionAnswerMapping[filename];
+  }
   
-  // Try direct match first
-  const directMatch = questionAnswerMapping[baseFilename];
-  if (directMatch) return directMatch;
+  // If no exact match, try to find a match by cleaning up the filename
+  const cleanedFilename = filename
+    .replace(/\\.(png|jpg|jpeg|gif|webp|mp4)$/i, '') // Remove file extensions
+    .trim();
+    
+  for (const [key, qa] of Object.entries(questionAnswerMapping)) {
+    const cleanedKey = key
+      .replace(/\\.(png|jpg|jpeg|gif|webp|mp4)$/i, '') // Remove file extensions
+      .trim();
+      
+    if (cleanedFilename === cleanedKey) {
+      return qa;
+    }
+  }
   
-  // Try matching just the basename without extension
-  const basenameWithoutExt = baseFilename.split('.')[0];
-  const basenameMatch = questionAnswerMapping[basenameWithoutExt];
-  if (basenameMatch) return basenameMatch;
-  
-  // Try looking for key portions in the filename
-  for (const key of Object.keys(questionAnswerMapping)) {
-    if (baseFilename.includes(key) || key.includes(baseFilename)) {
-      return questionAnswerMapping[key];
+  // If still no match, try if the filename contains the key
+  for (const [key, qa] of Object.entries(questionAnswerMapping)) {
+    if (filename.includes(key)) {
+      return qa;
     }
   }
   
@@ -142,10 +127,6 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
   return undefined;
 }
 `;
-  
-  // Write the TypeScript file
-  fs.writeFileSync(outputPath, tsContent);
-  console.log(`Generated TypeScript file at: ${outputPath}`);
-  
-  return qaMapping;
+
+  return tsCode;
 }

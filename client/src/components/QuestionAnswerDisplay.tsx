@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Flag, Check, X } from "lucide-react";
+import { findMatchingQA } from "@/data/qa-mapping";
 
 interface QAData {
   country: string;
@@ -179,6 +180,24 @@ function getQuestionAnswerFromData(material: any): QAData {
   
   // Clean the title
   const title = material.title ? formatText.cleanFileName(material.title) : '';
+  
+  // First, try to find a matching Q&A from the Excel-processed mapping
+  // This will ensure the correct question/answer pair is displayed based on the filename
+  const filename = material.content || '';
+  const mappedQA = findMatchingQA(filename);
+  
+  if (mappedQA) {
+    console.log("Found matching Q&A from Excel mapping for:", filename);
+    return {
+      question: mappedQA.question,
+      answer: mappedQA.answer,
+      country: formatText.determineCountry(content),
+      hasData: true
+    };
+  }
+  
+  // If no mapping found, fall back to the existing pattern matching logic
+  console.log("No Excel mapping found for:", filename, "- using pattern matching");
   
   // Function to extract code pattern from filename (like "01 R A", "01 A b", "02 B c", etc.)
   const extractCodePattern = (text: string): string => {
