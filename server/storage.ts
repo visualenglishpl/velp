@@ -8,6 +8,7 @@ import {
 import { eq, and, desc, asc } from "drizzle-orm";
 import session from "express-session";
 import createMemoryStore from "memorystore";
+import { initialBooks, initialUnits } from "./memory-data";
 
 // Interface for Storage Operations
 export interface IStorage {
@@ -189,6 +190,17 @@ export class MemStorage implements IStorage {
       role: "admin",
       createdAt: new Date()
     });
+    
+    // Initialize with books from memory-data.ts
+    console.log('Initializing storage with predefined books and units');
+    
+    // Add books
+    this.books = initialBooks;
+    this.nextBookId = Math.max(...initialBooks.map(book => book.id)) + 1;
+    
+    // Add units
+    this.units = initialUnits;
+    this.nextUnitId = Math.max(...initialUnits.map(unit => unit.id)) + 1;
   }
 
   // User operations
