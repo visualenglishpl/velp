@@ -73,11 +73,27 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
       }
       
       for (let i = 1; i <= unitCount; i++) {
+        // Generate optimal thumbnail URL based on book ID
+        let thumbnailUrl = '';
+        
+        // For Book 0 series, use the format from S3 bucket: book{bookId}/icons/thumbnailsuni{bookId}-{number}.png
+        if (bookId.startsWith('0')) {
+          thumbnailUrl = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${i}.png`;
+        } 
+        // For Book 4, use specific format
+        else if (bookId === '4') {
+          thumbnailUrl = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${i}.png`;
+        }
+        // For all other books use the thumbnails folder format
+        else {
+          thumbnailUrl = `/api/direct/thumbnails/thumbnailsuni${bookId}-${i}.png`;
+        }
+        
         demoUnits.push({
           unitNumber: i.toString(),
           title: `UNIT ${i}`,
           description: '', // Remove descriptions as requested
-          thumbnailUrl: `/api/asset/book${bookId}/unit${i}/thumbnail.jpg`
+          thumbnailUrl: thumbnailUrl
         });
       }
       return demoUnits;
@@ -111,7 +127,7 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-6">
             {[...Array(10)].map((_, i) => (
               <Card key={i} className="overflow-hidden flex flex-col border-0 shadow-none">
                 <div className="aspect-square w-full">
@@ -131,7 +147,7 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-6">
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col h-full border-0 shadow-none">
                 <div className="aspect-square relative overflow-hidden">
