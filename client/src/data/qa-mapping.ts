@@ -245,19 +245,19 @@ export const questionAnswerMapping: Record<string, QuestionAnswer> = {
 export function findMatchingQA(filename: string): QuestionAnswer | undefined {
   console.log("Looking for matching Q&A for:", filename);
   
-  // First, try an exact match
-  if (questionAnswerMapping[filename]) {
-    console.log("Found exact match for:", filename);
-    return questionAnswerMapping[filename];
-  }
-  
-  // Special case for Poland content
-  if (filename.toLowerCase().includes('poland')) {
+  // Special case for Poland content - put this first for priority
+  if (filename.toLowerCase().includes('poland') || filename.match(/01\s*r/i)) {
     console.log("Found Poland content:", filename);
     return {
       question: "What country is this?",
       answer: "It is Poland."
     };
+  }
+  
+  // First, try an exact match
+  if (questionAnswerMapping[filename]) {
+    console.log("Found exact match for:", filename);
+    return questionAnswerMapping[filename];
   }
   
   // If no exact match, try to find a match by cleaning up the filename
