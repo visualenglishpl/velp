@@ -6,8 +6,8 @@ import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
 import { User as SchemaUser } from "@shared/schema";
-import connectPg from "connect-pg-simple";
-import { pool } from "./db";
+// Import MemoryStore for session storage instead of PostgreSQL
+import createMemoryStore from "memorystore";
 
 // Define a User type with explicit handling of fullName being null or undefined
 type UserType = {
@@ -27,7 +27,8 @@ declare global {
   }
 }
 
-const PostgresSessionStore = connectPg(session);
+// Create memory store
+const MemoryStore = createMemoryStore(session);
 const scryptAsync = promisify(scrypt);
 
 async function hashPassword(password: string): Promise<string> {
@@ -48,10 +49,8 @@ export function setupAuth(app: Express) {
     secret: process.env.SESSION_SECRET || "velp-dev-secret-key-change-me-in-production",
     resave: false,
     saveUninitialized: false,
-    store: new PostgresSessionStore({
-      pool,
-      tableName: 'session',
-      createTableIfMissing: true
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
     }),
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days

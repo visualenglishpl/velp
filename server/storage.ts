@@ -5,11 +5,15 @@ import {
   materials, type Material, type InsertMaterial,
   plans, schools, subscriptions, schoolTeachers
 } from "@shared/schema";
-import { db } from "./db";
 import { eq, and, desc, asc } from "drizzle-orm";
+import session from "express-session";
+import createMemoryStore from "memorystore";
 
 // Interface for Storage Operations
 export interface IStorage {
+  // Session store
+  sessionStore: session.Store;
+
   // User operations
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -156,4 +160,202 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+// Memory Storage Implementation
+export class MemStorage implements IStorage {
+  private users: User[] = [];
+  private nextUserId = 1;
+  private books: Book[] = [];
+  private nextBookId = 1;
+  private units: Unit[] = [];
+  private nextUnitId = 1;
+  private materials: Material[] = [];
+  private nextMaterialId = 1;
+  
+  // Session store
+  sessionStore: session.Store;
+  
+  constructor() {
+    const MemoryStore = createMemoryStore(session);
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000, // prune expired entries every 24h
+    });
+    
+    // Create admin user
+    this.createUser({
+      username: "admin",
+      password: "$2b$10$PX5aQ5N5YCgBZq7TwwQw7.QRH65VNqnWJwWDc8QFG0EY0g/3erRZa", // password: "admin123"
+      email: "admin@example.com",
+      fullName: "Admin User",
+      role: "admin",
+      createdAt: new Date()
+    });
+  }
+
+  // User operations
+  async getUser(id: number): Promise<User | undefined> {
+    return this.users.find(user => user.id === id);
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    return this.users.find(user => user.username === username);
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const user: User = {
+      ...insertUser,
+      id: this.nextUserId++,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.users.push(user);
+    return user;
+  }
+  
+  // Book operations
+  async getBooks(): Promise<Book[]> {
+    return [...this.books].sort((a, b) => a.bookId.localeCompare(b.bookId));
+  }
+  
+  async getBookById(id: number): Promise<Book | undefined> {
+    return this.books.find(book => book.id === id);
+  }
+  
+  async getBookByBookId(bookId: string): Promise<Book | undefined> {
+    return this.books.find(book => book.bookId === bookId);
+  }
+  
+  async createBook(book: InsertBook): Promise<Book> {
+    const newBook: Book = {
+      ...book,
+      id: this.nextBookId++,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.books.push(newBook);
+    return newBook;
+  }
+  
+  async updateBook(id: number, book: Partial<InsertBook>): Promise<Book> {
+    const index = this.books.findIndex(b => b.id === id);
+    if (index === -1) {
+      throw new Error(`Book with id ${id} not found`);
+    }
+    
+    const updatedBook: Book = {
+      ...this.books[index],
+      ...book,
+      updatedAt: new Date()
+    };
+    
+    this.books[index] = updatedBook;
+    return updatedBook;
+  }
+  
+  async deleteBook(id: number): Promise<void> {
+    const index = this.books.findIndex(book => book.id === id);
+    if (index !== -1) {
+      this.books.splice(index, 1);
+      // Also delete all units and materials associated with this book
+      const unitIds = this.units.filter(unit => unit.bookId === id).map(unit => unit.id);
+      this.units = this.units.filter(unit => unit.bookId !== id);
+      unitIds.forEach(unitId => {
+        this.materials = this.materials.filter(material => material.unitId !== unitId);
+      });
+    }
+  }
+  
+  // Unit operations
+  async getUnits(bookId: number): Promise<Unit[]> {
+    return [...this.units]
+      .filter(unit => unit.bookId === bookId)
+      .sort((a, b) => a.unitNumber - b.unitNumber);
+  }
+  
+  async getUnitById(id: number): Promise<Unit | undefined> {
+    return this.units.find(unit => unit.id === id);
+  }
+  
+  async createUnit(unit: InsertUnit): Promise<Unit> {
+    const newUnit: Unit = {
+      ...unit,
+      id: this.nextUnitId++,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.units.push(newUnit);
+    return newUnit;
+  }
+  
+  async updateUnit(id: number, unit: Partial<InsertUnit>): Promise<Unit> {
+    const index = this.units.findIndex(u => u.id === id);
+    if (index === -1) {
+      throw new Error(`Unit with id ${id} not found`);
+    }
+    
+    const updatedUnit: Unit = {
+      ...this.units[index],
+      ...unit,
+      updatedAt: new Date()
+    };
+    
+    this.units[index] = updatedUnit;
+    return updatedUnit;
+  }
+  
+  async deleteUnit(id: number): Promise<void> {
+    const index = this.units.findIndex(unit => unit.id === id);
+    if (index !== -1) {
+      this.units.splice(index, 1);
+      // Also delete all materials associated with this unit
+      this.materials = this.materials.filter(material => material.unitId !== id);
+    }
+  }
+  
+  // Material operations
+  async getMaterials(unitId: number): Promise<Material[]> {
+    return [...this.materials]
+      .filter(material => material.unitId === unitId)
+      .sort((a, b) => a.orderIndex - b.orderIndex);
+  }
+  
+  async getMaterialById(id: number): Promise<Material | undefined> {
+    return this.materials.find(material => material.id === id);
+  }
+  
+  async createMaterial(material: InsertMaterial): Promise<Material> {
+    const newMaterial: Material = {
+      ...material,
+      id: this.nextMaterialId++,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.materials.push(newMaterial);
+    return newMaterial;
+  }
+  
+  async updateMaterial(id: number, material: Partial<InsertMaterial>): Promise<Material> {
+    const index = this.materials.findIndex(m => m.id === id);
+    if (index === -1) {
+      throw new Error(`Material with id ${id} not found`);
+    }
+    
+    const updatedMaterial: Material = {
+      ...this.materials[index],
+      ...material,
+      updatedAt: new Date()
+    };
+    
+    this.materials[index] = updatedMaterial;
+    return updatedMaterial;
+  }
+  
+  async deleteMaterial(id: number): Promise<void> {
+    const index = this.materials.findIndex(material => material.id === id);
+    if (index !== -1) {
+      this.materials.splice(index, 1);
+    }
+  }
+}
+
+// Use MemStorage instead of DatabaseStorage
+export const storage = new MemStorage();
