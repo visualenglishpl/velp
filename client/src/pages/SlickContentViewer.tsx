@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation, useNavigate } from 'wouter';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical, Save, Pencil, Type, Square, ArrowUpRight, Eraser } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -911,7 +911,13 @@ export default function SlickContentViewer() {
                         <video 
                           src={material.path}
                           controls
-                          className={`h-auto w-auto max-w-full mx-auto object-contain ${isEditMode ? 'cursor-crosshair' : ''}`}
+                          className={`h-auto w-auto max-w-full mx-auto object-contain ${isEditMode ? 'cursor-crosshair' : ''} 
+                            ${!hasPaidAccess && (
+                              // Apply blur based on book type - 0a, 0b, 0c blur from 3rd image onwards, others from 11th
+                              (/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit) || 
+                              (!/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit)
+                            ) ? 'blur-lg brightness-75' : ''}
+                          `}
                           style={{ maxHeight: '100%' }}
                           onError={(e) => {
                             console.error(`Error loading video at ${material.path}`, e);
@@ -921,6 +927,26 @@ export default function SlickContentViewer() {
                         >
                           Your browser does not support the video tag.
                         </video>
+                        
+                        {/* Premium content overlay */}
+                        {!hasPaidAccess && (
+                          // Apply blur based on book type - 0a, 0b, 0c blur from 3rd image onwards, others from 11th
+                          (/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit) || 
+                          (!/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit)
+                        ) && (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
+                            <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
+                            <p className="text-sm mb-4">Subscribe to access all learning materials</p>
+                            <Button 
+                              size="sm" 
+                              variant="default"
+                              className="bg-primary text-white hover:bg-primary/90"
+                              onClick={() => setLocation('/checkout/single_lesson')}
+                            >
+                              Upgrade Now
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
                       <div className="relative h-full flex items-center justify-center">
@@ -939,23 +965,51 @@ export default function SlickContentViewer() {
                             }
                           }}
                         >
-                          <img 
-                            src={material.path}
-                            alt={`Learning material slide ${index + 1}`}
-                            className={`h-auto w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''} transition-transform duration-200`}
-                            style={{ 
-                              maxHeight: isZoomed ? 'none' : '100%',
-                              transform: `scale(${isZoomed ? zoomLevel : 1})`,
-                              transformOrigin: 'center center'
-                            }}
-                            loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
-                            onError={(e) => {
-                              console.error(`Error loading image at ${material.path}`, e);
-                              // Set a fallback or placeholder
-                              e.currentTarget.src = `/placeholder.png`;
-                              e.currentTarget.classList.add('error-image');
-                            }}
-                          />
+                          <div className="relative w-full h-full flex items-center justify-center">
+                            <img 
+                              src={material.path}
+                              alt={`Learning material slide ${index + 1}`}
+                              className={`h-auto w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''} transition-transform duration-200 
+                                ${!hasPaidAccess && (
+                                  // Apply blur based on book type - 0a, 0b, 0c blur from 3rd image onwards, others from 11th
+                                  (/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit) || 
+                                  (!/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit)
+                                ) ? 'blur-lg brightness-75' : ''}
+                              `}
+                              style={{ 
+                                maxHeight: isZoomed ? 'none' : '100%',
+                                transform: `scale(${isZoomed ? zoomLevel : 1})`,
+                                transformOrigin: 'center center'
+                              }}
+                              loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
+                              onError={(e) => {
+                                console.error(`Error loading image at ${material.path}`, e);
+                                // Set a fallback or placeholder
+                                e.currentTarget.src = `/placeholder.png`;
+                                e.currentTarget.classList.add('error-image');
+                              }}
+                            />
+                            
+                            {/* Premium content overlay */}
+                            {!hasPaidAccess && (
+                              // Apply blur based on book type - 0a, 0b, 0c blur from 3rd image onwards, others from 11th
+                              (/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit) || 
+                              (!/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit)
+                            ) && (
+                              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
+                                <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
+                                <p className="text-sm mb-4">Subscribe to access all learning materials</p>
+                                <Button 
+                                  size="sm" 
+                                  variant="default"
+                                  className="bg-primary text-white hover:bg-primary/90"
+                                  onClick={() => setLocation('/checkout/single_lesson')}
+                                >
+                                  Upgrade Now
+                                </Button>
+                              </div>
+                            )}
+                          </div>
                           
                           {/* Zoom controls - only show when current slide is active */}
                           {index === currentIndex && !isEditMode && (
