@@ -167,10 +167,15 @@ export default function CheckoutPage() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [planType, setPlanType] = useState<PlanType>(planId as PlanType || 'single_lesson');
   
-  // Parse the URL query parameters to get the book ID
+  // Parse the URL query parameters to get the book ID and unit ID
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   const [selectedBooks, setSelectedBooks] = useState<string[]>([]);
   const [multipleBooks, setMultipleBooks] = useState<boolean>(false);
+  
+  // For single lesson selection
+  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+  const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
+  const [multipleUnits, setMultipleUnits] = useState<boolean>(false);
   
   // Book title map for readable titles
   const bookTitles: Record<string, string> = {
@@ -297,17 +302,25 @@ export default function CheckoutPage() {
     }
   ];
 
-  // Get book ID from URL parameters
+  // Get book ID and unit ID from URL parameters
   useEffect(() => {
     // Parse URL query parameters
     const searchParams = new URLSearchParams(location.split('?')[1]);
     const bookParam = searchParams.get('book');
+    const unitParam = searchParams.get('unit');
     
     if (bookParam) {
       setSelectedBookId(bookParam);
       console.log(`Selected book: ${bookParam}`);
+      
+      // For single lesson access, also track the unit
+      if (unitParam && planType === 'single_lesson') {
+        setSelectedUnitId(unitParam);
+        setSelectedUnits([unitParam]); // Initialize the array with the selected unit
+        console.log(`Selected unit: ${unitParam}`);
+      }
     }
-  }, [location]);
+  }, [location, planType]);
   
   // Customer information state
   const [customerInfo, setCustomerInfo] = useState({
@@ -384,6 +397,12 @@ export default function CheckoutPage() {
       setIsLoading(false);
       return;
     }
+    
+    // For single lesson checkout, we need a book and at least one selected unit
+    if (planType === 'single_lesson' && (!selectedBookId || selectedUnits.length === 0)) {
+      setIsLoading(false);
+      return;
+    }
 
     setIsLoading(true);
     const createPaymentIntent = async () => {
@@ -393,7 +412,10 @@ export default function CheckoutPage() {
           billingCycle,
           bookId: selectedBookId || undefined,
           bookIds: multipleBooks ? selectedBooks : undefined,
-          multipleBooks: multipleBooks
+          multipleBooks: multipleBooks,
+          // Include unit information for single lesson purchases
+          unitIds: planType === 'single_lesson' ? selectedUnits : undefined,
+          multipleUnits: planType === 'single_lesson' && selectedUnits.length > 1
         });
         
         const data = await response.json();
@@ -420,7 +442,7 @@ export default function CheckoutPage() {
     };
 
     createPaymentIntent();
-  }, [planType, billingCycle, toast, customerInfo.name, customerInfo.email, selectedBookId, multipleBooks, selectedBooks]);
+  }, [planType, billingCycle, toast, customerInfo.name, customerInfo.email, selectedBookId, multipleBooks, selectedBooks, selectedUnits]);
 
   // Create Stripe Elements options
   const stripeOptions: StripeElementsOptions = {
@@ -575,8 +597,107 @@ export default function CheckoutPage() {
         <h1 className="text-3xl font-bold mb-10 text-center">
           {planType === 'whole_book' && selectedBookId 
             ? `${bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`} - Checkout` 
-            : 'Checkout'}
+            : planType === 'single_lesson' && selectedBookId
+              ? `Single Lesson - ${bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`}`
+              : 'Checkout'}
         </h1>
+
+        {/* Unit Selection for Single Lesson plan */}
+        {planType === 'single_lesson' && selectedBookId && (
+          <div className="md:col-span-2 mb-6">
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Select Units</CardTitle>
+                    <CardDescription>Choose which units you want to purchase access for</CardDescription>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Label htmlFor="multipleUnits" className="cursor-pointer">Add more units</Label>
+                    <input 
+                      type="checkbox" 
+                      id="multipleUnits" 
+                      className="cursor-pointer form-checkbox h-5 w-5 text-primary" 
+                      checked={multipleUnits}
+                      onChange={(e) => {
+                        setMultipleUnits(e.target.checked);
+                      }}
+                    />
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-4 md:grid-cols-9 gap-2">
+                  {(() => {
+                    // Determine the number of units based on the book ID
+                    let unitCount = 10; // Default
+                    
+                    if (['0a', '0b', '0c'].includes(selectedBookId)) {
+                      unitCount = 20;
+                    } else if (['1', '2', '3'].includes(selectedBookId)) {
+                      unitCount = 18;
+                    } else if (['4', '5', '6', '7'].includes(selectedBookId)) {
+                      unitCount = 16;
+                    }
+                    
+                    // Generate unit elements
+                    const unitElements = [];
+                    for (let i = 1; i <= unitCount; i++) {
+                      const unitId = i.toString();
+                      const isSelected = selectedUnits.includes(unitId);
+                      
+                      unitElements.push(
+                        <Card
+                          key={unitId}
+                          className={`cursor-pointer border-2 overflow-hidden hover:bg-gray-50 ${
+                            isSelected ? 'border-primary' : 'border-transparent'
+                          }`}
+                          onClick={() => {
+                            if (multipleUnits) {
+                              // Toggle unit selection when multiple units are allowed
+                              setSelectedUnits(prev => 
+                                prev.includes(unitId)
+                                  ? prev.filter(id => id !== unitId)
+                                  : [...prev, unitId]
+                              );
+                            } else {
+                              // Select only this unit
+                              setSelectedUnits([unitId]);
+                              setSelectedUnitId(unitId);
+                            }
+                          }}
+                        >
+                          <div className="p-2 text-center">
+                            <div className="font-bold">
+                              {isSelected && (
+                                <span className="text-primary mr-1">✓</span>
+                              )}
+                              UNIT {unitId}
+                            </div>
+                          </div>
+                        </Card>
+                      );
+                    }
+                    
+                    return unitElements;
+                  })()}
+                </div>
+                <div className="mt-4 text-center text-sm text-gray-500">
+                  {selectedUnits.length > 0 && (
+                    <p>
+                      Selected: {selectedUnits.map(unitId => `UNIT ${unitId}`).join(', ')}
+                      {selectedUnits.length > 1 && (
+                        <span className="font-medium text-primary ml-2">
+                          Total: €{billingCycle === 'monthly' ? 5 * selectedUnits.length : 40 * selectedUnits.length}
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         {/* Show book selection grid when on whole book plan with no selection */}
         {planType === 'whole_book' && (
@@ -732,7 +853,7 @@ export default function CheckoutPage() {
                 </div>
                 
                 {/* Single book selection */}
-                {!multipleBooks && selectedBookId && (
+                {!multipleBooks && selectedBookId && planType !== 'single_lesson' && (
                   <div className="mt-2 p-3 bg-gray-50 rounded-md">
                     <div className="font-medium text-sm">Selected Book:</div>
                     <div className="text-primary font-bold">
