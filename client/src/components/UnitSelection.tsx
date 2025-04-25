@@ -80,14 +80,32 @@ export function UnitSelection({
     unitElements.push(
       <button
         key={unitId}
-        className={`cursor-pointer transition-all text-center p-1 rounded border text-xs ${
+        className={`cursor-pointer transition-all text-center p-1 rounded-md border ${
           isSelected 
-            ? 'border-primary bg-primary/5 text-primary font-bold' 
+            ? 'border-primary bg-primary/5 text-primary font-medium' 
             : 'border-gray-200 hover:border-primary hover:bg-gray-50'
         }`}
         onClick={() => selectUnit(unitId)}
       >
-        {unitId}
+        <div className="flex flex-col items-center">
+          <div className="w-10 h-10 mb-0.5 overflow-hidden rounded-sm bg-gray-100">
+            <img 
+              src={`/api/direct/book${selectedBookId}/unit${unitId}/thumbnail.jpg`}
+              alt={`Unit ${unitId}`}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                const img = e.target as HTMLImageElement;
+                img.src = `/api/direct/book${selectedBookId}/unit${unitId}/00 A.png`;
+                img.onerror = () => {
+                  const fallbackImg = e.target as HTMLImageElement;
+                  fallbackImg.src = `/api/direct/book${selectedBookId}/unit${unitId}/title.png`;
+                  fallbackImg.onerror = null;
+                };
+              }}
+            />
+          </div>
+          <span className="text-xs font-medium">{unitId}</span>
+        </div>
       </button>
     );
   }
@@ -122,7 +140,7 @@ export function UnitSelection({
       </p>
       
       <div className="p-2 bg-gray-50 rounded-md border border-gray-200 mb-2">
-        <div className="grid grid-cols-6 sm:grid-cols-10 md:grid-cols-12 gap-1">
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1.5">
           {unitElements}
         </div>
       </div>
