@@ -375,13 +375,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Generate presigned URLs for unit thumbnails
       const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
+        // Use the standard path format for all books: book{bookId}/icons/thumbnailsuni{bookId}-{unitNumber}.png
+        const thumbnailPath = `book${currentBook.bookId}/icons/thumbnailsuni${currentBook.bookId}-${unit.unitNumber}.png`;
         let thumbnailUrl = null;
-        if (unit.thumbnail) {
-          try {
-            thumbnailUrl = await getS3PresignedUrl(unit.thumbnail);
-            console.log(`Success: Generated thumbnail URL for unit ${unit.unitNumber}: ${unit.thumbnail}`);
-          } catch (error) {
-            console.error(`Error generating URL for ${unit.thumbnail}:`, error);
+        
+        try {
+          thumbnailUrl = await getS3PresignedUrl(thumbnailPath);
+          console.log(`Success: Generated thumbnail URL for unit ${unit.unitNumber}: ${thumbnailPath}`);
+        } catch (error) {
+          console.error(`Error generating URL for ${thumbnailPath}:`, error);
             // Try alternate path format if first attempt fails
             if (currentBook) {
               // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
