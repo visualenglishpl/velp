@@ -1,6 +1,8 @@
 import { Express, Request, Response } from "express";
 import { GetObjectCommand, S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import * as path from 'path';
+import { processExcelAndGenerateTS } from './excel-processor';
 
 // S3 configuration 
 const S3_BUCKET = process.env.S3_BUCKET || "visualenglishmaterial";
@@ -690,6 +692,53 @@ export function registerDirectRoutes(app: Express) {
   });
   
   // Endpoint to store flagged questions
+  // Endpoint to process Excel file and update question-answer mappings
+  app.post("/api/direct/process-excel", isAuthenticated, async (req, res) => {
+    try {
+      console.log("Processing Excel file to update question-answer mappings");
+      
+      // Verify admin access
+      if (!req.isAuthenticated || !req.user || req.user.role !== 'admin') {
+        console.log("Unauthorized access attempt to process-excel endpoint");
+        return res.status(401).json({
+          success: false,
+          error: "Unauthorized - Admin access required"
+        });
+      }
+      
+      // Path to the Excel file
+      const excelFilePath = path.join(process.cwd(), 'attached_assets', 'VISUAL 1 QUESTIONS.xlsx');
+      
+      // Path for the output TypeScript file
+      const tsOutputPath = path.join(process.cwd(), 'client', 'src', 'data', 'question-data.ts');
+      
+      try {
+        // Process the Excel file and generate TypeScript
+        const qaMapping = processExcelAndGenerateTS(excelFilePath, tsOutputPath);
+        
+        return res.json({
+          success: true,
+          message: "Excel processed successfully",
+          totalMappings: Object.keys(qaMapping).length,
+          outputFile: tsOutputPath
+        });
+      } catch (processingError) {
+        console.error("Error processing Excel file:", processingError);
+        return res.status(500).json({
+          success: false,
+          error: "Error processing Excel file",
+          details: processingError.message
+        });
+      }
+    } catch (error) {
+      console.error("Error in process-excel endpoint:", error);
+      return res.status(500).json({
+        success: false,
+        error: "Internal server error"
+      });
+    }
+  });
+  
   app.post("/api/direct/flag-question", isAuthenticated, async (req, res) => {
     try {
       const { 
