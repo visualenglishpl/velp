@@ -3,6 +3,7 @@ import { GetObjectCommand, S3Client, ListObjectsV2Command } from "@aws-sdk/clien
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import * as path from 'path';
 import { processExcelAndGenerateTS } from './excel-processor';
+import { processUnitExcel } from './excel-unit-processor';
 import { storage } from './storage';
 
 // S3 configuration 
@@ -1156,6 +1157,44 @@ export function registerDirectRoutes(app: Express) {
       res.status(500).json({ 
         success: false, 
         error: "Failed to process Q&A Excel file: " + (error instanceof Error ? error.message : String(error))
+      });
+    }
+  });
+  
+  // Process Excel data for a specific unit
+  app.get("/api/direct/:bookPath/:unitPath/excel-qa", isAuthenticated, async (req, res) => {
+    try {
+      const { bookPath, unitPath } = req.params;
+      
+      console.log(`Processing Excel QA for ${bookPath}/${unitPath}`);
+      
+      // First check if we have cached data
+      let qaEntries = await storage.getUnitQuestionAnswers(bookPath, unitPath);
+      
+      // If no cached data, process Excel from S3
+      if (!qaEntries || qaEntries.length === 0) {
+        console.log(`No cached QA data for ${bookPath}/${unitPath}, processing Excel...`);
+        qaEntries = await processUnitExcel(bookPath, unitPath);
+        
+        // Save to cache if we got data
+        if (qaEntries && qaEntries.length > 0) {
+          await storage.saveUnitQuestionAnswers(bookPath, unitPath, qaEntries);
+        }
+      }
+      
+      return res.json({
+        success: true,
+        bookId: bookPath,
+        unitId: unitPath,
+        entries: qaEntries,
+        count: qaEntries.length
+      });
+    } catch (error) {
+      console.error(`Error processing Excel QA for unit: ${error}`);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to process Excel for unit",
+        error: String(error)
       });
     }
   });

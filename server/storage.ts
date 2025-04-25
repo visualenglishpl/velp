@@ -219,6 +219,7 @@ export class MemStorage implements IStorage {
   private nextSlideOrderId = 1;
   private flaggedQuestions: FlaggedQuestion[] = [];
   private nextFlaggedQuestionId = 1;
+  private unitQuestionAnswers: { bookId: string; unitId: string; entries: QuestionAnswerEntry[] }[] = [];
   
   // Session store
   sessionStore: session.Store;
@@ -522,6 +523,42 @@ export class MemStorage implements IStorage {
     console.log(`Updated flagged question with ID ${id}`);
     
     return updatedQuestion;
+  }
+  
+  // Unit question-answer operations from Excel
+  async getUnitQuestionAnswers(bookId: string, unitId: string): Promise<QuestionAnswerEntry[]> {
+    const existing = this.unitQuestionAnswers.find(
+      qa => qa.bookId === bookId && qa.unitId === unitId
+    );
+    
+    if (existing) {
+      console.log(`Found ${existing.entries.length} cached QA entries for ${bookId}/${unitId}`);
+      return existing.entries;
+    }
+    
+    console.log(`No cached QA entries found for ${bookId}/${unitId}`);
+    return [];
+  }
+  
+  async saveUnitQuestionAnswers(bookId: string, unitId: string, entries: QuestionAnswerEntry[]): Promise<boolean> {
+    const existingIndex = this.unitQuestionAnswers.findIndex(
+      qa => qa.bookId === bookId && qa.unitId === unitId
+    );
+    
+    if (existingIndex !== -1) {
+      // Update existing entries
+      this.unitQuestionAnswers[existingIndex].entries = entries;
+    } else {
+      // Add new entry
+      this.unitQuestionAnswers.push({
+        bookId,
+        unitId,
+        entries
+      });
+    }
+    
+    console.log(`Saved ${entries.length} QA entries for ${bookId}/${unitId}`);
+    return true;
   }
 }
 
