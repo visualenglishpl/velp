@@ -24,7 +24,8 @@ const Navbar = () => {
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        navigate('/');
+        // Use window.location instead of navigate to force a full page reload
+        window.location.href = '/';
         setMobileMenuOpen(false);
       }
     });
