@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Flag, Check, X, RefreshCw } from "lucide-react";
-import { findMatchingQA } from "@/data/qa-mapping";
 import { useQuery } from "@tanstack/react-query";
 
 interface QAData {
@@ -134,49 +133,6 @@ const formatText = {
       }
     }
     
-    // For files with common question patterns without dashes
-    // Examples: "Do You Have A Pen in Your Pencil Case.gif"
-    
-    const questionPatterns = [
-      { regex: /^do you have (.+?)(\.|\?|$)/i, answerPositive: "Yes, I have $1.", answerNegative: "No, I don't have $1." },
-      { regex: /^does (he|she) have (.+?)(\.|\?|$)/i, answerPositive: "Yes, $1 has $2.", answerNegative: "No, $1 doesn't have $2." },
-      { regex: /^is (it|he|she|this) (.+?)(\.|\?|$)/i, answerPositive: "Yes, $1 is $2.", answerNegative: "No, $1 isn't $2." },
-      { regex: /^are (you|they|these) (.+?)(\.|\?|$)/i, answerPositive: "Yes, $1 are $2.", answerNegative: "No, $1 aren't $2." },
-      { regex: /^what is (.+?)(\.|\?|$)/i, answer: "It is $1." },
-      { regex: /^what are (.+?)(\.|\?|$)/i, answer: "They are $1." },
-      { regex: /^where is (.+?)(\.|\?|$)/i, answer: "It is in $1." },
-      { regex: /^which (.+?) is (.+?)(\.|\?|$)/i, answer: "It is $2." }
-    ];
-    
-    for (const pattern of questionPatterns) {
-      const match = lowerFilename.match(pattern.regex);
-      if (match) {
-        // Format as proper question
-        let question = match[0];
-        if (!question.endsWith('?')) {
-          question = question.replace(/\..*$/, '?');
-        }
-        question = question.charAt(0).toUpperCase() + question.slice(1);
-        
-        let answer;
-        if ('answer' in pattern && pattern.answer) {
-          // For single-answer patterns like "what is"
-          answer = pattern.answer.replace(/\$(\d+)/g, (_, n) => match[parseInt(n)]);
-        } else if ('answerPositive' in pattern && pattern.answerPositive) {
-          // For yes/no questions
-          answer = pattern.answerPositive.replace(/\$(\d+)/g, (_, n) => match[parseInt(n)]);
-        } else {
-          // Fallback
-          answer = "It is " + match[0] + ".";
-        }
-        
-        return {
-          question,
-          answer
-        };
-      }
-    }
-    
     return null;
   }
 };
@@ -184,98 +140,12 @@ const formatText = {
 // Helper function to get question and answer for a material
 function getQuestionAnswerFromData(material: any): QAData {
   const content = material.content || '';
-  const description = material.description || '';
   
   // Clean the title
   const title = material.title ? formatText.cleanFileName(material.title) : '';
   
-  // First, try to find a matching Q&A from the Excel-processed mapping
-  // This will ensure the correct question/answer pair is displayed based on the filename
-  const filename = material.content || '';
-  const mappedQA = findMatchingQA(filename);
-  
-  if (mappedQA) {
-    console.log("Found matching Q&A from Excel mapping for:", filename);
-    return {
-      question: mappedQA.question,
-      answer: mappedQA.answer,
-      country: formatText.determineCountry(content),
-      hasData: true
-    };
-  }
-  
-  // If no mapping found, fall back to the existing pattern matching logic
-  console.log("No Excel mapping found for:", filename, "- using pattern matching");
-  
-  // Function to extract code pattern from filename (like "01 R A", "01 A b", "02 B c", etc.)
-  const extractCodePattern = (text: string): string => {
-    // Try to match patterns like "(01 A a)" from the pasted document format 
-    const parenMatch = text.match(/\((\d{2})\s*([a-z])\s*([a-z])\)/i);
-    if (parenMatch) {
-      const result = `${parenMatch[1]} ${parenMatch[2].toLowerCase()} ${parenMatch[3].toLowerCase()}`;
-      console.log("Extracted parenthesized code pattern:", result, "from text:", text);
-      return result;
-    }
-    
-    // Try to extract from more specific patterns first (look for code pattern at the beginning)
-    const specificMatch = text.match(/^(\d{2})\s+([a-z])\s+([a-z](?:a)?)\s/i);
-    if (specificMatch) {
-      const result = `${specificMatch[1]} ${specificMatch[2].toLowerCase()} ${specificMatch[3].toLowerCase()}`;
-      console.log("Extracted specific code pattern:", result, "from text:", text);
-      return result;
-    }
-
-    // Match patterns like "01 R A" or "05 L C" anywhere in the text
-    // Be more restrictive - require it to be followed by specific keywords or be at the start
-    const codeMatch = text.match(/(\d{2})\s+([a-z])\s+([a-z](?:a)?)(\s|$|\s+what|\s+do|\s+is|\s+are|\s+how|\s+where|\s+who)/i);
-    if (codeMatch) {
-      // Return standardized format for matching: "01 r a"
-      const result = `${codeMatch[1]} ${codeMatch[2].toLowerCase()} ${codeMatch[3].toLowerCase()}`;
-      console.log("Extracted code pattern:", result, "from text:", text);
-      return result;
-    }
-    
-    return '';
-  };
-  
-  // Extract code pattern from content and description
-  const contentCode = extractCodePattern(content);
-  const descriptionCode = extractCodePattern(description);
-  
-  // Use the first code pattern found
-  const codePattern = contentCode || descriptionCode;
-  
-  // For debugging - log the source of the code pattern
-  if (contentCode) console.log("Using code pattern from content:", contentCode);
-  if (descriptionCode) console.log("Using code pattern from description:", descriptionCode);
-  
-  // If in filename, we may need to check if there's an actual country or subject match
-  if (contentCode && (content.includes("Gadgets") || content.toLowerCase().includes("phone") || 
-      content.toLowerCase().includes("charger") || content.toLowerCase().includes("gadget"))) {
-    console.log("Found gadgets in content, prioritizing mobile phone category");
-    
-    // Clear any country detection from the material content to avoid showing Poland question
-    if (formatText.determineCountry(content)) {
-      console.log("Overriding country detection because this is a gadget slide");
-    }
-  }
-  
-  // No hard-coded questions - all questions will come from Excel files in S3
-  const qaDatabase: QADatabaseEntry[] = [];
-  
-  // Check for an exact match in our database using the code pattern
-  if (codePattern) {
-    console.log("Found code pattern: ", codePattern);
-    const matchedQA = qaDatabase.find(qa => qa.code === codePattern);
-    if (matchedQA) {
-      return { 
-        country: matchedQA.country || matchedQA.category || "",
-        question: matchedQA.question, 
-        answer: matchedQA.answer, 
-        hasData: true 
-      };
-    }
-  }
+  // Extract country information
+  const country = formatText.determineCountry(content);
   
   // Try to extract question and answer directly from the filename using dash patterns
   // Examples: "What is it – It is a pencil.gif", "Where is this flag from – It is from Poland.jpg"
@@ -283,109 +153,17 @@ function getQuestionAnswerFromData(material: any): QAData {
   if (extractedFromFilename) {
     console.log("Extracted question/answer from filename:", extractedFromFilename);
     return {
-      country: formatText.determineCountry(content),
+      country: country,
       question: extractedFromFilename.question,
       answer: extractedFromFilename.answer,
       hasData: true
     };
   }
   
-  // Check for specific filename patterns
-  const contentLower = content.toLowerCase();
-  
-  // Special cases for particular content types
-  if (contentLower.includes('phone') || contentLower.includes('mobile')) {
-    if (contentLower.includes('what is')) {
-      return { 
-        country: "MOBILE PHONES",
-        question: "What is this?", 
-        answer: "It is a phone.", 
-        hasData: true 
-      };
-    }
-    
-    if (contentLower.includes('do you have')) {
-      return { 
-        country: "MOBILE PHONES",
-        question: "Do you have a phone?", 
-        answer: "Yes, I have a phone / No, I don't have a phone.", 
-        hasData: true 
-      };
-    }
-  }
-  
-  if (contentLower.includes('charger')) {
-    if (contentLower.includes('what is')) {
-      return { 
-        country: "CHARGERS & BATTERIES",
-        question: "What is this?", 
-        answer: "It is a charger.", 
-        hasData: true 
-      };
-    }
-
-    if (contentLower.includes('do you have a charger') || contentLower.includes('have a charger')) {
-      return { 
-        country: "CHARGERS & BATTERIES",
-        question: "Do you have a charger?", 
-        answer: "Yes, I have a charger / No, I do not.", 
-        hasData: true 
-      };
-    }
-  }
-  
-  const country = formatText.determineCountry(content);
-  
-  // Try to match by the first part of the code (e.g., "01 r")
-  if (codePattern) {
-    const mainCode = codePattern.substring(0, 4); // Like "01 r" 
-    const countryQAs = qaDatabase.filter(qa => qa.code.startsWith(mainCode));
-    if (countryQAs.length > 0) {
-      // Use the first question for this country
-      return { 
-        country: countryQAs[0].country || countryQAs[0].category || "",
-        question: countryQAs[0].question, 
-        answer: countryQAs[0].answer, 
-        hasData: true 
-      };
-    }
-  }
-  
-  // Try to match by filename content
-  if (contentLower.includes('flag')) {
-    if (country) {
-      return { 
-        country,
-        question: "Where is this flag from?", 
-        answer: `It is from ${country.charAt(0).toUpperCase() + country.slice(1).toLowerCase()}.`, 
-        hasData: true 
-      };
-    }
-  } else if (contentLower.includes('capital')) {
-    if (country === 'POLAND') {
-      return { country, question: "What is the capital of Poland?", answer: "It is Warsaw.", hasData: true };
-    } else if (country === 'ENGLAND') {
-      return { country, question: "What is England's capital?", answer: "It is London.", hasData: true };
-    } else if (country === 'SCOTLAND') {
-      return { country, question: "What is Scotland's capital?", answer: "It is Edinburgh.", hasData: true };
-    } else if (country === 'WALES') {
-      return { country, question: "What is Wales's capital?", answer: "It is Cardiff.", hasData: true };
-    }
-  } else if (contentLower.includes('nationality')) {
-    if (country === 'POLAND') {
-      return { country, question: "What nationality are they?", answer: "They are Polish.", hasData: true };
-    } else if (country === 'ENGLAND') {
-      return { country, question: "What nationality is he?", answer: "He is English.", hasData: true };
-    } else if (country === 'SCOTLAND') {
-      return { country, question: "What nationality is he?", answer: "He is Scottish.", hasData: true };
-    } else if (country === 'WALES') {
-      return { country, question: "What nationality is he?", answer: "He is Welsh.", hasData: true };
-    }
-  }
-  
   // No matches found - return empty data
+  // This will be filled by Excel data from S3
   return {
-    country: "",
+    country: country || "",
     question: "",
     answer: "",
     hasData: false
@@ -533,7 +311,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ material,
       }
     }
     
-    // Fall back to the legacy pattern matching logic if no Excel match
+    // Fall back to the basic pattern matching logic if no Excel match
+    // This section only extracts patterns from the filename, not hardcoded questions
     const processed = getQuestionAnswerFromData(material);
     setQAData(processed);
   }, [material, excelData]);
@@ -550,146 +329,213 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ material,
         status: 'pending'
       };
       
-      const response = await apiRequest('POST', '/api/flagged-questions', flagData);
+      const res = await apiRequest('POST', '/api/flagged-questions', flagData);
       
-      if (response.ok) {
+      if (res.ok) {
         toast({
-          title: "Question flagged",
-          description: "The question has been flagged for review. Thank you for your feedback!",
+          title: "Flagged successfully",
+          description: "Thank you for your feedback. An admin will review it soon.",
         });
         setShowForm(false);
         setFlagReason('');
         setEditedQuestion('');
         setEditedAnswer('');
       } else {
-        toast({
-          title: "Error",
-          description: "There was an error flagging the question. Please try again.",
-          variant: "destructive",
-        });
+        throw new Error('Failed to flag question');
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "There was an error flagging the question. Please try again.",
+        title: "Error flagging question",
+        description: "There was a problem submitting your feedback. Please try again.",
         variant: "destructive",
       });
     }
   };
   
-  if (!showQuestions) {
+  if (!material) {
     return null;
   }
   
-  if (isLoadingExcel) {
-    return <div className="flex justify-center items-center p-4 text-gray-500">
-      <RefreshCw className="animate-spin mr-2" size={16} />
-      <span>Loading questions...</span>
-    </div>;
-  }
-  
   return (
-    <div className="bg-blue-50 p-4 rounded-lg shadow-sm mb-4 relative">
-      {qaData.country && (
-        <div className="absolute top-2 right-2 bg-blue-100 px-2 py-1 rounded-full text-xs font-medium flex items-center">
-          <Flag className="h-3 w-3 mr-1" />
-          {qaData.country}
+    <div className={`relative ${showQuestions ? 'flex flex-col items-center justify-center' : 'hidden'}`}>
+      {/* Controls shown in edit mode */}
+      {isEditMode && (
+        <div className="absolute -top-2 right-0 flex space-x-2">
+          <button
+            onClick={() => {
+              // Reset to default values from database or pattern matching
+              const processed = getQuestionAnswerFromData(material);
+              setQAData(processed);
+              setIsEditing(false);
+            }}
+            className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
+            title="Reset to default"
+          >
+            <RefreshCw className="h-4 w-4" />
+          </button>
+          
+          {!isEditing ? (
+            <button
+              onClick={() => {
+                setEditedQuestion(qaData.question);
+                setEditedAnswer(qaData.answer);
+                setIsEditing(true);
+              }}
+              className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
+              title="Edit"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  setQAData(prev => ({ ...prev, question: editedQuestion, answer: editedAnswer }));
+                  setIsEditing(false);
+                }}
+                className="p-1 text-green-500 hover:text-green-700 transition-colors"
+                title="Save"
+              >
+                <Check className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="p-1 text-red-500 hover:text-red-700 transition-colors"
+                title="Cancel"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </>
+          )}
         </div>
       )}
       
-      <div className="flex flex-col items-center">
-        {qaData.hasData ? (
-          <>
-            <div className="text-lg font-medium text-center mb-2">{qaData.question}</div>
-            <div className="text-md text-center">{qaData.answer}</div>
-            
-            <div className="mt-3 flex gap-2">
-              {isEditMode && (
-                <button 
-                  onClick={() => setIsEditing(!isEditing)}
-                  className="text-xs px-2 py-1 rounded bg-blue-100 hover:bg-blue-200"
-                >
-                  {isEditing ? "Cancel" : "Edit"}
-                </button>
-              )}
-              
-              <button 
-                onClick={() => setShowForm(!showForm)}
-                className="text-xs px-2 py-1 rounded bg-red-100 hover:bg-red-200 flex items-center"
-              >
-                <Flag className="h-3 w-3 mr-1" />
-                Flag Question
-              </button>
+      {/* Loading state for Excel data */}
+      {isLoadingExcel && (
+        <div className="p-2 text-center">
+          <svg className="animate-spin h-5 w-5 text-indigo-500 mx-auto mb-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p className="text-sm text-gray-500">Loading question data...</p>
+        </div>
+      )}
+      
+      {/* Display question and answer */}
+      {!isLoadingExcel && qaData.hasData && (
+        <div className="p-2 text-center">
+          {isEditing ? (
+            <div className="space-y-2">
+              <div>
+                <input
+                  value={editedQuestion}
+                  onChange={(e) => setEditedQuestion(e.target.value)}
+                  className="w-full p-2 border rounded text-center"
+                />
+              </div>
+              <div>
+                <input
+                  value={editedAnswer}
+                  onChange={(e) => setEditedAnswer(e.target.value)}
+                  className="w-full p-2 border rounded text-center"
+                />
+              </div>
             </div>
-            
-            {showForm && (
-              <div className="mt-4 bg-white p-3 rounded-md shadow w-full">
-                <h3 className="font-medium text-sm mb-2">Flag this question or answer as incorrect</h3>
-                
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-xs mb-1">Suggested Question (optional)</label>
-                    <input 
-                      type="text" 
-                      value={editedQuestion} 
-                      onChange={(e) => setEditedQuestion(e.target.value)}
-                      className="w-full text-sm p-1 border rounded" 
-                      placeholder="Enter corrected question" 
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-xs mb-1">Suggested Answer (optional)</label>
-                    <input 
-                      type="text" 
-                      value={editedAnswer} 
-                      onChange={(e) => setEditedAnswer(e.target.value)}
-                      className="w-full text-sm p-1 border rounded" 
-                      placeholder="Enter corrected answer" 
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-xs mb-1">Reason (required)</label>
-                    <textarea 
-                      value={flagReason} 
-                      onChange={(e) => setFlagReason(e.target.value)}
-                      className="w-full text-sm p-1 border rounded" 
-                      placeholder="Why is this question or answer incorrect?" 
-                      rows={2}
-                    />
-                  </div>
-                  
-                  <div className="flex justify-end gap-2">
-                    <button 
-                      onClick={() => setShowForm(false)}
-                      className="text-xs px-2 py-1 rounded bg-gray-100 hover:bg-gray-200"
-                    >
-                      Cancel
-                    </button>
-                    <button 
-                      onClick={handleFlagQuestion}
-                      disabled={!flagReason.trim()}
-                      className={`text-xs px-2 py-1 rounded flex items-center ${
-                        flagReason.trim() 
-                          ? 'bg-red-500 hover:bg-red-600 text-white' 
-                          : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                      }`}
+          ) : (
+            <>
+              <div className="mb-1 font-medium text-xl">{qaData.question}</div>
+              <div className="text-lg">{qaData.answer}</div>
+              
+              {/* Flag button for users to report incorrect questions */}
+              {!isEditMode && (
+                <div className="mt-3">
+                  {!showForm ? (
+                    <button
+                      onClick={() => setShowForm(true)}
+                      className="inline-flex items-center text-xs text-gray-500 hover:text-red-500"
                     >
                       <Flag className="h-3 w-3 mr-1" />
-                      Submit Flag
+                      Flag as incorrect
                     </button>
-                  </div>
+                  ) : (
+                    <div className="p-2 border rounded-md w-full max-w-sm mx-auto mt-2">
+                      <h4 className="text-sm font-medium mb-1">Flag this Q&A as incorrect</h4>
+                      <div className="space-y-2 text-left">
+                        <div>
+                          <label className="block text-xs mb-1">Reason</label>
+                          <select
+                            value={flagReason}
+                            onChange={(e) => setFlagReason(e.target.value)}
+                            className="w-full p-1 text-sm border rounded"
+                          >
+                            <option value="">Select a reason</option>
+                            <option value="Wrong question">Wrong question</option>
+                            <option value="Wrong answer">Wrong answer</option>
+                            <option value="Both wrong">Both wrong</option>
+                            <option value="Typo or grammar">Typo or grammar</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-xs mb-1">Suggested question (optional)</label>
+                          <input
+                            value={editedQuestion}
+                            onChange={(e) => setEditedQuestion(e.target.value)}
+                            placeholder={qaData.question}
+                            className="w-full p-1 text-sm border rounded"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-xs mb-1">Suggested answer (optional)</label>
+                          <input
+                            value={editedAnswer}
+                            onChange={(e) => setEditedAnswer(e.target.value)}
+                            placeholder={qaData.answer}
+                            className="w-full p-1 text-sm border rounded"
+                          />
+                        </div>
+                        
+                        <div className="flex justify-end space-x-2 mt-2">
+                          <button
+                            onClick={() => {
+                              setShowForm(false);
+                              setFlagReason('');
+                              setEditedQuestion('');
+                              setEditedAnswer('');
+                            }}
+                            className="px-2 py-1 text-xs text-gray-500 hover:text-gray-700"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={handleFlagQuestion}
+                            disabled={!flagReason}
+                            className={`px-2 py-1 text-xs text-white rounded ${flagReason ? 'bg-red-500 hover:bg-red-600' : 'bg-gray-300 cursor-not-allowed'}`}
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="text-center text-gray-500">
-            <p>No questions available for this slide.</p>
-          </div>
-        )}
-      </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
+      
+      {/* No data found state */}
+      {!isLoadingExcel && !qaData.hasData && (
+        <div className="p-2 text-center text-gray-500">
+          <p>No question available for this slide.</p>
+          {qaData.country && <p className="text-xs">Country/Category: {qaData.country}</p>}
+        </div>
+      )}
     </div>
   );
 };
