@@ -1119,58 +1119,23 @@ export function registerDirectRoutes(app: Express) {
     try {
       console.log("Processing Excel file for Q&A mapping");
       
-      // Define the S3 bucket and Excel file path
-      const bucketName = S3_BUCKET;
-      const excelKey = "book1/VISUAL 1 QUESTIONS.xlsx";
-      const localDir = "./temp";
-      
-      // Create the local directory if it doesn't exist
-      if (!require('fs').existsSync(localDir)) {
-        require('fs').mkdirSync(localDir, { recursive: true });
-      }
-      
-      const localExcelPath = `${localDir}/qa-mapping.xlsx`;
+      // Use the local Excel file instead of downloading from S3
+      const localExcelPath = "./attached_assets/VISUAL 1 QUESTIONS.xlsx";
       const outputPath = "./client/src/data/qa-mapping.ts";
       
-      // Download the Excel file from S3
-      console.log(`Attempting to download Excel file from S3: ${excelKey}`);
-      
-      try {
-        // Create command to get object
-        const command = new GetObjectCommand({
-          Bucket: bucketName,
-          Key: excelKey,
-        });
-        
-        // Get object from S3
-        const { Body } = await s3Client.send(command);
-        
-        if (!Body) {
-          throw new Error(`Failed to download file: ${excelKey} - Body is undefined`);
-        }
-        
-        // Convert readable stream to buffer
-        const chunks: Uint8Array[] = [];
-        for await (const chunk of Body as any) {
-          chunks.push(chunk);
-        }
-        const buffer = Buffer.concat(chunks);
-        
-        // Write buffer to file
-        require('fs').writeFileSync(localExcelPath, buffer);
-        
-        console.log(`Successfully downloaded Excel file to ${localExcelPath}`);
-      } catch (error) {
-        console.error(`Error downloading Excel file from S3:`, error);
-        return res.status(500).json({ 
-          success: false, 
-          error: "Failed to download Excel file from S3" 
-        });
-      }
+      console.log(`Processing local Excel file at ${localExcelPath}`);
       
       // Process the Excel file and generate the mapping
       try {
-        console.log(`Processing Excel file at ${localExcelPath}`);
+        // Check if the file exists
+        if (!require('fs').existsSync(localExcelPath)) {
+          console.error(`Excel file not found at ${localExcelPath}`);
+          return res.status(404).json({
+            success: false,
+            error: "Excel file not found"
+          });
+        }
+        
         const qaMapping = processExcelAndGenerateTS(localExcelPath, outputPath);
         
         return res.json({
@@ -1183,14 +1148,14 @@ export function registerDirectRoutes(app: Express) {
         console.error(`Error processing Excel file:`, error);
         return res.status(500).json({ 
           success: false, 
-          error: "Failed to process Excel file" 
+          error: "Failed to process Excel file: " + (error instanceof Error ? error.message : String(error))
         });
       }
     } catch (error) {
       console.error(`Error in process-qa-excel endpoint:`, error);
       res.status(500).json({ 
         success: false, 
-        error: "Failed to process Q&A Excel file" 
+        error: "Failed to process Q&A Excel file: " + (error instanceof Error ? error.message : String(error))
       });
     }
   });

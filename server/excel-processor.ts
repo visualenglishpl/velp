@@ -29,22 +29,58 @@ export function processExcelAndGenerateTS(
   // Create mapping object
   const mapping: Record<string, {question: string, answer: string}> = {};
   
+  console.log("Excel data sample:", JSON.stringify(jsonData.slice(0, 3), null, 2));
+  
   // Process each row
   for (const row of jsonData) {
+    // Type cast row to fix TypeScript errors
+    const typedRow = row as Record<string, any>;
+    
+    // Get the expected column names
+    const possibleFilePathColumns = ['File Path', 'FilePath', 'Path', 'Filename', 'File', 'A'];
+    const possibleQuestionColumns = ['Question', 'Questions', 'Q', 'B'];
+    const possibleAnswerColumns = ['Answer', 'Answers', 'A', 'C'];
+    
+    // Find the actual column names
+    let filePathColumn = possibleFilePathColumns.find(col => typedRow[col] !== undefined);
+    let questionColumn = possibleQuestionColumns.find(col => typedRow[col] !== undefined);
+    let answerColumn = possibleAnswerColumns.find(col => typedRow[col] !== undefined);
+    
+    // Log the column structure of first row
+    if (jsonData.indexOf(row) === 0) {
+      console.log("Column structure found:", { filePathColumn, questionColumn, answerColumn });
+      console.log("Available columns:", Object.keys(typedRow).join(", "));
+    }
+    
     // Skip rows without required data
-    if (!row['File Path'] || !row['Question'] || !row['Answer']) {
+    if (!filePathColumn || !questionColumn || !answerColumn || 
+        !typedRow[filePathColumn] || !typedRow[questionColumn] || !typedRow[answerColumn]) {
       continue;
     }
     
     // Get the filename from the path
-    const filePath = String(row['File Path']);
-    const fileName = path.basename(filePath);
+    const filePath = String(typedRow[filePathColumn]);
+    
+    // Handle different path formats - might be full path or just filename
+    let fileName = filePath;
+    if (filePath.includes('/') || filePath.includes('\\')) {
+      fileName = path.basename(filePath);
+    }
     
     // Store the mapping with the filename as key
     mapping[fileName] = {
-      question: String(row['Question']),
-      answer: String(row['Answer'])
+      question: String(typedRow[questionColumn]),
+      answer: String(typedRow[answerColumn])
     };
+    
+    // Also store without file extension to make matching easier
+    const fileNameWithoutExt = fileName.replace(/\.(png|jpg|jpeg|gif|mp4)$/i, '');
+    if (fileNameWithoutExt !== fileName) {
+      mapping[fileNameWithoutExt] = {
+        question: String(typedRow[questionColumn]),
+        answer: String(typedRow[answerColumn])
+      };
+    }
   }
   
   console.log(`Generated mapping for ${Object.keys(mapping).length} files`);
@@ -91,13 +127,29 @@ ${entries}
 };
 
 /**
+ * Extract a code pattern like "01 A a" from a filename
+ */
+function extractCodePattern(text: string): string | null {
+  // Try to match patterns like "01 I A" or "05 L C"
+  const codeMatch = text.match(/(\d{2})\\s+([A-Za-z])\\s+([A-Za-z])/i);
+  if (codeMatch) {
+    // Return standardized format for matching: "01 a a"
+    return \`\${codeMatch[1]} \${codeMatch[2].toLowerCase()} \${codeMatch[3].toLowerCase()}\`;
+  }
+  return null;
+}
+
+/**
  * Find the closest matching Q&A for a given filename
  * @param filename The filename to match
  * @returns The matching Q&A or undefined if no match
  */
 export function findMatchingQA(filename: string): QuestionAnswer | undefined {
+  console.log("Looking for Q&A mapping for:", filename);
+  
   // First, try an exact match
   if (questionAnswerMapping[filename]) {
+    console.log("Found exact match for:", filename);
     return questionAnswerMapping[filename];
   }
   
@@ -106,24 +158,43 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
     .replace(/\\.(png|jpg|jpeg|gif|webp|mp4)$/i, '') // Remove file extensions
     .trim();
     
+  if (questionAnswerMapping[cleanedFilename]) {
+    console.log("Found match for cleaned filename:", cleanedFilename);
+    return questionAnswerMapping[cleanedFilename];
+  }
+  
+  // Try to match by code pattern (like "01 A a")
+  const codePattern = extractCodePattern(filename);
+  if (codePattern) {
+    console.log("Extracted code pattern:", codePattern, "from filename:", filename);
+    
+    // Look for matches based on the code pattern
+    for (const [key, qa] of Object.entries(questionAnswerMapping)) {
+      if (key.toLowerCase().includes(codePattern.toLowerCase())) {
+        console.log("Found code pattern match:", key);
+        return qa;
+      }
+    }
+  }
+  
+  // If still no match, try if any key is a substring of filename
   for (const [key, qa] of Object.entries(questionAnswerMapping)) {
-    const cleanedKey = key
-      .replace(/\\.(png|jpg|jpeg|gif|webp|mp4)$/i, '') // Remove file extensions
-      .trim();
-      
-    if (cleanedFilename === cleanedKey) {
+    if (filename.includes(key)) {
+      console.log("Found substring match:", key, "in filename:", filename);
       return qa;
     }
   }
   
-  // If still no match, try if the filename contains the key
+  // Try the reverse - if filename is a substring of any key
   for (const [key, qa] of Object.entries(questionAnswerMapping)) {
-    if (filename.includes(key)) {
+    if (key.includes(cleanedFilename)) {
+      console.log("Found filename as substring in key:", key);
       return qa;
     }
   }
   
   // No match found
+  console.log("No mapping match found for:", filename);
   return undefined;
 }
 `;
