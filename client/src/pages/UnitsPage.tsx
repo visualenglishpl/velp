@@ -127,7 +127,7 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {[...Array(10)].map((_, i) => (
               <Card key={i} className="overflow-hidden flex flex-col border-0 shadow-none">
                 <div className="aspect-square w-full">
@@ -147,7 +147,7 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {units.map((unit, index) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col h-full border-0 shadow-none">
                 <div className="aspect-square relative overflow-hidden">
