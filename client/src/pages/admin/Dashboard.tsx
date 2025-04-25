@@ -18,8 +18,12 @@ const AdminDashboard = () => {
   }, [user, navigate, logoutMutation.isPending]);
 
   const handleLogout = () => {
-    logoutMutation.mutate();
-    navigate("/auth");
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        // Use window.location instead of navigate to force a full page reload
+        window.location.href = '/';
+      }
+    });
   };
 
   const navigateToBooksAndContent = () => {
@@ -57,7 +61,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button className="w-full py-2 bg-blue-600 text-white hover:bg-blue-700 border-0">Manage Files</Button>
+                <Button className="w-full py-2 bg-gray-400 text-white hover:bg-gray-500 border-0" disabled>
+                  Coming Soon
+                </Button>
               </div>
             </div>
 
@@ -73,7 +79,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button className="w-full py-2 bg-amber-600 text-white hover:bg-amber-700 border-0">Manage Users</Button>
+                <Button className="w-full py-2 bg-gray-400 text-white hover:bg-gray-500 border-0" disabled>
+                  Coming Soon
+                </Button>
               </div>
             </div>
 
@@ -89,7 +97,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button className="w-full py-2 bg-green-600 text-white hover:bg-green-700 border-0">Manage Schools</Button>
+                <Button className="w-full py-2 bg-gray-400 text-white hover:bg-gray-500 border-0" disabled>
+                  Coming Soon
+                </Button>
               </div>
             </div>
 
@@ -171,7 +181,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button className="w-full py-2 text-white hover:bg-opacity-90 border-0" style={{ backgroundColor: '#474e59' }}>System Settings</Button>
+                <Button className="w-full py-2 bg-gray-400 text-white hover:bg-gray-500 border-0" disabled>
+                  Coming Soon
+                </Button>
               </div>
             </div>
             
@@ -190,6 +202,17 @@ const AdminDashboard = () => {
                 <ExcelQAProcessor />
               </div>
             </div>
+          </div>
+          
+          {/* Logout Button Section */}
+          <div className="mt-10 text-center">
+            <Button 
+              className="px-8 py-2 bg-red-600 text-white hover:bg-red-700"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sign Out
+            </Button>
           </div>
         </div>
       </div>
