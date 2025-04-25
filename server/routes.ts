@@ -384,69 +384,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log(`Success: Generated thumbnail URL for unit ${unit.unitNumber}: ${thumbnailPath}`);
         } catch (error) {
           console.error(`Error generating URL for ${thumbnailPath}:`, error);
-            // Try alternate path format if first attempt fails
-            if (currentBook) {
-              // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
-              // For books 1, 2, 3, 5, 6, 7: thumbnails/thumbnailsuni1-14.png (direct in thumbnails folder)
-              // For book 4: book4/icons/thumbnailsuni4-7.png
-              // Check multiple possible paths
-              let alternatePaths = [];
-              const bookId = currentBook.bookId;
+          
+          // Try alternate path format if first attempt fails
+          if (currentBook) {
+            // For book0a-0c: book0a/icons/thumbnailsuni0a-11.png
+            // For books 1, 2, 3, 5, 6, 7: thumbnails/thumbnailsuni1-14.png (direct in thumbnails folder)
+            // For book 4: book4/icons/thumbnailsuni4-7.png
+            // Check multiple possible paths
+            let alternatePaths = [];
+            const bookId = currentBook.bookId;
+            
+            // Path patterns based on specific book IDs
+            if (bookId.startsWith('0')) {
+              // Books 0a-0c
+              alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            } else if (bookId === '1' || bookId === '2' || bookId === '3') {
+              // Books 1-3
+              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            } else if (bookId === '4' || bookId === '5') {
+              // Book 4 & 5 use same pattern for consistency
+              alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               
-              // Path patterns based on specific book IDs
-              if (bookId.startsWith('0')) {
-                // Books 0a-0c
-                alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-              } else if (bookId === '1' || bookId === '2' || bookId === '3') {
-                // Books 1-3
-                alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-              } else if (bookId === '4' || bookId === '5') {
-                // Book 4 & 5 use same pattern for consistency
-                alternatePaths.push(`book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-                
-                // Common backup patterns for all books
-                alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-                alternatePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-                alternatePaths.push(`thumbnails/book${bookId}/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-                alternatePaths.push(`icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-                // Try without leading zero
-                alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${String(unit.unitNumber).padStart(2, '0')}.png`);
-                // Try with spaces
-                alternatePaths.push(`thumbnails/thumbnailsuni${bookId} -${unit.unitNumber}.png`);
-              } else {
-                // Books 6-7
-                alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-              }
-              
-              // Always add these common patterns as fallbacks
+              // Common backup patterns for all books
+              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               alternatePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               alternatePaths.push(`thumbnails/book${bookId}/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
               alternatePaths.push(`icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
-              
-              // Try each path
-              let thumbnailFound = false;
-              for (const path of alternatePaths) {
-                if (path !== unit.thumbnail && !thumbnailFound) {
-                  console.log(`Trying alternate path: ${path}`);
-                  try {
-                    thumbnailUrl = await getS3PresignedUrl(path);
-                    console.log(`Success with alternate path for unit ${unit.unitNumber}: ${path}`);
-                    thumbnailFound = true;
-                    break;  // Stop once we find a valid thumbnail
-                  } catch (altError) {
-                    console.error(`Failed with alternate path for unit ${unit.unitNumber}: ${path}`);
-                  }
+              // Try without leading zero
+              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${String(unit.unitNumber).padStart(2, '0')}.png`);
+              // Try with spaces
+              alternatePaths.push(`thumbnails/thumbnailsuni${bookId} -${unit.unitNumber}.png`);
+            } else {
+              // Books 6-7
+              alternatePaths.push(`thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            }
+            
+            // Always add these common patterns as fallbacks
+            alternatePaths.push(`book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            alternatePaths.push(`thumbnails/book${bookId}/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            alternatePaths.push(`icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`);
+            
+            // Try each path
+            let thumbnailFound = false;
+            for (const path of alternatePaths) {
+              if (path !== unit.thumbnail && !thumbnailFound) {
+                console.log(`Trying alternate path: ${path}`);
+                try {
+                  thumbnailUrl = await getS3PresignedUrl(path);
+                  console.log(`Success with alternate path for unit ${unit.unitNumber}: ${path}`);
+                  thumbnailFound = true;
+                  break;  // Stop once we find a valid thumbnail
+                } catch (altError) {
+                  console.error(`Failed with alternate path for unit ${unit.unitNumber}: ${path}`);
                 }
               }
-              
-              if (!thumbnailFound) {
-                console.log(`Could not find any valid thumbnail for unit ${unit.unitNumber} of book ${currentBook.bookId}`);
-              }
+            }
+            
+            if (!thumbnailFound) {
+              console.log(`Could not find any valid thumbnail for unit ${unit.unitNumber} of book ${currentBook.bookId}`);
             }
           }
-        } else {
+        }
+        
+        // Log if no thumbnail was found after all attempts
+        if (!thumbnailUrl) {
           console.log(`No thumbnail found for unit ${unit.unitNumber}`);
         }
+        
+        // Return unit with thumbnail URL
         return {
           ...unit,
           thumbnailUrl

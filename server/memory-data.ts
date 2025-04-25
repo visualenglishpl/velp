@@ -152,3 +152,16 @@ export function generateInitialUnits() {
 
 // Initial units
 export const initialUnits = generateInitialUnits();
+
+// Structure for slide orders
+export interface SlideOrder {
+  id: number;
+  bookPath: string;
+  unitPath: string;
+  order: number[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Initial empty slide orders array
+export const initialSlideOrders: SlideOrder[] = [];
