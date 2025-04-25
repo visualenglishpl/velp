@@ -468,6 +468,90 @@ export default function CheckoutPage() {
         <CardDescription>Please provide your details</CardDescription>
       </CardHeader>
       <CardContent>
+        {/* Unit Selection UI that appears directly in the checkout form */}
+        {planType === 'single_lesson' && selectedBookId && (
+          <div className="mb-6 border-b pb-6">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-semibold text-lg">Select Units</h3>
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="multipleUnitsInline" className="cursor-pointer text-sm font-medium">Add multiple units</Label>
+                <Switch
+                  id="multipleUnitsInline"
+                  checked={multipleUnits}
+                  onCheckedChange={setMultipleUnits}
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-5 md:grid-cols-9 gap-2">
+              {(() => {
+                // Determine the number of units based on the book ID
+                let unitCount = 10; // Default
+                
+                if (['0a', '0b', '0c'].includes(selectedBookId)) {
+                  unitCount = 20;
+                } else if (['1', '2', '3'].includes(selectedBookId)) {
+                  unitCount = 18;
+                } else if (['4', '5', '6', '7'].includes(selectedBookId)) {
+                  unitCount = 16;
+                }
+                
+                // Generate unit elements
+                const unitElements = [];
+                for (let i = 1; i <= unitCount; i++) {
+                  const unitId = i.toString();
+                  const isSelected = selectedUnits.includes(unitId);
+                  
+                  unitElements.push(
+                    <div
+                      key={unitId}
+                      className={`cursor-pointer border-2 rounded-md overflow-hidden hover:bg-gray-50 p-2 text-center ${
+                        isSelected ? 'border-primary bg-primary/5' : 'border-gray-200'
+                      }`}
+                      onClick={() => {
+                        if (multipleUnits) {
+                          // Toggle unit selection when multiple units are allowed
+                          setSelectedUnits(prev => 
+                            prev.includes(unitId)
+                              ? prev.filter(id => id !== unitId)
+                              : [...prev, unitId]
+                          );
+                        } else {
+                          // Select only this unit
+                          setSelectedUnits([unitId]);
+                          setSelectedUnitId(unitId);
+                        }
+                      }}
+                    >
+                      <div className="font-medium">
+                        {isSelected && (
+                          <span className="text-primary mr-1">✓</span>
+                        )}
+                        {unitId}
+                      </div>
+                    </div>
+                  );
+                }
+                
+                return unitElements;
+              })()}
+            </div>
+            
+            <div className="mt-4 text-sm text-gray-600">
+              {selectedUnits.length > 0 && (
+                <p>
+                  <span className="font-medium">Selected:</span> {selectedUnits.map(unitId => `UNIT ${unitId}`).join(', ')}
+                  {selectedUnits.length > 1 && (
+                    <span className="font-medium text-primary ml-2">
+                      Total: €{billingCycle === 'monthly' ? 5 * selectedUnits.length : 40 * selectedUnits.length}
+                    </span>
+                  )}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
         <form 
           className="space-y-4"
           onSubmit={(e) => {
