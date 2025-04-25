@@ -8,6 +8,28 @@ export interface QuestionAnswer {
 
 // Mapping based on the Excel data
 export const questionAnswerMapping: Record<string, QuestionAnswer> = {
+  // Poland content - special case
+  "01 R A": {
+    question: "What country is this?",
+    answer: "It is Poland."
+  },
+  "01 R B": {
+    question: "Where is this flag from?",
+    answer: "It is from Poland."
+  },
+  "01 R C": {
+    question: "What colors are the Polish flag?",
+    answer: "The Polish flag is white and red."
+  },
+  "01 R": {
+    question: "What is the name of the country?",
+    answer: "The country is Poland."
+  },
+  "POLAND": {
+    question: "What country is this?",
+    answer: "It is Poland."
+  },
+  // Morning routine questions
   "01 I A": {
     question: "What do you say in the morning?",
     answer: "I say 'Good Morning' in the morning."
@@ -120,6 +142,12 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
     return questionAnswerMapping[filename];
   }
   
+  // Special case for Poland content
+  if (filename.toLowerCase().includes('poland')) {
+    console.log("Found Poland content:", filename);
+    return questionAnswerMapping["POLAND"];
+  }
+  
   // If no exact match, try to find a match by cleaning up the filename
   const cleanedFilename = filename
     .replace(/\.(png|jpg|jpeg|gif|webp|mp4)$/i, '') // Remove file extensions
@@ -144,6 +172,12 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
     // Get the first two parts of the pattern (e.g., "01 I" from "01 I A")
     const simplifiedPattern = codePattern.split(' ').slice(0, 2).join(' ');
     
+    // Special case for 01 R pattern (Poland)
+    if (simplifiedPattern === "01 R") {
+      console.log("Found Poland pattern:", simplifiedPattern);
+      return questionAnswerMapping["01 R"];
+    }
+    
     // Find keys that start with this simplified pattern
     for (const key of Object.keys(questionAnswerMapping)) {
       if (key.startsWith(simplifiedPattern)) {
@@ -151,6 +185,20 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
         return questionAnswerMapping[key];
       }
     }
+  }
+  
+  // Content-based matching
+  const lowerFilename = filename.toLowerCase();
+  
+  // Check for content keywords
+  if (lowerFilename.includes('poland') || lowerFilename.includes('polish')) {
+    console.log("Found Poland keyword in:", filename);
+    return questionAnswerMapping["POLAND"];
+  }
+  
+  if (lowerFilename.includes('morning') && !lowerFilename.includes('what time')) {
+    console.log("Found morning content without time specifics:", filename);
+    return questionAnswerMapping["01 I A"]; // "What do you say in the morning?"
   }
   
   console.log("No matching Q&A found for:", filename);
