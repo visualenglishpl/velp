@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag, Flag } from "lucide-react";
+import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag, Flag, FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
+import ExcelQAProcessor from "@/components/ExcelQAProcessor";
 
 const AdminDashboard = () => {
   const { user, logoutMutation } = useAuth();
@@ -171,6 +172,22 @@ const AdminDashboard = () => {
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <Button className="w-full py-2 text-white hover:bg-opacity-90 border-0" style={{ backgroundColor: '#474e59' }}>System Settings</Button>
+              </div>
+            </div>
+            
+            {/* Excel QA Processor */}
+            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
+              <div className="flex items-start mb-4">
+                <div className="p-2 bg-teal-50 rounded-md mr-4">
+                  <FileSpreadsheet className="h-6 w-6 text-teal-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">Excel Q&A Processor</h3>
+                  <p className="text-sm text-gray-500">Process Excel files for automated Q&A mapping</p>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <ExcelQAProcessor />
               </div>
             </div>
           </div>
