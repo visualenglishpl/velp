@@ -49,9 +49,7 @@ export function setupAuth(app: Express) {
     secret: process.env.SESSION_SECRET || "velp-dev-secret-key-change-me-in-production",
     resave: false,
     saveUninitialized: false,
-    store: new MemoryStore({
-      checkPeriod: 86400000 // prune expired entries every 24h
-    }),
+    store: storage.sessionStore,
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       secure: process.env.NODE_ENV === "production"
