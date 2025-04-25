@@ -478,21 +478,6 @@ export default function CheckoutPage() {
         <CardDescription>Please provide your details</CardDescription>
       </CardHeader>
       <CardContent>
-        {/* Unit Selection UI that appears directly in the checkout form */}
-        {planType === 'single_lesson' && (
-          <div className="mb-6 border-b pb-6">
-            <UnitSelection
-              selectedBookId={selectedBookId}
-              selectedUnits={selectedUnits}
-              setSelectedUnits={setSelectedUnits}
-              multipleUnits={multipleUnits}
-              setMultipleUnits={setMultipleUnits}
-              billingCycle={billingCycle}
-              bookOptions={allBooks}
-              onSelectBook={setSelectedBookId}
-            />
-          </div>
-        )}
 
         <form 
           className="space-y-4"
@@ -638,7 +623,29 @@ export default function CheckoutPage() {
               : 'Checkout'}
         </h1>
 
-        {/* Unit selection is now handled inside the customer form */}
+        {/* Book/Unit Selection Section - At the top */}
+        {planType === 'single_lesson' && (
+          <div className="mb-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Select a Book</CardTitle>
+                <CardDescription>Choose the book and units you want to access</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <UnitSelection
+                  selectedBookId={selectedBookId}
+                  selectedUnits={selectedUnits}
+                  setSelectedUnits={setSelectedUnits}
+                  multipleUnits={multipleUnits}
+                  setMultipleUnits={setMultipleUnits}
+                  billingCycle={billingCycle}
+                  bookOptions={allBooks}
+                  onSelectBook={setSelectedBookId}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         {/* Show book selection grid when on whole book plan with no selection */}
         {planType === 'whole_book' && (
