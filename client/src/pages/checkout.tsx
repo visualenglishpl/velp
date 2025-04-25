@@ -583,6 +583,8 @@ export default function CheckoutPage() {
               customerInfo={customerInfo}
               selectedBookId={selectedBookId}
               bookTitles={bookTitles}
+              selectedUnits={selectedUnits}
+              multipleUnits={multipleUnits}
             />
           </Elements>
         )}
