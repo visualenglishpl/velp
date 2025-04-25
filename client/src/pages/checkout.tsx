@@ -27,7 +27,9 @@ function CheckoutForm({
   planDetails,
   customerInfo,
   selectedBookId,
-  bookTitles
+  bookTitles,
+  selectedUnits = [],
+  multipleUnits = false
 }: {
   planType: PlanType;
   billingCycle: BillingCycle;
@@ -43,6 +45,8 @@ function CheckoutForm({
   };
   selectedBookId: string | null;
   bookTitles: Record<string, string>;
+  selectedUnits?: string[];
+  multipleUnits?: boolean;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -117,6 +121,10 @@ function CheckoutForm({
           description: `Thank you for your purchase of ${planDetails.name}${
             selectedBookId 
               ? ` for ${bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`}` 
+              : ''
+          }${
+            planType === 'single_lesson' && selectedUnits.length > 0
+              ? ` (${selectedUnits.length > 1 ? `${selectedUnits.length} units` : `UNIT ${selectedUnits[0]}`})` 
               : ''
           }!`,
         });
@@ -852,7 +860,72 @@ export default function CheckoutPage() {
                       : `Billed ${billingCycle} (${billingCycle === 'monthly' ? 'monthly' : 'annually'})`}
                 </div>
                 
-                {/* Single book selection */}
+                {/* Single lesson with unit selection */}
+                {planType === 'single_lesson' && selectedBookId && selectedUnits.length > 0 && (
+                  <div className="mt-2 p-3 bg-gray-50 rounded-md">
+                    <div className="font-medium text-sm">Selected Book:</div>
+                    <div className="text-primary font-bold">
+                      {bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="w-16 h-16 overflow-hidden rounded">
+                        <img 
+                          src={allBooks.find(b => b.id === selectedBookId)?.thumbnail || ''}
+                          alt={`${selectedBookId.toUpperCase()} thumbnail`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const img = e.target as HTMLImageElement;
+                            const book = allBooks.find(b => b.id === selectedBookId);
+                            
+                            if (book?.fallbackImages && book.fallbackImages.length > 0) {
+                              img.src = book.fallbackImages[0];
+                            } else {
+                              img.onerror = null; // Prevent infinite error loop
+                              const canvas = document.createElement('canvas');
+                              canvas.width = 100;
+                              canvas.height = 100;
+                              const ctx = canvas.getContext('2d');
+                              if (ctx) {
+                                ctx.fillStyle = '#f3f4f6'; // Light gray background
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                ctx.fillStyle = '#6366f1'; // Primary color text
+                                ctx.font = 'bold 16px Arial';
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText(`BOOK ${selectedBookId.toUpperCase()}`, canvas.width/2, canvas.height/2);
+                                img.src = canvas.toDataURL();
+                              }
+                            }
+                          }}
+                        />
+                      </div>
+                      <div className="ml-3">
+                        <div className="font-medium mt-1 text-sm">Selected Units:</div>
+                        <div className="flex flex-wrap gap-1 mt-1 max-w-xs">
+                          {selectedUnits.map(unitId => (
+                            <div key={unitId} className="bg-primary/10 text-primary px-2 py-0.5 rounded text-xs font-medium">
+                              UNIT {unitId}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {selectedUnits.length > 1 && (
+                      <div className="mt-2 text-sm flex justify-between items-center font-medium">
+                        <span>Multiple units selected:</span>
+                        <span className="text-right font-bold">
+                          {selectedUnits.length} units × {billingCycle === 'monthly' ? '€5' : '€40'} = 
+                          <span className="text-primary ml-1">
+                            €{billingCycle === 'monthly' ? 5 * selectedUnits.length : 40 * selectedUnits.length}
+                          </span>
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {/* Single book selection for whole book plan */}
                 {!multipleBooks && selectedBookId && planType !== 'single_lesson' && (
                   <div className="mt-2 p-3 bg-gray-50 rounded-md">
                     <div className="font-medium text-sm">Selected Book:</div>
@@ -1033,7 +1106,9 @@ export default function CheckoutPage() {
                     <span>
                       {multipleBooks && selectedBooks.length > 0 
                         ? `€${selectedBooks.length * (billingCycle === 'monthly' ? 25 : 180)}`
-                        : `${planDetails.price}${planType === 'printed_book' ? ' + delivery' : ''}`
+                        : planType === 'single_lesson' && selectedUnits.length > 1
+                          ? `€${selectedUnits.length * (billingCycle === 'monthly' ? 5 : 40)}`
+                          : `${planDetails.price}${planType === 'printed_book' ? ' + delivery' : ''}`
                       }
                     </span>
                   </div>
@@ -1041,6 +1116,12 @@ export default function CheckoutPage() {
                   {multipleBooks && selectedBooks.length > 0 && (
                     <div className="text-xs text-gray-500 text-right mt-1">
                       {selectedBooks.length} {selectedBooks.length === 1 ? 'book' : 'books'} × {billingCycle === 'monthly' ? '€25' : '€180'} {billingCycle === 'monthly' ? 'monthly' : 'yearly'}
+                    </div>
+                  )}
+                  
+                  {planType === 'single_lesson' && selectedUnits.length > 1 && (
+                    <div className="text-xs text-gray-500 text-right mt-1">
+                      {selectedUnits.length} units × {billingCycle === 'monthly' ? '€5' : '€40'} {billingCycle === 'monthly' ? 'monthly' : 'yearly'}
                     </div>
                   )}
                 </>
