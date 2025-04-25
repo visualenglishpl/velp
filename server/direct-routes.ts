@@ -3,7 +3,7 @@ import { GetObjectCommand, S3Client, ListObjectsV2Command } from "@aws-sdk/clien
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import * as path from 'path';
 import { processExcelAndGenerateTS } from './excel-processor';
-import { processUnitExcel } from './excel-unit-processor';
+import { processUnitExcel, QuestionAnswerEntry } from './excel-unit-processor';
 import { storage } from './storage';
 
 // S3 configuration 
