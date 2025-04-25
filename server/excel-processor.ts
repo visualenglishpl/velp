@@ -36,49 +36,88 @@ export function processExcelAndGenerateTS(
     // Type cast row to fix TypeScript errors
     const typedRow = row as Record<string, any>;
     
-    // Get the expected column names
-    const possibleFilePathColumns = ['File Path', 'FilePath', 'Path', 'Filename', 'File', 'A'];
-    const possibleQuestionColumns = ['Question', 'Questions', 'Q', 'B'];
-    const possibleAnswerColumns = ['Answer', 'Answers', 'A', 'C'];
+    // Based on the Excel screenshot, we know exactly what columns to use:
+    // Column A: File code (like "01 I A")
+    // Column B: Question
+    // Column C: Answer
     
-    // Find the actual column names
-    let filePathColumn = possibleFilePathColumns.find(col => typedRow[col] !== undefined);
-    let questionColumn = possibleQuestionColumns.find(col => typedRow[col] !== undefined);
-    let answerColumn = possibleAnswerColumns.find(col => typedRow[col] !== undefined);
+    // Access columns directly - Excel typically uses numbers or __EMPTY for column names
+    let fileCode = null;
+    let question = null;
+    let answer = null;
     
-    // Log the column structure of first row
-    if (jsonData.indexOf(row) === 0) {
-      console.log("Column structure found:", { filePathColumn, questionColumn, answerColumn });
-      console.log("Available columns:", Object.keys(typedRow).join(", "));
+    // Try different possible column names based on how Excel files are parsed
+    for (const key of Object.keys(typedRow)) {
+      const value = String(typedRow[key] || '');
+      
+      // First column (A) - usually contains file code like "01 I A"
+      if (key === 'A' || key === '0' || key.includes('__EMPTY')) {
+        if (value && value.match(/^\d{2}\s+[A-Za-z]/)) {
+          fileCode = value;
+        }
+      }
+      
+      // Second column (B) - contains the question
+      if (key === 'B' || key === '1' || (key.includes('__EMPTY') && fileCode && !question)) {
+        if (value && value.startsWith('What') || value.startsWith('Do')) {
+          question = value;
+        }
+      }
+      
+      // Third column (C) - contains the answer
+      if (key === 'C' || key === '2' || (key.includes('__EMPTY') && fileCode && question && !answer)) {
+        if (value && (value.startsWith('I') || value.startsWith('Yes') || value.startsWith('No'))) {
+          answer = value;
+        }
+      }
+    }
+    
+    // For Excel files where columns might have numeric indices
+    if (!fileCode && typedRow['0']) fileCode = String(typedRow['0']);
+    if (!question && typedRow['1']) question = String(typedRow['1']);
+    if (!answer && typedRow['2']) answer = String(typedRow['2']);
+    
+    // Log first few rows to understand structure
+    if (jsonData.indexOf(row) < 3) {
+      console.log("Row structure:", { 
+        fileCode, 
+        question, 
+        answer, 
+        allKeys: Object.keys(typedRow),
+        sampleValues: Object.values(typedRow).slice(0, 3)
+      });
     }
     
     // Skip rows without required data
-    if (!filePathColumn || !questionColumn || !answerColumn || 
-        !typedRow[filePathColumn] || !typedRow[questionColumn] || !typedRow[answerColumn]) {
+    if (!fileCode || !question || !answer) {
       continue;
     }
     
-    // Get the filename from the path
-    const filePath = String(typedRow[filePathColumn]);
+    // Clean up the file code to use as key
+    const cleanFileCode = fileCode.trim();
     
-    // Handle different path formats - might be full path or just filename
-    let fileName = filePath;
-    if (filePath.includes('/') || filePath.includes('\\')) {
-      fileName = path.basename(filePath);
-    }
-    
-    // Store the mapping with the filename as key
-    mapping[fileName] = {
-      question: String(typedRow[questionColumn]),
-      answer: String(typedRow[answerColumn])
+    // Store mapping with the file code as key for easier pattern matching
+    mapping[cleanFileCode] = {
+      question: question,
+      answer: answer
     };
     
-    // Also store without file extension to make matching easier
-    const fileNameWithoutExt = fileName.replace(/\.(png|jpg|jpeg|gif|mp4)$/i, '');
-    if (fileNameWithoutExt !== fileName) {
-      mapping[fileNameWithoutExt] = {
-        question: String(typedRow[questionColumn]),
-        answer: String(typedRow[answerColumn])
+    // Also store by file pattern (with extension variations)
+    const filePatterns = [
+      `${cleanFileCode}.png`,
+      `${cleanFileCode}.jpg`,
+      `${cleanFileCode}.gif`,
+      `${cleanFileCode}.mp4`,
+      cleanFileCode.replace(/\s+/g, ' '),  // normalize spaces
+      cleanFileCode.toLowerCase(),         // lowercase version
+      cleanFileCode.toUpperCase()          // uppercase version
+    ];
+    
+    // Add these file patterns to our mapping
+    for (const pattern of filePatterns) {
+      mapping[pattern] = {
+        question: question,
+        answer: answer
       };
     }
   }
@@ -127,15 +166,23 @@ ${entries}
 };
 
 /**
- * Extract a code pattern like "01 A a" from a filename
+ * Extract a code pattern like "01 I A" from a filename
  */
 function extractCodePattern(text: string): string | null {
-  // Try to match patterns like "01 I A" or "05 L C"
-  const codeMatch = text.match(/(\d{2})\\s+([A-Za-z])\\s+([A-Za-z])/i);
+  // Try to match patterns like "01 I A" or "05 L C" 
+  // This matches the exact format from the Excel file
+  const codeMatch = text.match(/(\d{2})\s+([A-Za-z])\s+([A-Za-z])/i);
   if (codeMatch) {
-    // Return standardized format for matching: "01 a a"
-    return \`\${codeMatch[1]} \${codeMatch[2].toLowerCase()} \${codeMatch[3].toLowerCase()}\`;
+    // Return standardized format while preserving case: "01 I A"
+    return codeMatch[1] + " " + codeMatch[2] + " " + codeMatch[3];
   }
+  
+  // Try to match patterns with just two parts like "01 A"
+  const simplifiedMatch = text.match(/(\d{2})\s+([A-Za-z])/i);
+  if (simplifiedMatch) {
+    return simplifiedMatch[1] + " " + simplifiedMatch[2];
+  }
+
   return null;
 }
 
@@ -163,15 +210,30 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
     return questionAnswerMapping[cleanedFilename];
   }
   
-  // Try to match by code pattern (like "01 A a")
+  // Try to match by exact code pattern from Excel (like "01 I A")
   const codePattern = extractCodePattern(filename);
   if (codePattern) {
     console.log("Extracted code pattern:", codePattern, "from filename:", filename);
     
-    // Look for matches based on the code pattern
+    // First, try exact pattern match
+    if (questionAnswerMapping[codePattern]) {
+      console.log("Found exact code pattern match:", codePattern);
+      return questionAnswerMapping[codePattern];
+    }
+    
+    // Try normalized code pattern (lowercase)
+    const normalizedCodePattern = codePattern.toLowerCase();
+    if (questionAnswerMapping[normalizedCodePattern]) {
+      console.log("Found normalized code pattern match:", normalizedCodePattern);
+      return questionAnswerMapping[normalizedCodePattern];
+    }
+    
+    // Look for partial matches based on the code pattern
     for (const [key, qa] of Object.entries(questionAnswerMapping)) {
-      if (key.toLowerCase().includes(codePattern.toLowerCase())) {
-        console.log("Found code pattern match:", key);
+      // Check if the key contains the code pattern at the beginning
+      if (key.toLowerCase().startsWith(normalizedCodePattern.toLowerCase()) ||
+          key.toLowerCase().includes(normalizedCodePattern.toLowerCase())) {
+        console.log("Found partial code pattern match:", key);
         return qa;
       }
     }

@@ -680,10 +680,27 @@ function QuestionAnswerDisplay({
 }: QuestionAnswerDisplayProps) {
   // Get question and answer data
   const qaData = React.useMemo(() => {
-    const data = getQuestionAnswerFromData(material);
-    // Apply Callan-style formatting to all answers
-    data.answer = formatFullAnswer(data.question, data.answer);
-    return data;
+    // First check from our Excel mapping (qa-mapping.ts)
+    const mapping = findMatchingQA(material.content);
+    if (mapping) {
+      console.log("Found Excel mapping for:", material.content);
+      const data = {
+        question: mapping.question,
+        answer: mapping.answer,
+        country: formatText.determineCountry(material.content),
+        hasData: true,
+        category: "" // No category needed from Excel mapping
+      };
+      // Apply Callan-style formatting to all answers
+      data.answer = formatFullAnswer(data.question, data.answer);
+      return data;
+    } else {
+      console.log("Falling back to pattern matching for:", material.content);
+      const data = getQuestionAnswerFromData(material);
+      // Apply Callan-style formatting to all answers
+      data.answer = formatFullAnswer(data.question, data.answer);
+      return data;
+    }
   }, [material]);
   
   const [editedQuestion, setEditedQuestion] = React.useState<string>(qaData.question);
