@@ -54,13 +54,13 @@ export function UnitSelection({
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 mb-1 overflow-hidden rounded-sm bg-gray-100 border border-gray-200">
                     <img 
-                      src={`/api/direct/icons/VISUAL ${book.id.toUpperCase()}.gif`}
+                      src={`/api/direct/book${book.id}/unit1/thumbnail.jpg`}
                       alt={`Book ${book.id.toUpperCase()}`}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover"
                       onError={(e) => {
-                        // If icon fails, try using unit1 thumbnail
+                        // If first thumbnail fails, try alternate path
                         const imgElement = e.target as HTMLImageElement;
-                        imgElement.src = `/api/direct/book${book.id}/unit1/thumbnail.jpg`;
+                        imgElement.src = `/api/direct/book${book.id}/unit1/00 A.png`;
                         
                         imgElement.onerror = () => {
                           // Final fallback with just text
@@ -112,23 +112,16 @@ export function UnitSelection({
             <img 
               src={`/api/direct/book${selectedBookId}/unit${unitId}/thumbnail.jpg`}
               alt={`Unit ${unitId}`}
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
               onError={(e) => {
-                // First try the unit icon path
+                // If the thumbnail fails, try first slide of unit
                 const imgElement = e.target as HTMLImageElement;
-                imgElement.src = `/api/direct/book${selectedBookId}/icons/unit${unitId}.png`;
+                imgElement.src = `/api/direct/book${selectedBookId}/unit${unitId}/00 A.png`;
                 
                 imgElement.onerror = () => {
-                  // If unit icons fail, try 00 A.png
-                  const fallbackImg = e.target as HTMLImageElement;
-                  fallbackImg.src = `/api/direct/book${selectedBookId}/unit${unitId}/00 A.png`;
-                  
-                  fallbackImg.onerror = () => {
-                    // Final fallback
-                    const lastFallback = e.target as HTMLImageElement;
-                    lastFallback.src = `/api/direct/icons/VISUAL ${selectedBookId.toUpperCase()}.gif`;
-                    lastFallback.onerror = null;
-                  };
+                  // Last fallback - just hide the image
+                  const fallbackEl = e.target as HTMLImageElement;
+                  fallbackEl.style.display = 'none';
                 };
               }}
             />
