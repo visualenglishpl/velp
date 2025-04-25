@@ -78,15 +78,18 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
         
         // For Book 0 series, use the format from S3 bucket: book{bookId}/icons/thumbnailsuni{bookId}-{number}.png
         if (bookId.startsWith('0')) {
+          // Use our specific icons endpoint for Book 0 series
           thumbnailUrl = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${i}.png`;
         } 
         // For Book 4, use specific format
         else if (bookId === '4') {
+          // Use our specific icons endpoint for Book 4
           thumbnailUrl = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${i}.png`;
         }
-        // For all other books use the thumbnails folder format
+        // For all other books (1, 2, 3, 5, 6, 7) use the thumbnails folder format
         else {
-          thumbnailUrl = `/api/direct/thumbnails/thumbnailsuni${bookId}-${i}.png`;
+          // Use our specific thumbnails endpoint
+          thumbnailUrl = `/api/direct/thumbnails/book${bookId}_unit${i}.jpg`;
         }
         
         demoUnits.push({

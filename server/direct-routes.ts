@@ -305,6 +305,76 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
+  // Specific route for book icons
+  app.get("/api/direct/:bookPath/icons/:filename", async (req, res) => {
+    try {
+      const { bookPath, filename } = req.params;
+      
+      // Clean filename
+      let cleanFilename = decodeURIComponent(filename);
+      
+      // Construct the exact S3 path
+      const key = `${bookPath}/icons/${cleanFilename}`;
+      
+      console.log(`Book icon access - trying to fetch: ${key}`);
+      
+      // Get the presigned URL
+      const presignedUrl = await getS3PresignedUrl(key);
+      
+      if (!presignedUrl) {
+        console.error(`Book icon not found: ${key}`);
+        return res.status(404).json({ error: "Book icon not found" });
+      }
+      
+      try {
+        console.log(`Using presigned URL for book icon: ${presignedUrl}`);
+        
+        // Use fetch to get the content directly
+        const response = await fetch(presignedUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': '*/*',
+          },
+        });
+        
+        if (!response.ok) {
+          console.error(`Error fetching book icon: ${response.status} ${response.statusText}`);
+          return res.status(response.status).json({ 
+            error: "Error fetching book icon from S3", 
+            details: `${response.status} ${response.statusText}` 
+          });
+        }
+        
+        // Get the content type from the response
+        const contentType = response.headers.get('content-type');
+        
+        // Set the content type header in the response
+        if (contentType) {
+          res.setHeader('Content-Type', contentType);
+        }
+        
+        // Set cache headers
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        
+        // Get the buffer from the response
+        const buffer = await response.arrayBuffer();
+        
+        // Send the buffer as a response
+        return res.send(Buffer.from(buffer));
+        
+      } catch (fetchError) {
+        console.error(`Fetch error from presigned URL for book icon: ${fetchError}`);
+        return res.status(500).json({ 
+          error: "Failed to fetch book icon from S3", 
+          details: String(fetchError)
+        });
+      }
+    } catch (error) {
+      console.error(`Error fetching book icon: ${error}`);
+      res.status(500).json({ error: "Failed to fetch book icon" });
+    }
+  });
+  
   // Direct route for accessing book contents from S3
   app.get("/api/direct/:bookPath/:unitPath", isAuthenticated, async (req, res) => {
     try {
