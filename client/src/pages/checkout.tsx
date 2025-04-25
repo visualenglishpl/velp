@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch'; 
 import { useToast } from '@/hooks/use-toast';
 import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -313,9 +314,12 @@ export default function CheckoutPage() {
   // Get book ID and unit ID from URL parameters
   useEffect(() => {
     // Parse URL query parameters
-    const searchParams = new URLSearchParams(location.split('?')[1]);
+    console.log('Current location URL:', location);
+    const searchParams = new URLSearchParams(location.split('?')[1] || '');
     const bookParam = searchParams.get('book');
     const unitParam = searchParams.get('unit');
+    
+    console.log('URL Parameters:', { book: bookParam, unit: unitParam, planType });
     
     if (bookParam) {
       setSelectedBookId(bookParam);
@@ -326,6 +330,11 @@ export default function CheckoutPage() {
         setSelectedUnitId(unitParam);
         setSelectedUnits([unitParam]); // Initialize the array with the selected unit
         console.log(`Selected unit: ${unitParam}`);
+      } else if (planType === 'single_lesson') {
+        // If we're in single lesson mode with a book but no unit, default to unit 1
+        console.log('No unit specified, defaulting to unit 1');
+        setSelectedUnitId('1');
+        setSelectedUnits(['1']);
       }
     }
   }, [location, planType]);
