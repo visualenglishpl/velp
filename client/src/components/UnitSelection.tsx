@@ -49,9 +49,29 @@ export function UnitSelection({
               <button 
                 key={book.id}
                 onClick={() => onSelectBook(book.id)} 
-                className="cursor-pointer transition-all hover:bg-primary/5 text-center p-3 rounded-md border border-gray-200 hover:border-primary font-medium text-primary"
+                className="cursor-pointer transition-all hover:bg-primary/5 text-center p-2 rounded-md border border-gray-200 hover:border-primary"
               >
-                BOOK {book.id.toUpperCase()}
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 mb-1 overflow-hidden rounded-sm bg-gray-100 border border-gray-200">
+                    <img 
+                      src={`/api/direct/icons/VISUAL ${book.id.toUpperCase()}.gif`}
+                      alt={`Book ${book.id.toUpperCase()}`}
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        // If icon fails, try using unit1 thumbnail
+                        const imgElement = e.target as HTMLImageElement;
+                        imgElement.src = `/api/direct/book${book.id}/unit1/thumbnail.jpg`;
+                        
+                        imgElement.onerror = () => {
+                          // Final fallback with just text
+                          const fallbackEl = e.target as HTMLImageElement;
+                          fallbackEl.style.display = 'none'; // Hide the broken image
+                        };
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-primary">BOOK {book.id.toUpperCase()}</span>
+                </div>
               </button>
             );
           })}
@@ -92,14 +112,23 @@ export function UnitSelection({
             <img 
               src={`/api/direct/book${selectedBookId}/unit${unitId}/thumbnail.jpg`}
               alt={`Unit ${unitId}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               onError={(e) => {
-                const img = e.target as HTMLImageElement;
-                img.src = `/api/direct/book${selectedBookId}/unit${unitId}/00 A.png`;
-                img.onerror = () => {
+                // First try the unit icon path
+                const imgElement = e.target as HTMLImageElement;
+                imgElement.src = `/api/direct/book${selectedBookId}/icons/unit${unitId}.png`;
+                
+                imgElement.onerror = () => {
+                  // If unit icons fail, try 00 A.png
                   const fallbackImg = e.target as HTMLImageElement;
-                  fallbackImg.src = `/api/direct/book${selectedBookId}/unit${unitId}/title.png`;
-                  fallbackImg.onerror = null;
+                  fallbackImg.src = `/api/direct/book${selectedBookId}/unit${unitId}/00 A.png`;
+                  
+                  fallbackImg.onerror = () => {
+                    // Final fallback
+                    const lastFallback = e.target as HTMLImageElement;
+                    lastFallback.src = `/api/direct/icons/VISUAL ${selectedBookId.toUpperCase()}.gif`;
+                    lastFallback.onerror = null;
+                  };
                 };
               }}
             />
