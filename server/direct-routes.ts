@@ -1012,29 +1012,24 @@ export function registerDirectRoutes(app: Express) {
         });
       }
       
-      // Find the flagged question
-      const allFlaggedQuestions = (global as any).flaggedQuestions || [];
-      const questionIndex = allFlaggedQuestions.findIndex((q: { id: number }) => q.id === questionId);
+      // Update the question using the storage implementation
+      const updatedQuestion = await storage.updateFlaggedQuestion(questionId, {
+        status,
+        adminNotes,
+        reviewedAt: new Date()
+      });
       
-      if (questionIndex === -1) {
+      if (!updatedQuestion) {
         return res.status(404).json({
           success: false,
           error: "Flagged question not found"
         });
       }
       
-      // Update the question
-      allFlaggedQuestions[questionIndex] = {
-        ...allFlaggedQuestions[questionIndex],
-        status,
-        adminNotes: adminNotes || null,
-        reviewedAt: new Date()
-      };
-      
       return res.json({
         success: true,
         message: "Flagged question updated successfully",
-        question: allFlaggedQuestions[questionIndex]
+        question: updatedQuestion
       });
     } catch (error) {
       console.error(`Error updating flagged question:`, error);
@@ -1060,28 +1055,23 @@ export function registerDirectRoutes(app: Express) {
         });
       }
       
-      // Initialize book storage if needed
-      if (!(global as any).books) {
-        (global as any).books = [];
-      }
-      
       // Keep track of books and units added
       const addedBooks = [];
       const addedUnits = [];
       
       // Process each book
       for (const book of books) {
-        // Add required timestamps
-        const bookToAdd = {
-          ...book,
-          id: Date.now() + Math.floor(Math.random() * 1000), // Generate unique ID
-          createdAt: new Date(),
-          updatedAt: new Date()
-        };
+        // Create book using storage implementation
+        const newBook = await storage.createBook({
+          bookId: book.bookId,
+          title: book.title,
+          thumbnail: book.thumbnail || '',
+          level: book.level || 'beginner',
+          description: book.description || null,
+          isPublished: book.isPublished !== false
+        });
         
-        // Add to storage
-        (global as any).books.push(bookToAdd);
-        addedBooks.push(bookToAdd);
+        addedBooks.push(newBook);
         
         // Determine number of units based on book ID
         let numUnits = 16; // Default for books 4-7
@@ -1091,28 +1081,19 @@ export function registerDirectRoutes(app: Express) {
           numUnits = 18; // For books 1-3
         }
         
-        // Initialize units storage if needed
-        if (!(global as any).units) {
-          (global as any).units = [];
-        }
-        
         // Add units for this book
         for (let i = 1; i <= numUnits; i++) {
-          const unitToAdd = {
-            id: Date.now() + Math.floor(Math.random() * 1000) + i, // Generate unique ID
-            bookId: bookToAdd.id,
+          // Create unit using storage implementation
+          const newUnit = await storage.createUnit({
+            bookId: newBook.id,
             unitNumber: i,
             title: `UNIT ${i}`,
             description: `Unit ${i} for ${book.title}`,
             thumbnail: `/thumbnails/book${book.bookId}_unit${i}.jpg`,
-            isPublished: true,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          };
+            isPublished: true
+          });
           
-          // Add to storage
-          (global as any).units.push(unitToAdd);
-          addedUnits.push(unitToAdd);
+          addedUnits.push(newUnit);
         }
       }
       
