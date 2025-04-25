@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, LogOut, User, Book, BookOpen, LayoutDashboard } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [, navigate] = useLocation();
+  const { user, logoutMutation } = useAuth();
+  
+  const isAdmin = user?.role === 'admin';
+  const isTeacher = user?.role === 'teacher';
+  const isLoggedIn = !!user;
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -13,6 +19,15 @@ const Navbar = () => {
   
   const navigateToAuth = () => {
     window.location.href = "/auth";
+  };
+  
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        navigate('/');
+        setMobileMenuOpen(false);
+      }
+    });
   };
   
   const scrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
@@ -64,30 +79,85 @@ const Navbar = () => {
               </div>
             </Link>
           </div>
-          <div className="hidden md:flex items-center space-x-6">
-            <a href="#plans" 
-               onClick={scrollToSection('plans')}
-               className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
-              Plans & Pricing
-            </a>
-            <a href="#faq"
-               onClick={scrollToSection('faq')}
-               className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
-              FAQ
-            </a>
+          <div className="hidden md:flex items-center space-x-4">
+            {/* Admin Navigation */}
+            {isAdmin && (
+              <>
+                <Link href="/admin" className="text-gray-600 hover:text-primary flex items-center gap-1 px-3 py-2 text-sm font-medium">
+                  <LayoutDashboard className="h-4 w-4" />
+                  <span>Admin</span>
+                </Link>
+                <Link href="/admin/books" className="text-gray-600 hover:text-primary flex items-center gap-1 px-3 py-2 text-sm font-medium">
+                  <Book className="h-4 w-4" />
+                  <span>Books</span>
+                </Link>
+                <Link href="/admin/flagged-questions" className="text-gray-600 hover:text-primary flex items-center gap-1 px-3 py-2 text-sm font-medium">
+                  <BookOpen className="h-4 w-4" />
+                  <span>Flagged Questions</span>
+                </Link>
+              </>
+            )}
             
-            <Link href="/books">
-              <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
-                Bookstore
-              </Button>
-            </Link>
-            <Button 
-              variant="outline" 
-              className="border-gray-300 text-gray-700"
-              onClick={navigateToAuth}
-            >
-              Sign In
-            </Button>
+            {/* Teacher Navigation */}
+            {isTeacher && (
+              <>
+                <Link href="/" className="text-gray-600 hover:text-primary flex items-center gap-1 px-3 py-2 text-sm font-medium">
+                  <LayoutDashboard className="h-4 w-4" />
+                  <span>Dashboard</span>
+                </Link>
+              </>
+            )}
+            
+            {/* Common Navigation for All Logged In Users */}
+            {isLoggedIn && (
+              <>
+                <Link href="/books">
+                  <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
+                    <Book className="h-4 w-4 mr-1" />
+                    Bookstore
+                  </Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  className="border-gray-300 text-gray-700"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="h-4 w-4 mr-1" />
+                  Sign Out
+                </Button>
+              </>
+            )}
+            
+            {/* Guest Navigation */}
+            {!isLoggedIn && (
+              <>
+                <a href="#plans" 
+                   onClick={scrollToSection('plans')}
+                   className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
+                  Plans & Pricing
+                </a>
+                <a href="#faq"
+                   onClick={scrollToSection('faq')}
+                   className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">
+                  FAQ
+                </a>
+                
+                <Link href="/books">
+                  <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
+                    <Book className="h-4 w-4 mr-1" />
+                    Bookstore
+                  </Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  className="border-gray-300 text-gray-700"
+                  onClick={navigateToAuth}
+                >
+                  <User className="h-4 w-4 mr-1" />
+                  Sign In
+                </Button>
+              </>
+            )}
           </div>
           <div className="flex md:hidden items-center">
             <Button
@@ -105,32 +175,98 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <a href="#plans" 
-               onClick={scrollToSection('plans')}
-               className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
-              Plans & Pricing
-            </a>
-            <a href="#faq"
-               onClick={scrollToSection('faq')}
-               className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
-              FAQ
-            </a>
+            {/* Admin Mobile Navigation */}
+            {isAdmin && (
+              <>
+                <Link href="/admin">
+                  <div className="text-gray-600 hover:text-primary flex items-center gap-1 px-3 py-2 text-base font-medium">
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span>Admin</span>
+                  </div>
+                </Link>
+                <Link href="/admin/books">
+                  <div className="text-gray-600 hover:text-primary flex items-center gap-1 px-3 py-2 text-base font-medium">
+                    <Book className="h-4 w-4" />
+                    <span>Books</span>
+                  </div>
+                </Link>
+                <Link href="/admin/flagged-questions">
+                  <div className="text-gray-600 hover:text-primary flex items-center gap-1 px-3 py-2 text-base font-medium">
+                    <BookOpen className="h-4 w-4" />
+                    <span>Flagged Questions</span>
+                  </div>
+                </Link>
+              </>
+            )}
             
-            <Link href="/books">
-              <Button 
-                variant="default" 
-                className="bg-black hover:bg-gray-800 text-white w-full justify-start"
-              >
-                Bookstore
-              </Button>
-            </Link>
-            <Button 
-              variant="outline" 
-              className="border-gray-300 text-gray-700 w-full justify-start mt-1"
-              onClick={navigateToAuth}
-            >
-              Sign In
-            </Button>
+            {/* Teacher Mobile Navigation */}
+            {isTeacher && (
+              <>
+                <Link href="/">
+                  <div className="text-gray-600 hover:text-primary flex items-center gap-1 px-3 py-2 text-base font-medium">
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span>Dashboard</span>
+                  </div>
+                </Link>
+              </>
+            )}
+            
+            {/* Common Mobile Navigation for All Logged In Users */}
+            {isLoggedIn && (
+              <>
+                <Link href="/books">
+                  <Button 
+                    variant="default" 
+                    className="bg-black hover:bg-gray-800 text-white w-full justify-start"
+                  >
+                    <Book className="h-4 w-4 mr-1" />
+                    Bookstore
+                  </Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  className="border-gray-300 text-gray-700 w-full justify-start mt-1"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="h-4 w-4 mr-1" />
+                  Sign Out
+                </Button>
+              </>
+            )}
+            
+            {/* Guest Mobile Navigation */}
+            {!isLoggedIn && (
+              <>
+                <a href="#plans" 
+                   onClick={scrollToSection('plans')}
+                   className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
+                  Plans & Pricing
+                </a>
+                <a href="#faq"
+                   onClick={scrollToSection('faq')}
+                   className="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
+                  FAQ
+                </a>
+                
+                <Link href="/books">
+                  <Button 
+                    variant="default" 
+                    className="bg-black hover:bg-gray-800 text-white w-full justify-start"
+                  >
+                    <Book className="h-4 w-4 mr-1" />
+                    Bookstore
+                  </Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  className="border-gray-300 text-gray-700 w-full justify-start mt-1"
+                  onClick={navigateToAuth}
+                >
+                  <User className="h-4 w-4 mr-1" />
+                  Sign In
+                </Button>
+              </>
+            )}
           </div>
         </div>
       )}
