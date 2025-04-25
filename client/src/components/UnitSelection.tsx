@@ -61,13 +61,20 @@ export function UnitSelection({
                   <div className="bg-white border border-blue-100 rounded-md overflow-hidden hover:border-primary">
                     <div className="h-16 bg-blue-50 flex items-center justify-center relative">
                       <img
-                        src={`https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book${book.id}/unit1/thumb.jpg`}
+                        src={`https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/VISUAL ${book.id}.gif`}
                         alt={`Book ${book.id.toUpperCase()} thumbnail`}
-                        className="w-full h-full object-cover opacity-80"
+                        className="w-full h-full object-contain opacity-90"
                         onError={(e) => {
                           // Fallback if image doesn't exist, display a colored background with book ID
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-blue-100 text-primary font-bold text-xl">${book.id.toUpperCase()}</div>`;
+                          const img = e.currentTarget;
+                          if (img.parentElement) {
+                            img.style.display = 'none';
+                            // Create and append a new div instead of setting innerHTML
+                            const fallbackDiv = document.createElement('div');
+                            fallbackDiv.className = 'w-full h-full flex items-center justify-center bg-blue-100 text-primary font-bold text-xl';
+                            fallbackDiv.textContent = book.id.toUpperCase();
+                            img.parentElement.appendChild(fallbackDiv);
+                          }
                         }}
                       />
                     </div>
@@ -117,13 +124,20 @@ export function UnitSelection({
         <div className={`h-12 ${isSelected ? 'bg-primary/10' : 'bg-gray-50'} flex items-center justify-center`}>
           <div className="w-full h-full flex items-center justify-center">
             <img
-              src={`https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book${selectedBookId}/unit${unitId}/thumb.jpg`}
+              src={`https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book${selectedBookId}/icons/unit${unitId}.jpg`}
               alt={`Unit ${unitId} thumbnail`}
-              className="w-full h-full object-cover opacity-80"
+              className="w-full h-full object-contain opacity-90"
               onError={(e) => {
                 // Fallback if image doesn't exist, display a colored background with unit number
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-blue-100 text-primary font-bold text-base">${unitId}</div>`;
+                const img = e.currentTarget;
+                if (img.parentElement) {
+                  img.style.display = 'none';
+                  // Create and append a new div instead of setting innerHTML
+                  const fallbackDiv = document.createElement('div');
+                  fallbackDiv.className = 'w-full h-full flex items-center justify-center bg-blue-100 text-primary font-bold text-base';
+                  fallbackDiv.textContent = unitId;
+                  img.parentElement.appendChild(fallbackDiv);
+                }
               }}
             />
           </div>
