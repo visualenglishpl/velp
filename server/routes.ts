@@ -227,7 +227,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ----- CONTENT MANAGEMENT API ROUTES -----
   
   // S3 Assets API
-  app.get("/api/assets/book-thumbnails", isAuthenticated, async (req, res) => {
+  app.get("/api/assets/book-thumbnails", async (req, res) => {
     try {
       const books = await storage.getBooks();
       const bookThumbnails = [];
@@ -349,7 +349,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Units API
-  app.get("/api/books/:bookId/units", isAuthenticated, async (req, res) => {
+  app.get("/api/books/:bookId/units", async (req, res) => {
     try {
       // Check if bookId parameter is a database ID (number) or a book_id string
       const bookIdParam = req.params.bookId;

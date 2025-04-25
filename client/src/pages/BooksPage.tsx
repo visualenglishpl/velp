@@ -35,7 +35,7 @@ export default function BooksPage() {
     checkAuth();
   }, []);
 
-  // Query to get book thumbnails
+  // Query to get book thumbnails - allow all users to access books
   const { data: books, isLoading, error } = useQuery<BookWithThumbnail[]>({
     queryKey: ['/api/assets/book-thumbnails'],
     queryFn: async () => {
@@ -44,8 +44,7 @@ export default function BooksPage() {
         throw new Error('Failed to fetch books');
       }
       return await res.json();
-    },
-    enabled: isAuthenticated
+    }
   });
 
   // Handle error
@@ -59,19 +58,7 @@ export default function BooksPage() {
     }
   }, [error, toast]);
 
-  if (!isAuthenticated) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl font-bold mb-6">Visual English Library</h1>
-          <p className="mb-8 text-lg text-gray-600">Please sign in to view our collection of books.</p>
-          <Link href="/auth">
-            <Button size="lg">Sign In</Button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  // Allow all users to view the bookstore without requiring authentication
 
   return (
     <div className="container mx-auto px-4 py-8">
