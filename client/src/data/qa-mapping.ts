@@ -6,30 +6,139 @@ export interface QuestionAnswer {
   answer: string;
 }
 
-// Mapping based on the Excel data
+// Mapping based on the S3 bucket filenames and Excel data
 export const questionAnswerMapping: Record<string, QuestionAnswer> = {
-  // Poland content - special case
-  "01 R A": {
-    question: "What country is this?",
-    answer: "It is Poland."
+  // Direct mapping from the file list
+  "01 I A What Do You Say in the Morning – Good Morning.gif": {
+    question: "What do you say in the morning?",
+    answer: "I say 'Good Morning' in the morning."
   },
-  "01 R B": {
-    question: "Where is this flag from?",
-    answer: "It is from Poland."
+  "01 I B What Time Do You Get Up – in the Morning, in the Afternoon, in the Evening or at Night.gif": {
+    question: "What time do you get up?",
+    answer: "I get up in the morning."
   },
-  "01 R C": {
-    question: "What colors are the Polish flag?",
-    answer: "The Polish flag is white and red."
+  "01 I C What Time Do You Eat Breakfast – in the Morning, in the Afternoon, in the Evening or at Night.gif": {
+    question: "What time do you eat breakfast?",
+    answer: "I eat breakfast in the morning."
   },
-  "01 R": {
-    question: "What is the name of the country?",
-    answer: "The country is Poland."
+  "01 I D What Time Do You Go to School – in the Morning, in the Afternoon, in the Evening or at Night.gif": {
+    question: "What time do you go to school?",
+    answer: "I go to school in the morning."
   },
-  "POLAND": {
-    question: "What country is this?",
-    answer: "It is Poland."
+  "01 I E What Do You Drink in the Morning.gif": {
+    question: "What do you drink in the morning?",
+    answer: "I drink milk/juice/coffee in the morning."
   },
-  // Morning routine questions
+  "01 I F What Do You Eat in the Morning.gif": {
+    question: "What do you eat in the morning?",
+    answer: "I eat cereal/toast/fruit in the morning."
+  },
+  "01 I G Do You Like to Get Up in the Morning – Yes, I Do – No, I Don't.gif": {
+    question: "Do you like to get up in the morning?",
+    answer: "Yes, I like to get up in the morning. / No, I don't like to get up in the morning."
+  },
+  "01 I H Do You Run in the Morning – Yes, I Do – No, I Don't.gif": {
+    question: "Do you run in the morning?",
+    answer: "Yes, I run in the morning. / No, I don't run in the morning."
+  },
+  "02 I A What Do You Say in the Afternoon – Good Afternoon.gif": {
+    question: "What do you say in the afternoon?",
+    answer: "I say 'Good Afternoon' in the afternoon."
+  },
+  "02 I B What Time Do You Go Home – in the Morning, in the Afternoon, in the Evening or at Night.gif": {
+    question: "What time do you go home?",
+    answer: "I go home in the afternoon."
+  },
+  "02 I C What Time Do You Eat Lunch – in the Morning, in the Afternoon, in the Evening or at Night.png": {
+    question: "What time do you eat lunch?",
+    answer: "I eat lunch in the afternoon."
+  },
+  "02 I D Do You Have Lunch in the Afternoon in School – Yes, I Do – No, I Don't.png": {
+    question: "Do you have lunch in the afternoon at school?",
+    answer: "Yes, I have lunch in the afternoon at school. / No, I don't have lunch in the afternoon at school."
+  },
+  "02 I E What Do You Eat in the Afternoon.gif": {
+    question: "What do you eat in the afternoon?",
+    answer: "I eat sandwiches/snacks/fruit in the afternoon."
+  },
+  "02 I F Do You Do Homework in the Afternoon – Yes, I Do – No, I Don't.gif": {
+    question: "Do you do homework in the afternoon?",
+    answer: "Yes, I do homework in the afternoon. / No, I don't do homework in the afternoon."
+  },
+  "02 I G Do You Play with Friends in the Afternoon – Yes, I Do – No, I Don't.gif": {
+    question: "Do you play with friends in the afternoon?",
+    answer: "Yes, I play with friends in the afternoon. / No, I don't play with friends in the afternoon."
+  },
+  "02 I H Do You Go Home by Bus in the Afternoon – Yes, I Do – No, I Don't.gif": {
+    question: "Do you go home by bus in the afternoon?",
+    answer: "Yes, I go home by bus in the afternoon. / No, I don't go home by bus in the afternoon."
+  },
+  "03 I A What Do You Say in the Evening – Good Evening.gif": {
+    question: "What do you say in the evening?",
+    answer: "I say 'Good Evening' in the evening."
+  },
+  "03 I B What Time Do You Eat Dinner – in the Morning, in the Afternoon, in the Evening or at Night.gif": {
+    question: "What time do you eat dinner?",
+    answer: "I eat dinner in the evening."
+  },
+  "03 I C What Time is It in the Picture – in the Morning, in the Afternoon, in the Evening or at Night.gif": {
+    question: "What time is it in the picture?",
+    answer: "It is in the evening."
+  },
+  "03 I D What Do You Have for Dinner in the Evening.gif": {
+    question: "What do you have for dinner in the evening?",
+    answer: "I have pasta/rice/meat for dinner in the evening."
+  },
+  "03 I E Do You Do Homework in the Evening – Yes, I Do – No, I Don't.gif": {
+    question: "Do you do homework in the evening?",
+    answer: "Yes, I do homework in the evening. / No, I don't do homework in the evening."
+  },
+  "03 I F Do You Watch Tv in the Evening – Yes, I Do – No, I Don't.gif": {
+    question: "Do you watch TV in the evening?",
+    answer: "Yes, I watch TV in the evening. / No, I don't watch TV in the evening."
+  },
+  "03 I G Do You Take A Bath in the Evening – Yes, I Do – No, I Don't.gif": {
+    question: "Do you take a bath in the evening?",
+    answer: "Yes, I take a bath in the evening. / No, I don't take a bath in the evening."
+  },
+  "03 I H Do You Take A Shower in the Evening – Yes, I Do – No, I Don't.gif": {
+    question: "Do you take a shower in the evening?",
+    answer: "Yes, I take a shower in the evening. / No, I don't take a shower in the evening."
+  },
+  "04 I A What Do You Say at Night – Good Night.gif": {
+    question: "What do you say at night?",
+    answer: "I say 'Good Night' at night."
+  },
+  "04 I B What Time Do You Go to Sleep – in the Morning, in the Afternoon, in the Evening or at Night.gif": {
+    question: "What time do you go to sleep?",
+    answer: "I go to sleep at night. / I go to sleep in the evening."
+  },
+  "04 I C What Time Do You Go to Sleep at Night.gif": {
+    question: "What time do you go to sleep at night?",
+    answer: "I go to sleep at [time] at night."
+  },
+  "04 I D What Time Do You Wear Pyjamas – in the Morning, in the Afternoon, in the Evening or at Night.gif": {
+    question: "What time do you wear pyjamas?",
+    answer: "I wear pyjamas in the evening. / I wear pyjamas at night."
+  },
+  "04 I E Do You Brush Your Teeth at Night – Yes, I Do – No, I Don't.gif": {
+    question: "Do you brush your teeth at night?",
+    answer: "Yes, I brush my teeth at night. / No, I don't brush my teeth at night."
+  },
+  "04 I F Do You Sit on the Telephone at Night – Yes, I Do – No, I Don't.gif": {
+    question: "Do you sit on the telephone at night?",
+    answer: "Yes, I sit on the telephone at night. / No, I don't sit on the telephone at night."
+  },
+  "04 I G Do You Watch Tv at Night – Yes, I Do – No, I Don't.gif": {
+    question: "Do you watch TV at night?",
+    answer: "Yes, I watch TV at night. / No, I don't watch TV at night."
+  },
+  "04 I H Do You Read Books at Night – Yes, I Do – No, I Don't.gif": {
+    question: "Do you read books at night?",
+    answer: "Yes, I read books at night. / No, I don't read books at night."
+  },
+  
+  // Code pattern backup - exact code patterns for lookup
   "01 I A": {
     question: "What do you say in the morning?",
     answer: "I say 'Good Morning' in the morning."
@@ -145,7 +254,10 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
   // Special case for Poland content
   if (filename.toLowerCase().includes('poland')) {
     console.log("Found Poland content:", filename);
-    return questionAnswerMapping["POLAND"];
+    return {
+      question: "What country is this?",
+      answer: "It is Poland."
+    };
   }
   
   // If no exact match, try to find a match by cleaning up the filename
@@ -175,7 +287,10 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
     // Special case for 01 R pattern (Poland)
     if (simplifiedPattern === "01 R") {
       console.log("Found Poland pattern:", simplifiedPattern);
-      return questionAnswerMapping["01 R"];
+      return {
+        question: "What country is this?",
+        answer: "It is Poland."
+      };
     }
     
     // Find keys that start with this simplified pattern
@@ -193,7 +308,10 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
   // Check for content keywords
   if (lowerFilename.includes('poland') || lowerFilename.includes('polish')) {
     console.log("Found Poland keyword in:", filename);
-    return questionAnswerMapping["POLAND"];
+    return {
+      question: "What country is this?",
+      answer: "It is Poland."
+    };
   }
   
   if (lowerFilename.includes('morning') && !lowerFilename.includes('what time')) {
