@@ -49,33 +49,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
       console.log("Login attempting with:", credentials);
-      // Always use admin role regardless of what was selected
-      const adminCredentials = {
-        ...credentials,
-        role: "admin" // Override to ensure content manager access
-      };
-      console.log("Modified login with admin access:", adminCredentials);
-      const res = await apiRequest("POST", "/api/login", adminCredentials);
+      const res = await apiRequest("POST", "/api/login", credentials);
       const data = await res.json();
       console.log("Login response:", data);
       return data;
     },
     onSuccess: (user: User) => {
-      // Force admin role to ensure full content management access
-      const contentManagerUser = {
-        ...user,
-        role: "admin" // Ensure admin role is set
-      };
-      console.log("Setting user with admin privileges:", contentManagerUser);
-      queryClient.setQueryData(["/api/user"], contentManagerUser);
+      console.log("Login successful:", user);
+      queryClient.setQueryData(["/api/user"], user);
       toast({
-        title: "Content Manager Access Granted",
-        description: `Welcome back, ${contentManagerUser.username}!`,
+        title: "Login Successful",
+        description: `Welcome back, ${user.username}!`,
       });
       
-      // Immediately redirect to admin dashboard after successful login
-      console.log("Login successful, redirecting to admin dashboard");
-      window.location.href = "/admin";
+      // Redirect based on role
+      if (user.role === 'admin') {
+        console.log("Admin user, redirecting to admin dashboard");
+        window.location.href = "/admin";
+      } else {
+        console.log("Teacher/user, redirecting to books page");
+        window.location.href = "/books";
+      }
     },
     onError: (error: Error) => {
       toast({
