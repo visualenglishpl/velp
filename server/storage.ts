@@ -8,7 +8,7 @@ import {
 import { eq, and, desc, asc } from "drizzle-orm";
 import session from "express-session";
 import createMemoryStore from "memorystore";
-import { initialBooks, initialUnits } from "./memory-data";
+import { initialBooks, initialUnits, initialSlideOrders, type SlideOrder } from "./memory-data";
 
 // Interface for Storage Operations
 export interface IStorage {
@@ -41,6 +41,10 @@ export interface IStorage {
   createMaterial(material: InsertMaterial): Promise<Material>;
   updateMaterial(id: number, material: Partial<InsertMaterial>): Promise<Material>;
   deleteMaterial(id: number): Promise<void>;
+  
+  // SlideOrder operations
+  getSlideOrder(bookPath: string, unitPath: string): Promise<number[] | null>;
+  saveSlideOrder(bookPath: string, unitPath: string, order: number[]): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -171,6 +175,8 @@ export class MemStorage implements IStorage {
   private nextUnitId = 1;
   private materials: Material[] = [];
   private nextMaterialId = 1;
+  private slideOrders: SlideOrder[] = [];
+  private nextSlideOrderId = 1;
   
   // Session store
   sessionStore: session.Store;
@@ -201,6 +207,12 @@ export class MemStorage implements IStorage {
     // Add units
     this.units = initialUnits;
     this.nextUnitId = Math.max(...initialUnits.map(unit => unit.id)) + 1;
+    
+    // Add slide orders (if any)
+    this.slideOrders = initialSlideOrders;
+    if (initialSlideOrders.length > 0) {
+      this.nextSlideOrderId = Math.max(...initialSlideOrders.map(order => order.id)) + 1;
+    }
   }
 
   // User operations
@@ -366,6 +378,45 @@ export class MemStorage implements IStorage {
     if (index !== -1) {
       this.materials.splice(index, 1);
     }
+  }
+  
+  // SlideOrder operations
+  async getSlideOrder(bookPath: string, unitPath: string): Promise<number[] | null> {
+    const slideOrder = this.slideOrders.find(
+      order => order.bookPath === bookPath && order.unitPath === unitPath
+    );
+    return slideOrder ? slideOrder.order : null;
+  }
+  
+  async saveSlideOrder(bookPath: string, unitPath: string, order: number[]): Promise<void> {
+    // Check if an order already exists for this book/unit
+    const existingIndex = this.slideOrders.findIndex(
+      so => so.bookPath === bookPath && so.unitPath === unitPath
+    );
+    
+    const now = new Date();
+    
+    if (existingIndex !== -1) {
+      // Update existing slide order
+      this.slideOrders[existingIndex] = {
+        ...this.slideOrders[existingIndex],
+        order,
+        updatedAt: now
+      };
+    } else {
+      // Create a new slide order
+      const newSlideOrder: SlideOrder = {
+        id: this.nextSlideOrderId++,
+        bookPath,
+        unitPath,
+        order,
+        createdAt: now,
+        updatedAt: now
+      };
+      this.slideOrders.push(newSlideOrder);
+    }
+    
+    console.log(`Saved slide order for ${bookPath}/${unitPath} to permanent storage`);
   }
 }
 
