@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Flag, Check, X } from "lucide-react";
+import { Flag, Check, X, RefreshCw } from "lucide-react";
 import { findMatchingQA } from "@/data/qa-mapping";
+import { useQuery } from "@tanstack/react-query";
 
 interface QAData {
   country: string;
@@ -30,6 +31,13 @@ interface FlaggedQuestion {
   status: 'pending' | 'reviewed' | 'approved' | 'rejected';
   createdAt: Date;
   reviewedAt?: Date;
+}
+
+interface ExcelQAEntry {
+  filename: string;
+  codePattern: string;
+  question: string;
+  answer: string;
 }
 
 interface QuestionAnswerDisplayProps {
@@ -678,12 +686,77 @@ function QuestionAnswerDisplay({
   bookId, 
   unitId 
 }: QuestionAnswerDisplayProps) {
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // Query Excel data from the API
+  const {
+    data: excelData,
+    isLoading: isExcelLoading,
+    error: excelError
+  } = useQuery({
+    queryKey: [`/api/direct/${bookId}/${unitId}/excel-qa`],
+    queryFn: async () => {
+      // Only fetch if we have bookId and unitId
+      if (!bookId || !unitId) return null;
+      
+      try {
+        setIsLoading(true);
+        const response = await fetch(`/api/direct/${bookId}/${unitId}/excel-qa`);
+        const data = await response.json();
+        if (!data.success) {
+          throw new Error(data.message || "Failed to load Excel data");
+        }
+        console.log(`Loaded ${data.count} QA entries from Excel for ${bookId}/${unitId}`);
+        return data;
+      } catch (error) {
+        console.error("Error loading Excel QA data:", error);
+        toast({
+          title: "Error loading questions",
+          description: "Could not load questions from Excel. Falling back to pattern matching.",
+          variant: "destructive"
+        });
+        return null;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    enabled: !!bookId && !!unitId, // Only fetch if we have a bookId and unitId
+  });
+  
   // Get question and answer data
   const qaData = React.useMemo(() => {
-    // First check from our Excel mapping (qa-mapping.ts)
+    // Clean the filename to prevent code extraction issues
+    const filename = material.content || '';
+    
+    // First check if we have Excel data from the API
+    if (excelData && excelData.entries && excelData.entries.length > 0) {
+      // Look for a matching entry by filename or code pattern
+      const matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => 
+        entry.filename === filename || 
+        filename.includes(entry.codePattern) ||
+        material.description === entry.codePattern
+      );
+      
+      if (matchingEntry) {
+        console.log("Found Excel API mapping for:", filename, "code:", matchingEntry.codePattern);
+        const data = {
+          question: matchingEntry.question,
+          answer: matchingEntry.answer,
+          country: formatText.determineCountry(material.content),
+          hasData: true,
+          category: "" // No category needed from Excel mapping
+        };
+        // Apply Callan-style formatting to all answers
+        data.answer = formatFullAnswer(data.question, data.answer);
+        return data;
+      }
+    }
+    
+    // Fall back to local Excel mapping
     const mapping = findMatchingQA(material.content);
     if (mapping) {
-      console.log("Found Excel mapping for:", material.content);
+      console.log("Found local Excel mapping for:", material.content);
       const data = {
         question: mapping.question,
         answer: mapping.answer,
@@ -701,7 +774,7 @@ function QuestionAnswerDisplay({
       data.answer = formatFullAnswer(data.question, data.answer);
       return data;
     }
-  }, [material]);
+  }, [material, excelData]);
   
   const [editedQuestion, setEditedQuestion] = React.useState<string>(qaData.question);
   const [editedAnswer, setEditedAnswer] = React.useState<string>(qaData.answer);
@@ -711,7 +784,6 @@ function QuestionAnswerDisplay({
   const [suggestedAnswer, setSuggestedAnswer] = useState("");
   const [flagReason, setFlagReason] = useState("");
   const [isFlagged, setIsFlagged] = useState(false);
-  const { toast } = useToast();
   
   // Update state when material changes
   React.useEffect(() => {
@@ -818,6 +890,16 @@ function QuestionAnswerDisplay({
       });
     }
   };
+
+  // Show loading indicator while fetching Excel data
+  if (isLoading || isExcelLoading) {
+    return (
+      <div className="mb-3 bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100 flex items-center justify-center">
+        <RefreshCw className="w-5 h-5 animate-spin text-blue-500 mr-2" />
+        <span className="text-blue-700">Loading questions...</span>
+      </div>
+    );
+  }
 
   if (qaData.hasData || editedQuestion || editedAnswer) {
     return (
