@@ -1,131 +1,151 @@
-import * as xlsx from 'xlsx';
+import * as XLSX from 'xlsx';
 import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * Module for processing Excel files containing question-answer pairs
+ * Extract the meaningful part of the filename to match with questions and answers
+ * This attempts to extract the Q&A indicator and question text from the file path
  */
-
-// Define the structure for questions data
-export interface QuestionAnswerPair {
-  question: string;
-  answer: string;
+function extractMatchingKey(filePath: string): string {
+  // Convert backslashes to forward slashes for consistency
+  const normalizedPath = filePath.replace(/\\/g, '/');
+  
+  // Extract the filename without extension
+  const filename = path.basename(normalizedPath, path.extname(normalizedPath));
+  
+  // Handle different file naming patterns
+  
+  // Pattern 1: Extract codes like "01 I A" or "05 M E" followed by the question text
+  const match = filename.match(/\d{2}\s+[A-Z]\s+[A-Z](.+)/);
+  if (match) {
+    return match[0].trim();
+  }
+  
+  // Pattern 2: Extract anything after the last slash that contains a question pattern
+  const parts = normalizedPath.split('/');
+  const lastPart = parts[parts.length - 1];
+  
+  if (lastPart.includes('?') || 
+      lastPart.toLowerCase().includes('what') || 
+      lastPart.toLowerCase().includes('where') || 
+      lastPart.toLowerCase().includes('who') || 
+      lastPart.toLowerCase().includes('how') ||
+      lastPart.toLowerCase().includes('can you')) {
+    return lastPart.trim();
+  }
+  
+  // Pattern 3: Use the full filename as a fallback
+  return filename.trim();
 }
 
-export type QuestionAnswerMap = Record<string, QuestionAnswerPair>;
-
 /**
- * Process an Excel file to extract question-answer pairs
+ * Process Excel file and generate a mapping between file paths and Q&A
  * @param excelFilePath Path to the Excel file
- * @returns A map of file paths to question-answer pairs
+ * @param outputPath Path where the generated TypeScript file will be saved
+ * @returns Object containing the mapping
  */
-export function processExcelFile(excelFilePath: string): QuestionAnswerMap {
-  if (!fs.existsSync(excelFilePath)) {
-    throw new Error(`Excel file not found: ${excelFilePath}`);
-  }
-
+export function processExcelAndGenerateTS(excelFilePath: string, outputPath: string): Record<string, { question: string; answer: string }> {
   console.log(`Processing Excel file: ${excelFilePath}`);
   
   // Read the Excel file
-  const workbook = xlsx.readFile(excelFilePath);
-  const sheetName = workbook.SheetNames[0];
-  const sheet = workbook.Sheets[sheetName];
+  const workbook = XLSX.readFile(excelFilePath);
+  const sheetName = workbook.SheetNames[0]; // Assume first sheet
+  const worksheet = workbook.Sheets[sheetName];
   
   // Convert to JSON
-  const data = xlsx.utils.sheet_to_json(sheet);
-  console.log(`Found ${data.length} rows in Excel file`);
+  const data: any[] = XLSX.utils.sheet_to_json(worksheet, { header: ["filePath", "question", "answer"] });
   
-  // Create a mapping from file path to question/answer
-  const qaMapping: QuestionAnswerMap = {};
+  // Skip header row if present
+  const startIndex = typeof data[0].filePath === 'string' && 
+                   (data[0].filePath.toLowerCase().includes('file') || 
+                    data[0].filePath.toLowerCase().includes('path')) ? 1 : 0;
   
-  data.forEach((row: any, index: number) => {
-    // Excel columns might vary - check all possible column names
-    const filePath = row['File Path'] || row['Filename'] || row['Path'] || '';
-    const question = row['Question'] || row['Q'] || '';
-    const answer = row['Answer'] || row['A'] || '';
+  // Create mapping between file paths (keys) and Q&A (values)
+  const qaMapping: Record<string, { question: string; answer: string }> = {};
+  
+  for (let i = startIndex; i < data.length; i++) {
+    const row = data[i];
     
-    if (filePath && (question || answer)) {
-      // Clean the file path - remove extension and directory parts if needed
-      const cleanFilePath = filePath.replace(/\.[^/.]+$/, '');
-      
-      qaMapping[cleanFilePath] = {
-        question: question,
-        answer: answer
+    // Skip empty rows
+    if (!row.filePath) continue;
+    
+    // Extract matching key from file path
+    const matchingKey = extractMatchingKey(row.filePath);
+    
+    // Create mapping entry
+    qaMapping[matchingKey] = {
+      question: row.question || '',
+      answer: row.answer || ''
+    };
+    
+    // Also create variations of the key for better matching
+    // For example, if the key is "01 I A What is your name",
+    // also create entries for "What is your name", "01 I A", etc.
+    
+    // Variant 1: Numbers and codes only (e.g., "01 I A")
+    const codeMatch = matchingKey.match(/^\d{2}\s+[A-Z]\s+[A-Z]/);
+    if (codeMatch) {
+      qaMapping[codeMatch[0].trim()] = {
+        question: row.question || '',
+        answer: row.answer || ''
       };
     }
-  });
-  
-  console.log(`Created mapping for ${Object.keys(qaMapping).length} files`);
-  return qaMapping;
-}
-
-/**
- * Generate a TypeScript file with the question-answer mapping
- * @param qaMapping The question-answer mapping
- * @param outputFilePath Path to write the TypeScript file
- */
-export function generateTypeScriptFile(qaMapping: QuestionAnswerMap, outputFilePath: string): void {
-  const outputDir = path.dirname(outputFilePath);
-  
-  // Ensure the output directory exists
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-  
-  // Generate TypeScript file content
-  const tsContent = `/**
- * Generated question-answer mapping from Excel file
- * Generated on: ${new Date().toISOString()}
- */
-
-export type QuestionAnswerPair = {
-  question: string;
-  answer: string;
-};
-
-export const questionAnswerMap: Record<string, QuestionAnswerPair> = ${JSON.stringify(qaMapping, null, 2)};
-
-/**
- * Gets a question-answer pair for a given file path
- * @param filePath The file path without extension
- * @returns Question-answer pair or empty strings if not found
- */
-export function getQuestionAnswer(filePath: string): QuestionAnswerPair {
-  // Clean the file path - remove extension if present
-  const cleanPath = filePath.replace(/\\.[^/.]+$/, '');
-  
-  // Try to find an exact match
-  if (questionAnswerMap[cleanPath]) {
-    return questionAnswerMap[cleanPath];
-  }
-  
-  // If no exact match, try to find a match based on the filename only
-  const fileName = cleanPath.split('/').pop() || '';
-  
-  for (const key in questionAnswerMap) {
-    if (key.endsWith(fileName)) {
-      return questionAnswerMap[key];
+    
+    // Variant 2: Question text only
+    const questionTextMatch = matchingKey.match(/\d{2}\s+[A-Z]\s+[A-Z]\s+(.*)/);
+    if (questionTextMatch && questionTextMatch[1]) {
+      qaMapping[questionTextMatch[1].trim()] = {
+        question: row.question || '',
+        answer: row.answer || ''
+      };
     }
   }
   
-  // Return empty strings if no match found
-  return { question: '', answer: '' };
+  // Generate TypeScript file
+  const tsContent = `// Auto-generated file from Excel data
+// Generated on ${new Date().toISOString()}
+
+export interface QuestionAnswer {
+  question: string;
+  answer: string;
+}
+
+export const questionAnswerMapping: Record<string, QuestionAnswer> = ${JSON.stringify(qaMapping, null, 2)};
+
+/**
+ * Find the closest matching Q&A for a given filename
+ * @param filename The filename to match
+ * @returns The matching Q&A or undefined if no match
+ */
+export function findMatchingQA(filename: string): QuestionAnswer | undefined {
+  // Normalize filename
+  const normalizedFilename = filename.replace(/\\\\/g, '/');
+  const baseFilename = normalizedFilename.split('/').pop() || '';
+  
+  // Try direct match first
+  const directMatch = questionAnswerMapping[baseFilename];
+  if (directMatch) return directMatch;
+  
+  // Try matching just the basename without extension
+  const basenameWithoutExt = baseFilename.split('.')[0];
+  const basenameMatch = questionAnswerMapping[basenameWithoutExt];
+  if (basenameMatch) return basenameMatch;
+  
+  // Try looking for key portions in the filename
+  for (const key of Object.keys(questionAnswerMapping)) {
+    if (baseFilename.includes(key) || key.includes(baseFilename)) {
+      return questionAnswerMapping[key];
+    }
+  }
+  
+  // No match found
+  return undefined;
 }
 `;
   
   // Write the TypeScript file
-  fs.writeFileSync(outputFilePath, tsContent);
-  console.log(`Generated TypeScript file: ${outputFilePath}`);
-}
-
-/**
- * Process an Excel file and generate a TypeScript file
- * @param excelFilePath Path to the Excel file
- * @param outputFilePath Path to write the TypeScript file
- * @returns The question-answer mapping
- */
-export function processExcelAndGenerateTS(excelFilePath: string, outputFilePath: string): QuestionAnswerMap {
-  const qaMapping = processExcelFile(excelFilePath);
-  generateTypeScriptFile(qaMapping, outputFilePath);
+  fs.writeFileSync(outputPath, tsContent);
+  console.log(`Generated TypeScript file at: ${outputPath}`);
+  
   return qaMapping;
 }
