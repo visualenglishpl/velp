@@ -893,5 +893,93 @@ export function registerDirectRoutes(app: Express) {
     }
   });
 
+  // Direct endpoint to add books - simpler authentication for scripts
+  app.post("/api/direct/add-books", async (req, res) => {
+    try {
+      console.log("Adding books via direct endpoint");
+      
+      // Simple authentication - verify admin key instead of session
+      const { adminKey, books } = req.body;
+      
+      if (adminKey !== 'admin-secret-key' || !Array.isArray(books) || books.length === 0) {
+        return res.status(401).json({
+          success: false,
+          error: "Invalid admin key or books data"
+        });
+      }
+      
+      // Initialize book storage if needed
+      if (!(global as any).books) {
+        (global as any).books = [];
+      }
+      
+      // Keep track of books and units added
+      const addedBooks = [];
+      const addedUnits = [];
+      
+      // Process each book
+      for (const book of books) {
+        // Add required timestamps
+        const bookToAdd = {
+          ...book,
+          id: Date.now() + Math.floor(Math.random() * 1000), // Generate unique ID
+          createdAt: new Date(),
+          updatedAt: new Date()
+        };
+        
+        // Add to storage
+        (global as any).books.push(bookToAdd);
+        addedBooks.push(bookToAdd);
+        
+        // Determine number of units based on book ID
+        let numUnits = 16; // Default for books 4-7
+        if (book.bookId.startsWith('0')) {
+          numUnits = 20; // For books 0a, 0b, 0c
+        } else if (['1', '2', '3'].includes(book.bookId)) {
+          numUnits = 18; // For books 1-3
+        }
+        
+        // Initialize units storage if needed
+        if (!(global as any).units) {
+          (global as any).units = [];
+        }
+        
+        // Add units for this book
+        for (let i = 1; i <= numUnits; i++) {
+          const unitToAdd = {
+            id: Date.now() + Math.floor(Math.random() * 1000) + i, // Generate unique ID
+            bookId: bookToAdd.id,
+            unitNumber: i,
+            title: `UNIT ${i}`,
+            description: `Unit ${i} for ${book.title}`,
+            thumbnail: `/thumbnails/book${book.bookId}_unit${i}.jpg`,
+            isPublished: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          };
+          
+          // Add to storage
+          (global as any).units.push(unitToAdd);
+          addedUnits.push(unitToAdd);
+        }
+      }
+      
+      return res.json({
+        success: true,
+        message: "Books and units added successfully",
+        addedBooks: addedBooks.length,
+        addedUnits: addedUnits.length,
+        books: addedBooks,
+        units: addedUnits
+      });
+    } catch (error) {
+      console.error("Error adding books:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to add books"
+      });
+    }
+  });
+
   console.log("Direct routes registered successfully");
 }

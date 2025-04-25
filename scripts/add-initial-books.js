@@ -1,4 +1,10 @@
 import fetch from 'node-fetch';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get current directory in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Script to add initial books to the system
@@ -12,30 +18,9 @@ async function main() {
   console.log('Starting to add initial books to the system...');
   
   // URL where the server is running
-  const BASE_URL = 'http://localhost:5000';
+  const BASE_URL = 'http://localhost:3000';
   
   try {
-    // First login as admin
-    console.log('Logging in as admin...');
-    const loginRes = await fetch(`${BASE_URL}/api/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: 'admin',
-        password: '12345',
-        role: 'admin'
-      })
-    });
-    
-    if (!loginRes.ok) {
-      throw new Error(`Login failed: ${loginRes.status} ${loginRes.statusText}`);
-    }
-    
-    const user = await loginRes.json();
-    console.log(`Logged in as ${user.username} with role ${user.role}`);
-    
     // Define books to add
     const books = [
       {
@@ -120,73 +105,42 @@ async function main() {
       }
     ];
     
-    // Add each book
-    for (const book of books) {
-      console.log(`Adding book ${book.bookId}: ${book.title}...`);
+    console.log('Using direct endpoint to add all books at once');
+    
+    // Add all books in a single API call
+    const response = await fetch(`${BASE_URL}/api/direct/add-books`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        adminKey: 'admin-secret-key',
+        books: books
+      })
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to add books: ${response.status} ${response.statusText} - ${errorText}`);
+    }
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      console.log(`Successfully added ${result.addedBooks} books and ${result.addedUnits} units`);
       
-      const bookRes = await fetch(`${BASE_URL}/api/books`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(book)
-      });
-      
-      if (!bookRes.ok) {
-        console.warn(`Failed to add book ${book.bookId}: ${bookRes.status} ${bookRes.statusText}`);
-        continue;
+      // Print out the first book added
+      if (result.books && result.books.length > 0) {
+        console.log('First book added:', result.books[0].title);
       }
-      
-      const newBook = await bookRes.json();
-      console.log(`Successfully added book ${book.bookId} with database ID ${newBook.id}`);
-      
-      // Add units for this book
-      await addUnitsForBook(newBook, BASE_URL);
+    } else {
+      console.error('Failed to add books:', result.error);
     }
     
     console.log('Finished adding books and units!');
   } catch (error) {
     console.error('Error adding books:', error);
     process.exit(1);
-  }
-}
-
-async function addUnitsForBook(book, baseUrl) {
-  // Determine how many units based on book ID
-  let numUnits = 16; // Default for books 4-7
-  if (book.bookId.startsWith('0')) {
-    numUnits = 20; // For books 0a, 0b, 0c
-  } else if (['1', '2', '3'].includes(book.bookId)) {
-    numUnits = 18; // For books 1-3
-  }
-  
-  console.log(`Adding ${numUnits} units for book ${book.bookId}...`);
-  
-  for (let i = 1; i <= numUnits; i++) {
-    const unit = {
-      bookId: book.id, // Database ID of the book
-      unitNumber: i,
-      title: `UNIT ${i}`,
-      description: `Unit ${i} for ${book.title}`,
-      thumbnail: `/thumbnails/book${book.bookId}_unit${i}.jpg`,
-      isPublished: true
-    };
-    
-    const unitRes = await fetch(`${baseUrl}/api/units`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(unit)
-    });
-    
-    if (!unitRes.ok) {
-      console.warn(`Failed to add unit ${i} for book ${book.bookId}: ${unitRes.status} ${unitRes.statusText}`);
-      continue;
-    }
-    
-    const newUnit = await unitRes.json();
-    console.log(`Successfully added unit ${i} for book ${book.bookId}`);
   }
 }
 

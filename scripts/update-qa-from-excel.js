@@ -7,9 +7,14 @@
  * 2. Processes the Excel file and updates the question-answer mappings
  */
 
-const fetch = require('node-fetch');
-const path = require('path');
-const fs = require('fs');
+import fetch from 'node-fetch';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+// Get current directory in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration
 const SERVER_URL = process.env.SERVER_URL || 'http://localhost:5000';
