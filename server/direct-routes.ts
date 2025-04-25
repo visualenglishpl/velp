@@ -2,8 +2,9 @@ import { Express, Request, Response } from "express";
 import { GetObjectCommand, S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import * as path from 'path';
+import * as xlsx from 'xlsx';
 import { processExcelAndGenerateTS } from './excel-processor';
-import { processUnitExcel, QuestionAnswerEntry } from './excel-unit-processor';
+import { processUnitExcel, QuestionAnswerEntry, downloadExcelFile } from './excel-unit-processor';
 import { storage } from './storage';
 
 // S3 configuration 
@@ -1166,28 +1167,61 @@ export function registerDirectRoutes(app: Express) {
     try {
       const { bookPath, unitPath } = req.params;
       
-      console.log(`Processing Excel QA for ${bookPath}/${unitPath}`);
+      console.log(`=====================================================`);
+      console.log(`START: Processing Excel QA for ${bookPath}/${unitPath}`);
+      console.log(`=====================================================`);
       
-      // First check if we have cached data
-      let qaEntries = await storage.getUnitQuestionAnswers(bookPath, unitPath);
+      // Force reprocess option - useful for debugging
+      const forceReprocess = req.query.force === 'true';
+      if (forceReprocess) {
+        console.log(`FORCE REPROCESS flag detected - bypassing cache`);
+      }
+      
+      // First check if we have cached data (unless force reprocess is requested)
+      let qaEntries = !forceReprocess ? await storage.getUnitQuestionAnswers(bookPath, unitPath) : [];
       
       // If no cached data, process Excel from S3
       if (!qaEntries || qaEntries.length === 0) {
         console.log(`No cached QA data for ${bookPath}/${unitPath}, processing Excel...`);
+        
+        console.time('Excel processing');
         qaEntries = await processUnitExcel(bookPath, unitPath);
+        console.timeEnd('Excel processing');
+        
+        if (!qaEntries) {
+          console.error(`Failed to process Excel for ${bookPath}/${unitPath} - null result returned`);
+          qaEntries = [];
+        }
+        
+        console.log(`Processed ${qaEntries.length} QA entries from Excel`);
+        
+        // Log a sample of the entries for debugging
+        if (qaEntries.length > 0) {
+          console.log(`Sample entry: ${JSON.stringify(qaEntries[0], null, 2)}`);
+        }
         
         // Save to cache if we got data
         if (qaEntries && qaEntries.length > 0) {
+          console.log(`Saving ${qaEntries.length} entries to storage cache`);
           await storage.saveUnitQuestionAnswers(bookPath, unitPath, qaEntries);
+        } else {
+          console.warn(`No entries to cache for ${bookPath}/${unitPath}`);
         }
+      } else {
+        console.log(`Using ${qaEntries.length} cached QA entries for ${bookPath}/${unitPath}`);
       }
+      
+      console.log(`=====================================================`);
+      console.log(`END: Returning ${qaEntries.length} Excel QA entries for ${bookPath}/${unitPath}`);
+      console.log(`=====================================================`);
       
       return res.json({
         success: true,
         bookId: bookPath,
         unitId: unitPath,
         entries: qaEntries,
-        count: qaEntries.length
+        count: qaEntries.length,
+        timestamp: new Date().toISOString()
       });
     } catch (error) {
       console.error(`Error processing Excel QA for unit: ${error}`);
@@ -1199,5 +1233,72 @@ export function registerDirectRoutes(app: Express) {
     }
   });
 
+  // Testing endpoint for Excel file download and processing
+  app.get("/api/direct/test/excel-download/:bookPath", isAuthenticated, async (req, res) => {
+    try {
+      const { bookPath } = req.params;
+      
+      console.log(`Testing Excel download for ${bookPath}`);
+      
+      // Attempt to download the Excel file
+      const excelFilePath = await downloadExcelFile(bookPath);
+      
+      if (!excelFilePath) {
+        return res.status(404).json({
+          success: false,
+          message: `Could not download Excel file for ${bookPath}`,
+          checkedPaths: [
+            `${bookPath}/VISUAL ${bookPath.replace('book', '')} QUESTIONS.xlsx`,
+            `${bookPath}/VISUAL ${bookPath.replace('book', '')}  QUESTIONS.xlsx`,
+            `${bookPath}/questions.xlsx`,
+            `${bookPath}/VISUAL-${bookPath.replace('book', '')}-QUESTIONS.xlsx`,
+            `${bookPath}/QA.xlsx`
+          ]
+        });
+      }
+      
+      // If we got here, the file was downloaded successfully
+      console.log(`Excel file successfully downloaded to ${excelFilePath}`);
+      
+      // Try to load and process the Excel file
+      const workbook = xlsx.readFile(excelFilePath);
+      const sheetNames = workbook.SheetNames;
+      
+      // Get basic info about the Excel file
+      const sheets = sheetNames.map(name => {
+        const sheet = workbook.Sheets[name];
+        const range = xlsx.utils.decode_range(sheet['!ref'] || 'A1:A1');
+        const rowCount = range.e.r - range.s.r + 1;
+        const colCount = range.e.c - range.s.c + 1;
+        
+        // Get sample data (first few rows)
+        const rows = xlsx.utils.sheet_to_json(sheet, { header: 'A' });
+        const sampleRows = rows.slice(0, 3);
+        
+        return {
+          name,
+          rowCount,
+          colCount,
+          range: sheet['!ref'],
+          sampleRows
+        };
+      });
+      
+      return res.json({
+        success: true,
+        message: `Successfully downloaded and processed Excel file for ${bookPath}`,
+        filePath: excelFilePath,
+        sheets
+      });
+    } catch (error) {
+      console.error(`Error testing Excel download: ${error}`);
+      return res.status(500).json({
+        success: false,
+        message: `Error testing Excel download for ${bookPath}`,
+        error: String(error)
+      });
+    }
+  });
+  
   console.log("Direct routes registered successfully");
 }

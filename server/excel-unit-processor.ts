@@ -58,16 +58,10 @@ function processExcelWorkbook(workbook: xlsx.WorkBook, unitId: string): Question
   try {
     // Get the sheet names
     const sheetNames = workbook.SheetNames;
+    console.log(`Excel file contains ${sheetNames.length} sheets: ${sheetNames.join(', ')}`);
     
-    // Excel file should have one sheet that contains all Q&A mappings
-    const sheet = workbook.Sheets[sheetNames[0]];
-    if (!sheet) {
-      console.error("No sheet found in Excel file");
-      return result;
-    }
-    
-    // Convert sheet to JSON
-    const rows = xlsx.utils.sheet_to_json<{ [key: string]: any }>(sheet);
+    // Try all sheets to maximize our chance of finding the right data
+    let foundEntries = false;
     
     // Extract unit number from unitId (e.g., "unit1" -> "1")
     const unitNumberMatch = unitId.match(/\d+/);
@@ -79,53 +73,152 @@ function processExcelWorkbook(workbook: xlsx.WorkBook, unitId: string): Question
     const unitNumber = parseInt(unitNumberMatch[0], 10);
     console.log(`Processing Q&A for unit number: ${unitNumber}`);
     
-    // Filter rows that belong to this unit
-    for (const row of rows) {
-      // The Excel structure has:
-      // Column A: Code pattern (e.g., "01 R A")
-      // Column B: Question
-      // Column C: Answer
+    // Try each sheet until we find matching entries
+    for (const sheetName of sheetNames) {
+      console.log(`Processing sheet: ${sheetName}`);
+      const sheet = workbook.Sheets[sheetName];
+      if (!sheet) continue;
       
-      // Skip rows without all required columns
-      const codeCol = row['__EMPTY'] || row['A'] || row[0];
-      const questionCol = row['__EMPTY_1'] || row['B'] || row[1];
-      const answerCol = row['__EMPTY_2'] || row['C'] || row[2];
+      // Convert sheet to JSON
+      const rows = xlsx.utils.sheet_to_json<{ [key: string]: any }>(sheet, { 
+        header: 'A',
+        defval: '',
+        blankrows: false
+      });
       
-      if (!codeCol || !questionCol || !answerCol) {
-        continue;
-      }
+      console.log(`Sheet ${sheetName} has ${rows.length} rows`);
+      if (rows.length === 0) continue;
       
-      // Convert to strings
-      const codePattern = String(codeCol).trim();
-      const question = String(questionCol).trim();
-      const answer = String(answerCol).trim();
+      // Log a few sample rows for debugging
+      console.log("Sample row structure:", JSON.stringify(rows[0]));
       
-      // Only process rows with valid code patterns
-      // Code pattern format: "01 R A" where first digits indicate unit number
-      const codeUnitMatch = codePattern.match(/^(\d{2})/);
-      if (!codeUnitMatch) {
-        continue;
-      }
+      // Try to determine column structure
+      let codeColumn = 'A';
+      let questionColumn = 'B';
+      let answerColumn = 'C';
       
-      const codeUnit = parseInt(codeUnitMatch[1], 10);
-      
-      // Check if this row belongs to our unit
-      if (codeUnit === unitNumber) {
-        // Create a filename that could match with the content in the material
-        // Format: "01 R A What country is this.png"
-        const filename = `${codePattern} ${question.replace(/\?$/, '')}.png`;
+      // Try to auto-detect column structure by checking the first few rows
+      for (let i = 0; i < Math.min(5, rows.length); i++) {
+        const row = rows[i];
+        const keys = Object.keys(row);
         
-        result.push({
-          filename,
-          codePattern,
-          question,
-          answer
-        });
+        // Look for a row that has at least 3 columns
+        if (keys.length >= 3) {
+          // If first column contains code-like patterns (e.g., "01 A a"), use this structure
+          const firstColValue = String(row[keys[0]] || '').trim();
+          const codeMatch = firstColValue.match(/^\d{2}\s+[A-Za-z]\s+[A-Za-z]/);
+          
+          if (codeMatch) {
+            codeColumn = keys[0];
+            questionColumn = keys[1];
+            answerColumn = keys[2];
+            console.log(`Auto-detected columns: Code=${codeColumn}, Question=${questionColumn}, Answer=${answerColumn}`);
+            break;
+          }
+        }
+      }
+      
+      // Filter rows that belong to this unit
+      let entriesInSheet = 0;
+      
+      for (const row of rows) {
+        // Get values from the determined columns
+        const codeCol = row[codeColumn] || '';
+        const questionCol = row[questionColumn] || '';
+        const answerCol = row[answerColumn] || '';
+        
+        // Skip rows without all required columns
+        if (!codeCol || !questionCol || !answerCol) {
+          continue;
+        }
+        
+        // Convert to strings
+        const codePattern = String(codeCol).trim();
+        const question = String(questionCol).trim();
+        const answer = String(answerCol).trim();
+        
+        // Debug logging
+        // console.log(`Processing row: Code=${codePattern}, Q=${question}, A=${answer}`);
+        
+        // Only process rows with valid code patterns
+        // Code pattern format: "01 R A" where first digits indicate unit number
+        const codeUnitMatch = codePattern.match(/^(\d{2})/);
+        if (!codeUnitMatch) {
+          continue;
+        }
+        
+        const codeUnit = parseInt(codeUnitMatch[1], 10);
+        
+        // Check if this row belongs to our unit
+        if (codeUnit === unitNumber) {
+          // Create multiple filename patterns that could match with content in the material
+          const basePattern = codePattern;
+          
+          // Create several filename variations to increase matching success
+          // 1. Standard format: "01 R A What country is this.png"
+          const filenameStandard = `${basePattern} ${question.replace(/\?$/, '')}`;
+          
+          // 2. Format for dashPattern: "01 R A What country is this - It is Poland.png"
+          const dashPattern = `${basePattern} ${question.replace(/\?$/, '')} - ${answer}`;
+          
+          // 3. Format with different spacings: "01R A What country is this.png"
+          const compactPattern = `${basePattern.replace(/\s+/g, '')} ${question.replace(/\?$/, '')}`;
+          
+          // 4. Format with code at the end: "What country is this 01 R A.png"
+          const codeAtEnd = `${question.replace(/\?$/, '')} ${basePattern}`;
+          
+          result.push({
+            filename: filenameStandard,
+            codePattern: basePattern,
+            question,
+            answer
+          });
+          
+          // Add the dash pattern as a separate entry
+          result.push({
+            filename: dashPattern,
+            codePattern: basePattern,
+            question,
+            answer
+          });
+          
+          // Add the compact pattern
+          result.push({
+            filename: compactPattern,
+            codePattern: basePattern,
+            question,
+            answer
+          });
+          
+          // Add code at end pattern
+          result.push({
+            filename: codeAtEnd,
+            codePattern: basePattern,
+            question,
+            answer
+          });
+          
+          entriesInSheet++;
+        }
+      }
+      
+      if (entriesInSheet > 0) {
+        console.log(`Found ${entriesInSheet} Q&A entries for unit ${unitNumber} in sheet "${sheetName}"`);
+        foundEntries = true;
       }
     }
     
-    console.log(`Found ${result.length} Q&A entries for unit ${unitNumber}`);
-    return result;
+    // Remove duplicates based on codePattern to avoid redundancy
+    const uniqueEntries: { [key: string]: QuestionAnswerEntry } = {};
+    
+    for (const entry of result) {
+      const key = entry.codePattern;
+      uniqueEntries[key] = entry;
+    }
+    
+    const finalResult = Object.values(uniqueEntries);
+    console.log(`Final result: ${finalResult.length} unique Q&A entries for unit ${unitNumber}`);
+    return finalResult;
   } catch (error) {
     console.error(`Error processing Excel workbook: ${error}`);
     return result;
@@ -149,14 +242,31 @@ export async function downloadExcelFile(bookId: string): Promise<string | null> 
   }
   
   try {
-    // Different books may have differently named Excel files
-    // Let's try a few standard patterns
-    const possiblePaths = [
-      `${bookId}/VISUAL ${bookId.replace('book', '')} QUESTIONS.xlsx`,
+    // Using the exact paths provided for all books
+    let possiblePaths = [];
+    
+    // Book-specific paths based on the exact file naming convention
+    if (bookId === 'book1') {
+      possiblePaths.push(`${bookId}/VISUAL 1 QUESTIONS.xlsx`);
+    } 
+    else if (bookId === 'book2' || bookId === 'book3') {
+      possiblePaths.push(`${bookId}/VISUAL ${bookId.replace('book', '')}  QUESTIONS.xlsx`); // Note: Two spaces between number and QUESTIONS
+    }
+    else if (bookId === 'book4') {
+      possiblePaths.push(`${bookId}/VISUAL 4 QUESTIONS.xlsx`);
+    }
+    else if (bookId === 'book5' || bookId === 'book6' || bookId === 'book7') {
+      possiblePaths.push(`${bookId}/VISUAL ${bookId.replace('book', '')}  QUESTIONS.xlsx`); // Two spaces for these books
+    }
+    
+    // Add fallback paths in case the specific naming convention changes
+    possiblePaths = possiblePaths.concat([
+      `${bookId}/VISUAL ${bookId.replace('book', '')} QUESTIONS.xlsx`, // One space
+      `${bookId}/VISUAL ${bookId.replace('book', '')}  QUESTIONS.xlsx`, // Two spaces
       `${bookId}/questions.xlsx`,
       `${bookId}/VISUAL-${bookId.replace('book', '')}-QUESTIONS.xlsx`,
       `${bookId}/QA.xlsx`
-    ];
+    ]);
     
     let s3Response = null;
     

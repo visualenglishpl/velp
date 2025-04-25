@@ -731,15 +731,77 @@ function QuestionAnswerDisplay({
     
     // First check if we have Excel data from the API
     if (excelData && excelData.entries && excelData.entries.length > 0) {
-      // Look for a matching entry by filename or code pattern
-      const matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => 
-        entry.filename === filename || 
-        filename.includes(entry.codePattern) ||
-        material.description === entry.codePattern
+      // Extract code pattern (like "01 I A") from filename if it exists
+      const codePatternMatch = filename.match(/(\d{2}\s*[A-Za-z]\s*[A-Za-z])/);
+      let extractedCodePattern = '';
+      if (codePatternMatch) {
+        extractedCodePattern = codePatternMatch[1];
+        console.log("Extracted code pattern:", extractedCodePattern, "from filename:", filename);
+      }
+      
+      // Functions to help with matching
+      const normalizeString = (str: string) => str.toLowerCase().replace(/\s+/g, ' ').trim();
+      const normalizedFilename = normalizeString(filename);
+      
+      // Try several matching strategies in order of precision
+      let matchingEntry = null;
+      
+      // 1. Exact filename match (very unlikely, but most precise)
+      matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => 
+        normalizeString(entry.filename) === normalizedFilename
       );
       
       if (matchingEntry) {
-        console.log("Found Excel API mapping for:", filename, "code:", matchingEntry.codePattern);
+        console.log("Found exact match for:", filename);
+      }
+      
+      // 2. If no exact match, try matching by code pattern
+      if (!matchingEntry && extractedCodePattern) {
+        matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => 
+          normalizeString(entry.codePattern) === normalizeString(extractedCodePattern)
+        );
+        
+        if (matchingEntry) {
+          console.log("Found exact code pattern match:", extractedCodePattern);
+        }
+      }
+      
+      // 3. If still no match, check if code pattern is contained in the filename
+      if (!matchingEntry) {
+        matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => 
+          normalizedFilename.includes(normalizeString(entry.codePattern))
+        );
+        
+        if (matchingEntry) {
+          console.log("Found code pattern contained in filename:", matchingEntry.codePattern);
+        }
+      }
+      
+      // 4. If still no match, check if filename contains the question (without ? mark)
+      if (!matchingEntry) {
+        matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => {
+          const questionWithoutQuestionMark = entry.question.replace(/\?$/, '');
+          return normalizedFilename.includes(normalizeString(questionWithoutQuestionMark));
+        });
+        
+        if (matchingEntry) {
+          console.log("Found question match in filename for:", matchingEntry.question);
+        }
+      }
+      
+      // 5. If still no match, check if material description contains code pattern
+      if (!matchingEntry && material.description) {
+        matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => 
+          normalizeString(material.description).includes(normalizeString(entry.codePattern))
+        );
+        
+        if (matchingEntry) {
+          console.log("Found code pattern in description:", matchingEntry.codePattern);
+        }
+      }
+      
+      if (matchingEntry) {
+        console.log("Found Excel API mapping for:", filename);
         const data = {
           question: matchingEntry.question,
           answer: matchingEntry.answer,
