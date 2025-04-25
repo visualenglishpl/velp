@@ -58,11 +58,13 @@ export function UnitSelection({
                   onClick={() => onSelectBook(book.id)} 
                   className="cursor-pointer transition-all hover:scale-105 text-center"
                 >
-                  <div className="bg-white border-2 border-blue-100 rounded-md overflow-hidden p-4 hover:border-primary">
-                    <div className="font-bold text-primary text-base mb-1">{bookName}</div>
-                    {bookDesc && (
-                      <div className="text-xs text-gray-500">{bookDesc}</div>
-                    )}
+                  <div className="bg-white border-2 border-blue-100 rounded-md overflow-hidden hover:border-primary">
+                    <div className="h-24 bg-blue-50 flex items-center justify-center">
+                      <div className="font-bold text-2xl text-primary">{book.id.toUpperCase()}</div>
+                    </div>
+                    <div className="p-3">
+                      <div className="font-bold text-primary text-base">{bookName}</div>
+                    </div>
                   </div>
                 </div>
               );
@@ -93,19 +95,36 @@ export function UnitSelection({
     unitElements.push(
       <div
         key={unitId}
-        className={`cursor-pointer border-2 rounded-md overflow-hidden hover:bg-gray-50 p-3 text-center transition-all relative ${
-          isSelected ? 'border-primary bg-primary/5 shadow-sm' : 'border-gray-200'
+        className={`cursor-pointer border-2 rounded-md overflow-hidden transition-all relative ${
+          isSelected ? 'border-primary shadow-sm' : 'border-gray-200'
         }`}
         onClick={() => selectUnit(unitId)}
       >
         {isSelected && (
-          <div className="absolute top-1 right-1">
+          <div className="absolute top-1 right-1 z-10">
             <div className="bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✓</div>
           </div>
         )}
-        <div className="font-medium">
-          <div className="text-xs text-gray-500">UNIT</div>
-          <div className={`text-xl ${isSelected ? 'text-primary font-bold' : ''}`}>{unitId}</div>
+        <div className={`h-16 ${isSelected ? 'bg-primary/10' : 'bg-gray-50'} flex items-center justify-center`}>
+          <div className="w-full h-full flex items-center justify-center">
+            <img
+              src={`https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book${selectedBookId}/unit${unitId}/thumb.jpg`}
+              alt={`Unit ${unitId} thumbnail`}
+              className="w-full h-full object-cover opacity-80"
+              onError={(e) => {
+                // Fallback if image doesn't exist, display a colored background with unit number
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-blue-100 text-primary font-bold text-xl">${unitId}</div>`;
+              }}
+            />
+          </div>
+        </div>
+        <div className={`p-2 text-center ${isSelected ? 'bg-primary/5' : 'bg-white'}`}>
+          <div className="font-medium">
+            <div className={`text-base ${isSelected ? 'text-primary font-bold' : ''}`}>
+              UNIT {unitId}
+            </div>
+          </div>
         </div>
       </div>
     );
