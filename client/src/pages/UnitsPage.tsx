@@ -73,24 +73,9 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
       }
       
       for (let i = 1; i <= unitCount; i++) {
-        // Generate optimal thumbnail URL based on book ID
-        let thumbnailUrl = '';
-        
-        // For Book 0 series, use the format from S3 bucket: book{bookId}/icons/thumbnailsuni{bookId}-{number}.png
-        if (bookId.startsWith('0')) {
-          // Use our specific icons endpoint for Book 0 series
-          thumbnailUrl = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${i}.png`;
-        } 
-        // For Book 4, use specific format
-        else if (bookId === '4') {
-          // Use our specific icons endpoint for Book 4
-          thumbnailUrl = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${i}.png`;
-        }
-        // For all other books (1, 2, 3, 5, 6, 7) use the thumbnails folder format
-        else {
-          // Use our specific thumbnails endpoint
-          thumbnailUrl = `/api/direct/thumbnails/book${bookId}_unit${i}.jpg`;
-        }
+        // Generate thumbnail URL based on book ID
+        // All books use the same pattern based on S3 path: s3://visualenglishmaterial/book1/icons/thumbnailsuni1-1.png
+        const thumbnailUrl = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${i}.png`;
         
         demoUnits.push({
           unitNumber: i.toString(),
@@ -175,28 +160,12 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
                         src={
                           // Dynamically determine the best starting path based on book and unit
                           (() => {
-                            // For book 0a, 0b, 0c - they have special icon folder structure
-                            if (bookId.startsWith("0")) {
-                              // For Book 0 series - use the discovered actual format in the S3 bucket
-                              // The exact format is "thumbnailsuni0a-1.png" etc.
-                              const unitNum = parseInt(unit.unitNumber, 10);
-                              return `/api/direct/book${bookId.slice(0, 3)}/icons/thumbnailsuni${bookId}-${unitNum}.png`;
-                            }
-                            // For all known problematic units in any book
-                            else if (
-                              (bookId === "1" && ["1", "2", "5", "10"].includes(unit.unitNumber)) ||
-                              (bookId === "2" && ["1", "4", "5", "8", "9", "10"].includes(unit.unitNumber)) ||
-                              (bookId === "3" && ["3", "5", "7", "8", "10"].includes(unit.unitNumber)) ||
-                              (bookId === "4" && unit.unitNumber === "14") ||
-                              ((bookId === "5" || bookId === "6") && ["5", "8", "13"].includes(unit.unitNumber)) ||
-                              (bookId === "7" && ["5", "7", "8", "13", "14"].includes(unit.unitNumber))
-                            ) {
-                              return `/api/direct/book${bookId}/unit${unit.unitNumber}/title.png`;
-                            }
-                            // Standard path for most units
-                            else {
-                              return `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/00 E.png`;
-                            }
+                            // All books use the same pattern for thumbnails in the S3 bucket
+                            // The exact format is: book{bookId}/icons/thumbnailsuni{bookId}-{number}.png
+                            const unitNum = parseInt(unit.unitNumber, 10);
+                            
+                            // Return thumbnail path using the same pattern for all books
+                            return `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${unitNum}.png`;
                           })()
                         } 
                         alt={`Thumbnail for ${unit.title}`}
