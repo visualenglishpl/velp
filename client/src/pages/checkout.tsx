@@ -615,7 +615,7 @@ export default function CheckoutPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl font-bold mb-10 text-center">
+        <h1 className="text-2xl font-bold mb-4 text-center">
           {planType === 'whole_book' && selectedBookId 
             ? `${bookTitles[selectedBookId] || `BOOK ${selectedBookId.toUpperCase()}`} - Checkout` 
             : planType === 'single_lesson' && selectedBookId
@@ -625,13 +625,9 @@ export default function CheckoutPage() {
 
         {/* Book/Unit Selection Section - At the top */}
         {planType === 'single_lesson' && (
-          <div className="mb-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Select a Book</CardTitle>
-                <CardDescription>Choose the book and units you want to access</CardDescription>
-              </CardHeader>
-              <CardContent>
+          <div className="mb-4">
+            <Card className="shadow-sm">
+              <CardContent className="pt-4">
                 <UnitSelection
                   selectedBookId={selectedBookId}
                   selectedUnits={selectedUnits}

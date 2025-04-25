@@ -42,50 +42,19 @@ export function UnitSelection({
 
   if (!selectedBookId) {
     return (
-      <div className="mb-4">
-        <h3 className="font-semibold text-lg mb-3">Select a Book</h3>
-        <div className="p-4 bg-blue-50 rounded-md border border-blue-200">
-          <p className="text-sm mb-3 text-blue-800">Please select a book to see available units:</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-            {bookOptions.map(book => {
-              // Extract the description from the title if it exists
-              const bookName = `BOOK ${book.id.toUpperCase()}`;
-              const bookDesc = book.title?.replace(bookName, '')?.trim() || '';
-              
-              return (
-                <div 
-                  key={book.id}
-                  onClick={() => onSelectBook(book.id)} 
-                  className="cursor-pointer transition-all hover:scale-105 text-center"
-                >
-                  <div className="bg-white border border-blue-100 rounded-md overflow-hidden hover:border-primary">
-                    <div className="h-16 bg-blue-50 flex items-center justify-center relative">
-                      <img
-                        src={`https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/VISUAL ${book.id}.gif`}
-                        alt={`Book ${book.id.toUpperCase()} thumbnail`}
-                        className="w-full h-full object-contain opacity-90"
-                        onError={(e) => {
-                          // Fallback if image doesn't exist, display a colored background with book ID
-                          const img = e.currentTarget;
-                          if (img.parentElement) {
-                            img.style.display = 'none';
-                            // Create and append a new div instead of setting innerHTML
-                            const fallbackDiv = document.createElement('div');
-                            fallbackDiv.className = 'w-full h-full flex items-center justify-center bg-blue-100 text-primary font-bold text-xl';
-                            fallbackDiv.textContent = book.id.toUpperCase();
-                            img.parentElement.appendChild(fallbackDiv);
-                          }
-                        }}
-                      />
-                    </div>
-                    <div className="p-1 text-center">
-                      <div className="font-bold text-primary text-xs">{book.id.toUpperCase()}</div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      <div>
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
+          {bookOptions.map(book => {
+            return (
+              <button 
+                key={book.id}
+                onClick={() => onSelectBook(book.id)} 
+                className="cursor-pointer transition-all hover:bg-primary/5 text-center p-3 rounded-md border border-gray-200 hover:border-primary font-medium text-primary"
+              >
+                BOOK {book.id.toUpperCase()}
+              </button>
+            );
+          })}
         </div>
       </div>
     );
@@ -109,113 +78,66 @@ export function UnitSelection({
     const isSelected = selectedUnits.includes(unitId);
     
     unitElements.push(
-      <div
+      <button
         key={unitId}
-        className={`cursor-pointer border rounded-md overflow-hidden transition-all relative ${
-          isSelected ? 'border-primary shadow-sm' : 'border-gray-200'
+        className={`cursor-pointer transition-all text-center p-1 rounded border text-xs ${
+          isSelected 
+            ? 'border-primary bg-primary/5 text-primary font-bold' 
+            : 'border-gray-200 hover:border-primary hover:bg-gray-50'
         }`}
         onClick={() => selectUnit(unitId)}
       >
-        {isSelected && (
-          <div className="absolute top-0.5 right-0.5 z-10">
-            <div className="bg-primary text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px]">✓</div>
-          </div>
-        )}
-        <div className={`h-12 ${isSelected ? 'bg-primary/10' : 'bg-gray-50'} flex items-center justify-center`}>
-          <div className="w-full h-full flex items-center justify-center">
-            <img
-              src={`https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book${selectedBookId}/icons/unit${unitId}.jpg`}
-              alt={`Unit ${unitId} thumbnail`}
-              className="w-full h-full object-contain opacity-90"
-              onError={(e) => {
-                // Fallback if image doesn't exist, display a colored background with unit number
-                const img = e.currentTarget;
-                if (img.parentElement) {
-                  img.style.display = 'none';
-                  // Create and append a new div instead of setting innerHTML
-                  const fallbackDiv = document.createElement('div');
-                  fallbackDiv.className = 'w-full h-full flex items-center justify-center bg-blue-100 text-primary font-bold text-base';
-                  fallbackDiv.textContent = unitId;
-                  img.parentElement.appendChild(fallbackDiv);
-                }
-              }}
-            />
-          </div>
-        </div>
-        <div className={`p-1 text-center ${isSelected ? 'bg-primary/5' : 'bg-white'}`}>
-          <div className="font-medium">
-            <div className={`text-xs ${isSelected ? 'text-primary font-bold' : ''}`}>
-              {unitId}
-            </div>
-          </div>
-        </div>
-      </div>
+        {unitId}
+      </button>
     );
   }
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-3">
-        <div>
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="p-0 h-8 w-8"
-              onClick={() => {
-                // Clear unit selection and book selection
-                setSelectedUnits([]);
-                onSelectBook(null);
-              }}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <h3 className="font-semibold text-lg">Select Units</h3>
-          </div>
-          <p className="text-sm text-gray-500 ml-8">
-            {selectedBookId && `From BOOK ${selectedBookId.toUpperCase()}`}
-          </p>
-        </div>
-        <div className="flex items-center space-x-2 bg-gray-50 px-3 py-1.5 rounded-md border border-gray-200">
-          <Label htmlFor="multipleUnitsComponent" className="cursor-pointer text-sm font-medium">
-            Add multiple units
+      <div className="flex items-center justify-between mb-2">
+        <button 
+          className="text-primary text-sm flex items-center gap-1"
+          onClick={() => {
+            setSelectedUnits([]);
+            onSelectBook(null);
+          }}
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Back to books
+        </button>
+        <div className="flex items-center space-x-2">
+          <Label htmlFor="multipleUnitsComponent" className="cursor-pointer text-xs">
+            Multiple units
           </Label>
           <Switch
             id="multipleUnitsComponent"
             checked={multipleUnits}
             onCheckedChange={setMultipleUnits}
-            className="data-[state=checked]:bg-primary"
+            className="data-[state=checked]:bg-primary h-4 w-7"
           />
         </div>
       </div>
+      <p className="text-sm font-medium mb-2">
+        Book {selectedBookId.toUpperCase()} - Select units:
+      </p>
       
-      <div className="p-3 bg-gray-50 rounded-md border border-gray-200 mb-4">
-        <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2">
+      <div className="p-2 bg-gray-50 rounded-md border border-gray-200 mb-2">
+        <div className="grid grid-cols-6 sm:grid-cols-10 md:grid-cols-12 gap-1">
           {unitElements}
         </div>
       </div>
       
       {selectedUnits.length > 0 && (
-        <div className="mt-4 p-3 border rounded-md border-primary/20 bg-primary/5">
-          <div className="flex flex-wrap gap-1 mb-2">
-            {selectedUnits.map(unitId => (
-              <div key={unitId} className="bg-primary/15 text-primary px-2 py-0.5 rounded text-xs font-medium">
-                UNIT {unitId}
-              </div>
-            ))}
-          </div>
-          
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Units selected: {selectedUnits.length}</span>
-            {selectedUnits.length > 1 && (
-              <span className="text-sm font-bold text-primary">
-                Total: €{billingCycle === 'monthly' ? 5 * selectedUnits.length : 40 * selectedUnits.length}
-                <span className="text-xs ml-1 text-gray-500 font-normal">
-                  ({billingCycle === 'monthly' ? 'monthly' : 'yearly'})
-                </span>
+        <div className="mt-2 flex justify-between items-center border-t pt-2 text-sm">
+          <span className="font-medium">Units selected: {selectedUnits.length}</span>
+          {selectedUnits.length > 1 && (
+            <span className="font-bold text-primary">
+              Total: €{billingCycle === 'monthly' ? 5 * selectedUnits.length : 40 * selectedUnits.length}
+              <span className="text-xs ml-1 text-gray-500 font-normal">
+                ({billingCycle === 'monthly' ? 'monthly' : 'yearly'})
               </span>
-            )}
-          </div>
+            </span>
+          )}
         </div>
       )}
     </div>
