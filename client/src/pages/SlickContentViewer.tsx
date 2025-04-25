@@ -96,7 +96,7 @@ export default function SlickContentViewer() {
   const [isZoomed, setIsZoomed] = useState(false);
   
   // State for question visibility - default to hidden per user request
-  const [showQuestions, setShowQuestions] = useState(false);
+  const [showQuestions, setShowQuestions] = useState(true);
   
   // Extract bookId and unitNumber from URL path
   let bookId: string | null = null;
