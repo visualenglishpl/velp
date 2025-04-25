@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useLocation, useNavigate } from 'wouter';
+import { useLocation } from 'wouter';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical, Save, Pencil, Type, Square, ArrowUpRight, Eraser } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -941,7 +941,7 @@ export default function SlickContentViewer() {
                               size="sm" 
                               variant="default"
                               className="bg-primary text-white hover:bg-primary/90"
-                              onClick={() => setLocation('/checkout/single_lesson')}
+                              onClick={() => window.location.href = '/checkout/single_lesson'}
                             >
                               Upgrade Now
                             </Button>
@@ -1003,7 +1003,7 @@ export default function SlickContentViewer() {
                                   size="sm" 
                                   variant="default"
                                   className="bg-primary text-white hover:bg-primary/90"
-                                  onClick={() => setLocation('/checkout/single_lesson')}
+                                  onClick={() => window.location.href = '/checkout/single_lesson'}
                                 >
                                   Upgrade Now
                                 </Button>
@@ -1173,7 +1173,7 @@ export default function SlickContentViewer() {
                       <div className="rounded-lg bg-white p-4 text-center shadow-lg">
                         <h3 className="text-lg font-semibold text-blue-700">Premium Content</h3>
                         <p className="mb-4 text-sm text-gray-700">Sign in to access all slides in this unit.</p>
-                        <Button onClick={() => navigate('/auth')}>Sign In</Button>
+                        <Button onClick={() => window.location.href = '/auth'}>Sign In</Button>
                       </div>
                     </div>
                   )}
