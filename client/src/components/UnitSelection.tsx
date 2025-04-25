@@ -12,7 +12,7 @@ interface UnitSelectionProps {
   setMultipleUnits: (value: boolean) => void;
   billingCycle: 'monthly' | 'yearly';
   bookOptions: Array<{ id: string; title: string }>;
-  onSelectBook: (bookId: string) => void;
+  onSelectBook: (bookId: string | null) => void;
 }
 
 export function UnitSelection({
@@ -44,21 +44,29 @@ export function UnitSelection({
     return (
       <div className="mb-4">
         <h3 className="font-semibold text-lg mb-3">Select a Book</h3>
-        <div className="p-4 bg-blue-50 rounded-md border border-blue-200 text-blue-800">
-          <p className="text-sm mb-3">Please select a book to see available units:</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
-            {bookOptions.map(book => (
-              <Button 
-                key={book.id} 
-                variant="outline"
-                size="sm"
-                onClick={() => onSelectBook(book.id)}
-                className={`text-sm p-3 h-auto flex flex-col items-center justify-center`}
-              >
-                <span className="font-bold">BOOK {book.id.toUpperCase()}</span>
-                {book.title && <span className="text-xs mt-1 text-gray-500">{book.title}</span>}
-              </Button>
-            ))}
+        <div className="p-4 bg-blue-50 rounded-md border border-blue-200">
+          <p className="text-sm mb-3 text-blue-800">Please select a book to see available units:</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+            {bookOptions.map(book => {
+              // Extract the description from the title if it exists
+              const bookName = `BOOK ${book.id.toUpperCase()}`;
+              const bookDesc = book.title?.replace(bookName, '')?.trim() || '';
+              
+              return (
+                <div 
+                  key={book.id}
+                  onClick={() => onSelectBook(book.id)} 
+                  className="cursor-pointer transition-all hover:scale-105 text-center"
+                >
+                  <div className="bg-white border-2 border-blue-100 rounded-md overflow-hidden p-4 hover:border-primary">
+                    <div className="font-bold text-primary text-base mb-1">{bookName}</div>
+                    {bookDesc && (
+                      <div className="text-xs text-gray-500">{bookDesc}</div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -85,16 +93,19 @@ export function UnitSelection({
     unitElements.push(
       <div
         key={unitId}
-        className={`cursor-pointer border-2 rounded-md overflow-hidden hover:bg-gray-50 p-2 text-center ${
-          isSelected ? 'border-primary bg-primary/5' : 'border-gray-200'
+        className={`cursor-pointer border-2 rounded-md overflow-hidden hover:bg-gray-50 p-3 text-center transition-all relative ${
+          isSelected ? 'border-primary bg-primary/5 shadow-sm' : 'border-gray-200'
         }`}
         onClick={() => selectUnit(unitId)}
       >
+        {isSelected && (
+          <div className="absolute top-1 right-1">
+            <div className="bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✓</div>
+          </div>
+        )}
         <div className="font-medium">
-          {isSelected && (
-            <span className="text-primary mr-1">✓</span>
-          )}
-          UNIT {unitId}
+          <div className="text-xs text-gray-500">UNIT</div>
+          <div className={`text-xl ${isSelected ? 'text-primary font-bold' : ''}`}>{unitId}</div>
         </div>
       </div>
     );
@@ -123,7 +134,7 @@ export function UnitSelection({
             {selectedBookId && `From BOOK ${selectedBookId.toUpperCase()}`}
           </p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 bg-gray-50 px-3 py-1.5 rounded-md border border-gray-200">
           <Label htmlFor="multipleUnitsComponent" className="cursor-pointer text-sm font-medium">
             Add multiple units
           </Label>
@@ -131,12 +142,13 @@ export function UnitSelection({
             id="multipleUnitsComponent"
             checked={multipleUnits}
             onCheckedChange={setMultipleUnits}
+            className="data-[state=checked]:bg-primary"
           />
         </div>
       </div>
       
-      <div className="p-3 bg-gray-50 rounded-md border border-gray-200 mb-3">
-        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-9 gap-2">
+      <div className="p-4 bg-gray-50 rounded-md border border-gray-200 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-3">
           {unitElements}
         </div>
       </div>
