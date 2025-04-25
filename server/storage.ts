@@ -9,6 +9,7 @@ import { eq, and, desc, asc } from "drizzle-orm";
 import session from "express-session";
 import createMemoryStore from "memorystore";
 import { initialBooks, initialUnits, initialSlideOrders, type SlideOrder } from "./memory-data";
+import { QuestionAnswerEntry } from "./excel-unit-processor";
 
 // Interface for Storage Operations
 // Flagged question interface
@@ -80,6 +81,10 @@ export interface IStorage {
   getFlaggedQuestions(filters?: { status?: string; bookId?: string; unitId?: string }): Promise<FlaggedQuestion[]>;
   createFlaggedQuestion(question: InsertFlaggedQuestion): Promise<FlaggedQuestion>;
   updateFlaggedQuestion(id: number, updates: Partial<FlaggedQuestion>): Promise<FlaggedQuestion | null>;
+  
+  // Unit question-answer operations from Excel
+  getUnitQuestionAnswers(bookId: string, unitId: string): Promise<QuestionAnswerEntry[]>;
+  saveUnitQuestionAnswers(bookId: string, unitId: string, entries: QuestionAnswerEntry[]): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
