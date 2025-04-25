@@ -27,11 +27,16 @@ const AuthPage = () => {
     if (!loginData.username || !loginData.password) {
       return; // TODO: Add form validation
     }
-    // Always use admin role for content manager access
-    console.log("Logging in with admin role for content manager access");
+    
+    if (!selectedRole) {
+      console.log("No role selected, please select a role");
+      return;
+    }
+    
+    console.log(`Logging in with role: ${selectedRole}`);
     loginMutation.mutate({ 
       ...loginData,
-      role: "admin"
+      role: selectedRole
     });
   };
 
@@ -51,18 +56,24 @@ const AuthPage = () => {
   // For navigation
   const [, navigate] = useLocation();
 
-  // Redirect logged in users to content management page
+  // Redirect logged in users based on their role
   useEffect(() => {
     // Check if we're already on an admin page to avoid redirect loops
-    const isAlreadyOnAdminPage = window.location.pathname.startsWith('/admin');
     const isAlreadyOnAuthPage = window.location.pathname === '/auth';
     
     if (user && !isLoading && isAlreadyOnAuthPage) {
-      console.log("Content manager authenticated:", user);
+      console.log("User authenticated:", user);
       
-      // Always redirect to admin books management for content managers
-      console.log("Redirecting to books management");
-      navigate("/admin/books");
+      // Admin redirects to admin page
+      if (user.role === 'admin') {
+        console.log("Admin user detected, redirecting to admin dashboard");
+        navigate("/admin");
+      } 
+      // Teacher or other users redirect to books page
+      else {
+        console.log("Teacher/user detected, redirecting to bookstore");
+        navigate("/books");
+      }
     }
   }, [user, isLoading, navigate]);
 
