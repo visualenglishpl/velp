@@ -562,21 +562,18 @@ export function registerDirectRoutes(app: Express) {
       
       console.log(`Saving reordered materials for ${bookPath}/${unitPath}`);
       
-      // In a production environment, you would save this order to a database
-      // For now, we'll store it in memory (this will reset on server restart)
-      if (!(global as any).materialOrders) {
-        (global as any).materialOrders = {};
-      }
+      // Extract material IDs
+      const materialIds = materials.map(m => m.id);
       
-      const orderKey = `${bookPath}/${unitPath}`;
-      (global as any).materialOrders[orderKey] = materials.map(m => m.id);
+      // Save the order to storage
+      await storage.saveSlideOrder(bookPath, unitPath, materialIds);
       
-      console.log(`Saved order for ${orderKey}:`, (global as any).materialOrders[orderKey]);
+      console.log(`Saved order for ${bookPath}/${unitPath}:`, materialIds);
       
       return res.json({ 
         success: true, 
-        message: "Order saved successfully",
-        orderKey
+        message: "Order saved successfully to permanent storage",
+        orderKey: `${bookPath}/${unitPath}`
       });
     } catch (error) {
       console.error(`Error saving material order:`, error);
@@ -646,10 +643,9 @@ export function registerDirectRoutes(app: Express) {
   app.get("/api/direct/:bookPath/:unitPath/savedOrder", isAuthenticated, async (req, res) => {
     try {
       const { bookPath, unitPath } = req.params;
-      const orderKey = `${bookPath}/${unitPath}`;
       
-      // Get the saved order from memory
-      const savedOrder = (global as any).materialOrders?.[orderKey] || null;
+      // Get the saved order from permanent storage
+      const savedOrder = await storage.getSlideOrder(bookPath, unitPath);
       
       return res.json({
         success: true,
@@ -844,13 +840,46 @@ export function registerDirectRoutes(app: Express) {
         });
       }
       
-      // Path to the Excel file
+      // S3 path to the Excel file
+      const excelS3Path = "book1/VISUAL 1 QUESTIONS.xlsx";
+      
+      // Local path to save the Excel file temporarily
       const excelFilePath = path.join(process.cwd(), 'attached_assets', 'VISUAL 1 QUESTIONS.xlsx');
       
       // Path for the output TypeScript file
       const tsOutputPath = path.join(process.cwd(), 'client', 'src', 'data', 'question-data.ts');
       
+      // First, download the Excel file from S3
+      console.log(`Downloading Excel file from S3 path: ${excelS3Path}`);
+      
+      // Get the presigned URL for the Excel file
+      const presignedUrl = await getS3PresignedUrl(excelS3Path);
+      
+      if (!presignedUrl) {
+        console.error(`Excel file not found at S3 path: ${excelS3Path}`);
+        return res.status(404).json({
+          success: false,
+          error: "Excel file not found in S3 bucket"
+        });
+      }
+      
       try {
+        // Use fetch to download the file
+        const response = await fetch(presignedUrl);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Convert response to buffer
+        const buffer = await response.arrayBuffer();
+        
+        // Save the file locally
+        const fs = require('fs');
+        fs.writeFileSync(excelFilePath, Buffer.from(buffer));
+        
+        console.log(`Excel file downloaded and saved to ${excelFilePath}`);
+        
         // Process the Excel file and generate TypeScript
         const qaMapping = processExcelAndGenerateTS(excelFilePath, tsOutputPath);
         
@@ -860,12 +889,12 @@ export function registerDirectRoutes(app: Express) {
           totalMappings: Object.keys(qaMapping).length,
           outputFile: tsOutputPath
         });
-      } catch (processingError) {
-        console.error("Error processing Excel file:", processingError);
+      } catch (fetchError) {
+        console.error("Error downloading or processing Excel file:", fetchError);
         return res.status(500).json({
           success: false,
           error: "Error processing Excel file",
-          details: processingError.message
+          details: String(fetchError)
         });
       }
     } catch (error) {
@@ -900,32 +929,21 @@ export function registerDirectRoutes(app: Express) {
         });
       }
       
-      // In a production app, you would save this to a database
-      // For this implementation, we'll save it to memory
-      const flaggedQuestion = {
-        id: Date.now(), // Generate a unique ID
+      // Create flagged question using the storage implementation
+      const flaggedQuestion = await storage.createFlaggedQuestion({
         materialId,
         questionText,
         answerText,
-        suggestedQuestion: suggestedQuestion || null,
-        suggestedAnswer: suggestedAnswer || null,
-        reason: reason || null,
-        status: status || 'pending',
+        suggestedQuestion,
+        suggestedAnswer,
+        reason,
+        status,
         bookId,
         unitId,
-        createdAt: createdAt || new Date(),
-        reviewedAt: null
-      };
+        createdAt: createdAt ? new Date(createdAt) : undefined
+      });
       
-      // Initialize or get the existing flagged questions
-      if (!(global as any).flaggedQuestions) {
-        (global as any).flaggedQuestions = [];
-      }
-      
-      // Add the new flagged question
-      (global as any).flaggedQuestions.push(flaggedQuestion);
-      
-      console.log(`Flagged question for material ID ${materialId} in ${bookId}/${unitId} saved`);
+      console.log(`Flagged question for material ID ${materialId} in ${bookId}/${unitId} saved to permanent storage`);
       
       return res.json({
         success: true,
@@ -949,27 +967,23 @@ export function registerDirectRoutes(app: Express) {
       const bookId = req.query.bookId as string;
       const unitId = req.query.unitId as string;
       
-      // Get all flagged questions
-      const allFlaggedQuestions = (global as any).flaggedQuestions || [];
-      
-      // Apply filters
-      let filteredQuestions = [...allFlaggedQuestions];
+      // Create filters object for storage implementation
+      const filters: { status?: string; bookId?: string; unitId?: string } = {};
       
       if (statusFilter !== 'all') {
-        filteredQuestions = filteredQuestions.filter((q: { status: string }) => q.status === statusFilter);
+        filters.status = statusFilter;
       }
       
       if (bookId) {
-        filteredQuestions = filteredQuestions.filter((q: { bookId?: string }) => q.bookId === bookId);
+        filters.bookId = bookId;
       }
       
       if (unitId) {
-        filteredQuestions = filteredQuestions.filter((q: { unitId?: string }) => q.unitId === unitId);
+        filters.unitId = unitId;
       }
       
-      // Sort by createdAt in descending order (newest first)
-      filteredQuestions.sort((a: { createdAt: string | Date }, b: { createdAt: string | Date }) => 
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      // Get filtered and sorted flagged questions from storage
+      const filteredQuestions = await storage.getFlaggedQuestions(filters);
       
       return res.json({
         success: true,

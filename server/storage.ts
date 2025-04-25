@@ -11,6 +11,36 @@ import createMemoryStore from "memorystore";
 import { initialBooks, initialUnits, initialSlideOrders, type SlideOrder } from "./memory-data";
 
 // Interface for Storage Operations
+// Flagged question interface
+export interface FlaggedQuestion {
+  id: number;
+  materialId: number;
+  questionText: string;
+  answerText: string;
+  suggestedQuestion: string | null;
+  suggestedAnswer: string | null;
+  reason: string | null;
+  status: string;
+  bookId: string;
+  unitId: string;
+  createdAt: Date;
+  reviewedAt: Date | null;
+  adminNotes?: string | null;
+}
+
+export interface InsertFlaggedQuestion {
+  materialId: number;
+  questionText: string;
+  answerText: string;
+  suggestedQuestion?: string | null;
+  suggestedAnswer?: string | null;
+  reason?: string | null;
+  status?: string;
+  bookId: string;
+  unitId: string;
+  createdAt?: Date;
+}
+
 export interface IStorage {
   // Session store
   sessionStore: session.Store;
@@ -45,6 +75,11 @@ export interface IStorage {
   // SlideOrder operations
   getSlideOrder(bookPath: string, unitPath: string): Promise<number[] | null>;
   saveSlideOrder(bookPath: string, unitPath: string, order: number[]): Promise<void>;
+  
+  // Flagged question operations
+  getFlaggedQuestions(filters?: { status?: string; bookId?: string; unitId?: string }): Promise<FlaggedQuestion[]>;
+  createFlaggedQuestion(question: InsertFlaggedQuestion): Promise<FlaggedQuestion>;
+  updateFlaggedQuestion(id: number, updates: Partial<FlaggedQuestion>): Promise<FlaggedQuestion | null>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -177,6 +212,8 @@ export class MemStorage implements IStorage {
   private nextMaterialId = 1;
   private slideOrders: SlideOrder[] = [];
   private nextSlideOrderId = 1;
+  private flaggedQuestions: FlaggedQuestion[] = [];
+  private nextFlaggedQuestionId = 1;
   
   // Session store
   sessionStore: session.Store;
@@ -417,6 +454,69 @@ export class MemStorage implements IStorage {
     }
     
     console.log(`Saved slide order for ${bookPath}/${unitPath} to permanent storage`);
+  }
+  
+  // Flagged question operations
+  async getFlaggedQuestions(filters?: { status?: string; bookId?: string; unitId?: string }): Promise<FlaggedQuestion[]> {
+    let result = [...this.flaggedQuestions];
+    
+    // Apply filters if provided
+    if (filters) {
+      if (filters.status && filters.status !== 'all') {
+        result = result.filter(q => q.status === filters.status);
+      }
+      
+      if (filters.bookId) {
+        result = result.filter(q => q.bookId === filters.bookId);
+      }
+      
+      if (filters.unitId) {
+        result = result.filter(q => q.unitId === filters.unitId);
+      }
+    }
+    
+    // Sort by createdAt in descending order (newest first)
+    return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+  
+  async createFlaggedQuestion(question: InsertFlaggedQuestion): Promise<FlaggedQuestion> {
+    const flaggedQuestion: FlaggedQuestion = {
+      id: this.nextFlaggedQuestionId++,
+      materialId: question.materialId,
+      questionText: question.questionText,
+      answerText: question.answerText,
+      suggestedQuestion: question.suggestedQuestion || null,
+      suggestedAnswer: question.suggestedAnswer || null,
+      reason: question.reason || null,
+      status: question.status || 'pending',
+      bookId: question.bookId,
+      unitId: question.unitId,
+      createdAt: question.createdAt || new Date(),
+      reviewedAt: null
+    };
+    
+    this.flaggedQuestions.push(flaggedQuestion);
+    console.log(`Created flagged question with ID ${flaggedQuestion.id}`);
+    
+    return flaggedQuestion;
+  }
+  
+  async updateFlaggedQuestion(id: number, updates: Partial<FlaggedQuestion>): Promise<FlaggedQuestion | null> {
+    const index = this.flaggedQuestions.findIndex(q => q.id === id);
+    
+    if (index === -1) {
+      return null;
+    }
+    
+    const updatedQuestion: FlaggedQuestion = {
+      ...this.flaggedQuestions[index],
+      ...updates
+    };
+    
+    this.flaggedQuestions[index] = updatedQuestion;
+    console.log(`Updated flagged question with ID ${id}`);
+    
+    return updatedQuestion;
   }
 }
 
