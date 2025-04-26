@@ -39,6 +39,23 @@
   border: none;
 }
 
+/* Force equal heights for resource cards */
+.resource-grid-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.resource-grid-card > div:first-child {
+  flex-shrink: 0;
+}
+
+/* Card container in grid */
+.h-full.flex {
+  width: 100%;
+}
+
 /* Lesson plan container */
 .lesson-plan-container {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

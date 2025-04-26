@@ -646,7 +646,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             {videoResources.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {videoResources.map((resource, index) => (
-                  <div key={resource.id || index} className="h-full">
+                  <div key={resource.id || index} className="h-full flex">
                     <ResourceItem 
                       resource={resource}
                       index={index}
@@ -679,7 +679,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             {gameResources.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {gameResources.map((resource, index) => (
-                  <div key={resource.id || index} className="h-full">
+                  <div key={resource.id || index} className="h-full flex">
                     <ResourceItem 
                       resource={resource}
                       index={index}
@@ -946,7 +946,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
   onChange
 }) => {
   return (
-    <div className="border rounded-lg overflow-hidden shadow-sm bg-white h-full flex flex-col w-full">
+    <div className="border rounded-lg overflow-hidden shadow-sm bg-white resource-grid-card">
       {/* Resource header */}
       <div className="p-4 flex flex-wrap items-center justify-between gap-2 border-b bg-gray-50">
         <div className="flex items-center gap-2">
@@ -1074,9 +1074,9 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
         ) : (
           <div className="flex-grow flex items-center justify-center">
             <div 
-              className="w-full rounded-lg overflow-hidden border bg-white shadow-sm aspect-video max-w-full media-container"
+              className="w-full rounded-lg overflow-hidden border bg-white shadow-sm max-w-full media-container"
               dangerouslySetInnerHTML={{ __html: resource.embedCode }}
-              style={{ height: '200px' }}
+              style={{ height: '180px' }}
             />
           </div>
         )}
