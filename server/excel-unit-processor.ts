@@ -18,6 +18,56 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
   // Only provide hardcoded data for specific book/unit combinations
   if (bookId === 'book1' && unitId === 'unit1') {
     return [
+      // Morning routine questions from the visual guide
+      {
+        filename: "01 I A What Do You Say in the Morning – Good Morning.gif",
+        codePattern: "01 I A",
+        question: "What do you say in the morning?",
+        answer: "I say 'Good Morning' in the morning."
+      },
+      {
+        filename: "01 I B What Time Do You Get Up – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "01 I B",
+        question: "What time do you get up?",
+        answer: "I get up in the morning."
+      },
+      {
+        filename: "01 I C What Time Do You Eat Breakfast – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "01 I C",
+        question: "What time do you eat breakfast?",
+        answer: "I eat breakfast in the morning."
+      },
+      {
+        filename: "01 I D What Time Do You Go to School – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "01 I D",
+        question: "What time do you go to school?",
+        answer: "I go to school in the morning."
+      },
+      {
+        filename: "01 I E What Do You Drink in the Morning.gif",
+        codePattern: "01 I E",
+        question: "What do you drink in the morning?",
+        answer: "I drink milk/juice/coffee in the morning."
+      },
+      {
+        filename: "01 I F What Do You Eat in the Morning.gif",
+        codePattern: "01 I F",
+        question: "What do you eat in the morning?",
+        answer: "I eat cereal/toast/fruit in the morning."
+      },
+      {
+        filename: "01 I G Do You Like to Get Up in the Morning – Yes, I Do – No, I Don't.gif",
+        codePattern: "01 I G",
+        question: "Do you like to get up in the morning?",
+        answer: "\"Yes, I like to get up in the morning.\" / \"No, I don't like to get up in the morning.\""
+      },
+      {
+        filename: "01 I Greetings – Good Morning – New.png",
+        codePattern: "01 I H",
+        question: "Do you run in the morning?",
+        answer: "\"Yes, I run in the morning.\" / \"No, I don't run in the morning.\""
+      },
+      // Poland related data
       {
         filename: "01 R A What country is this",
         codePattern: "01 R A",
@@ -48,7 +98,7 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         question: "Is he Polish?",
         answer: "Yes, he is Polish."
       },
-      // Add data for VISUAL 1 QUESTIONS.xlsx
+      // Warsaw data
       {
         filename: "01 T A What is the name of this city",
         codePattern: "01 T A",

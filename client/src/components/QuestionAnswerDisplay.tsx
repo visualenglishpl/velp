@@ -196,18 +196,18 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       if (!bookId || !unitId) return { success: false, entries: [] };
       
       try {
-        const numericBookId = bookId.replace(/\D/g, '');
-        const numericUnitId = unitId.replace(/\D/g, '');
+        // Use the full bookId and unitId format instead of just extracting numeric parts
+        // This ensures we match the correct path in our server's API endpoints
         
         // Fetch Excel QA data for this specific book and unit
-        const res = await apiRequest('GET', `/api/direct/${numericBookId}/${numericUnitId}/excel-qa`);
+        const res = await apiRequest('GET', `/api/direct/${bookId}/${unitId}/excel-qa`);
         if (!res.ok) {
-          console.log(`Error loading Excel QA data for ${numericBookId}/${numericUnitId}: ${res.statusText}`);
+          console.log(`Error loading Excel QA data for ${bookId}/${unitId}: ${res.statusText}`);
           return { success: false, entries: [] };
         }
         
         const data = await res.json();
-        console.log(`Loaded ${data.entries?.length || 0} QA entries from Excel for ${numericBookId}/${numericUnitId}`);
+        console.log(`Loaded ${data.entries?.length || 0} QA entries from Excel for ${bookId}/${unitId}`);
         return data;
       } catch (error) {
         console.error("Error fetching Excel QA data:", error);

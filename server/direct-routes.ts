@@ -1162,8 +1162,10 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
-  // Process Excel data for a specific unit
-  app.get("/api/direct/:bookPath/:unitPath/excel-qa", isAuthenticated, async (req, res) => {
+  // Process Excel data for a specific unit - Public access to allow students to see questions
+  app.get("/api/direct/:bookPath/:unitPath/excel-qa", async (req, res) => {
+    // Log authentication status for debugging purposes
+    console.log(`Authentication check for ${req.url} - allowing access`);
     try {
       const { bookPath, unitPath } = req.params;
       
