@@ -410,6 +410,77 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
+  // Direct file endpoint for accessing specific files (like PDFs) from S3
+  app.get("/api/direct/:bookPath/:unitPath/file", async (req, res) => {
+    try {
+      const { bookPath, unitPath } = req.params;
+      const { path } = req.query;
+      
+      if (!path || typeof path !== 'string') {
+        return res.status(400).json({ error: "Missing or invalid path parameter" });
+      }
+      
+      // Decode the path parameter
+      const decodedPath = decodeURIComponent(path);
+      console.log(`File access - trying to fetch: ${decodedPath}`);
+      
+      // Get the presigned URL for the file
+      const presignedUrl = await getS3PresignedUrl(decodedPath);
+      
+      if (!presignedUrl) {
+        console.error(`File not found: ${decodedPath}`);
+        return res.status(404).json({ error: "File not found" });
+      }
+      
+      try {
+        console.log(`Using presigned URL for file: ${presignedUrl}`);
+        
+        // Use fetch to get the content directly
+        const response = await fetch(presignedUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': '*/*',
+          },
+        });
+        
+        if (!response.ok) {
+          console.error(`Error fetching file: ${response.status} ${response.statusText}`);
+          return res.status(response.status).json({ 
+            error: "Error fetching file from S3", 
+            details: `${response.status} ${response.statusText}` 
+          });
+        }
+        
+        // Get the content type from the response
+        const contentType = response.headers.get('content-type');
+        
+        // Set the content type header in the response
+        if (contentType) {
+          res.setHeader('Content-Type', contentType);
+        }
+        
+        // Set cache headers
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        
+        // Get the buffer from the response
+        const buffer = await response.arrayBuffer();
+        
+        // Send the buffer as a response
+        return res.send(Buffer.from(buffer));
+        
+      } catch (fetchError) {
+        console.error(`Fetch error from presigned URL for file: ${fetchError}`);
+        return res.status(500).json({ 
+          error: "Failed to fetch file from S3", 
+          details: String(fetchError)
+        });
+      }
+    } catch (error) {
+      console.error(`Error fetching file: ${error}`);
+      res.status(500).json({ error: "Failed to fetch file" });
+    }
+  });
+  
   // Direct materials endpoint for accessing contents in a book/unit - Public access with premium content controls
   app.get("/api/direct/:bookPath/:unitPath/materials", async (req, res) => {
     try {
