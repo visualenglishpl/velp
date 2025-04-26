@@ -125,7 +125,18 @@ export default function SlickContentViewer() {
   
   // Authentication
   const { user } = useAuth();
+  
+  // IMPORTANT: For non-authenticated users viewing public content
+  if (!user) {
+    console.log("Non-authenticated user accessing public content");
+  }
+  
+  // Check if user has paid access based on authentication status
   const hasPaidAccess = Boolean(user);
+  
+  // Apply free content limits based on book series:
+  // - For Books 0a/0b/0c: blur from 3rd image (index 2)
+  // - For standard books: first 10 slides available as preview
   const freeSlideLimit = /^0[a-c]$/i.test(bookId || '') ? 2 : 10;
   
   // Fetch unit information
@@ -855,6 +866,11 @@ export default function SlickContentViewer() {
             {materials.map((material, index) => {
               // For premium content, blur or hide based on free slide limit
               const shouldBlur = !hasPaidAccess && index >= freeSlideLimit;
+              
+              // Debug log for crucial blur check
+              if (index >= freeSlideLimit) {
+                console.log(`PREMIUM CONTENT CHECK: Slide ${index} | hasPaidAccess=${hasPaidAccess} | freeSlideLimit=${freeSlideLimit} | shouldBlur=${shouldBlur}`);
+              }
               
               return (
                 <div key={index} className="outline-none h-[50vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
