@@ -6,6 +6,7 @@ import * as xlsx from 'xlsx';
 import { processExcelAndGenerateTS } from './excel-processor';
 import { processUnitExcel, QuestionAnswerEntry, downloadExcelFile, getHardcodedQuestionAnswers } from './excel-unit-processor';
 import { storage } from './storage';
+import { ensureContentEditsTable, saveContentEdit, getContentEdits, deleteContentEdit, resetContentEdits } from './content-management';
 
 // S3 configuration 
 const S3_BUCKET = process.env.S3_BUCKET || "visualenglishmaterial";
