@@ -663,9 +663,9 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="video" className="space-y-4">
             {videoResources.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {videoResources.map((resource, index) => (
-                  <div key={resource.id || index} className="flex flex-col h-full">
+                  <div key={resource.id || index} className="h-full">
                     <ResourceItem 
                       resource={resource}
                       index={index}
@@ -696,9 +696,9 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="game" className="space-y-4">
             {gameResources.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {gameResources.map((resource, index) => (
-                  <div key={resource.id || index} className="flex flex-col h-full">
+                  <div key={resource.id || index} className="h-full">
                     <ResourceItem 
                       resource={resource}
                       index={index}
@@ -965,7 +965,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
   onChange
 }) => {
   return (
-    <div className="border rounded-lg overflow-hidden shadow-sm bg-white">
+    <div className="border rounded-lg overflow-hidden shadow-sm bg-white h-full flex flex-col">
       {/* Resource header */}
       <div className="p-4 flex flex-wrap items-center justify-between gap-2 border-b bg-gray-50">
         <div className="flex items-center gap-2">
@@ -1056,7 +1056,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
       </div>
       
       {/* Resource content */}
-      <div className="p-4">
+      <div className="p-4 flex-grow flex flex-col">
         {isEditing ? (
           <div className="space-y-4">
             <div>
@@ -1091,10 +1091,12 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
             </div>
           </div>
         ) : (
-          <div 
-            className="w-full rounded-lg overflow-hidden border bg-white shadow-sm aspect-video max-w-full"
-            dangerouslySetInnerHTML={{ __html: resource.embedCode }}
-          />
+          <div className="flex-grow flex items-center justify-center">
+            <div 
+              className="w-full rounded-lg overflow-hidden border bg-white shadow-sm aspect-video max-w-full"
+              dangerouslySetInnerHTML={{ __html: resource.embedCode }}
+            />
+          </div>
         )}
       </div>
     </div>
