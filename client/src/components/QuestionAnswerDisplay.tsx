@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Flag, Check, X, RefreshCw } from "lucide-react";
+import { Flag, Check, X, RefreshCw, EyeOff, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
 interface QAData {
