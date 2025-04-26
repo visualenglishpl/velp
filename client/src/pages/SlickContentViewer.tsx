@@ -10,6 +10,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import QuestionAnswerDisplay from '@/components/QuestionAnswerDisplay';
+import TeacherResources from '@/components/TeacherResources';
 import { 
   DndContext, 
   DragEndEvent,
@@ -1296,6 +1297,15 @@ export default function SlickContentViewer() {
             </DragOverlay>
           </DndContext>
         </div>
+      </div>
+      
+      {/* Teacher Resources Section */}
+      <div className="max-w-6xl mx-auto px-4 pb-12">
+        <TeacherResources 
+          bookId={bookId || undefined} 
+          unitId={unitNumber || undefined}
+          isEditMode={isEditMode}
+        />
       </div>
     </div>
   );
