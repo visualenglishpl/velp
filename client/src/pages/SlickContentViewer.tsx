@@ -886,6 +886,7 @@ export default function SlickContentViewer() {
                       hasPaidAccess={hasPaidAccess}
                       index={index}
                       freeSlideLimit={freeSlideLimit}
+                      isTeacherMode={isTeacherMode}
                     />
                   </div>
                   

@@ -53,6 +53,7 @@ interface QuestionAnswerDisplayProps {
   hasPaidAccess?: boolean;
   index?: number;
   freeSlideLimit?: number;
+  isTeacherMode?: boolean;
 }
 
 // Utility functions
@@ -181,7 +182,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   unitId,
   hasPaidAccess = false,
   index = 0,
-  freeSlideLimit = 10
+  freeSlideLimit = 10,
+  isTeacherMode = false
 }) => {
   // Use Excel-based data for questions and answers
   const { 
