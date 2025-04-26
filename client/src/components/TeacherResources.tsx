@@ -286,15 +286,16 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
   useEffect(() => {
     if (bookId === '1' && unitId === '1' && !pdfResources.length) {
       // Only add if we don't already have a PDF resource
+      const pdfPath = encodeURIComponent("book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf");
       const pdfResource: TeacherResource = {
         bookId: "1",
         unitId: "1",
         title: "Visual English 1 - Unit 1 - Lesson PDF",
         resourceType: "pdf",
-        embedCode: `<iframe src="/api/direct/book1/unit1/file?path=book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf" width="100%" height="600" style="border: none;"></iframe>`,
+        embedCode: `<iframe src="/api/direct/book1/unit1/file?path=${pdfPath}" width="100%" height="600" style="border: none;"></iframe>`,
         order: resources.length,
         provider: "Visual English",
-        sourceUrl: `/api/direct/book1/unit1/file?path=book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf`
+        sourceUrl: `/api/direct/book1/unit1/file?path=${pdfPath}`
       };
       
       setResources(prev => [...prev, pdfResource]);
