@@ -290,6 +290,16 @@ function processExcelWorkbook(workbook: xlsx.WorkBook, unitId: string): Question
           // 4. Format with code at the end: "What country is this 01 R A.png"
           const codeAtEnd = `${question.replace(/\?$/, '')} ${basePattern}`;
           
+          // Debug logging for pattern matching
+          console.log(`Creating entries for code pattern "${basePattern}" with question "${question}"`);
+          console.log(`Pattern variants: "${filenameStandard}", "${dashPattern}", "${compactPattern}", "${codeAtEnd}"`);
+          
+          // Add additional variants with just the code pattern itself
+          // This helps match files that just have the code in the name
+          const codeOnly = basePattern;
+          const codeFirstPart = basePattern.split(' ')[0]; // "01" from "01 R A"
+          const codeFirstTwoParts = basePattern.split(' ').slice(0, 2).join(' '); // "01 R" from "01 R A"
+          
           result.push({
             filename: filenameStandard,
             codePattern: basePattern,

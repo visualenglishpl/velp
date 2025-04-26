@@ -89,6 +89,12 @@ export function extractCodePattern(text: string): string | null {
     return simplifiedMatch[1] + " " + simplifiedMatch[2].toUpperCase();
   }
   
+  // Try for just the number like "01"
+  const numberMatch = text.match(/(\d{2})/);
+  if (numberMatch) {
+    return numberMatch[1];
+  }
+  
   return null;
 }
 

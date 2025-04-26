@@ -241,17 +241,19 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       const normalizeString = (str: string) => str.toLowerCase().replace(/\s+/g, ' ').trim();
       const extractCodePattern = (text: string): string | null => {
         // Try the standard format like "01 I A"
-        let matches = text.match(/(\d{2}\s*[A-Za-z]\s*[A-Za-z](?:\s+|$))/i);
+        let matches = text.match(/(\d{2})\s*([A-Za-z])\s*([A-Za-z])(?:\s+|$)/i);
         if (matches) {
-          let extractedCodePattern = matches[1].trim().toLowerCase();
+          // Standardize the code pattern format as "XX Y Z" (e.g., "01 I A")
+          let extractedCodePattern = `${matches[1]} ${matches[2].toUpperCase()} ${matches[3].toUpperCase()}`;
           console.log("Extracted standard code pattern:", extractedCodePattern, "from filename:", filename);
           return extractedCodePattern;
         }
         
         // Try alternative format like "01I"
-        matches = text.match(/(\d{2}\s*[A-Za-z])/i);
+        matches = text.match(/(\d{2})\s*([A-Za-z])/i);
         if (matches) {
-          let extractedCodePattern = matches[1].trim().toLowerCase();
+          // Standardize as "XX Y" (e.g., "01 I")
+          let extractedCodePattern = `${matches[1]} ${matches[2].toUpperCase()}`;
           console.log("Extracted simplified code pattern:", extractedCodePattern, "from filename:", filename);
           return extractedCodePattern;
         }
@@ -259,7 +261,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         // Try just the numeric part like "01"
         matches = text.match(/^.*?(\d{2}).*$/i);
         if (matches) {
-          let extractedCodePattern = matches[1].trim().toLowerCase();
+          let extractedCodePattern = matches[1];
           console.log("Extracted numeric code pattern:", extractedCodePattern, "from filename:", filename);
           return extractedCodePattern;
         }
@@ -287,12 +289,35 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       // 2. Try to match code pattern
       const extractedCodePattern = extractCodePattern(filename);
       if (extractedCodePattern) {
-        matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => 
-          normalizeString(entry.codePattern) === normalizeString(extractedCodePattern)
-        );
+        console.log(`Searching for match with extracted code pattern: "${extractedCodePattern}"`);
+        
+        // Convert to more flexible matching by standardizing both sides
+        matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => {
+          const normalizedEntryPattern = normalizeString(entry.codePattern);
+          const normalizedExtractedPattern = normalizeString(extractedCodePattern);
+          
+          // Try exact match
+          if (normalizedEntryPattern === normalizedExtractedPattern) {
+            console.log(`Found exact code pattern match: "${entry.codePattern}" = "${extractedCodePattern}"`);
+            return true;
+          }
+          
+          // Try prefix match (e.g., "01 I" matches "01 I A")
+          if (normalizedEntryPattern.startsWith(normalizedExtractedPattern) || 
+              normalizedExtractedPattern.startsWith(normalizedEntryPattern)) {
+            console.log(`Found prefix code pattern match: "${entry.codePattern}" starts with "${extractedCodePattern}" (or vice versa)`);
+            return true;
+          }
+          
+          return false;
+        });
         
         if (matchingEntry) {
-          console.log("Found exact code pattern match:", extractedCodePattern);
+          console.log(`Found match using code pattern "${extractedCodePattern}" against entry with pattern "${matchingEntry.codePattern}"`);
+        } else {
+          console.log(`No entries matched the code pattern "${extractedCodePattern}"`);
+          // Debug - print all available code patterns
+          console.log("Available code patterns:", excelData.entries.map(e => e.codePattern).join(", "));
         }
       }
       
