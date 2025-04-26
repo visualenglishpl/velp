@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical, Save, Pencil, Type, Square, ArrowUpRight, Eraser } from 'lucide-react';
+import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical, Save, Pencil, Type, Square, ArrowUpRight, Eraser, Trash2, Download } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
@@ -729,20 +730,42 @@ export default function SlickContentViewer() {
             </Button>
             
             {isEditMode && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => saveAnnotations(annotations)}
-                disabled={isSavingAnnotations}
-                className="rounded-full shadow-sm bg-green-50 hover:bg-green-100 border-green-200 text-green-600 transition-all"
-              >
-                {isSavingAnnotations ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="mr-2 h-4 w-4" />
-                )}
-                Save Annotations
-              </Button>
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => saveAnnotations(annotations)}
+                  disabled={isSavingAnnotations}
+                  className="rounded-full shadow-sm bg-green-50 hover:bg-green-100 border-green-200 text-green-600 transition-all"
+                >
+                  {isSavingAnnotations ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Save className="mr-2 h-4 w-4" />
+                  )}
+                  Save Annotations
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    if (materials[currentIndex]) {
+                      setSlideToRemove(materials[currentIndex]);
+                      setShowRemoveDialog(true);
+                    }
+                  }}
+                  disabled={isRemoving}
+                  className="rounded-full shadow-sm bg-red-50 hover:bg-red-100 border-red-200 text-red-600 transition-all"
+                >
+                  {isRemoving ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Trash2 className="mr-2 h-4 w-4" />
+                  )}
+                  Delete Slide
+                </Button>
+              </>
             )}
             
             {isEditMode && (
@@ -1307,6 +1330,40 @@ export default function SlickContentViewer() {
           isEditMode={isEditMode}
         />
       </div>
+      
+      {/* Slide Removal Confirmation Dialog */}
+      <Dialog open={showRemoveDialog} onOpenChange={setShowRemoveDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Remove Slide</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to remove this slide from the unit? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center p-4 border rounded-md bg-gray-50">
+            {slideToRemove && (
+              <img 
+                src={slideToRemove.path} 
+                alt="Slide to remove" 
+                className="h-32 object-contain"
+                onError={(e) => {
+                  // Fallback for non-image files
+                  e.currentTarget.style.display = 'none';
+                }} 
+              />
+            )}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowRemoveDialog(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmRemoveSlide} disabled={isRemoving}>
+              {isRemoving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+              Remove
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
