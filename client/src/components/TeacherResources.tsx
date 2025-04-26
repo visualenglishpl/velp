@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { Trash, Plus, Edit, Save, X } from 'lucide-react';
+import { Trash, Plus, Edit, Save, X, Upload, Video, Gamepad2, BookOpen, Link, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { Card } from '@/components/ui/card';
 
 interface TeacherResource {
   id?: number;
@@ -12,6 +15,8 @@ interface TeacherResource {
   title: string;
   resourceType: 'video' | 'game' | 'activity' | 'other';
   embedCode: string;
+  provider?: string;
+  sourceUrl?: string;
   order: number;
 }
 
@@ -30,7 +35,9 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
   const [newResource, setNewResource] = useState<Partial<TeacherResource>>({
     resourceType: 'video',
     title: '',
-    embedCode: ''
+    embedCode: '',
+    provider: '',
+    sourceUrl: ''
   });
   const [isAdding, setIsAdding] = useState(false);
   const [editingResource, setEditingResource] = useState<number | null>(null);
@@ -82,7 +89,9 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     setNewResource({
       resourceType: 'video',
       title: '',
-      embedCode: ''
+      embedCode: '',
+      provider: '',
+      sourceUrl: ''
     });
     setIsAdding(false);
 
@@ -150,75 +159,122 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               Add Teaching Resource
             </Button>
           ) : (
-            <div className="p-4 border rounded-md bg-gray-50">
-              <h3 className="text-lg font-medium mb-3">Add New Teaching Resource</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Resource Type</label>
-                  <select 
-                    value={newResource.resourceType}
-                    onChange={(e) => setNewResource(prev => ({ 
-                      ...prev, 
-                      resourceType: e.target.value as 'video' | 'game' | 'activity' | 'other'
-                    }))}
-                    className="w-full p-2 border rounded"
-                  >
-                    <option value="video">Video</option>
-                    <option value="game">Game</option>
-                    <option value="activity">Activity</option>
-                    <option value="other">Other</option>
-                  </select>
+            <Card className="p-6 border-2 bg-gray-50">
+              <h3 className="text-xl font-semibold mb-4 flex items-center">
+                {newResource.resourceType === 'video' && <Video className="h-5 w-5 mr-2 text-red-500" />}
+                {newResource.resourceType === 'game' && <Gamepad2 className="h-5 w-5 mr-2 text-blue-500" />}
+                {newResource.resourceType === 'activity' && <BookOpen className="h-5 w-5 mr-2 text-amber-500" />}
+                {newResource.resourceType === 'other' && <Link className="h-5 w-5 mr-2 text-gray-500" />}
+                Add New {newResource.resourceType.charAt(0).toUpperCase() + newResource.resourceType.slice(1)} Resource
+              </h3>
+              
+              <div className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Resource Type</label>
+                    <select 
+                      value={newResource.resourceType}
+                      onChange={(e) => setNewResource(prev => ({ 
+                        ...prev, 
+                        resourceType: e.target.value as 'video' | 'game' | 'activity' | 'other'
+                      }))}
+                      className="w-full p-2 border rounded focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
+                    >
+                      <option value="video">Video (YouTube, Vimeo, etc.)</option>
+                      <option value="game">Game (Wordwall, etc.)</option>
+                      <option value="activity">Activity (Online exercises)</option>
+                      <option value="other">Other Embedded Content</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Title</label>
+                    <Input 
+                      type="text"
+                      value={newResource.title}
+                      onChange={(e) => setNewResource(prev => ({ ...prev, title: e.target.value }))}
+                      placeholder={newResource.resourceType === 'video' ? "e.g., Good Morning Pinkfong" : 
+                                  newResource.resourceType === 'game' ? "e.g., Wordwall - Greetings" : 
+                                  "e.g., Times of the Day Activity"}
+                      className="w-full"
+                    />
+                  </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Title</label>
-                  <input 
-                    type="text"
-                    value={newResource.title}
-                    onChange={(e) => setNewResource(prev => ({ ...prev, title: e.target.value }))}
-                    placeholder="e.g., Good Morning Pinkfong Video"
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">Embed Code</label>
+                  <label className="block text-sm font-medium mb-1">
+                    Embed Code
+                    <span className="text-xs text-gray-500 ml-2">
+                      (Copy & paste iframe code from YouTube, Wordwall, etc.)
+                    </span>
+                  </label>
                   <textarea 
                     value={newResource.embedCode}
                     onChange={(e) => setNewResource(prev => ({ ...prev, embedCode: e.target.value }))}
-                    placeholder="Paste YouTube iframe or other embed code here"
-                    className="w-full p-2 border rounded min-h-[100px] font-mono text-sm"
+                    placeholder={`Paste embed code here. For example:\n\n<iframe width="560" height="315" src="https://www.youtube.com/embed/..." title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`}
+                    className="w-full p-3 border rounded min-h-[120px] font-mono text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
                   />
                 </div>
                 
-                <div className="flex justify-end space-x-2">
+                <div className="bg-amber-50 border border-amber-200 p-3 rounded-md text-amber-800 text-sm">
+                  <p>
+                    <strong>Tip:</strong> To get embed code from YouTube, click "Share" button below a video, 
+                    then "Embed", and copy the iframe code provided.
+                  </p>
+                </div>
+                
+                <div className="flex justify-end space-x-3 pt-2">
                   <Button variant="outline" onClick={() => setIsAdding(false)}>
-                    Cancel
+                    <X className="h-4 w-4 mr-1" /> Cancel
                   </Button>
                   <Button onClick={handleAddResource}>
-                    Add Resource
+                    <Plus className="h-4 w-4 mr-1" /> Add Resource
                   </Button>
                 </div>
               </div>
-            </div>
+            </Card>
           )}
         </div>
       )}
       
       {resources.length > 0 ? (
         <Tabs defaultValue="video" className="w-full">
-          <TabsList className="grid grid-cols-4 mb-4">
-            <TabsTrigger value="video">
-              Videos {getCategoryCount('video') > 0 && `(${getCategoryCount('video')})`}
+          <TabsList className="grid grid-cols-4 gap-2 mb-6">
+            <TabsTrigger value="video" className="flex items-center gap-2">
+              <Video className="h-4 w-4 text-red-500" />
+              <span>Videos</span> 
+              {getCategoryCount('video') > 0 && (
+                <span className="ml-1 px-1.5 py-0.5 text-xs bg-red-100 text-red-700 rounded-full">
+                  {getCategoryCount('video')}
+                </span>
+              )}
             </TabsTrigger>
-            <TabsTrigger value="game">
-              Games {getCategoryCount('game') > 0 && `(${getCategoryCount('game')})`}
+            <TabsTrigger value="game" className="flex items-center gap-2">
+              <Gamepad2 className="h-4 w-4 text-blue-500" />
+              <span>Games</span>
+              {getCategoryCount('game') > 0 && (
+                <span className="ml-1 px-1.5 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">
+                  {getCategoryCount('game')}
+                </span>
+              )}
             </TabsTrigger>
-            <TabsTrigger value="activity">
-              Activities {getCategoryCount('activity') > 0 && `(${getCategoryCount('activity')})`}
+            <TabsTrigger value="activity" className="flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-amber-500" />
+              <span>Activities</span>
+              {getCategoryCount('activity') > 0 && (
+                <span className="ml-1 px-1.5 py-0.5 text-xs bg-amber-100 text-amber-700 rounded-full">
+                  {getCategoryCount('activity')}
+                </span>
+              )}
             </TabsTrigger>
-            <TabsTrigger value="other">
-              Other {getCategoryCount('other') > 0 && `(${getCategoryCount('other')})`}
+            <TabsTrigger value="other" className="flex items-center gap-2">
+              <Link className="h-4 w-4 text-gray-500" />
+              <span>Other</span>
+              {getCategoryCount('other') > 0 && (
+                <span className="ml-1 px-1.5 py-0.5 text-xs bg-gray-100 text-gray-700 rounded-full">
+                  {getCategoryCount('other')}
+                </span>
+              )}
             </TabsTrigger>
           </TabsList>
           
@@ -372,20 +428,48 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
   onDelete,
   onChange
 }) => {
+  // Determine provider icon based on embed code
+  const getProviderIcon = () => {
+    const code = resource.embedCode.toLowerCase();
+    if (code.includes('youtube.com') || code.includes('youtu.be')) {
+      return <Video className="h-4 w-4 text-red-600" />;
+    } else if (code.includes('wordwall.net')) {
+      return <Gamepad2 className="h-4 w-4 text-indigo-600" />;
+    } else if (code.includes('google.com') || code.includes('docs.google.com')) {
+      return <BookOpen className="h-4 w-4 text-blue-600" />;
+    } else {
+      return <Link className="h-4 w-4 text-gray-600" />;
+    }
+  };
+
+  // Format embed code for responsive display
+  const formatEmbedCode = (code: string) => {
+    // Make embedded content responsive
+    if (code.includes('<iframe')) {
+      // Add responsive wrapper and styling
+      if (!code.includes('class="')) {
+        return code.replace('<iframe', '<iframe class="w-full aspect-video rounded-md shadow-sm max-w-full"');
+      } else {
+        return code.replace('class="', 'class="w-full aspect-video rounded-md shadow-sm max-w-full ');
+      }
+    }
+    return code;
+  };
+
   return (
-    <div className="border rounded-md p-4 relative">
+    <Card className="p-5 relative overflow-hidden shadow-sm border-gray-200 hover:border-gray-300 transition-all">
       {isEditMode && !isEditing && (
-        <div className="absolute top-2 right-2 flex space-x-2">
+        <div className="absolute top-3 right-3 flex space-x-2 z-10">
           <button
             onClick={onEdit}
-            className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
+            className="p-1.5 bg-white/90 rounded-full text-gray-600 hover:text-primary hover:bg-white transition-colors shadow-sm"
             title="Edit resource"
           >
             <Edit className="h-4 w-4" />
           </button>
           <button
             onClick={onDelete}
-            className="p-1 text-red-500 hover:text-red-700 transition-colors"
+            className="p-1.5 bg-white/90 rounded-full text-red-500 hover:text-red-600 hover:bg-white transition-colors shadow-sm"
             title="Delete resource"
           >
             <Trash className="h-4 w-4" />
@@ -397,11 +481,11 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Title</label>
-            <input 
+            <Input 
               type="text"
               value={resource.title}
               onChange={(e) => onChange('title', e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full"
             />
           </div>
           
@@ -410,29 +494,48 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
             <textarea 
               value={resource.embedCode}
               onChange={(e) => onChange('embedCode', e.target.value)}
-              className="w-full p-2 border rounded min-h-[100px] font-mono text-sm"
+              className="w-full p-2 border rounded min-h-[120px] font-mono text-sm"
+              placeholder="Paste YouTube or Wordwall iframe code here"
             />
           </div>
           
-          <div className="flex justify-end space-x-2">
-            <Button variant="outline" onClick={onCancelEdit}>
+          <div className="flex justify-end space-x-2 mt-4">
+            <Button variant="outline" size="sm" onClick={onCancelEdit}>
               <X className="h-4 w-4 mr-1" /> Cancel
             </Button>
-            <Button onClick={onUpdate}>
+            <Button size="sm" onClick={onUpdate}>
               <Save className="h-4 w-4 mr-1" /> Save
             </Button>
           </div>
         </div>
       ) : (
         <div>
-          <h3 className="text-lg font-medium mb-3">{resource.title}</h3>
-          <div 
-            className="embed-container" 
-            dangerouslySetInnerHTML={{ __html: resource.embedCode }}
-          />
+          <div className="flex items-center mb-3">
+            {getProviderIcon()}
+            <h3 className="text-lg font-medium ml-2">{resource.title}</h3>
+          </div>
+          
+          <div className="aspect-video relative overflow-hidden rounded-md bg-gray-50 mb-2">
+            <div 
+              className="embed-container w-full h-full" 
+              dangerouslySetInnerHTML={{ __html: formatEmbedCode(resource.embedCode) }}
+            />
+          </div>
+          
+          {resource.sourceUrl && (
+            <a 
+              href={resource.sourceUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs text-primary hover:underline flex items-center mt-1"
+            >
+              <ExternalLink className="h-3 w-3 mr-1" /> 
+              View original
+            </a>
+          )}
         </div>
       )}
-    </div>
+    </Card>
   );
 };
 
