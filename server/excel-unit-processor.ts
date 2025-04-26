@@ -26,6 +26,13 @@ export async function processUnitExcel(bookId: string, unitId: string): Promise<
   try {
     console.log(`Processing Excel for ${bookId}/${unitId}`);
     
+    // Check if we have hardcoded data for this book/unit combination
+    const hardcodedData = getHardcodedQuestionAnswers(bookId, unitId);
+    if (hardcodedData && hardcodedData.length > 0) {
+      console.log(`Using ${hardcodedData.length} hardcoded QA entries for ${bookId}/${unitId}`);
+      return hardcodedData;
+    }
+    
     // First, download the Excel file
     const excelFilePath = await downloadExcelFile(bookId);
     if (!excelFilePath) {
