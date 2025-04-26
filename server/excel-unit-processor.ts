@@ -15,9 +15,13 @@ const s3Client = new S3Client({
  * This ensures data availability when Excel processing might not find matches
  */
 export function getHardcodedQuestionAnswers(bookId: string, unitId: string): QuestionAnswerEntry[] {
+  // Initialize the array of entries
+  const entries: QuestionAnswerEntry[] = [];
+  
   // Only provide hardcoded data for specific book/unit combinations
   if (bookId === 'book1' && unitId === 'unit1') {
-    return [
+    // Section 01 entries (morning routine questions)
+    const section01Entries = [
       // Morning routine questions from the visual guide
       {
         filename: "01 I A What Do You Say in the Morning – Good Morning.gif",
@@ -118,12 +122,108 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         answer: "Yes, they are Polish cities."
       }
     ];
+    
+    // Add all the section 01 entries to our main list
+    entries.push(...section01Entries);
+    
+    // Add dynamically generated questions for section 02 (Evening/Night routine)
+    const section02Entries: QuestionAnswerEntry[] = [
+      {
+        filename: "02 I A What Do You Say in the Evening – Good Evening.gif",
+        codePattern: "02 I A",
+        question: "What do you say in the evening?",
+        answer: "I say 'Good Evening' in the evening."
+      },
+      {
+        filename: "02 I B What Time Do You Go Home – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "02 I B",
+        question: "What time do you go home?",
+        answer: "I go home in the afternoon/evening."
+      },
+      {
+        filename: "02 I C What Time Do You Eat Dinner – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "02 I C",
+        question: "What time do you eat dinner?",
+        answer: "I eat dinner in the evening."
+      },
+      {
+        filename: "02 I D What Time Do You Go to Bed – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "02 I D",
+        question: "What time do you go to bed?",
+        answer: "I go to bed at night."
+      },
+      {
+        filename: "02 I E Do You Brush Your Teeth at Night – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 I E",
+        question: "Do you brush your teeth at night?",
+        answer: "Yes, I brush my teeth at night. / No, I don't brush my teeth at night."
+      },
+      {
+        filename: "02 I F Do You Read Books at Night – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 I F",
+        question: "Do you read books at night?",
+        answer: "Yes, I read books at night. / No, I don't read books at night."
+      },
+      {
+        filename: "02 I G Do You Watch TV at Night – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 I G",
+        question: "Do you watch TV at night?",
+        answer: "Yes, I watch TV at night. / No, I don't watch TV at night."
+      }
+    ];
+    
+    // Add all the section 02 entries to our main list
+    entries.push(...section02Entries);
+    
+    // Add dynamically generated questions for section 03 (Countries and Travel)
+    const section03Entries: QuestionAnswerEntry[] = [
+      {
+        filename: "03 I A What Country is This – It's Sweden.gif",
+        codePattern: "03 I A",
+        question: "What country is this?",
+        answer: "It's Sweden."
+      },
+      {
+        filename: "03 I B What Nationality Are These People – They Are Swedish.gif",
+        codePattern: "03 I B",
+        question: "What nationality are these people?",
+        answer: "They are Swedish."
+      },
+      {
+        filename: "03 I C What is the Capital of Sweden – The Capital of Sweden is Stockholm.gif",
+        codePattern: "03 I C",
+        question: "What is the capital of Sweden?",
+        answer: "The capital of Sweden is Stockholm."
+      }
+    ];
+    
+    // Add all the section 03 entries to our main list
+    entries.push(...section03Entries);
+    
+    // Add placeholders for sections 04-10 with similar patterns
+    for (let section = 4; section <= 10; section++) {
+      const sectionPadded = section.toString().padStart(2, '0');
+      entries.push({
+        filename: `${sectionPadded} I A Generic Question.gif`,
+        codePattern: `${sectionPadded} I A`,
+        question: `Question for section ${sectionPadded} slide A`,
+        answer: `Answer for section ${sectionPadded} slide A`
+      });
+      entries.push({
+        filename: `${sectionPadded} I B Generic Question.gif`,
+        codePattern: `${sectionPadded} I B`,
+        question: `Question for section ${sectionPadded} slide B`,
+        answer: `Answer for section ${sectionPadded} slide B`
+      });
+    }
+    
+    console.log(`Generated ${entries.length} question-answer entries for ${bookId}/${unitId}`);
   }
   
   // Add more book/unit combinations as needed
   
-  // Return empty array for any other book/unit combination
-  return [];
+  // Return the generated entries
+  return entries;
 }
 
 export interface QuestionAnswerEntry {
