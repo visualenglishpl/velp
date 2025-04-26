@@ -224,6 +224,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   const [flagReason, setFlagReason] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [hideImage, setHideImage] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   // Always show answers directly, no need for reveal feature
   const { toast } = useToast();
 
