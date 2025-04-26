@@ -4,7 +4,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import * as path from 'path';
 import * as xlsx from 'xlsx';
 import { processExcelAndGenerateTS } from './excel-processor';
-import { processUnitExcel, QuestionAnswerEntry, downloadExcelFile } from './excel-unit-processor';
+import { processUnitExcel, QuestionAnswerEntry, downloadExcelFile, getHardcodedQuestionAnswers } from './excel-unit-processor';
 import { storage } from './storage';
 
 // S3 configuration 
@@ -1179,8 +1179,34 @@ export function registerDirectRoutes(app: Express) {
         console.log(`FORCE REPROCESS flag detected - bypassing cache`);
       }
       
+      // For Book 1 Unit 1, use hardcoded data to ensure better coverage
+      if (bookPath === 'book1' && unitPath === 'unit1') {
+        console.log(`Using hardcoded data for ${bookPath}/${unitPath} to ensure better coverage`);
+        const hardcodedEntries = getHardcodedQuestionAnswers(bookPath, unitPath);
+        
+        // Save these entries to cache even if not requested via force reload
+        if (hardcodedEntries && hardcodedEntries.length > 0) {
+          console.log(`Saving ${hardcodedEntries.length} hardcoded entries to storage cache`);
+          await storage.saveUnitQuestionAnswers(bookPath, unitPath, hardcodedEntries);
+          
+          console.log(`=====================================================`);
+          console.log(`END: Returning ${hardcodedEntries.length} hardcoded Excel QA entries for ${bookPath}/${unitPath}`);
+          console.log(`=====================================================`);
+          
+          return res.json({
+            success: true,
+            bookId: bookPath,
+            unitId: unitPath,
+            entries: hardcodedEntries,
+            count: hardcodedEntries.length,
+            timestamp: new Date().toISOString()
+          });
+        }
+      }
+      
       // First check if we have cached data (unless force reprocess is requested)
       let qaEntries = !forceReprocess ? await storage.getUnitQuestionAnswers(bookPath, unitPath) : [];
+      console.log(qaEntries && qaEntries.length > 0 ? `Found ${qaEntries.length} cached QA entries for ${bookPath}/${unitPath}` : `No cached QA entries found for ${bookPath}/${unitPath}`);
       
       // If no cached data, process Excel from S3
       if (!qaEntries || qaEntries.length === 0) {
@@ -1296,7 +1322,7 @@ export function registerDirectRoutes(app: Express) {
       console.error(`Error testing Excel download: ${error}`);
       return res.status(500).json({
         success: false,
-        message: `Error testing Excel download for ${bookId}`,
+        message: `Error testing Excel download for ${bookPath}`,
         error: String(error)
       });
     }

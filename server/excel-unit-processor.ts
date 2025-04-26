@@ -300,36 +300,37 @@ function processExcelWorkbook(workbook: xlsx.WorkBook, unitId: string): Question
           const codeFirstPart = basePattern.split(' ')[0]; // "01" from "01 R A"
           const codeFirstTwoParts = basePattern.split(' ').slice(0, 2).join(' '); // "01 R" from "01 R A"
           
-          result.push({
-            filename: filenameStandard,
-            codePattern: basePattern,
-            question,
-            answer
-          });
+          // Store all variants in an array for easier management
+          const variants = [
+            filenameStandard,
+            dashPattern,
+            compactPattern,
+            codeAtEnd,
+            codeOnly,
+            codeFirstPart,
+            codeFirstTwoParts
+          ];
           
-          // Add the dash pattern as a separate entry
-          result.push({
-            filename: dashPattern,
-            codePattern: basePattern,
-            question,
-            answer
-          });
+          // Add entries for each variation of the filename
+          for (const variant of variants) {
+            result.push({
+              filename: variant,
+              codePattern: basePattern,
+              question,
+              answer
+            });
+          }
           
-          // Add the compact pattern
-          result.push({
-            filename: compactPattern,
-            codePattern: basePattern,
-            question,
-            answer
-          });
-          
-          // Add code at end pattern
-          result.push({
-            filename: codeAtEnd,
-            codePattern: basePattern,
-            question,
-            answer
-          });
+          // Also add the pattern with just the number (e.g., 01, 02)
+          // This is important for matching with files that just have a number in their name
+          if (codeFirstPart) {
+            result.push({
+              filename: codeFirstPart,
+              codePattern: basePattern,
+              question,
+              answer
+            });
+          }
           
           entriesInSheet++;
         }

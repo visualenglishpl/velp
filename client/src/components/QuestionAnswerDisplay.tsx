@@ -553,7 +553,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                           <label className="block text-xs mb-1">Reason</label>
                           <select
                             value={flagReason}
-                            onChange={(e) => setFlagReason(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFlagReason(e.target.value)}
                             className="w-full p-1 text-sm border rounded"
                           >
                             <option value="">Select a reason</option>
@@ -569,7 +569,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                           <label className="block text-xs mb-1">Suggested question (optional)</label>
                           <input
                             value={editedQuestion}
-                            onChange={(e) => setEditedQuestion(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditedQuestion(e.target.value)}
                             placeholder={qaData.question}
                             className="w-full p-1 text-sm border rounded"
                           />
@@ -579,7 +579,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                           <label className="block text-xs mb-1">Suggested answer (optional)</label>
                           <input
                             value={editedAnswer}
-                            onChange={(e) => setEditedAnswer(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditedAnswer(e.target.value)}
                             placeholder={qaData.answer}
                             className="w-full p-1 text-sm border rounded"
                           />
