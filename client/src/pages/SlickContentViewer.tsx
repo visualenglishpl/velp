@@ -694,9 +694,24 @@ export default function SlickContentViewer() {
             <span className="hidden sm:inline">Back to Units</span>
           </Button>
           
-          <h1 className="text-lg font-semibold text-blue-700">
-            {unitData ? unitData.title : `${bookPath}/${unitPath}`}
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-semibold text-blue-700">
+              {unitData ? unitData.title : `${bookPath}/${unitPath}`}
+            </h1>
+            
+            {/* PDF Download Button - specifically for Book 1, Unit 1 */}
+            {bookId === '1' && unitNumber === '1' && (
+              <a
+                href={`/api/direct/book1/unit1/file?path=book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-2.5 py-1 border border-gray-300 text-xs font-medium rounded-full shadow-sm text-gray-700 bg-white hover:bg-gray-50 transition-all"
+              >
+                <Download className="mr-1 h-3.5 w-3.5" />
+                Download Lesson PDF
+              </a>
+            )}
+          </div>
         </div>
         
         {/* Admin controls */}
