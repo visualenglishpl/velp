@@ -161,11 +161,11 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           ) : (
             <Card className="p-6 border-2 bg-gray-50">
               <h3 className="text-xl font-semibold mb-4 flex items-center">
-                {newResource.resourceType === 'video' && <Video className="h-5 w-5 mr-2 text-red-500" />}
-                {newResource.resourceType === 'game' && <Gamepad2 className="h-5 w-5 mr-2 text-blue-500" />}
-                {newResource.resourceType === 'activity' && <BookOpen className="h-5 w-5 mr-2 text-amber-500" />}
-                {newResource.resourceType === 'other' && <Link className="h-5 w-5 mr-2 text-gray-500" />}
-                Add New {newResource.resourceType.charAt(0).toUpperCase() + newResource.resourceType.slice(1)} Resource
+                {(newResource.resourceType || 'video') === 'video' && <Video className="h-5 w-5 mr-2 text-red-500" />}
+                {(newResource.resourceType || 'video') === 'game' && <Gamepad2 className="h-5 w-5 mr-2 text-blue-500" />}
+                {(newResource.resourceType || 'video') === 'activity' && <BookOpen className="h-5 w-5 mr-2 text-amber-500" />}
+                {(newResource.resourceType || 'video') === 'other' && <Link className="h-5 w-5 mr-2 text-gray-500" />}
+                Add New {((newResource.resourceType || 'video').charAt(0).toUpperCase() + (newResource.resourceType || 'video').slice(1))} Resource
               </h3>
               
               <div className="space-y-5">
@@ -173,7 +173,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   <div>
                     <label className="block text-sm font-medium mb-1">Resource Type</label>
                     <select 
-                      value={newResource.resourceType}
+                      value={newResource.resourceType || 'video'}
                       onChange={(e) => setNewResource(prev => ({ 
                         ...prev, 
                         resourceType: e.target.value as 'video' | 'game' | 'activity' | 'other'
@@ -193,8 +193,8 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                       type="text"
                       value={newResource.title}
                       onChange={(e) => setNewResource(prev => ({ ...prev, title: e.target.value }))}
-                      placeholder={newResource.resourceType === 'video' ? "e.g., Good Morning Pinkfong" : 
-                                  newResource.resourceType === 'game' ? "e.g., Wordwall - Greetings" : 
+                      placeholder={(newResource.resourceType || 'video') === 'video' ? "e.g., Good Morning Pinkfong" : 
+                                  (newResource.resourceType || 'video') === 'game' ? "e.g., Wordwall - Greetings" : 
                                   "e.g., Times of the Day Activity"}
                       className="w-full"
                     />
@@ -278,126 +278,180 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="video" className="space-y-6">
+          <TabsContent value="video">
             {videoResources.length > 0 ? (
-              videoResources.map((resource, index) => (
-                <ResourceItem
-                  key={`video-${index}`}
-                  resource={resource}
-                  index={index}
-                  isEditing={editingResource === index}
-                  isEditMode={isEditMode}
-                  onEdit={() => setEditingResource(index)}
-                  onCancelEdit={() => setEditingResource(null)}
-                  onUpdate={() => handleUpdateResource(index)}
-                  onDelete={() => handleDeleteResource(index)}
-                  onChange={(field, value) => {
-                    const updatedResources = [...resources];
-                    updatedResources[index] = {
-                      ...updatedResources[index],
-                      [field]: value
-                    };
-                    setResources(updatedResources);
-                  }}
-                />
-              ))
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {videoResources.map((resource, index) => (
+                  <ResourceItem
+                    key={`video-${index}`}
+                    resource={resource}
+                    index={index}
+                    isEditing={editingResource === index}
+                    isEditMode={isEditMode}
+                    onEdit={() => setEditingResource(index)}
+                    onCancelEdit={() => setEditingResource(null)}
+                    onUpdate={() => handleUpdateResource(index)}
+                    onDelete={() => handleDeleteResource(index)}
+                    onChange={(field, value) => {
+                      const updatedResources = [...resources];
+                      updatedResources[index] = {
+                        ...updatedResources[index],
+                        [field]: value
+                      };
+                      setResources(updatedResources);
+                    }}
+                  />
+                ))}
+              </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">No video resources available</p>
+              <div className="text-center py-8 border border-dashed rounded-md bg-gray-50 border-gray-200">
+                <Video className="h-10 w-10 mx-auto text-gray-300 mb-2" />
+                <p className="text-gray-500">No video resources available</p>
+                {isEditMode && (
+                  <p className="text-xs text-gray-400 mt-2">
+                    Click "Add Teaching Resource" and select "Video" type to add YouTube videos
+                  </p>
+                )}
+              </div>
             )}
           </TabsContent>
           
-          <TabsContent value="game" className="space-y-6">
+          <TabsContent value="game">
             {gameResources.length > 0 ? (
-              gameResources.map((resource, index) => (
-                <ResourceItem
-                  key={`game-${index}`}
-                  resource={resource}
-                  index={index}
-                  isEditing={editingResource === resources.findIndex(r => r === resource)}
-                  isEditMode={isEditMode}
-                  onEdit={() => setEditingResource(resources.findIndex(r => r === resource))}
-                  onCancelEdit={() => setEditingResource(null)}
-                  onUpdate={() => handleUpdateResource(resources.findIndex(r => r === resource))}
-                  onDelete={() => handleDeleteResource(resources.findIndex(r => r === resource))}
-                  onChange={(field, value) => {
-                    const resourceIndex = resources.findIndex(r => r === resource);
-                    const updatedResources = [...resources];
-                    updatedResources[resourceIndex] = {
-                      ...updatedResources[resourceIndex],
-                      [field]: value
-                    };
-                    setResources(updatedResources);
-                  }}
-                />
-              ))
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {gameResources.map((resource, index) => (
+                  <ResourceItem
+                    key={`game-${index}`}
+                    resource={resource}
+                    index={index}
+                    isEditing={editingResource === resources.findIndex(r => r === resource)}
+                    isEditMode={isEditMode}
+                    onEdit={() => setEditingResource(resources.findIndex(r => r === resource))}
+                    onCancelEdit={() => setEditingResource(null)}
+                    onUpdate={() => handleUpdateResource(resources.findIndex(r => r === resource))}
+                    onDelete={() => handleDeleteResource(resources.findIndex(r => r === resource))}
+                    onChange={(field, value) => {
+                      const resourceIndex = resources.findIndex(r => r === resource);
+                      const updatedResources = [...resources];
+                      updatedResources[resourceIndex] = {
+                        ...updatedResources[resourceIndex],
+                        [field]: value
+                      };
+                      setResources(updatedResources);
+                    }}
+                  />
+                ))}
+              </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">No game resources available</p>
+              <div className="text-center py-8 border border-dashed rounded-md bg-gray-50 border-gray-200">
+                <Gamepad2 className="h-10 w-10 mx-auto text-gray-300 mb-2" />
+                <p className="text-gray-500">No game resources available</p>
+                {isEditMode && (
+                  <p className="text-xs text-gray-400 mt-2">
+                    Click "Add Teaching Resource" and select "Game" type to add Wordwall games
+                  </p>
+                )}
+              </div>
             )}
           </TabsContent>
           
-          <TabsContent value="activity" className="space-y-6">
+          <TabsContent value="activity">
             {activityResources.length > 0 ? (
-              activityResources.map((resource, index) => (
-                <ResourceItem
-                  key={`activity-${index}`}
-                  resource={resource}
-                  index={index}
-                  isEditing={editingResource === resources.findIndex(r => r === resource)}
-                  isEditMode={isEditMode}
-                  onEdit={() => setEditingResource(resources.findIndex(r => r === resource))}
-                  onCancelEdit={() => setEditingResource(null)}
-                  onUpdate={() => handleUpdateResource(resources.findIndex(r => r === resource))}
-                  onDelete={() => handleDeleteResource(resources.findIndex(r => r === resource))}
-                  onChange={(field, value) => {
-                    const resourceIndex = resources.findIndex(r => r === resource);
-                    const updatedResources = [...resources];
-                    updatedResources[resourceIndex] = {
-                      ...updatedResources[resourceIndex],
-                      [field]: value
-                    };
-                    setResources(updatedResources);
-                  }}
-                />
-              ))
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {activityResources.map((resource, index) => (
+                  <ResourceItem
+                    key={`activity-${index}`}
+                    resource={resource}
+                    index={index}
+                    isEditing={editingResource === resources.findIndex(r => r === resource)}
+                    isEditMode={isEditMode}
+                    onEdit={() => setEditingResource(resources.findIndex(r => r === resource))}
+                    onCancelEdit={() => setEditingResource(null)}
+                    onUpdate={() => handleUpdateResource(resources.findIndex(r => r === resource))}
+                    onDelete={() => handleDeleteResource(resources.findIndex(r => r === resource))}
+                    onChange={(field, value) => {
+                      const resourceIndex = resources.findIndex(r => r === resource);
+                      const updatedResources = [...resources];
+                      updatedResources[resourceIndex] = {
+                        ...updatedResources[resourceIndex],
+                        [field]: value
+                      };
+                      setResources(updatedResources);
+                    }}
+                  />
+                ))}
+              </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">No activity resources available</p>
+              <div className="text-center py-8 border border-dashed rounded-md bg-gray-50 border-gray-200">
+                <BookOpen className="h-10 w-10 mx-auto text-gray-300 mb-2" />
+                <p className="text-gray-500">No activity resources available</p>
+                {isEditMode && (
+                  <p className="text-xs text-gray-400 mt-2">
+                    Click "Add Teaching Resource" and select "Activity" type to add interactive activities
+                  </p>
+                )}
+              </div>
             )}
           </TabsContent>
           
-          <TabsContent value="other" className="space-y-6">
+          <TabsContent value="other">
             {otherResources.length > 0 ? (
-              otherResources.map((resource, index) => (
-                <ResourceItem
-                  key={`other-${index}`}
-                  resource={resource}
-                  index={index}
-                  isEditing={editingResource === resources.findIndex(r => r === resource)}
-                  isEditMode={isEditMode}
-                  onEdit={() => setEditingResource(resources.findIndex(r => r === resource))}
-                  onCancelEdit={() => setEditingResource(null)}
-                  onUpdate={() => handleUpdateResource(resources.findIndex(r => r === resource))}
-                  onDelete={() => handleDeleteResource(resources.findIndex(r => r === resource))}
-                  onChange={(field, value) => {
-                    const resourceIndex = resources.findIndex(r => r === resource);
-                    const updatedResources = [...resources];
-                    updatedResources[resourceIndex] = {
-                      ...updatedResources[resourceIndex],
-                      [field]: value
-                    };
-                    setResources(updatedResources);
-                  }}
-                />
-              ))
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {otherResources.map((resource, index) => (
+                  <ResourceItem
+                    key={`other-${index}`}
+                    resource={resource}
+                    index={index}
+                    isEditing={editingResource === resources.findIndex(r => r === resource)}
+                    isEditMode={isEditMode}
+                    onEdit={() => setEditingResource(resources.findIndex(r => r === resource))}
+                    onCancelEdit={() => setEditingResource(null)}
+                    onUpdate={() => handleUpdateResource(resources.findIndex(r => r === resource))}
+                    onDelete={() => handleDeleteResource(resources.findIndex(r => r === resource))}
+                    onChange={(field, value) => {
+                      const resourceIndex = resources.findIndex(r => r === resource);
+                      const updatedResources = [...resources];
+                      updatedResources[resourceIndex] = {
+                        ...updatedResources[resourceIndex],
+                        [field]: value
+                      };
+                      setResources(updatedResources);
+                    }}
+                  />
+                ))}
+              </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">No other resources available</p>
+              <div className="text-center py-8 border border-dashed rounded-md bg-gray-50 border-gray-200">
+                <Link className="h-10 w-10 mx-auto text-gray-300 mb-2" />
+                <p className="text-gray-500">No other resources available</p>
+                {isEditMode && (
+                  <p className="text-xs text-gray-400 mt-2">
+                    Click "Add Teaching Resource" and select "Other" type to add miscellaneous embeddable content
+                  </p>
+                )}
+              </div>
             )}
           </TabsContent>
         </Tabs>
       ) : (
-        <div className="text-center py-8 border rounded-md bg-gray-50">
+        <div className="text-center py-10 border rounded-md bg-gray-50">
+          <div className="flex justify-center space-x-3 mb-3">
+            <Video className="h-8 w-8 text-gray-300" />
+            <Gamepad2 className="h-8 w-8 text-gray-300" />
+            <BookOpen className="h-8 w-8 text-gray-300" />
+          </div>
           <p className="text-gray-500 mb-2">No teacher resources available for this unit</p>
           {isEditMode && (
-            <p className="text-sm text-gray-400">Click the "Add Teaching Resource" button to add videos, games, and other resources.</p>
+            <div className="mt-4">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsAdding(true)}
+                className="border-dashed bg-gray-50 hover:bg-white"
+              >
+                <Plus className="h-4 w-4 mr-2" /> Add Teaching Resource
+              </Button>
+              <p className="text-xs text-gray-400 mt-3">Add videos, games, and other resources to help teachers with this unit</p>
+            </div>
           )}
         </div>
       )}
