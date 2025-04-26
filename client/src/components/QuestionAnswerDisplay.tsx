@@ -230,9 +230,10 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   // Always show answers directly, no need for reveal feature
   const { toast } = useToast();
 
-  // Load saved Q&A data from localStorage when component mounts
+  // Load saved Q&A data from server and localStorage when component mounts
   useEffect(() => {
     if (bookId && unitId && material?.id) {
+      // First try to get edits from localStorage (for immediate display)
       try {
         const savedQAString = localStorage.getItem(`qa-${bookId}-${unitId}`);
         if (savedQAString) {
@@ -243,24 +244,77 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             // Check if this Q&A was deleted
             if (savedItem.deleted) {
               setIsDeleted(true);
-              return;
             }
             
             // Apply saved edits
-            if (savedItem.question && savedItem.answer) {
+            else if (savedItem.question && savedItem.answer) {
               setQAData(prev => ({ 
                 ...prev, 
                 question: savedItem.question, 
                 answer: savedItem.answer,
                 hasData: true 
               }));
-              return;
             }
           }
         }
       } catch (error) {
-        console.error("Error loading saved Q&A data:", error);
+        console.error("Error loading saved Q&A data from localStorage:", error);
       }
+      
+      // Then try to fetch from server (which will override localStorage if newer)
+      const fetchServerEdits = async () => {
+        try {
+          const response = await apiRequest('GET', `/api/direct/content-edits/${bookId}/${unitId}`);
+          if (response.ok) {
+            const data = await response.json();
+            
+            if (data.success && data.edits && data.edits.length > 0) {
+              // Find edits for this specific material
+              const materialEdits = data.edits.filter((edit: any) => 
+                edit.materialId === material.id
+              );
+              
+              if (materialEdits.length > 0) {
+                // Get the most recent edit
+                const latestEdit = materialEdits.reduce((latest: any, edit: any) => {
+                  const latestDate = latest?.updatedAt || latest?.createdAt || '';
+                  const currentDate = edit.updatedAt || edit.createdAt || '';
+                  return new Date(currentDate) > new Date(latestDate) ? edit : latest;
+                }, null);
+                
+                if (latestEdit) {
+                  setServerSynced(true);
+                  
+                  // Apply server edits based on edit type
+                  if (latestEdit.editType === 'qa_delete' || latestEdit.isDeleted) {
+                    setIsDeleted(true);
+                  } 
+                  else if (latestEdit.editType === 'qa_edit' && latestEdit.questionText && latestEdit.answerText) {
+                    setQAData(prev => ({ 
+                      ...prev, 
+                      question: latestEdit.questionText, 
+                      answer: latestEdit.answerText,
+                      hasData: true 
+                    }));
+                    
+                    // Update localStorage with server data
+                    const savedQA = JSON.parse(localStorage.getItem(`qa-${bookId}-${unitId}`) || "{}");
+                    savedQA[material.id] = { 
+                      question: latestEdit.questionText, 
+                      answer: latestEdit.answerText 
+                    };
+                    localStorage.setItem(`qa-${bookId}-${unitId}`, JSON.stringify(savedQA));
+                  }
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching content edits from server:", error);
+        }
+      };
+      
+      fetchServerEdits();
     }
   }, [bookId, unitId, material?.id]);
   
@@ -463,18 +517,57 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       {isEditMode && (
         <div className="absolute -top-2 right-0 flex space-x-2">
           <button
-            onClick={() => {
+            onClick={async () => {
+              setIsSaving(true);
+              
               // Reset to default values from database or pattern matching
               const processed = getQuestionAnswerFromData(material);
               setQAData(processed);
               setIsEditing(false);
               setIsDeleted(false);
+              setServerSynced(false);
 
               // Save this reset to localStorage
               if (bookId && unitId) {
                 const savedQA = JSON.parse(localStorage.getItem(`qa-${bookId}-${unitId}`) || "{}");
                 delete savedQA[material.id];
                 localStorage.setItem(`qa-${bookId}-${unitId}`, JSON.stringify(savedQA));
+              }
+              
+              // Try to reset on server
+              try {
+                if (bookId && unitId && material?.id) {
+                  const response = await apiRequest('DELETE', `/api/direct/content-edits/${bookId}/${unitId}/${material.id}`);
+                  const result = await response.json();
+                  
+                  if (result.success) {
+                    toast({
+                      title: "Reset complete",
+                      description: result.dbAvailable === false 
+                        ? "Content has been reset on this device." 
+                        : "Content has been reset on the server and this device.",
+                    });
+                  } else {
+                    // If server reset failed, still inform user that local reset worked
+                    toast({
+                      title: "Partial reset",
+                      description: "Content has been reset on this device but the server reset failed.",
+                    });
+                  }
+                } else {
+                  toast({
+                    title: "Reset complete",
+                    description: "Content has been reset to default values.",
+                  });
+                }
+              } catch (error) {
+                console.error('Error resetting content on server:', error);
+                toast({
+                  title: "Partial reset",
+                  description: "Content has been reset on this device but the server reset failed.",
+                });
+              } finally {
+                setIsSaving(false);
               }
             }}
             className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
