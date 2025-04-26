@@ -60,6 +60,7 @@ export default function SlickContentViewer() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isTeacherMode, setIsTeacherMode] = useState(false);
   
   // State for slide annotations (when in edit mode)
   const [annotations, setAnnotations] = useState<Record<number, Array<{
