@@ -204,13 +204,26 @@ export default function SlickContentViewer() {
       });
     },
     onSuccess: () => {
+      // Remove the slide from local state to immediately update the UI
+      setMaterials(currentMaterials => currentMaterials.filter(m => m.id !== slideToRemove?.id));
+      
       toast({
         title: "Slide removed",
         description: "The slide has been removed from this unit.",
       });
+      
+      // Invalidate both the materials and savedOrder queries
       queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/savedOrder`] });
+      
+      // Reset states
       setShowRemoveDialog(false);
       setSlideToRemove(null);
+      
+      // If the current slide is the one being removed, go to slide 0
+      if (currentIndex && slideToRemove && materials[currentIndex]?.id === slideToRemove.id) {
+        goToSlide(0);
+      }
     },
     onError: (error: Error) => {
       toast({
