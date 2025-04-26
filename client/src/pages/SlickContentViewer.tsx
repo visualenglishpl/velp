@@ -928,7 +928,7 @@ export default function SlickContentViewer() {
                           src={material.path}
                           controls
                           className={`h-auto w-auto max-w-full mx-auto object-contain ${isEditMode ? 'cursor-crosshair' : ''} 
-                            ${!hasPaidAccess && index >= freeSlideLimit ? 'blur-lg brightness-75' : ''}
+                            ${!hasPaidAccess ? 'blur-lg brightness-75' : ''}
                           `}
                           style={{ maxHeight: '100%' }}
                           onError={(e) => {
@@ -940,8 +940,8 @@ export default function SlickContentViewer() {
                           Your browser does not support the video tag.
                         </video>
                         
-                        {/* Premium content overlay */}
-                        {!hasPaidAccess && index >= freeSlideLimit && (
+                        {/* Premium content overlay for videos - show for ALL videos when not logged in */}
+                        {!hasPaidAccess && (
                           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
                             <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
                             <p className="text-sm mb-4">Subscribe to access all learning materials</p>
