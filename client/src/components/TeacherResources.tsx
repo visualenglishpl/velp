@@ -155,140 +155,151 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             title: "Lesson Plan - Greetings and Times of Day (2 x 45min)",
             resourceType: "activity",
             embedCode: `<div style="padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #e2e8f0;">
-            <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem;">Comprehensive Lesson Plan: Greetings and Times of Day (2 x 45min)</h2>
+            <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem; text-align: center;">Comprehensive Lesson Plan: Greetings and Times of Day (2 x 45min)</h2>
             
             <div style="margin-bottom: 1.5rem; background-color: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6;">
               <h3 style="font-size: 1.3rem; color: #1e40af; margin-bottom: 0.5rem;">Lesson Overview</h3>
               <p>This comprehensive plan covers two 45-minute lessons focusing on greetings and times of day vocabulary and expressions.</p>
             </div>
             
-            <div style="margin-bottom: 1.5rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Learning Objectives</h3>
-              <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                <li>Students will identify and use greetings appropriate for different times of day</li>
-                <li>Students will practice time-related vocabulary (morning, afternoon, evening, night)</li>
-                <li>Students will demonstrate understanding through role-play and interactive activities</li>
-                <li>Students will create their own greeting dialogues for different scenarios</li>
-              </ul>
-            </div>
-            
-            <div style="margin-bottom: 1.5rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Required Materials</h3>
-              <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                <li>Visual English Book 1 - Unit 1 slides (Greetings section)</li>
-                <li>Time of day flashcards with images showing different times</li>
-                <li>Role-play situation cards (different times and settings)</li>
-                <li>Craft materials: colored paper, markers, scissors, glue</li>
-                <li>Clock face templates</li>
-                <li>Printed greetings for a matching activity</li>
-              </ul>
-            </div>
-            
-            <div style="margin-bottom: 1.5rem; background-color: #f0f9ff; padding: 16px; border-radius: 8px;">
-              <h3 style="font-size: 1.3rem; color: #0369a1; margin-bottom: 0.5rem;">Lesson 1: Greetings Basics (45 minutes)</h3>
-              
-              <div style="margin-bottom: 1rem;">
-                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Warm-up (5 minutes)</h4>
-                <p>Greet students as they enter with various greetings based on the current time. Have students respond with an appropriate greeting. Ask students what time of day it is and which greetings are appropriate now.</p>
-              </div>
-              
-              <div style="margin-bottom: 1rem;">
-                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Presentation (15 minutes)</h4>
+            <!-- Two-column layout for learning objectives and materials -->
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.5rem;">
+              <div style="flex: 1; min-width: 300px;">
+                <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Learning Objectives</h3>
                 <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                  <li>Show slides 1-10 with different greetings and times of day</li>
-                  <li>Model pronunciation and have students repeat each greeting</li>
-                  <li>Demonstrate greeting dialogues with a student volunteer</li>
-                  <li>Explain when each greeting is appropriate using visual time cues</li>
+                  <li>Students will identify and use greetings appropriate for different times of day</li>
+                  <li>Students will practice time-related vocabulary (morning, afternoon, evening, night)</li>
+                  <li>Students will demonstrate understanding through role-play and interactive activities</li>
+                  <li>Students will create their own greeting dialogues for different scenarios</li>
                 </ul>
               </div>
               
-              <div style="margin-bottom: 1rem;">
-                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Practice (15 minutes)</h4>
+              <div style="flex: 1; min-width: 300px;">
+                <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Required Materials</h3>
                 <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                  <li>Show time flashcards and have students call out appropriate greetings</li>
-                  <li>Pair activity: Students practice greetings dialogues with partners</li>
-                  <li>Matching game: Match greetings to appropriate times of day</li>
-                  <li>Chain greeting: Students form a circle and greet the next person with a different greeting</li>
-                </ul>
-              </div>
-              
-              <div style="margin-bottom: 1rem;">
-                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Production (10 minutes)</h4>
-                <p>Role-play activity: Students work in pairs with time scenario cards. Each pair creates and performs a short greeting dialogue appropriate for their assigned time of day.</p>
-              </div>
-              
-              <div>
-                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Wrap-up & Assessment (5 minutes)</h4>
-                <p>Quick review of the greetings learned. Students complete a short self-assessment checklist about which greetings they feel confident using.</p>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 1.5rem; background-color: #fff7ed; padding: 16px; border-radius: 8px;">
-              <h3 style="font-size: 1.3rem; color: #9a3412; margin-bottom: 0.5rem;">Lesson 2: Creative Applications (45 minutes)</h3>
-              
-              <div style="margin-bottom: 1rem;">
-                <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Warm-up & Review (8 minutes)</h4>
-                <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                  <li>Greeting song: Play the "Good Morning" video and have students sing along</li>
-                  <li>Quick review game: Teacher shows times on a clock, students say the appropriate greeting</li>
-                </ul>
-              </div>
-              
-              <div style="margin-bottom: 1rem;">
-                <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Creative Craft Activity (15 minutes)</h4>
-                <p><strong>Time-of-Day Greeting Wheels:</strong> Students create interactive wheels with different times of day and matching greetings:</p>
-                <ol style="list-style-type: decimal; padding-left: 1.5rem;">
-                  <li>Give each student two circles of cardboard/paper</li>
-                  <li>On the bottom circle, students draw/write the four times of day (morning, afternoon, evening, night)</li>
-                  <li>On the top circle (with a section cut out), students write matching greetings</li>
-                  <li>Connect the circles with a paper fastener so the top wheel rotates</li>
-                  <li>Students can decorate their wheels with appropriate time symbols</li>
-                </ol>
-              </div>
-              
-              <div style="margin-bottom: 1rem;">
-                <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Interactive Game (12 minutes)</h4>
-                <p><strong>Greeting Detectives:</strong> A fun movement activity to practice greetings:</p>
-                <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                  <li>Students move around the classroom</li>
-                  <li>Teacher calls out a time of day</li>
-                  <li>Students must find a partner and exchange appropriate greetings</li>
-                  <li>Students who use incorrect greetings sit down</li>
-                  <li>Last students standing are the "Greeting Detectives"</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Digital Extension & Closing (10 minutes)</h4>
-                <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                  <li>Play the Wordwall Greetings game as a class competition</li>
-                  <li>Students take turns answering questions</li>
-                  <li>Award small prizes for correct answers</li>
-                  <li>Final review of all greetings and when to use them</li>
+                  <li>Visual English Book 1 - Unit 1 slides (Greetings section)</li>
+                  <li>Time of day flashcards with images showing different times</li>
+                  <li>Role-play situation cards (different times and settings)</li>
+                  <li>Craft materials: colored paper, markers, scissors, glue</li>
+                  <li>Clock face templates</li>
+                  <li>Printed greetings for a matching activity</li>
                 </ul>
               </div>
             </div>
             
-            <div style="margin-top: 1.5rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Additional Games & Craft Ideas</h3>
-              <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                <li><strong>Greeting Bingo:</strong> Create bingo cards with different greetings. Teacher shows a time of day, students mark the appropriate greeting.</li>
-                <li><strong>Greeting Posters:</strong> Students create illustrated posters showing different greetings and when to use them.</li>
-                <li><strong>Time Puppets:</strong> Create sun/moon puppets that students hold up while practicing appropriate greetings.</li>
-                <li><strong>Greeting Charades:</strong> Students act out times of day while others guess the appropriate greeting.</li>
-                <li><strong>Digital Greeting Cards:</strong> Older students can create digital greeting cards with appropriate time-based greetings.</li>
-              </ul>
+            <!-- Two-column layout for lesson plans -->
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.5rem;">
+              <!-- Lesson 1 -->
+              <div style="flex: 1; min-width: 300px; background-color: #f0f9ff; padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 1.3rem; color: #0369a1; margin-bottom: 1rem; text-align: center;">Lesson 1: Greetings Basics (45 minutes)</h3>
+                
+                <div style="margin-bottom: 1rem;">
+                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Warm-up (5 minutes)</h4>
+                  <p>Greet students as they enter with various greetings based on the current time. Have students respond with an appropriate greeting. Ask students what time of day it is and which greetings are appropriate now.</p>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Presentation (15 minutes)</h4>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Show slides 1-10 with different greetings and times of day</li>
+                    <li>Model pronunciation and have students repeat each greeting</li>
+                    <li>Demonstrate greeting dialogues with a student volunteer</li>
+                    <li>Explain when each greeting is appropriate using visual time cues</li>
+                  </ul>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Practice (15 minutes)</h4>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Show time flashcards and have students call out appropriate greetings</li>
+                    <li>Pair activity: Students practice greetings dialogues with partners</li>
+                    <li>Matching game: Match greetings to appropriate times of day</li>
+                    <li>Chain greeting: Students form a circle and greet the next person with a different greeting</li>
+                  </ul>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Production (10 minutes)</h4>
+                  <p>Role-play activity: Students work in pairs with time scenario cards. Each pair creates and performs a short greeting dialogue appropriate for their assigned time of day.</p>
+                </div>
+                
+                <div>
+                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Wrap-up & Assessment (5 minutes)</h4>
+                  <p>Quick review of the greetings learned. Students complete a short self-assessment checklist about which greetings they feel confident using.</p>
+                </div>
+              </div>
+              
+              <!-- Lesson 2 -->
+              <div style="flex: 1; min-width: 300px; background-color: #fff7ed; padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 1.3rem; color: #9a3412; margin-bottom: 1rem; text-align: center;">Lesson 2: Creative Applications (45 minutes)</h3>
+                
+                <div style="margin-bottom: 1rem;">
+                  <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Warm-up & Review (8 minutes)</h4>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Greeting song: Play the "Good Morning" video and have students sing along</li>
+                    <li>Quick review game: Teacher shows times on a clock, students say the appropriate greeting</li>
+                  </ul>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                  <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Creative Craft Activity (15 minutes)</h4>
+                  <p><strong>Time-of-Day Greeting Wheels:</strong> Students create interactive wheels with different times of day and matching greetings:</p>
+                  <ol style="list-style-type: decimal; padding-left: 1.5rem;">
+                    <li>Give each student two circles of cardboard/paper</li>
+                    <li>On the bottom circle, students draw/write the four times of day</li>
+                    <li>On the top circle (with a section cut out), students write matching greetings</li>
+                    <li>Connect the circles with a paper fastener so the top wheel rotates</li>
+                    <li>Students can decorate their wheels with appropriate time symbols</li>
+                  </ol>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                  <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Interactive Game (12 minutes)</h4>
+                  <p><strong>Greeting Detectives:</strong> A fun movement activity to practice greetings:</p>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Students move around the classroom</li>
+                    <li>Teacher calls out a time of day</li>
+                    <li>Students must find a partner and exchange appropriate greetings</li>
+                    <li>Students who use incorrect greetings sit down</li>
+                    <li>Last students standing are the "Greeting Detectives"</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Digital Extension & Closing (10 minutes)</h4>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Play the Wordwall Greetings game as a class competition</li>
+                    <li>Students take turns answering questions</li>
+                    <li>Award small prizes for correct answers</li>
+                    <li>Final review of all greetings and when to use them</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             
-            <div style="margin-top: 1.5rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Assessment Strategies</h3>
-              <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                <li>Observation during pair and group activities</li>
-                <li>Greeting wheels completion and accuracy</li>
-                <li>Role-play performance using correct greetings</li>
-                <li>Exit tickets: Students write or circle correct greetings for given scenarios</li>
-                <li>Peer assessment during partner activities</li>
-              </ul>
+            <!-- Two-column layout for additional ideas and assessment -->
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 1.5rem;">
+              <div style="flex: 1; min-width: 300px;">
+                <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Additional Games & Craft Ideas</h3>
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li><strong>Greeting Bingo:</strong> Create bingo cards with different greetings. Teacher shows a time of day, students mark the appropriate greeting.</li>
+                  <li><strong>Greeting Posters:</strong> Students create illustrated posters showing different greetings and when to use them.</li>
+                  <li><strong>Time Puppets:</strong> Create sun/moon puppets that students hold up while practicing appropriate greetings.</li>
+                  <li><strong>Greeting Charades:</strong> Students act out times of day while others guess the appropriate greeting.</li>
+                  <li><strong>Digital Greeting Cards:</strong> Older students can create digital greeting cards with appropriate time-based greetings.</li>
+                </ul>
+              </div>
+              
+              <div style="flex: 1; min-width: 300px;">
+                <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Assessment Strategies</h3>
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li>Observation during pair and group activities</li>
+                  <li>Greeting wheels completion and accuracy</li>
+                  <li>Role-play performance using correct greetings</li>
+                  <li>Exit tickets: Students write or circle correct greetings for given scenarios</li>
+                  <li>Peer assessment during partner activities</li>
+                </ul>
+              </div>
             </div>
           </div>`,
             order: 7,
@@ -395,13 +406,21 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         unitId: "1",
         title: "Visual English 1 - Unit 1 - Lesson PDF",
         resourceType: "pdf",
-        // Open the PDF in a new tab by default to ensure it displays properly
-        embedCode: `<div class="pdf-container">
-          <object data="/api/direct/book1/unit1/file?path=${pdfPath}" type="application/pdf" width="100%" height="600">
-            <p>Your browser does not support embedded PDFs. 
-              <a href="/api/direct/book1/unit1/file?path=${pdfPath}" target="_blank">Click here to download the PDF</a>
-            </p>
-          </object>
+        // Use iframe with direct PDF source - more reliable across browsers
+        embedCode: `<div class="pdf-container flex flex-col items-center">
+          <iframe src="/api/direct/book1/unit1/file?path=${pdfPath}" width="100%" height="600" frameborder="0" style="border: 1px solid #e2e8f0; border-radius: 0.375rem;"></iframe>
+          <div class="mt-4">
+            <a 
+              href="/api/direct/book1/unit1/file?path=${pdfPath}" 
+              target="_blank" 
+              class="inline-flex items-center px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Open PDF in New Tab
+            </a>
+          </div>
         </div>`,
         order: resources.length,
         provider: "Visual English",
@@ -530,53 +549,100 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       
       {resources.length > 0 ? (
         <Tabs defaultValue="video" className="px-4">
-          <TabsList className="grid grid-cols-5 mb-4">
-            <TabsTrigger value="video" className="flex items-center gap-1">
-              <Video className="h-4 w-4 text-red-500" />
-              <span>Videos</span>
-              {getCategoryCount('video') > 0 && (
-                <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-red-100 text-red-800 rounded-full">
-                  {getCategoryCount('video')}
-                </span>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="game" className="flex items-center gap-1">
-              <Gamepad2 className="h-4 w-4 text-blue-500" />
-              <span>Games</span>
-              {getCategoryCount('game') > 0 && (
-                <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                  {getCategoryCount('game')}
-                </span>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="activity" className="flex items-center gap-1">
-              <BookOpen className="h-4 w-4 text-amber-500" />
-              <span>Lessons</span>
-              {getCategoryCount('activity') > 0 && (
-                <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-amber-100 text-amber-800 rounded-full">
-                  {getCategoryCount('activity')}
-                </span>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="pdf" className="flex items-center gap-1">
-              <FileText className="h-4 w-4 text-green-500" />
-              <span>Lesson PDF</span>
-              {getCategoryCount('pdf') > 0 && (
-                <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-                  {getCategoryCount('pdf')}
-                </span>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="other" className="flex items-center gap-1">
-              <Link className="h-4 w-4 text-gray-500" />
-              <span>Other</span>
-              {getCategoryCount('other') > 0 && (
-                <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">
-                  {getCategoryCount('other')}
-                </span>
-              )}
-            </TabsTrigger>
-          </TabsList>
+          <div className="flex items-center justify-between mb-4">
+            <TabsList className="grid grid-cols-5">
+              <TabsTrigger value="video" className="flex items-center gap-1">
+                <Video className="h-4 w-4 text-red-500" />
+                <span>Videos</span>
+                {getCategoryCount('video') > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-red-100 text-red-800 rounded-full">
+                    {getCategoryCount('video')}
+                  </span>
+                )}
+              </TabsTrigger>
+              <TabsTrigger value="game" className="flex items-center gap-1">
+                <Gamepad2 className="h-4 w-4 text-blue-500" />
+                <span>Games</span>
+                {getCategoryCount('game') > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                    {getCategoryCount('game')}
+                  </span>
+                )}
+              </TabsTrigger>
+              <TabsTrigger value="activity" className="flex items-center gap-1">
+                <BookOpen className="h-4 w-4 text-amber-500" />
+                <span>Lessons</span>
+                {getCategoryCount('activity') > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-amber-100 text-amber-800 rounded-full">
+                    {getCategoryCount('activity')}
+                  </span>
+                )}
+              </TabsTrigger>
+              <TabsTrigger value="pdf" className="flex items-center gap-1">
+                <FileText className="h-4 w-4 text-green-500" />
+                <span>Lesson PDF</span>
+                {getCategoryCount('pdf') > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                    {getCategoryCount('pdf')}
+                  </span>
+                )}
+              </TabsTrigger>
+              <TabsTrigger value="other" className="flex items-center gap-1">
+                <Link className="h-4 w-4 text-gray-500" />
+                <span>Other</span>
+                {getCategoryCount('other') > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">
+                    {getCategoryCount('other')}
+                  </span>
+                )}
+              </TabsTrigger>
+            </TabsList>
+          
+            {isEditMode && (
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => {
+                    setNewResource({
+                      bookId: bookId,
+                      unitId: unitId,
+                      title: "New Video",
+                      resourceType: "video",
+                      embedCode: "",
+                      order: resources.length,
+                      provider: "YouTube"
+                    });
+                    setIsAdding(true);
+                  }}
+                  className="flex items-center"
+                >
+                  <Video className="h-4 w-4 mr-1 text-red-500" />
+                  Add Video
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => {
+                    setNewResource({
+                      bookId: bookId,
+                      unitId: unitId,
+                      title: "New Game",
+                      resourceType: "game",
+                      embedCode: "",
+                      order: resources.length,
+                      provider: "Wordwall"
+                    });
+                    setIsAdding(true);
+                  }}
+                  className="flex items-center"
+                >
+                  <Gamepad2 className="h-4 w-4 mr-1 text-blue-500" />
+                  Add Game
+                </Button>
+              </div>
+            )}
+          </div>
           
           <TabsContent value="video" className="space-y-4">
             {videoResources.length > 0 ? (
