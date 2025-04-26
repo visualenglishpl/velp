@@ -461,7 +461,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
               {!hasPaidAccess && index >= freeSlideLimit ? (
                 <div className="py-4 relative">
                   <div className="blur-lg brightness-75">
-                    <div className="mb-1 font-medium text-xl">Premium Content</div>
+                    <div className="mb-3 font-semibold text-2xl">Premium Content</div>
                     <div className="text-lg">Subscribe to view questions and answers</div>
                   </div>
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
@@ -477,8 +477,15 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                 </div>
               ) : (
                 <>
-                  <div className="mb-1 font-medium text-xl">{qaData.question}</div>
-                  <div className="text-lg">{qaData.answer}</div>
+                  {/* Callan-style centered question with larger font */}
+                  <div className="mb-4 font-medium text-2xl bg-primary/5 py-3 px-4 rounded-md border border-primary/20">
+                    {qaData.question}
+                  </div>
+                  
+                  {/* Answer in a more visible format */}
+                  <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200">
+                    {qaData.answer}
+                  </div>
                 </>
               )}
               
