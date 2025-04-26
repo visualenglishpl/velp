@@ -946,15 +946,15 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
   onChange
 }) => {
   return (
-    <div className="border rounded-lg overflow-hidden shadow-sm bg-white resource-grid-card">
+    <div className="resource-card">
       {/* Resource header */}
-      <div className="p-4 flex flex-wrap items-center justify-between gap-2 border-b bg-gray-50">
-        <div className="flex items-center gap-2">
-          {resource.resourceType === 'video' && <Video className="h-5 w-5 text-red-500" />}
-          {resource.resourceType === 'game' && <Gamepad2 className="h-5 w-5 text-blue-500" />}
-          {resource.resourceType === 'activity' && <BookOpen className="h-5 w-5 text-amber-500" />}
-          {resource.resourceType === 'pdf' && <FileText className="h-5 w-5 text-green-500" />}
-          {resource.resourceType === 'other' && <Link className="h-5 w-5 text-gray-500" />}
+      <div className="resource-card-header">
+        <div className="resource-title">
+          {resource.resourceType === 'video' && <Video className="icon text-red-500" />}
+          {resource.resourceType === 'game' && <Gamepad2 className="icon text-blue-500" />}
+          {resource.resourceType === 'activity' && <BookOpen className="icon text-amber-500" />}
+          {resource.resourceType === 'pdf' && <FileText className="icon text-green-500" />}
+          {resource.resourceType === 'other' && <Link className="icon text-gray-500" />}
           
           {isEditing ? (
             <Input 
@@ -963,13 +963,13 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
               className="w-full"
             />
           ) : (
-            <h3 className="text-lg font-semibold">{resource.title}</h3>
+            <h3 className="title">{resource.title}</h3>
           )}
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="resource-actions">
           {resource.provider && !isEditing && (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+            <span className="provider-badge">
               {resource.provider}
             </span>
           )}
@@ -979,7 +979,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
               href={resource.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
+              className="source-link"
             >
               <ExternalLink className="mr-1 h-3 w-3" />
               Source
@@ -992,7 +992,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
                 variant="ghost" 
                 size="sm"
                 onClick={onEdit}
-                className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
+                className="action-button edit"
                 title="Edit resource"
               >
                 <Edit className="h-4 w-4" />
@@ -1002,7 +1002,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
                 variant="ghost" 
                 size="sm"
                 onClick={onDelete}
-                className="h-8 w-8 p-0 rounded-full hover:bg-red-100 text-red-500"
+                className="action-button delete"
                 title="Delete resource"
               >
                 <Trash className="h-4 w-4" />
@@ -1016,7 +1016,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
                 variant="ghost" 
                 size="sm"
                 onClick={onUpdate}
-                className="h-8 w-8 p-0 rounded-full hover:bg-green-100 text-green-500"
+                className="action-button save"
                 title="Save changes"
               >
                 <Save className="h-4 w-4" />
@@ -1026,7 +1026,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
                 variant="ghost" 
                 size="sm"
                 onClick={onCancelEdit}
-                className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
+                className="action-button cancel"
                 title="Cancel editing"
               >
                 <X className="h-4 w-4" />
@@ -1037,11 +1037,11 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
       </div>
       
       {/* Resource content */}
-      <div className="p-4 flex-grow flex flex-col">
+      <div className="resource-card-content">
         {isEditing ? (
-          <div className="space-y-4">
+          <div className="edit-form">
             <div>
-              <label className="block text-sm font-medium mb-1">Provider (Optional)</label>
+              <label className="form-label">Provider (Optional)</label>
               <Input 
                 placeholder="e.g., YouTube, Wordwall, etc."
                 value={resource.provider || ''}
@@ -1051,7 +1051,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-1">External URL (Optional)</label>
+              <label className="form-label">External URL (Optional)</label>
               <Input 
                 placeholder="https://example.com/resource"
                 value={resource.sourceUrl || ''}
@@ -1061,22 +1061,21 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-1">Embed Code</label>
+              <label className="form-label">Embed Code</label>
               <textarea 
                 placeholder='<iframe src="..." width="..." height="..." frameborder="0" allowfullscreen></iframe>'
                 rows={5}
-                className="w-full resize-y p-2 border rounded-md focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
+                className="embed-textarea"
                 value={resource.embedCode}
                 onChange={(e) => onChange('embedCode', e.target.value)}
               />
             </div>
           </div>
         ) : (
-          <div className="flex-grow flex items-center justify-center">
+          <div className="media-wrapper">
             <div 
-              className="w-full rounded-lg overflow-hidden border bg-white shadow-sm max-w-full media-container"
+              className="media-embed"
               dangerouslySetInnerHTML={{ __html: resource.embedCode }}
-              style={{ height: '180px' }}
             />
           </div>
         )}
