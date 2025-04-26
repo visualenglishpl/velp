@@ -638,26 +638,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   <Gamepad2 className="h-4 w-4 mr-1 text-blue-500" />
                   Add Game
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => {
-                    setNewResource({
-                      bookId: bookId,
-                      unitId: unitId,
-                      title: "New Lesson Plan",
-                      resourceType: "activity",
-                      embedCode: "",
-                      order: resources.length,
-                      provider: "Lesson Plan"
-                    });
-                    setIsAdding(true);
-                  }}
-                  className="flex items-center"
-                >
-                  <BookOpen className="h-4 w-4 mr-1 text-amber-500" />
-                  Add Lesson Plan
-                </Button>
+
               </div>
           </div>
           
@@ -665,7 +646,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             {videoResources.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {videoResources.map((resource, index) => (
-                  <div key={resource.id || index} className="h-full">
+                  <div key={resource.id || index} className="h-full flex">
                     <ResourceItem 
                       resource={resource}
                       index={index}
@@ -698,7 +679,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             {gameResources.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {gameResources.map((resource, index) => (
-                  <div key={resource.id || index} className="h-full">
+                  <div key={resource.id || index} className="h-full flex">
                     <ResourceItem 
                       resource={resource}
                       index={index}
