@@ -241,13 +241,31 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       // Helper functions
       const normalizeString = (str: string) => str.toLowerCase().replace(/\s+/g, ' ').trim();
       const extractCodePattern = (text: string): string | null => {
-        const matches = text.match(/(\d{2}\s*[A-Za-z]\s*[A-Za-z](?:\s+|$))/i);
-        if (!matches) return null;
+        // Try the standard format like "01 I A"
+        let matches = text.match(/(\d{2}\s*[A-Za-z]\s*[A-Za-z](?:\s+|$))/i);
+        if (matches) {
+          let extractedCodePattern = matches[1].trim().toLowerCase();
+          console.log("Extracted standard code pattern:", extractedCodePattern, "from filename:", filename);
+          return extractedCodePattern;
+        }
         
-        let extractedCodePattern = matches[1].trim().toLowerCase();
-        console.log("Extracted code pattern:", extractedCodePattern, "from filename:", filename);
+        // Try alternative format like "01I"
+        matches = text.match(/(\d{2}\s*[A-Za-z])/i);
+        if (matches) {
+          let extractedCodePattern = matches[1].trim().toLowerCase();
+          console.log("Extracted simplified code pattern:", extractedCodePattern, "from filename:", filename);
+          return extractedCodePattern;
+        }
         
-        return extractedCodePattern;
+        // Try just the numeric part like "01"
+        matches = text.match(/^.*?(\d{2}).*$/i);
+        if (matches) {
+          let extractedCodePattern = matches[1].trim().toLowerCase();
+          console.log("Extracted numeric code pattern:", extractedCodePattern, "from filename:", filename);
+          return extractedCodePattern;
+        }
+        
+        return null;
       };
       
       // 1. First try exact filename match

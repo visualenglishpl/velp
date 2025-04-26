@@ -905,8 +905,8 @@ export default function SlickContentViewer() {
                       material={material} 
                       isEditMode={isEditMode} 
                       showQuestions={showQuestions}
-                      bookId={bookId || undefined}
-                      unitId={unitNumber?.toString() || undefined}
+                      bookId={bookPath || undefined}
+                      unitId={unitPath || undefined}
                       hasPaidAccess={hasPaidAccess}
                       index={index}
                       freeSlideLimit={freeSlideLimit}
