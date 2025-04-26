@@ -928,11 +928,7 @@ export default function SlickContentViewer() {
                           src={material.path}
                           controls
                           className={`h-auto w-auto max-w-full mx-auto object-contain ${isEditMode ? 'cursor-crosshair' : ''} 
-                            ${!hasPaidAccess && (
-                              // Apply blur based on book type - 0a, 0b, 0c blur from 3rd image onwards, others from 11th
-                              (/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit) || 
-                              (!/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit)
-                            ) ? 'blur-lg brightness-75' : ''}
+                            ${!hasPaidAccess && index >= freeSlideLimit ? 'blur-lg brightness-75' : ''}
                           `}
                           style={{ maxHeight: '100%' }}
                           onError={(e) => {
@@ -945,11 +941,7 @@ export default function SlickContentViewer() {
                         </video>
                         
                         {/* Premium content overlay */}
-                        {!hasPaidAccess && (
-                          // Apply blur based on book type - 0a, 0b, 0c blur from 3rd image onwards, others from 11th
-                          (/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit) || 
-                          (!/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit)
-                        ) && (
+                        {!hasPaidAccess && index >= freeSlideLimit && (
                           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
                             <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
                             <p className="text-sm mb-4">Subscribe to access all learning materials</p>
@@ -986,11 +978,7 @@ export default function SlickContentViewer() {
                               src={material.path}
                               alt={`Learning material slide ${index + 1}`}
                               className={`h-auto w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''} transition-transform duration-200 
-                                ${!hasPaidAccess && (
-                                  // Apply blur based on book type - 0a, 0b, 0c blur from 3rd image onwards, others from 11th
-                                  (/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit) || 
-                                  (!/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit)
-                                ) ? 'blur-lg brightness-75' : ''}
+                                ${!hasPaidAccess && index >= freeSlideLimit ? 'blur-lg brightness-75' : ''}
                               `}
                               style={{ 
                                 maxHeight: isZoomed ? 'none' : '100%',
@@ -1007,11 +995,7 @@ export default function SlickContentViewer() {
                             />
                             
                             {/* Premium content overlay */}
-                            {!hasPaidAccess && (
-                              // Apply blur based on book type - 0a, 0b, 0c blur from 3rd image onwards, others from 11th
-                              (/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit) || 
-                              (!/^0[a-c]$/i.test(bookId || '') && index > freeSlideLimit)
-                            ) && (
+                            {!hasPaidAccess && index >= freeSlideLimit && (
                               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
                                 <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
                                 <p className="text-sm mb-4">Subscribe to access all learning materials</p>
