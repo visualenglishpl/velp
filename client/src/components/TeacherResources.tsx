@@ -59,6 +59,61 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       }
     }
   }, [bookId, unitId]);
+  
+  // Add pre-defined resources for Book 1, Unit 1
+  useEffect(() => {
+    if (bookId === "1" && unitId === "1" && resources.length === 0) {
+      const predefinedResources: TeacherResource[] = [
+        {
+          bookId: "1",
+          unitId: "1",
+          title: "Good Morning - PINKFONG",
+          resourceType: "video",
+          embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/7CuZr1Dz3sk?si=8rsR-SrYgJ8GhGSf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+          order: 0,
+          provider: "YouTube"
+        },
+        {
+          bookId: "1",
+          unitId: "1",
+          title: "Good Morning, Good Night - LITTLE FOX",
+          resourceType: "video",
+          embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/7CuZr1Dz3sk?si=xjDrz_iryoabkZjn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+          order: 1,
+          provider: "YouTube"
+        },
+        {
+          bookId: "1",
+          unitId: "1",
+          title: "The Greetings Song - MAPLE LEAF",
+          resourceType: "video",
+          embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/gVIFEVLzP4o?si=7yhM78fH9pFHwlgD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+          order: 2,
+          provider: "YouTube"
+        },
+        {
+          bookId: "1",
+          unitId: "1",
+          title: "Greetings Game - Wordwall",
+          resourceType: "game",
+          embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/7a5f9c9d02764745b1b471a56483ddf2?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+          order: 3,
+          provider: "Wordwall"
+        },
+        {
+          bookId: "1",
+          unitId: "1",
+          title: "Times of the Day Game - Wordwall",
+          resourceType: "game",
+          embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/aa9083a0802940d7abd8dfbb0ea2113d?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+          order: 4,
+          provider: "Wordwall"
+        }
+      ];
+      
+      setResources(predefinedResources);
+    }
+  }, [bookId, unitId, resources.length]);
 
   // Save resources to localStorage whenever they change
   useEffect(() => {
@@ -145,8 +200,11 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
   const otherResources = resources.filter(r => r.resourceType === 'other');
 
   return (
-    <div className="mt-8 border-t pt-6">
-      <h2 className="text-2xl font-bold mb-4">Teacher Resources</h2>
+    <div className="mt-8 border-t pt-6 pb-6 bg-white rounded-lg shadow-sm">
+      <h2 className="text-2xl font-bold mb-4 px-4 flex items-center">
+        <BookOpen className="w-6 h-6 mr-2 text-primary" />
+        Teacher Resources
+      </h2>
       
       {isEditMode && (
         <div className="mb-6">
@@ -502,12 +560,27 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
   const formatEmbedCode = (code: string) => {
     // Make embedded content responsive
     if (code.includes('<iframe')) {
+      let formattedCode = code;
+      
       // Add responsive wrapper and styling
-      if (!code.includes('class="')) {
-        return code.replace('<iframe', '<iframe class="w-full aspect-video rounded-md shadow-sm max-w-full"');
+      if (!formattedCode.includes('class="')) {
+        formattedCode = formattedCode.replace('<iframe', '<iframe class="w-full aspect-video rounded-md shadow-sm max-w-full"');
       } else {
-        return code.replace('class="', 'class="w-full aspect-video rounded-md shadow-sm max-w-full ');
+        formattedCode = formattedCode.replace('class="', 'class="w-full aspect-video rounded-md shadow-sm max-w-full ');
       }
+      
+      // Ensure iframe has proper width/height to be responsive
+      if (!formattedCode.includes('width="100%"')) {
+        formattedCode = formattedCode.replace(/width="(\d+)"/i, 'width="100%"');
+      }
+      
+      if (!formattedCode.includes('style="')) {
+        formattedCode = formattedCode.replace('<iframe', '<iframe style="border: none; max-width: 100%;"');
+      } else {
+        formattedCode = formattedCode.replace('style="', 'style="border: none; max-width: 100%; ');
+      }
+      
+      return formattedCode;
     }
     return code;
   };
@@ -571,7 +644,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
             <h3 className="text-lg font-medium ml-2">{resource.title}</h3>
           </div>
           
-          <div className="aspect-video relative overflow-hidden rounded-md bg-gray-50 mb-2">
+          <div className="relative overflow-hidden rounded-md bg-gray-50 mb-3 border shadow-sm p-2">
             <div 
               className="embed-container w-full h-full" 
               dangerouslySetInnerHTML={{ __html: formatEmbedCode(resource.embedCode) }}
