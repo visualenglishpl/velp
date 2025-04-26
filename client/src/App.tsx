@@ -113,9 +113,9 @@ function Router() {
         {() => <ProtectedRoute component={FlaggedQuestions} adminOnly={true} />}
       </Route>
       
-      {/* Content Viewer Routes */}
+      {/* Content Viewer Routes - Allow public access with premium content controls */}
       <Route path="/book:bookId/unit:unitNumber">
-        {() => <ProtectedRoute component={SlickContentViewer} />}
+        {() => <SlickContentViewer />}
       </Route>
       
       {/* Direct book route (e.g., /book4) - redirects to the units page */}
@@ -133,12 +133,12 @@ function Router() {
         }}
       </Route>
       
-      {/* Fallback for any other book/unit pattern */}
+      {/* Fallback for any other book/unit pattern - Allow public access with premium content controls */}
       <Route path="/:bookPath/:unitPath">
         {(params) => {
           // Only match book/unit pattern (e.g., book3/unit12)
           if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
-            return <ProtectedRoute component={SlickContentViewer} />;
+            return <SlickContentViewer />;
           }
           return <NotFound />;
         }}
