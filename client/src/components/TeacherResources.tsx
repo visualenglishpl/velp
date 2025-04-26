@@ -108,6 +108,69 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/aa9083a0802940d7abd8dfbb0ea2113d?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
           order: 4,
           provider: "Wordwall"
+        },
+        {
+          bookId: "1",
+          unitId: "1",
+          title: "Lesson Plan - Greetings and Times of Day",
+          resourceType: "activity",
+          embedCode: `<div style="padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+          <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem;">Lesson Plan: Greetings and Times of Day</h2>
+          
+          <div style="margin-bottom: 1rem;">
+            <h3 style="font-size: 1.2rem; color: #4b5563;">Lesson Objectives</h3>
+            <ul style="list-style-type: disc; padding-left: 1.5rem;">
+              <li>Students will learn greetings appropriate for different times of day</li>
+              <li>Students will practice identifying times of day</li>
+              <li>Students will be able to greet others correctly based on time</li>
+            </ul>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <h3 style="font-size: 1.2rem; color: #4b5563;">Required Materials</h3>
+            <ul style="list-style-type: disc; padding-left: 1.5rem;">
+              <li>Visual English Book 1 - Unit 1 slides</li>
+              <li>Time of day flashcards</li>
+              <li>Role-play cards</li>
+            </ul>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <h3 style="font-size: 1.2rem; color: #4b5563;">Warm-up (5 minutes)</h3>
+            <p>Greet students as they enter with appropriate greetings. Ask students what time of day it is and which greeting is appropriate.</p>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <h3 style="font-size: 1.2rem; color: #4b5563;">Presentation (10 minutes)</h3>
+            <p>Go through slides 1-10 showing different greetings. Have students repeat each greeting and practice in pairs.</p>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <h3 style="font-size: 1.2rem; color: #4b5563;">Practice (15 minutes)</h3>
+            <p>Show time of day flashcards and have students call out appropriate greetings. Then have students practice time-based dialogues in pairs.</p>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <h3 style="font-size: 1.2rem; color: #4b5563;">Production (15 minutes)</h3>
+            <p>Role-play activity: Give each pair a different time of day scenario. Students must act out a short dialogue including appropriate greetings.</p>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <h3 style="font-size: 1.2rem; color: #4b5563;">Extension Activities</h3>
+            <ul style="list-style-type: disc; padding-left: 1.5rem;">
+              <li>Have students create a daily schedule with different greeting times</li>
+              <li>Play the Wordwall Greetings game as a class competition</li>
+              <li>Watch the "Good Morning" song video and have students create actions</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 style="font-size: 1.2rem; color: #4b5563;">Assessment</h3>
+            <p>Observe student participation during activities. Check correct usage of greetings in the role-play activity.</p>
+          </div>
+        </div>`,
+          order: 5,
+          provider: "Lesson Plan"
         }
       ];
       
@@ -240,7 +303,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                     >
                       <option value="video">Video (YouTube, Vimeo, etc.)</option>
                       <option value="game">Game (Wordwall, etc.)</option>
-                      <option value="activity">Activity (Online exercises)</option>
+                      <option value="activity">Activity (Lesson plans, exercises)</option>
                       <option value="other">Other Embedded Content</option>
                     </select>
                   </div>
@@ -274,10 +337,26 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   />
                 </div>
                 
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    External URL (Optional)
+                    <span className="text-xs text-gray-500 ml-2">
+                      (Add a link to the original source)
+                    </span>
+                  </label>
+                  <Input
+                    type="url"
+                    value={newResource.sourceUrl || ''}
+                    onChange={(e) => setNewResource(prev => ({ ...prev, sourceUrl: e.target.value }))}
+                    placeholder="https://example.com/resource"
+                    className="w-full"
+                  />
+                </div>
+
                 <div className="bg-amber-50 border border-amber-200 p-3 rounded-md text-amber-800 text-sm">
                   <p>
                     <strong>Tip:</strong> To get embed code from YouTube, click "Share" button below a video, 
-                    then "Embed", and copy the iframe code provided.
+                    then "Embed", and copy the iframe code provided. Or add a direct link in the External URL field.
                   </p>
                 </div>
                 
