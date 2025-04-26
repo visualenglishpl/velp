@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { Trash, Plus, Edit, Save, X, Upload, Video, Gamepad2, BookOpen, Link, ExternalLink } from 'lucide-react';
+import { Trash, Plus, Edit, Save, X, Upload, Video, Gamepad2, BookOpen, Link, ExternalLink, FileText, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
