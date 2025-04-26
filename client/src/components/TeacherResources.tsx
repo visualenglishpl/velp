@@ -13,7 +13,7 @@ interface TeacherResource {
   bookId: string;
   unitId: string;
   title: string;
-  resourceType: 'video' | 'game' | 'activity' | 'other';
+  resourceType: 'video' | 'game' | 'activity' | 'pdf' | 'other';
   embedCode: string;
   provider?: string;
   sourceUrl?: string;

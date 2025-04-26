@@ -640,6 +640,46 @@ export function registerDirectRoutes(app: Express) {
       res.status(500).json({ error: "Failed to fetch annotations" });
     }
   });
+  
+  // Endpoint to remove a slide from a unit
+  app.post("/api/direct/:bookPath/:unitPath/removeSlide", isAuthenticated, async (req, res) => {
+    try {
+      const { bookPath, unitPath } = req.params;
+      const { slideId } = req.body;
+      
+      if (!slideId) {
+        return res.status(400).json({ error: "Missing slideId parameter" });
+      }
+      
+      // For admin users only
+      if (!req.user || req.user.username !== 'admin') {
+        return res.status(403).json({ error: "Only admin users can remove slides" });
+      }
+      
+      console.log(`Removing slide ${slideId} from ${bookPath}/${unitPath}`);
+      
+      // Get current saved order
+      const savedOrder = await storage.getSlideOrder(bookPath, unitPath) || [];
+      
+      // Remove the slide ID from the saved order
+      const updatedOrder = savedOrder.filter(id => id !== slideId);
+      
+      // Save the updated order
+      await storage.saveSlideOrder(bookPath, unitPath, updatedOrder);
+      
+      console.log(`Updated order after removal for ${bookPath}/${unitPath}:`, updatedOrder);
+      
+      return res.json({ 
+        success: true, 
+        message: "Slide removed successfully",
+        slideId,
+        updatedOrder
+      });
+    } catch (error) {
+      console.error(`Error removing slide:`, error);
+      res.status(500).json({ error: "Failed to remove slide" });
+    }
+  });
 
   // Get the saved order for materials - Public access
   app.get("/api/direct/:bookPath/:unitPath/savedOrder", async (req, res) => {
