@@ -60,7 +60,6 @@ export default function SlickContentViewer() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isTeacherMode, setIsTeacherMode] = useState(false);
   
   // State for slide annotations (when in edit mode)
   const [annotations, setAnnotations] = useState<Record<number, Array<{
@@ -838,28 +837,38 @@ export default function SlickContentViewer() {
           </Button>
 
           {/* Teacher Mode toggle */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setIsTeacherMode(!isTeacherMode)}
-            className={`rounded-full w-8 h-8 p-0 ${isTeacherMode ? 'bg-purple-50 hover:bg-purple-100 border-purple-200 text-purple-600' : 'bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-500'} shadow-sm transition-all`}
-            title={isTeacherMode ? "Switch to Student Mode" : "Switch to Teacher Mode"}
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-4 w-4" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor" 
-              strokeWidth={2}
+          <div className="flex items-center">
+            {isTeacherMode && (
+              <div className="text-purple-700 text-xs font-medium mr-2 bg-purple-50 py-0.5 px-2 rounded-md border border-purple-200">
+                Teacher Mode
+              </div>
+            )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsTeacherMode(!isTeacherMode)}
+              className={`relative rounded-full w-8 h-8 p-0 ${isTeacherMode ? 'bg-purple-100 hover:bg-purple-200 border-purple-300 text-purple-700' : 'bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-500'} shadow-sm transition-all`}
+              title={isTeacherMode ? "Switch to Student Mode" : "Switch to Teacher Mode"}
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-              />
-            </svg>
-          </Button>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor" 
+                strokeWidth={2}
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
+              </svg>
+              {isTeacherMode && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full border border-white"></span>
+              )}
+            </Button>
+          </div>
 
           {/* Fullscreen toggle */}
           <Button

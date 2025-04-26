@@ -1296,7 +1296,7 @@ export function registerDirectRoutes(app: Express) {
       console.error(`Error testing Excel download: ${error}`);
       return res.status(500).json({
         success: false,
-        message: `Error testing Excel download for ${bookPath}`,
+        message: `Error testing Excel download for ${bookId}`,
         error: String(error)
       });
     }
