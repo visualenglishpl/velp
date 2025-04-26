@@ -882,6 +882,9 @@ export default function SlickContentViewer() {
                       showQuestions={showQuestions}
                       bookId={bookId || undefined}
                       unitId={unitNumber?.toString() || undefined}
+                      hasPaidAccess={hasPaidAccess}
+                      index={index}
+                      freeSlideLimit={freeSlideLimit}
                     />
                   </div>
                   

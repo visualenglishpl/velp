@@ -50,6 +50,9 @@ interface QuestionAnswerDisplayProps {
   showQuestions?: boolean;
   bookId?: string;
   unitId?: string;
+  hasPaidAccess?: boolean;
+  index?: number;
+  freeSlideLimit?: number;
 }
 
 // Utility functions
@@ -170,7 +173,16 @@ function getQuestionAnswerFromData(material: any): QAData {
   };
 }
 
-const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ material, isEditMode = false, showQuestions = true, bookId, unitId }) => {
+const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ 
+  material, 
+  isEditMode = false, 
+  showQuestions = true, 
+  bookId, 
+  unitId,
+  hasPaidAccess = false,
+  index = 0,
+  freeSlideLimit = 10
+}) => {
   // Use Excel-based data for questions and answers
   const { 
     data: excelData,
@@ -425,7 +437,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ material,
       
       {/* Display question and answer */}
       {!isLoadingExcel && qaData.hasData && (
-        <div className="p-2 text-center">
+        <div className="p-2 text-center relative">
           {isEditing ? (
             <div className="space-y-2">
               <div>
@@ -445,11 +457,33 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({ material,
             </div>
           ) : (
             <>
-              <div className="mb-1 font-medium text-xl">{qaData.question}</div>
-              <div className="text-lg">{qaData.answer}</div>
+              {/* Handle premium content for questions and answers */}
+              {!hasPaidAccess && index >= freeSlideLimit ? (
+                <div className="py-4 relative">
+                  <div className="blur-lg brightness-75">
+                    <div className="mb-1 font-medium text-xl">Premium Content</div>
+                    <div className="text-lg">Subscribe to view questions and answers</div>
+                  </div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
+                    <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
+                    <p className="text-sm mb-4">Subscribe to access all learning materials</p>
+                    <button 
+                      className="px-4 py-1 bg-primary text-white rounded-md text-sm hover:bg-primary/90"
+                      onClick={() => window.location.href = '/checkout/single_lesson'}
+                    >
+                      Upgrade Now
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-1 font-medium text-xl">{qaData.question}</div>
+                  <div className="text-lg">{qaData.answer}</div>
+                </>
+              )}
               
-              {/* Flag button for users to report incorrect questions */}
-              {!isEditMode && (
+              {/* Flag button for users to report incorrect questions - only show for paid users */}
+              {!isEditMode && hasPaidAccess && (
                 <div className="mt-3">
                   {!showForm ? (
                     <button
