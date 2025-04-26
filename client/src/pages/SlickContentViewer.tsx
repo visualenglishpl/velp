@@ -237,9 +237,12 @@ export default function SlickContentViewer() {
   });
   
   // Handler for slide removal confirmation
-  const confirmRemoveSlide = () => {
-    if (slideToRemove) {
-      removeSlide(slideToRemove.id);
+  const confirmRemoveSlide = (id: number) => {
+    // Set the slide to remove and then trigger the mutation
+    const slideToBeRemoved = materials.find(m => m.id === id);
+    if (slideToBeRemoved) {
+      setSlideToRemove(slideToBeRemoved);
+      removeSlide(id);
     }
   };
   
@@ -926,6 +929,7 @@ export default function SlickContentViewer() {
                       hasPaidAccess={hasPaidAccess}
                       index={index}
                       freeSlideLimit={freeSlideLimit}
+                      onSlideDelete={(id) => confirmRemoveSlide(id)}
                     />
                   </div>
                   

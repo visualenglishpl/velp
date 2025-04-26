@@ -658,19 +658,82 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                 </svg>
               </button>
               
-              {onSlideDelete && (
+              <button
+                onClick={async () => {
+                  // Delete the Q&A but keep track of this decision
+                  setIsDeleted(true);
+                  setIsSaving(true);
+                  
+                  // Save this deletion to localStorage
+                  if (bookId && unitId) {
+                    const savedQA = JSON.parse(localStorage.getItem(`qa-${bookId}-${unitId}`) || "{}");
+                    savedQA[material.id] = { deleted: true };
+                    localStorage.setItem(`qa-${bookId}-${unitId}`, JSON.stringify(savedQA));
+                  }
+                  
+                  // Try to save to server
+                  try {
+                    if (bookId && unitId && material?.id) {
+                      const editData = {
+                        bookId,
+                        unitId,
+                        materialId: material.id,
+                        editType: 'qa_delete',
+                        isDeleted: true
+                      };
+                      
+                      const response = await apiRequest('POST', '/api/direct/content-edits', editData);
+                      const result = await response.json();
+                      
+                      if (result.success) {
+                        setServerSynced(true);
+                        toast({
+                          title: "Question hidden",
+                          description: result.dbAvailable === false 
+                            ? "The question has been hidden from this slide and saved to this device." 
+                            : "The question has been hidden and this change will persist across devices.",
+                        });
+                      } else {
+                        console.error('Error saving deletion to server:', result.error);
+                        toast({
+                          title: "Question hidden",
+                          description: "The question has been hidden from this slide but the change could not be saved to the server.",
+                        });
+                      }
+                    } else {
+                      toast({
+                        title: "Question hidden",
+                        description: "The question and answer have been hidden from this slide.",
+                      });
+                    }
+                  } catch (error) {
+                    console.error('Error saving deletion to server:', error);
+                    toast({
+                      title: "Question hidden",
+                      description: "The question has been hidden from this slide but the change could not be saved to the server.",
+                    });
+                  } finally {
+                    setIsSaving(false);
+                  }
+                }}
+                className="p-1 text-amber-500 hover:text-amber-700 transition-colors"
+                title="Hide Q&A"
+              >
+                <EyeOff className="h-4 w-4" />
+              </button>
+              
+              {/* Video slide delete button - only show for MP4 files */}
+              {material.content.toLowerCase().endsWith('.mp4') && onSlideDelete && (
                 <button
                   onClick={() => {
-                    if (onSlideDelete && material.id) {
+                    if (onSlideDelete && material.id && confirm("Are you sure you want to remove this video slide from the unit?")) {
                       onSlideDelete(material.id);
                     }
                   }}
-                  className="p-1 text-orange-500 hover:text-orange-700 transition-colors"
-                  title="Delete Slide"
+                  className="p-1 text-red-500 hover:text-red-700 transition-colors"
+                  title="Remove video slide from unit"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  <Trash2 className="h-4 w-4" />
                 </button>
               )}
             </>
