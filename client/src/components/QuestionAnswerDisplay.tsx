@@ -53,7 +53,7 @@ interface QuestionAnswerDisplayProps {
   hasPaidAccess?: boolean;
   index?: number;
   freeSlideLimit?: number;
-  isTeacherMode?: boolean;
+
 }
 
 // Utility functions
@@ -182,8 +182,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   unitId,
   hasPaidAccess = false,
   index = 0,
-  freeSlideLimit = 10,
-  isTeacherMode = false
+  freeSlideLimit = 10
 }) => {
   // Use Excel-based data for questions and answers
   const { 
@@ -223,7 +222,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   const [editedAnswer, setEditedAnswer] = useState('');
   const [flagReason, setFlagReason] = useState('');
   const [showForm, setShowForm] = useState(false);
-  const [showAnswerReveal, setShowAnswerReveal] = useState(false);
+  // Always show answers directly, no need for reveal feature
   const { toast } = useToast();
   
   useEffect(() => {
@@ -503,18 +502,10 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                     {qaData.question}
                   </div>
                   
-                  {/* Answer - shown by default in Teacher Mode, toggleable in Student Mode */}
-                  {isTeacherMode ? (
-                    <div className="text-lg bg-purple-50 py-2 px-4 rounded-md border border-purple-200 transition-all">
-                      {qaData.answer}
-                      <div className="text-xs text-purple-600 mt-1">Teacher Mode: Answer Visible</div>
-                    </div>
-                  ) : (
-                    <div className={`text-lg py-2 px-4 rounded-md border transition-all duration-300 ${showAnswerReveal ? 'bg-gray-50 border-gray-200' : 'bg-blue-50 border-blue-200 cursor-pointer'}`}
-                         onClick={() => setShowAnswerReveal(!showAnswerReveal)}>
-                      {showAnswerReveal ? qaData.answer : 'Click to reveal answer'}
-                    </div>
-                  )}
+                  {/* Answer - shown directly */}
+                  <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200 transition-all">
+                    {qaData.answer}
+                  </div>
                 </>
               )}
               
