@@ -641,8 +641,8 @@ export function registerDirectRoutes(app: Express) {
     }
   });
 
-  // Get the saved order for materials
-  app.get("/api/direct/:bookPath/:unitPath/savedOrder", isAuthenticated, async (req, res) => {
+  // Get the saved order for materials - Public access
+  app.get("/api/direct/:bookPath/:unitPath/savedOrder", async (req, res) => {
     try {
       const { bookPath, unitPath } = req.params;
       
@@ -660,8 +660,8 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
-  // Special endpoint for Book 0 icons folder access
-  app.get("/api/direct/:bookPath/icons/:filename", isAuthenticated, async (req, res) => {
+  // Special endpoint for Book 0 icons folder access - Public access
+  app.get("/api/direct/:bookPath/icons/:filename", async (req, res) => {
     try {
       const { bookPath, filename } = req.params;
       

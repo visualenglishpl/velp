@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { LockIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/use-auth';
 
 type UnitInfo = {
   unitNumber: string;
@@ -34,10 +35,21 @@ export default function UnitsPage(props: UnitsPageBaseProps = {}) {
   const bookId = bookIdParam || params?.bookId || '';
   const { toast } = useToast();
   
-  // Determine if the user has purchased access (in a real app, this would come from authentication/subscription data)
+  // Get authentication status from the useAuth hook
+  const { user } = useAuth();
+  
+  // Determine if the user has purchased access based on authentication status
   const [hasPurchased, setHasPurchased] = useState(false);
   
-  // Check for query parameter indicating a successful purchase
+  // Update hasPurchased whenever authentication status changes
+  useEffect(() => {
+    // User is authenticated, so they have purchased access
+    if (user) {
+      setHasPurchased(true);
+    }
+  }, [user]);
+  
+  // Also check for query parameter indicating a successful purchase
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.get('purchased') === 'true') {
