@@ -279,7 +279,27 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
   const videoResources = resources.filter(r => r.resourceType === 'video');
   const gameResources = resources.filter(r => r.resourceType === 'game');
   const activityResources = resources.filter(r => r.resourceType === 'activity');
+  const pdfResources = resources.filter(r => r.resourceType === 'pdf');
   const otherResources = resources.filter(r => r.resourceType === 'other');
+  
+  // Add default PDF resource for Book 1, Unit 1 if not already present
+  useEffect(() => {
+    if (bookId === '1' && unitId === '1' && !pdfResources.length) {
+      // Only add if we don't already have a PDF resource
+      const pdfResource: TeacherResource = {
+        bookId: "1",
+        unitId: "1",
+        title: "Visual English 1 - Unit 1 - Lesson PDF",
+        resourceType: "pdf",
+        embedCode: `<iframe src="/api/direct/book1/unit1/file?path=book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf" width="100%" height="600" style="border: none;"></iframe>`,
+        order: resources.length,
+        provider: "Visual English",
+        sourceUrl: `/api/direct/book1/unit1/file?path=book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf`
+      };
+      
+      setResources(prev => [...prev, pdfResource]);
+    }
+  }, [bookId, unitId, pdfResources.length, resources.length]);
 
   return (
     <div className="mt-8 border-t pt-6 pb-6 bg-white rounded-lg shadow-sm">
@@ -316,13 +336,14 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                       value={newResource.resourceType || 'video'}
                       onChange={(e) => setNewResource(prev => ({ 
                         ...prev, 
-                        resourceType: e.target.value as 'video' | 'game' | 'activity' | 'other'
+                        resourceType: e.target.value as 'video' | 'game' | 'activity' | 'pdf' | 'other'
                       }))}
                       className="w-full p-2 border rounded focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
                     >
                       <option value="video">Video (YouTube, Vimeo, etc.)</option>
                       <option value="game">Game (Wordwall, etc.)</option>
                       <option value="activity">Activity (Lesson plans, exercises)</option>
+                      <option value="pdf">Lesson PDF (Materials, handouts)</option>
                       <option value="other">Other Embedded Content</option>
                     </select>
                   </div>
@@ -398,7 +419,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       
       {resources.length > 0 ? (
         <Tabs defaultValue="video" className="px-4">
-          <TabsList className="grid grid-cols-4 mb-4">
+          <TabsList className="grid grid-cols-5 mb-4">
             <TabsTrigger value="video" className="flex items-center gap-1">
               <Video className="h-4 w-4 text-red-500" />
               <span>Videos</span>
@@ -423,6 +444,15 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               {getCategoryCount('activity') > 0 && (
                 <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-amber-100 text-amber-800 rounded-full">
                   {getCategoryCount('activity')}
+                </span>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="pdf" className="flex items-center gap-1">
+              <FileText className="h-4 w-4 text-green-500" />
+              <span>Lesson PDF</span>
+              {getCategoryCount('pdf') > 0 && (
+                <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                  {getCategoryCount('pdf')}
                 </span>
               )}
             </TabsTrigger>
@@ -535,6 +565,67 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             )}
           </TabsContent>
           
+          <TabsContent value="pdf" className="space-y-4">
+            {pdfResources.length > 0 ? (
+              <div className="grid grid-cols-1 gap-6">
+                {pdfResources.map((resource, index) => (
+                  <div key={resource.id || index} className="border rounded-lg overflow-hidden shadow-sm bg-white">
+                    <div className="p-4 flex flex-wrap items-center justify-between gap-2 border-b bg-gray-50">
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-5 w-5 text-green-500" />
+                        <h3 className="text-lg font-semibold">{resource.title}</h3>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        {resource.sourceUrl && (
+                          <a 
+                            href={resource.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-2.5 py-1 border border-green-300 text-sm font-medium rounded-full shadow-sm text-green-700 bg-white hover:bg-green-50 transition-all"
+                          >
+                            <Download className="mr-1 h-4 w-4" />
+                            Download PDF
+                          </a>
+                        )}
+                        
+                        {isEditMode && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => handleDeleteResource(index)}
+                            className="h-8 w-8 p-0 rounded-full hover:bg-red-100 text-red-500"
+                            title="Delete resource"
+                          >
+                            <Trash className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="p-4">
+                      <div 
+                        className="w-full overflow-hidden rounded-md" 
+                        dangerouslySetInnerHTML={{ __html: resource.embedCode }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                {bookId === '1' && unitId === '1' ? (
+                  <div className="flex flex-col items-center">
+                    <p className="mb-4">Loading Lesson PDF...</p>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                  </div>
+                ) : (
+                  <p>No PDF resources available for this unit.</p>
+                )}
+              </div>
+            )}
+          </TabsContent>
+          
           <TabsContent value="other" className="space-y-4">
             {otherResources.length > 0 ? (
               <div className="grid grid-cols-1 gap-6">
@@ -617,6 +708,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
           {resource.resourceType === 'video' && <Video className="h-5 w-5 text-red-500" />}
           {resource.resourceType === 'game' && <Gamepad2 className="h-5 w-5 text-blue-500" />}
           {resource.resourceType === 'activity' && <BookOpen className="h-5 w-5 text-amber-500" />}
+          {resource.resourceType === 'pdf' && <FileText className="h-5 w-5 text-green-500" />}
           {resource.resourceType === 'other' && <Link className="h-5 w-5 text-gray-500" />}
           
           {isEditing ? (
