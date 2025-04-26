@@ -239,7 +239,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       
       {resources.length > 0 ? (
         <Tabs defaultValue="video" className="w-full">
-          <TabsList className="grid grid-cols-4 gap-2 mb-6">
+          <TabsList className="grid grid-cols-4 gap-2 mb-6 bg-gray-50 rounded-lg p-1 hover:bg-gray-100 transition-colors">
             <TabsTrigger value="video" className="flex items-center gap-2">
               <Video className="h-4 w-4 text-red-500" />
               <span>Videos</span> 
@@ -441,7 +441,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             <BookOpen className="h-8 w-8 text-gray-300" />
           </div>
           <p className="text-gray-500 mb-2">No teacher resources available for this unit</p>
-          {isEditMode && (
+          {isEditMode ? (
             <div className="mt-4">
               <Button 
                 variant="outline" 
@@ -452,6 +452,8 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               </Button>
               <p className="text-xs text-gray-400 mt-3">Add videos, games, and other resources to help teachers with this unit</p>
             </div>
+          ) : (
+            <p className="text-sm text-gray-400 mt-2">Check back later for teaching materials</p>
           )}
         </div>
       )}
