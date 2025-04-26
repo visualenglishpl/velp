@@ -406,21 +406,29 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         unitId: "1",
         title: "Visual English 1 - Unit 1 - Lesson PDF",
         resourceType: "pdf",
-        // Use iframe with direct PDF source - more reliable across browsers
-        embedCode: `<div class="pdf-container flex flex-col items-center">
-          <iframe src="/api/direct/book1/unit1/file?path=${pdfPath}" width="100%" height="600" frameborder="0" style="border: 1px solid #e2e8f0; border-radius: 0.375rem;"></iframe>
-          <div class="mt-4">
-            <a 
-              href="/api/direct/book1/unit1/file?path=${pdfPath}" 
-              target="_blank" 
-              class="inline-flex items-center px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Open PDF in New Tab
-            </a>
+        // Use a direct link to PDF instead of embedding to avoid Chrome security restrictions
+        embedCode: `<div class="pdf-container flex flex-col items-center justify-center p-8 bg-gray-50 rounded-xl">
+          <div class="w-20 h-20 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600 w-full h-full">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
           </div>
+          <h3 class="text-xl font-bold mb-2">Visual English 1 - Unit 1 - Lesson PDF</h3>
+          <p class="text-gray-600 mb-6 text-center">The PDF is ready to view, but must be opened in a separate window for better compatibility with all browsers.</p>
+          <a 
+            href="/api/direct/book1/unit1/file?path=${pdfPath}" 
+            target="_blank" 
+            class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors shadow-md"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            View Lesson PDF
+          </a>
         </div>`,
         order: resources.length,
         provider: "Visual English",
