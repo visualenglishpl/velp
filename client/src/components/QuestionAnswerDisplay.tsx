@@ -226,6 +226,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   const [isDeleted, setIsDeleted] = useState(false);
   const [hideImage, setHideImage] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [serverSynced, setServerSynced] = useState(false);
   // Always show answers directly, no need for reveal feature
   const { toast } = useToast();
 
@@ -499,9 +500,10 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
               </button>
               
               <button
-                onClick={() => {
+                onClick={async () => {
                   // Delete the Q&A but keep track of this decision
                   setIsDeleted(true);
+                  setIsSaving(true);
                   
                   // Save this deletion to localStorage
                   if (bookId && unitId) {
@@ -510,10 +512,50 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                     localStorage.setItem(`qa-${bookId}-${unitId}`, JSON.stringify(savedQA));
                   }
                   
-                  toast({
-                    title: "Question removed",
-                    description: "The question and answer have been removed from this slide.",
-                  });
+                  // Try to save to server
+                  try {
+                    if (bookId && unitId && material?.id) {
+                      const editData = {
+                        bookId,
+                        unitId,
+                        materialId: material.id,
+                        editType: 'qa_delete',
+                        isDeleted: true
+                      };
+                      
+                      const response = await apiRequest('POST', '/api/direct/content-edits', editData);
+                      const result = await response.json();
+                      
+                      if (result.success) {
+                        setServerSynced(true);
+                        toast({
+                          title: "Question removed",
+                          description: result.dbAvailable === false 
+                            ? "The question has been removed from this slide and saved to this device." 
+                            : "The question has been removed and this change will persist across devices.",
+                        });
+                      } else {
+                        console.error('Error saving deletion to server:', result.error);
+                        toast({
+                          title: "Question removed",
+                          description: "The question has been removed from this slide but the change could not be saved to the server.",
+                        });
+                      }
+                    } else {
+                      toast({
+                        title: "Question removed",
+                        description: "The question and answer have been removed from this slide.",
+                      });
+                    }
+                  } catch (error) {
+                    console.error('Error saving deletion to server:', error);
+                    toast({
+                      title: "Question removed",
+                      description: "The question has been removed from this slide but the change could not be saved to the server.",
+                    });
+                  } finally {
+                    setIsSaving(false);
+                  }
                 }}
                 className="p-1 text-red-500 hover:text-red-700 transition-colors"
                 title="Delete Question/Answer"
@@ -542,7 +584,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
           ) : isEditing ? (
             <>
               <button
-                onClick={() => {
+                onClick={async () => {
+                  setIsSaving(true);
                   const updatedQA = {
                     ...qaData,
                     question: editedQuestion,
@@ -559,10 +602,52 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                     localStorage.setItem(`qa-${bookId}-${unitId}`, JSON.stringify(savedQA));
                   }
                   
-                  toast({
-                    title: "Changes saved",
-                    description: "Your edits have been saved and will persist when you return.",
-                  });
+                  // Try to save to server
+                  try {
+                    // Function to save edits to server
+                    if (bookId && unitId && material?.id) {
+                      const editData = {
+                        bookId,
+                        unitId,
+                        materialId: material.id,
+                        editType: 'qa_edit',
+                        questionText: editedQuestion,
+                        answerText: editedAnswer
+                      };
+                      
+                      const response = await apiRequest('POST', '/api/direct/content-edits', editData);
+                      const result = await response.json();
+                      
+                      if (result.success) {
+                        setServerSynced(true);
+                        toast({
+                          title: "Changes saved",
+                          description: result.dbAvailable === false 
+                            ? "Your edits have been saved to this device." 
+                            : "Your edits have been saved to the server and will persist across devices.",
+                        });
+                      } else {
+                        console.error('Error saving to server:', result.error);
+                        toast({
+                          title: "Changes saved locally",
+                          description: "Your edits could not be saved to the server but are saved on this device.",
+                        });
+                      }
+                    } else {
+                      toast({
+                        title: "Changes saved locally",
+                        description: "Your edits have been saved to this device.",
+                      });
+                    }
+                  } catch (error) {
+                    console.error('Error saving edit to server:', error);
+                    toast({
+                      title: "Changes saved locally",
+                      description: "Your edits could not be saved to the server but are saved on this device.",
+                    });
+                  } finally {
+                    setIsSaving(false);
+                  }
                 }}
                 className="p-1 text-green-500 hover:text-green-700 transition-colors"
                 title="Save"

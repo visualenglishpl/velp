@@ -1,5 +1,15 @@
-import { db } from './db';
+// Import drizzle-orm SQL builder
 import { sql } from 'drizzle-orm';
+
+// Try to import the database connection
+let db: any = null;
+try {
+  const dbModule = require('./db');
+  db = dbModule.db;
+  console.log('Database connection imported successfully');
+} catch (error) {
+  console.error('Failed to import database connection:', error);
+}
 
 // Interface for content edits data
 export interface ContentEdit {
@@ -19,6 +29,12 @@ export interface ContentEdit {
 
 // Create content_edits table if it doesn't exist
 export async function ensureContentEditsTable() {
+  // If db is not available, use localStorage
+  if (!db) {
+    console.log('Database not available - using localStorage for content edits');
+    return true;
+  }
+
   try {
     await db.execute(sql`
       CREATE TABLE IF NOT EXISTS content_edits (
@@ -46,6 +62,17 @@ export async function ensureContentEditsTable() {
 
 // Save a content edit
 export async function saveContentEdit(edit: ContentEdit) {
+  // If db is not available, return a mock success response
+  if (!db) {
+    console.log('Database not available - content changes will be stored in localStorage only');
+    return { 
+      success: true, 
+      id: Math.floor(Math.random() * 1000) + 1, // Generate a fake ID
+      updated: false,
+      dbAvailable: false
+    };
+  }
+
   try {
     // Check if there's an existing edit for this material
     const existingEdits = await db.execute(sql`
@@ -56,7 +83,7 @@ export async function saveContentEdit(edit: ContentEdit) {
       AND material_id = ${edit.materialId}
     `);
 
-    if (existingEdits.length > 0) {
+    if (existingEdits && existingEdits.length > 0) {
       // Update existing edit
       const editId = existingEdits[0].id;
       await db.execute(sql`
@@ -69,7 +96,7 @@ export async function saveContentEdit(edit: ContentEdit) {
         updated_at = CURRENT_TIMESTAMP
         WHERE id = ${editId}
       `);
-      return { success: true, id: editId, updated: true };
+      return { success: true, id: editId, updated: true, dbAvailable: true };
     } else {
       // Insert new edit
       const result = await db.execute(sql`
@@ -82,16 +109,26 @@ export async function saveContentEdit(edit: ContentEdit) {
           ${edit.isDeleted || false}, ${edit.hideImage || false}
         ) RETURNING id
       `);
-      return { success: true, id: result[0].id, updated: false };
+      return { success: true, id: result[0].id, updated: false, dbAvailable: true };
     }
   } catch (error) {
     console.error('Error saving content edit:', error);
-    return { success: false, error: error.message };
+    if (error instanceof Error) {
+      return { success: false, error: error.message, dbAvailable: true };
+    } else {
+      return { success: false, error: 'Unknown error', dbAvailable: true };
+    }
   }
 }
 
 // Get content edits for a specific user, book, and unit
 export async function getContentEdits(userId: number, bookId: string, unitId: string) {
+  // If db is not available, return an empty array
+  if (!db) {
+    console.log('Database not available - returning empty edits list');
+    return [];
+  }
+  
   try {
     const edits = await db.execute(sql`
       SELECT * FROM content_edits 
@@ -100,8 +137,13 @@ export async function getContentEdits(userId: number, bookId: string, unitId: st
       AND unit_id = ${unitId}
     `);
     
+    if (!edits || !Array.isArray(edits)) {
+      console.log('No edits found or invalid result format');
+      return [];
+    }
+    
     // Transform from snake_case DB columns to camelCase for frontend
-    return edits.map(edit => ({
+    return edits.map((edit: any) => ({
       id: edit.id,
       userId: edit.user_id,
       bookId: edit.book_id,
@@ -123,20 +165,36 @@ export async function getContentEdits(userId: number, bookId: string, unitId: st
 
 // Delete a content edit
 export async function deleteContentEdit(id: number, userId: number) {
+  // If db is not available, return success (will rely on localStorage)
+  if (!db) {
+    console.log('Database not available - deletion will rely on localStorage only');
+    return { success: true, dbAvailable: false };
+  }
+  
   try {
     await db.execute(sql`
       DELETE FROM content_edits 
       WHERE id = ${id} AND user_id = ${userId}
     `);
-    return { success: true };
+    return { success: true, dbAvailable: true };
   } catch (error) {
     console.error('Error deleting content edit:', error);
-    return { success: false, error: error.message };
+    if (error instanceof Error) {
+      return { success: false, error: error.message, dbAvailable: true };
+    } else {
+      return { success: false, error: 'Unknown error', dbAvailable: true };
+    }
   }
 }
 
 // Reset all edits for a specific material
 export async function resetContentEdits(userId: number, bookId: string, unitId: string, materialId: number) {
+  // If db is not available, return success (will rely on localStorage)
+  if (!db) {
+    console.log('Database not available - reset will rely on localStorage only');
+    return { success: true, dbAvailable: false };
+  }
+  
   try {
     await db.execute(sql`
       DELETE FROM content_edits 
@@ -145,9 +203,13 @@ export async function resetContentEdits(userId: number, bookId: string, unitId: 
       AND unit_id = ${unitId} 
       AND material_id = ${materialId}
     `);
-    return { success: true };
+    return { success: true, dbAvailable: true };
   } catch (error) {
     console.error('Error resetting content edits:', error);
-    return { success: false, error: error.message };
+    if (error instanceof Error) {
+      return { success: false, error: error.message, dbAvailable: true };
+    } else {
+      return { success: false, error: 'Unknown error', dbAvailable: true };
+    }
   }
 }
