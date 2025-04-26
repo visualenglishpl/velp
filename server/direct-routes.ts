@@ -378,8 +378,8 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
-  // Direct route for accessing book contents from S3
-  app.get("/api/direct/:bookPath/:unitPath", isAuthenticated, async (req, res) => {
+  // Direct route for accessing book contents from S3 - Public access with premium content controls
+  app.get("/api/direct/:bookPath/:unitPath", async (req, res) => {
     try {
       const { bookPath, unitPath } = req.params;
       
@@ -410,8 +410,8 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
-  // Direct materials endpoint for accessing contents in a book/unit
-  app.get("/api/direct/:bookPath/:unitPath/materials", isAuthenticated, async (req, res) => {
+  // Direct materials endpoint for accessing contents in a book/unit - Public access with premium content controls
+  app.get("/api/direct/:bookPath/:unitPath/materials", async (req, res) => {
     try {
       const { bookPath, unitPath } = req.params;
       
@@ -484,8 +484,8 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
-  // Direct asset endpoint for accessing individual files
-  app.get("/api/direct/:bookPath/:unitPath/assets/:filename", isAuthenticated, async (req, res) => {
+  // Direct asset endpoint for accessing individual files - Public access with premium content controls
+  app.get("/api/direct/:bookPath/:unitPath/assets/:filename", async (req, res) => {
     try {
       const { bookPath, unitPath, filename } = req.params;
       

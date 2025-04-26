@@ -18,45 +18,58 @@ import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
 import { useAuth } from "@/hooks/use-auth";
 
-// Protected Route Component - redirects to login if not authenticated
-function ProtectedRoute({ component: Component, adminOnly = false }: { component: React.ComponentType, adminOnly?: boolean }) {
+// Protected Route Component - redirects to login if authentication is required
+function ProtectedRoute({ component: Component, adminOnly = false, requireAuth = true }: { 
+  component: React.ComponentType, 
+  adminOnly?: boolean,
+  requireAuth?: boolean
+}) {
   const { user, isLoading } = useAuth();
   const [, navigate] = useLocation();
   
   // If loading, show nothing yet
   if (isLoading) return null;
   
-  // If not logged in, redirect to auth page
-  if (!user) {
+  // If authentication is required and user is not logged in, redirect to auth page
+  if (requireAuth && !user) {
     console.log("User not authenticated, redirecting to login");
     navigate("/auth");
     return null;
   }
   
-  // Handle admin role for content management
-  console.log("User role:", user.role);
-  const isAdmin = user.role === "admin";
-  
-  // For admin-only routes, ensure the user is an admin
-  if (adminOnly && !isAdmin) {
-    console.log("Non-admin user trying to access admin-only area");
-    navigate("/");
-    return null;
+  // Allow non-authenticated users to access non-admin routes if requireAuth is false
+  // This is for our content viewer to allow browsing with premium content blurring
+  if (!requireAuth && !user) {
+    console.log("Non-authenticated user accessing public content");
+    return <Component />;
   }
   
-  // For admin users, set a cookie to prevent content blurring
-  if (isAdmin) {
-    console.log("Setting admin cookies for content management");
-    document.cookie = "isContentManager=true; path=/";
-    document.cookie = "role=admin; path=/";
+  // For authenticated users, handle admin role checks
+  if (user) {
+    console.log("User role:", user.role);
+    const isAdmin = user.role === "admin";
     
-    // Also modify user role directly for component access
-    if (adminOnly) {
-      user.role = "admin"; // Ensure admin access to content management features
+    // For admin-only routes, ensure the user is an admin
+    if (adminOnly && !isAdmin) {
+      console.log("Non-admin user trying to access admin-only area");
+      navigate("/");
+      return null;
+    }
+    
+    // For admin users, set a cookie to prevent content blurring
+    if (isAdmin) {
+      console.log("Setting admin cookies for content management");
+      document.cookie = "isContentManager=true; path=/";
+      document.cookie = "role=admin; path=/";
+      
+      // Also modify user role directly for component access
+      if (adminOnly) {
+        user.role = "admin"; // Ensure admin access to content management features
+      }
     }
   }
   
-  // User is authenticated (and has admin role if required)
+  // User is authenticated if required (and has admin role if required)
   return <Component />;
 }
 
@@ -115,7 +128,7 @@ function Router() {
       
       {/* Content Viewer Routes - Allow public access with premium content controls */}
       <Route path="/book:bookId/unit:unitNumber">
-        {() => <SlickContentViewer />}
+        {() => <ProtectedRoute component={SlickContentViewer} requireAuth={false} />}
       </Route>
       
       {/* Direct book route (e.g., /book4) - redirects to the units page */}
@@ -128,7 +141,7 @@ function Router() {
           const processedBookId = bookId.startsWith('book') ? bookId : `book${bookId}`;
           console.log(`Processed book ID: ${processedBookId}`);
           
-          // Directly use UnitsPage with the bookId parameter
+          // Allow non-authenticated users to view the units page
           return <UnitsPage bookIdParam={processedBookId} />;
         }}
       </Route>
@@ -138,7 +151,7 @@ function Router() {
         {(params) => {
           // Only match book/unit pattern (e.g., book3/unit12)
           if (params.bookPath.startsWith('book') && params.unitPath.startsWith('unit')) {
-            return <SlickContentViewer />;
+            return <ProtectedRoute component={SlickContentViewer} requireAuth={false} />;
           }
           return <NotFound />;
         }}
