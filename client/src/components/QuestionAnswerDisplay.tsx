@@ -53,7 +53,7 @@ interface QuestionAnswerDisplayProps {
   hasPaidAccess?: boolean;
   index?: number;
   freeSlideLimit?: number;
-
+  onSlideDelete?: (id: number) => void;
 }
 
 // Utility functions
@@ -182,7 +182,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   unitId,
   hasPaidAccess = false,
   index = 0,
-  freeSlideLimit = 10
+  freeSlideLimit = 10,
+  onSlideDelete
 }) => {
   // Use Excel-based data for questions and answers
   const { 
@@ -222,12 +223,52 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   const [editedAnswer, setEditedAnswer] = useState('');
   const [flagReason, setFlagReason] = useState('');
   const [showForm, setShowForm] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   // Always show answers directly, no need for reveal feature
   const { toast } = useToast();
+
+  // Load saved Q&A data from localStorage when component mounts
+  useEffect(() => {
+    if (bookId && unitId && material?.id) {
+      try {
+        const savedQAString = localStorage.getItem(`qa-${bookId}-${unitId}`);
+        if (savedQAString) {
+          const savedQA = JSON.parse(savedQAString);
+          if (savedQA[material.id]) {
+            const savedItem = savedQA[material.id];
+            
+            // Check if this Q&A was deleted
+            if (savedItem.deleted) {
+              setIsDeleted(true);
+              return;
+            }
+            
+            // Apply saved edits
+            if (savedItem.question && savedItem.answer) {
+              setQAData(prev => ({ 
+                ...prev, 
+                question: savedItem.question, 
+                answer: savedItem.answer,
+                hasData: true 
+              }));
+              return;
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error loading saved Q&A data:", error);
+      }
+    }
+  }, [bookId, unitId, material?.id]);
   
   useEffect(() => {
     if (!material || !material.content) {
       setQAData({ country: '', question: '', answer: '', hasData: false });
+      return;
+    }
+    
+    // Don't load data if this Q&A is marked as deleted
+    if (isDeleted) {
       return;
     }
     
@@ -424,6 +465,14 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
               const processed = getQuestionAnswerFromData(material);
               setQAData(processed);
               setIsEditing(false);
+              setIsDeleted(false);
+
+              // Save this reset to localStorage
+              if (bookId && unitId) {
+                const savedQA = JSON.parse(localStorage.getItem(`qa-${bookId}-${unitId}`) || "{}");
+                delete savedQA[material.id];
+                localStorage.setItem(`qa-${bookId}-${unitId}`, JSON.stringify(savedQA));
+              }
             }}
             className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
             title="Reset to default"
@@ -431,26 +480,87 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             <RefreshCw className="h-4 w-4" />
           </button>
           
-          {!isEditing ? (
-            <button
-              onClick={() => {
-                setEditedQuestion(qaData.question);
-                setEditedAnswer(qaData.answer);
-                setIsEditing(true);
-              }}
-              className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
-              title="Edit"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-              </svg>
-            </button>
-          ) : (
+          {!isEditing && !isDeleted ? (
             <>
               <button
                 onClick={() => {
-                  setQAData(prev => ({ ...prev, question: editedQuestion, answer: editedAnswer }));
+                  setEditedQuestion(qaData.question);
+                  setEditedAnswer(qaData.answer);
+                  setIsEditing(true);
+                }}
+                className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
+                title="Edit"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+              
+              <button
+                onClick={() => {
+                  // Delete the Q&A but keep track of this decision
+                  setIsDeleted(true);
+                  
+                  // Save this deletion to localStorage
+                  if (bookId && unitId) {
+                    const savedQA = JSON.parse(localStorage.getItem(`qa-${bookId}-${unitId}`) || "{}");
+                    savedQA[material.id] = { deleted: true };
+                    localStorage.setItem(`qa-${bookId}-${unitId}`, JSON.stringify(savedQA));
+                  }
+                  
+                  toast({
+                    title: "Question removed",
+                    description: "The question and answer have been removed from this slide.",
+                  });
+                }}
+                className="p-1 text-red-500 hover:text-red-700 transition-colors"
+                title="Delete Question/Answer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+              
+              {onSlideDelete && (
+                <button
+                  onClick={() => {
+                    if (onSlideDelete && material.id) {
+                      onSlideDelete(material.id);
+                    }
+                  }}
+                  className="p-1 text-orange-500 hover:text-orange-700 transition-colors"
+                  title="Delete Slide"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </>
+          ) : isEditing ? (
+            <>
+              <button
+                onClick={() => {
+                  const updatedQA = {
+                    ...qaData,
+                    question: editedQuestion,
+                    answer: editedAnswer,
+                    hasData: true
+                  };
+                  setQAData(updatedQA);
                   setIsEditing(false);
+                  
+                  // Save changes to localStorage for persistence
+                  if (bookId && unitId) {
+                    const savedQA = JSON.parse(localStorage.getItem(`qa-${bookId}-${unitId}`) || "{}");
+                    savedQA[material.id] = { question: editedQuestion, answer: editedAnswer };
+                    localStorage.setItem(`qa-${bookId}-${unitId}`, JSON.stringify(savedQA));
+                  }
+                  
+                  toast({
+                    title: "Changes saved",
+                    description: "Your edits have been saved and will persist when you return.",
+                  });
                 }}
                 className="p-1 text-green-500 hover:text-green-700 transition-colors"
                 title="Save"
@@ -465,7 +575,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                 <X className="h-4 w-4" />
               </button>
             </>
-          )}
+          ) : null}
         </div>
       )}
       
