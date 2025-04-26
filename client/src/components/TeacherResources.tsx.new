@@ -154,19 +154,19 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             unitId: "1",
             title: "Lesson Plan - Greetings and Times of Day (2 x 45min)",
             resourceType: "activity",
-            embedCode: `<div style="padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #e2e8f0;">
-            <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem; text-align: center;">Comprehensive Lesson Plan: Greetings and Times of Day (2 x 45min)</h2>
+            embedCode: `<div style="padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #e2e8f0; max-width: 1200px; margin: 0 auto;">
+            <h2 style="font-size: 1.8rem; color: #2563eb; margin-bottom: 1.5rem; text-align: center; border-bottom: 3px solid #e2e8f0; padding-bottom: 12px;">Comprehensive Lesson Plan: Greetings and Times of Day (2 x 45min)</h2>
             
-            <div style="margin-bottom: 1.5rem; background-color: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6;">
-              <h3 style="font-size: 1.3rem; color: #1e40af; margin-bottom: 0.5rem;">Lesson Overview</h3>
-              <p>This comprehensive plan covers two 45-minute lessons focusing on greetings and times of day vocabulary and expressions.</p>
+            <div style="margin-bottom: 1.8rem; background-color: #f8fafc; padding: 20px; border-radius: 8px; border-left: 6px solid #3b82f6;">
+              <h3 style="font-size: 1.4rem; color: #1e40af; margin-bottom: 0.8rem;">Lesson Overview</h3>
+              <p style="font-size: 1.1rem; line-height: 1.6;">This comprehensive plan covers two 45-minute lessons focusing on greetings and times of day vocabulary and expressions. The activities are designed to engage students through multiple learning styles and provide practical conversation practice.</p>
             </div>
             
             <!-- Two-column layout for learning objectives and materials -->
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.5rem;">
-              <div style="flex: 1; min-width: 300px;">
-                <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Learning Objectives</h3>
-                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-bottom: 2rem;">
+              <div style="background-color: #f0f9ff; padding: 20px; border-radius: 8px; border: 1px solid #bfdbfe;">
+                <h3 style="font-size: 1.3rem; color: #0369a1; border-bottom: 2px solid #bfdbfe; padding-bottom: 10px; margin-bottom: 15px;">Learning Objectives</h3>
+                <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.7;">
                   <li>Students will identify and use greetings appropriate for different times of day</li>
                   <li>Students will practice time-related vocabulary (morning, afternoon, evening, night)</li>
                   <li>Students will demonstrate understanding through role-play and interactive activities</li>
@@ -174,9 +174,9 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                 </ul>
               </div>
               
-              <div style="flex: 1; min-width: 300px;">
-                <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Required Materials</h3>
-                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+              <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; border: 1px solid #bbf7d0;">
+                <h3 style="font-size: 1.3rem; color: #166534; border-bottom: 2px solid #bbf7d0; padding-bottom: 10px; margin-bottom: 15px;">Required Materials</h3>
+                <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.7;">
                   <li>Visual English Book 1 - Unit 1 slides (Greetings section)</li>
                   <li>Time of day flashcards with images showing different times</li>
                   <li>Role-play situation cards (different times and settings)</li>
@@ -188,155 +188,212 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             </div>
             
             <!-- Two-column layout for lesson plans -->
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.5rem;">
-              <!-- Lesson 1 -->
-              <div style="flex: 1; min-width: 300px; background-color: #f0f9ff; padding: 16px; border-radius: 8px;">
-                <h3 style="font-size: 1.3rem; color: #0369a1; margin-bottom: 1rem; text-align: center;">Lesson 1: Greetings Basics (45 minutes)</h3>
-                
-                <div style="margin-bottom: 1rem;">
-                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Warm-up (5 minutes)</h4>
-                  <p>Greet students as they enter with various greetings based on the current time. Have students respond with an appropriate greeting. Ask students what time of day it is and which greetings are appropriate now.</p>
-                </div>
-                
-                <div style="margin-bottom: 1rem;">
-                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Presentation (15 minutes)</h4>
-                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                    <li>Show slides 1-10 with different greetings and times of day</li>
-                    <li>Model pronunciation and have students repeat each greeting</li>
-                    <li>Demonstrate greeting dialogues with a student volunteer</li>
-                    <li>Explain when each greeting is appropriate using visual time cues</li>
-                  </ul>
-                </div>
-                
-                <div style="margin-bottom: 1rem;">
-                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Practice (15 minutes)</h4>
-                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                    <li>Show time flashcards and have students call out appropriate greetings</li>
-                    <li>Pair activity: Students practice greetings dialogues with partners</li>
-                    <li>Matching game: Match greetings to appropriate times of day</li>
-                    <li>Chain greeting: Students form a circle and greet the next person with a different greeting</li>
-                  </ul>
-                </div>
-                
-                <div style="margin-bottom: 1rem;">
-                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Production (10 minutes)</h4>
-                  <p>Role-play activity: Students work in pairs with time scenario cards. Each pair creates and performs a short greeting dialogue appropriate for their assigned time of day.</p>
-                </div>
-                
-                <div>
-                  <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Wrap-up & Assessment (5 minutes)</h4>
-                  <p>Quick review of the greetings learned. Students complete a short self-assessment checklist about which greetings they feel confident using.</p>
-                </div>
-              </div>
+            <div style="margin-bottom: 2rem;">
+              <h3 style="font-size: 1.5rem; color: #4b5563; text-align: center; margin-bottom: 1.2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Detailed Lesson Plans</h3>
               
-              <!-- Lesson 2 -->
-              <div style="flex: 1; min-width: 300px; background-color: #fff7ed; padding: 16px; border-radius: 8px;">
-                <h3 style="font-size: 1.3rem; color: #9a3412; margin-bottom: 1rem; text-align: center;">Lesson 2: Creative Applications (45 minutes)</h3>
-                
-                <div style="margin-bottom: 1rem;">
-                  <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Warm-up & Review (8 minutes)</h4>
-                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                    <li>Greeting song: Play the "Good Morning" video and have students sing along</li>
-                    <li>Quick review game: Teacher shows times on a clock, students say the appropriate greeting</li>
-                  </ul>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px;">
+                <!-- Lesson 1 -->
+                <div style="background-color: #f0f9ff; padding: 25px; border-radius: 12px; border: 1px solid #bfdbfe;">
+                  <h3 style="font-size: 1.4rem; color: #0369a1; margin-bottom: 1.2rem; text-align: center; border-bottom: 2px solid #bfdbfe; padding-bottom: 10px;">Lesson 1: Greetings Basics (45 minutes)</h3>
+                  
+                  <div style="margin-bottom: 1.2rem; background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #0ea5e9; margin-bottom: 0.6rem; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px;">Warm-up (5 minutes)</h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6;">Greet students as they enter with various greetings based on the current time. Have students respond with an appropriate greeting. Ask students what time of day it is and which greetings are appropriate now.</p>
+                  </div>
+                  
+                  <div style="margin-bottom: 1.2rem; background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #0ea5e9; margin-bottom: 0.6rem; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px;">Presentation (15 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.6;">
+                      <li>Show slides 1-10 with different greetings and times of day</li>
+                      <li>Model pronunciation and have students repeat each greeting</li>
+                      <li>Demonstrate greeting dialogues with a student volunteer</li>
+                      <li>Explain when each greeting is appropriate using visual time cues</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1.2rem; background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #0ea5e9; margin-bottom: 0.6rem; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px;">Practice (15 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.6;">
+                      <li>Show time flashcards and have students call out appropriate greetings</li>
+                      <li>Pair activity: Students practice greetings dialogues with partners</li>
+                      <li>Matching game: Match greetings to appropriate times of day</li>
+                      <li>Chain greeting: Students form a circle and greet the next person with a different greeting</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1.2rem; background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #0ea5e9; margin-bottom: 0.6rem; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px;">Production (10 minutes)</h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6;">Role-play activity: Students work in pairs with time scenario cards. Each pair creates and performs a short greeting dialogue appropriate for their assigned time of day.</p>
+                  </div>
+                  
+                  <div style="background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #0ea5e9; margin-bottom: 0.6rem; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px;">Wrap-up & Assessment (5 minutes)</h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6;">Quick review of the greetings learned. Students complete a short self-assessment checklist about which greetings they feel confident using.</p>
+                  </div>
                 </div>
                 
-                <div style="margin-bottom: 1rem;">
-                  <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Creative Craft Activity (15 minutes)</h4>
-                  <p><strong>Time-of-Day Greeting Wheels:</strong> Students create interactive wheels with different times of day and matching greetings:</p>
-                  <ol style="list-style-type: decimal; padding-left: 1.5rem;">
-                    <li>Give each student two circles of cardboard/paper</li>
-                    <li>On the bottom circle, students draw/write the four times of day</li>
-                    <li>On the top circle (with a section cut out), students write matching greetings</li>
-                    <li>Connect the circles with a paper fastener so the top wheel rotates</li>
-                    <li>Students can decorate their wheels with appropriate time symbols</li>
-                  </ol>
-                </div>
-                
-                <div style="margin-bottom: 1rem;">
-                  <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Interactive Game (12 minutes)</h4>
-                  <p><strong>Greeting Detectives:</strong> A fun movement activity to practice greetings:</p>
-                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                    <li>Students move around the classroom</li>
-                    <li>Teacher calls out a time of day</li>
-                    <li>Students must find a partner and exchange appropriate greetings</li>
-                    <li>Students who use incorrect greetings sit down</li>
-                    <li>Last students standing are the "Greeting Detectives"</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Digital Extension & Closing (10 minutes)</h4>
-                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                    <li>Play the Wordwall Greetings game as a class competition</li>
-                    <li>Students take turns answering questions</li>
-                    <li>Award small prizes for correct answers</li>
-                    <li>Final review of all greetings and when to use them</li>
-                  </ul>
+                <!-- Lesson 2 -->
+                <div style="background-color: #fff7ed; padding: 25px; border-radius: 12px; border: 1px solid #fed7aa;">
+                  <h3 style="font-size: 1.4rem; color: #9a3412; margin-bottom: 1.2rem; text-align: center; border-bottom: 2px solid #fed7aa; padding-bottom: 10px;">Lesson 2: Creative Applications (45 minutes)</h3>
+                  
+                  <div style="margin-bottom: 1.2rem; background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #ea580c; margin-bottom: 0.6rem; border-bottom: 1px solid #fed7aa; padding-bottom: 5px;">Warm-up & Review (8 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.6;">
+                      <li>Greeting song: Play the "Good Morning" video and have students sing along</li>
+                      <li>Quick review game: Teacher shows times on a clock, students say the appropriate greeting</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1.2rem; background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #ea580c; margin-bottom: 0.6rem; border-bottom: 1px solid #fed7aa; padding-bottom: 5px;">Creative Craft Activity (15 minutes)</h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 10px;"><strong>Time-of-Day Greeting Wheels:</strong> Students create interactive wheels with different times of day and matching greetings:</p>
+                    <ol style="list-style-type: decimal; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.6;">
+                      <li>Give each student two circles of cardboard/paper</li>
+                      <li>On the bottom circle, students draw/write the four times of day</li>
+                      <li>On the top circle (with a section cut out), students write matching greetings</li>
+                      <li>Connect the circles with a paper fastener so the top wheel rotates</li>
+                      <li>Students can decorate their wheels with appropriate time symbols</li>
+                    </ol>
+                  </div>
+                  
+                  <div style="margin-bottom: 1.2rem; background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #ea580c; margin-bottom: 0.6rem; border-bottom: 1px solid #fed7aa; padding-bottom: 5px;">Interactive Game (12 minutes)</h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 10px;"><strong>Greeting Detectives:</strong> A fun movement activity to practice greetings:</p>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.6;">
+                      <li>Students move around the classroom</li>
+                      <li>Teacher calls out a time of day</li>
+                      <li>Students must find a partner and exchange appropriate greetings</li>
+                      <li>Students who use incorrect greetings sit down</li>
+                      <li>Last students standing are the "Greeting Detectives"</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="background-color: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <h4 style="font-size: 1.2rem; color: #ea580c; margin-bottom: 0.6rem; border-bottom: 1px solid #fed7aa; padding-bottom: 5px;">Digital Extension & Closing (10 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.6;">
+                      <li>Play the Wordwall Greetings game as a class competition</li>
+                      <li>Students take turns answering questions</li>
+                      <li>Award small prizes for correct answers</li>
+                      <li>Final review of all greetings and when to use them</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
             
             <!-- Two-column layout for additional ideas and assessment -->
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 1.5rem;">
-              <div style="flex: 1; min-width: 300px;">
-                <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Additional Games & Craft Ideas</h3>
-                <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                  <li><strong>Greeting Bingo:</strong> Create bingo cards with different greetings. Teacher shows a time of day, students mark the appropriate greeting.</li>
-                  <li><strong>Greeting Posters:</strong> Students create illustrated posters showing different greetings and when to use them.</li>
-                  <li><strong>Time Puppets:</strong> Create sun/moon puppets that students hold up while practicing appropriate greetings.</li>
-                  <li><strong>Greeting Charades:</strong> Students act out times of day while others guess the appropriate greeting.</li>
-                  <li><strong>Digital Greeting Cards:</strong> Older students can create digital greeting cards with appropriate time-based greetings.</li>
-                </ul>
-              </div>
+            <div style="margin-top: 2rem;">
+              <h3 style="font-size: 1.5rem; color: #4b5563; text-align: center; margin-bottom: 1.2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Supporting Resources</h3>
               
-              <div style="flex: 1; min-width: 300px;">
-                <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Assessment Strategies</h3>
-                <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                  <li>Observation during pair and group activities</li>
-                  <li>Greeting wheels completion and accuracy</li>
-                  <li>Role-play performance using correct greetings</li>
-                  <li>Exit tickets: Students write or circle correct greetings for given scenarios</li>
-                  <li>Peer assessment during partner activities</li>
-                </ul>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
+                <div style="background-color: #faf5ff; padding: 20px; border-radius: 8px; border: 1px solid #e9d5ff;">
+                  <h3 style="font-size: 1.3rem; color: #6b21a8; border-bottom: 2px solid #e9d5ff; padding-bottom: 10px; margin-bottom: 15px;">Additional Games & Craft Ideas</h3>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.7;">
+                    <li><strong>Greeting Bingo:</strong> Create bingo cards with different greetings. Teacher shows a time of day, students mark the appropriate greeting.</li>
+                    <li><strong>Time Freeze:</strong> Play music, when it stops, teacher shows a clock time and students must quickly find a partner and exchange appropriate greetings.</li>
+                    <li><strong>Greeting Puppets:</strong> Students create simple stick puppets with different characters and practice greetings dialogues using them.</li>
+                    <li><strong>Around the World:</strong> Show images of people from different countries greeting each other at different times of day.</li>
+                  </ul>
+                </div>
+                
+                <div style="background-color: #fef2f2; padding: 20px; border-radius: 8px; border: 1px solid #fecaca;">
+                  <h3 style="font-size: 1.3rem; color: #991b1b; border-bottom: 2px solid #fecaca; padding-bottom: 10px; margin-bottom: 15px;">Assessment & Differentiation</h3>
+                  <div style="margin-bottom: 1.2rem;">
+                    <h4 style="font-size: 1.2rem; color: #b91c1c; margin-bottom: 0.6rem; border-bottom: 1px solid #fecaca; padding-bottom: 5px;">Assessment</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.7;">
+                      <li><strong>Formative:</strong> Teacher observation during activities, checking for correct greeting usage</li>
+                      <li><strong>Summative:</strong> Role-play performance, greeting wheel completion, participation in games</li>
+                      <li><strong>Self-assessment:</strong> Students indicate which greetings they can use confidently</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 style="font-size: 1.2rem; color: #b91c1c; margin-bottom: 0.6rem; border-bottom: 1px solid #fecaca; padding-bottom: 5px;">Differentiation</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem; font-size: 1.05rem; line-height: 1.7;">
+                      <li><strong>Support:</strong> Provide visual cue cards, simplified dialogues, partner with stronger students</li>
+                      <li><strong>Extension:</strong> Create more complex dialogues, add follow-up questions, teach cultural variations of greetings</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>`,
             order: 7,
             provider: "Lesson Plan"
+          },
+          // PDFs
+          {
+            bookId: "1",
+            unitId: "1",
+            title: "Unit 1 Lesson Plan (PDF)",
+            resourceType: "pdf",
+            embedCode: 'PDF not available for preview. Click the download button to view.',
+            sourceUrl: '/api/direct/file/book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf',
+            order: 8,
+            provider: "Visual English"
           }
         ];
         setResources(predefinedResources);
       }
+      
+      // Save to localStorage
+      if (predefinedResources.length > 0) {
+        localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(predefinedResources));
+      }
     }
-  }, [bookId, unitId, resources.length]);
+  }, [resources.length, bookId, unitId]);
 
-  // Save resources to localStorage whenever they change
-  useEffect(() => {
-    if (bookId && unitId && resources.length > 0) {
-      localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(resources));
-    }
-  }, [resources, bookId, unitId]);
-
+  // Handle adding a new resource
   const handleAddResource = () => {
-    if (!newResource.title || !newResource.embedCode) {
+    if (!bookId || !unitId || !newResource.title || !newResource.embedCode) {
       toast({
-        title: 'Missing information',
-        description: 'Please provide both a title and embed code for the resource.',
-        variant: 'destructive'
+        title: "Incomplete resource",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
       });
       return;
     }
-
+    
     const resourceToAdd: TeacherResource = {
-      ...newResource as TeacherResource,
-      bookId: bookId || '',
-      unitId: unitId || '',
+      bookId,
+      unitId,
+      title: newResource.title || '',
+      resourceType: newResource.resourceType as TeacherResource['resourceType'] || 'video',
+      embedCode: newResource.embedCode || '',
+      provider: newResource.provider || '',
+      sourceUrl: newResource.sourceUrl || '',
       order: resources.length,
-      resourceType: newResource.resourceType || 'video'
     };
-
-    setResources(prev => [...prev, resourceToAdd]);
+    
+    // If PDF, add a direct link
+    if (resourceToAdd.resourceType === 'pdf' && resourceToAdd.sourceUrl) {
+      // Special handling for PDF resources
+      const pdfResource: TeacherResource = {
+        ...resourceToAdd,
+        embedCode: 'PDF not available for preview. Click the download button to view.'
+      };
+      
+      const newResources = [...resources, pdfResource];
+      setResources(newResources);
+      localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(newResources));
+      
+      toast({
+        title: "PDF Resource Added",
+        description: "The PDF resource has been added successfully.",
+      });
+    } else {
+      // Standard resource addition
+      const newResources = [...resources, resourceToAdd];
+      setResources(newResources);
+      localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(newResources));
+      
+      toast({
+        title: "Resource Added",
+        description: "The resource has been added successfully.",
+      });
+    }
+    
+    setIsAdding(false);
     setNewResource({
       resourceType: 'video',
       title: '',
@@ -344,214 +401,151 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       provider: '',
       sourceUrl: ''
     });
-    setIsAdding(false);
-
-    toast({
-      title: 'Resource added',
-      description: 'The teaching resource has been added successfully.'
-    });
   };
 
-  const handleDeleteResource = (index: number) => {
-    setResources(prev => prev.filter((_, i) => i !== index));
-    toast({
-      title: 'Resource deleted',
-      description: 'The teaching resource has been removed.'
-    });
-  };
-
+  // Handle updating a resource
   const handleUpdateResource = (index: number) => {
     const updatedResources = [...resources];
-    const editedResource = updatedResources[index];
-    
-    if (!editedResource.title || !editedResource.embedCode) {
-      toast({
-        title: 'Missing information',
-        description: 'Please provide both a title and embed code for the resource.',
-        variant: 'destructive'
-      });
-      return;
-    }
-    
-    setResources(updatedResources);
-    setEditingResource(null);
+    localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(updatedResources));
     
     toast({
-      title: 'Resource updated',
-      description: 'The teaching resource has been updated successfully.'
+      title: "Resource Updated",
+      description: "The resource has been updated successfully.",
+    });
+    
+    setEditingResource(null);
+  };
+
+  // Handle deleting a resource
+  const handleDeleteResource = (index: number) => {
+    const updatedResources = resources.filter((_, i) => i !== index);
+    setResources(updatedResources);
+    localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(updatedResources));
+    
+    toast({
+      title: "Resource Deleted",
+      description: "The resource has been removed successfully.",
     });
   };
 
-  const getCategoryCount = (type: string) => {
-    return resources.filter(r => r.resourceType === type).length;
+  // Cancel adding a new resource
+  const handleCancelAdd = () => {
+    setIsAdding(false);
+    setNewResource({
+      resourceType: 'video',
+      title: '',
+      embedCode: '',
+      provider: '',
+      sourceUrl: ''
+    });
   };
-  
-  if (!bookId || !unitId) {
-    return null;
-  }
 
+  // Filter resources by type
   const videoResources = resources.filter(r => r.resourceType === 'video');
   const gameResources = resources.filter(r => r.resourceType === 'game');
   const activityResources = resources.filter(r => r.resourceType === 'activity');
   const pdfResources = resources.filter(r => r.resourceType === 'pdf');
-  const otherResources = resources.filter(r => r.resourceType === 'other');
-  
-  // Add default PDF resource for Book 1, Unit 1 if not already present
-  useEffect(() => {
-    if (bookId === '1' && unitId === '1' && !pdfResources.length) {
-      // Only add if we don't already have a PDF resource
-      const pdfPath = encodeURIComponent("book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf");
-      const pdfResource: TeacherResource = {
-        bookId: "1",
-        unitId: "1",
-        title: "Visual English 1 - Unit 1 - Lesson PDF",
-        resourceType: "pdf",
-        // Use a direct link to PDF instead of embedding to avoid Chrome security restrictions
-        embedCode: `<div class="pdf-container flex flex-col items-center justify-center p-8 bg-gray-50 rounded-xl">
-          <div class="w-20 h-20 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600 w-full h-full">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-              <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold mb-2">Visual English 1 - Unit 1 - Lesson PDF</h3>
-          <p class="text-gray-600 mb-6 text-center">The PDF is ready to view, but must be opened in a separate window for better compatibility with all browsers.</p>
-          <a 
-            href="/api/direct/book1/unit1/file?path=${pdfPath}" 
-            target="_blank" 
-            class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors shadow-md"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            View Lesson PDF
-          </a>
-        </div>`,
-        order: resources.length,
-        provider: "Visual English",
-        sourceUrl: `/api/direct/book1/unit1/file?path=${pdfPath}`
-      };
-      
-      setResources(prev => [...prev, pdfResource]);
-    }
-  }, [bookId, unitId, pdfResources.length, resources.length]);
+
+  // Get count of resources by category
+  const getCategoryCount = (category: string) => {
+    return resources.filter(r => r.resourceType === category).length;
+  };
 
   return (
-    <div className="mt-8 border-t pt-6 pb-6 bg-white rounded-lg shadow-sm">
-      <h2 className="text-2xl font-bold mb-4 px-4 flex items-center">
-        <BookOpen className="w-6 h-6 mr-2 text-primary" />
-        Teacher Resources
-      </h2>
+    <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+      <div className="p-4 border-b bg-gray-50 flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Teacher Resources</h2>
+        
+        {isEditMode && !isAdding && (
+          <Button 
+            onClick={() => setIsAdding(true)}
+            className="flex items-center"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Resource
+          </Button>
+        )}
+      </div>
       
-      {isEditMode && (
-        <div className="mb-6">
-          {!isAdding ? (
-            <Button 
-              onClick={() => setIsAdding(true)}
-              className="flex items-center"
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              Add Teaching Resource
-            </Button>
-          ) : (
-            <Card className="p-6 border-2 bg-gray-50">
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                {(newResource.resourceType || 'video') === 'video' && <Video className="h-5 w-5 mr-2 text-red-500" />}
-                {(newResource.resourceType || 'video') === 'game' && <Gamepad2 className="h-5 w-5 mr-2 text-blue-500" />}
-                {(newResource.resourceType || 'video') === 'activity' && <BookOpen className="h-5 w-5 mr-2 text-amber-500" />}
-                {(newResource.resourceType || 'video') === 'other' && <Link className="h-5 w-5 mr-2 text-gray-500" />}
-                Add New {((newResource.resourceType || 'video').charAt(0).toUpperCase() + (newResource.resourceType || 'video').slice(1))} Resource
-              </h3>
-              
-              <div className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Resource Type</label>
-                    <select 
-                      value={newResource.resourceType || 'video'}
-                      onChange={(e) => setNewResource(prev => ({ 
-                        ...prev, 
-                        resourceType: e.target.value as 'video' | 'game' | 'activity' | 'pdf' | 'other'
-                      }))}
-                      className="w-full p-2 border rounded focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
-                    >
-                      <option value="video">Video (YouTube, Vimeo, etc.)</option>
-                      <option value="game">Game (Wordwall, etc.)</option>
-                      <option value="activity">Activity (Lesson plans, exercises)</option>
-                      <option value="pdf">Lesson PDF (Materials, handouts)</option>
-                      <option value="other">Other Embedded Content</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Provider (Optional)</label>
-                    <Input 
-                      placeholder="e.g., YouTube, Wordwall, etc."
-                      value={newResource.provider || ''}
-                      onChange={(e) => setNewResource(prev => ({ ...prev, provider: e.target.value }))}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">Title</label>
-                  <Input 
-                    placeholder="Resource title"
-                    value={newResource.title || ''}
-                    onChange={(e) => setNewResource(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">External URL (Optional)</label>
-                  <div className="flex items-center gap-2">
-                    <Input 
-                      placeholder="https://example.com/resource"
-                      value={newResource.sourceUrl || ''}
-                      onChange={(e) => setNewResource(prev => ({ ...prev, sourceUrl: e.target.value }))}
-                      className="w-full"
-                    />
-                    {newResource.sourceUrl && (
-                      <a 
-                        href={newResource.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-shrink-0 inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">Embed Code</label>
-                  <textarea 
-                    placeholder='<iframe src="..." width="..." height="..." frameborder="0" allowfullscreen></iframe>'
-                    rows={5}
-                    className="w-full resize-y p-2 border rounded-md focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
-                    value={newResource.embedCode}
-                    onChange={(e) => setNewResource(prev => ({ ...prev, embedCode: e.target.value }))}
-                  />
-                </div>
-                
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline" onClick={() => setIsAdding(false)}>
-                    Cancel
-                  </Button>
-                  <Button onClick={handleAddResource}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Resource
-                  </Button>
-                </div>
+      {isAdding && (
+        <div className="p-4 border-b bg-gray-50">
+          <h3 className="text-lg font-medium mb-4">Add New Resource</h3>
+          
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Resource Type</label>
+                <select 
+                  value={newResource.resourceType}
+                  onChange={(e) => setNewResource({...newResource, resourceType: e.target.value as TeacherResource['resourceType']})}
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
+                >
+                  <option value="video">Video</option>
+                  <option value="game">Game</option>
+                  <option value="activity">Activity / Lesson Plan</option>
+                  <option value="pdf">PDF Document</option>
+                </select>
               </div>
-            </Card>
-          )}
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Title</label>
+                <Input 
+                  placeholder="Resource title"
+                  value={newResource.title}
+                  onChange={(e) => setNewResource({...newResource, title: e.target.value})}
+                  className="w-full"
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Provider (Optional)</label>
+                <Input 
+                  placeholder="e.g., YouTube, Wordwall, etc."
+                  value={newResource.provider}
+                  onChange={(e) => setNewResource({...newResource, provider: e.target.value})}
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  {newResource.resourceType === 'pdf' ? 'PDF URL (Required)' : 'External URL (Optional)'}
+                </label>
+                <Input 
+                  placeholder={newResource.resourceType === 'pdf' ? "URL to PDF file" : "https://example.com/resource"}
+                  value={newResource.sourceUrl}
+                  onChange={(e) => setNewResource({...newResource, sourceUrl: e.target.value})}
+                  className="w-full"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                {newResource.resourceType === 'pdf' ? 'Description (Optional)' : 'Embed Code (Required)'}
+              </label>
+              <textarea 
+                placeholder={
+                  newResource.resourceType === 'pdf' 
+                    ? 'Additional description for the PDF' 
+                    : newResource.resourceType === 'activity'
+                    ? 'HTML content for the activity or lesson plan'
+                    : '<iframe src="..." width="..." height="..." frameborder="0" allowfullscreen></iframe>'
+                }
+                rows={5}
+                value={newResource.embedCode}
+                onChange={(e) => setNewResource({...newResource, embedCode: e.target.value})}
+                className="w-full resize-y p-2 border rounded-md focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
+              />
+            </div>
+            
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={handleCancelAdd}>Cancel</Button>
+              <Button onClick={handleAddResource}>Add Resource</Button>
+            </div>
+          </div>
         </div>
       )}
       
@@ -663,9 +657,9 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="video" className="space-y-4">
             {videoResources.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {videoResources.map((resource, index) => (
-                  <div key={resource.id || index} className="flex flex-col h-full">
+                  <div key={resource.id || index} className="h-full flex flex-col">
                     <ResourceItem 
                       resource={resource}
                       index={index}
