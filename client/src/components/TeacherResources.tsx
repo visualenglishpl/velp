@@ -83,6 +83,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       // Book 1, Unit 1 resources
       else if (bookId === "1" && unitId === "1") {
         predefinedResources = [
+          // Videos
           {
             bookId: "1",
             unitId: "1",
@@ -113,10 +114,20 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           {
             bookId: "1",
             unitId: "1",
+            title: "Hello! - Super Simple Songs",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tVlcKp3bWH8?si=Z_LsC0kU3mC3KZDA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 3,
+            provider: "YouTube"
+          },
+          // Games
+          {
+            bookId: "1",
+            unitId: "1",
             title: "Greetings Game - Wordwall",
             resourceType: "game",
             embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/7a5f9c9d02764745b1b471a56483ddf2?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 3,
+            order: 4,
             provider: "Wordwall"
           },
           {
@@ -125,70 +136,162 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             title: "Times of the Day Game - Wordwall",
             resourceType: "game",
             embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/aa9083a0802940d7abd8dfbb0ea2113d?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 4,
+            order: 5,
             provider: "Wordwall"
           },
           {
             bookId: "1",
             unitId: "1",
-            title: "Lesson Plan - Greetings and Times of Day",
+            title: "Greetings Match-Up - Wordwall",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/7a5f9c9d02764745b1b471a56483ddf2?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 6,
+            provider: "Wordwall"
+          },
+          // Lesson Plans
+          {
+            bookId: "1",
+            unitId: "1",
+            title: "Lesson Plan - Greetings and Times of Day (2 x 45min)",
             resourceType: "activity",
             embedCode: `<div style="padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #e2e8f0;">
-            <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem;">Lesson Plan: Greetings and Times of Day</h2>
+            <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem;">Comprehensive Lesson Plan: Greetings and Times of Day (2 x 45min)</h2>
             
-            <div style="margin-bottom: 1rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563;">Lesson Objectives</h3>
+            <div style="margin-bottom: 1.5rem; background-color: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+              <h3 style="font-size: 1.3rem; color: #1e40af; margin-bottom: 0.5rem;">Lesson Overview</h3>
+              <p>This comprehensive plan covers two 45-minute lessons focusing on greetings and times of day vocabulary and expressions.</p>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+              <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Learning Objectives</h3>
               <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                <li>Students will learn greetings appropriate for different times of day</li>
-                <li>Students will practice identifying times of day</li>
-                <li>Students will be able to greet others correctly based on time</li>
+                <li>Students will identify and use greetings appropriate for different times of day</li>
+                <li>Students will practice time-related vocabulary (morning, afternoon, evening, night)</li>
+                <li>Students will demonstrate understanding through role-play and interactive activities</li>
+                <li>Students will create their own greeting dialogues for different scenarios</li>
               </ul>
             </div>
             
-            <div style="margin-bottom: 1rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563;">Required Materials</h3>
+            <div style="margin-bottom: 1.5rem;">
+              <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Required Materials</h3>
               <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                <li>Visual English Book 1 - Unit 1 slides</li>
-                <li>Time of day flashcards</li>
-                <li>Role-play cards</li>
+                <li>Visual English Book 1 - Unit 1 slides (Greetings section)</li>
+                <li>Time of day flashcards with images showing different times</li>
+                <li>Role-play situation cards (different times and settings)</li>
+                <li>Craft materials: colored paper, markers, scissors, glue</li>
+                <li>Clock face templates</li>
+                <li>Printed greetings for a matching activity</li>
               </ul>
             </div>
             
-            <div style="margin-bottom: 1rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563;">Warm-up (5 minutes)</h3>
-              <p>Greet students as they enter with appropriate greetings. Ask students what time of day it is and which greeting is appropriate.</p>
+            <div style="margin-bottom: 1.5rem; background-color: #f0f9ff; padding: 16px; border-radius: 8px;">
+              <h3 style="font-size: 1.3rem; color: #0369a1; margin-bottom: 0.5rem;">Lesson 1: Greetings Basics (45 minutes)</h3>
+              
+              <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Warm-up (5 minutes)</h4>
+                <p>Greet students as they enter with various greetings based on the current time. Have students respond with an appropriate greeting. Ask students what time of day it is and which greetings are appropriate now.</p>
+              </div>
+              
+              <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Presentation (15 minutes)</h4>
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li>Show slides 1-10 with different greetings and times of day</li>
+                  <li>Model pronunciation and have students repeat each greeting</li>
+                  <li>Demonstrate greeting dialogues with a student volunteer</li>
+                  <li>Explain when each greeting is appropriate using visual time cues</li>
+                </ul>
+              </div>
+              
+              <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Practice (15 minutes)</h4>
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li>Show time flashcards and have students call out appropriate greetings</li>
+                  <li>Pair activity: Students practice greetings dialogues with partners</li>
+                  <li>Matching game: Match greetings to appropriate times of day</li>
+                  <li>Chain greeting: Students form a circle and greet the next person with a different greeting</li>
+                </ul>
+              </div>
+              
+              <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Production (10 minutes)</h4>
+                <p>Role-play activity: Students work in pairs with time scenario cards. Each pair creates and performs a short greeting dialogue appropriate for their assigned time of day.</p>
+              </div>
+              
+              <div>
+                <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Wrap-up & Assessment (5 minutes)</h4>
+                <p>Quick review of the greetings learned. Students complete a short self-assessment checklist about which greetings they feel confident using.</p>
+              </div>
             </div>
             
-            <div style="margin-bottom: 1rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563;">Presentation (10 minutes)</h3>
-              <p>Go through slides 1-10 showing different greetings. Have students repeat each greeting and practice in pairs.</p>
+            <div style="margin-bottom: 1.5rem; background-color: #fff7ed; padding: 16px; border-radius: 8px;">
+              <h3 style="font-size: 1.3rem; color: #9a3412; margin-bottom: 0.5rem;">Lesson 2: Creative Applications (45 minutes)</h3>
+              
+              <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Warm-up & Review (8 minutes)</h4>
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li>Greeting song: Play the "Good Morning" video and have students sing along</li>
+                  <li>Quick review game: Teacher shows times on a clock, students say the appropriate greeting</li>
+                </ul>
+              </div>
+              
+              <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Creative Craft Activity (15 minutes)</h4>
+                <p><strong>Time-of-Day Greeting Wheels:</strong> Students create interactive wheels with different times of day and matching greetings:</p>
+                <ol style="list-style-type: decimal; padding-left: 1.5rem;">
+                  <li>Give each student two circles of cardboard/paper</li>
+                  <li>On the bottom circle, students draw/write the four times of day (morning, afternoon, evening, night)</li>
+                  <li>On the top circle (with a section cut out), students write matching greetings</li>
+                  <li>Connect the circles with a paper fastener so the top wheel rotates</li>
+                  <li>Students can decorate their wheels with appropriate time symbols</li>
+                </ol>
+              </div>
+              
+              <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Interactive Game (12 minutes)</h4>
+                <p><strong>Greeting Detectives:</strong> A fun movement activity to practice greetings:</p>
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li>Students move around the classroom</li>
+                  <li>Teacher calls out a time of day</li>
+                  <li>Students must find a partner and exchange appropriate greetings</li>
+                  <li>Students who use incorrect greetings sit down</li>
+                  <li>Last students standing are the "Greeting Detectives"</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Digital Extension & Closing (10 minutes)</h4>
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li>Play the Wordwall Greetings game as a class competition</li>
+                  <li>Students take turns answering questions</li>
+                  <li>Award small prizes for correct answers</li>
+                  <li>Final review of all greetings and when to use them</li>
+                </ul>
+              </div>
             </div>
             
-            <div style="margin-bottom: 1rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563;">Practice (15 minutes)</h3>
-              <p>Show time of day flashcards and have students call out appropriate greetings. Then have students practice time-based dialogues in pairs.</p>
-            </div>
-            
-            <div style="margin-bottom: 1rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563;">Production (15 minutes)</h3>
-              <p>Role-play activity: Give each pair a different time of day scenario. Students must act out a short dialogue including appropriate greetings.</p>
-            </div>
-            
-            <div style="margin-bottom: 1rem;">
-              <h3 style="font-size: 1.2rem; color: #4b5563;">Extension Activities</h3>
+            <div style="margin-top: 1.5rem;">
+              <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Additional Games & Craft Ideas</h3>
               <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                <li>Have students create a daily schedule with different greeting times</li>
-                <li>Play the Wordwall Greetings game as a class competition</li>
-                <li>Watch the "Good Morning" song video and have students create actions</li>
+                <li><strong>Greeting Bingo:</strong> Create bingo cards with different greetings. Teacher shows a time of day, students mark the appropriate greeting.</li>
+                <li><strong>Greeting Posters:</strong> Students create illustrated posters showing different greetings and when to use them.</li>
+                <li><strong>Time Puppets:</strong> Create sun/moon puppets that students hold up while practicing appropriate greetings.</li>
+                <li><strong>Greeting Charades:</strong> Students act out times of day while others guess the appropriate greeting.</li>
+                <li><strong>Digital Greeting Cards:</strong> Older students can create digital greeting cards with appropriate time-based greetings.</li>
               </ul>
             </div>
             
-            <div>
-              <h3 style="font-size: 1.2rem; color: #4b5563;">Assessment</h3>
-              <p>Observe student participation during activities. Check correct usage of greetings in the role-play activity.</p>
+            <div style="margin-top: 1.5rem;">
+              <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Assessment Strategies</h3>
+              <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                <li>Observation during pair and group activities</li>
+                <li>Greeting wheels completion and accuracy</li>
+                <li>Role-play performance using correct greetings</li>
+                <li>Exit tickets: Students write or circle correct greetings for given scenarios</li>
+                <li>Peer assessment during partner activities</li>
+              </ul>
             </div>
           </div>`,
-            order: 5,
+            order: 7,
             provider: "Lesson Plan"
           }
         ];
@@ -292,7 +395,14 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         unitId: "1",
         title: "Visual English 1 - Unit 1 - Lesson PDF",
         resourceType: "pdf",
-        embedCode: `<iframe src="/api/direct/book1/unit1/file?path=${pdfPath}" width="100%" height="600" style="border: none;"></iframe>`,
+        // Open the PDF in a new tab by default to ensure it displays properly
+        embedCode: `<div class="pdf-container">
+          <object data="/api/direct/book1/unit1/file?path=${pdfPath}" type="application/pdf" width="100%" height="600">
+            <p>Your browser does not support embedded PDFs. 
+              <a href="/api/direct/book1/unit1/file?path=${pdfPath}" target="_blank">Click here to download the PDF</a>
+            </p>
+          </object>
+        </div>`,
         order: resources.length,
         provider: "Visual English",
         sourceUrl: `/api/direct/book1/unit1/file?path=${pdfPath}`
@@ -470,7 +580,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="video" className="space-y-4">
             {videoResources.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {videoResources.map((resource, index) => (
                   <ResourceItem 
                     key={resource.id || index}
@@ -502,7 +612,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="game" className="space-y-4">
             {gameResources.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {gameResources.map((resource, index) => (
                   <ResourceItem 
                     key={resource.id || index}
@@ -535,7 +645,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="activity" className="space-y-4">
             {activityResources.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {activityResources.map((resource, index) => (
                   <ResourceItem 
                     key={resource.id || index}
@@ -629,7 +739,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="other" className="space-y-4">
             {otherResources.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {otherResources.map((resource, index) => (
                   <ResourceItem 
                     key={resource.id || index}
