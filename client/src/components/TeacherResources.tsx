@@ -98,7 +98,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             unitId: "1",
             title: "Good Morning, Good Night - LITTLE FOX",
             resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/7CuZr1Dz3sk?si=xjDrz_iryoabkZjn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ln86OxoVl7k?si=E2BDuoLuPHCQa2yA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
             order: 1,
             provider: "YouTube"
           },
@@ -654,27 +654,28 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="video" className="space-y-4">
             {videoResources.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
                 {videoResources.map((resource, index) => (
-                  <ResourceItem 
-                    key={resource.id || index}
-                    resource={resource}
-                    index={index}
-                    isEditing={editingResource === index}
-                    isEditMode={isEditMode}
-                    onEdit={() => setEditingResource(index)}
-                    onCancelEdit={() => setEditingResource(null)}
-                    onUpdate={() => handleUpdateResource(index)}
-                    onDelete={() => handleDeleteResource(index)}
-                    onChange={(field, value) => {
-                      const updatedResources = [...resources];
-                      updatedResources[index] = { 
-                        ...updatedResources[index],
-                        [field]: value
-                      };
-                      setResources(updatedResources);
-                    }}
-                  />
+                  <div key={resource.id || index} className="flex flex-col h-full">
+                    <ResourceItem 
+                      resource={resource}
+                      index={index}
+                      isEditing={editingResource === index}
+                      isEditMode={isEditMode}
+                      onEdit={() => setEditingResource(index)}
+                      onCancelEdit={() => setEditingResource(null)}
+                      onUpdate={() => handleUpdateResource(index)}
+                      onDelete={() => handleDeleteResource(index)}
+                      onChange={(field, value) => {
+                        const updatedResources = [...resources];
+                        updatedResources[index] = { 
+                          ...updatedResources[index],
+                          [field]: value
+                        };
+                        setResources(updatedResources);
+                      }}
+                    />
+                  </div>
                 ))}
               </div>
             ) : (
@@ -686,28 +687,29 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="game" className="space-y-4">
             {gameResources.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
                 {gameResources.map((resource, index) => (
-                  <ResourceItem 
-                    key={resource.id || index}
-                    resource={resource}
-                    index={index}
-                    isEditing={editingResource === index}
-                    isEditMode={isEditMode}
-                    onEdit={() => setEditingResource(index)}
-                    onCancelEdit={() => setEditingResource(null)}
-                    onUpdate={() => handleUpdateResource(index)}
-                    onDelete={() => handleDeleteResource(index)}
-                    onChange={(field, value) => {
-                      const updatedResources = [...resources];
-                      const resourceIndex = resources.findIndex(r => r === resource);
-                      updatedResources[resourceIndex] = { 
-                        ...updatedResources[resourceIndex],
-                        [field]: value
-                      };
-                      setResources(updatedResources);
-                    }}
-                  />
+                  <div key={resource.id || index} className="flex flex-col h-full">
+                    <ResourceItem 
+                      resource={resource}
+                      index={index}
+                      isEditing={editingResource === index}
+                      isEditMode={isEditMode}
+                      onEdit={() => setEditingResource(index)}
+                      onCancelEdit={() => setEditingResource(null)}
+                      onUpdate={() => handleUpdateResource(index)}
+                      onDelete={() => handleDeleteResource(index)}
+                      onChange={(field, value) => {
+                        const updatedResources = [...resources];
+                        const resourceIndex = resources.findIndex(r => r === resource);
+                        updatedResources[resourceIndex] = { 
+                          ...updatedResources[resourceIndex],
+                          [field]: value
+                        };
+                        setResources(updatedResources);
+                      }}
+                    />
+                  </div>
                 ))}
               </div>
             ) : (
@@ -719,7 +721,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="activity" className="space-y-4">
             {activityResources.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6">
                 {activityResources.map((resource, index) => (
                   <ResourceItem 
                     key={resource.id || index}
@@ -813,28 +815,29 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           
           <TabsContent value="other" className="space-y-4">
             {otherResources.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
                 {otherResources.map((resource, index) => (
-                  <ResourceItem 
-                    key={resource.id || index}
-                    resource={resource}
-                    index={index}
-                    isEditing={editingResource === index}
-                    isEditMode={isEditMode}
-                    onEdit={() => setEditingResource(index)}
-                    onCancelEdit={() => setEditingResource(null)}
-                    onUpdate={() => handleUpdateResource(index)}
-                    onDelete={() => handleDeleteResource(index)}
-                    onChange={(field, value) => {
-                      const updatedResources = [...resources];
-                      const resourceIndex = resources.findIndex(r => r === resource);
-                      updatedResources[resourceIndex] = { 
-                        ...updatedResources[resourceIndex],
-                        [field]: value
-                      };
-                      setResources(updatedResources);
-                    }}
-                  />
+                  <div key={resource.id || index} className="flex flex-col h-full">
+                    <ResourceItem 
+                      resource={resource}
+                      index={index}
+                      isEditing={editingResource === index}
+                      isEditMode={isEditMode}
+                      onEdit={() => setEditingResource(index)}
+                      onCancelEdit={() => setEditingResource(null)}
+                      onUpdate={() => handleUpdateResource(index)}
+                      onDelete={() => handleDeleteResource(index)}
+                      onChange={(field, value) => {
+                        const updatedResources = [...resources];
+                        const resourceIndex = resources.findIndex(r => r === resource);
+                        updatedResources[resourceIndex] = { 
+                          ...updatedResources[resourceIndex],
+                          [field]: value
+                        };
+                        setResources(updatedResources);
+                      }}
+                    />
+                  </div>
                 ))}
               </div>
             ) : (
