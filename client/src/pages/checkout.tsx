@@ -207,8 +207,9 @@ export default function CheckoutPage() {
       id: '0a', 
       uniqueId: 'book-0a',
       title: 'BOOK 0A - BEGINNERS ENGLISH', 
-      thumbnail: `/api/direct/book0a/icons/thumbnailsuni0a-1.png`, 
+      thumbnail: `/api/direct/icons/VISUAL 0a.gif`, 
       fallbackImages: [
+        `/api/direct/icons/VISUAL 0a.gif`,
         `/api/direct/book0a/icons/thumbnailsuni0a-1.png`,
         `/api/direct/book0a/unit1/thumbnail.jpg`
       ]
@@ -217,8 +218,9 @@ export default function CheckoutPage() {
       id: '0b', 
       uniqueId: 'book-0b',
       title: 'BOOK 0B - BEGINNERS ENGLISH', 
-      thumbnail: `/api/direct/book0b/icons/thumbnailsuni0b-1.png`, 
+      thumbnail: `/api/direct/icons/VISUAL 0b.gif`, 
       fallbackImages: [
+        `/api/direct/icons/VISUAL 0b.gif`,
         `/api/direct/book0b/icons/thumbnailsuni0b-1.png`,
         `/api/direct/book0b/unit1/thumbnail.jpg`
       ]
@@ -227,8 +229,9 @@ export default function CheckoutPage() {
       id: '0c', 
       uniqueId: 'book-0c',
       title: 'BOOK 0C - BEGINNERS ENGLISH', 
-      thumbnail: `/api/direct/book0c/icons/thumbnailsuni0c-1.png`, 
+      thumbnail: `/api/direct/icons/VISUAL 0c.gif`, 
       fallbackImages: [
+        `/api/direct/icons/VISUAL 0c.gif`,
         `/api/direct/book0c/icons/thumbnailsuni0c-1.png`,
         `/api/direct/book0c/unit1/thumbnail.jpg`
       ]
@@ -237,77 +240,77 @@ export default function CheckoutPage() {
       id: '1', 
       uniqueId: 'book-1',
       title: 'BOOK 1 - ELEMENTARY ENGLISH', 
-      thumbnail: `/api/direct/book1/unit1/thumbnail.jpg`, 
+      thumbnail: `/api/direct/icons/VISUAL 1.gif`, 
       fallbackImages: [
+        `/api/direct/icons/VISUAL 1.gif`,
         `/api/direct/book1/unit1/thumbnail.jpg`,
-        `/api/direct/book1/unit4/thumbnail.jpg`,
-        `/api/direct/book1/unit1/assets/00 E.png`
+        `/api/direct/book1/unit4/thumbnail.jpg`
       ]
     },
     {
       id: '2', 
       uniqueId: 'book-2',
       title: 'BOOK 2 - PRE-INTERMEDIATE ENGLISH', 
-      thumbnail: `/api/direct/book2/unit1/thumbnail.jpg`, 
+      thumbnail: `/api/direct/icons/VISUAL 2.gif`, 
       fallbackImages: [
-        `/api/direct/book2/unit4/thumbnail.jpg`,
-        `/api/direct/book2/unit8/thumbnail.jpg`,
-        `/api/direct/book2/unit1/assets/00 E.png`
+        `/api/direct/icons/VISUAL 2.gif`,
+        `/api/direct/book2/unit1/thumbnail.jpg`,
+        `/api/direct/book2/unit4/thumbnail.jpg`
       ]
     },
     {
       id: '3', 
       uniqueId: 'book-3',
       title: 'BOOK 3 - INTERMEDIATE ENGLISH', 
-      thumbnail: `/api/direct/book3/unit1/thumbnail.jpg`, 
+      thumbnail: `/api/direct/icons/VISUAL 3.gif`, 
       fallbackImages: [
-        `/api/direct/book3/unit4/thumbnail.jpg`,
-        `/api/direct/book3/unit8/thumbnail.jpg`,
-        `/api/direct/book3/unit1/assets/00 E.png`
+        `/api/direct/icons/VISUAL 3.gif`,
+        `/api/direct/book3/unit1/thumbnail.jpg`,
+        `/api/direct/book3/unit4/thumbnail.jpg`
       ]
     },
     {
       id: '4', 
       uniqueId: 'book-4',
       title: 'BOOK 4 - UPPER-INTERMEDIATE ENGLISH', 
-      thumbnail: `/api/direct/book4/unit14/thumbnail.png`, 
+      thumbnail: `/api/direct/icons/VISUAL 4.gif`, 
       fallbackImages: [
+        `/api/direct/icons/VISUAL 4.gif`,
         `/api/direct/book4/unit14/thumbnail.png`,
-        `/api/direct/book4/unit1/thumbnail.jpg`,
-        `/api/direct/book4/unit1/assets/00 E.png`
+        `/api/direct/book4/unit1/thumbnail.jpg`
       ]
     },
     {
       id: '5', 
       uniqueId: 'book-5',
       title: 'BOOK 5 - ADVANCED ENGLISH', 
-      thumbnail: `/api/direct/book5/unit8/00 A.png`, 
+      thumbnail: `/api/direct/icons/VISUAL 5.gif`, 
       fallbackImages: [
+        `/api/direct/icons/VISUAL 5.gif`,
         `/api/direct/book5/unit8/00 A.png`,
-        `/api/direct/book5/unit13/00 A.png`,
-        `/api/direct/book5/unit1/assets/00 E.png`
+        `/api/direct/book5/unit13/00 A.png`
       ]
     },
     {
       id: '6', 
       uniqueId: 'book-6',
       title: 'BOOK 6 - PROFICIENCY ENGLISH', 
-      thumbnail: `/api/direct/book6/unit8/title.png`, 
+      thumbnail: `/api/direct/icons/VISUAL 6.gif`, 
       fallbackImages: [
+        `/api/direct/icons/VISUAL 6.gif`,
         `/api/direct/book6/unit8/title.png`,
-        `/api/direct/book6/unit13/title.png`,
-        `/api/direct/book6/unit1/assets/00 E.png`
+        `/api/direct/book6/unit13/title.png`
       ]
     },
     {
       id: '7', 
       uniqueId: 'book-7',
       title: 'BOOK 7 - MASTERS ENGLISH', 
-      thumbnail: `/api/direct/book7/unit1/thumbnail.jpg`, 
+      thumbnail: `/api/direct/icons/VISUAL 7.gif`, 
       fallbackImages: [
-        `/api/direct/book7/unit4/thumbnail.jpg`,
-        `/api/direct/book7/unit8/thumbnail.jpg`,
-        `/api/direct/book7/unit1/assets/00 E.png`
+        `/api/direct/icons/VISUAL 7.gif`,
+        `/api/direct/book7/unit1/thumbnail.jpg`,
+        `/api/direct/book7/unit4/thumbnail.jpg`
       ]
     }
   ];

@@ -54,19 +54,24 @@ export function UnitSelection({
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 mb-1 overflow-hidden rounded-sm bg-gray-100 border border-gray-200">
                     <img 
-                      src={`/api/direct/book${book.id}/unit1/thumbnail.jpg`}
+                      src={`/api/direct/icons/VISUAL ${book.id}.gif`}
                       alt={`Book ${book.id.toUpperCase()}`}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        // If first thumbnail fails, try alternate path
+                        // If the VISUAL gif fails, try the book icon path
                         const imgElement = e.target as HTMLImageElement;
-                        imgElement.src = `/api/direct/book${book.id}/unit1/00 A.png`;
                         
+                        // Try the book unit1 thumbnail
                         imgElement.onerror = () => {
-                          // Final fallback with just text
-                          const fallbackEl = e.target as HTMLImageElement;
-                          fallbackEl.style.display = 'none'; // Hide the broken image
+                          // Try first slide of unit
+                          imgElement.onerror = () => {
+                            // Final fallback with just text
+                            const fallbackEl = e.target as HTMLImageElement;
+                            fallbackEl.style.display = 'none'; // Hide the broken image
+                          };
+                          imgElement.src = `/api/direct/book${book.id}/unit1/00 A.png`;
                         };
+                        imgElement.src = `/api/direct/book${book.id}/unit1/thumbnail.jpg`;
                       }}
                     />
                   </div>
@@ -110,19 +115,24 @@ export function UnitSelection({
         <div className="flex items-center space-x-1">
           <div className="w-6 h-6 overflow-hidden rounded-sm bg-gray-100 border border-gray-200">
             <img 
-              src={`/api/direct/book${selectedBookId}/unit${unitId}/thumbnail.jpg`}
+              src={`/api/direct/book${selectedBookId}/icons/thumbnailsuni${selectedBookId}-${unitId}.png`}
               alt={`Unit ${unitId}`}
               className="w-full h-full object-cover"
               onError={(e) => {
-                // If the thumbnail fails, try first slide of unit
+                // If the unit thumbnail fails, try fallback paths
                 const imgElement = e.target as HTMLImageElement;
-                imgElement.src = `/api/direct/book${selectedBookId}/unit${unitId}/00 A.png`;
                 
+                // Try the unit thumbnail.jpg
                 imgElement.onerror = () => {
-                  // Last fallback - just hide the image
-                  const fallbackEl = e.target as HTMLImageElement;
-                  fallbackEl.style.display = 'none';
+                  // If that fails, try the first slide of unit
+                  imgElement.onerror = () => {
+                    // Last fallback - just hide the image
+                    const fallbackEl = e.target as HTMLImageElement;
+                    fallbackEl.style.display = 'none';
+                  };
+                  imgElement.src = `/api/direct/book${selectedBookId}/unit${unitId}/00 A.png`;
                 };
+                imgElement.src = `/api/direct/book${selectedBookId}/unit${unitId}/thumbnail.jpg`;
               }}
             />
           </div>
