@@ -22,3 +22,24 @@
 .animate-fadeInOut {
   animation: fadeInOut 1.5s ease-in-out;
 }
+
+/* Resource card media containers */
+.media-container {
+  height: 200px !important;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.media-container iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+
+/* Lesson plan container */
+.lesson-plan-container {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
