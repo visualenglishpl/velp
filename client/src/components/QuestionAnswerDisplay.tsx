@@ -358,7 +358,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         } else {
           console.log(`No entries matched the code pattern "${extractedCodePattern}"`);
           // Debug - print all available code patterns
-          console.log("Available code patterns:", excelData.entries.map(e => e.codePattern).join(", "));
+          console.log("Available code patterns:", excelData.entries.map((e: ExcelQAEntry) => e.codePattern).join(", "));
         }
       }
       
@@ -590,22 +590,22 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         </div>
       )}
       
-      {/* Display question and answer */}
-      {!isLoadingExcel && qaData.hasData && (
+      {/* Display question and answer - unless it's been deleted */}
+      {!isLoadingExcel && qaData.hasData && !isDeleted && (
         <div className="p-2 text-center relative">
           {isEditing ? (
             <div className="space-y-2">
               <div>
                 <input
                   value={editedQuestion}
-                  onChange={(e) => setEditedQuestion(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditedQuestion(e.target.value)}
                   className="w-full p-2 border rounded text-center"
                 />
               </div>
               <div>
                 <input
                   value={editedAnswer}
-                  onChange={(e) => setEditedAnswer(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditedAnswer(e.target.value)}
                   className="w-full p-2 border rounded text-center"
                 />
               </div>
@@ -725,13 +725,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         </div>
       )}
       
-      {/* No data found state */}
-      {!isLoadingExcel && !qaData.hasData && (
-        <div className="p-2 text-center text-gray-500">
-          <p>No question available for this slide.</p>
-          {qaData.country && <p className="text-xs">Country/Category: {qaData.country}</p>}
-        </div>
-      )}
+      {/* No data found state - now hidden per user request */}
+      {/* We're hiding the "No question available for this slide" message */}
     </div>
   );
 };
