@@ -20,9 +20,8 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
   
   // Only provide hardcoded data for specific book/unit combinations
   if (bookId === 'book1' && unitId === 'unit1') {
-    // Section 01 entries (morning routine questions)
-    const section01Entries = [
-      // Morning routine questions from the visual guide
+    // Exact question-answer pairs from the user-provided file
+    return [
       {
         filename: "01 I A What Do You Say in the Morning – Good Morning.gif",
         codePattern: "01 I A",
@@ -120,104 +119,155 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         codePattern: "01 T C",
         question: "Are these Polish cities?",
         answer: "Yes, they are Polish cities."
-      }
-    ];
-    
-    // Add all the section 01 entries to our main list
-    entries.push(...section01Entries);
-    
-    // Add dynamically generated questions for section 02 (Evening/Night routine)
-    const section02Entries: QuestionAnswerEntry[] = [
+      },
+      // Section 02 entries (afternoon routine)
       {
-        filename: "02 I A What Do You Say in the Evening – Good Evening.gif",
+        filename: "02 I A What Do You Say in the Afternoon – Good Afternoon.gif",
         codePattern: "02 I A",
-        question: "What do you say in the evening?",
-        answer: "I say 'Good Evening' in the evening."
+        question: "What do you say in the afternoon?",
+        answer: "I say 'Good Afternoon' in the afternoon."
       },
       {
         filename: "02 I B What Time Do You Go Home – in the Morning, in the Afternoon, in the Evening or at Night.gif",
         codePattern: "02 I B",
         question: "What time do you go home?",
-        answer: "I go home in the afternoon/evening."
+        answer: "I go home in the afternoon."
       },
       {
-        filename: "02 I C What Time Do You Eat Dinner – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        filename: "02 I C What Time Do You Eat Lunch – in the Morning, in the Afternoon, in the Evening or at Night.png",
         codePattern: "02 I C",
+        question: "What time do you eat lunch?",
+        answer: "I eat lunch in the afternoon."
+      },
+      {
+        filename: "02 I D Do You Have Lunch in the Afternoon in School – Yes, I Do – No, I Don't.png",
+        codePattern: "02 I D",
+        question: "Do you have lunch in the afternoon at school?",
+        answer: "Yes, I have lunch in the afternoon at school. / No, I don't have lunch in the afternoon at school."
+      },
+      {
+        filename: "02 I E What Do You Eat in the Afternoon.gif",
+        codePattern: "02 I E",
+        question: "What do you eat in the afternoon?",
+        answer: "I eat sandwiches/snacks/fruit in the afternoon."
+      },
+      {
+        filename: "02 I F Do You Do Homework in the Afternoon – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 I F",
+        question: "Do you do homework in the afternoon?",
+        answer: "Yes, I do homework in the afternoon. / No, I don't do homework in the afternoon."
+      },
+      {
+        filename: "02 I G Do You Play with Friends in the Afternoon – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 I G",
+        question: "Do you play with friends in the afternoon?",
+        answer: "Yes, I play with friends in the afternoon. / No, I don't play with friends in the afternoon."
+      },
+      {
+        filename: "02 I H Do You Go Home by Bus in the Afternoon – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 I H",
+        question: "Do you go home by bus in the afternoon?",
+        answer: "Yes, I go home by bus in the afternoon. / No, I don't go home by bus in the afternoon."
+      },
+      // Section 03 entries (evening routine)
+      {
+        filename: "03 I A What Do You Say in the Evening – Good Evening.gif",
+        codePattern: "03 I A",
+        question: "What do you say in the evening?",
+        answer: "I say 'Good Evening' in the evening."
+      },
+      {
+        filename: "03 I B What Time Do You Eat Dinner – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "03 I B",
         question: "What time do you eat dinner?",
         answer: "I eat dinner in the evening."
       },
       {
-        filename: "02 I D What Time Do You Go to Bed – in the Morning, in the Afternoon, in the Evening or at Night.gif",
-        codePattern: "02 I D",
-        question: "What time do you go to bed?",
-        answer: "I go to bed at night."
+        filename: "03 I C What Time is It in the Picture – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "03 I C",
+        question: "What time is it in the picture?",
+        answer: "It is in the evening."
       },
       {
-        filename: "02 I E Do You Brush Your Teeth at Night – Yes, I Do – No, I Don't.gif",
-        codePattern: "02 I E",
+        filename: "03 I D What Do You Have for Dinner in the Evening.gif",
+        codePattern: "03 I D",
+        question: "What do you have for dinner in the evening?",
+        answer: "I have pasta/rice/meat for dinner in the evening."
+      },
+      {
+        filename: "03 I E Do You Do Homework in the Evening – Yes, I Do – No, I Don't.gif",
+        codePattern: "03 I E",
+        question: "Do you do homework in the evening?",
+        answer: "Yes, I do homework in the evening. / No, I don't do homework in the evening."
+      },
+      {
+        filename: "03 I F Do You Watch Tv in the Evening – Yes, I Do – No, I Don't.gif",
+        codePattern: "03 I F",
+        question: "Do you watch TV in the evening?",
+        answer: "Yes, I watch TV in the evening. / No, I don't watch TV in the evening."
+      },
+      {
+        filename: "03 I G Do You Take A Bath in the Evening – Yes, I Do – No, I Don't.gif",
+        codePattern: "03 I G",
+        question: "Do you take a bath in the evening?",
+        answer: "Yes, I take a bath in the evening. / No, I don't take a bath in the evening."
+      },
+      {
+        filename: "03 I H Do You Take A Shower in the Evening – Yes, I Do – No, I Don't.gif",
+        codePattern: "03 I H",
+        question: "Do you take a shower in the evening?",
+        answer: "Yes, I take a shower in the evening. / No, I don't take a shower in the evening."
+      },
+      // Section 04 entries (night routine)
+      {
+        filename: "04 I A What Do You Say at Night – Good Night.gif",
+        codePattern: "04 I A",
+        question: "What do you say at night?",
+        answer: "I say 'Good Night' at night."
+      },
+      {
+        filename: "04 I B What Time Do You Go to Sleep – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "04 I B",
+        question: "What time do you go to sleep?",
+        answer: "I go to sleep at night. / I go to sleep in the evening."
+      },
+      {
+        filename: "04 I C What Time Do You Go to Sleep at Night.gif",
+        codePattern: "04 I C",
+        question: "What time do you go to sleep at night?",
+        answer: "I go to sleep at [time] at night."
+      },
+      {
+        filename: "04 I D What Time Do You Wear Pyjamas – in the Morning, in the Afternoon, in the Evening or at Night.gif",
+        codePattern: "04 I D",
+        question: "What time do you wear pyjamas?",
+        answer: "I wear pyjamas in the evening. / I wear pyjamas at night."
+      },
+      {
+        filename: "04 I E Do You Brush Your Teeth at Night – Yes, I Do – No, I Don't.gif",
+        codePattern: "04 I E",
         question: "Do you brush your teeth at night?",
         answer: "Yes, I brush my teeth at night. / No, I don't brush my teeth at night."
       },
       {
-        filename: "02 I F Do You Read Books at Night – Yes, I Do – No, I Don't.gif",
-        codePattern: "02 I F",
-        question: "Do you read books at night?",
-        answer: "Yes, I read books at night. / No, I don't read books at night."
+        filename: "04 I F Do You Sit on the Telephone at Night – Yes, I Do – No, I Don't.gif",
+        codePattern: "04 I F", 
+        question: "Do you sit on the telephone at night?",
+        answer: "Yes, I sit on the telephone at night. / No, I don't sit on the telephone at night."
       },
       {
-        filename: "02 I G Do You Watch TV at Night – Yes, I Do – No, I Don't.gif",
-        codePattern: "02 I G",
+        filename: "04 I G Do You Watch Tv at Night – Yes, I Do – No, I Don't.gif",
+        codePattern: "04 I G",
         question: "Do you watch TV at night?",
         answer: "Yes, I watch TV at night. / No, I don't watch TV at night."
-      }
-    ];
-    
-    // Add all the section 02 entries to our main list
-    entries.push(...section02Entries);
-    
-    // Add dynamically generated questions for section 03 (Countries and Travel)
-    const section03Entries: QuestionAnswerEntry[] = [
-      {
-        filename: "03 I A What Country is This – It's Sweden.gif",
-        codePattern: "03 I A",
-        question: "What country is this?",
-        answer: "It's Sweden."
       },
       {
-        filename: "03 I B What Nationality Are These People – They Are Swedish.gif",
-        codePattern: "03 I B",
-        question: "What nationality are these people?",
-        answer: "They are Swedish."
-      },
-      {
-        filename: "03 I C What is the Capital of Sweden – The Capital of Sweden is Stockholm.gif",
-        codePattern: "03 I C",
-        question: "What is the capital of Sweden?",
-        answer: "The capital of Sweden is Stockholm."
+        filename: "04 I H Do You Read Books at Night – Yes, I Do – No, I Don't.gif",
+        codePattern: "04 I H",
+        question: "Do you read books at night?",
+        answer: "Yes, I read books at night. / No, I don't read books at night."
       }
     ];
-    
-    // Add all the section 03 entries to our main list
-    entries.push(...section03Entries);
-    
-    // Add placeholders for sections 04-10 with similar patterns
-    for (let section = 4; section <= 10; section++) {
-      const sectionPadded = section.toString().padStart(2, '0');
-      entries.push({
-        filename: `${sectionPadded} I A Generic Question.gif`,
-        codePattern: `${sectionPadded} I A`,
-        question: `Question for section ${sectionPadded} slide A`,
-        answer: `Answer for section ${sectionPadded} slide A`
-      });
-      entries.push({
-        filename: `${sectionPadded} I B Generic Question.gif`,
-        codePattern: `${sectionPadded} I B`,
-        question: `Question for section ${sectionPadded} slide B`,
-        answer: `Answer for section ${sectionPadded} slide B`
-      });
-    }
-    
-    console.log(`Generated ${entries.length} question-answer entries for ${bookId}/${unitId}`);
   }
   
   // Add more book/unit combinations as needed
