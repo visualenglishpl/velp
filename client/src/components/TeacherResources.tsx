@@ -169,26 +169,169 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             embedCode: `<div style="padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #e2e8f0;">
               <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem; text-align: center;">Comprehensive Lesson Plan: Unit 2 - School Objects (2 x 45min)</h2>
               
-              <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+              <div style="margin-bottom: 1.5rem; background-color: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                <h3 style="font-size: 1.3rem; color: #1e40af; margin-bottom: 0.5rem;">Lesson Overview</h3>
+                <p>This comprehensive plan covers two 45-minute lessons focusing on the key vocabulary and expressions related to school objects.</p>
+              </div>
+              
+              <!-- Two-column layout for learning objectives and materials -->
+              <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.5rem;">
                 <div style="flex: 1; min-width: 300px;">
                   <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Learning Objectives</h3>
                   <ul style="list-style-type: disc; padding-left: 1.5rem;">
-                    <li>Identify and name common school objects (pen, pencil, crayon, book, notebook, glue, eraser, etc.)</li>
+                    <li>Identify and name common school objects (pen, pencil, crayon, book, etc.)</li>
                     <li>Ask and answer questions about school objects using "What is it?" and "What are they?"</li>
                     <li>Describe school objects by color, size, and attributes</li>
                     <li>Express possession of school objects using "Do you have...?"</li>
+                    <li>Differentiate between singular and plural forms of school objects</li>
+                    <li>Express preferences (e.g., "Do you prefer a pencil or a pen?")</li>
                   </ul>
                 </div>
                 
                 <div style="flex: 1; min-width: 300px;">
-                  <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Materials Needed</h3>
+                  <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Required Materials</h3>
                   <ul style="list-style-type: disc; padding-left: 1.5rem;">
                     <li>Visual English Book 1, Unit 2 slides</li>
-                    <li>Actual school objects (pens, pencils, crayons, etc.)</li>
+                    <li>Actual school objects (pens, pencils, crayons, erasers, etc.)</li>
                     <li>Flashcards of school objects</li>
-                    <li>Worksheet for practice activities</li>
+                    <li>School bag or pencil case for demonstration</li>
+                    <li>Worksheets for guided practice</li>
+                    <li>Colored pencils and markers</li>
+                    <li>Mini-whiteboards or scrap paper for quick activities</li>
                   </ul>
                 </div>
+              </div>
+              
+              <!-- Two-column layout for lesson plans -->
+              <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.5rem;">
+                <!-- Lesson 1 -->
+                <div style="flex: 1; min-width: 300px; background-color: #f0f9ff; padding: 16px; border-radius: 8px;">
+                  <h3 style="font-size: 1.3rem; color: #0369a1; margin-bottom: 1rem; text-align: center;">Lesson 1: School Objects Vocabulary (45 minutes)</h3>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Warm-up (5 minutes)</h4>
+                    <p>Start by showing your own school bag and taking out different school objects one by one. Ask students what each object is, encouraging them to respond with "It's a/an..." as you model the question "What is it?"</p>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Presentation (15 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Show slides 1-15 introducing the key vocabulary (pen, pencil, eraser, etc.)</li>
+                      <li>Model pronunciation and have students repeat each term</li>
+                      <li>Demonstrate the question-answer pattern "What is it?" / "It's a/an..."</li>
+                      <li>Introduce plural forms with "What are they?" / "They are..."</li>
+                      <li>Show actual objects alongside the images for better retention</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Practice (15 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Pass around actual school objects and have students identify them</li>
+                      <li>Play "What's in my bag?" where you slowly reveal items</li>
+                      <li>Pair work: Students take turns asking "What is it?" about flashcards</li>
+                      <li>Group items together and practice plurals with "What are they?"</li>
+                      <li>Practice with colors: "What color is the pencil?" "It's red."</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Production & Assessment (10 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Students draw their own school bag contents and label items</li>
+                      <li>Mini show-and-tell: Students present 3-4 school objects they have</li>
+                      <li>Quick quiz: Show objects and have students write names</li>
+                      <li>Exit ticket: Each student names 3 school objects they learned</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <!-- Lesson 2 -->
+                <div style="flex: 1; min-width: 300px; background-color: #f0fdf4; padding: 16px; border-radius: 8px;">
+                  <h3 style="font-size: 1.3rem; color: #166534; margin-bottom: 1rem; text-align: center;">Lesson 2: School Objects Usage (45 minutes)</h3>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #16a34a; margin-bottom: 0.5rem;">Review & Warm-up (8 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Play the "School Objects" video and have students point to objects they recognize</li>
+                      <li>Quick review game: Teacher shows objects and students call out names</li>
+                      <li>Flashcard race: Students race to identify objects correctly</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #16a34a; margin-bottom: 0.5rem;">New Patterns (12 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Introduce the question: "Do you have a/an...?" with "Yes, I do" / "No, I don't"</li>
+                      <li>Model asking about different school objects</li>
+                      <li>Introduce preference questions: "Do you prefer a pencil or a pen?"</li>
+                      <li>Demonstrate descriptions: "It's a blue notebook" / "It's a big eraser"</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #16a34a; margin-bottom: 0.5rem;">Interactive Activities (15 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Survey activity: Students ask 5 classmates "Do you have a...?" and record answers</li>
+                      <li>"Find someone who" activity with school objects</li>
+                      <li>School object preference interview: "Do you prefer...or...?"</li>
+                      <li>Describe and draw: Students describe an object for partner to draw</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 style="font-size: 1.1rem; color: #16a34a; margin-bottom: 0.5rem;">Games & Assessment (10 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Play the Wordwall games in pairs or small groups</li>
+                      <li>"What's missing?" game with school objects</li>
+                      <li>Brief assessment worksheet with matching and fill-in-the-blank</li>
+                      <li>Preview of next lesson's content</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Extension Activities Section -->
+              <div style="background-color: #fffbeb; padding: 16px; border-radius: 8px; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.3rem; color: #92400e; margin-bottom: 1rem; text-align: center;">Extension Activities & Differentiation</h3>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                  <div style="flex: 1; min-width: 300px;">
+                    <h4 style="font-size: 1.1rem; color: #b45309; margin-bottom: 0.5rem;">For Advanced Students</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Create a school supply shopping dialogue</li>
+                      <li>Write descriptions of school objects using multiple adjectives</li>
+                      <li>Create a classroom scavenger hunt with clues</li>
+                      <li>Make a poster about school supplies in different countries</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="flex: 1; min-width: 300px;">
+                    <h4 style="font-size: 1.1rem; color: #b45309; margin-bottom: 0.5rem;">For Students Needing Support</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Focus on just 5-6 key school objects</li>
+                      <li>Use picture cards with words underneath</li>
+                      <li>Simplify questions to yes/no format</li>
+                      <li>Provide sentence frames for responses</li>
+                      <li>Work with a language buddy</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Homework and Follow-up -->
+              <div style="background-color: #f5f5f4; padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 1.3rem; color: #44403c; margin-bottom: 1rem; text-align: center;">Homework & Follow-up</h3>
+                
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li>Create a picture dictionary of school objects with at least 10 items</li>
+                  <li>Find and label school objects in magazines or catalogs</li>
+                  <li>Complete a worksheet with "Do you have a...?" questions</li>
+                  <li>Watch the recommended YouTube videos for further practice</li>
+                  <li>Play the Wordwall games at home for reinforcement</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Follow-up:</strong> In the next lesson, we will build on these vocabulary items by introducing more complex structures and incorporating them into role-plays about school life.</p>
               </div>
             </div>`,
             order: 1,
