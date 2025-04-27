@@ -144,7 +144,96 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           }
         ];
         setResources(predefinedResources);
-      } 
+      }
+      // Book 1, Unit 2 resources (School Objects)
+      else if (bookId === "1" && unitId === "2") {
+        predefinedResources = [
+          // Videos
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Objects - ENGLISH TREE",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/41cJ0mqWses?si=JlxMgV_GADKfiUFf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 0,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "Magic Crayons - WATTS ENGLISH",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ix4dSjKqwvc?si=eK9P-OvHUpAP2T49" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 1,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "PPAP Pen Pineapple Apple Pen (Long Version) - PIKOTARO",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ct6BUPvE2sM?si=-OWJf3xPmmeHVw_b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 2,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "PenPineappleApplePen Song - PPAP",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/t24dt39WNG0?si=DkWmQWqsVIBtV_sQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 3,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "Back to School Mix - WATTS ENGLISH",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/F9OdB53UGmA?si=dli3ESO3Q-28sZ3q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 4,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "What is In Your Bag Song - DREAM ENGLISH",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/JLMsm-D7kjk?si=hbbam_l55tiPpX5F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 5,
+            provider: "YouTube"
+          },
+          // Games
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Objects Game 1 - WORDWALL",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/db3feb02d90048c794504e2a408ef901?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 6,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Objects Game 2 - WORDWALL",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/5282ddaa503a4c5e9875ee2426934081?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 7,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Objects Game 3 - WORDWALL",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/5ce51d4acf1e41058c70f1b6d1951f8a?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 8,
+            provider: "Wordwall"
+          }
+        ];
+        setResources(predefinedResources);
+      }
       // Book 1, Unit 1 resources
       else if (bookId === "1" && unitId === "1") {
         predefinedResources = [
