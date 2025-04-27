@@ -545,134 +545,133 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         Teacher Resources
       </h2>
       
-      {isEditMode && (
-        <div className="mb-6">
-          {!isAdding ? (
-            <Button 
-              onClick={() => setIsAdding(true)}
-              className="flex items-center"
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              Add Teaching Resource
-            </Button>
-          ) : (
-            <Card className="p-6 border-2 bg-gray-50">
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                {(newResource.resourceType || 'video') === 'video' && <Video className="h-5 w-5 mr-2 text-red-500" />}
-                {(newResource.resourceType || 'video') === 'game' && <Gamepad2 className="h-5 w-5 mr-2 text-blue-500" />}
-                {(newResource.resourceType || 'video') === 'activity' && <BookOpen className="h-5 w-5 mr-2 text-amber-500" />}
-                {(newResource.resourceType || 'video') === 'other' && <Link className="h-5 w-5 mr-2 text-gray-500" />}
-                Add New {((newResource.resourceType || 'video').charAt(0).toUpperCase() + (newResource.resourceType || 'video').slice(1))} Resource
-              </h3>
-              
-              <div className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Resource Type</label>
-                    <select 
-                      value={newResource.resourceType || 'video'}
-                      onChange={(e) => setNewResource(prev => ({ 
-                        ...prev, 
-                        resourceType: e.target.value as 'video' | 'game' | 'activity' | 'pdf' | 'other'
-                      }))}
-                      className="w-full p-2 border rounded focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
-                    >
-                      <option value="video">Video (YouTube, Vimeo, etc.)</option>
-                      <option value="game">Game (Wordwall, etc.)</option>
-                      <option value="activity">Activity (Lesson plans, exercises)</option>
-                      <option value="pdf">Lesson PDF (Materials, handouts)</option>
-                      <option value="other">Other Embedded Content</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Provider (Optional)</label>
-                    <Input 
-                      placeholder="e.g., YouTube, Wordwall, etc."
-                      value={newResource.provider || ''}
-                      onChange={(e) => setNewResource(prev => ({ ...prev, provider: e.target.value }))}
-                      className="w-full"
-                    />
-                  </div>
+      {/* Show the Add Teacher Resource button for both admin and teacher users */}
+      <div className="mb-6">
+        {!isAdding ? (
+          <Button 
+            onClick={() => setIsAdding(true)}
+            className="flex items-center"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Teaching Resource
+          </Button>
+        ) : (
+          <Card className="p-6 border-2 bg-gray-50">
+            <h3 className="text-xl font-semibold mb-4 flex items-center">
+              {(newResource.resourceType || 'video') === 'video' && <Video className="h-5 w-5 mr-2 text-red-500" />}
+              {(newResource.resourceType || 'video') === 'game' && <Gamepad2 className="h-5 w-5 mr-2 text-blue-500" />}
+              {(newResource.resourceType || 'video') === 'activity' && <BookOpen className="h-5 w-5 mr-2 text-amber-500" />}
+              {(newResource.resourceType || 'video') === 'other' && <Link className="h-5 w-5 mr-2 text-gray-500" />}
+              Add New {((newResource.resourceType || 'video').charAt(0).toUpperCase() + (newResource.resourceType || 'video').slice(1))} Resource
+            </h3>
+            
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Resource Type</label>
+                  <select 
+                    value={newResource.resourceType || 'video'}
+                    onChange={(e) => setNewResource(prev => ({ 
+                      ...prev, 
+                      resourceType: e.target.value as 'video' | 'game' | 'activity' | 'pdf' | 'other'
+                    }))}
+                    className="w-full p-2 border rounded focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
+                  >
+                    <option value="video">Video (YouTube, Vimeo, etc.)</option>
+                    <option value="game">Game (Wordwall, etc.)</option>
+                    <option value="activity">Activity (Lesson plans, exercises)</option>
+                    <option value="pdf">Lesson PDF (Materials, handouts)</option>
+                    <option value="other">Other Embedded Content</option>
+                  </select>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Title</label>
+                  <label className="block text-sm font-medium mb-1">Provider (Optional)</label>
                   <Input 
-                    placeholder="Resource title"
-                    value={newResource.title || ''}
-                    onChange={(e) => setNewResource(prev => ({ ...prev, title: e.target.value }))}
+                    placeholder="e.g., YouTube, Wordwall, etc."
+                    value={newResource.provider || ''}
+                    onChange={(e) => setNewResource(prev => ({ ...prev, provider: e.target.value }))}
                     className="w-full"
                   />
                 </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">External URL (Optional)</label>
-                  <div className="flex items-center gap-2">
-                    <Input 
-                      placeholder="https://example.com/resource"
-                      value={newResource.sourceUrl || ''}
-                      onChange={(e) => setNewResource(prev => ({ ...prev, sourceUrl: e.target.value }))}
-                      className="w-full"
-                    />
-                    {newResource.sourceUrl && (
-                      <a 
-                        href={newResource.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-shrink-0 inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    {newResource.resourceType === 'activity' && "Lesson Plan Content"}
-                    {newResource.resourceType === 'pdf' && "PDF Display Content"}
-                    {(newResource.resourceType === 'video' || newResource.resourceType === 'game' || newResource.resourceType === 'other') && "Embed Code"}
-                  </label>
-                  <textarea 
-                    placeholder={
-                      newResource.resourceType === 'activity' 
-                        ? 'Enter lesson plan content or HTML formatting...' 
-                        : newResource.resourceType === 'pdf'
-                          ? 'Enter PDF display information or embed code...'
-                          : '<iframe src="..." width="..." height="..." frameborder="0" allowfullscreen></iframe>'
-                    }
-                    rows={newResource.resourceType === 'activity' ? 10 : 5}
-                    className="w-full resize-y p-2 border rounded-md focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
-                    value={newResource.embedCode}
-                    onChange={(e) => setNewResource(prev => ({ ...prev, embedCode: e.target.value }))}
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Title</label>
+                <Input 
+                  placeholder="Resource title"
+                  value={newResource.title || ''}
+                  onChange={(e) => setNewResource(prev => ({ ...prev, title: e.target.value }))}
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">External URL (Optional)</label>
+                <div className="flex items-center gap-2">
+                  <Input 
+                    placeholder="https://example.com/resource"
+                    value={newResource.sourceUrl || ''}
+                    onChange={(e) => setNewResource(prev => ({ ...prev, sourceUrl: e.target.value }))}
+                    className="w-full"
                   />
-                  {newResource.resourceType === 'activity' && (
-                    <p className="text-xs text-gray-500 mt-1">
-                      You can use HTML formatting to create a nicely structured lesson plan.
-                    </p>
+                  {newResource.sourceUrl && (
+                    <a 
+                      href={newResource.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-shrink-0 inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
                   )}
-                  {newResource.resourceType === 'pdf' && (
-                    <p className="text-xs text-gray-500 mt-1">
-                      For PDF files, provide the full path to the PDF in the S3 bucket (e.g., book1/unit1/sample.pdf).
-                    </p>
-                  )}
-                </div>
-                
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline" onClick={() => setIsAdding(false)}>
-                    Cancel
-                  </Button>
-                  <Button onClick={handleAddResource}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Resource
-                  </Button>
                 </div>
               </div>
-            </Card>
-          )}
-        </div>
-      )}
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  {newResource.resourceType === 'activity' && "Lesson Plan Content"}
+                  {newResource.resourceType === 'pdf' && "PDF Display Content"}
+                  {(newResource.resourceType === 'video' || newResource.resourceType === 'game' || newResource.resourceType === 'other') && "Embed Code"}
+                </label>
+                <textarea 
+                  placeholder={
+                    newResource.resourceType === 'activity' 
+                      ? 'Enter lesson plan content or HTML formatting...' 
+                      : newResource.resourceType === 'pdf'
+                        ? 'Enter PDF display information or embed code...'
+                        : '<iframe src="..." width="..." height="..." frameborder="0" allowfullscreen></iframe>'
+                  }
+                  rows={newResource.resourceType === 'activity' ? 10 : 5}
+                  className="w-full resize-y p-2 border rounded-md focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
+                  value={newResource.embedCode}
+                  onChange={(e) => setNewResource(prev => ({ ...prev, embedCode: e.target.value }))}
+                />
+                {newResource.resourceType === 'activity' && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    You can use HTML formatting to create a nicely structured lesson plan.
+                  </p>
+                )}
+                {newResource.resourceType === 'pdf' && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    For PDF files, provide the full path to the PDF in the S3 bucket (e.g., book1/unit1/sample.pdf).
+                  </p>
+                )}
+              </div>
+              
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setIsAdding(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleAddResource}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Resource
+                </Button>
+              </div>
+            </div>
+          </Card>
+        )}
+      </div>
       
       {resources.length > 0 ? (
         <Tabs defaultValue="video" className="px-4">
