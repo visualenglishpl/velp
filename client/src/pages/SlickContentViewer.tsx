@@ -767,7 +767,9 @@ export default function SlickContentViewer() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => {
+                  onClick={(e) => {
+                    // Stop propagation to prevent triggering parent events
+                    e.stopPropagation();
                     if (materials[currentIndex]) {
                       setSlideToRemove(materials[currentIndex]);
                       setShowRemoveDialog(true);

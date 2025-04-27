@@ -413,8 +413,20 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     });
   };
 
-  const handleDeleteResource = (index: number) => {
-    setResources(prev => prev.filter((_, i) => i !== index));
+  const handleDeleteResource = (index: number, e?: React.MouseEvent) => {
+    // Stop propagation to prevent triggering parent events if event is provided
+    if (e) {
+      e.stopPropagation();
+    }
+    
+    const updatedResources = resources.filter((_, i) => i !== index);
+    setResources(updatedResources);
+    
+    // If we have bookId and unitId, save to server
+    if (bookId && unitId) {
+      saveResourcesToServer(updatedResources);
+    }
+    
     toast({
       title: 'Resource deleted',
       description: 'The teaching resource has been removed.'
@@ -803,7 +815,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                             <Button 
                               variant="ghost" 
                               size="sm"
-                              onClick={() => handleDeleteResource(index)}
+                              onClick={(e) => handleDeleteResource(index, e)}
                               className="h-8 w-8 p-0 rounded-full hover:bg-red-100 text-red-500"
                               title="Delete resource"
                             >
