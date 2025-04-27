@@ -113,7 +113,15 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         }
       };
       
+      // Fetch resources immediately when component mounts or bookId/unitId changes
       fetchResources();
+      
+      // Set up an interval to refresh resources from server every 5 seconds
+      // This ensures synchronization between admin and teacher pages
+      const intervalId = setInterval(fetchResources, 5000);
+      
+      // Clean up interval on unmount or when bookId/unitId changes
+      return () => clearInterval(intervalId);
     }
   }, [bookId, unitId]);
   
@@ -688,14 +696,14 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               </TabsTrigger>
             </TabsList>
           
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={() => {
                     setNewResource({
-                      bookId: bookId,
-                      unitId: unitId,
+                      bookId: bookId || '',
+                      unitId: unitId || '',
                       title: "New Video",
                       resourceType: "video",
                       embedCode: "",
@@ -714,8 +722,8 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   size="sm" 
                   onClick={() => {
                     setNewResource({
-                      bookId: bookId,
-                      unitId: unitId,
+                      bookId: bookId || '',
+                      unitId: unitId || '',
                       title: "New Game",
                       resourceType: "game",
                       embedCode: "",
@@ -729,7 +737,46 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   <Gamepad2 className="h-4 w-4 mr-1 text-blue-500" />
                   Add Game
                 </Button>
-
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => {
+                    setNewResource({
+                      bookId: bookId || '',
+                      unitId: unitId || '',
+                      title: "New Lesson Plan",
+                      resourceType: "activity",
+                      embedCode: "",
+                      order: resources.length,
+                      provider: "Visual English"
+                    });
+                    setIsAdding(true);
+                  }}
+                  className="flex items-center"
+                >
+                  <BookOpen className="h-4 w-4 mr-1 text-amber-500" />
+                  Add Lesson
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => {
+                    setNewResource({
+                      bookId: bookId || '',
+                      unitId: unitId || '',
+                      title: "New Lesson PDF",
+                      resourceType: "pdf",
+                      embedCode: "",
+                      order: resources.length,
+                      provider: "Visual English"
+                    });
+                    setIsAdding(true);
+                  }}
+                  className="flex items-center"
+                >
+                  <FileText className="h-4 w-4 mr-1 text-green-500" />
+                  Add PDF
+                </Button>
               </div>
           </div>
           
