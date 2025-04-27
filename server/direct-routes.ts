@@ -1261,13 +1261,16 @@ export function registerDirectRoutes(app: Express) {
       
       // Process the Excel file and generate the mapping
       try {
+        // Import fs instead of using require
+        const fs = await import('fs');
+        
         // Check if the file exists
-        if (!require('fs').existsSync(localExcelPath)) {
+        if (!fs.existsSync(localExcelPath)) {
           console.error(`Excel file not found at ${localExcelPath}`);
           
           // If we're looking for VISUAL 2 QUESTIONS.xlsx but it's not in the attached_assets folder,
           // check if it exists as an uploaded file from the client
-          if (require('fs').existsSync(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`)) {
+          if (fs.existsSync(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`)) {
             console.log(`Found uploaded Excel file for Book ${bookId}`);
             const qaMapping = processExcelAndGenerateTS(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`, outputPath);
             
