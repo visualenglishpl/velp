@@ -1823,7 +1823,7 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
       
       // Section 9 - School Bag (pattern N)
       {
-        filename: "09 N A What is It – It is A School Bag.gif",
+        filename: "09 N A What is It – It is A Bag.gif",
         codePattern: "09 N A",
         question: "What is it?",
         answer: "It is a school bag."
@@ -1851,6 +1851,54 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         codePattern: "09 N E",
         question: "Is it a tiger or lion school bag?",
         answer: "It is a tiger school bag. / It is a lion school bag."
+      },
+      {
+        filename: "09 N F is It A Hello Kitty or Panda School Bag.gif",
+        codePattern: "09 N F",
+        question: "Is it a Hello Kitty or Panda school bag?",
+        answer: "It is a Hello Kitty school bag. / It is a Panda school bag."
+      },
+      {
+        filename: "09 N G How Many School Bags are There.gif",
+        codePattern: "09 N G",
+        question: "How many school bags are there?",
+        answer: "There are [number] school bags."
+      },
+      {
+        filename: "09 N H Do You Have A Pink School Bag.gif",
+        codePattern: "09 N H",
+        question: "Do you have a pink school bag?",
+        answer: "Yes, I have a pink school bag. / No, I don't have a pink school bag."
+      },
+      {
+        filename: "09 N I Do You Have A Blue School Bag.gif",
+        codePattern: "09 N I",
+        question: "Do you have a blue school bag?",
+        answer: "Yes, I have a blue school bag. / No, I don't have a blue school bag."
+      },
+      {
+        filename: "09 N J is It A New or Old School Bag.gif",
+        codePattern: "09 N J",
+        question: "Is it a new or old school bag?",
+        answer: "It is a new school bag. / It is an old school bag."
+      },
+      {
+        filename: "09 N K What Colour is the School Bag – Purple.gif",
+        codePattern: "09 N K",
+        question: "What color is the school bag?",
+        answer: "The school bag is purple."
+      },
+      {
+        filename: "09 N L What Colour is the School Bag – Purple.gif",
+        codePattern: "09 N L",
+        question: "What color is the school bag?",
+        answer: "The school bag is purple."
+      },
+      {
+        filename: "09 N M What Colour are the School Bags.gif",
+        codePattern: "09 N M",
+        question: "What color are the school bags?",
+        answer: "The school bags are [colors]."
       },
       {
         filename: "07 N B What Colour is the Eraser.gif",
