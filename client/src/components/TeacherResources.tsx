@@ -942,7 +942,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                           <Button 
                             variant="ghost" 
                             size="sm"
-                            onClick={() => handleDeleteResource(index)}
+                            onClick={(e) => handleDeleteResource(index, e)}
                             className="h-8 w-8 p-0 rounded-full hover:bg-red-100 text-red-500"
                             title="Delete resource"
                           >
@@ -1074,7 +1074,10 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
               <Button 
                 variant="ghost" 
                 size="sm"
-                onClick={onDelete}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete();
+                }}
                 className="action-button delete"
                 title="Delete resource"
               >
