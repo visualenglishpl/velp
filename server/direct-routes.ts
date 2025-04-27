@@ -500,6 +500,10 @@ export function registerDirectRoutes(app: Express) {
         console.log(`No files found at ${s3Path}`);
       }
       
+      // Get list of deleted slide IDs for this book/unit
+      const deletedSlideIds = await storage.getDeletedSlides(bookPath, unitPath);
+      console.log(`Found ${deletedSlideIds.length} deleted slides for ${bookPath}/${unitPath}: ${deletedSlideIds.join(', ')}`);
+      
       // Convert S3 files to material objects
       const materials = s3Files.map((filePath, index) => {
         // Get the filename without the path
@@ -517,11 +521,15 @@ export function registerDirectRoutes(app: Express) {
           extractedDescription = fileCodeMatch[0];
         }
         
+        // Generate a material id that will be stable between requests
+        // This is important so deleted slide IDs are consistent
+        const materialId = index + 1;
+        
         // Create a material object
         // Instead of returning a relative path, generate a direct API endpoint URL
         // that will proxy the S3 content through our server avoiding CORS issues
         return {
-          id: index + 1, // Simple sequential ID
+          id: materialId, // Simple sequential ID
           path: `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(filename)}`, // API endpoint path
           title: extractedTitle, // Will be set by client
           description: extractedDescription, // Contains file code for question mapping
@@ -536,8 +544,11 @@ export function registerDirectRoutes(app: Express) {
         };
       });
       
+      // Filter out any materials that have been marked as deleted
+      const filteredMaterials = materials.filter(material => !deletedSlideIds.includes(material.id));
+      
       // Sort the materials by content filename numeric prefix if possible
-      materials.sort((a, b) => {
+      filteredMaterials.sort((a, b) => {
         const aMatch = a.content.match(/^(\d+)/);
         const bMatch = b.content.match(/^(\d+)/);
         
@@ -548,8 +559,8 @@ export function registerDirectRoutes(app: Express) {
         return a.orderIndex - b.orderIndex;
       });
       
-      console.log(`Returning ${materials.length} materials for direct path: ${s3Path}`);
-      return res.json(materials);
+      console.log(`Returning ${filteredMaterials.length} materials for direct path: ${s3Path} (${materials.length - filteredMaterials.length} were filtered out as deleted)`);
+      return res.json(filteredMaterials);
     } catch (err) {
       console.error(`Error fetching materials for ${req.params.bookPath}/${req.params.unitPath}:`, err);
       res.status(500).json({ error: "Failed to fetch materials" });
