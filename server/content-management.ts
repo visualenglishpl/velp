@@ -213,3 +213,95 @@ export async function resetContentEdits(userId: number, bookId: string, unitId: 
     }
   }
 }
+
+// Teacher resource interface
+export interface TeacherResource {
+  id?: number;
+  bookId: string;
+  unitId: string;
+  title: string;
+  resourceType: 'video' | 'game' | 'document' | 'activity' | 'audio' | 'resource';
+  embedCode: string;
+  order: number;
+  provider?: string;
+  sourceUrl?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+// In-memory storage for resources when database isn't available
+const resourcesCache: Record<string, TeacherResource[]> = {};
+
+// Create teacher_resources table if it doesn't exist
+export async function ensureTeacherResourcesTable() {
+  // If db is not available, use localStorage/memory
+  if (!db) {
+    console.log('Database not available - using in-memory cache for teacher resources');
+    return true;
+  }
+
+  try {
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS teacher_resources (
+        id SERIAL PRIMARY KEY,
+        book_id TEXT NOT NULL,
+        unit_id TEXT NOT NULL,
+        title TEXT NOT NULL,
+        resource_type TEXT NOT NULL,
+        embed_code TEXT NOT NULL,
+        order_index INTEGER NOT NULL,
+        provider TEXT,
+        source_url TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('Teacher resources table created or already exists');
+    return true;
+  } catch (error) {
+    console.error('Error creating teacher_resources table:', error);
+    return false;
+  }
+}
+
+// Save resources for a unit
+export function saveResourcesForUnit(bookId: string, unitId: string, resources: TeacherResource[]) {
+  const key = `${bookId}-${unitId}`;
+  
+  // If db is not available, store in memory
+  if (!db) {
+    console.log(`Database not available - storing ${resources.length} resources in memory for ${key}`);
+    resourcesCache[key] = resources;
+    return true;
+  }
+  
+  try {
+    // Implementation for database storage would go here
+    // For now, just store in memory cache
+    resourcesCache[key] = resources;
+    return true;
+  } catch (error) {
+    console.error(`Error saving resources for ${key}:`, error);
+    return false;
+  }
+}
+
+// Get resources for a unit
+export function getResourcesForUnit(bookId: string, unitId: string): TeacherResource[] | null {
+  const key = `${bookId}-${unitId}`;
+  
+  // If db is not available, get from memory
+  if (!db) {
+    console.log(`Database not available - retrieving resources from memory for ${key}`);
+    return resourcesCache[key] || null;
+  }
+  
+  try {
+    // Implementation for database retrieval would go here
+    // For now, just get from memory cache
+    return resourcesCache[key] || null;
+  } catch (error) {
+    console.error(`Error getting resources for ${key}:`, error);
+    return null;
+  }
+}

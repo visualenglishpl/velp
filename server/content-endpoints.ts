@@ -1,13 +1,31 @@
 import { Express, Request, Response } from "express";
-import { ensureContentEditsTable, saveContentEdit, getContentEdits, deleteContentEdit, resetContentEdits } from './content-management';
+import { 
+  ensureContentEditsTable, 
+  ensureTeacherResourcesTable,
+  saveContentEdit, 
+  getContentEdits, 
+  deleteContentEdit, 
+  resetContentEdits,
+  getResourcesForUnit,
+  saveResourcesForUnit,
+  TeacherResource
+} from './content-management';
 
 export function registerContentEndpoints(app: Express) {
-  // Ensure the content_edits table exists
+  // Ensure the content_edits and teacher_resources tables exist
   ensureContentEditsTable().then(success => {
     if (success) {
       console.log("Content edits table is ready");
     } else {
       console.error("Failed to initialize content edits table");
+    }
+  });
+  
+  ensureTeacherResourcesTable().then(success => {
+    if (success) {
+      console.log("Teacher resources table is ready");
+    } else {
+      console.error("Failed to initialize teacher resources table");
     }
   });
 
@@ -99,5 +117,49 @@ export function registerContentEndpoints(app: Express) {
     }
   });
 
+  // API endpoint to get teacher resources for a specific book and unit
+  app.get("/api/direct/:bookId/:unitId/resources", isAuthenticated, (req, res) => {
+    try {
+      const { bookId, unitId } = req.params;
+      
+      const resources = getResourcesForUnit(bookId, unitId);
+      
+      return res.status(200).json({ 
+        success: true, 
+        resources: resources || [] 
+      });
+    } catch (error) {
+      console.error("Error getting teacher resources:", error);
+      return res.status(500).json({ success: false, error: "Server error" });
+    }
+  });
+  
+  // API endpoint to save teacher resources for a specific book and unit
+  app.post("/api/direct/:bookId/:unitId/resources", isAuthenticated, (req, res) => {
+    try {
+      const { bookId, unitId } = req.params;
+      const { resources } = req.body;
+      
+      // Basic validation
+      if (!resources || !Array.isArray(resources)) {
+        return res.status(400).json({ success: false, error: "Invalid resources data" });
+      }
+      
+      const success = saveResourcesForUnit(bookId, unitId, resources);
+      
+      if (success) {
+        return res.status(200).json({ 
+          success: true, 
+          message: "Resources saved successfully" 
+        });
+      } else {
+        return res.status(500).json({ success: false, error: "Failed to save resources" });
+      }
+    } catch (error) {
+      console.error("Error saving teacher resources:", error);
+      return res.status(500).json({ success: false, error: "Server error" });
+    }
+  });
+  
   console.log("Content management endpoints registered successfully");
 }
