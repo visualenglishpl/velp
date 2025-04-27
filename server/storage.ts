@@ -8,7 +8,7 @@ import {
 import { eq, and, desc, asc } from "drizzle-orm";
 import session from "express-session";
 import createMemoryStore from "memorystore";
-import { initialBooks, initialUnits, initialSlideOrders, type SlideOrder } from "./memory-data";
+import { initialBooks, initialUnits, initialSlideOrders, type SlideOrder, initialDeletedSlides, type DeletedSlide } from "./memory-data";
 import { QuestionAnswerEntry } from "./excel-unit-processor";
 
 // Interface for Storage Operations
@@ -76,6 +76,10 @@ export interface IStorage {
   // SlideOrder operations
   getSlideOrder(bookPath: string, unitPath: string): Promise<number[] | null>;
   saveSlideOrder(bookPath: string, unitPath: string, order: number[]): Promise<void>;
+  
+  // Deleted slides operations
+  getDeletedSlides(bookPath: string, unitPath: string): Promise<number[]>;
+  markSlideAsDeleted(bookPath: string, unitPath: string, slideId: number): Promise<void>;
   
   // Flagged question operations
   getFlaggedQuestions(filters?: { status?: string; bookId?: string; unitId?: string }): Promise<FlaggedQuestion[]>;
@@ -217,6 +221,8 @@ export class MemStorage implements IStorage {
   private nextMaterialId = 1;
   private slideOrders: SlideOrder[] = [];
   private nextSlideOrderId = 1;
+  private deletedSlides: DeletedSlide[] = [];
+  private nextDeletedSlideId = 1;
   private flaggedQuestions: FlaggedQuestion[] = [];
   private nextFlaggedQuestionId = 1;
   private unitQuestionAnswers: { bookId: string; unitId: string; entries: QuestionAnswerEntry[] }[] = [];

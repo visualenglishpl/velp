@@ -165,3 +165,15 @@ export interface SlideOrder {
 
 // Initial empty slide orders array
 export const initialSlideOrders: SlideOrder[] = [];
+
+// Structure for tracking deleted slides
+export interface DeletedSlide {
+  id: number;
+  slideId: number;
+  bookPath: string;
+  unitPath: string;
+  deletedAt: Date;
+}
+
+// Initial empty deleted slides array
+export const initialDeletedSlides: DeletedSlide[] = [];
