@@ -1376,7 +1376,7 @@ export default function SlickContentViewer() {
             <Button variant="outline" onClick={() => setShowRemoveDialog(false)}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmRemoveSlide} disabled={isRemoving}>
+            <Button variant="destructive" onClick={() => confirmRemoveSlide(currentSlideToRemove)} disabled={isRemoving}>
               {isRemoving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               Remove
             </Button>

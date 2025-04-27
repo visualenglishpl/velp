@@ -43,20 +43,77 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
   const [editingResource, setEditingResource] = useState<number | null>(null);
   const { toast } = useToast();
 
-  // Load resources from localStorage
+  // Function to save resources to the server
+  const saveResourcesToServer = async (resourcesToSave: TeacherResource[]) => {
+    if (!bookId || !unitId || resourcesToSave.length === 0) return;
+    
+    try {
+      const response = await apiRequest('POST', `/api/direct/${bookId}/${unitId}/resources`, {
+        resources: resourcesToSave
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        console.log(`Successfully saved ${resourcesToSave.length} resources to server for ${bookId}/${unitId}`);
+      } else {
+        console.error('Failed to save resources to server:', data.error);
+      }
+    } catch (error) {
+      console.error('Error saving resources to server:', error);
+    }
+  };
+
+  // Load resources from server with localStorage fallback
   useEffect(() => {
     if (bookId && unitId) {
-      const savedResources = localStorage.getItem(`resources-${bookId}-${unitId}`);
-      if (savedResources) {
+      // First try to fetch from server
+      const fetchResources = async () => {
         try {
-          const parsed = JSON.parse(savedResources);
-          if (Array.isArray(parsed)) {
-            setResources(parsed);
+          const response = await apiRequest('GET', `/api/direct/${bookId}/${unitId}/resources`);
+          const data = await response.json();
+          
+          if (data.success && Array.isArray(data.resources) && data.resources.length > 0) {
+            console.log(`Loaded ${data.resources.length} resources from server for ${bookId}/${unitId}`);
+            setResources(data.resources);
+          } else {
+            // Fallback to localStorage if server has no resources
+            const savedResources = localStorage.getItem(`resources-${bookId}-${unitId}`);
+            if (savedResources) {
+              try {
+                const parsed = JSON.parse(savedResources);
+                if (Array.isArray(parsed)) {
+                  console.log(`Loaded ${parsed.length} resources from localStorage for ${bookId}/${unitId}`);
+                  setResources(parsed);
+                  
+                  // Save to server for future use
+                  saveResourcesToServer(parsed);
+                }
+              } catch (error) {
+                console.error('Error parsing saved resources:', error);
+              }
+            }
           }
         } catch (error) {
-          console.error('Error parsing saved resources:', error);
+          console.error('Error fetching resources from server:', error);
+          
+          // Fallback to localStorage on error
+          const savedResources = localStorage.getItem(`resources-${bookId}-${unitId}`);
+          if (savedResources) {
+            try {
+              const parsed = JSON.parse(savedResources);
+              if (Array.isArray(parsed)) {
+                console.log(`Loaded ${parsed.length} resources from localStorage (server error) for ${bookId}/${unitId}`);
+                setResources(parsed);
+              }
+            } catch (error) {
+              console.error('Error parsing saved resources:', error);
+            }
+          }
         }
-      }
+      };
+      
+      fetchResources();
     }
   }, [bookId, unitId]);
   
@@ -310,11 +367,15 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       }
     }
   }, [bookId, unitId, resources.length]);
-
-  // Save resources to localStorage whenever they change
+  
+  // Save resources to localStorage and server whenever they change
   useEffect(() => {
     if (bookId && unitId && resources.length > 0) {
+      // Always save to localStorage as a backup
       localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(resources));
+      
+      // Also save to server
+      saveResourcesToServer(resources);
     }
   }, [resources, bookId, unitId]);
 
