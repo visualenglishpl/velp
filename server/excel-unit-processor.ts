@@ -18,6 +18,17 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
   // Initialize the array of entries
   const entries: QuestionAnswerEntry[] = [];
   
+  // Units that have hardcoded data
+  const hardcodedUnits = [
+    "unit3", "unit5", "unit6", "unit7", "unit8", "unit9", "unit10", "unit11", "unit17", "unit18"
+  ];
+  
+  // Only provide hardcoded data for specific book/unit combinations
+  if (bookId === 'book1' && hardcodedUnits.includes(unitId)) {
+    // If we're calling for a unit that has hardcoded data, this will be handled by specific conditions below
+    // This ensures the functions below will be used
+  }
+  
   // Only provide hardcoded data for specific book/unit combinations
   if (bookId === 'book1' && unitId === 'unit1') {
     // Exact question-answer pairs from the user-provided file
@@ -1659,6 +1670,994 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         codePattern: "05 I G",
         question: "Can a frog jump?",
         answer: "Yes, it can. / No, it can't."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 8 (Hair) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit8') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "01 L A the Girl Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L A",
+        question: "Does the girl have fair or dark hair?",
+        answer: "The girl has fair hair. / The girl has dark hair."
+      },
+      {
+        filename: "01 L B the Man Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L B",
+        question: "Does the man have fair or dark hair?",
+        answer: "The man has fair hair. / The man has dark hair."
+      },
+      {
+        filename: "01 L C the Woman Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L C",
+        question: "Does the woman have fair or dark hair?",
+        answer: "The woman has fair hair. / The woman has dark hair."
+      },
+      {
+        filename: "01 L D the Man Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L D",
+        question: "Does the man have fair or dark hair?",
+        answer: "The man has fair hair. / The man has dark hair."
+      },
+      {
+        filename: "01 L E the Boy Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L E",
+        question: "Does the boy have fair or dark hair?",
+        answer: "The boy has fair hair. / The boy has dark hair."
+      },
+      {
+        filename: "01 L F the Man Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L F",
+        question: "Does the man have fair or dark hair?",
+        answer: "The man has fair hair. / The man has dark hair."
+      },
+      {
+        filename: "01 L G the Woman Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L G",
+        question: "Does the woman have fair or dark hair?",
+        answer: "The woman has fair hair. / The woman has dark hair."
+      },
+      {
+        filename: "01 L H the Woman Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L H",
+        question: "Does the woman have fair or dark hair?",
+        answer: "The woman has fair hair. / The woman has dark hair."
+      },
+      {
+        filename: "01 L I the Baby Has Got Dark – Fair Hair.gif",
+        codePattern: "01 L I",
+        question: "Does the baby have fair or dark hair?",
+        answer: "The baby has fair hair. / The baby has dark hair."
+      },
+      {
+        filename: "01 L J the Woman Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L J",
+        question: "Does the woman have fair or dark hair?",
+        answer: "The woman has fair hair. / The woman has dark hair."
+      },
+      {
+        filename: "01 L K the Woman Has Got Fair – Dark Hair.gif",
+        codePattern: "01 L K",
+        question: "Does the woman have fair or dark hair?",
+        answer: "The woman has fair hair. / The woman has dark hair."
+      },
+      {
+        filename: "02 M A the Girl Has Got Short – Long Hair.gif",
+        codePattern: "02 M A",
+        question: "Does the girl have short or long hair?",
+        answer: "The girl has short hair. / The girl has long hair."
+      },
+      {
+        filename: "02 M B the Baby Has Got Short – Long Hair.jpg",
+        codePattern: "02 M B",
+        question: "Does the baby have short or long hair?",
+        answer: "The baby has short hair. / The baby has long hair."
+      },
+      {
+        filename: "02 M C the Woman Has Got Short – Long Hair.gif",
+        codePattern: "02 M C",
+        question: "Does the woman have short or long hair?",
+        answer: "The woman has short hair. / The woman has long hair."
+      },
+      {
+        filename: "02 M D the Boy Has Got Short – Long Hair.gif",
+        codePattern: "02 M D",
+        question: "Does the boy have short or long hair?",
+        answer: "The boy has short hair. / The boy has long hair."
+      },
+      {
+        filename: "02 M E the Woman Has Got Short – Long Hair.gif",
+        codePattern: "02 M E",
+        question: "Does the woman have short or long hair?",
+        answer: "The woman has short hair. / The woman has long hair."
+      },
+      {
+        filename: "02 M F the Man Has Got Short – Long Hair.gif",
+        codePattern: "02 M F",
+        question: "Does the man have short or long hair?",
+        answer: "The man has short hair. / The man has long hair."
+      },
+      {
+        filename: "02 M G the Woman Has Got Short – Long Hair.gif",
+        codePattern: "02 M G",
+        question: "Does the woman have short or long hair?",
+        answer: "The woman has short hair. / The woman has long hair."
+      },
+      {
+        filename: "02 M H the Girl Has Got Short – Long Hair.gif",
+        codePattern: "02 M H",
+        question: "Does the girl have short or long hair?",
+        answer: "The girl has short hair. / The girl has long hair."
+      },
+      {
+        filename: "02 M I the Baby Has Got Short – Long Hair.gif",
+        codePattern: "02 M I",
+        question: "Does the baby have short or long hair?",
+        answer: "The baby has short hair. / The baby has long hair."
+      },
+      {
+        filename: "02 M J the Woman Has Got Short – Long Hair.gif",
+        codePattern: "02 M J",
+        question: "Does the woman have short or long hair?",
+        answer: "The woman has short hair. / The woman has long hair."
+      },
+      {
+        filename: "02 M K the Girl Has Got Short – Long Hair.gif",
+        codePattern: "02 M K",
+        question: "Does the girl have short or long hair?",
+        answer: "The girl has short hair. / The girl has long hair."
+      },
+      {
+        filename: "02 M L the Witch Has Got Short – Long Hair.gif",
+        codePattern: "02 M L",
+        question: "Does the witch have short or long hair?",
+        answer: "The witch has short hair. / The witch has long hair."
+      },
+      {
+        filename: "03 L A the Woman Has Got Straight – Curly Hair.gif",
+        codePattern: "03 L A",
+        question: "Does the woman have straight or curly hair?",
+        answer: "The woman has straight hair. / The woman has curly hair."
+      },
+      {
+        filename: "03 L B the Woman Has Got Straight – Curly Hair.gif",
+        codePattern: "03 L B",
+        question: "Does the woman have straight or curly hair?",
+        answer: "The woman has straight hair. / The woman has curly hair."
+      },
+      {
+        filename: "03 L C the Woman Has Got Straight – Curly Hair.gif",
+        codePattern: "03 L C",
+        question: "Does the woman have straight or curly hair?",
+        answer: "The woman has straight hair. / The woman has curly hair."
+      },
+      {
+        filename: "03 L D the Girl Has Got Straight – Curly Hair.gif",
+        codePattern: "03 L D",
+        question: "Does the girl have straight or curly hair?",
+        answer: "The girl has straight hair. / The girl has curly hair."
+      },
+      {
+        filename: "03 L E the Woman Has Got Straight – Curly Hair.gif",
+        codePattern: "03 L E",
+        question: "Does the woman have straight or curly hair?",
+        answer: "The woman has straight hair. / The woman has curly hair."
+      },
+      {
+        filename: "03 L F the Girl Has Got Short – Curly – Straight Hair.gif",
+        codePattern: "03 L F",
+        question: "Does the girl have short, curly, or straight hair?",
+        answer: "The girl has short hair. / The girl has curly hair. / The girl has straight hair."
+      },
+      {
+        filename: "03 L G the Woman Has Got Curly – Straight Hair.gif",
+        codePattern: "03 L G",
+        question: "Does the woman have curly or straight hair?",
+        answer: "The woman has curly hair. / The woman has straight hair."
+      },
+      {
+        filename: "03 L H the Man Has Got Curly – Straight Hair.gif",
+        codePattern: "03 L H",
+        question: "Does the man have curly or straight hair?",
+        answer: "The man has curly hair. / The man has straight hair."
+      },
+      {
+        filename: "03 L I the Bird Has Got Curly – Straight Hair.gif",
+        codePattern: "03 L I",
+        question: "Does the bird have curly or straight hair?",
+        answer: "The bird has curly hair. / The bird has straight hair."
+      },
+      {
+        filename: "03 L J the Girl Has Got Curly – Straight Hair.gif",
+        codePattern: "03 L J",
+        question: "Does the girl have curly or straight hair?",
+        answer: "The girl has curly hair. / The girl has straight hair."
+      },
+      {
+        filename: "03 L K the Dog Has Got Short – Curly – Straight Hair.gif",
+        codePattern: "03 L K",
+        question: "Does the dog have short, curly, or straight hair?",
+        answer: "The dog has short hair. / The dog has curly hair. / The dog has straight hair."
+      },
+      {
+        filename: "04 A How Many Hairs Can You See – 1.gif",
+        codePattern: "04 A",
+        question: "How many hairs can you see?",
+        answer: "I can see one hair."
+      },
+      {
+        filename: "04 B What Colour is the Boy's Hair – Red.gif",
+        codePattern: "04 B",
+        question: "What color is the boy's hair?",
+        answer: "The boy's hair is red."
+      },
+      {
+        filename: "04 C What Colour is the Girl's Hair – Green.gif",
+        codePattern: "04 C",
+        question: "What color is the girl's hair?",
+        answer: "The girl's hair is green."
+      },
+      {
+        filename: "04 D What Colour is the Girl's Hair – Ginger.gif",
+        codePattern: "04 D",
+        question: "What color is the girl's hair?",
+        answer: "The girl's hair is ginger."
+      },
+      {
+        filename: "04 D What Colour is the Girl's Hair – Purple.gif",
+        codePattern: "04 D",
+        question: "What color is the girl's hair?",
+        answer: "The girl's hair is purple."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 9 (Face) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit9') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 F A What is It – It is A Nose.gif",
+        codePattern: "02 F A",
+        question: "What is it?",
+        answer: "It is a nose."
+      },
+      {
+        filename: "02 F B What Colour is the Nose – Red.gif",
+        codePattern: "02 F B",
+        question: "What color is the nose?",
+        answer: "The nose is red."
+      },
+      {
+        filename: "02 F C is It A Cat or A Dog Nose.gif",
+        codePattern: "02 F C",
+        question: "Is it a cat or a dog nose?",
+        answer: "It is a cat nose. / It is a dog nose."
+      },
+      {
+        filename: "02 F D is It A Small or A Big Nose.gif",
+        codePattern: "02 F D",
+        question: "Is it a small or big nose?",
+        answer: "It is a small nose. / It is a big nose."
+      },
+      {
+        filename: "02 F E is It A Small or A Big Nose.gif",
+        codePattern: "02 F E",
+        question: "Is it a small or big nose?",
+        answer: "It is a small nose. / It is a big nose."
+      },
+      {
+        filename: "03 F A What is It – It is an Eye.gif",
+        codePattern: "03 F A",
+        question: "What is it?",
+        answer: "It is an eye."
+      },
+      {
+        filename: "03 F B What are They – They are Eyes.gif",
+        codePattern: "03 F B",
+        question: "What are they?",
+        answer: "They are eyes."
+      },
+      {
+        filename: "03 F C What Colour are the Eyes – They are Green.gif",
+        codePattern: "03 F C",
+        question: "What color are the eyes?",
+        answer: "The eyes are green."
+      },
+      {
+        filename: "03 F D What Colour are the Eyes – They are Blue.gif",
+        codePattern: "03 F D",
+        question: "What color are the eyes?",
+        answer: "The eyes are blue."
+      },
+      {
+        filename: "03 F E are They Small or Big Eyes.gif",
+        codePattern: "03 F E",
+        question: "Are they small or big eyes?",
+        answer: "They are small eyes. / They are big eyes."
+      },
+      {
+        filename: "04 F A What is It – It is Hair.gif",
+        codePattern: "04 F A",
+        question: "What is it?",
+        answer: "It is hair."
+      },
+      {
+        filename: "04 F B is It Short or Long Hair.gif",
+        codePattern: "04 F B",
+        question: "Is it short or long hair?",
+        answer: "It is short hair. / It is long hair."
+      },
+      {
+        filename: "04 F C is It Fair or Dark Hair.gif",
+        codePattern: "04 F C",
+        question: "Is it fair or dark hair?",
+        answer: "It is fair hair. / It is dark hair."
+      },
+      {
+        filename: "04 F D How Many Hairs Can You See – 1.gif",
+        codePattern: "04 F D",
+        question: "How many hairs can you see?",
+        answer: "I can see one hair."
+      },
+      {
+        filename: "04 F E What Colour is the Hair – Red.gif",
+        codePattern: "04 F E",
+        question: "What color is the hair?",
+        answer: "The hair is red."
+      },
+      {
+        filename: "05 F A What is It – It is A Tooth.gif",
+        codePattern: "05 F A",
+        question: "What is it?",
+        answer: "It is a tooth."
+      },
+      {
+        filename: "05 F B What are They – They are Teeth.gif",
+        codePattern: "05 F B",
+        question: "What are they?",
+        answer: "They are teeth."
+      },
+      {
+        filename: "05 F C are They Small or Big Teeth.gif",
+        codePattern: "05 F C",
+        question: "Are they small or big teeth?",
+        answer: "They are small teeth. / They are big teeth."
+      },
+      {
+        filename: "05 F D How Many Teeth Can You See – 8 Teeth.gif",
+        codePattern: "05 F D",
+        question: "How many teeth can you see?",
+        answer: "I can see eight teeth."
+      },
+      {
+        filename: "05 F E are They Fish or Shark Teeth.gif",
+        codePattern: "05 F E",
+        question: "Are they fish or shark teeth?",
+        answer: "They are fish teeth. / They are shark teeth."
+      },
+      {
+        filename: "06 F A What is It – It is A Mouth.jpg",
+        codePattern: "06 F A",
+        question: "What is it?",
+        answer: "It is a mouth."
+      },
+      {
+        filename: "06 F B Where is the Man – in the Tiger's or Lion's Mouth.gif",
+        codePattern: "06 F B",
+        question: "Where is the man?",
+        answer: "The man is in the tiger's mouth. / The man is in the lion's mouth."
+      },
+      {
+        filename: "06 F C is It A Small or A Big Mouth.gif",
+        codePattern: "06 F C",
+        question: "Is it a small or big mouth?",
+        answer: "It is a small mouth. / It is a big mouth."
+      },
+      {
+        filename: "06 F D is the Mouth Open or Closed.gif",
+        codePattern: "06 F D",
+        question: "Is the mouth open or closed?",
+        answer: "The mouth is open. / The mouth is closed."
+      },
+      {
+        filename: "06 F E is It A Small or A Big Mouth.gif",
+        codePattern: "06 F E",
+        question: "Is it a small or big mouth?",
+        answer: "It is a small mouth. / It is a big mouth."
+      },
+      {
+        filename: "07 F A What is It – It is an Ear.gif",
+        codePattern: "07 F A",
+        question: "What is it?",
+        answer: "It is an ear."
+      },
+      {
+        filename: "07 F B What are They – They are Ears.gif",
+        codePattern: "07 F B",
+        question: "What are they?",
+        answer: "They are ears."
+      },
+      {
+        filename: "07 F C are They Short or Long Ears.gif",
+        codePattern: "07 F C",
+        question: "Are they short or long ears?",
+        answer: "They are short ears. / They are long ears."
+      },
+      {
+        filename: "07 F D What Colour are the Ears – Green.gif",
+        codePattern: "07 F D",
+        question: "What color are the ears?",
+        answer: "The ears are green."
+      },
+      {
+        filename: "07 F E are They Small or Big Ears.gif",
+        codePattern: "07 F E",
+        question: "Are they small or big ears?",
+        answer: "They are small ears. / They are big ears."
+      },
+      {
+        filename: "08 A What is It – It is A Head.gif",
+        codePattern: "08 A",
+        question: "What is it?",
+        answer: "It is a head."
+      },
+      {
+        filename: "08 B is It A Big or A Small Head.gif",
+        codePattern: "08 B",
+        question: "Is it a big or small head?",
+        answer: "It is a big head. / It is a small head."
+      },
+      {
+        filename: "08 D How Many Heads Can You See – 0.jpg",
+        codePattern: "08 D",
+        question: "How many heads can you see?",
+        answer: "I can see zero heads."
+      },
+      {
+        filename: "08 F is It A Normal or Robot Head.gif",
+        codePattern: "08 F",
+        question: "Is it a normal or robot head?",
+        answer: "It is a normal head. / It is a robot head."
+      },
+      {
+        filename: "08 G How Many Heads Can You See – 2 Heads.gif",
+        codePattern: "08 G",
+        question: "How many heads can you see?",
+        answer: "I can see two heads."
+      },
+      {
+        filename: "08 H What Colour is the Head – Green.gif",
+        codePattern: "08 H",
+        question: "What color is the head?",
+        answer: "The head is green."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 11 (Seasons) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit11') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "01 D Aa What are the Four Seasons of the Year.gif",
+        codePattern: "01 D Aa",
+        question: "What are the four seasons of the year?",
+        answer: "The four seasons are spring, summer, autumn, and winter."
+      },
+      {
+        filename: "01 D Ab What is Your Favourite Season.gif",
+        codePattern: "01 D Ab",
+        question: "What is your favorite season?",
+        answer: "Spring / Summer / Autumn / Winter."
+      },
+      {
+        filename: "01 D Ac What Do You Prefer Cold or Hot Weather.gif",
+        codePattern: "01 D Ac",
+        question: "What do you prefer: cold or hot weather?",
+        answer: "I prefer cold weather. / I prefer hot weather."
+      },
+      {
+        filename: "02 A a What Season is This – It is Spring.gif",
+        codePattern: "02 A a",
+        question: "What season is this?",
+        answer: "It is spring."
+      },
+      {
+        filename: "02 A c Do You Like Spring – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 A c",
+        question: "Do you like spring?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "02 A c When Does Spring Start – in March.gif",
+        codePattern: "02 A c",
+        question: "When does spring start?",
+        answer: "Spring starts in March."
+      },
+      {
+        filename: "02 A d What Do You See in Spring – Flowers.gif",
+        codePattern: "02 A d",
+        question: "What do you see in spring?",
+        answer: "I see flowers in spring."
+      },
+      {
+        filename: "02 A e What Do You See in Spring – Birds.gif",
+        codePattern: "02 A e",
+        question: "What do you see in spring?",
+        answer: "I see birds in spring."
+      },
+      {
+        filename: "02 B a What Season is This – It is Summer.gif",
+        codePattern: "02 B a",
+        question: "What season is this?",
+        answer: "It is summer."
+      },
+      {
+        filename: "02 B b Do You Like Summer – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 B b",
+        question: "Do you like summer?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "02 B c is It Hot or Cold in the Summer.gif",
+        codePattern: "02 B c",
+        question: "Is it hot or cold in the summer?",
+        answer: "It is hot in the summer."
+      },
+      {
+        filename: "02 B d Do You Swim in the Summer – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 B d",
+        question: "Do you swim in the summer?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "02 be Do You Sunbathe in the Summer – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 be",
+        question: "Do you sunbathe in the summer?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "02 C a What Season is This – It is Autumn.gif",
+        codePattern: "02 C a",
+        question: "What season is this?",
+        answer: "It is autumn."
+      },
+      {
+        filename: "02 C b Do You Like Autumn – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 C b",
+        question: "Do you like autumn?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "02 C b is It an Autumn or A Winter Tree.gif",
+        codePattern: "02 C b",
+        question: "Is it an autumn or winter tree?",
+        answer: "It is an autumn tree. / It is a winter tree."
+      },
+      {
+        filename: "02 C c is It Warm or Cool in the Autumn.gif",
+        codePattern: "02 C c",
+        question: "Is it warm or cool in the autumn?",
+        answer: "It is cool in the autumn."
+      },
+      {
+        filename: "02 C e is It Rainy or Sunny in the Autumn.gif",
+        codePattern: "02 C e",
+        question: "Is it rainy or sunny in the autumn?",
+        answer: "It is rainy in the autumn. / It is sunny in the autumn."
+      },
+      {
+        filename: "02 D a What Season is This – It is Winter.gif",
+        codePattern: "02 D a",
+        question: "What season is this?",
+        answer: "It is winter."
+      },
+      {
+        filename: "02 D b Do You Like Winter – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 D b",
+        question: "Do you like winter?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "02 D c is It Hot or Cold in the Winter.gif",
+        codePattern: "02 D c",
+        question: "Is it hot or cold in the winter?",
+        answer: "It is cold in the winter."
+      },
+      {
+        filename: "02 D d Do You Make Snowmen in the Winter – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 D d",
+        question: "Do you make snowmen in the winter?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "02 D e Do You Ice Skate in the Winter – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 D e",
+        question: "Do you ice skate in the winter?",
+        answer: "Yes, I do. / No, I don't."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 10 (Shapes) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit10') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 I A What is It – It is A Heart.gif",
+        codePattern: "02 I A",
+        question: "What is it?",
+        answer: "It is a heart."
+      },
+      {
+        filename: "02 I B is It A Happy or Sad Heart.gif",
+        codePattern: "02 I B",
+        question: "Is it a happy or sad heart?",
+        answer: "It is a happy heart. / It is a sad heart."
+      },
+      {
+        filename: "02 I C is It A Small or Big Heart.gif",
+        codePattern: "02 I C",
+        question: "Is it a small or big heart?",
+        answer: "It is a small heart. / It is a big heart."
+      },
+      {
+        filename: "02 I D is It A Standing or Sitting Heart.gif",
+        codePattern: "02 I D",
+        question: "Is it a standing or sitting heart?",
+        answer: "It is a standing heart. / It is a sitting heart."
+      },
+      {
+        filename: "02 I E is It A Happy or Sad Heart.gif",
+        codePattern: "02 I E",
+        question: "Is it a happy or sad heart?",
+        answer: "It is a happy heart. / It is a sad heart."
+      },
+      {
+        filename: "02 I F Who Has Got the Heart – A Cowboy or Cowgirl.gif",
+        codePattern: "02 I F",
+        question: "Who has got the heart?",
+        answer: "A cowboy has got the heart. / A cowgirl has got the heart."
+      },
+      {
+        filename: "02 I G How Many Hearts Can You See – 3 Hearts.gif",
+        codePattern: "02 I G",
+        question: "How many hearts can you see?",
+        answer: "I can see 3 hearts."
+      },
+      {
+        filename: "02 I H is It A Heart Mouth or A Heart Nose.gif",
+        codePattern: "02 I H",
+        question: "Is it a heart mouth or a heart nose?",
+        answer: "It is a heart mouth. / It is a heart nose."
+      },
+      {
+        filename: "03 I A What is It – It is A Square.gif",
+        codePattern: "03 I A",
+        question: "What is it?",
+        answer: "It is a square."
+      },
+      {
+        filename: "03 I B is It A Drinking or an Eating Sqaure.gif",
+        codePattern: "03 I B",
+        question: "Is it a drinking or eating square?",
+        answer: "It is a drinking square. / It is an eating square."
+      },
+      {
+        filename: "03 I C is It A Man or A Woman Square.gif",
+        codePattern: "03 I C",
+        question: "Is it a man or woman square?",
+        answer: "It is a man square. / It is a woman square."
+      },
+      {
+        filename: "03 I D is It A Happy or Angry Square.gif",
+        codePattern: "03 I D",
+        question: "Is it a happy or angry square?",
+        answer: "It is a happy square. / It is an angry square."
+      },
+      {
+        filename: "03 I E is It A Square Bee or A Square Butterfly.gif",
+        codePattern: "03 I E",
+        question: "Is it a square bee or square butterfly?",
+        answer: "It is a square bee. / It is a square butterfly."
+      },
+      {
+        filename: "03 I F What Shape is Spongebob – He is Sqaure.gif",
+        codePattern: "03 I F",
+        question: "What shape is SpongeBob?",
+        answer: "SpongeBob is square."
+      },
+      {
+        filename: "03 I G is It Square Window or Square Door.gif",
+        codePattern: "03 I G",
+        question: "Is it a square window or square door?",
+        answer: "It is a square window. / It is a square door."
+      },
+      {
+        filename: "03 I H is It A Square Cat or Square Dog.gif",
+        codePattern: "03 I H",
+        question: "Is it a square cat or square dog?",
+        answer: "It is a square cat. / It is a square dog."
+      },
+      {
+        filename: "04 I A What is It – It is A Triangle.gif",
+        codePattern: "04 I A",
+        question: "What is it?",
+        answer: "It is a triangle."
+      },
+      {
+        filename: "04 I B is It Standing or Sitting Triangle.gif",
+        codePattern: "04 I B",
+        question: "Is it a standing or sitting triangle?",
+        answer: "It is a standing triangle. / It is a sitting triangle."
+      },
+      {
+        filename: "04 I C is It A Pizza or A Tortilla Triangle.gif",
+        codePattern: "04 I C",
+        question: "Is it a pizza or a tortilla triangle?",
+        answer: "It is a pizza triangle. / It is a tortilla triangle."
+      },
+      {
+        filename: "04 I E is It A Woman or Man Triangle.gif",
+        codePattern: "04 I E",
+        question: "Is it a woman or man triangle?",
+        answer: "It is a woman triangle. / It is a man triangle."
+      },
+      {
+        filename: "04 I F is It A Running or Walking Triangle.gif",
+        codePattern: "04 I F",
+        question: "Is it a running or walking triangle?",
+        answer: "It is a running triangle. / It is a walking triangle."
+      },
+      {
+        filename: "04 I G What Colour is the Triangle Flag – Red Triangle.gif",
+        codePattern: "04 I G",
+        question: "What colour is the triangle flag?",
+        answer: "The triangle flag is red."
+      },
+      {
+        filename: "04 I H is It A Happy or Angry Triangle.gif",
+        codePattern: "04 I H",
+        question: "Is it a happy or angry triangle?",
+        answer: "It is a happy triangle. / It is an angry triangle."
+      },
+      {
+        filename: "05 I A What is It – It is A Circle.gif",
+        codePattern: "05 I A",
+        question: "What is it?",
+        answer: "It is a circle."
+      },
+      {
+        filename: "05 I B is It A Cat or Dog Circle.gif",
+        codePattern: "05 I B",
+        question: "Is it a cat or dog circle?",
+        answer: "It is a cat circle. / It is a dog circle."
+      },
+      {
+        filename: "05 I C How Many Circles Can You See – 2 Circles.gif",
+        codePattern: "05 I C",
+        question: "How many circles can you see?",
+        answer: "I can see 2 circles."
+      },
+      {
+        filename: "05 I D is It A Circle Sofa or A Circle Chair.gif",
+        codePattern: "05 I D",
+        question: "Is it a circle sofa or a circle chair?",
+        answer: "It is a circle sofa. / It is a circle chair."
+      },
+      {
+        filename: "05 I E is It A Circle Lion or Circle Tiger.gif",
+        codePattern: "05 I E",
+        question: "Is it a circle lion or circle tiger?",
+        answer: "It is a circle lion. / It is a circle tiger."
+      },
+      {
+        filename: "05 I F is It A Circle Dog or Circle Cat.gif",
+        codePattern: "05 I F",
+        question: "Is it a circle dog or circle cat?",
+        answer: "It is a circle dog. / It is a circle cat."
+      },
+      {
+        filename: "05 I G is It A Circle Cookie or Circle Cake.gif",
+        codePattern: "05 I G",
+        question: "Is it a circle cookie or circle cake?",
+        answer: "It is a circle cookie. / It is a circle cake."
+      },
+      {
+        filename: "05 I H Where is the Dog – on the Circle or Under the Circle.gif",
+        codePattern: "05 I H",
+        question: "Where is the dog?",
+        answer: "The dog is on the circle. / The dog is under the circle."
+      },
+      {
+        filename: "06 I A What is It – It is A Rectangle.gif",
+        codePattern: "06 I A",
+        question: "What is it?",
+        answer: "It is a rectangle."
+      },
+      {
+        filename: "06 I B is It A Rectangle Cake or Rectangle Chocolate.gif",
+        codePattern: "06 I B",
+        question: "Is it a rectangle cake or rectangle chocolate?",
+        answer: "It is a rectangle cake. / It is a rectangle chocolate."
+      },
+      {
+        filename: "06 I C is It A Rectangle Telephone or A Rectangle Tablet.gif",
+        codePattern: "06 I C",
+        question: "Is it a rectangle telephone or rectangle tablet?",
+        answer: "It is a rectangle telephone. / It is a rectangle tablet."
+      },
+      {
+        filename: "06 I D is It A Dancing or Sleeping Rectangle.gif",
+        codePattern: "06 I D",
+        question: "Is it a dancing or sleeping rectangle?",
+        answer: "It is a dancing rectangle. / It is a sleeping rectangle."
+      },
+      {
+        filename: "06 I E is It A Rectangle Man or Woman.gif",
+        codePattern: "06 I E",
+        question: "Is it a rectangle man or woman?",
+        answer: "It is a rectangle man. / It is a rectangle woman."
+      },
+      {
+        filename: "06 I F is It A Rectangular Door or Window.gif",
+        codePattern: "06 I F",
+        question: "Is it a rectangular door or window?",
+        answer: "It is a rectangular door. / It is a rectangular window."
+      },
+      {
+        filename: "06 I G is It A Rectangle Telephone or A Rectangle Tablet.gif",
+        codePattern: "06 I G",
+        question: "Is it a rectangle telephone or rectangle tablet?",
+        answer: "It is a rectangle telephone. / It is a rectangle tablet."
+      },
+      {
+        filename: "06 I H How Many Rectangles Can You See in the House – 4 Rectangles.gif",
+        codePattern: "06 I H",
+        question: "How many rectangles can you see in the house?",
+        answer: "I can see 4 rectangles."
+      },
+      {
+        filename: "07 I A What is It – It is A Star.gif",
+        codePattern: "07 I A",
+        question: "What is it?",
+        answer: "It is a star."
+      },
+      {
+        filename: "07 I B How Many Stars Can You See – 5 Stars.gif",
+        codePattern: "07 I B",
+        question: "How many stars can you see?",
+        answer: "I can see 5 stars."
+      },
+      {
+        filename: "07 I C What is in Her Hands – A Star.gif",
+        codePattern: "07 I C",
+        question: "What is in her hands?",
+        answer: "There is a star in her hands."
+      },
+      {
+        filename: "07 I D Where is the Star – in or Under the Christams Tree.gif",
+        codePattern: "07 I D",
+        question: "Where is the star?",
+        answer: "The star is in the Christmas tree. / The star is under the Christmas tree."
+      },
+      {
+        filename: "07 I E is It A Happy or Sad Star.gif",
+        codePattern: "07 I E",
+        question: "Is it a happy or sad star?",
+        answer: "It is a happy star. / It is a sad star."
+      },
+      {
+        filename: "07 I F What Colour is the Star Fish.gif",
+        codePattern: "07 I F",
+        question: "What colour is the starfish?",
+        answer: "The starfish is [colour]."
+      },
+      {
+        filename: "07 I G is Patrick A Circle Fish or A Star Fish.gif",
+        codePattern: "07 I G",
+        question: "Is Patrick a circle fish or a starfish?",
+        answer: "Patrick is a starfish."
+      },
+      {
+        filename: "07 I H is It A Happy or Sad Star.gif",
+        codePattern: "07 I H",
+        question: "Is it a happy or sad star?",
+        answer: "It is a happy star. / It is a sad star."
+      },
+      {
+        filename: "08 G A What is It – It is A Diamond.gif",
+        codePattern: "08 G A",
+        question: "What is it?",
+        answer: "It is a diamond."
+      },
+      {
+        filename: "08 G B What Colour is the Diamond – It is Red.gif",
+        codePattern: "08 G B",
+        question: "What colour is the diamond?",
+        answer: "The diamond is red."
+      },
+      {
+        filename: "08 G C is It A Real or Fake Diamond.gif",
+        codePattern: "08 G C",
+        question: "Is it a real or fake diamond?",
+        answer: "It is a real diamond. / It is a fake diamond."
+      },
+      {
+        filename: "08 G D How Many Diamonds Can You See – 6 Diamonds.gif",
+        codePattern: "08 G D",
+        question: "How many diamonds can you see?",
+        answer: "I can see 6 diamonds."
+      },
+      {
+        filename: "08 G E is It A Small Diamond or A Big Diamond.gif",
+        codePattern: "08 G E",
+        question: "Is it a small diamond or a big diamond?",
+        answer: "It is a small diamond. / It is a big diamond."
+      },
+      {
+        filename: "08 G F How Many Diamonds Can You See – 3 Diamonds.gif",
+        codePattern: "08 G F",
+        question: "How many diamonds can you see?",
+        answer: "I can see 3 diamonds."
+      },
+      {
+        filename: "08 G H How Many Diamonds Can You See – 10 Diamonds.gif",
+        codePattern: "08 G H",
+        question: "How many diamonds can you see?",
+        answer: "I can see 10 diamonds."
+      },
+      {
+        filename: "09 I A What is It – It is an Oval.gif",
+        codePattern: "09 I A",
+        question: "What is it?",
+        answer: "It is an oval."
+      },
+      {
+        filename: "09 I B What Shape is the Head – It is Oval.gif",
+        codePattern: "09 I B",
+        question: "What shape is the head?",
+        answer: "The head is oval."
+      },
+      {
+        filename: "09 I C What Shape are the Eggs – They are Oval.gif",
+        codePattern: "09 I C",
+        question: "What shape are the eggs?",
+        answer: "The eggs are oval."
+      },
+      {
+        filename: "09 I D How Many Ovals Can You See – 5 Ovals.gif",
+        codePattern: "09 I D",
+        question: "How many ovals can you see?",
+        answer: "I can see 5 ovals."
+      },
+      {
+        filename: "09 I E is It A Happy or Sad Oval.gif",
+        codePattern: "09 I E",
+        question: "Is it a happy or sad oval?",
+        answer: "It is a happy oval. / It is a sad oval."
+      },
+      {
+        filename: "09 I F is It A Happy or Sad Oval.gif",
+        codePattern: "09 I F",
+        question: "Is it a happy or sad oval?",
+        answer: "It is a happy oval. / It is a sad oval."
+      },
+      {
+        filename: "09 I G is It an Oval Ball or A Circle Ball.gif",
+        codePattern: "09 I G",
+        question: "Is it an oval ball or a circle ball?",
+        answer: "It is an oval ball. / It is a circle ball."
+      },
+      {
+        filename: "09 I H What Shape is the Baby – It is Oval.gif",
+        codePattern: "09 I H",
+        question: "What shape is the baby?",
+        answer: "The baby is oval."
       }
     ];
   }
