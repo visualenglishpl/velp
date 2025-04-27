@@ -1162,56 +1162,56 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
     console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
     return [
       {
-        filename: "02 E A Who is He – He is A Father.gif",
-        codePattern: "02 E A",
+        filename: "02 N A Who is He – He is A Father.gif",
+        codePattern: "02 N A",
         question: "Who is he?",
         answer: "He is a father."
       },
       {
-        filename: "02 E B is He Happy or Sad.gif",
-        codePattern: "02 E B",
+        filename: "02 N B is He Happy or Sad.gif",
+        codePattern: "02 N B",
         question: "Is he happy or sad?",
         answer: "He is happy. / He is sad."
       },
       {
-        filename: "02 E C is He Angry or Happy.gif",
-        codePattern: "02 E C",
+        filename: "02 N C is He Angry or Happy.gif",
+        codePattern: "02 N C",
         question: "Is he angry or happy?",
         answer: "He is angry. / He is happy."
       },
       {
-        filename: "02 E D is Dad Tired or Scared.gif",
-        codePattern: "02 E D",
+        filename: "02 N D is Dad Tired or Scared.gif",
+        codePattern: "02 N D",
         question: "Is dad tired or scared?",
         answer: "Dad is tired. / Dad is scared."
       },
       {
-        filename: "03 E A Who is He – He is A Mother.gif",
-        codePattern: "03 E A",
+        filename: "03 N A Who is He – He is A Mother.gif",
+        codePattern: "03 N A",
         question: "Who is he?",
         answer: "He is a mother."
       },
       {
-        filename: "03 E B is She Happy or Sad.gif",
-        codePattern: "03 E B",
+        filename: "03 N B is She Happy or Sad.gif",
+        codePattern: "03 N B",
         question: "Is she happy or sad?",
         answer: "She is happy. / She is sad."
       },
       {
-        filename: "03 E C is Mum A Man or A Woman.gif",
-        codePattern: "03 E C",
+        filename: "03 N C is Mum A Man or A Woman.gif",
+        codePattern: "03 N C",
         question: "Is mum a man or a woman?",
         answer: "Mum is a woman."
       },
       {
-        filename: "03 E D is She A Happy or Sad Mother.gif",
-        codePattern: "03 E D",
+        filename: "03 N D is She A Happy or Sad Mother.gif",
+        codePattern: "03 N D",
         question: "Is she a happy or sad mother?",
         answer: "She is a happy mother. / She is a sad mother."
       },
       {
-        filename: "04 E A Who is He – He is A Baby.gif",
-        codePattern: "04 E A",
+        filename: "04 N A Who is He – He is A Baby.gif",
+        codePattern: "04 N A",
         question: "Who is he?",
         answer: "He is a baby."
       },
