@@ -739,7 +739,11 @@ export function registerDirectRoutes(app: Express) {
       // Save the updated order
       await storage.saveSlideOrder(bookPath, unitPath, updatedOrder);
       
+      // Mark the slide as deleted in the permanent storage system
+      await storage.markSlideAsDeleted(bookPath, unitPath, slideId);
+      
       console.log(`Updated order after removal for ${bookPath}/${unitPath}:`, updatedOrder);
+      console.log(`Slide ${slideId} has been permanently marked as deleted`);
       
       return res.json({ 
         success: true, 

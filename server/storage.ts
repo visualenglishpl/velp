@@ -262,6 +262,12 @@ export class MemStorage implements IStorage {
     if (initialSlideOrders.length > 0) {
       this.nextSlideOrderId = Math.max(...initialSlideOrders.map(order => order.id)) + 1;
     }
+    
+    // Initialize deleted slides
+    this.deletedSlides = initialDeletedSlides;
+    if (initialDeletedSlides.length > 0) {
+      this.nextDeletedSlideId = Math.max(...initialDeletedSlides.map(slide => slide.id)) + 1;
+    }
   }
 
   // User operations
@@ -466,6 +472,39 @@ export class MemStorage implements IStorage {
     }
     
     console.log(`Saved slide order for ${bookPath}/${unitPath} to permanent storage`);
+  }
+  
+  // Deleted slides operations
+  async getDeletedSlides(bookPath: string, unitPath: string): Promise<number[]> {
+    const deletedSlideEntries = this.deletedSlides.filter(
+      ds => ds.bookPath === bookPath && ds.unitPath === unitPath
+    );
+    
+    // Return just the slide IDs
+    return deletedSlideEntries.map(entry => entry.slideId);
+  }
+  
+  async markSlideAsDeleted(bookPath: string, unitPath: string, slideId: number): Promise<void> {
+    // Check if this slide is already marked as deleted
+    const isAlreadyDeleted = this.deletedSlides.some(
+      ds => ds.bookPath === bookPath && ds.unitPath === unitPath && ds.slideId === slideId
+    );
+    
+    if (!isAlreadyDeleted) {
+      // Add to deleted slides collection
+      const deletedSlide: DeletedSlide = {
+        id: this.nextDeletedSlideId++,
+        slideId,
+        bookPath,
+        unitPath,
+        deletedAt: new Date()
+      };
+      
+      this.deletedSlides.push(deletedSlide);
+      console.log(`Marked slide ${slideId} as deleted for ${bookPath}/${unitPath}`);
+    } else {
+      console.log(`Slide ${slideId} is already marked as deleted for ${bookPath}/${unitPath}`);
+    }
   }
   
   // Flagged question operations
