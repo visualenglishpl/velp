@@ -725,7 +725,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
               {/* Video slide delete button - only show for MP4 files */}
               {material.content.toLowerCase().endsWith('.mp4') && onSlideDelete && (
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (onSlideDelete && material.id && confirm("Are you sure you want to remove this video slide from the unit?")) {
                       onSlideDelete(material.id);
                     }

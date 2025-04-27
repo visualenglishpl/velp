@@ -203,9 +203,9 @@ export default function SlickContentViewer() {
         slideId
       });
     },
-    onSuccess: () => {
+    onSuccess: (_, slideId) => {
       // Remove the slide from local state to immediately update the UI
-      setMaterials(currentMaterials => currentMaterials.filter(m => m.id !== slideToRemove?.id));
+      setMaterials(currentMaterials => currentMaterials.filter(m => m.id !== slideId));
       
       toast({
         title: "Slide removed",
@@ -221,7 +221,7 @@ export default function SlickContentViewer() {
       setSlideToRemove(null);
       
       // If the current slide is the one being removed, go to slide 0
-      if (currentIndex && slideToRemove && materials[currentIndex]?.id === slideToRemove.id) {
+      if (currentIndex !== null && materials[currentIndex]?.id === slideId) {
         goToSlide(0);
       }
     },
@@ -238,7 +238,7 @@ export default function SlickContentViewer() {
   
   // Handler for slide removal confirmation
   const confirmRemoveSlide = (id: number) => {
-    // Set the slide to remove and then trigger the mutation
+    // Find the slide object and then trigger the mutation
     const slideToBeRemoved = materials.find(m => m.id === id);
     if (slideToBeRemoved) {
       setSlideToRemove(slideToBeRemoved);
