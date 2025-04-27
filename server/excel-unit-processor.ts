@@ -20,7 +20,8 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
   
   // Units that have hardcoded data
   const hardcodedUnits = [
-    "unit3", "unit5", "unit6", "unit7", "unit8", "unit9", "unit10", "unit11", "unit17", "unit18"
+    "unit3", "unit4", "unit5", "unit6", "unit7", "unit8", "unit9", "unit10", "unit11",
+    "unit12", "unit13", "unit14", "unit15", "unit16", "unit17", "unit18"
   ];
   
   // Only provide hardcoded data for specific book/unit combinations
@@ -277,6 +278,1062 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         codePattern: "04 I H",
         question: "Do you read books at night?",
         answer: "Yes, I read books at night. / No, I don't read books at night."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 15 hardcoded data based on provided content (Clothing)
+  if (bookId === 'book1' && unitId === 'unit15') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 F A What is It - It is A Hat.gif",
+        codePattern: "02 F A",
+        question: "What is it?",
+        answer: "It is a hat."
+      },
+      {
+        filename: "02 F B is It A Big or Small Hat.gif",
+        codePattern: "02 F B",
+        question: "Is it a big or small hat?",
+        answer: "It is a big hat. / It is a small hat."
+      },
+      {
+        filename: "02 F C What Colour is the Hat.gif",
+        codePattern: "02 F C",
+        question: "What color is the hat?",
+        answer: "The hat is [color]."
+      },
+      {
+        filename: "02 F D Do You Have A Hat.gif",
+        codePattern: "02 F D",
+        question: "Do you have a hat?",
+        answer: "Yes, I have a hat. / No, I don't have a hat."
+      },
+      {
+        filename: "03 F A What is It - It is A Shirt.gif",
+        codePattern: "03 F A",
+        question: "What is it?",
+        answer: "It is a shirt."
+      },
+      {
+        filename: "03 F B is It A Long or Short Sleeved Shirt.gif",
+        codePattern: "03 F B",
+        question: "Is it a long or short sleeved shirt?",
+        answer: "It is a long sleeved shirt. / It is a short sleeved shirt."
+      },
+      {
+        filename: "03 F C What Colour is the Shirt.gif",
+        codePattern: "03 F C",
+        question: "What color is the shirt?",
+        answer: "The shirt is [color]."
+      },
+      {
+        filename: "03 F D Do You Have A Shirt.gif",
+        codePattern: "03 F D",
+        question: "Do you have a shirt?",
+        answer: "Yes, I have a shirt. / No, I don't have a shirt."
+      },
+      {
+        filename: "04 F A What is It - It is A Skirt.gif",
+        codePattern: "04 F A",
+        question: "What is it?",
+        answer: "It is a skirt."
+      },
+      {
+        filename: "04 F B is It A Long or Short Skirt.gif",
+        codePattern: "04 F B",
+        question: "Is it a long or short skirt?",
+        answer: "It is a long skirt. / It is a short skirt."
+      },
+      {
+        filename: "04 F C What Colour is the Skirt.gif",
+        codePattern: "04 F C",
+        question: "What color is the skirt?",
+        answer: "The skirt is [color]."
+      },
+      {
+        filename: "04 F D Do You Have A Skirt.gif",
+        codePattern: "04 F D",
+        question: "Do you have a skirt?",
+        answer: "Yes, I have a skirt. / No, I don't have a skirt."
+      },
+      {
+        filename: "05 F A What is It - It is A Pair of Trousers.gif",
+        codePattern: "05 F A",
+        question: "What is it?",
+        answer: "It is a pair of trousers."
+      },
+      {
+        filename: "05 F B are They Long or Short Trousers.gif",
+        codePattern: "05 F B",
+        question: "Are they long or short trousers?",
+        answer: "They are long trousers. / They are short trousers."
+      },
+      {
+        filename: "05 F C What Colour are the Trousers.gif",
+        codePattern: "05 F C",
+        question: "What color are the trousers?",
+        answer: "The trousers are [color]."
+      },
+      {
+        filename: "05 F D Do You Have Trousers.gif",
+        codePattern: "05 F D",
+        question: "Do you have trousers?",
+        answer: "Yes, I have trousers. / No, I don't have trousers."
+      },
+      {
+        filename: "06 F A What is It - It is A Jumper.gif",
+        codePattern: "06 F A",
+        question: "What is it?",
+        answer: "It is a jumper."
+      },
+      {
+        filename: "06 F B is It A Summer or Winter Jumper.gif",
+        codePattern: "06 F B",
+        question: "Is it a summer or winter jumper?",
+        answer: "It is a summer jumper. / It is a winter jumper."
+      },
+      {
+        filename: "06 F C What Colour is the Jumper.gif",
+        codePattern: "06 F C",
+        question: "What color is the jumper?",
+        answer: "The jumper is [color]."
+      },
+      {
+        filename: "06 F D Do You Have A Jumper.gif",
+        codePattern: "06 F D",
+        question: "Do you have a jumper?",
+        answer: "Yes, I have a jumper. / No, I don't have a jumper."
+      },
+      {
+        filename: "07 F A What is It - It is A Pair of Shoes.gif",
+        codePattern: "07 F A",
+        question: "What is it?",
+        answer: "It is a pair of shoes."
+      },
+      {
+        filename: "07 F B are They Big or Small Shoes.gif",
+        codePattern: "07 F B",
+        question: "Are they big or small shoes?",
+        answer: "They are big shoes. / They are small shoes."
+      },
+      {
+        filename: "07 F C What Colour are the Shoes.gif",
+        codePattern: "07 F C",
+        question: "What color are the shoes?",
+        answer: "The shoes are [color]."
+      },
+      {
+        filename: "07 F D Do You Have Shoes.gif",
+        codePattern: "07 F D",
+        question: "Do you have shoes?",
+        answer: "Yes, I have shoes. / No, I don't have shoes."
+      },
+      {
+        filename: "08 F A What is It - It is A Dress.gif",
+        codePattern: "08 F A",
+        question: "What is it?",
+        answer: "It is a dress."
+      },
+      {
+        filename: "08 F B is It A Long or Short Dress.gif",
+        codePattern: "08 F B",
+        question: "Is it a long or short dress?",
+        answer: "It is a long dress. / It is a short dress."
+      },
+      {
+        filename: "08 F C What Colour is the Dress.gif",
+        codePattern: "08 F C",
+        question: "What color is the dress?",
+        answer: "The dress is [color]."
+      },
+      {
+        filename: "08 F D Do You Have A Dress.gif",
+        codePattern: "08 F D",
+        question: "Do you have a dress?",
+        answer: "Yes, I have a dress. / No, I don't have a dress."
+      }
+    ];
+  }
+
+  // Book 1, Unit 16 hardcoded data based on provided content (Transport)
+  if (bookId === 'book1' && unitId === 'unit16') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 K A What is It - It is A Car.gif",
+        codePattern: "02 K A",
+        question: "What is it?",
+        answer: "It is a car."
+      },
+      {
+        filename: "02 K B is It A Big or Small Car.gif",
+        codePattern: "02 K B",
+        question: "Is it a big or small car?",
+        answer: "It is a big car. / It is a small car."
+      },
+      {
+        filename: "02 K C is It A Fast or Slow Car.gif",
+        codePattern: "02 K C",
+        question: "Is it a fast or slow car?",
+        answer: "It is a fast car. / It is a slow car."
+      },
+      {
+        filename: "02 K D Do You Have A Car.gif",
+        codePattern: "02 K D",
+        question: "Do you have a car?",
+        answer: "Yes, I have a car. / No, I don't have a car."
+      },
+      {
+        filename: "03 K A What is It - It is A Bus.gif",
+        codePattern: "03 K A",
+        question: "What is it?",
+        answer: "It is a bus."
+      },
+      {
+        filename: "03 K B is It A Big or Small Bus.gif",
+        codePattern: "03 K B",
+        question: "Is it a big or small bus?",
+        answer: "It is a big bus. / It is a small bus."
+      },
+      {
+        filename: "03 K C is It A Fast or Slow Bus.gif",
+        codePattern: "03 K C",
+        question: "Is it a fast or slow bus?",
+        answer: "It is a fast bus. / It is a slow bus."
+      },
+      {
+        filename: "03 K D Do You Go to School by Bus.gif",
+        codePattern: "03 K D",
+        question: "Do you go to school by bus?",
+        answer: "Yes, I go to school by bus. / No, I don't go to school by bus."
+      },
+      {
+        filename: "04 K A What is It - It is A Train.gif",
+        codePattern: "04 K A",
+        question: "What is it?",
+        answer: "It is a train."
+      },
+      {
+        filename: "04 K B is It A Big or Small Train.gif",
+        codePattern: "04 K B",
+        question: "Is it a big or small train?",
+        answer: "It is a big train. / It is a small train."
+      },
+      {
+        filename: "04 K C is It A Fast or Slow Train.gif",
+        codePattern: "04 K C",
+        question: "Is it a fast or slow train?",
+        answer: "It is a fast train. / It is a slow train."
+      },
+      {
+        filename: "04 K D Do You Go on Holiday by Train.gif",
+        codePattern: "04 K D",
+        question: "Do you go on holiday by train?",
+        answer: "Yes, I go on holiday by train. / No, I don't go on holiday by train."
+      },
+      {
+        filename: "05 K A What is It - It is A Plane.gif",
+        codePattern: "05 K A",
+        question: "What is it?",
+        answer: "It is a plane."
+      },
+      {
+        filename: "05 K B is It A Big or Small Plane.gif",
+        codePattern: "05 K B",
+        question: "Is it a big or small plane?",
+        answer: "It is a big plane. / It is a small plane."
+      },
+      {
+        filename: "05 K C is It A Fast or Slow Plane.gif",
+        codePattern: "05 K C",
+        question: "Is it a fast or slow plane?",
+        answer: "It is a fast plane. / It is a slow plane."
+      },
+      {
+        filename: "05 K D Do You Go on Holiday by Plane.gif",
+        codePattern: "05 K D",
+        question: "Do you go on holiday by plane?",
+        answer: "Yes, I go on holiday by plane. / No, I don't go on holiday by plane."
+      },
+      {
+        filename: "06 K A What is It - It is A Ship.gif",
+        codePattern: "06 K A",
+        question: "What is it?",
+        answer: "It is a ship."
+      },
+      {
+        filename: "06 K B is It A Big or Small Ship.gif",
+        codePattern: "06 K B",
+        question: "Is it a big or small ship?",
+        answer: "It is a big ship. / It is a small ship."
+      },
+      {
+        filename: "06 K C is It A Fast or Slow Ship.gif",
+        codePattern: "06 K C",
+        question: "Is it a fast or slow ship?",
+        answer: "It is a fast ship. / It is a slow ship."
+      },
+      {
+        filename: "06 K D Do You Go on Holiday by Ship.gif",
+        codePattern: "06 K D",
+        question: "Do you go on holiday by ship?",
+        answer: "Yes, I go on holiday by ship. / No, I don't go on holiday by ship."
+      },
+      {
+        filename: "07 K A What is It - It is A Bike.gif",
+        codePattern: "07 K A",
+        question: "What is it?",
+        answer: "It is a bike."
+      },
+      {
+        filename: "07 K B is It A Big or Small Bike.gif",
+        codePattern: "07 K B",
+        question: "Is it a big or small bike?",
+        answer: "It is a big bike. / It is a small bike."
+      },
+      {
+        filename: "07 K C is It A Fast or Slow Bike.gif",
+        codePattern: "07 K C",
+        question: "Is it a fast or slow bike?",
+        answer: "It is a fast bike. / It is a slow bike."
+      },
+      {
+        filename: "07 K D Do You Have A Bike.gif",
+        codePattern: "07 K D",
+        question: "Do you have a bike?",
+        answer: "Yes, I have a bike. / No, I don't have a bike."
+      },
+      {
+        filename: "08 K A What is It - It is A Helicopter.gif",
+        codePattern: "08 K A",
+        question: "What is it?",
+        answer: "It is a helicopter."
+      },
+      {
+        filename: "08 K B is It A Big or Small Helicopter.gif",
+        codePattern: "08 K B",
+        question: "Is it a big or small helicopter?",
+        answer: "It is a big helicopter. / It is a small helicopter."
+      },
+      {
+        filename: "08 K C is It A Fast or Slow Helicopter.gif",
+        codePattern: "08 K C",
+        question: "Is it a fast or slow helicopter?",
+        answer: "It is a fast helicopter. / It is a slow helicopter."
+      },
+      {
+        filename: "08 K D Have You Been in A Helicopter.gif",
+        codePattern: "08 K D",
+        question: "Have you been in a helicopter?",
+        answer: "Yes, I have been in a helicopter. / No, I haven't been in a helicopter."
+      }
+    ];
+  }
+
+  // Book 1, Unit 14 hardcoded data based on provided content (Animals)
+  if (bookId === 'book1' && unitId === 'unit14') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 J A What is It - It is A Dog.gif",
+        codePattern: "02 J A",
+        question: "What is it?",
+        answer: "It is a dog."
+      },
+      {
+        filename: "02 J B is It A Big or Small Dog.gif",
+        codePattern: "02 J B",
+        question: "Is it a big or small dog?",
+        answer: "It is a big dog. / It is a small dog."
+      },
+      {
+        filename: "02 J C is It A Happy or Sad Dog.gif",
+        codePattern: "02 J C",
+        question: "Is it a happy or sad dog?",
+        answer: "It is a happy dog. / It is a sad dog."
+      },
+      {
+        filename: "02 J D Do You Have A Dog.gif",
+        codePattern: "02 J D",
+        question: "Do you have a dog?",
+        answer: "Yes, I have a dog. / No, I don't have a dog."
+      },
+      {
+        filename: "03 J A What is It - It is A Cat.gif",
+        codePattern: "03 J A",
+        question: "What is it?",
+        answer: "It is a cat."
+      },
+      {
+        filename: "03 J B is It A Big or Small Cat.gif",
+        codePattern: "03 J B",
+        question: "Is it a big or small cat?",
+        answer: "It is a big cat. / It is a small cat."
+      },
+      {
+        filename: "03 J C is It A Happy or Sad Cat.gif",
+        codePattern: "03 J C",
+        question: "Is it a happy or sad cat?",
+        answer: "It is a happy cat. / It is a sad cat."
+      },
+      {
+        filename: "03 J D Do You Have A Cat.gif",
+        codePattern: "03 J D",
+        question: "Do you have a cat?",
+        answer: "Yes, I have a cat. / No, I don't have a cat."
+      },
+      {
+        filename: "04 J A What is It - It is A Bird.gif",
+        codePattern: "04 J A",
+        question: "What is it?",
+        answer: "It is a bird."
+      },
+      {
+        filename: "04 J B is It A Big or Small Bird.gif",
+        codePattern: "04 J B",
+        question: "Is it a big or small bird?",
+        answer: "It is a big bird. / It is a small bird."
+      },
+      {
+        filename: "04 J C What Colour is the Bird.gif",
+        codePattern: "04 J C",
+        question: "What color is the bird?",
+        answer: "The bird is [color]."
+      },
+      {
+        filename: "04 J D Do You Have A Bird.gif",
+        codePattern: "04 J D",
+        question: "Do you have a bird?",
+        answer: "Yes, I have a bird. / No, I don't have a bird."
+      },
+      {
+        filename: "05 J A What is It - It is A Fish.gif",
+        codePattern: "05 J A",
+        question: "What is it?",
+        answer: "It is a fish."
+      },
+      {
+        filename: "05 J B is It A Big or Small Fish.gif",
+        codePattern: "05 J B",
+        question: "Is it a big or small fish?",
+        answer: "It is a big fish. / It is a small fish."
+      },
+      {
+        filename: "05 J C What Colour is the Fish.gif",
+        codePattern: "05 J C",
+        question: "What color is the fish?",
+        answer: "The fish is [color]."
+      },
+      {
+        filename: "05 J D Do You Have A Fish.gif",
+        codePattern: "05 J D",
+        question: "Do you have a fish?",
+        answer: "Yes, I have a fish. / No, I don't have a fish."
+      },
+      {
+        filename: "06 J A What is It - It is A Rabbit.gif",
+        codePattern: "06 J A",
+        question: "What is it?",
+        answer: "It is a rabbit."
+      },
+      {
+        filename: "06 J B is It A Big or Small Rabbit.gif",
+        codePattern: "06 J B",
+        question: "Is it a big or small rabbit?",
+        answer: "It is a big rabbit. / It is a small rabbit."
+      },
+      {
+        filename: "06 J C What Colour is the Rabbit.gif",
+        codePattern: "06 J C",
+        question: "What color is the rabbit?",
+        answer: "The rabbit is [color]."
+      },
+      {
+        filename: "06 J D Do You Have A Rabbit.gif",
+        codePattern: "06 J D",
+        question: "Do you have a rabbit?",
+        answer: "Yes, I have a rabbit. / No, I don't have a rabbit."
+      },
+      {
+        filename: "07 J A What is It - It is A Hamster.gif",
+        codePattern: "07 J A",
+        question: "What is it?",
+        answer: "It is a hamster."
+      },
+      {
+        filename: "07 J B is It A Big or Small Hamster.gif",
+        codePattern: "07 J B",
+        question: "Is it a big or small hamster?",
+        answer: "It is a big hamster. / It is a small hamster."
+      },
+      {
+        filename: "07 J C What Colour is the Hamster.gif",
+        codePattern: "07 J C",
+        question: "What color is the hamster?",
+        answer: "The hamster is [color]."
+      },
+      {
+        filename: "07 J D Do You Have A Hamster.gif",
+        codePattern: "07 J D",
+        question: "Do you have a hamster?",
+        answer: "Yes, I have a hamster. / No, I don't have a hamster."
+      },
+      {
+        filename: "08 J A What is It - It is A Horse.gif",
+        codePattern: "08 J A",
+        question: "What is it?",
+        answer: "It is a horse."
+      },
+      {
+        filename: "08 J B is It A Big or Small Horse.gif",
+        codePattern: "08 J B",
+        question: "Is it a big or small horse?",
+        answer: "It is a big horse. / It is a small horse."
+      },
+      {
+        filename: "08 J C What Colour is the Horse.gif",
+        codePattern: "08 J C",
+        question: "What color is the horse?",
+        answer: "The horse is [color]."
+      },
+      {
+        filename: "08 J D Do You Have A Horse.gif",
+        codePattern: "08 J D",
+        question: "Do you have a horse?",
+        answer: "Yes, I have a horse. / No, I don't have a horse."
+      }
+    ];
+  }
+
+  // Book 1, Unit 13 hardcoded data based on provided content (Food)
+  if (bookId === 'book1' && unitId === 'unit13') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 G A What is It - It is An Apple.gif",
+        codePattern: "02 G A",
+        question: "What is it?",
+        answer: "It is an apple."
+      },
+      {
+        filename: "02 G B is It A Big or Small Apple.gif",
+        codePattern: "02 G B",
+        question: "Is it a big or small apple?",
+        answer: "It is a big apple. / It is a small apple."
+      },
+      {
+        filename: "02 G C is It A Red or Green Apple.gif",
+        codePattern: "02 G C",
+        question: "Is it a red or green apple?",
+        answer: "It is a red apple. / It is a green apple."
+      },
+      {
+        filename: "02 G D Do You Like Apples.gif",
+        codePattern: "02 G D",
+        question: "Do you like apples?",
+        answer: "Yes, I like apples. / No, I don't like apples."
+      },
+      {
+        filename: "03 G A What is It - It is A Banana.gif",
+        codePattern: "03 G A",
+        question: "What is it?",
+        answer: "It is a banana."
+      },
+      {
+        filename: "03 G B is It A Big or Small Banana.gif",
+        codePattern: "03 G B",
+        question: "Is it a big or small banana?",
+        answer: "It is a big banana. / It is a small banana."
+      },
+      {
+        filename: "03 G C is It A Yellow or Green Banana.gif",
+        codePattern: "03 G C",
+        question: "Is it a yellow or green banana?",
+        answer: "It is a yellow banana. / It is a green banana."
+      },
+      {
+        filename: "03 G D Do You Like Bananas.gif",
+        codePattern: "03 G D",
+        question: "Do you like bananas?",
+        answer: "Yes, I like bananas. / No, I don't like bananas."
+      },
+      {
+        filename: "04 G A What is It - It is A Strawberry.gif",
+        codePattern: "04 G A",
+        question: "What is it?",
+        answer: "It is a strawberry."
+      },
+      {
+        filename: "04 G B is It A Big or Small Strawberry.gif",
+        codePattern: "04 G B",
+        question: "Is it a big or small strawberry?",
+        answer: "It is a big strawberry. / It is a small strawberry."
+      },
+      {
+        filename: "04 G C is It A Red or Green Strawberry.gif",
+        codePattern: "04 G C",
+        question: "Is it a red or green strawberry?",
+        answer: "It is a red strawberry. / It is a green strawberry."
+      },
+      {
+        filename: "04 G D Do You Like Strawberries.gif",
+        codePattern: "04 G D",
+        question: "Do you like strawberries?",
+        answer: "Yes, I like strawberries. / No, I don't like strawberries."
+      },
+      {
+        filename: "05 G A What is It - It is A Watermelon.gif",
+        codePattern: "05 G A",
+        question: "What is it?",
+        answer: "It is a watermelon."
+      },
+      {
+        filename: "05 G B is It A Big or Small Watermelon.gif",
+        codePattern: "05 G B",
+        question: "Is it a big or small watermelon?",
+        answer: "It is a big watermelon. / It is a small watermelon."
+      },
+      {
+        filename: "05 G C What Colour is the Watermelon.gif",
+        codePattern: "05 G C",
+        question: "What color is the watermelon?",
+        answer: "The watermelon is green on the outside and red on the inside."
+      },
+      {
+        filename: "05 G D Do You Like Watermelon.gif",
+        codePattern: "05 G D",
+        question: "Do you like watermelon?",
+        answer: "Yes, I like watermelon. / No, I don't like watermelon."
+      },
+      {
+        filename: "06 G A What is It - It is Pizza.gif",
+        codePattern: "06 G A",
+        question: "What is it?",
+        answer: "It is pizza."
+      },
+      {
+        filename: "06 G B is It A Big or Small Pizza.gif",
+        codePattern: "06 G B",
+        question: "Is it a big or small pizza?",
+        answer: "It is a big pizza. / It is a small pizza."
+      },
+      {
+        filename: "06 G C is It A Hot or Cold Pizza.gif",
+        codePattern: "06 G C",
+        question: "Is it a hot or cold pizza?",
+        answer: "It is a hot pizza. / It is a cold pizza."
+      },
+      {
+        filename: "06 G D Do You Like Pizza.gif",
+        codePattern: "06 G D",
+        question: "Do you like pizza?",
+        answer: "Yes, I like pizza. / No, I don't like pizza."
+      },
+      {
+        filename: "07 G A What is It - It is Ice Cream.gif",
+        codePattern: "07 G A",
+        question: "What is it?",
+        answer: "It is ice cream."
+      },
+      {
+        filename: "07 G B is It A Chocolate or Vanilla Ice Cream.gif",
+        codePattern: "07 G B",
+        question: "Is it chocolate or vanilla ice cream?",
+        answer: "It is chocolate ice cream. / It is vanilla ice cream."
+      },
+      {
+        filename: "07 G C is It A Hot or Cold Ice Cream.gif",
+        codePattern: "07 G C",
+        question: "Is it hot or cold ice cream?",
+        answer: "It is cold ice cream."
+      },
+      {
+        filename: "07 G D Do You Like Ice Cream.gif",
+        codePattern: "07 G D",
+        question: "Do you like ice cream?",
+        answer: "Yes, I like ice cream. / No, I don't like ice cream."
+      },
+      {
+        filename: "08 G A What is It - It is A Cookie.gif",
+        codePattern: "08 G A",
+        question: "What is it?",
+        answer: "It is a cookie."
+      },
+      {
+        filename: "08 G B is It A Chocolate or Vanilla Cookie.gif",
+        codePattern: "08 G B",
+        question: "Is it a chocolate or vanilla cookie?",
+        answer: "It is a chocolate cookie. / It is a vanilla cookie."
+      },
+      {
+        filename: "08 G C is It A Big or Small Cookie.gif",
+        codePattern: "08 G C",
+        question: "Is it a big or small cookie?",
+        answer: "It is a big cookie. / It is a small cookie."
+      },
+      {
+        filename: "08 G D Do You Like Cookies.gif",
+        codePattern: "08 G D",
+        question: "Do you like cookies?",
+        answer: "Yes, I like cookies. / No, I don't like cookies."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 12 hardcoded data based on provided content (Toys)
+  if (bookId === 'book1' && unitId === 'unit12') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 H A What is It - It is A Car.gif",
+        codePattern: "02 H A",
+        question: "What is it?",
+        answer: "It is a car."
+      },
+      {
+        filename: "02 H B is It A Big or Small Car.gif",
+        codePattern: "02 H B",
+        question: "Is it a big or small car?",
+        answer: "It is a big car. / It is a small car."
+      },
+      {
+        filename: "02 H C is It A Fast or Slow Car.gif",
+        codePattern: "02 H C",
+        question: "Is it a fast or slow car?",
+        answer: "It is a fast car. / It is a slow car."
+      },
+      {
+        filename: "02 H D Do You Have A Car.gif",
+        codePattern: "02 H D",
+        question: "Do you have a car?",
+        answer: "Yes, I have a car. / No, I don't have a car."
+      },
+      {
+        filename: "03 H A What is It - It is A Doll.gif",
+        codePattern: "03 H A",
+        question: "What is it?",
+        answer: "It is a doll."
+      },
+      {
+        filename: "03 H B is It A Big or Small Doll.gif",
+        codePattern: "03 H B",
+        question: "Is it a big or small doll?",
+        answer: "It is a big doll. / It is a small doll."
+      },
+      {
+        filename: "03 H C is It A Boy or Girl Doll.gif",
+        codePattern: "03 H C",
+        question: "Is it a boy or girl doll?",
+        answer: "It is a boy doll. / It is a girl doll."
+      },
+      {
+        filename: "03 H D Do You Have A Doll.gif",
+        codePattern: "03 H D",
+        question: "Do you have a doll?",
+        answer: "Yes, I have a doll. / No, I don't have a doll."
+      },
+      {
+        filename: "04 H A What is It - It is A Ball.gif",
+        codePattern: "04 H A",
+        question: "What is it?",
+        answer: "It is a ball."
+      },
+      {
+        filename: "04 H B is It A Big or Small Ball.gif",
+        codePattern: "04 H B",
+        question: "Is it a big or small ball?",
+        answer: "It is a big ball. / It is a small ball."
+      },
+      {
+        filename: "04 H C What Colour is the Ball.gif",
+        codePattern: "04 H C",
+        question: "What color is the ball?",
+        answer: "The ball is [color]."
+      },
+      {
+        filename: "04 H D Do You Have A Ball.gif",
+        codePattern: "04 H D",
+        question: "Do you have a ball?",
+        answer: "Yes, I have a ball. / No, I don't have a ball."
+      },
+      {
+        filename: "05 H A What is It - It is A Teddy Bear.gif",
+        codePattern: "05 H A",
+        question: "What is it?",
+        answer: "It is a teddy bear."
+      },
+      {
+        filename: "05 H B is It A Big or Small Teddy Bear.gif",
+        codePattern: "05 H B",
+        question: "Is it a big or small teddy bear?",
+        answer: "It is a big teddy bear. / It is a small teddy bear."
+      },
+      {
+        filename: "05 H C What Colour is the Teddy Bear.gif",
+        codePattern: "05 H C",
+        question: "What color is the teddy bear?",
+        answer: "The teddy bear is [color]."
+      },
+      {
+        filename: "05 H D Do You Have A Teddy Bear.gif",
+        codePattern: "05 H D",
+        question: "Do you have a teddy bear?",
+        answer: "Yes, I have a teddy bear. / No, I don't have a teddy bear."
+      },
+      {
+        filename: "06 H A What is It - It is A Plane.gif",
+        codePattern: "06 H A",
+        question: "What is it?",
+        answer: "It is a plane."
+      },
+      {
+        filename: "06 H B is It A Big or Small Plane.gif",
+        codePattern: "06 H B",
+        question: "Is it a big or small plane?",
+        answer: "It is a big plane. / It is a small plane."
+      },
+      {
+        filename: "06 H C What Colour is the Plane.gif",
+        codePattern: "06 H C",
+        question: "What color is the plane?",
+        answer: "The plane is [color]."
+      },
+      {
+        filename: "06 H D Do You Have A Plane.gif",
+        codePattern: "06 H D",
+        question: "Do you have a plane?",
+        answer: "Yes, I have a plane. / No, I don't have a plane."
+      },
+      {
+        filename: "07 H A What is It - It is A Robot.gif",
+        codePattern: "07 H A",
+        question: "What is it?",
+        answer: "It is a robot."
+      },
+      {
+        filename: "07 H B is It A Big or Small Robot.gif",
+        codePattern: "07 H B",
+        question: "Is it a big or small robot?",
+        answer: "It is a big robot. / It is a small robot."
+      },
+      {
+        filename: "07 H C What Colour is the Robot.gif",
+        codePattern: "07 H C",
+        question: "What color is the robot?",
+        answer: "The robot is [color]."
+      },
+      {
+        filename: "07 H D Do You Have A Robot.gif",
+        codePattern: "07 H D",
+        question: "Do you have a robot?",
+        answer: "Yes, I have a robot. / No, I don't have a robot."
+      },
+      {
+        filename: "08 H A What is It - It is A Train.gif",
+        codePattern: "08 H A",
+        question: "What is it?",
+        answer: "It is a train."
+      },
+      {
+        filename: "08 H B is It A Big or Small Train.gif",
+        codePattern: "08 H B",
+        question: "Is it a big or small train?",
+        answer: "It is a big train. / It is a small train."
+      },
+      {
+        filename: "08 H C What Colour is the Train.gif",
+        codePattern: "08 H C",
+        question: "What color is the train?",
+        answer: "The train is [color]."
+      },
+      {
+        filename: "08 H D Do You Have A Train.gif",
+        codePattern: "08 H D",
+        question: "Do you have a train?",
+        answer: "Yes, I have a train. / No, I don't have a train."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 4 hardcoded data based on provided content (Family)
+  if (bookId === 'book1' && unitId === 'unit4') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 E A Who is He – He is A Father.gif",
+        codePattern: "02 E A",
+        question: "Who is he?",
+        answer: "He is a father."
+      },
+      {
+        filename: "02 E B is He Happy or Sad.gif",
+        codePattern: "02 E B",
+        question: "Is he happy or sad?",
+        answer: "He is happy. / He is sad."
+      },
+      {
+        filename: "02 E C is He Angry or Happy.gif",
+        codePattern: "02 E C",
+        question: "Is he angry or happy?",
+        answer: "He is angry. / He is happy."
+      },
+      {
+        filename: "02 E D is Dad Tired or Scared.gif",
+        codePattern: "02 E D",
+        question: "Is dad tired or scared?",
+        answer: "Dad is tired. / Dad is scared."
+      },
+      {
+        filename: "03 E A Who is He – He is A Mother.gif",
+        codePattern: "03 E A",
+        question: "Who is he?",
+        answer: "He is a mother."
+      },
+      {
+        filename: "03 E B is She Happy or Sad.gif",
+        codePattern: "03 E B",
+        question: "Is she happy or sad?",
+        answer: "She is happy. / She is sad."
+      },
+      {
+        filename: "03 E C is Mum A Man or A Woman.gif",
+        codePattern: "03 E C",
+        question: "Is mum a man or a woman?",
+        answer: "Mum is a woman."
+      },
+      {
+        filename: "03 E D is She A Happy or Sad Mother.gif",
+        codePattern: "03 E D",
+        question: "Is she a happy or sad mother?",
+        answer: "She is a happy mother. / She is a sad mother."
+      },
+      {
+        filename: "04 E A Who is He – He is A Baby.gif",
+        codePattern: "04 E A",
+        question: "Who is he?",
+        answer: "He is a baby."
+      },
+      {
+        filename: "04 E B is the Baby Happy or Sad.gif",
+        codePattern: "04 E B",
+        question: "Is the baby happy or sad?",
+        answer: "The baby is happy. / The baby is sad."
+      },
+      {
+        filename: "04 E C is the Baby A Boy or A Girl.gif",
+        codePattern: "04 E C",
+        question: "Is the baby a boy or a girl?",
+        answer: "The baby is a boy. / The baby is a girl."
+      },
+      {
+        filename: "04 E D is the Baby Sleeping or Crying.gif",
+        codePattern: "04 E D",
+        question: "Is the baby sleeping or crying?",
+        answer: "The baby is sleeping. / The baby is crying."
+      },
+      {
+        filename: "05 E A Who are They – They are A Family.gif",
+        codePattern: "05 E A",
+        question: "Who are they?",
+        answer: "They are a family."
+      },
+      {
+        filename: "05 E B is It A Big or Small Family.gif",
+        codePattern: "05 E B",
+        question: "Is it a big or small family?",
+        answer: "It is a big family. / It is a small family."
+      },
+      {
+        filename: "05 E C is It A Happy or Sad Family.gif",
+        codePattern: "05 E C",
+        question: "Is it a happy or sad family?",
+        answer: "It is a happy family. / It is a sad family."
+      },
+      {
+        filename: "05 E D How Many People are There in the Family.gif",
+        codePattern: "05 E D",
+        question: "How many people are there in the family?",
+        answer: "There are [number] people in the family."
+      },
+      {
+        filename: "06 E A is Grandma A Man or A Woman.gif",
+        codePattern: "06 E A",
+        question: "Is grandma a man or a woman?",
+        answer: "Grandma is a woman."
+      },
+      {
+        filename: "06 E B is Grandpa A Man or A Woman.gif",
+        codePattern: "06 E B",
+        question: "Is grandpa a man or a woman?",
+        answer: "Grandpa is a man."
+      },
+      {
+        filename: "06 E C is Grandma Young or Old.gif",
+        codePattern: "06 E C",
+        question: "Is grandma young or old?",
+        answer: "Grandma is young. / Grandma is old."
+      },
+      {
+        filename: "06 E D is Grandpa Young or Old.gif",
+        codePattern: "06 E D",
+        question: "Is grandpa young or old?",
+        answer: "Grandpa is young. / Grandpa is old."
+      },
+      {
+        filename: "07 E A is Uncle A Man or A Woman.gif",
+        codePattern: "07 E A",
+        question: "Is uncle a man or a woman?",
+        answer: "Uncle is a man."
+      },
+      {
+        filename: "07 E B is Aunt A Man or A Woman.gif",
+        codePattern: "07 E B",
+        question: "Is aunt a man or a woman?",
+        answer: "Aunt is a woman."
+      },
+      {
+        filename: "07 E C is Uncle Young or Old.gif",
+        codePattern: "07 E C",
+        question: "Is uncle young or old?",
+        answer: "Uncle is young. / Uncle is old."
+      },
+      {
+        filename: "07 E D is Aunt Young or Old.gif",
+        codePattern: "07 E D",
+        question: "Is aunt young or old?",
+        answer: "Aunt is young. / Aunt is old."
+      },
+      {
+        filename: "08 B A What is Brother.gif",
+        codePattern: "08 B A",
+        question: "What is a brother?",
+        answer: "A brother is a boy in a family."
+      },
+      {
+        filename: "08 B C What is Sister.gif",
+        codePattern: "08 B C",
+        question: "What is a sister?",
+        answer: "A sister is a girl in a family."
+      },
+      {
+        filename: "09 C A Do You Have A Brother.gif",
+        codePattern: "09 C A",
+        question: "Do you have a brother?",
+        answer: "Yes, I have a brother. / No, I don't have a brother."
+      },
+      {
+        filename: "09 C B Do You Have A Sister.gif",
+        codePattern: "09 C B",
+        question: "Do you have a sister?",
+        answer: "Yes, I have a sister. / No, I don't have a sister."
+      },
+      {
+        filename: "10 B A is the Boy Happy or Sad.gif",
+        codePattern: "10 B A",
+        question: "Is the boy happy or sad?",
+        answer: "The boy is happy. / The boy is sad."
       }
     ];
   }
