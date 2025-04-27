@@ -270,6 +270,554 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
     ];
   }
   
+  // Book 1, Unit 2 hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit2') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "01 E A What is It – It is A Pen.gif",
+        codePattern: "01 E A",
+        question: "What is it?",
+        answer: "It is a pen."
+      },
+      {
+        filename: "01 E B What are They – They are Pens.gif",
+        codePattern: "01 E B",
+        question: "What are they?",
+        answer: "They are pens."
+      },
+      {
+        filename: "01 E C is It A Girl or A Boy Pen.gif",
+        codePattern: "01 E C",
+        question: "Is it a girl or boy pen?",
+        answer: "It is a girl pen. / It is a boy pen."
+      },
+      {
+        filename: "01 E D is It A Dog or A Cat Pen.jpg",
+        codePattern: "01 E D",
+        question: "Is it a dog or cat pen?",
+        answer: "It is a dog pen. / It is a cat pen."
+      },
+      {
+        filename: "01 E F is It A Hotdog or A Hamburger Pen.png",
+        codePattern: "01 E F",
+        question: "Is it a hotdog or hamburger pen?",
+        answer: "It is a hotdog pen. / It is a hamburger pen."
+      },
+      {
+        filename: "01 E F is It A Lion or Tiger Pen.png",
+        codePattern: "01 E F",
+        question: "Is it a lion or tiger pen?",
+        answer: "It is a lion pen. / It is a tiger pen."
+      },
+      {
+        filename: "01 E G Do You Have A Pen in Your Pencil Case.gif",
+        codePattern: "01 E G",
+        question: "Do you have a pen in your pencil case?",
+        answer: "Yes, I have a pen in my pencil case. / No, I don't have a pen in my pencil case."
+      },
+      {
+        filename: "01 E H Do You Have A Blue Pen.gif",
+        codePattern: "01 E H",
+        question: "Do you have a blue pen?",
+        answer: "Yes, I have a blue pen. / No, I don't have a blue pen."
+      },
+      {
+        filename: "01 E I Do You Have A Black Pen.gif",
+        codePattern: "01 E I",
+        question: "Do you have a black pen?",
+        answer: "Yes, I have a black pen. / No, I don't have a black pen."
+      },
+      {
+        filename: "01 E J Do You Have A Lego Pen.png",
+        codePattern: "01 E J",
+        question: "Do you have a Lego pen?",
+        answer: "Yes, I have a Lego pen. / No, I don't have a Lego pen."
+      },
+      {
+        filename: "01 E K What Colour is the Pen – Blue.gif",
+        codePattern: "01 E K",
+        question: "What color is the pen?",
+        answer: "The pen is blue."
+      },
+      {
+        filename: "01 E L What Colour are the Pens.gif",
+        codePattern: "01 E L",
+        question: "What color are the pens?",
+        answer: "The pens are [color]."
+      },
+      {
+        filename: "01 E M How Many Pens are There – 4 Pens.gif",
+        codePattern: "01 E M",
+        question: "How many pens are there?",
+        answer: "There are 4 pens."
+      },
+      {
+        filename: "02 N A What is It – It is A Pencil (2).gif",
+        codePattern: "02 N A",
+        question: "What is it?",
+        answer: "It is a pencil."
+      },
+      {
+        filename: "02 N B What are They – They are Pencils.gif",
+        codePattern: "02 N B",
+        question: "What are they?",
+        answer: "They are pencils."
+      },
+      {
+        filename: "02 N C is It A Dog or A Cat Pencil.gif",
+        codePattern: "02 N C",
+        question: "Is it a dog or cat pencil?",
+        answer: "It is a dog pencil. / It is a cat pencil."
+      },
+      {
+        filename: "02 N D is It A Happy or A Sad Pencil.gif",
+        codePattern: "02 N D",
+        question: "Is it a happy or sad pencil?",
+        answer: "It is a happy pencil. / It is a sad pencil."
+      },
+      {
+        filename: "02 N E is It A Small or Big Pencil.jpg",
+        codePattern: "02 N E",
+        question: "Is it a small or big pencil?",
+        answer: "It is a small pencil. / It is a big pencil."
+      },
+      {
+        filename: "02 N F is It A Red or Black Pencil.gif",
+        codePattern: "02 N F",
+        question: "Is it a red or black pencil?",
+        answer: "It is a red pencil. / It is a black pencil."
+      },
+      {
+        filename: "02 N G is It A Small or Big Pencil.jpg",
+        codePattern: "02 N G",
+        question: "Is it a small or big pencil?",
+        answer: "It is a small pencil. / It is a big pencil."
+      },
+      {
+        filename: "02 N H Do You Have A Pencil in Your Pencil Case.gif",
+        codePattern: "02 N H",
+        question: "Do you have a pencil in your pencil case?",
+        answer: "Yes, I have a pencil in my pencil case. / No, I don't have a pencil in my pencil case."
+      },
+      {
+        filename: "02 N I Do You Have Glitter Pencils.gif",
+        codePattern: "02 N I",
+        question: "Do you have glitter pencils?",
+        answer: "Yes, I have glitter pencils. / No, I don't have glitter pencils."
+      },
+      {
+        filename: "02 N J Do You Have A Lego Pencil.gif",
+        codePattern: "02 N J",
+        question: "Do you have a Lego pencil?",
+        answer: "Yes, I have a Lego pencil. / No, I don't have a Lego pencil."
+      },
+      {
+        filename: "02 N K Do You Have A Yellow Pencil.gif",
+        codePattern: "02 N K",
+        question: "Do you have a yellow pencil?",
+        answer: "Yes, I have a yellow pencil. / No, I don't have a yellow pencil."
+      },
+      {
+        filename: "02 N L Do You Have A Rainbow Pencil.gif",
+        codePattern: "02 N L",
+        question: "Do you have a rainbow pencil?",
+        answer: "Yes, I have a rainbow pencil. / No, I don't have a rainbow pencil."
+      },
+      {
+        filename: "02 N M How Many Pencils are There – 4 Pencils.gif",
+        codePattern: "02 N M",
+        question: "How many pencils are there?",
+        answer: "There are 4 pencils."
+      },
+      {
+        filename: "03 N A What is It – It is A Crayon.gif",
+        codePattern: "03 N A",
+        question: "What is it?",
+        answer: "It is a crayon."
+      },
+      {
+        filename: "03 N B What are They – They are Crayons- Colour Pencils.gif",
+        codePattern: "03 N B",
+        question: "What are they?",
+        answer: "They are crayons."
+      },
+      {
+        filename: "03 N C are They Big or Small Crayons.gif",
+        codePattern: "03 N C",
+        question: "Are they big or small crayons?",
+        answer: "They are big crayons. / They are small crayons."
+      },
+      {
+        filename: "03 N D is It A Big or Small Crayon.jpg",
+        codePattern: "03 N D",
+        question: "Is it a big or small crayon?",
+        answer: "It is a big crayon. / It is a small crayon."
+      },
+      {
+        filename: "03 N E What is in the Red Box – Crayons.gif",
+        codePattern: "03 N E",
+        question: "What is in the red box?",
+        answer: "There are crayons in the red box."
+      },
+      {
+        filename: "03 N F Do You Have Glitter Crayons.jpg",
+        codePattern: "03 N F",
+        question: "Do you have glitter crayons?",
+        answer: "Yes, I have glitter crayons. / No, I don't have glitter crayons."
+      },
+      {
+        filename: "03 N G Do You Have Crayons.gif",
+        codePattern: "03 N G",
+        question: "Do you have crayons?",
+        answer: "Yes, I have crayons. / No, I don't have crayons."
+      },
+      {
+        filename: "03 N H How Many Crayons are There – 3 Crayons.gif",
+        codePattern: "03 N H",
+        question: "How many crayons are there?",
+        answer: "There are 3 crayons."
+      },
+      {
+        filename: "03 N I How Many Crayons are There – 2 Crayons.png",
+        codePattern: "03 N I",
+        question: "How many crayons are there?",
+        answer: "There are 2 crayons."
+      },
+      {
+        filename: "03 N J What Colour is the Crayon – Green.gif",
+        codePattern: "03 N J",
+        question: "What color is the crayon?",
+        answer: "The crayon is green."
+      },
+      {
+        filename: "03 N K What Colour is the Crayon – Red.gif",
+        codePattern: "03 N K",
+        question: "What color is the crayon?",
+        answer: "The crayon is red."
+      },
+      {
+        filename: "03 N L What Colour is the Crayon – Pink.gif",
+        codePattern: "03 N L",
+        question: "What color is the crayon?",
+        answer: "The crayon is pink."
+      },
+      {
+        filename: "03 N M What Colour are the Crayons.gif",
+        codePattern: "03 N M",
+        question: "What color are the crayons?",
+        answer: "The crayons are [color]."
+      },
+      {
+        filename: "04 N A What is It – It is A Book.gif",
+        codePattern: "04 N A",
+        question: "What is it?",
+        answer: "It is a book."
+      },
+      {
+        filename: "04 N B What are They – They are Books.gif",
+        codePattern: "04 N B",
+        question: "What are they?",
+        answer: "They are books."
+      },
+      {
+        filename: "04 N C is It A Normal or Telephone Book.gif",
+        codePattern: "04 N C",
+        question: "Is it a normal or telephone book?",
+        answer: "It is a normal book. / It is a telephone book."
+      },
+      {
+        filename: "04 N D is It A Big or Small Book.gif",
+        codePattern: "04 N D",
+        question: "Is it a big or small book?",
+        answer: "It is a big book. / It is a small book."
+      },
+      {
+        filename: "04 N E is It an Open or Closed Book.gif",
+        codePattern: "04 N E",
+        question: "Is it an open or closed book?",
+        answer: "It is an open book. / It is a closed book."
+      },
+      {
+        filename: "04 N F is It A Big or Small Book.jpg",
+        codePattern: "04 N F",
+        question: "Is it a big or small book?",
+        answer: "It is a big book. / It is a small book."
+      },
+      {
+        filename: "04 N G is It A Big or Small Book.jpg",
+        codePattern: "04 N G",
+        question: "Is it a big or small book?",
+        answer: "It is a big book. / It is a small book."
+      },
+      {
+        filename: "04 N H Do You Have A Book in Your Bag.gif",
+        codePattern: "04 N H",
+        question: "Do you have a book in your bag?",
+        answer: "Yes, I have a book in my bag. / No, I don't have a book in my bag."
+      },
+      {
+        filename: "04 N I How Many Books are There – 7 Books.gif",
+        codePattern: "04 N I",
+        question: "How many books are there?",
+        answer: "There are 7 books."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 3 hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit3') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 N A is the Dog Happy or Sad.gif",
+        codePattern: "02 N A",
+        question: "Is the dog happy or sad?",
+        answer: "The dog is happy. / The dog is sad."
+      },
+      {
+        filename: "02 N B is the Baby Happy or Sad.gif",
+        codePattern: "02 N B",
+        question: "Is the baby happy or sad?",
+        answer: "The baby is happy. / The baby is sad."
+      },
+      {
+        filename: "02 N C is the Monster Sad or Happy.gif",
+        codePattern: "02 N C",
+        question: "Is the monster sad or happy?",
+        answer: "The monster is sad. / The monster is happy."
+      },
+      {
+        filename: "02 N D is the Girl Happy or Sad.gif",
+        codePattern: "02 N D",
+        question: "Is the girl happy or sad?",
+        answer: "The girl is happy. / The girl is sad."
+      },
+      {
+        filename: "02 N E is the Girl Happy or Sad.gif",
+        codePattern: "02 N E",
+        question: "Is the girl happy or sad?",
+        answer: "The girl is happy. / The girl is sad."
+      },
+      {
+        filename: "02 N F is the Monster Happy or Sad.gif",
+        codePattern: "02 N F",
+        question: "Is the monster happy or sad?",
+        answer: "The monster is happy. / The monster is sad."
+      },
+      {
+        filename: "02 N G is the Man Sad or Happy.gif",
+        codePattern: "02 N G",
+        question: "Is the man sad or happy?",
+        answer: "The man is sad. / The man is happy."
+      },
+      {
+        filename: "02 N H is the Cactus Happy or Sad.gif",
+        codePattern: "02 N H",
+        question: "Is the cactus happy or sad?",
+        answer: "The cactus is happy. / The cactus is sad."
+      },
+      {
+        filename: "02 N I is the Clown Happy or Sad.gif",
+        codePattern: "02 N I",
+        question: "Is the clown happy or sad?",
+        answer: "The clown is happy. / The clown is sad."
+      },
+      {
+        filename: "02 N J is It A Happy or A Sad Eagle.gif",
+        codePattern: "02 N J",
+        question: "Is it a happy or sad eagle?",
+        answer: "It is a happy eagle. / It is a sad eagle."
+      },
+      {
+        filename: "02 N K is It A Happy or A Sad Snake.gif",
+        codePattern: "02 N K",
+        question: "Is it a happy or sad snake?",
+        answer: "It is a happy snake. / It is a sad snake."
+      },
+      {
+        filename: "02 N L is It A Happy or A Sad Elephant.gif",
+        codePattern: "02 N L",
+        question: "Is it a happy or sad elephant?",
+        answer: "It is a happy elephant. / It is a sad elephant."
+      },
+      {
+        filename: "02 N M are They Sad or Happy.gif",
+        codePattern: "02 N M",
+        question: "Are they sad or happy?",
+        answer: "They are sad. / They are happy."
+      },
+      {
+        filename: "03 N A is the Man Cold or Hot.gif",
+        codePattern: "03 N A",
+        question: "Is the man cold or hot?",
+        answer: "The man is cold. / The man is hot."
+      },
+      {
+        filename: "03 N B is the Man Cold or Hot.gif",
+        codePattern: "03 N B",
+        question: "Is the man cold or hot?",
+        answer: "The man is cold. / The man is hot."
+      },
+      {
+        filename: "03 N C is the Man Cold or Hot.gif",
+        codePattern: "03 N C",
+        question: "Is the man cold or hot?",
+        answer: "The man is cold. / The man is hot."
+      },
+      {
+        filename: "03 N D is the Woman Cold or Hot.gif",
+        codePattern: "03 N D",
+        question: "Is the woman cold or hot?",
+        answer: "The woman is cold. / The woman is hot."
+      },
+      {
+        filename: "03 N E is the Man Hot or Cold.gif",
+        codePattern: "03 N E",
+        question: "Is the man hot or cold?",
+        answer: "The man is hot. / The man is cold."
+      },
+      {
+        filename: "03 N F is the Animal Cold or Hot.gif",
+        codePattern: "03 N F",
+        question: "Is the animal cold or hot?",
+        answer: "The animal is cold. / The animal is hot."
+      },
+      {
+        filename: "03 N G is the Man Hot or Cold.gif",
+        codePattern: "03 N G",
+        question: "Is the man hot or cold?",
+        answer: "The man is hot. / The man is cold."
+      },
+      {
+        filename: "03 N H is the Cow Hot or Cold.gif",
+        codePattern: "03 N H",
+        question: "Is the cow hot or cold?",
+        answer: "The cow is hot. / The cow is cold."
+      },
+      {
+        filename: "03 N I is the Boy Hot or Cold.gif",
+        codePattern: "03 N I",
+        question: "Is the boy hot or cold?",
+        answer: "The boy is hot. / The boy is cold."
+      },
+      {
+        filename: "03 N J is the Girl Cold or Hot.gif",
+        codePattern: "03 N J",
+        question: "Is the girl cold or hot?",
+        answer: "The girl is cold. / The girl is hot."
+      },
+      {
+        filename: "03 N K is the Potato Hot or Cold.gif",
+        codePattern: "03 N K",
+        question: "Is the potato hot or cold?",
+        answer: "The potato is hot. / The potato is cold."
+      },
+      {
+        filename: "03 N L is the Woman Hot or Cold.gif",
+        codePattern: "03 N L",
+        question: "Is the woman hot or cold?",
+        answer: "The woman is hot. / The woman is cold."
+      },
+      {
+        filename: "03 N M is He Hot or Cold.gif",
+        codePattern: "03 N M",
+        question: "Is he hot or cold?",
+        answer: "He is hot. / He is cold."
+      },
+      {
+        filename: "04 N A is the Hamburger Hungry or Thirsty.gif",
+        codePattern: "04 N A",
+        question: "Is the hamburger hungry or thirsty?",
+        answer: "The hamburger is hungry. / The hamburger is thirsty."
+      },
+      {
+        filename: "04 N B is the Girl Thirsty or Hungry.gif",
+        codePattern: "04 N B",
+        question: "Is the girl thirsty or hungry?",
+        answer: "The girl is thirsty. / The girl is hungry."
+      },
+      {
+        filename: "04 N C is the Cat Hungry or Thirsty.gif",
+        codePattern: "04 N C",
+        question: "Is the cat hungry or thirsty?",
+        answer: "The cat is hungry. / The cat is thirsty."
+      },
+      {
+        filename: "04 N D is the Mouse Hungry or Thirsty.gif",
+        codePattern: "04 N D",
+        question: "Is the mouse hungry or thirsty?",
+        answer: "The mouse is hungry. / The mouse is thirsty."
+      },
+      {
+        filename: "04 N E are They Hungry or Thirsty.gif",
+        codePattern: "04 N E",
+        question: "Are they hungry or thirsty?",
+        answer: "They are hungry. / They are thirsty."
+      },
+      {
+        filename: "04 N F is the Monster Thirsty or Hungry.gif",
+        codePattern: "04 N F",
+        question: "Is the monster thirsty or hungry?",
+        answer: "The monster is thirsty. / The monster is hungry."
+      },
+      {
+        filename: "04 N G is the Cat Hungry or Thirsty.gif",
+        codePattern: "04 N G",
+        question: "Is the cat hungry or thirsty?",
+        answer: "The cat is hungry. / The cat is thirsty."
+      },
+      {
+        filename: "04 N H is the Dragon Hungry or Thirsty.gif",
+        codePattern: "04 N H",
+        question: "Is the dragon hungry or thirsty?",
+        answer: "The dragon is hungry. / The dragon is thirsty."
+      },
+      {
+        filename: "04 N I is the Girl Thirsty or Hungry.gif",
+        codePattern: "04 N I",
+        question: "Is the girl thirsty or hungry?",
+        answer: "The girl is thirsty. / The girl is hungry."
+      },
+      {
+        filename: "04 N J is the Bee Thirsty or Hungry Fanta.gif",
+        codePattern: "04 N J",
+        question: "Is the bee thirsty or hungry?",
+        answer: "The bee is thirsty. / The bee is hungry."
+      },
+      {
+        filename: "04 N K is the Man Thirsty or Hungry Fanta.gif",
+        codePattern: "04 N K",
+        question: "Is the man thirsty or hungry?",
+        answer: "The man is thirsty. / The man is hungry."
+      },
+      {
+        filename: "04 N L is the Panda Thirsty or Hungry Fanta.gif",
+        codePattern: "04 N L",
+        question: "Is the panda thirsty or hungry?",
+        answer: "The panda is thirsty. / The panda is hungry."
+      },
+      {
+        filename: "04 N M is the Man Thirsty or Hungry.gif",
+        codePattern: "04 N M",
+        question: "Is the man thirsty or hungry?",
+        answer: "The man is thirsty. / The man is hungry."
+      },
+      {
+        filename: "05 N A is Patrick Scared or Tired.gif",
+        codePattern: "05 N A",
+        question: "Is Patrick scared or tired?",
+        answer: "Patrick is scared. / Patrick is tired."
+      },
+      {
+        filename: "05 N B is the Monster Tired or Scared.gif",
+        codePattern: "05 N B",
+        question: "Is the monster tired or scared?",
+        answer: "The monster is tired. / The monster is scared."
+      }
+    ];
+  }
+  
   // Add more book/unit combinations as needed
   
   // Return the generated entries

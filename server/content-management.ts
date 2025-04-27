@@ -4,9 +4,13 @@ import { sql } from 'drizzle-orm';
 // Try to import the database connection
 let db: any = null;
 try {
-  const dbModule = require('./db');
-  db = dbModule.db;
-  console.log('Database connection imported successfully');
+  // Use dynamic import instead of require
+  import('./db').then(dbModule => {
+    db = dbModule.db;
+    console.log('Database connection imported successfully');
+  }).catch(error => {
+    console.error('Failed to import database connection:', error);
+  });
 } catch (error) {
   console.error('Failed to import database connection:', error);
 }
