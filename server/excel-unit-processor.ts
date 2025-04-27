@@ -1156,6 +1156,513 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
     ];
   }
   
+  // Book 1, Unit 7 (Numbers) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit7') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "03 A Colour Number 1 – Yellow.jpg",
+        codePattern: "03 A",
+        question: "What colour is number 1?",
+        answer: "Number 1 is yellow."
+      },
+      {
+        filename: "04 A Colour Number 2 – Blue.jpg",
+        codePattern: "04 A",
+        question: "What colour is number 2?",
+        answer: "Number 2 is blue."
+      },
+      {
+        filename: "05 A Colour Number 3 – Red.jpg",
+        codePattern: "05 A",
+        question: "What colour is number 3?",
+        answer: "Number 3 is red."
+      },
+      {
+        filename: "06 A Colour Number 4 – Green.jpg",
+        codePattern: "06 A",
+        question: "What colour is number 4?",
+        answer: "Number 4 is green."
+      },
+      {
+        filename: "07 A Colour Number 5 – Silver.jpg",
+        codePattern: "07 A",
+        question: "What colour is number 5?",
+        answer: "Number 5 is silver."
+      },
+      {
+        filename: "08 A Colour Number 6 – Orange.jpg",
+        codePattern: "08 A",
+        question: "What colour is number 6?",
+        answer: "Number 6 is orange."
+      },
+      {
+        filename: "09 A Colour Number 7 – Pink.jpg",
+        codePattern: "09 A",
+        question: "What colour is number 7?",
+        answer: "Number 7 is pink."
+      },
+      {
+        filename: "10 A Colour Number 8 – Black.jpg",
+        codePattern: "10 A",
+        question: "What colour is number 8?",
+        answer: "Number 8 is black."
+      },
+      {
+        filename: "11 A Colour Number 10 – Brown.jpg",
+        codePattern: "11 A",
+        question: "What colour is number 9?",
+        answer: "Number 9 is brown."
+      },
+      {
+        filename: "12 A Colour Number 10 – Purple.jpg",
+        codePattern: "12 A",
+        question: "What colour is number 10?",
+        answer: "Number 10 is purple."
+      },
+      {
+        filename: "13 A Colour Number 10 – Grey.jpg",
+        codePattern: "13 A",
+        question: "What colour is number 11?",
+        answer: "Number 11 is grey."
+      },
+      {
+        filename: "14 A Colour Number 10 – Gold.jpg",
+        codePattern: "14 A",
+        question: "What colour is number 12?",
+        answer: "Number 12 is gold."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 17 (Weather) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit17') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "01 G A What Can You See – I Can See Rain.gif",
+        codePattern: "01 G A",
+        question: "What can you see?",
+        answer: "I can see rain."
+      },
+      {
+        filename: "01 G B What is the Weather Like – It is Rainy.gif",
+        codePattern: "01 G B",
+        question: "What is the weather like?",
+        answer: "It is rainy."
+      },
+      {
+        filename: "01 G C Who is Standing in the Rain – A Girl or A Boy.gif",
+        codePattern: "01 G C",
+        question: "Who is standing in the rain?",
+        answer: "A girl is standing in the rain. / A boy is standing in the rain."
+      },
+      {
+        filename: "01 G D Who is Standing in the Rain – A Woman or A Man.gif",
+        codePattern: "01 G D",
+        question: "Who is standing in the rain?",
+        answer: "A woman is standing in the rain. / A man is standing in the rain."
+      },
+      {
+        filename: "01 G E is It A Woman or A Man Sitting in the Rain.gif",
+        codePattern: "01 G E",
+        question: "Is it a woman or a man sitting in the rain?",
+        answer: "It is a woman sitting in the rain. / It is a man sitting in the rain."
+      },
+      {
+        filename: "01 G F is She Sleeping or Jumping in the Rain.gif",
+        codePattern: "01 G F",
+        question: "Is she sleeping or jumping in the rain?",
+        answer: "She is sleeping in the rain. / She is jumping in the rain."
+      },
+      {
+        filename: "02 G A What Can You See in the Picture – A Cloud.gif",
+        codePattern: "02 G A",
+        question: "What can you see in the picture?",
+        answer: "I can see a cloud."
+      },
+      {
+        filename: "02 G B What is the Weather Like – It is Cloudy.gif",
+        codePattern: "02 G B",
+        question: "What is the weather like?",
+        answer: "It is cloudy."
+      },
+      {
+        filename: "02 G C What Colour are the Clouds – Black.gif",
+        codePattern: "02 G C",
+        question: "What colour are the clouds?",
+        answer: "The clouds are black."
+      },
+      {
+        filename: "02 G D is the Cloud Drinking or Eating.gif",
+        codePattern: "02 G D",
+        question: "Is the cloud drinking or eating?",
+        answer: "The cloud is drinking. / The cloud is eating."
+      },
+      {
+        filename: "02 G E is It A Hungry or an Angry Cloud.gif",
+        codePattern: "02 G E",
+        question: "Is it a hungry or an angry cloud?",
+        answer: "It is a hungry cloud. / It is an angry cloud."
+      },
+      {
+        filename: "02 G F How Many Clouds Can You See – 2 Clouds.gif",
+        codePattern: "02 G F",
+        question: "How many clouds can you see?",
+        answer: "I can see 2 clouds."
+      },
+      {
+        filename: "03 G A What Can You See – I Can See Snow.gif",
+        codePattern: "03 G A",
+        question: "What can you see?",
+        answer: "I can see snow."
+      },
+      {
+        filename: "03 G B What is the Weather Like – It is Snowy.gif",
+        codePattern: "03 G B",
+        question: "What is the weather like?",
+        answer: "It is snowy."
+      },
+      {
+        filename: "03 G C What Colour is the Snow – White.gif",
+        codePattern: "03 G C",
+        question: "What colour is the snow?",
+        answer: "The snow is white."
+      },
+      {
+        filename: "03 G D is It A Boy or A Girl in the Snow.gif",
+        codePattern: "03 G D",
+        question: "Is it a boy or a girl in the snow?",
+        answer: "It is a boy in the snow. / It is a girl in the snow."
+      },
+      {
+        filename: "03 G E is It A Man or A Woman in the Snow.gif",
+        codePattern: "03 G E",
+        question: "Is it a man or a woman in the snow?",
+        answer: "It is a man in the snow. / It is a woman in the snow."
+      },
+      {
+        filename: "03 G F What Animal Can You See in the Snow – A Dog or A Cat.gif",
+        codePattern: "03 G F",
+        question: "What animal can you see in the snow?",
+        answer: "I can see a dog in the snow. / I can see a cat in the snow."
+      },
+      {
+        filename: "04 G A What Can You See in the Picture – the Sun.gif",
+        codePattern: "04 G A",
+        question: "What can you see in the picture?",
+        answer: "I can see the sun."
+      },
+      {
+        filename: "04 G B What is the Weather Like – It is Sunny.gif",
+        codePattern: "04 G B",
+        question: "What is the weather like?",
+        answer: "It is sunny."
+      },
+      {
+        filename: "04 G C What Colour is the Sun – Yellow.gif",
+        codePattern: "04 G C",
+        question: "What colour is the sun?",
+        answer: "The sun is yellow."
+      },
+      {
+        filename: "04 G D is the Sun Hot or Cold.gif",
+        codePattern: "04 G D",
+        question: "Is the sun hot or cold?",
+        answer: "The sun is hot."
+      },
+      {
+        filename: "04 G E is the Ghost Sleeping or Swimming in the Sun.gif",
+        codePattern: "04 G E",
+        question: "Is the ghost sleeping or swimming in the sun?",
+        answer: "The ghost is sleeping in the sun. / The ghost is swimming in the sun."
+      },
+      {
+        filename: "04 G F is the Man Sleeping or Playing in the Sun.gif",
+        codePattern: "04 G F",
+        question: "Is the man sleeping or playing in the sun?",
+        answer: "The man is sleeping in the sun. / The man is playing in the sun."
+      },
+      {
+        filename: "05 G A What Can You See in the Picture – Wind.gif",
+        codePattern: "05 G A",
+        question: "What can you see in the picture?",
+        answer: "I can see wind."
+      },
+      {
+        filename: "05 G B What is the Weather Like – It is Windy.gif",
+        codePattern: "05 G B",
+        question: "What is the weather like?",
+        answer: "It is windy."
+      },
+      {
+        filename: "05 G C What is Standing in the Wind – A Cat or A Dog.gif",
+        codePattern: "05 G C",
+        question: "What is standing in the wind?",
+        answer: "A cat is standing in the wind. / A dog is standing in the wind."
+      },
+      {
+        filename: "05 G D is It A Girl or A Boy in the Wind.gif",
+        codePattern: "05 G D",
+        question: "Is it a girl or a boy in the wind?",
+        answer: "It is a girl in the wind. / It is a boy in the wind."
+      },
+      {
+        filename: "05 G E is It A Man or A Woman in the Wind.gif",
+        codePattern: "05 G E",
+        question: "Is it a man or a woman in the wind?",
+        answer: "It is a man in the wind. / It is a woman in the wind."
+      },
+      {
+        filename: "05 G F is the Girl Sitting or Standing in the Wind.gif",
+        codePattern: "05 G F",
+        question: "Is the girl sitting or standing in the wind?",
+        answer: "The girl is sitting in the wind. / The girl is standing in the wind."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 18 (Can You...) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit18') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "01 I A Can You Climb A Tree – Yes, I Can – No, I Can't.jpg",
+        codePattern: "01 I A",
+        question: "Can you climb a tree?",
+        answer: "Yes, I can. / No, I can't."
+      },
+      {
+        filename: "01 I B Can A Monkey Climb A Tree – Yes, It Can. No, It Can't.gif",
+        codePattern: "01 I B",
+        question: "Can a monkey climb a tree?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "01 I C Can A Fish Climb – Yes, It Can. No, It Can't.jpeg",
+        codePattern: "01 I C",
+        question: "Can a fish climb?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "01 I D Can an Elephant Climb – Yes, It Can. No, It Can't.jpeg",
+        codePattern: "01 I D",
+        question: "Can an elephant climb?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "01 I E Can Spiderman Climb – Yes, He Can. No, He Can't.gif",
+        codePattern: "01 I E",
+        question: "Can Spiderman climb?",
+        answer: "Yes, he can. / No, he can't."
+      },
+      {
+        filename: "01 I F Can A Rhino Climb – Yes, It Can. No, It Can't.jpeg",
+        codePattern: "01 I F",
+        question: "Can a rhino climb?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "01 I G Can A Snake Climb – Yes, It Can. No, It Can't.gif",
+        codePattern: "01 I G",
+        question: "Can a snake climb?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "01 I H Do You Like Climbing Mountains – Yes, I Do – No, I Don't.gif",
+        codePattern: "01 I H",
+        question: "Do you like climbing mountains?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "02 I A Can You Swim – Yes, I Can – No, I Cant.gif",
+        codePattern: "02 I A",
+        question: "Can you swim?",
+        answer: "Yes, I can. / No, I can't."
+      },
+      {
+        filename: "02 I B Can A Fish Swim – Yes, It Can. No, It Can't.gif",
+        codePattern: "02 I B",
+        question: "Can a fish swim?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "02 I C Can A Bee Swim – Yes, It Can. No, It Can't.gif",
+        codePattern: "02 I C",
+        question: "Can a bee swim?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "02 I D Can an Owl Swim – Yes, It Can. No, It Can't.jpeg",
+        codePattern: "02 I D",
+        question: "Can an owl swim?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "02 I E Can A Dolphin Swim – Yes, It Can. No, It Can't.gif",
+        codePattern: "02 I E",
+        question: "Can a dolphin swim?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "02 I F Can A Cheetah Swim – Yes, It Can. No, It Can't.jpeg",
+        codePattern: "02 I F",
+        question: "Can a cheetah swim?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "02 I G Can A Dog Swim – Yes, It Can. No, It Can't.gif",
+        codePattern: "02 I G",
+        question: "Can a dog swim?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "02 I H Do You Like Swimming – Yes, I Do – No, I Don't.gif",
+        codePattern: "02 I H",
+        question: "Do you like swimming?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "03 I A Can You Run – Yes, I Can – No, I Cant.gif",
+        codePattern: "03 I A",
+        question: "Can you run?",
+        answer: "Yes, I can. / No, I can't."
+      },
+      {
+        filename: "03 I B Can A Cheetah Run – Yes, It Can. No, It Can't.gif",
+        codePattern: "03 I B",
+        question: "Can a cheetah run?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "03 I C Can A Fish Run – Yes, It Can. No, It Can't.gif",
+        codePattern: "03 I C",
+        question: "Can a fish run?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "03 I D Can A Rhino Run – Yes, It Can. No, It Can't.gif",
+        codePattern: "03 I D",
+        question: "Can a rhino run?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "03 I E Can A Snake Run – Yes, It Can. No, It Can't.jpeg",
+        codePattern: "03 I E",
+        question: "Can a snake run?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "03 I F Can A Deer Run – Yes, It Can. No, It Can't.gif",
+        codePattern: "03 I F",
+        question: "Can a deer run?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "03 I G Can A Frog Run – Yes, It Can. No, It Can't.jpeg",
+        codePattern: "03 I G",
+        question: "Can a frog run?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "03 I H Do You Like Running – Yes, I Do – No, I Don't.gif",
+        codePattern: "03 I H",
+        question: "Do you like running?",
+        answer: "Yes, I do. / No, I don't."
+      },
+      {
+        filename: "04 I A Can You Fly – Yes, I Can – No, I Cant.gif",
+        codePattern: "04 I A",
+        question: "Can you fly?",
+        answer: "Yes, I can. / No, I can't."
+      },
+      {
+        filename: "04 I B Can A Bee Fly – Yes, It Can. No, It Can't.gif",
+        codePattern: "04 I B",
+        question: "Can a bee fly?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "04 I C Can an Elephant Fly – Yes, It Can. No, It Can't.gif",
+        codePattern: "04 I C",
+        question: "Can an elephant fly?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "04 I D Can A Chicken Fly – Yes, It Can. No, It Can't.gif",
+        codePattern: "04 I D",
+        question: "Can a chicken fly?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "04 I E Can A Bird Fly – Yes, It Can. No, It Can't.gif",
+        codePattern: "04 I E",
+        question: "Can a bird fly?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "04 I F Can A Monkey Fly – Yes, It Can. No, It Can't.gif",
+        codePattern: "04 I F",
+        question: "Can a monkey fly?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "04 I G Can A Shark Fly – Yes, It Can. No, It Can't.jpeg",
+        codePattern: "04 I G",
+        question: "Can a shark fly?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "04 I H How Many Girls are Flying – 5 Girls.gif",
+        codePattern: "04 I H",
+        question: "How many girls are flying?",
+        answer: "There are 5 girls flying."
+      },
+      {
+        filename: "05 I A Can You Jump – Yes, I Can – No, I Cant.gif",
+        codePattern: "05 I A",
+        question: "Can you jump?",
+        answer: "Yes, I can. / No, I can't."
+      },
+      {
+        filename: "05 I B Can A Kangaroo Jump – Yes, It Can. No, It Can't.gif",
+        codePattern: "05 I B",
+        question: "Can a kangaroo jump?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "05 I C Can an Elephant Jump – Yes, It Can. No, It Can't.gif",
+        codePattern: "05 I C",
+        question: "Can an elephant jump?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "05 I D Can A Deer Jump – Yes, It Can. No, It Can't.gif",
+        codePattern: "05 I D",
+        question: "Can a deer jump?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "05 I E Can A Dolphin Jump – Yes, It Can. No, It Can't.gif",
+        codePattern: "05 I E",
+        question: "Can a dolphin jump?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "05 I F Can an Owl Jump – Yes, It Can. No, It Can't.gif",
+        codePattern: "05 I F",
+        question: "Can an owl jump?",
+        answer: "Yes, it can. / No, it can't."
+      },
+      {
+        filename: "05 I G Can A Frog Jump – Yes, It Can. No, It Can't.gif",
+        codePattern: "05 I G",
+        question: "Can a frog jump?",
+        answer: "Yes, it can. / No, it can't."
+      }
+    ];
+  }
+  
   // Add more book/unit combinations as needed
   
   // Return the generated entries
