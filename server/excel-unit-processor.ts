@@ -1968,6 +1968,50 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         question: "Is it a panda or koala pencil case?",
         answer: "It is a panda pencil case. / It is a koala pencil case."
       },
+      
+      // Section 12 - Scissors (pattern N)
+      {
+        filename: "12 N A What are They – They are Scissors.gif",
+        codePattern: "12 N A",
+        question: "What are they?",
+        answer: "They are scissors."
+      },
+      {
+        filename: "12 N B are They Big or Small Scissors.gif",
+        codePattern: "12 N B",
+        question: "Are they big or small scissors?",
+        answer: "They are big scissors. / They are small scissors."
+      },
+      {
+        filename: "12 N C Do You Have Scissors in Your Pencil Case.gif",
+        codePattern: "12 N C",
+        question: "Do you have scissors in your pencil case?",
+        answer: "Yes, I have scissors in my pencil case. / No, I don't have scissors in my pencil case."
+      },
+      {
+        filename: "12 N D What Colour are the Scissors – Pink.jpg",
+        codePattern: "12 N D",
+        question: "What color are the scissors?",
+        answer: "The scissors are pink."
+      },
+      {
+        filename: "12 N E What Colour are the Scissors – Blue.jpg",
+        codePattern: "12 N E",
+        question: "What color are the scissors?",
+        answer: "The scissors are blue."
+      },
+      {
+        filename: "12 N F How Many Scissors are There – 1 Scissors.gif",
+        codePattern: "12 N F",
+        question: "How many scissors are there?",
+        answer: "There is 1 scissors."
+      },
+      {
+        filename: "12 N G How Many Scissors are There – 2 Scissors.jpg",
+        codePattern: "12 N G",
+        question: "How many scissors are there?",
+        answer: "There are 2 scissors."
+      },
       {
         filename: "07 N B What Colour is the Eraser.gif",
         codePattern: "07 N B",
