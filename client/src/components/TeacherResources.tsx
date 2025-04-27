@@ -195,6 +195,8 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             provider: "Visual English"
           }
         ];
+        setResources(predefinedResources);
+        saveResourcesToServer(predefinedResources);
       }
       
       // Book 0b, Unit 1 resources

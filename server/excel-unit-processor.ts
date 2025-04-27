@@ -1820,6 +1820,38 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         question: "What is it?",
         answer: "It is an eraser."
       },
+      
+      // Section 9 - School Bag (pattern N)
+      {
+        filename: "09 N A What is It – It is A School Bag.gif",
+        codePattern: "09 N A",
+        question: "What is it?",
+        answer: "It is a school bag."
+      },
+      {
+        filename: "09 N B What School Bag Do You Like.gif",
+        codePattern: "09 N B",
+        question: "What school bag do you like?",
+        answer: "I like the [color/pattern] school bag."
+      },
+      {
+        filename: "09 N C Do You Have A School Bag.gif",
+        codePattern: "09 N C",
+        question: "Do you have a school bag?",
+        answer: "Yes, I have a school bag. / No, I don't have a school bag."
+      },
+      {
+        filename: "09 N D is It A Backpack or Shoulder Bag.gif",
+        codePattern: "09 N D", 
+        question: "Is it a backpack or shoulder bag?",
+        answer: "It is a backpack. / It is a shoulder bag."
+      },
+      {
+        filename: "09 N E is It A Tiger or A Lion School Bag.gif",
+        codePattern: "09 N E",
+        question: "Is it a tiger or lion school bag?",
+        answer: "It is a tiger school bag. / It is a lion school bag."
+      },
       {
         filename: "07 N B What Colour is the Eraser.gif",
         codePattern: "07 N B",
