@@ -818,6 +818,344 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
     ];
   }
   
+  // Book 1, Unit 5 (Family) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit5') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 E A Who is He – He is A Father.gif",
+        codePattern: "02 E A",
+        question: "Who is he?",
+        answer: "He is a father."
+      },
+      {
+        filename: "02 E B is He A Mum or A Dad.gif",
+        codePattern: "02 E B",
+        question: "Is he a mum or a dad?",
+        answer: "He is a dad."
+      },
+      {
+        filename: "02 E C is Dad A Man or A Woman.gif",
+        codePattern: "02 E C",
+        question: "Is dad a man or a woman?",
+        answer: "Dad is a man."
+      },
+      {
+        filename: "02 E D is Dad Tired or Scared.gif",
+        codePattern: "02 E D",
+        question: "Is dad tired or scared?",
+        answer: "Dad is tired. / Dad is scared."
+      },
+      {
+        filename: "03 E A Who is He – He is A Mother.gif",
+        codePattern: "03 E A",
+        question: "Who is she?",
+        answer: "She is a mother."
+      },
+      {
+        filename: "03 E B is She A Mum or A Dad.gif",
+        codePattern: "03 E B",
+        question: "Is she a mum or a dad?",
+        answer: "She is a mum."
+      },
+      {
+        filename: "03 E C is Mum A Man or A Woman.gif",
+        codePattern: "03 E C",
+        question: "Is mum a man or a woman?",
+        answer: "Mum is a woman."
+      },
+      {
+        filename: "03 E D is She A Happy or Sad Mum.gif",
+        codePattern: "03 E D",
+        question: "Is she a happy or sad mum?",
+        answer: "She is a happy mum. / She is a sad mum."
+      },
+      {
+        filename: "04 E A Who are They – They are Brothers.gif",
+        codePattern: "04 E A",
+        question: "Who are they?",
+        answer: "They are brothers."
+      },
+      {
+        filename: "04 E B How Many Brothers Can You See – 3 Brothers.gif",
+        codePattern: "04 E B",
+        question: "How many brothers can you see?",
+        answer: "I can see 3 brothers."
+      },
+      {
+        filename: "04 E C are Brothers Girls or Boys.gif",
+        codePattern: "04 E C",
+        question: "Are brothers girls or boys?",
+        answer: "Brothers are boys."
+      },
+      {
+        filename: "04 E D are They Happy or Sad Brothers.gif",
+        codePattern: "04 E D",
+        question: "Are they happy or sad brothers?",
+        answer: "They are happy brothers. / They are sad brothers."
+      },
+      {
+        filename: "05 E A Who are They – They are Sisters 2.gif",
+        codePattern: "05 E A",
+        question: "Who are they?",
+        answer: "They are sisters."
+      },
+      {
+        filename: "05 E B How Many Sisters Can You See – 2 Sisters.gif",
+        codePattern: "05 E B",
+        question: "How many sisters can you see?",
+        answer: "I can see 2 sisters."
+      },
+      {
+        filename: "05 E C are Sisters Girls or Boys.gif",
+        codePattern: "05 E C",
+        question: "Are sisters girls or boys?",
+        answer: "Sisters are girls."
+      },
+      {
+        filename: "05 E D are They Swimming or Flying Sisters.gif",
+        codePattern: "05 E D",
+        question: "Are they swimming or flying sisters?",
+        answer: "They are swimming sisters. / They are flying sisters."
+      },
+      {
+        filename: "06 E A Who is He – He is A Grandfather.gif",
+        codePattern: "06 E A",
+        question: "Who is he?",
+        answer: "He is a grandfather."
+      },
+      {
+        filename: "06 E B is He A Grandad or A Grandmum.gif",
+        codePattern: "06 E B",
+        question: "Is he a grandad or a grandmum?",
+        answer: "He is a grandad."
+      },
+      {
+        filename: "06 E C is Granddad A Man or A Woman.gif",
+        codePattern: "06 E C",
+        question: "Is granddad a man or a woman?",
+        answer: "Granddad is a man."
+      },
+      {
+        filename: "06 E D is He A Scared or Tired Granddad.gif",
+        codePattern: "06 E D",
+        question: "Is he a scared or tired granddad?",
+        answer: "He is a scared granddad. / He is a tired granddad."
+      },
+      {
+        filename: "07 E A Who is She – She is A Grandmother.gif",
+        codePattern: "07 E A",
+        question: "Who is she?",
+        answer: "She is a grandmother."
+      },
+      {
+        filename: "07 E B is She A Grandad or A Grandmum.gif",
+        codePattern: "07 E B",
+        question: "Is she a grandad or a grandmum?",
+        answer: "She is a grandmum."
+      },
+      {
+        filename: "07 E C is Grandmum A Man or A Woman.gif",
+        codePattern: "07 E C",
+        question: "Is grandmum a man or a woman?",
+        answer: "Grandmum is a woman."
+      },
+      {
+        filename: "07 E D is She an Angry or A Hungry Grandmum.gif",
+        codePattern: "07 E D",
+        question: "Is she an angry or hungry grandmum?",
+        answer: "She is an angry grandmum. / She is a hungry grandmum."
+      },
+      {
+        filename: "08 B A Who is He – He is an Uncle.jpeg",
+        codePattern: "08 B A",
+        question: "Who is he?",
+        answer: "He is an uncle."
+      },
+      {
+        filename: "08 B C is an Uncle A Man or A Woman.jpg",
+        codePattern: "08 B C",
+        question: "Is an uncle a man or a woman?",
+        answer: "An uncle is a man."
+      },
+      {
+        filename: "09 C A Who is She – She is an Aunt.jpg",
+        codePattern: "09 C A",
+        question: "Who is she?",
+        answer: "She is an aunt."
+      },
+      {
+        filename: "09 C B is an Aunt A Woman or A Man.jpg",
+        codePattern: "09 C B",
+        question: "Is an aunt a woman or a man?",
+        answer: "An aunt is a woman."
+      },
+      {
+        filename: "10 B A Who Can You See – I Can See an Uncle, an Aunt and 2 Cousins.jpg",
+        codePattern: "10 B A",
+        question: "Who can you see?",
+        answer: "I can see an uncle, an aunt, and two cousins."
+      }
+    ];
+  }
+  
+  // Book 1, Unit 6 (Colors) hardcoded data from the provided text file
+  if (bookId === 'book1' && unitId === 'unit6') {
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    return [
+      {
+        filename: "02 A a What is It – It is A Red Pen.gif",
+        codePattern: "02 A a",
+        question: "What is it?",
+        answer: "It is a red pen."
+      },
+      {
+        filename: "02 A b What Colour is Planet Mars.gif",
+        codePattern: "02 A b",
+        question: "What colour is planet Mars?",
+        answer: "Planet Mars is red."
+      },
+      {
+        filename: "02 A c What Colour is the Frog – is the Picture Fake or Real.jpg",
+        codePattern: "02 A c",
+        question: "What colour is the frog? Is the picture fake or real?",
+        answer: "The frog is green. The picture is fake. / The frog is green. The picture is real."
+      },
+      {
+        filename: "02 A d What Colour are the Bananas – is the Picture Fake or Real.jpg",
+        codePattern: "02 A d",
+        question: "What colour are the bananas? Is the picture fake or real?",
+        answer: "The bananas are yellow. The picture is fake. / The bananas are yellow. The picture is real."
+      },
+      {
+        filename: "02 A e What Colour is the Zebra – is the Picture Fake or Real.jpg",
+        codePattern: "02 A e",
+        question: "What colour is the zebra? Is the picture fake or real?",
+        answer: "The zebra is black and white. The picture is fake. / The zebra is black and white. The picture is real."
+      },
+      {
+        filename: "02 B a What is It – It is A Yellow Book.jpg",
+        codePattern: "02 B a",
+        question: "What is it?",
+        answer: "It is a yellow book."
+      },
+      {
+        filename: "02 B c What Colour is the Cat – is the Picture Fake or Real.jpg",
+        codePattern: "02 B c",
+        question: "What colour is the cat? Is the picture fake or real?",
+        answer: "The cat is yellow. The picture is fake. / The cat is yellow. The picture is real."
+      },
+      {
+        filename: "02 B d What Colour is the Frog – is the Picture Fake or Real.jpg",
+        codePattern: "02 B d",
+        question: "What colour is the frog? Is the picture fake or real?",
+        answer: "The frog is yellow. The picture is fake. / The frog is yellow. The picture is real."
+      },
+      {
+        filename: "02 B h What Colour is the Bee – is the Picture Fake or Real.jpg",
+        codePattern: "02 B h",
+        question: "What colour is the bee? Is the picture fake or real?",
+        answer: "The bee is yellow. The picture is fake. / The bee is yellow. The picture is real."
+      },
+      {
+        filename: "02 B i What Colour is the Snake – is the Picture Fake or Real.jpg",
+        codePattern: "02 B i",
+        question: "What colour is the snake? Is the picture fake or real?",
+        answer: "The snake is yellow. The picture is fake. / The snake is yellow. The picture is real."
+      },
+      {
+        filename: "02 C a What is It – It is an Orange Cat.jpg",
+        codePattern: "02 C a",
+        question: "What is it?",
+        answer: "It is an orange cat."
+      },
+      {
+        filename: "02 C b What Colour is the Orange – is the Picture Fake or Real.gif",
+        codePattern: "02 C b",
+        question: "What colour is the orange? Is the picture fake or real?",
+        answer: "The orange is orange. The picture is fake. / The orange is orange. The picture is real."
+      },
+      {
+        filename: "02 C c What Colour is the Fanta – is the Picture Fake or Real.gif",
+        codePattern: "02 C c",
+        question: "What colour is the Fanta? Is the picture fake or real?",
+        answer: "The Fanta is orange. The picture is fake. / The Fanta is orange. The picture is real."
+      },
+      {
+        filename: "02 C d What Colour is the Bird – is the Picture Fake or Real.jpg",
+        codePattern: "02 C d",
+        question: "What colour is the bird? Is the picture fake or real?",
+        answer: "The bird is orange. The picture is fake. / The bird is orange. The picture is real."
+      },
+      {
+        filename: "02 C e What Colour is the Pumpkin – is the Picture Fake or Real.gif",
+        codePattern: "02 C e",
+        question: "What colour is the pumpkin? Is the picture fake or real?",
+        answer: "The pumpkin is orange. The picture is fake. / The pumpkin is orange. The picture is real."
+      },
+      {
+        filename: "02 D a What is It – It is A Golden Ring.gif",
+        codePattern: "02 D a",
+        question: "What is it?",
+        answer: "It is a golden ring."
+      },
+      {
+        filename: "02 D b What Colour is the Car – is the Picture Fake or Real.jpg",
+        codePattern: "02 D b",
+        question: "What colour is the car? Is the picture fake or real?",
+        answer: "The car is gold. The picture is fake. / The car is gold. The picture is real."
+      },
+      {
+        filename: "02 D c What Colour is the Bird – is the Picture Fake or Real.jpg",
+        codePattern: "02 D c",
+        question: "What colour is the bird? Is the picture fake or real?",
+        answer: "The bird is gold. The picture is fake. / The bird is gold. The picture is real."
+      },
+      {
+        filename: "02 D d What Colour is the Bug – is the Picture Fake or Real.jpg",
+        codePattern: "02 D d",
+        question: "What colour is the bug? Is the picture fake or real?",
+        answer: "The bug is gold. The picture is fake. / The bug is gold. The picture is real."
+      },
+      {
+        filename: "02 D e What Colour is the Strawberry – is the Picture Fake or Real.jpg",
+        codePattern: "02 D e",
+        question: "What colour is the strawberry? Is the picture fake or real?",
+        answer: "The strawberry is gold. The picture is fake. / The strawberry is gold. The picture is real."
+      },
+      {
+        filename: "02 E a What is It – It is A Pink Kiwi.jpg",
+        codePattern: "02 E a",
+        question: "What is it?",
+        answer: "It is a pink kiwi."
+      },
+      {
+        filename: "02 E b What Colour is the Laptop – is the Picture Fake or Real.jpg",
+        codePattern: "02 E b",
+        question: "What colour is the laptop? Is the picture fake or real?",
+        answer: "The laptop is pink. The picture is fake. / The laptop is pink. The picture is real."
+      },
+      {
+        filename: "02 E c What Colour is the Fruit – is the Picture Fake or Real.jpg",
+        codePattern: "02 E c",
+        question: "What colour is the fruit? Is the picture fake or real?",
+        answer: "The fruit is pink. The picture is fake. / The fruit is pink. The picture is real."
+      },
+      {
+        filename: "02 E d What Colour is the Cow – is the Picture Fake or Real.jpg",
+        codePattern: "02 E d",
+        question: "What colour is the cow? Is the picture fake or real?",
+        answer: "The cow is pink. The picture is fake. / The cow is pink. The picture is real."
+      },
+      {
+        filename: "02 E e What Colour is the Dolphin – is the Picture Fake or Real.gif",
+        codePattern: "02 E e",
+        question: "What colour is the dolphin? Is the picture fake or real?",
+        answer: "The dolphin is pink. The picture is fake. / The dolphin is pink. The picture is real."
+      }
+    ];
+  }
+  
   // Add more book/unit combinations as needed
   
   // Return the generated entries
