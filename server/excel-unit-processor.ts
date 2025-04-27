@@ -1877,22 +1877,28 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         answer: "Yes, I have a blue school bag. / No, I don't have a blue school bag."
       },
       {
-        filename: "09 N J is It A New or Old School Bag.gif",
+        filename: "09 N J is It A Spiderman or Batman School Bag.gif",
         codePattern: "09 N J",
-        question: "Is it a new or old school bag?",
-        answer: "It is a new school bag. / It is an old school bag."
+        question: "Is it a Spiderman or Batman school bag?",
+        answer: "It is a Spiderman school bag. / It is a Batman school bag."
       },
       {
-        filename: "09 N K What Colour is the School Bag – Purple.gif",
+        filename: "09 N K is It A Nike or Adidas School Bag.jpg",
         codePattern: "09 N K",
-        question: "What color is the school bag?",
-        answer: "The school bag is purple."
+        question: "Is it a Nike or Adidas school bag?",
+        answer: "It is a Nike school bag. / It is an Adidas school bag."
       },
       {
         filename: "09 N L What Colour is the School Bag – Purple.gif",
         codePattern: "09 N L",
         question: "What color is the school bag?",
         answer: "The school bag is purple."
+      },
+      {
+        filename: "09 N L What Colour is the School Bag – Pink.gif",
+        codePattern: "09 N L",
+        question: "What color is the school bag?",
+        answer: "The school bag is pink."
       },
       {
         filename: "09 N M What Colour are the School Bags.gif",
@@ -1945,10 +1951,10 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         answer: "It is a dog pencil case. / It is a cat pencil case."
       },
       {
-        filename: "11 N H is It A Dog or Cat Pencil Case.jpg",
+        filename: "11 N H is It A Pizza or Tortilla Pencil Case.jpg",
         codePattern: "11 N H",
-        question: "Is it a dog or cat pencil case?",
-        answer: "It is a dog pencil case. / It is a cat pencil case."
+        question: "Is it a pizza or tortilla pencil case?",
+        answer: "It is a pizza pencil case. / It is a tortilla pencil case."
       },
       {
         filename: "11 N I is It A Micky or Hello Kitty Pencil Case.jpg",
@@ -2012,6 +2018,13 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         question: "How many scissors are there?",
         answer: "There are 2 scissors."
       },
+      // Section 7 - Eraser (pattern N)
+      {
+        filename: "07 N A What is It – It is an Eraser.gif",
+        codePattern: "07 N A",
+        question: "What is it?",
+        answer: "It is an eraser."
+      },
       {
         filename: "07 N B What Colour is the Eraser.gif",
         codePattern: "07 N B",
@@ -2065,6 +2078,24 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         codePattern: "07 N J",
         question: "Is it a man or woman eraser?",
         answer: "It is a man eraser. / It is a woman eraser."
+      },
+      {
+        filename: "07 N K What Colour is the Eraser – Light Blue.gif",
+        codePattern: "07 N K",
+        question: "What color is the eraser?",
+        answer: "The eraser is light blue."
+      },
+      {
+        filename: "07 N L What Colour is the Eraser – Pink.gif",
+        codePattern: "07 N L",
+        question: "What color is the eraser?",
+        answer: "The eraser is pink."
+      },
+      {
+        filename: "07 N M How Many Erasers are There.gif",
+        codePattern: "07 N M",
+        question: "How many erasers are there?",
+        answer: "There are [number] erasers."
       }
     ];
   }
