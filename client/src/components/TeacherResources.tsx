@@ -125,10 +125,77 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     }
   }, [bookId, unitId]);
   
-  // Add pre-defined resources for Book 1, Unit 1 and Book 0b, Unit 1
+  // Add pre-defined resources for Book 1, Unit 1, Book 1, Unit 2, Book 1, Unit 10, and Book 0b, Unit 1
   useEffect(() => {
     if (resources.length === 0 && bookId && unitId) {
       let predefinedResources: TeacherResource[] = [];
+      
+      // Book 1, Unit 2 resources
+      if (bookId === "1" && unitId === "2") {
+        predefinedResources = [
+          // PDF Resource
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "Visual English Book 1 - Unit 2 - Lesson PDF",
+            resourceType: "pdf",
+            embedCode: `<div style="padding: 20px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
+              <h3 style="margin-bottom: 15px; color: #2563eb;">Unit 2 - Complete Lesson PDF</h3>
+              <p style="margin-bottom: 20px;">This PDF contains the complete lesson materials for Unit 2 - School Objects</p>
+              <a href="https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit2/00%20A%20Visual%20English%201%20%E2%80%93%20Unit%202%20%E2%80%93%20New%20Version.pdf" 
+                 target="_blank" 
+                 style="display: inline-block; background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: 500;">
+                <span style="display: flex; align-items: center; justify-content: center;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <line x1="10" y1="9" x2="8" y2="9"></line>
+                  </svg>
+                  Download PDF
+                </span>
+              </a>
+            </div>`,
+            order: 0,
+            provider: "Amazon S3"
+          },
+          // Lesson Plan
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "Unit 2 - School Objects Lesson Plan (2 x 45min)",
+            resourceType: "activity",
+            embedCode: `<div style="padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem; text-align: center;">Comprehensive Lesson Plan: Unit 2 - School Objects (2 x 45min)</h2>
+              
+              <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <div style="flex: 1; min-width: 300px;">
+                  <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Learning Objectives</h3>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Identify and name common school objects (pen, pencil, crayon, book, notebook, glue, eraser, etc.)</li>
+                    <li>Ask and answer questions about school objects using "What is it?" and "What are they?"</li>
+                    <li>Describe school objects by color, size, and attributes</li>
+                    <li>Express possession of school objects using "Do you have...?"</li>
+                  </ul>
+                </div>
+                
+                <div style="flex: 1; min-width: 300px;">
+                  <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Materials Needed</h3>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Visual English Book 1, Unit 2 slides</li>
+                    <li>Actual school objects (pens, pencils, crayons, etc.)</li>
+                    <li>Flashcards of school objects</li>
+                    <li>Worksheet for practice activities</li>
+                  </ul>
+                </div>
+              </div>
+            </div>`,
+            order: 1,
+            provider: "Visual English"
+          }
+        ];
+      }
       
       // Book 0b, Unit 1 resources
       if (bookId === "0b" && unitId === "1") {

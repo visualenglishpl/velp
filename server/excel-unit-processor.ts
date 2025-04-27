@@ -1342,6 +1342,7 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
   if (bookId === 'book1' && unitId === 'unit2') {
     console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
     return [
+      // Pen category - pattern E
       {
         filename: "01 E A What is It – It is A Pen.gif",
         codePattern: "01 E A",
@@ -1629,6 +1630,249 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         codePattern: "04 N I",
         question: "How many books are there?",
         answer: "There are 7 books."
+      },
+      {
+        filename: "04 N J What Colour is the Book – Red.gif",
+        codePattern: "04 N J",
+        question: "What color is the book?",
+        answer: "The book is red."
+      },
+      {
+        filename: "04 N K What Colour is the Book – Blue.gif",
+        codePattern: "04 N K",
+        question: "What color is the book?",
+        answer: "The book is blue."
+      },
+      {
+        filename: "04 N L What Colour is the Book – Pink.gif",
+        codePattern: "04 N L",
+        question: "What color is the book?",
+        answer: "The book is pink."
+      },
+      {
+        filename: "04 N M What Colour is the Book – White.gif",
+        codePattern: "04 N M",
+        question: "What color is the book?",
+        answer: "The book is white."
+      },
+      // Section 5 - Notebook (pattern B)
+      {
+        filename: "05 B A What is It – It is A Notebook.gif",
+        codePattern: "05 B A",
+        question: "What is it?",
+        answer: "It is a notebook."
+      },
+      {
+        filename: "05 B C is It A Banana or an Apple Book.jpg",
+        codePattern: "05 B C",
+        question: "Is it a banana or apple book?",
+        answer: "It is a banana book. / It is an apple book."
+      },
+      {
+        filename: "05 B D is It A Girl's or Boy's Notebook.jpg",
+        codePattern: "05 B D",
+        question: "Is it a girl's or boy's notebook?",
+        answer: "It is a girl's notebook. / It is a boy's notebook."
+      },
+      {
+        filename: "05 B D is It an Open or Closed Notebook.gif",
+        codePattern: "05 B D",
+        question: "Is it an open or closed notebook?",
+        answer: "It is an open notebook. / It is a closed notebook."
+      },
+      {
+        filename: "05 B E is It A Girl's or Boy's Notebook.jpg",
+        codePattern: "05 B E",
+        question: "Is it a girl's or boy's notebook?",
+        answer: "It is a girl's notebook. / It is a boy's notebook."
+      },
+      {
+        filename: "05 B F is It A Lion or Crocodile Notebook.jpg",
+        codePattern: "05 B F",
+        question: "Is it a lion or crocodile notebook?",
+        answer: "It is a lion notebook. / It is a crocodile notebook."
+      },
+      {
+        filename: "05 B G is It A Pizza or A Hamburger Notebook.gif",
+        codePattern: "05 B G",
+        question: "Is it a pizza or hamburger notebook?",
+        answer: "It is a pizza notebook. / It is a hamburger notebook."
+      },
+      {
+        filename: "05 B H Do You Have A Notebook in Your Bag.gif",
+        codePattern: "05 B H",
+        question: "Do you have a notebook in your bag?",
+        answer: "Yes, I have a notebook in my bag. / No, I don't have a notebook in my bag."
+      },
+      {
+        filename: "05 B I Do You Have an Elmo Notebook.gif",
+        codePattern: "05 B I",
+        question: "Do you have an Elmo notebook?",
+        answer: "Yes, I have an Elmo notebook. / No, I don't have an Elmo notebook."
+      },
+      {
+        filename: "05 B J Do You Have A Unicorn Notebook.jpg",
+        codePattern: "05 B J",
+        question: "Do you have a unicorn notebook?",
+        answer: "Yes, I have a unicorn notebook. / No, I don't have a unicorn notebook."
+      },
+      {
+        filename: "05 B K Do You Have an English Notebook.jpg",
+        codePattern: "05 B K",
+        question: "Do you have an English notebook?",
+        answer: "Yes, I have an English notebook. / No, I don't have an English notebook."
+      },
+      {
+        filename: "05 B L What Colour is the Notebook – It is Grey.gif",
+        codePattern: "05 B L",
+        question: "What color is the notebook?",
+        answer: "The notebook is grey."
+      },
+      {
+        filename: "05 B M Do You Have A Maths Notebook.jpg",
+        codePattern: "05 B M",
+        question: "Do you have a maths notebook?",
+        answer: "Yes, I have a maths notebook. / No, I don't have a maths notebook."
+      },
+      // Section 6 - Glue (pattern K)
+      {
+        filename: "06 K A What is It – It is Glue.gif",
+        codePattern: "06 K A",
+        question: "What is it?",
+        answer: "It is glue."
+      },
+      {
+        filename: "06 K B What are They – They are Glue Sticks.gif",
+        codePattern: "06 K B",
+        question: "What are they?",
+        answer: "They are glue sticks."
+      },
+      {
+        filename: "06 K C Do You Prefer White Glue or A Glues Stick.jpg",
+        codePattern: "06 K C",
+        question: "Do you prefer white glue or a glue stick?",
+        answer: "I prefer white glue. / I prefer a glue stick."
+      },
+      {
+        filename: "06 K D Do You Have Glue in Your Pencil Case.gif",
+        codePattern: "06 K D",
+        question: "Do you have glue in your pencil case?",
+        answer: "Yes, I have glue in my pencil case. / No, I don't have glue in my pencil case."
+      },
+      {
+        filename: "06 K E Do You Have Glitter Glue.jpg",
+        codePattern: "06 K E",
+        question: "Do you have glitter glue?",
+        answer: "Yes, I have glitter glue. / No, I don't have glitter glue."
+      },
+      {
+        filename: "06 K F Do You Have White Glue.gif",
+        codePattern: "06 K F",
+        question: "Do you have white glue?",
+        answer: "Yes, I have white glue. / No, I don't have white glue."
+      },
+      {
+        filename: "06 K G Do You Have A Glue Gun.gif",
+        codePattern: "06 K G",
+        question: "Do you have a glue gun?",
+        answer: "Yes, I have a glue gun. / No, I don't have a glue gun."
+      },
+      {
+        filename: "06 K H Do You Have A Glue Stick.gif",
+        codePattern: "06 K H",
+        question: "Do you have a glue stick?",
+        answer: "Yes, I have a glue stick. / No, I don't have a glue stick."
+      },
+      {
+        filename: "06 K I What Colour is the Glue – White.gif",
+        codePattern: "06 K I",
+        question: "What color is the glue?",
+        answer: "The glue is white."
+      },
+      {
+        filename: "06 K J What Colour is the Glue – Blue.gif",
+        codePattern: "06 K J",
+        question: "What color is the glue?",
+        answer: "The glue is blue."
+      },
+      {
+        filename: "06 K L is It Glue or Ketchup.gif",
+        codePattern: "06 K L",
+        question: "Is it glue or ketchup?",
+        answer: "It is glue. / It is ketchup."
+      },
+      {
+        filename: "06 K L is It Normal or Slime Glue.jpg",
+        codePattern: "06 K L",
+        question: "Is it normal or slime glue?",
+        answer: "It is normal glue. / It is slime glue."
+      },
+      {
+        filename: "06 K M How Many Glue Sticks are There – There are 8.gif",
+        codePattern: "06 K M",
+        question: "How many glue sticks are there?",
+        answer: "There are 8 glue sticks."
+      },
+      // Section 7 - Eraser (pattern N)
+      {
+        filename: "07 N A What is It – It is an Eraser.gif",
+        codePattern: "07 N A",
+        question: "What is it?",
+        answer: "It is an eraser."
+      },
+      {
+        filename: "07 N B What Colour is the Eraser.gif",
+        codePattern: "07 N B",
+        question: "What color is the eraser?",
+        answer: "The eraser is [color]."
+      },
+      {
+        filename: "07 N C is It A Cat or Dog Eraser.jpg",
+        codePattern: "07 N C",
+        question: "Is it a cat or dog eraser?",
+        answer: "It is a cat eraser. / It is a dog eraser."
+      },
+      {
+        filename: "07 N D is It A Cat or Dog Eraser.jpg",
+        codePattern: "07 N D",
+        question: "Is it a cat or dog eraser?",
+        answer: "It is a cat eraser. / It is a dog eraser."
+      },
+      {
+        filename: "07 N E is It A Big or Small Eraser.gif",
+        codePattern: "07 N E",
+        question: "Is it a big or small eraser?",
+        answer: "It is a big eraser. / It is a small eraser."
+      },
+      {
+        filename: "07 N F is It A Happy or Sad Eraser.gif",
+        codePattern: "07 N F",
+        question: "Is it a happy or sad eraser?",
+        answer: "It is a happy eraser. / It is a sad eraser."
+      },
+      {
+        filename: "07 N G Do You Have an Eraser in Your Pencil Case.gif",
+        codePattern: "07 N G",
+        question: "Do you have an eraser in your pencil case?",
+        answer: "Yes, I have an eraser in my pencil case. / No, I don't have an eraser in my pencil case."
+      },
+      {
+        filename: "07 N H is It an Icecream or Cake Eraser.jpg",
+        codePattern: "07 N H",
+        question: "Is it an ice cream or cake eraser?",
+        answer: "It is an ice cream eraser. / It is a cake eraser."
+      },
+      {
+        filename: "07 N I What Colour are the Erasers.gif",
+        codePattern: "07 N I",
+        question: "What color are the erasers?",
+        answer: "The erasers are [color]."
+      },
+      {
+        filename: "07 N J is It A Man or Woman Eraser.jpg",
+        codePattern: "07 N J",
+        question: "Is it a man or woman eraser?",
+        answer: "It is a man eraser. / It is a woman eraser."
       }
     ];
   }
