@@ -146,6 +146,18 @@ function Router() {
         }}
       </Route>
       
+      {/* Support for books/id/units/id/content pattern */}
+      <Route path="/books/:bookId/units/:unitId/content">
+        {(params) => {
+          // Redirect to our standard book/unit format
+          const bookPath = `book${params.bookId}`;
+          const unitPath = `unit${params.unitId}`;
+          console.log(`Redirecting from books pattern to: ${bookPath}/${unitPath}`);
+          window.location.href = `/${bookPath}/${unitPath}`;
+          return null;
+        }}
+      </Route>
+      
       {/* Fallback for any other book/unit pattern - Allow public access with premium content controls */}
       <Route path="/:bookPath/:unitPath">
         {(params) => {
