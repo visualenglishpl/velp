@@ -629,14 +629,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Embed Code</label>
+                  <label className="block text-sm font-medium mb-1">
+                    {newResource.resourceType === 'activity' && "Lesson Plan Content"}
+                    {newResource.resourceType === 'pdf' && "PDF Display Content"}
+                    {(newResource.resourceType === 'video' || newResource.resourceType === 'game' || newResource.resourceType === 'other') && "Embed Code"}
+                  </label>
                   <textarea 
-                    placeholder='<iframe src="..." width="..." height="..." frameborder="0" allowfullscreen></iframe>'
-                    rows={5}
+                    placeholder={
+                      newResource.resourceType === 'activity' 
+                        ? 'Enter lesson plan content or HTML formatting...' 
+                        : newResource.resourceType === 'pdf'
+                          ? 'Enter PDF display information or embed code...'
+                          : '<iframe src="..." width="..." height="..." frameborder="0" allowfullscreen></iframe>'
+                    }
+                    rows={newResource.resourceType === 'activity' ? 10 : 5}
                     className="w-full resize-y p-2 border rounded-md focus:ring-2 focus:ring-primary/30 focus:border-primary/70"
                     value={newResource.embedCode}
                     onChange={(e) => setNewResource(prev => ({ ...prev, embedCode: e.target.value }))}
                   />
+                  {newResource.resourceType === 'activity' && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      You can use HTML formatting to create a nicely structured lesson plan.
+                    </p>
+                  )}
+                  {newResource.resourceType === 'pdf' && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      For PDF files, provide the full path to the PDF in the S3 bucket (e.g., book1/unit1/sample.pdf).
+                    </p>
+                  )}
                 </div>
                 
                 <div className="flex justify-end gap-2">
@@ -737,46 +757,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   <Gamepad2 className="h-4 w-4 mr-1 text-blue-500" />
                   Add Game
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => {
-                    setNewResource({
-                      bookId: bookId || '',
-                      unitId: unitId || '',
-                      title: "New Lesson Plan",
-                      resourceType: "activity",
-                      embedCode: "",
-                      order: resources.length,
-                      provider: "Visual English"
-                    });
-                    setIsAdding(true);
-                  }}
-                  className="flex items-center"
-                >
-                  <BookOpen className="h-4 w-4 mr-1 text-amber-500" />
-                  Add Lesson
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => {
-                    setNewResource({
-                      bookId: bookId || '',
-                      unitId: unitId || '',
-                      title: "New Lesson PDF",
-                      resourceType: "pdf",
-                      embedCode: "",
-                      order: resources.length,
-                      provider: "Visual English"
-                    });
-                    setIsAdding(true);
-                  }}
-                  className="flex items-center"
-                >
-                  <FileText className="h-4 w-4 mr-1 text-green-500" />
-                  Add PDF
-                </Button>
+
               </div>
           </div>
           
