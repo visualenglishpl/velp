@@ -397,7 +397,17 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       resourceType: newResource.resourceType || 'video'
     };
 
-    setResources(prev => [...prev, resourceToAdd]);
+    const updatedResources = [...resources, resourceToAdd];
+    setResources(updatedResources);
+    
+    // Save to server if we have bookId and unitId
+    if (bookId && unitId) {
+      saveResourcesToServer(updatedResources);
+      
+      // Also update localStorage for fallback
+      localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(updatedResources));
+    }
+    
     setNewResource({
       resourceType: 'video',
       title: '',
@@ -448,6 +458,14 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     
     setResources(updatedResources);
     setEditingResource(null);
+    
+    // Save to server if we have bookId and unitId
+    if (bookId && unitId) {
+      saveResourcesToServer(updatedResources);
+      
+      // Also update localStorage for fallback
+      localStorage.setItem(`resources-${bookId}-${unitId}`, JSON.stringify(updatedResources));
+    }
     
     toast({
       title: 'Resource updated',
