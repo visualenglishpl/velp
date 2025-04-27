@@ -969,14 +969,17 @@ export function registerDirectRoutes(app: Express) {
         });
       }
       
-      // S3 path to the Excel file
-      const excelS3Path = "book1/VISUAL 1 QUESTIONS.xlsx";
+      // Get the book ID from the request query
+      const bookId = req.query.bookId || '1';
+      
+      // Determine the Excel file path based on book ID
+      const excelS3Path = `book${bookId}/VISUAL ${bookId} QUESTIONS.xlsx`;
       
       // Local path to save the Excel file temporarily
-      const excelFilePath = path.join(process.cwd(), 'attached_assets', 'VISUAL 1 QUESTIONS.xlsx');
+      const excelFilePath = path.join(process.cwd(), 'attached_assets', `VISUAL ${bookId} QUESTIONS.xlsx`);
       
-      // Path for the output TypeScript file
-      const tsOutputPath = path.join(process.cwd(), 'client', 'src', 'data', 'question-data.ts');
+      // Path for the output TypeScript file - now book-specific
+      const tsOutputPath = path.join(process.cwd(), 'client', 'src', 'data', `question-data-book${bookId}.ts`);
       
       // First, download the Excel file from S3
       console.log(`Downloading Excel file from S3 path: ${excelS3Path}`);
@@ -1246,11 +1249,13 @@ export function registerDirectRoutes(app: Express) {
   // Endpoint to download and process the Excel file with questions and answers
   app.get("/api/direct/process-qa-excel", isAuthenticated, async (req, res) => {
     try {
-      console.log("Processing Excel file for Q&A mapping");
+      // Get the book ID from the request query
+      const bookId = req.query.bookId || '1';
+      console.log(`Processing Excel file for Q&A mapping for Book ${bookId}`);
       
-      // Use the local Excel file instead of downloading from S3
-      const localExcelPath = "./attached_assets/VISUAL 1 QUESTIONS.xlsx";
-      const outputPath = "./client/src/data/qa-mapping.ts";
+      // Determine file path based on book ID
+      const localExcelPath = `./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`;
+      const outputPath = `./client/src/data/qa-mapping-book${bookId}.ts`;
       
       console.log(`Processing local Excel file at ${localExcelPath}`);
       
@@ -1259,9 +1264,24 @@ export function registerDirectRoutes(app: Express) {
         // Check if the file exists
         if (!require('fs').existsSync(localExcelPath)) {
           console.error(`Excel file not found at ${localExcelPath}`);
+          
+          // If we're looking for VISUAL 2 QUESTIONS.xlsx but it's not in the attached_assets folder,
+          // check if it exists as an uploaded file from the client
+          if (require('fs').existsSync(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`)) {
+            console.log(`Found uploaded Excel file for Book ${bookId}`);
+            const qaMapping = processExcelAndGenerateTS(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`, outputPath);
+            
+            return res.json({
+              success: true,
+              message: `Successfully processed Q&A Excel file for Book ${bookId}`,
+              mappingCount: Object.keys(qaMapping).length,
+              outputPath
+            });
+          }
+          
           return res.status(404).json({
             success: false,
-            error: "Excel file not found"
+            error: `Excel file not found for Book ${bookId}`
           });
         }
         
@@ -1269,7 +1289,7 @@ export function registerDirectRoutes(app: Express) {
         
         return res.json({
           success: true,
-          message: "Successfully processed Q&A Excel file",
+          message: `Successfully processed Q&A Excel file for Book ${bookId}`,
           mappingCount: Object.keys(qaMapping).length,
           outputPath
         });

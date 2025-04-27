@@ -4,9 +4,12 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle, FileSpreadsheet, Check, RefreshCcw } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 const ExcelQAProcessor: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedBook, setSelectedBook] = useState('1');
   const [processResult, setProcessResult] = useState<{
     success: boolean;
     message: string;
@@ -20,7 +23,8 @@ const ExcelQAProcessor: React.FC = () => {
     setProcessResult(null);
 
     try {
-      const response = await apiRequest('GET', '/api/direct/process-qa-excel');
+      // Pass the selected book ID as a query parameter
+      const response = await apiRequest('GET', `/api/direct/process-qa-excel?bookId=${selectedBook}`);
       const result = await response.json();
 
       if (result.success) {
@@ -32,27 +36,27 @@ const ExcelQAProcessor: React.FC = () => {
         
         toast({
           title: "Success!",
-          description: `Processed Excel file and extracted ${result.mappingCount} Q&A mappings.`,
+          description: `Processed Excel file for Book ${selectedBook} and extracted ${result.mappingCount} Q&A mappings.`,
           variant: "default"
         });
       } else {
         setProcessResult({
           success: false,
-          message: "Failed to process Excel file",
+          message: `Failed to process Excel file for Book ${selectedBook}`,
           error: result.error
         });
         
         toast({
           title: "Error",
-          description: result.error || "Failed to process Excel file",
+          description: result.error || `Failed to process Excel file for Book ${selectedBook}`,
           variant: "destructive"
         });
       }
     } catch (error) {
-      console.error("Error processing Excel file:", error);
+      console.error(`Error processing Excel file for Book ${selectedBook}:`, error);
       setProcessResult({
         success: false,
-        message: "Error processing Excel file",
+        message: `Error processing Excel file for Book ${selectedBook}`,
         error: error instanceof Error ? error.message : String(error)
       });
       
@@ -79,11 +83,32 @@ const ExcelQAProcessor: React.FC = () => {
       </CardHeader>
       <CardContent>
         <p className="text-sm mb-4">
-          This process will download the Excel file "VISUAL 1 QUESTIONS.xlsx" from S3,
-          parse the question and answer mappings, and generate a TypeScript file that
-          can be used to automatically match slide filenames with their corresponding
-          questions and answers.
+          This process will download the Excel file containing questions and answers for the selected book,
+          parse the mappings, and generate a TypeScript file that can be used to automatically match
+          slide filenames with their corresponding questions and answers.
         </p>
+        
+        <div className="mb-4 space-y-2">
+          <Label htmlFor="book-select">Select Book</Label>
+          <Select 
+            value={selectedBook} 
+            onValueChange={setSelectedBook}
+            disabled={isLoading}
+          >
+            <SelectTrigger id="book-select" className="w-full">
+              <SelectValue placeholder="Select book">Book {selectedBook}</SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">Book 1</SelectItem>
+              <SelectItem value="2">Book 2</SelectItem>
+              <SelectItem value="3">Book 3</SelectItem>
+              <SelectItem value="4">Book 4</SelectItem>
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-muted-foreground">
+            Will process "VISUAL {selectedBook} QUESTIONS.xlsx" from S3 bucket
+          </p>
+        </div>
         
         {processResult && (
           <div className={`my-4 p-3 rounded-md ${processResult.success ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`}>
@@ -115,10 +140,10 @@ const ExcelQAProcessor: React.FC = () => {
           {isLoading ? (
             <>
               <RefreshCcw className="h-4 w-4 mr-2 animate-spin" />
-              Processing...
+              Processing Book {selectedBook}...
             </>
           ) : (
-            'Process Excel File'
+            `Process Book ${selectedBook} Excel File`
           )}
         </Button>
       </CardFooter>
