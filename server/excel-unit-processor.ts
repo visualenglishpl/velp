@@ -1216,92 +1216,92 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         answer: "He is a baby."
       },
       {
-        filename: "04 E B is the Baby Happy or Sad.gif",
-        codePattern: "04 E B",
+        filename: "04 N B is the Baby Happy or Sad.gif",
+        codePattern: "04 N B",
         question: "Is the baby happy or sad?",
         answer: "The baby is happy. / The baby is sad."
       },
       {
-        filename: "04 E C is the Baby A Boy or A Girl.gif",
-        codePattern: "04 E C",
+        filename: "04 N C is the Baby A Boy or A Girl.gif",
+        codePattern: "04 N C",
         question: "Is the baby a boy or a girl?",
         answer: "The baby is a boy. / The baby is a girl."
       },
       {
-        filename: "04 E D is the Baby Sleeping or Crying.gif",
-        codePattern: "04 E D",
+        filename: "04 N D is the Baby Sleeping or Crying.gif",
+        codePattern: "04 N D",
         question: "Is the baby sleeping or crying?",
         answer: "The baby is sleeping. / The baby is crying."
       },
       {
-        filename: "05 E A Who are They – They are A Family.gif",
-        codePattern: "05 E A",
+        filename: "05 N A Who are They – They are A Family.gif",
+        codePattern: "05 N A",
         question: "Who are they?",
         answer: "They are a family."
       },
       {
-        filename: "05 E B is It A Big or Small Family.gif",
-        codePattern: "05 E B",
+        filename: "05 N B is It A Big or Small Family.gif",
+        codePattern: "05 N B",
         question: "Is it a big or small family?",
         answer: "It is a big family. / It is a small family."
       },
       {
-        filename: "05 E C is It A Happy or Sad Family.gif",
-        codePattern: "05 E C",
+        filename: "05 N C is It A Happy or Sad Family.gif",
+        codePattern: "05 N C",
         question: "Is it a happy or sad family?",
         answer: "It is a happy family. / It is a sad family."
       },
       {
-        filename: "05 E D How Many People are There in the Family.gif",
-        codePattern: "05 E D",
+        filename: "05 N D How Many People are There in the Family.gif",
+        codePattern: "05 N D",
         question: "How many people are there in the family?",
         answer: "There are [number] people in the family."
       },
       {
-        filename: "06 E A is Grandma A Man or A Woman.gif",
-        codePattern: "06 E A",
+        filename: "06 N A is Grandma A Man or A Woman.gif",
+        codePattern: "06 N A",
         question: "Is grandma a man or a woman?",
         answer: "Grandma is a woman."
       },
       {
-        filename: "06 E B is Grandpa A Man or A Woman.gif",
-        codePattern: "06 E B",
+        filename: "06 N B is Grandpa A Man or A Woman.gif",
+        codePattern: "06 N B",
         question: "Is grandpa a man or a woman?",
         answer: "Grandpa is a man."
       },
       {
-        filename: "06 E C is Grandma Young or Old.gif",
-        codePattern: "06 E C",
+        filename: "06 N C is Grandma Young or Old.gif",
+        codePattern: "06 N C",
         question: "Is grandma young or old?",
         answer: "Grandma is young. / Grandma is old."
       },
       {
-        filename: "06 E D is Grandpa Young or Old.gif",
-        codePattern: "06 E D",
+        filename: "06 N D is Grandpa Young or Old.gif",
+        codePattern: "06 N D",
         question: "Is grandpa young or old?",
         answer: "Grandpa is young. / Grandpa is old."
       },
       {
-        filename: "07 E A is Uncle A Man or A Woman.gif",
-        codePattern: "07 E A",
+        filename: "07 N A is Uncle A Man or A Woman.gif",
+        codePattern: "07 N A",
         question: "Is uncle a man or a woman?",
         answer: "Uncle is a man."
       },
       {
-        filename: "07 E B is Aunt A Man or A Woman.gif",
-        codePattern: "07 E B",
+        filename: "07 N B is Aunt A Man or A Woman.gif",
+        codePattern: "07 N B",
         question: "Is aunt a man or a woman?",
         answer: "Aunt is a woman."
       },
       {
-        filename: "07 E C is Uncle Young or Old.gif",
-        codePattern: "07 E C",
+        filename: "07 N C is Uncle Young or Old.gif",
+        codePattern: "07 N C",
         question: "Is uncle young or old?",
         answer: "Uncle is young. / Uncle is old."
       },
       {
-        filename: "07 E D is Aunt Young or Old.gif",
-        codePattern: "07 E D",
+        filename: "07 N D is Aunt Young or Old.gif",
+        codePattern: "07 N D",
         question: "Is aunt young or old?",
         answer: "Aunt is young. / Aunt is old."
       },
