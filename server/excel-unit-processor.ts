@@ -1343,80 +1343,80 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
     console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
     return [
       {
-        filename: "01 N A What is It – It is A Pen.gif",
-        codePattern: "01 N A",
+        filename: "01 E A What is It – It is A Pen.gif",
+        codePattern: "01 E A",
         question: "What is it?",
         answer: "It is a pen."
       },
       {
-        filename: "01 N B What are They – They are Pens.gif",
-        codePattern: "01 N B",
+        filename: "01 E B What are They – They are Pens.gif",
+        codePattern: "01 E B",
         question: "What are they?",
         answer: "They are pens."
       },
       {
-        filename: "01 N C is It A Girl or A Boy Pen.gif",
-        codePattern: "01 N C",
+        filename: "01 E C is It A Girl or A Boy Pen.gif",
+        codePattern: "01 E C",
         question: "Is it a girl or boy pen?",
         answer: "It is a girl pen. / It is a boy pen."
       },
       {
-        filename: "01 N D is It A Dog or A Cat Pen.jpg",
-        codePattern: "01 N D",
+        filename: "01 E D is It A Dog or A Cat Pen.jpg",
+        codePattern: "01 E D",
         question: "Is it a dog or cat pen?",
         answer: "It is a dog pen. / It is a cat pen."
       },
       {
-        filename: "01 N F is It A Hotdog or A Hamburger Pen.png",
-        codePattern: "01 N F",
+        filename: "01 E F is It A Hotdog or A Hamburger Pen.png",
+        codePattern: "01 E F",
         question: "Is it a hotdog or hamburger pen?",
         answer: "It is a hotdog pen. / It is a hamburger pen."
       },
       {
-        filename: "01 N F is It A Lion or Tiger Pen.png",
-        codePattern: "01 N F",
+        filename: "01 E F is It A Lion or Tiger Pen.png",
+        codePattern: "01 E F",
         question: "Is it a lion or tiger pen?",
         answer: "It is a lion pen. / It is a tiger pen."
       },
       {
-        filename: "01 N G Do You Have A Pen in Your Pencil Case.gif",
-        codePattern: "01 N G",
+        filename: "01 E G Do You Have A Pen in Your Pencil Case.gif",
+        codePattern: "01 E G",
         question: "Do you have a pen in your pencil case?",
         answer: "Yes, I have a pen in my pencil case. / No, I don't have a pen in my pencil case."
       },
       {
-        filename: "01 N H Do You Have A Blue Pen.gif",
-        codePattern: "01 N H",
+        filename: "01 E H Do You Have A Blue Pen.gif",
+        codePattern: "01 E H",
         question: "Do you have a blue pen?",
         answer: "Yes, I have a blue pen. / No, I don't have a blue pen."
       },
       {
-        filename: "01 N I Do You Have A Black Pen.gif",
-        codePattern: "01 N I",
+        filename: "01 E I Do You Have A Black Pen.gif",
+        codePattern: "01 E I",
         question: "Do you have a black pen?",
         answer: "Yes, I have a black pen. / No, I don't have a black pen."
       },
       {
-        filename: "01 N J Do You Have A Lego Pen.png",
-        codePattern: "01 N J",
+        filename: "01 E J Do You Have A Lego Pen.png",
+        codePattern: "01 E J",
         question: "Do you have a Lego pen?",
         answer: "Yes, I have a Lego pen. / No, I don't have a Lego pen."
       },
       {
-        filename: "01 N K What Colour is the Pen – Blue.gif",
-        codePattern: "01 N K",
+        filename: "01 E K What Colour is the Pen – Blue.gif",
+        codePattern: "01 E K",
         question: "What color is the pen?",
         answer: "The pen is blue."
       },
       {
-        filename: "01 N L What Colour are the Pens.gif",
-        codePattern: "01 N L",
+        filename: "01 E L What Colour are the Pens.gif",
+        codePattern: "01 E L",
         question: "What color are the pens?",
         answer: "The pens are [color]."
       },
       {
-        filename: "01 N M How Many Pens are There – 4 Pens.gif",
-        codePattern: "01 N M",
+        filename: "01 E M How Many Pens are There – 4 Pens.gif",
+        codePattern: "01 E M",
         question: "How many pens are there?",
         answer: "There are 4 pens."
       },

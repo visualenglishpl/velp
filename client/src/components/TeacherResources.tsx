@@ -145,6 +145,173 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         ];
         setResources(predefinedResources);
       }
+      // Book 1, Unit 10 resources
+      else if (bookId === "1" && unitId === "10") {
+        predefinedResources = [
+          // PDF Resource
+          {
+            bookId: "1",
+            unitId: "10",
+            title: "Visual English Book 1 - Unit 10 - Lesson PDF",
+            resourceType: "pdf",
+            embedCode: `<div style="padding: 20px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
+              <h3 style="margin-bottom: 15px; color: #2563eb;">Unit 10 - Complete Lesson PDF</h3>
+              <p style="margin-bottom: 20px;">This PDF contains the complete lesson materials for Unit 10</p>
+              <a href="https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit10/00%20A%20Visual%20English%201%20%E2%80%93%20Unit%2010%20%E2%80%93%20New%20Version.pdf" 
+                 target="_blank" 
+                 style="display: inline-block; background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: 500;">
+                <span style="display: flex; align-items: center; justify-content: center;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <line x1="10" y1="9" x2="8" y2="9"></line>
+                  </svg>
+                  Download PDF
+                </span>
+              </a>
+            </div>`,
+            order: 0,
+            provider: "Amazon S3"
+          },
+          // Lesson Plan
+          {
+            bookId: "1",
+            unitId: "10",
+            title: "Unit 10 - Comprehensive Lesson Plan (2 x 45min)",
+            resourceType: "activity",
+            embedCode: `<div style="padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem; text-align: center;">Comprehensive Lesson Plan: Unit 10 (2 x 45min)</h2>
+              
+              <div style="margin-bottom: 1.5rem; background-color: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                <h3 style="font-size: 1.3rem; color: #1e40af; margin-bottom: 0.5rem;">Lesson Overview</h3>
+                <p>This comprehensive plan covers two 45-minute lessons focusing on the key vocabulary and expressions from Unit 10.</p>
+              </div>
+              
+              <!-- Two-column layout for learning objectives and materials -->
+              <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.5rem;">
+                <div style="flex: 1; min-width: 300px;">
+                  <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Learning Objectives</h3>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Students will identify and use key vocabulary from Unit 10</li>
+                    <li>Students will practice question and answer patterns from the unit</li>
+                    <li>Students will demonstrate understanding through role-play and interactive activities</li>
+                    <li>Students will be able to create their own dialogues using target language</li>
+                  </ul>
+                </div>
+                
+                <div style="flex: 1; min-width: 300px;">
+                  <h3 style="font-size: 1.2rem; color: #4b5563; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Required Materials</h3>
+                  <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                    <li>Visual English Book 1 - Unit 10 slides</li>
+                    <li>Unit 10 vocabulary flashcards</li>
+                    <li>Role-play situation cards</li>
+                    <li>Craft materials: colored paper, markers, scissors, glue</li>
+                    <li>Printed worksheets for guided practice</li>
+                    <li>Audio/video resources for the unit theme</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <!-- Two-column layout for lesson plans -->
+              <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.5rem;">
+                <!-- Lesson 1 -->
+                <div style="flex: 1; min-width: 300px; background-color: #f0f9ff; padding: 16px; border-radius: 8px;">
+                  <h3 style="font-size: 1.3rem; color: #0369a1; margin-bottom: 1rem; text-align: center;">Lesson 1: Vocabulary Introduction (45 minutes)</h3>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Warm-up (5 minutes)</h4>
+                    <p>Begin with a quick review of previously learned vocabulary. Show pictures related to Unit 10 and ask students to guess what they will learn today.</p>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Presentation (15 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Show slides 1-10 introducing the key vocabulary</li>
+                      <li>Model pronunciation and have students repeat each term</li>
+                      <li>Demonstrate simple question and answer patterns</li>
+                      <li>Use visual aids to reinforce understanding</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Practice (15 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Guided practice with flashcards - show images and elicit vocabulary</li>
+                      <li>Pair activity: Students practice Q&A patterns with partners</li>
+                      <li>Chain activity: Each student adds a new word from the unit</li>
+                      <li>Matching game: Connect questions with appropriate answers</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Production (5 minutes)</h4>
+                    <p>Students create simple dialogues using the vocabulary and patterns learned in class.</p>
+                  </div>
+                  
+                  <div>
+                    <h4 style="font-size: 1.1rem; color: #0ea5e9; margin-bottom: 0.5rem;">Wrap-up & Assessment (5 minutes)</h4>
+                    <p>Quick review of vocabulary learned. Exit ticket: Each student must correctly use one new word or phrase before leaving.</p>
+                  </div>
+                </div>
+                
+                <!-- Lesson 2 -->
+                <div style="flex: 1; min-width: 300px; background-color: #fff7ed; padding: 16px; border-radius: 8px;">
+                  <h3 style="font-size: 1.3rem; color: #9a3412; margin-bottom: 1rem; text-align: center;">Lesson 2: Application & Practice (45 minutes)</h3>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Warm-up & Review (8 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Vocabulary recall game: Teacher shows images from Unit 10</li>
+                      <li>Students race to identify and use vocabulary in sentences</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Extended Practice (20 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Group activity: Students rotate through 3 stations with different practice activities</li>
+                      <li>Station 1: Complete written worksheets with Unit 10 vocabulary</li>
+                      <li>Station 2: Role-play dialogues using question and answer patterns</li>
+                      <li>Station 3: Create visual vocabulary cards for classroom display</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Creative Application (12 minutes)</h4>
+                    <p>Students work in small groups to create a short skit or story incorporating at least 5 vocabulary items from Unit 10. Groups perform their skits for the class.</p>
+                  </div>
+                  
+                  <div>
+                    <h4 style="font-size: 1.1rem; color: #ea580c; margin-bottom: 0.5rem;">Assessment & Closure (5 minutes)</h4>
+                    <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li>Conduct a quick quiz using the Unit 10 question patterns</li>
+                      <li>Review any challenging vocabulary or expressions</li>
+                      <li>Assign homework: Students complete a take-home worksheet to reinforce learning</li>
+                      <li>Preview upcoming content for the next lesson</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="background-color: #f1f5f9; padding: 16px; border-radius: 8px; margin-top: 1rem;">
+                <h3 style="font-size: 1.2rem; color: #475569; margin-bottom: 0.5rem;">Teacher Notes</h3>
+                <ul style="list-style-type: disc; padding-left: 1.5rem;">
+                  <li>Adjust the pace based on student comprehension and engagement</li>
+                  <li>For mixed-ability classes, prepare additional challenge activities for advanced students</li>
+                  <li>The Visual English Book 1 - Unit 10 PDF contains additional exercises that can be incorporated</li>
+                  <li>Consider using online games and videos as supplementary materials</li>
+                  <li>Take photos of student work for portfolio assessment</li>
+                </ul>
+              </div>
+            </div>`,
+            order: 1,
+            provider: "Visual English"
+          }
+        ];
+        setResources(predefinedResources);
+      }
       // Book 1, Unit 2 resources (School Objects)
       else if (bookId === "1" && unitId === "2") {
         predefinedResources = [
