@@ -717,47 +717,52 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             </TabsList>
           
             <div className="flex flex-wrap gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => {
-                    setNewResource({
-                      bookId: bookId || '',
-                      unitId: unitId || '',
-                      title: "New Video",
-                      resourceType: "video",
-                      embedCode: "",
-                      order: resources.length,
-                      provider: "YouTube"
-                    });
-                    setIsAdding(true);
-                  }}
-                  className="flex items-center"
-                >
-                  <Video className="h-4 w-4 mr-1 text-red-500" />
-                  Add Video
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => {
-                    setNewResource({
-                      bookId: bookId || '',
-                      unitId: unitId || '',
-                      title: "New Game",
-                      resourceType: "game",
-                      embedCode: "",
-                      order: resources.length,
-                      provider: "Wordwall"
-                    });
-                    setIsAdding(true);
-                  }}
-                  className="flex items-center"
-                >
-                  <Gamepad2 className="h-4 w-4 mr-1 text-blue-500" />
-                  Add Game
-                </Button>
-
+                {isEditMode && (
+                  <>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => {
+                        console.log("Add Video button clicked - setting isAdding to true");
+                        setNewResource({
+                          bookId: bookId || '',
+                          unitId: unitId || '',
+                          title: "New Video",
+                          resourceType: "video",
+                          embedCode: "",
+                          order: resources.length,
+                          provider: "YouTube"
+                        });
+                        setIsAdding(true);
+                      }}
+                      className="flex items-center"
+                    >
+                      <Video className="h-4 w-4 mr-1 text-red-500" />
+                      Add Video
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => {
+                        console.log("Add Game button clicked - setting isAdding to true");
+                        setNewResource({
+                          bookId: bookId || '',
+                          unitId: unitId || '',
+                          title: "New Game",
+                          resourceType: "game",
+                          embedCode: "",
+                          order: resources.length,
+                          provider: "Wordwall"
+                        });
+                        setIsAdding(true);
+                      }}
+                      className="flex items-center"
+                    >
+                      <Gamepad2 className="h-4 w-4 mr-1 text-blue-500" />
+                      Add Game
+                    </Button>
+                  </>
+                )}
               </div>
           </div>
           
