@@ -1338,9 +1338,9 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
     ];
   }
   
-  // Book 1, Unit 2 hardcoded data from the provided text file
+  // Book 1, Unit 2 hardcoded data based on the reference file
   if (bookId === 'book1' && unitId === 'unit2') {
-    console.log(`Using hardcoded data for ${bookId}/${unitId} from text file`);
+    console.log(`Using hardcoded data for ${bookId}/${unitId} from reference file`);
     return [
       // Pen category - pattern E
       {
@@ -1899,6 +1899,74 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         codePattern: "09 N M",
         question: "What color are the school bags?",
         answer: "The school bags are [colors]."
+      },
+      
+      // Section 11 - Pencil Case (pattern N)
+      {
+        filename: "11 N A What is It – It is A Pencil Case.gif",
+        codePattern: "11 N A",
+        question: "What is it?",
+        answer: "It is a pencil case."
+      },
+      {
+        filename: "11 N B What are They – They are Pencil Cases.gif",
+        codePattern: "11 N B",
+        question: "What are they?",
+        answer: "They are pencil cases."
+      },
+      {
+        filename: "11 N C Do You Have A Pencil Case.gif",
+        codePattern: "11 N C",
+        question: "Do you have a pencil case?",
+        answer: "Yes, I have a pencil case. / No, I don't have a pencil case."
+      },
+      {
+        filename: "11 N D What Colour is Your Pencil Case.gif",
+        codePattern: "11 N D",
+        question: "What color is your pencil case?",
+        answer: "My pencil case is [color]."
+      },
+      {
+        filename: "11 N E is It A Girl or Boy Pencil Case.jpg",
+        codePattern: "11 N E",
+        question: "Is it a girl or boy pencil case?",
+        answer: "It is a girl pencil case. / It is a boy pencil case."
+      },
+      {
+        filename: "11 N F is It A Small or Big Pencil Case.gif",
+        codePattern: "11 N F",
+        question: "Is it a small or big pencil case?",
+        answer: "It is a small pencil case. / It is a big pencil case."
+      },
+      {
+        filename: "11 N G is It A Dog or Cat Pencil Case.jpg",
+        codePattern: "11 N G",
+        question: "Is it a dog or cat pencil case?",
+        answer: "It is a dog pencil case. / It is a cat pencil case."
+      },
+      {
+        filename: "11 N H is It A Dog or Cat Pencil Case.jpg",
+        codePattern: "11 N H",
+        question: "Is it a dog or cat pencil case?",
+        answer: "It is a dog pencil case. / It is a cat pencil case."
+      },
+      {
+        filename: "11 N I is It A Micky or Hello Kitty Pencil Case.jpg",
+        codePattern: "11 N I",
+        question: "Is it a Mickey or Hello Kitty pencil case?",
+        answer: "It is a Mickey pencil case. / It is a Hello Kitty pencil case."
+      },
+      {
+        filename: "11 N J is It A Fish or Snake Pencil Case.jpg",
+        codePattern: "11 N J",
+        question: "Is it a fish or snake pencil case?",
+        answer: "It is a fish pencil case. / It is a snake pencil case."
+      },
+      {
+        filename: "11 N K is It A Panda or Koala Pencil Case.gif",
+        codePattern: "11 N K",
+        question: "Is it a panda or koala pencil case?",
+        answer: "It is a panda pencil case. / It is a koala pencil case."
       },
       {
         filename: "07 N B What Colour is the Eraser.gif",
