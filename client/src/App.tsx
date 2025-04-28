@@ -127,12 +127,15 @@ function Router() {
       </Route>
       
       {/* Content Viewer Routes - Allow public access with premium content controls */}
-      <Route path="/book:bookId/unit:unitNumber">
-        {() => <ProtectedRoute component={SlickContentViewer} requireAuth={false} />}
+      <Route path="/book/:bookId/:unitId">
+        {(params) => {
+          console.log(`Book/unit content viewer for: /book/${params.bookId}/${params.unitId}`);
+          return <ProtectedRoute component={SlickContentViewer} requireAuth={false} />;
+        }}
       </Route>
       
       {/* Direct book route (e.g., /book4) - redirects to the units page */}
-      <Route path="/book:bookId">
+      <Route path="/book/:bookId">
         {(params) => {
           const bookId = params.bookId;
           console.log(`Direct book route handler for bookId: ${bookId}`);
