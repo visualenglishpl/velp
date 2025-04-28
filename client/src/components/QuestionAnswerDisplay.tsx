@@ -304,24 +304,10 @@ function getQuestionAnswerFromData(material: any): QAData {
   
   // FIRST APPROACH: Try our advanced pattern engine
   // This uses sophisticated pattern detection to generate Q&A for any file
-  // Extract the unit ID from props or from content
-  if (material && material.content) {
-    // Try to get unitId from props passed to the function (this component)
-    let currentUnitId = '';
-    
-    if (unitId) {
-      // If unitId is directly passed as a prop, use it
-      currentUnitId = unitId;
-    } else if (content && content.toLowerCase().includes('unit')) {
-      // Try to extract unit number from content string
-      const unitMatch = content.match(/unit\s*(\d+)/i);
-      if (unitMatch && unitMatch[1]) {
-        currentUnitId = `unit${unitMatch[1]}`;
-      }
-    }
-    
-    console.log(`Using pattern engine for ${content} in book/${currentUnitId}`);
-    const patternEngineResult = getQuestionAnswer(content, currentUnitId);
+  if (material && material.content && typeof unitId === 'string') {
+    // The unitId is passed as a prop to this component
+    console.log(`Using pattern engine for ${content} in book/${unitId}`);
+    const patternEngineResult = getQuestionAnswer(content, unitId);
     
     if (patternEngineResult) {
       console.log(`Pattern engine generated Q&A for ${content}:`, patternEngineResult);
