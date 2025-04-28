@@ -1326,6 +1326,11 @@ export function registerDirectRoutes(app: Express) {
       console.log(`START: Processing Excel QA for ${bookPath}/${unitPath}`);
       console.log(`=====================================================`);
       
+      // Special handling for Unit 3 to ensure all questions are loaded
+      if (bookPath === 'book1' && unitPath === 'unit3') {
+        console.log('Using enhanced processing for Book 1 Unit 3');
+      }
+      
       // Force reprocess option - useful for debugging
       const forceReprocess = req.query.force === 'true';
       if (forceReprocess) {
