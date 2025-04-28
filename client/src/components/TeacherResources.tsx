@@ -676,72 +676,80 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             <TabsTrigger value="activity">Lesson Plans</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="videos" className="resources-list space-y-4">
-            {resources.filter(r => r.resourceType === 'video').map((resource, index) => (
-              <ResourceItem
-                key={index}
-                resource={resource}
-                index={resources.indexOf(resource)}
-                isEditing={editingResource === resources.indexOf(resource)}
-                isEditMode={isEditMode}
-                onEdit={() => handleEditResource(resources.indexOf(resource))}
-                onCancelEdit={handleCancelEdit}
-                onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
-                onDelete={() => handleDeleteResource(resources.indexOf(resource))}
-                onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
-              />
-            ))}
+          <TabsContent value="videos">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {resources.filter(r => r.resourceType === 'video').map((resource, index) => (
+                <ResourceItem
+                  key={index}
+                  resource={resource}
+                  index={resources.indexOf(resource)}
+                  isEditing={editingResource === resources.indexOf(resource)}
+                  isEditMode={isEditMode}
+                  onEdit={() => handleEditResource(resources.indexOf(resource))}
+                  onCancelEdit={handleCancelEdit}
+                  onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
+                  onDelete={() => handleDeleteResource(resources.indexOf(resource))}
+                  onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
+                />
+              ))}
+            </div>
           </TabsContent>
           
-          <TabsContent value="games" className="resources-list space-y-4">
-            {resources.filter(r => r.resourceType === 'game').map((resource, index) => (
-              <ResourceItem
-                key={index}
-                resource={resource}
-                index={resources.indexOf(resource)}
-                isEditing={editingResource === resources.indexOf(resource)}
-                isEditMode={isEditMode}
-                onEdit={() => handleEditResource(resources.indexOf(resource))}
-                onCancelEdit={handleCancelEdit}
-                onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
-                onDelete={() => handleDeleteResource(resources.indexOf(resource))}
-                onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
-              />
-            ))}
+          <TabsContent value="games">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {resources.filter(r => r.resourceType === 'game').map((resource, index) => (
+                <ResourceItem
+                  key={index}
+                  resource={resource}
+                  index={resources.indexOf(resource)}
+                  isEditing={editingResource === resources.indexOf(resource)}
+                  isEditMode={isEditMode}
+                  onEdit={() => handleEditResource(resources.indexOf(resource))}
+                  onCancelEdit={handleCancelEdit}
+                  onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
+                  onDelete={() => handleDeleteResource(resources.indexOf(resource))}
+                  onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
+                />
+              ))}
+            </div>
           </TabsContent>
           
-          <TabsContent value="pdf" className="resources-list space-y-4">
-            {resources.filter(r => r.resourceType === 'pdf').map((resource, index) => (
-              <ResourceItem
-                key={index}
-                resource={resource}
-                index={resources.indexOf(resource)}
-                isEditing={editingResource === resources.indexOf(resource)}
-                isEditMode={isEditMode}
-                onEdit={() => handleEditResource(resources.indexOf(resource))}
-                onCancelEdit={handleCancelEdit}
-                onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
-                onDelete={() => handleDeleteResource(resources.indexOf(resource))}
-                onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
-              />
-            ))}
+          <TabsContent value="pdf">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {resources.filter(r => r.resourceType === 'pdf').map((resource, index) => (
+                <ResourceItem
+                  key={index}
+                  resource={resource}
+                  index={resources.indexOf(resource)}
+                  isEditing={editingResource === resources.indexOf(resource)}
+                  isEditMode={isEditMode}
+                  onEdit={() => handleEditResource(resources.indexOf(resource))}
+                  onCancelEdit={handleCancelEdit}
+                  onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
+                  onDelete={() => handleDeleteResource(resources.indexOf(resource))}
+                  onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
+                />
+              ))}
+            </div>
           </TabsContent>
           
-          <TabsContent value="activity" className="resources-list space-y-4">
-            {resources.filter(r => r.resourceType === 'activity').map((resource, index) => (
-              <ResourceItem
-                key={index}
-                resource={resource}
-                index={resources.indexOf(resource)}
-                isEditing={editingResource === resources.indexOf(resource)}
-                isEditMode={isEditMode}
-                onEdit={() => handleEditResource(resources.indexOf(resource))}
-                onCancelEdit={handleCancelEdit}
-                onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
-                onDelete={() => handleDeleteResource(resources.indexOf(resource))}
-                onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
-              />
-            ))}
+          <TabsContent value="activity">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {resources.filter(r => r.resourceType === 'activity').map((resource, index) => (
+                <ResourceItem
+                  key={index}
+                  resource={resource}
+                  index={resources.indexOf(resource)}
+                  isEditing={editingResource === resources.indexOf(resource)}
+                  isEditMode={isEditMode}
+                  onEdit={() => handleEditResource(resources.indexOf(resource))}
+                  onCancelEdit={handleCancelEdit}
+                  onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
+                  onDelete={() => handleDeleteResource(resources.indexOf(resource))}
+                  onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
+                />
+              ))}
+            </div>
           </TabsContent>
         </Tabs>
       )}
