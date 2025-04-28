@@ -202,6 +202,9 @@ function getContentTypeFromPath(filepath: string): string {
   return "document";
 }
 
+// Import http module for server creation
+import { createServer } from 'http';
+
 // Register direct routes that map 1:1 with S3 structure
 export function registerDirectRoutes(app: Express) {
   // Basic authentication middleware - made optional for direct paths
@@ -1474,6 +1477,44 @@ export function registerDirectRoutes(app: Express) {
         success: false,
         message: `Error testing Excel download for ${bookPath}`,
         error: String(error)
+      });
+    }
+  });
+  
+  // Update teacher resources endpoint for admin
+  app.post("/api/direct/updateTeacherResources", isAuthenticated, async (req, res) => {
+    try {
+      console.log("Starting teacher resources update process...");
+      
+      // Use the node file system to run the update script
+      const { exec } = require('child_process');
+      
+      // Run the script as a separate process
+      const process = exec('node run_update_resources.js', (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Teacher resources update error: ${error}`);
+          return;
+        }
+        if (stderr) {
+          console.error(`Teacher resources stderr: ${stderr}`);
+          return;
+        }
+        console.log(`Teacher resources update complete: ${stdout}`);
+      });
+      
+      // Return immediately without waiting for completion
+      res.json({ 
+        success: true, 
+        message: "Teacher resources update initiated successfully. This process will run in the background."
+      });
+      
+    } catch (error) {
+      console.error("Failed to start teacher resources update:", error);
+      const err = error as { message?: string };
+      res.status(500).json({ 
+        success: false, 
+        message: "Failed to start teacher resources update",
+        error: err.message || "Unknown error"
       });
     }
   });
