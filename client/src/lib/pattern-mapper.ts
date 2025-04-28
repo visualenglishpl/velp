@@ -478,6 +478,31 @@ export function getQAForFilename(filename: string): QAResult {
       };
     }
   }
+  
+  // Special handling for Unit 3 files (Classroom Rules) with hyphenated codes or no spaces
+  // Pattern: 02-N-A, 02NA, etc.
+  const unit3Match = justFilename.match(/0?2[-\s]?([NOP])[-\s]?([ABC])/i);
+  if (unit3Match) {
+    const typeCode = unit3Match[1].toUpperCase();
+    const variantCode = unit3Match[2].toUpperCase();
+    console.log(`UNIT 3 PATTERN MATCH: 02 ${typeCode} ${variantCode}`);
+    
+    // Standard format pattern that should be in our mappings
+    const lookupPattern = `02 ${typeCode} ${variantCode}`;
+    
+    // Look for entries that start with this pattern
+    for (const key of Object.keys(EXACT_FILENAME_MAPPINGS)) {
+      if (key.startsWith(lookupPattern)) {
+        console.log(`Unit 3 match found via pattern: ${key}`);
+        const mapping = EXACT_FILENAME_MAPPINGS[key];
+        return {
+          question: mapping.question,
+          answer: mapping.answer,
+          hasMapping: true
+        };
+      }
+    }
+  }
 
   // Content-based matching for scissors
   if (justFilename.includes('scissors') || justFilename.includes('Scissors')) {
