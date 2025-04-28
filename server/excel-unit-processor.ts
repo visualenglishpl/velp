@@ -2007,16 +2007,52 @@ export function getHardcodedQuestionAnswers(bookId: string, unitId: string): Que
         answer: "The scissors are blue."
       },
       {
-        filename: "12 N F How Many Scissors are There – 1 Scissors.gif",
+        filename: "12 N F Do You Have Scissors in Your Pencil Case.gif",
         codePattern: "12 N F",
-        question: "How many scissors are there?",
-        answer: "There is 1 scissors."
+        question: "Do you have scissors in your pencil case?",
+        answer: "Yes, I have scissors in my pencil case. / No, I don't have scissors in my pencil case."
       },
       {
-        filename: "12 N G How Many Scissors are There – 2 Scissors.jpg",
+        filename: "12 N G Do You Have Green Scissors.gif",
         codePattern: "12 N G",
+        question: "Do you have green scissors?",
+        answer: "Yes, I have green scissors. / No, I don't have green scissors."
+      },
+      {
+        filename: "12 N H What Colour are the Scissors – Purple.gif",
+        codePattern: "12 N H",
+        question: "What color are the scissors?",
+        answer: "The scissors are purple."
+      },
+      {
+        filename: "12 N I What Colour are the Scissors.gif",
+        codePattern: "12 N I",
+        question: "What color are the scissors?",
+        answer: "The scissors are [color]."
+      },
+      {
+        filename: "12 N J What Colour are the Scissors – Yellow.gif",
+        codePattern: "12 N J",
+        question: "What color are the scissors?",
+        answer: "The scissors are yellow."
+      },
+      {
+        filename: "12 N K What Scissors Do You Like.jpg",
+        codePattern: "12 N K",
+        question: "What scissors do you like?",
+        answer: "I like [type of scissors]."
+      },
+      {
+        filename: "12 N L How Many Scissors are There – 4 Scissors.jpg",
+        codePattern: "12 N L",
         question: "How many scissors are there?",
-        answer: "There are 2 scissors."
+        answer: "There are 4 scissors."
+      },
+      {
+        filename: "12 N M How Many Scissors are There – There are 3.jpg",
+        codePattern: "12 N M",
+        question: "How many scissors are there?",
+        answer: "There are 3 scissors."
       },
       // Section 7 - Eraser (pattern N)
       {
