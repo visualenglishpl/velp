@@ -6,6 +6,7 @@ export interface QuestionAnswer {
   question: string;
   answer: string;
   codePattern?: string;
+  unitId?: string;  // Add unitId to track which unit this Q&A belongs to
 }
 
 export interface QAMapping {

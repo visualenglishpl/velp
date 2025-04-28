@@ -8,6 +8,7 @@ export interface QuestionAnswer {
   codePattern?: string;
   generatedBy?: string;
   source?: string;
+  unitId?: string;  // Add unitId to track which unit this Q&A belongs to
 }
 
 export interface QAMapping {
@@ -131,20 +132,40 @@ export function useExcelQA(bookId: string) {
   /**
    * Find a matching QA for a filename using the improved algorithm
    * @param filename The filename to match
+   * @param currentUnitId Optional unitId to filter matches by unit
    * @returns The matching QA or undefined if no match found
    */
-  function findMatchingQA(filename: string): QuestionAnswer | undefined {
+  function findMatchingQA(filename: string, currentUnitId?: string): QuestionAnswer | undefined {
     if (!mappings || Object.keys(mappings).length === 0) {
       return undefined;
     }
 
     // Debug the filename for better understanding
     console.log(`Looking for match for filename: ${filename}`);
-
+    
+    // Create a filtered mappings object that only includes entries for this unit
+    const filteredMappings: QAMapping = {};
+    
+    if (currentUnitId) {
+      // Filter mappings to only include those from the current unit or with no unit
+      Object.entries(mappings).forEach(([key, qa]) => {
+        if (!qa.unitId || qa.unitId === currentUnitId) {
+          filteredMappings[key] = qa;
+        }
+      });
+      
+      console.log(`Filtered mappings to ${Object.keys(filteredMappings).length} entries matching unit ${currentUnitId}`);
+    } else {
+      // If no unitId provided, use all mappings
+      Object.assign(filteredMappings, mappings);
+    }
+    
+    // Use the filtered mappings for matching
+    
     // Start with exact match
-    if (mappings[filename]) {
+    if (filteredMappings[filename]) {
       console.log(`Found exact match for:`, filename);
-      return mappings[filename];
+      return filteredMappings[filename];
     }
 
     // Try with the filename without extension

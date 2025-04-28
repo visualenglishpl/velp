@@ -1415,9 +1415,15 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
     if (!isLoadingJsonMappings && jsonMappings && Object.keys(jsonMappings).length > 0) {
       console.log("Using enhanced JSON-based Q&A mapping system");
       const filename = material.content;
+      
+      // Filter mappings by unitId if provided
+      const currentUnitId = unitId || '';
+      console.log(`Loaded ${Object.values(jsonMappings).filter(qa => qa.unitId === currentUnitId).length} QA entries from Excel for ${bookId}/${currentUnitId}`);
+      
       const matchingQA = findMatchingQA(filename);
       
-      if (matchingQA) {
+      // Only use the match if it belongs to the current unit or doesn't have a unitId specified
+      if (matchingQA && (matchingQA.unitId === currentUnitId || !matchingQA.unitId)) {
         console.log("✅ FOUND MATCH using enhanced JSON-based mapping for:", filename);
         setQAData({
           country: formatText.determineCountry(filename),
