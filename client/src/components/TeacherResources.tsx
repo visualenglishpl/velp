@@ -124,7 +124,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     }
   }, [bookId, unitId]);
   
-  // Add pre-defined resources for Book 1 units
+  // Add pre-defined resources for Book 1 and Book 4 units
   useEffect(() => {
     if (resources.length === 0 && bookId && unitId) {
       let predefinedResources: TeacherResource[] = [];
@@ -1381,6 +1381,430 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         // Save predefined resources
         setResources(predefinedResources);
         saveResourcesToServer(predefinedResources);
+      }
+      // Book 4 - Add interactive teacher resources
+      else if (bookId === "4") {
+        // Unit 1 - Nationalities
+        if (unitId === "1") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "1",
+              title: "UK Flags Game - Wordwall",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9d62a87534154c39b8572b448fdd59ed?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "1",
+              title: "UK Countries Game - Wordwall",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/3af0790f88df445b94749377ac272a6a?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "1",
+              title: "UK Capital Cities Game - Wordwall",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/779a554a69a1475d9ea370e71279bf75?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 2 - Gadgets
+        else if (unitId === "2") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "2",
+              title: "Gadgets 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9b778eef10ff453b8ef30da1d667dadb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "2",
+              title: "Gadgets 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/7543280a4eab4edf90f4cbbe14a8f771?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "2",
+              title: "Gadgets 3 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/96418a9e2fce4091844ac3f35a855add?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "2",
+              title: "Find the Technology - ABCya Game",
+              resourceType: "game",
+              embedCode: `<div style="padding: 20px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
+                <h3 style="margin-bottom: 15px; color: #2563eb;">Find the Technology - Interactive Game</h3>
+                <p style="margin-bottom: 20px;">Practice identifying technology and gadgets with this interactive game</p>
+                <a href="https://www.abcya.com/games/find_the_tech" 
+                   target="_blank" 
+                   style="display: inline-block; background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: 500;">
+                  <span style="display: flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                      <path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
+                      <path d="M12 17v4"></path>
+                      <path d="M8 21h8"></path>
+                      <path d="M7 14.5s.5-2 5-2 5 2 5 2"></path>
+                      <path d="M7 10h0"></path>
+                      <path d="M17 10h0"></path>
+                    </svg>
+                    Play the Game
+                  </span>
+                </a>
+              </div>`,
+              order: 3,
+              provider: "ABCya"
+            }
+          );
+        }
+        // Unit 3 - Home Sweet Home
+        else if (unitId === "3") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Types of Houses 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/cbcccb9fd6d94e119677fad59f266cb0?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Types of Houses 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/b1e0d0a301514e3683d544934b5b6fc3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Rooms of Houses - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/b9cc3e3556ad460887c4c142019276ea?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Office - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2c152aa804c24e4e93a02ffc82bd898e?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 3,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Garage - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/f5e2aaddc74a4f52ba8b4bb2f6590aca?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 4,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Bedroom - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/f5e2aaddc74a4f52ba8b4bb2f6590aca?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 5,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Bathroom - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/992ac1652f2449089965650466150410?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 6,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Living Room - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/467616b037bd4fd8b9dfb6537f7f8170?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 7,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Dining Room - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/4506b9c842e44a4d97c817692a0b7919?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 8,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Basement - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/af5f6cbe67b842f690c0a9783053391d?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 9,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Attic - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/4cdcb6c9228644cb8bec9eb93ca948bb?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 10,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Kitchen - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/88b29208d37147cda3dd3ab49c7a7355?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 11,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Hall - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/3849bf8c81d540689446cee3d48088fa?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 12,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Parts of the House - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/76146409a4de4fa59a6c364e43e4eee6?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 13,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 4 - Family - Describing People
+        else if (unitId === "4") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "4",
+              title: "Types of Hair - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/0268bf9e65734957a7b291700fc07eee?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "4",
+              title: "Describing People - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6c610a5d0f4e4b72be38e5deebf55425?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "4",
+              title: "Family - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/1373ff4429454b2c8c63824e64176643?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 5 - Personality
+        else if (unitId === "5") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "5",
+              title: "Personality Traits - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/339ab9a507314c98aa8ad268f9dbd2fc?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "5",
+              title: "Personality Matching - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c6d609be7c0a4370adf35d199dd1001d?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 6 - Collections
+        else if (unitId === "6") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "6",
+              title: "Collections - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6bcdbdd1f33a4700968fcc126d42c323?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "6",
+              title: "Collections Kahoot Game",
+              resourceType: "game",
+              embedCode: `<div style="padding: 20px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
+                <h3 style="margin-bottom: 15px; color: #2563eb;">Collections Kahoot Game</h3>
+                <p style="margin-bottom: 20px;">Interactive Kahoot game about collecting things</p>
+                <a href="https://create.kahoot.it/share/collecting-things/cde5c17a-250c-4764-be4a-cadc750ce300" 
+                   target="_blank" 
+                   style="display: inline-block; background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: 500;">
+                  <span style="display: flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 8v8"></path>
+                      <path d="M8 12h8"></path>
+                    </svg>
+                    Play Kahoot Game
+                  </span>
+                </a>
+              </div>`,
+              order: 1,
+              provider: "Kahoot"
+            }
+          );
+        }
+        // Unit 7 - Fashion Crazy
+        else if (unitId === "7") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "7",
+              title: "Clothes - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/4b5921b195f2437b91adf882adb32d07?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "7",
+              title: "Clothes Patterns 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/31b10b47b8184627b05d45e372b69b62?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "7",
+              title: "Clothes Patterns 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/87e2df1853c646db9f4a27d632cc9f48?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 8 - Enjoy Your Meal
+        else if (unitId === "8") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "8",
+              title: "British Breakfast - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/26789cf0b8d648709a7ac5457a9bbfa6?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "8",
+              title: "Food Groups Part 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9cf0155f43aa4ff8821070d9f084aa4e?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "8",
+              title: "Food Groups Part 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9899470993214165a255330753bdd0ff?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "8",
+              title: "Drinks - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9cf0155f43aa4ff8821070d9f084aa4e?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 3,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "8",
+              title: "Berries - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a6ff7af2a86047cfbc2bc3fa0e940c96?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 4,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "8",
+              title: "Nuts - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/08c1c6a3d58a46419a654d194ffd9af0?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 5,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "8",
+              title: "Food Pyramid - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c19d7fb0540e4e269de458c2184b6624?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 6,
+              provider: "Wordwall"
+            }
+          );
+        }
+
+        // Save resources to the server
+        if (predefinedResources.length > 0) {
+          setResources(predefinedResources);
+          saveResourcesToServer(predefinedResources);
+        }
       }
     }
   }, [resources.length, bookId, unitId]);
