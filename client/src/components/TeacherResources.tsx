@@ -647,14 +647,74 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               unitId: "4",
               title: "Feelings & Emotions Teaching Activities",
               resourceType: "activity",
-              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Feelings & Emotions</h3>
-                <ul class="space-y-2 list-disc pl-5">
-                  <li>Create emotion flashcards with students - they draw faces showing different emotions</li>
-                  <li>Play "Feelings Charades" - act out an emotion for others to guess</li>
-                  <li>Use mirrors to practice facial expressions for different emotions</li>
-                  <li>Create a feelings chart with emoticons for students to indicate how they feel each day</li>
-                </ul>
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">Feelings & Emotions - Comprehensive Lesson Plan</h2>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn vocabulary related to basic feelings and emotions</li>
+                    <li>Students will be able to ask and answer "How are you?" with appropriate responses</li>
+                    <li>Students will identify and express different emotions in English</li>
+                    <li>Students will recognize emotions based on facial expressions and tone of voice</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Key Vocabulary</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Basic emotions: Happy, sad, angry, scared, surprised, tired</li>
+                    <li>Physical states: Hot, cold, hungry, thirsty, sick</li>
+                    <li>Question forms: "How are you?", "How do you feel?", "Are you [emotion]?"</li>
+                    <li>Responses: "I'm happy", "I'm sad", "I'm not angry", etc.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up Activities (5-10 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Emotion Faces:</strong> Show different emotion faces and have students identify them. Use exaggerated expressions for better recognition.</li>
+                    <li><strong>How Are You Today?:</strong> Greet each student individually with "How are you today?" and encourage varied responses beyond just "I'm fine."</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Main Activities (20-25 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Emotion Songs:</strong> Teach and sing the "How Are You Today?" song or "Are You Happy?" song (see video resources).</li>
+                    <li><strong>Mirror Expressions:</strong> Using small mirrors, have students practice making different facial expressions for emotions and saying the corresponding words.</li>
+                    <li><strong>Emotions Flashcards:</strong> Create emotion flashcards with students - they draw faces showing different emotions and label them in English.</li>
+                    <li><strong>Feelings Charades:</strong> Students take turns acting out an emotion for others to guess. "Are you [emotion]?" "Yes, I'm [emotion]." or "No, I'm not."</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (15 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Emotion Interviews:</strong> Students walk around the classroom asking classmates "How are you?" and recording responses on a simple chart.</li>
+                    <li><strong>Emotion Story:</strong> Show a simple picture story and ask students to identify how characters feel at different points.</li>
+                    <li><strong>Wordwall Games:</strong> Use the interactive Wordwall games to practice emotions vocabulary (see game resources).</li>
+                    <li><strong>Feelings Match-up:</strong> Match emotion words to corresponding pictures or situations.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up Activity (5 minutes)</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li><strong>Feelings Chart:</strong> Create a classroom feelings chart with emoticons for students to indicate how they feel at the end of class.</li>
+                    <li><strong>Emotion Ball Pass:</strong> Pass a ball around. When a student catches the ball, they say how they're feeling and pass to another student.</li>
+                  </ul>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Create an "Emotions Book" with drawings of different feelings and simple sentences</li>
+                    <li>Discuss what makes us feel different emotions (I'm happy when...)</li>
+                    <li>Add intensity words to emotions (very happy, a little sad, really tired)</li>
+                    <li>Practice changing emotions in role plays (I was sad, but now I'm happy)</li>
+                  </ul>
+                </div>
               </div>`,
               order: 8,
               provider: "Visual English"
@@ -742,14 +802,74 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               unitId: "5",
               title: "Family Teaching Activities",
               resourceType: "activity",
-              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Family</h3>
-                <ul class="space-y-2 list-disc pl-5">
-                  <li>Create a family tree using pictures or drawings</li>
-                  <li>Make finger puppets representing different family members</li>
-                  <li>Practice introducing family members with photos: "This is my mother"</li>
-                  <li>Draw a family portrait and label each member</li>
-                </ul>
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">Family - Comprehensive Lesson Plan</h2>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn and identify basic family member vocabulary</li>
+                    <li>Students will be able to introduce their family members using simple English</li>
+                    <li>Students will use possessive adjectives (my, your) with family vocabulary</li>
+                    <li>Students will create and describe a simple family tree</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Key Vocabulary</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Immediate family: Mother/mom, father/dad, sister, brother, baby</li>
+                    <li>Extended family: Grandmother/grandma, grandfather/grandpa, aunt, uncle, cousin</li>
+                    <li>Possessive adjectives: My, your, his, her</li>
+                    <li>Structures: "This is my...", "Who is this?", "This is your..."</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up Activities (5-10 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Family Photos:</strong> Show pictures of your own family (or a cartoon family) and introduce them to students.</li>
+                    <li><strong>Family Mime:</strong> Mime different family members (grandpa walking with a cane, baby crawling) and have students guess.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Main Activities (20-25 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Family Songs:</strong> Teach and sing one of the family songs, such as "The Finger Family" or "The Baby Shark" song with actions (see video resources).</li>
+                    <li><strong>Finger Puppets:</strong> Make simple finger puppets representing different family members using paper, markers, and tape. Practice dialogues between family members.</li>
+                    <li><strong>Family Tree Craft:</strong> Create a simple family tree using pictures or drawings. Students label each member and practice saying "This is my mother," etc.</li>
+                    <li><strong>Photo Sharing:</strong> If appropriate, ask students to bring photos of their family members and introduce them to a partner or small group.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (15 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Family Memory Game:</strong> Place family flashcards face down. Students turn over two cards at a time, naming each family member, trying to find matches.</li>
+                    <li><strong>Who's Missing?:</strong> Display family member cards, then remove one while students close their eyes. They must identify which family member is missing.</li>
+                    <li><strong>Wordwall Games:</strong> Use the interactive Wordwall games to practice family vocabulary (see game resources).</li>
+                    <li><strong>Family Role Play:</strong> Students take on roles of different family members and act out simple family scenarios (dinner time, going to the park).</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up Activity (5 minutes)</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li><strong>Family Portrait:</strong> Students draw a quick family portrait and label each member.</li>
+                    <li><strong>Family Chain:</strong> In a circle, each student introduces one family member. The next student repeats and adds their own.</li>
+                  </ul>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Create a class book with each student contributing a page about their family</li>
+                    <li>Introduce numbers with family (I have 1 sister, 2 brothers, etc.)</li>
+                    <li>Compare family sizes and structure (My family is big/small)</li>
+                    <li>Learn about family celebrations and traditions in different cultures</li>
+                  </ul>
+                </div>
               </div>`,
               order: 9,
               provider: "Visual English"
@@ -828,14 +948,74 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               unitId: "6",
               title: "Colors Teaching Activities",
               resourceType: "activity",
-              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Colors</h3>
-                <ul class="space-y-2 list-disc pl-5">
-                  <li>Color hunt - find items of specific colors around the classroom</li>
-                  <li>Color sorting activities with colored objects</li>
-                  <li>Create a classroom rainbow with student artwork</li>
-                  <li>Play "I Spy" with colors: "I spy something blue"</li>
-                </ul>
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">Colors - Comprehensive Lesson Plan</h2>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn and identify basic colors in English</li>
+                    <li>Students will express preferences about colors: "My favorite color is..."</li>
+                    <li>Students will associate colors with common objects</li>
+                    <li>Students will practice asking and answering questions about colors</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Key Vocabulary</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Basic colors: Red, blue, green, yellow, black, white, orange, purple, pink, brown</li>
+                    <li>Question forms: "What color is it?", "What's your favorite color?"</li>
+                    <li>Structures: "It's [color]", "My favorite color is [color]", "I like [color]"</li>
+                    <li>Descriptive: Light/dark, bright/dull</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up Activities (5-10 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Color Flash:</strong> Show colored flashcards quickly and have students call out the color names.</li>
+                    <li><strong>Touch the Color:</strong> Call out a color and have students touch something of that color in the classroom or on their clothing.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Main Activities (20-25 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Color Songs:</strong> Teach and sing the "I See Something Blue" or "What's Your Favorite Color" songs (see video resources).</li>
+                    <li><strong>Color Hunt:</strong> Students search for items of specific colors around the classroom. "Find something red!" Students bring or point to red objects.</li>
+                    <li><strong>Color Sorting:</strong> Provide a collection of colored objects (buttons, blocks, etc.) and have students sort them by color, naming each group.</li>
+                    <li><strong>Favorite Color Survey:</strong> Students ask 5 classmates "What's your favorite color?" and record the answers on a simple chart.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (15 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>I Spy Game:</strong> Play "I spy with my little eye something [color]" and students guess the object.</li>
+                    <li><strong>Color Dictation Drawing:</strong> Describe a simple picture using colors (e.g., "Draw a red apple on a green table") and students draw according to instructions.</li>
+                    <li><strong>Wordwall Games:</strong> Use the interactive Wordwall games to practice color vocabulary (see game resources).</li>
+                    <li><strong>Color Categories:</strong> Name a color and students must think of objects that are naturally that color (e.g., "Blue - sky, ocean, blueberries").</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up Activity (5 minutes)</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li><strong>Rainbow Collage:</strong> Create a quick collaborative classroom rainbow with student drawings or colored paper strips.</li>
+                    <li><strong>Color Bomb:</strong> Pass a ball while music plays. When music stops, teacher calls out a color and the student holding the ball must name something of that color.</li>
+                  </ul>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Create color mixing experiments to learn about secondary colors</li>
+                    <li>Read a color-themed storybook like "Brown Bear, Brown Bear, What Do You See?"</li>
+                    <li>Make color word cards where the word is written in the corresponding color</li>
+                    <li>Connect colors to emotions (How does each color make you feel?)</li>
+                  </ul>
+                </div>
               </div>`,
               order: 8,
               provider: "Visual English"
@@ -905,14 +1085,74 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               unitId: "7",
               title: "Numbers & Age Teaching Activities",
               resourceType: "activity",
-              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Numbers & Age</h3>
-                <ul class="space-y-2 list-disc pl-5">
-                  <li>Count classroom objects together: "How many pencils?"</li>
-                  <li>Create birthday cards with age numbers</li>
-                  <li>Play "Number Bingo" with numbers 1-10</li>
-                  <li>Sing counting songs with gestures for each number</li>
-                </ul>
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">Numbers & Age - Comprehensive Lesson Plan</h2>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn numbers from 1-10 in English</li>
+                    <li>Students will be able to ask and answer "How old are you?" with appropriate responses</li>
+                    <li>Students will count objects using numbers 1-10</li>
+                    <li>Students will recognize written number words (one, two, three, etc.)</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Key Vocabulary</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Numbers: 1-10 (one, two, three, four, five, six, seven, eight, nine, ten)</li>
+                    <li>Question forms: "How old are you?", "How many...?", "Can you count...?"</li>
+                    <li>Structures: "I am [number] years old", "There are [number] [objects]"</li>
+                    <li>Birthday-related: Cake, candles, present, party</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up Activities (5-10 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Number Chant:</strong> Count from 1-10 together using different voices (loud, whisper, robot) with accompanying hand gestures.</li>
+                    <li><strong>Number Line-up:</strong> Give students number cards from 1-10 and have them arrange themselves in order.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Main Activities (20-25 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Number Songs:</strong> Teach and sing counting songs or watch number videos (see video resources).</li>
+                    <li><strong>How Old Are You Chain:</strong> Students form a circle. First student asks "How old are you?" to the next, who responds "I am [age] years old" and then asks the next student.</li>
+                    <li><strong>Counting Objects:</strong> Place collections of classroom objects (pencils, books, etc.) around the room. Students work in pairs to count and report: "There are six pencils."</li>
+                    <li><strong>Birthday Cards:</strong> Students create simple birthday cards with age numbers, practicing writing numbers and saying "Happy Birthday! You are [number] years old."</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (15 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Number Bingo:</strong> Play bingo with numbers 1-10. Call out numbers in English and students mark their cards.</li>
+                    <li><strong>How Many?:</strong> Show pictures with different quantities of objects and ask "How many [objects] are there?" Students answer with full sentences.</li>
+                    <li><strong>Wordwall Games:</strong> Use the interactive Wordwall games to practice number vocabulary (see game resources).</li>
+                    <li><strong>Number Dictation:</strong> Call out numbers and have students write them down or select the correct number card.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up Activity (5 minutes)</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li><strong>Number Snowball:</strong> Students write a number from 1-10 on a piece of paper, crumple it into a "snowball," throw it, pick up another, and read the number aloud.</li>
+                    <li><strong>Birthday Role Play:</strong> Act out a birthday scene with age-appropriate candles on a cake. Practice asking and telling age.</li>
+                  </ul>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Introduce numbers 11-20 for advanced students</li>
+                    <li>Play number-based math games with simple addition using objects</li>
+                    <li>Create a class birthday chart showing everyone's age</li>
+                    <li>Read stories featuring numbers, like "Ten Little Fingers" or "Five Little Monkeys"</li>
+                  </ul>
+                </div>
               </div>`,
               order: 7,
               provider: "Visual English"
