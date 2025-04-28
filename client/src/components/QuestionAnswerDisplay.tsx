@@ -145,6 +145,23 @@ const formatText = {
 // Import our pattern-mapper for standardized mapping
 import { getQAForFilename } from "@/lib/pattern-mapper";
 
+// Debug helper function to log information about scissors content detection
+function debugScissorsDetection(content: string): void {
+  if (content.toLowerCase().includes('scissors')) {
+    console.log(`📊 SCISSORS DEBUG INFO for "${content}":`);
+    console.log(`  • Contains '12 N G': ${content.includes('12 N G')}`);
+    console.log(`  • Contains 'green scissors': ${content.toLowerCase().includes('green scissors')}`);
+    console.log(`  • Regex match for /12\\s*N\\s*G/i: ${Boolean(content.match(/12\s*N\s*G/i))}`);
+    
+    const sectionMatch = content.match(/(\d{1,2})\s*([A-Za-z])\s*([A-Za-z])/i);
+    if (sectionMatch) {
+      console.log(`  • Section pattern extracted: ${sectionMatch[1]} ${sectionMatch[2]} ${sectionMatch[3]}`);
+    } else {
+      console.log(`  • No section pattern extracted`);
+    }
+  }
+}
+
 function getQuestionAnswerFromData(material: any): QAData {
   const content = material.content || '';
   
@@ -154,7 +171,36 @@ function getQuestionAnswerFromData(material: any): QAData {
   // Extract country information
   const country = formatText.determineCountry(content);
   
-  // Special case for the scissors pattern
+  // Run our debugging helper for scissors detection
+  if (content.toLowerCase().includes('scissors')) {
+    debugScissorsDetection(content);
+  }
+  
+  // MOST DIRECT CHECK: Exact substring match for "12 N G Do You Have Green Scissors" anywhere in the filename
+  if (content.includes('12 N G Do You Have Green Scissors') || 
+      content.includes('12 N G Green Scissors') || 
+      content.includes('12NG Do You Have Green Scissors')) {
+    console.log('🎯 EXACT FILENAME MATCH FOR 12 N G GREEN SCISSORS');
+    return {
+      country: country,
+      question: "Do you have green scissors?",
+      answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+      hasData: true
+    };
+  }
+  
+  // Check if the filename starts with "12 N G" pattern
+  if (content.match(/^12\s*N\s*G/i)) {
+    console.log('🔎 FILENAME STARTS WITH 12 N G PATTERN');
+    return {
+      country: country,
+      question: "Do you have green scissors?",
+      answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+      hasData: true
+    };
+  }
+  
+  // Special case for the scissors pattern with 12 N G anywhere in the string
   if (content.includes('12 N G') && content.toLowerCase().includes('scissors')) {
     console.log('✂️ SPECIAL DIRECT MAPPING FOR SCISSORS in QuestionAnswerDisplay');
     return {
@@ -198,10 +244,32 @@ function getQuestionAnswerFromData(material: any): QAData {
   if (lowerContent.includes('scissors')) {
     console.log('🔍 SCISSORS SPECIAL SECTION DETECTED: ' + content);
     
-    // Look for the 12 N G pattern specifically
+    // HIGHEST PRIORITY: Exact match for "12 N G Do You Have Green Scissors"
+    if (content.includes('12 N G') && lowerContent.includes('green scissors')) {
+      console.log('💚 GREEN SCISSORS EXACT PATTERN MATCH FOUND');
+      return {
+        country: country,
+        question: "Do you have green scissors?",
+        answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+        hasData: true
+      };
+    }
+    
+    // Look for partial matches - any 12 N G pattern
     const scissorsMatch = content.match(/12\s*N\s*G/i);
-    if (scissorsMatch || content.toLowerCase().includes('green scissors')) {
-      console.log('💚 GREEN SCISSORS PATTERN MATCH FOUND');
+    if (scissorsMatch) {
+      console.log('🎯 12 N G SCISSORS PATTERN MATCH FOUND');
+      return {
+        country: country,
+        question: "Do you have green scissors?",
+        answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+        hasData: true
+      };
+    }
+    
+    // Look for "green scissors" anywhere in the content
+    if (lowerContent.includes('green scissors')) {
+      console.log('🧩 GREEN SCISSORS CONTENT MATCH FOUND');
       return {
         country: country,
         question: "Do you have green scissors?",

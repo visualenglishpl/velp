@@ -235,7 +235,8 @@ const EXACT_FILENAME_MAPPINGS: Record<string, QAMapping> = {
     answer: "The pencil case is green." 
   },
 
-  // 12 N - SCISSORS
+  // 12 N - SCISSORS - EXACT MAPPINGS FROM EXCEL DATA
+  // These mappings are taken directly from the Excel data provided by the user
   "12 N A What are They – They are Scissors.gif": { 
     question: "What are they?", 
     answer: "They are scissors." 
@@ -287,6 +288,23 @@ const EXACT_FILENAME_MAPPINGS: Record<string, QAMapping> = {
   "12 N M How Many Scissors are There – There are 3.jpg": { 
     question: "How many scissors are there?", 
     answer: "There are 3 scissors." 
+  },
+  // Add additional variations of the filenames to catch all possible versions
+  "12 N G Do You Have Green Scissors": { 
+    question: "Do you have green scissors?", 
+    answer: "Yes, I have green scissors. / No, I don't have green scissors." 
+  },
+  "12N G Do You Have Green Scissors": { 
+    question: "Do you have green scissors?", 
+    answer: "Yes, I have green scissors. / No, I don't have green scissors." 
+  },
+  "12 NG Do You Have Green Scissors": { 
+    question: "Do you have green scissors?", 
+    answer: "Yes, I have green scissors. / No, I don't have green scissors." 
+  },
+  "12NG Do You Have Green Scissors": { 
+    question: "Do you have green scissors?", 
+    answer: "Yes, I have green scissors. / No, I don't have green scissors." 
   }
 };
 
