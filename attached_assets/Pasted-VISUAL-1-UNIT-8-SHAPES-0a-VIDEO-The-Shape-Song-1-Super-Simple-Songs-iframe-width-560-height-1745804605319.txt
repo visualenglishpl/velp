@@ -1,0 +1,20 @@
+VISUAL 1 - UNIT 8 - SHAPES
+0a VIDEO The Shape Song 1 Super Simple Songs
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TJhfl5vdxp4?si=6rVtTBbIENScQqy-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0b VIDEO The Shape Song 2 Super Simple Songs
+<iframe width="560" height="315" src="https://www.youtube.com/embed/03pyY9C2Pm8?si=MIf13-bIxze2_vF_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0c VIDEO Shapes PINKFONG
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0B6Ge0FzHG0?si=pQL9a255hrzGG3Gv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0d VIDEO Shapes Song ENGLISH TREE
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FOZLDVnvrZM?si=1qm7XlmfoLJJrH0f" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+13a VIDEO Shapes PINKFONG
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lcl8uB2AWM0?si=-SHyNKki0N2YVjkR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+13c VIDEO Shapes Pancake Manor
+13c VIDEO What Shape Is It DREAM KIDS
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9GFEjNL0XXw?si=FADkhaPtpTyIi7au" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+15a ONLINE GAME WORDWALL - SHAPES
+<iframe style="max-width:100%" src="https://wordwall.net/embed/a3dfd9e2aa764904a073828747936488?themeId=21&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+15b ONLINE GAME WORDWALL - SHAPES
+<iframe style="max-width:100%" src="https://wordwall.net/embed/cb6e5a77fb104ff6a1b7d9c0b66582ef?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+15c ONLINE GAME WORDWALL - SHAPES
+<iframe style="max-width:100%" src="https://wordwall.net/embed/c8dc456710c3427aa892110f7073b50d?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
