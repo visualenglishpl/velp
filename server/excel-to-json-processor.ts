@@ -34,6 +34,17 @@ export function processExcelToJson(
     console.log(`Processing sheet: ${sheetName}`);
     const worksheet = workbook.Sheets[sheetName];
     
+    // Extract unit information from sheet name (e.g., "VISUAL 1 - UNIT 8" → unit8)
+    const unitMatch = sheetName.match(/UNIT\s*(\d+)/i);
+    const unitNumber = unitMatch ? unitMatch[1] : null;
+    const unitId = unitNumber ? `unit${unitNumber}` : '';
+    
+    if (unitNumber) {
+      console.log(`Extracted unit number ${unitNumber} from sheet name: ${sheetName}`);
+    } else {
+      console.log(`Could not extract unit number from sheet name: ${sheetName}`);
+    }
+    
     // Process the Excel file manually to properly handle the specific structure
     // Visual English Excel files have:
     // Column A: Filename
@@ -78,6 +89,14 @@ export function processExcelToJson(
         continue;
       }
       
+      // Add unit information to mapping entry
+      const mappingEntry = {
+        question,
+        answer,
+        codePattern,
+        unitId: unitId || undefined, // Only include unitId if it exists
+      };
+      
       // If we found a code pattern, use it as the key
       if (codePattern) {
         // Create various formats of the code pattern to increase match likelihood
@@ -87,7 +106,8 @@ export function processExcelToJson(
           allMappings[pattern] = {
             question,
             answer,
-            codePattern: pattern
+            codePattern: pattern,
+            unitId: unitId || undefined // Include the unit info here
           };
         }
       }
@@ -97,7 +117,8 @@ export function processExcelToJson(
         allMappings[question] = {
           question,
           answer,
-          codePattern: codePattern || ''
+          codePattern: codePattern || '',
+          unitId: unitId || undefined // Include the unit info here
         };
       }
     }
