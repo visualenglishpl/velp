@@ -167,9 +167,146 @@ function getQuestionAnswerFromData(material: any): QAData {
   // Special case handling for problematic sections (hardcoded fallbacks)
   const lowerContent = content.toLowerCase();
   
-  // Sharpener section
+  // Sharpener section with specific pattern matching for 08 M patterns
   if (lowerContent.includes('sharpener')) {
-    console.log("Using hardcoded fallback for sharpener section");
+    console.log("Processing sharpener section with code pattern checks");
+    
+    // Special handling for exact patterns from the provided mapping
+    // First, try to extract the exact section pattern (08 M A, 08 M B, etc.)
+    const sharpenerMatches = content.match(/0([0-9])\s*([A-Za-z])\s*([A-Za-z])/i);
+    if (sharpenerMatches) {
+      const sectionNum = sharpenerMatches[1];
+      const typeCode = sharpenerMatches[2].toUpperCase();
+      const subCode = sharpenerMatches[3].toUpperCase();
+      
+      // Check if it's section 08 M with various subpatterns
+      if (sectionNum === '8' && typeCode === 'M') {
+        console.log(`Found exact sharpener pattern match: 08 ${typeCode} ${subCode}`);
+        
+        // Handle specific subpatterns
+        switch (subCode) {
+          case 'A':
+            return {
+              country: country,
+              question: "What is it?",
+              answer: "It is a sharpener.",
+              hasData: true
+            };
+          
+          case 'B':
+            return {
+              country: country,
+              question: "Is it a metal or plastic sharpener?",
+              answer: lowerContent.includes('metal') ? "It is a metal sharpener." : "It is a plastic sharpener.",
+              hasData: true
+            };
+            
+          case 'C':
+            return {
+              country: country,
+              question: "Is it a dragon or dinosaur sharpener?",
+              answer: lowerContent.includes('dragon') ? "It is a dragon sharpener." : "It is a dinosaur sharpener.",
+              hasData: true
+            };
+            
+          case 'D':
+            return {
+              country: country,
+              question: "Is it an eye or nose sharpener?",
+              answer: lowerContent.includes('eye') ? "It is an eye sharpener." : "It is a nose sharpener.",
+              hasData: true
+            };
+            
+          case 'E':
+            return {
+              country: country,
+              question: "Is it a Roblox or Minecraft sharpener?",
+              answer: lowerContent.includes('roblox') ? "It is a Roblox sharpener." : "It is a Minecraft sharpener.",
+              hasData: true
+            };
+            
+          case 'F':
+            return {
+              country: country,
+              question: "Is it a happy or sad sharpener?",
+              answer: lowerContent.includes('happy') ? "It is a happy sharpener." : "It is a sad sharpener.",
+              hasData: true
+            };
+            
+          case 'G':
+            return {
+              country: country,
+              question: "Do you have a Lego sharpener?",
+              answer: "Yes, I have a Lego sharpener.",
+              hasData: true
+            };
+            
+          case 'H':
+            return {
+              country: country,
+              question: "Do you have a sharpener in your pencil case?",
+              answer: "Yes, I have a sharpener in my pencil case.",
+              hasData: true
+            };
+            
+          case 'I':
+            // Check for the number in the filename for "How many" questions
+            const howManyMatch = lowerContent.match(/there are (\d+)/i);
+            const quantity = howManyMatch ? howManyMatch[1] : "2";
+            
+            return {
+              country: country,
+              question: "How many sharpeners are there?",
+              answer: `There are ${quantity} sharpeners.`,
+              hasData: true
+            };
+            
+          case 'J':
+            // Another "How many" with different quantity
+            const howManyMatch2 = lowerContent.match(/there are (\d+)/i);
+            const quantity2 = howManyMatch2 ? howManyMatch2[1] : "5";
+            
+            return {
+              country: country,
+              question: "How many sharpeners are there?",
+              answer: `There are ${quantity2} sharpeners.`,
+              hasData: true
+            };
+            
+          case 'K':
+            // Check for color in the filename
+            const colorMatch = lowerContent.match(/(?:what colour|what color)[^-]+([-–]\s*(?:the sharpener is|it is)\s+([a-z]+))?/i);
+            const color = colorMatch && colorMatch[2] ? colorMatch[2] : "purple";
+            
+            return {
+              country: country,
+              question: "What color is the sharpener?",
+              answer: `The sharpener is ${color}.`,
+              hasData: true
+            };
+            
+          case 'L':
+            return {
+              country: country,
+              question: "What color are the sharpeners?",
+              answer: "The sharpeners are colorful.",
+              hasData: true
+            };
+            
+          default:
+            // Default fallback for 08 M section sharpeners
+            return {
+              country: country,
+              question: "What is this?",
+              answer: "It is a sharpener.",
+              hasData: true
+            };
+        }
+      }
+    }
+    
+    // General fallback for any sharpener
+    console.log("Using general hardcoded fallback for sharpener section");
     return {
       country: country,
       question: "What is this?",
@@ -178,56 +315,272 @@ function getQuestionAnswerFromData(material: any): QAData {
     };
   }
   
-  // Extremely specific hardcoded patterns for sections 08-12
-  // These patterns match the exact filename patterns that are problematic
-  
-  // Section 08 Rulers
-  if (/08.*ruler/i.test(content)) {
-    console.log("Using precise hardcoded pattern match for section 08 ruler");
-    return {
-      country: country,
-      question: "What is this?",
-      answer: "It is a ruler.",
-      hasData: true
-    };
-  }
-  
-  // Section 09 Rulers
-  if (/09.*ruler/i.test(content)) {
-    console.log("Using precise hardcoded pattern match for section 09 ruler");
-    return {
-      country: country,
-      question: "What is this?",
-      answer: "It is a ruler.",
-      hasData: true
-    };
-  }
-  
-  // Section 10 Rulers - direct pattern match
-  if (/10.*ruler/i.test(content)) {
-    console.log("Using precise hardcoded pattern match for section 10 ruler");
+  // Ruler section with specific pattern matching for 10 N patterns
+  if (lowerContent.includes('ruler')) {
+    // Try to extract the exact section pattern (10 N A, 10 N B, etc.)
+    const rulerMatches = content.match(/([0-9]{2})\s*([A-Za-z])\s*([A-Za-z])/i);
     
-    // Check if this is "What is it?" or "What are they?" question
-    if (/what are they/i.test(content)) {
+    if (rulerMatches) {
+      const sectionNum = rulerMatches[1];
+      const typeCode = rulerMatches[2].toUpperCase();
+      const subCode = rulerMatches[3].toUpperCase();
+      
+      console.log(`Processing ruler pattern match: ${sectionNum} ${typeCode} ${subCode}`);
+      
+      // Check if it's section 10 N with various subpatterns
+      if (sectionNum === '10' && typeCode === 'N') {
+        console.log(`Found exact ruler pattern match: ${sectionNum} ${typeCode} ${subCode}`);
+        
+        // Handle specific subpatterns based on the provided mapping
+        switch (subCode) {
+          case 'A':
+            return {
+              country: country,
+              question: "What is it?",
+              answer: "It is a ruler.",
+              hasData: true
+            };
+          
+          case 'B':
+            return {
+              country: country,
+              question: "What are they?",
+              answer: "They are rulers.",
+              hasData: true
+            };
+            
+          case 'C':
+            return {
+              country: country,
+              question: "Is it a big or small ruler?",
+              answer: lowerContent.includes('big') ? "It is a big ruler." : "It is a small ruler.",
+              hasData: true
+            };
+            
+          case 'D':
+            return {
+              country: country,
+              question: "Is it a Minecraft or Roblox ruler?",
+              answer: lowerContent.includes('minecraft') ? "It is a Minecraft ruler." : "It is a Roblox ruler.",
+              hasData: true
+            };
+            
+          case 'E':
+            return {
+              country: country,
+              question: "Is it a sleeping or dancing ruler?",
+              answer: lowerContent.includes('sleeping') ? "It is a sleeping ruler." : "It is a dancing ruler.",
+              hasData: true
+            };
+            
+          case 'F':
+            return {
+              country: country,
+              question: "Is it a tiger or lion ruler?",
+              answer: lowerContent.includes('tiger') ? "It is a tiger ruler." : "It is a lion ruler.",
+              hasData: true
+            };
+            
+          case 'G':
+            return {
+              country: country,
+              question: "Is it a cat or dog ruler?",
+              answer: lowerContent.includes('cat') ? "It is a cat ruler." : "It is a dog ruler.",
+              hasData: true
+            };
+            
+          case 'H':
+            return {
+              country: country,
+              question: "Is it a girl's or boy's ruler?",
+              answer: lowerContent.includes("girl") ? "It is a girl's ruler." : "It is a boy's ruler.",
+              hasData: true
+            };
+            
+          case 'I':
+            return {
+              country: country,
+              question: "Do you have a ruler in your pencil case?",
+              answer: "Yes, I have a ruler in my pencil case.",
+              hasData: true
+            };
+            
+          case 'J':
+            return {
+              country: country,
+              question: "Is it a plastic or metal ruler?",
+              answer: lowerContent.includes('plastic') ? "It is a plastic ruler." : "It is a metal ruler.",
+              hasData: true
+            };
+            
+          case 'K':
+            // Check for color in the filename
+            const colorMatch = lowerContent.match(/what colou?r is the ruler[\s\-–]+([a-z]+)/i);
+            const color = colorMatch && colorMatch[1] ? colorMatch[1] : 
+                        lowerContent.includes('gold') ? "gold" : "blue";
+            
+            return {
+              country: country,
+              question: "What color is the ruler?",
+              answer: `The ruler is ${color}.`,
+              hasData: true
+            };
+            
+          case 'L':
+            return {
+              country: country,
+              question: "What ruler do you like?",
+              answer: "I like the colorful ruler.",
+              hasData: true
+            };
+            
+          case 'M':
+            // Handle "How many" questions with extracted count
+            const howManyMatch = lowerContent.match(/how many rulers[^-]+([-–]?\s*(?:there are)?\s*([0-9]+)\s*rulers?)?/i);
+            const countText = howManyMatch && howManyMatch[2] ? howManyMatch[2] : 
+                            lowerContent.includes('5') ? "5" : "3";
+            
+            return {
+              country: country,
+              question: "How many rulers are there?",
+              answer: `There are ${countText} rulers.`,
+              hasData: true
+            };
+            
+          default:
+            // Default ruler question
+            return {
+              country: country,
+              question: "What is this?",
+              answer: "It is a ruler.",
+              hasData: true
+            };
+        }
+      }
+      // Handle other ruler sections with numbered patterns
+      else if ((sectionNum === '08' || sectionNum === '09' || sectionNum === '11' || sectionNum === '12') 
+               && (typeCode === 'N' || typeCode === 'M')) {
+        
+        if (sectionNum === '08') {
+          console.log("Using precise hardcoded pattern match for section 08 ruler");
+          return {
+            country: country,
+            question: "What is this?",
+            answer: "It is a ruler.",
+            hasData: true
+          };
+        }
+        else if (sectionNum === '09') {
+          console.log("Using precise hardcoded pattern match for section 09 ruler");
+          return {
+            country: country,
+            question: "What is this?",
+            answer: "It is a ruler.",
+            hasData: true
+          };
+        }
+        else if (sectionNum === '11') {
+          console.log("Using precise hardcoded pattern match for section 11 ruler");
+          return {
+            country: country,
+            question: "What is this?",
+            answer: "It is a ruler.",
+            hasData: true
+          };
+        }
+        else if (sectionNum === '12') {
+          console.log("Using precise hardcoded pattern match for section 12 ruler");
+          return {
+            country: country,
+            question: "What is this?",
+            answer: "It is a ruler.",
+            hasData: true
+          };
+        }
+      }
+    }
+    
+    // If we couldn't extract a pattern or it's not a recognized pattern, use these fallbacks:
+    
+    // Section 08 Rulers - by basic pattern
+    if (/08.*ruler/i.test(content)) {
+      console.log("Using basic pattern match for section 08 ruler");
       return {
         country: country,
-        question: "What are they?",
-        answer: "They are rulers.",
-        hasData: true
-      };
-    } else {
-      return {
-        country: country,
-        question: "What is it?",
+        question: "What is this?",
         answer: "It is a ruler.",
         hasData: true
       };
     }
-  }
-  
-  // Section 11 Rulers
-  if (/11.*ruler/i.test(content)) {
-    console.log("Using precise hardcoded pattern match for section 11 ruler");
+    
+    // Section 09 Rulers - by basic pattern
+    if (/09.*ruler/i.test(content)) {
+      console.log("Using basic pattern match for section 09 ruler");
+      return {
+        country: country,
+        question: "What is this?",
+        answer: "It is a ruler.",
+        hasData: true
+      };
+    }
+    
+    // Section 10 Rulers - direct pattern match
+    if (/10.*ruler/i.test(content)) {
+      console.log("Using basic pattern match for section 10 ruler");
+      
+      // Check if this is "What is it?" or "What are they?" question
+      if (/what are they/i.test(content)) {
+        return {
+          country: country,
+          question: "What are they?",
+          answer: "They are rulers.",
+          hasData: true
+        };
+      } else {
+        return {
+          country: country,
+          question: "What is it?",
+          answer: "It is a ruler.",
+          hasData: true
+        };
+      }
+    }
+    
+    // Section 11 Rulers - by basic pattern
+    if (/11.*ruler/i.test(content)) {
+      console.log("Using basic pattern match for section 11 ruler");
+      return {
+        country: country,
+        question: "What is this?",
+        answer: "It is a ruler.",
+        hasData: true
+      };
+    }
+    
+    // Section 12 Rulers - by basic pattern
+    if (/12.*ruler/i.test(content)) {
+      console.log("Using basic pattern match for section 12 ruler");
+      return {
+        country: country,
+        question: "What is this?",
+        answer: "It is a ruler.",
+        hasData: true
+      };
+    }
+    
+    // General fallback for any other ruler sections not caught above
+    if ((/0[8-9]|1[0-2]/).test(content)) {
+      console.log("Using general hardcoded fallback for ruler section 08-12");
+      return {
+        country: country,
+        question: "What is this?",
+        answer: "It is a ruler.",
+        hasData: true
+      };
+    }
+    
+    // Final fallback for any ruler content
+    console.log("Using final fallback for ruler content");
     return {
       country: country,
       question: "What is this?",
@@ -236,50 +589,252 @@ function getQuestionAnswerFromData(material: any): QAData {
     };
   }
   
-  // Section 12 Rulers
-  if (/12.*ruler/i.test(content)) {
-    console.log("Using precise hardcoded pattern match for section 12 ruler");
-    return {
-      country: country,
-      question: "What is this?",
-      answer: "It is a ruler.",
-      hasData: true
-    };
-  }
-  
-  // General fallback for any other ruler sections not caught above
-  if (lowerContent.includes('ruler') && 
-      (/0[8-9]|1[0-2]/).test(content)) {
-    console.log("Using general hardcoded fallback for ruler section 08-12");
-    return {
-      country: country,
-      question: "What is this?",
-      answer: "It is a ruler.",
-      hasData: true
-    };
-  }
-  
-  // Scissors section
+  // Scissors section with specific pattern matching for 12 N patterns
   if (lowerContent.includes('scissors')) {
-    console.log("Using hardcoded fallback for scissors section");
+    console.log("Processing scissors section with code pattern checks");
+    
+    // First, try to extract the exact section pattern (12 N A, 12 N B, etc.)
+    const scissorsMatches = content.match(/([0-9]{2})\s*([A-Za-z])\s*([A-Za-z])/i);
+    if (scissorsMatches) {
+      const sectionNum = scissorsMatches[1];
+      const typeCode = scissorsMatches[2].toUpperCase();
+      const subCode = scissorsMatches[3].toUpperCase();
+      
+      // Check if it's section 12 N with various subpatterns
+      if (sectionNum === '12' && typeCode === 'N') {
+        console.log(`Found exact scissors pattern match: ${sectionNum} ${typeCode} ${subCode}`);
+        
+        // Handle specific subpatterns based on the provided mapping
+        switch (subCode) {
+          case 'A':
+            return {
+              country: country,
+              question: "What are they?",
+              answer: "They are scissors.",
+              hasData: true
+            };
+          
+          case 'B':
+          case 'C':
+            return {
+              country: country,
+              question: "Are they big or small scissors?",
+              answer: lowerContent.includes('big') ? "They are big scissors." : "They are small scissors.",
+              hasData: true
+            };
+            
+          case 'D':
+            return {
+              country: country,
+              question: "Are they horse or unicorn scissors?",
+              answer: lowerContent.includes('horse') ? "They are horse scissors." : "They are unicorn scissors.",
+              hasData: true
+            };
+            
+          case 'E':
+            return {
+              country: country,
+              question: "Are they panda or koala scissors?",
+              answer: lowerContent.includes('panda') ? "They are panda scissors." : "They are koala scissors.",
+              hasData: true
+            };
+            
+          case 'F':
+            return {
+              country: country,
+              question: "Do you have scissors in your pencil case?",
+              answer: "Yes, I have scissors in my pencil case.",
+              hasData: true
+            };
+            
+          case 'G':
+            return {
+              country: country,
+              question: "Do you have green scissors?",
+              answer: "Yes, I have green scissors.",
+              hasData: true
+            };
+            
+          case 'H':
+          case 'I':
+          case 'J':
+            // Check for color in the filename
+            const colorMatch = lowerContent.match(/what colou?r are the scissors[\s\-–]+([a-z]+)/i);
+            const color = colorMatch && colorMatch[1] ? colorMatch[1] : 
+                        lowerContent.includes('purple') ? "purple" : 
+                        lowerContent.includes('yellow') ? "yellow" : "red";
+            
+            return {
+              country: country,
+              question: "What color are the scissors?",
+              answer: `The scissors are ${color}.`,
+              hasData: true
+            };
+            
+          case 'K':
+            return {
+              country: country,
+              question: "What scissors do you like?",
+              answer: "I like colorful scissors.",
+              hasData: true
+            };
+            
+          case 'L':
+          case 'M':
+            // Handle "How many" questions with extracted count
+            const howManyMatch = lowerContent.match(/how many scissors[^-]+([-–]\s*(?:there are)\s+([0-9]+))?/i);
+            const countText = howManyMatch && howManyMatch[2] ? howManyMatch[2] : 
+                            lowerContent.includes('4') ? "4" : 
+                            lowerContent.includes('3') ? "3" : "2";
+            
+            return {
+              country: country,
+              question: "How many scissors are there?",
+              answer: `There are ${countText} scissors.`,
+              hasData: true
+            };
+            
+          default:
+            // Default scissors question
+            return {
+              country: country,
+              question: "What are these?",
+              answer: "They are scissors.",
+              hasData: true
+            };
+        }
+      }
+    }
+    
+    // General fallback for scissors
+    console.log("Using general hardcoded fallback for scissors section");
     return {
       country: country,
       question: "What are these?",
-      answer: "These are scissors.",
+      answer: "They are scissors.",
       hasData: true
     };
   }
   
-  // Bag section - with more specific pattern matching
+  // Bag section - with specific pattern matching for 09 N patterns
   if (lowerContent.includes('bag')) {
-    console.log("Using hardcoded fallback for bag section");
+    console.log("Processing bag section with code pattern checks");
     
+    // First, try to extract the exact section pattern (09 N A, 09 N B, etc.)
+    const bagMatches = content.match(/0([0-9])\s*([A-Za-z])\s*([A-Za-z])/i);
+    if (bagMatches) {
+      const sectionNum = bagMatches[1];
+      const typeCode = bagMatches[2].toUpperCase();
+      const subCode = bagMatches[3].toUpperCase();
+      
+      // Check if it's section 09 N with various subpatterns
+      if (sectionNum === '9' && typeCode === 'N') {
+        console.log(`Found exact bag pattern match: 09 ${typeCode} ${subCode}`);
+        
+        // Handle specific subpatterns based on the provided mapping
+        switch (subCode) {
+          case 'A':
+            return {
+              country: country,
+              question: "What is it?",
+              answer: "It is a bag.",
+              hasData: true
+            };
+          
+          case 'B':
+          case 'C':
+            return {
+              country: country,
+              question: "What school bag do you like?",
+              answer: "I like the colorful school bag.",
+              hasData: true
+            };
+            
+          case 'D':
+            return {
+              country: country,
+              question: "Is it a dog or cat school bag?",
+              answer: lowerContent.includes('dog') ? "It is a dog school bag." : "It is a cat school bag.",
+              hasData: true
+            };
+            
+          case 'E':
+            return {
+              country: country,
+              question: "Is it a tiger or lion school bag?",
+              answer: lowerContent.includes('tiger') ? "It is a tiger school bag." : "It is a lion school bag.",
+              hasData: true
+            };
+            
+          case 'F':
+          case 'G':
+          case 'H':
+            return {
+              country: country,
+              question: "Is it a girl's or boy's school bag?",
+              answer: lowerContent.includes('girl') ? "It is a girl's school bag." : "It is a boy's school bag.",
+              hasData: true
+            };
+            
+          case 'I':
+            return {
+              country: country,
+              question: "Do you have a school bag?",
+              answer: "Yes, I have a school bag.",
+              hasData: true
+            };
+            
+          case 'J':
+            return {
+              country: country,
+              question: "Is it a Spiderman or Superman school bag?",
+              answer: lowerContent.includes('spiderman') ? "It is a Spiderman school bag." : "It is a Superman school bag.",
+              hasData: true
+            };
+            
+          case 'K':
+            return {
+              country: country,
+              question: "Is it a Nike or Adidas school bag?",
+              answer: lowerContent.includes('nike') ? "It is a Nike school bag." : "It is an Adidas school bag.",
+              hasData: true
+            };
+            
+          case 'L':
+          case 'M':
+            // Check for color in the filename
+            const colorMatch = lowerContent.match(/what colou?r is the school bag[\s\-–]+([a-z]+)/i);
+            const color = colorMatch && colorMatch[1] ? colorMatch[1] : 
+                        lowerContent.includes('pink') ? "pink" : 
+                        lowerContent.includes('purple') ? "purple" : 
+                        lowerContent.includes('red') ? "red" : "blue";
+            
+            return {
+              country: country,
+              question: "What color is the school bag?",
+              answer: `The school bag is ${color}.`,
+              hasData: true
+            };
+            
+          default:
+            // Default bag question if subpattern isn't recognized
+            return {
+              country: country,
+              question: "What is it?",
+              answer: "It is a school bag.",
+              hasData: true
+            };
+        }
+      }
+    }
+    
+    // More general fallbacks for bag sections
     // Check for specific question types in the filename
     if (lowerContent.includes('do you have')) {
       return {
         country: country,
-        question: "Do you have a bag?",
-        answer: "Yes, I have a bag.",
+        question: "Do you have a school bag?",
+        answer: "Yes, I have a school bag.",
         hasData: true
       };
     } else if (lowerContent.includes('what color') || lowerContent.includes('what colour')) {
@@ -289,31 +844,40 @@ function getQuestionAnswerFromData(material: any): QAData {
         const color = colorMatch[2];
         return {
           country: country,
-          question: `What color is the bag?`,
-          answer: `It is ${color}.`,
+          question: `What color is the school bag?`,
+          answer: `The school bag is ${color}.`,
           hasData: true
         };
       } else {
         return {
           country: country,
-          question: "What color is the bag?",
-          answer: "It is blue.",
+          question: "What color is the school bag?",
+          answer: "The school bag is blue.",
           hasData: true
         };
       }
     } else if (lowerContent.includes('is it')) {
-      return {
-        country: country,
-        question: "Is it a bag?",
-        answer: "Yes, it is a bag.",
-        hasData: true
-      };
+      if (lowerContent.includes('boy') || lowerContent.includes('girl')) {
+        return {
+          country: country,
+          question: "Is it a boy's or girl's school bag?",
+          answer: lowerContent.includes('girl') ? "It is a girl's school bag." : "It is a boy's school bag.",
+          hasData: true
+        };
+      } else {
+        return {
+          country: country,
+          question: "Is it a school bag?",
+          answer: "Yes, it is a school bag.",
+          hasData: true
+        };
+      }
     } else {
       // Default bag question
       return {
         country: country,
         question: "What is this?",
-        answer: "It is a bag.",
+        answer: "It is a school bag.",
         hasData: true
       };
     }
