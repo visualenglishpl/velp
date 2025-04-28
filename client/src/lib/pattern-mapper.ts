@@ -15,6 +15,115 @@ interface QAMapping {
 
 // Comprehensive mapping for all files
 const EXACT_FILENAME_MAPPINGS: Record<string, QAMapping> = {
+  // UNIT 3 - CLASSROOM RULES
+  "02 N A is the Dog Happy or Sad.gif": { 
+    question: "Is the dog happy or sad?", 
+    answer: "The dog is happy. / The dog is sad." 
+  },
+  "02NA is the Dog Happy or Sad.gif": { 
+    question: "Is the dog happy or sad?", 
+    answer: "The dog is happy. / The dog is sad." 
+  },
+  "02-N-A is the Dog Happy or Sad.gif": { 
+    question: "Is the dog happy or sad?", 
+    answer: "The dog is happy. / The dog is sad." 
+  },
+  "02 N B is the Baby Happy or Sad.gif": { 
+    question: "Is the baby happy or sad?", 
+    answer: "The baby is happy. / The baby is sad." 
+  },
+  "02NB is the Baby Happy or Sad.gif": { 
+    question: "Is the baby happy or sad?", 
+    answer: "The baby is happy. / The baby is sad." 
+  },
+  "02-N-B is the Baby Happy or Sad.gif": { 
+    question: "Is the baby happy or sad?", 
+    answer: "The baby is happy. / The baby is sad." 
+  },
+  "02 N C is the Monster Sad or Happy.gif": { 
+    question: "Is the monster sad or happy?", 
+    answer: "The monster is sad. / The monster is happy." 
+  },
+  "02NC is the Monster Sad or Happy.gif": { 
+    question: "Is the monster sad or happy?", 
+    answer: "The monster is sad. / The monster is happy." 
+  },
+  "02-N-C is the Monster Sad or Happy.gif": { 
+    question: "Is the monster sad or happy?", 
+    answer: "The monster is sad. / The monster is happy." 
+  },
+  "02 O A is the Man Sitting Down or Standing Up.gif": { 
+    question: "Is the man sitting down or standing up?", 
+    answer: "The man is sitting down. / The man is standing up." 
+  },
+  "02OA is the Man Sitting Down or Standing Up.gif": { 
+    question: "Is the man sitting down or standing up?", 
+    answer: "The man is sitting down. / The man is standing up." 
+  },
+  "02-O-A is the Man Sitting Down or Standing Up.gif": { 
+    question: "Is the man sitting down or standing up?", 
+    answer: "The man is sitting down. / The man is standing up." 
+  },
+  "02 O B is the Lady Sitting Down or Standing Up.gif": { 
+    question: "Is the lady sitting down or standing up?", 
+    answer: "The lady is sitting down. / The lady is standing up." 
+  },
+  "02OB is the Lady Sitting Down or Standing Up.gif": { 
+    question: "Is the lady sitting down or standing up?", 
+    answer: "The lady is sitting down. / The lady is standing up." 
+  },
+  "02-O-B is the Lady Sitting Down or Standing Up.gif": { 
+    question: "Is the lady sitting down or standing up?", 
+    answer: "The lady is sitting down. / The lady is standing up." 
+  },
+  "02 O C is the Man Standing Up or Running.gif": { 
+    question: "Is the man standing up or running?", 
+    answer: "The man is standing up. / The man is running." 
+  },
+  "02OC is the Man Standing Up or Running.gif": { 
+    question: "Is the man standing up or running?", 
+    answer: "The man is standing up. / The man is running." 
+  },
+  "02-O-C is the Man Standing Up or Running.gif": { 
+    question: "Is the man standing up or running?", 
+    answer: "The man is standing up. / The man is running." 
+  },
+  "02 P A What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Be quiet.'" 
+  },
+  "02PA What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Be quiet.'" 
+  },
+  "02-P-A What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Be quiet.'" 
+  },
+  "02 P B What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Sit down.'" 
+  },
+  "02PB What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Sit down.'" 
+  },
+  "02-P-B What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Sit down.'" 
+  },
+  "02 P C What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Stand up.'" 
+  },
+  "02PC What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Stand up.'" 
+  },
+  "02-P-C What Does the Teacher Say.gif": { 
+    question: "What does the teacher say?", 
+    answer: "The teacher says 'Stand up.'" 
+  },
   // 08 M - SHARPENERS
   "08 M A What is It – It is A Sharpener.gif": { 
     question: "What is it?", 
@@ -405,6 +514,29 @@ export function getQAForFilename(filename: string): QAResult {
     const variantCode = sectionMatch[3].toUpperCase();
     
     console.log(`DEBUG: Extracted section pattern ${sectionNum} ${typeCode} ${variantCode}`);
+    
+    // Special case for Unit 3 (Classroom Rules) patterns
+    if (sectionNum === "02" && (
+        (typeCode === "N" && ["A", "B", "C"].includes(variantCode)) || 
+        (typeCode === "O" && ["A", "B", "C"].includes(variantCode)) ||
+        (typeCode === "P" && ["A", "B", "C"].includes(variantCode))
+      )) {
+      console.log(`Unit 3 Classroom Rules pattern detected: ${sectionNum} ${typeCode} ${variantCode}`);
+      
+      // Look for an exact match with this pattern in our mappings
+      const matchPattern = `${sectionNum} ${typeCode} ${variantCode}`;
+      for (const key of Object.keys(EXACT_FILENAME_MAPPINGS)) {
+        if (key.startsWith(matchPattern)) {
+          console.log(`Found potential Unit 3 match: ${key}`);
+          const mapping = EXACT_FILENAME_MAPPINGS[key];
+          return {
+            question: mapping.question,
+            answer: mapping.answer,
+            hasMapping: true
+          };
+        }
+      }
+    }
     
     // Check for 12 N G specifically
     if (sectionNum === '12' && typeCode === 'N' && variantCode === 'G') {
