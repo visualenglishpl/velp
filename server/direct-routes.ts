@@ -2,6 +2,7 @@ import { Express, Request, Response } from "express";
 import { GetObjectCommand, S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import * as path from 'path';
+import * as fs from 'fs';
 import * as xlsx from 'xlsx';
 import { processExcelAndGenerateTS } from './excel-processor';
 import { processExcelToJson, findMatchingQA } from './excel-to-json-processor';
@@ -1327,6 +1328,50 @@ export function registerDirectRoutes(app: Express) {
   });
   
   // Process Excel data for a specific unit - Public access to allow students to see questions
+  // Serve enhanced JSON-based Q&A mappings for a specific book
+  app.get("/api/direct/:bookId/json-qa", async (req, res) => {
+    try {
+      const { bookId } = req.params;
+      console.log(`Processing JSON Q&A request for Book ${bookId}`);
+      
+      // Determine the Excel file path based on book ID
+      const localExcelPath = `./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`;
+      
+      // Check if the Excel file exists
+      if (!fs.existsSync(localExcelPath)) {
+        console.error(`Excel file not found: ${localExcelPath}`);
+        return res.status(404).json({ 
+          success: false, 
+          error: `Excel file not found for Book ${bookId}` 
+        });
+      }
+      
+      try {
+        // Process Excel file to JSON
+        const qaMapping = processExcelToJson(localExcelPath);
+        
+        // Return the JSON mapping
+        return res.json({
+          success: true,
+          mappings: qaMapping,
+          mappingCount: Object.keys(qaMapping).length
+        });
+      } catch (error) {
+        const err = error as Error;
+        console.error(`Error processing Excel to JSON for Book ${bookId}:`, err);
+        return res.status(500).json({ 
+          success: false, 
+          error: `Error processing Excel file: ${err.message}` 
+        });
+      }
+    } catch (error) {
+      const err = error as Error;
+      console.error("Error serving JSON Q&A mapping:", err);
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // Original Excel-based Q&A endpoint (keeping for backward compatibility)
   app.get("/api/direct/:bookPath/:unitPath/excel-qa", async (req, res) => {
     // Log authentication status for debugging purposes
     console.log(`Authentication check for ${req.url} - allowing access`);
@@ -1489,6 +1534,8 @@ export function registerDirectRoutes(app: Express) {
       });
     } catch (error) {
       console.error(`Error testing Excel download: ${error}`);
+      // Get the bookPath from the params in the error handler
+      const { bookPath = "unknown" } = req.params;
       return res.status(500).json({
         success: false,
         message: `Error testing Excel download for ${bookPath}`,
@@ -1505,18 +1552,19 @@ export function registerDirectRoutes(app: Express) {
       // Use the node file system to run the update script
       const { exec } = require('child_process');
       
-      // Run the script as a separate process
-      const process = exec('node run_update_resources.js', (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Teacher resources update error: ${error}`);
-          return;
-        }
-        if (stderr) {
-          console.error(`Teacher resources stderr: ${stderr}`);
-          return;
-        }
-        console.log(`Teacher resources update complete: ${stdout}`);
-      });
+      // Run the script as a separate process with proper type handling
+      const process = exec('node run_update_resources.js', 
+        (error: Error | null, stdout: string, stderr: string) => {
+          if (error) {
+            console.error(`Teacher resources update error: ${error.message}`);
+            return;
+          }
+          if (stderr) {
+            console.error(`Teacher resources stderr: ${stderr}`);
+            return;
+          }
+          console.log(`Teacher resources update complete: ${stdout}`);
+        });
       
       // Return immediately without waiting for completion
       res.json({ 
