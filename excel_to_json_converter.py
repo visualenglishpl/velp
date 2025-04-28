@@ -16,99 +16,117 @@ def process_excel(excel_file, book_id):
     """Process Excel file and generate JSON mapping with proper structure."""
     print(f"Processing Excel file: {excel_file}")
     
-    # Load Excel file
-    excel = pd.ExcelFile(excel_file, engine='openpyxl')
-    
-    # Dictionary to store all Q&A mappings
-    mapping = {}
-    
-    # Iterate through each sheet (unit)
-    for sheet_name in excel.sheet_names:
-        unit_id = extract_unit_id(sheet_name)
-        if not unit_id:
-            print(f"Warning: Could not extract unit ID from sheet {sheet_name}")
-            continue
-            
-        print(f"Processing sheet: {sheet_name} (Unit ID: {unit_id})")
+    try:
+        # Load Excel file with more robust error handling for binary files
+        excel = pd.ExcelFile(excel_file, engine='openpyxl')
         
-        # Read the sheet data
-        df = pd.read_excel(excel, sheet_name=sheet_name)
+        # Dictionary to store all Q&A mappings
+        mapping = {}
         
-        # Skip processing if DataFrame is empty
-        if df.empty:
-            print(f"Warning: Empty sheet {sheet_name}")
-            continue
+        # Track total processed entries
+        total_entries = 0
         
-        # Get column names - the first column contains filenames
-        filename_col = df.columns[0]
-        
-        # The second column may be unnamed but contains questions
-        question_col = 'Unnamed: 1' if 'Unnamed: 1' in df.columns else None
-        
-        # The third column may be unnamed but contains answers
-        answer_col = 'Unnamed: 2' if 'Unnamed: 2' in df.columns else None
-        
-        if not question_col or not answer_col:
-            print(f"Warning: Missing question or answer column in sheet {sheet_name}")
-            # Try to find columns with non-null values that could be questions/answers
-            for col in df.columns[1:]:
-                non_null = df[col].count()
-                if non_null > 0:
-                    if not question_col:
-                        question_col = col
-                    elif not answer_col:
-                        answer_col = col
+        # Iterate through each sheet (unit)
+        for sheet_name in excel.sheet_names:
+            try:
+                unit_id = extract_unit_id(sheet_name)
+                if not unit_id:
+                    print(f"Warning: Could not extract unit ID from sheet {sheet_name}")
+                    # If we can't extract unit ID from sheet name, try to extract from numbers in the name
+                    number_match = re.search(r'(\d+)', sheet_name)
+                    if number_match:
+                        unit_id = f"unit{number_match.group(1)}"
+                        print(f"Extracted fallback unit ID: {unit_id}")
                     else:
-                        break
-        
-        # Log the column structure for debugging
-        print(f"Using columns: Filename={filename_col}, Question={question_col}, Answer={answer_col}")
-        
-        # Filter out rows where both question and answer are missing
-        valid_rows = df.loc[
-            df[question_col].notna() & df[answer_col].notna()
-        ]
-        
-        # Count non-null entries
-        non_null_count = len(valid_rows)
-        print(f"Found {non_null_count} valid Q&A entries in {sheet_name}")
-        
-        # Process each row with valid Q&A data
-        for _, row in valid_rows.iterrows():
-            filename = str(row[filename_col]).strip()
-            question = str(row[question_col]).strip()
-            answer = str(row[answer_col]).strip()
-            
-            # Extract code pattern from filename
-            code_pattern = extract_code_pattern(filename)
-            
-            # Generate a unique key for the mapping
-            # Use the filename as the key for the most direct matching
-            mapping[filename] = {
-                'filename': filename,
-                'codePattern': code_pattern,
-                'question': question,
-                'answer': answer,
-                'unitId': unit_id,
-                'bookId': book_id
-            }
-            
-            # Also add mapping with filename without extension for easier matching
-            filename_no_ext = re.sub(r'\.(png|jpg|jpeg|gif|webp|mp4)$', '', filename, flags=re.IGNORECASE)
-            if filename_no_ext != filename:
-                mapping[filename_no_ext] = mapping[filename].copy()
+                        continue
+                        
+                print(f"Processing sheet: {sheet_name} (Unit ID: {unit_id})")
                 
-            # For flexibility, also add entries with normalized code patterns
-            if code_pattern:
-                # Add variations of the code pattern for better matching
-                pattern_variations = generate_pattern_variations(code_pattern)
-                for variation in pattern_variations:
-                    if variation not in mapping:
-                        # Create a copy of the mapping entry with the variation as the key
-                        mapping[variation] = mapping[filename].copy()
-                        mapping[variation]['codePattern'] = variation
+                # Read the sheet data with more robust error handling
+                try:
+                    df = pd.read_excel(excel, sheet_name=sheet_name, engine='openpyxl')
+                except Exception as e:
+                    print(f"Error reading sheet {sheet_name}: {e}")
+                    continue
+                
+                # Skip processing if DataFrame is empty
+                if df.empty:
+                    print(f"Warning: Empty sheet {sheet_name}")
+                    continue
+                
+                # Handle different possible column structures
+                
+                # First approach: Use column indices rather than names to be more robust
+                # Even if columns are unnamed or have inconsistent names, we can access by position
+                
+                if len(df.columns) >= 3:
+                    # Process each row using direct column indices
+                    valid_count = 0
+                    
+                    for _, row in df.iterrows():
+                        try:
+                            # Access data by position rather than column name
+                            filename = row.iloc[0] if not pd.isna(row.iloc[0]) else None
+                            question = row.iloc[1] if not pd.isna(row.iloc[1]) else None
+                            answer = row.iloc[2] if not pd.isna(row.iloc[2]) else None
+                            
+                            # Skip if any required field is missing
+                            if not filename or not question or not answer:
+                                continue
+                                
+                            # Convert to string and clean
+                            filename = str(filename).strip()
+                            question = str(question).strip()
+                            answer = str(answer).strip()
+                            
+                            # Extract code pattern from filename
+                            code_pattern = extract_code_pattern(filename)
+                            
+                            # Generate entry in the mapping
+                            mapping[filename] = {
+                                'filename': filename,
+                                'codePattern': code_pattern,
+                                'question': question,
+                                'answer': answer,
+                                'unitId': unit_id,
+                                'bookId': book_id
+                            }
+                            
+                            # Also add mapping with filename without extension for easier matching
+                            filename_no_ext = re.sub(r'\.(png|jpg|jpeg|gif|webp|mp4)$', '', filename, flags=re.IGNORECASE)
+                            if filename_no_ext != filename:
+                                mapping[filename_no_ext] = mapping[filename].copy()
+                                
+                            # For flexibility, also add entries with normalized code patterns
+                            if code_pattern:
+                                # Add variations of the code pattern for better matching
+                                pattern_variations = generate_pattern_variations(code_pattern)
+                                for variation in pattern_variations:
+                                    if variation not in mapping:
+                                        # Create a copy of the mapping entry with the variation as the key
+                                        mapping[variation] = mapping[filename].copy()
+                                        mapping[variation]['codePattern'] = variation
+                            
+                            valid_count += 1
+                        except Exception as row_error:
+                            print(f"Error processing row in sheet {sheet_name}: {row_error}")
+                            continue
+                    
+                    total_entries += valid_count
+                    print(f"Processed {valid_count} valid entries from sheet {sheet_name}")
+                else:
+                    print(f"Warning: Sheet {sheet_name} has fewer than 3 columns")
+            
+            except Exception as sheet_error:
+                print(f"Error processing sheet {sheet_name}: {sheet_error}")
+                continue
+        
+        print(f"Total entries processed: {total_entries}")
+        return mapping
     
-    return mapping
+    except Exception as e:
+        print(f"Error processing Excel file {excel_file}: {e}")
+        raise
 
 def extract_code_pattern(filename):
     """Extract code pattern from filename (like '01 I A')."""
