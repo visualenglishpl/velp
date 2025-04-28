@@ -1889,6 +1889,176 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/76146409a4de4fa59a6c364e43e4eee6?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 13,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "3",
+              title: "Home Sweet Home: Lesson Plan (Ages 9-10)",
+              resourceType: "activity",
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">Home Sweet Home: Lesson Plan</h2>
+                <div class="text-right text-sm text-gray-500 mb-4">For students aged 9-10 years</div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will identify different types of housing (apartment, detached house, cottage, etc.)</li>
+                    <li>Students will name and describe different rooms in a house</li>
+                    <li>Students will learn vocabulary for common furniture and household items</li>
+                    <li>Students will practice giving and following directions using prepositions of place</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Materials Needed</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Pictures of different types of houses (apartment, house, cottage, mansion, etc.)</li>
+                    <li>Flashcards with rooms of the house</li>
+                    <li>Small furniture cutouts or toy furniture</li>
+                    <li>Paper for drawing floor plans</li>
+                    <li>Colored pencils or markers</li>
+                    <li>Handout with house vocabulary</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up (10 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Types of Houses Discussion:</strong> Show students pictures of different types of houses and ask:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>"What type of house is this?" (apartment building, detached house, cottage, etc.)</li>
+                      <li>"Do you live in a house like this?"</li>
+                      <li>"What type of house do you live in?"</li>
+                    </ul>
+                    <p class="mt-2">Create a quick tally on the board of how many students live in each type of housing.</p>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Vocabulary Development (15 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>1. Rooms in a House:</strong> Introduce or review vocabulary:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Kitchen, living room, bedroom, bathroom, dining room</li>
+                      <li>Attic, basement, garage, garden/yard</li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>2. Furniture and Items:</strong> Teach key vocabulary for each room:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Kitchen: refrigerator, stove, sink, cupboard, table, chair</li>
+                      <li>Living room: sofa, armchair, TV, bookshelf, coffee table</li>
+                      <li>Bedroom: bed, wardrobe, desk, lamp, pillow, blanket</li>
+                      <li>Bathroom: toilet, shower, bathtub, sink, mirror</li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>3. Prepositions Review:</strong> Quick review of:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>In, on, under, next to, between, in front of, behind</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (25 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>1. "Where Is It?" Game (10 minutes):</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Place small furniture items or cutouts on a table</li>
+                      <li>Students take turns asking: "Where is the [item]?"</li>
+                      <li>Another student must answer using a preposition: "It's under the table" or "It's next to the chair"</li>
+                      <li>For more challenge, add room context: "The lamp is on the desk in the bedroom"</li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>2. "My Dream House" Floor Plan (15 minutes):</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Students draw a simple floor plan of their dream house</li>
+                      <li>They must label at least 5 rooms</li>
+                      <li>They should draw and label at least 3 furniture items in each room</li>
+                      <li>Encourage creativity but ensure they're using the vocabulary correctly</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Pair Work Activity (15 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>"Find the Differences" Houses:</strong></p>
+                    <ol class="ml-4 mt-1 space-y-1 list-decimal">
+                      <li>Pair students and give each student a slightly different house picture (with 5-7 differences)</li>
+                      <li>Without looking at each other's pictures, they must ask questions to identify differences</li>
+                      <li>Example questions:
+                        <ul class="ml-4 mt-1 space-y-1 list-disc">
+                          <li>"How many bedrooms are there in your house?"</li>
+                          <li>"Is there a TV in the living room?"</li>
+                          <li>"Where is the lamp in the bedroom?"</li>
+                        </ul>
+                      </li>
+                      <li>Students should list all differences they discover</li>
+                    </ol>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Speaking Activity (10 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>"House Tour" Presentations:</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Students use their dream house floor plans from earlier</li>
+                      <li>In pairs, students give a "tour" of their dream house</li>
+                      <li>They should describe each room and its furniture: "This is the kitchen. There's a big refrigerator next to the door and a table in the middle of the room."</li>
+                      <li>Select 2-3 volunteers to share their house tours with the whole class</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up (5 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Room Riddles:</strong> Describe a room without naming it, and have students guess which room it is.</p>
+                    <p class="mt-2">Example: "In this room, you can find a refrigerator, a sink, and a stove. What room is it?"</p>
+                    <p class="mt-2">Have students create their own room riddles and share them with the class.</p>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Assessment</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p>Observe students during activities and assess:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Correct use of house and furniture vocabulary</li>
+                      <li>Proper use of prepositions of place</li>
+                      <li>Ability to describe rooms and house layouts</li>
+                      <li>Participation in pair and group activities</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Homework Ideas</h3>
+                  <div class="pl-5 text-gray-700">
+                    <ul class="ml-4 space-y-1 list-disc">
+                      <li>Draw and label your real home with at least 8 furniture items</li>
+                      <li>Write 5 sentences describing where things are in your home using prepositions</li>
+                      <li>Create a mini-book titled "My Home" with drawings of different rooms</li>
+                      <li>Research and write about a traditional type of house from another country</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <div class="pl-5 text-gray-700">
+                    <ul class="ml-4 space-y-1 list-disc">
+                      <li>Create a 3D model of a room using a shoebox</li>
+                      <li>Explore different housing types around the world (igloos, yurts, houseboats)</li>
+                      <li>Role play conversations in different rooms (shopping in the kitchen, watching TV in the living room)</li>
+                      <li>Create a house advertisement with drawings and descriptions</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>`,
+              order: 14,
+              provider: "Visual English"
             }
           );
         }
@@ -1921,6 +2091,190 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/1373ff4429454b2c8c63824e64176643?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 2,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "4",
+              title: "All About Me & My Family: Lesson Plan (Ages 9-10)",
+              resourceType: "activity",
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">All About Me & My Family: Lesson Plan</h2>
+                <div class="text-right text-sm text-gray-500 mb-4">For students aged 9-10 years</div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn and use vocabulary to describe physical appearance</li>
+                    <li>Students will identify and name family members using appropriate terms</li>
+                    <li>Students will practice asking and answering personal questions</li>
+                    <li>Students will create descriptions of themselves and family members</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Materials Needed</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Family photos (teacher brings some examples, students can bring their own)</li>
+                    <li>Small mirrors for students to observe themselves</li>
+                    <li>Pictures of people with different physical features</li>
+                    <li>Family tree template worksheets</li>
+                    <li>Art supplies (colored pencils, markers, paper)</li>
+                    <li>Vocabulary flashcards for family members and physical descriptions</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up (10 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Guess Who? Game:</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Display pictures of famous people or cartoon characters</li>
+                      <li>Describe one person without saying who it is</li>
+                      <li>Students guess which person you're describing</li>
+                      <li>Use phrases like: "This person has long black hair. This person wears glasses. This person is tall."</li>
+                      <li>Invite volunteers to describe someone for others to guess</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Vocabulary Development (15 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>1. Physical Description Vocabulary:</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Hair: long/short, straight/curly/wavy, blonde/brown/black/red/gray</li>
+                      <li>Eyes: blue/green/brown/hazel, big/small</li>
+                      <li>Height: tall/medium height/short</li>
+                      <li>Build: thin/average/heavy</li>
+                      <li>Age: young/middle-aged/old</li>
+                      <li>Other features: glasses, freckles, beard, mustache</li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>2. Family Vocabulary:</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Immediate family: mother, father, sister, brother</li>
+                      <li>Extended family: grandmother, grandfather, aunt, uncle, cousin</li>
+                      <li>Other terms: parents, grandparents, siblings, twins</li>
+                    </ul>
+                    
+                    <p class="mt-3">Demonstrate by describing your own family members or using photos.</p>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (25 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>1. "Describe Yourself" Mirror Activity (10 minutes):</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Give each student a small mirror</li>
+                      <li>Have them write 5-6 sentences describing themselves</li>
+                      <li>Prompt with questions: "What color is your hair? What color are your eyes? Are you tall or short?"</li>
+                      <li>Students share their descriptions with a partner who verifies the accuracy</li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>2. Family Tree Project (15 minutes):</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Distribute family tree templates</li>
+                      <li>Students fill in names and draw small portraits of their family members</li>
+                      <li>For each family member, they write one sentence describing them</li>
+                      <li>Example: "My mother has brown hair and blue eyes. She is tall."</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Interview Activity (15 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>"Family Reporter" Pairs Activity:</strong></p>
+                    <ol class="ml-4 mt-1 space-y-1 list-decimal">
+                      <li>Pair students and give them question prompts:</li>
+                      <ul class="ml-4 mt-1 space-y-1 list-disc">
+                        <li>"How many people are in your family?"</li>
+                        <li>"Do you have any brothers or sisters?"</li>
+                        <li>"What does your mother/father look like?"</li>
+                        <li>"Who do you look most like in your family?"</li>
+                        <li>"Do you have any pets in your family?"</li>
+                      </ul>
+                      <li>Students interview each other and take notes</li>
+                      <li>Each student presents 3 interesting facts they learned about their partner's family</li>
+                    </ol>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Creative Writing Activity (10 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>"My Special Family Member" Mini-Essay:</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Students choose one family member they want to write about</li>
+                      <li>They write 5-7 sentences describing:
+                        <ul class="ml-4 mt-1 space-y-1 list-disc">
+                          <li>Who this person is in their family</li>
+                          <li>What they look like (physical description)</li>
+                          <li>What they like to do (simple interests/hobbies)</li>
+                          <li>Why this family member is special to them</li>
+                        </ul>
+                      </li>
+                      <li>Volunteers can share their writing with the class</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up (5 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Family Similarities Game:</strong></p>
+                    <p class="mt-1">Call out statements about family similarities and students stand up if it's true for them:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>"Stand up if you have the same color hair as your mother/father."</li>
+                      <li>"Stand up if you have the same color eyes as someone in your family."</li>
+                      <li>"Stand up if you are the tallest person in your family."</li>
+                      <li>"Stand up if you have more than one brother or sister."</li>
+                    </ul>
+                    <p class="mt-2">Conclude by emphasizing that all families are different and special.</p>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Assessment</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p>Assessment based on:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Accurate use of physical description vocabulary</li>
+                      <li>Correct use of family relationship terms</li>
+                      <li>Ability to form clear, grammatically correct descriptive sentences</li>
+                      <li>Participation in pair and group activities</li>
+                      <li>Completion of family tree with appropriate descriptions</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Homework Ideas</h3>
+                  <div class="pl-5 text-gray-700">
+                    <ul class="ml-4 space-y-1 list-disc">
+                      <li>Complete a more detailed family tree with descriptions of each person</li>
+                      <li>Interview an older family member about what they looked like when they were the student's age</li>
+                      <li>Write a short story about "A Day in My Family" describing family activities</li>
+                      <li>Find photos of famous people who look similar to family members and explain the similarities</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <div class="pl-5 text-gray-700">
+                    <ul class="ml-4 space-y-1 list-disc">
+                      <li>Create "Wanted" posters with detailed descriptions of family members</li>
+                      <li>Research family traditions from different cultures and compare with their own</li>
+                      <li>Create a family recipe book with descriptions of who makes each dish in the family</li>
+                      <li>Role-play introducing family members at a family reunion</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>`,
+              order: 3,
+              provider: "Visual English"
             }
           );
         }
