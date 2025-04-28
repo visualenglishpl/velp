@@ -2085,6 +2085,226 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             }
           );
         }
+        // Unit 9 - Camping
+        else if (unitId === "9") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "9",
+              title: "Camping Verbs - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/26789cf0b8d648709a7ac5457a9bbfa6?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "9",
+              title: "Camping Vocabulary - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6433e17ad3f84d538f1d5e9eb5d6b4e0?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 10 - Mother Nature
+        else if (unitId === "10") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "10",
+              title: "Weather 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/e01b844b81f34deca0222f6548d2b19a?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "10",
+              title: "Weather 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/584b1bd4ad394131b887c4787bf869a3?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "10",
+              title: "Weather 3 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/531c7ba221c44e3389dc009f2ec114f8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "10",
+              title: "Mother Nature - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9c1af9a866eb4251a65afc8696916d4d?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 3,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 11 - Daily Routines
+        else if (unitId === "11") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "11",
+              title: "Daily Routines 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/06b2e108c57843bc86f50245c245854a?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "11",
+              title: "Daily Routines 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/459e14c3d21a459f9423a4eb7097e5fc?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 12 - At The Farm
+        else if (unitId === "12") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "12",
+              title: "Farm Animals 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9ac6bf8c618248c894a6ffaf6747f79f?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "12",
+              title: "Farm Animals 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c4c0f4a82d1e4fafa10a6cad72b201be?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "12",
+              title: "Farm Animals Verbs - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/cdbb6e247e6049c0a53ab06a8ede7a00?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 13 - At The Playground
+        else if (unitId === "13") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "13",
+              title: "At The Playground 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c50669484ab247c4ab66b98e3c94f4af?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "13",
+              title: "At The Playground 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ca514af1b9ce49429181a2475142de6a?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 14 - What Can You Do
+        else if (unitId === "14") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "14",
+              title: "I Can Verbs 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/cb60e7edbea74d8d81417cd3eeef28ed?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "14",
+              title: "I Can Verbs 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/29b2dad99a9d447f8ea8823024d19216?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 15 - At The Circus
+        else if (unitId === "15") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "15",
+              title: "Circus Vocabulary 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/94c4f083575e4321bd59f57bc024dbd3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "15",
+              title: "Circus Vocabulary 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6c0d9d6d5b1d40b78d0d23df4539e1e1?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "15",
+              title: "Circus Animals - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/1c724495ff684609895ed535379cbec0?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 16 - Free Time Activities
+        else if (unitId === "16") {
+          predefinedResources.push(
+            {
+              bookId: "4",
+              unitId: "16",
+              title: "Free Time Activities 1 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ba588163d9c4497d9f86c6aca1479354?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 0,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "16",
+              title: "Free Time Activities 2 - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9d97f106652e47cd86c4416269c4fd86?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            }
+          );
+        }
 
         // Save resources to the server
         if (predefinedResources.length > 0) {
