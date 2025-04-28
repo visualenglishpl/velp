@@ -1258,50 +1258,50 @@ export function registerDirectRoutes(app: Express) {
       const bookId = req.query.bookId || '1';
       console.log(`Processing Excel file for Q&A mapping for Book ${bookId}`);
       
-      // Determine file paths based on book ID
-      const localExcelPath = `./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`;
+      // Check multiple possible naming patterns
+      const possibleExcelPaths = [
+        `./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`,  // Original format: VISUAL 1 QUESTIONS.xlsx
+        `./attached_assets/VISUAL ${bookId}  QUESTIONS.xlsx`, // For books with two spaces: VISUAL 1  QUESTIONS.xlsx
+        `./attached_assets/VISUAL-${bookId}-QUESTIONS.xlsx`,  // For hyphenated format: VISUAL-1-QUESTIONS.xlsx
+        `./attached_assets/VISUAL${bookId}QUESTIONS.xlsx`,    // For no-space format: VISUAL1QUESTIONS.xlsx
+      ];
+      
+      // Also handle the case where 'book' prefix is included in the bookId
+      const numericBookId = String(bookId).replace(/^book/i, '');
+      if (numericBookId !== String(bookId)) {
+        possibleExcelPaths.push(
+          `./attached_assets/VISUAL ${numericBookId} QUESTIONS.xlsx`,
+          `./attached_assets/VISUAL ${numericBookId}  QUESTIONS.xlsx`
+        );
+      }
+      
+      // Try each possible path
+      let excelPath = null;
+      for (const path of possibleExcelPaths) {
+        if (fs.existsSync(path)) {
+          excelPath = path;
+          console.log(`Found Excel file at ${path}`);
+          break;
+        }
+      }
+      
+      if (!excelPath) {
+        console.error(`Excel file not found at any of these paths:`, possibleExcelPaths);
+        return res.status(404).json({
+          success: false,
+          error: `Excel file not found for Book ${bookId}`,
+          checkedPaths: possibleExcelPaths
+        });
+      }
+      
+      // Output paths for the generated files
       const tsOutputPath = `./client/src/data/qa-mapping-book${bookId}.ts`;
       const jsonOutputPath = `./client/src/data/qa-mapping-book${bookId}.json`;
       
-      console.log(`Processing local Excel file at ${localExcelPath}`);
-      
-      // Process the Excel file and generate the mapping
       try {
-        // Import fs instead of using require
-        const fs = await import('fs');
-        
-        // Check if the file exists
-        if (!fs.existsSync(localExcelPath)) {
-          console.error(`Excel file not found at ${localExcelPath}`);
-          
-          // If we're looking for VISUAL 2 QUESTIONS.xlsx but it's not in the attached_assets folder,
-          // check if it exists as an uploaded file from the client
-          if (fs.existsSync(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`)) {
-            console.log(`Found uploaded Excel file for Book ${bookId}`);
-            
-            // Process with both methods - old TS approach for backward compatibility and new JSON approach
-            const tsMapping = processExcelAndGenerateTS(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`, tsOutputPath);
-            const jsonMapping = processExcelToJson(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`, jsonOutputPath);
-            
-            return res.json({
-              success: true,
-              message: `Successfully processed Q&A Excel file for Book ${bookId}`,
-              mappingCount: Object.keys(jsonMapping).length,
-              tsOutputPath,
-              jsonOutputPath,
-              usingEnhancedMapping: true
-            });
-          }
-          
-          return res.status(404).json({
-            success: false,
-            error: `Excel file not found for Book ${bookId}`
-          });
-        }
-        
-        // Process with both methods - old TS approach for backward compatibility and new JSON approach
-        const tsMapping = processExcelAndGenerateTS(localExcelPath, tsOutputPath);
-        const jsonMapping = processExcelToJson(localExcelPath, jsonOutputPath);
+        // Process the Excel file and generate the mapping
+        const tsMapping = processExcelAndGenerateTS(excelPath, tsOutputPath);
+        const jsonMapping = processExcelToJson(excelPath, jsonOutputPath);
         
         return res.json({
           success: true,
@@ -1332,29 +1332,75 @@ export function registerDirectRoutes(app: Express) {
   app.get("/api/direct/:bookId/json-qa", async (req, res) => {
     try {
       const { bookId } = req.params;
-      console.log(`Processing JSON Q&A request for Book ${bookId}`);
+      console.log(`Direct access to ${bookId}/json-qa`);
       
-      // Determine the Excel file path based on book ID
-      const localExcelPath = `./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`;
+      // Check multiple possible naming patterns
+      const possibleExcelPaths = [
+        `./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`,  // Original format: VISUAL 1 QUESTIONS.xlsx
+        `./attached_assets/VISUAL ${bookId}  QUESTIONS.xlsx`, // For books with two spaces: VISUAL 1  QUESTIONS.xlsx
+        `./attached_assets/VISUAL-${bookId}-QUESTIONS.xlsx`,  // For hyphenated format: VISUAL-1-QUESTIONS.xlsx
+        `./attached_assets/VISUAL${bookId}QUESTIONS.xlsx`,    // For no-space format: VISUAL1QUESTIONS.xlsx
+      ];
       
-      // Check if the Excel file exists
-      if (!fs.existsSync(localExcelPath)) {
-        console.error(`Excel file not found: ${localExcelPath}`);
+      // Also handle the case where 'book' prefix is included in the bookId
+      const numericBookId = String(bookId).replace(/^book/i, '');
+      if (numericBookId !== String(bookId)) {
+        possibleExcelPaths.push(
+          `./attached_assets/VISUAL ${numericBookId} QUESTIONS.xlsx`,
+          `./attached_assets/VISUAL ${numericBookId}  QUESTIONS.xlsx`
+        );
+      }
+      
+      // Try each possible path
+      let excelPath = null;
+      for (const path of possibleExcelPaths) {
+        if (fs.existsSync(path)) {
+          excelPath = path;
+          console.log(`Found Excel file at ${path}`);
+          break;
+        }
+      }
+      
+      if (!excelPath) {
+        // Handle hardcoded mappings as a fallback - most reliable approach
+        console.log(`No Excel file found for book ${bookId}, using hardcoded mappings`);
+        
+        // Create fallback mappings based on common patterns
+        const fallbackQA: Record<string, any> = {};
+        
+        // Using existing book data, let's generate some mappings using common patterns
+        const hardcodedMappings = getHardcodedQuestionAnswers(bookId, undefined);
+        
+        if (Object.keys(hardcodedMappings).length > 0) {
+          console.log(`Using ${Object.keys(hardcodedMappings).length} hardcoded Q&A mappings for book ${bookId}`);
+          return res.json({
+            success: true,
+            mappings: hardcodedMappings,
+            mappingCount: Object.keys(hardcodedMappings).length,
+            source: "hardcoded"
+          });
+        }
+        
+        // If we get here, we couldn't find any mappings
+        console.warn(`No Excel file or hardcoded mappings found for Book ${bookId}`);
         return res.status(404).json({ 
           success: false, 
-          error: `Excel file not found for Book ${bookId}` 
+          error: `No Q&A mappings found for Book ${bookId}`,
+          checkedPaths: possibleExcelPaths 
         });
       }
       
       try {
         // Process Excel file to JSON
-        const qaMapping = processExcelToJson(localExcelPath);
+        const qaMapping = processExcelToJson(excelPath);
         
         // Return the JSON mapping
         return res.json({
           success: true,
           mappings: qaMapping,
-          mappingCount: Object.keys(qaMapping).length
+          mappingCount: Object.keys(qaMapping).length,
+          source: "excel",
+          path: excelPath
         });
       } catch (error) {
         const err = error as Error;
