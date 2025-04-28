@@ -29,6 +29,7 @@ type PatternType =
   | 'worksheet'
   | 'game'
   | 'video'
+  | 'can-do'
   | 'unknown';
 
 // Define units that we know about
@@ -110,15 +111,23 @@ export function determinePatternType(filename: string, unitId: string = ''): Pat
   
   // Use unit ID as a hint for other content types
   if (unitId) {
-    const unitLower = unitId.toLowerCase();
+    // Extract unit number from paths like "book1/unit8" or "unit8"
+    const unitMatch = unitId.match(/unit(\d+)/i);
+    const unitNumber = unitMatch ? unitMatch[1] : null;
     
-    if (unitLower.includes('unit8') || unitLower === 'unit8') return 'shapes';
-    if (unitLower.includes('unit4') || unitLower === 'unit4') return 'emotions';
-    if (unitLower.includes('unit5') || unitLower === 'unit5') return 'family';
-    if (unitLower.includes('unit13') || unitLower === 'unit13') return 'animals';
-    if (unitLower.includes('unit15') || unitLower === 'unit15') return 'fruits';
-    if (unitLower.includes('unit16') || unitLower === 'unit16') return 'vegetables';
-    if (unitLower.includes('unit17') || unitLower === 'unit17') return 'weather';
+    if (unitNumber) {
+      switch (unitNumber) {
+        case '8': return 'shapes';
+        case '4': return 'emotions';
+        case '5': return 'family';
+        case '13': return 'animals';
+        case '15': return 'fruits';
+        case '16': return 'vegetables';
+        case '17': return 'weather';
+        case '18': return 'can-do';
+        default: break;
+      }
+    }
   }
   
   return 'unknown';
@@ -257,6 +266,13 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
       return {
         question: 'How are you today?',
         answer: 'I am happy/sad/angry/tired/excited.',
+        generatedBy: 'pattern-engine'
+      };
+    }
+    case 'can-do': {
+      return {
+        question: 'Can you do this activity?',
+        answer: 'Yes, I can. / No, I can\'t.',
         generatedBy: 'pattern-engine'
       };
     }
