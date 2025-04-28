@@ -5,6 +5,8 @@ import * as path from 'path';
 export interface QuestionAnswer {
   question: string;
   answer: string;
+  codePattern?: string;
+  unitId?: string;  // Add unitId to track which unit this Q&A belongs to
 }
 
 /**
@@ -29,6 +31,43 @@ export function processExcelAndGenerateTS(
   for (const sheetName of workbook.SheetNames) {
     console.log(`Processing sheet: ${sheetName}`);
     const worksheet = workbook.Sheets[sheetName];
+    
+    // Extract unit information from sheet name (e.g., "VISUAL 1 - UNIT 8" → unit8)
+    // Use multiple regex patterns to try to extract unit number
+    let unitNumber = null;
+    
+    // Try pattern: "UNIT X" or "UNIT-X"
+    const unitMatch = sheetName.match(/UNIT[\s-]*(\d+)/i);
+    if (unitMatch) {
+      unitNumber = unitMatch[1];
+    } 
+    
+    // Try pattern: "UX" (e.g., "U8" for Unit 8)
+    if (!unitNumber) {
+      const shortUnitMatch = sheetName.match(/\bU(\d+)\b/i);
+      if (shortUnitMatch) {
+        unitNumber = shortUnitMatch[1];
+      }
+    }
+    
+    // Try looking for just a number in the sheet name (last resort)
+    if (!unitNumber) {
+      const justNumberMatch = sheetName.match(/\b(\d{1,2})\b/);
+      if (justNumberMatch) {
+        unitNumber = justNumberMatch[1];
+      }
+    }
+    
+    // Format unitId as "unitX"
+    const unitId = unitNumber ? `unit${unitNumber}` : '';
+    
+    if (unitNumber) {
+      console.log(`✅ Successfully extracted unit number ${unitNumber} from sheet name: ${sheetName}`);
+    } else {
+      console.log(`⚠️ Could not extract unit number from sheet name: ${sheetName}`);
+    }
+    
+    console.log(`Processing sheet ${sheetName} with unitId: ${unitId || 'NONE'}`);
     
     // Process the Excel file manually to properly handle the specific structure
     // Visual English Excel files have:
@@ -74,10 +113,12 @@ export function processExcelAndGenerateTS(
         continue;
       }
       
-      // Add to mapping using code as key
+      // Add to mapping using code as key, including unitId
       mapping[codePattern] = {
         question,
-        answer
+        answer,
+        codePattern,
+        unitId: unitId || undefined   // Include unitId when available
       };
       
       // Also add formatted variants for better matching
@@ -85,14 +126,18 @@ export function processExcelAndGenerateTS(
       if (formattedCode !== codePattern) {
         mapping[formattedCode] = {
           question,
-          answer
+          answer,
+          codePattern,
+          unitId: unitId || undefined   // Include unitId when available
         };
       }
       
       // Add lowercase variant for case-insensitive matching
       mapping[codePattern.toLowerCase()] = {
         question,
-        answer
+        answer,
+        codePattern,
+        unitId: unitId || undefined   // Include unitId when available
       };
     }
     

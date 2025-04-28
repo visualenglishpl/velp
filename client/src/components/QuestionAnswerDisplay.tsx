@@ -1420,10 +1420,11 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       const currentUnitId = unitId || '';
       console.log(`Loaded ${Object.values(jsonMappings).filter(qa => qa.unitId === currentUnitId).length} QA entries from Excel for ${bookId}/${currentUnitId}`);
       
-      const matchingQA = findMatchingQA(filename);
+      // Pass the currentUnitId to the findMatchingQA function to filter by unit
+      const matchingQA = findMatchingQA(filename, currentUnitId);
       
-      // Only use the match if it belongs to the current unit or doesn't have a unitId specified
-      if (matchingQA && (matchingQA.unitId === currentUnitId || !matchingQA.unitId)) {
+      // Check if we found a matching question
+      if (matchingQA) {
         console.log("✅ FOUND MATCH using enhanced JSON-based mapping for:", filename);
         setQAData({
           country: formatText.determineCountry(filename),

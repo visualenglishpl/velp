@@ -36,15 +36,42 @@ export function processExcelToJson(
     const worksheet = workbook.Sheets[sheetName];
     
     // Extract unit information from sheet name (e.g., "VISUAL 1 - UNIT 8" → unit8)
-    const unitMatch = sheetName.match(/UNIT\s*(\d+)/i);
-    const unitNumber = unitMatch ? unitMatch[1] : null;
+    // Use multiple regex patterns to try to extract unit number
+    let unitNumber = null;
+    
+    // Try pattern: "UNIT X" or "UNIT-X"
+    const unitMatch = sheetName.match(/UNIT[\s-]*(\d+)/i);
+    if (unitMatch) {
+      unitNumber = unitMatch[1];
+    } 
+    
+    // Try pattern: "UX" (e.g., "U8" for Unit 8)
+    if (!unitNumber) {
+      const shortUnitMatch = sheetName.match(/\bU(\d+)\b/i);
+      if (shortUnitMatch) {
+        unitNumber = shortUnitMatch[1];
+      }
+    }
+    
+    // Try looking for just a number in the sheet name (last resort)
+    if (!unitNumber) {
+      const justNumberMatch = sheetName.match(/\b(\d{1,2})\b/);
+      if (justNumberMatch) {
+        unitNumber = justNumberMatch[1];
+      }
+    }
+    
+    // Format unitId as "unitX"
     const unitId = unitNumber ? `unit${unitNumber}` : '';
     
     if (unitNumber) {
-      console.log(`Extracted unit number ${unitNumber} from sheet name: ${sheetName}`);
+      console.log(`✅ Successfully extracted unit number ${unitNumber} from sheet name: ${sheetName}`);
     } else {
-      console.log(`Could not extract unit number from sheet name: ${sheetName}`);
+      console.log(`⚠️ Could not extract unit number from sheet name: ${sheetName}`);
     }
+    
+    // For debugging, output some sample entries to verify data
+    console.log(`Processing sheet ${sheetName} with unitId: ${unitId || 'NONE'}`);
     
     // Process the Excel file manually to properly handle the specific structure
     // Visual English Excel files have:

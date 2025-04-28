@@ -170,15 +170,15 @@ export function useExcelQA(bookId: string) {
 
     // Try with the filename without extension
     const filenameWithoutExt = filename.replace(/\.(png|jpg|jpeg|gif|webp|mp4)$/i, '').trim();
-    if (mappings[filenameWithoutExt]) {
+    if (filteredMappings[filenameWithoutExt]) {
       console.log(`Found match without extension for:`, filenameWithoutExt);
-      return mappings[filenameWithoutExt];
+      return filteredMappings[filenameWithoutExt];
     }
 
     // Special handling for Unit 6 "What Colour is" patterns
     if (filename.includes("What Colour is") || filename.includes("What Color is")) {
       // Look through available entries to find a color match
-      const allEntries = Object.values(mappings);
+      const allEntries = Object.values(filteredMappings);
       
       // Try to find the object type from the filename
       // For example, extract "Ice Cream" from "02 F e What Colour is the Ice Cream – is the Picture Fake or Real.jpg"
@@ -205,9 +205,9 @@ export function useExcelQA(bookId: string) {
       console.log(`Searching for match with extracted code pattern: "${codePattern}"`);
       
       // First try direct match with the code pattern
-      if (mappings[codePattern]) {
+      if (filteredMappings[codePattern]) {
         console.log(`Found match with code pattern for:`, codePattern);
-        return mappings[codePattern];
+        return filteredMappings[codePattern];
       }
       
       // Then try to match with just the first part (section number and letter)
@@ -215,7 +215,7 @@ export function useExcelQA(bookId: string) {
       const mainSection = codePattern.split(' ').slice(0, 2).join(' ');
       
       // Find all entries with this main section
-      const matchingEntries = Object.entries(mappings).filter(([key, value]) => {
+      const matchingEntries = Object.entries(filteredMappings).filter(([key, value]) => {
         if (value.codePattern) {
           return value.codePattern.startsWith(mainSection);
         }
@@ -246,7 +246,7 @@ export function useExcelQA(bookId: string) {
         console.log(`No entries matched the code pattern "${codePattern}"`);
         
         // Log available patterns to help debugging
-        const availablePatterns = Object.values(mappings)
+        const availablePatterns = Object.values(filteredMappings)
           .map(qa => qa.codePattern)
           .filter(Boolean)
           .join(", ");
@@ -256,9 +256,9 @@ export function useExcelQA(bookId: string) {
       // Try with code pattern variants
       const variants = generateCodePatternVariants(codePattern);
       for (const variant of variants) {
-        if (mappings[variant]) {
+        if (filteredMappings[variant]) {
           console.log(`Found match with variant "${variant}" for original pattern "${codePattern}"`);
-          return mappings[variant];
+          return filteredMappings[variant];
         }
       }
     }
@@ -268,7 +268,7 @@ export function useExcelQA(bookId: string) {
       console.log(`Found question match in filename for:`, "What is it?");
       
       // Look for entries with this question
-      for (const entry of Object.values(mappings)) {
+      for (const entry of Object.values(filteredMappings)) {
         if (entry.question.toLowerCase() === "what is it?") {
           console.log(`Using Excel entry:`, entry);
           return entry;
@@ -280,7 +280,7 @@ export function useExcelQA(bookId: string) {
     let bestMatch: QuestionAnswer | undefined = undefined;
     let bestMatchScore = 0;
 
-    for (const [key, qa] of Object.entries(mappings)) {
+    for (const [key, qa] of Object.entries(filteredMappings)) {
       // Skip empty keys
       if (!key) continue;
 
