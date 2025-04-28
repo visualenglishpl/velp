@@ -287,84 +287,72 @@ const EXACT_FILENAME_MAPPINGS: Record<string, QAMapping> = {
   }
 };
 
-/**
- * Extracts pattern details from a filename
- * Example: "10 N B What are They – They are Rulers.gif" returns { sectionNum: "10", typeCode: "N", variantCode: "B", ... }
- */
-export function extractPatternFromFilename(filename: string): PatternDetails | null {
-  if (!filename) return null;
-  
-  // Extract the pattern using regex
-  const patternMatch = filename.match(/(\d{1,2})\s*([A-Za-z])\s*([A-Za-z])/i);
-  
-  if (!patternMatch) return null;
-  
-  const sectionNum = patternMatch[1].padStart(2, '0'); // Ensure 2 digits with leading zero
-  const typeCode = patternMatch[2].toUpperCase();
-  const variantCode = patternMatch[3].toUpperCase();
-  const fullPattern = `${sectionNum} ${typeCode} ${variantCode}`;
-  
-  // Determine if this is a special section (ruler, scissors, etc.)
-  const isSpecialSection = sectionNum === '10' || sectionNum === '12';
-  
-  // Get the object type based on section number
-  const objectType = OBJECT_TYPE_MAP[sectionNum] || '';
-  
-  return {
-    sectionNum,
-    typeCode,
-    variantCode,
-    fullPattern,
-    isSpecialSection,
-    objectType
-  };
+// Interface for the return type of getQAForFilename
+interface QAResult {
+  question: string;
+  answer: string;
+  hasMapping: boolean;
 }
 
 /**
  * Gets the standardized question and answer for a given filename
- * Prioritizes special mappings, then falls back to pattern-based extraction
+ * Uses the exact filename to match with our mapping database
  */
-export function getQAForFilename(filename: string): { question: string, answer: string, hasMapping: boolean } {
-  const pattern = extractPatternFromFilename(filename);
-  
-  if (!pattern) {
-    console.log(`No pattern extracted from filename: ${filename}`);
+export function getQAForFilename(filename: string): QAResult {
+  if (!filename) {
+    console.log("No filename provided to getQAForFilename");
     return { question: '', answer: '', hasMapping: false };
   }
   
-  console.log(`Pattern extracted: ${pattern.fullPattern} from ${filename}`);
+  // Extract just the filename without path (if path is included)
+  const justFilename = filename.includes('/') 
+    ? filename.substring(filename.lastIndexOf('/') + 1) 
+    : filename;
   
-  // Check for special mappings first (for sections 10, 12, etc.)
-  if (pattern.isSpecialSection && SPECIAL_MAPPINGS[pattern.sectionNum]) {
-    const sectionMappings = SPECIAL_MAPPINGS[pattern.sectionNum];
-    
-    if (sectionMappings[pattern.variantCode]) {
-      console.log(`Using special mapping for ${pattern.fullPattern}`);
+  console.log(`Looking for exact match for filename: ${justFilename}`);
+  
+  // Check for exact filename match in our mapping
+  if (EXACT_FILENAME_MAPPINGS[justFilename]) {
+    console.log(`EXACT MATCH FOUND for ${justFilename}`);
+    const mapping = EXACT_FILENAME_MAPPINGS[justFilename];
+    return {
+      question: mapping.question,
+      answer: mapping.answer,
+      hasMapping: true
+    };
+  }
+  
+  // Special case for filenames with different casing
+  const lowercaseFilename = justFilename.toLowerCase();
+  const keys = Object.keys(EXACT_FILENAME_MAPPINGS);
+  for (const key of keys) {
+    if (key.toLowerCase() === lowercaseFilename) {
+      console.log(`CASE-INSENSITIVE MATCH FOUND for ${justFilename} -> ${key}`);
+      const mapping = EXACT_FILENAME_MAPPINGS[key];
       return {
-        ...sectionMappings[pattern.variantCode],
+        question: mapping.question,
+        answer: mapping.answer,
+        hasMapping: true
+      };
+    }
+  }
+
+  // Check for partial filename matches (without extension)
+  const filenameWithoutExt = justFilename.substring(0, justFilename.lastIndexOf('.'));
+  for (const key of keys) {
+    if (key.startsWith(filenameWithoutExt)) {
+      console.log(`PARTIAL MATCH FOUND for ${justFilename} -> ${key}`);
+      const mapping = EXACT_FILENAME_MAPPINGS[key];
+      return {
+        question: mapping.question,
+        answer: mapping.answer,
         hasMapping: true
       };
     }
   }
   
-  // Check for animal-shaped rulers in section 10
-  const lowerFilename = filename.toLowerCase();
-  if (pattern.sectionNum === '10' && 
-      (lowerFilename.includes('shark') || 
-       lowerFilename.includes('lion') || 
-       lowerFilename.includes('crocodile') || 
-       lowerFilename.includes('animal'))) {
-    
-    console.log(`Animal-shaped ruler detected in ${filename}`);
-    return {
-      question: 'What are they?',
-      answer: 'They are rulers.',
-      hasMapping: true
-    };
-  }
-  
-  // Fallback for when we don't have a specific mapping
-  console.log(`No specific mapping found for ${pattern.fullPattern}, using fallback`);
+  // No match found
+  console.log(`No exact match found for ${justFilename}`);
   return {
     question: '',
     answer: '',
