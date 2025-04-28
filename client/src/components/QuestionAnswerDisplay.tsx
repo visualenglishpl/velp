@@ -165,7 +165,7 @@ function debugScissorsDetection(content: string): void {
   }
 }
 
-function getQuestionAnswerFromData(material: any): QAData {
+function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   const content = material.content || '';
   
   // Clean the title
