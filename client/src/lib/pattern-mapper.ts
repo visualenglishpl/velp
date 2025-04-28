@@ -5,6 +5,9 @@
 // This maps exact filenames to their specific questions and answers
 // Format: "filename.ext": { question: "Question Text?", answer: "Answer Text." }
 
+// Log our debugging info
+console.log("Pattern-mapper.ts loaded - direct mapping system is active");
+
 interface QAMapping {
   question: string;
   answer: string;
@@ -304,12 +307,24 @@ export function getQAForFilename(filename: string): QAResult {
     return { question: '', answer: '', hasMapping: false };
   }
   
+  // ADDITIONAL SCISSORS SPECIAL CASE 
+  // This ensures that the specific scissors file mentioned always has the correct mapping
+  if (filename.includes('12 N G Do You Have Green Scissors')) {
+    console.log("💥 DIRECT SCISSORS MATCH FOUND");
+    return {
+      question: "Do you have green scissors?",
+      answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+      hasMapping: true
+    };
+  }
+  
   // Extract just the filename without path (if path is included)
   const justFilename = filename.includes('/') 
     ? filename.substring(filename.lastIndexOf('/') + 1) 
     : filename;
   
   console.log(`Looking for exact match for filename: ${justFilename}`);
+  console.log(`DEBUG: First 10 chars of filename: "${justFilename.substring(0, 10)}"`);
   
   // Check for exact filename match in our mapping
   if (EXACT_FILENAME_MAPPINGS[justFilename]) {
@@ -337,6 +352,19 @@ export function getQAForFilename(filename: string): QAResult {
     }
   }
 
+  // Content-based matching for scissors
+  if (justFilename.includes('scissors') || justFilename.includes('Scissors')) {
+    // Check for pattern 12 N G with scissors 
+    if (justFilename.match(/12\s*N\s*G/i)) {
+      console.log("💥 SCISSORS 12 N G PATTERN DETECTED");
+      return {
+        question: "Do you have green scissors?",
+        answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+        hasMapping: true
+      };
+    }
+  }
+
   // Check for partial filename matches (without extension)
   const filenameWithoutExt = justFilename.substring(0, justFilename.lastIndexOf('.'));
   for (const key of keys) {
@@ -351,8 +379,28 @@ export function getQAForFilename(filename: string): QAResult {
     }
   }
   
+  // Section code matching (for cases like 12 N G)
+  const sectionMatch = justFilename.match(/(\d{1,2})\s*([A-Za-z])\s*([A-Za-z])/i);
+  if (sectionMatch) {
+    const sectionNum = sectionMatch[1].padStart(2, '0');
+    const typeCode = sectionMatch[2].toUpperCase();
+    const variantCode = sectionMatch[3].toUpperCase();
+    
+    console.log(`DEBUG: Extracted section pattern ${sectionNum} ${typeCode} ${variantCode}`);
+    
+    // Check for 12 N G specifically
+    if (sectionNum === '12' && typeCode === 'N' && variantCode === 'G') {
+      console.log("💥 SECTION PATTERN MATCH FOR 12 N G");
+      return {
+        question: "Do you have green scissors?",
+        answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+        hasMapping: true
+      };
+    }
+  }
+  
   // No match found
-  console.log(`No exact match found for ${justFilename}`);
+  console.log(`No match found for ${justFilename}`);
   return {
     question: '',
     answer: '',

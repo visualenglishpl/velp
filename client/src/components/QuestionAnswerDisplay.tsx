@@ -154,6 +154,17 @@ function getQuestionAnswerFromData(material: any): QAData {
   // Extract country information
   const country = formatText.determineCountry(content);
   
+  // Special case for the scissors pattern
+  if (content.includes('12 N G') && content.toLowerCase().includes('scissors')) {
+    console.log('✂️ SPECIAL DIRECT MAPPING FOR SCISSORS in QuestionAnswerDisplay');
+    return {
+      country: country,
+      question: "Do you have green scissors?",
+      answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+      hasData: true
+    };
+  }
+  
   // FIRST APPROACH: Try our new standardized pattern-mapper system
   // This provides a consistent mapping across all sections and units
   const patternMapping = getQAForFilename(content);
@@ -182,6 +193,126 @@ function getQuestionAnswerFromData(material: any): QAData {
   
   // Special case handling for problematic sections (hardcoded fallbacks)
   const lowerContent = content.toLowerCase();
+  
+  // Special case for scissors - especially the 12 N G pattern
+  if (lowerContent.includes('scissors')) {
+    console.log('🔍 SCISSORS SPECIAL SECTION DETECTED: ' + content);
+    
+    // Look for the 12 N G pattern specifically
+    const scissorsMatch = content.match(/12\s*N\s*G/i);
+    if (scissorsMatch || content.toLowerCase().includes('green scissors')) {
+      console.log('💚 GREEN SCISSORS PATTERN MATCH FOUND');
+      return {
+        country: country,
+        question: "Do you have green scissors?",
+        answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+        hasData: true
+      };
+    }
+    
+    // Other scissors patterns
+    if (content.match(/12\s*N\s*[A-Z]/i)) {
+      const scissorsCodeMatch = content.match(/12\s*N\s*([A-Z])/i);
+      const variantCode = scissorsCodeMatch ? scissorsCodeMatch[1].toUpperCase() : '';
+      
+      console.log('✂️ SCISSORS CODE DETECTED: 12 N ' + variantCode);
+      
+      switch (variantCode) {
+        case 'A':
+          return {
+            country: country,
+            question: "What are they?",
+            answer: "They are scissors.",
+            hasData: true
+          };
+          
+        case 'B':
+        case 'C':
+          return {
+            country: country,
+            question: "Are they big or small scissors?",
+            answer: "They are big scissors. / They are small scissors.",
+            hasData: true
+          };
+          
+        case 'D':
+          return {
+            country: country,
+            question: "Are they horse or unicorn scissors?",
+            answer: "They are horse scissors. / They are unicorn scissors.",
+            hasData: true
+          };
+          
+        case 'E':
+          return {
+            country: country,
+            question: "Are they panda or koala scissors?",
+            answer: "They are panda scissors. / They are koala scissors.",
+            hasData: true
+          };
+          
+        case 'F':
+          return {
+            country: country,
+            question: "Do you have scissors in your pencil case?",
+            answer: "Yes, I have scissors in my pencil case. / No, I don't have scissors in my pencil case.",
+            hasData: true
+          };
+          
+        case 'G':
+          return {
+            country: country,
+            question: "Do you have green scissors?",
+            answer: "Yes, I have green scissors. / No, I don't have green scissors.",
+            hasData: true
+          };
+          
+        case 'H':
+        case 'I':
+        case 'J':
+          return {
+            country: country,
+            question: "What color are the scissors?",
+            answer: lowerContent.includes('purple') ? "The scissors are purple." : 
+                   lowerContent.includes('yellow') ? "The scissors are yellow." : 
+                   "The scissors are colorful.",
+            hasData: true
+          };
+          
+        case 'K':
+          return {
+            country: country,
+            question: "What scissors do you like?",
+            answer: "I like these scissors.",
+            hasData: true
+          };
+          
+        case 'L':
+          return {
+            country: country,
+            question: "How many scissors are there?",
+            answer: "There are 4 scissors.",
+            hasData: true
+          };
+          
+        case 'M':
+          return {
+            country: country,
+            question: "How many scissors are there?",
+            answer: "There are 3 scissors.",
+            hasData: true
+          };
+          
+        default:
+          return {
+            country: country,
+            question: "What are these?",
+            answer: "They are scissors.",
+            hasData: true
+          };
+      }
+    }
+  }
   
   // Sharpener section with specific pattern matching for 08 M patterns
   if (lowerContent.includes('sharpener')) {
