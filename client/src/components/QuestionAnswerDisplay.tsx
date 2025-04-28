@@ -222,11 +222,18 @@ function getQuestionAnswerFromData(material: any): QAData {
     // Log the entire content string to see exactly what's in the file
     console.log('SLIDE CONTENT STRING:', content);
     
-    // Check for the most problematic cases directly
+    // ENHANCED SCISSORS DETECTION - works regardless of the actual filename pattern
     
-    // For 12 N G Do You Have Green Scissors
-    if (content.includes('12 N G')) {
-      console.log('🟢 OVERRIDING WITH DIRECT VISUAL DETECTION: 12 N G GREEN SCISSORS');
+    // General pattern for 12 N X where X is a letter
+    const scissorsCodeMatch = content.match(/12\s*N\s*([A-Z])/i);
+    const variantCode = scissorsCodeMatch ? scissorsCodeMatch[1].toUpperCase() : '';
+    console.log(`🔍 SCISSORS VARIANT DETECTED: ${variantCode || 'NONE'}`);
+    
+    // COMPREHENSIVE VISUAL MATCHING - content-based detection for specific variants
+    
+    // Check for the most problematic cases by content, not just by section code
+    if (content.toLowerCase().includes('green scissors') || content.includes('12 N G')) {
+      console.log('🟢 OVERRIDING WITH DIRECT VISUAL DETECTION: GREEN SCISSORS');
       return {
         country: country,
         question: "Do you have green scissors?",
@@ -235,14 +242,48 @@ function getQuestionAnswerFromData(material: any): QAData {
       };
     }
     
-    // For 12 N
-    if (content.includes('12 N.png')) {
-      console.log('⚠️ DETECTED PROBLEMATIC CASE: 12 N.png');
-      // Use the most common scissors question as fallback
+    // For basic scissors identification
+    if (content.includes('12 N.png') || (content.toLowerCase().includes('scissors') && !variantCode)) {
+      console.log('⚠️ DETECTED BASIC SCISSORS CASE');
       return {
         country: country,
         question: "What are they?",
         answer: "They are scissors.",
+        hasData: true
+      };
+    }
+    
+    // For purple scissors
+    if (content.toLowerCase().includes('purple scissors') || 
+        (content.includes('12 N H') && content.toLowerCase().includes('purple'))) {
+      console.log('💜 DETECTED PURPLE SCISSORS');
+      return {
+        country: country,
+        question: "What color are the scissors?",
+        answer: "The scissors are purple.",
+        hasData: true
+      };
+    }
+    
+    // For yellow scissors
+    if (content.toLowerCase().includes('yellow scissors') || 
+        (content.includes('12 N J') && content.toLowerCase().includes('yellow'))) {
+      console.log('💛 DETECTED YELLOW SCISSORS');
+      return {
+        country: country,
+        question: "What color are the scissors?",
+        answer: "The scissors are yellow.",
+        hasData: true
+      };
+    }
+    
+    // For scissors you like
+    if (content.toLowerCase().includes('what scissors do you like') || content.includes('12 N K')) {
+      console.log('👍 DETECTED SCISSORS PREFERENCE QUESTION');
+      return {
+        country: country,
+        question: "What scissors do you like?",
+        answer: "I like these scissors.",
         hasData: true
       };
     }
