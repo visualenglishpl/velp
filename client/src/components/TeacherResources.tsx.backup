@@ -477,7 +477,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       }
       
       // Book 0b, Unit 1 resources
-      if (bookId === "0b" && unitId === "1") {
+      else if (bookId === "0b" && unitId === "1") {
         predefinedResources = [
           {
             bookId: "0b",
