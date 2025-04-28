@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag, Flag, FileSpreadsheet } from "lucide-react";
+import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag, Flag, FileSpreadsheet, RefreshCw, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import ExcelQAProcessor from "@/components/ExcelQAProcessor";
 
 const AdminDashboard = () => {
   const { user, logoutMutation } = useAuth();
   const [, navigate] = useLocation();
+  const { toast } = useToast();
+  const [isUpdatingResources, setIsUpdatingResources] = useState(false);
 
   // User auth check moved to useEffect to prevent constant redirects
   useEffect(() => {
@@ -16,6 +20,34 @@ const AdminDashboard = () => {
       navigate("/auth");
     }
   }, [user, navigate, logoutMutation.isPending]);
+  
+  // Function to update teacher resources
+  const updateTeacherResources = async () => {
+    try {
+      setIsUpdatingResources(true);
+      const response = await apiRequest("POST", "/api/direct/update-teacher-resources");
+      const data = await response.json();
+      
+      if (data.success) {
+        toast({
+          title: "Teacher Resources Updated",
+          description: "Successfully updated teacher resources for all units.",
+          variant: "default",
+        });
+      } else {
+        throw new Error(data.message || "Failed to update teacher resources");
+      }
+    } catch (error: any) {
+      console.error("Error updating teacher resources:", error);
+      toast({
+        title: "Update Failed",
+        description: error?.message || "Failed to update teacher resources. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdatingResources(false);
+    }
+  };
 
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
@@ -200,6 +232,39 @@ const AdminDashboard = () => {
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <ExcelQAProcessor />
+              </div>
+            </div>
+            
+            {/* Teacher Resources Update */}
+            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
+              <div className="flex items-start mb-4">
+                <div className="p-2 bg-cyan-50 rounded-md mr-4">
+                  <RefreshCw className="h-6 w-6 text-cyan-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">Teacher Resources</h3>
+                  <p className="text-sm text-gray-500">Update videos and games for all units from source files</p>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <Button 
+                  className="w-full py-2 text-white hover:bg-opacity-90 border-0"
+                  style={{ backgroundColor: '#0891b2' }}
+                  onClick={updateTeacherResources}
+                  disabled={isUpdatingResources}
+                >
+                  {isUpdatingResources ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Updating Resources...
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Update Teacher Resources
+                    </>
+                  )}
+                </Button>
               </div>
             </div>
           </div>
