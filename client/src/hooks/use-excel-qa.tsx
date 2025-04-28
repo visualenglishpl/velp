@@ -66,7 +66,34 @@ export function useExcelQA(bookId: string) {
 
     async function loadFromAPI() {
       try {
-        // If JSON file doesn't exist, try to process it
+        console.log(`Loading QA mappings from API for book ${bookId}`);
+        
+        // First try our new direct JSON-based API endpoint (most reliable)
+        try {
+          const jsonApiResponse = await fetch(`/api/direct/${bookId}/json-qa`);
+          
+          if (jsonApiResponse.ok) {
+            const jsonData = await jsonApiResponse.json();
+            
+            if (jsonData.success && jsonData.mappings) {
+              console.log(`Successfully loaded ${jsonData.mappingCount} QA mappings from direct JSON API for book ${bookId}`);
+              
+              // Save to cache and state
+              loadedMappings[bookId] = jsonData.mappings;
+              setMappings(jsonData.mappings);
+              return;
+            } else {
+              console.warn(`JSON API endpoint returned success=false for book ${bookId}:`, jsonData.error);
+            }
+          } else {
+            console.warn(`JSON API request failed for book ${bookId}: ${jsonApiResponse.status} ${jsonApiResponse.statusText}`);
+          }
+        } catch (jsonApiError) {
+          console.warn(`Error using direct JSON API for book ${bookId}:`, jsonApiError);
+        }
+        
+        // If the new endpoint fails, fall back to the old processing endpoint
+        console.log(`Falling back to Excel processing API for book ${bookId}`);
         const response = await apiRequest("GET", `/api/direct/process-qa-excel?bookId=${bookId}`);
         const result = await response.json();
 
