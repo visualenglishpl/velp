@@ -525,6 +525,23 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/1c606c6af00643d692fc0199a60c2b2c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 8,
               provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "Family Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Family</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Create a family tree using pictures or drawings</li>
+                  <li>Make finger puppets representing different family members</li>
+                  <li>Practice introducing family members with photos: "This is my mother"</li>
+                  <li>Draw a family portrait and label each member</li>
+                </ul>
+              </div>`,
+              order: 9,
+              provider: "Visual English"
             }
           );
         }
@@ -594,6 +611,23 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/360776cf889d4170872d084aa81d3995?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 7,
               provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "6",
+              title: "Colors Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Colors</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Color hunt - find items of specific colors around the classroom</li>
+                  <li>Color sorting activities with colored objects</li>
+                  <li>Create a classroom rainbow with student artwork</li>
+                  <li>Play "I Spy" with colors: "I spy something blue"</li>
+                </ul>
+              </div>`,
+              order: 8,
+              provider: "Visual English"
             }
           );
         }
@@ -654,6 +688,23 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a0ac3f124ba146bda184a6fe30e24d5b?themeId=26&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 6,
               provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "7",
+              title: "Numbers & Age Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Numbers & Age</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Count classroom objects together: "How many pencils?"</li>
+                  <li>Create birthday cards with age numbers</li>
+                  <li>Play "Number Bingo" with numbers 1-10</li>
+                  <li>Sing counting songs with gestures for each number</li>
+                </ul>
+              </div>`,
+              order: 7,
+              provider: "Visual English"
             }
           );
         }
@@ -673,6 +724,8 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       case 'game':
         return <Gamepad2 className="h-5 w-5" />;
       case 'pdf':
+        return <FileText className="h-5 w-5" />;
+      case 'activity':
         return <FileText className="h-5 w-5" />;
       default:
         return null;
@@ -824,6 +877,8 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
       case 'game':
         return <Gamepad2 className="h-5 w-5" />;
       case 'pdf':
+        return <FileText className="h-5 w-5" />;
+      case 'activity':
         return <FileText className="h-5 w-5" />;
       default:
         return null;
