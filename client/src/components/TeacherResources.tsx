@@ -176,10 +176,106 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         // Start with the PDF resource
         predefinedResources = [pdfResource];
         
-        // Add additional unit-specific resources 
-        if (unitId === "2") {
-          // Add School Objects specific resources
-          // ... add additional resources for Unit 2 as needed
+        // Add additional unit-specific resources
+        // Unit 1 - Greeting and Introduction
+        if (unitId === "1") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Hello Song for Kids - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/_x5KQBtLcJI?si=qdTrTvpAGWxn-pTk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Hello! - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tVlcKp3bWH8?si=DZLTajD2AH9JfcpC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Hello! What's Your Name? - English Tree TV",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/l15aPP4nUTs?si=vfJasmGf79TGR-FT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 3,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Greeting Words - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2e7d4bdbcc23420689c5274d1df5a6af?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 4,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Greeting Matching Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/76e7d34b884a46ad9cdfeea4bda98c8c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 5,
+              provider: "Wordwall"
+            }
+          );
+        }
+        // Unit 2 - School Objects
+        else if (unitId === "2") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "2",
+              title: "School Objects - English Tree",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/e9C30pu9uj4?si=0ZHCRHhj_-rY5y9c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "2",
+              title: "School Supplies Song - ELF Learning",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/41cJ0mqWses?si=xFIxcoBqhGwtaYEb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "2",
+              title: "In My Schoolbag - Pinkfong",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/0IfDjT-Fqf4?si=0vz4_G8qdahQJK7A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 3,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "2",
+              title: "School Objects - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/34cdb3acf77747118b9ff4f1b18e7f90?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 4,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "2",
+              title: "School Supplies Matching Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/60ade0a6f8f54e3ca3cc03227fa71f9c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 5,
+              provider: "Wordwall"
+            }
+          );
         }
         // Unit 3 - Classroom Rules
         else if (unitId === "3") {
@@ -572,31 +668,13 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           <p className="text-gray-500">No teacher resources available for this unit yet.</p>
         </div>
       ) : (
-        <Tabs defaultValue="all" className="w-full">
+        <Tabs defaultValue="videos" className="w-full">
           <TabsList className="mb-4">
-            <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="videos">Videos</TabsTrigger>
             <TabsTrigger value="games">Games</TabsTrigger>
             <TabsTrigger value="pdf">Lesson PDFs</TabsTrigger>
             <TabsTrigger value="activity">Lesson Plans</TabsTrigger>
           </TabsList>
-          
-          <TabsContent value="all" className="resources-list space-y-4">
-            {resources.map((resource, index) => (
-              <ResourceItem
-                key={index}
-                resource={resource}
-                index={index}
-                isEditing={editingResource === index}
-                isEditMode={isEditMode}
-                onEdit={() => handleEditResource(index)}
-                onCancelEdit={handleCancelEdit}
-                onUpdate={() => handleUpdateResource(index)}
-                onDelete={() => handleDeleteResource(index)}
-                onChange={(field, value) => handleFieldChange(index, field, value)}
-              />
-            ))}
-          </TabsContent>
           
           <TabsContent value="videos" className="resources-list space-y-4">
             {resources.filter(r => r.resourceType === 'video').map((resource, index) => (
