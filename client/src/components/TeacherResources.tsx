@@ -677,7 +677,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           </TabsList>
           
           <TabsContent value="videos">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {resources.filter(r => r.resourceType === 'video').map((resource, index) => (
                 <ResourceItem
                   key={index}
@@ -696,7 +696,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           </TabsContent>
           
           <TabsContent value="games">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {resources.filter(r => r.resourceType === 'game').map((resource, index) => (
                 <ResourceItem
                   key={index}
@@ -715,7 +715,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           </TabsContent>
           
           <TabsContent value="pdf">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {resources.filter(r => r.resourceType === 'pdf').map((resource, index) => (
                 <ResourceItem
                   key={index}
@@ -734,7 +734,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           </TabsContent>
           
           <TabsContent value="activity">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {resources.filter(r => r.resourceType === 'activity').map((resource, index) => (
                 <ResourceItem
                   key={index}
