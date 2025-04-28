@@ -4585,6 +4585,23 @@ function processExcelWorkbook(workbook: xlsx.WorkBook, unitId: string): Question
         }
       }
       
+      // Special case for the Visual 1 QUESTIONS.xlsx format where columns are named differently
+      // Check for "__EMPTY" and "__EMPTY_1" columns which are specific to this Excel format
+      const hasEmptyColumns = rows.length > 0 && 
+                           Object.keys(rows[0]).some(k => k === "__EMPTY") && 
+                           Object.keys(rows[0]).some(k => k === "__EMPTY_1");
+      
+      if (hasEmptyColumns) {
+        console.log("Detected Visual English QUESTIONS.xlsx format with __EMPTY columns");
+        // Find the first column key that isn't "__EMPTY" or "__EMPTY_1" - this is the code/filename column
+        const firstRow = rows[0];
+        const keys = Object.keys(firstRow);
+        codeColumn = keys.find(k => k !== "__EMPTY" && k !== "__EMPTY_1") || keys[0];
+        questionColumn = "__EMPTY";
+        answerColumn = "__EMPTY_1";
+        console.log(`Using special column mapping: Code=${codeColumn}, Question=${questionColumn}, Answer=${answerColumn}`);
+      }
+      
       // Filter rows that belong to this unit
       let entriesInSheet = 0;
       
