@@ -338,6 +338,29 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       // Helper functions
       const normalizeString = (str: string) => str.toLowerCase().replace(/\s+/g, ' ').trim();
       const extractCodePattern = (text: string): string | null => {
+        // Special case for ruler, scissors, and sharpener sections
+        if (text.toLowerCase().includes('ruler') || 
+            text.toLowerCase().includes('scissors') || 
+            text.toLowerCase().includes('sharpener')) {
+          
+          // Check for the standard pattern first (most specific)
+          let specialMatches = text.match(/(\d{2})\s*([A-Za-z])\s*([A-Za-z])(?:\s+|$)/i);
+          if (specialMatches) {
+            let specialPattern = `${specialMatches[1]} ${specialMatches[2].toUpperCase()} ${specialMatches[3].toUpperCase()}`;
+            console.log("Extracted special section pattern:", specialPattern, "from filename:", filename);
+            return specialPattern;
+          }
+          
+          // For these special sections, try to extract the pattern in a more flexible way
+          // Look for pattern like "11 N" or "12 N" which are common for these objects
+          specialMatches = text.match(/(\d{2})\s*([A-Za-z])/i);
+          if (specialMatches) {
+            let specialSimplePattern = `${specialMatches[1]} ${specialMatches[2].toUpperCase()}`;
+            console.log("Extracted simplified special section pattern:", specialSimplePattern, "from filename:", filename);
+            return specialSimplePattern;
+          }
+        }
+        
         // Try the standard format like "01 I A"
         let matches = text.match(/(\d{2})\s*([A-Za-z])\s*([A-Za-z])(?:\s+|$)/i);
         if (matches) {
@@ -407,6 +430,32 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             return true;
           }
           
+          // Special case for scissors, ruler, and sharpener sections
+          if (filename.toLowerCase().includes('scissors') || 
+              filename.toLowerCase().includes('ruler') || 
+              filename.toLowerCase().includes('sharpener')) {
+              
+            // For these sections, we should be more flexible with numeric patterns
+            // Extract just the numeric part of both patterns
+            const entryNumeric = entry.codePattern.match(/(\d{2})/);
+            const extractedNumeric = extractedCodePattern.match(/(\d{2})/);
+            
+            if (entryNumeric && extractedNumeric && entryNumeric[1] === extractedNumeric[1]) {
+              // If the numeric parts match (11, 12, 07, etc.), this is likely a match
+              console.log(`Found special section numeric match: "${entry.codePattern}" and "${extractedCodePattern}" share numeric part ${extractedNumeric[1]}`);
+              return true;
+            }
+            
+            // Also check if the section name is in the question
+            const questionLower = entry.question.toLowerCase();
+            if ((filename.toLowerCase().includes('scissors') && questionLower.includes('scissors')) ||
+                (filename.toLowerCase().includes('ruler') && questionLower.includes('ruler')) ||
+                (filename.toLowerCase().includes('sharpener') && questionLower.includes('sharpener'))) {
+              console.log(`Found match based on special section name in question: "${entry.question}"`);
+              return true;
+            }
+          }
+          
           return false;
         });
         
@@ -427,6 +476,27 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         
         if (matchingEntry) {
           console.log("Found code pattern contained in filename:", matchingEntry.codePattern);
+        }
+      }
+      
+      // Special additional check for scissors, ruler, and sharpener sections
+      if (!matchingEntry) {
+        if (filename.toLowerCase().includes('scissors') || 
+            filename.toLowerCase().includes('ruler') || 
+            filename.toLowerCase().includes('sharpener')) {
+            
+          // Try to match based on the specific object type in the question
+          matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => {
+            const questionLower = entry.question.toLowerCase();
+            
+            return (filename.toLowerCase().includes('scissors') && questionLower.includes('scissors')) ||
+                   (filename.toLowerCase().includes('ruler') && questionLower.includes('ruler')) ||
+                   (filename.toLowerCase().includes('sharpener') && questionLower.includes('sharpener'));
+          });
+          
+          if (matchingEntry) {
+            console.log("Found special section match based on object type:", matchingEntry.question);
+          }
         }
       }
       
