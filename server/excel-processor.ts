@@ -180,15 +180,33 @@ export const questionAnswerMapping: Record<string, QuestionAnswer> = {};
 /**
  * Find the closest matching Q&A for a given filename
  * @param filename The filename to match
+ * @param currentUnitId Optional unitId to filter matches by unit
  * @returns The matching Q&A or undefined if no match
  */
-export function findMatchingQA(filename: string): QuestionAnswer | undefined {
-  console.log("Looking for Q&A mapping for:", filename);
+export function findMatchingQA(filename: string, currentUnitId?: string): QuestionAnswer | undefined {
+  console.log(`Looking for Q&A mapping for: ${filename}${currentUnitId ? ` (unit: ${currentUnitId})` : ''}`);
   
-  // First, try an exact match
-  if (questionAnswerMapping[filename]) {
+  // Create a filtered mappings object that only includes entries for this unit
+  let filteredMappings: Record<string, QuestionAnswer> = {};
+  
+  if (currentUnitId) {
+    // Filter mappings to only include those from the current unit or with no unit
+    Object.entries(questionAnswerMapping).forEach(([key, qa]) => {
+      if (!qa.unitId || qa.unitId === currentUnitId) {
+        filteredMappings[key] = qa;
+      }
+    });
+    
+    console.log(`Filtered mappings to ${Object.keys(filteredMappings).length} entries matching unit ${currentUnitId}`);
+  } else {
+    // If no unitId provided, use all mappings
+    filteredMappings = questionAnswerMapping;
+  }
+  
+  // First, try an exact match with filtered mappings
+  if (filteredMappings[filename]) {
     console.log("Found exact match for:", filename);
-    return questionAnswerMapping[filename];
+    return filteredMappings[filename];
   }
   
   // If no exact match, try to find a match by cleaning up the filename
@@ -196,9 +214,9 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
     .replace(/\.(png|jpg|jpeg|gif|webp|mp4)$/i, '') // Remove file extensions
     .trim();
     
-  if (questionAnswerMapping[cleanedFilename]) {
+  if (filteredMappings[cleanedFilename]) {
     console.log("Found match for cleaned filename:", cleanedFilename);
-    return questionAnswerMapping[cleanedFilename];
+    return filteredMappings[cleanedFilename];
   }
   
   // Try to match by exact code pattern from Excel (like "01 I A")
@@ -207,20 +225,20 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
     console.log("Extracted code pattern:", codePattern, "from filename:", filename);
     
     // First, try exact pattern match
-    if (questionAnswerMapping[codePattern]) {
+    if (filteredMappings[codePattern]) {
       console.log("Found exact code pattern match:", codePattern);
-      return questionAnswerMapping[codePattern];
+      return filteredMappings[codePattern];
     }
     
     // Try normalized code pattern (lowercase)
     const normalizedCodePattern = codePattern.toLowerCase();
-    if (questionAnswerMapping[normalizedCodePattern]) {
+    if (filteredMappings[normalizedCodePattern]) {
       console.log("Found normalized code pattern match:", normalizedCodePattern);
-      return questionAnswerMapping[normalizedCodePattern];
+      return filteredMappings[normalizedCodePattern];
     }
     
     // Look for partial matches based on the code pattern
-    for (const [key, qa] of Object.entries(questionAnswerMapping)) {
+    for (const [key, qa] of Object.entries(filteredMappings)) {
       // Check if the key contains the code pattern at the beginning
       if (key.toLowerCase().startsWith(normalizedCodePattern.toLowerCase()) ||
           key.toLowerCase().includes(normalizedCodePattern.toLowerCase())) {
@@ -231,7 +249,7 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
   }
   
   // If still no match, try if any key is a substring of filename
-  for (const [key, qa] of Object.entries(questionAnswerMapping)) {
+  for (const [key, qa] of Object.entries(filteredMappings)) {
     if (filename.includes(key)) {
       console.log("Found substring match:", key, "in filename:", filename);
       return qa;
@@ -239,7 +257,7 @@ export function findMatchingQA(filename: string): QuestionAnswer | undefined {
   }
   
   // Try the reverse - if filename is a substring of any key
-  for (const [key, qa] of Object.entries(questionAnswerMapping)) {
+  for (const [key, qa] of Object.entries(filteredMappings)) {
     if (key.includes(cleanedFilename)) {
       console.log("Found filename as substring in key:", key);
       return qa;
