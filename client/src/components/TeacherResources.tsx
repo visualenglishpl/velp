@@ -226,6 +226,80 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/76e7d34b884a46ad9cdfeea4bda98c8c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 5,
               provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Greeting and Introduction Lesson Plan",
+              resourceType: "activity",
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">Greetings and Introductions - Comprehensive Lesson Plan</h2>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn basic greeting expressions in English</li>
+                    <li>Students will be able to introduce themselves and ask others' names</li>
+                    <li>Students will practice saying "hello" and "goodbye" in different situations</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Key Vocabulary</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Hello, Hi, Good morning, Good afternoon, Good evening</li>
+                    <li>Goodbye, Bye, See you later</li>
+                    <li>My name is..., What's your name?</li>
+                    <li>Nice to meet you</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up Activities (5-10 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Greeting Wave:</strong> Have students stand in a circle. Say "Hello" and wave to a student. That student then waves and says "Hello" to another student, and so on.</li>
+                    <li><strong>Time-based Greetings:</strong> Practice saying "Good morning," "Good afternoon," and "Good evening" based on different times shown on a clock.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Main Activities (20-25 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Hello Song:</strong> Teach and sing the "Hello Song" together (see video resources).</li>
+                    <li><strong>Puppet Dialogues:</strong> Use puppets or stuffed animals to demonstrate greetings. Have the puppets greet each other, introduce themselves, and say goodbye.</li>
+                    <li><strong>Name Chain Game:</strong> Sitting in a circle, the first student says "Hello, my name is [name]." The next student says "Hello [previous student's name], my name is [name]" and so on.</li>
+                    <li><strong>Role Play Cards:</strong> Give students role-play cards with different situations (meeting a new friend, greeting a teacher, etc.) and have them practice appropriate greetings.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (15 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Greeting Flashcards:</strong> Use flashcards showing different times of day and have students say the appropriate greeting.</li>
+                    <li><strong>Name Game:</strong> Students walk around the classroom. When the teacher says "Stop," they greet the nearest person and introduce themselves.</li>
+                    <li><strong>Wordwall Games:</strong> Use the interactive Wordwall games to practice greeting vocabulary (see game resources).</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up Activity (5 minutes)</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Review greetings using a ball toss game. When a student catches the ball, they must greet another student and ask their name.</li>
+                    <li>End the class with a proper "Goodbye" song or chant.</li>
+                  </ul>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Create greeting cards with different expressions for classroom display</li>
+                    <li>Learn greetings from different cultures and compare them</li>
+                    <li>Practice formal vs. informal greetings for different situations</li>
+                  </ul>
+                </div>
+              </div>`,
+              order: 6,
+              provider: "Visual English"
             }
           );
         }
@@ -276,6 +350,83 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/60ade0a6f8f54e3ca3cc03227fa71f9c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 5,
               provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "2",
+              title: "School Objects Lesson Plan",
+              resourceType: "activity",
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">School Objects - Comprehensive Lesson Plan</h2>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn vocabulary related to common school objects</li>
+                    <li>Students will be able to identify and name at least 10 different classroom items</li>
+                    <li>Students will practice using "This is a..." and "These are..." structures</li>
+                    <li>Students will respond to "What's this?" questions about classroom objects</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Key Vocabulary</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Pencil, pen, pencil case, eraser, ruler, book, notebook</li>
+                    <li>Scissors, sharpener, glue, backpack/schoolbag</li>
+                    <li>Crayon, marker, folder, calculator, whiteboard</li>
+                    <li>Structures: "This is a...", "That is a...", "These are...", "What's this?"</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up Activities (5-10 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Object Introduction:</strong> Display real school objects and introduce them one by one, having students repeat their names.</li>
+                    <li><strong>What's Missing Game:</strong> Show several objects, then remove one while students close their eyes. Ask them to identify what's missing.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Main Activities (20-25 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>School Supplies Song:</strong> Teach and sing one of the school objects songs from the video resources.</li>
+                    <li><strong>Show and Tell:</strong> Give each student an object or picture of a school item. They take turns saying "This is a [object]" to the class.</li>
+                    <li><strong>Memory Circle:</strong> In a circle, the first student says "In my schoolbag, I have a pencil." The next student repeats and adds their own item: "In my schoolbag, I have a pencil and a book."</li>
+                    <li><strong>Object Sorting:</strong> Sort objects by category (writing tools, art supplies, etc.) and have students name each group.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (15 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>School Object Bingo:</strong> Create bingo cards with pictures of school objects. Call out the items and have students mark them off.</li>
+                    <li><strong>I Spy Game:</strong> "I spy with my little eye something that is [color] and we use it for [function]."</li>
+                    <li><strong>Wordwall Games:</strong> Use the interactive Wordwall games to reinforce vocabulary (see game resources).</li>
+                    <li><strong>Classroom Scavenger Hunt:</strong> Students find and identify specific objects around the classroom.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up Activity (5 minutes)</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Show flashcards quickly and have students name the objects as fast as they can.</li>
+                    <li>Play "Whisper Chain" with school object vocabulary words.</li>
+                  </ul>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Create an illustrated "My School Objects" mini-book with drawings and labels</li>
+                    <li>Add color vocabulary: "This is a blue pen" or "These are red scissors"</li>
+                    <li>Practice counting objects: "I have two pencils and three markers"</li>
+                    <li>Introduce possessive pronouns: "This is my book" vs. "That is your book"</li>
+                  </ul>
+                </div>
+              </div>`,
+              order: 6,
+              provider: "Visual English"
             }
           );
         }
@@ -350,14 +501,74 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               unitId: "3",
               title: "Classroom Rules Teaching Activities",
               resourceType: "activity",
-              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Classroom Rules</h3>
-                <ul class="space-y-2 list-disc pl-5">
-                  <li>Use TPR (Total Physical Response) to practice classroom commands: "Stand up", "Sit down", "Open your book", etc.</li>
-                  <li>Create a classroom rules poster together with the students</li>
-                  <li>Play "Simon Says" using classroom rules: "Simon says, stand up" etc.</li>
-                  <li>Role-play different classroom scenarios following the rules</li>
-                </ul>
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">Classroom Rules - Comprehensive Lesson Plan</h2>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn and follow basic classroom instructions</li>
+                    <li>Students will respond to commands: "stand up", "sit down", "open", "close", etc.</li>
+                    <li>Students will understand and follow classroom rules through interactive activities</li>
+                    <li>Students will practice giving and responding to simple classroom commands</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Key Vocabulary</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Commands: Stand up, Sit down, Open your book, Close your book, Listen, Look</li>
+                    <li>Classroom objects: Book, pencil, pen, eraser, door, window</li>
+                    <li>Actions: Open, close, put away, take out, raise hand, line up</li>
+                    <li>Structures: "Please [action]", "Can you [action]?", "Let's [action]"</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up Activities (5-10 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Action Greeting:</strong> As students enter, give them a simple command to follow (stand up, sit down, wave hello).</li>
+                    <li><strong>Command Chain:</strong> Students stand in a circle. Teacher gives a command to the first student who performs it and passes a different command to the next student.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Main Activities (20-25 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>TPR (Total Physical Response):</strong> Practice classroom commands as a whole class. Start with teacher modeling, then students respond to commands without teacher modeling.</li>
+                    <li><strong>Simon Says:</strong> Play "Simon Says" with classroom commands. "Simon says, stand up." "Simon says, open your book." Students only follow commands preceded by "Simon says."</li>
+                    <li><strong>Command Songs:</strong> Teach and sing the "Stand Up, Sit Down" song or "Open, Close" song with actions (see video resources).</li>
+                    <li><strong>Classroom Rules Poster:</strong> Create a visual classroom rules poster together with simple rules and corresponding pictures.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (15 minutes)</h3>
+                  <ul class="space-y-2 list-disc pl-5 text-gray-700">
+                    <li><strong>Role-Play Scenarios:</strong> Students act out different classroom scenarios following appropriate rules (entering class, asking questions, cleaning up).</li>
+                    <li><strong>Command Challenge:</strong> Students work in pairs; one student gives commands, the other follows them. Then they switch roles.</li>
+                    <li><strong>Wordwall Games:</strong> Use the interactive Wordwall games to reinforce classroom rules (see game resources).</li>
+                    <li><strong>Action Cards:</strong> Students draw cards showing different classroom actions and must perform the action and say what they're doing.</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up Activity (5 minutes)</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Play a quick game of "Classroom Rules Freeze" - students move around when music plays and freeze in a position when music stops. Teacher calls out a command they must follow while frozen.</li>
+                    <li>Review the classroom rules poster created earlier and practice the actions together one last time.</li>
+                  </ul>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Create illustrated classroom rule cards for students to use as reminders</li>
+                    <li>Introduce polite language with commands: "Please stand up", "Thank you for sitting down"</li>
+                    <li>Assign "Classroom Helpers" who assist with giving commands to classmates</li>
+                    <li>Integrate math by having students count while doing actions: "Jump 5 times", "Clap 3 times"</li>
+                  </ul>
+                </div>
               </div>`,
               order: 8,
               provider: "Visual English"
