@@ -130,6 +130,7 @@ function Router() {
       <Route path="/book/:bookId/:unitId">
         {(params) => {
           console.log(`Book/unit content viewer for: /book/${params.bookId}/${params.unitId}`);
+          // The SlickContentViewer extracts params from the URL directly
           return <ProtectedRoute component={SlickContentViewer} requireAuth={false} />;
         }}
       </Route>

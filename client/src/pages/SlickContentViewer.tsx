@@ -104,19 +104,35 @@ export default function SlickContentViewer() {
   let bookId: string | null = null;
   let unitNumber: string | null = null;
   
-  // Parse from /book4/unit3 or /book0a/unit3 format (supporting alphanumeric book IDs)
-  const pathRegex = /\/book([a-zA-Z0-9]+)\/unit(\d+)/;
-  const pathMatch = location.match(pathRegex);
+  // Handle different URL patterns:
+  // 1. /book/1/13 format (with slashes)
+  // 2. /book1/unit13 format (legacy)
   
-  if (pathMatch) {
-    bookId = pathMatch[1];
-    unitNumber = pathMatch[2];
-    console.log(`Path match: Book ${bookId}, Unit ${unitNumber}`);
+  // First try the new format: /book/:bookId/:unitId
+  const newFormatRegex = /\/book\/([a-zA-Z0-9]+)\/([a-zA-Z0-9]+)/;
+  const newFormatMatch = location.match(newFormatRegex);
+  
+  if (newFormatMatch) {
+    bookId = newFormatMatch[1];
+    // If unitId starts with "unit", strip it
+    unitNumber = newFormatMatch[2].replace(/^unit/i, '');
+    console.log(`New format match: Book ${bookId}, Unit ${unitNumber}`);
   } else {
-    // Fallback to URL parameters
-    const params = new URLSearchParams(window.location.search);
-    bookId = params.get('bookId');
-    unitNumber = params.get('unitNumber');
+    // Try legacy format: /book1/unit13
+    const legacyRegex = /\/book([a-zA-Z0-9]+)\/unit(\d+)/;
+    const legacyMatch = location.match(legacyRegex);
+    
+    if (legacyMatch) {
+      bookId = legacyMatch[1];
+      unitNumber = legacyMatch[2];
+      console.log(`Legacy format match: Book ${bookId}, Unit ${unitNumber}`);
+    } else {
+      // Fallback to URL parameters
+      const params = new URLSearchParams(window.location.search);
+      bookId = params.get('bookId');
+      unitNumber = params.get('unitNumber');
+      console.log(`URL parameters: Book ${bookId}, Unit ${unitNumber}`);
+    }
   }
   
   // Build paths for API requests
