@@ -709,6 +709,224 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           );
         }
         
+        // Unit 13 - Do You Have a Pet
+        else if (unitId === "13") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "13",
+              title: "I Have A Pet - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/pWepfJ-8XU0?si=ij_lH_zn4Fvq_Vr7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "13",
+              title: "What Pet Should I Get - Dr. Seuss",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/psCzO1TlJUU?si=PLgE3Tn7fUOhkLJK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "13",
+              title: "Pets Game 1",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a6ed7abe04ef40a3b7fc7a1c1e43baa3?themeId=1&templateId=8&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 3,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "13",
+              title: "Pets Game 2",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a69c62dffa604b9b8b3bf8af18be33e3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 4,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "13",
+              title: "Pets Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Pets</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Create pet puppets and role play caring for pets</li>
+                  <li>Draw your favorite pet and write about what it eats</li>
+                  <li>Match pets with their homes and food</li>
+                  <li>Play "Guess the Animal" by describing pet characteristics</li>
+                </ul>
+              </div>`,
+              order: 5,
+              provider: "Visual English"
+            }
+          );
+        }
+        
+        // Unit 12 - Home Sweet Home
+        else if (unitId === "12") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "12",
+              title: "Rooms Of The House Song - Planet Pop",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/IjnlkdGwcIY?si=vEVQmhSvgJHkZAXN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "12",
+              title: "Home Sweet Home - Kids Learning Tube",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/JRh0YAWziWE?si=9m4fKJAZLcGNGsIS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "12",
+              title: "Rooms of the House Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/edd2c3b1d51e4c749c12f7f29c51bbd4?themeId=1&templateId=11&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 3,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "12",
+              title: "Home & House Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Home & House</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Create a paper doll house with labeled rooms</li>
+                  <li>Match household items to the rooms they belong in</li>
+                  <li>Draw and label your own bedroom</li>
+                  <li>Role play different activities in each room: "What do you do in the kitchen?"</li>
+                </ul>
+              </div>`,
+              order: 4,
+              provider: "Visual English"
+            }
+          );
+        }
+        
+        // Unit 11 - Seasons of the Year
+        else if (unitId === "11") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "11",
+              title: "Season Song - Pancake Manor",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/8ZjpI6fgYSY?si=QGaTvWjzJTIbImrB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "11",
+              title: "Four Seasons Song - The Singing Walrus",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ksGiLaIx39c?si=FT1qJ0jdUjU8F74Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "11",
+              title: "Seasons Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a01f74fd215e479cab60c7c0bba25d18?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 3,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "11",
+              title: "Seasons Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Seasons</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Create a seasons wheel with pictures for each season</li>
+                  <li>Sort clothing items appropriate for different seasons</li>
+                  <li>Draw a tree showing how it changes in each season</li>
+                  <li>Discuss seasonal activities: "What do you do in summer/winter?"</li>
+                </ul>
+              </div>`,
+              order: 4,
+              provider: "Visual English"
+            }
+          );
+        }
+        
+        // Unit 8 - Shapes
+        else if (unitId === "8") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "8",
+              title: "The Shape Song 1 - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/TJhfl5vdxp4?si=KGz3TRf8JULhBF1W" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "8",
+              title: "The Shape Song 2 - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/03pyY9C2Pm8?si=gZQXn83XKYLa0kQI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "8",
+              title: "Shapes Game 1",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/0cad1e2eff7c492f87bf170e073e3fa7?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 3,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "8",
+              title: "Shapes Game 2",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9aba456eebc04fcdbcace5c56cd6ed48?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 4,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "8",
+              title: "Shapes Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Shapes</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Shape hunt - find objects of different shapes in the classroom</li>
+                  <li>Create a shape collage using colored paper</li>
+                  <li>Draw pictures using only basic shapes</li>
+                  <li>Sort objects by shape and count how many of each shape</li>
+                </ul>
+              </div>`,
+              order: 5,
+              provider: "Visual English"
+            }
+          );
+        }
+        
         // Save predefined resources
         setResources(predefinedResources);
         saveResourcesToServer(predefinedResources);
