@@ -2179,6 +2179,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             {
               bookId: "4",
               unitId: "4",
+              title: "Book 4 - Unit 4 - Family & Describing People",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 4 - Family & Describing People</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit4/assets/00 A Book 4 – Unit 4 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 4</p>
+              </div>`,
+              order: 3,
+              provider: "Visual English"
+            },
+            {
+              bookId: "4",
+              unitId: "4",
               title: "All About Me & My Family: Lesson Plan (Ages 9-10)",
               resourceType: "activity",
               embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
@@ -2448,6 +2476,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               </div>`,
               order: 1,
               provider: "Kahoot"
+            },
+            {
+              bookId: "4",
+              unitId: "6",
+              title: "Book 4 - Unit 6 - Collections",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 6 - Collections</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit6/assets/00 A Book 4 – Unit 6 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 6</p>
+              </div>`,
+              order: 2,
+              provider: "Visual English"
             }
           );
         }
@@ -2480,6 +2536,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/87e2df1853c646db9f4a27d632cc9f48?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 2,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "7",
+              title: "Book 4 - Unit 7 - Fashion Crazy",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 7 - Fashion Crazy</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit7/assets/00 A Book 4 – Unit 7 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 7</p>
+              </div>`,
+              order: 3,
+              provider: "Visual English"
             }
           );
         }
@@ -2548,6 +2632,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c19d7fb0540e4e269de458c2184b6624?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 6,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "8",
+              title: "Book 4 - Unit 8 - Enjoy Your Meal",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 8 - Enjoy Your Meal</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit8/assets/00 A Book 4 – Unit 8 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 8</p>
+              </div>`,
+              order: 7,
+              provider: "Visual English"
             }
           );
         }
