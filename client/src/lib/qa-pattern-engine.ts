@@ -8,7 +8,7 @@
  * to create appropriate questions and answers.
  */
 
-import { QuestionAnswer } from '../hooks/use-excel-qa';
+import { QuestionAnswer } from '@/hooks/use-excel-qa';
 
 // Define pattern types that we commonly see in the ESL content
 type PatternType = 

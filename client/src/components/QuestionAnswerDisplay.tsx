@@ -142,8 +142,10 @@ const formatText = {
   }
 };
 
-// Helper function to get question and answer for a material
-// Import our pattern-mapper for standardized mapping
+// Helper functions to get question and answer for a material
+// Import our pattern-engine for advanced pattern detection
+import { getQuestionAnswer } from "@/lib/qa-pattern-engine";
+// Legacy pattern-mapper for backward compatibility
 import { getQAForFilename } from "@/lib/pattern-mapper";
 
 // Debug helper function to log information about scissors content detection
@@ -300,7 +302,26 @@ function getQuestionAnswerFromData(material: any): QAData {
     }
   }
   
-  // FIRST APPROACH: Try our new standardized pattern-mapper system
+  // FIRST APPROACH: Try our advanced pattern engine
+  // This uses sophisticated pattern detection to generate Q&A for any file
+  if (material && material.content) {
+    const unitIdFromProps = material.unitId || '';  // Get unitId safely
+    console.log(`Using pattern engine for ${content} in book/${unitIdFromProps}`);
+    const patternEngineResult = getQuestionAnswer(content, unitIdFromProps);
+    
+    if (patternEngineResult) {
+      console.log(`Pattern engine generated Q&A for ${content}:`, patternEngineResult);
+      return {
+        country: country,
+        question: patternEngineResult.question,
+        answer: patternEngineResult.answer,
+        hasData: true,
+        category: `pattern-engine-${patternEngineResult.generatedBy || 'auto'}`
+      };
+    }
+  }
+  
+  // SECOND APPROACH: Try our legacy pattern-mapper system
   // This provides a consistent mapping across all sections and units
   const patternMapping = getQAForFilename(content);
   if (patternMapping.hasMapping) {

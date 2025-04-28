@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { apiRequest } from "@/lib/queryClient";
+import { getQuestionAnswer } from '@/lib/qa-pattern-engine';
 
-interface QuestionAnswer {
+export interface QuestionAnswer {
   question: string;
   answer: string;
   codePattern?: string;
+  generatedBy?: string;
+  source?: string;
 }
 
-interface QAMapping {
+export interface QAMapping {
   [key: string]: QuestionAnswer;
 }
 
