@@ -1,0 +1,19 @@
+VISUAL 1 - UNIT 18 - WHAT CAN YOU DO?
+0a VIDEO SONG Yes, I Can! Super Simple Songs
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_Ir0Mc6Qilo?si=yZbOkz3BttYRJpW3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0b VIDEO FILM I CAN DREAM FLY SWIM JUMP WATTS ENGLISH
+<iframe width="560" height="315" src="https://www.youtube.com/embed/opyc2bvtBpo?si=xamI9uQjs__zjY9r" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0c VIDEO What can you do MAPLE LEAF
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qI7nYvVXudo?si=gwb6myCqDcEnnVxp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0d VIDEO SKIT Can Can't Simple Skits MAPLE LEAF
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hA3ClzoslBo?si=sZCd8KQjwMdLOsiH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0e VIDEO SONG - What can you do
+<iframe width="560" height="315" src="https://www.youtube.com/embed/radrRGGe-J0?si=CO0bXstO0-wqYbfA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+10a VIDEO SONG I CAN The Singing Walrus
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hft6uJQIF4g?si=YNeeUx4o98FdScCM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+10b VIDEO SONG Animals Song For Kids Fish Can Swim Birds Can Fly
+<iframe width="560" height="315" src="https://www.youtube.com/embed/e6J63bCyuwU?si=5gjTFw10ZDc70ZnW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+13a ONLINE GAME WORDWALL - WHAT CAN YOU DO
+<iframe style="max-width:100%" src="https://wordwall.net/embed/e4a93912a9784dc6b9171a1c54272864?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+13b ONLINE GAME WORDWALL - WHAT CAN YOU DO
+<iframe style="max-width:100%" src="https://wordwall.net/embed/b712584d5def413aa86cbdcfa8c222dd?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
