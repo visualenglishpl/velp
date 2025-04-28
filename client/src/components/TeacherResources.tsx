@@ -48,7 +48,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     if (!bookId || !unitId || resourcesToSave.length === 0) return;
     
     try {
-      await apiRequest('POST', `/api/direct/teacherResources/${bookId}/${unitId}`, resourcesToSave);
+      await apiRequest('POST', `/api/direct/${bookId}/${unitId}/resources`, { resources: resourcesToSave });
       toast({
         title: "Resources Saved",
         description: "Teacher resources have been saved successfully.",
@@ -68,9 +68,11 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     if (!bookId || !unitId) return;
     
     try {
-      const response = await apiRequest('GET', `/api/direct/teacherResources/${bookId}/${unitId}`);
+      const response = await apiRequest('GET', `/api/direct/${bookId}/${unitId}/resources`);
       const data = await response.json();
-      setResources(data);
+      // Check if the data structure has a resources property
+      const resourcesData = data.resources || data;
+      setResources(Array.isArray(resourcesData) ? resourcesData : []);
     } catch (error) {
       console.error("Error fetching teacher resources:", error);
     }
