@@ -142,6 +142,9 @@ const formatText = {
 };
 
 // Helper function to get question and answer for a material
+// Import our pattern-mapper for standardized mapping
+import { getQAForFilename } from "@/lib/pattern-mapper";
+
 function getQuestionAnswerFromData(material: any): QAData {
   const content = material.content || '';
   
@@ -151,7 +154,20 @@ function getQuestionAnswerFromData(material: any): QAData {
   // Extract country information
   const country = formatText.determineCountry(content);
   
-  // Try to extract question and answer directly from the filename using dash patterns
+  // FIRST APPROACH: Try our new standardized pattern-mapper system
+  // This provides a consistent mapping across all sections and units
+  const patternMapping = getQAForFilename(content);
+  if (patternMapping.hasMapping) {
+    console.log(`Using standardized pattern mapping system for ${content}`);
+    return {
+      country: country,
+      question: patternMapping.question,
+      answer: patternMapping.answer,
+      hasData: true
+    };
+  }
+  
+  // SECOND APPROACH: Try to extract question and answer directly from the filename using dash patterns
   // Examples: "What is it – It is a pencil.gif", "Where is this flag from – It is from Poland.jpg"
   const extractedFromFilename = formatText.extractQuestionsFromFilename(content);
   if (extractedFromFilename) {
