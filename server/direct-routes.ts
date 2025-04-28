@@ -4,6 +4,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import * as path from 'path';
 import * as xlsx from 'xlsx';
 import { processExcelAndGenerateTS } from './excel-processor';
+import { processExcelToJson, findMatchingQA } from './excel-to-json-processor';
 import { processUnitExcel, QuestionAnswerEntry, downloadExcelFile, getHardcodedQuestionAnswers } from './excel-unit-processor';
 import { storage } from './storage';
 import { ensureContentEditsTable, saveContentEdit, getContentEdits, deleteContentEdit, resetContentEdits } from './content-management';
@@ -1256,9 +1257,10 @@ export function registerDirectRoutes(app: Express) {
       const bookId = req.query.bookId || '1';
       console.log(`Processing Excel file for Q&A mapping for Book ${bookId}`);
       
-      // Determine file path based on book ID
+      // Determine file paths based on book ID
       const localExcelPath = `./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`;
-      const outputPath = `./client/src/data/qa-mapping-book${bookId}.ts`;
+      const tsOutputPath = `./client/src/data/qa-mapping-book${bookId}.ts`;
+      const jsonOutputPath = `./client/src/data/qa-mapping-book${bookId}.json`;
       
       console.log(`Processing local Excel file at ${localExcelPath}`);
       
@@ -1275,13 +1277,18 @@ export function registerDirectRoutes(app: Express) {
           // check if it exists as an uploaded file from the client
           if (fs.existsSync(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`)) {
             console.log(`Found uploaded Excel file for Book ${bookId}`);
-            const qaMapping = processExcelAndGenerateTS(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`, outputPath);
+            
+            // Process with both methods - old TS approach for backward compatibility and new JSON approach
+            const tsMapping = processExcelAndGenerateTS(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`, tsOutputPath);
+            const jsonMapping = processExcelToJson(`./attached_assets/VISUAL ${bookId} QUESTIONS.xlsx`, jsonOutputPath);
             
             return res.json({
               success: true,
               message: `Successfully processed Q&A Excel file for Book ${bookId}`,
-              mappingCount: Object.keys(qaMapping).length,
-              outputPath
+              mappingCount: Object.keys(jsonMapping).length,
+              tsOutputPath,
+              jsonOutputPath,
+              usingEnhancedMapping: true
             });
           }
           
@@ -1291,13 +1298,17 @@ export function registerDirectRoutes(app: Express) {
           });
         }
         
-        const qaMapping = processExcelAndGenerateTS(localExcelPath, outputPath);
+        // Process with both methods - old TS approach for backward compatibility and new JSON approach
+        const tsMapping = processExcelAndGenerateTS(localExcelPath, tsOutputPath);
+        const jsonMapping = processExcelToJson(localExcelPath, jsonOutputPath);
         
         return res.json({
           success: true,
           message: `Successfully processed Q&A Excel file for Book ${bookId}`,
-          mappingCount: Object.keys(qaMapping).length,
-          outputPath
+          mappingCount: Object.keys(jsonMapping).length,
+          tsOutputPath,
+          jsonOutputPath,
+          usingEnhancedMapping: true
         });
       } catch (error) {
         console.error(`Error processing Excel file:`, error);

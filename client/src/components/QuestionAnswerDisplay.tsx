@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Flag, Check, X, RefreshCw, EyeOff, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { useExcelQA } from "@/hooks/use-excel-qa";
 
 interface QAData {
   country: string;
