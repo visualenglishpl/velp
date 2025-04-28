@@ -22,50 +22,81 @@ export function processExcelAndGenerateTS(
   // Read the Excel file
   const workbook = XLSX.readFile(excelFilePath);
   
-  // Assume first sheet unless specified
-  const firstSheetName = workbook.SheetNames[0];
-  const worksheet = workbook.Sheets[firstSheetName];
-  
-  // Convert to JSON
-  const jsonData = XLSX.utils.sheet_to_json(worksheet) as Array<Record<string, string>>;
-  
-  console.log(`Found ${jsonData.length} rows in Excel sheet`);
-  
   // Create mapping object
   const mapping: Record<string, QuestionAnswer> = {};
   
-  // Process each row and extract information
-  for (const row of jsonData) {
-    // Assume Excel structure has columns like: Code, Question, Answer
-    const codePattern = row['Code'] || row['code'] || row['CODE'] || '';
-    const question = row['Question'] || row['question'] || row['QUESTION'] || '';
-    const answer = row['Answer'] || row['answer'] || row['ANSWER'] || '';
+  // Process all sheets in the workbook
+  for (const sheetName of workbook.SheetNames) {
+    console.log(`Processing sheet: ${sheetName}`);
+    const worksheet = workbook.Sheets[sheetName];
     
-    // Skip if any required field is missing
-    if (!codePattern || !question || !answer) {
-      continue;
-    }
+    // Process the Excel file manually to properly handle the specific structure
+    // Visual English Excel files have:
+    // Column A: Filename
+    // Column B: Question
+    // Column C: Answer
     
-    // Add to mapping using code as key
-    mapping[codePattern] = {
-      question,
-      answer
-    };
+    let rowIndex = 1;
+    let processedRows = 0;
     
-    // Also add formatted variants for better matching
-    const formattedCode = codePattern.trim().replace(/\s+/g, ' ');
-    if (formattedCode !== codePattern) {
-      mapping[formattedCode] = {
+    while (true) {
+      const filenameCell = worksheet['A' + rowIndex];
+      const questionCell = worksheet['B' + rowIndex];
+      const answerCell = worksheet['C' + rowIndex];
+      
+      // Break when we reach the end of data
+      if (!filenameCell) {
+        break;
+      }
+      
+      rowIndex++;
+      
+      // Skip rows without question/answer
+      if (!questionCell || !answerCell) {
+        continue;
+      }
+      
+      const filename = filenameCell.v.toString();
+      let question = questionCell.v.toString();
+      let answer = answerCell.v.toString();
+      
+      // Remove quotation marks if present
+      question = question.replace(/^"(.+)"$/, '$1');
+      answer = answer.replace(/^"(.+)"$/, '$1');
+      
+      processedRows++;
+      
+      // Extract code pattern from filename
+      const codePattern = extractCodePattern(filename);
+      
+      // Skip if filename doesn't have a proper code pattern
+      if (!codePattern) {
+        continue;
+      }
+      
+      // Add to mapping using code as key
+      mapping[codePattern] = {
+        question,
+        answer
+      };
+      
+      // Also add formatted variants for better matching
+      const formattedCode = codePattern.trim().replace(/\s+/g, ' ');
+      if (formattedCode !== codePattern) {
+        mapping[formattedCode] = {
+          question,
+          answer
+        };
+      }
+      
+      // Add lowercase variant for case-insensitive matching
+      mapping[codePattern.toLowerCase()] = {
         question,
         answer
       };
     }
     
-    // Add lowercase variant for case-insensitive matching
-    mapping[codePattern.toLowerCase()] = {
-      question,
-      answer
-    };
+    console.log(`Processed ${processedRows} rows in sheet ${sheetName}`);
   }
   
   console.log(`Generated mapping with ${Object.keys(mapping).length} entries`);

@@ -34,63 +34,47 @@ export function processExcelToJson(
     console.log(`Processing sheet: ${sheetName}`);
     const worksheet = workbook.Sheets[sheetName];
     
-    // Convert to JSON
-    const jsonData = XLSX.utils.sheet_to_json(worksheet) as Array<Record<string, any>>;
+    // Process the Excel file manually to properly handle the specific structure
+    // Visual English Excel files have:
+    // Column A: Filename
+    // Column B: Question
+    // Column C: Answer
     
-    console.log(`Found ${jsonData.length} rows in sheet ${sheetName}`);
+    let rowIndex = 1;
+    let processedRows = 0;
     
-    // Process each row and extract information
-    for (const row of jsonData) {
-      // Check the Excel structure. The main columns we're looking for are:
-      // - A column with file code/pattern (might be called "Code", "__EMPTY", etc.)
-      // - A column with the question (might be called "Question", "__EMPTY_1", etc.)
-      // - A column with the answer (might be called "Answer", "__EMPTY_2", etc.)
+    while (true) {
+      const filenameCell = worksheet['A' + rowIndex];
+      const questionCell = worksheet['B' + rowIndex];
+      const answerCell = worksheet['C' + rowIndex];
       
-      // Try to find the pattern in various formats
-      let codePattern = null;
-      for (const key of Object.keys(row)) {
-        const value = row[key]?.toString() || '';
-        // Check if this value looks like a code pattern (e.g., "01 A B", "02 N C", etc.)
-        if (value.match(/^\d{2}\s*[A-Za-z]\s*[A-Za-z]/i)) {
-          codePattern = value;
-          break;
-        }
+      // Break when we reach the end of data
+      if (!filenameCell) {
+        break;
       }
       
-      // Look for question and answer in different column names
-      let question = '';
-      let answer = '';
+      rowIndex++;
       
-      // Standard column names in Excel
-      if (row['Question'] || row['question'] || row['QUESTION']) {
-        question = row['Question'] || row['question'] || row['QUESTION'];
+      // Skip rows without question/answer
+      if (!questionCell || !answerCell) {
+        continue;
       }
       
-      if (row['Answer'] || row['answer'] || row['ANSWER']) {
-        answer = row['Answer'] || row['answer'] || row['ANSWER'];
-      }
+      const filename = filenameCell.v.toString();
+      let question = questionCell.v.toString();
+      let answer = answerCell.v.toString();
       
-      // If not found with standard names, try looking at "__EMPTY_1" (often used for question) and "__EMPTY_2" (often used for answer)
-      if (!question && row['__EMPTY_1']) {
-        question = row['__EMPTY_1'];
-      }
+      // Remove quotation marks if present
+      question = question.replace(/^"(.+)"$/, '$1');
+      answer = answer.replace(/^"(.+)"$/, '$1');
       
-      if (!answer && row['__EMPTY_2']) {
-        answer = row['__EMPTY_2'];
-      }
+      processedRows++;
       
-      // If still no question/answer, try other fields
-      const keys = Object.keys(row);
-      if (!question && keys.length > 1) {
-        question = row[keys[1]];
-      }
+      // Extract code pattern from filename
+      const codePattern = extractCodePatternFromFilename(filename);
       
-      if (!answer && keys.length > 2) {
-        answer = row[keys[2]];
-      }
-      
-      // Skip if required fields are missing
-      if (!question || !answer) {
+      // Skip if filename doesn't have a proper code pattern
+      if (!codePattern) {
         continue;
       }
       
