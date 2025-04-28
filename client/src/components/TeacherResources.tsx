@@ -344,6 +344,23 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c95d7edfe0e64b77be765f3289a7c3e3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 7,
               provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "3",
+              title: "Classroom Rules Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Classroom Rules</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Use TPR (Total Physical Response) to practice classroom commands: "Stand up", "Sit down", "Open your book", etc.</li>
+                  <li>Create a classroom rules poster together with the students</li>
+                  <li>Play "Simon Says" using classroom rules: "Simon says, stand up" etc.</li>
+                  <li>Role-play different classroom scenarios following the rules</li>
+                </ul>
+              </div>`,
+              order: 8,
+              provider: "Visual English"
             }
           );
         }
@@ -413,6 +430,23 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/61576e9315e949fd9a89477f5807ce46?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 7,
               provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "4",
+              title: "Feelings & Emotions Teaching Activities",
+              resourceType: "activity",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-lg font-semibold mb-3">Teaching Activities for Feelings & Emotions</h3>
+                <ul class="space-y-2 list-disc pl-5">
+                  <li>Create emotion flashcards with students - they draw faces showing different emotions</li>
+                  <li>Play "Feelings Charades" - act out an emotion for others to guess</li>
+                  <li>Use mirrors to practice facial expressions for different emotions</li>
+                  <li>Create a feelings chart with emoticons for students to indicate how they feel each day</li>
+                </ul>
+              </div>`,
+              order: 8,
+              provider: "Visual English"
             }
           );
         }
