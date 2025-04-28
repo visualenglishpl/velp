@@ -537,34 +537,53 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             lowercaseFilename.includes('sharpener') ||
             lowercaseFilename.includes('bag')) {
             
-          // Special handling for ruler sections 08-12 that need specific matching
-          if (lowercaseFilename.includes('ruler')) {
-            // Extract any numbers from the filename that might match patterns 08-12
-            const rulerNumberMatch = filename.match(/(\d{2})/g);
-            if (rulerNumberMatch) {
-              const rulerNumbers = rulerNumberMatch.map(num => parseInt(num, 10));
+          // Direct hardcoded mapping for sections 08-12
+          if (lowercaseFilename.includes('ruler') && 
+              (/08|09|10|11|12/).test(filename)) {
+            console.log("CRITICAL SECTION: Detected ruler section 08-12:", filename);
+            
+            // For these exact numbered sections, try to find the right question based on both
+            // the object type and the section number
+            const sectionNumber = filename.match(/\b(0[8-9]|1[0-2])\b/);
+            if (sectionNumber) {
+              const sectionNum = sectionNumber[1];
+              console.log("Extracted section number for special mapping:", sectionNum);
               
-              // Look specifically for ruler entries with numeric patterns 08-12
+              // First try to find exact matches for both ruler AND section number
               matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => {
-                // Check if the entry is about rulers
-                const isRulerQuestion = entry.question.toLowerCase().includes('ruler');
+                const entryCodePattern = entry.codePattern.toLowerCase();
+                const entryQuestion = entry.question.toLowerCase();
                 
-                if (!isRulerQuestion) return false;
-                
-                // Get the numeric part of the entry's code pattern
-                const entryNumMatch = entry.codePattern.match(/(\d{2})/);
-                if (!entryNumMatch) return false;
-                
-                const entryNum = parseInt(entryNumMatch[1], 10);
-                
-                // Match specifically for ruler sections 08-12
-                return isRulerQuestion && 
-                       (entryNum >= 8 && entryNum <= 12) && 
-                       rulerNumbers.includes(entryNum);
+                // Check for both ruler in question and matching section number
+                return entryQuestion.includes('ruler') && 
+                       entryCodePattern.includes(sectionNum);
               });
               
               if (matchingEntry) {
-                console.log("Found ruler section 08-12 match:", matchingEntry.question);
+                console.log("FOUND PERFECT MATCH for ruler section " + sectionNum + ":", matchingEntry.question);
+              } else {
+                // If no exact match, find ANY question about rulers
+                // But prioritize questions with matching section numbers
+                const rulerEntries = excelData.entries.filter((entry: ExcelQAEntry) => 
+                  entry.question.toLowerCase().includes('ruler')
+                );
+                
+                if (rulerEntries.length > 0) {
+                  // First try to find entries with matching section numbers
+                  const matchingNumberEntries = rulerEntries.filter((entry: ExcelQAEntry) => 
+                    entry.codePattern.includes(sectionNum)
+                  );
+                  
+                  if (matchingNumberEntries.length > 0) {
+                    // Use the first match with both ruler and matching section number
+                    matchingEntry = matchingNumberEntries[0];
+                    console.log("Found section number match for ruler:", matchingEntry.question);
+                  } else {
+                    // Fall back to any ruler question
+                    matchingEntry = rulerEntries[0];
+                    console.log("Using fallback ruler question:", matchingEntry.question);
+                  }
+                }
               }
             }
           }
