@@ -1413,6 +1413,134 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/779a554a69a1475d9ea370e71279bf75?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 2,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "1",
+              title: "World Explorers: Nationalities Lesson Plan (Ages 9-10)",
+              resourceType: "activity",
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">World Explorers: Nationalities Lesson Plan</h2>
+                <div class="text-right text-sm text-gray-500 mb-4">For students aged 9-10 years</div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn to identify countries and their nationalities</li>
+                    <li>Students will practice asking and answering "Where are you from?" and "What's your nationality?"</li>
+                    <li>Students will explore cultural aspects of different countries</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Materials Needed</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>World map or globe</li>
+                    <li>Pictures of famous landmarks from different countries</li>
+                    <li>Country flags flashcards</li>
+                    <li>Passport template handouts (one per student)</li>
+                    <li>Colored pencils or markers</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up (10 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>World Map Exploration:</strong> Display a world map and ask students to point to countries they know. Have them share any experiences with travel or connections to different countries.</p>
+                    <p class="mt-2"><strong>Flag Quiz:</strong> Show different country flags and see if students can identify the countries. Introduce the concept of nationalities as you go.</p>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Vocabulary Development (15 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Country-Nationality Pairs:</strong> Introduce 8-10 country-nationality pairs using flashcards or slides. For each country, show:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Country name (Poland, Japan, Brazil, etc.)</li>
+                      <li>Flag</li>
+                      <li>Nationality (Polish, Japanese, Brazilian, etc.)</li>
+                      <li>Simple sentence: "She is from Poland. She is Polish."</li>
+                    </ul>
+                    <p class="mt-2"><strong>Choral Repetition:</strong> Lead students in pronouncing each country and nationality, focusing on pronunciation.</p>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (20 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>1. Passport Creation:</strong> Give each student a passport template. Have them:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Draw their picture on the first page</li>
+                      <li>Write their name and choose a country they would like to be "from"</li>
+                      <li>Write their "nationality" based on their chosen country</li>
+                      <li>Decorate their passport with the flag of their chosen country</li>
+                    </ul>
+                    <p class="mt-3"><strong>2. Immigration Station Role Play:</strong> Set up an "immigration counter" in the classroom:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>One student plays the immigration officer, asking: "Where are you from?" and "What's your nationality?"</li>
+                      <li>Students line up with their passports and answer based on their created identities</li>
+                      <li>The "officer" stamps their passport after successful answers</li>
+                      <li>Rotate roles so several students get to be the officer</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Interactive Game (15 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>World Travelers Game:</strong></p>
+                    <ol class="ml-4 mt-1 space-y-1 list-decimal">
+                      <li>Arrange students in a circle</li>
+                      <li>First student says: "My name is [name], I'm from [country], and I'm [nationality]."</li>
+                      <li>They pass a small globe or ball to another student</li>
+                      <li>The next student must repeat what the previous student said and then add their own information</li>
+                      <li>For an easier version, students only need to repeat their immediate predecessor's information</li>
+                      <li>For a challenge, add that each student must also name something famous from their chosen country</li>
+                    </ol>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Cultural Extension (10 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Famous Landmarks:</strong> Show pictures of famous landmarks and have students guess the country and nationality.</p>
+                    <p class="mt-2"><strong>Cultural Facts:</strong> Share 1-2 interesting facts about each country discussed (traditional food, sport, custom, etc.).</p>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up (5 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Exit Ticket:</strong> Each student tells one new country-nationality pair they learned today.</p>
+                    <p class="mt-2"><strong>Mini-Reflection:</strong> Ask students which countries they'd like to visit one day and why.</p>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Assessment</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p>Observe students' participation in activities and assess their ability to:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Correctly match countries with nationalities</li>
+                      <li>Ask and answer questions about origin and nationality</li>
+                      <li>Use proper sentence structure when discussing nationalities</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <div class="pl-5 text-gray-700">
+                    <ul class="ml-4 space-y-1 list-disc">
+                      <li>Create a classroom display with country profiles created by students</li>
+                      <li>Research and present about a chosen country's traditions or celebrations</li>
+                      <li>International food day where students bring or describe traditional foods</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>`,
+              order: 3,
+              provider: "Visual English"
             }
           );
         }
@@ -1472,6 +1600,164 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               </div>`,
               order: 3,
               provider: "ABCya"
+            },
+            {
+              bookId: "4",
+              unitId: "2",
+              title: "Digital Detectives: Technology Lesson Plan (Ages 9-10)",
+              resourceType: "activity",
+              embedCode: `<div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-blue-700 border-b pb-2">Digital Detectives: Technology & Gadgets Lesson Plan</h2>
+                <div class="text-right text-sm text-gray-500 mb-4">For students aged 9-10 years</div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Lesson Objectives</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Students will learn vocabulary related to modern technology and gadgets</li>
+                    <li>Students will practice describing gadgets and their functions</li>
+                    <li>Students will compare older technologies with modern equivalents</li>
+                    <li>Students will use phrases to express ownership of technology items</li>
+                  </ul>
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Materials Needed</h3>
+                  <ul class="space-y-1 list-disc pl-5 text-gray-700">
+                    <li>Pictures or real examples of various gadgets (smartphones, tablets, headphones, etc.)</li>
+                    <li>"Then and Now" technology cards (showing old and new versions of technologies)</li>
+                    <li>Mini-whiteboards or paper and markers</li>
+                    <li>Materials for "Invent a Gadget" activity (paper, colored pencils, markers)</li>
+                    <li>Optional: A few actual gadgets for demonstration (if available)</li>
+                  </ul>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Warm-up (10 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Gadget Guessing Game:</strong> Show students images of gadgets with certain parts hidden or blurred. Have them guess what the gadget is based on the partial image.</p>
+                    <p class="mt-2"><strong>My Favorite Gadget:</strong> Ask students to draw their favorite technology item on mini-whiteboards and then hold them up. Have volunteers explain what their favorite gadget is and what they use it for.</p>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Vocabulary Development (15 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Technology Vocabulary:</strong> Introduce 10-12 key gadget terms with visuals:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Smartphone, tablet, laptop, smartwatch, headphones, earbuds</li>
+                      <li>Charger, keyboard, mouse, webcam, speaker, microphone</li>
+                    </ul>
+                    <p class="mt-2"><strong>Function Words:</strong> Teach verbs associated with gadgets:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Charge, connect, download, upload, install, browse</li>
+                      <li>Turn on/off, plug in, scroll, swipe, tap, click</li>
+                    </ul>
+                    <p class="mt-2"><strong>Ownership Phrases:</strong> Practice phrases like "I have a...", "Do you have a...?", "It's my...", "Whose... is this?"</p>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Practice Activities (20 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>1. Then and Now Technology:</strong> Show pairs of old and new technology:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Old telephone → Smartphone</li>
+                      <li>Walkman → MP3 player/streaming service</li>
+                      <li>VHS tape → Streaming video</li>
+                      <li>Film camera → Digital camera/phone camera</li>
+                    </ul>
+                    <p class="mt-1">Ask students to describe differences using simple comparative language: "The smartphone is smaller than the old telephone." "The digital camera is easier to use than the film camera."</p>
+                    
+                    <p class="mt-3"><strong>2. Gadget Charades:</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Divide students into small groups</li>
+                      <li>One student acts out using a gadget without speaking</li>
+                      <li>Others guess what gadget it is and what they're doing with it</li>
+                      <li>The student who guesses correctly goes next</li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>3. Survey Activity:</strong></p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Students circulate around the room asking each other questions</li>
+                      <li>"Do you have a tablet?" "How often do you use headphones?"</li>
+                      <li>Students record answers on a simple survey sheet</li>
+                      <li>Afterward, they report findings: "Five students have tablets."</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Creative Project (15 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>"Invent a Gadget" Activity:</strong></p>
+                    <ol class="ml-4 mt-1 space-y-1 list-decimal">
+                      <li>Students work in pairs to design a new, imaginary gadget</li>
+                      <li>They draw their invention and label its parts</li>
+                      <li>Students must give their gadget a name and explain what it does</li>
+                      <li>Encourage them to use the new vocabulary from the lesson</li>
+                      <li>Each pair presents their invention to the class: "This is a [gadget name]. It can [function]."</li>
+                    </ol>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Digital Citizenship Discussion (10 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Safe Technology Use:</strong> Have a simple, age-appropriate discussion about:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Screen time limits ("When do you use gadgets? For how long?")</li>
+                      <li>Being kind online ("How can we be nice when using technology?")</li>
+                      <li>Asking permission to use others' gadgets ("Whose tablet is this? Can I use your headphones?")</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mb-5">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Wrap-up (5 minutes)</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p><strong>Technology Memory Chain:</strong> Start with "In my tech bag, I have a smartphone." Next student repeats and adds an item: "In my tech bag, I have a smartphone and headphones." Continue around the class.</p>
+                    <p class="mt-2"><strong>Quick Review:</strong> Show flashcards of gadgets and have students quickly name them as a class.</p>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Assessment</h3>
+                  <div class="pl-5 text-gray-700">
+                    <p>Assessment can be based on:</p>
+                    <ul class="ml-4 mt-1 space-y-1 list-disc">
+                      <li>Correct identification and naming of technology items</li>
+                      <li>Appropriate use of "have/has" and possessive forms</li>
+                      <li>Participation in interactive activities</li>
+                      <li>Creativity and language use in the "Invent a Gadget" activity</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Extension Activities</h3>
+                  <div class="pl-5 text-gray-700">
+                    <ul class="ml-4 space-y-1 list-disc">
+                      <li>Create a class technology dictionary with pictures and definitions</li>
+                      <li>Write simple instructions for how to use a particular gadget</li>
+                      <li>Interview parents/grandparents about technology from when they were young</li>
+                      <li>Design a poster showing technology rules for the classroom</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-200">
+                  <h3 class="text-lg font-semibold mb-2 text-blue-600">Homework Ideas</h3>
+                  <div class="pl-5 text-gray-700">
+                    <ul class="ml-4 space-y-1 list-disc">
+                      <li>Draw and label your favorite gadget and write 3-5 sentences about it</li>
+                      <li>Create a simple timeline showing how one technology has changed over time</li>
+                      <li>Find and count technology items at home and create a simple bar chart</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>`,
+              order: 4,
+              provider: "Visual English"
             }
           );
         }
