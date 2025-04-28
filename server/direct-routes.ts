@@ -1369,7 +1369,7 @@ export function registerDirectRoutes(app: Express) {
         const fallbackQA: Record<string, any> = {};
         
         // Using existing book data, let's generate some mappings using common patterns
-        const hardcodedMappings = getHardcodedQuestionAnswers(bookId, undefined);
+        const hardcodedMappings = getHardcodedQuestionAnswers(bookId, '');
         
         if (Object.keys(hardcodedMappings).length > 0) {
           console.log(`Using ${Object.keys(hardcodedMappings).length} hardcoded Q&A mappings for book ${bookId}`);

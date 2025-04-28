@@ -135,35 +135,124 @@ export function useExcelQA(bookId: string) {
       return undefined;
     }
 
+    // Debug the filename for better understanding
+    console.log(`Looking for match for filename: ${filename}`);
+
     // Start with exact match
     if (mappings[filename]) {
+      console.log(`Found exact match for:`, filename);
       return mappings[filename];
     }
 
     // Try with the filename without extension
     const filenameWithoutExt = filename.replace(/\.(png|jpg|jpeg|gif|webp|mp4)$/i, '').trim();
     if (mappings[filenameWithoutExt]) {
+      console.log(`Found match without extension for:`, filenameWithoutExt);
       return mappings[filenameWithoutExt];
+    }
+
+    // Special handling for Unit 6 "What Colour is" patterns
+    if (filename.includes("What Colour is") || filename.includes("What Color is")) {
+      // Look through available entries to find a color match
+      const allEntries = Object.values(mappings);
+      
+      // Try to find the object type from the filename
+      // For example, extract "Ice Cream" from "02 F e What Colour is the Ice Cream – is the Picture Fake or Real.jpg"
+      const objectMatch = filenameWithoutExt.match(/What\s+Colou?r\s+is\s+the\s+([^–\?\.]+)/i);
+      
+      if (objectMatch && objectMatch[1]) {
+        const objectName = objectMatch[1].trim().toLowerCase();
+        console.log(`Found color question about:`, objectName);
+        
+        // Look for entries with similar question patterns
+        for (const entry of allEntries) {
+          if (entry.question.toLowerCase().includes("what colour is") ||
+              entry.question.toLowerCase().includes("what color is")) {
+            console.log(`Found local Excel mapping for:`, filename);
+            return entry;
+          }
+        }
+      }
     }
 
     // Try extracting a code pattern like "01 A B" from the filename
     const codePattern = extractCodePatternFromFilename(filename);
-    if (codePattern && mappings[codePattern]) {
-      return mappings[codePattern];
-    }
-
-    // Try with code pattern variants
     if (codePattern) {
+      console.log(`Searching for match with extracted code pattern: "${codePattern}"`);
+      
+      // First try direct match with the code pattern
+      if (mappings[codePattern]) {
+        console.log(`Found match with code pattern for:`, codePattern);
+        return mappings[codePattern];
+      }
+      
+      // Then try to match with just the first part (section number and letter)
+      // Example: if we have "02 F a" try to match with any entry that has "02 F"
+      const mainSection = codePattern.split(' ').slice(0, 2).join(' ');
+      
+      // Find all entries with this main section
+      const matchingEntries = Object.entries(mappings).filter(([key, value]) => {
+        if (value.codePattern) {
+          return value.codePattern.startsWith(mainSection);
+        }
+        return false;
+      });
+      
+      if (matchingEntries.length > 0) {
+        // Log all the matching entries
+        console.log(`Entries matched with main section "${mainSection}":`, matchingEntries.map(([key, value]) => value.codePattern));
+        
+        // Try to find the best match based on question patterns
+        // For Unit 6, prioritize color-related questions
+        if (filename.includes("Colour") || filename.includes("Color")) {
+          const colorEntry = matchingEntries.find(([key, value]) => 
+            value.question.includes("colour") || value.question.includes("color")
+          );
+          
+          if (colorEntry) {
+            console.log(`Found color-related entry:`, colorEntry[1].question);
+            return colorEntry[1];
+          }
+        }
+        
+        // Return the first match if nothing better is found
+        console.log(`Using first match from section:`, matchingEntries[0][1].question);
+        return matchingEntries[0][1];
+      } else {
+        console.log(`No entries matched the code pattern "${codePattern}"`);
+        
+        // Log available patterns to help debugging
+        const availablePatterns = Object.values(mappings)
+          .map(qa => qa.codePattern)
+          .filter(Boolean)
+          .join(", ");
+        console.log(`Available code patterns:`, availablePatterns);
+      }
+      
+      // Try with code pattern variants
       const variants = generateCodePatternVariants(codePattern);
       for (const variant of variants) {
         if (mappings[variant]) {
+          console.log(`Found match with variant "${variant}" for original pattern "${codePattern}"`);
           return mappings[variant];
         }
       }
     }
 
-    // Try partial matches
-    // Look through all mappings and find the best match
+    // Check if filename contains "What is It"
+    if (filename.toLowerCase().includes("what is it")) {
+      console.log(`Found question match in filename for:`, "What is it?");
+      
+      // Look for entries with this question
+      for (const entry of Object.values(mappings)) {
+        if (entry.question.toLowerCase() === "what is it?") {
+          console.log(`Using Excel entry:`, entry);
+          return entry;
+        }
+      }
+    }
+
+    // Try partial matches as a last resort
     let bestMatch: QuestionAnswer | undefined = undefined;
     let bestMatchScore = 0;
 
@@ -202,10 +291,12 @@ export function useExcelQA(bookId: string) {
     }
 
     if (bestMatch) {
+      console.log(`Found best partial match with score ${bestMatchScore}:`, bestMatch.question);
       return bestMatch;
     }
 
     // No match found
+    console.log(`No match found for ${filename}`);
     return undefined;
   }
 
@@ -221,7 +312,18 @@ export function extractCodePatternFromFilename(filename: string): string | null 
   // Remove file extension
   const filenameWithoutExt = filename.replace(/\.(png|jpg|jpeg|gif|webp|mp4)$/i, '');
   
+  // Debug log to see what we're working with
+  console.log(`DEBUG: First 10 chars of filename: "${filenameWithoutExt.slice(0, 10)}"`);
+  
   // Try different regex patterns to extract codes
+  
+  // Pattern: "02 F a" - found in Unit 6 (pattern for colors)
+  const colorPattern = filenameWithoutExt.match(/^(\d{2})\s*([A-Za-z])\s*([a-z])/i);
+  if (colorPattern) {
+    const pattern = `${colorPattern[1]} ${colorPattern[2].toUpperCase()} ${colorPattern[3].toLowerCase()}`;
+    console.log(`DEBUG: Extracted section pattern ${pattern}`);
+    return pattern;
+  }
   
   // Pattern: "01 A B" or "01 A B What is this thing"
   const standardPattern = filenameWithoutExt.match(/(\d{2})\s*([A-Za-z])\s*([A-Za-z])/i);
@@ -233,6 +335,14 @@ export function extractCodePatternFromFilename(filename: string): string | null 
   const simplePattern = filenameWithoutExt.match(/(\d{2})[\s-]*([A-Za-z])/i);
   if (simplePattern) {
     return `${simplePattern[1]} ${simplePattern[2].toUpperCase()}`;
+  }
+  
+  // Pattern: for filenames like "02 F e What Colour is the Ice Cream – is the Picture Fake or Real.jpg"
+  // Extract the question part
+  const questionMatch = filenameWithoutExt.match(/What\s+Colour\s+is\s+the\s+([^–]+)/i);
+  if (questionMatch) {
+    console.log(`Found question match in filename for:`, "What is it?");
+    return null; // We'll handle this in the findMatchingQA method
   }
   
   // Just get the number if available
