@@ -1237,7 +1237,14 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   freeSlideLimit = 10,
   onSlideDelete
 }) => {
-  // Use Excel-based data for questions and answers
+  // Use our enhanced Excel QA hook for better pattern matching
+  const { 
+    mappings: jsonMappings, 
+    isLoading: isLoadingJsonMappings,
+    findMatchingQA 
+  } = useExcelQA(bookId || "1");
+  
+  // Keep the original Excel-based data query for backward compatibility
   const { 
     data: excelData,
     isLoading: isLoadingExcel,
@@ -1381,7 +1388,29 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       return;
     }
     
-    // Try to match with Excel data first
+    // FIRST APPROACH: Try our enhanced JSON-based mapping (most reliable)
+    // This uses the improved pattern matching algorithms
+    if (!isLoadingJsonMappings && jsonMappings && Object.keys(jsonMappings).length > 0) {
+      console.log("Using enhanced JSON-based Q&A mapping system");
+      const filename = material.content;
+      const matchingQA = findMatchingQA(filename);
+      
+      if (matchingQA) {
+        console.log("✅ FOUND MATCH using enhanced JSON-based mapping for:", filename);
+        setQAData({
+          country: formatText.determineCountry(filename),
+          question: matchingQA.question,
+          answer: matchingQA.answer,
+          hasData: true,
+          category: matchingQA.codePattern
+        });
+        return;
+      } else {
+        console.log("❌ No match found using enhanced JSON-based mapping for:", filename);
+      }
+    }
+    
+    // SECOND APPROACH (LEGACY): Try to match with Excel data first (older method)
     if (excelData?.entries?.length > 0) {
       // Get the filename
       const filename = material.content;
@@ -1696,7 +1725,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
     // This section only extracts patterns from the filename, not hardcoded questions
     const processed = getQuestionAnswerFromData(material);
     setQAData(processed);
-  }, [material, excelData]);
+  }, [material, excelData, jsonMappings, isLoadingJsonMappings, findMatchingQA, isDeleted]);
   
   const handleFlagQuestion = async () => {
     try {
