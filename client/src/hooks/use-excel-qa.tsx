@@ -29,56 +29,59 @@ export function useExcelQA(bookId: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  // Normalize bookId to handle formats like "book3" or just "3"
+  const normalizedBookId = bookId.startsWith('book') ? bookId : `book${bookId}`;
+
   useEffect(() => {
     async function loadMappings() {
       try {
         // If already in cache, use it
-        if (loadedMappings[bookId]) {
-          console.log(`Using cached mappings for ${bookId} with ${Object.keys(loadedMappings[bookId]).length} entries`);
-          setMappings(loadedMappings[bookId]);
+        if (loadedMappings[normalizedBookId]) {
+          console.log(`Using cached mappings for ${normalizedBookId} with ${Object.keys(loadedMappings[normalizedBookId]).length} entries`);
+          setMappings(loadedMappings[normalizedBookId]);
           setIsLoading(false);
           return;
         }
 
         // Try to dynamically load the JSON file
         try {
-          const importedModule = await import(`../data/qa-mapping-${bookId}.json`);
+          const importedModule = await import(`../data/qa-mapping-${normalizedBookId}.json`);
           const data = importedModule.default;
-          console.log(`Successfully loaded ${Object.keys(data).length} Q&A entries from JSON file for ${bookId}`);
+          console.log(`Successfully loaded ${Object.keys(data).length} Q&A entries from JSON file for ${normalizedBookId}`);
           
           // Save to cache and state
-          loadedMappings[bookId] = data;
+          loadedMappings[normalizedBookId] = data;
           setMappings(data);
         } catch (importError) {
-          console.warn(`Error importing JSON file for ${bookId}:`, importError);
+          console.warn(`Error importing JSON file for ${normalizedBookId}:`, importError);
           
           // Try fetching from the API directly
           try {
-            const response = await fetch(`/api/direct/${bookId}/json-qa`);
+            const response = await fetch(`/api/direct/${normalizedBookId}/json-qa`);
             if (response.ok) {
               const result = await response.json();
               
               if (result.success && result.mappings) {
-                console.log(`Successfully loaded ${result.mappingCount} Q&A mappings from direct JSON API for ${bookId}`);
+                console.log(`Successfully loaded ${result.mappingCount} Q&A mappings from direct JSON API for ${normalizedBookId}`);
                 
                 // Save to cache and state
-                loadedMappings[bookId] = result.mappings;
+                loadedMappings[normalizedBookId] = result.mappings;
                 setMappings(result.mappings);
               } else {
-                console.warn(`JSON API endpoint returned success=false for ${bookId}:`, result.error);
+                console.warn(`JSON API endpoint returned success=false for ${normalizedBookId}:`, result.error);
                 setMappings({});
               }
             } else {
-              console.warn(`JSON API request failed for ${bookId}: ${response.status} ${response.statusText}`);
+              console.warn(`JSON API request failed for ${normalizedBookId}: ${response.status} ${response.statusText}`);
               setMappings({});
             }
           } catch (apiError) {
-            console.error(`API error for ${bookId}:`, apiError);
+            console.error(`API error for ${normalizedBookId}:`, apiError);
             setMappings({});
           }
         }
       } catch (err) {
-        console.error(`Error loading mappings for ${bookId}:`, err);
+        console.error(`Error loading mappings for ${normalizedBookId}:`, err);
         setError(err instanceof Error ? err : new Error(String(err)));
         setMappings({});
       } finally {
@@ -88,7 +91,7 @@ export function useExcelQA(bookId: string) {
 
     setIsLoading(true);
     loadMappings();
-  }, [bookId]);
+  }, [normalizedBookId]);
 
   /**
    * Find a matching QA for a filename using the improved algorithm
@@ -98,8 +101,8 @@ export function useExcelQA(bookId: string) {
    */
   function findMatchingQA(filename: string, currentUnitId?: string): QuestionAnswer | undefined {
     if (Object.keys(mappings).length === 0) {
-      console.log(`No mappings available for ${bookId}, using pattern engine for ${filename} in ${currentUnitId}`);
-      return getQuestionAnswer(filename, currentUnitId, bookId);
+      console.log(`No mappings available for ${normalizedBookId}, using pattern engine for ${filename} in ${currentUnitId}`);
+      return getQuestionAnswer(filename, currentUnitId, normalizedBookId);
     }
 
     // Debug the filename for better understanding
@@ -186,7 +189,7 @@ export function useExcelQA(bookId: string) {
       .join(", ");
     console.log(`Available code patterns:`, availablePatterns);
     
-    return getQuestionAnswer(filename, currentUnitId, bookId);
+    return getQuestionAnswer(filename, currentUnitId, normalizedBookId);
   }
 
   return { mappings, isLoading, error, findMatchingQA };

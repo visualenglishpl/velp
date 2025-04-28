@@ -325,8 +325,17 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
 /**
  * Main function to get a question-answer pair for a file
  * First tries to match with known patterns, then falls back to generation
+ * @param filename The filename to get Q&A for
+ * @param unitId Optional unit ID for context
+ * @param bookIdOrMappings Either a bookId string or mappings object
  */
-export function getQuestionAnswer(filename: string, unitId: string = '', mappings: Record<string, QuestionAnswer> = {}): QuestionAnswer {
+export function getQuestionAnswer(
+  filename: string, 
+  unitId: string = '', 
+  bookIdOrMappings: string | Record<string, QuestionAnswer> = {}
+): QuestionAnswer {
+  // If bookIdOrMappings is a string (bookId), create an empty mappings object
+  const mappings: Record<string, QuestionAnswer> = typeof bookIdOrMappings === 'string' ? {} : bookIdOrMappings;
   // First, try to find a direct match in mappings
   if (mappings[filename]) {
     return {
