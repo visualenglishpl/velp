@@ -176,14 +176,354 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         // Start with the PDF resource
         predefinedResources = [pdfResource];
         
-        // Add additional unit-specific resources if needed
+        // Add additional unit-specific resources 
         if (unitId === "2") {
           // Add School Objects specific resources
           // ... add additional resources for Unit 2 as needed
         }
+        // Unit 3 - Classroom Rules
         else if (unitId === "3") {
-          // Add Classroom Rules specific resources
-          // ... add additional resources for Unit 3 as needed
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "3",
+              title: "Stand Up Sit Down - FUN KIDS ENGLISH",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/WsiRSWthV1k?si=5qhIghLOyTJLoACs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "3",
+              title: "Stand Up - Sit Down - tddongtv",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/DiXMZJi_2NU?si=UQ4Gw6Tmux2TgAIG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "3",
+              title: "Open Close! Open Shut Them Song - MAPLE LEAF LEARNING",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/E_VcSQn73do?si=rqxV1ItW15Gp0biP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 3,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "3",
+              title: "Open Close! Open Shut Them Song - SUPER SIMPLE",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/RNUZBHlRH4Y?si=Q5ovKH7UTWy0eTXk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 4,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "3",
+              title: "Clean Up Song - Kids Song for Tidying Up - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/SFE0mMWbA-Y?si=DMWEOIFgkgokf4Bf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 5,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "3",
+              title: "Classroom Rules - Game 1",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/94341df31881431a8e6bb5e707557a42?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 6,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "3",
+              title: "Classroom Rules - Game 2",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c95d7edfe0e64b77be765f3289a7c3e3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 7,
+              provider: "Wordwall"
+            }
+          );
+        }
+        
+        // Unit 4 - How Are You?
+        else if (unitId === "4") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "4",
+              title: "Are You Happy Sad Hot Cold - WATTS ENGLISH",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/5su1M6NdG-I?si=VDPLCxtaD7jlbp6l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "4",
+              title: "Are you Thirsty Hungry and Sick - WATTS ENGLISH",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/iztRyiYIwUs?si=fVLZihbWVRUgpwXt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "4",
+              title: "Are You Hungry Kids - SUPER SIMPLE SONGS",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ykTR0uFGwE0?si=Y5Ty39bwGYrdD-W6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 3,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "4",
+              title: "How Are You Today - MAPLE LEAF",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/teMU8dHLqSI?si=QuGLh_wOKnY8LR2k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 4,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "4",
+              title: "SKIT How Are You Today - MAPLE LEAF",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/kR6Qcqx2fJE?si=ZhzOtIlzF8guQFDx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 5,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "4",
+              title: "How Are You/How Is The Dog - Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/cc9df848c6a94c99b8dcf9c9b65caeb4?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 6,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "4",
+              title: "How Are You - Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/61576e9315e949fd9a89477f5807ce46?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 7,
+              provider: "Wordwall"
+            }
+          );
+        }
+        
+        // Unit 5 - Family
+        else if (unitId === "5") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "The Finger Family Song",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/1EyrquyRg5s?si=3Zq8IQRNRyPxT6CU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "My Family - WATTS ENGLISH",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/VvrG4JguNQk?si=MghyBpQyLCnOTu_H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "Baby Shark Dance - PINKFONG",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/XqZsoesa55w?si=QTyqs9ClhhT3iApt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 3,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "Baby Shark - SUPER SIMPLE SONGS",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/GR2o6k8aPlI?si=tcGAuyQKEkEVZdJr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 4,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "Family - ENGLISH TREE",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/d_WQEw13TCo?si=caFvmudI0NPkvY-_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 5,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "Family - Game 1",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/e5f62afa86814cc98336327469ce1554?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 6,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "Family - Game 2",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/d1bc1e8629a445468a696f03f372e5e9?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 7,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "5",
+              title: "Family - Game 3",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/1c606c6af00643d692fc0199a60c2b2c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 8,
+              provider: "Wordwall"
+            }
+          );
+        }
+        
+        // Unit 6 - My Favourite Colour
+        else if (unitId === "6") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "6",
+              title: "I See Something Blue - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/jYAWf8Y91hA?si=b9qEwXN-0LtJVkre" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "6",
+              title: "I See Something Pink - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Asb8N0nz9OI?si=5Oh9ii42PJzsv7mc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "6",
+              title: "What Colour Is It?",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/NUquLTPhMwg?si=6GQoDS1m4JvkT-gj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 3,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "6",
+              title: "What's Your Favorite Color - Super Simple Song",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/zxIpA5nF_LY?si=MItpQRQKiUxtWmg_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 4,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "6",
+              title: "Colour Spelling",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/0LNuoKsAtN8?si=FM5PFJceDGSdGIW6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 5,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "6",
+              title: "Colours - Game 1",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/54d466d5a13948c6acbafc5729e6d887?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 6,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "6",
+              title: "Colours - Game 2",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/360776cf889d4170872d084aa81d3995?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 7,
+              provider: "Wordwall"
+            }
+          );
+        }
+
+        // Unit 7 - How Old Are You
+        else if (unitId === "7") {
+          predefinedResources.push(
+            {
+              bookId: "1",
+              unitId: "7",
+              title: "Number Zoo 1-10",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/nsDanlM8_3c?si=owcKnsCijJfHmIWz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "7",
+              title: "Spelling Numbers 1-10 - Salamander",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/HG361wJyDY0?si=-d2LBkehBjfjOKYC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 2,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "7",
+              title: "How Old Are You - ENGLISH TREE",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/JooOjnzWv3E?si=bqiXPFN_AS0j-2dw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 3,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "7",
+              title: "Numbers 1-10 - Game 1",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/43666156c96d455686dc6620f025c979?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 4,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "7",
+              title: "Numbers 1-10 - Game 2",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6b732e25ee5641e38bdb2785e4fe390b?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 5,
+              provider: "Wordwall"
+            },
+            {
+              bookId: "1",
+              unitId: "7",
+              title: "Numbers 1-10 - Game 3",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a0ac3f124ba146bda184a6fe30e24d5b?themeId=26&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 6,
+              provider: "Wordwall"
+            }
+          );
         }
         
         // Save predefined resources
@@ -232,22 +572,100 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           <p className="text-gray-500">No teacher resources available for this unit yet.</p>
         </div>
       ) : (
-        <div className="resources-list space-y-4">
-          {resources.map((resource, index) => (
-            <ResourceItem
-              key={index}
-              resource={resource}
-              index={index}
-              isEditing={editingResource === index}
-              isEditMode={isEditMode}
-              onEdit={() => handleEditResource(index)}
-              onCancelEdit={handleCancelEdit}
-              onUpdate={() => handleUpdateResource(index)}
-              onDelete={() => handleDeleteResource(index)}
-              onChange={(field, value) => handleFieldChange(index, field, value)}
-            />
-          ))}
-        </div>
+        <Tabs defaultValue="all" className="w-full">
+          <TabsList className="mb-4">
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="videos">Videos</TabsTrigger>
+            <TabsTrigger value="games">Games</TabsTrigger>
+            <TabsTrigger value="pdf">Lesson PDFs</TabsTrigger>
+            <TabsTrigger value="activity">Lesson Plans</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="all" className="resources-list space-y-4">
+            {resources.map((resource, index) => (
+              <ResourceItem
+                key={index}
+                resource={resource}
+                index={index}
+                isEditing={editingResource === index}
+                isEditMode={isEditMode}
+                onEdit={() => handleEditResource(index)}
+                onCancelEdit={handleCancelEdit}
+                onUpdate={() => handleUpdateResource(index)}
+                onDelete={() => handleDeleteResource(index)}
+                onChange={(field, value) => handleFieldChange(index, field, value)}
+              />
+            ))}
+          </TabsContent>
+          
+          <TabsContent value="videos" className="resources-list space-y-4">
+            {resources.filter(r => r.resourceType === 'video').map((resource, index) => (
+              <ResourceItem
+                key={index}
+                resource={resource}
+                index={resources.indexOf(resource)}
+                isEditing={editingResource === resources.indexOf(resource)}
+                isEditMode={isEditMode}
+                onEdit={() => handleEditResource(resources.indexOf(resource))}
+                onCancelEdit={handleCancelEdit}
+                onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
+                onDelete={() => handleDeleteResource(resources.indexOf(resource))}
+                onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
+              />
+            ))}
+          </TabsContent>
+          
+          <TabsContent value="games" className="resources-list space-y-4">
+            {resources.filter(r => r.resourceType === 'game').map((resource, index) => (
+              <ResourceItem
+                key={index}
+                resource={resource}
+                index={resources.indexOf(resource)}
+                isEditing={editingResource === resources.indexOf(resource)}
+                isEditMode={isEditMode}
+                onEdit={() => handleEditResource(resources.indexOf(resource))}
+                onCancelEdit={handleCancelEdit}
+                onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
+                onDelete={() => handleDeleteResource(resources.indexOf(resource))}
+                onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
+              />
+            ))}
+          </TabsContent>
+          
+          <TabsContent value="pdf" className="resources-list space-y-4">
+            {resources.filter(r => r.resourceType === 'pdf').map((resource, index) => (
+              <ResourceItem
+                key={index}
+                resource={resource}
+                index={resources.indexOf(resource)}
+                isEditing={editingResource === resources.indexOf(resource)}
+                isEditMode={isEditMode}
+                onEdit={() => handleEditResource(resources.indexOf(resource))}
+                onCancelEdit={handleCancelEdit}
+                onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
+                onDelete={() => handleDeleteResource(resources.indexOf(resource))}
+                onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
+              />
+            ))}
+          </TabsContent>
+          
+          <TabsContent value="activity" className="resources-list space-y-4">
+            {resources.filter(r => r.resourceType === 'activity').map((resource, index) => (
+              <ResourceItem
+                key={index}
+                resource={resource}
+                index={resources.indexOf(resource)}
+                isEditing={editingResource === resources.indexOf(resource)}
+                isEditMode={isEditMode}
+                onEdit={() => handleEditResource(resources.indexOf(resource))}
+                onCancelEdit={handleCancelEdit}
+                onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
+                onDelete={() => handleDeleteResource(resources.indexOf(resource))}
+                onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
+              />
+            ))}
+          </TabsContent>
+        </Tabs>
       )}
     </div>
   );
