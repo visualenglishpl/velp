@@ -217,6 +217,233 @@ function getQuestionAnswerFromData(material: any): QAData {
   
   // VISUAL DETECTION: Try to determine actual content by looking for specific phrases
   // (filenames may not match what's in the slide)
+  
+  // SECTION 8 - SHARPENER DETECTION
+  if (content.toLowerCase().includes('sharpener')) {
+    console.log('🔎 VISUAL DETECTION FOR SHARPENER SLIDES ACTIVATED');
+    console.log('SLIDE CONTENT STRING:', content);
+    
+    // Extract sharpener section code if available
+    const sharpenerCodeMatch = content.match(/08\s*M\s*([A-Z])/i);
+    const sharpenerVariant = sharpenerCodeMatch ? sharpenerCodeMatch[1].toUpperCase() : '';
+    console.log(`🔍 SHARPENER VARIANT DETECTED: ${sharpenerVariant || 'NONE'}`);
+    
+    // Basic sharpener identification
+    if (content.includes('08 M A') || content.toLowerCase().includes('what is it') && content.toLowerCase().includes('sharpener')) {
+      console.log('✏️ DETECTED BASIC SHARPENER CASE');
+      return {
+        country: country,
+        question: "What is it?",
+        answer: "It is a sharpener.",
+        hasData: true
+      };
+    }
+    
+    // Metal or plastic sharpener
+    if (content.toLowerCase().includes('metal or plastic sharpener') || content.includes('08 M B')) {
+      console.log('🔩 DETECTED METAL/PLASTIC SHARPENER');
+      return {
+        country: country,
+        question: "Is it a metal or plastic sharpener?",
+        answer: "It is a metal sharpener. / It is a plastic sharpener.",
+        hasData: true
+      };
+    }
+    
+    // Dragon or dinosaur sharpener
+    if (content.toLowerCase().includes('dragon or dinosaur sharpener') || content.includes('08 M C')) {
+      console.log('🐉 DETECTED DRAGON/DINOSAUR SHARPENER');
+      return {
+        country: country,
+        question: "Is it a dragon or dinosaur sharpener?",
+        answer: "It is a dragon sharpener. / It is a dinosaur sharpener.",
+        hasData: true
+      };
+    }
+    
+    // Lego sharpener
+    if (content.toLowerCase().includes('lego sharpener') || content.includes('08 M G')) {
+      console.log('🎮 DETECTED LEGO SHARPENER');
+      return {
+        country: country,
+        question: "Do you have a Lego sharpener?", 
+        answer: "Yes, I have a Lego sharpener. / No, I don't have a Lego sharpener.",
+        hasData: true
+      };
+    }
+    
+    // Sharpener in pencil case
+    if (content.toLowerCase().includes('sharpener in your pencil case') || content.includes('08 M H')) {
+      console.log('📏 DETECTED SHARPENER IN PENCIL CASE');
+      return {
+        country: country,
+        question: "Do you have a sharpener in your pencil case?",
+        answer: "Yes, I have a sharpener in my pencil case. / No, I don't have a sharpener in my pencil case.",
+        hasData: true
+      };
+    }
+  }
+  
+  // SECTION 9 - SCHOOL BAG DETECTION
+  if (content.toLowerCase().includes('bag') || content.toLowerCase().includes('school bag')) {
+    console.log('🔎 VISUAL DETECTION FOR SCHOOL BAG SLIDES ACTIVATED');
+    console.log('SLIDE CONTENT STRING:', content);
+    
+    // Extract bag section code if available
+    const bagCodeMatch = content.match(/09\s*N\s*([A-Z])/i);
+    const bagVariant = bagCodeMatch ? bagCodeMatch[1].toUpperCase() : '';
+    console.log(`🔍 BAG VARIANT DETECTED: ${bagVariant || 'NONE'}`);
+    
+    // Basic bag identification
+    if (content.includes('09 N A') || (content.toLowerCase().includes('what is it') && content.toLowerCase().includes('bag'))) {
+      console.log('🎒 DETECTED BASIC BAG CASE');
+      return {
+        country: country,
+        question: "What is it?",
+        answer: "It is a bag.",
+        hasData: true
+      };
+    }
+    
+    // School bag preference
+    if (content.toLowerCase().includes('what school bag do you like') || content.includes('09 N B') || content.includes('09 N C')) {
+      console.log('👜 DETECTED BAG PREFERENCE');
+      return {
+        country: country,
+        question: "What school bag do you like?",
+        answer: "I like [type of bag].",
+        hasData: true
+      };
+    }
+    
+    // Do you have a school bag
+    if (content.toLowerCase().includes('do you have a school bag') || content.includes('09 N I')) {
+      console.log('🛍️ DETECTED "DO YOU HAVE A SCHOOL BAG"');
+      return {
+        country: country,
+        question: "Do you have a school bag?",
+        answer: "Yes, I have a school bag. / No, I don't have a school bag.",
+        hasData: true
+      };
+    }
+  }
+  
+  // SECTION 10 - RULER DETECTION
+  if (content.toLowerCase().includes('ruler')) {
+    console.log('🔎 VISUAL DETECTION FOR RULER SLIDES ACTIVATED');
+    console.log('SLIDE CONTENT STRING:', content);
+    
+    // Extract ruler section code if available
+    const rulerCodeMatch = content.match(/10\s*N\s*([A-Z])/i);
+    const rulerVariant = rulerCodeMatch ? rulerCodeMatch[1].toUpperCase() : '';
+    console.log(`🔍 RULER VARIANT DETECTED: ${rulerVariant || 'NONE'}`);
+    
+    // Basic ruler identification
+    if (content.includes('10 N A') || (content.toLowerCase().includes('what is it') && content.toLowerCase().includes('ruler'))) {
+      console.log('📏 DETECTED BASIC RULER CASE');
+      return {
+        country: country,
+        question: "What is it?",
+        answer: "It is a ruler.",
+        hasData: true
+      };
+    }
+    
+    // Multiple rulers
+    if (content.includes('10 N B') || (content.toLowerCase().includes('what are they') && content.toLowerCase().includes('ruler'))) {
+      console.log('📏📏 DETECTED MULTIPLE RULERS');
+      return {
+        country: country,
+        question: "What are they?",
+        answer: "They are rulers.",
+        hasData: true
+      };
+    }
+    
+    // Big or small ruler
+    if (content.toLowerCase().includes('big or small ruler') || content.includes('10 N C')) {
+      console.log('📏 DETECTED BIG/SMALL RULER');
+      return {
+        country: country,
+        question: "Is it a big or small ruler?",
+        answer: "It is a big ruler. / It is a small ruler.",
+        hasData: true
+      };
+    }
+    
+    // Ruler in pencil case
+    if (content.toLowerCase().includes('ruler in your pencil case') || content.includes('10 N I')) {
+      console.log('📏 DETECTED RULER IN PENCIL CASE');
+      return {
+        country: country,
+        question: "Do you have a ruler in your pencil case?",
+        answer: "Yes, I have a ruler in my pencil case. / No, I don't have a ruler in my pencil case.",
+        hasData: true
+      };
+    }
+  }
+  
+  // SECTION 11 - PENCIL CASE DETECTION
+  if (content.toLowerCase().includes('pencil case')) {
+    console.log('🔎 VISUAL DETECTION FOR PENCIL CASE SLIDES ACTIVATED');
+    console.log('SLIDE CONTENT STRING:', content);
+    
+    // Extract pencil case section code if available
+    const pencilCaseCodeMatch = content.match(/11\s*N\s*([A-Z])/i);
+    const pencilCaseVariant = pencilCaseCodeMatch ? pencilCaseCodeMatch[1].toUpperCase() : '';
+    console.log(`🔍 PENCIL CASE VARIANT DETECTED: ${pencilCaseVariant || 'NONE'}`);
+    
+    // Basic pencil case identification
+    if (content.includes('11 N A') || (content.toLowerCase().includes('what is it') && content.toLowerCase().includes('pencil case'))) {
+      console.log('🖊️ DETECTED BASIC PENCIL CASE');
+      return {
+        country: country,
+        question: "What is it?",
+        answer: "It is a pencil case.",
+        hasData: true
+      };
+    }
+    
+    // Do you like this pencil case
+    if (content.toLowerCase().includes('do you like this pencil case') || content.includes('11 N B')) {
+      console.log('🖊️ DETECTED PENCIL CASE PREFERENCE');
+      return {
+        country: country,
+        question: "Do you like this pencil case?",
+        answer: "Yes, I like this pencil case. / No, I don't like this pencil case.",
+        hasData: true
+      };
+    }
+    
+    // Pizza or tortilla pencil case
+    if (content.toLowerCase().includes('pizza or tortilla pencil case') || content.includes('11 N E')) {
+      console.log('🍕 DETECTED PIZZA/TORTILLA PENCIL CASE');
+      return {
+        country: country,
+        question: "Is it a pizza or tortilla pencil case?",
+        answer: "It is a pizza pencil case. / It is a tortilla pencil case.",
+        hasData: true
+      };
+    }
+    
+    // Pencil case colors
+    if ((content.toLowerCase().includes('what color') && content.toLowerCase().includes('pencil case')) || 
+        content.includes('11 N L') || content.includes('11 N M')) {
+      
+      const color = content.toLowerCase().includes('pink') ? 'pink' : 
+                    content.toLowerCase().includes('green') ? 'green' : '[color]';
+      
+      console.log(`🎨 DETECTED PENCIL CASE COLOR: ${color}`);
+      return {
+        country: country,
+        question: "What color is the pencil case?",
+        answer: `The pencil case is ${color}.`,
+        hasData: true
+      };
+    }
+  }
+  
+  // SECTION 12 - SCISSORS DETECTION
   if (content.toLowerCase().includes('scissors')) {
     console.log('🔎 VISUAL DETECTION FOR SCISSORS SLIDES ACTIVATED');
     // Log the entire content string to see exactly what's in the file
