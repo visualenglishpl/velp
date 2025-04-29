@@ -1899,6 +1899,83 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     }
 
+    if (type === 'video' || type === 'game') {
+      return (
+        <div className="max-w-6xl mx-auto mt-4 space-y-8">
+          {filteredResources.map((resource, index) => (
+            <div key={resource.id || index} className="bg-white rounded-lg overflow-hidden border shadow-sm hover:shadow-md transition-shadow">
+              <div className="p-4 pb-2">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-xl font-medium">{resource.title}</h3>
+                  <Badge variant="outline" className="rounded-full px-3 py-1">
+                    {resource.resourceType === 'video' && <Video className="h-3 w-3 mr-1" />}
+                    {resource.resourceType === 'game' && <Gamepad2 className="h-3 w-3 mr-1" />}
+                    {resource.provider || resource.resourceType.charAt(0).toUpperCase() + resource.resourceType.slice(1)}
+                  </Badge>
+                </div>
+              </div>
+              
+              <div className="p-0 bg-black/5">
+                {resource.embedCode && (
+                  <div className={`${resource.resourceType === 'video' ? 'aspect-video' : 'h-[420px]'} w-full overflow-hidden`} 
+                       dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
+                )}
+                
+                {!resource.embedCode && resource.resourceType === 'video' && (
+                  <div className="aspect-video w-full flex items-center justify-center bg-muted">
+                    <Video className="h-16 w-16 text-muted-foreground opacity-50" />
+                  </div>
+                )}
+
+                {!resource.embedCode && resource.resourceType === 'game' && (
+                  <div className="h-[300px] w-full flex items-center justify-center bg-muted">
+                    <Gamepad2 className="h-16 w-16 text-muted-foreground opacity-50" />
+                  </div>
+                )}
+              </div>
+              
+              <div className="p-4 flex justify-between items-center bg-muted/10">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => handleViewMore(resource)}
+                >
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Open in New Tab
+                </Button>
+
+                {isEditMode && (
+                  <div className="flex space-x-2">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => {
+                        setNewResource({ ...resource });
+                        setIsAdding(true);
+                      }}
+                    >
+                      <Pencil className="h-4 w-4 mr-1" />
+                      Edit
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-destructive" 
+                      onClick={() => setConfirmDelete(resource)}
+                    >
+                      <Trash2 className="h-4 w-4 mr-1" />
+                      Delete
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    // For PDF and other resource types, keep the original grid layout
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
         {filteredResources.map((resource, index) => (
@@ -1907,9 +1984,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               <div className="flex justify-between items-start">
                 <CardTitle className="text-lg">{resource.title}</CardTitle>
                 <Badge variant="outline" className="ml-2">
-                  {resource.resourceType === 'video' && <Video className="h-3 w-3 mr-1" />}
-                  {resource.resourceType === 'game' && <Gamepad2 className="h-3 w-3 mr-1" />}
-                  {(resource.resourceType === 'lesson' || resource.resourceType === 'pdf') && <FileText className="h-3 w-3 mr-1" />}
+                  <FileText className="h-3 w-3 mr-1" />
                   {resource.resourceType.charAt(0).toUpperCase() + resource.resourceType.slice(1)}
                 </Badge>
               </div>
@@ -1920,29 +1995,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               )}
             </CardHeader>
             
-            <CardContent className="pt-0">
-              {resource.embedCode && resource.resourceType === 'video' && (
-                <div className="aspect-video relative mb-4 rounded overflow-hidden border shadow-sm" 
-                     dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
-              )}
-              
-              {resource.embedCode && resource.resourceType === 'game' && (
-                <div className="h-[380px] mb-4 rounded overflow-hidden border shadow-sm" 
-                     dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
-              )}
-
-              {(!resource.embedCode && resource.resourceType === 'video') && (
-                <div className="bg-muted aspect-video flex items-center justify-center rounded mb-4">
-                  <Video className="h-12 w-12 text-muted-foreground" />
-                </div>
-              )}
-
-              {(!resource.embedCode && resource.resourceType === 'game') && (
-                <div className="bg-muted h-[200px] flex items-center justify-center rounded mb-4">
-                  <Gamepad2 className="h-12 w-12 text-muted-foreground" />
-                </div>
-              )}
-              
+            <CardContent className="pt-0">              
               {/* PDF Embedding */}
               {resource.fileUrl && (resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && (
                 <div className="rounded overflow-hidden mb-4 border">
