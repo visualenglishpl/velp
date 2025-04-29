@@ -51,6 +51,90 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     queryKey: [`/api/direct/${bookId}/${unitId}/resources`],
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
+  
+  // Resources specific to Book 7, Unit 1
+  const book7Unit1Resources = [
+    {
+      id: "book7-unit1-video1",
+      bookId,
+      unitId,
+      title: "Movie Genres Vocabulary Epic ESL Guessing Game",
+      resourceType: "video" as const,
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/watch?v=FTuQIwl7j3k",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FTuQIwl7j3k?si=wh3So_Qj8Hqk6TL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit1-video2",
+      bookId,
+      unitId,
+      title: "Guess the soundtrack of the films",
+      resourceType: "video" as const,
+      provider: "YouTube",
+      sourceUrl: "https://youtu.be/p57KyLojoHU?si=ydbr2xbJxAgeN7_u",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/p57KyLojoHU?si=g_6AyW2jlsRI9DgC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit1-video3",
+      bookId,
+      unitId,
+      title: "Guess the Film Genre",
+      resourceType: "video" as const,
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/watch?v=Bp07u0YrH4Y",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Bp07u0YrH4Y?si=ufzMpcalPer6eRCn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit1-game1",
+      bookId,
+      unitId,
+      title: "Film Genres Game 1",
+      resourceType: "game" as const,
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/dcc6034981ea455d9bfa88f6740c720f",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/dcc6034981ea455d9bfa88f6740c720f?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit1-game2",
+      bookId,
+      unitId,
+      title: "Film Genres Game 2",
+      resourceType: "game" as const,
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/1e211e293d514f56b1786cfbf6ed146b",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1e211e293d514f56b1786cfbf6ed146b?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit1-game3",
+      bookId,
+      unitId,
+      title: "Film Genres Game 3",
+      resourceType: "game" as const,
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/de72c3ff49e54609b845500c1bf34432",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/de72c3ff49e54609b845500c1bf34432?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit1-pdf1",
+      bookId,
+      unitId,
+      title: "Book 7 - Unit 1 Overview",
+      resourceType: "pdf" as const,
+      provider: "Visual English",
+      sourceUrl: "https://67bd8e1e-e6a8-419f-b59e-299052eae36a-00-1j78vcuapq5ig.spock.replit.dev/book7/unit1/00%20A%20Book%207%20%E2%80%93%20Unit%201.pdf",
+      embedCode: ""
+    },
+    {
+      id: "book7-unit1-pdf2",
+      bookId,
+      unitId,
+      title: "Links to Online Games and Films",
+      resourceType: "pdf" as const,
+      provider: "Visual English",
+      sourceUrl: "https://67bd8e1e-e6a8-419f-b59e-299052eae36a-00-1j78vcuapq5ig.spock.replit.dev/book7/unit1/22%20D%20Links%20to%20Online%20Games%20and%20Films.pdf",
+      embedCode: ""
+    }
+  ];
 
   // Save resources mutation
   const saveMutation = useMutation({
@@ -78,14 +162,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   });
 
   useEffect(() => {
-    if (data && Array.isArray(data)) {
+    // For Book 7, Unit 1, use the predefined resources
+    if (bookId === '7' && unitId === '1') {
+      setResources(book7Unit1Resources);
+    } else if (data && Array.isArray(data)) {
       setResources(data);
     } else if (data) {
       // Handle case where data is not an array
       console.warn('Resources data is not an array:', data);
       setResources([]);
     }
-  }, [data]);
+  }, [data, bookId, unitId, book7Unit1Resources]);
 
   const handleNewResourceChange = (field: keyof TeacherResource, value: string) => {
     setNewResource(prev => ({
