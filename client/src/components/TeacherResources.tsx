@@ -2028,16 +2028,26 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             </CardHeader>
             
             <CardContent className="pt-0">              
-              {/* PDF Embedding */}
+              {/* PDF Embedding - Enhanced UI */}
               {resource.fileUrl && (resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && (
-                <div className="rounded overflow-hidden mb-4 border">
-                  <iframe 
-                    src={resource.fileUrl}
-                    className="w-full"
-                    style={{ height: '400px' }} 
-                    title={resource.title}
-                    frameBorder="0"
-                  />
+                <div className="rounded overflow-hidden mb-4 border bg-white">
+                  <div className="p-4 flex flex-col items-center">
+                    <div className="bg-muted/20 w-24 h-32 flex items-center justify-center rounded mb-3 border relative overflow-hidden">
+                      <FileText className="h-12 w-12 text-primary/60" />
+                      <div className="absolute bottom-0 left-0 right-0 bg-primary/10 text-center text-xs py-1 font-medium">PDF</div>
+                    </div>
+                    <h4 className="text-sm font-medium text-center mb-1">{resource.title}</h4>
+                    <p className="text-xs text-muted-foreground mb-3 text-center">Provider: {resource.provider || 'Visual English'}</p>
+                    <Button 
+                      size="sm"
+                      variant="outline" 
+                      className="w-full mt-2"
+                      onClick={() => window.open(resource.fileUrl, '_blank')}
+                    >
+                      <FileText className="h-3 w-3 mr-2" />
+                      Open Lesson PDF
+                    </Button>
+                  </div>
                 </div>
               )}
               
@@ -2312,6 +2322,47 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     ],
     assessmentTips: "Evaluate students' use of money vocabulary during role-plays and the budget challenge.",
     homeworkIdeas: ["Students can research and compare prices of common items in different countries, presenting their findings to the class."]
+  };
+  
+  const currencyLessonPlan: LessonPlan = {
+    id: "currency-exchange-1",
+    title: "Currency Exchange & Foreign Money",
+    level: "",
+    duration: "45 min",
+    objectives: [
+      "Learn vocabulary related to currency exchange and international money",
+      "Practice converting between different currencies",
+      "Understand cultural aspects of money around the world"
+    ],
+    materials: [
+      "Currency examples from different countries",
+      "Exchange rate charts",
+      "Travel situation role-play cards"
+    ],
+    steps: [
+      {
+        title: "World Currencies Identification",
+        duration: "10 min",
+        description: "Show images of different currencies and have students identify them. Focus on major currencies (Dollar, Euro, Pound, Yen) and their symbols ($, €, £, ¥)."
+      },
+      {
+        title: "Exchange Rate Practice",
+        duration: "10 min",
+        description: "Provide simple exchange rate charts and have students practice converting between currencies with basic math problems."
+      },
+      {
+        title: "Tourist Role-Play",
+        duration: "15 min",
+        description: "Students role-play scenarios where tourists need to exchange money, pay in foreign currency, or ask about prices in different countries."
+      },
+      {
+        title: "Currency Design",
+        duration: "10 min",
+        description: "Discuss what appears on the currency of different countries and what it says about their culture and values. Students can design a simple bank note for an imaginary country."
+      }
+    ],
+    assessmentTips: "Observe students' ability to use currency vocabulary accurately during role-plays and evaluate their currency conversion calculations.",
+    homeworkIdeas: ["Students research a country's currency and create a presentation about its design, history, and current exchange rate."]
   };
   
   const renderLessonPlans = () => {
@@ -2737,7 +2788,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         <span>Money and Shopping Vocabulary</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>A1-A2</CardDescription>
+                      <CardDescription></CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
@@ -2768,17 +2819,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   <div className="flex justify-between items-start">
                     <div>
                       <CardTitle className="flex justify-between text-lg">
-                        <span>Banking & Budgeting Skills</span>
+                        <span>Currency Exchange & Foreign Money</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>A1-A2</CardDescription>
+                      <CardDescription></CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
                         variant="ghost" 
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'banking-budget-1', title: 'Banking & Budgeting Skills', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        onClick={() => setConfirmDelete({ id: 'currency-exchange-1', title: 'Currency Exchange & Foreign Money', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
@@ -2787,7 +2838,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   </div>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={moneyLessonPlan} />
+                  <LessonPlanTemplate plan={currencyLessonPlan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
                   <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
