@@ -390,6 +390,11 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               Teacher Resources
             </h2>
             <p className="text-muted-foreground mt-1">Educational materials for Book {bookId}, Unit {unitId}</p>
+            {bookId === '7' && unitId === '1' && (
+              <a href="/lesson-plans" className="mt-2 inline-block text-primary hover:underline flex items-center">
+                <span className="mr-1">📝</span> View Detailed Lesson Plans
+              </a>
+            )}
           </div>
           
           <div className="flex space-x-3">
