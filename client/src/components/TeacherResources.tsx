@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { 
@@ -576,7 +577,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       <div 
         ref={setNodeRef} 
         style={style} 
-        className={`p-4 border rounded-lg mb-4 ${isEditing ? 'bg-muted/50' : ''}`}
+        className={`p-4 border rounded-lg h-full flex flex-col bg-card shadow-sm hover:shadow transition-all ${isEditing ? 'bg-muted/50' : ''}`}
       >
         <div className="flex justify-between items-start mb-2">
           <div className="flex-1">
@@ -689,7 +690,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           items={filteredResources.map(r => r.id?.toString() || filteredResources.indexOf(r).toString())}
           strategy={verticalListSortingStrategy}
         >
-          <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredResources.map((resource, index) => (
               <SortableItem
                 key={`${resource.id || index}-${resource.title}`}
@@ -795,7 +796,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           <DialogHeader>
             <DialogTitle>Add Teacher Resource</DialogTitle>
             <DialogDescription>
-              Add a new resource for this unit. Provide the embed code from YouTube, Wordwall, or other sources.
+              Add a new resource for this unit. You can add videos, games, lesson plans, or PDF documents.
             </DialogDescription>
           </DialogHeader>
           
