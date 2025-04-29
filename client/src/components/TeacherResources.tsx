@@ -961,6 +961,262 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       ];
     }
 
+    // Resources for Book 6, Unit 1
+    if (bookId === '6' && unitId === '1') {
+      return [
+        {
+          id: "book6-unit1-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 1 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit1/00%20A%20Book%206%20%E2%80%93%20Unit%201.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+
+    // Resources for Book 6, Unit 2
+    if (bookId === '6' && unitId === '2') {
+      return [
+        {
+          id: "book6-unit2-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 2 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit2/00%20A%20Book%206%20%E2%80%93%20Unit%202.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+
+    // Resources for Book 6, Unit 3
+    if (bookId === '6' && unitId === '3') {
+      return [
+        {
+          id: "book6-unit3-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 3 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit3/00%20A%20Book%206%20%E2%80%93%20Unit%203.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+
+    // Resources for Book 6, Unit 4
+    if (bookId === '6' && unitId === '4') {
+      return [
+        {
+          id: "book6-unit4-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 4 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit4/00%20A%20Book%206%20%E2%80%93%20Unit%204.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 5
+    if (bookId === '6' && unitId === '5') {
+      return [
+        {
+          id: "book6-unit5-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 5 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit5/00%20A%20Book%206%20%E2%80%93%20Unit%205.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 6
+    if (bookId === '6' && unitId === '6') {
+      return [
+        {
+          id: "book6-unit6-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 6 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit6/00%20A%20Book%206%20%E2%80%93%20Unit%206.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 7
+    if (bookId === '6' && unitId === '7') {
+      return [
+        {
+          id: "book6-unit7-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 7 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit7/00%20A%20Book%206%20%E2%80%93%20Unit%207.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 8
+    if (bookId === '6' && unitId === '8') {
+      return [
+        {
+          id: "book6-unit8-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 8 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit8/00%20A%20Book%206%20%E2%80%93%20Unit%208.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 9
+    if (bookId === '6' && unitId === '9') {
+      return [
+        {
+          id: "book6-unit9-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 9 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit9/00%20A%20Book%206%20%E2%80%93%20Unit%209.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 10
+    if (bookId === '6' && unitId === '10') {
+      return [
+        {
+          id: "book6-unit10-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 10 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit10/00%20A%20Book%206%20%E2%80%93%20Unit%2010.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 11
+    if (bookId === '6' && unitId === '11') {
+      return [
+        {
+          id: "book6-unit11-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 11 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit11/00%20A%20Book%206%20%E2%80%93%20Unit%2011.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 12
+    if (bookId === '6' && unitId === '12') {
+      return [
+        {
+          id: "book6-unit12-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 12 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit12/00%20A%20Book%206%20%E2%80%93%20Unit%2012.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 13
+    if (bookId === '6' && unitId === '13') {
+      return [
+        {
+          id: "book6-unit13-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 13 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit13/00%20A%20Book%206%20%E2%80%93%20Unit%2013.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 14
+    if (bookId === '6' && unitId === '14') {
+      return [
+        {
+          id: "book6-unit14-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 14 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit14/00%20A%20Book%206%20%E2%80%93%20Unit%2014.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 15
+    if (bookId === '6' && unitId === '15') {
+      return [
+        {
+          id: "book6-unit15-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 15 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit15/00%20A%20Book%206%20%E2%80%93%20Unit%2015.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+    
+    // Resources for Book 6, Unit 16
+    if (bookId === '6' && unitId === '16') {
+      return [
+        {
+          id: "book6-unit16-pdf1",
+          bookId,
+          unitId,
+          title: "Book 6 - Unit 16 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit16/00%20A%20Book%206%20%E2%80%93%20Unit%2016.pdf",
+          embedCode: ""
+        }
+      ];
+    }
+
     // For other book/unit combinations, return an empty array
     return [];
   };
@@ -971,8 +1227,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Save resources mutation
   const saveMutation = useMutation({
     mutationFn: async (updatedResources: TeacherResource[]) => {
-      // For Book 7 specific units, just return success without saving to server
-      if (bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) {
+      // For Book 6 and 7 specific units, just return success without saving to server
+      if ((bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) ||
+          (bookId === '6' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId))) {
         return { success: true };
       }
       
@@ -984,7 +1241,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     },
     onSuccess: () => {
-      if (bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) {
+      if ((bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) ||
+          (bookId === '6' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId))) {
         setResources(bookUnitResources);
       } else {
         refetch();
@@ -1005,8 +1263,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   });
 
   useEffect(() => {
-    // For Book 7 units with predefined resources, use them
-    if (bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) {
+    // For Book 6 and 7 units with predefined resources, use them
+    if ((bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) ||
+        (bookId === '6' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId))) {
       setResources(bookUnitResources);
     } else if (data && Array.isArray(data)) {
       setResources(data);
