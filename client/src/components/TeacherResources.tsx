@@ -1912,13 +1912,28 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         <div className="mt-6 space-y-8">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex justify-between">
-                    <span>Movie Genres Vocabulary</span>
-                    <span className="text-sm font-normal">45 min</span>
-                  </CardTitle>
-                  <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Movie Genres Vocabulary</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'film-genres-1', title: 'Movie Genres Vocabulary' })}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
                   <LessonPlanTemplate plan={movieGenresLessonPlan} />
@@ -1931,13 +1946,28 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               </Card>
             </div>
             <div>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex justify-between">
-                    <span>Film Production Roles</span>
-                    <span className="text-sm font-normal">45 min</span>
-                  </CardTitle>
-                  <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Film Production Roles</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'film-production-1', title: 'Film Production Roles' })}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
                   <LessonPlanTemplate plan={filmProductionLessonPlan} />
@@ -1957,13 +1987,28 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         <div className="mt-6 space-y-8">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex justify-between">
-                    <span>Body Piercings Vocabulary</span>
-                    <span className="text-sm font-normal">45 min</span>
-                  </CardTitle>
-                  <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Body Piercings Vocabulary</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'body-piercings-1', title: 'Body Piercings Vocabulary' })}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
                   <LessonPlanTemplate plan={bodyPiercingsLessonPlan} />
@@ -1976,13 +2021,28 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               </Card>
             </div>
             <div>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex justify-between">
-                    <span>Hairstyles and Hair Types</span>
-                    <span className="text-sm font-normal">45 min</span>
-                  </CardTitle>
-                  <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Hairstyles and Hair Types</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'hairstyles-1', title: 'Hairstyles and Hair Types' })}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
                   <LessonPlanTemplate plan={hairstylesLessonPlan} />
@@ -2021,12 +2081,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         )}
       </div>
 
-      <Tabs defaultValue="all">
+      <Tabs defaultValue="videos">
         <TabsList className="mb-4">
-          <TabsTrigger value="all" className="flex items-center">
-            <Book className="h-4 w-4 mr-2" />
-            All Resources
-          </TabsTrigger>
           <TabsTrigger value="videos" className="flex items-center">
             <Video className="h-4 w-4 mr-2" />
             Videos
@@ -2037,17 +2093,13 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           </TabsTrigger>
           <TabsTrigger value="materials" className="flex items-center">
             <FileText className="h-4 w-4 mr-2" />
-            Worksheets & PDFs
+            PDF Lesson
           </TabsTrigger>
           <TabsTrigger value="lessonplans" className="flex items-center">
             <FileText className="h-4 w-4 mr-2" />
             45-min Lesson Plans
           </TabsTrigger>
         </TabsList>
-
-        <TabsContent value="all">
-          {renderResources()}
-        </TabsContent>
 
         <TabsContent value="videos">
           {renderResources('video')}
