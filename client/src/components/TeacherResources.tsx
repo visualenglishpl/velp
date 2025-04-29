@@ -357,12 +357,72 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             provider: "Wordwall"
           }
         ];
-        
-        // Add the predefined resources
-        if (predefinedResources.length > 0) {
-          setResources(predefinedResources);
-          saveResourcesToServer(predefinedResources);
-        }
+      }
+      
+      // Book 1 - Unit 2 (School Objects)
+      if (bookId === "1" && unitId === "2") {
+        predefinedResources = [
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Objects Vocabulary - English Tree TV",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/1GDCiMbAZSI?si=tPtYXHVrFMZF5KaQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 0,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Objects Song - English Sing Sing",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/RlE4WYPqRqo?si=R7Ib4oZoFf4YosMX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 1,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "What's in My Pencil Case - Sing and Learn",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/S8KOHEFUoTs?si=Fcs8XNnYdqg0LDbO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 2,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Objects Matching Game",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/8eed2c82e2ac4ca4a70b0da6b79a1ced?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 3,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Supplies Quiz",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/56bb24a7e71d47bab3382f94cf2ec1eb?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 4,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "School Objects Lesson Plan",
+            resourceType: "pdf",
+            embedCode: '<iframe src="https://drive.google.com/file/d/1Gdb7Y_wUb0uSEaW7BwS09dFU7K0J1HKK/preview" width="640" height="480" allow="autoplay"></iframe>',
+            order: 5,
+            provider: "Google Drive"
+          }
+        ];
+      }
+      
+      // Add the predefined resources
+      if (predefinedResources.length > 0) {
+        setResources(predefinedResources);
+        saveResourcesToServer(predefinedResources);
       }
     }
   }, [resources.length, bookId, unitId]);
@@ -517,7 +577,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   .map((r, idx) => r.id?.toString() || `video-${idx}`)}
                 strategy={verticalListSortingStrategy}
               >
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {resources
                     .filter(r => r.resourceType === 'video')
                     .map((resource, index) => (
@@ -557,7 +617,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   .map((r, idx) => r.id?.toString() || `game-${idx}`)}
                 strategy={verticalListSortingStrategy}
               >
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {resources
                     .filter(r => r.resourceType === 'game')
                     .map((resource, index) => (
@@ -597,7 +657,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   .map((r, idx) => r.id?.toString() || `pdf-${idx}`)}
                 strategy={verticalListSortingStrategy}
               >
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {resources
                     .filter(r => r.resourceType === 'pdf')
                     .map((resource, index) => (
@@ -637,7 +697,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                   .map((r, idx) => r.id?.toString() || `activity-${idx}`)}
                 strategy={verticalListSortingStrategy}
               >
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {resources
                     .filter(r => r.resourceType === 'activity')
                     .map((resource, index) => (
