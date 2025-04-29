@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Card } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 
 interface TeacherResource {
   id?: number;
@@ -109,6 +110,70 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     const updatedResources = [...resources];
     (updatedResources[index] as any)[field] = value;
     setResources(updatedResources);
+  };
+  
+  // Handle changes to new resource fields
+  const handleNewResourceChange = (field: string, value: string) => {
+    setNewResource(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+  
+  // Handle adding a new resource
+  const handleAddResource = () => {
+    if (!bookId || !unitId) {
+      toast({
+        title: "Error Adding Resource",
+        description: "Book ID and Unit ID are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Validate required fields
+    if (!newResource.title || !newResource.embedCode) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide a title and embed code for the resource.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Create the complete resource object
+    const completeResource: TeacherResource = {
+      bookId: bookId,
+      unitId: unitId,
+      title: newResource.title || '',
+      resourceType: newResource.resourceType as 'video' | 'game' | 'activity' | 'pdf' | 'other',
+      embedCode: newResource.embedCode || '',
+      provider: newResource.provider || '',
+      sourceUrl: newResource.sourceUrl || '',
+      order: resources.length  // Add at the end
+    };
+    
+    // Add the new resource to the list
+    const updatedResources = [...resources, completeResource];
+    setResources(updatedResources);
+    
+    // Save to server
+    saveResourcesToServer(updatedResources);
+    
+    // Reset the form and close dialog
+    setNewResource({
+      resourceType: 'video',
+      title: '',
+      embedCode: '',
+      provider: '',
+      sourceUrl: ''
+    });
+    setIsAdding(false);
+    
+    toast({
+      title: "Resource Added",
+      description: "The new resource has been added successfully.",
+    });
   };
 
   // Initial load of resources
