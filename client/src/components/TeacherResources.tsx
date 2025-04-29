@@ -1773,6 +1773,115 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       }
     ]
   };
+  
+  // Unit 2: Fashion Styles Vocabulary Lesson Plan
+  const fashionStylesLessonPlan: LessonPlan = {
+    id: 'fashion-styles-1',
+    title: 'Fashion Styles Vocabulary',
+    duration: '45 minutes',
+    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    objectives: [
+      'Identify and name different fashion styles in English (punk, hippie, metal, etc.)',
+      'Express opinions about different fashion styles using simple structures',
+      'Ask and answer questions about fashion preferences using present tense forms',
+      'Use descriptive vocabulary to talk about clothing and style elements'
+    ],
+    materials: [
+      'Visual English Book 7, Unit 2 slides (07 M A - 07 M L)',
+      'Wordwall interactive game - Fashion Styles vocabulary',
+      'Fashion style images organized by category',
+      'Opinion cards with expressions (beautiful, ugly, cool, trendy, etc.)'
+    ],
+    steps: [
+      {
+        title: 'Warm-up: Fashion Recognition',
+        duration: '5 mins',
+        description: 'Show students a variety of fashion style images and elicit what they already know.',
+        instructions: [
+          'Display the slides with different fashion styles (punk, hippie, metal, etc.)',
+          "Ask: 'What style is this? Do you know what it's called?'",
+          'Have students describe what they see - colors, clothing items, accessories',
+          'Note key vocabulary on the board as students respond'
+        ],
+        teacherNotes: 'Accept all reasonable answers at this stage to build confidence and assess existing knowledge.'
+      },
+      {
+        title: 'Vocabulary Presentation: Fashion Styles',
+        duration: '12 mins',
+        description: 'Introduce vocabulary for different fashion styles using Visual English Book 7 slides.',
+        materials: [
+          'Book 7, Unit 2 slides (07 M A - 07 M E)',
+          'Fashion style images'
+        ],
+        instructions: [
+          'Present each fashion style one by one: punk, hippie, metal, emo, rasta',
+          'For each style, ask: "What fashion is it? What are the key features?"',
+          'Teach style-specific vocabulary (leather jacket, dreadlocks, tie-dye, etc.)',
+          'Have students repeat the new vocabulary to practice pronunciation'
+        ]
+      },
+      {
+        title: 'Question Practice: Fashion Preferences',
+        duration: '10 mins',
+        description: 'Students practice asking and answering questions about fashion styles.',
+        materials: [
+          'Book 7, Unit 2 slides (07 M Ab - 07 M Kc)',
+          'Question pattern cards'
+        ],
+        instructions: [
+          'Model question and answer patterns: "Do you like punk fashion?" "Yes, I do/No, I don\'t"',
+          '"Do you wear hippie fashion?" "Sometimes I do/No, I don\'t"',
+          '"Is metal fashion trendy?" "Yes, it is/No, it isn\'t"',
+          'Have students work in pairs to practice asking and answering about different styles',
+          'Monitor for accurate use of vocabulary and grammar'
+        ]
+      },
+      {
+        title: 'Opinion Activity: Fashion Critique',
+        duration: '13 mins',
+        description: 'Students express opinions about different fashion styles and justify their views.',
+        materials: [
+          'Book 7, Unit 2 slides (07 M Ad - 07 M Ld)',
+          'Opinion phrases on cards'
+        ],
+        instructions: [
+          'Focus on the "What is your opinion on..." slides for different fashion styles',
+          'Model expressing opinions: "I think punk fashion is interesting because..."',
+          'In small groups, students discuss what they think about each fashion style',
+          'Each student should use the phrases: beautiful, ugly, disgusting, amazing, or "don\'t mind"',
+          'Groups share their most interesting opinions with the class'
+        ],
+        teacherNotes: 'Emphasize that this is an opportunity to practice language, not to judge others for their style preferences.'
+      },
+      {
+        title: 'Wrap-up: Fashion Style Quiz',
+        duration: '5 mins',
+        description: 'Quick quiz to review vocabulary and gauge understanding.',
+        instructions: [
+          'Show mixed images of fashion styles without labels',
+          'Students identify the correct fashion style name',
+          'Ask follow-up questions: "Is this fashion trendy now?" "Who might wear this style?"',
+          'End with a quick poll: "Which fashion style do you like best?"'
+        ]
+      }
+    ],
+    assessmentTips: 'Evaluate students based on their participation in group activities, correct identification of fashion styles, and ability to express opinions using target language.',
+    homeworkIdeas: [
+      'Write a paragraph describing your personal fashion style using vocabulary from the lesson.',
+      'Find pictures of 3 different fashion styles not covered in class and write 2-3 sentences about each one.',
+      'Interview a family member about fashion styles they liked when they were younger.'
+    ],
+    additionalResources: [
+      {
+        title: 'Wordwall Fashion Styles Game',
+        url: 'https://wordwall.net/resource/29461275/fashion-styles-vocabulary'
+      },
+      {
+        title: 'Fashion Vocabulary in English',
+        url: 'https://www.youtube.com/watch?v=4vGLON1qRSI'
+      }
+    ]
+  };
 
   // View more resources handler
   const handleViewMore = (resource: TeacherResource) => {
@@ -1927,7 +2036,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         variant="ghost" 
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'film-genres-1', title: 'Movie Genres Vocabulary' })}
+                        onClick={() => setConfirmDelete({ id: 'film-genres-1', title: 'Movie Genres Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
@@ -1961,7 +2070,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         variant="ghost" 
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'film-production-1', title: 'Film Production Roles' })}
+                        onClick={() => setConfirmDelete({ id: 'film-production-1', title: 'Film Production Roles', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
@@ -1985,24 +2094,24 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     } else if (bookId === '7' && unitId === '2') {
       return (
         <div className="mt-6 space-y-8">
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
             <div>
               <Card className="h-full">
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
                     <div>
-                      <CardTitle className="flex justify-between text-lg">
+                      <CardTitle className="text-lg truncate">
                         <span>Body Piercings Vocabulary</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription className="truncate">Elementary to Pre-Intermediate (A1-A2)</CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
                         variant="ghost" 
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'body-piercings-1', title: 'Body Piercings Vocabulary' })}
+                        onClick={() => setConfirmDelete({ id: 'body-piercings-1', title: 'Body Piercings Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
@@ -2025,18 +2134,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
                     <div>
-                      <CardTitle className="flex justify-between text-lg">
+                      <CardTitle className="text-lg truncate">
                         <span>Hairstyles and Hair Types</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription className="truncate">Elementary to Pre-Intermediate (A1-A2)</CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
                         variant="ghost" 
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'hairstyles-1', title: 'Hairstyles and Hair Types' })}
+                        onClick={() => setConfirmDelete({ id: 'hairstyles-1', title: 'Hairstyles and Hair Types', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
@@ -2046,6 +2155,40 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
                   <LessonPlanTemplate plan={hairstylesLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-lg truncate">
+                        <span>Fashion Styles Vocabulary</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription className="truncate">Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'fashion-styles-1', title: 'Fashion Styles Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={fashionStylesLessonPlan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
                   <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
