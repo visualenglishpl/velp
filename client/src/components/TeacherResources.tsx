@@ -87,6 +87,239 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   // Resources for various book units
   const getBookUnitResources = (bookId: string, unitId: string): TeacherResource[] => {
+    // Common PDF resources that should appear for all Book 7 units
+    if (bookId === '7') {
+      // Unit-specific PDF resources
+      if (unitId === '1') {
+        return [
+          {
+            id: `book7-unit1-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 1 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit1/00%20A%20Book%207%20%E2%80%93%20Unit%201.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit1/00%20A%20Book%207%20%E2%80%93%20Unit%201.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '2') {
+        return [
+          {
+            id: `book7-unit2-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 2 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '3') {
+        return [
+          {
+            id: `book7-unit3-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 3 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit3/00%20A%20Book%207%20%E2%80%93%20Unit%203.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit3/00%20A%20Book%207%20%E2%80%93%20Unit%203.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '4') {
+        return [
+          {
+            id: `book7-unit4-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 4 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit4/00%20A%20Book%207%20%E2%80%93%20Unit%204.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit4/00%20A%20Book%207%20%E2%80%93%20Unit%204.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '5') {
+        return [
+          {
+            id: `book7-unit5-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 5 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit5/00%20A%20Book%207%20%E2%80%93%20Unit%205.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit5/00%20A%20Book%207%20%E2%80%93%20Unit%205.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '6') {
+        return [
+          {
+            id: `book7-unit6-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 6 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '7') {
+        return [
+          {
+            id: `book7-unit7-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 7 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit7/00%20A%20Book%207%20%E2%80%93%20Unit%207.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit7/00%20A%20Book%207%20%E2%80%93%20Unit%207.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '8') {
+        return [
+          {
+            id: `book7-unit8-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 8 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit8/00%20A%20Book%207%20%E2%80%93%20Unit%208.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit8/00%20A%20Book%207%20%E2%80%93%20Unit%208.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '9') {
+        return [
+          {
+            id: `book7-unit9-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 9 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit9/00%20A%20Book%207%20%E2%80%93%20Unit%209.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit9/00%20A%20Book%207%20%E2%80%93%20Unit%209.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '10') {
+        return [
+          {
+            id: `book7-unit10-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 10 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit10/00%20A%20Book%207%20%E2%80%93%20Unit%2010.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit10/00%20A%20Book%207%20%E2%80%93%20Unit%2010.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '11') {
+        return [
+          {
+            id: `book7-unit11-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 11 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit11/00%20A%20Book%207%20%E2%80%93%20Unit%2011.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit11/00%20A%20Book%207%20%E2%80%93%20Unit%2011.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '12') {
+        return [
+          {
+            id: `book7-unit12-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 12 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit12/00%20A%20Book%207.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit12/00%20A%20Book%207.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '13') {
+        return [
+          {
+            id: `book7-unit13-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 13 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit13/00%20A%20Book%207%20%E2%80%93%20Unit%2013.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit13/00%20A%20Book%207%20%E2%80%93%20Unit%2013.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '14') {
+        return [
+          {
+            id: `book7-unit14-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 14 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit14/00%20A%20Book%207.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit14/00%20A%20Book%207.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '15') {
+        return [
+          {
+            id: `book7-unit15-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 15 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit15/00%20A%20Book%207.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit15/00%20A%20Book%207.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      } else if (unitId === '16') {
+        return [
+          {
+            id: `book7-unit16-pdf1`,
+            bookId,
+            unitId,
+            title: "Book 7 - Unit 16 Overview",
+            resourceType: "pdf" as const,
+            provider: "Visual English",
+            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf`,
+            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf`
+          },
+          ...getMoreUnitResources(bookId, unitId)
+        ];
+      }
+      // Default return for Book 7 with unit-specific fallback resources
+      return getMoreUnitResources(bookId, unitId);
+    }
+    
+    // Resources for other books or specific units in Book 7 that were already implemented
     // Resources for Book 7, Unit 1 - Film genres
     if (bookId === '7' && unitId === '1') {
       return [
@@ -2007,9 +2240,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     }
 
-    // For PDF and other resource types, keep the original grid layout
+    // For PDF and other resource types, use a wider layout
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
         {filteredResources.map((resource, index) => (
           <Card key={resource.id || index} className="overflow-hidden hover:shadow-md transition-shadow">
             <CardHeader className="pb-2">
@@ -2104,6 +2337,236 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   };
 
   // Define all the lesson plans first
+  const musicalInstrumentsLessonPlan: LessonPlan = {
+    id: "musical-instruments-1",
+    title: "Musical Instruments and Music",
+    level: "",
+    duration: "45 min",
+    objectives: [
+      "Learn vocabulary related to musical instruments",
+      "Practice asking and answering questions about playing instruments",
+      "Develop listening skills through music-related activities"
+    ],
+    materials: [
+      "Images of various musical instruments (accordion, bagpipes, violin, etc.)",
+      "Short audio samples of different instruments",
+      "Flashcards with instruments and related vocabulary"
+    ],
+    steps: [
+      {
+        title: "Instrument Introduction",
+        duration: "10 min",
+        description: "Show images of different musical instruments (accordion, bagpipe, drums, etc.) and introduce their names. Practice pronunciation and have students repeat after you."
+      },
+      {
+        title: "Play or Don't Play",
+        duration: "10 min",
+        description: "Practice questions and answers: 'Can you play the accordion?' 'Yes, I can' or 'No, I can't.' Students work in pairs asking and answering about different instruments using the target language patterns."
+      },
+      {
+        title: "Musical Difficulty Ranking",
+        duration: "10 min",
+        description: "Discuss different instruments and whether they are easy or difficult to play. Students discuss in groups and then share their opinions using phrases like 'The violin is difficult to play because...' or 'The drums are easy to play because...'"
+      },
+      {
+        title: "Would You Like To?",
+        duration: "10 min",
+        description: "Practice conversation patterns: 'Would you like to play the accordion?' 'Yes, I would like to learn' or 'No, I wouldn't like to learn'. Students circulate and ask each other about various instruments."
+      },
+      {
+        title: "Music Preferences",
+        duration: "5 min",
+        description: "Wrap up with a brief discussion about students' favorite types of music and instruments, reinforcing vocabulary and question patterns learned."
+      }
+    ],
+    assessmentTips: "Evaluate students' use of target vocabulary and question/answer patterns during pair work activities.",
+    homeworkIdeas: ["Students create a simple poster about a musical instrument they would like to learn, including 5 facts about it."]
+  };
+  
+  const artsCultureLessonPlan: LessonPlan = {
+    id: "arts-culture-1",
+    title: "Arts and Culture",
+    level: "", 
+    duration: "45 min",
+    objectives: [
+      "Learn vocabulary related to arts, culture, and entertainment",
+      "Practice discussing preferences regarding different art forms",
+      "Develop critical thinking skills through art appreciation activities"
+    ],
+    materials: [
+      "Images of famous paintings, sculptures, and other art forms",
+      "List of cultural venues and events vocabulary",
+      "Simple art appreciation worksheet"
+    ],
+    steps: [
+      {
+        title: "Art Forms Vocabulary",
+        duration: "10 min",
+        description: "Introduce vocabulary for different art forms (painting, sculpture, music, dance, theater, etc.) and cultural venues (museum, gallery, concert hall, theater). Use images and have students match terms to pictures."
+      },
+      {
+        title: "Art Appreciation",
+        duration: "10 min",
+        description: "Show images of famous artworks and practice descriptive language. Guide students to express opinions using phrases like 'I think this painting is beautiful/interesting/strange because...'"
+      },
+      {
+        title: "Cultural Venues Discussion",
+        duration: "10 min",
+        description: "Discuss different places where people can experience art and culture. Practice questions like 'Have you ever been to a museum/concert/theater?' and responses 'Yes, I have' or 'No, I haven't.'"
+      },
+      {
+        title: "Arts and Culture Survey",
+        duration: "10 min",
+        description: "Students interview each other about cultural preferences using prepared questions: 'Do you like modern art?' 'What kind of music do you enjoy?' 'How often do you go to concerts?'"
+      },
+      {
+        title: "Create an Exhibition",
+        duration: "5 min",
+        description: "In small groups, students plan a mini art exhibition or cultural event, deciding what type of art to showcase and where to hold it."
+      }
+    ],
+    assessmentTips: "Monitor students' use of arts and culture vocabulary during pair and group activities. Note their ability to express preferences and opinions about different art forms.",
+    homeworkIdeas: ["Students research a famous artist or musician from their country and prepare a simple presentation."]
+  };
+  
+  const sportsLessonPlan: LessonPlan = {
+    id: "sports-activities-1",
+    title: "Sports and Physical Activities",
+    level: "",
+    duration: "45 min",
+    objectives: [
+      "Learn vocabulary related to different sports and physical activities",
+      "Practice discussing sports preferences and frequency",
+      "Develop conversation skills through sports-themed discussions"
+    ],
+    materials: [
+      "Images of various sports and activities",
+      "Sports equipment flashcards",
+      "Sports frequency questionnaire"
+    ],
+    steps: [
+      {
+        title: "Sports Vocabulary Introduction",
+        duration: "8 min",
+        description: "Introduce vocabulary for different sports (football, basketball, tennis, swimming, etc.) using images. Practice pronunciation and categorize sports as individual/team and indoor/outdoor."
+      },
+      {
+        title: "Sports Preferences",
+        duration: "10 min",
+        description: "Practice asking and answering: 'Do you like playing football?' 'Yes, I like playing football' or 'No, I don't like playing football'. Students work in pairs asking about different sports."
+      },
+      {
+        title: "Frequency Expressions",
+        duration: "10 min",
+        description: "Teach frequency expressions (always, usually, sometimes, hardly ever, never) and practice with questions like 'How often do you play tennis?' 'I sometimes play tennis.'"
+      },
+      {
+        title: "Sports in Your Country",
+        duration: "10 min",
+        description: "Discuss which sports are popular in different countries. Students use phrases like 'Football is popular in my country' and practice asking 'Is basketball popular in your country?'"
+      },
+      {
+        title: "Sports Fan Discussion",
+        duration: "7 min",
+        description: "Students discuss whether they are sports fans, what teams they support, and if they watch sports on TV, using target language structures."
+      }
+    ],
+    assessmentTips: "Evaluate students' use of sports vocabulary and their ability to discuss preferences and habits using the correct frequency expressions.",
+    homeworkIdeas: ["Students create a sports diary for one week, noting what sports they play or watch and how often."]
+  };
+  
+  const naturalDisastersLessonPlan: LessonPlan = {
+    id: "natural-disasters-1",
+    title: "Natural Disasters and Emergency Preparedness",
+    level: "",
+    duration: "45 min",
+    objectives: [
+      "Learn vocabulary related to different natural disasters",
+      "Practice discussing emergency preparedness and safety measures",
+      "Develop critical thinking about disaster response"
+    ],
+    materials: [
+      "Images or videos of different natural disasters",
+      "Emergency preparedness checklist",
+      "Safety measure flashcards"
+    ],
+    steps: [
+      {
+        title: "Disaster Vocabulary",
+        duration: "10 min",
+        description: "Introduce vocabulary for different natural disasters (earthquake, flood, hurricane, tornado, wildfire, etc.) using images. Discuss characteristics of each disaster type."
+      },
+      {
+        title: "Experience Sharing",
+        duration: "8 min",
+        description: "Practice asking and answering 'Have you ever seen an earthquake/flood?' with responses 'Yes, I have seen...' or 'No, I haven't seen... yet.' Students share any experiences with natural disasters."
+      },
+      {
+        title: "Safety Measures",
+        duration: "12 min",
+        description: "Discuss safety measures for different disaster types. Practice structures like 'What should you do during an earthquake?' and responses 'You should take cover under a sturdy table.'"
+      },
+      {
+        title: "Indoor or Outdoor Safety",
+        duration: "8 min",
+        description: "Discuss whether it's better to be indoors or outdoors during different disasters. Students use phrases like 'It's better to be outdoors during an earthquake because...'"
+      },
+      {
+        title: "Emergency Kit Planning",
+        duration: "7 min",
+        description: "In small groups, students create a list of items needed in an emergency kit, practicing vocabulary for essential supplies."
+      }
+    ],
+    assessmentTips: "Monitor students' use of disaster vocabulary and safety instructions. Note their ability to give advice using modal verbs.",
+    homeworkIdeas: ["Students research a major natural disaster that occurred in their country or region and write 5-8 sentences about it."]
+  };
+  
+  const holidaysLessonPlan: LessonPlan = {
+    id: "holidays-travel-1",
+    title: "Holidays and Travel",
+    level: "",
+    duration: "45 min",
+    objectives: [
+      "Learn vocabulary related to travel, vacations and holiday activities",
+      "Practice talking about past and future holiday plans",
+      "Develop conversation skills through travel-themed discussions"
+    ],
+    materials: [
+      "Images of different holiday destinations and activities",
+      "Travel vocabulary flashcards",
+      "Simple travel brochures or advertisements"
+    ],
+    steps: [
+      {
+        title: "Holiday Vocabulary",
+        duration: "8 min",
+        description: "Introduce vocabulary for different types of holidays (beach vacation, city break, camping trip, etc.) and travel activities using images. Practice pronunciation and categorization."
+      },
+      {
+        title: "Destination Preferences",
+        duration: "10 min",
+        description: "Practice asking and answering: 'Do you prefer beach holidays or mountain trips?' Students discuss preferences for different types of vacation destinations and activities."
+      },
+      {
+        title: "Past Holiday Experiences",
+        duration: "10 min",
+        description: "Students practice talking about past holidays using simple past tense: 'Where did you go on your last holiday?' 'I went to the seaside.' 'What did you do there?' 'I swam and relaxed.'"
+      },
+      {
+        title: "Future Travel Plans",
+        duration: "10 min",
+        description: "Discuss future travel plans using 'going to' structure: 'Where are you going to travel next summer?' 'I'm going to visit London.' Students interview each other about future travel intentions."
+      },
+      {
+        title: "Dream Vacation Planning",
+        duration: "7 min",
+        description: "In pairs, students describe their dream vacation, including destination, accommodation, activities, and who they would travel with."
+      }
+    ],
+    assessmentTips: "Evaluate students' use of travel vocabulary and their ability to discuss past experiences and future plans using appropriate tense structures.",
+    homeworkIdeas: ["Students create a simple travel itinerary for a three-day trip to a destination of their choice, including activities for each day."]
+  };
+  
   const crimeLessonPlan: LessonPlan = {
     id: "crime-vocabulary-1",
     title: "Crime Vocabulary & Law Enforcement",
@@ -2921,7 +3384,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         </TabsContent>
 
         <TabsContent value="materials">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
             {renderResources('pdf')}
             {renderResources('lesson')}
           </div>
