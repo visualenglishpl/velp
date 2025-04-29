@@ -308,6 +308,68 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     setActiveId(null);
   };
 
+  // Function to fetch PDF resources from S3 for the current book/unit
+  const fetchAutomaticPdfResources = async (bookNumber: string, unitNumber: string) => {
+    try {
+      console.log(`Checking for automatic PDF resources for book ${bookNumber}, unit ${unitNumber}...`);
+      
+      // Array to hold any PDF resources found
+      const pdfResources: TeacherResource[] = [];
+      
+      // Check for curriculum PDF
+      try {
+        // Construct the URL for curriculum PDF
+        const curriculumUrl = `/api/direct/book${bookNumber}/unit${unitNumber}/file?path=book${bookNumber}/unit${unitNumber}/00 A Book ${bookNumber} – Unit ${unitNumber} – New Version.pdf`;
+        
+        // Check if it exists by making a HEAD request
+        const response = await fetch(curriculumUrl, { method: 'HEAD' });
+        
+        if (response.ok) {
+          console.log(`Found curriculum PDF for book ${bookNumber}, unit ${unitNumber}`);
+          pdfResources.push({
+            bookId: bookNumber,
+            unitId: unitNumber,
+            title: `Curriculum: Book ${bookNumber} – Unit ${unitNumber}`,
+            resourceType: 'pdf',
+            embedCode: `<object data="${curriculumUrl}" type="application/pdf" width="100%" height="600px"><p>Unable to display PDF file. <a href="${curriculumUrl}" target="_blank">Download</a> instead.</p></object>`,
+            order: 0,
+            provider: 'Visual English'
+          });
+        }
+      } catch (error) {
+        console.warn(`Error checking for curriculum PDF: ${error}`);
+      }
+      
+      // Check for "Online Games Links" PDF
+      try {
+        const gamesLinksUrl = `/api/direct/files/${bookNumber}/${unitNumber}/linki-do-filmy-i-gry`;
+        
+        // Check if it exists
+        const response = await fetch(gamesLinksUrl, { method: 'HEAD' });
+        
+        if (response.ok) {
+          console.log(`Found games/links PDF for book ${bookNumber}, unit ${unitNumber}`);
+          pdfResources.push({
+            bookId: bookNumber,
+            unitId: unitNumber,
+            title: `Online Games and Film Links: Unit ${unitNumber}`,
+            resourceType: 'pdf',
+            embedCode: `<object data="${gamesLinksUrl}" type="application/pdf" width="100%" height="600px"><p>Unable to display PDF file. <a href="${gamesLinksUrl}" target="_blank">Download</a> instead.</p></object>`,
+            order: pdfResources.length,
+            provider: 'Visual English'
+          });
+        }
+      } catch (error) {
+        console.warn(`Error checking for games links PDF: ${error}`);
+      }
+      
+      return pdfResources;
+    } catch (error) {
+      console.error(`Error fetching automatic PDF resources: ${error}`);
+      return [];
+    }
+  };
+
   // Initial load of resources
   useEffect(() => {
     if (bookId && unitId) {
@@ -320,796 +382,414 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       return () => clearInterval(intervalId);
     }
   }, [bookId, unitId]);
-  
+
   // Add pre-defined resources for Book units
   useEffect(() => {
-    if (resources.length === 0 && bookId && unitId) {
-      let predefinedResources: TeacherResource[] = [];
-      
-      // Book 1 - Add special resources for Unit 1
-      if (bookId === "1" && unitId === "1") {
-        predefinedResources = [
-          {
-            bookId: "1",
-            unitId: "1",
-            title: "Hello Song for Kids - Super Simple Songs",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/_x5KQBtLcJI?si=qdTrTvpAGWxn-pTk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 0,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "1",
-            title: "Hello! - Super Simple Songs",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tVlcKp3bWH8?si=DZLTajD2AH9JfcpC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 1,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "1",
-            title: "Greeting Words - Wordwall Game",
-            resourceType: "game",
-            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2e7d4bdbcc23420689c5274d1df5a6af?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 2,
-            provider: "Wordwall"
-          },
-          {
-            bookId: "1",
-            unitId: "1",
-            title: "Online Games and Links for Unit 1",
-            resourceType: "pdf" as "video" | "game" | "activity" | "pdf" | "other",
-            embedCode: '<iframe src="https://docs.google.com/viewer?url=https://github.com/replit/replit.github.io/raw/master/media/linki-do-filmy-i-gry.pdf&embedded=true" width="100%" height="500px" frameborder="0"></iframe>',
-            order: 3,
-            provider: "Visual English"
-          }
-        ];
-      }
-      
-      // Book 1 - Unit 2 (School Objects)
-      if (bookId === "1" && unitId === "2") {
-        predefinedResources = [
-          {
-            bookId: "1",
-            unitId: "2",
-            title: "School Objects Vocabulary - English Tree TV",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/1GDCiMbAZSI?si=tPtYXHVrFMZF5KaQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 0,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "2",
-            title: "School Objects Song - English Sing Sing",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/RlE4WYPqRqo?si=R7Ib4oZoFf4YosMX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 1,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "2",
-            title: "What's in My Pencil Case - Sing and Learn",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/S8KOHEFUoTs?si=Fcs8XNnYdqg0LDbO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 2,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "2",
-            title: "School Objects Matching Game",
-            resourceType: "game",
-            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/8eed2c82e2ac4ca4a70b0da6b79a1ced?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 3,
-            provider: "Wordwall"
-          },
-          {
-            bookId: "1",
-            unitId: "2",
-            title: "School Supplies Quiz",
-            resourceType: "game",
-            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/56bb24a7e71d47bab3382f94cf2ec1eb?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 4,
-            provider: "Wordwall"
-          },
-          {
-            bookId: "1",
-            unitId: "2",
-            title: "School Objects Lesson Plan",
-            resourceType: "pdf",
-            embedCode: '<iframe src="https://drive.google.com/file/d/1Gdb7Y_wUb0uSEaW7BwS09dFU7K0J1HKK/preview" width="640" height="480" allow="autoplay"></iframe>',
-            order: 5,
-            provider: "Google Drive"
-          },
-          {
-            bookId: "1",
-            unitId: "2",
-            title: "Linki Do Filmy I Gry (Links to Films and Games)",
-            resourceType: "pdf",
-            embedCode: '<object data="/api/direct/files/1/2/linki-do-filmy-i-gry" type="application/pdf" width="100%" height="500px"><p>Your browser does not support PDFs. <a href="/api/direct/files/1/2/linki-do-filmy-i-gry">Download the PDF</a> instead.</p></object>',
-            order: 6,
-            provider: "Visual English"
-          }
-        ];
-      }
-      
-      // Book 1 - Unit 3
-      if (bookId === "1" && unitId === "3") {
-        // Add a special resource for Unit 3 links to films and games
-        const unitResources: TeacherResource[] = [
-          {
-            bookId: "1",
-            unitId: "3",
-            title: "Rooms of the House - Song by Planet Pop",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/FgWyY-RCaWk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 0,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "3",
-            title: "Rooms of the House - Learn English with Steve",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/qJyW4dBh0Fc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 1,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "3",
-            title: "Rooms in the House - Wordwall Game",
-            resourceType: "game",
-            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/b4f8d2af8aa947a19d2d75f74f2e5ef3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 2,
-            provider: "Wordwall"
-          },
-          {
-            bookId: "1",
-            unitId: "3",
-            title: "Linki Do Filmy I Gry (Links to Films and Games)",
-            resourceType: "pdf",
-            embedCode: '<object data="/api/direct/files/1/3/linki-do-filmy-i-gry" type="application/pdf" width="100%" height="500px"><p>Your browser does not support PDFs. <a href="/api/direct/files/1/3/linki-do-filmy-i-gry">Download the PDF</a> instead.</p></object>',
-            order: 3,
-            provider: "Visual English"
-          }
-        ];
-        predefinedResources = unitResources;
-      }
-      
-      // Book 1 - Unit 4
-      if (bookId === "1" && unitId === "4") {
-        // Add a special resource for Unit 4 links to films and games
-        const unitResources: TeacherResource[] = [
-          {
-            bookId: "1",
-            unitId: "4",
-            title: "Parts of the Face - English Singsing",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/K4DGm8gkM-A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 0,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "4",
-            title: "Body Parts Matching Game",
-            resourceType: "game",
-            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a6474c6c32a545e5b69a6c0573a6d66d?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 1,
-            provider: "Wordwall"
-          },
-          {
-            bookId: "1",
-            unitId: "4",
-            title: "Linki Do Filmy I Gry (Links to Films and Games)",
-            resourceType: "pdf",
-            embedCode: '<object data="/api/direct/files/1/4/linki-do-filmy-i-gry" type="application/pdf" width="100%" height="500px"><p>Your browser does not support PDFs. <a href="/api/direct/files/1/4/linki-do-filmy-i-gry">Download the PDF</a> instead.</p></object>',
-            order: 2,
-            provider: "Visual English"
-          }
-        ];
-        predefinedResources = unitResources;
-      }
-      
-      // Book 1 - Unit 5
-      if (bookId === "1" && unitId === "5") {
-        // Add a special resource for Unit 5 links to films and games
-        const unitResources: TeacherResource[] = [
-          {
-            bookId: "1",
-            unitId: "5",
-            title: "Shapes Song - Super Simple Songs",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tRNy2i75tCc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 0,
-            provider: "YouTube"
-          },
-          {
-            bookId: "1",
-            unitId: "5",
-            title: "2D Shapes Game - Wordwall",
-            resourceType: "game",
-            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9a85b0e7dff745a2bd8c6f29da06f3d5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 1,
-            provider: "Wordwall"
-          },
-          {
-            bookId: "1",
-            unitId: "5",
-            title: "Linki Do Filmy I Gry (Links to Films and Games)",
-            resourceType: "pdf",
-            embedCode: '<object data="/api/direct/files/1/5/linki-do-filmy-i-gry" type="application/pdf" width="100%" height="500px"><p>Your browser does not support PDFs. <a href="/api/direct/files/1/5/linki-do-filmy-i-gry">Download the PDF</a> instead.</p></object>',
-            order: 2,
-            provider: "Visual English"
-          }
-        ];
-        predefinedResources = unitResources;
-      }
-      
-      // Book 4 - Unit 1 (Nationalities)
-      if (bookId === "4" && unitId === "1") {
-        // Add resources for Book 4 Unit 1
-        const unitResources: TeacherResource[] = [
-          {
-            bookId: "4",
-            unitId: "1",
-            title: "Countries and Nationalities - English with Lucy",
-            resourceType: "video",
-            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/i6G53BMgugo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            order: 0,
-            provider: "YouTube"
-          },
-          {
-            bookId: "4",
-            unitId: "1",
-            title: "Countries and Nationalities Quiz - Wordwall",
-            resourceType: "game",
-            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/4df2de3c3c7d4b87910d4178d48c96cd?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 1,
-            provider: "Wordwall"
-          },
-          {
-            bookId: "4",
-            unitId: "1",
-            title: "Flags and Countries Matching - Wordwall",
-            resourceType: "game",
-            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/82ce5c3f9c484aa2b9c9e1a4a25e0be7?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-            order: 2,
-            provider: "Wordwall"
-          },
-          {
-            bookId: "4",
-            unitId: "1",
-            title: "Nationalities - Lesson Plan",
-            resourceType: "pdf",
-            embedCode: '<iframe src="https://docs.google.com/viewer?url=https://github.com/replit/replit.github.io/raw/master/media/nationalities-lesson-plan.pdf&embedded=true" width="100%" height="500px" frameborder="0"></iframe>',
-            order: 3,
-            provider: "Visual English"
-          }
-        ];
-        predefinedResources = unitResources;
-      }
-      
-      // Add the predefined resources
-      if (predefinedResources.length > 0) {
-        setResources(predefinedResources);
-        saveResourcesToServer(predefinedResources);
-      }
-    }
-  }, [resources.length, bookId, unitId]);
-
-  return (
-    <div className="teacher-resources p-4 bg-gray-50 rounded-lg">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-800">Teacher Resources</h2>
+    const loadResources = async () => {
+      if (resources.length === 0 && bookId && unitId) {
+        let predefinedResources: TeacherResource[] = [];
+        let automaticPdfResources: TeacherResource[] = [];
         
+        // Fetch automatic PDF resources first
+        try {
+          automaticPdfResources = await fetchAutomaticPdfResources(bookId, unitId);
+          console.log(`Found ${automaticPdfResources.length} automatic PDF resources`);
+        } catch (error) {
+          console.error(`Error loading automatic PDF resources: ${error}`);
+          automaticPdfResources = [];
+        }
+        
+        // Book 1 - Add special resources for Unit 1
+        if (bookId === "1" && unitId === "1") {
+          predefinedResources = [
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Hello Song for Kids - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/_x5KQBtLcJI?si=qdTrTvpAGWxn-pTk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 0,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Hello! - Super Simple Songs",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tVlcKp3bWH8?si=DZLTajD2AH9JfcpC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 1,
+              provider: "YouTube"
+            },
+            {
+              bookId: "1",
+              unitId: "1",
+              title: "Greeting Words - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2e7d4bdbcc23420689c5274d1df5a6af?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 2,
+              provider: "Wordwall"
+            }
+          ];
+          
+          // Add any automatic PDF resources found
+          if (automaticPdfResources.length > 0) {
+            const pdfStartOrder = predefinedResources.length;
+            automaticPdfResources.forEach((pdf, index) => {
+              predefinedResources.push({
+                ...pdf,
+                order: pdfStartOrder + index
+              });
+            });
+          }
+        }
+        
+        // Book 4 - Unit 1 (Nationalities)
+        else if (bookId === "4" && unitId === "1") {
+          // Add resources for Book 4 Unit 1
+          const unitResources: TeacherResource[] = [
+            {
+              bookId: "4",
+              unitId: "1",
+              title: "Countries and Nationalities - English with Lucy",
+              resourceType: "video",
+              embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/i6G53BMgugo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+              order: 0,
+              provider: "YouTube"
+            },
+            {
+              bookId: "4",
+              unitId: "1",
+              title: "Countries and Nationalities - Wordwall Game",
+              resourceType: "game",
+              embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/61b9b4b9c6e94e02811d8e0b34ed32f2?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+              order: 1,
+              provider: "Wordwall"
+            }
+          ];
+          
+          // Add any automatic PDF resources
+          if (automaticPdfResources.length > 0) {
+            automaticPdfResources.forEach((pdf, index) => {
+              unitResources.push({
+                ...pdf,
+                order: unitResources.length
+              });
+            });
+          }
+          
+          predefinedResources = unitResources;
+        }
+        
+        // For any other book/unit, use just automatic PDF resources if available
+        else if (automaticPdfResources.length > 0) {
+          predefinedResources = automaticPdfResources;
+        }
+        
+        // Save the predefined resources
+        if (predefinedResources.length > 0) {
+          setResources(predefinedResources);
+          saveResourcesToServer(predefinedResources);
+        }
+      }
+    };
+    
+    // Execute the async function
+    loadResources();
+  }, [bookId, unitId, resources.length]);
+  
+  // Sortable Item Component
+  const SortableItem = ({
+    resource,
+    index,
+    isEditing
+  }: {
+    resource: TeacherResource,
+    index: number,
+    isEditing: boolean
+  }) => {
+    const { 
+      attributes, 
+      listeners, 
+      setNodeRef, 
+      isDragging 
+    } = useSortable({ 
+      id: resource.id?.toString() || index.toString(),
+      data: {
+        type: 'resource',
+        resource
+      }
+    });
+    
+    const style = {
+      opacity: isDragging ? 0.5 : 1,
+    };
+    
+    return (
+      <div 
+        ref={setNodeRef} 
+        style={style} 
+        className={`p-4 border rounded-lg mb-4 ${isEditing ? 'bg-muted/50' : ''}`}
+      >
+        <div className="flex justify-between items-start mb-2">
+          <div className="flex-1">
+            {isEditing ? (
+              <Input 
+                type="text" 
+                value={resource.title} 
+                onChange={(e) => handleFieldChange(index, 'title', e.target.value)} 
+                className="mb-2"
+                placeholder="Resource Title"
+              />
+            ) : (
+              <h3 className="text-lg font-semibold">{resource.title}</h3>
+            )}
+            {isEditing && (
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <Input 
+                  type="text" 
+                  value={resource.provider || ''} 
+                  onChange={(e) => handleFieldChange(index, 'provider', e.target.value)} 
+                  placeholder="Provider (e.g., YouTube)" 
+                />
+                <Input 
+                  type="text" 
+                  value={resource.sourceUrl || ''} 
+                  onChange={(e) => handleFieldChange(index, 'sourceUrl', e.target.value)} 
+                  placeholder="Source URL (optional)" 
+                />
+              </div>
+            )}
+          </div>
+          <div className="flex items-center space-x-2">
+            {isEditMode && !isDragging && (
+              <>
+                {isEditing ? (
+                  <>
+                    <Button size="sm" variant="ghost" onClick={() => handleUpdateResource(index)}>
+                      <Save className="h-4 w-4" />
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={handleCancelEdit}>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button size="sm" variant="ghost" onClick={() => handleEditResource(index)}>
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => handleDeleteResource(index)}>
+                      <Trash className="h-4 w-4" />
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
+            {isEditMode && !isEditing && (
+              <div
+                {...attributes}
+                {...listeners}
+                className="cursor-grab p-1"
+              >
+                <GripVertical className="h-4 w-4" />
+              </div>
+            )}
+            {!isEditMode && (
+              <div className="bg-primary/10 text-primary text-xs px-2 py-1 rounded">
+                {resource.resourceType}
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {isEditing ? (
+          <Input 
+            type="text" 
+            value={resource.embedCode} 
+            onChange={(e) => handleFieldChange(index, 'embedCode', e.target.value)} 
+            className="mb-2"
+            placeholder="Embed Code"
+          />
+        ) : (
+          <div 
+            className="mt-2 embed-container" 
+            dangerouslySetInnerHTML={{ __html: resource.embedCode }} 
+          />
+        )}
+      </div>
+    );
+  };
+  
+  // Resource List Component (with DnD)
+  const ResourceList = ({ resourceType }: { resourceType: string }) => {
+    const filteredResources = resources
+      .filter(r => r.resourceType === resourceType)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+    
+    if (filteredResources.length === 0) {
+      return <p className="text-muted-foreground text-center my-8">No {resourceType} resources available</p>;
+    }
+    
+    return (
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToVerticalAxis]}
+      >
+        <SortableContext 
+          items={filteredResources.map(r => r.id?.toString() || filteredResources.indexOf(r).toString())}
+          strategy={verticalListSortingStrategy}
+        >
+          <div>
+            {filteredResources.map((resource, index) => (
+              <SortableItem
+                key={`${resource.id || index}-${resource.title}`}
+                resource={resource}
+                index={resources.indexOf(resource)}
+                isEditing={editingResource === resources.indexOf(resource)}
+              />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
+    );
+  };
+  
+  // Resource type icon
+  const getResourceIcon = (type: string) => {
+    switch (type) {
+      case 'video': return <Video className="h-4 w-4" />;
+      case 'game': return <Gamepad2 className="h-4 w-4" />;
+      case 'pdf': return <FileText className="h-4 w-4" />;
+      default: return null;
+    }
+  };
+  
+  return (
+    <div>
+      <div className="mb-4 flex justify-between items-center">
+        <h2 className="text-2xl font-bold">Teacher Resources</h2>
         {isEditMode && (
-          <Button onClick={() => setIsAdding(true)} variant="default">
-            <Plus className="h-4 w-4 mr-1" /> Add Resource
+          <Button onClick={() => setIsAdding(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            Add Resource
           </Button>
         )}
       </div>
       
+      <Tabs defaultValue="video">
+        <TabsList className="mb-4">
+          <TabsTrigger value="video" className="flex items-center">
+            <Video className="h-4 w-4 mr-2" />
+            Videos
+          </TabsTrigger>
+          <TabsTrigger value="game" className="flex items-center">
+            <Gamepad2 className="h-4 w-4 mr-2" />
+            Games
+          </TabsTrigger>
+          <TabsTrigger value="pdf" className="flex items-center">
+            <FileText className="h-4 w-4 mr-2" />
+            Documents
+          </TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="video">
+          <ResourceList resourceType="video" />
+        </TabsContent>
+        
+        <TabsContent value="game">
+          <ResourceList resourceType="game" />
+        </TabsContent>
+        
+        <TabsContent value="pdf">
+          <ResourceList resourceType="pdf" />
+        </TabsContent>
+      </Tabs>
+      
+      {/* Add Resource Dialog */}
       <Dialog open={isAdding} onOpenChange={setIsAdding}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add New Teacher Resource</DialogTitle>
+            <DialogTitle>Add Teacher Resource</DialogTitle>
             <DialogDescription>
-              {newResource.resourceType === 'video' ? 
-                "Add a YouTube video to help students learn. Copy the embed code from YouTube's share > embed option." :
-               newResource.resourceType === 'game' ? 
-                "Add a Wordwall game or other interactive activity. Copy the embed code from the game's share options." :
-                "Add a new resource to this unit."}
+              Add a new resource for this unit. Provide the embed code from YouTube, Wordwall, or other sources.
             </DialogDescription>
           </DialogHeader>
           
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="title" className="text-right font-medium">
-                Title
-              </label>
-              <Input
-                id="title"
-                value={newResource.title || ''}
-                onChange={(e) => handleNewResourceChange('title', e.target.value)}
-                className="col-span-3"
-                placeholder="Enter a descriptive title"
-              />
-            </div>
-            
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="resourceType" className="text-right font-medium">
-                Type
-              </label>
-              <select
-                id="resourceType"
-                value={newResource.resourceType}
-                onChange={(e) => handleNewResourceChange('resourceType', e.target.value)}
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-              >
-                <option value="video">Video</option>
-                <option value="game">Game</option>
-                <option value="activity">Activity</option>
-                <option value="pdf">PDF</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="provider" className="text-right font-medium">
-                Provider
-              </label>
-              <Input
-                id="provider"
-                value={newResource.provider || ''}
-                onChange={(e) => handleNewResourceChange('provider', e.target.value)}
-                className="col-span-3"
-                placeholder="e.g., YouTube, Wordwall, etc."
-              />
-            </div>
-            
-            <div className="grid grid-cols-4 items-start gap-4">
-              <label htmlFor="embedCode" className="text-right font-medium">
-                Embed Code
-              </label>
-              <div className="col-span-3">
-                <textarea
-                  id="embedCode"
-                  value={newResource.embedCode || ''}
-                  onChange={(e) => handleNewResourceChange('embedCode', e.target.value)}
-                  rows={6}
-                  className="w-full rounded-md border border-input bg-background p-2 text-sm"
-                  placeholder={newResource.resourceType === 'video' ? 
-                    '<iframe width="560" height="315" src="https://www.youtube.com/embed/..." frameborder="0" allowfullscreen></iframe>' : 
-                    newResource.resourceType === 'game' ? 
-                    '<iframe style="max-width:100%" src="https://wordwall.net/embed/..." width="500" height="380" frameborder="0" allowfullscreen></iframe>' :
-                    'Paste embed code here...'}
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  Paste the embed HTML code from the source website.
-                </p>
+            <div className="flex items-center space-x-2">
+              <label className="w-24">Type:</label>
+              <div className="flex-1">
+                <select 
+                  className="w-full p-2 border rounded"
+                  value={newResource.resourceType}
+                  onChange={(e) => handleNewResourceChange('resourceType', e.target.value)}
+                >
+                  <option value="video">Video</option>
+                  <option value="game">Game</option>
+                  <option value="activity">Activity</option>
+                  <option value="pdf">PDF Document</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <label className="w-24">Title:</label>
+              <Input 
+                type="text"
+                value={newResource.title}
+                onChange={(e) => handleNewResourceChange('title', e.target.value)}
+                placeholder="Resource Title"
+                className="flex-1"
+              />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <label className="w-24">Provider:</label>
+              <Input 
+                type="text"
+                value={newResource.provider}
+                onChange={(e) => handleNewResourceChange('provider', e.target.value)}
+                placeholder="YouTube, Wordwall, etc."
+                className="flex-1"
+              />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <label className="w-24">Source URL:</label>
+              <Input 
+                type="text"
+                value={newResource.sourceUrl}
+                onChange={(e) => handleNewResourceChange('sourceUrl', e.target.value)}
+                placeholder="https://..."
+                className="flex-1"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label>Embed Code:</label>
+              <textarea 
+                rows={5}
+                value={newResource.embedCode}
+                onChange={(e) => handleNewResourceChange('embedCode', e.target.value)}
+                placeholder="<iframe>...</iframe>"
+                className="w-full p-2 border rounded"
+              />
             </div>
           </div>
           
           <DialogFooter>
-            <Button 
-              variant="outline" 
-              onClick={() => setIsAdding(false)}
-            >
+            <Button type="button" variant="ghost" onClick={() => setIsAdding(false)}>
               Cancel
             </Button>
-            <Button 
-              onClick={handleAddResource}
-              disabled={!newResource.title || !newResource.embedCode}
-            >
+            <Button type="button" onClick={handleAddResource}>
               Add Resource
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
-      {resources.length === 0 ? (
-        <div className="text-center p-8 border rounded-md bg-gray-50">
-          <p className="text-gray-500">No teacher resources available for this unit yet.</p>
-          {isEditMode && (
-            <Button 
-              onClick={() => setIsAdding(true)} 
-              variant="outline" 
-              className="mt-4"
-            >
-              <Plus className="h-4 w-4 mr-1" /> Add Your First Resource
-            </Button>
-          )}
-        </div>
-      ) : (
-        <Tabs defaultValue="videos" className="w-full">
-          <TabsList className="mb-4">
-            <TabsTrigger value="videos">Videos</TabsTrigger>
-            <TabsTrigger value="games">Games</TabsTrigger>
-            <TabsTrigger value="pdf">Lesson PDFs</TabsTrigger>
-            <TabsTrigger value="activity">Lesson Plans</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="videos">
-            <DndContext 
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragStart={(event) => {
-                setActiveResourceType('video');
-                handleDragStart(event);
-              }}
-              onDragEnd={handleDragEnd}
-              modifiers={[restrictToVerticalAxis]}
-            >
-              <SortableContext 
-                items={resources
-                  .filter(r => r.resourceType === 'video')
-                  .map((r, idx) => r.id?.toString() || `video-${idx}`)}
-                strategy={verticalListSortingStrategy}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {resources
-                    .filter(r => r.resourceType === 'video')
-                    .map((resource, index) => (
-                      <SortableResourceItem
-                        key={resource.id?.toString() || `video-${index}`}
-                        id={resource.id?.toString() || `video-${index}`}
-                        resource={resource}
-                        index={resources.indexOf(resource)}
-                        isEditing={editingResource === resources.indexOf(resource)}
-                        isEditMode={isEditMode}
-                        onEdit={() => handleEditResource(resources.indexOf(resource))}
-                        onCancelEdit={handleCancelEdit}
-                        onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
-                        onDelete={() => handleDeleteResource(resources.indexOf(resource))}
-                        onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
-                      />
-                    ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-          </TabsContent>
-          
-          <TabsContent value="games">
-            <DndContext 
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragStart={(event) => {
-                setActiveResourceType('game');
-                handleDragStart(event);
-              }}
-              onDragEnd={handleDragEnd}
-              modifiers={[restrictToVerticalAxis]}
-            >
-              <SortableContext 
-                items={resources
-                  .filter(r => r.resourceType === 'game')
-                  .map((r, idx) => r.id?.toString() || `game-${idx}`)}
-                strategy={verticalListSortingStrategy}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {resources
-                    .filter(r => r.resourceType === 'game')
-                    .map((resource, index) => (
-                      <SortableResourceItem
-                        key={resource.id?.toString() || `game-${index}`}
-                        id={resource.id?.toString() || `game-${index}`}
-                        resource={resource}
-                        index={resources.indexOf(resource)}
-                        isEditing={editingResource === resources.indexOf(resource)}
-                        isEditMode={isEditMode}
-                        onEdit={() => handleEditResource(resources.indexOf(resource))}
-                        onCancelEdit={handleCancelEdit}
-                        onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
-                        onDelete={() => handleDeleteResource(resources.indexOf(resource))}
-                        onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
-                      />
-                    ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-          </TabsContent>
-          
-          <TabsContent value="pdf">
-            <DndContext 
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragStart={(event) => {
-                setActiveResourceType('pdf');
-                handleDragStart(event);
-              }}
-              onDragEnd={handleDragEnd}
-              modifiers={[restrictToVerticalAxis]}
-            >
-              <SortableContext 
-                items={resources
-                  .filter(r => r.resourceType === 'pdf')
-                  .map((r, idx) => r.id?.toString() || `pdf-${idx}`)}
-                strategy={verticalListSortingStrategy}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {resources
-                    .filter(r => r.resourceType === 'pdf')
-                    .map((resource, index) => (
-                      <SortableResourceItem
-                        key={resource.id?.toString() || `pdf-${index}`}
-                        id={resource.id?.toString() || `pdf-${index}`}
-                        resource={resource}
-                        index={resources.indexOf(resource)}
-                        isEditing={editingResource === resources.indexOf(resource)}
-                        isEditMode={isEditMode}
-                        onEdit={() => handleEditResource(resources.indexOf(resource))}
-                        onCancelEdit={handleCancelEdit}
-                        onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
-                        onDelete={() => handleDeleteResource(resources.indexOf(resource))}
-                        onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
-                      />
-                    ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-          </TabsContent>
-          
-          <TabsContent value="activity">
-            <DndContext 
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragStart={(event) => {
-                setActiveResourceType('activity');
-                handleDragStart(event);
-              }}
-              onDragEnd={handleDragEnd}
-              modifiers={[restrictToVerticalAxis]}
-            >
-              <SortableContext 
-                items={resources
-                  .filter(r => r.resourceType === 'activity')
-                  .map((r, idx) => r.id?.toString() || `activity-${idx}`)}
-                strategy={verticalListSortingStrategy}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {resources
-                    .filter(r => r.resourceType === 'activity')
-                    .map((resource, index) => (
-                      <SortableResourceItem
-                        key={resource.id?.toString() || `activity-${index}`}
-                        id={resource.id?.toString() || `activity-${index}`}
-                        resource={resource}
-                        index={resources.indexOf(resource)}
-                        isEditing={editingResource === resources.indexOf(resource)}
-                        isEditMode={isEditMode}
-                        onEdit={() => handleEditResource(resources.indexOf(resource))}
-                        onCancelEdit={handleCancelEdit}
-                        onUpdate={() => handleUpdateResource(resources.indexOf(resource))}
-                        onDelete={() => handleDeleteResource(resources.indexOf(resource))}
-                        onChange={(field, value) => handleFieldChange(resources.indexOf(resource), field, value)}
-                      />
-                    ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-          </TabsContent>
-        </Tabs>
-      )}
-    </div>
-  );
-};
-
-interface ResourceItemProps {
-  resource: TeacherResource;
-  index: number;
-  isEditing: boolean;
-  isEditMode: boolean;
-  onEdit: () => void;
-  onCancelEdit: () => void;
-  onUpdate: () => void;
-  onDelete: () => void;
-  onChange: (field: string, value: string) => void;
-  dragHandle?: {
-    attributes: any;
-    listeners: any;
-  };
-  isDragging?: boolean;
-}
-
-// Create a sortable wrapper component for ResourceItem
-interface SortableResourceItemProps extends ResourceItemProps {
-  id: UniqueIdentifier;
-}
-
-const SortableResourceItem: React.FC<SortableResourceItemProps> = (props) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: props.id });
-
-  const style = {
-    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-    position: 'relative' as const,
-    zIndex: isDragging ? 1 : 0,
-  };
-
-  return (
-    <div ref={setNodeRef} style={style}>
-      <ResourceItem 
-        {...props} 
-        dragHandle={{ attributes, listeners }}
-        isDragging={isDragging}
-      />
-    </div>
-  );
-}
-
-const ResourceItem: React.FC<ResourceItemProps> = ({
-  resource,
-  index,
-  isEditing,
-  isEditMode,
-  onEdit,
-  onCancelEdit,
-  onUpdate,
-  onDelete,
-  onChange,
-  dragHandle,
-  isDragging
-}) => {
-  // Render icon based on resource type
-  const getResourceIcon = (type: string) => {
-    switch (type) {
-      case 'video':
-        return <Video className="h-5 w-5" />;
-      case 'game':
-        return <Gamepad2 className="h-5 w-5" />;
-      case 'pdf':
-        return <FileText className="h-5 w-5" />;
-      case 'activity':
-        return <FileText className="h-5 w-5" />;
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className={`resource-item border rounded-lg p-4 bg-white ${isDragging ? 'ring-2 ring-primary shadow-md' : ''}`}>
-      <div className="flex justify-between items-start mb-2">
-        <div className="flex items-center">
-          {isEditMode && dragHandle && (
-            <button
-              className="cursor-grab hover:bg-gray-100 rounded p-1 mr-2"
-              {...dragHandle.attributes}
-              {...dragHandle.listeners}
-              type="button"
-            >
-              <GripVertical className="h-4 w-4 text-gray-400" />
-            </button>
-          )}
-          <div className="mr-2 text-primary">
-            {getResourceIcon(resource.resourceType)}
-          </div>
-          {isEditing ? (
-            <Input 
-              value={resource.title}
-              onChange={(e) => onChange('title', e.target.value)}
-              className="font-medium"
-            />
-          ) : (
-            <h3 className="font-medium">{resource.title}</h3>
-          )}
-        </div>
-        
-        {isEditMode && (
-          <div className="flex space-x-2">
-            {isEditing ? (
-              <>
-                <Button size="sm" variant="outline" onClick={onCancelEdit}>
-                  <X className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="default" onClick={onUpdate}>
-                  <Save className="h-4 w-4" />
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button size="sm" variant="outline" onClick={onEdit}>
-                  <Edit className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="destructive" onClick={onDelete}>
-                  <Trash className="h-4 w-4" />
-                </Button>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-      
-      <Separator className="my-2" />
-      
-      {isEditing ? (
-        <div className="space-y-4 mt-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Resource Type</label>
-            <select 
-              value={resource.resourceType}
-              onChange={(e) => onChange('resourceType', e.target.value)}
-              className="w-full border rounded p-2"
-            >
-              <option value="video">Video</option>
-              <option value="game">Game</option>
-              <option value="activity">Activity</option>
-              <option value="pdf">PDF</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">Provider</label>
-            <Input 
-              value={resource.provider || ''}
-              onChange={(e) => onChange('provider', e.target.value)}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">Embed Code / HTML</label>
-            <textarea 
-              rows={5}
-              className="w-full border rounded p-2"
-              value={resource.embedCode}
-              onChange={(e) => onChange('embedCode', e.target.value)}
-            />
-          </div>
-        </div>
-      ) : (
-        <div className={`media-wrapper ${resource.resourceType === 'pdf' ? 'grid md:grid-cols-2 gap-4' : ''}`}>
-          {resource.resourceType === 'pdf' ? (
-            <>
-              <div className="lesson-content-sidebar">
-                <h4 className="font-medium text-blue-700 mb-2">Lesson Plan</h4>
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h5 className="font-medium mb-2">Unit Overview</h5>
-                  <p className="text-sm mb-4">This unit covers key concepts and vocabulary that students will need to master before moving forward.</p>
-                  
-                  <h5 className="font-medium mb-2">Learning Objectives</h5>
-                  <ul className="list-disc pl-5 text-sm mb-4">
-                    <li>Understand and use the target vocabulary</li>
-                    <li>Practice pronunciation through activities</li>
-                    <li>Engage with interactive materials</li>
-                  </ul>
-                  
-                  <h5 className="font-medium mb-2">Key Vocabulary</h5>
-                  <p className="text-sm mb-4">Review the vocabulary words highlighted in the PDF before class.</p>
-                  
-                  <h5 className="font-medium mb-2">Teaching Tips</h5>
-                  <p className="text-sm">Use the PDF material alongside the interactive exercises for maximum comprehension.</p>
-                </div>
-              </div>
-              <div className="pdf-viewer overflow-hidden rounded-lg border shadow-sm">
-                <div 
-                  className="media-embed h-full"
-                  dangerouslySetInnerHTML={{ __html: resource.embedCode }}
-                />
-              </div>
-            </>
-          ) : (
-            <div 
-              className="media-embed"
-              dangerouslySetInnerHTML={{ __html: resource.embedCode }}
-            />
-          )}
-        </div>
-      )}
     </div>
   );
 };

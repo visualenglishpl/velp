@@ -223,59 +223,105 @@ export function registerDirectRoutes(app: Express) {
     // res.status(401).json({ error: "Not authenticated" });
   };
   
-  // Endpoint for serving Linki Do Filmy I Gry PDF files from attached_assets
-  app.get("/api/direct/files/:bookId/:unitId/linki-do-filmy-i-gry", (req, res) => {
+  // Endpoint for serving Linki Do Filmy I Gry PDF files from S3
+  app.get("/api/direct/files/:bookId/:unitId/linki-do-filmy-i-gry", async (req, res) => {
     const { bookId, unitId } = req.params;
     
-    // Find the appropriate PDF file based on book and unit
-    // The file naming pattern from attached_assets is different from what we expected
-    // The pattern seems to be: number A Visual English Book 1 – Unit number – Linki Do Filmy I Gry.pdf
-    // We'll try various formats to make sure we find the right file
+    console.log(`Attempting to serve Linki Do Filmy I Gry PDF for book ${bookId}, unit ${unitId}`);
     
-    // Maps for the existing files we discovered
-    const fileMap = {
-      "1": {
-        "2": "20 A Visual English Book 1 – Unit 2 – Linki Do Filmy I Gry.pdf",
-        "3": "12 A Visual English Book 1 – Unit 3 – Linki Do Filmy I Gry.pdf", 
-        "4": "14 A Visual English Book 1 – Unit 4 – Linki Do Filmy I Gry.pdf",
-        "5": "18 A Visual English Book 1 – Unit 5 – Linki Do Filmy I Gry.pdf"
-      }
-    };
-    
-    // Try to get the file based on our known mapping
-    let pdfFileName = null;
-    if (fileMap[bookId] && fileMap[bookId][unitId]) {
-      pdfFileName = `${__dirname}/../attached_assets/${fileMap[bookId][unitId]}`;
-    } else {
-      // If not in our map, try a generic pattern
-      pdfFileName = `${__dirname}/../attached_assets/${bookId} A Visual English Book ${bookId} – Unit ${unitId} – Linki Do Filmy I Gry.pdf`;
-    }
-    
-    // Default fallback in case all else fails
-    const fallbackFileName = `${__dirname}/../attached_assets/12 A Visual English Book 1 – Unit 3 – Linki Do Filmy I Gry.pdf`;
-    
-    console.log(`Attempting to serve PDF file: ${pdfFileName}`);
-    
-    // Check if file exists
     try {
-      if (pdfFileName && fs.existsSync(pdfFileName)) {
-        // Set Content-Type header
-        res.setHeader('Content-Type', 'application/pdf');
-        // Return the file
-        return res.sendFile(pdfFileName);
-      } else if (fs.existsSync(fallbackFileName)) {
-        // If specific file doesn't exist, use a fallback file
-        console.log(`PDF file ${pdfFileName} not found, using fallback: ${fallbackFileName}`);
-        res.setHeader('Content-Type', 'application/pdf');
-        return res.sendFile(fallbackFileName);
+      // S3 path patterns based on the paths provided
+      const possiblePaths = [
+        // Search for pattern like "15 E Linki Do Filmy I Gry.pdf"
+        `book${bookId}/unit${unitId}/*Linki Do Filmy I Gry.pdf`,
+        // Search for pattern like "13 D Online Games Links.pdf"
+        `book${bookId}/unit${unitId}/*Online Games Links.pdf`,
+        // Try another common pattern
+        `book${bookId}/unit${unitId}/links_to_games_and_films.pdf`,
+      ];
+      
+      // List objects in the S3 bucket to find matching files
+      let foundPath = null;
+      for (const pattern of possiblePaths) {
+        console.log(`Searching for files matching pattern: ${pattern}`);
+        try {
+          const files = await listS3Objects(pattern);
+          if (files && files.length > 0) {
+            console.log(`Found files matching ${pattern}:`, files);
+            // Use the first match
+            foundPath = files[0];
+            break;
+          }
+        } catch (err) {
+          console.warn(`Error searching for pattern ${pattern}:`, err);
+          // Continue trying other patterns
+        }
+      }
+      
+      if (!foundPath) {
+        // If no specific pattern matches, try listing all files in the unit directory
+        // and find ones with likely filenames
+        const allFiles = await listS3Objects(`book${bookId}/unit${unitId}/`);
+        if (allFiles && allFiles.length > 0) {
+          // Look for PDFs with names containing keywords
+          const keywords = ['linki', 'games', 'films', 'online', 'links'];
+          foundPath = allFiles.find(path => {
+            const lowercasePath = path.toLowerCase();
+            return lowercasePath.endsWith('.pdf') && 
+                   keywords.some(keyword => lowercasePath.includes(keyword.toLowerCase()));
+          });
+        }
+      }
+      
+      if (foundPath) {
+        console.log(`Found PDF file: ${foundPath}`);
+        
+        // Get a presigned URL for the PDF file
+        const presignedUrl = await getS3PresignedUrl(foundPath);
+        
+        if (!presignedUrl) {
+          console.error(`Failed to generate presigned URL for ${foundPath}`);
+          return res.status(404).json({ error: "Failed to generate access URL for PDF file" });
+        }
+        
+        try {
+          console.log(`Using presigned URL for PDF: ${presignedUrl}`);
+          
+          // Fetch the PDF file from S3
+          const response = await fetch(presignedUrl, {
+            method: 'GET',
+            headers: { 'Accept': '*/*' },
+          });
+          
+          if (!response.ok) {
+            console.error(`Error fetching PDF: ${response.status} ${response.statusText}`);
+            return res.status(response.status).json({ 
+              error: "Error fetching PDF file from S3", 
+              details: `${response.status} ${response.statusText}` 
+            });
+          }
+          
+          // Set the content type header
+          res.setHeader('Content-Type', 'application/pdf');
+          
+          // Get the PDF content and send it
+          const buffer = await response.arrayBuffer();
+          return res.send(Buffer.from(buffer));
+          
+        } catch (fetchError) {
+          console.error(`Fetch error from presigned URL for PDF: ${fetchError}`);
+          return res.status(500).json({ 
+            error: "Failed to fetch PDF file from S3", 
+            details: String(fetchError)
+          });
+        }
       } else {
-        // No PDF file found
-        console.error(`PDF file not found: ${pdfFileName} or fallback`);
+        console.error(`No matching PDF file found for book${bookId}/unit${unitId}`);
         return res.status(404).json({ error: "PDF file not found" });
       }
     } catch (error) {
-      console.error(`Error sending PDF file: ${error}`);
-      return res.status(500).json({ error: "Failed to send PDF file" });
+      console.error(`Error serving Linki Do Filmy I Gry PDF: ${error}`);
+      return res.status(500).json({ error: "Failed to serve PDF file" });
     }
   });
   
