@@ -3277,6 +3277,110 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         </div>
       </div>
       
+      {/* Add Resource Dialog */}
+      <Dialog open={isAdding} onOpenChange={setIsAdding}>
+        <DialogContent className="sm:max-w-[625px]">
+          <DialogHeader>
+            <DialogTitle>
+              {newResource.resourceType === 'video' ? 'Add Video Resource' : 
+               newResource.resourceType === 'game' ? 'Add Game Resource' : 
+               'Add New Resource'}
+            </DialogTitle>
+            <DialogDescription>
+              {newResource.resourceType === 'video' ? 
+                "Add a YouTube video to help students learn. Copy the embed code from YouTube's share > embed option." :
+               newResource.resourceType === 'game' ? 
+                "Add a Wordwall game or other interactive activity. Copy the embed code from the game's share options." :
+                "Add a new resource to this unit."}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="title" className="text-right font-medium">
+                Title
+              </label>
+              <Input
+                id="title"
+                value={newResource.title || ''}
+                onChange={(e) => handleNewResourceChange('title', e.target.value)}
+                className="col-span-3"
+                placeholder="Enter a descriptive title"
+              />
+            </div>
+            
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="resourceType" className="text-right font-medium">
+                Type
+              </label>
+              <select
+                id="resourceType"
+                value={newResource.resourceType}
+                onChange={(e) => handleNewResourceChange('resourceType', e.target.value)}
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              >
+                <option value="video">Video</option>
+                <option value="game">Game</option>
+                <option value="activity">Activity</option>
+                <option value="pdf">PDF</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="provider" className="text-right font-medium">
+                Provider
+              </label>
+              <Input
+                id="provider"
+                value={newResource.provider || ''}
+                onChange={(e) => handleNewResourceChange('provider', e.target.value)}
+                className="col-span-3"
+                placeholder="e.g., YouTube, Wordwall, etc."
+              />
+            </div>
+            
+            <div className="grid grid-cols-4 items-start gap-4">
+              <label htmlFor="embedCode" className="text-right font-medium">
+                Embed Code
+              </label>
+              <div className="col-span-3">
+                <textarea
+                  id="embedCode"
+                  value={newResource.embedCode || ''}
+                  onChange={(e) => handleNewResourceChange('embedCode', e.target.value)}
+                  rows={6}
+                  className="w-full rounded-md border border-input bg-background p-2 text-sm"
+                  placeholder={newResource.resourceType === 'video' ? 
+                    '<iframe width="560" height="315" src="https://www.youtube.com/embed/..." frameborder="0" allowfullscreen></iframe>' : 
+                    newResource.resourceType === 'game' ? 
+                    '<iframe style="max-width:100%" src="https://wordwall.net/embed/..." width="500" height="380" frameborder="0" allowfullscreen></iframe>' :
+                    'Paste embed code here...'}
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Paste the embed HTML code from the source website.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsAdding(false)}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleAddResource}
+              disabled={!newResource.title || !newResource.embedCode}
+            >
+              Add Resource
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
       {resources.length === 0 ? (
         <div className="text-center p-8 border rounded-md bg-gray-50">
           <p className="text-gray-500">No teacher resources available for this unit yet.</p>
