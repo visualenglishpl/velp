@@ -2010,9 +2010,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   // Define all the lesson plans first
   const crimeLessonPlan: LessonPlan = {
-    id: "crime-lesson-1",
+    id: "crime-vocabulary-1",
     title: "Crime Vocabulary & Law Enforcement",
-    level: "Elementary to Pre-Intermediate (A1-A2)",
+    level: "A1-A2",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to crime and law enforcement",
@@ -2051,9 +2051,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   };
 
   const governmentLessonPlan: LessonPlan = {
-    id: "government-lesson-1",
+    id: "government-vocabulary-1",
     title: "Government and Politics Vocabulary",
-    level: "Intermediate (B1-B2)",
+    level: "B1-B2",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to government structures and political systems",
@@ -2099,7 +2099,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const schoolLessonPlan: LessonPlan = {
     id: "school-subjects-1",
     title: "School Subjects and Activities",
-    level: "Elementary to Pre-Intermediate (A1-A2)",
+    level: "A1-A2",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to school subjects and after-school activities",
@@ -2145,7 +2145,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const moneyLessonPlan: LessonPlan = {
     id: "money-shopping-1",
     title: "Money and Shopping Vocabulary",
-    level: "Elementary to Pre-Intermediate (A1-A2)",
+    level: "A1-A2",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to money, banking, and shopping",
@@ -2376,7 +2376,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     } else if (bookId === '7' && unitId === '3') {
       return (
         <div className="mt-6 space-y-8">
-          <div className="grid grid-cols-1 xl:grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
                 <CardHeader className="pb-2">
@@ -2386,7 +2386,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         <span>Crime Vocabulary & Law Enforcement</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription>A1-A2</CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
@@ -2411,13 +2411,47 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 </CardFooter>
               </Card>
             </div>
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Police & Detective Work</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>A1-A2</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'detective-work-1', title: 'Police & Detective Work', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={crimeLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
           </div>
         </div>
       );
     } else if (bookId === '7' && unitId === '4') {
       return (
         <div className="mt-6 space-y-8">
-          <div className="grid grid-cols-1 xl:grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
                 <CardHeader className="pb-2">
@@ -2427,7 +2461,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         <span>Government and Politics Vocabulary</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>Intermediate (B1-B2)</CardDescription>
+                      <CardDescription>B1-B2</CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
@@ -2452,13 +2486,47 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 </CardFooter>
               </Card>
             </div>
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Elections & Voting Systems</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>B1-B2</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'elections-voting-1', title: 'Elections & Voting Systems', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={governmentLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
           </div>
         </div>
       );
     } else if (bookId === '7' && unitId === '5') {
       return (
         <div className="mt-6 space-y-8">
-          <div className="grid grid-cols-1 xl:grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
                 <CardHeader className="pb-2">
@@ -2468,7 +2536,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         <span>School Subjects and Activities</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription>A1-A2</CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
@@ -2493,13 +2561,47 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 </CardFooter>
               </Card>
             </div>
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Education Systems Around the World</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>A1-A2</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'education-systems-1', title: 'Education Systems Around the World', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={schoolLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
           </div>
         </div>
       );
     } else if (bookId === '7' && unitId === '6') {
       return (
         <div className="mt-6 space-y-8">
-          <div className="grid grid-cols-1 xl:grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
                 <CardHeader className="pb-2">
@@ -2509,7 +2611,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         <span>Money and Shopping Vocabulary</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription>A1-A2</CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
@@ -2517,6 +2619,40 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
                         onClick={() => setConfirmDelete({ id: 'money-vocabulary-1', title: 'Money and Shopping Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={moneyLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Banking & Budgeting Skills</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>A1-A2</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'banking-budget-1', title: 'Banking & Budgeting Skills', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
