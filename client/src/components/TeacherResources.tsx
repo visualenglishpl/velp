@@ -2474,22 +2474,29 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             <CardContent className="pt-0">              
               {/* PDF Embedding - Enhanced UI */}
               {resource.fileUrl && (resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && (
-                <div className="rounded overflow-hidden mb-4 border bg-white">
+                <div className="rounded overflow-hidden mb-4 border bg-white hover:shadow-md transition-all">
                   <div className="p-4 flex flex-col items-center">
-                    <div className="bg-muted/20 w-24 h-32 flex items-center justify-center rounded mb-3 border relative overflow-hidden">
-                      <FileText className="h-12 w-12 text-primary/60" />
-                      <div className="absolute bottom-0 left-0 right-0 bg-primary/10 text-center text-xs py-1 font-medium">PDF</div>
-                    </div>
+                    <a 
+                      href={resource.fileUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="cursor-pointer"
+                    >
+                      <div className="bg-muted/20 w-24 h-32 flex items-center justify-center rounded mb-3 border relative overflow-hidden hover:border-primary/50 transition-all">
+                        <FileText className="h-12 w-12 text-primary/60" />
+                        <div className="absolute bottom-0 left-0 right-0 bg-primary/10 text-center text-xs py-1 font-medium">PDF</div>
+                      </div>
+                    </a>
                     <h4 className="text-sm font-medium text-center mb-1">{resource.title}</h4>
                     <p className="text-xs text-muted-foreground mb-3 text-center">Provider: {resource.provider || 'Visual English'}</p>
                     <Button 
                       size="sm"
-                      variant="outline" 
-                      className="w-full mt-2"
+                      variant="default" 
+                      className="w-full mt-2 bg-primary/90 hover:bg-primary"
                       onClick={() => window.open(resource.fileUrl, '_blank')}
                     >
                       <FileText className="h-3 w-3 mr-2" />
-                      Open Lesson PDF
+                      Open PDF Document
                     </Button>
                   </div>
                 </div>
@@ -3040,9 +3047,116 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   };
   
   const renderLessonPlans = () => {
+    // First, check if there are any lesson plans specifically for this book/unit in the resources list
+    const lessonPlansFromResources = resources.filter(r => r.resourceType === 'lesson');
+    
+    // If there are any lesson plans in resources, render them first
+    const resourceLessonPlans = lessonPlansFromResources.length > 0 ? (
+      <div className="mt-6 mb-10">
+        <h3 className="text-lg font-semibold mb-4">Uploaded Lesson Plans</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {lessonPlansFromResources.map((resource, index) => (
+            <Card key={resource.id || index} className="overflow-hidden hover:shadow-md transition-shadow">
+              <CardHeader className="pb-2">
+                <div className="flex justify-between items-start">
+                  <CardTitle className="text-lg">{resource.title}</CardTitle>
+                  <Badge variant="outline" className="ml-2">
+                    <FileText className="h-3 w-3 mr-1" />
+                    Lesson Plan
+                  </Badge>
+                </div>
+                {resource.provider && (
+                  <CardDescription className="text-xs">
+                    Provider: {resource.provider}
+                  </CardDescription>
+                )}
+              </CardHeader>
+              
+              <CardContent className="pt-0">
+                {resource.fileUrl && (
+                  <div className="rounded overflow-hidden mb-4 border bg-white hover:shadow-md transition-all">
+                    <div className="p-4 flex flex-col items-center">
+                      <a 
+                        href={resource.fileUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="cursor-pointer"
+                      >
+                        <div className="bg-muted/20 w-24 h-32 flex items-center justify-center rounded mb-3 border relative overflow-hidden hover:border-primary/50 transition-all">
+                          <FileText className="h-12 w-12 text-primary/60" />
+                          <div className="absolute bottom-0 left-0 right-0 bg-primary/10 text-center text-xs py-1 font-medium">PDF</div>
+                        </div>
+                      </a>
+                      <h4 className="text-sm font-medium text-center mb-1">{resource.title}</h4>
+                      <p className="text-xs text-muted-foreground mb-3 text-center">Provider: {resource.provider || 'Visual English'}</p>
+                      <Button 
+                        size="sm"
+                        variant="default" 
+                        className="w-full mt-2 bg-primary/90 hover:bg-primary"
+                        onClick={() => window.open(resource.fileUrl, '_blank')}
+                      >
+                        <FileText className="h-3 w-3 mr-2" />
+                        Open Lesson Plan
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+              
+              <CardFooter className="bg-muted/30 pt-2 pb-2">
+                <div className="flex justify-between w-full">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-xs flex items-center" 
+                    onClick={() => handleViewMore(resource)}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    View More
+                  </Button>
+
+                  {isEditMode && (
+                    <div className="flex space-x-1">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center" 
+                        onClick={() => {
+                          setNewResource({ ...resource });
+                          setIsAdding(true);
+                        }}
+                      >
+                        <Pencil className="h-3 w-3 mr-1" />
+                        Edit
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete(resource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      </div>
+    ) : null;
+
+    // Now render the built-in lesson plans depending on book and unit
+    let builtInLessonPlans = null;
+
+    // Book 7 Units specific lesson plans
+    // Check if this book/unit combination has built-in lesson plans and render them if available
     if (bookId === '7' && unitId === '1') {
-      return (
+      builtInLessonPlans = (
         <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
@@ -3116,8 +3230,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         </div>
       );
     } else if (bookId === '7' && unitId === '2') {
-      return (
+      builtInLessonPlans = (
         <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
             <div>
               <Card className="h-full">
@@ -3225,8 +3340,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         </div>
       );
     } else if (bookId === '7' && unitId === '3') {
-      return (
+      builtInLessonPlans = (
         <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
@@ -3300,8 +3416,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         </div>
       );
     } else if (bookId === '7' && unitId === '4') {
-      return (
+      builtInLessonPlans = (
         <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
@@ -3375,8 +3492,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         </div>
       );
     } else if (bookId === '7' && unitId === '5') {
-      return (
+      builtInLessonPlans = (
         <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
@@ -3450,8 +3568,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         </div>
       );
     } else if (bookId === '7' && unitId === '6') {
-      return (
+      builtInLessonPlans = (
         <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             <div>
               <Card className="h-full">
