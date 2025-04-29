@@ -49,7 +49,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Fetch teacher resources
   const { data, isLoading, refetch } = useQuery<TeacherResource[]>({
     queryKey: [`/api/direct/${bookId}/${unitId}/resources`],
-    queryFn: getQueryFn({}),
+    queryFn: getQueryFn(),
   });
 
   // Save resources mutation
