@@ -228,14 +228,37 @@ export function registerDirectRoutes(app: Express) {
     const { bookId, unitId } = req.params;
     
     // Find the appropriate PDF file based on book and unit
-    const pdfFileName = `${__dirname}/../attached_assets/${bookId} A Visual English Book ${bookId} – Unit ${unitId} – Linki Do Filmy I Gry.pdf`;
+    // The file naming pattern from attached_assets is different from what we expected
+    // The pattern seems to be: number A Visual English Book 1 – Unit number – Linki Do Filmy I Gry.pdf
+    // We'll try various formats to make sure we find the right file
+    
+    // Maps for the existing files we discovered
+    const fileMap = {
+      "1": {
+        "2": "20 A Visual English Book 1 – Unit 2 – Linki Do Filmy I Gry.pdf",
+        "3": "12 A Visual English Book 1 – Unit 3 – Linki Do Filmy I Gry.pdf", 
+        "4": "14 A Visual English Book 1 – Unit 4 – Linki Do Filmy I Gry.pdf",
+        "5": "18 A Visual English Book 1 – Unit 5 – Linki Do Filmy I Gry.pdf"
+      }
+    };
+    
+    // Try to get the file based on our known mapping
+    let pdfFileName = null;
+    if (fileMap[bookId] && fileMap[bookId][unitId]) {
+      pdfFileName = `${__dirname}/../attached_assets/${fileMap[bookId][unitId]}`;
+    } else {
+      // If not in our map, try a generic pattern
+      pdfFileName = `${__dirname}/../attached_assets/${bookId} A Visual English Book ${bookId} – Unit ${unitId} – Linki Do Filmy I Gry.pdf`;
+    }
+    
+    // Default fallback in case all else fails
     const fallbackFileName = `${__dirname}/../attached_assets/12 A Visual English Book 1 – Unit 3 – Linki Do Filmy I Gry.pdf`;
     
     console.log(`Attempting to serve PDF file: ${pdfFileName}`);
     
     // Check if file exists
     try {
-      if (fs.existsSync(pdfFileName)) {
+      if (pdfFileName && fs.existsSync(pdfFileName)) {
         // Set Content-Type header
         res.setHeader('Content-Type', 'application/pdf');
         // Return the file
