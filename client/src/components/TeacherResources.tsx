@@ -49,7 +49,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Fetch teacher resources
   const { data, isLoading, refetch } = useQuery<TeacherResource[]>({
     queryKey: [`/api/direct/${bookId}/${unitId}/resources`],
-    queryFn: getQueryFn({}),
+    queryFn: getQueryFn({ on401: "returnNull" }),
   });
 
   // Save resources mutation
@@ -78,8 +78,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   });
 
   useEffect(() => {
-    if (data) {
+    if (data && Array.isArray(data)) {
       setResources(data);
+    } else if (data) {
+      // Handle case where data is not an array
+      console.warn('Resources data is not an array:', data);
+      setResources([]);
     }
   }, [data]);
 
@@ -166,7 +170,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   };
 
   const ResourceList = ({ resourceType }: { resourceType: string }) => {
-    const filteredResources = resources.filter(r => r.resourceType === resourceType);
+    // Make sure resources is an array before filtering
+    const filteredResources = Array.isArray(resources) 
+      ? resources.filter(r => r?.resourceType === resourceType)
+      : [];
     
     if (filteredResources.length === 0) {
       return (
@@ -192,8 +199,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-1">
         {filteredResources.map((resource, index) => (
-          <Card key={index} className="group overflow-hidden transition-all duration-300 hover:shadow-md border border-border/50">
-            <CardHeader className="pb-3">
+          <Card key={index} className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/30 border border-border/50">
+            <CardHeader className="pb-3 bg-gradient-to-b from-muted/30 to-transparent">
               <div className="flex justify-between items-start">
                 <div className="space-y-1">
                   <CardTitle className="text-lg font-bold bg-gradient-to-r from-primary to-primary/70 text-transparent bg-clip-text">
@@ -205,7 +212,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                     </CardDescription>
                   )}
                 </div>
-                <Badge variant="outline" className="bg-primary/5">
+                <Badge variant="outline" className="bg-primary/5 shadow-sm">
                   <span className="flex items-center gap-1">
                     {getIconForResourceType(resource.resourceType)}
                     <span className="capitalize">{resource.resourceType}</span>
@@ -234,13 +241,13 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               ) : null}
             </CardContent>
             
-            <CardFooter className="flex justify-between pt-2">
+            <CardFooter className="flex justify-between pt-2 border-t border-border/20">
               {resource.sourceUrl ? (
                 <a 
                   href={resource.sourceUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-xs flex items-center text-primary hover:underline transition-all"
+                  className="text-xs flex items-center text-primary hover:underline hover:text-primary/80 transition-all group-hover:font-medium"
                 >
                   <ExternalLink className="h-3 w-3 mr-1" /> Open Resource
                 </a>
@@ -252,7 +259,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="text-destructive hover:text-destructive/80 p-0 h-auto"
+                  className="text-destructive hover:text-destructive/80 p-0 h-auto opacity-70 hover:opacity-100 transition-opacity"
                   onClick={() => setConfirmDelete(resource)}
                 >
                   <Trash2 className="h-4 w-4" />
@@ -304,35 +311,35 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         
         <div className="bg-background/70 backdrop-blur-sm rounded-lg p-4 shadow-inner">
           <Tabs defaultValue="video">
-            <TabsList className="mb-6 grid w-full grid-cols-2 md:grid-cols-4 rounded-lg bg-muted/50 p-1 shadow-inner border border-muted">
-              <TabsTrigger value="video" className="flex items-center justify-center py-3 data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200">
-                <Video className="h-4 w-4 mr-2" />
+            <TabsList className="mb-6 grid w-full grid-cols-2 md:grid-cols-4 rounded-lg bg-muted/50 p-1.5 shadow-inner border border-muted">
+              <TabsTrigger value="video" className="flex items-center justify-center py-3 data-[state=active]:bg-background data-[state=active]:shadow-md data-[state=active]:border-b-2 data-[state=active]:border-primary/50 transition-all duration-200">
+                <Video className="h-4 w-4 mr-2 text-primary/80" />
                 <span className="font-medium">Videos</span>
                 <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary font-medium">
-                  {resources.filter(r => r.resourceType === 'video').length}
+                  {Array.isArray(resources) ? resources.filter(r => r?.resourceType === 'video').length : 0}
                 </span>
               </TabsTrigger>
-              <TabsTrigger value="game" className="flex items-center justify-center py-3 data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200">
-                <Gamepad2 className="h-4 w-4 mr-2" />
+              <TabsTrigger value="game" className="flex items-center justify-center py-3 data-[state=active]:bg-background data-[state=active]:shadow-md data-[state=active]:border-b-2 data-[state=active]:border-primary/50 transition-all duration-200">
+                <Gamepad2 className="h-4 w-4 mr-2 text-primary/80" />
                 <span className="font-medium">Games</span>
                 <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary font-medium">
-                  {resources.filter(r => r.resourceType === 'game').length}
+                  {Array.isArray(resources) ? resources.filter(r => r?.resourceType === 'game').length : 0}
                 </span>
               </TabsTrigger>
-              <TabsTrigger value="lesson" className="flex items-center justify-center py-3 data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-2">
+              <TabsTrigger value="lesson" className="flex items-center justify-center py-3 data-[state=active]:bg-background data-[state=active]:shadow-md data-[state=active]:border-b-2 data-[state=active]:border-primary/50 transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-2 text-primary/80">
                   <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
                 </svg>
                 <span className="font-medium">Lesson Plans</span>
                 <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary font-medium">
-                  {resources.filter(r => r.resourceType === 'lesson').length}
+                  {Array.isArray(resources) ? resources.filter(r => r?.resourceType === 'lesson').length : 0}
                 </span>
               </TabsTrigger>
-              <TabsTrigger value="pdf" className="flex items-center justify-center py-3 data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200">
-                <FileText className="h-4 w-4 mr-2" />
+              <TabsTrigger value="pdf" className="flex items-center justify-center py-3 data-[state=active]:bg-background data-[state=active]:shadow-md data-[state=active]:border-b-2 data-[state=active]:border-primary/50 transition-all duration-200">
+                <FileText className="h-4 w-4 mr-2 text-primary/80" />
                 <span className="font-medium">PDF Resources</span>
                 <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary font-medium">
-                  {resources.filter(r => r.resourceType === 'pdf').length}
+                  {Array.isArray(resources) ? resources.filter(r => r?.resourceType === 'pdf').length : 0}
                 </span>
               </TabsTrigger>
             </TabsList>
