@@ -316,51 +316,93 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       // Array to hold any PDF resources found
       const pdfResources: TeacherResource[] = [];
       
-      // Check for curriculum PDF
-      try {
-        // Construct the URL for curriculum PDF
-        const curriculumUrl = `/api/direct/book${bookNumber}/unit${unitNumber}/file?path=book${bookNumber}/unit${unitNumber}/00 A Book ${bookNumber} – Unit ${unitNumber} – New Version.pdf`;
-        
-        // Check if it exists by making a HEAD request
-        const response = await fetch(curriculumUrl, { method: 'HEAD' });
-        
-        if (response.ok) {
-          console.log(`Found curriculum PDF for book ${bookNumber}, unit ${unitNumber}`);
-          pdfResources.push({
-            bookId: bookNumber,
-            unitId: unitNumber,
-            title: `Curriculum: Book ${bookNumber} – Unit ${unitNumber}`,
-            resourceType: 'pdf',
-            embedCode: `<object data="${curriculumUrl}" type="application/pdf" width="100%" height="600px"><p>Unable to display PDF file. <a href="${curriculumUrl}" target="_blank">Download</a> instead.</p></object>`,
-            order: 0,
-            provider: 'Visual English'
-          });
-        }
-      } catch (error) {
-        console.warn(`Error checking for curriculum PDF: ${error}`);
-      }
+      // Use the new endpoint to get a list of all available PDFs
+      const response = await fetch(`/api/direct/${bookNumber}/${unitNumber}/pdf-resources`);
       
-      // Check for "Online Games Links" PDF
-      try {
-        const gamesLinksUrl = `/api/direct/files/${bookNumber}/${unitNumber}/linki-do-filmy-i-gry`;
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`Found ${data.resources.length} PDF resources in S3:`, data.resources);
         
-        // Check if it exists
-        const response = await fetch(gamesLinksUrl, { method: 'HEAD' });
-        
-        if (response.ok) {
-          console.log(`Found games/links PDF for book ${bookNumber}, unit ${unitNumber}`);
-          pdfResources.push({
-            bookId: bookNumber,
-            unitId: unitNumber,
-            title: `Online Games and Film Links: Unit ${unitNumber}`,
-            resourceType: 'pdf',
-            embedCode: `<object data="${gamesLinksUrl}" type="application/pdf" width="100%" height="600px"><p>Unable to display PDF file. <a href="${gamesLinksUrl}" target="_blank">Download</a> instead.</p></object>`,
-            order: pdfResources.length,
-            provider: 'Visual English'
+        if (data.success && data.resources && data.resources.length > 0) {
+          // Process each found resource
+          data.resources.forEach((resource: any, index: number) => {
+            // Extract file name from key
+            const fileName = resource.fileName || resource.key.split('/').pop() || 'PDF Resource';
+            
+            // Determine resource title based on file name pattern
+            let title = fileName;
+            const lowerFileName = fileName.toLowerCase();
+            
+            if (lowerFileName.includes('linki do filmy') || lowerFileName.includes('online games')) {
+              title = `Online Games and Film Links: Unit ${unitNumber}`;
+            } else if (lowerFileName.includes('book') && lowerFileName.includes('unit')) {
+              title = `Curriculum: Book ${bookNumber} – Unit ${unitNumber}`;
+            }
+            
+            // Add to resources list
+            if (resource.url) {
+              pdfResources.push({
+                bookId: bookNumber,
+                unitId: unitNumber,
+                title: title,
+                resourceType: 'pdf',
+                embedCode: `<object data="${resource.url}" type="application/pdf" width="100%" height="600px"><p>Unable to display PDF file. <a href="${resource.url}" target="_blank">Download</a> instead.</p></object>`,
+                order: index,
+                provider: 'Visual English'
+              });
+            }
           });
         }
-      } catch (error) {
-        console.warn(`Error checking for games links PDF: ${error}`);
+      } else {
+        // Try the old methods as fallback if the new endpoint fails
+        console.log('Using fallback methods to find PDF resources');
+        
+        // Check for curriculum PDF
+        try {
+          // Construct the URL for curriculum PDF
+          const curriculumUrl = `/api/direct/book${bookNumber}/unit${unitNumber}/file?path=book${bookNumber}/unit${unitNumber}/00 A Book ${bookNumber} – Unit ${unitNumber} – New Version.pdf`;
+          
+          // Check if it exists by making a HEAD request
+          const response = await fetch(curriculumUrl, { method: 'HEAD' });
+          
+          if (response.ok) {
+            console.log(`Found curriculum PDF for book ${bookNumber}, unit ${unitNumber}`);
+            pdfResources.push({
+              bookId: bookNumber,
+              unitId: unitNumber,
+              title: `Curriculum: Book ${bookNumber} – Unit ${unitNumber}`,
+              resourceType: 'pdf',
+              embedCode: `<object data="${curriculumUrl}" type="application/pdf" width="100%" height="600px"><p>Unable to display PDF file. <a href="${curriculumUrl}" target="_blank">Download</a> instead.</p></object>`,
+              order: 0,
+              provider: 'Visual English'
+            });
+          }
+        } catch (error) {
+          console.warn(`Error checking for curriculum PDF: ${error}`);
+        }
+        
+        // Check for "Online Games Links" PDF
+        try {
+          const gamesLinksUrl = `/api/direct/files/${bookNumber}/${unitNumber}/linki-do-filmy-i-gry`;
+          
+          // Check if it exists
+          const response = await fetch(gamesLinksUrl, { method: 'HEAD' });
+          
+          if (response.ok) {
+            console.log(`Found games/links PDF for book ${bookNumber}, unit ${unitNumber}`);
+            pdfResources.push({
+              bookId: bookNumber,
+              unitId: unitNumber,
+              title: `Online Games and Film Links: Unit ${unitNumber}`,
+              resourceType: 'pdf',
+              embedCode: `<object data="${gamesLinksUrl}" type="application/pdf" width="100%" height="600px"><p>Unable to display PDF file. <a href="${gamesLinksUrl}" target="_blank">Download</a> instead.</p></object>`,
+              order: pdfResources.length,
+              provider: 'Visual English'
+            });
+          }
+        } catch (error) {
+          console.warn(`Error checking for games links PDF: ${error}`);
+        }
       }
       
       return pdfResources;
@@ -390,10 +432,13 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         let predefinedResources: TeacherResource[] = [];
         let automaticPdfResources: TeacherResource[] = [];
         
+        console.log(`Attempting to load PDF resources for book ${bookId}, unit ${unitId}`);
+        
         // Fetch automatic PDF resources first
         try {
           automaticPdfResources = await fetchAutomaticPdfResources(bookId, unitId);
-          console.log(`Found ${automaticPdfResources.length} automatic PDF resources`);
+          console.log(`Found ${automaticPdfResources.length} automatic PDF resources:`, 
+            automaticPdfResources.map(r => r.title).join(', '));
         } catch (error) {
           console.error(`Error loading automatic PDF resources: ${error}`);
           automaticPdfResources = [];

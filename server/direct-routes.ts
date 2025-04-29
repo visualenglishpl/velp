@@ -1731,5 +1731,111 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
+  // Endpoint to check for PDF resources available in S3 for a specific book/unit
+  app.get("/api/direct/:bookId/:unitId/pdf-resources", isAuthenticated, async (req, res) => {
+    try {
+      const { bookId, unitId } = req.params;
+      
+      console.log(`Checking for PDF resources for book ${bookId}, unit ${unitId}`);
+      
+      // Define patterns to search for PDF files
+      const patterns = [
+        // Curriculum PDFs
+        `book${bookId}/unit${unitId}/00 A Book ${bookId} – Unit ${unitId} – New Version.pdf`,
+        `book${bookId}/unit${unitId}/00 A Visual English ${bookId} – Unit ${unitId} – New Version.pdf`,
+        `book${bookId}/unit${unitId}/00*Unit ${unitId}*.pdf`,
+        
+        // Game/Video links PDFs
+        `book${bookId}/unit${unitId}/*Online Games Links.pdf`,
+        `book${bookId}/unit${unitId}/*Linki Do Filmy I Gry.pdf`
+      ];
+      
+      const foundResources = [];
+      
+      // Check each pattern and see if we can find files
+      for (const pattern of patterns) {
+        try {
+          // For exact filenames, we can check directly
+          if (!pattern.includes('*')) {
+            try {
+              const command = new GetObjectCommand({
+                Bucket: S3_BUCKET,
+                Key: pattern
+              });
+              
+              try {
+                // Just check if the command would work, don't actually fetch the data
+                await s3Client.send(command);
+                
+                // If we get here, the file exists
+                const presignedUrl = await getS3PresignedUrl(pattern);
+                
+                foundResources.push({
+                  key: pattern,
+                  fileName: pattern.split('/').pop(),
+                  url: presignedUrl,
+                  type: 'pdf'
+                });
+              } catch (error) {
+                // File doesn't exist, just continue
+              }
+            } catch (error) {
+              // Skip errors for individual files
+            }
+          } else {
+            // For patterns with wildcards, list objects and filter
+            const prefix = pattern.split('*')[0];
+            const suffix = pattern.includes('.pdf') ? '.pdf' : '';
+            
+            const files = await listS3Objects(prefix);
+            
+            if (files && files.length > 0) {
+              for (const file of files) {
+                if (suffix && !file.endsWith(suffix)) continue;
+                
+                // Check if file matches the pattern
+                let matches = true;
+                const parts = pattern.split('*');
+                
+                // Skip the first part as we already used it for the prefix
+                for (let i = 1; i < parts.length; i++) {
+                  if (parts[i] && !file.includes(parts[i])) {
+                    matches = false;
+                    break;
+                  }
+                }
+                
+                if (matches) {
+                  const presignedUrl = await getS3PresignedUrl(file);
+                  
+                  foundResources.push({
+                    key: file,
+                    fileName: file.split('/').pop(),
+                    url: presignedUrl,
+                    type: 'pdf'
+                  });
+                }
+              }
+            }
+          }
+        } catch (patternError) {
+          console.warn(`Error checking pattern ${pattern}:`, patternError);
+        }
+      }
+      
+      return res.json({
+        success: true,
+        resources: foundResources
+      });
+    } catch (error) {
+      console.error(`Error checking for PDF resources:`, error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to check for PDF resources",
+        error: String(error)
+      });
+    }
+  });
+  
   console.log("Direct routes registered successfully");
 }
