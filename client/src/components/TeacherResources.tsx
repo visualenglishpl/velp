@@ -1709,7 +1709,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate lessonPlan={movieGenresLessonPlan} />
+                  <LessonPlanTemplate plan={movieGenresLessonPlan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
                   <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
@@ -1728,7 +1728,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate lessonPlan={filmProductionLessonPlan} />
+                  <LessonPlanTemplate plan={filmProductionLessonPlan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
                   <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
