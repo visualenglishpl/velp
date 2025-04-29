@@ -1349,7 +1349,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
   };
 
-  // Movie Genres Vocabulary Lesson Plan
+  // Unit 1: Movie Genres Vocabulary Lesson Plan
   const movieGenresLessonPlan: LessonPlan = {
     id: 'film-genres-1',
     title: 'Movie Genres Vocabulary - Part 1',
@@ -1453,7 +1453,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     ]
   };
 
-  // Film Production Roles Lesson Plan
+  // Unit 1: Film Production Roles Lesson Plan
   const filmProductionLessonPlan: LessonPlan = {
     id: 'film-production-1',
     title: 'Film Production Roles - Part 1',
@@ -1558,6 +1558,218 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       {
         title: 'Behind the Scenes of a Movie',
         url: 'https://www.youtube.com/watch?v=p57KyLojoHU'
+      }
+    ]
+  };
+  
+  // Unit 2: Body Piercings Vocabulary Lesson Plan
+  const bodyPiercingsLessonPlan: LessonPlan = {
+    id: 'body-piercings-1',
+    title: 'Body Piercings Vocabulary - Part 1',
+    duration: '45 minutes',
+    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    objectives: [
+      'Identify and name common types of body piercings in English',
+      'Use appropriate prepositions to describe piercing locations on the body',
+      'Express opinions about different types of piercings using simple structures',
+      'Ask and answer questions about piercings using the present simple tense'
+    ],
+    materials: [
+      'Visual English Book 7, Unit 2 slides (01 A - 01 H Ed)',
+      'Wordwall interactive game - Body Piercings vocabulary',
+      'YouTube video: "Body Modification - English Vocabulary"',
+      'Body parts diagram with piercing locations labeled',
+      'Opinion cards with expressions (beautiful, ugly, disgusting, amazing, etc.)'
+    ],
+    steps: [
+      {
+        title: 'Warm-up: Personal Experience',
+        duration: '5 mins',
+        description: 'Begin by asking students about their experiences with or opinions on body piercings.',
+        instructions: [
+          "Ask students: 'Do you have any piercings? Where?'",
+          "Follow up with: 'Do you know anyone who has piercings? What kind?'",
+          "Use the opportunity to gauge student comfort with the topic and pre-teach some basic vocabulary."
+        ],
+        teacherNotes: 'Be sensitive to cultural differences regarding body modifications. Keep the discussion respectful.'
+      },
+      {
+        title: 'Vocabulary Introduction: Types of Piercings',
+        duration: '12 mins',
+        description: 'Introduce vocabulary for different types of piercings using Visual English Book 7 slides.',
+        materials: [
+          'Book 7, Unit 2 slides (01 A - 01 H Ba)',
+          'Body parts diagram'
+        ],
+        instructions: [
+          'Display slides showing different piercing types',
+          'For each type, ask: "What is this called? Where is it located?"',
+          'Teach prepositions of location: "The piercing is on/in the ear/nose/lip/etc."',
+          'Have students repeat the vocabulary to practice pronunciation'
+        ]
+      },
+      {
+        title: 'Question Practice: Ask and Answer',
+        duration: '10 mins',
+        description: 'Students practice asking and answering questions about piercings using the target structures.',
+        materials: [
+          'Book 7, Unit 2 slides (01 H Ab - 01 H Ca)',
+          'Question prompts on the board'
+        ],
+        instructions: [
+          'Model question and answer patterns: "Do you have piercings?" "Yes, I do/No, I don\'t"',
+          '"Where is the piercing?" "It\'s on/in the ___"',
+          'Have students work in pairs to practice asking and answering questions',
+          'Monitor and provide feedback on grammar and pronunciation'
+        ]
+      },
+      {
+        title: 'Opinion Activity: What Do You Think?',
+        duration: '13 mins',
+        description: 'Students express and justify opinions about different types of piercings.',
+        materials: [
+          'Book 7, Unit 2 slides (01 H Ac - 01 H Ed)',
+          'Opinion cards with expressions (beautiful, ugly, disgusting, amazing, etc.)'
+        ],
+        instructions: [
+          'Display slides showing different piercing styles',
+          'Model expressing opinions: "I think ____ piercings are beautiful/interesting/etc. because..."',
+          'Distribute opinion cards and have students discuss in small groups',
+          'Each student must use at least 3 different opinion expressions'
+        ],
+        teacherNotes: 'Remind students to be respectful of different opinions. This is about practicing language, not judging others.'
+      },
+      {
+        title: 'Wrap-up: Class Survey',
+        duration: '5 mins',
+        description: 'Conduct a quick class survey about piercing preferences.',
+        instructions: [
+          'Ask students to raise hands: "Who has piercings? Who wants to get piercings?"',
+          'Count responses and write numbers on the board',
+          'Ask 2-3 students to share their reasons for their preferences',
+          'Summarize the key vocabulary and structures learned in the lesson'
+        ]
+      }
+    ],
+    assessmentTips: 'Evaluate students based on their participation in pair work and their ability to use the target vocabulary and question forms accurately.',
+    homeworkIdeas: [
+      'Write 5 sentences about your opinion on different types of piercings using the vocabulary from class.',
+      'Find a picture of someone with piercings and write 3-5 sentences describing where the piercings are located.'
+    ],
+    additionalResources: [
+      {
+        title: 'Wordwall Body Piercing Vocabulary Game',
+        url: 'https://wordwall.net/resource/8156271/body-piercings-vocabulary'
+      },
+      {
+        title: 'Body Modification - English Vocabulary Video',
+        url: 'https://www.youtube.com/watch?v=LfX_UpuJJjs'
+      }
+    ]
+  };
+
+  // Unit 2: Hairstyles Vocabulary Lesson Plan
+  const hairstylesLessonPlan: LessonPlan = {
+    id: 'hairstyles-1',
+    title: 'Hairstyles and Hair Types - Part 1',
+    duration: '45 minutes',
+    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    objectives: [
+      'Identify and name common hairstyles in English (mohawk, bald, fringe, braids, etc.)',
+      'Describe people\'s hair using appropriate adjectives',
+      'Express preferences about hairstyles using simple structures',
+      'Ask and answer questions about hairstyles using present tense forms'
+    ],
+    materials: [
+      'Visual English Book 7, Unit 2 slides (02 M - 02 M Dc)',
+      'Wordwall interactive game - Hairstyles vocabulary',
+      'YouTube video: "English Vocabulary: Hair and Hairstyles"',
+      'Pictures of different hairstyles',
+      'Basic hairstyle flashcards'
+    ],
+    steps: [
+      {
+        title: 'Warm-up: Celebrity Hairstyles',
+        duration: '5 mins',
+        description: 'Show pictures of celebrities with distinctive hairstyles and elicit descriptions from students.',
+        instructions: [
+          "Show 4-5 pictures of celebrities with different hairstyles",
+          "Ask: 'Can you describe this person\'s hair?'",
+          "Note key vocabulary on the board as students respond"
+        ],
+        teacherNotes: 'Use this activity to assess prior knowledge and introduce the topic in an engaging way.'
+      },
+      {
+        title: 'Vocabulary Presentation: Hairstyle Types',
+        duration: '12 mins',
+        description: 'Introduce vocabulary for different hairstyles using Visual English Book 7 slides.',
+        materials: [
+          'Book 7, Unit 2 slides (02 M - 02 M Ca)',
+          'Hairstyle flashcards'
+        ],
+        instructions: [
+          'Display slides showing different hairstyles',
+          'For each style, ask: "What hairstyle is this? What\'s it called?"',
+          'Teach descriptive vocabulary (mohawk, bald, fringe, braids, etc.)',
+          'Have students repeat the new vocabulary to practice pronunciation'
+        ]
+      },
+      {
+        title: 'Question Practice: Personal Experience',
+        duration: '10 mins',
+        description: 'Students practice asking and answering questions about hairstyles.',
+        materials: [
+          'Book 7, Unit 2 slides (02 M Bc - 02 M Cd)',
+          'Question prompts written on the board'
+        ],
+        instructions: [
+          'Model question and answer patterns: "Do you know anyone who is bald/has a fringe?"',
+          '"Do you want to have a mohawk/braids?" "Yes, I do/No, I don\'t"',
+          'Have students work in pairs to practice asking and answering',
+          'Monitor for accurate use of vocabulary and grammar'
+        ]
+      },
+      {
+        title: 'Interactive Activity: Hairstyle Opinions',
+        duration: '13 mins',
+        description: 'Students discuss and express opinions about different hairstyles.',
+        materials: [
+          'Book 7, Unit 2 slides (02 M Ad - 02 M Bd)',
+          'Opinion phrases on cards or the board (beautiful, ugly, cool, strange, etc.)'
+        ],
+        instructions: [
+          'Display slides showing different hairstyles',
+          'Model expressing opinions: "I think mohawks are cool because..."',
+          'In small groups, students discuss what they think about each style',
+          'Each group reports their most interesting opinions to the class'
+        ],
+        teacherNotes: 'Encourage students to explain their opinions using "because" to practice more complex sentence structures.'
+      },
+      {
+        title: 'Wrap-up: Hairstyle Survey',
+        duration: '5 mins',
+        description: 'Students conduct a quick survey about hairstyle preferences in the class.',
+        instructions: [
+          'Students ask 3-4 classmates: "What\'s your favorite hairstyle?"',
+          'Students note responses and report back to class',
+          'Teacher creates a quick bar graph on board showing most popular styles',
+          'Summarize the key vocabulary learned in the lesson'
+        ]
+      }
+    ],
+    assessmentTips: 'Evaluate students based on their participation in group activities and their ability to correctly use hairstyle vocabulary when describing pictures and expressing opinions.',
+    homeworkIdeas: [
+      'Write a short paragraph describing your current hairstyle and a style you would like to try in the future.',
+      'Find pictures of 3 different hairstyles online and write 2 sentences about each one using vocabulary from the lesson.'
+    ],
+    additionalResources: [
+      {
+        title: 'Wordwall Hairstyles Vocabulary Game',
+        url: 'https://wordwall.net/resource/11736815/hairstyles-vocabulary'
+      },
+      {
+        title: 'English Vocabulary: Hair and Hairstyles',
+        url: 'https://www.youtube.com/watch?v=EjRAnkHF1FU'
       }
     ]
   };
@@ -1729,6 +1941,51 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
                   <LessonPlanTemplate plan={filmProductionLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (bookId === '7' && unitId === '2') {
+      return (
+        <div className="mt-6 space-y-8">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex justify-between">
+                    <span>Body Piercings Vocabulary</span>
+                    <span className="text-sm font-normal">45 min</span>
+                  </CardTitle>
+                  <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={bodyPiercingsLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex justify-between">
+                    <span>Hairstyles and Hair Types</span>
+                    <span className="text-sm font-normal">45 min</span>
+                  </CardTitle>
+                  <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={hairstylesLessonPlan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
                   <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
