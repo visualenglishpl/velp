@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image } from 'lucide-react';
+import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image, PenLine, CheckCircle } from 'lucide-react';
 import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
 
 export interface TeacherResource {
@@ -63,7 +63,7 @@ const KahootThumbnail = ({ title }: { title: string }) => {
 const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const { toast } = useToast();
   const urlParams = new URLSearchParams(window.location.search);
-  const isEditMode = urlParams.get('edit') === 'true';
+  const [isEditMode, setIsEditMode] = useState(urlParams.get('edit') === 'true');
   const [resources, setResources] = useState<TeacherResource[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [editingResource, setEditingResource] = useState<TeacherResource | null>(null);
@@ -2867,11 +2867,29 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Teacher Resources for Book {bookId}, Unit {unitId}</h2>
-        {isEditMode && (
-          <Button onClick={() => setIsAdding(true)}>
-            <Plus className="h-4 w-4 mr-2" /> Add Resource
-          </Button>
-        )}
+        <div className="flex items-center gap-3">
+          {isEditMode ? (
+            <>
+              <Button onClick={() => setIsAdding(true)} className="bg-green-600 hover:bg-green-700">
+                <Plus className="h-4 w-4 mr-2" /> Add Resource
+              </Button>
+              <Button 
+                variant="outline" 
+                className="text-muted-foreground" 
+                onClick={() => setIsEditMode(false)}
+              >
+                <CheckCircle className="h-4 w-4 mr-2" /> Done Editing
+              </Button>
+            </>
+          ) : (
+            <Button 
+              variant="outline" 
+              onClick={() => setIsEditMode(true)}
+            >
+              <PenLine className="h-4 w-4 mr-2" /> Manage Resources
+            </Button>
+          )}
+        </div>
       </div>
 
       <Tabs defaultValue="videos">
