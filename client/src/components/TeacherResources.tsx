@@ -2051,9 +2051,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   };
 
   const governmentLessonPlan: LessonPlan = {
+    id: "government-lesson-1",
     title: "Government and Politics Vocabulary",
     level: "Intermediate (B1-B2)",
-    duration: 45,
+    duration: "45 min",
     objectives: [
       "Learn vocabulary related to government structures and political systems",
       "Practice discussing political processes and civic duties",
@@ -2064,41 +2065,42 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       "Political systems infographic",
       "Simplified political vocabulary glossary"
     ],
-    warmUp: {
-      title: "Government Brainstorm",
-      duration: 5,
-      description: "Students brainstorm words related to government and politics. Create a mind map on the board categorizing terms (officials, buildings, processes, etc.)."
-    },
-    mainActivities: [
+    steps: [
+      {
+        title: "Government Brainstorm",
+        duration: "5 min",
+        description: "Students brainstorm words related to government and politics. Create a mind map on the board categorizing terms (officials, buildings, processes, etc.)."
+      },
       {
         title: "Political Systems Comparison",
-        duration: 15,
+        duration: "15 min",
         description: "Introduce different political systems (democracy, monarchy, dictatorship). Students complete a comparison chart highlighting key features of each system."
       },
       {
         title: "Government Roles Matching",
-        duration: 10,
+        duration: "10 min",
         description: "Students match government positions (president, prime minister, mayor, judge, etc.) with their responsibilities and powers."
       },
       {
         title: "Mini-Debate",
-        duration: 10,
+        duration: "10 min",
         description: "Students debate simple political questions in small groups using target vocabulary (e.g., 'Should voting be mandatory?')"
+      },
+      {
+        title: "Ideal Government",
+        duration: "5 min",
+        description: "Students briefly describe their ideal government structure, using at least 5 vocabulary terms from the lesson."
       }
     ],
-    closure: {
-      title: "Ideal Government",
-      duration: 5,
-      description: "Students briefly describe their ideal government structure, using at least 5 vocabulary terms from the lesson."
-    },
-    assessment: "Monitor students' use of target vocabulary during debates and in their final descriptions of ideal governments.",
-    extension: "Students research the government structure of an English-speaking country and prepare a short presentation."
+    assessmentTips: "Monitor students' use of target vocabulary during debates and in their final descriptions of ideal governments.",
+    homeworkIdeas: ["Students research the government structure of an English-speaking country and prepare a short presentation."]
   };
 
   const schoolLessonPlan: LessonPlan = {
+    id: "school-subjects-1",
     title: "School Subjects and Activities",
     level: "Elementary to Pre-Intermediate (A1-A2)",
-    duration: 45,
+    duration: "45 min",
     objectives: [
       "Learn vocabulary related to school subjects and after-school activities",
       "Practice expressing preferences about school subjects",
@@ -2109,41 +2111,42 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       "After-school club images",
       "School timetable template"
     ],
-    warmUp: {
-      title: "School Days",
-      duration: 5,
-      description: "Ask students about their favorite and least favorite school subjects. List subjects on the board as they are mentioned."
-    },
-    mainActivities: [
+    steps: [
+      {
+        title: "School Days",
+        duration: "5 min",
+        description: "Ask students about their favorite and least favorite school subjects. List subjects on the board as they are mentioned."
+      },
       {
         title: "Subject Vocabulary",
-        duration: 10,
+        duration: "10 min",
         description: "Introduce or review school subject vocabulary with images (mathematics, science, history, geography, art, music, physical education, etc.)."
       },
       {
         title: "School Clubs Exploration",
-        duration: 10,
+        duration: "10 min",
         description: "Present various after-school activities and clubs. Students discuss which they would join and why, using expressions like 'I'm interested in...' or 'I'm good at...'"
       },
       {
         title: "Dream Timetable",
-        duration: 15,
+        duration: "15 min",
         description: "Students create their ideal school timetable, including subjects and after-school activities. They should include at least 3 core subjects and 2 extracurricular activities."
+      },
+      {
+        title: "School Comparison",
+        duration: "5 min",
+        description: "Discuss differences between schools in different countries, focusing on subjects taught and activities offered."
       }
     ],
-    closure: {
-      title: "School Comparison",
-      duration: 5,
-      description: "Discuss differences between schools in different countries, focusing on subjects taught and activities offered."
-    },
-    assessment: "Evaluate students' use of school vocabulary in their dream timetables and during discussions.",
-    extension: "Students can create a poster or brochure for a new after-school club they would like to start."
+    assessmentTips: "Evaluate students' use of school vocabulary in their dream timetables and during discussions.",
+    homeworkIdeas: ["Students can create a poster or brochure for a new after-school club they would like to start."]
   };
   
   const moneyLessonPlan: LessonPlan = {
+    id: "money-shopping-1",
     title: "Money and Shopping Vocabulary",
     level: "Elementary to Pre-Intermediate (A1-A2)",
-    duration: 45,
+    duration: "45 min",
     objectives: [
       "Learn vocabulary related to money, banking, and shopping",
       "Practice conversations about prices and transactions",
@@ -2154,35 +2157,35 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       "Price tags and product images",
       "Role-play cards for shopping scenarios"
     ],
-    warmUp: {
-      title: "Money Around the World",
-      duration: 5,
-      description: "Show examples of different currencies and discuss their names. Ask students what they know about money in English-speaking countries."
-    },
-    mainActivities: [
+    steps: [
+      {
+        title: "Money Around the World",
+        duration: "5 min",
+        description: "Show examples of different currencies and discuss their names. Ask students what they know about money in English-speaking countries."
+      },
       {
         title: "Banking Vocabulary",
-        duration: 10,
+        duration: "10 min",
         description: "Introduce vocabulary related to banking (account, deposit, withdraw, ATM, credit card, etc.) with visual aids and example sentences."
       },
       {
         title: "Shopping Role-play",
-        duration: 15,
+        duration: "15 min",
         description: "Students practice shopping dialogues in pairs, using phrases like 'How much is this?', 'I'd like to buy...', 'Do you accept credit cards?', etc."
       },
       {
         title: "Budget Challenge",
-        duration: 10,
+        duration: "10 min",
         description: "Give students a budget and a list of items with prices. They must plan purchases within their budget, explaining their choices."
+      },
+      {
+        title: "Money Idioms",
+        duration: "5 min",
+        description: "Introduce a few common money idioms (e.g., 'cost an arm and a leg', 'save for a rainy day') and have students try to use them in sentences."
       }
     ],
-    closure: {
-      title: "Money Idioms",
-      duration: 5,
-      description: "Introduce a few common money idioms (e.g., 'cost an arm and a leg', 'save for a rainy day') and have students try to use them in sentences."
-    },
-    assessment: "Evaluate students' use of money vocabulary during role-plays and the budget challenge.",
-    extension: "Students can research and compare prices of common items in different countries, presenting their findings to the class."
+    assessmentTips: "Evaluate students' use of money vocabulary during role-plays and the budget challenge.",
+    homeworkIdeas: ["Students can research and compare prices of common items in different countries, presenting their findings to the class."]
   };
   
   const renderLessonPlans = () => {
