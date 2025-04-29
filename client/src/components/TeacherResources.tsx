@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { Trash, Plus, Edit, Save, X, Video, Gamepad2, FileText } from 'lucide-react';
+import { Trash, Plus, Edit, Save, X, Video, Gamepad2, FileText, GripVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { 
+  DndContext, 
+  DragEndEvent,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragStartEvent,
+  DragOverlay,
+  UniqueIdentifier
+} from '@dnd-kit/core';
+import { 
+  SortableContext, 
+  verticalListSortingStrategy,
+  useSortable
+} from '@dnd-kit/sortable';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 interface TeacherResource {
   id?: number;
@@ -42,7 +60,19 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
   });
   const [isAdding, setIsAdding] = useState(false);
   const [editingResource, setEditingResource] = useState<number | null>(null);
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const [activeResourceType, setActiveResourceType] = useState<string>('video');
   const { toast } = useToast();
+  
+  // Set up DnD sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor)
+  );
 
   // Function to save resources to the server
   const saveResourcesToServer = async (resourcesToSave: TeacherResource[]) => {
@@ -174,6 +204,67 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       title: "Resource Added",
       description: "The new resource has been added successfully.",
     });
+  };
+  
+  // Drag and Drop handlers
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    setActiveId(active.id);
+    
+    // Find the resource type of the dragged item
+    const draggedResource = resources.find(r => r.id === active.id || resources.indexOf(r) === Number(active.id));
+    if (draggedResource) {
+      setActiveResourceType(draggedResource.resourceType);
+    }
+  };
+  
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (over && active.id !== over.id) {
+      // Get the filtered resources of the current type to determine correct indices
+      const filteredResources = resources.filter(r => r.resourceType === activeResourceType);
+      
+      // Find the source and destination indices in the filtered list
+      const activeIndex = filteredResources.findIndex(r => r.id === active.id || filteredResources.indexOf(r) === Number(active.id));
+      const overIndex = filteredResources.findIndex(r => r.id === over.id || filteredResources.indexOf(r) === Number(over.id));
+      
+      if (activeIndex !== -1 && overIndex !== -1) {
+        // Create a new array of filtered resources with the item moved
+        const newFilteredOrder = [...filteredResources];
+        const [movedItem] = newFilteredOrder.splice(activeIndex, 1);
+        newFilteredOrder.splice(overIndex, 0, movedItem);
+        
+        // Create a new resources array with updated order
+        const newResources = [...resources];
+        
+        // Find the indices of the filtered resources in the full resources array
+        // and update their order
+        newFilteredOrder.forEach((resource, index) => {
+          const resourceIndex = newResources.findIndex(r => 
+            (r.id && r.id === resource.id) || 
+            (r === resource)
+          );
+          if (resourceIndex !== -1) {
+            newResources[resourceIndex].order = index;
+          }
+        });
+        
+        // Update the resources state
+        setResources(newResources);
+        
+        // Save the updated order to the server
+        saveResourcesToServer(newResources);
+        
+        toast({
+          title: "Resources Reordered",
+          description: "Resource order has been updated successfully.",
+        });
+      }
+    }
+    
+    // Reset active states
+    setActiveId(null);
   };
 
   // Initial load of resources
@@ -3485,6 +3576,45 @@ interface ResourceItemProps {
   onUpdate: () => void;
   onDelete: () => void;
   onChange: (field: string, value: string) => void;
+  dragHandle?: {
+    attributes: any;
+    listeners: any;
+  };
+  isDragging?: boolean;
+}
+
+// Create a sortable wrapper component for ResourceItem
+interface SortableResourceItemProps extends ResourceItemProps {
+  id: UniqueIdentifier;
+}
+
+const SortableResourceItem: React.FC<SortableResourceItemProps> = (props) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: props.id });
+
+  const style = {
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    position: 'relative' as const,
+    zIndex: isDragging ? 1 : 0,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style}>
+      <ResourceItem 
+        {...props} 
+        dragHandle={{ attributes, listeners }}
+        isDragging={isDragging}
+      />
+    </div>
+  );
 }
 
 const ResourceItem: React.FC<ResourceItemProps> = ({
