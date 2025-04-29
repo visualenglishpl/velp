@@ -308,7 +308,7 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
       // Generic fallback for unknown patterns
       return {
         question: `This is slide ${sectionCode} in the unit.`,
-        answer: 'Follow the teacher\'s instructions for this activity.',
+        answer: '',  // Removed instruction text as requested
         generatedBy: 'pattern-engine'
       };
     }
