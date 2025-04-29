@@ -53,8 +53,11 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
   
-  // Resources specific to Book 7, Unit 1
-  const book7Unit1Resources = [
+  // Resources specific to Book 7, Unit 1 and Unit 2
+  const getBookUnitResources = (bookId: string, unitId: string) => {
+    // Resources for Book 7, Unit 1
+    if (bookId === '7' && unitId === '1') {
+      return [
     {
       id: "book7-unit1-video1",
       bookId,
@@ -136,12 +139,66 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       embedCode: ""
     }
   ];
+    }
+    
+    // Resources for Book 7, Unit 2
+    if (bookId === '7' && unitId === '2') {
+      return [
+        {
+          id: "book7-unit2-video1",
+          bookId,
+          unitId,
+          title: "Short Movie on Afro Hair",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=kNw8V_Fkw28",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/kNw8V_Fkw28?si=9Zl2x1mjJ3wRpYZ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit2-resource1",
+          bookId,
+          unitId,
+          title: "Tattoos & Piercings - Worksheet Online",
+          resourceType: "lesson" as const,
+          provider: "British Council",
+          sourceUrl: "https://learnenglishteens.britishcouncil.org/study-break/youtubers/tattoos-piercings",
+          embedCode: ""
+        },
+        {
+          id: "book7-unit2-game1",
+          bookId,
+          unitId,
+          title: "Piercings & Tattoos Game 1",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/d05c71b310af42f59922123edb75c96e",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d05c71b310af42f59922123edb75c96e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit2-game2",
+          bookId,
+          unitId,
+          title: "Piercings & Tattoos Game 2",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/0cd285bfcf87423e9d5a7ed1a3935d22",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0cd285bfcf87423e9d5a7ed1a3935d22?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+    
+    // For other book/unit combinations, return an empty array
+    return [];
+  };
+  
+  // Get resources based on book and unit
+  const bookUnitResources = getBookUnitResources(bookId, unitId);
 
   // Save resources mutation
   const saveMutation = useMutation({
     mutationFn: async (updatedResources: TeacherResource[]) => {
-      // For Book 7, Unit 1, just return success without saving to server
-      if (bookId === '7' && unitId === '1') {
+      // For Book 7 specific units, just return success without saving to server
+      if (bookId === '7' && ['1', '2', '3', '4'].includes(unitId)) {
         return { success: true };
       }
       
@@ -153,8 +210,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     },
     onSuccess: () => {
-      if (bookId === '7' && unitId === '1') {
-        setResources(book7Unit1Resources);
+      if (bookId === '7' && ['1', '2', '3', '4'].includes(unitId)) {
+        setResources(bookUnitResources);
       } else {
         refetch();
       }
@@ -174,9 +231,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   });
 
   useEffect(() => {
-    // For Book 7, Unit 1, use the predefined resources
-    if (bookId === '7' && unitId === '1') {
-      setResources(book7Unit1Resources);
+    // For Book 7 units with predefined resources, use them
+    if (bookId === '7' && ['1', '2', '3', '4'].includes(unitId)) {
+      setResources(bookUnitResources);
     } else if (data && Array.isArray(data)) {
       setResources(data);
     } else if (data) {
@@ -184,7 +241,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       console.warn('Resources data is not an array:', data);
       setResources([]);
     }
-  }, [data, bookId, unitId, book7Unit1Resources]);
+  }, [data, bookId, unitId, bookUnitResources]);
 
   const handleNewResourceChange = (field: keyof TeacherResource, value: string) => {
     setNewResource(prev => ({
