@@ -360,7 +360,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             bookId: "1",
             unitId: "1",
             title: "Online Games and Links for Unit 1",
-            resourceType: "pdf",
+            resourceType: "pdf" as "video" | "game" | "activity" | "pdf" | "other",
             embedCode: '<iframe src="https://docs.google.com/viewer?url=https://github.com/replit/replit.github.io/raw/master/media/linki-do-filmy-i-gry.pdf&embedded=true" width="100%" height="500px" frameborder="0"></iframe>',
             order: 3,
             provider: "Visual English"
@@ -440,7 +440,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       // Book 1 - Unit 3
       if (bookId === "1" && unitId === "3") {
         // Add a special resource for Unit 3 links to films and games
-        const unitResources = [
+        const unitResources: TeacherResource[] = [
           {
             bookId: "1",
             unitId: "3",
@@ -484,7 +484,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       // Book 1 - Unit 4
       if (bookId === "1" && unitId === "4") {
         // Add a special resource for Unit 4 links to films and games
-        const unitResources = [
+        const unitResources: TeacherResource[] = [
           {
             bookId: "1",
             unitId: "4",
@@ -519,7 +519,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       // Book 1 - Unit 5
       if (bookId === "1" && unitId === "5") {
         // Add a special resource for Unit 5 links to films and games
-        const unitResources = [
+        const unitResources: TeacherResource[] = [
           {
             bookId: "1",
             unitId: "5",
@@ -554,7 +554,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       // Book 4 - Unit 1 (Nationalities)
       if (bookId === "4" && unitId === "1") {
         // Add resources for Book 4 Unit 1
-        const unitResources = [
+        const unitResources: TeacherResource[] = [
           {
             bookId: "4",
             unitId: "1",

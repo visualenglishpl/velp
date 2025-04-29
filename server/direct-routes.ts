@@ -223,6 +223,39 @@ export function registerDirectRoutes(app: Express) {
     // res.status(401).json({ error: "Not authenticated" });
   };
   
+  // Endpoint for serving Linki Do Filmy I Gry PDF files from attached_assets
+  app.get("/api/direct/files/:bookId/:unitId/linki-do-filmy-i-gry", (req, res) => {
+    const { bookId, unitId } = req.params;
+    
+    // Find the appropriate PDF file based on book and unit
+    const pdfFileName = `${__dirname}/../attached_assets/${bookId} A Visual English Book ${bookId} – Unit ${unitId} – Linki Do Filmy I Gry.pdf`;
+    const fallbackFileName = `${__dirname}/../attached_assets/12 A Visual English Book 1 – Unit 3 – Linki Do Filmy I Gry.pdf`;
+    
+    console.log(`Attempting to serve PDF file: ${pdfFileName}`);
+    
+    // Check if file exists
+    try {
+      if (fs.existsSync(pdfFileName)) {
+        // Set Content-Type header
+        res.setHeader('Content-Type', 'application/pdf');
+        // Return the file
+        return res.sendFile(pdfFileName);
+      } else if (fs.existsSync(fallbackFileName)) {
+        // If specific file doesn't exist, use a fallback file
+        console.log(`PDF file ${pdfFileName} not found, using fallback: ${fallbackFileName}`);
+        res.setHeader('Content-Type', 'application/pdf');
+        return res.sendFile(fallbackFileName);
+      } else {
+        // No PDF file found
+        console.error(`PDF file not found: ${pdfFileName} or fallback`);
+        return res.status(404).json({ error: "PDF file not found" });
+      }
+    } catch (error) {
+      console.error(`Error sending PDF file: ${error}`);
+      return res.status(500).json({ error: "Failed to send PDF file" });
+    }
+  });
+  
   // Test route to verify S3 connectivity
   app.get("/api/direct/test-s3", async (req, res) => {
     try {
