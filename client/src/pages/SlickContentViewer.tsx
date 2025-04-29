@@ -516,6 +516,16 @@ export default function SlickContentViewer() {
       
       // Go to the selected slide
       goToSlide(newIndex);
+      
+      // Save the new order to persist across sessions
+      if (user) {
+        saveOrder(newMaterials);
+        toast({
+          title: "Order saved",
+          description: "The slide order has been saved and will persist when you log back in.",
+          duration: 3000,
+        });
+      }
     }
     
     setActiveId(null);
