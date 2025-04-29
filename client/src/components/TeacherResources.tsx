@@ -2050,6 +2050,47 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     homeworkIdeas: ["Students can write a short crime story using at least 10 vocabulary words from the lesson."]
   };
 
+  const accommodationLessonPlan: LessonPlan = {
+    id: "accommodation-hotels-1",
+    title: "Accommodation & Hotels",
+    level: "B1-B2",
+    duration: "45 min",
+    objectives: [
+      "Learn vocabulary related to different types of accommodation",
+      "Practice making hotel reservations and handling inquiries",
+      "Compare and evaluate different lodging options"
+    ],
+    materials: [
+      "Pictures of different types of accommodation (hotel, hostel, B&B, etc.)",
+      "Hotel booking dialogue cards",
+      "Travel brochures or accommodation listings"
+    ],
+    steps: [
+      {
+        title: "Accommodation Types",
+        duration: "10 min",
+        description: "Introduce vocabulary for different types of accommodation (hotel, motel, hostel, B&B, resort, apartment, campsite). Students match descriptions to images and discuss advantages of each."
+      },
+      {
+        title: "Hotel Facilities Vocabulary",
+        duration: "10 min",
+        description: "Teach vocabulary related to hotel facilities and amenities (reception, concierge, room service, housekeeping, spa, Wi-Fi, etc.)."
+      },
+      {
+        title: "Booking Role-play",
+        duration: "15 min",
+        description: "Students practice dialogues for making reservations, checking in, asking about facilities, and dealing with problems at a hotel."
+      },
+      {
+        title: "Accommodation Review",
+        duration: "10 min",
+        description: "Students read sample accommodation reviews and then write their own short review of an imaginary stay, using at least 8 vocabulary items from the lesson."
+      }
+    ],
+    assessmentTips: "Evaluate students' use of accommodation vocabulary in their role-plays and written reviews.",
+    homeworkIdeas: ["Students research and compare prices and facilities for different types of accommodation in a city of their choice."]
+  };
+  
   const governmentLessonPlan: LessonPlan = {
     id: "government-vocabulary-1",
     title: "Government and Politics Vocabulary",
@@ -2492,7 +2533,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   <div className="flex justify-between items-start">
                     <div>
                       <CardTitle className="flex justify-between text-lg">
-                        <span>Elections & Voting Systems</span>
+                        <span>Accommodation & Hotels</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
                       <CardDescription>B1-B2</CardDescription>
@@ -2502,7 +2543,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                         variant="ghost" 
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'elections-voting-1', title: 'Elections & Voting Systems', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        onClick={() => setConfirmDelete({ id: 'accommodation-hotels-1', title: 'Accommodation & Hotels', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
