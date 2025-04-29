@@ -85,6 +85,150 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
 
+  // Helper function to get additional unit-specific resources
+  const getMoreUnitResources = (bookId: string, unitId: string): TeacherResource[] => {
+    // Book 7, Unit 1 - Film genres
+    if (bookId === '7' && unitId === '1') {
+      return [
+        {
+          id: "book7-unit1-video1",
+          bookId,
+          unitId,
+          title: "Movie Genres Vocabulary Epic ESL Guessing Game",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=FTuQIwl7j3k",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FTuQIwl7j3k?si=wh3So_Qj8Hqk6TL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit1-video2",
+          bookId,
+          unitId,
+          title: "Guess the soundtrack of the films",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://youtu.be/p57KyLojoHU?si=ydbr2xbJxAgeN7_u",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/p57KyLojoHU?si=g_6AyW2jlsRI9DgC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit1-video3",
+          bookId,
+          unitId,
+          title: "Guess the Film Genre",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=Bp07u0YrH4Y",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Bp07u0YrH4Y?si=ufzMpcalPer6eRCn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit1-game1",
+          bookId,
+          unitId,
+          title: "Film Genres Game 1",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/dcc6034981ea455d9bfa88f6740c720f",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/dcc6034981ea455d9bfa88f6740c720f?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit1-game2",
+          bookId,
+          unitId,
+          title: "Film Genres Game 2",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/1e211e293d514f56b1786cfbf6ed146b",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1e211e293d514f56b1786cfbf6ed146b?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit1-game3",
+          bookId,
+          unitId,
+          title: "Film Genres Game 3",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/de72c3ff49e54609b845500c1bf34432",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/de72c3ff49e54609b845500c1bf34432?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+
+    // Resources for Book 7, Unit 2 - Piercings & Tattoos
+    if (bookId === '7' && unitId === '2') {
+      return [
+        {
+          id: "book7-unit2-video1",
+          bookId,
+          unitId,
+          title: "Fashion Styles Vocabulary",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=4vGLON1qRSI",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4vGLON1qRSI?si=1J7_4Z6aOwF4UkSx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit2-game1",
+          bookId,
+          unitId,
+          title: "Fashion Styles Vocabulary Game",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/29461275/fashion-styles-vocabulary",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29461275/fashion-styles-vocabulary?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+
+    // Resources for Book 7, Unit 3 - Crime
+    if (bookId === '7' && unitId === '3') {
+      return [
+        {
+          id: "book7-unit3-video1",
+          bookId,
+          unitId,
+          title: "Where do you see robbers - in shops - banks",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://youtu.be/uikPlL-AOzw?si=nlokxIhxX173GPzk",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/uikPlL-AOzw?si=nlokxIhxX173GPzk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit3-video2",
+          bookId,
+          unitId,
+          title: "What crime are they commiting - smuggling",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://youtu.be/0FRKITalAz4?si=U7S67_uDmlD6PBwW",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/0FRKITalAz4?si=Kkb15NP2MqOUjvvS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit3-game1",
+          bookId,
+          unitId,
+          title: "Crime Vocabulary Game 1",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/ecc57a3b73f14f5faf7d6c0ae1d3beba",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ecc57a3b73f14f5faf7d6c0ae1d3beba?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit3-game2",
+          bookId,
+          unitId,
+          title: "Crime Vocabulary Game 2",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/8f09e7c155fb4932aed9903332ca20cf",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8f09e7c155fb4932aed9903332ca20cf?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+
+    // Default case - return empty array if no specific resources found
+    return [];
+  };
+
   // Resources for various book units
   const getBookUnitResources = (bookId: string, unitId: string): TeacherResource[] => {
     // Common PDF resources that should appear for all Book 7 units
