@@ -1219,41 +1219,11 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           id: "book7-unit14-game1",
           bookId,
           unitId,
-          title: "Months of the Year Game 1",
+          title: "Social Problems Game",
           resourceType: "game" as const,
           provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/1c0632327e4d4c33abf969014a371645",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1c0632327e4d4c33abf969014a371645?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit14-game2",
-          bookId,
-          unitId,
-          title: "Months of the Year Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/c52506eabcd4406cbd3681a0d184060e",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c52506eabcd4406cbd3681a0d184060e?themeId=1&templateId=50&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit14-game3",
-          bookId,
-          unitId,
-          title: "World Celebrations Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/143919e90a414397ba99e8744fcbf7a3",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/143919e90a414397ba99e8744fcbf7a3?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit14-game4",
-          bookId,
-          unitId,
-          title: "Family Celebrations Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/ab22249eb83043d8940f69a78058f725",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ab22249eb83043d8940f69a78058f725?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          sourceUrl: "https://wordwall.net/resource/693f7afb993242929b59236c929717a5",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/693f7afb993242929b59236c929717a5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
