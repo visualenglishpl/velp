@@ -321,7 +321,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     }
   }, [bookId, unitId]);
   
-  // Add pre-defined resources for Book 1 units
+  // Add pre-defined resources for Book units
   useEffect(() => {
     if (resources.length === 0 && bookId && unitId) {
       let predefinedResources: TeacherResource[] = [];
@@ -355,6 +355,15 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2e7d4bdbcc23420689c5274d1df5a6af?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
             order: 2,
             provider: "Wordwall"
+          },
+          {
+            bookId: "1",
+            unitId: "1",
+            title: "Online Games and Links for Unit 1",
+            resourceType: "pdf",
+            embedCode: '<iframe src="https://docs.google.com/viewer?url=https://github.com/replit/replit.github.io/raw/master/media/linki-do-filmy-i-gry.pdf&embedded=true" width="100%" height="500px" frameborder="0"></iframe>',
+            order: 3,
+            provider: "Visual English"
           }
         ];
       }
@@ -415,8 +424,175 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             embedCode: '<iframe src="https://drive.google.com/file/d/1Gdb7Y_wUb0uSEaW7BwS09dFU7K0J1HKK/preview" width="640" height="480" allow="autoplay"></iframe>',
             order: 5,
             provider: "Google Drive"
+          },
+          {
+            bookId: "1",
+            unitId: "2",
+            title: "Linki Do Filmy I Gry (Links to Films and Games)",
+            resourceType: "pdf",
+            embedCode: '<object data="/api/direct/files/1/2/linki-do-filmy-i-gry" type="application/pdf" width="100%" height="500px"><p>Your browser does not support PDFs. <a href="/api/direct/files/1/2/linki-do-filmy-i-gry">Download the PDF</a> instead.</p></object>',
+            order: 6,
+            provider: "Visual English"
           }
         ];
+      }
+      
+      // Book 1 - Unit 3
+      if (bookId === "1" && unitId === "3") {
+        // Add a special resource for Unit 3 links to films and games
+        const unitResources = [
+          {
+            bookId: "1",
+            unitId: "3",
+            title: "Rooms of the House - Song by Planet Pop",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/FgWyY-RCaWk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 0,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "3",
+            title: "Rooms of the House - Learn English with Steve",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/qJyW4dBh0Fc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 1,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "3",
+            title: "Rooms in the House - Wordwall Game",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/b4f8d2af8aa947a19d2d75f74f2e5ef3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 2,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "1",
+            unitId: "3",
+            title: "Linki Do Filmy I Gry (Links to Films and Games)",
+            resourceType: "pdf",
+            embedCode: '<object data="/api/direct/files/1/3/linki-do-filmy-i-gry" type="application/pdf" width="100%" height="500px"><p>Your browser does not support PDFs. <a href="/api/direct/files/1/3/linki-do-filmy-i-gry">Download the PDF</a> instead.</p></object>',
+            order: 3,
+            provider: "Visual English"
+          }
+        ];
+        predefinedResources = unitResources;
+      }
+      
+      // Book 1 - Unit 4
+      if (bookId === "1" && unitId === "4") {
+        // Add a special resource for Unit 4 links to films and games
+        const unitResources = [
+          {
+            bookId: "1",
+            unitId: "4",
+            title: "Parts of the Face - English Singsing",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/K4DGm8gkM-A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 0,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "4",
+            title: "Body Parts Matching Game",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a6474c6c32a545e5b69a6c0573a6d66d?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 1,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "1",
+            unitId: "4",
+            title: "Linki Do Filmy I Gry (Links to Films and Games)",
+            resourceType: "pdf",
+            embedCode: '<object data="/api/direct/files/1/4/linki-do-filmy-i-gry" type="application/pdf" width="100%" height="500px"><p>Your browser does not support PDFs. <a href="/api/direct/files/1/4/linki-do-filmy-i-gry">Download the PDF</a> instead.</p></object>',
+            order: 2,
+            provider: "Visual English"
+          }
+        ];
+        predefinedResources = unitResources;
+      }
+      
+      // Book 1 - Unit 5
+      if (bookId === "1" && unitId === "5") {
+        // Add a special resource for Unit 5 links to films and games
+        const unitResources = [
+          {
+            bookId: "1",
+            unitId: "5",
+            title: "Shapes Song - Super Simple Songs",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tRNy2i75tCc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 0,
+            provider: "YouTube"
+          },
+          {
+            bookId: "1",
+            unitId: "5",
+            title: "2D Shapes Game - Wordwall",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9a85b0e7dff745a2bd8c6f29da06f3d5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 1,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "1",
+            unitId: "5",
+            title: "Linki Do Filmy I Gry (Links to Films and Games)",
+            resourceType: "pdf",
+            embedCode: '<object data="/api/direct/files/1/5/linki-do-filmy-i-gry" type="application/pdf" width="100%" height="500px"><p>Your browser does not support PDFs. <a href="/api/direct/files/1/5/linki-do-filmy-i-gry">Download the PDF</a> instead.</p></object>',
+            order: 2,
+            provider: "Visual English"
+          }
+        ];
+        predefinedResources = unitResources;
+      }
+      
+      // Book 4 - Unit 1 (Nationalities)
+      if (bookId === "4" && unitId === "1") {
+        // Add resources for Book 4 Unit 1
+        const unitResources = [
+          {
+            bookId: "4",
+            unitId: "1",
+            title: "Countries and Nationalities - English with Lucy",
+            resourceType: "video",
+            embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/i6G53BMgugo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            order: 0,
+            provider: "YouTube"
+          },
+          {
+            bookId: "4",
+            unitId: "1",
+            title: "Countries and Nationalities Quiz - Wordwall",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/4df2de3c3c7d4b87910d4178d48c96cd?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 1,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "4",
+            unitId: "1",
+            title: "Flags and Countries Matching - Wordwall",
+            resourceType: "game",
+            embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/82ce5c3f9c484aa2b9c9e1a4a25e0be7?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+            order: 2,
+            provider: "Wordwall"
+          },
+          {
+            bookId: "4",
+            unitId: "1",
+            title: "Nationalities - Lesson Plan",
+            resourceType: "pdf",
+            embedCode: '<iframe src="https://docs.google.com/viewer?url=https://github.com/replit/replit.github.io/raw/master/media/nationalities-lesson-plan.pdf&embedded=true" width="100%" height="500px" frameborder="0"></iframe>',
+            order: 3,
+            provider: "Visual English"
+          }
+        ];
+        predefinedResources = unitResources;
       }
       
       // Add the predefined resources
