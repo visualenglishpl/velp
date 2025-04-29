@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer } from 'lucide-react';
+import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image } from 'lucide-react';
 import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
 
 export interface TeacherResource {
@@ -27,6 +27,38 @@ interface TeacherResourcesProps {
   bookId: string;
   unitId: string;
 }
+
+// Kahoot AI-generated thumbnail component
+const KahootThumbnail = ({ title }: { title: string }) => {
+  // Generate random pastel background color
+  const getRandomPastel = () => {
+    const hue = Math.floor(Math.random() * 360);
+    return `hsl(${hue}, 70%, 80%)`;
+  };
+
+  return (
+    <div 
+      className="aspect-video w-full rounded-md flex flex-col items-center justify-center text-center p-6"
+      style={{ background: getRandomPastel() }}
+    >
+      <div className="bg-white/90 p-4 rounded-lg shadow-md w-full max-w-xs">
+        <div className="flex justify-center mb-3">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-purple-500 rounded-md h-12 w-12"></div>
+            <div className="bg-red-500 rounded-md h-12 w-12"></div>
+            <div className="bg-blue-500 rounded-md h-12 w-12"></div>
+            <div className="bg-yellow-500 rounded-md h-12 w-12"></div>
+          </div>
+        </div>
+        <h3 className="font-bold text-sm mb-1">KAHOOT!</h3>
+        <p className="text-xs font-medium text-gray-800">{title}</p>
+        <div className="mt-3 text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white py-1 px-3 rounded-full inline-block">
+          Play Now
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const { toast } = useToast();
