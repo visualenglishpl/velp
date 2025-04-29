@@ -65,6 +65,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const urlParams = new URLSearchParams(window.location.search);
   const [isEditMode, setIsEditMode] = useState(urlParams.get('edit') === 'true');
   const [resources, setResources] = useState<TeacherResource[]>([]);
+  const [customResources, setCustomResources] = useState<TeacherResource[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [editingResource, setEditingResource] = useState<TeacherResource | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<TeacherResource | null>(null);
@@ -78,6 +79,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     sourceUrl: '',
     embedCode: '',
   });
+  
+  // Check if this is a special book/unit with predefined resources
+  const isSpecialBookUnit = (bookId === '7' || bookId === '6') && 
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId);
 
   // Fetch teacher resources
   const { data, isLoading, refetch } = useQuery<TeacherResource[]>({
@@ -1623,9 +1628,14 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   useEffect(() => {
     // For Book 6 and 7 units with predefined resources, use them
-    if ((bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) ||
-        (bookId === '6' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId))) {
-      setResources(bookUnitResources);
+    if (isSpecialBookUnit) {
+      // Get the base resources from either bookUnitResources or getBookUnitResources
+      const bookUnitRes = getMoreUnitResources(bookId, unitId);
+      const bookPdfRes = getBookUnitResources(bookId, unitId);
+      const baseResources = bookPdfRes.length > 0 ? bookPdfRes : bookUnitRes;
+      
+      // Combine predefined resources with any custom resources
+      setResources([...baseResources, ...customResources]);
     } else if (data && Array.isArray(data)) {
       setResources(data);
     } else if (data) {
@@ -1633,7 +1643,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       console.warn('Resources data is not an array:', data);
       setResources([]);
     }
-  }, [data, bookId, unitId, bookUnitResources]);
+  }, [data, bookId, unitId, isSpecialBookUnit, customResources]);
 
   const handleNewResourceChange = (field: keyof TeacherResource, value: string) => {
     setNewResource(prev => ({
@@ -1685,13 +1695,42 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           }
         }
       }
-
-      // Add the new resource to the list
-      const updatedResources = [...resources, resourceToAdd];
-      console.log('Saving updated resources:', updatedResources);
       
-      // Save to the server
-      await saveMutation.mutateAsync(updatedResources);
+      // Generate similar embed code for Wordwall games if needed
+      if (newResource.resourceType === 'game' && newResource.sourceUrl && !newResource.embedCode) {
+        if (newResource.sourceUrl.includes('wordwall.net/resource/')) {
+          // Extract resource ID from Wordwall URL
+          const resourceMatch = newResource.sourceUrl.match(/wordwall\.net\/resource\/([^/]+)/);
+          const resourceId = resourceMatch?.[1];
+          
+          if (resourceId) {
+            resourceToAdd.embedCode = `<iframe style="max-width:100%" src="https://wordwall.net/embed/${resourceId}?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`;
+          }
+        }
+      }
+
+      // If this is a special book/unit with predefined resources
+      if (isSpecialBookUnit) {
+        // Add custom resource to our state
+        setCustomResources(prev => [...prev, resourceToAdd]);
+        
+        // Get combined list of predefined + custom resources
+        const bookUnitRes = getMoreUnitResources(bookId, unitId);
+        const bookPdfRes = getBookUnitResources(bookId, unitId);
+        const baseResources = bookPdfRes.length > 0 ? bookPdfRes : bookUnitRes;
+        const updatedResources = [...baseResources, ...customResources, resourceToAdd];
+        
+        // Save to server (this will be a no-op for special book/units)
+        await saveMutation.mutateAsync(updatedResources);
+        
+        // Update the resources list to include the new resource
+        setResources(updatedResources);
+      } else {
+        // For regular books, save directly to the server
+        const updatedResources = [...resources, resourceToAdd];
+        await saveMutation.mutateAsync(updatedResources);
+      }
+      
       toast({
         title: "Resource Added",
         description: `${resourceToAdd.title} has been added successfully.`,
@@ -1722,9 +1761,40 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   const handleDeleteResource = async (resource: TeacherResource) => {
     try {
-      const updatedResources = resources.filter(r => r !== resource);
+      // For special book units, we need to handle predefined vs custom resources differently
+      if (isSpecialBookUnit) {
+        // Get the base predefined resources
+        const bookUnitRes = getMoreUnitResources(bookId, unitId);
+        const bookPdfRes = getBookUnitResources(bookId, unitId);
+        const baseResources = bookPdfRes.length > 0 ? bookPdfRes : bookUnitRes;
+        
+        // Check if this is a predefined resource or a custom one
+        const isPredefined = baseResources.some(r => r.id === resource.id);
+        
+        if (isPredefined) {
+          // Show a message that predefined resources can't be deleted
+          toast({
+            title: "Cannot Delete",
+            description: "Predefined resources cannot be deleted. You can only delete custom resources.",
+            variant: "destructive",
+          });
+          setConfirmDelete(null);
+          return;
+        } else {
+          // Update customResources state to remove the resource
+          setCustomResources(prev => prev.filter(r => r.id !== resource.id));
+        }
+      }
+      
+      // Update the resources list
+      const updatedResources = resources.filter(r => r.id !== resource.id);
       await saveMutation.mutateAsync(updatedResources);
       setConfirmDelete(null);
+      
+      toast({
+        title: "Resource Deleted",
+        description: "The resource has been successfully deleted.",
+      });
     } catch (error) {
       console.error('Error deleting resource:', error);
       toast({
