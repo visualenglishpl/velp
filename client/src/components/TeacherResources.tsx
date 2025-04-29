@@ -3626,7 +3626,9 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
   onCancelEdit,
   onUpdate,
   onDelete,
-  onChange
+  onChange,
+  dragHandle,
+  isDragging
 }) => {
   // Render icon based on resource type
   const getResourceIcon = (type: string) => {
@@ -3645,9 +3647,19 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
   };
 
   return (
-    <div className="resource-item border rounded-lg p-4 bg-white">
+    <div className={`resource-item border rounded-lg p-4 bg-white ${isDragging ? 'ring-2 ring-primary shadow-md' : ''}`}>
       <div className="flex justify-between items-start mb-2">
         <div className="flex items-center">
+          {isEditMode && dragHandle && (
+            <button
+              className="cursor-grab hover:bg-gray-100 rounded p-1 mr-2"
+              {...dragHandle.attributes}
+              {...dragHandle.listeners}
+              type="button"
+            >
+              <GripVertical className="h-4 w-4 text-gray-400" />
+            </button>
+          )}
           <div className="mr-2 text-primary">
             {getResourceIcon(resource.resourceType)}
           </div>
