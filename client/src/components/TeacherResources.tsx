@@ -713,29 +713,50 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
   
   return (
     <div>
-      <div className="mb-4 flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Teacher Resources</h2>
-        {isEditMode && (
-          <Button onClick={() => setIsAdding(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Resource
-          </Button>
-        )}
+      <div className="mb-6 bg-gradient-to-b from-primary/5 to-transparent p-6 rounded-xl">
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 text-transparent bg-clip-text">
+              Teacher Resources
+            </h2>
+            <p className="text-muted-foreground text-sm">Educational materials for Book {bookId}, Unit {unitId}</p>
+          </div>
+          {isEditMode && (
+            <Button onClick={() => setIsAdding(true)} size="sm" className="shadow-sm transition-all hover:shadow-md">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Resource
+            </Button>
+          )}
+        </div>
+        
+        <div className="text-sm text-muted-foreground bg-background/80 p-3 rounded-lg border border-border/50 shadow-sm">
+          <p>Teaching resources for this unit include educational videos, interactive games, and curriculum documents.</p>
+          <p>Resources are organized in tabs below for easy navigation.</p>
+        </div>
       </div>
       
-      <Tabs defaultValue="video">
-        <TabsList className="mb-4">
-          <TabsTrigger value="video" className="flex items-center">
+      <Tabs defaultValue="video" className="bg-card/50 rounded-lg p-4 shadow-sm border border-border/50">
+        <TabsList className="mb-4 grid w-full grid-cols-3 rounded-lg bg-muted/80">
+          <TabsTrigger value="video" className="flex items-center justify-center py-3 data-[state=active]:shadow-sm">
             <Video className="h-4 w-4 mr-2" />
-            Videos
+            <span className="font-medium">Videos</span>
+            <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+              {resources.filter(r => r.resourceType === 'video').length}
+            </span>
           </TabsTrigger>
-          <TabsTrigger value="game" className="flex items-center">
+          <TabsTrigger value="game" className="flex items-center justify-center py-3 data-[state=active]:shadow-sm">
             <Gamepad2 className="h-4 w-4 mr-2" />
-            Games
+            <span className="font-medium">Games</span>
+            <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+              {resources.filter(r => r.resourceType === 'game').length}
+            </span>
           </TabsTrigger>
-          <TabsTrigger value="pdf" className="flex items-center">
+          <TabsTrigger value="pdf" className="flex items-center justify-center py-3 data-[state=active]:shadow-sm">
             <FileText className="h-4 w-4 mr-2" />
-            Documents
+            <span className="font-medium">Documents</span>
+            <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+              {resources.filter(r => r.resourceType === 'pdf').length}
+            </span>
           </TabsTrigger>
         </TabsList>
         
