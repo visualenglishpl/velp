@@ -1901,13 +1901,13 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
     if (type === 'video' || type === 'game') {
       return (
-        <div className="max-w-6xl mx-auto mt-4 space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {filteredResources.map((resource, index) => (
             <div key={resource.id || index} className="bg-white rounded-lg overflow-hidden border shadow-sm hover:shadow-md transition-shadow">
-              <div className="p-4 pb-2">
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-xl font-medium">{resource.title}</h3>
-                  <Badge variant="outline" className="rounded-full px-3 py-1">
+              <div className="p-3 pb-2">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-base font-medium truncate mr-2">{resource.title}</h3>
+                  <Badge variant="outline" className="rounded-full px-2 py-0.5 text-xs whitespace-nowrap">
                     {resource.resourceType === 'video' && <Video className="h-3 w-3 mr-1" />}
                     {resource.resourceType === 'game' && <Gamepad2 className="h-3 w-3 mr-1" />}
                     {resource.provider || resource.resourceType.charAt(0).toUpperCase() + resource.resourceType.slice(1)}
@@ -1917,53 +1917,55 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               
               <div className="p-0 bg-black/5">
                 {resource.embedCode && (
-                  <div className={`${resource.resourceType === 'video' ? 'aspect-video' : 'h-[420px]'} w-full overflow-hidden`} 
+                  <div className={`${resource.resourceType === 'video' ? 'aspect-video' : 'h-[300px]'} w-full overflow-hidden`} 
                        dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
                 )}
                 
                 {!resource.embedCode && resource.resourceType === 'video' && (
                   <div className="aspect-video w-full flex items-center justify-center bg-muted">
-                    <Video className="h-16 w-16 text-muted-foreground opacity-50" />
+                    <Video className="h-12 w-12 text-muted-foreground opacity-50" />
                   </div>
                 )}
 
                 {!resource.embedCode && resource.resourceType === 'game' && (
-                  <div className="h-[300px] w-full flex items-center justify-center bg-muted">
-                    <Gamepad2 className="h-16 w-16 text-muted-foreground opacity-50" />
+                  <div className="h-[220px] w-full flex items-center justify-center bg-muted">
+                    <Gamepad2 className="h-12 w-12 text-muted-foreground opacity-50" />
                   </div>
                 )}
               </div>
               
-              <div className="p-4 flex justify-between items-center bg-muted/10">
+              <div className="p-3 flex justify-between items-center bg-muted/10">
                 <Button 
                   variant="outline" 
                   size="sm"
+                  className="text-xs"
                   onClick={() => handleViewMore(resource)}
                 >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Open in New Tab
+                  <ExternalLink className="h-3 w-3 mr-1" />
+                  Open
                 </Button>
 
                 {isEditMode && (
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-1">
                     <Button 
                       variant="ghost" 
-                      size="sm" 
+                      size="sm"
+                      className="text-xs"
                       onClick={() => {
                         setNewResource({ ...resource });
                         setIsAdding(true);
                       }}
                     >
-                      <Pencil className="h-4 w-4 mr-1" />
+                      <Pencil className="h-3 w-3 mr-1" />
                       Edit
                     </Button>
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="text-destructive" 
+                      className="text-xs text-destructive" 
                       onClick={() => setConfirmDelete(resource)}
                     >
-                      <Trash2 className="h-4 w-4 mr-1" />
+                      <Trash2 className="h-3 w-3 mr-1" />
                       Delete
                     </Button>
                   </div>
