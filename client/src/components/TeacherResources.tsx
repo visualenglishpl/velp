@@ -2683,6 +2683,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6433e17ad3f84d538f1d5e9eb5d6b4e0?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 1,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "9",
+              title: "Book 4 - Unit 9 - Camping",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 9 - Camping</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit9/assets/00 A Book 4 – Unit 9 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 9</p>
+              </div>`,
+              order: 2,
+              provider: "Visual English"
             }
           );
         }
@@ -2724,6 +2752,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9c1af9a866eb4251a65afc8696916d4d?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 3,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "10",
+              title: "Book 4 - Unit 10 - Mother Nature",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 10 - Mother Nature</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit10/assets/00 A Book 4 – Unit 10 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 10</p>
+              </div>`,
+              order: 4,
+              provider: "Visual English"
             }
           );
         }
@@ -2747,6 +2803,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/459e14c3d21a459f9423a4eb7097e5fc?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 1,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "11",
+              title: "Book 4 - Unit 11 - Daily Routines",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 11 - Daily Routines</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit11/assets/00 A Book 4 – Unit 11 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 11</p>
+              </div>`,
+              order: 2,
+              provider: "Visual English"
             }
           );
         }
@@ -2779,6 +2863,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/cdbb6e247e6049c0a53ab06a8ede7a00?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 2,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "12",
+              title: "Book 4 - Unit 12 - At The Farm",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 12 - At The Farm</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit12/assets/00 A Book 4 – Unit 12 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 12</p>
+              </div>`,
+              order: 3,
+              provider: "Visual English"
             }
           );
         }
@@ -2802,6 +2914,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ca514af1b9ce49429181a2475142de6a?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 1,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "13",
+              title: "Book 4 - Unit 13 - At The Playground",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 13 - At The Playground</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit13/assets/00 A Book 4 – Unit 13 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 13</p>
+              </div>`,
+              order: 2,
+              provider: "Visual English"
             }
           );
         }
@@ -2825,6 +2965,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/29b2dad99a9d447f8ea8823024d19216?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 1,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "14",
+              title: "Book 4 - Unit 14 - What Can You Do",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 14 - What Can You Do</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit14/assets/00 A Book 4 – Unit 14 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 14</p>
+              </div>`,
+              order: 2,
+              provider: "Visual English"
             }
           );
         }
@@ -2857,6 +3025,34 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/1c724495ff684609895ed535379cbec0?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
               order: 2,
               provider: "Wordwall"
+            },
+            {
+              bookId: "4",
+              unitId: "15",
+              title: "Book 4 - Unit 15 - At The Circus",
+              resourceType: "pdf",
+              embedCode: `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div class="text-center mb-3">
+                  <h3 class="text-lg font-semibold mb-1 text-blue-700">Book 4 - Unit 15 - At The Circus</h3>
+                  <p class="text-sm text-gray-500">Complete lesson curriculum from Visual English</p>
+                </div>
+                <div class="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex justify-center items-center">
+                  <a 
+                    href="/api/direct/book4/unit15/assets/00 A Book 4 – Unit 15 – New Version.pdf" 
+                    target="_blank"
+                    class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View PDF Curriculum
+                  </a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500 italic">Access the complete teaching materials for Unit 15</p>
+              </div>`,
+              order: 3,
+              provider: "Visual English"
             }
           );
         }
