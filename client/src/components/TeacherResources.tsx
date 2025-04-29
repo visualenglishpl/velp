@@ -3469,9 +3469,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold">Teacher Resources for Book {bookId}, Unit {unitId}</h2>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 self-end md:self-auto">
           {isEditMode ? (
             <>
               <Button onClick={() => setIsAdding(true)} className="bg-green-600 hover:bg-green-700">
@@ -3489,6 +3489,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             <Button 
               variant="outline" 
               onClick={() => setIsEditMode(true)}
+              className="whitespace-nowrap"
             >
               <PenLine className="h-4 w-4 mr-2" /> Manage Resources
             </Button>
