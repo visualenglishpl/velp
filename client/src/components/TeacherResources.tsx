@@ -190,7 +190,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             },
             {
               title: 'British Food Vocabulary Video',
-              url: 'https://www.youtube.com/watch?v=9n3-nQITZrE'
+              url: 'https://www.youtube.com/watch?v=QBt2RdBBNHo'
             }
           ]
         },
@@ -460,8 +460,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           title: "British Food and Meals Vocabulary",
           resourceType: "video" as const,
           provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=9n3-nQITZrE",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/9n3-nQITZrE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+          sourceUrl: "https://www.youtube.com/watch?v=QBt2RdBBNHo",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/QBt2RdBBNHo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit16-video2",
@@ -470,8 +470,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           title: "Cooking Vocabulary in English",
           resourceType: "video" as const,
           provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=pySYSJQMs84",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/pySYSJQMs84" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+          sourceUrl: "https://www.youtube.com/watch?v=bXL9CsRYTbA",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/bXL9CsRYTbA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit16-game1",
@@ -481,7 +481,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           resourceType: "game" as const,
           provider: "Wordwall",
           sourceUrl: "https://wordwall.net/resource/23705207/food-matching-game",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/23705207/food-matching-game?themeId=1&templateId=25&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3e4cba0db1a749208ff28fc5f45b4c89?themeId=1&templateId=25&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit16-game2",
@@ -491,7 +491,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           resourceType: "game" as const,
           provider: "Wordwall",
           sourceUrl: "https://wordwall.net/resource/29266561/british-food-quiz",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29266561/british-food-quiz?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0fd4a02daa474f3384696a0b1eee3c00?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit16-game3",
@@ -500,8 +500,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           title: "Food Tastes",
           resourceType: "game" as const,
           provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/embed/6730885c619848649b96d5fa6bf972c7",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6730885c619848649b96d5fa6bf972c7?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          sourceUrl: "https://wordwall.net/resource/11861517/food-taste",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/de48ab52e53e4bbc8e81f76a7e3ea91c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit16-game4",
@@ -510,8 +510,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           title: "Food Stall / Trucks",
           resourceType: "game" as const,
           provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/embed/3828678c606049d0a756fad74eb5819a",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3828678c606049d0a756fad74eb5819a?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          sourceUrl: "https://wordwall.net/resource/38078294/food-trucks-match-up",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ced23dfdb9584e64874b39d68d14dc17?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-game5",
+          bookId,
+          unitId,
+          title: "Guess The Fast Food Restaurants Logo",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/31559300/guess-the-fast-food-restaurants-logo",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3ac9ef15d8794a0f98fa17f5c01be4ae?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
