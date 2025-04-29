@@ -32,11 +32,12 @@ interface TeacherResource {
   bookId: string;
   unitId: string;
   title: string;
-  resourceType: 'video' | 'game' | 'activity' | 'pdf' | 'other';
+  resourceType: 'video' | 'game' | 'activity' | 'pdf' | 'lesson' | 'other';
   embedCode: string;
   provider?: string;
   sourceUrl?: string;
   order: number;
+  fileUrl?: string;
 }
 
 interface TeacherResourcesProps {
@@ -59,6 +60,8 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     provider: '',
     sourceUrl: ''
   });
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [editingResource, setEditingResource] = useState<number | null>(null);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -206,7 +209,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       bookId: bookId,
       unitId: unitId,
       title: newResource.title || '',
-      resourceType: newResource.resourceType as 'video' | 'game' | 'activity' | 'pdf' | 'other',
+      resourceType: newResource.resourceType as 'video' | 'game' | 'activity' | 'pdf' | 'lesson' | 'other',
       embedCode: newResource.embedCode || '',
       provider: newResource.provider || '',
       sourceUrl: newResource.sourceUrl || '',
@@ -736,7 +739,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
       </div>
       
       <Tabs defaultValue="video" className="bg-card/50 rounded-lg p-4 shadow-sm border border-border/50">
-        <TabsList className="mb-4 grid w-full grid-cols-3 rounded-lg bg-muted/80">
+        <TabsList className="mb-4 grid w-full grid-cols-4 rounded-lg bg-muted/80">
           <TabsTrigger value="video" className="flex items-center justify-center py-3 data-[state=active]:shadow-sm">
             <Video className="h-4 w-4 mr-2" />
             <span className="font-medium">Videos</span>
@@ -751,9 +754,18 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               {resources.filter(r => r.resourceType === 'game').length}
             </span>
           </TabsTrigger>
+          <TabsTrigger value="lesson" className="flex items-center justify-center py-3 data-[state=active]:shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-2">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+            </svg>
+            <span className="font-medium">Lesson Plans</span>
+            <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+              {resources.filter(r => r.resourceType === 'lesson').length}
+            </span>
+          </TabsTrigger>
           <TabsTrigger value="pdf" className="flex items-center justify-center py-3 data-[state=active]:shadow-sm">
             <FileText className="h-4 w-4 mr-2" />
-            <span className="font-medium">Documents</span>
+            <span className="font-medium">PDF Resources</span>
             <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
               {resources.filter(r => r.resourceType === 'pdf').length}
             </span>
@@ -766,6 +778,10 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
         
         <TabsContent value="game">
           <ResourceList resourceType="game" />
+        </TabsContent>
+        
+        <TabsContent value="lesson">
+          <ResourceList resourceType="lesson" />
         </TabsContent>
         
         <TabsContent value="pdf">
@@ -794,7 +810,7 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
                 >
                   <option value="video">Video</option>
                   <option value="game">Game</option>
-                  <option value="activity">Activity</option>
+                  <option value="lesson">Lesson Plan</option>
                   <option value="pdf">PDF Document</option>
                   <option value="other">Other</option>
                 </select>
@@ -834,16 +850,39 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
               />
             </div>
             
-            <div className="space-y-2">
-              <label>Embed Code:</label>
-              <textarea 
-                rows={5}
-                value={newResource.embedCode}
-                onChange={(e) => handleNewResourceChange('embedCode', e.target.value)}
-                placeholder="<iframe>...</iframe>"
-                className="w-full p-2 border rounded"
-              />
-            </div>
+            {(newResource.resourceType === 'pdf' || newResource.resourceType === 'lesson') ? (
+              <div className="space-y-2">
+                <label>Upload File:</label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.ppt,.pptx"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        setUploadedFile(e.target.files[0]);
+                      }
+                    }}
+                    className="flex-1"
+                  />
+                  {uploadedFile && (
+                    <Badge variant="outline" className="p-2">
+                      {uploadedFile.name}
+                    </Badge>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <label>Embed Code:</label>
+                <textarea 
+                  rows={5}
+                  value={newResource.embedCode}
+                  onChange={(e) => handleNewResourceChange('embedCode', e.target.value)}
+                  placeholder="<iframe>...</iframe>"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            )}
           </div>
           
           <DialogFooter>
