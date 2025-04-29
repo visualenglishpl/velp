@@ -3645,6 +3645,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     }
     
+    // If we have either uploaded resource lesson plans or built-in lesson plans, show them
+    if (resourceLessonPlans || builtInLessonPlans) {
+      return (
+        <div className="space-y-8">
+          {resourceLessonPlans}
+          {builtInLessonPlans}
+        </div>
+      );
+    }
+    
+    // No lesson plans of either type
     return (
       <div className="text-center py-8 text-muted-foreground">
         <p>No lesson plans available for this unit yet.</p>
