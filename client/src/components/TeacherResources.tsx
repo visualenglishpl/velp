@@ -1928,9 +1928,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 )}
 
                 {!resource.embedCode && resource.resourceType === 'game' && (
-                  <div className="h-[220px] w-full flex items-center justify-center bg-muted">
-                    <Gamepad2 className="h-12 w-12 text-muted-foreground opacity-50" />
-                  </div>
+                  <KahootThumbnail title={resource.title} />
                 )}
               </div>
               
@@ -2067,7 +2065,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const crimeLessonPlan: LessonPlan = {
     id: "crime-vocabulary-1",
     title: "Crime Vocabulary & Law Enforcement",
-    level: "A1-A2",
+    level: "",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to crime and law enforcement",
@@ -2108,7 +2106,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const accommodationLessonPlan: LessonPlan = {
     id: "accommodation-hotels-1",
     title: "Accommodation & Hotels",
-    level: "B1-B2",
+    level: "",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to different types of accommodation",
@@ -2149,7 +2147,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const governmentLessonPlan: LessonPlan = {
     id: "government-vocabulary-1",
     title: "Government and Politics Vocabulary",
-    level: "B1-B2",
+    level: "",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to government structures and political systems",
@@ -2195,7 +2193,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const schoolLessonPlan: LessonPlan = {
     id: "school-subjects-1",
     title: "School Subjects and Activities",
-    level: "A1-A2",
+    level: "",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to school subjects and after-school activities",
@@ -2241,7 +2239,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const moneyLessonPlan: LessonPlan = {
     id: "money-shopping-1",
     title: "Money and Shopping Vocabulary",
-    level: "A1-A2",
+    level: "",
     duration: "45 min",
     objectives: [
       "Learn vocabulary related to money, banking, and shopping",
