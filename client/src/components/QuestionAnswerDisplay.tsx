@@ -1795,6 +1795,11 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
     return null;
   }
   
+  // If there's no question and no answer, don't render anything
+  if (!qaData.hasData || (qaData.question === '' && qaData.answer === '')) {
+    return null;
+  }
+
   return (
     <div className={`relative ${showQuestions ? 'flex flex-col items-center justify-center' : 'hidden'}`}>
       {/* Controls shown in edit mode */}
