@@ -21,6 +21,7 @@ export interface TeacherResource {
   sourceUrl?: string;
   embedCode?: string;
   fileUrl?: string;
+  lessonPlan?: LessonPlan;
 }
 
 interface TeacherResourcesProps {
@@ -747,7 +748,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf`
           },
           {
-            id: "book7-unit16-lesson1",
+            id: "british-food-lesson-plan-1",
             bookId,
             unitId,
             title: "British Food and Meals - 45-minute Lesson Plan",
@@ -757,7 +758,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             lessonPlan: createFoodLessonPlans()[0] // Reference the first lesson plan we created
           },
           {
-            id: "book7-unit16-lesson2",
+            id: "cooking-vocabulary-lesson-plan-1",
             bookId,
             unitId,
             title: "Cooking Vocabulary - 45-minute Lesson Plan",
