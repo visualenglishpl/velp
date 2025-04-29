@@ -148,51 +148,31 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           id: "book7-unit2-pdf1",
           bookId,
           unitId,
-          title: "Book 7 - Unit 2 Overview",
+          title: "Book 7 - Unit 2 Overview (6-page Lesson)",
           resourceType: "pdf" as const,
           provider: "Visual English",
           sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf",
-          embedCode: ""
+          fileUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf"
         },
         {
           id: "book7-unit2-video1",
           bookId,
           unitId,
-          title: "Short Movie on Afro Hair",
+          title: "Fashion Styles Vocabulary",
           resourceType: "video" as const,
           provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=kNw8V_Fkw28",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/kNw8V_Fkw28?si=9Zl2x1mjJ3wRpYZ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit2-resource1",
-          bookId,
-          unitId,
-          title: "Tattoos & Piercings - Worksheet Online",
-          resourceType: "lesson" as const,
-          provider: "British Council",
-          sourceUrl: "https://learnenglishteens.britishcouncil.org/study-break/youtubers/tattoos-piercings",
-          embedCode: ""
+          sourceUrl: "https://www.youtube.com/watch?v=4vGLON1qRSI",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4vGLON1qRSI?si=1J7_4Z6aOwF4UkSx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit2-game1",
           bookId,
           unitId,
-          title: "Piercings & Tattoos Game 1",
+          title: "Fashion Styles Vocabulary Game",
           resourceType: "game" as const,
           provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/d05c71b310af42f59922123edb75c96e",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d05c71b310af42f59922123edb75c96e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit2-game2",
-          bookId,
-          unitId,
-          title: "Piercings & Tattoos Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/0cd285bfcf87423e9d5a7ed1a3935d22",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0cd285bfcf87423e9d5a7ed1a3935d22?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          sourceUrl: "https://wordwall.net/resource/29461275/fashion-styles-vocabulary",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29461275/fashion-styles-vocabulary?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
@@ -1920,7 +1900,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
         {filteredResources.map((resource, index) => (
           <Card key={resource.id || index} className="overflow-hidden hover:shadow-md transition-shadow">
             <CardHeader className="pb-2">
@@ -1942,12 +1922,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             
             <CardContent className="pt-0">
               {resource.embedCode && resource.resourceType === 'video' && (
-                <div className="aspect-video relative mb-4 rounded overflow-hidden" 
+                <div className="aspect-video relative mb-4 rounded overflow-hidden border shadow-sm" 
                      dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
               )}
               
               {resource.embedCode && resource.resourceType === 'game' && (
-                <div className="max-h-[380px] mb-4 rounded overflow-hidden" 
+                <div className="h-[380px] mb-4 rounded overflow-hidden border shadow-sm" 
                      dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
               )}
 
@@ -1962,9 +1942,22 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   <Gamepad2 className="h-12 w-12 text-muted-foreground" />
                 </div>
               )}
-
-              {(['lesson', 'pdf', 'other'].includes(resource.resourceType) && !resource.embedCode) && (
-                <div className="bg-muted h-[100px] flex items-center justify-center rounded mb-4">
+              
+              {/* PDF Embedding */}
+              {resource.fileUrl && (resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && (
+                <div className="rounded overflow-hidden mb-4 border">
+                  <iframe 
+                    src={resource.fileUrl}
+                    className="w-full"
+                    style={{ height: '400px' }} 
+                    title={resource.title}
+                    frameBorder="0"
+                  />
+                </div>
+              )}
+              
+              {(!resource.fileUrl && (resource.resourceType === 'pdf' || resource.resourceType === 'lesson')) && (
+                <div className="bg-muted h-[200px] flex items-center justify-center rounded mb-4 border shadow-sm">
                   <FileText className="h-12 w-12 text-muted-foreground" />
                 </div>
               )}
