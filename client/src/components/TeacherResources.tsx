@@ -3142,15 +3142,74 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
     <div className="teacher-resources">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Teacher Resources</h2>
-        {isEditMode && (
+        <div className="flex gap-2">
+          {/* Add Video button - available for all users */}
           <Button 
-            onClick={() => setIsAdding(true)}
+            onClick={() => {
+              setNewResource({
+                resourceType: 'video',
+                title: 'New Video Resource',
+                embedCode: '',
+                provider: 'YouTube',
+                sourceUrl: '',
+                order: resources.length + 1,
+                bookId: bookId || '1',
+                unitId: unitId || '1'
+              });
+              setIsAdding(true);
+            }}
             className="flex items-center"
             size="sm"
+            variant="outline"
           >
-            <Plus className="mr-1 h-4 w-4" /> Add Resource
+            <Video className="mr-1 h-4 w-4" /> Add Video
           </Button>
-        )}
+          
+          {/* Add Game button - available for all users */}
+          <Button 
+            onClick={() => {
+              setNewResource({
+                resourceType: 'game',
+                title: 'New Game Resource',
+                embedCode: '',
+                provider: 'Wordwall',
+                sourceUrl: '',
+                order: resources.length + 1,
+                bookId: bookId || '1',
+                unitId: unitId || '1'
+              });
+              setIsAdding(true);
+            }}
+            className="flex items-center"
+            size="sm"
+            variant="outline"
+          >
+            <Gamepad2 className="mr-1 h-4 w-4" /> Add Game
+          </Button>
+          
+          {/* Admin-only full resource adder */}
+          {isEditMode && (
+            <Button 
+              onClick={() => {
+                setNewResource({
+                  resourceType: 'video',
+                  title: '',
+                  embedCode: '',
+                  provider: '',
+                  sourceUrl: '',
+                  order: resources.length + 1,
+                  bookId: bookId || '1',
+                  unitId: unitId || '1'
+                });
+                setIsAdding(true);
+              }}
+              className="flex items-center"
+              size="sm"
+            >
+              <Plus className="mr-1 h-4 w-4" /> Add Resource
+            </Button>
+          )}
+        </div>
       </div>
       
       {resources.length === 0 ? (
@@ -3367,11 +3426,42 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
           </div>
         </div>
       ) : (
-        <div className="media-wrapper">
-          <div 
-            className="media-embed"
-            dangerouslySetInnerHTML={{ __html: resource.embedCode }}
-          />
+        <div className={`media-wrapper ${resource.resourceType === 'pdf' ? 'grid md:grid-cols-2 gap-4' : ''}`}>
+          {resource.resourceType === 'pdf' ? (
+            <>
+              <div className="lesson-content-sidebar">
+                <h4 className="font-medium text-blue-700 mb-2">Lesson Plan</h4>
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <h5 className="font-medium mb-2">Unit Overview</h5>
+                  <p className="text-sm mb-4">This unit covers key concepts and vocabulary that students will need to master before moving forward.</p>
+                  
+                  <h5 className="font-medium mb-2">Learning Objectives</h5>
+                  <ul className="list-disc pl-5 text-sm mb-4">
+                    <li>Understand and use the target vocabulary</li>
+                    <li>Practice pronunciation through activities</li>
+                    <li>Engage with interactive materials</li>
+                  </ul>
+                  
+                  <h5 className="font-medium mb-2">Key Vocabulary</h5>
+                  <p className="text-sm mb-4">Review the vocabulary words highlighted in the PDF before class.</p>
+                  
+                  <h5 className="font-medium mb-2">Teaching Tips</h5>
+                  <p className="text-sm">Use the PDF material alongside the interactive exercises for maximum comprehension.</p>
+                </div>
+              </div>
+              <div className="pdf-viewer overflow-hidden rounded-lg border shadow-sm">
+                <div 
+                  className="media-embed h-full"
+                  dangerouslySetInnerHTML={{ __html: resource.embedCode }}
+                />
+              </div>
+            </>
+          ) : (
+            <div 
+              className="media-embed"
+              dangerouslySetInnerHTML={{ __html: resource.embedCode }}
+            />
+          )}
         </div>
       )}
     </div>
