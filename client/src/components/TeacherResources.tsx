@@ -2008,6 +2008,183 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     );
   };
 
+  // Define all the lesson plans first
+  const crimeLessonPlan: LessonPlan = {
+    id: "crime-lesson-1",
+    title: "Crime Vocabulary & Law Enforcement",
+    level: "Elementary to Pre-Intermediate (A1-A2)",
+    duration: "45 min",
+    objectives: [
+      "Learn vocabulary related to crime and law enforcement",
+      "Practice describing different crimes and punishments",
+      "Develop speaking skills through discussion of criminal justice"
+    ],
+    materials: [
+      "Images of various crimes (theft, robbery, vandalism, etc.)",
+      "Vocabulary cards for law enforcement terms",
+      "Simple crime scenarios for role-play"
+    ],
+    steps: [
+      {
+        title: "Crime Scene Investigation",
+        duration: "5 min",
+        description: "Show students a picture of a crime scene (e.g., broken window, items missing) and ask them to describe what they think happened. Introduce key vocabulary."
+      },
+      {
+        title: "Crime Vocabulary Matching",
+        duration: "15 min",
+        description: "Students match crime terms with definitions and images. Include vocabulary like: theft, robbery, smuggling, vandalism, prison, judge, police officer, criminal."
+      },
+      {
+        title: "Law & Order Role Play",
+        duration: "15 min",
+        description: "Students work in small groups to role-play different scenarios: reporting a crime, interviewing witnesses, or a simple court case. Provide role cards with key vocabulary to use."
+      },
+      {
+        title: "Crime Prevention Poster",
+        duration: "10 min",
+        description: "In pairs, students create a simple crime prevention poster using the vocabulary learned in class. They should include at least 5 crime-related terms."
+      }
+    ],
+    assessmentTips: "Evaluate students' use of target vocabulary during role-play activities and in their crime prevention posters.",
+    homeworkIdeas: ["Students can write a short crime story using at least 10 vocabulary words from the lesson."]
+  };
+
+  const governmentLessonPlan: LessonPlan = {
+    title: "Government and Politics Vocabulary",
+    level: "Intermediate (B1-B2)",
+    duration: 45,
+    objectives: [
+      "Learn vocabulary related to government structures and political systems",
+      "Practice discussing political processes and civic duties",
+      "Develop critical thinking about different forms of government"
+    ],
+    materials: [
+      "Images of government buildings and political figures",
+      "Political systems infographic",
+      "Simplified political vocabulary glossary"
+    ],
+    warmUp: {
+      title: "Government Brainstorm",
+      duration: 5,
+      description: "Students brainstorm words related to government and politics. Create a mind map on the board categorizing terms (officials, buildings, processes, etc.)."
+    },
+    mainActivities: [
+      {
+        title: "Political Systems Comparison",
+        duration: 15,
+        description: "Introduce different political systems (democracy, monarchy, dictatorship). Students complete a comparison chart highlighting key features of each system."
+      },
+      {
+        title: "Government Roles Matching",
+        duration: 10,
+        description: "Students match government positions (president, prime minister, mayor, judge, etc.) with their responsibilities and powers."
+      },
+      {
+        title: "Mini-Debate",
+        duration: 10,
+        description: "Students debate simple political questions in small groups using target vocabulary (e.g., 'Should voting be mandatory?')"
+      }
+    ],
+    closure: {
+      title: "Ideal Government",
+      duration: 5,
+      description: "Students briefly describe their ideal government structure, using at least 5 vocabulary terms from the lesson."
+    },
+    assessment: "Monitor students' use of target vocabulary during debates and in their final descriptions of ideal governments.",
+    extension: "Students research the government structure of an English-speaking country and prepare a short presentation."
+  };
+
+  const schoolLessonPlan: LessonPlan = {
+    title: "School Subjects and Activities",
+    level: "Elementary to Pre-Intermediate (A1-A2)",
+    duration: 45,
+    objectives: [
+      "Learn vocabulary related to school subjects and after-school activities",
+      "Practice expressing preferences about school subjects",
+      "Compare school systems across different countries"
+    ],
+    materials: [
+      "School subject flashcards",
+      "After-school club images",
+      "School timetable template"
+    ],
+    warmUp: {
+      title: "School Days",
+      duration: 5,
+      description: "Ask students about their favorite and least favorite school subjects. List subjects on the board as they are mentioned."
+    },
+    mainActivities: [
+      {
+        title: "Subject Vocabulary",
+        duration: 10,
+        description: "Introduce or review school subject vocabulary with images (mathematics, science, history, geography, art, music, physical education, etc.)."
+      },
+      {
+        title: "School Clubs Exploration",
+        duration: 10,
+        description: "Present various after-school activities and clubs. Students discuss which they would join and why, using expressions like 'I'm interested in...' or 'I'm good at...'"
+      },
+      {
+        title: "Dream Timetable",
+        duration: 15,
+        description: "Students create their ideal school timetable, including subjects and after-school activities. They should include at least 3 core subjects and 2 extracurricular activities."
+      }
+    ],
+    closure: {
+      title: "School Comparison",
+      duration: 5,
+      description: "Discuss differences between schools in different countries, focusing on subjects taught and activities offered."
+    },
+    assessment: "Evaluate students' use of school vocabulary in their dream timetables and during discussions.",
+    extension: "Students can create a poster or brochure for a new after-school club they would like to start."
+  };
+  
+  const moneyLessonPlan: LessonPlan = {
+    title: "Money and Shopping Vocabulary",
+    level: "Elementary to Pre-Intermediate (A1-A2)",
+    duration: 45,
+    objectives: [
+      "Learn vocabulary related to money, banking, and shopping",
+      "Practice conversations about prices and transactions",
+      "Develop numeracy skills in English through money-related activities"
+    ],
+    materials: [
+      "Fake money (various currencies if available)",
+      "Price tags and product images",
+      "Role-play cards for shopping scenarios"
+    ],
+    warmUp: {
+      title: "Money Around the World",
+      duration: 5,
+      description: "Show examples of different currencies and discuss their names. Ask students what they know about money in English-speaking countries."
+    },
+    mainActivities: [
+      {
+        title: "Banking Vocabulary",
+        duration: 10,
+        description: "Introduce vocabulary related to banking (account, deposit, withdraw, ATM, credit card, etc.) with visual aids and example sentences."
+      },
+      {
+        title: "Shopping Role-play",
+        duration: 15,
+        description: "Students practice shopping dialogues in pairs, using phrases like 'How much is this?', 'I'd like to buy...', 'Do you accept credit cards?', etc."
+      },
+      {
+        title: "Budget Challenge",
+        duration: 10,
+        description: "Give students a budget and a list of items with prices. They must plan purchases within their budget, explaining their choices."
+      }
+    ],
+    closure: {
+      title: "Money Idioms",
+      duration: 5,
+      description: "Introduce a few common money idioms (e.g., 'cost an arm and a leg', 'save for a rainy day') and have students try to use them in sentences."
+    },
+    assessment: "Evaluate students' use of money vocabulary during role-plays and the budget challenge.",
+    extension: "Students can research and compare prices of common items in different countries, presenting their findings to the class."
+  };
+  
   const renderLessonPlans = () => {
     if (bookId === '7' && unitId === '1') {
       return (
@@ -2182,6 +2359,170 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
                   <LessonPlanTemplate plan={fashionStylesLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (bookId === '7' && unitId === '3') {
+      return (
+        <div className="mt-6 space-y-8">
+          <div className="grid grid-cols-1 xl:grid-cols-1 gap-8">
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Crime Vocabulary & Law Enforcement</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'crime-vocabulary-1', title: 'Crime Vocabulary & Law Enforcement', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={crimeLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (bookId === '7' && unitId === '4') {
+      return (
+        <div className="mt-6 space-y-8">
+          <div className="grid grid-cols-1 xl:grid-cols-1 gap-8">
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Government and Politics Vocabulary</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>Intermediate (B1-B2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'government-vocabulary-1', title: 'Government and Politics Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={governmentLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (bookId === '7' && unitId === '5') {
+      return (
+        <div className="mt-6 space-y-8">
+          <div className="grid grid-cols-1 xl:grid-cols-1 gap-8">
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>School Subjects and Activities</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'school-vocabulary-1', title: 'School Subjects and Activities', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={schoolLessonPlan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (bookId === '7' && unitId === '6') {
+      return (
+        <div className="mt-6 space-y-8">
+          <div className="grid grid-cols-1 xl:grid-cols-1 gap-8">
+            <div>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex justify-between text-lg">
+                        <span>Money and Shopping Vocabulary</span>
+                        <span className="text-sm font-normal ml-2">45 min</span>
+                      </CardTitle>
+                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: 'money-vocabulary-1', title: 'Money and Shopping Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={moneyLessonPlan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
                   <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
