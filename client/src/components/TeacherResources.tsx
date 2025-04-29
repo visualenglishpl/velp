@@ -125,7 +125,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           title: "Book 7 - Unit 1 Overview",
           resourceType: "pdf" as const,
           provider: "Visual English",
-          sourceUrl: "https://67bd8e1e-e6a8-419f-b59e-299052eae36a-00-1j78vcuapq5ig.spock.replit.dev/book7/unit1/00%20A%20Book%207%20%E2%80%93%20Unit%201.pdf",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit1/00%20A%20Book%207%20%E2%80%93%20Unit%201.pdf",
           embedCode: ""
         },
         {
@@ -144,6 +144,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 7, Unit 2 - Piercings & Tattoos
     if (bookId === '7' && unitId === '2') {
       return [
+        {
+          id: "book7-unit2-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 2 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf",
+          embedCode: ""
+        },
         {
           id: "book7-unit2-video1",
           bookId,
@@ -191,6 +201,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '3') {
       return [
         {
+          id: "book7-unit3-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 3 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit3/00%20A%20Book%207%20%E2%80%93%20Unit%203.pdf",
+          embedCode: ""
+        },
+        {
           id: "book7-unit3-video1",
           bookId,
           unitId,
@@ -237,6 +257,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '4') {
       return [
         {
+          id: "book7-unit4-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 4 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit4/00%20A%20Book%207%20%E2%80%93%20Unit%204.pdf",
+          embedCode: ""
+        },
+        {
           id: "book7-unit4-game1",
           bookId,
           unitId,
@@ -272,6 +302,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 7, Unit 5 - School
     if (bookId === '7' && unitId === '5') {
       return [
+        {
+          id: "book7-unit5-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 5 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit5/00%20A%20Book%207%20%E2%80%93%20Unit%205.pdf",
+          embedCode: ""
+        },
         {
           id: "book7-unit5-video1",
           bookId,
@@ -358,6 +398,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 7, Unit 6 - Money
     if (bookId === '7' && unitId === '6') {
       return [
+        {
+          id: "book7-unit6-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 6 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf",
+          embedCode: ""
+        },
         {
           id: "book7-unit6-video1",
           bookId,
