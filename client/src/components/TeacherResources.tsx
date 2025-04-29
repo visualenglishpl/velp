@@ -1626,8 +1626,27 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
   });
 
+  // First useEffect to update customResources when data changes
+useEffect(() => {
+    if (data && Array.isArray(data)) {
+      // For special book units, the data from the server is the custom user-added resources
+      // That need to be preserved and combined with the predefined resources
+      if (isSpecialBookUnit) {
+        setCustomResources(data);
+      } else {
+        // For regular units, just set the resources directly
+        setResources(data);
+      }
+    } else if (data) {
+      // Handle case where data is not an array
+      console.warn('Resources data is not an array:', data);
+      isSpecialBookUnit ? setCustomResources([]) : setResources([]);
+    }
+  }, [data, isSpecialBookUnit]);
+
+  // Second useEffect to combine predefined and custom resources
   useEffect(() => {
-    // For Book 6 and 7 units with predefined resources, use them
+    // Only run this for special book units that have predefined resources
     if (isSpecialBookUnit) {
       // Get the base resources from either bookUnitResources or getBookUnitResources
       const bookUnitRes = getMoreUnitResources(bookId, unitId);
@@ -1635,15 +1654,19 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       const baseResources = bookPdfRes.length > 0 ? bookPdfRes : bookUnitRes;
       
       // Combine predefined resources with any custom resources
-      setResources([...baseResources, ...customResources]);
-    } else if (data && Array.isArray(data)) {
-      setResources(data);
-    } else if (data) {
-      // Handle case where data is not an array
-      console.warn('Resources data is not an array:', data);
-      setResources([]);
+      // Make sure each resource has a unique ID to avoid duplicates
+      const uniqueResources = [...baseResources];
+      
+      // Add custom resources but avoid duplicates by ID
+      if (customResources.length > 0) {
+        const baseIds = new Set(baseResources.map(r => r.id));
+        const filteredCustom = customResources.filter(r => r.id && !baseIds.has(r.id));
+        uniqueResources.push(...filteredCustom);
+      }
+      
+      setResources(uniqueResources);
     }
-  }, [data, bookId, unitId, isSpecialBookUnit, customResources]);
+  }, [bookId, unitId, isSpecialBookUnit, customResources]);
 
   const handleNewResourceChange = (field: keyof TeacherResource, value: string) => {
     setNewResource(prev => ({
@@ -1711,20 +1734,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
       // If this is a special book/unit with predefined resources
       if (isSpecialBookUnit) {
-        // Add custom resource to our state
-        setCustomResources(prev => [...prev, resourceToAdd]);
+        // Add custom resource to our state - using separate state update to ensure it's tracked
+        const updatedCustomResources = [...customResources, resourceToAdd];
+        setCustomResources(updatedCustomResources);
         
-        // Get combined list of predefined + custom resources
-        const bookUnitRes = getMoreUnitResources(bookId, unitId);
-        const bookPdfRes = getBookUnitResources(bookId, unitId);
-        const baseResources = bookPdfRes.length > 0 ? bookPdfRes : bookUnitRes;
-        const updatedResources = [...baseResources, ...customResources, resourceToAdd];
+        // For special book units, we need to save ONLY the custom resources to the server
+        // This keeps our storage clean and lets us separate built-in from custom resources
+        await saveMutation.mutateAsync(updatedCustomResources);
         
-        // Save to server (this will be a no-op for special book/units)
-        await saveMutation.mutateAsync(updatedResources);
-        
-        // Update the resources list to include the new resource
-        setResources(updatedResources);
+        // The useEffect will handle combining predefined and custom resources automatically
+        // No need to manually update resources state here
       } else {
         // For regular books, save directly to the server
         const updatedResources = [...resources, resourceToAdd];
@@ -1786,9 +1805,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         }
       }
       
-      // Update the resources list
-      const updatedResources = resources.filter(r => r.id !== resource.id);
-      await saveMutation.mutateAsync(updatedResources);
+      // Update resources appropriately based on whether this is a special book unit
+      if (isSpecialBookUnit) {
+        // For special book units, we only save the custom resources to the server
+        // The useEffect will handle combining these with the predefined resources
+        const updatedCustomResources = customResources.filter(r => r.id !== resource.id);
+        await saveMutation.mutateAsync(updatedCustomResources);
+      } else {
+        // For regular book units, update and save the complete resources list
+        const updatedResources = resources.filter(r => r.id !== resource.id);
+        await saveMutation.mutateAsync(updatedResources);
+      }
+      
       setConfirmDelete(null);
       
       toast({
