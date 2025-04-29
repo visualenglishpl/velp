@@ -465,6 +465,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '7') {
       return [
         {
+          id: "book7-unit7-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 7 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit7/00%20A%20Book%207%20%E2%80%93%20Unit%207.pdf",
+          embedCode: ""
+        },
+        {
           id: "book7-unit7-game1",
           bookId,
           unitId,
@@ -490,6 +500,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 7, Unit 8 - Musical Instruments
     if (bookId === '7' && unitId === '8') {
       return [
+        {
+          id: "book7-unit8-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 8 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit8/00%20A%20Book%207%20%E2%80%93%20Unit%208.pdf",
+          embedCode: ""
+        },
         {
           id: "book7-unit8-video1",
           bookId,
@@ -567,6 +587,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '9') {
       return [
         {
+          id: "book7-unit9-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 9 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit9/00%20A%20Book%207%20%E2%80%93%20Unit%209.pdf",
+          embedCode: ""
+        },
+        {
           id: "book7-unit9-game1",
           bookId,
           unitId,
@@ -612,6 +642,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 7, Unit 10 - Sports
     if (bookId === '7' && unitId === '10') {
       return [
+        {
+          id: "book7-unit10-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 10 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit10/00%20A%20Book%207%20%E2%80%93%20Unit%2010.pdf",
+          embedCode: ""
+        },
         {
           id: "book7-unit10-game1",
           bookId,
@@ -669,6 +709,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '11') {
       return [
         {
+          id: "book7-unit11-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 11 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit11/00%20A%20Book%207%20%E2%80%93%20Unit%2011.pdf",
+          embedCode: ""
+        },
+        {
           id: "book7-unit11-game1",
           bookId,
           unitId,
@@ -694,6 +744,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 7, Unit 12 - Healthy Lifestyle
     if (bookId === '7' && unitId === '12') {
       return [
+        {
+          id: "book7-unit12-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 12 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit12/00%20A%20Book%207.pdf",
+          embedCode: ""
+        },
         {
           id: "book7-unit12-game1",
           bookId,
@@ -721,6 +781,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '13') {
       return [
         {
+          id: "book7-unit13-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 13 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit13/00%20A%20Book%207%20%E2%80%93%20Unit%2013.pdf",
+          embedCode: ""
+        },
+        {
           id: "book7-unit13-game1",
           bookId,
           unitId,
@@ -746,6 +816,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 7, Unit 14 - Celebrations
     if (bookId === '7' && unitId === '14') {
       return [
+        {
+          id: "book7-unit14-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 14 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit14/00%20A%20Book%207.pdf",
+          embedCode: ""
+        },
         {
           id: "book7-unit14-game1",
           bookId,
@@ -793,6 +873,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '15') {
       return [
         {
+          id: "book7-unit15-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 15 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit15/00%20A%20Book%207.pdf",
+          embedCode: ""
+        },
+        {
           id: "book7-unit15-game1",
           bookId,
           unitId,
@@ -838,6 +928,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 7, Unit 16 - Food Tastes
     if (bookId === '7' && unitId === '16') {
       return [
+        {
+          id: "book7-unit16-pdf1",
+          bookId,
+          unitId,
+          title: "Book 7 - Unit 16 Overview",
+          resourceType: "pdf" as const,
+          provider: "Visual English",
+          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf",
+          embedCode: ""
+        },
         {
           id: "book7-unit16-game1",
           bookId,
