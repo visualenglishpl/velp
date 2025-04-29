@@ -1654,8 +1654,13 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
 
     try {
-      // Create a copy of the resource to add
-      const resourceToAdd: TeacherResource = { ...newResource };
+      // Create a copy of the resource to add and ensure it has an ID
+      const resourceToAdd: TeacherResource = { 
+        ...newResource,
+        id: newResource.id || `${bookId}-${unitId}-${newResource.resourceType}-${Date.now()}` 
+      };
+      
+      console.log('Adding resource:', resourceToAdd);
       
       // If a file was uploaded, handle it
       if (uploadedFile && (newResource.resourceType === 'pdf' || newResource.resourceType === 'lesson')) {
@@ -1664,11 +1669,33 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         resourceToAdd.fileUrl = URL.createObjectURL(uploadedFile);
       }
 
+      // For videos, ensure embedCode is properly set if it's a YouTube URL
+      if (newResource.resourceType === 'video' && newResource.sourceUrl && !newResource.embedCode) {
+        if (newResource.sourceUrl.includes('youtube.com') || newResource.sourceUrl.includes('youtu.be')) {
+          // Extract video ID from YouTube URL
+          let videoId = '';
+          if (newResource.sourceUrl.includes('youtube.com/watch?v=')) {
+            videoId = new URL(newResource.sourceUrl).searchParams.get('v') || '';
+          } else if (newResource.sourceUrl.includes('youtu.be/')) {
+            videoId = newResource.sourceUrl.split('youtu.be/')[1]?.split('?')[0] || '';
+          }
+          
+          if (videoId) {
+            resourceToAdd.embedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+          }
+        }
+      }
+
       // Add the new resource to the list
       const updatedResources = [...resources, resourceToAdd];
+      console.log('Saving updated resources:', updatedResources);
       
       // Save to the server
       await saveMutation.mutateAsync(updatedResources);
+      toast({
+        title: "Resource Added",
+        description: `${resourceToAdd.title} has been added successfully.`,
+      });
       
       // Reset form
       setNewResource({
