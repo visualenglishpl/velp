@@ -491,6 +491,26 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           provider: "Wordwall",
           sourceUrl: "https://wordwall.net/resource/29266561/british-food-quiz",
           embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29266561/british-food-quiz?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-game3",
+          bookId,
+          unitId,
+          title: "Food Tastes",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/6730885c619848649b96d5fa6bf972c7",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6730885c619848649b96d5fa6bf972c7?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-game4",
+          bookId,
+          unitId,
+          title: "Food Stall / Trucks",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/3828678c606049d0a756fad74eb5819a",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3828678c606049d0a756fad74eb5819a?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
