@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { Trash, Plus, Edit, Save, X, Video, Gamepad2, FileText, GripVertical } from 'lucide-react';
+import { Trash, Plus, Edit, Save, X, Video, Gamepad2, FileText, GripVertical, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
@@ -733,9 +733,19 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
           )}
         </div>
         
-        <div className="text-sm text-muted-foreground bg-background/80 p-3 rounded-lg border border-border/50 shadow-sm">
-          <p>Teaching resources for this unit include educational videos, interactive games, and curriculum documents.</p>
-          <p>Resources are organized in tabs below for easy navigation.</p>
+        <div className="flex justify-end space-x-2 mb-4">
+          {isEditMode && (
+            <Button onClick={() => setIsAdding(true)} size="sm" className="shadow-sm transition-all hover:shadow-md">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Resource
+            </Button>
+          )}
+          {!isEditMode && (
+            <Button onClick={() => window.location.href = `?edit=true`} size="sm" variant="outline" className="shadow-sm transition-all hover:shadow-md">
+              <Pencil className="h-4 w-4 mr-2" />
+              Edit Resources
+            </Button>
+          )}
         </div>
       </div>
       
