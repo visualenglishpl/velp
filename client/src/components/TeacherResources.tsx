@@ -725,12 +725,6 @@ const TeacherResources: React.FC<TeacherResourcesProps> = ({
             </h2>
             <p className="text-muted-foreground text-sm">Educational materials for Book {bookId}, Unit {unitId}</p>
           </div>
-          {isEditMode && (
-            <Button onClick={() => setIsAdding(true)} size="sm" className="shadow-sm transition-all hover:shadow-md">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Resource
-            </Button>
-          )}
         </div>
         
         <div className="flex justify-end space-x-2 mb-4">
