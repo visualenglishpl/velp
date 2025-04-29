@@ -305,10 +305,10 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
       const sectionMatch = filename.match(/^(\d{2}\s*[A-Za-z]\s*[a-zA-Z]?)/);
       const sectionCode = sectionMatch ? sectionMatch[1] : '';
       
-      // Generic fallback for unknown patterns
+      // If no pattern match and no questions, leave the slide blank as requested
       return {
-        question: `This is slide ${sectionCode} in the unit.`,
-        answer: '',  // Removed instruction text as requested
+        question: '',  // Leave question blank as requested
+        answer: '',    // Leave answer blank as requested
         generatedBy: 'pattern-engine'
       };
     }
@@ -362,10 +362,10 @@ export function getQuestionAnswer(
     return generatedQA;
   }
   
-  // Ultimate fallback
+  // Ultimate fallback - leave blank if no question available
   return {
-    question: 'What do you see in this picture?',
-    answer: 'I can see [describe the image].',
+    question: '', // Leave blank as requested when no question is found
+    answer: '',
     generatedBy: 'pattern-engine',
     source: 'fallback'
   };
