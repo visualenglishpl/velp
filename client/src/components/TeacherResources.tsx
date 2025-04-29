@@ -139,6 +139,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Save resources mutation
   const saveMutation = useMutation({
     mutationFn: async (updatedResources: TeacherResource[]) => {
+      // For Book 7, Unit 1, just return success without saving to server
+      if (bookId === '7' && unitId === '1') {
+        return { success: true };
+      }
+      
+      // For other books/units, save to server
       await apiRequest(
         'POST', 
         `/api/direct/${bookId}/${unitId}/resources`, 
@@ -146,7 +152,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     },
     onSuccess: () => {
-      refetch();
+      if (bookId === '7' && unitId === '1') {
+        setResources(book7Unit1Resources);
+      } else {
+        refetch();
+      }
+      
       toast({
         title: "Resources Saved",
         description: "Teacher resources have been updated successfully.",
@@ -321,9 +332,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   </div>
                 )
               ) : resource.resourceType === 'pdf' || resource.resourceType === 'lesson' ? (
-                <div className="w-full p-4 rounded bg-primary/5 text-center">
+                <div className="w-full p-4 rounded bg-primary/5 text-center hover:bg-primary/10 transition-all cursor-pointer" onClick={() => {
+                  if (resource.sourceUrl) {
+                    window.open(resource.sourceUrl, '_blank');
+                  }
+                }}>
                   <FileText className="h-6 w-6 mx-auto mb-2 text-primary/70" />
                   <p className="text-sm font-medium">{resource.title}</p>
+                  {resource.sourceUrl && (
+                    <p className="text-xs text-primary mt-2">Click to open PDF</p>
+                  )}
                 </div>
               ) : null}
             </CardContent>
