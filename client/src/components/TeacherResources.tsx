@@ -83,6 +83,225 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Check if this is a special book/unit with predefined resources
   const isSpecialBookUnit = (bookId === '7' || bookId === '6') && 
     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId);
+    
+  // Create custom constants for specific books and units to check for special resources
+  const isBook7Unit16 = bookId === '7' && unitId === '16';
+  
+  // Lesson plans for specific book/unit combinations
+  const createFoodLessonPlans = () => {
+    if (isBook7Unit16) {
+      return [
+        {
+          id: 'british-food-1',
+          title: 'British Food and Meals - Part 1',
+          duration: '45 minutes',
+          level: 'Elementary to Pre-Intermediate (A1-A2)',
+          objectives: [
+            'Identify and name common British foods and meals',
+            'Discuss food preferences using simple structures',
+            'Learn vocabulary related to cooking and meal preparation',
+            'Understand cultural differences in meal times and food customs'
+          ],
+          materials: [
+            'Visual English Book 7, Unit 16 slides (01 A - 05 C)',
+            'Wordwall interactive game - British Food Quiz',
+            'YouTube video: "British Food and Meals Vocabulary"',
+            'Food flashcards',
+            'Recipe handouts for traditional British dishes'
+          ],
+          steps: [
+            {
+              title: 'Warm-up: Food Preferences',
+              duration: '5 mins',
+              description: 'Begin by asking students about their food preferences and eating habits.',
+              instructions: [
+                "Ask students: 'What did you eat for breakfast today?'",
+                "Follow up with: 'Do you prefer sweet or savory breakfast foods?'",
+                "Use the opportunity to pre-teach some basic vocabulary that might come up in their responses."
+              ],
+              teacherNotes: 'This activity helps assess prior knowledge and creates context for the lesson.'
+            },
+            {
+              title: 'Presentation: British Food Introduction',
+              duration: '10 mins',
+              description: 'Introduce traditional British foods using Visual English Book 7 slides.',
+              materials: [
+                'Book 7, Unit 16 slides (01 A - 03 C)',
+                'Food flashcards'
+              ],
+              instructions: [
+                'Display Book 7, Unit 16 slides showing different British foods',
+                'For each food, ask: "What is this food called?"',
+                'Drill pronunciation of each food name',
+                'Briefly explain the ingredients and when this food is typically eaten'
+              ]
+            },
+            {
+              title: 'Vocabulary Development: British Food Video',
+              duration: '10 mins',
+              description: 'Watch the "British Food and Meals Vocabulary" video to reinforce food vocabulary.',
+              materials: [
+                'YouTube video from Teacher Resources',
+                'Simple worksheet with food items listed'
+              ],
+              instructions: [
+                'Play the video once all the way through',
+                'Play again, pausing after each section to discuss the foods shown',
+                'Have students mark on their worksheets which foods they recognize or would like to try'
+              ],
+              teacherNotes: 'This video provides authentic examples and pronunciation of food vocabulary.'
+            },
+            {
+              title: 'Guided Practice: Food Matching Activity',
+              duration: '15 mins',
+              description: 'Students match food names to images and categorize them by meal time.',
+              materials: [
+                'Handout with food images and meal categories',
+                'Book 7, Unit 16 slides (04 A - 05 C)'
+              ],
+              instructions: [
+                'Distribute handouts with food images',
+                'Students work in pairs to match foods to appropriate meal times (breakfast, lunch, dinner)',
+                'Review the answers as a class using the Book 7 slides',
+                'For each answer, ask students if these foods are common in their country for these meals'
+              ]
+            },
+            {
+              title: 'Wrap-up: Food Preferences Discussion',
+              duration: '5 mins',
+              description: 'Students share their opinions about British foods they would like to try.',
+              instructions: [
+                'Have students complete the sentence: "I would like to try ___ because..."',
+                'Allow 3-4 students to share their preferences with the class',
+                'Summarize the key food vocabulary learned in the lesson'
+              ]
+            }
+          ],
+          assessmentTips: 'Assess students through their participation in the matching activity and their ability to identify foods correctly during the video activity.',
+          homeworkIdeas: [
+            'Write 3-5 sentences about your favorite meal of the day, including what foods you typically eat.',
+            'Research one traditional British dish and write down its main ingredients.'
+          ],
+          additionalResources: [
+            {
+              title: 'Wordwall British Food Quiz',
+              url: 'https://wordwall.net/resource/29266561/british-food-quiz'
+            },
+            {
+              title: 'British Food Vocabulary Video',
+              url: 'https://www.youtube.com/watch?v=9n3-nQITZrE'
+            }
+          ]
+        },
+        {
+          id: 'cooking-vocabulary-1',
+          title: 'Cooking Vocabulary - Part 1',
+          duration: '45 minutes',
+          level: 'Elementary to Pre-Intermediate (A1-A2)',
+          objectives: [
+            'Learn vocabulary related to cooking methods and kitchen equipment',
+            'Understand and follow simple recipe instructions',
+            'Use imperative forms for cooking instructions',
+            'Discuss food preparation in different cultures'
+          ],
+          materials: [
+            'Visual English Book 7, Unit 16 slides (06 A - 10 C)',
+            'Wordwall interactive game - Food Matching Game',
+            'YouTube video: "Cooking Vocabulary in English"',
+            'Simple recipe cards with cooking instructions',
+            'Kitchen utensils flashcards or images'
+          ],
+          steps: [
+            {
+              title: 'Warm-up: Cooking Experience',
+              duration: '5 mins',
+              description: 'Start by asking students about their cooking experience and favorite dishes to make.',
+              instructions: [
+                "Ask students: 'Do you cook at home? What do you like to cook?'",
+                "Follow up with: 'What's your specialty dish?'",
+                "Use the opportunity to pre-teach some basic cooking vocabulary."
+              ],
+              teacherNotes: 'This activity helps assess prior knowledge and creates context for the lesson.'
+            },
+            {
+              title: 'Presentation: Cooking Methods and Utensils',
+              duration: '12 mins',
+              description: 'Introduce cooking vocabulary using Visual English Book 7 slides and images.',
+              materials: [
+                'Book 7, Unit 16 slides (06 A - 08 B)',
+                'Kitchen utensils flashcards'
+              ],
+              instructions: [
+                'Display slides showing different cooking methods (boil, fry, bake, etc.)',
+                'For each method, ask: "What cooking method is this?"',
+                'Introduce kitchen equipment vocabulary (pot, pan, spatula, etc.)',
+                'Demonstrate the action for each cooking verb'
+              ],
+              teacherNotes: 'Use gestures to reinforce the meaning of cooking verbs.'
+            },
+            {
+              title: 'Vocabulary Development: Cooking Video',
+              duration: '10 mins',
+              description: 'Watch the "Cooking Vocabulary in English" video to reinforce cooking terminology.',
+              materials: [
+                'YouTube video from Teacher Resources',
+                'Worksheet with cooking verbs and utensils'
+              ],
+              instructions: [
+                'Play the video once all the way through',
+                'Play again, pausing after each section to practice the vocabulary',
+                'Have students complete their worksheets as they watch'
+              ],
+              teacherNotes: 'This video shows practical applications of cooking vocabulary.'
+            },
+            {
+              title: 'Guided Practice: Recipe Instructions',
+              duration: '13 mins',
+              description: 'Students practice giving and following cooking instructions.',
+              materials: [
+                'Simple recipe cards with ingredients and steps',
+                'Book 7, Unit 16 slides (09 A - 10 C)'
+              ],
+              instructions: [
+                'Divide students into pairs and give each pair a simple recipe card',
+                'One student reads the instructions while the other mimes the actions',
+                'Students then switch roles',
+                'As a class, discuss which recipes sound delicious or difficult'
+              ]
+            },
+            {
+              title: 'Wrap-up: Favorite Recipe',
+              duration: '5 mins',
+              description: 'Students share a simple recipe from their own culture.',
+              instructions: [
+                'Have students tell a partner about a simple dish from their country',
+                'Ask them to include at least three cooking verbs in their description',
+                'Invite 2-3 students to share their recipes with the class',
+                'Summarize the key cooking vocabulary learned'
+              ]
+            }
+          ],
+          assessmentTips: 'Evaluate students on their ability to use cooking verbs correctly and follow recipe instructions.',
+          homeworkIdeas: [
+            'Write a simple recipe for your favorite dish using at least 5 cooking verbs.',
+            'Create a list of 10 kitchen utensils with their uses.'
+          ],
+          additionalResources: [
+            {
+              title: 'Food Matching Game',
+              url: 'https://wordwall.net/resource/23705207/food-matching-game'
+            },
+            {
+              title: 'Cooking Vocabulary Video',
+              url: 'https://www.youtube.com/watch?v=pySYSJQMs84'
+            }
+          ]
+        }
+      ];
+    }
+    
+    return [];
+  };
 
   // Fetch teacher resources
   const { data, isLoading, refetch } = useQuery<TeacherResource[]>({
@@ -230,6 +449,52 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       ];
     }
 
+    // Book 7, Unit 16 - Food and Meals
+    if (bookId === '7' && unitId === '16') {
+      return [
+        {
+          id: "book7-unit16-video1",
+          bookId,
+          unitId,
+          title: "British Food and Meals Vocabulary",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=9n3-nQITZrE",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/9n3-nQITZrE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-video2",
+          bookId,
+          unitId,
+          title: "Cooking Vocabulary in English",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=pySYSJQMs84",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/pySYSJQMs84" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-game1",
+          bookId,
+          unitId,
+          title: "Food Matching Game",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/23705207/food-matching-game",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/23705207/food-matching-game?themeId=1&templateId=25&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-game2",
+          bookId,
+          unitId,
+          title: "British Food Quiz",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/29266561/british-food-quiz",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29266561/british-food-quiz?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+    
     // Default case - return empty array if no specific resources found
     return [];
   };
@@ -460,6 +725,26 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             provider: "Visual English",
             sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf`,
             fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf`
+          },
+          {
+            id: "book7-unit16-lesson1",
+            bookId,
+            unitId,
+            title: "British Food and Meals - 45-minute Lesson Plan",
+            resourceType: "lesson" as const,
+            provider: "Visual English",
+            sourceUrl: "",
+            lessonPlan: createFoodLessonPlans()[0] // Reference the first lesson plan we created
+          },
+          {
+            id: "book7-unit16-lesson2",
+            bookId,
+            unitId,
+            title: "Cooking Vocabulary - 45-minute Lesson Plan",
+            resourceType: "lesson" as const,
+            provider: "Visual English",
+            sourceUrl: "",
+            lessonPlan: createFoodLessonPlans()[1] // Reference the second lesson plan we created
           },
           ...getMoreUnitResources(bookId, unitId)
         ];
