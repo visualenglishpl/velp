@@ -295,6 +295,9 @@ export function registerDirectRoutes(app: express.Express) {
   app.get('/api/direct/:bookId/:unitId/resources', createTemporaryUser, (req, res) => {
     const { bookId, unitId } = req.params;
     
+    // Set content type to JSON
+    res.setHeader('Content-Type', 'application/json');
+    
     // This endpoint should require authentication
     if (!req.isAuthenticated()) {
       return res.status(401).json({ 

@@ -2,8 +2,27 @@ import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
-    const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+    let errorMessage = res.statusText;
+    try {
+      // First try to parse as JSON, which our API should return
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const errorData = await res.json();
+        errorMessage = errorData.error || errorData.message || JSON.stringify(errorData);
+      } else {
+        // If not JSON, get as text
+        errorMessage = await res.text();
+      }
+    } catch (e) {
+      // If JSON parsing fails, fall back to text
+      try {
+        errorMessage = await res.text();
+      } catch (textError) {
+        // If even text fails, use statusText
+        errorMessage = res.statusText;
+      }
+    }
+    throw new Error(`${res.status}: ${errorMessage}`);
   }
 }
 
@@ -38,7 +57,17 @@ export const getQueryFn: <T>(options: {
     }
 
     await throwIfResNotOk(res);
-    return await res.json();
+    
+    // Check content type before trying to parse as JSON
+    const contentType = res.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return await res.json();
+    }
+    
+    // If not JSON, this is unexpected but we'll handle it gracefully
+    const text = await res.text();
+    console.warn('Received non-JSON response:', text);
+    throw new Error('Expected JSON response but received: ' + (text.length > 100 ? text.substring(0, 100) + '...' : text));
   };
 
 export const queryClient = new QueryClient({
