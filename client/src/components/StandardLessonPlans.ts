@@ -2629,6 +2629,113 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
           url: "https://wordwall.net/resource/search?query=shopping%20vocabulary"
         }
       ]
+    },
+    {
+      id: "book7-unit12-extension-lesson",
+      title: "Online Shopping - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to online shopping and e-commerce",
+        "Compare traditional shopping with online shopping",
+        "Practice language for describing online shopping experiences",
+        "Develop critical thinking skills about advantages and disadvantages"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 12 slides",
+        "Online shopping vocabulary handout",
+        "Online store screenshots or printouts",
+        "Online vs. in-store comparison worksheet"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Online Shopping Experience",
+          duration: "5 mins",
+          description: "Begin by asking students about their experiences with online shopping.",
+          instructions: [
+            "Ask students: 'Have you ever bought anything online?'",
+            "Follow up with: 'What was the last thing you bought online?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Collect some examples from the class"
+          ],
+          teacherNotes: "This activates schema and creates context for the lesson on online shopping."
+        },
+        {
+          title: "Vocabulary Presentation: E-commerce",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to online shopping and e-commerce.",
+          materials: [
+            "Online shopping vocabulary handout",
+            "Book 7, Unit 12 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present online shopping terms: cart, checkout, delivery, review, etc.",
+            "Introduce online payment terms: credit card, PayPal, secure, etc.",
+            "Drill pronunciation of each term",
+            "Show examples using online store screenshots",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Online vs. In-store Comparison",
+          duration: "10 mins",
+          description: "Students compare traditional and online shopping experiences.",
+          materials: [
+            "Online vs. in-store comparison worksheet",
+            "Comparison language prompts"
+          ],
+          instructions: [
+            "Review comparative language: 'more convenient than', 'less time-consuming than'",
+            "Brainstorm advantages and disadvantages of both shopping methods",
+            "Students complete comparison worksheet in pairs",
+            "Discuss differences in price, convenience, experience, etc.",
+            "Check responses as a class"
+          ],
+          teacherNotes: "Encourage balanced consideration of both shopping methods."
+        },
+        {
+          title: "Online Shopping Simulation",
+          duration: "15 mins",
+          description: "Students simulate the online shopping process through role play.",
+          materials: [
+            "Online store simulation worksheets",
+            "Product cards with descriptions and prices"
+          ],
+          instructions: [
+            "Divide students into pairs",
+            "One student is the 'shopper', one is the 'website/customer service'",
+            "Shopper browses products, asks questions, places order",
+            "Website provides information, confirms order, answers questions",
+            "Have pairs switch roles halfway through"
+          ]
+        },
+        {
+          title: "Wrap-up: Shopping Advice",
+          duration: "5 mins",
+          description: "Students give advice about smart online shopping practices.",
+          instructions: [
+            "In small groups, students create tips for safe online shopping",
+            "Each group shares their best piece of advice",
+            "Create a class list of online shopping tips",
+            "Review key vocabulary and expressions from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the online shopping simulation and their ability to use appropriate e-commerce vocabulary.",
+      homeworkIdeas: [
+        "Write a short review of an online store or a product you've purchased online.",
+        "Create a comparison chart of prices for the same item in physical stores and online shops."
+      ],
+      additionalResources: [
+        {
+          title: "E-commerce Vocabulary",
+          url: "https://quizlet.com/subject/e-commerce/"
+        },
+        {
+          title: "Online Shopping Safety Guide",
+          url: "https://www.consumer.ftc.gov/articles/0020-shopping-online"
+        }
+      ]
     }
   ],
   
@@ -2739,6 +2846,113 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
         {
           title: "Dining Out Quiz",
           url: "https://wordwall.net/resource/search?query=restaurant%20vocabulary"
+        }
+      ]
+    },
+    {
+      id: "book7-unit13-extension-lesson",
+      title: "International Cuisine - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to international cuisine and food types",
+        "Compare eating customs from different cultures",
+        "Practice describing dishes from around the world",
+        "Develop cultural awareness through food traditions"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 13 slides",
+        "World map with cuisine markers",
+        "International food flashcards",
+        "Cultural dining customs handout"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Food Around the World",
+          duration: "5 mins",
+          description: "Begin by asking students about their experience with international foods.",
+          instructions: [
+            "Ask students: 'What foreign foods have you tried?'",
+            "Follow up with: 'Which country's cuisine do you like best?'",
+            "Have students share experiences in pairs",
+            "Collect some examples from the class"
+          ],
+          teacherNotes: "This activates schema and creates context for exploring international cuisines."
+        },
+        {
+          title: "Vocabulary Presentation: International Dishes",
+          duration: "10 mins",
+          description: "Introduce vocabulary for different international dishes and ingredients.",
+          materials: [
+            "International food flashcards",
+            "Book 7, Unit 13 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present dishes from different countries (pasta, sushi, curry, etc.)",
+            "Show each dish and ask: 'Do you know what this is called and where it's from?'",
+            "Drill pronunciation of each dish name",
+            "Discuss key ingredients and preparation methods",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Cultural Dining Customs",
+          duration: "10 mins",
+          description: "Students learn about eating customs from different cultures.",
+          materials: [
+            "Cultural dining customs handout",
+            "World map with cuisine markers"
+          ],
+          instructions: [
+            "Present different dining customs (using chopsticks, eating with hands, etc.)",
+            "Discuss table manners in different countries",
+            "Students match customs to countries in pairs",
+            "Highlight interesting differences and similarities",
+            "Discuss what might surprise visitors to their own country"
+          ],
+          teacherNotes: "Emphasize respect for cultural differences and avoid stereotyping."
+        },
+        {
+          title: "International Restaurant Guide",
+          duration: "15 mins",
+          description: "Students create guides for diners at international restaurants.",
+          materials: [
+            "Restaurant guide template",
+            "Cultural information cards"
+          ],
+          instructions: [
+            "Divide students into small groups",
+            "Assign each group a specific cuisine/country",
+            "Groups create mini-guides including: typical dishes, customs, useful phrases",
+            "Encourage adding recommendations and tips for first-time diners",
+            "Have groups present their guides to the class"
+          ]
+        },
+        {
+          title: "Wrap-up: Food Journey",
+          duration: "5 mins",
+          description: "Students plan an imaginary culinary journey around the world.",
+          instructions: [
+            "Students choose three countries they would visit for their cuisine",
+            "They complete: 'On my food journey, I would visit... to try...'",
+            "Share ideas with the class",
+            "Review key vocabulary and cultural insights from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their international restaurant guides and their ability to appropriately describe international cuisines and customs.",
+      homeworkIdeas: [
+        "Research a traditional dish from another country and write a recipe with ingredients and preparation steps.",
+        "Create a cultural comparison of dining customs between your country and another country of your choice."
+      ],
+      additionalResources: [
+        {
+          title: "International Cuisine Guide",
+          url: "https://www.taste-atlas.com/"
+        },
+        {
+          title: "World Food Vocabulary",
+          url: "https://quizlet.com/subject/world-cuisine/"
         }
       ]
     }
@@ -2853,6 +3067,113 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
           url: "https://wordwall.net/resource/search?query=health%20vocabulary"
         }
       ]
+    },
+    {
+      id: "book7-unit14-extension-lesson",
+      title: "Mental Health and Well-being - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to mental health and well-being",
+        "Discuss stress management and self-care strategies",
+        "Practice expressing feelings and emotional states",
+        "Develop awareness of the mind-body connection"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 14 slides",
+        "Emotions flashcards",
+        "Well-being activities worksheet",
+        "Stress management scenario cards"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Feelings Check-in",
+          duration: "5 mins",
+          description: "Begin by asking students to identify their current emotional state.",
+          instructions: [
+            "Present a range of emotion words or faces",
+            "Ask students: 'How are you feeling today?'",
+            "Encourage them to use more specific terms than just 'good' or 'bad'",
+            "Have students discuss briefly why they feel that way"
+          ],
+          teacherNotes: "Keep this activity light and voluntary, with no pressure to share deeply personal feelings."
+        },
+        {
+          title: "Vocabulary Presentation: Mental Well-being",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to mental health and emotional well-being.",
+          materials: [
+            "Emotions flashcards",
+            "Book 7, Unit 14 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present mental health vocabulary: stress, relaxation, mindfulness, etc.",
+            "Introduce emotion vocabulary beyond basics: frustrated, content, anxious, etc.",
+            "Drill pronunciation of each term",
+            "Discuss different situations that might trigger various emotions",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Self-care Strategies",
+          duration: "10 mins",
+          description: "Students learn about and discuss various self-care strategies.",
+          materials: [
+            "Well-being activities worksheet",
+            "Self-care images or examples"
+          ],
+          instructions: [
+            "Present different self-care activities (exercise, meditation, hobbies, etc.)",
+            "Discuss the benefits of each for mental well-being",
+            "Students complete a worksheet matching activities to benefits",
+            "Ask: 'What do you do to relax when you feel stressed?'",
+            "Share responses as a class"
+          ],
+          teacherNotes: "Emphasize that different strategies work for different people."
+        },
+        {
+          title: "Stress Management Role Play",
+          duration: "15 mins",
+          description: "Students practice responding to stressful scenarios in healthy ways.",
+          materials: [
+            "Stress management scenario cards",
+            "Response suggestion prompts"
+          ],
+          instructions: [
+            "Divide students into pairs",
+            "Give each pair scenario cards with potentially stressful situations",
+            "Students discuss how they would respond and manage the stress",
+            "Encourage use of new vocabulary and positive coping strategies",
+            "Have pairs share their best solutions with the class"
+          ]
+        },
+        {
+          title: "Wrap-up: Personal Well-being Plan",
+          duration: "5 mins",
+          description: "Students create simple personal well-being plans.",
+          instructions: [
+            "Students identify 3 activities they can do regularly for mental well-being",
+            "They complete: 'To take care of my mental health, I will...'",
+            "Share some ideas with the class (voluntary)",
+            "Review key vocabulary and concepts from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the stress management role plays and their ability to discuss mental well-being using appropriate vocabulary.",
+      homeworkIdeas: [
+        "Keep a simple mood journal for three days, noting how you feel and what may have influenced your mood.",
+        "Research a mindfulness or relaxation technique and write instructions for how to practice it."
+      ],
+      additionalResources: [
+        {
+          title: "Emotions Vocabulary",
+          url: "https://www.vocabulary.cl/Lists/Feelings.htm"
+        },
+        {
+          title: "Mindfulness Activities for the Classroom",
+          url: "https://www.mindfulschools.org/free-resources/"
+        }
+      ]
     }
   ],
   
@@ -2962,6 +3283,113 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
         {
           title: "Environmental Issues Quiz",
           url: "https://wordwall.net/resource/search?query=environment%20vocabulary"
+        }
+      ]
+    },
+    {
+      id: "book7-unit15-extension-lesson",
+      title: "Climate Change - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to climate change and global warming",
+        "Understand basic causes and effects of climate change",
+        "Discuss personal and community actions to address climate issues",
+        "Practice expressing opinions about environmental responsibility"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 15 slides",
+        "Climate change vocabulary handout",
+        "Before and after climate impact images",
+        "Climate action cards"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Weather Changes",
+          duration: "5 mins",
+          description: "Begin by asking students about weather patterns and changes they've noticed.",
+          instructions: [
+            "Ask students: 'Have you noticed any changes in the weather over the years?'",
+            "Follow up with: 'What seasons do you like and why?'",
+            "Have students discuss observations in pairs",
+            "Collect some examples from the class"
+          ],
+          teacherNotes: "This activates schema and creates a personal connection to climate topics."
+        },
+        {
+          title: "Vocabulary Presentation: Climate Change",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to climate change and its effects.",
+          materials: [
+            "Climate change vocabulary handout",
+            "Book 7, Unit 15 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present climate change terms: global warming, greenhouse gases, carbon footprint, etc.",
+            "Show before/after images of climate impacts",
+            "Drill pronunciation of each term",
+            "Explain each concept with simple, clear examples",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Causes and Effects Chain",
+          duration: "10 mins",
+          description: "Students identify causes and effects of climate change.",
+          materials: [
+            "Cause and effect worksheet",
+            "Climate impact images"
+          ],
+          instructions: [
+            "Present a simple model of cause and effect for climate change",
+            "Provide sentence frames: 'When [action happens], it causes [result]'",
+            "In pairs, students complete a cause-effect worksheet",
+            "Discuss how one action can lead to multiple effects",
+            "Review answers as a class"
+          ],
+          teacherNotes: "Keep explanations simple and appropriate for language level."
+        },
+        {
+          title: "Climate Action Planning",
+          duration: "15 mins",
+          description: "Students develop and present climate action plans.",
+          materials: [
+            "Climate action cards",
+            "Action plan template"
+          ],
+          instructions: [
+            "Divide students into small groups",
+            "Each group selects a climate issue to address (transport, energy, waste, etc.)",
+            "Groups create a simple 3-step plan with actions at personal and community levels",
+            "Encourage use of target vocabulary and 'should/could/must' structures",
+            "Each group presents their plan to the class"
+          ]
+        },
+        {
+          title: "Wrap-up: Personal Climate Pledge",
+          duration: "5 mins",
+          description: "Students commit to one personal action to address climate change.",
+          instructions: [
+            "Students reflect on actions discussed during the lesson",
+            "They complete: 'To help fight climate change, I will...'",
+            "Share pledges with the class",
+            "Review key vocabulary and concepts from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the climate action planning activity and their ability to discuss climate issues using appropriate vocabulary.",
+      homeworkIdeas: [
+        "Create a poster showing three causes and three effects of climate change with illustrations.",
+        "Track your 'carbon footprint' for one day and write 3-5 sentences about how you could reduce it."
+      ],
+      additionalResources: [
+        {
+          title: "Climate Change Vocabulary",
+          url: "https://learnenglish.britishcouncil.org/vocabulary/beginner-to-pre-intermediate/environment"
+        },
+        {
+          title: "NASA Climate Kids",
+          url: "https://climatekids.nasa.gov/"
         }
       ]
     }
@@ -3077,58 +3505,114 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
       ]
     },
     {
-      id: "book7-unit16-british-food",
-      title: "British Food and Meals - 45-minute Lesson Plan",
+      id: "book7-unit16-extension-lesson",
+      title: "Cooking and Food Preparation - 45-minute Extension Lesson",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Identify and name common British foods and meals",
-        "Discuss food preferences using simple structures",
-        "Learn vocabulary related to British cuisine",
-        "Understand cultural differences in meal times and food customs"
+        "Learn vocabulary related to cooking and food preparation",
+        "Understand and use cooking verbs and measurements",
+        "Follow and give recipe instructions",
+        "Develop speaking skills through collaborative recipe creation"
       ],
       materials: [
-        "Visual English Book 7, Unit 16 slides (01 A - 05 C)",
-        "Wordwall interactive game - British Food Quiz",
-        "YouTube video: 'British Food and Meals Vocabulary'",
-        "Food flashcards",
-        "Recipe handouts for traditional British dishes"
+        "Visual English Book 7, Unit 16 slides",
+        "Cooking verbs flashcards",
+        "Simple recipe cards",
+        "Food preparation images",
+        "Kitchen utensils vocabulary handout"
       ],
       steps: [
         {
-          title: "Warm-up: Food Preferences",
+          title: "Warm-up: Cooking Experience",
           duration: "5 mins",
-          description: "Begin by asking students about their food preferences and eating habits.",
+          description: "Begin by asking students about their cooking experiences.",
           instructions: [
-            "Ask students: 'What did you eat for breakfast today?'",
-            "Follow up with: 'Do you prefer sweet or savory breakfast foods?'",
-            "Use the opportunity to pre-teach some basic vocabulary that might come up in their responses."
+            "Ask students: 'Do you like to cook? Why or why not?'",
+            "Follow up with: 'What's something you know how to prepare?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Collect some examples from the class"
           ],
-          teacherNotes: "This activity helps assess prior knowledge and creates context for the lesson."
+          teacherNotes: "This activates schema and creates context for the lesson on cooking."
         },
         {
-          title: "Presentation: British Food Introduction",
+          title: "Vocabulary Presentation: Cooking Verbs",
           duration: "10 mins",
-          description: "Introduce traditional British foods using Visual English slides.",
+          description: "Introduce vocabulary related to cooking actions and utensils.",
           materials: [
-            "Book 7, Unit 16 slides (01 A - 03 C)",
-            "Food flashcards"
+            "Cooking verbs flashcards",
+            "Kitchen utensils vocabulary handout"
           ],
           instructions: [
-            "Display Book 7, Unit 16 slides showing different British foods",
-            "For each food, ask: 'What is this food called?'",
-            "Drill pronunciation of each food name",
-            "Briefly explain the ingredients and when this food is typically eaten"
+            "Present cooking verbs: chop, slice, boil, fry, bake, mix, etc.",
+            "Demonstrate each action with gestures if possible",
+            "Introduce kitchen utensils: knife, pan, pot, spoon, etc.",
+            "Drill pronunciation of each term",
+            "Have students match verbs with appropriate utensils"
           ]
         },
         {
-          title: "Vocabulary Development: British Food Video",
+          title: "Recipe Instruction Practice",
           duration: "10 mins",
-          description: "Watch the 'British Food and Meals Vocabulary' video to reinforce food vocabulary.",
+          description: "Students practice following and giving recipe instructions.",
           materials: [
-            "YouTube video from Teacher Resources",
-            "Simple worksheet with food items listed"
+            "Simple recipe cards",
+            "Food preparation images"
           ],
+          instructions: [
+            "Review imperative form used in recipes: 'Chop the onions', 'Beat the eggs'",
+            "Introduce sequencing words: first, next, then, finally",
+            "Model a simple recipe with clear step-by-step instructions",
+            "Students arrange recipe steps in correct order in pairs",
+            "Check answers as a class"
+          ],
+          teacherNotes: "Focus on clear sequence and appropriate cooking verbs."
+        },
+        {
+          title: "Collaborative Recipe Creation",
+          duration: "15 mins",
+          description: "Students work together to create and present simple recipes.",
+          materials: [
+            "Recipe template worksheets",
+            "Ingredient word cards"
+          ],
+          instructions: [
+            "Divide students into small groups of 3-4",
+            "Provide each group with ingredient word cards",
+            "Groups create a simple recipe using the given ingredients",
+            "They must use at least 5 cooking verbs and sequencing words",
+            "Each group presents their recipe to the class"
+          ]
+        },
+        {
+          title: "Wrap-up: Recipe Exchange",
+          duration: "5 mins",
+          description: "Students share personal recipes or cooking tips.",
+          instructions: [
+            "Students think about a simple family recipe or cooking tip",
+            "They complete: 'A dish I can teach you to make is...'",
+            "Share several ideas with the class",
+            "Review key vocabulary and cooking verbs from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their collaborative recipe creation and their ability to use cooking vocabulary and imperative forms appropriately.",
+      homeworkIdeas: [
+        "Write the instructions for preparing your favorite dish using at least 8 cooking verbs from the lesson.",
+        "Create an illustrated guide showing the steps to prepare a simple snack or sandwich."
+      ],
+      additionalResources: [
+        {
+          title: "Cooking Vocabulary",
+          url: "https://www.vocabulary.cl/Lists/Cooking.htm"
+        },
+        {
+          title: "Recipe English",
+          url: "https://learnenglish.britishcouncil.org/vocabulary/beginner-to-pre-intermediate/food-preparation"
+        }
+      ]
+    }
+  ]
           instructions: [
             "Play the video once all the way through",
             "Play again, pausing after each section to discuss the foods shown",
