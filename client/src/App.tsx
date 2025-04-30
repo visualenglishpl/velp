@@ -13,6 +13,7 @@ import PrintedBookCheckout from "@/pages/PrintedBookCheckout";
 import BooksPage from "@/pages/BooksPage";
 import UnitsPage from "@/pages/UnitsPage";
 import LessonPlansPage from "@/pages/LessonPlansPage";
+import TestResourcesPage from "@/pages/TestResourcesPage";
 import FlaggedQuestions from "@/pages/admin/FlaggedQuestions";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -163,6 +164,11 @@ function Router() {
         }}
       </Route>
       
+      {/* Test Resources Page - For debugging */}
+      <Route path="/test-resources">
+        {() => <TestResourcesPage />}
+      </Route>
+
       {/* Lesson Plans Page */}
       <Route path="/lesson-plans">
         {() => <ProtectedRoute component={LessonPlansPage} requireAuth={false} />}

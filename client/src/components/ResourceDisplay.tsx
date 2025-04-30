@@ -1,83 +1,55 @@
-import { useState, useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
-import { TeacherResource } from './TeacherResources.fixed';
-// Import individual card rendering components
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Video, Gamepad2, FileText, Book, Image as ImageIcon, ExternalLink } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// Internal ResourceCard component 
+interface TeacherResource {
+  id: string;
+  bookId: string;
+  unitId: string;
+  title: string;
+  resourceType: string;
+  provider?: string;
+  sourceUrl?: string;
+  embedCode?: string;
+}
+
 const ResourceCard = ({ resource }: { resource: TeacherResource }) => {
-  const getIcon = () => {
-    switch(resource.resourceType) {
-      case 'video': return <Video className="h-5 w-5 text-blue-500" />;
-      case 'game': return <Gamepad2 className="h-5 w-5 text-green-500" />;
-      case 'lesson': return <Book className="h-5 w-5 text-amber-500" />;
-      case 'pdf': return <FileText className="h-5 w-5 text-red-500" />;
-      default: return <ImageIcon className="h-5 w-5 text-purple-500" />;
-    }
-  };
-
   return (
-    <Card className="mb-4 transition-all hover:shadow-md">
-      <CardHeader className="pb-2">
-        <div className="flex justify-between items-start">
-          <div className="flex items-center gap-2">
-            {getIcon()}
-            <CardTitle className="text-lg">{resource.title}</CardTitle>
-          </div>
-        </div>
-        <div className="flex mt-1 gap-2">
-          {resource.provider && <Badge variant="outline" className="bg-white/50 text-xs font-normal">{resource.provider}</Badge>}
-          <Badge variant="outline" className="bg-white/50 text-xs font-normal">{resource.resourceType}</Badge>
-        </div>
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle>{resource.title}</CardTitle>
+        <CardDescription>
+          {resource.provider && <span>Provider: {resource.provider}</span>}
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        {resource.resourceType === 'video' && resource.embedCode && (
-          <div className="aspect-video mb-2" dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
-        )}
-        {resource.resourceType === 'game' && resource.embedCode && (
-          <div className="min-h-[400px] mb-2" dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
-        )}
-        {resource.resourceType === 'lesson' && resource.lessonPlan && (
-          <div className="mb-2">
-            <p className="text-sm mb-2"><strong>Level:</strong> {resource.lessonPlan?.level}</p>
-            <p className="text-sm mb-2"><strong>Duration:</strong> {resource.lessonPlan?.duration}</p>
-            <p className="text-sm"><strong>Objectives:</strong> {resource.lessonPlan?.objectives?.slice(0, 2).join(', ')}{resource.lessonPlan?.objectives?.length > 2 ? '...' : ''}</p>
-          </div>
+        {resource.embedCode ? (
+          <div className="overflow-hidden rounded-md" dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
+        ) : (
+          <p>No preview available. <a href={resource.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Open resource</a></p>
         )}
       </CardContent>
-      <CardFooter className="pt-0 flex justify-between">
+      <CardFooter className="flex justify-between">
+        <div className="text-sm text-muted-foreground">Type: {resource.resourceType}</div>
         {resource.sourceUrl && (
-          <Button variant="outline" size="sm" asChild>
-            <a href={resource.sourceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center">
-              <ExternalLink className="h-4 w-4 mr-2" /> Visit Source
-            </a>
-          </Button>
+          <a 
+            href={resource.sourceUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline text-sm"
+          >
+            Source
+          </a>
         )}
       </CardFooter>
     </Card>
   );
 };
 
-interface DirectResourcesLoaderProps {
-  bookId: string;
-  unitId: string;
-}
-
-const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) => {
-  const { toast } = useToast();
+const ResourceDisplay = () => {
   const [resources, setResources] = useState<TeacherResource[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Only use the no-auth endpoint for Book 7
-  const isBook7 = bookId === '7' || bookId === 'book7';
-  
-  // Extract unit number from unitId (e.g., 'unit9' -> '9')
-  const unitNumber = unitId.replace(/\D/g, '');
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -85,21 +57,10 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
       setError(null);
       
       try {
-        // Special case for Book 7 Unit 9 - use debug endpoint
-        let endpoint = '';
-        if (isBook7 && unitNumber === '9') {
-          // Use our special debug endpoint for Book 7 Unit 9
-          endpoint = '/api/debug/book7-unit9';
-          console.log('USING SPECIAL DEBUG ENDPOINT FOR BOOK 7 UNIT 9');
-        } else if (isBook7) {
-          // Use the regular no-auth endpoint for other Book 7 units
-          endpoint = `/api/no-auth/book7/${unitNumber}/resources`;
-        } else {
-          // Use the standard endpoint for other books
-          endpoint = `/api/direct/${bookId}/${unitId}/resources`;
-        }
+        // Use the debug endpoint
+        const endpoint = '/api/debug/book7-unit9';
         
-        console.log(`DirectResourcesLoader: Book=${bookId}, Unit=${unitId}, Using endpoint: ${endpoint}`);
+        console.log(`ResourceDisplay: Using debug endpoint: ${endpoint}`);
         
         // Make sure to prevent any caching issues
         const uniqueParam = `?t=${Date.now()}`;
@@ -107,9 +68,8 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
         
         console.log(`Fetching resources from ${fullEndpoint}`);
         
-        // For the no-auth endpoint, we don't need to include credentials
         const response = await fetch(fullEndpoint, {
-          credentials: isBook7 ? "omit" : "include", // Don't send credentials for no-auth endpoints
+          credentials: "omit", 
           headers: {
             "Accept": "application/json",
             "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -123,7 +83,7 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
           const data = await response.json();
           
           if (data.success && data.resources) {
-            console.log(`Received ${data.resources.length} resources from ${endpoint}`);
+            console.log(`Received ${data.resources.length} resources from debug endpoint`);
             setResources(data.resources);
           } else {
             // Handle API error response
@@ -144,10 +104,8 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
       }
     };
     
-    if (bookId && unitId) {
-      fetchResources();
-    }
-  }, [bookId, unitId, isBook7, unitNumber]);
+    fetchResources();
+  }, []);
 
   // Group resources by type for tab display
   const videos = resources.filter(r => r.resourceType === 'video');
@@ -181,10 +139,10 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
     return (
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Teacher Resources</CardTitle>
+          <CardTitle>Test Resources</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>No resources available for this unit.</p>
+          <p>No resources available from debug endpoint.</p>
         </CardContent>
       </Card>
     );
@@ -193,7 +151,7 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
   // If we have resources, render them in tabs
   return (
     <div className="w-full p-4">
-      <h2 className="text-2xl font-bold mb-4">Teacher Resources</h2>
+      <h2 className="text-2xl font-bold mb-4">Test Resources (Book 7 Unit 9)</h2>
       
       <Tabs defaultValue={videos.length > 0 ? "videos" : games.length > 0 ? "games" : "all"}>
         <TabsList className="mb-4">
@@ -238,4 +196,4 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
   );
 };
 
-export default DirectResourcesLoader;
+export default ResourceDisplay;
