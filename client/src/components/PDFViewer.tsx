@@ -4,22 +4,18 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, FileText, Loader2, ZoomIn, ZoomOut } from 'lucide-react';
 
 // Set up the worker for the PDF.js library
-// Use a fallback approach to find a working CDN
+// Use a more direct approach that works reliably in the Replit environment
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
+// Create a simplified API to reset the worker if needed
 const setUpPdfWorker = () => {
   try {
-    // First try CDNJS (most reliable)
-    pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+    // Force worker to reinitialize by using a slightly different URL (with a timestamp)
+    pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js?t=${Date.now()}`;
   } catch (e) {
-    try {
-      // Then try unpkg as fallback
-      pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-    } catch (e) {
-      console.error('Failed to load PDF.js worker from CDN', e);
-    }
+    console.error('Failed to reset PDF.js worker', e);
   }
 };
-
-setUpPdfWorker();
 
 interface PDFViewerProps {
   pdfUrl: string;
@@ -146,13 +142,21 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
           <div className="flex flex-col items-center justify-center p-8">
             <FileText className="h-12 w-12 text-destructive/60 mb-4" />
             <p className="text-sm text-destructive">{error}</p>
-            <Button 
-              variant="link" 
-              className="mt-2" 
-              onClick={() => window.open(pdfUrl, '_blank')}
-            >
-              Try opening in a new tab
-            </Button>
+            <div className="flex gap-2 mt-4">
+              <Button 
+                variant="outline" 
+                onClick={retryLoadPdf}
+              >
+                <Loader2 className="h-3.5 w-3.5 mr-1" />
+                Try Again
+              </Button>
+              <Button 
+                variant="link"
+                onClick={() => window.open(pdfUrl, '_blank')}
+              >
+                Open in new tab
+              </Button>
+            </div>
           </div>
         )}
         

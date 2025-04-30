@@ -2792,10 +2792,8 @@ useEffect(() => {
     if (filteredResources.length === 0) {
       return (
         <div className="text-center py-8 text-muted-foreground">
-          {isEditMode ? (
+          {isEditMode && (
             <p>No resources found. Click the "Add Resource" button to add some.</p>
-          ) : (
-            <p>No resources available for this unit yet.</p>
           )}
         </div>
       );
@@ -3615,7 +3613,7 @@ useEffect(() => {
                         <span>Movie Genres Vocabulary</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription></CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
