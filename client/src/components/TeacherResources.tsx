@@ -1350,6 +1350,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           provider: "YouTube",
           sourceUrl: "https://www.youtube.com/embed/nfzYoNTcAn8",
           embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/nfzYoNTcAn8?si=ePvFy6TfZVtNh1gZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit9-game4",
+          bookId,
+          unitId,
+          title: "Types of Jobs - Wordwall Game",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/c19107c08fe04affb6610d874284df4a",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c19107c08fe04affb6610d874284df4a?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
@@ -1452,6 +1462,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           provider: "Kahoot",
           sourceUrl: "https://create.kahoot.it/share/visual-english-7-unit-11-natural-disasters/49b6cfd8-e8b3-479c-bda3-e2192412a301",
           embedCode: ""
+        },
+        {
+          id: "book7-unit11-game3",
+          bookId,
+          unitId,
+          title: "Natural Disaster Wordwall Game",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/28a-ONLINE-GAME-WORDWALL-NATURAL-DISASTER",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/28a-ONLINE-GAME-WORDWALL-NATURAL-DISASTER?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
@@ -1540,6 +1560,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           provider: "Visual English",
           sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit14/00%20A%20Book%207.pdf",
           embedCode: ""
+        },
+        {
+          id: "book7-unit14-video1",
+          bookId,
+          unitId,
+          title: "Migrants - Award-Winning CG Animated Short Film about Climate change",
+          resourceType: "video",
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=ugPJi8kMK8Q",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ugPJi8kMK8Q?si=aj_dlhbAyjFFNf0G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit14-game1",
