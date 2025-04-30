@@ -1622,7 +1622,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           id: "book7-unit16-game1",
           bookId,
           unitId,
-          title: "Food Tastes Game",
+          title: "Food Tastes",
           resourceType: "game" as const,
           provider: "Wordwall",
           sourceUrl: "https://wordwall.net/resource/6730885c619848649b96d5fa6bf972c7",
@@ -1632,16 +1632,36 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           id: "book7-unit16-game2",
           bookId,
           unitId,
-          title: "Food Stall / Trucks Game",
+          title: "Food Stall / Trucks",
           resourceType: "game" as const,
           provider: "Wordwall",
           sourceUrl: "https://wordwall.net/resource/3828678c606049d0a756fad74eb5819a",
           embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3828678c606049d0a756fad74eb5819a?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-video1",
+          bookId,
+          unitId,
+          title: "Guess The Fast Food Restaurants Logo 🍔 | Food Logo Quiz 🍟",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=XPJ8sLW9MVs",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XPJ8sLW9MVs?si=rrEv0vqe5wxKRaMi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-video2",
+          bookId,
+          unitId,
+          title: "🌮 Guess the Country by its Food 🍕😋 | Country Quiz",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=OuKo5MVaeWU",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/OuKo5MVaeWU?si=xYZvg7F70fGeNxbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
         }
       ];
     }
 
-    // Resources for Book 6, Unit 1
+    // Resources for Book 6, Unit 1 - Jobs
     if (bookId === '6' && unitId === '1') {
       return [
         {
@@ -1653,6 +1673,66 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           provider: "Visual English",
           sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit1/00%20A%20Book%206%20%E2%80%93%20Unit%201.pdf",
           embedCode: ""
+        },
+        {
+          id: "book6-unit1-game1",
+          bookId,
+          unitId,
+          title: "Jobs and Occupations",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/29841026/jobs",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/23975bc1744b41c9a0c3b027be19b08c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book6-unit1-game2",
+          bookId,
+          unitId,
+          title: "Jobs Matching Game",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/38680/jobs-matching-game",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/936e34b36eda4c59bd94fe2e01166a29?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book6-unit1-game3",
+          bookId,
+          unitId,
+          title: "Jobs and Workplaces",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/32267/english/jobs-and-workplaces",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c1efc6c6dd03442789ccc1d22d7f5c7d?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book6-unit1-game4",
+          bookId,
+          unitId,
+          title: "Jobs Quiz",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/25831/english/jobs-quiz",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/df4a0c2a9ece496ba74b5d07b25c9d9e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book6-unit1-video1",
+          bookId,
+          unitId,
+          title: "Jobs and Occupations Vocabulary",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=fcKC1Vc965o",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/fcKC1Vc965o?si=LmLuRMdWL4D5bpnZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+        },
+        {
+          id: "book6-unit1-video2",
+          bookId,
+          unitId,
+          title: "Guess the Job by Emoji Quiz",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=gWpYB4asINU",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gWpYB4asINU?si=o-qMOh0Yz0FXPXCC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
         }
       ];
     }
