@@ -768,227 +768,225 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
       ]
     }
   ],  
-  // Unit 4: Books
+  // Unit 4: Hotels and Accommodation
   "4": [
     {
       id: "book7-unit4-main-lesson",
-      title: "Book Genres - 45-minute Lesson Plan",
+      title: "Hotel Accommodation - 45-minute Lesson Plan",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Identify and name different book genres",
-        "Express reading preferences using target structures",
-        "Ask and answer questions about reading habits",
-        "Recommend books to others based on preferences"
+        "Identify and name different types of hotel rooms and facilities",
+        "Learn vocabulary related to hotel services and amenities",
+        "Practice making hotel reservations and checking in/out",
+        "Ask and answer questions about accommodation preferences"
       ],
       materials: [
         "Visual English Book 7, Unit 4 slides",
-        "Book cover images or actual books from different genres",
-        "Reading habits questionnaire",
-        "Book recommendation cards"
+        "Hotel vocabulary flashcards",
+        "Hotel booking form worksheets",
+        "Hotel facilities and services handouts"
       ],
       steps: [
         {
-          title: "Warm-up: Reading Habits",
+          title: "Warm-up: Accommodation Experiences",
           duration: "5 mins",
-          description: "Begin by asking students about their reading habits.",
+          description: "Begin by asking students about their hotel experiences.",
           instructions: [
-            "Ask students: 'Do you enjoy reading books?'",
-            "Follow up with: 'What was the last book you read?'",
+            "Ask students: 'Have you ever stayed in a hotel?'",
+            "Follow up with: 'What kind of accommodation do you prefer when traveling?'",
             "Have students discuss in pairs for 1-2 minutes",
             "Get feedback from several students"
           ],
-          teacherNotes: "This activates schema and creates context for the main lesson on book genres."
+          teacherNotes: "This activates schema and creates context for the main lesson on hotel accommodation."
         },
         {
-          title: "Vocabulary Presentation: Book Genres",
+          title: "Vocabulary Presentation: Hotel Rooms and Facilities",
           duration: "10 mins",
-          description: "Introduce vocabulary for different book genres.",
+          description: "Introduce vocabulary for different types of hotel rooms and facilities.",
           materials: [
             "Book 7, Unit 4 slides (first section)",
-            "Book cover images representing different genres"
+            "Hotel vocabulary flashcards"
           ],
           instructions: [
-            "Display slides showing different book genres (mystery, romance, science fiction, etc.)",
-            "For each genre, ask: 'What type of book is this?'",
-            "Drill pronunciation of each genre name",
-            "Discuss key characteristics of each genre",
-            "Have students repeat and practice the vocabulary"
-          ]
-        },
-        {
-          title: "Reading Preferences Practice",
-          duration: "10 mins",
-          description: "Students practice expressing reading preferences.",
-          materials: [
-            "Book 7, Unit 4 slides (middle section)",
-            "Reading preferences questionnaire"
-          ],
-          instructions: [
-            "Review expressions: 'I prefer/I'm interested in/I find...boring/exciting'",
-            "Demonstrate how to express reading preferences",
-            "Students complete questionnaire in pairs, asking each other",
-            "Ask: 'What kind of books do you prefer reading?'",
-            "Collect some responses as a class"
-          ],
-          teacherNotes: "Encourage students to give reasons for their preferences."
-        },
-        {
-          title: "Book Recommendation Activity",
-          duration: "15 mins",
-          description: "Students practice recommending books based on preferences.",
-          materials: [
-            "Book recommendation cards",
-            "Book 7, Unit 4 slides (final section)"
-          ],
-          instructions: [
-            "Distribute book recommendation cards with brief descriptions",
-            "Students circulate and recommend books to each other",
-            "They must match books to classmates' preferences",
-            "Provide dialog prompts: 'I think you might enjoy this book because...'",
-            "Have 2-3 students share their recommended books"
-          ]
-        },
-        {
-          title: "Wrap-up: Best Book",
-          duration: "5 mins",
-          description: "Students vote for the most interesting book recommendation.",
-          instructions: [
-            "Display all book recommendations briefly",
-            "Students vote for the book they would most like to read",
-            "Discuss the most popular choices",
-            "Review key vocabulary and expressions from the lesson"
-          ]
-        }
-      ],
-      assessmentTips: "Assess students through their participation in the book recommendation activity and their ability to express reading preferences using the target structures.",
-      homeworkIdeas: [
-        "Write a paragraph about your favorite book, describing its genre and why you like it.",
-        "Create a mini book review for a book you have read recently."
-      ],
-      additionalResources: [
-        {
-          title: "Book Genres Vocabulary",
-          url: "https://www.vocabulary.cl/Lists/Books.htm"
-        },
-        {
-          title: "Book Genre Quiz",
-          url: "https://wordwall.net/resource/search?query=book%20genres"
-        }
-      ]
-    },
-    {
-      id: "book7-unit4-extension-lesson",
-      title: "Book Parts and Publishing - 45-minute Extension Lesson",
-      duration: "45 minutes",
-      level: "Elementary to Pre-Intermediate (A1-A2)",
-      objectives: [
-        "Learn vocabulary related to book parts and publishing",
-        "Understand the process of how books are made",
-        "Create a book cover and blurb for an imaginary book",
-        "Practice presenting and describing books to an audience"
-      ],
-      materials: [
-        "Visual English Book 7, Unit 4 slides",
-        "Real books to show different parts",
-        "Book creation template handouts",
-        "Book publishing process diagrams"
-      ],
-      steps: [
-        {
-          title: "Warm-up: Book Parts",
-          duration: "5 mins",
-          description: "Begin by showing students a book and asking them to identify its parts.",
-          instructions: [
-            "Hold up a book and point to different parts",
-            "Ask: 'What is this part of the book called?'",
-            "Elicit or teach: cover, spine, title, author, blurb, chapters, etc.",
-            "Have students briefly examine books in pairs and identify 5 parts"
-          ],
-          teacherNotes: "This activates schema and creates context for the lesson on book parts and publishing."
-        },
-        {
-          title: "Vocabulary Presentation: Book Publishing",
-          duration: "10 mins",
-          description: "Introduce vocabulary related to book publishing and creation.",
-          materials: [
-            "Book 7, Unit 4 slides (supplementary section)",
-            "Book publishing process diagram"
-          ],
-          instructions: [
-            "Display slides showing book publishing vocabulary",
-            "Introduce terms: author, editor, publisher, manuscript, draft, etc.",
-            "Show a simple diagram of how a book is published",
+            "Display slides showing different hotel rooms (single, double, suite, etc.)",
+            "For each room type, ask: 'What type of room is this?'",
+            "Introduce hotel facilities (reception, restaurant, gym, spa, etc.)",
             "Drill pronunciation of each term",
             "Have students repeat and practice the vocabulary"
           ]
         },
         {
-          title: "Book Cover Analysis",
+          title: "Hotel Services and Amenities",
           duration: "10 mins",
-          description: "Students analyze book covers and discuss their features.",
+          description: "Students learn vocabulary related to hotel services and amenities.",
           materials: [
-            "Various book covers (digital or physical)",
-            "Book cover analysis worksheet"
+            "Book 7, Unit 4 slides (middle section)",
+            "Hotel services and amenities handout"
           ],
           instructions: [
-            "Show 4-5 different book covers",
-            "Discuss elements: title, author name, images, colors, genre signals",
-            "Students complete analysis worksheet in pairs",
-            "Ask: 'How does this cover reflect the book's genre?'",
-            "Share observations as a class"
+            "Present vocabulary: room service, housekeeping, concierge, etc.",
+            "Ask: 'What services do hotels offer to guests?'",
+            "Students match services with descriptions in pairs",
+            "Practice using structures: 'I would like to order room service.'",
+            "Check responses as a class"
           ],
-          teacherNotes: "Help students understand how design elements communicate genre and content."
+          teacherNotes: "Emphasize practical language for requesting hotel services."
         },
         {
-          title: "Create Your Own Book",
+          title: "Hotel Booking Role Play",
           duration: "15 mins",
-          description: "Students design a book cover and write a blurb for an imaginary book.",
+          description: "Students practice making hotel reservations through role play.",
           materials: [
-            "Book creation template handouts",
-            "Colored pencils/markers",
-            "Sample blurbs for reference"
+            "Hotel booking form worksheets",
+            "Role cards (receptionist, guest)",
+            "Book 7, Unit 4 slides (final section)"
           ],
           instructions: [
-            "Distribute book creation templates",
-            "Students choose a genre for their imaginary book",
-            "They design a cover that reflects the genre",
-            "They write a 2-3 sentence blurb for the back cover",
-            "Monitor and assist with vocabulary and expressions"
+            "Review language for making reservations and checking in/out",
+            "Divide students into pairs (receptionist and guest)",
+            "Provide booking forms and scenario cards",
+            "Guests must book specific types of rooms with particular requirements",
+            "Receptionists complete booking forms based on requests",
+            "Have 2-3 pairs demonstrate their dialogues"
           ]
         },
         {
-          title: "Wrap-up: Book Presentations",
+          title: "Wrap-up: Ideal Hotel",
           duration: "5 mins",
-          description: "Students present their book covers and blurbs to the class.",
+          description: "Students describe their ideal hotel accommodation.",
           instructions: [
-            "Have 2-3 students present their book designs",
-            "Ask the class to guess the genre based on the cover design",
-            "Discuss effective elements of the presented books",
-            "Review key vocabulary from the lesson"
+            "Ask students to think about their perfect hotel",
+            "They complete the sentence: 'My ideal hotel would have...'",
+            "Share several ideas with the class",
+            "Review key vocabulary and expressions from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their book cover designs and blurbs, checking for appropriate use of genre-specific vocabulary and features.",
+      assessmentTips: "Assess students through their participation in the hotel booking role play and their ability to use hotel vocabulary correctly.",
       homeworkIdeas: [
-        "Research a famous author and write 5-7 sentences about their life and books.",
-        "Find an interesting book cover and analyze its design elements in writing."
+        "Write a hotel review for a real or imaginary hotel using vocabulary from the lesson.",
+        "Create a brochure for a new luxury hotel including rooms, facilities, and services."
       ],
       additionalResources: [
         {
-          title: "Book Publishing Vocabulary",
-          url: "https://www.vocabulary.cl/Lists/Publishing.htm"
+          title: "Hotel and Accommodation Vocabulary",
+          url: "https://www.vocabulary.cl/Lists/Hotels.htm"
         },
         {
-          title: "Book Cover Design Principles",
-          url: "https://www.canva.com/learn/book-cover-design/"
+          title: "Hotel Vocabulary Quiz",
+          url: "https://wordwall.net/resource/search?query=hotel%20vocabulary"
+        }
+      ]
+    },
+    {
+      id: "book7-unit4-extension-lesson",
+      title: "Types of Accommodation - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary for different types of accommodation",
+        "Compare advantages and disadvantages of various lodging options",
+        "Discuss travel and accommodation preferences",
+        "Develop speaking skills through accommodation comparisons"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 4 slides",
+        "Accommodation types flashcards",
+        "Accommodation comparison worksheet",
+        "Travel scenarios cards"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Travel Preferences",
+          duration: "5 mins",
+          description: "Begin by asking students about their travel accommodation preferences.",
+          instructions: [
+            "Ask students: 'What kind of place do you usually stay in when traveling?'",
+            "Follow up with: 'Have you ever tried unusual accommodation like camping or a hostel?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Collect some examples from the class"
+          ],
+          teacherNotes: "This activates schema and creates context for discussing different types of accommodation."
+        },
+        {
+          title: "Vocabulary Presentation: Accommodation Types",
+          duration: "10 mins",
+          description: "Introduce vocabulary for different types of accommodation beyond hotels.",
+          materials: [
+            "Accommodation types flashcards",
+            "Book 7, Unit 4 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present accommodation types: hostel, motel, B&B, guesthouse, apartment, campsite, etc.",
+            "Explain key features of each accommodation type",
+            "Drill pronunciation of each term",
+            "Discuss typical guests for each accommodation type",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Accommodation Comparison",
+          duration: "10 mins",
+          description: "Students compare different types of accommodation.",
+          materials: [
+            "Accommodation comparison worksheet",
+            "Price range and features chart"
+          ],
+          instructions: [
+            "Distribute comparison worksheets with criteria (price, comfort, privacy, etc.)",
+            "Review comparative language: 'Hotels are more expensive than hostels.'",
+            "Students work in pairs to complete comparisons",
+            "Discuss which accommodation offers best value for different travelers",
+            "Check answers as a class"
+          ],
+          teacherNotes: "Encourage students to think about different traveler needs and budgets."
+        },
+        {
+          title: "Travel Scenarios Activity",
+          duration: "15 mins",
+          description: "Students recommend accommodation based on different travel scenarios.",
+          materials: [
+            "Travel scenarios cards",
+            "Accommodation recommendation form"
+          ],
+          instructions: [
+            "Divide students into small groups",
+            "Distribute travel scenario cards (business trip, family vacation, backpacking, etc.)",
+            "Groups discuss and recommend suitable accommodation for each scenario",
+            "They must justify their recommendations",
+            "Groups present their recommendations to the class"
+          ]
+        },
+        {
+          title: "Wrap-up: Unusual Accommodations",
+          duration: "5 mins",
+          description: "Students discuss unusual or unique accommodation options.",
+          instructions: [
+            "Show pictures of unusual accommodations (ice hotel, treehouse, underwater hotel, etc.)",
+            "Ask: 'Would you like to stay in any of these places? Why or why not?'",
+            "Students share their opinions with the class",
+            "Review key vocabulary and concepts from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the travel scenarios activity and their ability to use appropriate vocabulary for different types of accommodation.",
+      homeworkIdeas: [
+        "Research an unusual type of accommodation and prepare a short presentation.",
+        "Write a dialogue between a travel agent and a client looking for specific accommodation."
+      ],
+      additionalResources: [
+        {
+          title: "Types of Accommodation Vocabulary",
+          url: "https://www.englishclub.com/vocabulary/travel-accommodation.php"
+        },
+        {
+          title: "Accommodation Matching Game",
+          url: "https://wordwall.net/resource/search?query=accommodation%20types"
         }
       ]
     }
-  ],
-  
-  // Unit 5: Art
-  "5": [
+  ],  "5": [
     {
       id: "book7-unit5-main-lesson",
       title: "Art and Artists - 45-minute Lesson Plan",
