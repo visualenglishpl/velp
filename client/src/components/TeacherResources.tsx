@@ -86,6 +86,11 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId);
     
   // Create custom constants for specific books and units to check for special resources
+  const isBook7Unit11 = bookId === '7' && unitId === '11';
+  const isBook7Unit12 = bookId === '7' && unitId === '12';
+  const isBook7Unit13 = bookId === '7' && unitId === '13';
+  const isBook7Unit14 = bookId === '7' && unitId === '14';
+  const isBook7Unit15 = bookId === '7' && unitId === '15';
   const isBook7Unit16 = bookId === '7' && unitId === '16';
   
   // Lesson plans for specific book/unit combinations
