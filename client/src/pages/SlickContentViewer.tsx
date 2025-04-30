@@ -579,7 +579,12 @@ export default function SlickContentViewer() {
           </button>
         )}
         
-        {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
+        {material.contentType === 'IMAGE' || 
+         (material.path && typeof material.path === 'string' && 
+          (material.path.endsWith('.jpg') || 
+           material.path.endsWith('.png') || 
+           material.path.endsWith('.gif') || 
+           material.path.endsWith('.avif'))) ? (
           <>
             <img 
               src={material.path} 
@@ -595,13 +600,15 @@ export default function SlickContentViewer() {
             />
             {/* File extension badge */}
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
-              {material.path.toLowerCase().endsWith('.jpg') ? 'JPG' : 
-               material.path.toLowerCase().endsWith('.png') ? 'PNG' : 
-               material.path.toLowerCase().endsWith('.gif') ? 'GIF' :
-               material.path.toLowerCase().endsWith('.avif') ? 'AVIF' : 'IMG'}
+              {material.path && typeof material.path === 'string' ? (
+                material.path.toLowerCase().endsWith('.jpg') ? 'JPG' : 
+                material.path.toLowerCase().endsWith('.png') ? 'PNG' : 
+                material.path.toLowerCase().endsWith('.gif') ? 'GIF' :
+                material.path.toLowerCase().endsWith('.avif') ? 'AVIF' : 'IMG'
+              ) : 'IMG'}
             </div>
           </>
-        ) : material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
+        ) : material.contentType === 'VIDEO' || (material.path && typeof material.path === 'string' && material.path.endsWith('.mp4')) ? (
           <>
             <div className="relative h-full w-full bg-gray-800 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
@@ -1033,17 +1040,17 @@ export default function SlickContentViewer() {
                       }
                     }}
                   >
-                    {material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
+                    {material.contentType === 'VIDEO' || (material.path && typeof material.path === 'string' && material.path.endsWith('.mp4')) ? (
                       <div className="relative h-full flex items-center justify-center">
                         <video 
-                          src={material.path}
+                          src={material.path || ''}
                           controls
                           className={`h-auto w-auto max-w-full mx-auto object-contain ${isEditMode ? 'cursor-crosshair' : ''} 
                             ${!hasPaidAccess ? 'blur-lg brightness-75' : ''}
                           `}
                           style={{ maxHeight: '100%' }}
                           onError={(e) => {
-                            console.error(`Error loading video at ${material.path}`, e);
+                            console.error(`Error loading video at ${material.path || 'unknown path'}`, e);
                           }}
                           autoPlay={index === currentIndex}
                           playsInline
@@ -1067,7 +1074,13 @@ export default function SlickContentViewer() {
                           </div>
                         )}
                       </div>
-                    ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
+                    ) : material.contentType === 'IMAGE' || 
+                      (material.path && typeof material.path === 'string' && 
+                        (material.path.endsWith('.jpg') || 
+                         material.path.endsWith('.png') || 
+                         material.path.endsWith('.gif') || 
+                         material.path.endsWith('.avif'))
+                      ) ? (
                       <div className="relative h-full flex items-center justify-center">
                         <div 
                           className={`relative ${isZoomed ? 'cursor-zoom-out overflow-auto' : 'cursor-zoom-in'}`} 
