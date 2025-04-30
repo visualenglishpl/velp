@@ -164,7 +164,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
           file={pdfUrl}
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={onDocumentLoadError}
-          className="flex justify-center"
+          className="flex justify-center w-full"
           loading={null} // We handle loading ourselves
         >
           <Page 
@@ -172,7 +172,8 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
             scale={scale}
             renderTextLayer={false}
             renderAnnotationLayer={false}
-            className="shadow-md"
+            className="shadow-md max-w-full"
+            width={Math.min(window.innerWidth * 0.85, 1200)} // Responsive width with max constraint
           />
         </Document>
       </div>

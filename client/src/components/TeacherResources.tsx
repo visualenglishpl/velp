@@ -4331,7 +4331,7 @@ useEffect(() => {
         open={!!viewingPdf} 
         onOpenChange={(open) => !open && setViewingPdf(null)}
       >
-        <DialogContent className="max-w-6xl w-[90vw] max-h-[90vh] overflow-hidden">
+        <DialogContent className="max-w-7xl w-[95vw] max-h-[95vh] overflow-hidden">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-between">
               <span>{viewingPdf?.title}</span>

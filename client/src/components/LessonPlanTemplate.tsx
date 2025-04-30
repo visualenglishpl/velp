@@ -57,7 +57,7 @@ const LessonPlanTemplate: React.FC<LessonPlanTemplateProps> = ({
           <div>
             <CardTitle className="text-2xl font-bold text-primary">{lessonPlan.title}</CardTitle>
             <CardDescription className="mt-1">
-              <span className="font-medium">Duration:</span> {lessonPlan.duration} • <span className="font-medium">Level:</span> {lessonPlan.level}
+              <span className="font-medium">Duration:</span> {lessonPlan.duration}
             </CardDescription>
           </div>
         </div>
