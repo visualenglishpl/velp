@@ -159,6 +159,16 @@ export function registerDirectRoutes(app: express.Express) {
     });
   });
   
+  // Simple test endpoint to verify our no-auth routes are working
+  app.get('/api/no-auth/test', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({
+      success: true,
+      message: "No-auth test endpoint is working correctly",
+      timestamp: new Date().toISOString()
+    });
+  });
+
   // Special no-auth endpoint for Book 7 resources
   app.get('/api/no-auth/book7/:unitId/resources', (req, res) => {
     const { unitId } = req.params;
