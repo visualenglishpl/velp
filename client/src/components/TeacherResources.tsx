@@ -3647,7 +3647,7 @@ useEffect(() => {
                         <span>Film Production Roles</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription>Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription></CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
@@ -3689,7 +3689,7 @@ useEffect(() => {
                         <span>Body Piercings Vocabulary</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription className="truncate">Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription className="truncate"></CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
@@ -3723,7 +3723,7 @@ useEffect(() => {
                         <span>Hairstyles and Hair Types</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription className="truncate">Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription className="truncate"></CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
@@ -4327,7 +4327,6 @@ useEffect(() => {
       <Dialog 
         open={!!viewingPdf} 
         onOpenChange={(open) => !open && setViewingPdf(null)}
-        className="max-w-6xl"
       >
         <DialogContent className="max-w-6xl w-[90vw] max-h-[90vh] overflow-hidden">
           <DialogHeader>
