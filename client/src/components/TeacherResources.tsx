@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { getQueryFn, apiRequest, queryClient } from '@/lib/queryClient';
@@ -2449,7 +2449,7 @@ useEffect(() => {
     id: 'body-piercings-1',
     title: 'Body Piercings Vocabulary - Part 1',
     duration: '45 minutes',
-    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    level: '',
     objectives: [
       'Identify and name common types of body piercings in English',
       'Use appropriate prepositions to describe piercing locations on the body',
@@ -2555,7 +2555,7 @@ useEffect(() => {
     id: 'hairstyles-1',
     title: 'Hairstyles and Hair Types - Part 1',
     duration: '45 minutes',
-    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    level: '',
     objectives: [
       'Identify and name common hairstyles in English (mohawk, bald, fringe, braids, etc.)',
       'Describe people\'s hair using appropriate adjectives',
@@ -2661,7 +2661,7 @@ useEffect(() => {
     id: 'fashion-styles-1',
     title: 'Fashion Styles Vocabulary',
     duration: '45 minutes',
-    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    level: '',
     objectives: [
       'Identify and name different fashion styles in English (punk, hippie, metal, etc.)',
       'Express opinions about different fashion styles using simple structures',

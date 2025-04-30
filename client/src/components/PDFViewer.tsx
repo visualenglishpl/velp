@@ -39,6 +39,20 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
     setLoading(false);
   };
 
+  // Retry loading the PDF
+  const retryLoadPdf = () => {
+    setError(null);
+    setLoading(true);
+    setRetryCount(retryCount + 1);
+    
+    // Re-initialize the worker
+    try {
+      setUpPdfWorker();
+    } catch (e) {
+      console.error('Failed to reinitialize PDF worker during retry', e);
+    }
+  };
+
   const onDocumentLoadError = (error: Error) => {
     console.error('PDF loading error:', error);
     setError('Failed to load PDF document. This could be due to network issues or the file format.');
