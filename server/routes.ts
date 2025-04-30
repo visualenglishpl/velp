@@ -11,29 +11,15 @@ import { registerDirectRoutes } from "./direct-routes";
 
 // Authentication middleware to protect routes
 function isAuthenticated(req: Request, res: Response, next: Function) {
-  // Check if this is a no-auth request that should bypass authentication
-  if ((req as any).isNoAuthRequest === true) {
-    console.log(`Bypassing authentication for no-auth path: ${req.path}`);
-    return next();
-  }
-  
-  // Normal authentication check
   if (req.isAuthenticated()) {
     return next();
   }
-  
   res.status(401).json({ error: "Not authenticated" });
 }
 
 // Role-based access control middleware
 function hasRole(roles: string[]) {
   return (req: Request, res: Response, next: Function) => {
-    // Allow no-auth requests to bypass
-    if ((req as any).isNoAuthRequest === true) {
-      console.log(`Bypassing role check for no-auth path: ${req.path}`);
-      return next();
-    }
-    
     if (!req.isAuthenticated()) {
       return res.status(401).json({ error: "Not authenticated" });
     }

@@ -2,20 +2,14 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { registerContentEndpoints } from "./content-endpoints";
-import { registerDirectRoutes } from "./direct-routes";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Define a no-auth whitelist for specific paths that should bypass authentication
-const noAuthPaths = ['/api/no-auth/'];
-
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  
-  // Log all API requests, including no-auth ones
   let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
   const originalResJson = res.json;
@@ -40,20 +34,10 @@ app.use((req, res, next) => {
     }
   });
 
-  // If the path starts with any of the no-auth paths, set a flag
-  if (noAuthPaths.some(noAuthPath => path.startsWith(noAuthPath))) {
-    // Set a special property on the request to indicate it's a no-auth request
-    (req as any).isNoAuthRequest = true;
-    log(`No-auth request detected: ${path}`);
-  }
-
   next();
 });
 
 (async () => {
-  // Register direct routes first (these bypass auth)
-  registerDirectRoutes(app);
-
   // Register our API endpoints
   registerContentEndpoints(app);
   

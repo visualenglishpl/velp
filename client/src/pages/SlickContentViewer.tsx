@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical, Save, Pencil, Type, Square, ArrowUpRight, Eraser, Trash2, Download, UserCircle, Video, GamepadIcon } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Loader2, ChevronLeft, ChevronRight, Book, Home, Maximize2, Minimize2, GripVertical, Save, Pencil, Type, Square, ArrowUpRight, Eraser, Trash2, Download } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
@@ -13,8 +11,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import QuestionAnswerDisplay from '@/components/QuestionAnswerDisplay';
-import TeacherResources from '@/components/TeacherResources.fixed';
-import DirectResourcesLoader from '@/components/DirectResourcesLoader';
+import TeacherResources from '@/components/TeacherResources';
 import { 
   DndContext, 
   DragEndEvent,
@@ -579,12 +576,7 @@ export default function SlickContentViewer() {
           </button>
         )}
         
-        {material.contentType === 'IMAGE' || 
-         (material.path && typeof material.path === 'string' && 
-          (material.path.endsWith('.jpg') || 
-           material.path.endsWith('.png') || 
-           material.path.endsWith('.gif') || 
-           material.path.endsWith('.avif'))) ? (
+        {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
           <>
             <img 
               src={material.path} 
@@ -600,15 +592,13 @@ export default function SlickContentViewer() {
             />
             {/* File extension badge */}
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
-              {material.path && typeof material.path === 'string' ? (
-                material.path.toLowerCase().endsWith('.jpg') ? 'JPG' : 
-                material.path.toLowerCase().endsWith('.png') ? 'PNG' : 
-                material.path.toLowerCase().endsWith('.gif') ? 'GIF' :
-                material.path.toLowerCase().endsWith('.avif') ? 'AVIF' : 'IMG'
-              ) : 'IMG'}
+              {material.path.toLowerCase().endsWith('.jpg') ? 'JPG' : 
+               material.path.toLowerCase().endsWith('.png') ? 'PNG' : 
+               material.path.toLowerCase().endsWith('.gif') ? 'GIF' :
+               material.path.toLowerCase().endsWith('.avif') ? 'AVIF' : 'IMG'}
             </div>
           </>
-        ) : material.contentType === 'VIDEO' || (material.path && typeof material.path === 'string' && material.path.endsWith('.mp4')) ? (
+        ) : material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
           <>
             <div className="relative h-full w-full bg-gray-800 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
@@ -744,38 +734,6 @@ export default function SlickContentViewer() {
           >
             <Book className="mr-2 h-4 w-4" />
             <span className="hidden sm:inline">Back to Units</span>
-          </Button>
-          
-          <Button 
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              // Temporary login function for testing
-              fetch('/api/testing/login')
-                .then(res => res.json())
-                .then(data => {
-                  if (data.success) {
-                    toast({
-                      title: "Logged in successfully",
-                      description: "You now have teacher access"
-                    });
-                    // Force reload to update the UI
-                    window.location.reload();
-                  }
-                })
-                .catch(err => {
-                  console.error('Login error:', err);
-                  toast({
-                    title: "Login failed",
-                    description: "Could not log in as teacher",
-                    variant: "destructive"
-                  });
-                });
-            }}
-            className="rounded-full bg-green-50 hover:bg-green-100 border-green-200 text-green-700 transition-all shadow-sm"
-          >
-            <UserCircle className="mr-2 h-4 w-4" />
-            <span className="hidden sm:inline">Login as Teacher</span>
           </Button>
           
           <div className="flex items-center gap-2">
@@ -1040,17 +998,17 @@ export default function SlickContentViewer() {
                       }
                     }}
                   >
-                    {material.contentType === 'VIDEO' || (material.path && typeof material.path === 'string' && material.path.endsWith('.mp4')) ? (
+                    {material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
                       <div className="relative h-full flex items-center justify-center">
                         <video 
-                          src={material.path || ''}
+                          src={material.path}
                           controls
                           className={`h-auto w-auto max-w-full mx-auto object-contain ${isEditMode ? 'cursor-crosshair' : ''} 
                             ${!hasPaidAccess ? 'blur-lg brightness-75' : ''}
                           `}
                           style={{ maxHeight: '100%' }}
                           onError={(e) => {
-                            console.error(`Error loading video at ${material.path || 'unknown path'}`, e);
+                            console.error(`Error loading video at ${material.path}`, e);
                           }}
                           autoPlay={index === currentIndex}
                           playsInline
@@ -1074,13 +1032,7 @@ export default function SlickContentViewer() {
                           </div>
                         )}
                       </div>
-                    ) : material.contentType === 'IMAGE' || 
-                      (material.path && typeof material.path === 'string' && 
-                        (material.path.endsWith('.jpg') || 
-                         material.path.endsWith('.png') || 
-                         material.path.endsWith('.gif') || 
-                         material.path.endsWith('.avif'))
-                      ) ? (
+                    ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
                       <div className="relative h-full flex items-center justify-center">
                         <div 
                           className={`relative ${isZoomed ? 'cursor-zoom-out overflow-auto' : 'cursor-zoom-in'}`} 
@@ -1419,22 +1371,11 @@ export default function SlickContentViewer() {
       
       {/* Teacher Resources Section */}
       <div className="max-w-6xl mx-auto px-4 pb-12">
-        {bookId !== '7' && (
-          // @ts-ignore - isEditMode prop exists but isn't properly typed
-          <TeacherResources 
-            bookId={bookId || ''} 
-            unitId={unitNumber || ''}
-            isEditMode={isEditMode}
-          />
-        )}
-        
-        {/* Use DirectResourcesLoader for Book 7 */}
-        {bookId === '7' && (
-          <DirectResourcesLoader 
-            bookId={bookId}
-            unitId={unitNumber || ''}
-          />
-        )}
+        <TeacherResources 
+          bookId={bookId || undefined} 
+          unitId={unitNumber || undefined}
+          isEditMode={isEditMode}
+        />
       </div>
       
       {/* Slide Removal Confirmation Dialog */}
