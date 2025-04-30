@@ -213,6 +213,50 @@ export function registerDirectRoutes(app: express.Express) {
     }
   });
   
+  // Direct endpoint for unit info that returns a strict JSON response
+  app.get('/api/direct/:bookId/:unitId', (req, res) => {
+    const { bookId, unitId } = req.params;
+    
+    // Important: Set headers early and consistently
+    res.set({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'X-Content-Type-Options': 'nosniff'
+    });
+    
+    try {
+      // Log the request for debugging
+      console.log(`Unit info endpoint accessed: /api/direct/${bookId}/${unitId}`);
+      
+      // Extract the unit number from unitId (e.g., 'unit8' -> 8)
+      const unitNumber = parseInt(unitId.replace(/\D/g, ''));
+      
+      // Extract book ID number from bookId (e.g., 'book7' -> '7')
+      const bookIdNumber = bookId.replace(/\D/g, '');
+      
+      // Create a unit info response
+      const unitInfo = {
+        id: unitNumber + 1000, // Just a dummy ID for testing
+        path: `${bookId}/${unitId}`,
+        bookId: bookIdNumber,
+        unitNumber: unitNumber,
+        title: `Unit ${unitNumber}`,
+        description: `Test unit for ${bookId}/${unitId}`
+      };
+      
+      // Use res.json() to ensure proper content type
+      return res.status(200).json(unitInfo);
+    } catch (error) {
+      console.error(`Error in unit info endpoint for ${bookId}/${unitId}:`, error);
+      return res.status(500).json({
+        success: false,
+        error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}`
+      });
+    }
+  });
+
   // Special debug endpoint for materials that returns a strict JSON response
   app.get('/api/direct/:bookId/:unitId/materials', (req, res) => {
     const { bookId, unitId } = req.params;
@@ -251,6 +295,38 @@ export function registerDirectRoutes(app: express.Express) {
       return res.status(200).json(materials);
     } catch (error) {
       console.error(`Error in materials endpoint for ${bookId}/${unitId}:`, error);
+      return res.status(500).json({
+        success: false,
+        error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}`
+      });
+    }
+  });
+  
+  // Endpoint for saved order information
+  app.get('/api/direct/:bookId/:unitId/savedOrder', (req, res) => {
+    const { bookId, unitId } = req.params;
+    
+    // Important: Set headers early and consistently
+    res.set({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'X-Content-Type-Options': 'nosniff'
+    });
+    
+    try {
+      // Log the request for debugging
+      console.log(`SavedOrder endpoint accessed: /api/direct/${bookId}/${unitId}/savedOrder`);
+      
+      // Return a response indicating no custom order (yet)
+      return res.status(200).json({
+        success: true,
+        hasCustomOrder: false,
+        order: [1001] // ID of our test material
+      });
+    } catch (error) {
+      console.error(`Error in savedOrder endpoint for ${bookId}/${unitId}:`, error);
       return res.status(500).json({
         success: false,
         error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}`
