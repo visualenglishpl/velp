@@ -168,18 +168,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
   }, [data]);
   
-  // Directly manage all resources without relying on API
+  // Create a set of pre-defined, hardcoded resources for specific book/unit combinations
+  // to avoid API dependency
   useEffect(() => {
-    // Book-specific resource detection
-    const isBook7 = bookId === '7';
-    const isBook6 = bookId === '6';
+    console.log(`Setting up hardcoded resources for Book ${bookId}, Unit ${unitId}`);
     
-    // Define resources based on book and unit
-    let unitResources: TeacherResource[] = [];
+    let hardcodedResources: TeacherResource[] = [];
     
     // Book 7, Unit 9 - Jobs
-    if (isBook7 && unitId === '9') {
-      unitResources = [
+    if (bookId === '7' && unitId === '9') {
+      hardcodedResources = [
         {
           id: "book7-unit9-game1",
           bookId: '7',
@@ -191,11 +189,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/97b3979a70a54b17a193a2d9c85f1d40?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
+      
+      // Set the resources immediately without waiting for API
+      if (hardcodedResources.length > 0) {
+        console.log(`Loaded ${hardcodedResources.length} hardcoded resources for Book 7, Unit 9`);
+        setResources(hardcodedResources);
+      }
     }
     
     // Book 7, Unit 1 - Film genres
-    if (isBook7 && unitId === '1') {
-      unitResources = [
+    if (bookId === '7' && unitId === '1') {
+      hardcodedResources = [
         {
           id: "book7-unit1-video1",
           bookId: '7',
@@ -236,11 +240,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           lessonPlan: movieGenresLessonPlan
         }
       ];
+      
+      // Set the resources immediately without waiting for API
+      if (hardcodedResources.length > 0) {
+        console.log(`Loaded ${hardcodedResources.length} hardcoded resources for Book 7, Unit 1`);
+        setResources(hardcodedResources);
+      }
     }
     
     // Book 7, Unit 11 - Natural Disasters
-    if (isBook7 && unitId === '11') {
-      unitResources = [
+    if (bookId === '7' && unitId === '11') {
+      hardcodedResources = [
         {
           id: "book7-unit11-video1",
           bookId: '7',
@@ -271,11 +281,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           lessonPlan: naturalDisastersLessonPlan
         }
       ];
+      
+      // Set the resources immediately without waiting for API
+      if (hardcodedResources.length > 0) {
+        console.log(`Loaded ${hardcodedResources.length} hardcoded resources for Book 7, Unit 11`);
+        setResources(hardcodedResources);
+      }
     }
 
     // Book 7, Unit 6 - Money
-    if (isBook7 && unitId === '6') {
-      unitResources = [
+    if (bookId === '7' && unitId === '6') {
+      hardcodedResources = [
         {
           id: "book7-unit6-video1",
           bookId: '7',
@@ -306,6 +322,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/bfcb61f5f6cf4493a2c879aba9b12b9a?themeId=48&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
+      
+      // Set the resources immediately without waiting for API
+      if (hardcodedResources.length > 0) {
+        console.log(`Loaded ${hardcodedResources.length} hardcoded resources for Book 7, Unit 6`);
+        setResources(hardcodedResources);
+      }
     }
     
     // If resources are found for this unit, use them
