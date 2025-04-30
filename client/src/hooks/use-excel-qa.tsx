@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getQuestionAnswer } from '@/lib/qa-pattern-engine';
 
 export interface QuestionAnswer {
@@ -93,13 +93,7 @@ export function useExcelQA(bookId: string) {
     loadMappings();
   }, [normalizedBookId]);
 
-  /**
-   * Find a matching QA for a filename using the improved algorithm
-   * @param filename The filename to match
-   * @param currentUnitId Optional unitId to filter matches by unit
-   * @returns The matching QA or undefined if no match found
-   */
-  function findMatchingQA(filename: string, currentUnitId?: string): QuestionAnswer | undefined {
+  const findMatchingQA = useCallback((filename: string, currentUnitId?: string): QuestionAnswer | undefined => {
     if (Object.keys(mappings).length === 0) {
       console.log(`No mappings available for ${normalizedBookId}, using pattern engine for ${filename} in ${currentUnitId}`);
       return getQuestionAnswer(filename, currentUnitId, normalizedBookId);
@@ -190,7 +184,7 @@ export function useExcelQA(bookId: string) {
     console.log(`Available code patterns:`, availablePatterns);
     
     return getQuestionAnswer(filename, currentUnitId, normalizedBookId);
-  }
+  }, [mappings, normalizedBookId]);
 
   return { mappings, isLoading, error, findMatchingQA };
 }
