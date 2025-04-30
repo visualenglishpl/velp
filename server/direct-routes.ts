@@ -134,6 +134,30 @@ const book7Resources: Record<string, Array<{
       sourceUrl: "https://wordwall.net/resource/8518517/natural-disasters",
       embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/f71ec9e2c30d4499b9e0fb0ba5c91a70?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
+  ],
+  
+  // Unit 16 - Additional resources for all units
+  "16": [
+    {
+      id: "book7-unit16-video1",
+      bookId: '7',
+      unitId: '16',
+      title: "Visual English Learning Resources",
+      resourceType: "video",
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/watch?v=xM4I6qWUVuw",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/xM4I6qWUVuw?si=abcdefghijk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit16-game1",
+      bookId: '7',
+      unitId: '16',
+      title: "English Learning Activities",
+      resourceType: "game",
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/29887281/visual-english-activities",
+      embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/f71ec9e2c30d4499b9e0fb0ba5c91a70?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
   ]
 };
 
