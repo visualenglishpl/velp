@@ -1,9 +1,66 @@
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { TeacherResource } from './TeacherResources.fixed';
-import ResourceCard from './ResourceCard';
+// Import individual card rendering components
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Video, Gamepad2, FileText, Book, Image as ImageIcon, ExternalLink } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+// Internal ResourceCard component 
+const ResourceCard = ({ resource }: { resource: TeacherResource }) => {
+  const getIcon = () => {
+    switch(resource.resourceType) {
+      case 'video': return <Video className="h-5 w-5 text-blue-500" />;
+      case 'game': return <Gamepad2 className="h-5 w-5 text-green-500" />;
+      case 'lesson': return <Book className="h-5 w-5 text-amber-500" />;
+      case 'pdf': return <FileText className="h-5 w-5 text-red-500" />;
+      default: return <ImageIcon className="h-5 w-5 text-purple-500" />;
+    }
+  };
+
+  return (
+    <Card className="mb-4 transition-all hover:shadow-md">
+      <CardHeader className="pb-2">
+        <div className="flex justify-between items-start">
+          <div className="flex items-center gap-2">
+            {getIcon()}
+            <CardTitle className="text-lg">{resource.title}</CardTitle>
+          </div>
+        </div>
+        <div className="flex mt-1 gap-2">
+          {resource.provider && <Badge variant="outline" className="bg-white/50 text-xs font-normal">{resource.provider}</Badge>}
+          <Badge variant="outline" className="bg-white/50 text-xs font-normal">{resource.resourceType}</Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {resource.resourceType === 'video' && resource.embedCode && (
+          <div className="aspect-video mb-2" dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
+        )}
+        {resource.resourceType === 'game' && resource.embedCode && (
+          <div className="min-h-[400px] mb-2" dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
+        )}
+        {resource.resourceType === 'lesson' && resource.lessonPlan && (
+          <div className="mb-2">
+            <p className="text-sm mb-2"><strong>Level:</strong> {resource.lessonPlan?.level}</p>
+            <p className="text-sm mb-2"><strong>Duration:</strong> {resource.lessonPlan?.duration}</p>
+            <p className="text-sm"><strong>Objectives:</strong> {resource.lessonPlan?.objectives?.slice(0, 2).join(', ')}{resource.lessonPlan?.objectives?.length > 2 ? '...' : ''}</p>
+          </div>
+        )}
+      </CardContent>
+      <CardFooter className="pt-0 flex justify-between">
+        {resource.sourceUrl && (
+          <Button variant="outline" size="sm" asChild>
+            <a href={resource.sourceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <ExternalLink className="h-4 w-4 mr-2" /> Visit Source
+            </a>
+          </Button>
+        )}
+      </CardFooter>
+    </Card>
+  );
+};
 
 interface DirectResourcesLoaderProps {
   bookId: string;
@@ -131,31 +188,31 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
         
         <TabsContent value="all" className="space-y-4">
           {resources.map((resource) => (
-            <ResourceCard key={resource.id} resource={resource} />
+            <ResourceCard key={resource.id || resource.title} resource={resource} />
           ))}
         </TabsContent>
         
         <TabsContent value="videos" className="space-y-4">
           {videos.map((resource) => (
-            <ResourceCard key={resource.id} resource={resource} />
+            <ResourceCard key={resource.id || resource.title} resource={resource} />
           ))}
         </TabsContent>
         
         <TabsContent value="games" className="space-y-4">
           {games.map((resource) => (
-            <ResourceCard key={resource.id} resource={resource} />
+            <ResourceCard key={resource.id || resource.title} resource={resource} />
           ))}
         </TabsContent>
         
         <TabsContent value="lessons" className="space-y-4">
           {lessons.map((resource) => (
-            <ResourceCard key={resource.id} resource={resource} />
+            <ResourceCard key={resource.id || resource.title} resource={resource} />
           ))}
         </TabsContent>
         
         <TabsContent value="others" className="space-y-4">
           {others.map((resource) => (
-            <ResourceCard key={resource.id} resource={resource} />
+            <ResourceCard key={resource.id || resource.title} resource={resource} />
           ))}
         </TabsContent>
       </Tabs>
