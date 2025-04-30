@@ -1127,7 +1127,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           id: "book7-unit6-video1",
           bookId,
           unitId,
-          title: "Learn English Money from 1p to 50 Pounds",
+          title: "Learn English Money from 1p to 50 Pounds - British Council",
           resourceType: "video" as const,
           provider: "YouTube",
           sourceUrl: "https://www.youtube.com/embed/Vcoi6l0D6ak",
