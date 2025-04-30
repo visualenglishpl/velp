@@ -11,7 +11,7 @@ const LessonPlansPage: React.FC = () => {
     id: 'film-genres-1',
     title: 'Movie Genres Vocabulary - Part 1',
     duration: '45 minutes',
-    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    level: '',
     objectives: [
       'Identify and name common film genres in English',
       'Match film genres with their characteristics',
@@ -115,7 +115,7 @@ const LessonPlansPage: React.FC = () => {
     id: 'film-production-1',
     title: 'Film Production Roles - Part 1',
     duration: '45 minutes',
-    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    level: '',
     objectives: [
       'Identify key roles in film production (director, actor, stuntman, etc.)',
       'Describe job responsibilities using simple present tense',
@@ -227,7 +227,7 @@ const LessonPlansPage: React.FC = () => {
     <div className="container mx-auto py-8 px-4">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 text-transparent bg-clip-text">Visual English Book 7, Unit 1 Lesson Plans</h1>
-        <p className="text-muted-foreground">These 45-minute lesson plans are designed for teaching movie genres and film production vocabulary to elementary to pre-intermediate ESL students.</p>
+        <p className="text-muted-foreground">These 45-minute lesson plans are designed for teaching movie genres and film production vocabulary to ESL students.</p>
       </div>
 
       <Tabs defaultValue="side-by-side" className="mb-6">

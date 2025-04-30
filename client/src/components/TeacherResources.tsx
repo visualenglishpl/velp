@@ -2901,29 +2901,49 @@ useEffect(() => {
               {/* PDF Embedding - Enhanced UI */}
               {resource.fileUrl && (resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && (
                 <div className="rounded overflow-hidden mb-4 border bg-white hover:shadow-md transition-all">
-                  <div className="p-4 flex flex-col items-center">
-                    <a 
-                      href={resource.fileUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="cursor-pointer"
-                    >
-                      <div className="bg-muted/20 w-24 h-32 flex items-center justify-center rounded mb-3 border relative overflow-hidden hover:border-primary/50 transition-all">
-                        <FileText className="h-12 w-12 text-primary/60" />
-                        <div className="absolute bottom-0 left-0 right-0 bg-primary/10 text-center text-xs py-1 font-medium">PDF</div>
+                  <div className="p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="text-base font-medium">{resource.title}</h4>
+                        <p className="text-xs text-muted-foreground">Provider: {resource.provider || 'Visual English'}</p>
                       </div>
-                    </a>
-                    <h4 className="text-sm font-medium text-center mb-1">{resource.title}</h4>
-                    <p className="text-xs text-muted-foreground mb-3 text-center">Provider: {resource.provider || 'Visual English'}</p>
-                    <Button 
-                      size="sm"
-                      variant="default" 
-                      className="w-full mt-2 bg-primary/90 hover:bg-primary"
-                      onClick={() => window.open(resource.fileUrl, '_blank')}
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm"
+                          variant="outline" 
+                          className="flex items-center" 
+                          onClick={() => window.open(resource.fileUrl, '_blank')}
+                        >
+                          <ExternalLink className="h-3.5 w-3.5 mr-1" />
+                          Open
+                        </Button>
+                        <Button 
+                          size="sm"
+                          variant="default" 
+                          className="flex items-center"
+                          onClick={() => setViewingPdf(resource)}
+                        >
+                          <Maximize2 className="h-3.5 w-3.5 mr-1" />
+                          View
+                        </Button>
+                      </div>
+                    </div>
+                    <div 
+                      className="relative w-full h-64 bg-slate-50 rounded overflow-hidden hover:bg-slate-100 cursor-pointer mt-3"
+                      onClick={() => setViewingPdf(resource)}
                     >
-                      <FileText className="h-3 w-3 mr-2" />
-                      Open PDF Document
-                    </Button>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="bg-white/80 px-4 py-2 rounded shadow-sm">
+                          <div className="flex items-center">
+                            <FileText className="h-5 w-5 text-primary mr-2" />
+                            <span className="text-sm font-medium">Preview PDF</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="w-full h-full opacity-40">
+                        <PDFViewer pdfUrl={resource.fileUrl} title="" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
