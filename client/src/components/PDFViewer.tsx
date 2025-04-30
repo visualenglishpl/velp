@@ -140,9 +140,21 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
           return;
         }
         
-        const viewport = page.getViewport({ scale: scale });
+        // Calculate scale to fit within container width
+        // Get the parent container's width or fallback to reasonable defaults
+        const containerElement = canvasRef.current.parentElement;
+        const containerWidth = containerElement ? 
+          containerElement.clientWidth - 20 : // 20px for padding
+          Math.min(document.documentElement.clientWidth - 80, 1200);
         
-        // Adjust canvas size to match the page dimensions
+        const viewportOriginal = page.getViewport({ scale: 1.0 });
+        const scaleFactor = containerWidth / viewportOriginal.width;
+        
+        // Apply user scaling on top of fit-to-width scaling
+        const adjustedScale = scaleFactor * scale;
+        const viewport = page.getViewport({ scale: adjustedScale });
+        
+        // Adjust canvas size to match the page dimensions at appropriate scale
         canvas.height = viewport.height;
         canvas.width = viewport.width;
         
@@ -165,12 +177,16 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
   const nextPage = () => {
     if (currentPage < numPages) {
       setCurrentPage(currentPage + 1);
+      // Reset scale to 1.0 (fit to width) when changing pages
+      setScale(1.0);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      // Reset scale to 1.0 (fit to width) when changing pages
+      setScale(1.0);
     }
   };
 
@@ -274,7 +290,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         )}
         
         {!useFallback && (
-          <div className="flex justify-center overflow-auto" 
+          <div className="flex justify-center overflow-auto w-full" 
                style={{ display: loading || error ? 'none' : 'flex' }}>
             <canvas ref={canvasRef} className="shadow-md"></canvas>
           </div>
