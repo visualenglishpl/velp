@@ -93,14 +93,19 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
         
         console.log(`DirectResourcesLoader: Book=${bookId}, Unit=${unitId}, Using endpoint: ${endpoint}`);
         
-        console.log(`Fetching resources from ${endpoint}`);
+        // Make sure to prevent any caching issues
+        const uniqueParam = `?t=${Date.now()}`;
+        const fullEndpoint = `${endpoint}${uniqueParam}`;
+        
+        console.log(`Fetching resources from ${fullEndpoint}`);
         
         // For the no-auth endpoint, we don't need to include credentials
-        const response = await fetch(endpoint, {
+        const response = await fetch(fullEndpoint, {
           credentials: isBook7 ? "omit" : "include", // Don't send credentials for no-auth endpoints
           headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache"
           }
         });
         
