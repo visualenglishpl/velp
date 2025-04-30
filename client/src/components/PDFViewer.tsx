@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { FileText, Loader2, RefreshCw, ExternalLink } from 'lucide-react';
-import PDFObject from 'pdfobject';
+import { FileText, Loader2, RefreshCw, ExternalLink, ZoomIn, ZoomOut, ChevronLeft, ChevronRight } from 'lucide-react';
+import * as pdfjs from 'pdfjs-dist';
+import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist';
+
+// Set the worker source path
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 interface PDFViewerProps {
   pdfUrl: string;
@@ -9,12 +13,15 @@ interface PDFViewerProps {
 }
 
 const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
-  const pdfContainerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [pdfDocument, setPdfDocument] = useState<PDFDocumentProxy | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [numPages, setNumPages] = useState(0);
+  const [scale, setScale] = useState(1.0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [retryCount, setRetryCount] = useState(0);
   const [useFallback, setUseFallback] = useState(false);
-
+  
   // Convert AWS S3 URL to correct format if needed
   // This handles both s3://bucket/key and https://bucket.s3.amazonaws.com/key formats
   const normalizePdfUrl = (url: string): string => {
@@ -30,56 +37,171 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
 
   const normalizedUrl = normalizePdfUrl(pdfUrl);
 
+  // Load the PDF document
   useEffect(() => {
-    if (!pdfContainerRef.current || useFallback) return;
-    
+    if (useFallback) return;
+
     setLoading(true);
     setError(null);
-    
-    const options = {
-      height: '700px',
-      width: '100%',
-      pdfOpenParams: {
-        navpanes: 1,
-        toolbar: 1,
-        statusbar: 1,
-        view: 'FitH'
+
+    // Clean up function for the current PDF document
+    const cleanup = () => {
+      if (pdfDocument) {
+        pdfDocument.destroy();
+        setPdfDocument(null);
       }
     };
 
-    try {
-      // Embed PDF using PDFObject
-      const success = PDFObject.embed(normalizedUrl, pdfContainerRef.current, options);
-      
-      // PDFObject.embed returns either false or the element it embeds into
-      if (!success) {
-        console.log('PDFObject could not embed PDF, trying fallback method...');
+    // Load a new PDF document
+    const loadPdf = async () => {
+      try {
+        cleanup();
+        
+        // Set fetch options with CORS support
+        const loadingTask = pdfjs.getDocument({
+          url: normalizedUrl,
+          cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/cmaps/',
+          cMapPacked: true,
+          withCredentials: false
+        });
+        
+        const newDocument = await loadingTask.promise;
+        setPdfDocument(newDocument);
+        setNumPages(newDocument.numPages);
+        setCurrentPage(1);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error loading PDF:', err);
+        setError('Failed to load PDF document. Using fallback viewer.');
+        setLoading(false);
         setUseFallback(true);
       }
-      
-      setLoading(false);
-    } catch (e) {
-      console.error('PDF embedding error:', e);
-      setUseFallback(true);
-      setLoading(false);
-    }
-  }, [normalizedUrl, retryCount, useFallback]);
+    };
 
-  const retryLoadPdf = () => {
-    setRetryCount(retryCount + 1);
-    setUseFallback(false);
+    loadPdf();
+
+    // Clean up when component unmounts or URL changes
+    return cleanup;
+  }, [normalizedUrl, useFallback]);
+
+  // Render the PDF page
+  useEffect(() => {
+    if (!pdfDocument || !canvasRef.current || useFallback) return;
+
+    const renderPage = async () => {
+      try {
+        const page = await pdfDocument.getPage(currentPage);
+        const canvas = canvasRef.current;
+        const context = canvas.getContext('2d');
+        
+        if (!context) {
+          console.error('Canvas context is null');
+          return;
+        }
+        
+        const viewport = page.getViewport({ scale: scale });
+        
+        // Adjust canvas size to match the page dimensions
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        // Render the page content
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport
+        };
+        
+        await page.render(renderContext).promise;
+      } catch (err) {
+        console.error('Error rendering page:', err);
+        setError('Failed to render PDF page.');
+      }
+    };
+
+    renderPage();
+  }, [pdfDocument, currentPage, scale, useFallback]);
+
+  const nextPage = () => {
+    if (currentPage < numPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const zoomIn = () => {
+    setScale(Math.min(scale + 0.2, 3.0));
+  };
+
+  const zoomOut = () => {
+    setScale(Math.max(scale - 0.2, 0.5));
+  };
+
+  // Switch to fallback method
+  const handleError = () => {
+    setUseFallback(true);
     setError(null);
   };
 
-  // Switch to alternate embed method
-  const switchToFallback = () => {
-    setUseFallback(true);
+  // Retry loading with PDF.js
+  const retryWithPdfJs = () => {
+    setUseFallback(false);
     setError(null);
   };
 
   return (
     <div className="w-full flex flex-col items-center">
       {title && <h3 className="text-lg font-medium mb-2">{title}</h3>}
+      
+      {!useFallback && (
+        <div className="w-full flex justify-center mb-4 gap-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={prevPage} 
+            disabled={currentPage <= 1}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          
+          <div className="flex items-center justify-center px-2 bg-muted rounded">
+            <span className="text-sm">
+              Page {currentPage} of {numPages}
+            </span>
+          </div>
+          
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={nextPage} 
+            disabled={currentPage >= numPages}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={zoomOut} 
+            disabled={scale <= 0.5}
+          >
+            <ZoomOut className="h-4 w-4" />
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={zoomIn} 
+            disabled={scale >= 3.0}
+          >
+            <ZoomIn className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
       
       <div className="w-full overflow-auto border rounded-md p-2 bg-white min-h-[700px] flex items-center justify-center">
         {loading && !useFallback && (
@@ -95,15 +217,8 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
             <p className="text-sm text-destructive">{error}</p>
             <div className="flex gap-2 mt-4">
               <Button 
-                variant="outline" 
-                onClick={retryLoadPdf}
-              >
-                <RefreshCw className="h-3.5 w-3.5 mr-1" />
-                Try Again
-              </Button>
-              <Button 
                 variant="outline"
-                onClick={switchToFallback}
+                onClick={handleError}
               >
                 Use Simple Viewer
               </Button>
@@ -118,12 +233,10 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         )}
         
         {!useFallback && (
-          <div 
-            id="pdf-container" 
-            ref={pdfContainerRef} 
-            className="w-full min-h-[700px]"
-            style={{ display: loading || error ? 'none' : 'block' }}
-          ></div>
+          <div className="flex justify-center overflow-auto" 
+               style={{ display: loading || error ? 'none' : 'flex' }}>
+            <canvas ref={canvasRef} className="shadow-md"></canvas>
+          </div>
         )}
 
         {useFallback && (
@@ -143,7 +256,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         {useFallback && (
           <Button 
             variant="outline" 
-            onClick={retryLoadPdf}
+            onClick={retryWithPdfJs}
           >
             <RefreshCw className="mr-2 h-4 w-4" />
             Try Interactive Viewer

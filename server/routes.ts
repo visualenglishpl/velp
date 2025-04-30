@@ -1,4 +1,4 @@
-import type { Express, Request, Response } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
@@ -8,6 +8,8 @@ import { z } from "zod";
 import { S3Client, GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { registerDirectRoutes } from "./direct-routes";
+import rateLimit from "express-rate-limit";
+import slowDown from "express-slow-down";
 
 // Authentication middleware to protect routes
 function isAuthenticated(req: Request, res: Response, next: Function) {
@@ -204,7 +206,135 @@ function getMaterialTypeFromFilename(filename: string): { type: string, title: s
   return { type, title };
 }
 
+// Configure rate limiting middleware
+const standardLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 100, // 100 requests per windowMs per IP
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: { error: 'Too many requests, please try again later.' }
+});
+
+// More aggressive rate limiting for authentication routes
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // 30 login/register attempts per windowMs per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many authentication attempts, please try again later.' }
+});
+
+// Speed limiter to prevent brute force attacks
+const speedLimiter = slowDown({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  delayAfter: 25, // Start delaying responses after 25 requests
+  delayMs: (hits) => hits * 100, // Add 100ms delay per hit above threshold
+  maxDelayMs: 5000 // Maximum 5 seconds delay
+});
+
+// Define custom rate limiter middleware for API endpoints
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute window
+  max: 60, // 60 requests per minute per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'API rate limit exceeded, please try again later.' },
+  // Store with additional client identifier tokens for better rate limiting
+  keyGenerator: (req) => {
+    // Use combination of IP and user ID if authenticated
+    if (req.isAuthenticated() && req.user && req.user.id) {
+      return `${req.ip}-user:${req.user.id}`;
+    }
+    return req.ip; // Fallback to IP address only
+  },
+  // Skip rate limiting for admin users
+  skip: (req) => {
+    return req.isAuthenticated() && req.user && req.user.role === 'admin';
+  } 
+});
+
+// Points-based rate limiting for premium content access
+const premiumContentPoints = {};
+const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.isAuthenticated() ? (req.user?.id || 'anonymous') : 'anonymous';
+  const ip = req.ip;
+  const key = `${userId}-${ip}`;
+  
+  // Initialize or reset points if needed
+  if (!premiumContentPoints[key]) {
+    premiumContentPoints[key] = {
+      points: 100, // Start with 100 points
+      lastReset: Date.now()
+    };
+  }
+  
+  // Reset points every hour (3600000 ms)
+  if (Date.now() - premiumContentPoints[key].lastReset > 3600000) {
+    premiumContentPoints[key].points = 100;
+    premiumContentPoints[key].lastReset = Date.now();
+  }
+  
+  // Different endpoints cost different amounts of points
+  let pointCost = 1; // Default cost
+  
+  // Adjust cost based on endpoint
+  if (req.path.includes('/api/direct/')) {
+    pointCost = 2; // Direct content access costs more
+  }
+  if (req.path.includes('/pdf') || req.path.includes('.pdf')) {
+    pointCost = 5; // PDF access costs more
+  }
+  
+  // For authenticated premium users, reduce the cost
+  if (req.isAuthenticated() && req.user && req.user.subscription && req.user.subscription.isPremium) {
+    pointCost = Math.max(1, Math.floor(pointCost / 2));
+  }
+  
+  // For admin users, no cost
+  if (req.isAuthenticated() && req.user && req.user.role === 'admin') {
+    pointCost = 0;
+  }
+  
+  // Check if enough points
+  if (premiumContentPoints[key].points < pointCost) {
+    return res.status(429).json({
+      error: 'Rate limit exceeded. Please wait before accessing more content.',
+      retryAfter: Math.ceil((premiumContentPoints[key].lastReset + 3600000 - Date.now()) / 1000)
+    });
+  }
+  
+  // Deduct points and continue
+  premiumContentPoints[key].points -= pointCost;
+  
+  // Add remaining points to response headers
+  res.setHeader('X-RateLimit-Remaining', premiumContentPoints[key].points);
+  res.setHeader('X-RateLimit-Reset', new Date(premiumContentPoints[key].lastReset + 3600000).toISOString());
+  
+  next();
+};
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Apply global rate limiting middleware
+  app.use(standardLimiter);
+  
+  // Apply speed limiter to all requests
+  app.use(speedLimiter);
+  
+  // Apply premium content points-based limiter to content routes
+  app.use('/api/direct', premiumContentLimiter);
+  
+  // Apply auth rate limiting to login/register routes
+  app.use(['/api/login', '/api/register'], authLimiter);
+  
+  // Apply API rate limiting to all API routes except auth (which have their own limiter)
+  app.use('/api', (req, res, next) => {
+    if (req.path !== '/login' && req.path !== '/register') {
+      apiLimiter(req, res, next);
+    } else {
+      next();
+    }
+  });
+  
   // Add request logging middleware
   app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
