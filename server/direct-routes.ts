@@ -416,6 +416,76 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
+  // PDF proxy endpoint to serve PDFs through server to avoid CORS and auth issues
+  app.get("/api/direct/pdf-proxy/:key(*)", async (req, res) => {
+    try {
+      const { key } = req.params;
+      
+      console.log(`PDF proxy access - trying to fetch S3 key: ${key}`);
+      
+      // Validate that this is actually a PDF file to prevent abuse
+      if (!key.toLowerCase().endsWith('.pdf')) {
+        console.error(`Attempted to use PDF proxy for non-PDF file: ${key}`);
+        return res.status(400).json({ error: "Only PDF files can be accessed through this endpoint" });
+      }
+      
+      // Get the presigned URL
+      const presignedUrl = await getS3PresignedUrl(key);
+      
+      if (!presignedUrl) {
+        console.error(`PDF not found in S3: ${key}`);
+        return res.status(404).json({ error: "PDF not found" });
+      }
+      
+      try {
+        console.log(`Using presigned URL for PDF proxy: ${presignedUrl}`);
+        
+        // Use fetch to get the content directly
+        const response = await fetch(presignedUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': '*/*',
+          },
+        });
+        
+        if (!response.ok) {
+          console.error(`Error fetching PDF through proxy: ${response.status} ${response.statusText}`);
+          return res.status(response.status).json({ 
+            error: "Error fetching PDF from S3", 
+            details: `${response.status} ${response.statusText}` 
+          });
+        }
+        
+        // Set the content type header for PDF
+        res.setHeader('Content-Type', 'application/pdf');
+        
+        // Add CORS headers to allow PDF.js to access this content
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        
+        // Add cache control headers
+        res.setHeader('Cache-Control', 'max-age=3600');
+        
+        // Get the buffer from the response
+        const buffer = await response.arrayBuffer();
+        
+        // Send the buffer as a response
+        return res.send(Buffer.from(buffer));
+        
+      } catch (fetchError) {
+        console.error(`Fetch error from presigned URL for PDF proxy: ${fetchError}`);
+        return res.status(500).json({ 
+          error: "Failed to fetch PDF through proxy", 
+          details: String(fetchError)
+        });
+      }
+    } catch (error) {
+      console.error(`Error in PDF proxy: ${error}`);
+      res.status(500).json({ error: "PDF proxy error" });
+    }
+  });
+
   // Specific route for book icons
   app.get("/api/direct/:bookPath/icons/:filename", async (req, res) => {
     try {

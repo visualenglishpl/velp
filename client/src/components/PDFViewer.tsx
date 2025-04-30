@@ -4,8 +4,9 @@ import { FileText, Loader2, RefreshCw, ExternalLink, ZoomIn, ZoomOut, ChevronLef
 import * as pdfjs from 'pdfjs-dist';
 import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist';
 
-// Set the worker source path
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+// Use local worker from node_modules
+const pdfjsWorker = new URL('pdfjs-dist/build/pdf.worker.min.js', import.meta.url);
+pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker.toString();
 
 interface PDFViewerProps {
   pdfUrl: string;
@@ -37,6 +38,27 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
 
   const normalizedUrl = normalizePdfUrl(pdfUrl);
 
+  // Convert S3 URL to API path for proxy access to improve security
+  const getPdfProxyUrl = (url: string): string => {
+    if (url.includes('s3.amazonaws.com')) {
+      // Extract the path from S3 URL
+      const matches = url.match(/\.amazonaws\.com\/(.+)/);
+      if (matches && matches[1]) {
+        return `/api/direct/pdf-proxy/${encodeURIComponent(matches[1])}`;
+      }
+    } else if (url.startsWith('s3://')) {
+      // Extract bucket and key
+      const parts = url.replace('s3://', '').split('/');
+      const bucket = parts.shift(); // Get bucket name
+      const key = parts.join('/'); // Get object key
+      return `/api/direct/pdf-proxy/${encodeURIComponent(key)}`;
+    }
+    return url;
+  };
+
+  // Use proxy URL for PDF loading
+  const proxyUrl = getPdfProxyUrl(normalizedUrl);
+
   // Load the PDF document
   useEffect(() => {
     if (useFallback) return;
@@ -47,7 +69,16 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
     // Clean up function for the current PDF document
     const cleanup = () => {
       if (pdfDocument) {
-        pdfDocument.destroy();
+        // We don't use destroy as it may not be available 
+        // in all PDF.js versions
+        try {
+          // @ts-ignore - destroy exists but TypeScript doesn't know about it
+          if (typeof pdfDocument.destroy === 'function') {
+            pdfDocument.destroy();
+          }
+        } catch (e) {
+          console.warn('PDF document destroy failed:', e);
+        }
         setPdfDocument(null);
       }
     };
@@ -57,13 +88,19 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
       try {
         cleanup();
         
-        // Set fetch options with CORS support
+        // Set fetch options with CORS support using proxy URL
         const loadingTask = pdfjs.getDocument({
-          url: normalizedUrl,
-          cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/cmaps/',
+          url: proxyUrl,
+          cMapUrl: './cmaps/', // Relative path (could be replaced with actual path)
           cMapPacked: true,
           withCredentials: false
         });
+        
+        // Add progress monitoring
+        loadingTask.onProgress = (progress) => {
+          const percent = progress.loaded ? Math.round(progress.loaded / (progress.total || 1) * 100) : 0;
+          console.log(`Loading PDF: ${percent}%`);
+        };
         
         const newDocument = await loadingTask.promise;
         setPdfDocument(newDocument);
@@ -82,7 +119,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
 
     // Clean up when component unmounts or URL changes
     return cleanup;
-  }, [normalizedUrl, useFallback]);
+  }, [proxyUrl, useFallback]);
 
   // Render the PDF page
   useEffect(() => {
@@ -92,6 +129,10 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
       try {
         const page = await pdfDocument.getPage(currentPage);
         const canvas = canvasRef.current;
+        
+        // Skip if canvas is no longer available
+        if (!canvas) return;
+        
         const context = canvas.getContext('2d');
         
         if (!context) {
@@ -224,7 +265,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
               </Button>
               <Button 
                 variant="link"
-                onClick={() => window.open(normalizedUrl, '_blank')}
+                onClick={() => window.open(proxyUrl, '_blank')}
               >
                 Open in new tab
               </Button>
@@ -242,7 +283,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         {useFallback && (
           <div className="w-full h-[700px]">
             <iframe 
-              src={normalizedUrl}
+              src={proxyUrl} // Use the proxy URL instead of direct S3 URL
               className="w-full h-full border-0"
               title={title || "PDF Document"}
               sandbox="allow-scripts allow-same-origin allow-forms"
@@ -264,7 +305,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         )}
         <Button 
           variant="outline" 
-          onClick={() => window.open(normalizedUrl, '_blank')}
+          onClick={() => window.open(proxyUrl, '_blank')}
         >
           <ExternalLink className="mr-2 h-4 w-4" />
           Open in New Tab
