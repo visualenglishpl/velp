@@ -1902,6 +1902,252 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       ];
     }
 
+    // Book 7, Unit 11 - Natural Disasters
+    if (bookId === '7' && unitId === '11') {
+      return [
+        {
+          id: "book7-unit11-video1",
+          bookId,
+          unitId,
+          title: "Natural Disasters - ISL Collective",
+          resourceType: "video",
+          provider: "ISL Collective",
+          sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/embed/718198",
+          embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/718198" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
+        },
+        {
+          id: "book7-unit11-game1",
+          bookId,
+          unitId,
+          title: "Wordwall - Natural Disasters",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/e2fdc9e3360e49aaa27816818a1179d6",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e2fdc9e3360e49aaa27816818a1179d6?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit11-game2",
+          bookId,
+          unitId,
+          title: "Kahoot - Natural Disasters",
+          resourceType: "game",
+          provider: "Kahoot",
+          sourceUrl: "https://create.kahoot.it/share/visual-english-7-unit-11-natural-disasters/49b6cfd8-e8b3-479c-bda3-e2192412a301",
+          embedCode: null
+        }
+      ];
+    }
+
+    // Book 7, Unit 12 - Healthy Lifestyle
+    if (bookId === '7' && unitId === '12') {
+      return [
+        {
+          id: "book7-unit12-video1",
+          bookId,
+          unitId,
+          title: "ISL Video - Burnout",
+          resourceType: "video",
+          provider: "ISL Collective",
+          sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/embed/1102668",
+          embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/1102668" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
+        },
+        {
+          id: "book7-unit12-game1",
+          bookId,
+          unitId,
+          title: "Wordwall - Should/Shouldn't",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/37bd90b81ab549adab6f3d3c074889ed",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/37bd90b81ab549adab6f3d3c074889ed?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit12-game2",
+          bookId,
+          unitId,
+          title: "Wordwall - Healthy/Unhealthy",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/ee74009d2b384b808714e36062a0801a",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ee74009d2b384b808714e36062a0801a?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+
+    // Book 7, Unit 13 - Places in the City
+    if (bookId === '7' && unitId === '13') {
+      return [
+        {
+          id: "book7-unit13-video1",
+          bookId,
+          unitId,
+          title: "10 Things to do in NEW YORK CITY WITH KIDS",
+          resourceType: "video",
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=Ceib2bv7BlA",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Ceib2bv7BlA?si=g7i3HSCPRzdhdsFx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit13-game1",
+          bookId,
+          unitId,
+          title: "Wordwall - Shops",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/411d9dcb9eb041b8b1be990c120d6931",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/411d9dcb9eb041b8b1be990c120d6931?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit13-game2",
+          bookId,
+          unitId,
+          title: "Wordwall - Places in the City",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/1b0157e89e6442009e1385bda1661fbf",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1b0157e89e6442009e1385bda1661fbf?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+
+    // Book 7, Unit 14 - Social Problems
+    if (bookId === '7' && unitId === '14') {
+      return [
+        {
+          id: "book7-unit14-video1",
+          bookId,
+          unitId,
+          title: "Migrants - Award-Winning CG Animated Short Film about Climate change",
+          resourceType: "video",
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=ugPJi8kMK8Q",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ugPJi8kMK8Q?si=aj_dlhbAyjFFNf0G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit14-game1",
+          bookId,
+          unitId,
+          title: "Wordwall - Social Problems Game",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/693f7afb993242929b59236c929717a5",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/693f7afb993242929b59236c929717a5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+
+    // Book 7, Unit 15 - Family Celebrations
+    if (bookId === '7' && unitId === '15') {
+      return [
+        {
+          id: "book7-unit15-video1",
+          bookId,
+          unitId,
+          title: "Weird Holidays Celebrated Around the World || Unique Festivals",
+          resourceType: "video",
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=dk9-dNvApng",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/dk9-dNvApng?si=I1CWY8crgQoGcabR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit15-video2",
+          bookId,
+          unitId,
+          title: "Guess the festival | Top 10 most famous festivals",
+          resourceType: "video",
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=Gn3qEebFMLc",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Gn3qEebFMLc?si=xHSA-RlnQ_npy3ck" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit15-game1",
+          bookId,
+          unitId,
+          title: "Wordwall - Months of the Year (1)",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/1c0632327e4d4c33abf969014a371645",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1c0632327e4d4c33abf969014a371645?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit15-game2",
+          bookId,
+          unitId,
+          title: "Wordwall - Months of the Year (2)",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/c52506eabcd4406cbd3681a0d184060e",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c52506eabcd4406cbd3681a0d184060e?themeId=1&templateId=50&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit15-game3",
+          bookId,
+          unitId,
+          title: "Wordwall - World Celebrations",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/143919e90a414397ba99e8744fcbf7a3",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/143919e90a414397ba99e8744fcbf7a3?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit15-game4",
+          bookId,
+          unitId,
+          title: "Wordwall - Family Celebrations",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/ab22249eb83043d8940f69a78058f725",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ab22249eb83043d8940f69a78058f725?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+
+    // Book 7, Unit 16 - Food
+    if (bookId === '7' && unitId === '16') {
+      return [
+        {
+          id: "book7-unit16-game1",
+          bookId,
+          unitId,
+          title: "Wordwall - Food Tastes",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/6730885c619848649b96d5fa6bf972c7",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6730885c619848649b96d5fa6bf972c7?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-game2",
+          bookId,
+          unitId,
+          title: "Wordwall - Food Stall / Trucks",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/embed/3828678c606049d0a756fad74eb5819a",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3828678c606049d0a756fad74eb5819a?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-video1",
+          bookId,
+          unitId,
+          title: "Guess The Fast Food Restaurants Logo 🍔 | Food Logo Quiz 🍟",
+          resourceType: "video",
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=XPJ8sLW9MVs",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XPJ8sLW9MVs?si=rrEv0vqe5wxKRaMi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit16-video2",
+          bookId,
+          unitId,
+          title: "Guess the Country by its Food 🍕😋 | Country Quiz",
+          resourceType: "video",
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=OuKo5MVaeWU",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/OuKo5MVaeWU?si=xYZvg7F70fGeNxbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+        }
+      ];
+    }
+
     // For other book/unit combinations, return an empty array
     return [];
   };
