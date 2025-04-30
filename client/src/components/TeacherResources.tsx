@@ -2768,7 +2768,10 @@ useEffect(() => {
   // View more resources handler
   const handleViewMore = (resource: TeacherResource) => {
     // Based on resource type, perform different actions
-    if (resource.sourceUrl) {
+    if ((resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && resource.fileUrl) {
+      // For PDF files, use our embedded PDF viewer
+      setViewingPdf(resource);
+    } else if (resource.sourceUrl) {
       window.open(resource.sourceUrl, '_blank');
     } else if (resource.fileUrl) {
       window.open(resource.fileUrl, '_blank');
@@ -3757,7 +3760,7 @@ useEffect(() => {
                         <span>Fashion Styles Vocabulary</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
-                      <CardDescription className="truncate">Elementary to Pre-Intermediate (A1-A2)</CardDescription>
+                      <CardDescription className="truncate"></CardDescription>
                     </div>
                     {isEditMode && (
                       <Button 
