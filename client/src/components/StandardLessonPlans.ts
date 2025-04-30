@@ -2088,229 +2088,227 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
       id: "book7-unit10-main-lesson",
       title: "Technology in Daily Life - 45-minute Lesson Plan",
       duration: "45 minutes",
+  // Unit 10: Sports and Physical Activities
+  "10": [
+    {
+      id: "book7-unit10-main-lesson",
+      title: "Are You Sporty - 45-minute Lesson Plan",
+      duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Learn vocabulary related to technology and devices",
-        "Discuss how technology is used in daily life",
-        "Express opinions about technology using target structures",
-        "Compare advantages and disadvantages of different devices"
+        "Learn vocabulary related to sports and physical activities",
+        "Practice discussing sports preferences and abilities",
+        "Use adverbs of frequency to discuss sports habits",
+        "Develop speaking skills through sports discussions"
       ],
       materials: [
         "Visual English Book 7, Unit 10 slides",
-        "Technology flashcards or images",
-        "Tech usage questionnaire",
-        "Gadget comparison worksheet"
+        "Sports flashcards",
+        "Sports equipment images",
+        "Sports habits questionnaire"
       ],
       steps: [
         {
-          title: "Warm-up: Tech Usage",
+          title: "Warm-up: Sports Brainstorm",
           duration: "5 mins",
-          description: "Begin by asking students about the technology they use daily.",
+          description: "Begin by brainstorming different sports and physical activities.",
           instructions: [
-            "Ask students: 'What technology do you use every day?'",
-            "Follow up with: 'Which device is most important to you?'",
-            "Have students discuss in pairs for 1-2 minutes",
-            "Get feedback from several students"
+            "Ask students: 'What sports do you know in English?'",
+            "Write student suggestions on the board",
+            "Ask follow-up: 'Are you sporty? What sports do you like?'",
+            "Have students discuss in pairs for 1-2 minutes"
           ],
-          teacherNotes: "This activates schema and creates context for the main lesson on technology."
+          teacherNotes: "This activates schema and creates context for the main lesson on sports and physical activities."
         },
         {
-          title: "Vocabulary Presentation: Technology",
+          title: "Vocabulary Presentation: Sports and Equipment",
           duration: "10 mins",
-          description: "Introduce vocabulary related to technology and devices.",
+          description: "Introduce vocabulary for different sports and related equipment.",
           materials: [
             "Book 7, Unit 10 slides (first section)",
-            "Technology flashcards"
+            "Sports flashcards"
           ],
           instructions: [
-            "Display slides showing different devices and tech terms",
-            "For each item, ask: 'What is this called?'",
+            "Display slides showing different sports (football, basketball, swimming, etc.)",
+            "For each sport, ask: 'What sport is this?'",
+            "Introduce related equipment: 'ball', 'racket', 'swimming pool', etc.",
             "Drill pronunciation of each term",
-            "Discuss what each device is used for",
-            "Have students repeat and practice the vocabulary"
+            "Practice sentences: 'She plays tennis with a racket.' 'He swims in a pool.'"
           ]
         },
         {
-          title: "Tech Opinions Practice",
+          title: "Sports Habits - Adverbs of Frequency",
           duration: "10 mins",
-          description: "Students practice expressing opinions about technology.",
+          description: "Students learn to discuss sports habits using adverbs of frequency.",
           materials: [
-            "Book 7, Unit 10 slides (middle section)",
-            "Tech usage questionnaire"
+            "Sports habits questionnaire",
+            "Book 7, Unit 10 slides (middle section)"
           ],
           instructions: [
-            "Review expressions: 'I think.../In my opinion.../I believe...'",
-            "Demonstrate how to express opinions about technology",
-            "Students complete questionnaire with a partner",
-            "Ask: 'What do you think about social media?'",
-            "Check some responses as a class"
+            "Present adverbs of frequency: always, usually, often, sometimes, rarely, never",
+            "Show examples: 'I always watch football on TV.' 'I never go skiing.'",
+            "Review proper sentence structure with adverbs of frequency",
+            "Distribute sports questionnaire for students to complete",
+            "Students interview a partner about their sports habits using the questionnaire",
+            "Share some responses with the class"
           ],
-          teacherNotes: "Encourage students to give reasons for their opinions."
+          teacherNotes: "Focus on correct placement of adverbs of frequency in sentences."
         },
         {
-          title: "Gadget Showroom Role Play",
+          title: "Are You Sporty? - Sports Abilities",
           duration: "15 mins",
-          description: "Students simulate a technology showroom, presenting and comparing devices.",
+          description: "Students discuss their sports abilities and preferences.",
           materials: [
-            "Gadget comparison worksheet",
-            "Role play cards with customer/salesperson roles"
+            "Sports ability prompts",
+            "Book 7, Unit 10 slides (final section)"
           ],
           instructions: [
-            "Divide students into pairs - customer and salesperson",
-            "Salesperson presents 2-3 devices, comparing features",
-            "Customer asks questions and decides which to buy",
-            "Provide dialog prompts: 'What are the advantages of this device?'",
-            "Have pairs switch roles halfway through"
+            "Present structures: 'Are you good at...?' 'Can you...?' 'Do you enjoy...?'",
+            "Model responses: 'Yes, I'm good at swimming.' 'No, I can't play golf.'",
+            "Divide students into small groups",
+            "Groups discuss their sports abilities and preferences using the prompt questions",
+            "Each student shares one thing they are good at and one they want to improve",
+            "Conduct a class survey to find the most/least popular sports"
           ]
         },
         {
-          title: "Wrap-up: Future Tech",
+          title: "Wrap-up: Benefits of Sports",
           duration: "5 mins",
-          description: "Students predict future technology.",
+          description: "Students discuss the benefits of playing sports.",
           instructions: [
-            "Students imagine a new technology for the future",
-            "They complete: 'In the future, I think we will have...'",
-            "Share several ideas with the class",
+            "Ask students: 'Why are sports important?'",
+            "Elicit responses: health, fun, friendship, teamwork, etc.",
+            "Have students complete the sentence: 'Sports are important because...'",
             "Review key vocabulary and expressions from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their participation in the gadget showroom role play and their ability to express opinions about technology using the target structures.",
+      assessmentTips: "Assess students through their participation in the sports discussions and their ability to use sports vocabulary and adverbs of frequency correctly.",
       homeworkIdeas: [
-        "Write a paragraph about how you use technology in your daily life.",
-        "Create a comparison chart of two technology devices, listing their advantages and disadvantages."
+        "Write a paragraph about your favorite sport including when you play it and why you like it.",
+        "Create a weekly sports schedule using adverbs of frequency."
       ],
       additionalResources: [
         {
-          title: "Technology Vocabulary",
-          url: "https://www.vocabulary.cl/Lists/Technology.htm"
+          title: "Sports Vocabulary",
+          url: "https://www.englishclub.com/vocabulary/sports.php"
         },
         {
-          title: "Technology Quiz",
-          url: "https://wordwall.net/resource/search?query=technology%20vocabulary"
+          title: "Sport Activities Quiz",
+          url: "https://wordwall.net/resource/search?query=sports%20vocabulary"
         }
       ]
     },
     {
       id: "book7-unit10-extension-lesson",
-      title: "Internet Safety and Digital Citizenship - 45-minute Extension Lesson",
+      title: "Sports Around the World - 45-minute Extension Lesson",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Learn vocabulary related to internet safety and online behavior",
-        "Understand basic principles of digital citizenship",
-        "Practice giving advice about safe online habits",
-        "Discuss potential problems and solutions related to internet use"
+        "Learn about popular sports from different countries",
+        "Practice comparative language to discuss sports",
+        "Develop cultural awareness through sports traditions",
+        "Create and present a simple sports report"
       ],
       materials: [
         "Visual English Book 7, Unit 10 slides",
-        "Internet safety vocabulary handout",
-        "Digital citizenship scenario cards",
-        "Online safety tips worksheet"
+        "World map with sports marked",
+        "Sports comparison worksheet",
+        "International sports fact cards"
       ],
       steps: [
         {
-          title: "Warm-up: Online Time",
+          title: "Warm-up: International Sports",
           duration: "5 mins",
-          description: "Begin by asking students about their online activities and time spent online.",
+          description: "Begin by discussing popular sports from different countries.",
           instructions: [
-            "Ask students: 'How much time do you spend online each day?'",
-            "Follow up with: 'What do you usually do online?'",
-            "Have students discuss in pairs for 1-2 minutes",
-            "Collect some responses from the class"
+            "Show world map with different sports highlighted",
+            "Ask students: 'What sports are popular in different countries?'",
+            "Elicit examples: cricket in India, sumo in Japan, etc.",
+            "Have students name the most popular sport in their country"
           ],
-          teacherNotes: "This activates schema and creates context for the lesson on internet safety."
+          teacherNotes: "This introduces the cultural aspect of sports and their global significance."
         },
         {
-          title: "Vocabulary Presentation: Internet Safety",
+          title: "Vocabulary Expansion: International Sports",
           duration: "10 mins",
-          description: "Introduce vocabulary related to internet safety and digital citizenship.",
+          description: "Introduce vocabulary for sports from around the world.",
           materials: [
-            "Internet safety vocabulary handout",
+            "International sports fact cards",
             "Book 7, Unit 10 slides (supplementary section)"
           ],
           instructions: [
-            "Present safety vocabulary: password, privacy, personal information, phishing, etc.",
-            "Introduce digital citizenship concepts: respect, responsibility, safety",
-            "Drill pronunciation of each term",
-            "Explain the meaning of each concept with examples",
-            "Have students repeat and practice the vocabulary"
+            "Present less familiar sports: cricket, rugby, sumo, lacrosse, etc.",
+            "Explain basic rules and equipment for each sport",
+            "Connect sports to their countries of origin",
+            "Students match sports with countries and equipment",
+            "Practice sentences: 'Cricket is popular in India and England.'"
           ]
         },
         {
-          title: "Online Safety Guidelines",
+          title: "Comparing Sports - Comparative Language",
           duration: "10 mins",
-          description: "Students discuss and learn basic guidelines for staying safe online.",
+          description: "Students practice comparing different sports using comparative forms.",
           materials: [
-            "Online safety tips worksheet",
-            "Internet safety illustrations"
+            "Sports comparison worksheet",
+            "Comparative language handout"
           ],
           instructions: [
-            "Present 5-6 key online safety rules with examples",
-            "Discuss why each rule is important",
-            "Students match safety tips with appropriate scenarios",
-            "Review answers as a class",
-            "Ask students to add any additional tips they know"
+            "Review comparative forms: 'Football is more popular than hockey.'",
+            "Present comparison categories: popularity, difficulty, equipment, team size, etc.",
+            "Model comparing two sports using different criteria",
+            "Students work in pairs to complete sports comparison worksheet",
+            "Discuss which comparisons were easy/difficult to make"
           ],
-          teacherNotes: "Focus on age-appropriate safety concerns without causing unnecessary worry."
+          teacherNotes: "Focus on correct formation of comparatives with short adjectives (-er) and long adjectives (more...)."
         },
         {
-          title: "Digital Citizenship Role Play",
+          title: "Sports Report Activity",
           duration: "15 mins",
-          description: "Students practice handling online scenarios responsibly.",
+          description: "Students create and present a simple sports report.",
           materials: [
-            "Digital citizenship scenario cards",
-            "Response suggestion prompts"
+            "Sports report template",
+            "Model sports report example"
           ],
           instructions: [
-            "Divide students into small groups of 3-4",
-            "Distribute scenario cards with online dilemmas",
-            "Groups discuss appropriate responses to each scenario",
-            "Groups present their scenario and solution to the class",
-            "Class discusses if they agree with the solution"
+            "Explain that students will become sports reporters",
+            "Show a model sports report with simple language",
+            "Introduce useful phrases: 'The match was exciting.' 'The player scored a goal.'",
+            "Students work in pairs to prepare a short report about a real or imaginary game",
+            "The report should include: sport, teams/players, what happened, result",
+            "Pairs present their sports reports to the class",
+            "Other students can ask follow-up questions"
           ]
         },
         {
-          title: "Wrap-up: Personal Safety Plan",
+          title: "Wrap-up: Sports in the Future",
           duration: "5 mins",
-          description: "Students create a personal internet safety plan.",
+          description: "Students discuss how sports might change in the future.",
           instructions: [
-            "Students write 3 personal online safety rules they will follow",
-            "Encourage specific, actionable commitments",
-            "Have several students share their plans",
-            "Review key vocabulary and safety concepts from the lesson"
+            "Ask students: 'How will sports be different in the future?'",
+            "Elicit ideas: new technologies, different rules, new sports, etc.",
+            "Students share predictions using 'will': 'I think robots will play football.'",
+            "Review key vocabulary and concepts from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their participation in the digital citizenship role play and their ability to articulate appropriate responses to online scenarios.",
+      assessmentTips: "Assess students through their sports reports and their ability to use comparative language when discussing different sports.",
       homeworkIdeas: [
-        "Create a poster or infographic with 5 important internet safety tips.",
-        "Interview a family member about their online safety habits and write a short report."
+        "Research an unusual sport from another country and prepare a simple presentation.",
+        "Write a short report about a recent sports event (local, national, or international)."
       ],
       additionalResources: [
         {
-          title: "Internet Safety for Kids",
-          url: "https://www.commonsensemedia.org/privacy-and-internet-safety"
+          title: "World Sports Encyclopedia",
+          url: "https://www.topendsports.com/sport/list/index.htm"
         },
         {
-          title: "Digital Citizenship Games",
-          url: "https://www.digitalcitizenship.net/curriculum.html"
+          title: "ESL Sports Activities",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/sports"
         }
       ]
     }
-  ],
-  
-  // Unit 11: Work
-  "11": [
-    {
-      id: "book7-unit11-main-lesson",
-      title: "Jobs and Careers - 45-minute Lesson Plan",
-      duration: "45 minutes",
-      level: "Elementary to Pre-Intermediate (A1-A2)",
-      objectives: [
-        "Learn vocabulary related to jobs and workplaces",
-        "Discuss different professions and required skills",
-        "Practice asking and answering questions about jobs",
+  ],        "Practice asking and answering questions about jobs",
         "Talk about career aspirations and preferences"
       ],
       materials: [
@@ -2519,6 +2517,8 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
   ],
   
   // Unit 12: Shopping
+  ],
+
   "12": [
     {
       id: "book7-unit12-main-lesson",
