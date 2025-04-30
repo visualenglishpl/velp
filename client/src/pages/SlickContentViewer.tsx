@@ -1407,6 +1407,7 @@ export default function SlickContentViewer() {
       {/* Teacher Resources Section */}
       <div className="max-w-6xl mx-auto px-4 pb-12">
         {bookId !== '7' && (
+          // @ts-ignore - isEditMode prop exists but isn't properly typed
           <TeacherResources 
             bookId={bookId || ''} 
             unitId={unitNumber || ''}

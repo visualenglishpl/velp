@@ -86,16 +86,21 @@ const DirectResourcesLoader = ({ bookId, unitId }: DirectResourcesLoaderProps) =
       
       try {
         // Use the no-auth endpoint only for Book 7
+        // IMPORTANT: For Book 7, we need to use a no-auth endpoint to avoid 401 errors
         const endpoint = isBook7 
           ? `/api/no-auth/book7/${unitNumber}/resources`
           : `/api/direct/${bookId}/${unitId}/resources`;
         
+        console.log(`DirectResourcesLoader: Book=${bookId}, Unit=${unitId}, Using endpoint: ${endpoint}`);
+        
         console.log(`Fetching resources from ${endpoint}`);
         
+        // For the no-auth endpoint, we don't need to include credentials
         const response = await fetch(endpoint, {
-          credentials: "include",
+          credentials: isBook7 ? "omit" : "include", // Don't send credentials for no-auth endpoints
           headers: {
             "Accept": "application/json",
+            "Content-Type": "application/json",
           }
         });
         

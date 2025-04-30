@@ -35,7 +35,21 @@ function createTemporaryUser(req: express.Request, res: express.Response, next: 
 }
 
 // Book 7 resources - hardcoded data to avoid authentication issues
-const book7Resources = {
+const book7Resources: Record<string, Array<{
+  id: string;
+  bookId: string;
+  unitId: string;
+  title: string;
+  resourceType: string;
+  provider: string;
+  sourceUrl: string;
+  embedCode: string;
+  lessonPlan?: {
+    level?: string;
+    duration?: string;
+    objectives?: string[];
+  };
+}>> = {
   // Unit 1 - Movie Genres
   "1": [
     {
