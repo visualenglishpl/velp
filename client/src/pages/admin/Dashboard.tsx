@@ -9,7 +9,6 @@ const AdminDashboard = () => {
   const { user, logoutMutation } = useAuth();
   const [, navigate] = useLocation();
   const { toast } = useToast();
-  const [isUpdatingResources, setIsUpdatingResources] = useState(false);
 
   // User auth check moved to useEffect to prevent constant redirects
   useEffect(() => {
@@ -18,34 +17,6 @@ const AdminDashboard = () => {
       navigate("/auth");
     }
   }, [user, navigate, logoutMutation.isPending]);
-  
-  // Function to update teacher resources
-  const updateTeacherResources = async () => {
-    try {
-      setIsUpdatingResources(true);
-      const response = await apiRequest("POST", "/api/direct/update-teacher-resources");
-      const data = await response.json();
-      
-      if (data.success) {
-        toast({
-          title: "Teacher Resources Updated",
-          description: "Successfully updated teacher resources for all units.",
-          variant: "default",
-        });
-      } else {
-        throw new Error(data.message || "Failed to update teacher resources");
-      }
-    } catch (error: any) {
-      console.error("Error updating teacher resources:", error);
-      toast({
-        title: "Update Failed",
-        description: error?.message || "Failed to update teacher resources. Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsUpdatingResources(false);
-    }
-  };
 
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
