@@ -2236,7 +2236,7 @@ useEffect(() => {
     id: 'film-genres-1',
     title: 'Movie Genres Vocabulary - Part 1',
     duration: '45 minutes',
-    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    level: '',
     objectives: [
       'Identify and name common film genres in English',
       'Match film genres with their characteristics',
@@ -2340,7 +2340,7 @@ useEffect(() => {
     id: 'film-production-1',
     title: 'Film Production Roles - Part 1',
     duration: '45 minutes',
-    level: 'Elementary to Pre-Intermediate (A1-A2)',
+    level: '',
     objectives: [
       'Identify key roles in film production (director, actor, stuntman, etc.)',
       'Describe job responsibilities using simple present tense',

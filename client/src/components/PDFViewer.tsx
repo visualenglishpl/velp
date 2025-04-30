@@ -4,8 +4,22 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, FileText, Loader2, ZoomIn, ZoomOut } from 'lucide-react';
 
 // Set up the worker for the PDF.js library
-// We'll use a CDN-hosted worker that works in most browsers
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+// Use a fallback approach to find a working CDN
+const setUpPdfWorker = () => {
+  try {
+    // First try CDNJS (most reliable)
+    pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+  } catch (e) {
+    try {
+      // Then try unpkg as fallback
+      pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+    } catch (e) {
+      console.error('Failed to load PDF.js worker from CDN', e);
+    }
+  }
+};
+
+setUpPdfWorker();
 
 interface PDFViewerProps {
   pdfUrl: string;
@@ -18,6 +32,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
   const [scale, setScale] = useState(1.0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -26,8 +41,15 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
 
   const onDocumentLoadError = (error: Error) => {
     console.error('PDF loading error:', error);
-    setError('Failed to load PDF. Please try again later.');
+    setError('Failed to load PDF document. This could be due to network issues or the file format.');
     setLoading(false);
+    
+    // Try to reinitialize the worker in case that's the issue
+    try {
+      setUpPdfWorker();
+    } catch (e) {
+      console.error('Failed to reinitialize PDF worker', e);
+    }
   };
 
   const goToPreviousPage = () => {
