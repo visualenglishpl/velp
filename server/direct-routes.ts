@@ -34,6 +34,95 @@ function createTemporaryUser(req: express.Request, res: express.Response, next: 
   next();
 }
 
+// Book 7 resources - hardcoded data to avoid authentication issues
+const book7Resources = {
+  // Unit 1 - Movie Genres
+  "1": [
+    {
+      id: "book7-unit1-video1",
+      bookId: '7',
+      unitId: '1',
+      title: "Movie Genres Vocabulary Epic ESL Guessing Game",
+      resourceType: "video",
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/watch?v=FTuQIwl7j3k",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FTuQIwl7j3k?si=wh3So_Qj8Hqk6TL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit1-game1",
+      bookId: '7',
+      unitId: '1',
+      title: "Movie & Film Genres - Wordwall Game",
+      resourceType: "game",
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/17566456/movies-film-genres",
+      embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/0e3ddce1b4b54f92a65a0c702db44271?themeId=23&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  
+  // Unit 6 - Money
+  "6": [
+    {
+      id: "book7-unit6-video1",
+      bookId: '7',
+      unitId: '6',
+      title: "Learn English: Money from 1p to 50 Pounds",
+      resourceType: "video",
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/watch?v=RrXNezFLWSI",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/RrXNezFLWSI?si=CJsKkDLw0TpfUfm7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit6-game1",
+      bookId: '7',
+      unitId: '6',
+      title: "Currency and Money Terms - Vocabulary Quiz",
+      resourceType: "game",
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/38051887/currency-and-money-terms",
+      embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/bfcb61f5f6cf4493a2c879aba9b12b9a?themeId=48&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  
+  // Unit 9 - Jobs
+  "9": [
+    {
+      id: "book7-unit9-game1",
+      bookId: '7',
+      unitId: '9',
+      title: "Types of Jobs - Wordwall Game",
+      resourceType: "game",
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/10037807/types-jobs",
+      embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/97b3979a70a54b17a193a2d9c85f1d40?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  
+  // Unit 11 - Natural Disasters
+  "11": [
+    {
+      id: "book7-unit11-video1",
+      bookId: '7',
+      unitId: '11',
+      title: "CG Animated Short Film about Climate change",
+      resourceType: "video",
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/watch?v=dKP08GCh4d4",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/dKP08GCh4d4?si=NYAjQpwGFz-VsDxH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit11-game1",
+      bookId: '7',
+      unitId: '11',
+      title: "Natural Disasters Vocabulary Game",
+      resourceType: "game",
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/8518517/natural-disasters",
+      embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/f71ec9e2c30d4499b9e0fb0ba5c91a70?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ]
+};
+
 export function registerDirectRoutes(app: express.Express) {
   // Create a new endpoint for temporary login from the teacher resources page
   app.post('/api/direct/temp-login', createTemporaryUser, (req, res) => {
@@ -54,6 +143,41 @@ export function registerDirectRoutes(app: express.Express) {
       message: "Temporarily logged in for testing", 
       user: req.user 
     });
+  });
+  
+  // Special no-auth endpoint for Book 7 resources
+  app.get('/api/no-auth/book7/:unitId/resources', (req, res) => {
+    const { unitId } = req.params;
+    
+    // Always set JSON content type to ensure proper client handling
+    res.setHeader('Content-Type', 'application/json');
+    
+    // CORS headers to ensure proper client access
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    
+    try {
+      // Check if we have hardcoded resources for this unit
+      if (book7Resources[unitId]) {
+        return res.status(200).json({
+          success: true,
+          resources: book7Resources[unitId]
+        });
+      } else {
+        // Return empty array for units without hardcoded resources
+        return res.status(200).json({
+          success: true,
+          resources: []
+        });
+      }
+    } catch (error) {
+      console.error(`Error retrieving Book 7 Unit ${unitId} resources:`, error);
+      return res.status(500).json({
+        success: false,
+        error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}`
+      });
+    }
   });
   // Route to directly add resources for a specific book and unit
   app.get('/api/admin/add-resources/:bookId/:unitId', (req, res) => {

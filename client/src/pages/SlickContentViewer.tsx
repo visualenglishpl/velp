@@ -14,7 +14,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import QuestionAnswerDisplay from '@/components/QuestionAnswerDisplay';
 import TeacherResources from '@/components/TeacherResources.fixed';
-import DirectTeacherResources from '@/components/DirectTeacherResources';
+import DirectResourcesLoader from '@/components/DirectResourcesLoader';
 import { 
   DndContext, 
   DragEndEvent,
