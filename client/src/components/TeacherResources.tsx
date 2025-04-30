@@ -384,16 +384,6 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '2') {
       return [
         {
-          id: "book7-unit2-video1",
-          bookId,
-          unitId,
-          title: "Fashion Styles Vocabulary",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=4vGLON1qRSI",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4vGLON1qRSI?si=1J7_4Z6aOwF4UkSx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
           id: "book7-unit2-video2",
           bookId,
           unitId,
@@ -404,16 +394,6 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/kNw8V_Fkw28?si=9Zl2x1mjJ3wRpYZ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
         },
         {
-          id: "book7-unit2-video3",
-          bookId,
-          unitId,
-          title: "Movie Genres Vocabulary - ESL Guessing Game",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=FTuQIwl7j3k",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FTuQIwl7j3k?si=wh3So_Qj8Hqk6TL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
           id: "book7-unit2-lesson1",
           bookId,
           unitId,
@@ -422,36 +402,6 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           provider: "British Council",
           sourceUrl: "https://learnenglishteens.britishcouncil.org/study-break/youtubers/tattoos-piercings",
           embedCode: ""
-        },
-        {
-          id: "book7-unit2-game1",
-          bookId,
-          unitId,
-          title: "Fashion Styles Vocabulary Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/29461275/fashion-styles-vocabulary",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29461275/fashion-styles-vocabulary?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit2-game2",
-          bookId,
-          unitId,
-          title: "Body Piercings Vocabulary",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/d05c71b310af42f59922123edb75c96e",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d05c71b310af42f59922123edb75c96e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit2-game3",
-          bookId,
-          unitId,
-          title: "Hairstyles Vocabulary Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/0cd285bfcf87423e9d5a7ed1a3935d22",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0cd285bfcf87423e9d5a7ed1a3935d22?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
@@ -478,36 +428,6 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           provider: "YouTube",
           sourceUrl: "https://youtu.be/0FRKITalAz4",
           embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/0FRKITalAz4?si=Kkb15NP2MqOUjvvS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit3-video3",
-          bookId,
-          unitId,
-          title: "Movie Genres Vocabulary - ESL Guessing Game",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=FTuQIwl7j3k",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FTuQIwl7j3k?si=wh3So_Qj8Hqk6TL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit3-game1",
-          bookId,
-          unitId,
-          title: "Crime and Criminals Vocabulary",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/ecc57a3b73f14f5faf7d6c0ae1d3beba",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ecc57a3b73f14f5faf7d6c0ae1d3beba?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit3-game2",
-          bookId,
-          unitId,
-          title: "Types of Crimes Matching Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/8f09e7c155fb4932aed9903332ca20cf",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8f09e7c155fb4932aed9903332ca20cf?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
