@@ -8,6 +8,9 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+
+// Add CSS for responsive grid layout
+import "@/styles/teacher-resources-grid.css";
 import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image, PenLine, CheckCircle, Maximize2 } from 'lucide-react';
 import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
 import PDFViewer from '@/components/PDFViewer';
@@ -2764,7 +2767,7 @@ useEffect(() => {
     }
   };
 
-  // UI for rendering resources
+  // UI for rendering resources with a unified card-based layout
   const renderResources = (type: string | null = null) => {
     let filteredResources = resources;
     
@@ -2782,50 +2785,124 @@ useEffect(() => {
       );
     }
 
-    if (type === 'video' || type === 'game') {
-      return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {filteredResources.map((resource, index) => (
-            <div key={resource.id || index} className="bg-white rounded-lg overflow-hidden border shadow-sm hover:shadow-md transition-shadow">
-              <div className="p-3 pb-2">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-base font-medium truncate mr-2">{resource.title}</h3>
-                  <Badge variant="outline" className="rounded-full px-2 py-0.5 text-xs whitespace-nowrap">
-                    {resource.resourceType === 'video' && <Video className="h-3 w-3 mr-1" />}
-                    {resource.resourceType === 'game' && <Gamepad2 className="h-3 w-3 mr-1" />}
-                    {resource.provider || resource.resourceType.charAt(0).toUpperCase() + resource.resourceType.slice(1)}
-                  </Badge>
+    // Unified card-based grid layout for all resource types
+    return (
+      <div className="resources-grid mt-4">
+        {filteredResources.map((resource, index) => (
+          <Card 
+            key={resource.id || index} 
+            className="resource-card border shadow-sm hover:shadow-md transition-all"
+          >
+            <CardHeader className="pb-2">
+              <div className="flex justify-between items-center">
+                <div className="text-lg font-medium truncate mr-2">{resource.title}</div>
+                <Badge variant="outline" className="rounded-full px-2 py-0.5 text-xs whitespace-nowrap">
+                  {resource.resourceType === 'video' && <Video className="h-3 w-3 mr-1" />}
+                  {resource.resourceType === 'game' && <Gamepad2 className="h-3 w-3 mr-1" />}
+                  {resource.resourceType === 'pdf' && <FileText className="h-3 w-3 mr-1" />}
+                  {resource.resourceType === 'lesson' && <Book className="h-3 w-3 mr-1" />}
+                  {resource.provider || resource.resourceType.charAt(0).toUpperCase() + resource.resourceType.slice(1)}
+                </Badge>
+              </div>
+              {resource.provider && (
+                <CardDescription className="text-xs">
+                  Provider: {resource.provider}
+                </CardDescription>
+              )}
+            </CardHeader>
+            
+            <CardContent className="p-3 pt-0 flex-grow">
+              {/* Video Content */}
+              {resource.resourceType === 'video' && (
+                <div className="resource-thumbnail video mb-3">
+                  {resource.embedCode ? (
+                    <div className="w-full overflow-hidden rounded" 
+                         dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
+                  ) : (
+                    <div className="aspect-video w-full flex items-center justify-center rounded border bg-gradient-to-br from-slate-100 to-slate-200">
+                      <div className="text-center">
+                        <Video className="h-12 w-12 text-primary/70 mx-auto mb-2" />
+                        <p className="text-sm text-muted-foreground">Video Preview</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
+              )}
               
-              <div className="p-0 bg-black/5">
-                {resource.embedCode && (
-                  <div className={`${resource.resourceType === 'video' ? 'aspect-video' : 'h-[300px]'} w-full overflow-hidden`} 
-                       dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
-                )}
-                
-                {!resource.embedCode && resource.resourceType === 'video' && (
-                  <div className="aspect-video w-full flex items-center justify-center bg-muted">
-                    <Video className="h-12 w-12 text-muted-foreground opacity-50" />
-                  </div>
-                )}
-
-                {!resource.embedCode && resource.resourceType === 'game' && (
-                  <KahootThumbnail title={resource.title} />
-                )}
-              </div>
+              {/* Game Content */}
+              {resource.resourceType === 'game' && (
+                <div className="resource-thumbnail game mb-3">
+                  {resource.embedCode ? (
+                    <div className="w-full overflow-hidden rounded" 
+                         dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
+                  ) : (
+                    <KahootThumbnail title={resource.title} />
+                  )}
+                </div>
+              )}
               
-              <div className="p-3 flex justify-between items-center bg-muted/10">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="text-xs"
-                  onClick={() => handleViewMore(resource)}
+              {/* PDF/Lesson Content */}
+              {(resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && (
+                <div 
+                  className="resource-thumbnail pdf mb-3 border rounded cursor-pointer bg-gradient-to-br from-slate-50 to-slate-100"
+                  onClick={() => resource.fileUrl && setViewingPdf(resource)}
                 >
-                  <ExternalLink className="h-3 w-3 mr-1" />
-                  Open
-                </Button>
+                  <div className="pdf-overlay">
+                    <div className="bg-white/90 px-4 py-2 rounded shadow-sm">
+                      <div className="flex items-center">
+                        <FileText className="h-5 w-5 text-primary mr-2" />
+                        <span className="text-sm font-medium">Preview PDF</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-full h-full flex items-center justify-center p-4">
+                    <FileText className="h-16 w-16 text-primary/40" />
+                  </div>
+                </div>
+              )}
+            </CardContent>
+            
+            <CardFooter className="bg-muted/10 pt-3 pb-3 border-t">
+              <div className="flex justify-between w-full">
+                {/* Resource action buttons in a horizontal group */}
+                <div className="button-group">
+                  {(resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && resource.fileUrl && (
+                    <>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => setViewingPdf(resource)}
+                      >
+                        <Maximize2 className="h-3 w-3 mr-1" />
+                        Preview
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => window.open(resource.fileUrl, '_blank')}
+                      >
+                        <ExternalLink className="h-3 w-3 mr-1" />
+                        Open
+                      </Button>
+                    </>
+                  )}
+                  
+                  {(resource.resourceType === 'video' || resource.resourceType === 'game') && (
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="text-xs"
+                      onClick={() => handleViewMore(resource)}
+                    >
+                      <ExternalLink className="h-3 w-3 mr-1" />
+                      Open
+                    </Button>
+                  )}
+                </div>
 
+                {/* Edit controls */}
                 {isEditMode && (
                   <div className="flex space-x-1">
                     <Button 
@@ -2844,130 +2921,6 @@ useEffect(() => {
                       variant="ghost" 
                       size="sm" 
                       className="text-xs text-destructive" 
-                      onClick={() => setConfirmDelete(resource)}
-                    >
-                      <Trash2 className="h-3 w-3 mr-1" />
-                      Delete
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    // For PDF and other resource types, use a wider layout
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-        {filteredResources.map((resource, index) => (
-          <Card key={resource.id || index} className="overflow-hidden hover:shadow-md transition-shadow">
-            <CardHeader className="pb-2">
-              <div className="flex justify-between items-start">
-                <CardTitle className="text-lg">{resource.title}</CardTitle>
-                <Badge variant="outline" className="ml-2">
-                  <FileText className="h-3 w-3 mr-1" />
-                  {resource.resourceType.charAt(0).toUpperCase() + resource.resourceType.slice(1)}
-                </Badge>
-              </div>
-              {resource.provider && (
-                <CardDescription className="text-xs">
-                  Provider: {resource.provider}
-                </CardDescription>
-              )}
-            </CardHeader>
-            
-            <CardContent className="pt-0">              
-              {/* PDF Embedding - Enhanced UI */}
-              {resource.fileUrl && (resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && (
-                <div className="rounded overflow-hidden mb-4 border bg-white hover:shadow-md transition-all">
-                  <div className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <h4 className="text-base font-medium">{resource.title}</h4>
-                        <p className="text-xs text-muted-foreground">Provider: {resource.provider || 'Visual English'}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button 
-                          size="sm"
-                          variant="outline" 
-                          className="flex items-center" 
-                          onClick={() => window.open(resource.fileUrl, '_blank')}
-                        >
-                          <ExternalLink className="h-3.5 w-3.5 mr-1" />
-                          Open
-                        </Button>
-                        <Button 
-                          size="sm"
-                          variant="default" 
-                          className="flex items-center"
-                          onClick={() => setViewingPdf(resource)}
-                        >
-                          <Maximize2 className="h-3.5 w-3.5 mr-1" />
-                          View
-                        </Button>
-                      </div>
-                    </div>
-                    <div 
-                      className="relative w-full h-64 bg-slate-50 rounded overflow-hidden hover:bg-slate-100 cursor-pointer mt-3"
-                      onClick={() => setViewingPdf(resource)}
-                    >
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="bg-white/80 px-4 py-2 rounded shadow-sm">
-                          <div className="flex items-center">
-                            <FileText className="h-5 w-5 text-primary mr-2" />
-                            <span className="text-sm font-medium">Preview PDF</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-full h-full opacity-40">
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                          <FileText className="h-12 w-12 text-primary/40" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              {(!resource.fileUrl && (resource.resourceType === 'pdf' || resource.resourceType === 'lesson')) && (
-                <div className="bg-muted h-[200px] flex items-center justify-center rounded mb-4 border shadow-sm">
-                  <FileText className="h-12 w-12 text-muted-foreground" />
-                </div>
-              )}
-            </CardContent>
-            
-            <CardFooter className="bg-muted/30 pt-2 pb-2">
-              <div className="flex justify-between w-full">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-xs flex items-center" 
-                  onClick={() => handleViewMore(resource)}
-                >
-                  <ExternalLink className="h-3 w-3 mr-1" />
-                  View More
-                </Button>
-
-                {isEditMode && (
-                  <div className="flex space-x-1">
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="text-xs flex items-center" 
-                      onClick={() => {
-                        setNewResource({ ...resource });
-                        setIsAdding(true);
-                      }}
-                    >
-                      <Pencil className="h-3 w-3 mr-1" />
-                      Edit
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="text-xs flex items-center text-destructive" 
                       onClick={() => setConfirmDelete(resource)}
                     >
                       <Trash2 className="h-3 w-3 mr-1" />
@@ -4177,10 +4130,9 @@ useEffect(() => {
         </TabsContent>
 
         <TabsContent value="materials">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-            {renderResources('pdf')}
-            {renderResources('lesson')}
-          </div>
+          {/* Using the same grid layout for PDFs/Lessons */}
+          {renderResources('pdf')}
+          {renderResources('lesson')}
         </TabsContent>
 
         <TabsContent value="lessonplans">
