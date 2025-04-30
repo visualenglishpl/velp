@@ -1754,7 +1754,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
     // This section only extracts patterns from the filename, not hardcoded questions
     const processed = getQuestionAnswerFromData(material, unitId);
     setQAData(processed);
-  }, [material, excelData, jsonMappings, isLoadingJsonMappings, findMatchingQA, isDeleted]);
+  }, [material?.content, excelData?.entries, jsonMappings, isLoadingJsonMappings, isDeleted, unitId]);
   
   const handleFlagQuestion = async () => {
     try {
