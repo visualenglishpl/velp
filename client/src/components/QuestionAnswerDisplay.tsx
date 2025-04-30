@@ -1400,63 +1400,50 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   }, [bookId, unitId, material?.id]);
   
   useEffect(() => {
-    // This function encapsulates all the logic to determine question and answer
-    // to prevent running this logic in the component body which causes re-renders
-    const determineQA = () => {
-      if (!material?.content) {
-        return { country: '', question: '', answer: '', hasData: false };
-      }
-      
-      // Don't load data if this Q&A is marked as deleted
-      if (isDeleted) {
-        return null;
-      }
-      
-      const filename = material.content;
-      const currentUnitId = unitId || '';
-      
-      // FIRST APPROACH: Try our enhanced JSON-based mapping (most reliable)
-      // This uses the improved pattern matching algorithms
-      if (!isLoadingJsonMappings && jsonMappings && Object.keys(jsonMappings).length > 0) {
-        console.log("Using enhanced JSON-based Q&A mapping system");
-        
-        // Filter mappings by unitId if provided
-        const filteredEntries = Object.values(jsonMappings).filter(qa => qa.unitId === currentUnitId);
-        console.log(`Loaded ${filteredEntries.length} QA entries from Excel for ${bookId}/${currentUnitId}`);
-        
-        // Pass the currentUnitId to the findMatchingQA function to filter by unit
-        const matchingQA = findMatchingQA(filename, currentUnitId);
-        
-        // Check if we found a matching question
-        if (matchingQA) {
-          console.log("✅ FOUND MATCH using enhanced JSON-based mapping for:", filename);
-          return {
-            country: formatText.determineCountry(filename),
-            question: matchingQA.question,
-            answer: matchingQA.answer,
-            hasData: true,
-            category: matchingQA.codePattern
-          };
-        } else {
-          console.log("❌ No match found using enhanced JSON-based mapping for:", filename);
-        }
-      }
-      
-      return null;
-    };
-    
-    const result = determineQA();
-    if (result) {
-      setQAData(result);
+    if (!material || !material.content) {
+      setQAData({ country: '', question: '', answer: '', hasData: false });
+      return;
     }
     
-    // Continue with the legacy approach only if we didn't find a match with the JSON approach
-    if (!result && excelData?.entries?.length > 0) {
-      // This gets executed in a separate function to avoid infinite loops
-      const processExcelData = () => {
-        // Get the filename
-        const filename = material.content;
-        const normalizedFilename = filename.toLowerCase();
+    // Don't load data if this Q&A is marked as deleted
+    if (isDeleted) {
+      return;
+    }
+    
+    // FIRST APPROACH: Try our enhanced JSON-based mapping (most reliable)
+    // This uses the improved pattern matching algorithms
+    if (!isLoadingJsonMappings && jsonMappings && Object.keys(jsonMappings).length > 0) {
+      console.log("Using enhanced JSON-based Q&A mapping system");
+      const filename = material.content;
+      
+      // Filter mappings by unitId if provided
+      const currentUnitId = unitId || '';
+      console.log(`Loaded ${Object.values(jsonMappings).filter(qa => qa.unitId === currentUnitId).length} QA entries from Excel for ${bookId}/${currentUnitId}`);
+      
+      // Pass the currentUnitId to the findMatchingQA function to filter by unit
+      const matchingQA = findMatchingQA(filename, currentUnitId);
+      
+      // Check if we found a matching question
+      if (matchingQA) {
+        console.log("✅ FOUND MATCH using enhanced JSON-based mapping for:", filename);
+        setQAData({
+          country: formatText.determineCountry(filename),
+          question: matchingQA.question,
+          answer: matchingQA.answer,
+          hasData: true,
+          category: matchingQA.codePattern
+        });
+        return;
+      } else {
+        console.log("❌ No match found using enhanced JSON-based mapping for:", filename);
+      }
+    }
+    
+    // SECOND APPROACH (LEGACY): Try to match with Excel data first (older method)
+    if (excelData?.entries?.length > 0) {
+      // Get the filename
+      const filename = material.content;
+      const normalizedFilename = filename.toLowerCase();
       
       // Helper functions
       const normalizeString = (str: string) => str.toLowerCase().replace(/\s+/g, ' ').trim();
@@ -1763,24 +1750,11 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       }
     }
     
-        // If we haven't found a match yet, fall back to the basic pattern matching logic
-        const processed = getQuestionAnswerFromData(material, unitId);
-        return processed;
-      };
-      
-      // Call our processing function and set the result
-      const excelResult = processExcelData();
-      if (excelResult) {
-        setQAData(excelResult);
-      }
-    }
-    
-    // If we still didn't find a match with either method, use the pattern-based approach
-    if (!result && material?.content) {
-      const processed = getQuestionAnswerFromData(material, unitId);
-      setQAData(processed);
-    }
-  }, [material?.content, excelData?.entries, jsonMappings, isLoadingJsonMappings, isDeleted, unitId, bookId]);
+    // Fall back to the basic pattern matching logic if no Excel match
+    // This section only extracts patterns from the filename, not hardcoded questions
+    const processed = getQuestionAnswerFromData(material, unitId);
+    setQAData(processed);
+  }, [material, excelData, jsonMappings, isLoadingJsonMappings, findMatchingQA, isDeleted]);
   
   const handleFlagQuestion = async () => {
     try {
