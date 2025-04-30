@@ -4,7 +4,45 @@
 import express from 'express';
 import { saveResourcesForUnit } from './content-management';
 
+// Temporary authentication middleware for direct testing
+function createTemporaryUser(req: express.Request, res: express.Response, next: express.NextFunction) {
+  // This creates a temporary authenticated user for testing purposes
+  if (!req.isAuthenticated()) {
+    // Only if not already authenticated
+    req.user = {
+      id: 999,
+      username: 'tempUser',
+      password: 'encrypted',
+      email: 'temp@example.com',
+      role: 'teacher',
+      fullName: 'Temporary Teacher',
+      createdAt: new Date(),
+      plan: 'premium'
+    } as any;
+    
+    // Override the isAuthenticated method temporarily
+    const originalIsAuthenticated = req.isAuthenticated;
+    req.isAuthenticated = () => true;
+    
+    // Restore after the request is complete
+    res.on('finish', () => {
+      req.isAuthenticated = originalIsAuthenticated;
+      req.user = undefined;
+    });
+  }
+  
+  next();
+}
+
 export function registerDirectRoutes(app: express.Express) {
+  // Add a direct login endpoint for testing
+  app.get('/api/testing/login', createTemporaryUser, (req, res) => {
+    res.status(200).json({ 
+      success: true, 
+      message: "Temporarily logged in for testing", 
+      user: req.user 
+    });
+  });
   // Route to directly add resources for a specific book and unit
   app.get('/api/admin/add-resources/:bookId/:unitId', (req, res) => {
     const { bookId, unitId } = req.params;

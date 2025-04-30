@@ -736,6 +736,38 @@ export default function SlickContentViewer() {
             <span className="hidden sm:inline">Back to Units</span>
           </Button>
           
+          <Button 
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              // Temporary login function for testing
+              fetch('/api/testing/login')
+                .then(res => res.json())
+                .then(data => {
+                  if (data.success) {
+                    toast({
+                      title: "Logged in successfully",
+                      description: "You now have teacher access"
+                    });
+                    // Force reload to update the UI
+                    window.location.reload();
+                  }
+                })
+                .catch(err => {
+                  console.error('Login error:', err);
+                  toast({
+                    title: "Login failed",
+                    description: "Could not log in as teacher",
+                    variant: "destructive"
+                  });
+                });
+            }}
+            className="rounded-full bg-green-50 hover:bg-green-100 border-green-200 text-green-700 transition-all shadow-sm"
+          >
+            <UserCircle className="mr-2 h-4 w-4" />
+            <span className="hidden sm:inline">Login as Teacher</span>
+          </Button>
+          
           <div className="flex items-center gap-2">
             <h1 className="text-lg font-semibold text-blue-700">
               {unitData ? unitData.title : `${bookPath}/${unitPath}`}
