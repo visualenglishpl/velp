@@ -149,6 +149,9 @@ export function registerDirectRoutes(app: express.Express) {
   app.get('/api/no-auth/book7/:unitId/resources', (req, res) => {
     const { unitId } = req.params;
     
+    // Debug 
+    console.log(`No-auth endpoint accessed: /api/no-auth/book7/${unitId}/resources`);
+    
     // Always set JSON content type to ensure proper client handling
     res.setHeader('Content-Type', 'application/json');
     
@@ -158,13 +161,19 @@ export function registerDirectRoutes(app: express.Express) {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     
     try {
+      // Debug log
+      console.log(`Checking for resources in book7Resources for unit ${unitId}`);
+      console.log(`Available units: ${Object.keys(book7Resources).join(', ')}`);
+      
       // Check if we have hardcoded resources for this unit
       if (book7Resources[unitId]) {
+        console.log(`Found ${book7Resources[unitId].length} resources for Book 7 Unit ${unitId}`);
         return res.status(200).json({
           success: true,
           resources: book7Resources[unitId]
         });
       } else {
+        console.log(`No resources found for Book 7 Unit ${unitId}`);
         // Return empty array for units without hardcoded resources
         return res.status(200).json({
           success: true,
