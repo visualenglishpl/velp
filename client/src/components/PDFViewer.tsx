@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, FileText, Loader2, ZoomIn, ZoomOut } from 'lucide-react';
 
 // Set up the worker for the PDF.js library
+// We'll use a CDN-hosted worker that works in most browsers
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 interface PDFViewerProps {
