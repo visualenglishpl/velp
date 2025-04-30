@@ -81,6 +81,20 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     embedCode: '',
   });
   
+  // Fetch teacher resources
+  const { data, isLoading, refetch } = useQuery<{ success: boolean, resources: TeacherResource[] }>({
+    queryKey: [`/api/direct/${bookId}/${unitId}/resources`],
+    queryFn: getQueryFn({ on401: "returnNull" }),
+  });
+  
+  // Set resources when data changes
+  useEffect(() => {
+    if (data && data.success && data.resources) {
+      console.log('Received resources data:', data.resources);
+      setCustomResources(data.resources);
+    }
+  }, [data]);
+  
   // Check if this is a special book/unit with predefined resources
   const isSpecialBookUnit = (bookId === '7' || bookId === '6') && 
     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId);

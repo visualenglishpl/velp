@@ -11,7 +11,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import QuestionAnswerDisplay from '@/components/QuestionAnswerDisplay';
-import TeacherResources from '@/components/TeacherResources';
+import TeacherResources from '@/components/TeacherResources.fixed';
 import { 
   DndContext, 
   DragEndEvent,
