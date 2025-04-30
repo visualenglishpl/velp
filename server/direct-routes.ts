@@ -35,6 +35,18 @@ function createTemporaryUser(req: express.Request, res: express.Response, next: 
 }
 
 export function registerDirectRoutes(app: express.Express) {
+  // Create a new endpoint for temporary login from the teacher resources page
+  app.post('/api/direct/temp-login', createTemporaryUser, (req, res) => {
+    res.status(200).json({ 
+      message: 'Logged in as teacher', 
+      user: { 
+        id: 999,
+        username: 'temp_teacher',
+        role: 'teacher'
+      } 
+    });
+  });
+  
   // Add a direct login endpoint for testing
   app.get('/api/testing/login', createTemporaryUser, (req, res) => {
     res.status(200).json({ 

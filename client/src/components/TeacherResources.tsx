@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image, PenLine, CheckCircle } from 'lucide-react';
+import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image, PenLine, CheckCircle, UserCircle } from 'lucide-react';
 import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
 
 export interface TeacherResource {
@@ -4297,11 +4297,39 @@ useEffect(() => {
     return <div className="py-8 text-center">Loading resources...</div>;
   }
 
+  // Add temporary login button function
+  const handleTempLogin = async () => {
+    try {
+      await apiRequest("POST", "/api/direct/temp-login", {});
+      toast({
+        title: "Logged in as teacher",
+        description: "You now have teacher access",
+      });
+      
+      // Refresh the resources
+      refetch();
+    } catch (error) {
+      toast({
+        title: "Login Failed",
+        description: "Could not log in as teacher",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold">Teacher Resources for Book {bookId}, Unit {unitId}</h2>
         <div className="flex items-center gap-3 self-end md:self-auto">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={handleTempLogin}
+            className="mr-2 whitespace-nowrap"
+          >
+            <UserCircle className="h-4 w-4 mr-2" /> Login as Teacher
+          </Button>
           {isEditMode ? (
             <>
               <Button onClick={() => setIsAdding(true)} className="bg-green-600 hover:bg-green-700">
