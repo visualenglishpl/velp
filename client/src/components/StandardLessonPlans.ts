@@ -1317,6 +1317,114 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
           url: "https://wordwall.net/resource/search?query=photography%20vocabulary"
         }
       ]
+    },
+    {
+      id: "book7-unit6-extension-lesson",
+      title: "Digital Photography and Sharing - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to digital photography and photo sharing",
+        "Discuss the impact of social media on photography",
+        "Practice giving and receiving feedback on photos",
+        "Create captions for photos using descriptive language"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 6 slides",
+        "Digital photography vocabulary handout",
+        "Sample social media posts with photos",
+        "Caption writing worksheet"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Social Media Photos",
+          duration: "5 mins",
+          description: "Begin by asking students about photo sharing on social media.",
+          instructions: [
+            "Ask students: 'Do you share photos on social media?'",
+            "Follow up with: 'What types of photos do you share online?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Get feedback from several students"
+          ],
+          teacherNotes: "This activates schema and creates context for the lesson on digital photography and sharing."
+        },
+        {
+          title: "Vocabulary Presentation: Digital Photography",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to digital photography and online sharing.",
+          materials: [
+            "Digital photography vocabulary handout",
+            "Book 7, Unit 6 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present digital photography terms: upload, filter, edit, share, etc.",
+            "Introduce social media photography terms: selfie, story, post, caption",
+            "Drill pronunciation of each term",
+            "Show examples of each concept",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Photo Caption Writing",
+          duration: "10 mins",
+          description: "Students practice writing captions for photos using descriptive language.",
+          materials: [
+            "Sample photos for captioning",
+            "Caption writing worksheet"
+          ],
+          instructions: [
+            "Explain the purpose of captions in photo sharing",
+            "Show examples of effective photo captions",
+            "Distribute photos for students to caption",
+            "Students write 1-2 sentence captions for each photo",
+            "Share some examples with the class"
+          ],
+          teacherNotes: "Encourage students to be creative but clear in their captions."
+        },
+        {
+          title: "Digital Photo Feedback Activity",
+          duration: "15 mins",
+          description: "Students simulate a social media environment, giving feedback on photos.",
+          materials: [
+            "Sample photos with captions",
+            "Feedback expression handout"
+          ],
+          instructions: [
+            "Introduce expressions for giving photo feedback: 'Great shot! The lighting is...'",
+            "Display 5-6 different photos with captions",
+            "Students work in small groups to discuss each photo",
+            "They write positive comments and suggestions for each photo",
+            "Groups share their feedback with the class"
+          ]
+        },
+        {
+          title: "Wrap-up: Digital Ethics",
+          duration: "5 mins",
+          description: "Brief discussion about digital photography ethics and etiquette.",
+          instructions: [
+            "Ask: 'What should you consider before sharing photos online?'",
+            "Discuss issues like permission, privacy, and appropriate content",
+            "Students complete: 'When I share photos, I always...'",
+            "Share several ideas with the class",
+            "Review key vocabulary from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students based on their caption writing skills and their ability to use appropriate digital photography vocabulary during the feedback activity.",
+      homeworkIdeas: [
+        "Create a mini photo essay of 3-5 photos with captions that tell a story.",
+        "Write a paragraph comparing traditional and digital photography."
+      ],
+      additionalResources: [
+        {
+          title: "Digital Photography Vocabulary",
+          url: "https://en.wikipedia.org/wiki/Glossary_of_digital_photography_terms"
+        },
+        {
+          title: "Photo Caption Writing Tips",
+          url: "https://grammar.yourdictionary.com/grammar/writing/how-to-write-good-captions-in-photojournalism.html"
+        }
+      ]
     }
   ],
   
@@ -1426,6 +1534,114 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
         {
           title: "Sports Quiz",
           url: "https://wordwall.net/resource/search?query=sports%20vocabulary"
+        }
+      ]
+    },
+    {
+      id: "book7-unit7-extension-lesson",
+      title: "Sports Rules and Competitions - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to sports rules and competitions",
+        "Understand and explain basic rules of common sports",
+        "Practice using imperatives for giving instructions",
+        "Develop speaking skills through commentary and explanation"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 7 slides",
+        "Sports rules flashcards or handouts",
+        "Competition vocabulary worksheet",
+        "Sports commentary video clips (optional)"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Sports Knowledge",
+          duration: "5 mins",
+          description: "Begin by asking students about their knowledge of sports rules.",
+          instructions: [
+            "Ask students: 'What sports do you know the rules for?'",
+            "Follow up with: 'What happens if a player breaks a rule?'",
+            "Have students share 1-2 basic rules from their favorite sports",
+            "Collect ideas from several students"
+          ],
+          teacherNotes: "This activates schema and creates context for the lesson on sports rules."
+        },
+        {
+          title: "Vocabulary Presentation: Rules and Competitions",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to sports rules and competitions.",
+          materials: [
+            "Competition vocabulary worksheet",
+            "Sports rules flashcards"
+          ],
+          instructions: [
+            "Introduce rule-related vocabulary: foul, penalty, referee, offside, etc.",
+            "Present competition vocabulary: tournament, championship, league, etc.",
+            "Drill pronunciation of each term",
+            "Demonstrate the meaning of each term with examples or gestures",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Sport Rules Explanation",
+          duration: "10 mins",
+          description: "Students practice explaining the basic rules of different sports.",
+          materials: [
+            "Sport rule cards for common sports",
+            "Visual aids showing sport situations"
+          ],
+          instructions: [
+            "Divide students into pairs",
+            "Give each pair a sport to focus on",
+            "They discuss and note down 3-5 basic rules of that sport",
+            "Practice using imperatives: 'Don't touch the ball with your hands in football'",
+            "Pairs take turns explaining their sport's rules to another pair"
+          ],
+          teacherNotes: "Focus on clear, simple explanations rather than complex rules."
+        },
+        {
+          title: "Sports Commentary Activity",
+          duration: "15 mins",
+          description: "Students practice providing sports commentary for imaginary or video sport scenarios.",
+          materials: [
+            "Short sports video clips (optional)",
+            "Commentary expression handout"
+          ],
+          instructions: [
+            "Introduce common phrases used in sports commentary",
+            "Show short sports video clips with sound off (or describe scenarios)",
+            "Students practice providing commentary in pairs",
+            "Focus on using present continuous and descriptive language",
+            "Have 2-3 pairs demonstrate their commentary to the class"
+          ]
+        },
+        {
+          title: "Wrap-up: Mini-Tournament Design",
+          duration: "5 mins",
+          description: "Students design a simple tournament structure for a class competition.",
+          instructions: [
+            "Discuss the concept of a tournament format",
+            "In small groups, students create a mini tournament plan",
+            "They decide: What sport? How many teams? What rules?",
+            "Share ideas with the class",
+            "Review key vocabulary from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their ability to explain sports rules clearly and their use of appropriate vocabulary during the commentary activity.",
+      homeworkIdeas: [
+        "Write rules for a made-up sport using at least 8 vocabulary items from the lesson.",
+        "Create a tournament bracket for a class competition in a sport of your choice."
+      ],
+      additionalResources: [
+        {
+          title: "Sports Rules Vocabulary",
+          url: "https://www.vocabulary.cl/Lists/Sports_Rules.htm"
+        },
+        {
+          title: "Sports Commentary Phrases",
+          url: "https://howdoyousay.net/sports-idioms-and-phrases/"
         }
       ]
     }
@@ -1539,6 +1755,113 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
           url: "https://wordwall.net/resource/search?query=hobbies%20vocabulary"
         }
       ]
+    },
+    {
+      id: "book7-unit8-extension-lesson",
+      title: "Hobby-Related Professions - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Connect hobbies to related professions or careers",
+        "Learn vocabulary related to turning hobbies into jobs",
+        "Practice discussing career aspirations related to interests",
+        "Express opinions about hobby-based businesses"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 8 slides",
+        "Hobby-profession matching cards",
+        "Career vocabulary handout",
+        "Success story examples of hobby-based careers"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Hobbies as Careers",
+          duration: "5 mins",
+          description: "Begin by asking students if they know anyone who turned a hobby into a job.",
+          instructions: [
+            "Ask students: 'Do you know anyone who turned their hobby into a job?'",
+            "Follow up with: 'What hobbies could become careers?'",
+            "Have students brainstorm ideas in pairs",
+            "Collect examples from several students"
+          ],
+          teacherNotes: "This activates schema and creates context for the connection between hobbies and careers."
+        },
+        {
+          title: "Vocabulary Presentation: Career Terms",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to careers and turning hobbies into professions.",
+          materials: [
+            "Career vocabulary handout",
+            "Success story examples"
+          ],
+          instructions: [
+            "Present career vocabulary: profession, career, business, entrepreneur, etc.",
+            "Show examples of hobby-related careers (photographer, chef, musician)",
+            "Drill pronunciation of each term",
+            "Discuss what skills are needed to turn a hobby into a career",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Hobby-Profession Matching",
+          duration: "10 mins",
+          description: "Students match hobbies with related professions and discuss connections.",
+          materials: [
+            "Hobby-profession matching cards",
+            "Book 7, Unit 8 slides (supplementary section)"
+          ],
+          instructions: [
+            "Divide students into small groups",
+            "Distribute hobby-profession matching cards",
+            "Groups match hobbies to related professions",
+            "They discuss what skills transfer from hobby to profession",
+            "Check answers and discuss as a class"
+          ],
+          teacherNotes: "Emphasize that many hobbies can lead to multiple career options."
+        },
+        {
+          title: "Career Planning Role Play",
+          duration: "15 mins",
+          description: "Students roleplay career advisor and client discussing hobby-based career options.",
+          materials: [
+            "Career advisor role cards",
+            "Client profile cards with hobby interests"
+          ],
+          instructions: [
+            "Divide students into pairs - advisor and client",
+            "Client has specific hobbies listed on their card",
+            "Advisor suggests possible careers based on these hobbies",
+            "Provide dialog prompts: 'Have you considered becoming a...?'",
+            "Have pairs switch roles halfway through"
+          ]
+        },
+        {
+          title: "Wrap-up: Ideal Hobby-Job",
+          duration: "5 mins",
+          description: "Students imagine their ideal job based on their interests or hobbies.",
+          instructions: [
+            "Students reflect on their own hobbies and interests",
+            "They complete: 'My ideal job would be... because I enjoy...'",
+            "Share several ideas with the class",
+            "Review key vocabulary and expressions from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the career planning role play and their ability to make logical connections between hobbies and careers.",
+      homeworkIdeas: [
+        "Research someone who turned their hobby into a successful career and write a short profile.",
+        "Create a simple business plan for a hobby-based business you might start someday."
+      ],
+      additionalResources: [
+        {
+          title: "Career Vocabulary",
+          url: "https://www.vocabulary.cl/Lists/Professions.htm"
+        },
+        {
+          title: "Entrepreneurship Resources",
+          url: "https://www.wikihow.com/Start-a-Business-Based-on-Your-Hobby"
+        }
+      ]
     }
   ],
   
@@ -1648,6 +1971,114 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
         {
           title: "Tourism and Travel Quiz",
           url: "https://wordwall.net/resource/search?query=travel%20vocabulary"
+        }
+      ]
+    },
+    {
+      id: "book7-unit9-extension-lesson",
+      title: "Cultural Etiquette While Traveling - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to cultural differences and customs",
+        "Understand basic etiquette for different countries",
+        "Practice asking for information about cultural norms",
+        "Develop awareness of respectful behavior when traveling"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 9 slides",
+        "Cultural etiquette cards for different countries",
+        "Etiquette role play scenarios",
+        "Cultural differences vocabulary handout"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Cultural Surprises",
+          duration: "5 mins",
+          description: "Begin by asking students about cultural differences they have experienced.",
+          instructions: [
+            "Ask students: 'Have you ever experienced cultural differences when traveling?'",
+            "Follow up with: 'What surprised you about another country's customs?'",
+            "Have students share brief examples in pairs",
+            "Collect a few interesting experiences from the class"
+          ],
+          teacherNotes: "This activates schema and creates context for cultural awareness while traveling."
+        },
+        {
+          title: "Vocabulary Presentation: Cultural Etiquette",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to cultural customs and etiquette.",
+          materials: [
+            "Cultural differences vocabulary handout",
+            "Book 7, Unit 9 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present etiquette vocabulary: customs, polite, rude, acceptable, taboo, etc.",
+            "Introduce phrases for asking about customs: 'Is it polite to...?'",
+            "Drill pronunciation of each term",
+            "Show examples of cultural differences (greetings, dining habits, etc.)",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Cultural Etiquette Matching",
+          duration: "10 mins",
+          description: "Students match cultural customs with their appropriate countries.",
+          materials: [
+            "Cultural etiquette cards for different countries",
+            "World map (optional)"
+          ],
+          instructions: [
+            "Divide students into small groups",
+            "Distribute sets of country cards and custom cards",
+            "Groups match customs to appropriate countries",
+            "Discuss reasons for each match",
+            "Check answers as a class and discuss any surprising customs"
+          ],
+          teacherNotes: "Emphasize that customs vary even within countries and cultures."
+        },
+        {
+          title: "Travel Etiquette Role Play",
+          duration: "15 mins",
+          description: "Students practice handling cultural situations through role play.",
+          materials: [
+            "Etiquette role play scenario cards",
+            "Props for different scenarios (optional)"
+          ],
+          instructions: [
+            "Divide students into pairs",
+            "Distribute scenario cards (dining, greeting, gift-giving, etc.)",
+            "Students practice appropriate cultural responses",
+            "Encourage using phrases like: 'I think we should... In this country, it's customary to...'",
+            "Have 2-3 pairs demonstrate their scenarios"
+          ]
+        },
+        {
+          title: "Wrap-up: Cultural Research",
+          duration: "5 mins",
+          description: "Students discuss how to research cultural etiquette before traveling.",
+          instructions: [
+            "Ask: 'How can you learn about a country's customs before visiting?'",
+            "Discuss different sources of information",
+            "Students complete: 'Before traveling to a new country, I should research...'",
+            "Share ideas with the class",
+            "Review key vocabulary and expressions from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the cultural etiquette role plays and their ability to demonstrate appropriate cultural awareness.",
+      homeworkIdeas: [
+        "Research three important customs or etiquette rules for a country you would like to visit.",
+        "Create a short guide to your country's customs for foreign visitors."
+      ],
+      additionalResources: [
+        {
+          title: "World Customs and Etiquette",
+          url: "https://www.ef.com/wwen/blog/language/customs-and-etiquette-around-the-world/"
+        },
+        {
+          title: "Cultural Awareness Quiz",
+          url: "https://wordwall.net/resource/search?query=cultural%20etiquette"
         }
       ]
     }
@@ -1761,6 +2192,113 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
           url: "https://wordwall.net/resource/search?query=technology%20vocabulary"
         }
       ]
+    },
+    {
+      id: "book7-unit10-extension-lesson",
+      title: "Internet Safety and Digital Citizenship - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to internet safety and online behavior",
+        "Understand basic principles of digital citizenship",
+        "Practice giving advice about safe online habits",
+        "Discuss potential problems and solutions related to internet use"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 10 slides",
+        "Internet safety vocabulary handout",
+        "Digital citizenship scenario cards",
+        "Online safety tips worksheet"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Online Time",
+          duration: "5 mins",
+          description: "Begin by asking students about their online activities and time spent online.",
+          instructions: [
+            "Ask students: 'How much time do you spend online each day?'",
+            "Follow up with: 'What do you usually do online?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Collect some responses from the class"
+          ],
+          teacherNotes: "This activates schema and creates context for the lesson on internet safety."
+        },
+        {
+          title: "Vocabulary Presentation: Internet Safety",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to internet safety and digital citizenship.",
+          materials: [
+            "Internet safety vocabulary handout",
+            "Book 7, Unit 10 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present safety vocabulary: password, privacy, personal information, phishing, etc.",
+            "Introduce digital citizenship concepts: respect, responsibility, safety",
+            "Drill pronunciation of each term",
+            "Explain the meaning of each concept with examples",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Online Safety Guidelines",
+          duration: "10 mins",
+          description: "Students discuss and learn basic guidelines for staying safe online.",
+          materials: [
+            "Online safety tips worksheet",
+            "Internet safety illustrations"
+          ],
+          instructions: [
+            "Present 5-6 key online safety rules with examples",
+            "Discuss why each rule is important",
+            "Students match safety tips with appropriate scenarios",
+            "Review answers as a class",
+            "Ask students to add any additional tips they know"
+          ],
+          teacherNotes: "Focus on age-appropriate safety concerns without causing unnecessary worry."
+        },
+        {
+          title: "Digital Citizenship Role Play",
+          duration: "15 mins",
+          description: "Students practice handling online scenarios responsibly.",
+          materials: [
+            "Digital citizenship scenario cards",
+            "Response suggestion prompts"
+          ],
+          instructions: [
+            "Divide students into small groups of 3-4",
+            "Distribute scenario cards with online dilemmas",
+            "Groups discuss appropriate responses to each scenario",
+            "Groups present their scenario and solution to the class",
+            "Class discusses if they agree with the solution"
+          ]
+        },
+        {
+          title: "Wrap-up: Personal Safety Plan",
+          duration: "5 mins",
+          description: "Students create a personal internet safety plan.",
+          instructions: [
+            "Students write 3 personal online safety rules they will follow",
+            "Encourage specific, actionable commitments",
+            "Have several students share their plans",
+            "Review key vocabulary and safety concepts from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the digital citizenship role play and their ability to articulate appropriate responses to online scenarios.",
+      homeworkIdeas: [
+        "Create a poster or infographic with 5 important internet safety tips.",
+        "Interview a family member about their online safety habits and write a short report."
+      ],
+      additionalResources: [
+        {
+          title: "Internet Safety for Kids",
+          url: "https://www.commonsensemedia.org/privacy-and-internet-safety"
+        },
+        {
+          title: "Digital Citizenship Games",
+          url: "https://www.digitalcitizenship.net/curriculum.html"
+        }
+      ]
     }
   ],
   
@@ -1870,6 +2408,113 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
         {
           title: "Professions Quiz",
           url: "https://wordwall.net/resource/search?query=jobs%20vocabulary"
+        }
+      ]
+    },
+    {
+      id: "book7-unit11-extension-lesson",
+      title: "Workplace Communication - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to workplace communication",
+        "Practice formal and informal communication styles",
+        "Develop email writing skills for professional contexts",
+        "Role play common workplace interactions"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 11 slides",
+        "Workplace communication vocabulary handout",
+        "Email template worksheet",
+        "Workplace scenario cards"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Communication Styles",
+          duration: "5 mins",
+          description: "Begin by discussing different communication styles in various contexts.",
+          instructions: [
+            "Ask students: 'How do you speak differently to friends versus teachers?'",
+            "Follow up with: 'How is workplace communication different from casual conversation?'",
+            "Have students discuss examples in pairs",
+            "Collect ideas from several students"
+          ],
+          teacherNotes: "This activates schema and creates context for formal workplace communication."
+        },
+        {
+          title: "Vocabulary Presentation: Workplace Communication",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to workplace communication.",
+          materials: [
+            "Workplace communication vocabulary handout",
+            "Book 7, Unit 11 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present communication vocabulary: meeting, deadline, report, supervisor, etc.",
+            "Introduce formal phrases: 'I would appreciate if you could.../I'm writing to request...'",
+            "Drill pronunciation of each term",
+            "Compare formal and informal expressions for the same requests",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Professional Email Writing",
+          duration: "10 mins",
+          description: "Students learn and practice writing professional emails.",
+          materials: [
+            "Email template worksheet",
+            "Sample professional emails"
+          ],
+          instructions: [
+            "Present the structure of a professional email (greeting, purpose, details, closing)",
+            "Discuss appropriate language and formality",
+            "Show examples of good professional emails",
+            "Students draft a short email based on a given scenario",
+            "Check some examples as a class"
+          ],
+          teacherNotes: "Focus on appropriate level of formality and clear communication."
+        },
+        {
+          title: "Workplace Communication Role Play",
+          duration: "15 mins",
+          description: "Students practice common workplace interactions through role play.",
+          materials: [
+            "Workplace scenario cards",
+            "Dialogue prompts"
+          ],
+          instructions: [
+            "Divide students into pairs",
+            "Distribute scenario cards (requesting time off, explaining a delay, etc.)",
+            "Students prepare and practice appropriate dialogues",
+            "Encourage use of formal language and polite expressions",
+            "Have 2-3 pairs demonstrate their scenarios"
+          ]
+        },
+        {
+          title: "Wrap-up: Communication Tips",
+          duration: "5 mins",
+          description: "Students compile tips for effective workplace communication.",
+          instructions: [
+            "In small groups, students create a list of 3-4 workplace communication tips",
+            "Groups share their tips with the class",
+            "Create a master list of the best communication tips",
+            "Review key vocabulary and phrases from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their email writing skills and their ability to use appropriate formal language in workplace role plays.",
+      homeworkIdeas: [
+        "Write a formal email to request information about a job or internship opportunity.",
+        "Create a dialogue between a boss and employee discussing a project deadline."
+      ],
+      additionalResources: [
+        {
+          title: "Business English Vocabulary",
+          url: "https://www.businessenglishresources.com/vocabulary-list/"
+        },
+        {
+          title: "Professional Email Writing Guide",
+          url: "https://owl.purdue.edu/owl/subject_specific_writing/professional_technical_writing/email_etiquette.html"
         }
       ]
     }
