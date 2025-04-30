@@ -2516,9 +2516,228 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
     }
   ],
   
-  // Unit 12: Shopping
+  // Unit 10: Sports (end)
+
+  // Unit 11: Natural Disasters
+  "11": [
+    {
+      id: "book7-unit11-main-lesson",
+      title: "Natural Disasters - 45-minute Lesson Plan",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to different natural disasters",
+        "Practice describing natural phenomena and their effects",
+        "Develop disaster preparedness awareness and vocabulary",
+        "Use past tense to discuss historical disasters"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 11 slides",
+        "Natural disaster flashcards",
+        "Disaster effects handout",
+        "Emergency preparedness worksheet"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Natural Phenomena",
+          duration: "5 mins",
+          description: "Begin by discussing different natural phenomena and disasters.",
+          instructions: [
+            "Show images of different natural disasters and ask: 'What is this?'",
+            "Elicit examples: earthquake, flood, hurricane, tornado, etc.",
+            "Ask follow-up: 'Have you ever experienced any of these?'",
+            "Have students briefly share any personal experiences"
+          ],
+          teacherNotes: "Be sensitive to students who may have experienced traumatic events related to natural disasters."
+        },
+        {
+          title: "Vocabulary Presentation: Natural Disasters",
+          duration: "10 mins",
+          description: "Introduce vocabulary for different types of natural disasters.",
+          materials: [
+            "Book 7, Unit 11 slides (first section)",
+            "Natural disaster flashcards"
+          ],
+          instructions: [
+            "Present disaster vocabulary: earthquake, flood, hurricane, tornado, tsunami, etc.",
+            "Explain the nature of each disaster: 'An earthquake is when the ground shakes.'",
+            "Introduce related verbs: shake, flood, destroy, damage, etc.",
+            "Drill pronunciation of each term",
+            "Have students match disasters with their definitions"
+          ]
+        },
+        {
+          title: "Effects of Natural Disasters",
+          duration: "10 mins",
+          description: "Students learn vocabulary to describe the effects of natural disasters.",
+          materials: [
+            "Disaster effects handout",
+            "Book 7, Unit 11 slides (middle section)"
+          ],
+          instructions: [
+            "Present vocabulary for disaster effects: damage, destroy, injure, evacuate, etc.",
+            "Show examples: 'The flood destroyed many houses.' 'People had to evacuate the area.'",
+            "Introduce weather-related vocabulary: heavy rain, strong winds, lightning, etc.",
+            "Students work in pairs to match disasters with their typical effects",
+            "Review answers as a class"
+          ],
+          teacherNotes: "Focus on factual information without being overly dramatic about the dangers."
+        },
+        {
+          title: "Emergency Preparedness Discussion",
+          duration: "15 mins",
+          description: "Students discuss emergency preparedness for different situations.",
+          materials: [
+            "Emergency preparedness worksheet",
+            "Book 7, Unit 11 slides (final section)"
+          ],
+          instructions: [
+            "Present emergency instructions vocabulary: 'stay indoors', 'evacuate', 'take shelter', etc.",
+            "Introduce emergency items: 'emergency kit', 'first aid kit', 'flashlight', 'radio', etc.",
+            "Show different disaster scenarios and ask: 'What should you do in this situation?'",
+            "Students work in small groups to complete the emergency preparedness worksheet",
+            "Each group presents one emergency situation and appropriate actions"
+          ]
+        },
+        {
+          title: "Wrap-up: Historical Disasters",
+          duration: "5 mins",
+          description: "Students learn about significant historical natural disasters.",
+          instructions: [
+            "Show information about famous natural disasters in history",
+            "Practice past tense: 'In 2004, a tsunami hit Southeast Asia.'",
+            "Ask students if they remember any major natural disasters",
+            "Review key vocabulary and safety concepts from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the emergency preparedness discussion and their ability to use disaster-related vocabulary correctly.",
+      homeworkIdeas: [
+        "Research a famous natural disaster and write 5-8 sentences about what happened.",
+        "Create a family emergency plan for one type of natural disaster."
+      ],
+      additionalResources: [
+        {
+          title: "Natural Disasters Vocabulary",
+          url: "https://www.englishclub.com/vocabulary/environment-natural-disasters.php"
+        },
+        {
+          title: "Emergency Preparedness Activities",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/natural%20disasters"
+        }
+      ]
+    },
+    {
+      id: "book7-unit11-extension-lesson",
+      title: "Climate Change and Extreme Weather - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to climate change and extreme weather",
+        "Practice using comparative and superlative forms to discuss changing weather patterns",
+        "Develop awareness of environmental issues",
+        "Create and present simple solutions for environmental protection"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 11 slides",
+        "Climate change vocabulary handout",
+        "Before/after environmental images",
+        "Environmental solutions worksheet"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Changing Weather",
+          duration: "5 mins",
+          description: "Begin by discussing changing weather patterns and climate.",
+          instructions: [
+            "Show images comparing past and present weather conditions",
+            "Ask students: 'How is the weather different now compared to the past?'",
+            "Elicit responses: hotter summers, stronger storms, less snow, etc.",
+            "Have students describe weather changes they've noticed in their lifetime"
+          ],
+          teacherNotes: "Keep the discussion factual and focused on observations rather than politics."
+        },
+        {
+          title: "Vocabulary Expansion: Climate Change",
+          duration: "10 mins",
+          description: "Introduce vocabulary related to climate change and extreme weather.",
+          materials: [
+            "Climate change vocabulary handout",
+            "Book 7, Unit 11 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present climate vocabulary: global warming, rising sea levels, drought, extreme weather, etc.",
+            "Show examples of each phenomenon with simple explanations",
+            "Introduce related verbs and adjectives: melt, rise, extreme, severe, etc.",
+            "Students match terms with definitions",
+            "Practice sentences: 'Global warming causes ice to melt.' 'Rising sea levels cause flooding.'"
+          ]
+        },
+        {
+          title: "Weather Comparison - Comparative and Superlative Forms",
+          duration: "10 mins",
+          description: "Students practice comparing weather conditions using comparative and superlative forms.",
+          materials: [
+            "Weather comparison chart",
+            "Before/after environmental images"
+          ],
+          instructions: [
+            "Review comparative forms: 'Summers are hotter than before.' 'There is less rain now.'",
+            "Review superlative forms: 'This was the hottest year on record.'",
+            "Show weather data from different time periods",
+            "Students practice making comparison sentences based on the data",
+            "Discuss which changes are most significant"
+          ],
+          teacherNotes: "Focus on correct formation of comparatives and superlatives with different adjective types."
+        },
+        {
+          title: "Environmental Protection Solutions",
+          duration: "15 mins",
+          description: "Students discuss environmental protection and disaster prevention measures.",
+          materials: [
+            "Environmental solutions worksheet",
+            "Solution category cards"
+          ],
+          instructions: [
+            "Present vocabulary for environmental solutions: reduce, reuse, recycle, conserve, etc.",
+            "Introduce categories: energy conservation, water conservation, waste reduction, etc.",
+            "Divide students into small groups with different solution categories",
+            "Groups brainstorm simple solutions related to their category",
+            "Each group presents their solutions to the class",
+            "Create a class 'green pledge' with the best ideas"
+          ]
+        },
+        {
+          title: "Wrap-up: Personal Impact",
+          duration: "5 mins",
+          description: "Students reflect on their personal impact on the environment.",
+          instructions: [
+            "Ask students: 'What can you do to help protect the environment?'",
+            "Have students complete the sentence: 'I can help by...'",
+            "Share several ideas with the class",
+            "Review key vocabulary and concepts from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their environmental solutions presentations and their ability to use comparative and superlative forms correctly.",
+      homeworkIdeas: [
+        "Create a poster about environmental protection with at least 5 tips.",
+        "Keep a 'green diary' for one day, noting all environmental actions taken."
+      ],
+      additionalResources: [
+        {
+          title: "Climate Vocabulary Guide",
+          url: "https://www.nationalgeographic.org/topics/climate-change/"
+        },
+        {
+          title: "Environmental ESL Activities",
+          url: "https://busyteacher.org/classroom_activities-vocabulary/environment-worksheets/"
+        }
+      ]
+    }
   ],
 
+  // Unit 12: Shopping
   "12": [
     {
       id: "book7-unit12-main-lesson",
