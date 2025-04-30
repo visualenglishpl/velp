@@ -241,22 +241,23 @@ const apiLimiter = rateLimit({
   message: { error: 'API rate limit exceeded, please try again later.' },
   // Store with additional client identifier tokens for better rate limiting
   keyGenerator: (req) => {
-    // Use combination of IP and user ID if authenticated
-    if (req.isAuthenticated() && req.user && req.user.id) {
+    // Use combination of IP and user ID if user is available
+    if (req.user?.id) {
       return `${req.ip}-user:${req.user.id}`;
     }
     return req.ip; // Fallback to IP address only
   },
   // Skip rate limiting for admin users
   skip: (req) => {
-    return req.isAuthenticated() && req.user && req.user.role === 'admin';
+    return req.user?.role === 'admin';
   } 
 });
 
 // Points-based rate limiting for premium content access
 const premiumContentPoints = {};
 const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.isAuthenticated() ? (req.user?.id || 'anonymous') : 'anonymous';
+  // Safe check for authentication - default to anonymous if auth is not set up
+  const userId = (req.user?.id || 'anonymous');
   const ip = req.ip;
   const key = `${userId}-${ip}`;
   
@@ -286,12 +287,13 @@ const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) 
   }
   
   // For authenticated premium users, reduce the cost
-  if (req.isAuthenticated() && req.user && req.user.subscription && req.user.subscription.isPremium) {
+  // Check if user exists and has premium subscription
+  if (req.user?.subscription?.isPremium) {
     pointCost = Math.max(1, Math.floor(pointCost / 2));
   }
   
   // For admin users, no cost
-  if (req.isAuthenticated() && req.user && req.user.role === 'admin') {
+  if (req.user?.role === 'admin') {
     pointCost = 0;
   }
   
