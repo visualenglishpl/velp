@@ -12,7 +12,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import QuestionAnswerDisplay from '@/components/QuestionAnswerDisplay';
 import TeacherResources from '@/components/TeacherResources.fixed';
-import HardcodedTeacherResources from '@/components/HardcodedTeacherResources';
+import DirectTeacherResources from '@/components/DirectTeacherResources';
 import { 
   DndContext, 
   DragEndEvent,
@@ -1404,11 +1404,10 @@ export default function SlickContentViewer() {
       
       {/* Teacher Resources Section */}
       <div className="max-w-6xl mx-auto px-4 pb-12">
-        {bookId === '7' && unitNumber ? (
-          <HardcodedTeacherResources 
-            bookId={bookId} 
+        {bookId === '7' ? (
+          <DirectTeacherResources 
+            bookId={bookId}
             unitId={unitNumber}
-            isEditMode={isEditMode}
           />
         ) : (
           <TeacherResources 
