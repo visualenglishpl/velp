@@ -2,7 +2,7 @@
  * Special direct routes for adding resources to the system
  */
 import express from 'express';
-import { saveResourcesForUnit } from './content-management';
+import { saveResourcesForUnit, getResourcesForUnit } from './content-management';
 
 // Temporary authentication middleware for direct testing
 function createTemporaryUser(req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -287,6 +287,45 @@ export function registerDirectRoutes(app: express.Express) {
       res.status(500).json({ 
         success: false, 
         error: `Server error: ${error.message}`
+      });
+    }
+  });
+  
+  // Route to get teacher resources for a specific book and unit
+  app.get('/api/direct/:bookId/:unitId/resources', createTemporaryUser, (req, res) => {
+    const { bookId, unitId } = req.params;
+    
+    // This endpoint should require authentication
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ 
+        success: false, 
+        error: 'Authentication required' 
+      });
+    }
+    
+    try {
+      // First check if we have any stored resources in memory/database
+      const storedResources = getResourcesForUnit(bookId, unitId);
+      
+      if (storedResources && storedResources.length > 0) {
+        // Return resources from storage
+        res.status(200).json({ 
+          success: true, 
+          resources: storedResources
+        });
+      } else {
+        // If no stored resources, check if we have hardcoded resources in TeacherResources.tsx
+        // For now, return empty array as those resources will be used client-side
+        res.status(200).json({ 
+          success: true, 
+          resources: []
+        });
+      }
+    } catch (error) {
+      console.error(`Error retrieving resources for Book ${bookId}, Unit ${unitId}:`, error);
+      res.status(500).json({ 
+        success: false, 
+        error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}`
       });
     }
   });
