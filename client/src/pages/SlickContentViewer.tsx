@@ -1404,10 +1404,10 @@ export default function SlickContentViewer() {
       
       {/* Teacher Resources Section */}
       <div className="max-w-6xl mx-auto px-4 pb-12">
-        {bookId === '7' ? (
+        {bookId === '7' && unitNumber ? (
           <HardcodedTeacherResources 
-            bookId={bookId || undefined} 
-            unitId={unitNumber || undefined}
+            bookId={bookId} 
+            unitId={unitNumber}
             isEditMode={isEditMode}
           />
         ) : (

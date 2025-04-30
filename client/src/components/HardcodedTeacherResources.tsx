@@ -27,7 +27,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import LessonPlanTemplate from "./LessonPlanTemplate";
+import SimpleLessonPlanDisplay, { SimpleLessonPlan } from "./SimpleLessonPlanDisplay";
 
 export interface LessonPlan {
   objectives: string[];
@@ -55,8 +55,8 @@ export interface TeacherResource {
 }
 
 interface HardcodedTeacherResourcesProps {
-  bookId?: string;
-  unitId?: string;
+  bookId: string;
+  unitId: string;
   isEditMode?: boolean;
 }
 
@@ -430,7 +430,7 @@ const HardcodedTeacherResources: React.FC<HardcodedTeacherResourcesProps> = ({
             
             <ScrollArea className="flex-1 p-6 overflow-auto">
               {selectedResource.resourceType === 'lesson' && selectedResource.lessonPlan ? (
-                <LessonPlanTemplate lessonPlan={selectedResource.lessonPlan} />
+                <SimpleLessonPlanDisplay lessonPlan={selectedResource.lessonPlan as SimpleLessonPlan} />
               ) : selectedResource.embedCode ? (
                 <div 
                   className="w-full" 
