@@ -2791,7 +2791,7 @@ useEffect(() => {
         {filteredResources.map((resource, index) => (
           <Card 
             key={resource.id || index} 
-            className="resource-card border shadow-sm hover:shadow-md transition-all"
+            className="resource-card"
           >
             <CardHeader className="pb-2">
               <div className="flex justify-between items-center">
@@ -2862,7 +2862,7 @@ useEffect(() => {
               )}
             </CardContent>
             
-            <CardFooter className="bg-muted/10 pt-3 pb-3 border-t">
+            <CardFooter>
               <div className="flex justify-between w-full">
                 {/* Resource action buttons in a horizontal group */}
                 <div className="button-group">
