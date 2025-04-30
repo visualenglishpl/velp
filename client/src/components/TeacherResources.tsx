@@ -8,8 +8,9 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image, PenLine, CheckCircle } from 'lucide-react';
+import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image, PenLine, CheckCircle, Maximize2 } from 'lucide-react';
 import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
+import PDFViewer from '@/components/PDFViewer';
 
 export interface TeacherResource {
   id?: string;
@@ -71,6 +72,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const [editingResource, setEditingResource] = useState<TeacherResource | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<TeacherResource | null>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [viewingPdf, setViewingPdf] = useState<TeacherResource | null>(null);
   const [newResource, setNewResource] = useState<TeacherResource>({
     bookId,
     unitId,
