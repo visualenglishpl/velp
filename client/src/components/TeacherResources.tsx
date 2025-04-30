@@ -394,14 +394,14 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/kNw8V_Fkw28?si=9Zl2x1mjJ3wRpYZ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
         },
         {
-          id: "book7-unit2-lesson1",
+          id: "book7-unit2-video1",
           bookId,
           unitId,
           title: "Tattoos & Piercings Worksheet",
-          resourceType: "lesson" as const,
+          resourceType: "video" as const,
           provider: "British Council",
           sourceUrl: "https://learnenglishteens.britishcouncil.org/study-break/youtubers/tattoos-piercings",
-          embedCode: ""
+          embedCode: "<iframe width=\"560\" height=\"315\" src=\"https://learnenglishteens.britishcouncil.org/study-break/youtubers/tattoos-piercings\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
         }
       ];
     }
