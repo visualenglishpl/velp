@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { FileText, Users, School, BookOpen, Settings, LogOut, ShoppingBag, Flag, FileSpreadsheet, RefreshCw, Loader2 } from "lucide-react";
+import { FileText, Users, BookOpen, Settings, LogOut, ShoppingBag, Flag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-import ExcelQAProcessor from "@/components/ExcelQAProcessor";
 
 const AdminDashboard = () => {
   const { user, logoutMutation } = useAuth();
@@ -117,24 +115,6 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            {/* School Management Card */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-green-50 rounded-md mr-4">
-                  <School className="h-6 w-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">School Management</h3>
-                  <p className="text-sm text-gray-500">Register and manage schools and their licenses</p>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button className="w-full py-2 bg-gray-400 text-white hover:bg-gray-500 border-0" disabled>
-                  Coming Soon
-                </Button>
-              </div>
-            </div>
-
             {/* Content Management Card */}
             <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
               <div className="flex items-start mb-4">
@@ -215,55 +195,6 @@ const AdminDashboard = () => {
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <Button className="w-full py-2 bg-gray-400 text-white hover:bg-gray-500 border-0" disabled>
                   Coming Soon
-                </Button>
-              </div>
-            </div>
-            
-            {/* Excel QA Processor */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-teal-50 rounded-md mr-4">
-                  <FileSpreadsheet className="h-6 w-6 text-teal-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">Excel Q&A Processor</h3>
-                  <p className="text-sm text-gray-500">Process Excel files for automated Q&A mapping</p>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <ExcelQAProcessor />
-              </div>
-            </div>
-            
-            {/* Teacher Resources Update */}
-            <div className="bg-white rounded-md shadow-sm p-6 border border-gray-100">
-              <div className="flex items-start mb-4">
-                <div className="p-2 bg-cyan-50 rounded-md mr-4">
-                  <RefreshCw className="h-6 w-6 text-cyan-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">Teacher Resources</h3>
-                  <p className="text-sm text-gray-500">Update videos and games for all units from source files</p>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <Button 
-                  className="w-full py-2 text-white hover:bg-opacity-90 border-0"
-                  style={{ backgroundColor: '#0891b2' }}
-                  onClick={updateTeacherResources}
-                  disabled={isUpdatingResources}
-                >
-                  {isUpdatingResources ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Updating Resources...
-                    </>
-                  ) : (
-                    <>
-                      <RefreshCw className="mr-2 h-4 w-4" />
-                      Update Teacher Resources
-                    </>
-                  )}
                 </Button>
               </div>
             </div>
