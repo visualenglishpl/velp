@@ -126,7 +126,30 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Fetch teacher resources
   const { data, isLoading, refetch } = useQuery<{ success: boolean, resources: TeacherResource[] }>({
     queryKey: [`/api/direct/${bookId}/${unitId}/resources`],
-    queryFn: getQueryFn({ on401: "returnNull" }),
+    queryFn: async () => {
+      try {
+        const response = await fetch(`/api/direct/${bookId}/${unitId}/resources`, {
+          credentials: "include",
+          headers: {
+            "Accept": "application/json",
+          }
+        });
+        
+        // Check content type before trying to parse as JSON
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          return await response.json();
+        } else {
+          // If not JSON, this is unexpected but we'll handle it
+          const text = await response.text();
+          console.warn('Received non-JSON response:', text);
+          return { success: false, resources: [] };
+        }
+      } catch (error) {
+        console.error('Failed to fetch resources:', error);
+        return { success: false, resources: [] };
+      }
+    },
   });
   
   // Set resources when data changes
@@ -1727,18 +1750,37 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Add temporary login button function
   const handleTempLogin = async () => {
     try {
-      await apiRequest("POST", "/api/direct/temp-login", {});
-      toast({
-        title: "Logged in as teacher",
-        description: "You now have teacher access",
+      console.log("Attempting temporary login...");
+      const response = await fetch("/api/direct/temp-login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       
-      // Refresh the resources
-      refetch();
+      if (response.ok) {
+        toast({
+          title: "Logged in as teacher",
+          description: "You now have teacher access",
+        });
+        
+        // Refresh the resources
+        refetch();
+      } else {
+        const errorText = await response.text();
+        console.error("Login failed:", errorText);
+        toast({
+          title: "Login Failed",
+          description: "Could not log in as teacher. See console for details.",
+          variant: "destructive"
+        });
+      }
     } catch (error) {
+      console.error("Login error:", error);
       toast({
         title: "Login Failed",
-        description: "Could not log in as teacher",
+        description: "Could not log in as teacher: " + (error instanceof Error ? error.message : String(error)),
         variant: "destructive"
       });
     }
