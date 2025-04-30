@@ -12,6 +12,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import QuestionAnswerDisplay from '@/components/QuestionAnswerDisplay';
 import TeacherResources from '@/components/TeacherResources.fixed';
+import HardcodedTeacherResources from '@/components/HardcodedTeacherResources';
 import { 
   DndContext, 
   DragEndEvent,
@@ -1403,11 +1404,19 @@ export default function SlickContentViewer() {
       
       {/* Teacher Resources Section */}
       <div className="max-w-6xl mx-auto px-4 pb-12">
-        <TeacherResources 
-          bookId={bookId || undefined} 
-          unitId={unitNumber || undefined}
-          isEditMode={isEditMode}
-        />
+        {bookId === '7' ? (
+          <HardcodedTeacherResources 
+            bookId={bookId || undefined} 
+            unitId={unitNumber || undefined}
+            isEditMode={isEditMode}
+          />
+        ) : (
+          <TeacherResources 
+            bookId={bookId || undefined} 
+            unitId={unitNumber || undefined}
+            isEditMode={isEditMode}
+          />
+        )}
       </div>
       
       {/* Slide Removal Confirmation Dialog */}
