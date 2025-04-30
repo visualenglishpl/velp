@@ -79,9 +79,9 @@ const ResourceCard = ({ resource, onEdit, onDelete, isEditMode }: {
         )}
         {resource.resourceType === 'lesson' && resource.lessonPlan && (
           <div className="mb-2">
-            <p className="text-sm mb-2"><strong>Level:</strong> {resource.lessonPlan.level}</p>
-            <p className="text-sm mb-2"><strong>Duration:</strong> {resource.lessonPlan.duration}</p>
-            <p className="text-sm"><strong>Objectives:</strong> {resource.lessonPlan.objectives.slice(0, 2).join(', ')}{resource.lessonPlan.objectives.length > 2 ? '...' : ''}</p>
+            <p className="text-sm mb-2"><strong>Level:</strong> {resource.lessonPlan?.level}</p>
+            <p className="text-sm mb-2"><strong>Duration:</strong> {resource.lessonPlan?.duration}</p>
+            <p className="text-sm"><strong>Objectives:</strong> {resource.lessonPlan?.objectives?.slice(0, 2).join(', ')}{resource.lessonPlan?.objectives?.length > 2 ? '...' : ''}</p>
           </div>
         )}
       </CardContent>
@@ -93,11 +93,19 @@ const ResourceCard = ({ resource, onEdit, onDelete, isEditMode }: {
             </a>
           </Button>
         )}
-        {resource.resourceType === 'lesson' && resource.lessonPlan && (
-          <Button variant="outline" size="sm" onClick={() => window.open(`/lesson-plan/${resource.lessonPlan.id}`, '_blank')}>
+        {resource.resourceType === 'lesson' && resource.lessonPlan ? (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => {
+              if (resource.lessonPlan?.id) {
+                window.open(`/lesson-plan/${resource.lessonPlan.id}`, '_blank');
+              }
+            }}
+          >
             <Printer className="h-4 w-4 mr-2" /> Print Lesson
           </Button>
-        )}
+        ) : null}
       </CardFooter>
     </Card>
   );
@@ -159,6 +167,29 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       setCustomResources(data.resources);
     }
   }, [data]);
+  
+  // Define specific cases for resource loading
+  const isBook7Unit9 = bookId === '7' && unitId === '9';
+  
+  // Load the predefined resources for Book 7 Unit 9 immediately on component mount
+  useEffect(() => {
+    if (isBook7Unit9) {
+      const jobResources = [
+        {
+          id: "book7-unit9-video1",
+          bookId: '7',
+          unitId: '9',
+          title: "Types of Jobs - Wordwall Game",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/10037807/types-jobs",
+          embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/97b3979a70a54b17a193a2d9c85f1d40?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+      setResources(jobResources);
+      console.log("Loaded predefined resources for Book 7 Unit 9:", jobResources);
+    }
+  }, [isBook7Unit9, bookId, unitId]);
   
   // Check if this is a special book/unit with predefined resources
   const isSpecialBookUnit = (bookId === '7' || bookId === '6') && 
