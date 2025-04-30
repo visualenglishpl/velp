@@ -360,6 +360,73 @@ export function registerDirectRoutes(app: express.Express) {
     }
   });
 
+  // Endpoint to serve image assets
+  app.get('/api/direct/:bookId/:unitId/assets/:filename', (req, res) => {
+    const { bookId, unitId, filename } = req.params;
+    
+    // Set content type based on file extension
+    const extension = filename.split('.').pop()?.toLowerCase();
+    let contentType = 'application/octet-stream';
+    
+    if (extension === 'png') contentType = 'image/png';
+    else if (extension === 'jpg' || extension === 'jpeg') contentType = 'image/jpeg';
+    else if (extension === 'gif') contentType = 'image/gif';
+    else if (extension === 'pdf') contentType = 'application/pdf';
+    
+    res.set({
+      'Content-Type': contentType,
+      'Cache-Control': 'public, max-age=86400'
+    });
+    
+    // For testing, we'll send a test image instead of fetching from S3
+    // In a production environment, this would fetch from S3 or another storage
+    
+    // Use a placeholder image for testing
+    const fs = require('fs');
+    const path = require('path');
+    
+    try {
+      // Try to find an image in the public directory
+      const publicImgPath = path.join(process.cwd(), 'public', 'placeholder.png');
+      const staticImgPath = path.join(process.cwd(), 'test_images', 'test.png');
+      const generatedIconPath = path.join(process.cwd(), 'generated-icon.png');
+      
+      // Check which file exists and serve it
+      if (fs.existsSync(publicImgPath)) {
+        return res.sendFile(publicImgPath);
+      } else if (fs.existsSync(staticImgPath)) {
+        return res.sendFile(staticImgPath);
+      } else if (fs.existsSync(generatedIconPath)) {
+        return res.sendFile(generatedIconPath);
+      } else {
+        // If no image is found, create a simple colored rectangle
+        const { createCanvas } = require('canvas');
+        const canvas = createCanvas(400, 300);
+        const ctx = canvas.getContext('2d');
+        
+        // Fill with a gradient
+        const gradient = ctx.createLinearGradient(0, 0, 400, 300);
+        gradient.addColorStop(0, '#4F46E5');
+        gradient.addColorStop(1, '#7C3AED');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 400, 300);
+        
+        // Add some text
+        ctx.font = '24px Arial';
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${bookId} - ${unitId}`, 200, 120);
+        ctx.fillText(filename, 200, 160);
+        
+        const buffer = canvas.toBuffer('image/png');
+        res.send(buffer);
+      }
+    } catch (error) {
+      console.error('Error serving image:', error);
+      res.status(500).send('Error generating image');
+    }
+  });
+
   // Special no-auth endpoint for Book 7 resources
   app.get('/api/no-auth/book7/:unitId/resources', (req, res) => {
     const { unitId } = req.params;
