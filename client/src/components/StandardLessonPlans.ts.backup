@@ -3613,7 +3613,13 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
       ]
     }
   ]
-};
+          instructions: [
+            "Play the video once all the way through",
+            "Play again, pausing after each section to discuss the foods shown",
+            "Have students mark on their worksheets which foods they recognize or would like to try"
+          ],
+          teacherNotes: "This video provides authentic examples and pronunciation of food vocabulary."
+        },
         {
           title: "Guided Practice: Food Matching Activity",
           duration: "15 mins",
