@@ -118,7 +118,7 @@ export function registerContentEndpoints(app: Express) {
   });
 
   // API endpoint to get teacher resources for a specific book and unit
-  app.get("/api/direct/:bookId/:unitId/resources", isAuthenticated, (req, res) => {
+  app.get("/api/direct/:bookId/:unitId/resources", (req, res) => {
     try {
       const { bookId, unitId } = req.params;
       

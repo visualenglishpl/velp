@@ -310,7 +310,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   };
 
   // Fetch teacher resources
-  const { data, isLoading, refetch } = useQuery<TeacherResource[]>({
+  const { data, isLoading, refetch } = useQuery<{ success: boolean, resources: TeacherResource[] }>({
     queryKey: [`/api/direct/${bookId}/${unitId}/resources`],
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
@@ -2225,19 +2225,24 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   // First useEffect to update customResources when data changes
 useEffect(() => {
-    if (data && Array.isArray(data)) {
-      // For special book units, the data from the server is the custom user-added resources
-      // That need to be preserved and combined with the predefined resources
-      if (isSpecialBookUnit) {
-        setCustomResources(data);
+    if (data) {
+      // Check if data is the new format with { success, resources } structure
+      const resourcesData = data.resources ? data.resources : data;
+      
+      if (Array.isArray(resourcesData)) {
+        // For special book units, the data from the server is the custom user-added resources
+        // That need to be preserved and combined with the predefined resources
+        if (isSpecialBookUnit) {
+          setCustomResources(resourcesData);
+        } else {
+          // For regular units, just set the resources directly
+          setResources(resourcesData);
+        }
       } else {
-        // For regular units, just set the resources directly
-        setResources(data);
+        // Handle case where data is not an array
+        console.warn('Resources data is not an array:', resourcesData);
+        isSpecialBookUnit ? setCustomResources([]) : setResources([]);
       }
-    } else if (data) {
-      // Handle case where data is not an array
-      console.warn('Resources data is not an array:', data);
-      isSpecialBookUnit ? setCustomResources([]) : setResources([]);
     }
   }, [data, isSpecialBookUnit]);
 
