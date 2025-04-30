@@ -212,6 +212,51 @@ export function registerDirectRoutes(app: express.Express) {
       });
     }
   });
+  
+  // Special debug endpoint for materials that returns a strict JSON response
+  app.get('/api/direct/:bookId/:unitId/materials', (req, res) => {
+    const { bookId, unitId } = req.params;
+    
+    // Important: Set headers early and consistently
+    res.set({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'X-Content-Type-Options': 'nosniff'
+    });
+    
+    try {
+      // Log the request for debugging
+      console.log(`Materials endpoint accessed: /api/direct/${bookId}/${unitId}/materials`);
+      
+      // Create a dummy response for testing - we'll replace with actual data later
+      const materials = [
+        {
+          id: 1001,
+          unitId: 101,
+          title: `Test Material for ${bookId}/${unitId}`,
+          contentType: "IMAGE",
+          content: "test-image.png",
+          orderIndex: 1,
+          isPublished: true,
+          isLocked: false,
+          order: 1,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ];
+      
+      // Use res.json() to ensure proper content type
+      return res.status(200).json(materials);
+    } catch (error) {
+      console.error(`Error in materials endpoint for ${bookId}/${unitId}:`, error);
+      return res.status(500).json({
+        success: false,
+        error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}`
+      });
+    }
+  });
 
   // Special no-auth endpoint for Book 7 resources
   app.get('/api/no-auth/book7/:unitId/resources', (req, res) => {
