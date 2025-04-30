@@ -330,14 +330,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       }
     }
     
-    // If resources are found for this unit, use them
-    if (unitResources.length > 0) {
-      console.log(`Loaded ${unitResources.length} predefined resources for Book ${bookId}, Unit ${unitId}:`, unitResources);
-      setResources(unitResources);
-    } else {
-      console.log(`No predefined resources for Book ${bookId}, Unit ${unitId}`);
-      // Clear resources if there are none for this unit
-      setResources([]);
+    // For any other book/unit combinations where we don't have hardcoded resources,
+    // the component will use the API data if available, or show empty state
+    if (hardcodedResources.length === 0) {
+      console.log(`No hardcoded resources available for Book ${bookId}, Unit ${unitId}. Will use API data if available.`);
     }
   }, [bookId, unitId]);
   
