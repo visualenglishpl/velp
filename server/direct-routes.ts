@@ -171,56 +171,67 @@ export function registerDirectRoutes(app: express.Express) {
   
   // Special debug endpoint for Book 7 Unit 9 resources
   app.get('/api/debug/book7-unit9', (req, res) => {
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    // Important: Set headers early and consistently
+    res.set({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'X-Content-Type-Options': 'nosniff'
+    });
     
-    // Set cache control headers
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-    
-    // Return hardcoded game data for testing
-    const resources = [
-      {
-        id: "book7-unit9-game1",
-        bookId: "7",
-        unitId: "9",
-        title: "Types of Jobs - Wordwall Game",
-        resourceType: "game",
-        provider: "Wordwall",
-        sourceUrl: "https://wordwall.net/resource/10037807/types-jobs",
-        embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/97b3979a70a54b17a193a2d9c85f1d40?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-      }
-    ];
-    
-    res.status(200).send(JSON.stringify({
-      success: true,
-      resources,
-      message: "Debug endpoint for Book 7 Unit 9 resources"
-    }));
+    try {
+      // Log request for debugging
+      console.log('Debug endpoint accessed: /api/debug/book7-unit9');
+      
+      // Return hardcoded game data for testing
+      const resources = [
+        {
+          id: "book7-unit9-game1", 
+          bookId: "7",
+          unitId: "9",
+          title: "Types of Jobs - Wordwall Game",
+          resourceType: "game",
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/10037807/types-jobs",
+          embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/97b3979a70a54b17a193a2d9c85f1d40?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+      
+      // Use res.json() instead of manually stringifying to ensure proper content type
+      return res.status(200).json({
+        success: true,
+        resources,
+        message: "Debug endpoint for Book 7 Unit 9 resources"
+      });
+    } catch (error) {
+      console.error('Error in debug endpoint:', error);
+      return res.status(500).json({
+        success: false,
+        error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}`
+      });
+    }
   });
 
   // Special no-auth endpoint for Book 7 resources
   app.get('/api/no-auth/book7/:unitId/resources', (req, res) => {
     const { unitId } = req.params;
     
-    // Debug 
-    console.log(`No-auth endpoint accessed: /api/no-auth/book7/${unitId}/resources`);
-    
-    // IMPORTANT: Set strict content type header before any other operations
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    
-    // CORS headers to ensure proper client access
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    
-    // Cache control headers to prevent caching issues
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+    // Important: Set headers early and consistently
+    res.set({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'X-Content-Type-Options': 'nosniff',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
     
     try {
-      // Debug log
+      // Debug logs
+      console.log(`No-auth endpoint accessed: /api/no-auth/book7/${unitId}/resources`);
       console.log(`Checking for resources in book7Resources for unit ${unitId}`);
       console.log(`Available units: ${Object.keys(book7Resources).join(', ')}`);
       
@@ -228,25 +239,27 @@ export function registerDirectRoutes(app: express.Express) {
       if (book7Resources[unitId]) {
         console.log(`Found ${book7Resources[unitId].length} resources for Book 7 Unit ${unitId}`);
         
-        // Send JSON response directly
-        return res.status(200).send(JSON.stringify({
+        // Use res.json() instead of manually stringifying to ensure proper content type
+        return res.status(200).json({
           success: true,
           resources: book7Resources[unitId]
-        }));
+        });
       } else {
         console.log(`No resources found for Book 7 Unit ${unitId}`);
+        
         // Return empty array for units without hardcoded resources
-        return res.status(200).send(JSON.stringify({
+        return res.status(200).json({
           success: true,
           resources: []
-        }));
+        });
       }
     } catch (error) {
       console.error(`Error retrieving Book 7 Unit ${unitId} resources:`, error);
-      return res.status(500).send(JSON.stringify({
+      
+      return res.status(500).json({
         success: false,
         error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}`
-      }));
+      });
     }
   });
   // Route to directly add resources for a specific book and unit
