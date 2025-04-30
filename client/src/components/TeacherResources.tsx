@@ -4263,23 +4263,15 @@ useEffect(() => {
         open={!!viewingPdf} 
         onOpenChange={(open) => !open && setViewingPdf(null)}
       >
-        <DialogContent className="max-w-7xl w-[95vw] max-h-[95vh] overflow-hidden">
+        <DialogContent className="max-w-3xl w-[90vw] max-h-[90vh] overflow-hidden">
           <DialogHeader>
-            <DialogTitle className="flex items-center justify-between">
-              <span>{viewingPdf?.title}</span>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="ml-auto" 
-                onClick={() => viewingPdf?.fileUrl && window.open(viewingPdf.fileUrl, '_blank')}
-              >
-                <ExternalLink className="h-4 w-4 mr-2" /> Open in New Tab
-              </Button>
+            <DialogTitle className="text-center mb-4">
+              {viewingPdf?.title}
             </DialogTitle>
           </DialogHeader>
-          <div className="flex-1 overflow-hidden relative min-h-[75vh] w-full">
+          <div className="flex-1 overflow-auto mx-auto">
             {viewingPdf?.fileUrl && (
-              <PDFViewer pdfUrl={viewingPdf.fileUrl} title={viewingPdf.title} />
+              <PDFViewer pdfUrl={viewingPdf.fileUrl} />
             )}
           </div>
         </DialogContent>

@@ -211,7 +211,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="flex flex-col items-center mx-auto" style={{ maxWidth: '600px' }}>
       {title && <h3 className="text-lg font-medium mb-2">{title}</h3>}
       
       {!useFallback && (
@@ -260,28 +260,30 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         </div>
       )}
       
-      <div className="w-full overflow-auto border rounded-md p-2 bg-white min-h-[700px] max-h-[80vh] flex items-center justify-center">
+      <div className="w-full overflow-auto border rounded-md p-2 bg-white min-h-[500px] max-h-[600px] flex items-center justify-center shadow-md">
         {loading && !useFallback && (
-          <div className="flex flex-col items-center justify-center p-8">
-            <Loader2 className="h-12 w-12 text-primary/60 animate-spin mb-4" />
+          <div className="flex flex-col items-center justify-center p-4">
+            <Loader2 className="h-10 w-10 text-primary/60 animate-spin mb-2" />
             <p className="text-sm text-muted-foreground">Loading PDF...</p>
           </div>
         )}
         
         {error && !useFallback && (
-          <div className="flex flex-col items-center justify-center p-8">
-            <FileText className="h-12 w-12 text-destructive/60 mb-4" />
+          <div className="flex flex-col items-center justify-center p-4">
+            <FileText className="h-10 w-10 text-destructive/60 mb-2" />
             <p className="text-sm text-destructive">{error}</p>
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-2 mt-2">
               <Button 
                 variant="outline"
                 onClick={handleError}
+                size="sm"
               >
                 Use Simple Viewer
               </Button>
               <Button 
                 variant="link"
                 onClick={() => window.open(proxyUrl, '_blank')}
+                size="sm"
               >
                 Open in new tab
               </Button>
@@ -290,42 +292,34 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         )}
         
         {!useFallback && (
-          <div className="flex justify-center overflow-auto w-full" 
-               style={{ display: loading || error ? 'none' : 'flex' }}>
-            <canvas ref={canvasRef} className="shadow-md"></canvas>
+          <div className="flex justify-center overflow-auto" 
+               style={{ display: loading || error ? 'none' : 'flex', maxWidth: '100%' }}>
+            <canvas ref={canvasRef} className="shadow-md max-w-full"></canvas>
           </div>
         )}
 
         {useFallback && (
-          <div className="w-full h-[80vh] max-w-full">
+          <div className="w-full h-[500px]">
             <iframe 
               src={proxyUrl} // Use the proxy URL instead of direct S3 URL
               className="w-full h-full border-0"
               title={title || "PDF Document"}
               sandbox="allow-scripts allow-same-origin allow-forms"
               loading="lazy"
-              style={{ width: '100%', minWidth: '100%', maxWidth: '100%' }}
             />
           </div>
         )}
       </div>
 
       <div className="mt-4 flex gap-2">
-        {useFallback && (
-          <Button 
-            variant="outline" 
-            onClick={retryWithPdfJs}
-          >
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Try Interactive Viewer
-          </Button>
-        )}
         <Button 
           variant="outline" 
           onClick={() => window.open(proxyUrl, '_blank')}
+          size="sm"
+          className="mx-auto"
         >
           <ExternalLink className="mr-2 h-4 w-4" />
-          Open in New Tab
+          Download PDF
         </Button>
       </div>
     </div>
