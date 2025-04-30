@@ -168,15 +168,20 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
   }, [data]);
   
-  // Define specific cases for resource loading
-  const isBook7Unit9 = bookId === '7' && unitId === '9';
-  
-  // Load the predefined resources for Book 7 Unit 9 immediately on component mount
+  // Directly manage all resources without relying on API
   useEffect(() => {
-    if (isBook7Unit9) {
-      const jobResources = [
+    // Book-specific resource detection
+    const isBook7 = bookId === '7';
+    const isBook6 = bookId === '6';
+    
+    // Define resources based on book and unit
+    let unitResources: TeacherResource[] = [];
+    
+    // Book 7, Unit 9 - Jobs
+    if (isBook7 && unitId === '9') {
+      unitResources = [
         {
-          id: "book7-unit9-video1",
+          id: "book7-unit9-game1",
           bookId: '7',
           unitId: '9',
           title: "Types of Jobs - Wordwall Game",
@@ -186,10 +191,133 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/97b3979a70a54b17a193a2d9c85f1d40?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
-      setResources(jobResources);
-      console.log("Loaded predefined resources for Book 7 Unit 9:", jobResources);
     }
-  }, [isBook7Unit9, bookId, unitId]);
+    
+    // Book 7, Unit 1 - Film genres
+    if (isBook7 && unitId === '1') {
+      unitResources = [
+        {
+          id: "book7-unit1-video1",
+          bookId: '7',
+          unitId: '1',
+          title: "Movie Genres Vocabulary Epic ESL Guessing Game",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=FTuQIwl7j3k",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FTuQIwl7j3k?si=wh3So_Qj8Hqk6TL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit1-video2",
+          bookId: '7',
+          unitId: '1',
+          title: "Describing and Rating Films - Oxford Online English",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=S5XkM_6j4p4",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/S5XkM_6j4p4?si=QvzMkxQl5FUYVwxJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit1-game1",
+          bookId: '7',
+          unitId: '1',
+          title: "Movie & Film Genres - Wordwall Game",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/17566456/movies-film-genres",
+          embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/0e3ddce1b4b54f92a65a0c702db44271?themeId=23&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit1-lesson1",
+          bookId: '7',
+          unitId: '1',
+          title: "Movie Genres Lesson Plan",
+          resourceType: "lesson" as const,
+          provider: "Visual English",
+          lessonPlan: movieGenresLessonPlan
+        }
+      ];
+    }
+    
+    // Book 7, Unit 11 - Natural Disasters
+    if (isBook7 && unitId === '11') {
+      unitResources = [
+        {
+          id: "book7-unit11-video1",
+          bookId: '7',
+          unitId: '11',
+          title: "CG Animated Short Film about Climate change",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=dKP08GCh4d4",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/dKP08GCh4d4?si=NYAjQpwGFz-VsDxH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit11-game1",
+          bookId: '7',
+          unitId: '11',
+          title: "Natural Disasters Vocabulary Game",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/8518517/natural-disasters",
+          embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/f71ec9e2c30d4499b9e0fb0ba5c91a70?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit11-lesson1",
+          bookId: '7',
+          unitId: '11',
+          title: "Natural Disasters Lesson Plan",
+          resourceType: "lesson" as const,
+          provider: "Visual English",
+          lessonPlan: naturalDisastersLessonPlan
+        }
+      ];
+    }
+
+    // Book 7, Unit 6 - Money
+    if (isBook7 && unitId === '6') {
+      unitResources = [
+        {
+          id: "book7-unit6-video1",
+          bookId: '7',
+          unitId: '6',
+          title: "Learn English: Money from 1p to 50 Pounds",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/watch?v=RrXNezFLWSI",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/RrXNezFLWSI?si=CJsKkDLw0TpfUfm7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit6-lesson1",
+          bookId: '7',
+          unitId: '6',
+          title: "Money and Currency Lesson Plan",
+          resourceType: "lesson" as const,
+          provider: "Visual English",
+          lessonPlan: moneyLessonPlan
+        },
+        {
+          id: "book7-unit6-game1",
+          bookId: '7',
+          unitId: '6',
+          title: "Currency and Money Terms - Vocabulary Quiz",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/38051887/currency-and-money-terms",
+          embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/bfcb61f5f6cf4493a2c879aba9b12b9a?themeId=48&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+    
+    // If resources are found for this unit, use them
+    if (unitResources.length > 0) {
+      console.log(`Loaded ${unitResources.length} predefined resources for Book ${bookId}, Unit ${unitId}:`, unitResources);
+      setResources(unitResources);
+    } else {
+      console.log(`No predefined resources for Book ${bookId}, Unit ${unitId}`);
+      // Clear resources if there are none for this unit
+      setResources([]);
+    }
+  }, [bookId, unitId]);
   
   // Check if this is a special book/unit with predefined resources
   const isSpecialBookUnit = (bookId === '7' || bookId === '6') && 
