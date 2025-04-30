@@ -244,7 +244,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         </div>
       )}
       
-      <div className="w-full overflow-auto border rounded-md p-2 bg-white min-h-[700px] flex items-center justify-center">
+      <div className="w-full overflow-auto border rounded-md p-2 bg-white min-h-[700px] max-h-[80vh] flex items-center justify-center">
         {loading && !useFallback && (
           <div className="flex flex-col items-center justify-center p-8">
             <Loader2 className="h-12 w-12 text-primary/60 animate-spin mb-4" />
@@ -281,13 +281,14 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         )}
 
         {useFallback && (
-          <div className="w-full h-[700px]">
+          <div className="w-full h-[80vh] max-w-full">
             <iframe 
               src={proxyUrl} // Use the proxy URL instead of direct S3 URL
               className="w-full h-full border-0"
               title={title || "PDF Document"}
               sandbox="allow-scripts allow-same-origin allow-forms"
               loading="lazy"
+              style={{ width: '100%', minWidth: '100%', maxWidth: '100%' }}
             />
           </div>
         )}

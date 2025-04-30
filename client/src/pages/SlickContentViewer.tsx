@@ -1370,7 +1370,7 @@ export default function SlickContentViewer() {
       </div>
       
       {/* Teacher Resources Section */}
-      <div className="max-w-6xl mx-auto px-4 pb-12">
+      <div className="max-w-full w-full mx-auto px-4 pb-12">
         <TeacherResources 
           bookId={bookId || undefined} 
           unitId={unitNumber || undefined}
