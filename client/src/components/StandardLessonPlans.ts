@@ -1426,663 +1426,664 @@ export const book7LessonPlans: Record<string, LessonPlan[]> = {
   ],
   
   // Unit 7: Sports
+  // Unit 7: DIY Projects
   "7": [
     {
       id: "book7-unit7-main-lesson",
-      title: "Sports and Activities - 45-minute Lesson Plan",
+      title: "DIY Projects - 45-minute Lesson Plan",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Identify and name different sports and sporting equipment",
-        "Express preferences about sports using target structures",
-        "Ask and answer questions about sporting activities",
-        "Discuss benefits of different sports"
+        "Learn vocabulary related to DIY projects and tools",
+        "Practice using 'can' to talk about abilities",
+        "Describe simple DIY projects and procedures",
+        "Express preferences about DIY activities"
       ],
       materials: [
         "Visual English Book 7, Unit 7 slides",
-        "Sports flashcards or images",
-        "Sports equipment pictures",
-        "Sports survey handout"
+        "DIY tool flashcards",
+        "Craft materials for simple in-class DIY project",
+        "Handout with DIY vocabulary and expressions"
       ],
       steps: [
         {
-          title: "Warm-up: Sports Experience",
+          title: "Warm-up: DIY Experiences",
           duration: "5 mins",
-          description: "Begin by asking students about their experiences with sports.",
+          description: "Begin by asking students about their DIY experiences and interests.",
           instructions: [
-            "Ask students: 'Do you play any sports?'",
-            "Follow up with: 'What's your favorite sport to watch?'",
+            "Ask students: 'Can you make things yourself at home?'",
+            "Follow up with: 'What can you make?'",
             "Have students discuss in pairs for 1-2 minutes",
             "Get feedback from several students"
           ],
-          teacherNotes: "This activates schema and creates context for the main lesson on sports."
+          teacherNotes: "This activates schema and creates context for the main lesson on DIY projects."
         },
         {
-          title: "Vocabulary Presentation: Sports",
+          title: "Vocabulary Presentation: DIY Tools and Materials",
           duration: "10 mins",
-          description: "Introduce vocabulary for different sports and equipment.",
+          description: "Introduce vocabulary for common DIY tools and materials.",
           materials: [
             "Book 7, Unit 7 slides (first section)",
-            "Sports flashcards"
+            "DIY tool flashcards"
           ],
           instructions: [
-            "Display slides showing different sports (football, tennis, swimming, etc.)",
-            "For each sport, ask: 'What sport is this?'",
-            "Drill pronunciation of each sport name",
-            "Introduce equipment used in each sport",
+            "Display slides showing different DIY tools (hammer, screwdriver, scissors, glue, etc.)",
+            "For each tool, ask: 'What is this? What can you do with it?'",
+            "Drill pronunciation of each term",
+            "Practice short sentences: 'You can use a hammer to hit a nail.'",
             "Have students repeat and practice the vocabulary"
           ]
         },
         {
-          title: "Sports Preferences Practice",
+          title: "Can You DIY? - Ability Expressions",
           duration: "10 mins",
-          description: "Students practice expressing sports preferences.",
+          description: "Students practice using 'can' to talk about DIY abilities.",
           materials: [
             "Book 7, Unit 7 slides (middle section)",
-            "Sports survey handout"
+            "DIY ability worksheet"
           ],
           instructions: [
-            "Review expressions: 'I enjoy playing/I'm good at/I find...difficult'",
-            "Demonstrate how to express sports preferences",
-            "Students complete a sports survey with a partner",
-            "Ask questions about different sports",
-            "Check some responses as a class"
+            "Present the structure: 'Can you...?' 'Yes, I can.' / 'No, I can't.'",
+            "Show examples of DIY activities: 'Can you fix a broken chair?'",
+            "Students work in pairs asking and answering about DIY abilities",
+            "Focus on proper intonation for questions and short answers",
+            "Have pairs share some of their answers with the class"
           ],
-          teacherNotes: "Encourage students to give reasons for their preferences."
+          teacherNotes: "Emphasize the difference between general ability and specific skills."
         },
         {
-          title: "Sports Recommendation Role Play",
+          title: "Simple DIY Project Instructions",
           duration: "15 mins",
-          description: "Students practice recommending sports based on preferences.",
+          description: "Students learn to follow and give simple DIY instructions.",
           materials: [
-            "Book 7, Unit 7 slides (final section)",
-            "Role play cards with different personas"
+            "Simple craft materials (paper, glue, scissors, etc.)",
+            "Step-by-step instruction cards",
+            "Book 7, Unit 7 slides (final section)"
           ],
           instructions: [
-            "Divide students into pairs - advisor and client",
-            "Client has specific goals (get fit, make friends, etc.)",
-            "Advisor recommends suitable sports",
-            "Provide dialog prompts: 'What kind of sport are you looking for?'",
-            "Have 2-3 pairs demonstrate their conversations"
+            "Review sequencing words: 'First', 'Then', 'Next', 'Finally'",
+            "Show a simple DIY project example from the slides",
+            "Distribute materials for a simple paper craft project",
+            "Give instructions step by step, having students follow along",
+            "Students then describe what they did using sequencing words",
+            "Have 2-3 students demonstrate their completed projects"
           ]
         },
         {
-          title: "Wrap-up: Sports Benefits",
+          title: "Wrap-up: DIY Project Ideas",
           duration: "5 mins",
-          description: "Students discuss the benefits of their favorite sports.",
+          description: "Students share DIY project ideas they would like to try.",
           instructions: [
-            "Students think about benefits of their favorite sport",
-            "They complete: '[Sport] is good for...'",
+            "Ask students: 'What DIY project would you like to try at home?'",
+            "They complete the sentence: 'I would like to make/build/create...'",
             "Share several ideas with the class",
             "Review key vocabulary and expressions from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their participation in the sports recommendation role play and their ability to express sports preferences using the target structures.",
+      assessmentTips: "Assess students through their participation in the DIY project activity and their ability to use DIY vocabulary and 'can' structures correctly.",
       homeworkIdeas: [
-        "Write a paragraph about your favorite sport, describing what equipment is needed and why you enjoy it.",
-        "Create a poster advertising a sport you think more people should try."
+        "Complete a simple DIY project at home and take a photo or write instructions.",
+        "Create a list of 5 DIY projects they can do and 5 they cannot do yet."
       ],
       additionalResources: [
         {
-          title: "Sports Vocabulary",
-          url: "https://www.vocabulary.cl/Lists/Sports.htm"
+          title: "DIY Vocabulary Quiz",
+          url: "https://wordwall.net/resource/search?query=DIY%20vocabulary"
         },
         {
-          title: "Sports Quiz",
-          url: "https://wordwall.net/resource/search?query=sports%20vocabulary"
+          title: "Simple DIY Projects for ESL Students",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/DIY"
         }
       ]
     },
     {
       id: "book7-unit7-extension-lesson",
-      title: "Sports Rules and Competitions - 45-minute Extension Lesson",
+      title: "DIY Home Improvement - 45-minute Extension Lesson",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Learn vocabulary related to sports rules and competitions",
-        "Understand and explain basic rules of common sports",
-        "Practice using imperatives for giving instructions",
-        "Develop speaking skills through commentary and explanation"
+        "Expand vocabulary related to home improvement and DIY projects",
+        "Practice giving and following detailed instructions",
+        "Develop speaking skills through project planning and presentation",
+        "Use imperative forms for giving instructions"
       ],
       materials: [
         "Visual English Book 7, Unit 7 slides",
-        "Sports rules flashcards or handouts",
-        "Competition vocabulary worksheet",
-        "Sports commentary video clips (optional)"
+        "Home improvement vocabulary handout",
+        "Project planning worksheet",
+        "Sample DIY instruction manuals"
       ],
       steps: [
         {
-          title: "Warm-up: Sports Knowledge",
+          title: "Warm-up: Home Improvement",
           duration: "5 mins",
-          description: "Begin by asking students about their knowledge of sports rules.",
+          description: "Begin by asking students about home improvement projects.",
           instructions: [
-            "Ask students: 'What sports do you know the rules for?'",
-            "Follow up with: 'What happens if a player breaks a rule?'",
-            "Have students share 1-2 basic rules from their favorite sports",
-            "Collect ideas from several students"
+            "Ask students: 'Have you ever improved or fixed something in your home?'",
+            "Follow up with: 'What was the most difficult DIY project you've done?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Collect some examples from the class"
           ],
-          teacherNotes: "This activates schema and creates context for the lesson on sports rules."
+          teacherNotes: "This connects students' personal experiences with the lesson topic."
         },
         {
-          title: "Vocabulary Presentation: Rules and Competitions",
+          title: "Vocabulary Expansion: Home Improvement",
           duration: "10 mins",
-          description: "Introduce vocabulary related to sports rules and competitions.",
+          description: "Introduce vocabulary for home improvement and DIY projects.",
           materials: [
-            "Competition vocabulary worksheet",
-            "Sports rules flashcards"
+            "Home improvement vocabulary handout",
+            "Book 7, Unit 7 slides (supplementary section)"
           ],
           instructions: [
-            "Introduce rule-related vocabulary: foul, penalty, referee, offside, etc.",
-            "Present competition vocabulary: tournament, championship, league, etc.",
-            "Drill pronunciation of each term",
-            "Demonstrate the meaning of each term with examples or gestures",
-            "Have students repeat and practice the vocabulary"
+            "Present vocabulary: paint, renovate, repair, decorate, install, etc.",
+            "Show before and after pictures of home improvement projects",
+            "Explain room-specific vocabulary (kitchen, bathroom, living room improvements)",
+            "Have students match DIY verbs with rooms and objects",
+            "Practice short sentences: 'I painted the walls in my bedroom.'"
           ]
         },
         {
-          title: "Sport Rules Explanation",
+          title: "Giving Instructions - Imperative Forms",
           duration: "10 mins",
-          description: "Students practice explaining the basic rules of different sports.",
+          description: "Students practice using imperatives for giving DIY instructions.",
           materials: [
-            "Sport rule cards for common sports",
-            "Visual aids showing sport situations"
+            "Sample DIY instruction manuals",
+            "Imperative verb handout"
           ],
           instructions: [
-            "Divide students into pairs",
-            "Give each pair a sport to focus on",
-            "They discuss and note down 3-5 basic rules of that sport",
-            "Practice using imperatives: 'Don't touch the ball with your hands in football'",
-            "Pairs take turns explaining their sport's rules to another pair"
+            "Review imperative form: 'Cut the paper.' 'Don't use too much glue.'",
+            "Look at examples from real DIY instructions",
+            "Focus on sequence markers: 'First, cut the fabric. Then, fold it in half.'",
+            "Students transform statements into instructions",
+            "Practice giving clear, concise instructions for common tasks"
           ],
-          teacherNotes: "Focus on clear, simple explanations rather than complex rules."
+          teacherNotes: "Emphasize that English instructions often use direct imperative forms."
         },
         {
-          title: "Sports Commentary Activity",
+          title: "DIY Project Planning Activity",
           duration: "15 mins",
-          description: "Students practice providing sports commentary for imaginary or video sport scenarios.",
+          description: "Students plan and present a simple DIY project.",
           materials: [
-            "Short sports video clips (optional)",
-            "Commentary expression handout"
+            "Project planning worksheet",
+            "Visual aids showing various DIY projects"
           ],
           instructions: [
-            "Introduce common phrases used in sports commentary",
-            "Show short sports video clips with sound off (or describe scenarios)",
-            "Students practice providing commentary in pairs",
-            "Focus on using present continuous and descriptive language",
-            "Have 2-3 pairs demonstrate their commentary to the class"
+            "Divide students into small groups",
+            "Each group chooses a simple DIY project (e.g., photo frame, bookshelf, decorated box)",
+            "Using the worksheet, groups list materials needed and step-by-step instructions",
+            "Encourage use of imperative forms and sequence markers",
+            "Each group presents their project plan to the class",
+            "Other students ask questions about the process"
           ]
         },
         {
-          title: "Wrap-up: Mini-Tournament Design",
+          title: "Wrap-up: DIY Troubleshooting",
           duration: "5 mins",
-          description: "Students design a simple tournament structure for a class competition.",
+          description: "Students discuss common DIY problems and solutions.",
           instructions: [
-            "Discuss the concept of a tournament format",
-            "In small groups, students create a mini tournament plan",
-            "They decide: What sport? How many teams? What rules?",
-            "Share ideas with the class",
-            "Review key vocabulary from the lesson"
+            "Show pictures of common DIY problems (crooked shelf, paint drips, etc.)",
+            "Ask: 'What went wrong? How can you fix it?'",
+            "Elicit solutions using 'should' and 'need to'",
+            "Review key imperative expressions and vocabulary from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their ability to explain sports rules clearly and their use of appropriate vocabulary during the commentary activity.",
+      assessmentTips: "Assess students through their DIY project planning and presentation, focusing on clear instructions and appropriate vocabulary.",
       homeworkIdeas: [
-        "Write rules for a made-up sport using at least 8 vocabulary items from the lesson.",
-        "Create a tournament bracket for a class competition in a sport of your choice."
+        "Create a step-by-step guide for a DIY project with pictures or drawings.",
+        "Find a 'DIY fail' online and write instructions on how to do it correctly."
       ],
       additionalResources: [
         {
-          title: "Sports Rules Vocabulary",
-          url: "https://www.vocabulary.cl/Lists/Sports_Rules.htm"
+          title: "Home Improvement Vocabulary",
+          url: "https://www.eslbuzz.com/useful-tools-and-home-improvement-vocabulary-in-english/"
         },
         {
-          title: "Sports Commentary Phrases",
-          url: "https://howdoyousay.net/sports-idioms-and-phrases/"
+          title: "DIY Project Instructions Writing Guide",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/instructions"
         }
       ]
     }
-  ],
-  
-  // Unit 8: Hobbies
+  // Unit 8: Art and Creativity
   "8": [
     {
       id: "book7-unit8-main-lesson",
-      title: "Hobbies and Free Time - 45-minute Lesson Plan",
+      title: "Are You Artsy - 45-minute Lesson Plan",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Identify and name different hobbies and free-time activities",
-        "Express preferences about hobbies using target structures",
-        "Ask and answer questions about free time",
-        "Discuss benefits of different hobbies"
+        "Learn vocabulary related to art forms and artistic activities",
+        "Practice using adjectives to describe artwork and artistic skills",
+        "Discuss art preferences and talents",
+        "Express opinions about different types of art"
       ],
       materials: [
         "Visual English Book 7, Unit 8 slides",
-        "Hobby flashcards or images",
-        "Free time activities questionnaire",
-        "Hobby description cards"
+        "Art form flashcards",
+        "Famous artwork images",
+        "Art vocabulary handout",
+        "Basic art supplies for mini-activity"
       ],
       steps: [
         {
-          title: "Warm-up: Free Time",
+          title: "Warm-up: Art Experiences",
           duration: "5 mins",
-          description: "Begin by asking students about their free time activities.",
+          description: "Begin by asking students about their art experiences and interests.",
           instructions: [
-            "Ask students: 'What do you do in your free time?'",
-            "Follow up with: 'How often do you do your hobby?'",
+            "Ask students: 'Are you artsy? Do you enjoy making art?'",
+            "Follow up with: 'What kind of art do you like?'",
             "Have students discuss in pairs for 1-2 minutes",
             "Get feedback from several students"
           ],
-          teacherNotes: "This activates schema and creates context for the main lesson on hobbies."
+          teacherNotes: "This activates schema and creates context for the main lesson on art and creativity."
         },
         {
-          title: "Vocabulary Presentation: Hobbies",
+          title: "Vocabulary Presentation: Art Forms",
           duration: "10 mins",
-          description: "Introduce vocabulary for different hobbies and free-time activities.",
+          description: "Introduce vocabulary for different art forms and artistic activities.",
           materials: [
             "Book 7, Unit 8 slides (first section)",
-            "Hobby flashcards"
+            "Art form flashcards"
           ],
           instructions: [
-            "Display slides showing different hobbies (painting, gardening, cooking, etc.)",
-            "For each hobby, ask: 'What activity is this?'",
-            "Drill pronunciation of each hobby name",
-            "Discuss what each hobby involves",
+            "Display slides showing different art forms (painting, sculpture, photography, etc.)",
+            "For each art form, ask: 'What is this type of art called?'",
+            "Introduce related verbs: 'to paint', 'to draw', 'to sculpt', etc.",
+            "Drill pronunciation of each term",
             "Have students repeat and practice the vocabulary"
           ]
         },
         {
-          title: "Hobby Preferences Practice",
+          title: "Art Appreciation and Description",
           duration: "10 mins",
-          description: "Students practice expressing preferences about hobbies.",
+          description: "Students learn to describe and express opinions about artwork.",
           materials: [
-            "Book 7, Unit 8 slides (middle section)",
-            "Free time activities questionnaire"
+            "Famous artwork images",
+            "Art vocabulary handout",
+            "Book 7, Unit 8 slides (middle section)"
           ],
           instructions: [
-            "Review expressions: 'I'm interested in/I enjoy/I'm keen on'",
-            "Demonstrate how to express hobby preferences",
-            "Students complete questionnaire with a partner",
-            "Ask: 'What kind of hobbies do you enjoy?'",
-            "Check some responses as a class"
+            "Present adjectives for describing art: beautiful, colorful, abstract, realistic, etc.",
+            "Show images of famous artworks from different styles",
+            "Model describing an artwork: 'This is a colorful abstract painting.'",
+            "Practice opinion expressions: 'I think it's interesting.' 'I don't like it.'",
+            "Students work in pairs describing and giving opinions on different artworks"
           ],
-          teacherNotes: "Encourage students to use frequency adverbs (often, sometimes, rarely)."
+          teacherNotes: "Emphasize that art appreciation is subjective and opinions can vary."
         },
         {
-          title: "Hobby Fair Role Play",
+          title: "Are You Artsy? - Discussing Artistic Abilities",
           duration: "15 mins",
-          description: "Students simulate a hobby fair, presenting and discussing hobbies.",
+          description: "Students discuss their artistic abilities and preferences.",
           materials: [
-            "Hobby description cards",
+            "Basic art supplies (colored pencils, paper)",
+            "Question prompts",
             "Book 7, Unit 8 slides (final section)"
           ],
           instructions: [
-            "Give each student a hobby to present at the 'fair'",
-            "They prepare a brief presentation about the hobby",
-            "Students circulate, asking questions about each others' hobbies",
-            "Provide dialog prompts: 'What equipment do you need for this hobby?'",
-            "Have 2-3 students present their hobbies to the whole class"
+            "Present the structure: 'Are you good at...?' 'Yes, I am.' / 'No, I'm not.'",
+            "Show examples of artistic activities: 'Are you good at drawing?'",
+            "Distribute art supplies for a quick sketch activity",
+            "Students draw a simple object or scene (2-3 minutes)",
+            "In groups, students ask and answer about their artistic skills",
+            "Groups share some of their artwork and discuss their abilities"
           ]
         },
         {
-          title: "Wrap-up: New Hobby",
+          title: "Wrap-up: Art in Our Lives",
           duration: "5 mins",
-          description: "Students choose a new hobby they would like to try.",
+          description: "Students discuss how art is part of everyday life.",
           instructions: [
-            "Based on the hobby fair, students select a new hobby to try",
-            "They complete: 'I would like to try... because...'",
-            "Share several ideas with the class",
+            "Ask students: 'Where do you see art in your daily life?'",
+            "Discuss examples: street art, advertisements, decorations, etc.",
+            "Have students complete the sentence: 'Art is important because...'",
             "Review key vocabulary and expressions from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their participation in the hobby fair role play and their ability to express preferences using the target structures.",
+      assessmentTips: "Assess students through their participation in the art description activities and their ability to use art vocabulary correctly.",
       homeworkIdeas: [
-        "Write a paragraph about your favorite hobby, describing what you need and how often you do it.",
-        "Interview a family member about their hobbies and write 5-7 sentences about it."
+        "Create a simple artwork and write 5-8 sentences describing it.",
+        "Find an interesting piece of art (online or in a book) and prepare a short presentation about it."
       ],
       additionalResources: [
         {
-          title: "Hobbies Vocabulary",
-          url: "https://www.vocabulary.cl/Lists/Hobbies.htm"
+          title: "Art Vocabulary",
+          url: "https://www.englishclub.com/vocabulary/art.php"
         },
         {
-          title: "Free Time Activities Quiz",
-          url: "https://wordwall.net/resource/search?query=hobbies%20vocabulary"
+          title: "Art Appreciation Activity",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/art%20appreciation"
         }
       ]
     },
     {
       id: "book7-unit8-extension-lesson",
-      title: "Hobby-Related Professions - 45-minute Extension Lesson",
+      title: "Exploring Artistic Expression - 45-minute Extension Lesson",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Connect hobbies to related professions or careers",
-        "Learn vocabulary related to turning hobbies into jobs",
-        "Practice discussing career aspirations related to interests",
-        "Express opinions about hobby-based businesses"
+        "Expand vocabulary related to artistic styles and techniques",
+        "Practice describing the creative process",
+        "Learn about different artists and their work",
+        "Develop speaking skills through art interpretation"
       ],
       materials: [
         "Visual English Book 7, Unit 8 slides",
-        "Hobby-profession matching cards",
-        "Career vocabulary handout",
-        "Success story examples of hobby-based careers"
+        "Artist biography cards",
+        "Artistic styles handout",
+        "Art interpretation worksheet",
+        "Examples of different artistic styles"
       ],
       steps: [
         {
-          title: "Warm-up: Hobbies as Careers",
+          title: "Warm-up: Artistic Styles",
           duration: "5 mins",
-          description: "Begin by asking students if they know anyone who turned a hobby into a job.",
+          description: "Begin by exposing students to different artistic styles.",
           instructions: [
-            "Ask students: 'Do you know anyone who turned their hobby into a job?'",
-            "Follow up with: 'What hobbies could become careers?'",
-            "Have students brainstorm ideas in pairs",
-            "Collect examples from several students"
+            "Show images representing different artistic styles (impressionism, cubism, pop art, etc.)",
+            "Ask students: 'Which style do you like best? Why?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Collect some preferences from the class"
           ],
-          teacherNotes: "This activates schema and creates context for the connection between hobbies and careers."
+          teacherNotes: "This introduces the concept that art comes in many styles and forms."
         },
         {
-          title: "Vocabulary Presentation: Career Terms",
+          title: "Vocabulary Expansion: Artistic Styles and Techniques",
           duration: "10 mins",
-          description: "Introduce vocabulary related to careers and turning hobbies into professions.",
+          description: "Introduce vocabulary for artistic styles, movements, and techniques.",
           materials: [
-            "Career vocabulary handout",
-            "Success story examples"
-          ],
-          instructions: [
-            "Present career vocabulary: profession, career, business, entrepreneur, etc.",
-            "Show examples of hobby-related careers (photographer, chef, musician)",
-            "Drill pronunciation of each term",
-            "Discuss what skills are needed to turn a hobby into a career",
-            "Have students repeat and practice the vocabulary"
-          ]
-        },
-        {
-          title: "Hobby-Profession Matching",
-          duration: "10 mins",
-          description: "Students match hobbies with related professions and discuss connections.",
-          materials: [
-            "Hobby-profession matching cards",
+            "Artistic styles handout",
             "Book 7, Unit 8 slides (supplementary section)"
           ],
           instructions: [
-            "Divide students into small groups",
-            "Distribute hobby-profession matching cards",
-            "Groups match hobbies to related professions",
-            "They discuss what skills transfer from hobby to profession",
-            "Check answers and discuss as a class"
-          ],
-          teacherNotes: "Emphasize that many hobbies can lead to multiple career options."
-        },
-        {
-          title: "Career Planning Role Play",
-          duration: "15 mins",
-          description: "Students roleplay career advisor and client discussing hobby-based career options.",
-          materials: [
-            "Career advisor role cards",
-            "Client profile cards with hobby interests"
-          ],
-          instructions: [
-            "Divide students into pairs - advisor and client",
-            "Client has specific hobbies listed on their card",
-            "Advisor suggests possible careers based on these hobbies",
-            "Provide dialog prompts: 'Have you considered becoming a...?'",
-            "Have pairs switch roles halfway through"
+            "Present vocabulary: impressionism, cubism, abstract, pop art, etc.",
+            "Show characteristic examples of each style",
+            "Introduce technique vocabulary: brushstrokes, shading, perspective, etc.",
+            "Have students match styles with their descriptions",
+            "Practice sentences: 'This painting uses bold colors and has thick brushstrokes.'"
           ]
         },
         {
-          title: "Wrap-up: Ideal Hobby-Job",
-          duration: "5 mins",
-          description: "Students imagine their ideal job based on their interests or hobbies.",
+          title: "Famous Artists - Mini Biographies",
+          duration: "10 mins",
+          description: "Students learn about famous artists and their contributions.",
+          materials: [
+            "Artist biography cards",
+            "Famous artwork examples"
+          ],
           instructions: [
-            "Students reflect on their own hobbies and interests",
-            "They complete: 'My ideal job would be... because I enjoy...'",
-            "Share several ideas with the class",
-            "Review key vocabulary and expressions from the lesson"
+            "Distribute artist biography cards to pairs of students",
+            "Each card contains simple information about a famous artist",
+            "Students read about their artist and look at examples of their work",
+            "Pairs prepare to introduce 'their' artist to the class",
+            "Each pair presents briefly: 'This is [Artist]. They were from [Country]. They painted/created [style].'",
+            "Discuss how different artists had different unique styles"
+          ],
+          teacherNotes: "Focus on simple biographies with accessible language."
+        },
+        {
+          title: "Art Interpretation Activity",
+          duration: "15 mins",
+          description: "Students practice interpreting and discussing artwork.",
+          materials: [
+            "Art interpretation worksheet",
+            "Selected artwork images"
+          ],
+          instructions: [
+            "Explain that art can be interpreted in many ways",
+            "Introduce question prompts: 'What do you see?' 'How does it make you feel?' 'What might it mean?'",
+            "Model an interpretation of one artwork",
+            "Divide students into small groups",
+            "Each group receives an artwork to interpret using the worksheet",
+            "Groups share their interpretations with the class",
+            "Discuss how different people can have different interpretations"
+          ]
+        },
+        {
+          title: "Wrap-up: Art in My Life",
+          duration: "5 mins",
+          description: "Students reflect on their own creative expression.",
+          instructions: [
+            "Ask students: 'How do you express yourself creatively?'",
+            "Discuss that creativity exists in many forms beyond traditional art",
+            "Have students complete the sentence: 'I express myself by...'",
+            "Review key concepts and vocabulary from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their participation in the career planning role play and their ability to make logical connections between hobbies and careers.",
+      assessmentTips: "Assess students through their art interpretation presentations and their ability to use artistic style vocabulary appropriately.",
       homeworkIdeas: [
-        "Research someone who turned their hobby into a successful career and write a short profile.",
-        "Create a simple business plan for a hobby-based business you might start someday."
+        "Research a famous artist from your country and prepare a simple biography.",
+        "Create an artwork inspired by one of the styles discussed in class."
       ],
       additionalResources: [
         {
-          title: "Career Vocabulary",
-          url: "https://www.vocabulary.cl/Lists/Professions.htm"
+          title: "Art Movements Timeline",
+          url: "https://www.tate.org.uk/art/art-terms"
         },
-        {
-          title: "Entrepreneurship Resources",
-          url: "https://www.wikihow.com/Start-a-Business-Based-on-Your-Hobby"
-        }
-      ]
-    }
-  ],
-  
-  // Unit 9: Travel
+  // Unit 9: Careers and Employment
   "9": [
     {
       id: "book7-unit9-main-lesson",
-      title: "Travel and Tourism - 45-minute Lesson Plan",
+      title: "My Dream Job - 45-minute Lesson Plan",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Learn vocabulary related to travel and tourism",
-        "Express preferences about travel destinations",
-        "Ask and answer questions about holiday experiences",
-        "Practice planning a trip using target language"
+        "Learn vocabulary related to jobs and careers",
+        "Practice discussing job preferences and dream jobs",
+        "Describe job requirements and responsibilities",
+        "Use modal verbs to discuss job qualifications"
       ],
       materials: [
         "Visual English Book 7, Unit 9 slides",
-        "Travel destination flashcards or images",
-        "Travel vocabulary worksheet",
-        "Trip planning worksheet"
+        "Job flashcards",
+        "Job description handouts",
+        "Dream job worksheet"
       ],
       steps: [
         {
-          title: "Warm-up: Travel Experience",
+          title: "Warm-up: Job Brainstorm",
           duration: "5 mins",
-          description: "Begin by asking students about their travel experiences.",
+          description: "Begin by brainstorming different jobs and professions.",
           instructions: [
-            "Ask students: 'Have you ever traveled abroad?'",
-            "Follow up with: 'What's your favorite place to visit?'",
-            "Have students discuss in pairs for 1-2 minutes",
-            "Get feedback from several students"
+            "Ask students: 'What jobs do you know in English?'",
+            "Write student suggestions on the board",
+            "Ask follow-up: 'What job would you like to have in the future?'",
+            "Have students discuss in pairs for 1-2 minutes"
           ],
-          teacherNotes: "This activates schema and creates context for the main lesson on travel."
+          teacherNotes: "This activates schema and creates context for the main lesson on jobs and careers."
         },
         {
-          title: "Vocabulary Presentation: Travel",
+          title: "Vocabulary Presentation: Jobs and Careers",
           duration: "10 mins",
-          description: "Introduce vocabulary related to travel and tourism.",
+          description: "Introduce vocabulary for different jobs and career fields.",
           materials: [
             "Book 7, Unit 9 slides (first section)",
-            "Travel vocabulary flashcards"
+            "Job flashcards"
           ],
           instructions: [
-            "Display slides showing travel vocabulary (airport, hotel, sightseeing, etc.)",
-            "For each term, ask: 'What is this called?'",
+            "Display slides showing different professions (doctor, teacher, engineer, etc.)",
+            "For each job, ask: 'What does this person do?'",
+            "Introduce job families: medical, educational, technical, etc.",
             "Drill pronunciation of each term",
-            "Discuss different types of holidays (beach, city break, etc.)",
-            "Have students repeat and practice the vocabulary"
+            "Practice sentences: 'A doctor works in a hospital.' 'A teacher teaches students.'"
           ]
         },
         {
-          title: "Travel Preferences Practice",
+          title: "Job Descriptions and Requirements",
           duration: "10 mins",
-          description: "Students practice expressing travel preferences.",
+          description: "Students learn to describe job responsibilities and requirements.",
           materials: [
-            "Book 7, Unit 9 slides (middle section)",
-            "Travel preferences worksheet"
+            "Job description handouts",
+            "Book 7, Unit 9 slides (middle section)"
           ],
           instructions: [
-            "Review expressions: 'I prefer/I'd rather/I'd like to'",
-            "Demonstrate how to express travel preferences",
-            "Students complete worksheet with a partner",
-            "Ask: 'What kind of holidays do you prefer?'",
-            "Check some responses as a class"
+            "Present vocabulary for job responsibilities: 'manage', 'create', 'help', etc.",
+            "Introduce modal verbs for requirements: 'must', 'need to', 'should'",
+            "Show examples: 'A doctor must study medicine.' 'A chef needs to cook well.'",
+            "Students match jobs with their descriptions in pairs",
+            "Review answers as a class"
           ],
-          teacherNotes: "Encourage students to use comparative structures if appropriate."
+          teacherNotes: "Focus on simple, clear descriptions appropriate for their level."
         },
         {
-          title: "Trip Planning Role Play",
+          title: "My Dream Job Activity",
           duration: "15 mins",
-          description: "Students practice planning a trip in pairs.",
+          description: "Students discuss and present their dream jobs.",
           materials: [
-            "Trip planning worksheet",
-            "Travel destination information cards"
+            "Dream job worksheet",
+            "Book 7, Unit 9 slides (final section)"
           ],
           instructions: [
-            "Divide students into pairs planning a trip together",
-            "They must decide where to go, how to travel, what to do",
-            "Provide planning worksheet with prompts",
-            "Encourage use of expressions like 'We could... How about...?'",
-            "Have 2-3 pairs present their trip plans"
+            "Distribute dream job worksheets",
+            "Students complete sections: 'My dream job is...', 'I want this job because...', 'In this job, I would...'",
+            "Provide model expressions: 'My dream job is to be a...', 'I want to work as a...'",
+            "Students work individually to complete their worksheets",
+            "In small groups, students share their dream jobs",
+            "Select a few students to present to the whole class"
           ]
         },
         {
-          title: "Wrap-up: Dream Destination",
+          title: "Wrap-up: Future Career Plans",
           duration: "5 mins",
-          description: "Students describe their dream travel destination.",
+          description: "Students discuss steps to achieve their career goals.",
           instructions: [
-            "Students think about a place they dream of visiting",
-            "They complete: 'I would love to visit... because...'",
-            "Share several ideas with the class",
+            "Ask students: 'What do you need to do to get your dream job?'",
+            "Elicit responses using 'need to', 'must', 'should': 'I need to study...', 'I must learn...'",
+            "Have students complete the sentence: 'To get my dream job, I need to...'",
             "Review key vocabulary and expressions from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their participation in the trip planning role play and their ability to express travel preferences using the target structures.",
+      assessmentTips: "Assess students through their dream job presentations and their ability to use job-related vocabulary correctly.",
       homeworkIdeas: [
-        "Write a paragraph about a place you have visited, describing what you did there.",
-        "Create a travel itinerary for a 3-day trip to a destination of your choice."
+        "Write a short paragraph about your dream job including qualifications and responsibilities.",
+        "Interview a family member about their job and prepare notes to share in class."
       ],
       additionalResources: [
         {
-          title: "Travel Vocabulary",
-          url: "https://www.vocabulary.cl/Lists/Travel.htm"
+          title: "Jobs and Occupations Vocabulary",
+          url: "https://www.englishclub.com/vocabulary/work-general.php"
         },
         {
-          title: "Tourism and Travel Quiz",
-          url: "https://wordwall.net/resource/search?query=travel%20vocabulary"
+          title: "Career Planning Activities",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/jobs%20and%20occupations"
         }
       ]
     },
     {
       id: "book7-unit9-extension-lesson",
-      title: "Cultural Etiquette While Traveling - 45-minute Extension Lesson",
+      title: "Job Application Skills - 45-minute Extension Lesson",
       duration: "45 minutes",
       level: "Elementary to Pre-Intermediate (A1-A2)",
       objectives: [
-        "Learn vocabulary related to cultural differences and customs",
-        "Understand basic etiquette for different countries",
-        "Practice asking for information about cultural norms",
-        "Develop awareness of respectful behavior when traveling"
+        "Learn vocabulary related to job applications and interviews",
+        "Practice writing a simple CV/resume",
+        "Develop job interview language skills",
+        "Discuss workplace expectations and etiquette"
       ],
       materials: [
         "Visual English Book 7, Unit 9 slides",
-        "Cultural etiquette cards for different countries",
-        "Etiquette role play scenarios",
-        "Cultural differences vocabulary handout"
+        "Sample CV/resume template",
+        "Job interview question cards",
+        "Workplace etiquette handout"
       ],
       steps: [
         {
-          title: "Warm-up: Cultural Surprises",
+          title: "Warm-up: Job Application Process",
           duration: "5 mins",
-          description: "Begin by asking students about cultural differences they have experienced.",
+          description: "Begin by discussing the steps in applying for a job.",
           instructions: [
-            "Ask students: 'Have you ever experienced cultural differences when traveling?'",
-            "Follow up with: 'What surprised you about another country's customs?'",
-            "Have students share brief examples in pairs",
-            "Collect a few interesting experiences from the class"
+            "Ask students: 'How do people find and apply for jobs?'",
+            "Elicit responses: look at job advertisements, write a CV, go to an interview, etc.",
+            "Create a simple flowchart on the board showing the application process",
+            "Ask: 'Have you ever applied for a job or been to an interview?'"
           ],
-          teacherNotes: "This activates schema and creates context for cultural awareness while traveling."
+          teacherNotes: "This introduces the concept of formal job application processes."
         },
         {
-          title: "Vocabulary Presentation: Cultural Etiquette",
+          title: "CV/Resume Writing Basics",
           duration: "10 mins",
-          description: "Introduce vocabulary related to cultural customs and etiquette.",
+          description: "Introduce the structure and vocabulary for a basic CV/resume.",
           materials: [
-            "Cultural differences vocabulary handout",
+            "Sample CV/resume template",
             "Book 7, Unit 9 slides (supplementary section)"
           ],
           instructions: [
-            "Present etiquette vocabulary: customs, polite, rude, acceptable, taboo, etc.",
-            "Introduce phrases for asking about customs: 'Is it polite to...?'",
-            "Drill pronunciation of each term",
-            "Show examples of cultural differences (greetings, dining habits, etc.)",
-            "Have students repeat and practice the vocabulary"
+            "Show a sample CV and explain its sections: personal information, education, experience, skills",
+            "Present key vocabulary: qualifications, references, achievements, etc.",
+            "Explain simple phrases used in CVs: 'responsible for...', 'experienced in...', 'skilled at...'",
+            "Distribute CV templates for students to begin filling out",
+            "Focus on creating honest, clear information appropriate for their level"
           ]
         },
         {
-          title: "Cultural Etiquette Matching",
+          title: "Job Interview Language",
           duration: "10 mins",
-          description: "Students match cultural customs with their appropriate countries.",
+          description: "Students learn common job interview questions and appropriate responses.",
           materials: [
-            "Cultural etiquette cards for different countries",
-            "World map (optional)"
+            "Job interview question cards",
+            "Response prompts handout"
           ],
           instructions: [
-            "Divide students into small groups",
-            "Distribute sets of country cards and custom cards",
-            "Groups match customs to appropriate countries",
-            "Discuss reasons for each match",
-            "Check answers as a class and discuss any surprising customs"
+            "Present common interview questions: 'Tell me about yourself.' 'Why do you want this job?' etc.",
+            "Provide sample answers and useful phrases for responding",
+            "Emphasize positive language and appropriate formality",
+            "Students practice formulating answers to basic interview questions",
+            "Discuss what makes a good vs. poor interview response"
           ],
-          teacherNotes: "Emphasize that customs vary even within countries and cultures."
+          teacherNotes: "Keep language simple but professional, focusing on clarity and politeness."
         },
         {
-          title: "Travel Etiquette Role Play",
+          title: "Job Interview Role Play",
           duration: "15 mins",
-          description: "Students practice handling cultural situations through role play.",
+          description: "Students practice job interviews through role play.",
           materials: [
-            "Etiquette role play scenario cards",
-            "Props for different scenarios (optional)"
+            "Job description cards",
+            "Interview scoring rubric"
           ],
           instructions: [
-            "Divide students into pairs",
-            "Distribute scenario cards (dining, greeting, gift-giving, etc.)",
-            "Students practice appropriate cultural responses",
-            "Encourage using phrases like: 'I think we should... In this country, it's customary to...'",
-            "Have 2-3 pairs demonstrate their scenarios"
+            "Divide students into pairs: interviewer and job applicant",
+            "Distribute job description cards for different positions",
+            "Review interview etiquette: greeting, body language, thanking, etc.",
+            "Pairs conduct mock interviews for 3-4 minutes each",
+            "Students switch roles and repeat with a different job",
+            "Select 1-2 pairs to demonstrate their interview to the class",
+            "Provide constructive feedback on language and manner"
           ]
         },
         {
-          title: "Wrap-up: Cultural Research",
+          title: "Wrap-up: Workplace Expectations",
           duration: "5 mins",
-          description: "Students discuss how to research cultural etiquette before traveling.",
+          description: "Students discuss expectations in a professional workplace.",
           instructions: [
-            "Ask: 'How can you learn about a country's customs before visiting?'",
-            "Discuss different sources of information",
-            "Students complete: 'Before traveling to a new country, I should research...'",
-            "Share ideas with the class",
-            "Review key vocabulary and expressions from the lesson"
+            "Show images representing workplace behaviors (punctuality, dress code, communication)",
+            "Ask: 'What is appropriate behavior at work?'",
+            "Introduce phrases: 'In a workplace, you should...' 'At work, it's important to...'",
+            "Have students complete the sentence: 'To be professional at work, you should...'",
+            "Review key vocabulary and concepts from the lesson"
           ]
         }
       ],
-      assessmentTips: "Assess students through their participation in the cultural etiquette role plays and their ability to demonstrate appropriate cultural awareness.",
+      assessmentTips: "Assess students through their participation in the interview role play and the quality of their CV drafts.",
       homeworkIdeas: [
-        "Research three important customs or etiquette rules for a country you would like to visit.",
-        "Create a short guide to your country's customs for foreign visitors."
+        "Complete a personal CV/resume using the template provided.",
+        "Prepare answers to three common job interview questions."
       ],
       additionalResources: [
         {
-          title: "World Customs and Etiquette",
-          url: "https://www.ef.com/wwen/blog/language/customs-and-etiquette-around-the-world/"
+          title: "CV Writing Tips for ESL Learners",
+          url: "https://www.linguahouse.com/esl-lesson-plans/topic/work"
         },
         {
-          title: "Cultural Awareness Quiz",
-          url: "https://wordwall.net/resource/search?query=cultural%20etiquette"
+          title: "Job Interview Practice",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/job%20interview"
         }
       ]
     }
-  ],
-  
-  // Unit 10: Technology
-  "10": [
+  ],  "10": [
     {
       id: "book7-unit10-main-lesson",
       title: "Technology in Daily Life - 45-minute Lesson Plan",

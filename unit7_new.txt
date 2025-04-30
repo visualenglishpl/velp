@@ -1,0 +1,220 @@
+  // Unit 7: DIY Projects
+  "7": [
+    {
+      id: "book7-unit7-main-lesson",
+      title: "DIY Projects - 45-minute Lesson Plan",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Learn vocabulary related to DIY projects and tools",
+        "Practice using 'can' to talk about abilities",
+        "Describe simple DIY projects and procedures",
+        "Express preferences about DIY activities"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 7 slides",
+        "DIY tool flashcards",
+        "Craft materials for simple in-class DIY project",
+        "Handout with DIY vocabulary and expressions"
+      ],
+      steps: [
+        {
+          title: "Warm-up: DIY Experiences",
+          duration: "5 mins",
+          description: "Begin by asking students about their DIY experiences and interests.",
+          instructions: [
+            "Ask students: 'Can you make things yourself at home?'",
+            "Follow up with: 'What can you make?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Get feedback from several students"
+          ],
+          teacherNotes: "This activates schema and creates context for the main lesson on DIY projects."
+        },
+        {
+          title: "Vocabulary Presentation: DIY Tools and Materials",
+          duration: "10 mins",
+          description: "Introduce vocabulary for common DIY tools and materials.",
+          materials: [
+            "Book 7, Unit 7 slides (first section)",
+            "DIY tool flashcards"
+          ],
+          instructions: [
+            "Display slides showing different DIY tools (hammer, screwdriver, scissors, glue, etc.)",
+            "For each tool, ask: 'What is this? What can you do with it?'",
+            "Drill pronunciation of each term",
+            "Practice short sentences: 'You can use a hammer to hit a nail.'",
+            "Have students repeat and practice the vocabulary"
+          ]
+        },
+        {
+          title: "Can You DIY? - Ability Expressions",
+          duration: "10 mins",
+          description: "Students practice using 'can' to talk about DIY abilities.",
+          materials: [
+            "Book 7, Unit 7 slides (middle section)",
+            "DIY ability worksheet"
+          ],
+          instructions: [
+            "Present the structure: 'Can you...?' 'Yes, I can.' / 'No, I can't.'",
+            "Show examples of DIY activities: 'Can you fix a broken chair?'",
+            "Students work in pairs asking and answering about DIY abilities",
+            "Focus on proper intonation for questions and short answers",
+            "Have pairs share some of their answers with the class"
+          ],
+          teacherNotes: "Emphasize the difference between general ability and specific skills."
+        },
+        {
+          title: "Simple DIY Project Instructions",
+          duration: "15 mins",
+          description: "Students learn to follow and give simple DIY instructions.",
+          materials: [
+            "Simple craft materials (paper, glue, scissors, etc.)",
+            "Step-by-step instruction cards",
+            "Book 7, Unit 7 slides (final section)"
+          ],
+          instructions: [
+            "Review sequencing words: 'First', 'Then', 'Next', 'Finally'",
+            "Show a simple DIY project example from the slides",
+            "Distribute materials for a simple paper craft project",
+            "Give instructions step by step, having students follow along",
+            "Students then describe what they did using sequencing words",
+            "Have 2-3 students demonstrate their completed projects"
+          ]
+        },
+        {
+          title: "Wrap-up: DIY Project Ideas",
+          duration: "5 mins",
+          description: "Students share DIY project ideas they would like to try.",
+          instructions: [
+            "Ask students: 'What DIY project would you like to try at home?'",
+            "They complete the sentence: 'I would like to make/build/create...'",
+            "Share several ideas with the class",
+            "Review key vocabulary and expressions from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their participation in the DIY project activity and their ability to use DIY vocabulary and 'can' structures correctly.",
+      homeworkIdeas: [
+        "Complete a simple DIY project at home and take a photo or write instructions.",
+        "Create a list of 5 DIY projects they can do and 5 they cannot do yet."
+      ],
+      additionalResources: [
+        {
+          title: "DIY Vocabulary Quiz",
+          url: "https://wordwall.net/resource/search?query=DIY%20vocabulary"
+        },
+        {
+          title: "Simple DIY Projects for ESL Students",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/DIY"
+        }
+      ]
+    },
+    {
+      id: "book7-unit7-extension-lesson",
+      title: "DIY Home Improvement - 45-minute Extension Lesson",
+      duration: "45 minutes",
+      level: "Elementary to Pre-Intermediate (A1-A2)",
+      objectives: [
+        "Expand vocabulary related to home improvement and DIY projects",
+        "Practice giving and following detailed instructions",
+        "Develop speaking skills through project planning and presentation",
+        "Use imperative forms for giving instructions"
+      ],
+      materials: [
+        "Visual English Book 7, Unit 7 slides",
+        "Home improvement vocabulary handout",
+        "Project planning worksheet",
+        "Sample DIY instruction manuals"
+      ],
+      steps: [
+        {
+          title: "Warm-up: Home Improvement",
+          duration: "5 mins",
+          description: "Begin by asking students about home improvement projects.",
+          instructions: [
+            "Ask students: 'Have you ever improved or fixed something in your home?'",
+            "Follow up with: 'What was the most difficult DIY project you've done?'",
+            "Have students discuss in pairs for 1-2 minutes",
+            "Collect some examples from the class"
+          ],
+          teacherNotes: "This connects students' personal experiences with the lesson topic."
+        },
+        {
+          title: "Vocabulary Expansion: Home Improvement",
+          duration: "10 mins",
+          description: "Introduce vocabulary for home improvement and DIY projects.",
+          materials: [
+            "Home improvement vocabulary handout",
+            "Book 7, Unit 7 slides (supplementary section)"
+          ],
+          instructions: [
+            "Present vocabulary: paint, renovate, repair, decorate, install, etc.",
+            "Show before and after pictures of home improvement projects",
+            "Explain room-specific vocabulary (kitchen, bathroom, living room improvements)",
+            "Have students match DIY verbs with rooms and objects",
+            "Practice short sentences: 'I painted the walls in my bedroom.'"
+          ]
+        },
+        {
+          title: "Giving Instructions - Imperative Forms",
+          duration: "10 mins",
+          description: "Students practice using imperatives for giving DIY instructions.",
+          materials: [
+            "Sample DIY instruction manuals",
+            "Imperative verb handout"
+          ],
+          instructions: [
+            "Review imperative form: 'Cut the paper.' 'Don't use too much glue.'",
+            "Look at examples from real DIY instructions",
+            "Focus on sequence markers: 'First, cut the fabric. Then, fold it in half.'",
+            "Students transform statements into instructions",
+            "Practice giving clear, concise instructions for common tasks"
+          ],
+          teacherNotes: "Emphasize that English instructions often use direct imperative forms."
+        },
+        {
+          title: "DIY Project Planning Activity",
+          duration: "15 mins",
+          description: "Students plan and present a simple DIY project.",
+          materials: [
+            "Project planning worksheet",
+            "Visual aids showing various DIY projects"
+          ],
+          instructions: [
+            "Divide students into small groups",
+            "Each group chooses a simple DIY project (e.g., photo frame, bookshelf, decorated box)",
+            "Using the worksheet, groups list materials needed and step-by-step instructions",
+            "Encourage use of imperative forms and sequence markers",
+            "Each group presents their project plan to the class",
+            "Other students ask questions about the process"
+          ]
+        },
+        {
+          title: "Wrap-up: DIY Troubleshooting",
+          duration: "5 mins",
+          description: "Students discuss common DIY problems and solutions.",
+          instructions: [
+            "Show pictures of common DIY problems (crooked shelf, paint drips, etc.)",
+            "Ask: 'What went wrong? How can you fix it?'",
+            "Elicit solutions using 'should' and 'need to'",
+            "Review key imperative expressions and vocabulary from the lesson"
+          ]
+        }
+      ],
+      assessmentTips: "Assess students through their DIY project planning and presentation, focusing on clear instructions and appropriate vocabulary.",
+      homeworkIdeas: [
+        "Create a step-by-step guide for a DIY project with pictures or drawings.",
+        "Find a 'DIY fail' online and write instructions on how to do it correctly."
+      ],
+      additionalResources: [
+        {
+          title: "Home Improvement Vocabulary",
+          url: "https://www.eslbuzz.com/useful-tools-and-home-improvement-vocabulary-in-english/"
+        },
+        {
+          title: "DIY Project Instructions Writing Guide",
+          url: "https://en.islcollective.com/english-esl-worksheets/search/instructions"
+        }
+      ]
+    }
+  ],
