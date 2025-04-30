@@ -4345,7 +4345,7 @@ useEffect(() => {
               </Button>
             </DialogTitle>
           </DialogHeader>
-          <div className="flex-1 overflow-hidden relative min-h-[70vh]">
+          <div className="flex-1 overflow-hidden relative min-h-[75vh] w-full">
             {viewingPdf?.fileUrl && (
               <PDFViewer pdfUrl={viewingPdf.fileUrl} title={viewingPdf.title} />
             )}
