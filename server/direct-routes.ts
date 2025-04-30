@@ -306,6 +306,8 @@ export function registerDirectRoutes(app: express.Express) {
           title: `Test Material for ${bookId}/${unitId}`,
           contentType: "IMAGE",
           content: "test-image.png",
+          // Add the path property for images to load correctly
+          path: `/api/direct/${bookId}/${unitId}/assets/01.png`,
           orderIndex: 1,
           isPublished: true,
           isLocked: false,
