@@ -102,7 +102,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Handle initial data loading - bookUnitResources, local storage resources
   const { data: bookUnitResources = [], isLoading, error } = useQuery<TeacherResource[]>({
     queryKey: [`/api/teacher-resources/${bookId}/${unitId}`],
-    queryFn: getQueryFn<TeacherResource[]>(),
+    queryFn: getQueryFn<TeacherResource[]>({ on401: "returnNull" }),
   });
 
   // Mutation to add a new resource
@@ -190,9 +190,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   // Effect to set initial resources from API data
   useEffect(() => {
-    if (bookUnitResources) {
-      setResources(bookUnitResources);
-    }
+    // Only update resources if bookUnitResources has changed
+    // Don't include resources in the dependency array to avoid infinite loops
+    setResources([...bookUnitResources]);
   }, [bookUnitResources]);
 
   // Function to get additional resources for specific book/unit combinations
