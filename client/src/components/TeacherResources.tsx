@@ -3482,7 +3482,7 @@ useEffect(() => {
     const resourceLessonPlans = lessonPlansFromResources.length > 0 ? (
       <div className="mt-6 mb-10">
         <h3 className="text-lg font-semibold mb-4">Uploaded Lesson Plans</h3>
-        <div className="lesson-plan-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {lessonPlansFromResources.map((resource, index) => (
             <Card key={resource.id || index} className="overflow-hidden hover:shadow-md transition-shadow">
               <CardHeader className="pb-2">
@@ -3661,7 +3661,7 @@ useEffect(() => {
       builtInLessonPlans = (
         <div className="mt-6 space-y-8">
           <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
-          <div className="lesson-plan-grid">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
             <div>
               <Card className="h-full">
                 <CardHeader className="pb-2">
