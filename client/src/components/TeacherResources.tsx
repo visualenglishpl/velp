@@ -260,9 +260,14 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
 
     // Resources for Book 7, Unit 6 - Money
-    if (bookId === '7' && unitId === '6') {
+    if (isBook7Unit6) {
       // Using resources from unit6-implementation.tsx
-      return getUnit6Resources(bookId, unitId);
+      try {
+        return getUnit6Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 6 resources:', error);
+        return [];
+      }
     }
 
     // Resources for Book 7, Unit 7
@@ -607,9 +612,14 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
     // Book 7 Units specific lesson plans
     // Check if this book/unit combination has built-in lesson plans and render them if available
-    if (bookId === '7' && unitId === '6') {
+    if (isBook7Unit6) {
       // Get Unit 6 lesson plans
-      const unit6Plans = getUnit6LessonPlans();
+      let unit6Plans: LessonPlan[] = [];
+      try {
+        unit6Plans = getUnit6LessonPlans();
+      } catch (error) {
+        console.error('Error getting Unit 6 lesson plans:', error);
+      }
       
       builtInLessonPlans = (
         <div className="mt-6 space-y-8">
