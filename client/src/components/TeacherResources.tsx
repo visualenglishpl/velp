@@ -188,12 +188,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
   }, [editingResource, bookId, unitId]);
 
-  // Effect to set initial resources from API data
+  // Effect to set initial resources from API data only when they change
   useEffect(() => {
-    // Only update resources if bookUnitResources has changed
-    // Don't include resources in the dependency array to avoid infinite loops
-    setResources([...bookUnitResources]);
-  }, [bookUnitResources]);
+    // Use a ref to track if this is the initial render
+    const resourcesJSON = JSON.stringify(bookUnitResources);
+    const currentResourcesJSON = JSON.stringify(resources);
+    
+    // Only update if the new resources are different from current resources
+    if (resourcesJSON !== currentResourcesJSON) {
+      setResources(bookUnitResources || []);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookUnitResources]);  // Intentionally omit resources to prevent infinite loop
 
   // Function to get additional resources for specific book/unit combinations
   const getMoreUnitResources = useCallback((): TeacherResource[] => {

@@ -40,8 +40,10 @@ export const unit6Resources = [
 
 // Lesson plan data for British Currency
 export const britishCurrencyLessonPlan = {
+  id: "british-currency-lesson",
   title: "British Currency",
-  overview: "A comprehensive lesson on British currency, focusing on identification, values, and usage.",
+  duration: "45 minutes",
+  level: "Intermediate",
   objectives: [
     "Identify British coins and notes",
     "Understand the value relationships between different denominations",
@@ -52,20 +54,42 @@ export const britishCurrencyLessonPlan = {
     "Currency conversion worksheets",
     "Role-play scenario cards"
   ],
-  procedure: [
-    "Introduce British currency system (10 min)",
-    "Practice identifying coins and notes through visual exercises (10 min)",
-    "Pair work: Price comparison and shopping dialogues (15 min)",
-    "Role-play: Making purchases in a British shop (10 min)"
+  steps: [
+    {
+      title: "Introduction to British Currency",
+      duration: "10 minutes",
+      description: "Introduce the British currency system and its denominations",
+      instructions: ["Show images of different coins and notes", "Explain the value relationships"]
+    },
+    {
+      title: "Visual Recognition Practice",
+      duration: "10 minutes",
+      description: "Practice identifying coins and notes through visual exercises",
+      materials: ["Currency flashcards", "Worksheets with coin/note images"]
+    },
+    {
+      title: "Pair Work: Price Comparison",
+      duration: "15 minutes",
+      description: "Students work in pairs to compare prices and practice shopping dialogues",
+      teacherNotes: "Monitor conversations and provide assistance with pronunciation and vocabulary"
+    },
+    {
+      title: "Role-play: Shopping Scenarios",
+      duration: "10 minutes",
+      description: "Students role-play making purchases in a British shop",
+      materials: ["Role-play scenario cards", "Fake British currency for props"]
+    }
   ],
-  assessment: "Students will be evaluated on their ability to correctly identify currency and perform basic transactions.",
-  extension: "Compare British currency with other currencies from English-speaking countries."
+  assessmentTips: "Students will be evaluated on their ability to correctly identify currency and perform basic transactions.",
+  homeworkIdeas: ["Compare British currency with other currencies from English-speaking countries", "Create a currency conversion chart"]
 };
 
 // Lesson plan data for International Money
 export const internationalMoneyLessonPlan = {
+  id: "international-money-lesson",
   title: "International Money Exchange",
-  overview: "An interactive lesson on international currencies and exchange rates.",
+  duration: "45 minutes",
+  level: "Intermediate",
   objectives: [
     "Identify major world currencies",
     "Understand basic exchange rate concepts",
@@ -76,20 +100,43 @@ export const internationalMoneyLessonPlan = {
     "Simple exchange rate charts",
     "Currency conversion worksheets"
   ],
-  procedure: [
-    "Introduction to major world currencies (10 min)",
-    "Exchange rate explanation and practice conversions (15 min)",
-    "Group activity: International shopping simulation (15 min)",
-    "Wrap-up discussion: Currency values and international travel (5 min)"
+  steps: [
+    {
+      title: "Introduction to World Currencies",
+      duration: "10 minutes",
+      description: "Introduction to major world currencies and their symbols",
+      instructions: ["Show images of different currencies", "Discuss which countries use which currencies"]
+    },
+    {
+      title: "Exchange Rate Explanation",
+      duration: "15 minutes",
+      description: "Explain exchange rate concepts and practice conversions",
+      materials: ["Exchange rate charts", "Conversion worksheets"],
+      teacherNotes: "Emphasize that exchange rates fluctuate daily"
+    },
+    {
+      title: "International Shopping Simulation",
+      duration: "15 minutes",
+      description: "Group activity simulating international shopping",
+      instructions: ["Divide students into groups representing different countries", "Have them 'purchase' items using different currencies"]
+    },
+    {
+      title: "Wrap-up Discussion",
+      duration: "5 minutes",
+      description: "Discussion about currency values and international travel",
+      teacherNotes: "Ask students about their experiences with different currencies if applicable"
+    }
   ],
-  assessment: "Students will complete a worksheet with currency conversion problems.",
-  extension: "Research how exchange rates affect international business and trade."
+  assessmentTips: "Students will complete a worksheet with currency conversion problems.",
+  homeworkIdeas: ["Research how exchange rates affect international business and trade", "Track exchange rates for a week and note changes"]
 };
 
 // Lesson plan data for Spending and Saving
 export const spendingSavingLessonPlan = {
+  id: "spending-saving-lesson",
   title: "Spending and Saving Money",
-  overview: "A practical lesson on financial literacy focused on spending wisely and saving money.",
+  duration: "45 minutes",
+  level: "Intermediate",
   objectives: [
     "Learn vocabulary related to banking and saving",
     "Understand the concept of budgeting",
@@ -100,12 +147,40 @@ export const spendingSavingLessonPlan = {
     "Banking vocabulary flashcards",
     "Decision-making scenario cards"
   ],
-  procedure: [
-    "Vocabulary building: Banking and saving terms (10 min)",
-    "Discussion: Why is saving important? (5 min)",
-    "Practical activity: Creating a simple budget (15 min)",
-    "Role-play: Making financial decisions (15 min)"
+  steps: [
+    {
+      title: "Banking Vocabulary",
+      duration: "10 minutes",
+      description: "Vocabulary building: Banking and saving terms",
+      materials: ["Banking vocabulary flashcards"],
+      instructions: ["Present key terms related to banking and saving", "Have students match terms with definitions"]
+    },
+    {
+      title: "Importance of Saving",
+      duration: "5 minutes",
+      description: "Class discussion about why saving money is important",
+      teacherNotes: "Encourage students to share personal experiences with saving money"
+    },
+    {
+      title: "Budget Creation Activity",
+      duration: "15 minutes",
+      description: "Practical activity: Creating a simple budget",
+      materials: ["Budget worksheet templates"],
+      instructions: ["Distribute budget worksheets", "Guide students through creating a monthly budget"]
+    },
+    {
+      title: "Financial Decision Role-play",
+      duration: "15 minutes",
+      description: "Role-play: Making financial decisions in different scenarios",
+      materials: ["Decision-making scenario cards"]
+    }
   ],
-  assessment: "Students will create a personal budget for a hypothetical scenario.",
-  extension: "Invite a local bank representative to discuss youth banking options."
+  assessmentTips: "Students will create a personal budget for a hypothetical scenario.",
+  homeworkIdeas: ["Track personal spending for one week", "Research and write about a banking service"],
+  additionalResources: [
+    {
+      title: "Youth Banking Guide",
+      url: "https://www.consumerfinance.gov/consumer-tools/money-as-you-grow/"
+    }
+  ]
 };

@@ -8,9 +8,9 @@ import { britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSaving
  */
 export const getUnit6LessonPlans = (): LessonPlan[] => {
   return [
-    britishCurrencyLessonPlan,
-    internationalMoneyLessonPlan,
-    spendingSavingLessonPlan
+    britishCurrencyLessonPlan as LessonPlan,
+    internationalMoneyLessonPlan as LessonPlan,
+    spendingSavingLessonPlan as LessonPlan
   ];
 };
 
