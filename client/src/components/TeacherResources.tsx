@@ -2815,10 +2815,12 @@ useEffect(() => {
 
   // UI for rendering resources with a unified card-based layout
   const renderResources = (type: string | null = null) => {
-    let filteredResources = resources;
+    // Filter out PDF resources as per user request
+    let allResources = resources.filter(r => r.resourceType !== 'pdf');
+    let filteredResources = allResources;
     
     if (type) {
-      filteredResources = resources.filter(r => r.resourceType === type);
+      filteredResources = allResources.filter(r => r.resourceType === type);
     }
 
     if (filteredResources.length === 0) {
