@@ -69,15 +69,23 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
     // Clean up function for the current PDF document
     const cleanup = () => {
       if (pdfDocument) {
-        // We don't use destroy as it may not be available 
-        // in all PDF.js versions
+        // First, manually remove references to help garbage collection
         try {
-          // @ts-ignore - destroy exists but TypeScript doesn't know about it
-          if (typeof pdfDocument.destroy === 'function') {
-            pdfDocument.destroy();
+          // Cast to any to avoid TypeScript checking for these methods
+          // This approach allows us to try multiple cleanup methods
+          // depending on the PDF.js version being used
+          const doc = pdfDocument as any;
+          
+          // Different PDF.js versions may have different cleanup methods
+          if (doc._transport && typeof doc._transport.destroy === 'function') {
+            doc._transport.destroy();
+          } else if (typeof doc.cleanup === 'function') {
+            doc.cleanup();
+          } else if (typeof doc.destroy === 'function') {
+            doc.destroy();
           }
         } catch (e) {
-          console.warn('PDF document destroy failed:', e);
+          console.warn('PDF document cleanup failed:', e);
         }
         setPdfDocument(null);
       }
