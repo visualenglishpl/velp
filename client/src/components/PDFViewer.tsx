@@ -69,16 +69,15 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
     // Clean up function for the current PDF document
     const cleanup = () => {
       if (pdfDocument) {
-        // In PDFjs 3.0+, destroy is available but not in the TypeScript types
-        // We'll handle this safely to avoid TypeScript errors
+        // We don't use destroy as it may not be available 
+        // in all PDF.js versions
         try {
-          // Cast to 'any' to access destroy method not in TypeScript types
-          const pdfDoc: any = pdfDocument;
-          if (pdfDoc && typeof pdfDoc.destroy === 'function') {
-            pdfDoc.destroy();
+          // @ts-ignore - destroy exists but TypeScript doesn't know about it
+          if (typeof pdfDocument.destroy === 'function') {
+            pdfDocument.destroy();
           }
         } catch (e) {
-          console.warn('PDF document cleanup failed:', e);
+          console.warn('PDF document destroy failed:', e);
         }
         setPdfDocument(null);
       }
@@ -212,23 +211,24 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center mx-auto w-full" style={{ maxWidth: '400px' }}>
-      {title && <h3 className="text-md font-medium mb-1">{title}</h3>}
+    <div className="flex flex-col items-center mx-auto w-full" style={{ maxWidth: '500px' }}>
+      {title && <h3 className="text-lg font-medium mb-2">{title}</h3>}
       
       {!useFallback && (
-        <div className="w-full flex justify-center mb-2 gap-1">
+        <div className="w-full flex justify-center mb-4 gap-2">
           <Button 
             variant="outline" 
             size="sm" 
             onClick={prevPage} 
             disabled={currentPage <= 1}
-            className="h-7 w-7 p-0"
           >
-            <ChevronLeft className="h-3 w-3" />
+            <ChevronLeft className="h-4 w-4" />
           </Button>
           
-          <div className="flex items-center justify-center px-2 bg-muted rounded text-xs">
-            {currentPage}/{numPages}
+          <div className="flex items-center justify-center px-2 bg-muted rounded">
+            <span className="text-sm">
+              Page {currentPage} of {numPages}
+            </span>
           </div>
           
           <Button 
@@ -236,9 +236,8 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
             size="sm" 
             onClick={nextPage} 
             disabled={currentPage >= numPages}
-            className="h-7 w-7 p-0"
           >
-            <ChevronRight className="h-3 w-3" />
+            <ChevronRight className="h-4 w-4" />
           </Button>
 
           <Button 
@@ -246,9 +245,8 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
             size="sm" 
             onClick={zoomOut} 
             disabled={scale <= 0.5}
-            className="h-7 w-7 p-0"
           >
-            <ZoomOut className="h-3 w-3" />
+            <ZoomOut className="h-4 w-4" />
           </Button>
           
           <Button 
@@ -256,14 +254,13 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
             size="sm" 
             onClick={zoomIn} 
             disabled={scale >= 3.0}
-            className="h-7 w-7 p-0"
           >
-            <ZoomIn className="h-3 w-3" />
+            <ZoomIn className="h-4 w-4" />
           </Button>
         </div>
       )}
       
-      <div className="w-full overflow-auto border rounded-md p-2 bg-white min-h-[300px] max-h-[400px] flex items-center justify-center shadow-md transition-all duration-200 hover:shadow-lg">
+      <div className="w-full overflow-auto border rounded-md p-3 bg-white min-h-[350px] max-h-[450px] flex items-center justify-center shadow-md transition-all duration-200 hover:shadow-lg">
         {loading && !useFallback && (
           <div className="flex flex-col items-center justify-center p-4">
             <Loader2 className="h-10 w-10 text-primary/60 animate-spin mb-2" />
@@ -302,7 +299,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         )}
 
         {useFallback && (
-          <div className="w-full h-[300px]">
+          <div className="w-full h-[350px]">
             <iframe 
               src={proxyUrl} // Use the proxy URL instead of direct S3 URL
               className="w-full h-full border-0"
@@ -314,14 +311,14 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         )}
       </div>
 
-      <div className="mt-3 flex gap-2">
+      <div className="mt-4 flex gap-2">
         <Button 
           variant="default" 
           onClick={() => window.open(proxyUrl, '_blank')}
           size="sm"
-          className="mx-auto shadow-sm hover:shadow transition-all duration-200 text-xs py-1 h-8"
+          className="mx-auto shadow-sm hover:shadow transition-all duration-200"
         >
-          <ExternalLink className="mr-1 h-3 w-3" />
+          <ExternalLink className="mr-2 h-4 w-4" />
           Download PDF
         </Button>
       </div>
