@@ -2,6 +2,7 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const http = require('http');
+const { writeFileSync } = require('fs');
 
 const lessonPlan = {
   bookId: "book7",
@@ -112,7 +113,7 @@ const lessonPlan = {
     </ul>
     <h2>Additional Resources</h2>
     <ul>
-      <li><a href="https://www.youtube.com/watch?v=cYTh99UmUthwy1yO" target="_blank">Learn English Money from 1p to 50 Pounds (YouTube Video)</a></li>
+      <li><a href="https://www.youtube.com/watch?v=ABCD12345" target="_blank">Learn English Money from 1p to 50 Pounds (YouTube Video)</a></li>
       <li><a href="https://en.islcollective.com/english-esl-worksheets/general-topic/countries/british-currency/18577" target="_blank">British currency worksheet to print</a></li>
       <li><a href="https://create.kahoot.it/share/currency/f87e8719-291e-440a-a340-22344175fedb" target="_blank">KAHOOT ONLINE GAME MONEY</a></li>
       <li><a href="https://wordwall.net/embed/463ad4520fbb4edd9ea903446f182971" target="_blank">ONLINE GAME WORDWALL - Option 1</a></li>
@@ -125,35 +126,14 @@ const lessonPlan = {
   }
 };
 
-const data = JSON.stringify(lessonPlan);
+// Instead of making HTTP request, write the resource to a file
+const resourceFile = 'british_currency_lesson.json';
 
-const options = {
-  hostname: 'localhost',
-  port: 5000,
-  path: '/api/direct/teacher-resources',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Content-Length': data.length
-  }
-};
-
-const req = http.request(options, (res) => {
-  console.log(`STATUS: ${res.statusCode}`);
-  let responseData = '';
-  
-  res.on('data', (chunk) => {
-    responseData += chunk;
-  });
-  
-  res.on('end', () => {
-    console.log('Lesson plan for British Currency successfully added!');
-  });
-});
-
-req.on('error', (e) => {
-  console.error(`Error: ${e.message}`);
-});
-
-req.write(data);
-req.end();
+try {
+  writeFileSync(resourceFile, JSON.stringify(lessonPlan, null, 2));
+  console.log(`Lesson plan for British Currency written to ${resourceFile}`);
+  console.log(`You can now import this file or use it in your Teacher Resources`);
+  console.log('Resource ready with title:', lessonPlan.title);
+} catch (error) {
+  console.error('Error writing file:', error);
+}
