@@ -36,7 +36,10 @@ function ProtectedRoute({ component: Component, adminOnly = false, requireAuth =
   // If authentication is required and user is not logged in, redirect to auth page
   if (requireAuth && !user) {
     console.log("User not authenticated, redirecting to login");
-    navigate("/auth");
+    // Use a setTimeout to avoid the React warning about setState during rendering
+    setTimeout(() => {
+      navigate("/auth");
+    }, 0);
     return null;
   }
   
@@ -55,7 +58,10 @@ function ProtectedRoute({ component: Component, adminOnly = false, requireAuth =
     // For admin-only routes, ensure the user is an admin
     if (adminOnly && !isAdmin) {
       console.log("Non-admin user trying to access admin-only area");
-      navigate("/");
+      // Use setTimeout to avoid React warnings
+      setTimeout(() => {
+        navigate("/");
+      }, 0);
       return null;
     }
     

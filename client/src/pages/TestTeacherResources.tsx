@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TeacherResources from '@/components/TeacherResources';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,6 +6,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 const TestTeacherResources = () => {
   const [bookId, setBookId] = useState('7');
   const [unitId, setUnitId] = useState('6');
+  
+  // Parse query parameters on component mount
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const bookParam = searchParams.get('book');
+    const unitParam = searchParams.get('unit');
+    
+    if (bookParam) {
+      setBookId(bookParam);
+    }
+    
+    if (unitParam) {
+      setUnitId(unitParam);
+    }
+  }, []);
   
   return (
     <div className="container mx-auto py-8">
