@@ -331,6 +331,10 @@ function Router() {
       </Route>
       
       {/* Test Teacher Resources Page */}
+      <Route path="/test-teacher-resources">
+        {() => <ProtectedRoute component={TestTeacherResources} requireAuth={false} />}
+      </Route>
+      {/* Alternate route for backward compatibility */}
       <Route path="/test-resources">
         {() => <ProtectedRoute component={TestTeacherResources} requireAuth={false} />}
       </Route>
