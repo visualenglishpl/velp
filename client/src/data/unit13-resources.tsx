@@ -126,3 +126,101 @@ export const cityTourLessonPlan = {
     }
   ]
 };
+
+// Second lesson plan for Unit 13: City Navigation and Directions
+export const cityNavigationLessonPlan = {
+  id: "city-navigation-lesson",
+  title: "City Navigation and Directions",
+  duration: "45 minutes",
+  level: "Intermediate",
+  objectives: [
+    "Master directional vocabulary and prepositions",
+    "Learn to give and follow directions accurately",
+    "Understand city maps and navigation symbols",
+    "Practice role-play conversations about finding places in a city"
+  ],
+  materials: [
+    "Visual English Book 7, Unit 13 slides",
+    "City maps (printed for each student or pair)",
+    "Direction vocabulary cards",
+    "Role-play scenario cards",
+    "Pictures of street signs and navigation symbols"
+  ],
+  steps: [
+    {
+      title: "Warm-up: Direction Words",
+      duration: "5 minutes",
+      description: "Review basic directional vocabulary",
+      instructions: [
+        "Use gestures to demonstrate: left, right, straight ahead, turn, etc.",
+        "Have students repeat the words and mimic the gestures",
+        "Show pictures of street signs and have students identify them",
+        "Create a list of navigation words on the board"
+      ]
+    },
+    {
+      title: "Map Reading Skills",
+      duration: "10 minutes",
+      description: "Learn to interpret city maps and symbols",
+      materials: ["City maps", "Visual English Book 7, Unit 13 slides"],
+      instructions: [
+        "Distribute city maps to students",
+        "Explain common map symbols and legend items",
+        "Teach vocabulary: block, intersection, crossroads, roundabout, etc.",
+        "Have students identify key landmarks and features on their maps"
+      ]
+    },
+    {
+      title: "Direction Phrases Practice",
+      duration: "10 minutes",
+      description: "Build sentences for giving directions",
+      materials: ["Direction vocabulary cards"],
+      instructions: [
+        "Introduce phrases: 'Go straight for two blocks', 'Turn left at the light', etc.",
+        "Practice prepositions: across from, next to, between, on the corner of, etc.",
+        "Distribute direction cards and have students create sentences",
+        "Have students practice in pairs, taking turns giving directions"
+      ]
+    },
+    {
+      title: "Find Your Way Activity",
+      duration: "15 minutes",
+      description: "Practice giving and following directions with maps",
+      materials: ["City maps", "Role-play scenario cards"],
+      instructions: [
+        "Divide students into pairs and distribute scenario cards",
+        "Each card contains a starting point and destination on the map",
+        "Student A must give directions while Student B follows on their map",
+        "Student B should reach the correct destination following the directions",
+        "Switch roles and repeat with different scenarios"
+      ]
+    },
+    {
+      title: "Real-Life Navigation Roleplay",
+      duration: "5 minutes",
+      description: "Practice complete dialogues for asking/giving directions",
+      instructions: [
+        "Model a dialogue: 'Excuse me, how do I get to the museum?' etc.",
+        "Teach polite expressions: 'Could you tell me...?', 'Do you know where...?'",
+        "In pairs, have students create and perform their own dialogues",
+        "Invite a few pairs to present their dialogues to the class"
+      ]
+    }
+  ],
+  assessmentTips: "Evaluate students on their accuracy in giving directions, proper use of prepositions, ability to follow directions on a map, and participation in role-play activities.",
+  homeworkIdeas: [
+    "Write directions from a local landmark to your home using at least 8 direction words", 
+    "Create a simple map of your neighborhood with directions to 3 important places",
+    "Record yourself giving directions to a famous place in your city"
+  ],
+  additionalResources: [
+    {
+      title: "Street View in Google Maps",
+      url: "https://www.google.com/streetview/"
+    },
+    {
+      title: "BBC Learning English - Asking for Directions",
+      url: "https://www.bbc.co.uk/learningenglish/english/course/eiam/unit-5/session-1"
+    }
+  ]
+};

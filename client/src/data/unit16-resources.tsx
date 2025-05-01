@@ -126,3 +126,103 @@ export const foodAndCuisineLessonPlan = {
     }
   ]
 };
+
+// Second lesson plan for Unit 16: Food Culture and Dining Etiquette
+export const foodCultureLessonPlan = {
+  id: "food-culture-lesson",
+  title: "Food Culture and Dining Etiquette",
+  duration: "45 minutes",
+  level: "Intermediate",
+  objectives: [
+    "Learn vocabulary related to dining etiquette and table manners",
+    "Understand cultural differences in eating habits and food traditions",
+    "Practice language for ordering food and dining out",
+    "Develop awareness of proper dining behavior in different contexts"
+  ],
+  materials: [
+    "Visual English Book 7, Unit 16 slides",
+    "Pictures of dining settings from different cultures",
+    "Menu cards from various restaurant types",
+    "Dining etiquette flashcards",
+    "Role-play scenario cards"
+  ],
+  steps: [
+    {
+      title: "Warm-up: Table Setting",
+      duration: "5 minutes",
+      description: "Identify table setting items and dining utensils",
+      instructions: [
+        "Display images of different table settings (formal Western, Asian, Middle Eastern, etc.)",
+        "Ask students to identify the items: fork, knife, spoon, chopsticks, plates, glasses, etc.",
+        "Discuss how table settings differ across cultures",
+        "Create a simple diagram of a formal place setting on the board with labels"
+      ]
+    },
+    {
+      title: "Dining Etiquette Vocabulary",
+      duration: "10 minutes",
+      description: "Learn vocabulary for dining behavior and restaurant interaction",
+      materials: ["Visual English Book 7, Unit 16 slides", "Dining etiquette flashcards"],
+      instructions: [
+        "Introduce vocabulary: reservation, appetizer, main course, dessert, bill, tip, etc.",
+        "Present etiquette terms: manner, polite, impolite, acceptable, taboo, custom, etc.",
+        "Show dining etiquette flashcards with dos and don'ts for different cultures",
+        "Students categorize behaviors as 'polite' or 'impolite' based on their own culture"
+      ]
+    },
+    {
+      title: "Cultural Food Customs",
+      duration: "10 minutes",
+      description: "Explore dining customs from around the world",
+      materials: ["Pictures of dining settings from different cultures"],
+      instructions: [
+        "Present interesting food customs from different countries",
+        "Examples: leaving food on plate in China (polite) vs. clearing plate in US (polite)",
+        "Discuss eating with hands in India vs. using utensils in Europe",
+        "Have students share unusual or interesting food customs from their own cultures",
+        "Create a chart comparing different dining customs across 3-4 cultures"
+      ]
+    },
+    {
+      title: "Restaurant Role-play",
+      duration: "15 minutes",
+      description: "Practice restaurant conversations and ordering food",
+      materials: ["Menu cards from various restaurant types", "Role-play scenario cards"],
+      instructions: [
+        "Divide students into pairs or groups of three",
+        "Distribute menu cards from different types of restaurants",
+        "Assign roles: customer(s), server, host/hostess",
+        "Students role-play a restaurant scenario including: greeting, ordering, asking questions about menu items, paying, and thanking",
+        "Rotate so students can try different roles",
+        "Invite some groups to perform their role-play for the class"
+      ]
+    },
+    {
+      title: "Dining Dilemmas",
+      duration: "5 minutes",
+      description: "Problem-solve challenging dining situations",
+      instructions: [
+        "Present 3-4 dining 'dilemmas' or challenging situations",
+        "Examples: 'You don't like the food you ordered', 'You don't know how to use chopsticks', 'You're invited to eat something you're allergic to'",
+        "Students discuss in small groups how to handle each situation politely",
+        "Share solutions with the class and discuss cultural sensitivity"
+      ]
+    }
+  ],
+  assessmentTips: "Evaluate students on their use of dining vocabulary, participation in role-plays, and understanding of cultural differences in dining customs.",
+  homeworkIdeas: [
+    "Create a guide for visitors to your country explaining important dining etiquette rules", 
+    "Research dining customs in a country you'd like to visit and write a short report",
+    "Design a formal dinner menu with appropriate courses and descriptions"
+  ],
+  additionalResources: [
+    {
+      title: "International Dining Etiquette Guide",
+      url: "https://www.etiquettescholar.com/dining_etiquette/table-etiquette.html"
+    },
+    {
+      title: "Food and Culture Resources - National Geographic",
+      url: "https://www.nationalgeographic.org/topics/resource-library-food-and-culture/"
+    }
+  ]
+};

@@ -130,3 +130,101 @@ export const migrationClimateLessonPlan = {
     }
   ]
 };
+
+// Second lesson plan for Unit 14: Environmental Conservation
+export const environmentalConservationLessonPlan = {
+  id: "environmental-conservation-lesson",
+  title: "Environmental Conservation",
+  duration: "45 minutes",
+  level: "Intermediate",
+  objectives: [
+    "Learn vocabulary related to environmental protection",
+    "Understand solutions to environmental challenges",
+    "Develop language for discussing conservation efforts",
+    "Practice proposing and evaluating environmental solutions"
+  ],
+  materials: [
+    "Visual English Book 7, Unit 14 slides",
+    "Climate Change - What can be done? video",
+    "Pictures of environmental conservation efforts",
+    "Solution cards with environmental actions",
+    "Chart paper and markers"
+  ],
+  steps: [
+    {
+      title: "Warm-up: Environmental Issues",
+      duration: "5 minutes",
+      description: "Identify environmental challenges in students' communities",
+      instructions: [
+        "Show pictures of various environmental issues (pollution, deforestation, etc.)",
+        "Ask students what environmental problems exist in their communities",
+        "Create a list on the board of environmental challenges identified",
+        "Categorize the issues (air quality, water pollution, waste management, etc.)"
+      ]
+    },
+    {
+      title: "Conservation Vocabulary",
+      duration: "10 minutes",
+      description: "Introduce terminology related to environmental protection",
+      materials: ["Visual English Book 7, Unit 14 slides"],
+      instructions: [
+        "Present vocabulary: conservation, sustainability, biodiversity, ecosystem, etc.",
+        "Show images of conservation efforts and sustainable practices",
+        "Practice pronunciation and have students repeat key terms",
+        "Match vocabulary terms with their definitions in pairs"
+      ]
+    },
+    {
+      title: "Video: Solutions for Climate Change",
+      duration: "10 minutes",
+      description: "Learn about possible solutions to environmental challenges",
+      materials: ["Climate Change - What can be done? video"],
+      instructions: [
+        "Play the video focusing on climate change solutions",
+        "Have students note specific actions mentioned in the video",
+        "After watching, create a solutions board with three categories: Individual Actions, Community Actions, Global Actions",
+        "Sort solutions from the video into these categories"
+      ]
+    },
+    {
+      title: "Environmental Solutions Activity",
+      duration: "15 minutes",
+      description: "Evaluate and prioritize conservation solutions",
+      materials: ["Solution cards with environmental actions", "Chart paper and markers"],
+      instructions: [
+        "Divide students into small groups of 3-4",
+        "Distribute solution cards with various environmental actions",
+        "Groups must sort their solutions from highest to lowest impact",
+        "Each group creates a poster showing their prioritized solutions",
+        "Groups present their rankings and explain their reasoning"
+      ]
+    },
+    {
+      title: "Personal Conservation Plan",
+      duration: "5 minutes",
+      description: "Commit to personal environmental actions",
+      instructions: [
+        "Students individually write 3 environmental actions they can take in their daily lives",
+        "Students share one commitment with the class",
+        "Create a class 'Conservation Commitment' poster with everyone's contributions",
+        "Discuss how small individual actions can create larger positive change"
+      ]
+    }
+  ],
+  assessmentTips: "Evaluate students on their appropriate use of environmental vocabulary, participation in the solutions activity, and ability to express ideas about conservation clearly.",
+  homeworkIdeas: [
+    "Research an environmental organization and prepare a presentation about their work", 
+    "Design a poster promoting one specific environmental solution",
+    "Conduct a 'mini-audit' of environmental practices at home and suggest three improvements"
+  ],
+  additionalResources: [
+    {
+      title: "National Geographic - Environment",
+      url: "https://www.nationalgeographic.com/environment/"
+    },
+    {
+      title: "UN Environment Programme",
+      url: "https://www.unep.org/"
+    }
+  ]
+};
