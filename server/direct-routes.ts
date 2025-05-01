@@ -18,7 +18,15 @@ if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
   console.warn("WARNING: AWS credentials are missing or empty! Direct S3 access will not work.");
   console.warn("Make sure AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables are set.");
 } else {
-  console.log("AWS credentials are available for S3 access.");
+  console.log("AWS credentials are available for S3 access:");
+  console.log(` - AWS_ACCESS_KEY_ID: ${process.env.AWS_ACCESS_KEY_ID ? process.env.AWS_ACCESS_KEY_ID.substring(0, 4) + '...' + process.env.AWS_ACCESS_KEY_ID.substring(process.env.AWS_ACCESS_KEY_ID.length - 4) : 'Not set'}`);
+  console.log(` - AWS_SECRET_ACCESS_KEY: ${process.env.AWS_SECRET_ACCESS_KEY ? '********' + process.env.AWS_SECRET_ACCESS_KEY.substring(process.env.AWS_SECRET_ACCESS_KEY.length - 4) : 'Not set'}`);
+  
+  // Validate AWS access key format - should start with AKIA for IAM user access keys
+  if (process.env.AWS_ACCESS_KEY_ID && !process.env.AWS_ACCESS_KEY_ID.startsWith('AKIA')) {
+    console.warn("WARNING: AWS_ACCESS_KEY_ID doesn't have the expected format (should start with 'AKIA').");
+    console.warn("This may be a fake or incorrectly formatted access key.");
+  }
 }
 
 // Import NodeJS's https module to check for redirects
@@ -325,26 +333,83 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
-  // Test route to verify S3 connectivity
+  // Test route to verify S3 connectivity with detailed diagnostics
   app.get("/api/direct/test-s3", async (req, res) => {
     try {
-      console.log("Testing S3 connectivity...");
+      console.log("Testing S3 connectivity with detailed diagnostics...");
+
+      // Log environment variables (without exposing secrets)
+      console.log("AWS Credential Status:");
+      console.log(" - AWS_ACCESS_KEY_ID present:", !!process.env.AWS_ACCESS_KEY_ID);
+      console.log(" - AWS_SECRET_ACCESS_KEY present:", !!process.env.AWS_SECRET_ACCESS_KEY);
+      
+      // Validate credentials format (without printing them)
+      if (process.env.AWS_ACCESS_KEY_ID) {
+        console.log(" - AWS_ACCESS_KEY_ID format valid:", 
+          process.env.AWS_ACCESS_KEY_ID.startsWith('AKIA') && 
+          process.env.AWS_ACCESS_KEY_ID.length === 20);
+      }
+      
+      // Log S3 configuration
+      console.log("S3 Configuration:");
+      console.log(" - Bucket name:", S3_BUCKET);
+      console.log(" - Region: eu-north-1"); // Stockholm region
+      
       // Try listing objects in the root of the bucket to test connectivity
+      console.log("Attempting to list objects in bucket root...");
       const s3Files = await listS3Objects("");
+      
+      // Check redirect
+      console.log("Checking bucket redirection...");
+      const redirectUrl = await checkBucketRedirect(`https://${S3_BUCKET}.s3.amazonaws.com`);
       
       return res.json({
         success: true,
-        message: "S3 connection successful",
-        fileCount: s3Files.length,
-        sampleFiles: s3Files.length > 0 ? s3Files.slice(0, 5) : []
+        message: "S3 connection diagnostic complete",
+        aws_credentials: {
+          access_key_present: !!process.env.AWS_ACCESS_KEY_ID,
+          secret_key_present: !!process.env.AWS_SECRET_ACCESS_KEY,
+          access_key_format_valid: process.env.AWS_ACCESS_KEY_ID ? 
+            (process.env.AWS_ACCESS_KEY_ID.startsWith('AKIA') && 
+             process.env.AWS_ACCESS_KEY_ID.length === 20) : false
+        },
+        s3_config: {
+          bucket: S3_BUCKET,
+          region: 'eu-north-1',
+          endpoint: 'https://s3.eu-north-1.amazonaws.com',
+          redirects: !!redirectUrl,
+          redirect_url: redirectUrl || null
+        },
+        connection_test: {
+          success: true,
+          file_count: s3Files.length,
+          sample_files: s3Files.length > 0 ? s3Files.slice(0, 5) : []
+        }
       });
     } catch (error) {
-      const err = error as { message?: string };
+      const err = error as { name?: string, message?: string, $metadata?: { httpStatusCode?: number } };
       console.error("S3 test connection failed:", error);
+      
+      // Detailed error analysis
+      let errorDetails = {
+        error_type: err.name || 'Unknown',
+        message: err.message || 'Unknown error',
+        status_code: err.$metadata?.httpStatusCode || 0
+      };
+      
       return res.status(500).json({
         success: false,
-        message: "S3 connection failed",
-        error: err.message || "Unknown error"
+        message: "S3 connection diagnostic failed",
+        aws_credentials: {
+          access_key_present: !!process.env.AWS_ACCESS_KEY_ID,
+          secret_key_present: !!process.env.AWS_SECRET_ACCESS_KEY
+        },
+        s3_config: {
+          bucket: S3_BUCKET,
+          region: 'eu-north-1',
+          endpoint: 'https://s3.eu-north-1.amazonaws.com'
+        },
+        error: errorDetails
       });
     }
   });
