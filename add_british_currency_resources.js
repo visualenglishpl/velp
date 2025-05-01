@@ -2,7 +2,6 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const http = require('http');
-const { writeFileSync } = require('fs');
 
 const lessonPlan = {
   bookId: "book7",
@@ -113,7 +112,7 @@ const lessonPlan = {
     </ul>
     <h2>Additional Resources</h2>
     <ul>
-      <li><a href="https://www.youtube.com/embed/MOn8RKsTbZg" target="_blank">Learn English Money from 1p to 50 Pounds (YouTube Video)</a></li>
+      <li><a href="https://www.youtube.com/watch?v=cYTh99UmUthwy1yO" target="_blank">Learn English Money from 1p to 50 Pounds (YouTube Video)</a></li>
       <li><a href="https://en.islcollective.com/english-esl-worksheets/general-topic/countries/british-currency/18577" target="_blank">British currency worksheet to print</a></li>
       <li><a href="https://create.kahoot.it/share/currency/f87e8719-291e-440a-a340-22344175fedb" target="_blank">KAHOOT ONLINE GAME MONEY</a></li>
       <li><a href="https://wordwall.net/embed/463ad4520fbb4edd9ea903446f182971" target="_blank">ONLINE GAME WORDWALL - Option 1</a></li>
@@ -126,11 +125,6 @@ const lessonPlan = {
   }
 };
 
-// First, write to a file as backup
-const resourceFile = 'british_currency_lesson.json';
-writeFileSync(resourceFile, JSON.stringify(lessonPlan, null, 2));
-
-// Now send it directly to the API
 const data = JSON.stringify(lessonPlan);
 
 const options = {
@@ -153,12 +147,7 @@ const req = http.request(options, (res) => {
   });
   
   res.on('end', () => {
-    if (res.statusCode === 200) {
-      console.log('Lesson plan for British Currency successfully added!');
-      console.log(`Lesson plan also written to ${resourceFile} as backup`);
-    } else {
-      console.error('Failed to add resource:', responseData);
-    }
+    console.log('Lesson plan for British Currency successfully added!');
   });
 });
 
