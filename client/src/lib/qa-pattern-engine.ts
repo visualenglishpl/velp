@@ -406,17 +406,7 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
     }
   }
   
-  // Don't return a generic question for intro slides (00 A) or title slides - leave them blank
-  if (filename.startsWith('00 A') || filename.includes('ACCOMODATION') || filename.includes('ACCOMMODATION')) {
-    console.log('Returning blank Q&A for intro/title slide:', filename);
-    return {
-      question: '',
-      answer: '',
-      generatedBy: 'pattern-engine'
-    };
-  }
-  
-  // If we couldn't generate something specific for other slides, return a generic answer
+  // If we couldn't generate something specific, return a generic answer
   return {
     question: 'What do you see in this picture?',
     answer: 'I can see [describe what\'s in the image].',
