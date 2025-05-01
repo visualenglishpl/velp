@@ -679,6 +679,230 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     }
     
+    // Unit 7 - DIY & Tools lesson plans
+    if (bookId === '7' && unitId === '7') {
+      // Get Unit 7 lesson plans
+      let unit7Plans: LessonPlan[] = [];
+      try {
+        unit7Plans = getUnit7LessonPlans();
+      } catch (error) {
+        console.error('Error getting Unit 7 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">DIY & Tools Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {unit7Plans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `diy-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Unit 8 - Musical Instruments lesson plans
+    if (bookId === '7' && unitId === '8') {
+      // Get Unit 8 lesson plans
+      let unit8Plans: LessonPlan[] = [];
+      try {
+        unit8Plans = getUnit8LessonPlans();
+      } catch (error) {
+        console.error('Error getting Unit 8 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Musical Instruments Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {unit8Plans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `music-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Unit 9 - Jobs lesson plans
+    if (bookId === '7' && unitId === '9') {
+      // Get Unit 9 lesson plans
+      let unit9Plans: LessonPlan[] = [];
+      try {
+        unit9Plans = getUnit9LessonPlans();
+      } catch (error) {
+        console.error('Error getting Unit 9 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Jobs & Careers Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {unit9Plans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `jobs-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Unit 10 - Sports lesson plans
+    if (bookId === '7' && unitId === '10') {
+      // Get Unit 10 lesson plans
+      let unit10Plans: LessonPlan[] = [];
+      try {
+        unit10Plans = getUnit10LessonPlans();
+      } catch (error) {
+        console.error('Error getting Unit 10 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Sports Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {unit10Plans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `sports-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
     // Return both resource plans and built-in plans
     return (
       <div className="space-y-8">
