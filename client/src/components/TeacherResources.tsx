@@ -274,42 +274,50 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       }
     }
 
-    // Resources for Book 7, Unit 7
+    // Resources for Book 7, Unit 7 - DIY & Tools
     if (bookId === '7' && unitId === '7') {
-      return [
-        {
-          id: "book7-unit7-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 7 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit7/00%20A%20Book%207%20%E2%80%93%20Unit%207.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit7-game1",
-          bookId,
-          unitId,
-          title: "Wordwall Game 1",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/f371ca1c30ca40a8a9b0428f9c00c31f",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f371ca1c30ca40a8a9b0428f9c00c31f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit7-game2",
-          bookId,
-          unitId,
-          title: "Wordwall Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/46e5304dce5040f5bca2005877e48058",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/46e5304dce5040f5bca2005877e48058?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
+      // Using resources from unit7-implementation.tsx
+      try {
+        return getUnit7Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 7 resources:', error);
+        return [];
+      }
     }
-
+    
+    // Resources for Book 7, Unit 8 - Musical Instruments
+    if (bookId === '7' && unitId === '8') {
+      // Using resources from unit8-implementation.tsx
+      try {
+        return getUnit8Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 8 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 7, Unit 9 - Jobs
+    if (bookId === '7' && unitId === '9') {
+      // Using resources from unit9-implementation.tsx
+      try {
+        return getUnit9Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 9 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 7, Unit 10 - Sports
+    if (bookId === '7' && unitId === '10') {
+      // Using resources from unit10-implementation.tsx
+      try {
+        return getUnit10Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 10 resources:', error);
+        return [];
+      }
+    }
+    
     // If no specific resources, return an empty array
     return [];
   }, [bookId, unitId]);
