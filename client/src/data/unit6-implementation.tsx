@@ -1,125 +1,83 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Printer, Trash2 } from "lucide-react";
-import LessonPlanTemplate from "@/components/LessonPlanTemplate";
-import { britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from "./lesson-plans-unit6";
-import { unit6Resources } from "./unit6-resources";
+// Unit 6 implementation file for Teacher Resources
+import { LessonPlan } from "@/components/LessonPlanTemplate";
+import { TeacherResource } from "@/components/TeacherResources";
+import { britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from "./unit6-resources";
 
-// Function to generate Unit 6 lesson plans UI component
-export const getUnit6LessonPlans = (bookId: string, unitId: string, isEditMode: boolean, setConfirmDelete: any) => {
-  return (
-    <div className="mt-6 space-y-8">
-      <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
-      <div className="lesson-plan-grid">
-        <div>
-          <Card className="h-full">
-            <CardHeader className="pb-2">
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="flex justify-between text-lg">
-                    <span>British Currency and Money</span>
-                    <span className="text-sm font-normal ml-2">45 min</span>
-                  </CardTitle>
-                  <CardDescription></CardDescription>
-                </div>
-                {isEditMode && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="text-xs flex items-center text-destructive" 
-                    onClick={() => setConfirmDelete({ id: 'british-currency-1', title: 'British Currency and Money', bookId, unitId, resourceType: 'lesson' })}
-                  >
-                    <Trash2 className="h-3 w-3 mr-1" />
-                    Delete
-                  </Button>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent className="max-h-[500px] overflow-y-auto">
-              <LessonPlanTemplate plan={britishCurrencyLessonPlan} />
-            </CardContent>
-            <CardFooter className="bg-muted/20 pt-3 pb-3">
-              <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-        <div>
-          <Card className="h-full">
-            <CardHeader className="pb-2">
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="flex justify-between text-lg">
-                    <span>International Money and Exchange</span>
-                    <span className="text-sm font-normal ml-2">45 min</span>
-                  </CardTitle>
-                  <CardDescription></CardDescription>
-                </div>
-                {isEditMode && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="text-xs flex items-center text-destructive" 
-                    onClick={() => setConfirmDelete({ id: 'international-money-1', title: 'International Money and Exchange', bookId, unitId, resourceType: 'lesson' })}
-                  >
-                    <Trash2 className="h-3 w-3 mr-1" />
-                    Delete
-                  </Button>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent className="max-h-[500px] overflow-y-auto">
-              <LessonPlanTemplate plan={internationalMoneyLessonPlan} />
-            </CardContent>
-            <CardFooter className="bg-muted/20 pt-3 pb-3">
-              <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-        <div>
-          <Card className="h-full">
-            <CardHeader className="pb-2">
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="flex justify-between text-lg">
-                    <span>Spending and Saving Money</span>
-                    <span className="text-sm font-normal ml-2">45 min</span>
-                  </CardTitle>
-                  <CardDescription></CardDescription>
-                </div>
-                {isEditMode && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="text-xs flex items-center text-destructive" 
-                    onClick={() => setConfirmDelete({ id: 'spending-saving-1', title: 'Spending and Saving Money', bookId, unitId, resourceType: 'lesson' })}
-                  >
-                    <Trash2 className="h-3 w-3 mr-1" />
-                    Delete
-                  </Button>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent className="max-h-[500px] overflow-y-auto">
-              <LessonPlanTemplate plan={spendingSavingLessonPlan} />
-            </CardContent>
-            <CardFooter className="bg-muted/20 pt-3 pb-3">
-              <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      </div>
-    </div>
-  );
+/**
+ * Get money-themed lesson plans for Unit 6
+ */
+export const getUnit6LessonPlans = (): LessonPlan[] => {
+  return [
+    britishCurrencyLessonPlan,
+    internationalMoneyLessonPlan,
+    spendingSavingLessonPlan
+  ];
 };
 
-// Function to get Unit 6 predefined resources
-export const getUnit6Resources = () => {
-  return unit6Resources;
+/**
+ * Get resources specifically for Unit 6 (Money theme)
+ */
+export const getUnit6Resources = (bookId: string, unitId: string): TeacherResource[] => {
+  return [
+    {
+      id: "book7-unit6-pdf1",
+      bookId,
+      unitId,
+      title: "Book 7 - Unit 6 Overview",
+      resourceType: "pdf" as const,
+      provider: "Visual English",
+      sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf",
+      fileUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf",
+    },
+    {
+      id: "book7-unit6-video1",
+      bookId,
+      unitId,
+      title: "Learn English Money from 1p to 50 Pounds",
+      resourceType: "video" as const,
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/embed/Vcoi6l0D6ak",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Vcoi6l0D6ak?si=cYTh99UmUthwy1yO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit6-lesson1",
+      bookId,
+      unitId,
+      title: "British Currency Worksheet to Print",
+      resourceType: "lesson" as const,
+      provider: "ISL Collective",
+      sourceUrl: "https://en.islcollective.com/english-esl-worksheets/general-topic/countries/british-currency/18577",
+      embedCode: ""
+    },
+    {
+      id: "book7-unit6-game1",
+      bookId,
+      unitId,
+      title: "Money Kahoot Game",
+      resourceType: "game" as const,
+      provider: "Kahoot",
+      sourceUrl: "https://create.kahoot.it/share/currency/f87e8719-291e-440a-a340-22344175fedb",
+      embedCode: ""
+    },
+    {
+      id: "book7-unit6-game2",
+      bookId,
+      unitId,
+      title: "Money Wordwall Game 1",
+      resourceType: "game" as const,
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/463ad4520fbb4edd9ea903446f182971",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/463ad4520fbb4edd9ea903446f182971?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      id: "book7-unit6-game3",
+      bookId,
+      unitId,
+      title: "Money Wordwall Game 2",
+      resourceType: "game" as const,
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/2108e23e264b487b9f5c8022145d22d8",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2108e23e264b487b9f5c8022145d22d8?themeId=41&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ];
 };

@@ -9,6 +9,9 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
+// Import resources for Book 7, Unit 6
+import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from '@/data/unit6-resources';
+
 // Add CSS for responsive grid layout
 import "@/styles/teacher-resources-grid.css";
 import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image, PenLine, CheckCircle, Maximize2 } from 'lucide-react';
@@ -94,910 +97,107 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId);
     
   // Create custom constants for specific books and units to check for special resources
-  const isBook7Unit16 = bookId === '7' && unitId === '16';
+  const isBook7Unit6 = bookId === '7' && unitId === '6';
   
-  // Lesson plans for specific book/unit combinations
-  const createFoodLessonPlans = () => {
-    if (isBook7Unit16) {
-      return [
-        {
-          id: 'british-food-1',
-          title: 'British Food and Meals - Part 1',
-          duration: '45 minutes',
-          level: '',
-          objectives: [
-            'Identify and name common British foods and meals',
-            'Discuss food preferences using simple structures',
-            'Learn vocabulary related to cooking and meal preparation',
-            'Understand cultural differences in meal times and food customs'
-          ],
-          materials: [
-            'Visual English Book 7, Unit 16 slides (01 A - 05 C)',
-            'Wordwall interactive game - British Food Quiz',
-            'YouTube video: "British Food and Meals Vocabulary"',
-            'Food flashcards',
-            'Recipe handouts for traditional British dishes'
-          ],
-          steps: [
-            {
-              title: 'Warm-up: Food Preferences',
-              duration: '5 mins',
-              description: 'Begin by asking students about their food preferences and eating habits.',
-              instructions: [
-                "Ask students: 'What did you eat for breakfast today?'",
-                "Follow up with: 'Do you prefer sweet or savory breakfast foods?'",
-                "Use the opportunity to pre-teach some basic vocabulary that might come up in their responses."
-              ],
-              teacherNotes: 'This activity helps assess prior knowledge and creates context for the lesson.'
-            },
-            {
-              title: 'Presentation: British Food Introduction',
-              duration: '10 mins',
-              description: 'Introduce traditional British foods using Visual English Book 7 slides.',
-              materials: [
-                'Book 7, Unit 16 slides (01 A - 03 C)',
-                'Food flashcards'
-              ],
-              instructions: [
-                'Display Book 7, Unit 16 slides showing different British foods',
-                'For each food, ask: "What is this food called?"',
-                'Drill pronunciation of each food name',
-                'Briefly explain the ingredients and when this food is typically eaten'
-              ]
-            },
-            {
-              title: 'Vocabulary Development: British Food Video',
-              duration: '10 mins',
-              description: 'Watch the "British Food and Meals Vocabulary" video to reinforce food vocabulary.',
-              materials: [
-                'YouTube video from Teacher Resources',
-                'Simple worksheet with food items listed'
-              ],
-              instructions: [
-                'Play the video once all the way through',
-                'Play again, pausing after each section to discuss the foods shown',
-                'Have students mark on their worksheets which foods they recognize or would like to try'
-              ],
-              teacherNotes: 'This video provides authentic examples and pronunciation of food vocabulary.'
-            },
-            {
-              title: 'Guided Practice: Food Matching Activity',
-              duration: '15 mins',
-              description: 'Students match food names to images and categorize them by meal time.',
-              materials: [
-                'Handout with food images and meal categories',
-                'Book 7, Unit 16 slides (04 A - 05 C)'
-              ],
-              instructions: [
-                'Distribute handouts with food images',
-                'Students work in pairs to match foods to appropriate meal times (breakfast, lunch, dinner)',
-                'Review the answers as a class using the Book 7 slides',
-                'For each answer, ask students if these foods are common in their country for these meals'
-              ]
-            },
-            {
-              title: 'Wrap-up: Food Preferences Discussion',
-              duration: '5 mins',
-              description: 'Students share their opinions about British foods they would like to try.',
-              instructions: [
-                'Have students complete the sentence: "I would like to try ___ because..."',
-                'Allow 3-4 students to share their preferences with the class',
-                'Summarize the key food vocabulary learned in the lesson'
-              ]
-            }
-          ],
-          assessmentTips: 'Assess students through their participation in the matching activity and their ability to identify foods correctly during the video activity.',
-          homeworkIdeas: [
-            'Write 3-5 sentences about your favorite meal of the day, including what foods you typically eat.',
-            'Research one traditional British dish and write down its main ingredients.'
-          ],
-          additionalResources: [
-            {
-              title: 'Wordwall British Food Quiz',
-              url: 'https://wordwall.net/resource/29266561/british-food-quiz'
-            },
-            {
-              title: 'British Food Vocabulary Video',
-              url: 'https://www.youtube.com/watch?v=QBt2RdBBNHo'
-            }
-          ]
-        },
-        {
-          id: 'cooking-vocabulary-1',
-          title: 'Cooking Vocabulary - Part 1',
-          duration: '45 minutes',
-          level: '',
-          objectives: [
-            'Learn vocabulary related to cooking methods and kitchen equipment',
-            'Understand and follow simple recipe instructions',
-            'Use imperative forms for cooking instructions',
-            'Discuss food preparation in different cultures'
-          ],
-          materials: [
-            'Visual English Book 7, Unit 16 slides (06 A - 10 C)',
-            'Wordwall interactive game - Food Matching Game',
-            'YouTube video: "Cooking Vocabulary in English"',
-            'Simple recipe cards with cooking instructions',
-            'Kitchen utensils flashcards or images'
-          ],
-          steps: [
-            {
-              title: 'Warm-up: Cooking Experience',
-              duration: '5 mins',
-              description: 'Start by asking students about their cooking experience and favorite dishes to make.',
-              instructions: [
-                "Ask students: 'Do you cook at home? What do you like to cook?'",
-                "Follow up with: 'What's your specialty dish?'",
-                "Use the opportunity to pre-teach some basic cooking vocabulary."
-              ],
-              teacherNotes: 'This activity helps assess prior knowledge and creates context for the lesson.'
-            },
-            {
-              title: 'Presentation: Cooking Methods and Utensils',
-              duration: '12 mins',
-              description: 'Introduce cooking vocabulary using Visual English Book 7 slides and images.',
-              materials: [
-                'Book 7, Unit 16 slides (06 A - 08 B)',
-                'Kitchen utensils flashcards'
-              ],
-              instructions: [
-                'Display slides showing different cooking methods (boil, fry, bake, etc.)',
-                'For each method, ask: "What cooking method is this?"',
-                'Introduce kitchen equipment vocabulary (pot, pan, spatula, etc.)',
-                'Demonstrate the action for each cooking verb'
-              ],
-              teacherNotes: 'Use gestures to reinforce the meaning of cooking verbs.'
-            },
-            {
-              title: 'Vocabulary Development: Cooking Video',
-              duration: '10 mins',
-              description: 'Watch the "Cooking Vocabulary in English" video to reinforce cooking terminology.',
-              materials: [
-                'YouTube video from Teacher Resources',
-                'Worksheet with cooking verbs and utensils'
-              ],
-              instructions: [
-                'Play the video once all the way through',
-                'Play again, pausing after each section to practice the vocabulary',
-                'Have students complete their worksheets as they watch'
-              ],
-              teacherNotes: 'This video shows practical applications of cooking vocabulary.'
-            },
-            {
-              title: 'Guided Practice: Recipe Instructions',
-              duration: '13 mins',
-              description: 'Students practice giving and following cooking instructions.',
-              materials: [
-                'Simple recipe cards with ingredients and steps',
-                'Book 7, Unit 16 slides (09 A - 10 C)'
-              ],
-              instructions: [
-                'Divide students into pairs and give each pair a simple recipe card',
-                'One student reads the instructions while the other mimes the actions',
-                'Students then switch roles',
-                'As a class, discuss which recipes sound delicious or difficult'
-              ]
-            },
-            {
-              title: 'Wrap-up: Favorite Recipe',
-              duration: '5 mins',
-              description: 'Students share a simple recipe from their own culture.',
-              instructions: [
-                'Have students tell a partner about a simple dish from their country',
-                'Ask them to include at least three cooking verbs in their description',
-                'Invite 2-3 students to share their recipes with the class',
-                'Summarize the key cooking vocabulary learned'
-              ]
-            }
-          ],
-          assessmentTips: 'Evaluate students on their ability to use cooking verbs correctly and follow recipe instructions.',
-          homeworkIdeas: [
-            'Write a simple recipe for your favorite dish using at least 5 cooking verbs.',
-            'Create a list of 10 kitchen utensils with their uses.'
-          ],
-          additionalResources: [
-            {
-              title: 'Food Matching Game',
-              url: 'https://wordwall.net/resource/23705207/food-matching-game'
-            },
-            {
-              title: 'Cooking Vocabulary Video',
-              url: 'https://www.youtube.com/watch?v=pySYSJQMs84'
-            }
-          ]
-        }
-      ];
-    }
-    
-    return [];
-  };
-
-  // Fetch teacher resources
-  const { data, isLoading, refetch } = useQuery<TeacherResource[]>({
-    queryKey: [`/api/direct/${bookId}/${unitId}/resources`],
-    queryFn: getQueryFn({ on401: "returnNull" }),
+  // Handle initial data loading - bookUnitResources, local storage resources
+  const { data: bookUnitResources = [], isLoading, error } = useQuery<TeacherResource[]>({
+    queryKey: [`/api/teacher-resources/${bookId}/${unitId}`],
+    queryFn: getQueryFn<TeacherResource[]>(),
   });
 
-  // Helper function to get additional unit-specific resources
-  const getMoreUnitResources = (bookId: string, unitId: string): TeacherResource[] => {
-    // Book 7, Unit 4 - Hotels vocabulary
-    if (bookId === '7' && unitId === '4') {
-      return [
-        {
-          id: "book7-unit4-video1",
-          bookId,
-          unitId,
-          title: "Hotel Vocabulary - ESL Collective",
-          resourceType: "video" as const,
-          provider: "ISL Collective",
-          sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/297369", 
-          embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/297369" width="100%" height="500" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
-        },
-        {
-          id: "book7-unit4-game1",
-          bookId,
-          unitId,
-          title: "Hotel Vocabulary Game 1",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/ead2718ebb544050a5077cc541d2e2a2",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ead2718ebb544050a5077cc541d2e2a2?themeId=1&templateId=2&fontStackId=0" width="100%" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit4-game2",
-          bookId,
-          unitId,
-          title: "Hotel Vocabulary Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/8a41f00f851f4c63b560c5a8e3b0622c",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8a41f00f851f4c63b560c5a8e3b0622c?themeId=1&templateId=3&fontStackId=0" width="100%" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit4-game3",
-          bookId,
-          unitId,
-          title: "Hotel Vocabulary Game 3",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/4d43ce661a25430eb84b3fe4e94a20ab",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4d43ce661a25430eb84b3fe4e94a20ab?themeId=1&templateId=3&fontStackId=0" width="100%" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-    
-    // Book 7, Unit 1 - Film genres
-    if (bookId === '7' && unitId === '1') {
-      return [
-        {
-          id: "book7-unit1-video1",
-          bookId,
-          unitId,
-          title: "Movie Genres Vocabulary - ESL Guessing Game",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=FTuQIwl7j3k",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FTuQIwl7j3k?si=wh3So_Qj8Hqk6TL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-video2",
-          bookId,
-          unitId,
-          title: "Guess the Soundtrack of the Films",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://youtu.be/p57KyLojoHU",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/p57KyLojoHU?si=g_6AyW2jlsRI9DgC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-video3",
-          bookId,
-          unitId,
-          title: "Guess the Film Genre",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=Bp07u0YrH4Y",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Bp07u0YrH4Y?si=ufzMpcalPer6eRCn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-game1",
-          bookId,
-          unitId,
-          title: "Film and TV Vocabulary",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/de72c3ff49e54609b845500c1bf34432",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/de72c3ff49e54609b845500c1bf34432?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-game2",
-          bookId,
-          unitId,
-          title: "Film Genres Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/dcc6034981ea455d9bfa88f6740c720f",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/dcc6034981ea455d9bfa88f6740c720f?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-game3",
-          bookId,
-          unitId,
-          title: "Film Production Roles",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/1e211e293d514f56b1786cfbf6ed146b",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1e211e293d514f56b1786cfbf6ed146b?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 2 - Piercings & Tattoos
-    if (bookId === '7' && unitId === '2') {
-      return [
-        {
-          id: "book7-unit2-video2",
-          bookId,
-          unitId,
-          title: "Short Movie on Afro Hair",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=kNw8V_Fkw28",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/kNw8V_Fkw28?si=9Zl2x1mjJ3wRpYZ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit2-video1",
-          bookId,
-          unitId,
-          title: "Tattoos & Piercings Worksheet",
-          resourceType: "video" as const,
-          provider: "British Council",
-          sourceUrl: "https://learnenglishteens.britishcouncil.org/study-break/youtubers/tattoos-piercings",
-          embedCode: "<iframe width=\"560\" height=\"315\" src=\"https://learnenglishteens.britishcouncil.org/study-break/youtubers/tattoos-piercings\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 3 - Crime
-    if (bookId === '7' && unitId === '3') {
-      return [
-        {
-          id: "book7-unit3-video1",
-          bookId,
-          unitId,
-          title: "Where Do You See Robbers - In Shops & Banks",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://youtu.be/uikPlL-AOzw",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/uikPlL-AOzw?si=nlokxIhxX173GPzk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit3-video2",
-          bookId,
-          unitId,
-          title: "What Crime Are They Committing - Smuggling",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://youtu.be/0FRKITalAz4",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/0FRKITalAz4?si=Kkb15NP2MqOUjvvS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Book 7, Unit 16 - Food and Meals
-    if (bookId === '7' && unitId === '16') {
-      return [
-        {
-          id: "book7-unit16-video1",
-          bookId,
-          unitId,
-          title: "British Food and Meals Vocabulary",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=QBt2RdBBNHo",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/QBt2RdBBNHo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-video2",
-          bookId,
-          unitId,
-          title: "Cooking Vocabulary in English",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=bXL9CsRYTbA",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/bXL9CsRYTbA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-game1",
-          bookId,
-          unitId,
-          title: "Food Matching Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/23705207/food-matching-game",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3e4cba0db1a749208ff28fc5f45b4c89?themeId=1&templateId=25&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-game2",
-          bookId,
-          unitId,
-          title: "British Food Quiz",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/29266561/british-food-quiz",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0fd4a02daa474f3384696a0b1eee3c00?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-game3",
-          bookId,
-          unitId,
-          title: "Food Tastes",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/11861517/food-taste",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/de48ab52e53e4bbc8e81f76a7e3ea91c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-game4",
-          bookId,
-          unitId,
-          title: "Food Stall / Trucks",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/38078294/food-trucks-match-up",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ced23dfdb9584e64874b39d68d14dc17?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-game5",
-          bookId,
-          unitId,
-          title: "Guess The Fast Food Restaurants Logo",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/31559300/guess-the-fast-food-restaurants-logo",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3ac9ef15d8794a0f98fa17f5c01be4ae?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-    
-    // Default case - return empty array if no specific resources found
-    return [];
-  };
-
-  // Resources for various book units
-  const getBookUnitResources = (bookId: string, unitId: string): TeacherResource[] => {
-    // Common PDF resources that should appear for all Book 7 units
-    if (bookId === '7') {
-      // Unit-specific PDF resources
-      if (unitId === '1') {
-        return [
-          {
-            id: `book7-unit1-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 1 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit1/00%20A%20Book%207%20%E2%80%93%20Unit%201.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit1/00%20A%20Book%207%20%E2%80%93%20Unit%201.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '2') {
-        return [
-          {
-            id: `book7-unit2-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 2 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '3') {
-        return [
-          {
-            id: `book7-unit3-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 3 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit3/00%20A%20Book%207%20%E2%80%93%20Unit%203.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit3/00%20A%20Book%207%20%E2%80%93%20Unit%203.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '4') {
-        return [
-          {
-            id: `book7-unit4-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 4 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit4/00%20A%20Book%207%20%E2%80%93%20Unit%204.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit4/00%20A%20Book%207%20%E2%80%93%20Unit%204.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '5') {
-        return [
-          {
-            id: `book7-unit5-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 5 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit5/00%20A%20Book%207%20%E2%80%93%20Unit%205.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit5/00%20A%20Book%207%20%E2%80%93%20Unit%205.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '6') {
-        return [
-          {
-            id: `book7-unit6-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 6 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '7') {
-        return [
-          {
-            id: `book7-unit7-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 7 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit7/00%20A%20Book%207%20%E2%80%93%20Unit%207.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit7/00%20A%20Book%207%20%E2%80%93%20Unit%207.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '8') {
-        return [
-          {
-            id: `book7-unit8-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 8 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit8/00%20A%20Book%207%20%E2%80%93%20Unit%208.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit8/00%20A%20Book%207%20%E2%80%93%20Unit%208.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '9') {
-        return [
-          {
-            id: `book7-unit9-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 9 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit9/00%20A%20Book%207%20%E2%80%93%20Unit%209.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit9/00%20A%20Book%207%20%E2%80%93%20Unit%209.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '10') {
-        return [
-          {
-            id: `book7-unit10-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 10 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit10/00%20A%20Book%207%20%E2%80%93%20Unit%2010.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit10/00%20A%20Book%207%20%E2%80%93%20Unit%2010.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '11') {
-        return [
-          {
-            id: `book7-unit11-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 11 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit11/00%20A%20Book%207%20%E2%80%93%20Unit%2011.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit11/00%20A%20Book%207%20%E2%80%93%20Unit%2011.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '12') {
-        return [
-          {
-            id: `book7-unit12-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 12 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit12/00%20A%20Book%207.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit12/00%20A%20Book%207.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '13') {
-        return [
-          {
-            id: `book7-unit13-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 13 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit13/00%20A%20Book%207%20%E2%80%93%20Unit%2013.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit13/00%20A%20Book%207%20%E2%80%93%20Unit%2013.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '14') {
-        return [
-          {
-            id: `book7-unit14-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 14 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit14/00%20A%20Book%207.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit14/00%20A%20Book%207.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '15') {
-        return [
-          {
-            id: `book7-unit15-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 15 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit15/00%20A%20Book%207.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit15/00%20A%20Book%207.pdf`
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
-      } else if (unitId === '16') {
-        return [
-          {
-            id: `book7-unit16-pdf1`,
-            bookId,
-            unitId,
-            title: "Book 7 - Unit 16 Overview",
-            resourceType: "pdf" as const,
-            provider: "Visual English",
-            sourceUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf`,
-            fileUrl: `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf`
-          },
-          {
-            id: "british-food-lesson-plan-1",
-            bookId,
-            unitId,
-            title: "British Food and Meals - 45-minute Lesson Plan",
-            resourceType: "lesson" as const,
-            provider: "Visual English",
-            sourceUrl: "",
-            lessonPlan: createFoodLessonPlans()[0] // Reference the first lesson plan we created
-          },
-          {
-            id: "cooking-vocabulary-lesson-plan-1",
-            bookId,
-            unitId,
-            title: "Cooking Vocabulary - 45-minute Lesson Plan",
-            resourceType: "lesson" as const,
-            provider: "Visual English",
-            sourceUrl: "",
-            lessonPlan: createFoodLessonPlans()[1] // Reference the second lesson plan we created
-          },
-          ...getMoreUnitResources(bookId, unitId)
-        ];
+  // Mutation to add a new resource
+  const addResourceMutation = useMutation({
+    mutationFn: async (newResource: TeacherResource) => {
+      const formData = new FormData();
+      
+      // Add file if available
+      if (uploadedFile) {
+        formData.append('file', uploadedFile);
       }
-      // Default return for Book 7 with unit-specific fallback resources
-      return getMoreUnitResources(bookId, unitId);
-    }
-    
-    // Resources for other books or specific units in Book 7 that were already implemented
-    // Resources for Book 7, Unit 1 - Film genres
-    if (bookId === '7' && unitId === '1') {
-      return [
-        {
-          id: "book7-unit1-video1",
-          bookId,
-          unitId,
-          title: "Movie Genres Vocabulary Epic ESL Guessing Game",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=FTuQIwl7j3k",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FTuQIwl7j3k?si=wh3So_Qj8Hqk6TL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-video2",
-          bookId,
-          unitId,
-          title: "Guess the soundtrack of the films",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://youtu.be/p57KyLojoHU?si=ydbr2xbJxAgeN7_u",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/p57KyLojoHU?si=g_6AyW2jlsRI9DgC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-video3",
-          bookId,
-          unitId,
-          title: "Guess the Film Genre",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=Bp07u0YrH4Y",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Bp07u0YrH4Y?si=ufzMpcalPer6eRCn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-game1",
-          bookId,
-          unitId,
-          title: "Film Genres Game 1",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/dcc6034981ea455d9bfa88f6740c720f",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/dcc6034981ea455d9bfa88f6740c720f?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-game2",
-          bookId,
-          unitId,
-          title: "Film Genres Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/1e211e293d514f56b1786cfbf6ed146b",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1e211e293d514f56b1786cfbf6ed146b?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-game3",
-          bookId,
-          unitId,
-          title: "Film Genres Game 3",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/de72c3ff49e54609b845500c1bf34432",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/de72c3ff49e54609b845500c1bf34432?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit1-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 1 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit1/00%20A%20Book%207%20%E2%80%93%20Unit%201.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit1-pdf2",
-          bookId,
-          unitId,
-          title: "Links to Online Games and Films",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://67bd8e1e-e6a8-419f-b59e-299052eae36a-00-1j78vcuapq5ig.spock.replit.dev/book7/unit1/22%20D%20Links%20to%20Online%20Games%20and%20Films.pdf",
-          embedCode: ""
-        }
-      ];
-    }
+      
+      // Add other resource data
+      formData.append('data', JSON.stringify(newResource));
+      
+      return apiRequest('POST', `/api/teacher-resources/${bookId}/${unitId}`, formData, { isFormData: true });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`/api/teacher-resources/${bookId}/${unitId}`] });
+      setIsAdding(false);
+      setEditingResource(null);
+      setUploadedFile(null);
+      setNewResource({
+        bookId,
+        unitId,
+        title: '',
+        resourceType: 'video',
+        provider: '',
+        sourceUrl: '',
+        embedCode: '',
+      });
+      toast({
+        title: 'Success',
+        description: 'Resource added successfully.',
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: 'Error',
+        description: 'Failed to add resource: ' + (error as Error).message,
+        variant: 'destructive',
+      });
+    },
+  });
 
-    // Resources for Book 7, Unit 2 - Piercings & Tattoos
-    if (bookId === '7' && unitId === '2') {
-      return [
-        {
-          id: "book7-unit2-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 2 Overview (6-page Lesson)",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf",
-          fileUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit2/00%20A%20Book%207%20%E2%80%93%20Unit%202.pdf"
-        },
-        {
-          id: "book7-unit2-video1",
-          bookId,
-          unitId,
-          title: "Fashion Styles Vocabulary",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=4vGLON1qRSI",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4vGLON1qRSI?si=1J7_4Z6aOwF4UkSx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit2-game1",
-          bookId,
-          unitId,
-          title: "Fashion Styles Vocabulary Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/29461275/fashion-styles-vocabulary",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29461275/fashion-styles-vocabulary?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
+  // Mutation to delete a resource
+  const deleteResourceMutation = useMutation({
+    mutationFn: async (resource: TeacherResource) => {
+      if (!resource.id) return;
+      return apiRequest('DELETE', `/api/teacher-resources/${bookId}/${unitId}/${resource.id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`/api/teacher-resources/${bookId}/${unitId}`] });
+      setConfirmDelete(null);
+      toast({
+        title: 'Success',
+        description: 'Resource deleted successfully.',
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: 'Error',
+        description: 'Failed to delete resource: ' + (error as Error).message,
+        variant: 'destructive',
+      });
+    },
+  });
 
-    // Resources for Book 7, Unit 3 - Crime
-    if (bookId === '7' && unitId === '3') {
-      return [
-        {
-          id: "book7-unit3-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 3 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit3/00%20A%20Book%207%20%E2%80%93%20Unit%203.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit3-video1",
-          bookId,
-          unitId,
-          title: "Where do you see robbers - in shops - banks",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://youtu.be/uikPlL-AOzw?si=nlokxIhxX173GPzk",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/uikPlL-AOzw?si=nlokxIhxX173GPzk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit3-video2",
-          bookId,
-          unitId,
-          title: "What crime are they commiting - smuggling",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://youtu.be/0FRKITalAz4?si=U7S67_uDmlD6PBwW",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/0FRKITalAz4?si=Kkb15NP2MqOUjvvS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit3-game1",
-          bookId,
-          unitId,
-          title: "Crime Vocabulary Game 1",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/ecc57a3b73f14f5faf7d6c0ae1d3beba",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ecc57a3b73f14f5faf7d6c0ae1d3beba?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit3-game2",
-          bookId,
-          unitId,
-          title: "Crime Vocabulary Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/8f09e7c155fb4932aed9903332ca20cf",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8f09e7c155fb4932aed9903332ca20cf?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
+  // Effect to reset form when editing resource changes
+  useEffect(() => {
+    if (editingResource) {
+      setNewResource(editingResource);
+    } else {
+      setNewResource({
+        bookId,
+        unitId,
+        title: '',
+        resourceType: 'video',
+        provider: '',
+        sourceUrl: '',
+        embedCode: '',
+      });
     }
+  }, [editingResource, bookId, unitId]);
 
-    // Resources for Book 7, Unit 4
+  // Effect to set initial resources from API data
+  useEffect(() => {
+    if (bookUnitResources) {
+      setResources(bookUnitResources);
+    }
+  }, [bookUnitResources]);
+
+  // Function to get additional resources for specific book/unit combinations
+  const getMoreUnitResources = useCallback((): TeacherResource[] => {
+    // Resources for Book 7, Unit 4 - Accommodation
     if (bookId === '7' && unitId === '4') {
       return [
         {
@@ -1011,159 +211,52 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           embedCode: ""
         },
         {
+          id: "book7-unit4-video1",
+          bookId,
+          unitId,
+          title: "Accommodation Types",
+          resourceType: "video" as const,
+          provider: "YouTube",
+          sourceUrl: "https://www.youtube.com/embed/I2t7h8XZC8A",
+          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/I2t7h8XZC8A?si=zYsHv0JsKf3VnYC4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        },
+        {
           id: "book7-unit4-game1",
           bookId,
           unitId,
-          title: "Vocabulary Game 1",
+          title: "Accommodation Types Game",
           resourceType: "game" as const,
           provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/ead2718ebb544050a5077cc541d2e2a2",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ead2718ebb544050a5077cc541d2e2a2?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          sourceUrl: "https://wordwall.net/resource/abe4d3f5a38b4ebfa7b2183c8adfdf1c",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/abe4d3f5a38b4ebfa7b2183c8adfdf1c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit4-game2",
           bookId,
           unitId,
-          title: "Vocabulary Game 2",
+          title: "Hotel Room Features",
           resourceType: "game" as const,
           provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/8a41f00f851f4c63b560c5a8e3b0622c",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8a41f00f851f4c63b560c5a8e3b0622c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          sourceUrl: "https://wordwall.net/resource/f1d6bb00c7f942d29b1efa5c2f94073f",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f1d6bb00c7f942d29b1efa5c2f94073f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         },
         {
           id: "book7-unit4-game3",
           bookId,
           unitId,
-          title: "Vocabulary Game 3",
+          title: "Hotel Vocabulary",
           resourceType: "game" as const,
           provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/4d43ce661a25430eb84b3fe4e94a20ab",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4d43ce661a25430eb84b3fe4e94a20ab?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 5 - School
-    if (bookId === '7' && unitId === '5') {
-      return [
-        {
-          id: "book7-unit5-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 5 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit5/00%20A%20Book%207%20%E2%80%93%20Unit%205.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit5-video1",
-          bookId,
-          unitId,
-          title: "Schools in the UK/USA 1",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/fAAFO44pJlU",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/fAAFO44pJlU?si=SOgbD4Upe_Tj_SQ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit5-video2",
-          bookId,
-          unitId,
-          title: "Schools in the UK/USA 2",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/-_nbbEahq8k",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/-_nbbEahq8k?si=u_MW45TfECHX7tyo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit5-video3",
-          bookId,
-          unitId,
-          title: "After School Clubs",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/l1xgc0aTnLU",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/l1xgc0aTnLU?si=yVTDuxfnuhbh_heW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit5-video4",
-          bookId,
-          unitId,
-          title: "School Rules in Japan",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/7D1hebI6QdI",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/7D1hebI6QdI?si=dkyk-1SxRwDunjjt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit5-video5",
-          bookId,
-          unitId,
-          title: "School Rules",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/Z3y_RrLdYtE",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Z3y_RrLdYtE?si=AVmtcXIwd4uBFpqk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit5-game1",
-          bookId,
-          unitId,
-          title: "After School Clubs Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/4d43ce661a25430eb84b3fe4e94a20ab",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4d43ce661a25430eb84b3fe4e94a20ab?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit5-game2",
-          bookId,
-          unitId,
-          title: "Places in School Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/f72c3b6631a649f0b68952153fbc6441",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f72c3b6631a649f0b68952153fbc6441?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit5-game3",
-          bookId,
-          unitId,
-          title: "School Subjects Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/c19107c08fe04affb6610d874284df4a",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c19107c08fe04affb6610d874284df4a?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+          sourceUrl: "https://wordwall.net/resource/ead2718ebb544050a5077cc541d2e2a2",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ead2718ebb544050a5077cc541d2e2a2?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
         }
       ];
     }
 
     // Resources for Book 7, Unit 6 - Money
     if (bookId === '7' && unitId === '6') {
-      // Using new resources from unit6-resources.tsx
-      const mappedResources = unit6Resources.map((resource, index) => ({
-        id: `book7-unit6-${resource.resourceType}${index + 1}`,
-        bookId,
-        unitId,
-        ...resource
-      }));
-      
-      return [
-        // PDF overview first
-        {
-          id: "book7-unit6-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 6 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf",
-          fileUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf"
-        },
-        // Add all the mapped resources from unit6-resources.tsx
-        ...mappedResources
-      ];
+      // Using resources from unit6-implementation.tsx
+      return getUnit6Resources(bookId, unitId);
     }
 
     // Resources for Book 7, Unit 7
@@ -1202,2244 +295,229 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       ];
     }
 
-    // Resources for Book 7, Unit 8 - Musical Instruments
-    if (bookId === '7' && unitId === '8') {
-      return [
-        {
-          id: "book7-unit8-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 8 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit8/00%20A%20Book%207%20%E2%80%93%20Unit%208.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit8-video1",
-          bookId,
-          unitId,
-          title: "Musical Instruments Quiz",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/WV63aVMnyMA",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/WV63aVMnyMA?si=iicLZ4_-HXXjnJiF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit8-video2",
-          bookId,
-          unitId,
-          title: "Guess the Sound - Musical Instruments Quiz",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/tb0gHAzpQPE",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/tb0gHAzpQPE?si=01WXGLlOnyEFfrXy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit8-game1",
-          bookId,
-          unitId,
-          title: "Kahoot - Musical Instruments",
-          resourceType: "game" as const,
-          provider: "Kahoot",
-          sourceUrl: "https://create.kahoot.it/share/music-instruments/60a322c4-b3a8-4c2d-9078-e877ca66ac23",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit8-game2",
-          bookId,
-          unitId,
-          title: "Places of Entertainment",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/9e1962f07e5b4f6ab60abe28003ad348",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/9e1962f07e5b4f6ab60abe28003ad348?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit8-game3",
-          bookId,
-          unitId,
-          title: "Music Instruments",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/a399888cbe8943ec97dabfb51b788af5",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a399888cbe8943ec97dabfb51b788af5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit8-game4",
-          bookId,
-          unitId,
-          title: "Artists and Musicians",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/4e38eb1bea364cef87a813ce0c7d0482",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4e38eb1bea364cef87a813ce0c7d0482?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit8-game5",
-          bookId,
-          unitId,
-          title: "Types of Books",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/77bf2cabcab44344a2080c033914d8be",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/77bf2cabcab44344a2080c033914d8be?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 9 - Jobs
-    if (bookId === '7' && unitId === '9') {
-      return [
-        {
-          id: "book7-unit9-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 9 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit9/00%20A%20Book%207%20%E2%80%93%20Unit%209.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit9-game1",
-          bookId,
-          unitId,
-          title: "Types of Jobs Game 1",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/51d5ddacedd84b80a1a641af60f9abb3",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/51d5ddacedd84b80a1a641af60f9abb3?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit9-game2",
-          bookId,
-          unitId,
-          title: "Types of Jobs Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/0100b9837b4f46c0b56a01caab8e459a",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0100b9837b4f46c0b56a01caab8e459a?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit9-game3",
-          bookId,
-          unitId,
-          title: "Jobs Kahoot",
-          resourceType: "game" as const,
-          provider: "Kahoot",
-          sourceUrl: "https://create.kahoot.it/share/visual-7-unit-9-jobs/07fa5381-b0a3-4da8-996f-e34a9232145b",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit9-video1",
-          bookId,
-          unitId,
-          title: "What Do You Want To Be?",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/nfzYoNTcAn8",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/nfzYoNTcAn8?si=ePvFy6TfZVtNh1gZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 10 - Sports
-    if (bookId === '7' && unitId === '10') {
-      return [
-        {
-          id: "book7-unit10-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 10 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit10/00%20A%20Book%207%20%E2%80%93%20Unit%2010.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit10-game1",
-          bookId,
-          unitId,
-          title: "Go-Play-Do Sports Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/29a03787b421456f827094e6b08363cc",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29a03787b421456f827094e6b08363cc?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit10-game2",
-          bookId,
-          unitId,
-          title: "Sports Places Game 1",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/48a835075ae5459eb3dbb23e211f7019",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/48a835075ae5459eb3dbb23e211f7019?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit10-game3",
-          bookId,
-          unitId,
-          title: "Sports Equipment Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/2f85e31cefed4733a458f93e9c7352fb",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2f85e31cefed4733a458f93e9c7352fb?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit10-game4",
-          bookId,
-          unitId,
-          title: "Sports Places Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/29de738cb6964006b5a15c86def52c2b",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/29de738cb6964006b5a15c86def52c2b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit10-game5",
-          bookId,
-          unitId,
-          title: "Sports Places and Equipment Kahoot",
-          resourceType: "game" as const,
-          provider: "Kahoot",
-          sourceUrl: "https://create.kahoot.it/share/sport-places-and-equipment/b2205677-5c0b-43af-aacd-28af5751763e",
-          embedCode: ""
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 11 - Natural Disasters
-    if (bookId === '7' && unitId === '11') {
-      return [
-        {
-          id: "book7-unit11-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 11 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit11/00%20A%20Book%207%20%E2%80%93%20Unit%2011.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit11-game1",
-          bookId,
-          unitId,
-          title: "Natural Disaster Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/e2fdc9e3360e49aaa27816818a1179d6",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e2fdc9e3360e49aaa27816818a1179d6?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit11-game2",
-          bookId,
-          unitId,
-          title: "Natural Disasters Kahoot",
-          resourceType: "game" as const,
-          provider: "Kahoot",
-          sourceUrl: "https://create.kahoot.it/share/visual-english-7-unit-11-natural-disasters/49b6cfd8-e8b3-479c-bda3-e2192412a301",
-          embedCode: ""
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 12 - Healthy Lifestyle
-    if (bookId === '7' && unitId === '12') {
-      return [
-        {
-          id: "book7-unit12-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 12 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit12/00%20A%20Book%207.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit12-game1",
-          bookId,
-          unitId,
-          title: "Should - Shouldn't Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/37bd90b81ab549adab6f3d3c074889ed",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/37bd90b81ab549adab6f3d3c074889ed?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit12-game2",
-          bookId,
-          unitId,
-          title: "Healthy - Unhealthy Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/ee74009d2b384b808714e36062a0801a",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ee74009d2b384b808714e36062a0801a?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 13 - Shops
-    if (bookId === '7' && unitId === '13') {
-      return [
-        {
-          id: "book7-unit13-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 13 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit13/00%20A%20Book%207%20%E2%80%93%20Unit%2013.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit13-game1",
-          bookId,
-          unitId,
-          title: "Shops Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/411d9dcb9eb041b8b1be990c120d6931",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/411d9dcb9eb041b8b1be990c120d6931?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit13-game2",
-          bookId,
-          unitId,
-          title: "Places in the City Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/1b0157e89e6442009e1385bda1661fbf",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1b0157e89e6442009e1385bda1661fbf?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 14 - Celebrations
-    if (bookId === '7' && unitId === '14') {
-      return [
-        {
-          id: "book7-unit14-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 14 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit14/00%20A%20Book%207.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit14-game1",
-          bookId,
-          unitId,
-          title: "Social Problems Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/693f7afb993242929b59236c929717a5",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/693f7afb993242929b59236c929717a5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 7, Unit 15 - Celebrations (Same as Unit 14)
-    if (bookId === '7' && unitId === '15') {
-      return [
-        {
-          id: "book7-unit15-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 15 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit15/00%20A%20Book%207.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit15-game1",
-          bookId,
-          unitId,
-          title: "Months of the Year Game 1",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/1c0632327e4d4c33abf969014a371645",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1c0632327e4d4c33abf969014a371645?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit15-game2",
-          bookId,
-          unitId,
-          title: "Months of the Year Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/c52506eabcd4406cbd3681a0d184060e",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c52506eabcd4406cbd3681a0d184060e?themeId=1&templateId=50&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit15-game3",
-          bookId,
-          unitId,
-          title: "World Celebrations Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/143919e90a414397ba99e8744fcbf7a3",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/143919e90a414397ba99e8744fcbf7a3?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit15-game4",
-          bookId,
-          unitId,
-          title: "Family Celebrations Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/ab22249eb83043d8940f69a78058f725",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ab22249eb83043d8940f69a78058f725?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
-      ];
-    }
-    
-    // Resources for Book 7, Unit 16 - Food Tastes
-    if (bookId === '7' && unitId === '16') {
-      return [
-        {
-          id: "book7-unit16-pdf1",
-          bookId,
-          unitId,
-          title: "Book 7 - Unit 16 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit16/00%20A%20Book%207.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit16-game1",
-          bookId,
-          unitId,
-          title: "Food Tastes",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/6730885c619848649b96d5fa6bf972c7",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6730885c619848649b96d5fa6bf972c7?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-game2",
-          bookId,
-          unitId,
-          title: "Food Stall / Trucks",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/3828678c606049d0a756fad74eb5819a",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3828678c606049d0a756fad74eb5819a?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-video1",
-          bookId,
-          unitId,
-          title: "Guess The Fast Food Restaurants Logo 🍔 | Food Logo Quiz 🍟",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=XPJ8sLW9MVs",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XPJ8sLW9MVs?si=rrEv0vqe5wxKRaMi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit16-video2",
-          bookId,
-          unitId,
-          title: "🌮 Guess the Country by its Food 🍕😋 | Country Quiz",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=OuKo5MVaeWU",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/OuKo5MVaeWU?si=xYZvg7F70fGeNxbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 6, Unit 1 - Jobs
-    if (bookId === '6' && unitId === '1') {
-      return [
-        {
-          id: "book6-unit1-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 1 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit1/00%20A%20Book%206%20%E2%80%93%20Unit%201.pdf",
-          embedCode: ""
-        },
-        {
-          id: "book6-unit1-game1",
-          bookId,
-          unitId,
-          title: "Jobs and Occupations",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/29841026/jobs",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/23975bc1744b41c9a0c3b027be19b08c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book6-unit1-game2",
-          bookId,
-          unitId,
-          title: "Jobs Matching Game",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/38680/jobs-matching-game",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/936e34b36eda4c59bd94fe2e01166a29?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book6-unit1-game3",
-          bookId,
-          unitId,
-          title: "Jobs and Workplaces",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/32267/english/jobs-and-workplaces",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c1efc6c6dd03442789ccc1d22d7f5c7d?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book6-unit1-game4",
-          bookId,
-          unitId,
-          title: "Jobs Quiz",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/25831/english/jobs-quiz",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/df4a0c2a9ece496ba74b5d07b25c9d9e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book6-unit1-video1",
-          bookId,
-          unitId,
-          title: "Jobs and Occupations Vocabulary",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=fcKC1Vc965o",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/fcKC1Vc965o?si=LmLuRMdWL4D5bpnZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-        },
-        {
-          id: "book6-unit1-video2",
-          bookId,
-          unitId,
-          title: "Guess the Job by Emoji Quiz",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/watch?v=gWpYB4asINU",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gWpYB4asINU?si=o-qMOh0Yz0FXPXCC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-        }
-      ];
-    }
-
-    // Resources for Book 6, Unit 2
-    if (bookId === '6' && unitId === '2') {
-      return [
-        {
-          id: "book6-unit2-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 2 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit2/00%20A%20Book%206%20%E2%80%93%20Unit%202.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-
-    // Resources for Book 6, Unit 3
-    if (bookId === '6' && unitId === '3') {
-      return [
-        {
-          id: "book6-unit3-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 3 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit3/00%20A%20Book%206%20%E2%80%93%20Unit%203.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-
-    // Resources for Book 6, Unit 4
-    if (bookId === '6' && unitId === '4') {
-      return [
-        {
-          id: "book6-unit4-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 4 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit4/00%20A%20Book%206%20%E2%80%93%20Unit%204.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 5
-    if (bookId === '6' && unitId === '5') {
-      return [
-        {
-          id: "book6-unit5-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 5 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit5/00%20A%20Book%206%20%E2%80%93%20Unit%205.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 6
-    if (bookId === '6' && unitId === '6') {
-      return [
-        {
-          id: "book6-unit6-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 6 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit6/00%20A%20Book%206%20%E2%80%93%20Unit%206.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 7
-    if (bookId === '6' && unitId === '7') {
-      return [
-        {
-          id: "book6-unit7-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 7 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit7/00%20A%20Book%206%20%E2%80%93%20Unit%207.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 8
-    if (bookId === '6' && unitId === '8') {
-      return [
-        {
-          id: "book6-unit8-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 8 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit8/00%20A%20Book%206%20%E2%80%93%20Unit%208.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 9
-    if (bookId === '6' && unitId === '9') {
-      return [
-        {
-          id: "book6-unit9-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 9 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit9/00%20A%20Book%206%20%E2%80%93%20Unit%209.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 10
-    if (bookId === '6' && unitId === '10') {
-      return [
-        {
-          id: "book6-unit10-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 10 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit10/00%20A%20Book%206%20%E2%80%93%20Unit%2010.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 11
-    if (bookId === '6' && unitId === '11') {
-      return [
-        {
-          id: "book6-unit11-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 11 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit11/00%20A%20Book%206%20%E2%80%93%20Unit%2011.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 12
-    if (bookId === '6' && unitId === '12') {
-      return [
-        {
-          id: "book6-unit12-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 12 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit12/00%20A%20Book%206%20%E2%80%93%20Unit%2012.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 13
-    if (bookId === '6' && unitId === '13') {
-      return [
-        {
-          id: "book6-unit13-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 13 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit13/00%20A%20Book%206%20%E2%80%93%20Unit%2013.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 14
-    if (bookId === '6' && unitId === '14') {
-      return [
-        {
-          id: "book6-unit14-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 14 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit14/00%20A%20Book%206%20%E2%80%93%20Unit%2014.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 15
-    if (bookId === '6' && unitId === '15') {
-      return [
-        {
-          id: "book6-unit15-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 15 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit15/00%20A%20Book%206%20%E2%80%93%20Unit%2015.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-    
-    // Resources for Book 6, Unit 16
-    if (bookId === '6' && unitId === '16') {
-      return [
-        {
-          id: "book6-unit16-pdf1",
-          bookId,
-          unitId,
-          title: "Book 6 - Unit 16 Overview",
-          resourceType: "pdf" as const,
-          provider: "Visual English",
-          sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book6/unit16/00%20A%20Book%206%20%E2%80%93%20Unit%2016.pdf",
-          embedCode: ""
-        }
-      ];
-    }
-
-    // For other book/unit combinations, return an empty array
+    // If no specific resources, return an empty array
     return [];
-  };
+  }, [bookId, unitId]);
 
-  // Get resources based on book and unit
-  const bookUnitResources = getBookUnitResources(bookId, unitId);
+  // Function to render resources based on type
+  const renderResources = (resourceType: 'video' | 'game' | 'pdf' | 'lesson') => {
+    // Get all resources of the specified type
+    const allResources = [...resources, ...getMoreUnitResources()]
+      .filter(r => r.resourceType === resourceType);
 
-  // Save resources mutation
-  const saveMutation = useMutation({
-    mutationFn: async (updatedResources: TeacherResource[]) => {
-      // For Book 6 and 7 specific units, just return success without saving to server
-      if ((bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) ||
-          (bookId === '6' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId))) {
-        return { success: true };
-      }
-      
-      // For other books/units, save to server
-      await apiRequest(
-        'POST', 
-        `/api/direct/${bookId}/${unitId}/resources`, 
-        { resources: updatedResources }
-      );
-    },
-    onSuccess: () => {
-      if ((bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId)) ||
-          (bookId === '6' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'].includes(unitId))) {
-        setResources(bookUnitResources);
-      } else {
-        refetch();
-      }
-      
-      toast({
-        title: "Resources Saved",
-        description: "Teacher resources have been updated successfully.",
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Save Failed",
-        description: error.message || "Could not save resources. Please try again.",
-        variant: "destructive",
-      });
-    }
-  });
-
-  // First useEffect to update customResources when data changes
-useEffect(() => {
-    if (data && Array.isArray(data)) {
-      // For special book units, the data from the server is the custom user-added resources
-      // That need to be preserved and combined with the predefined resources
-      if (isSpecialBookUnit) {
-        setCustomResources(data);
-      } else {
-        // For regular units, just set the resources directly
-        setResources(data);
-      }
-    } else if (data) {
-      // Handle case where data is not an array
-      console.warn('Resources data is not an array:', data);
-      isSpecialBookUnit ? setCustomResources([]) : setResources([]);
-    }
-  }, [data, isSpecialBookUnit]);
-
-  // Second useEffect to combine predefined and custom resources
-  useEffect(() => {
-    // Only run this for special book units that have predefined resources
-    if (isSpecialBookUnit) {
-      // Get the base resources from either bookUnitResources or getBookUnitResources
-      const bookUnitRes = getMoreUnitResources(bookId, unitId);
-      const bookPdfRes = getBookUnitResources(bookId, unitId);
-      const baseResources = bookPdfRes.length > 0 ? bookPdfRes : bookUnitRes;
-      
-      // Combine predefined resources with any custom resources
-      // Make sure each resource has a unique ID to avoid duplicates
-      const uniqueResources = [...baseResources];
-      
-      // Add custom resources but avoid duplicates by ID
-      if (customResources.length > 0) {
-        const baseIds = new Set(baseResources.map(r => r.id));
-        const filteredCustom = customResources.filter(r => r.id && !baseIds.has(r.id));
-        uniqueResources.push(...filteredCustom);
-      }
-      
-      setResources(uniqueResources);
-    }
-  }, [bookId, unitId, isSpecialBookUnit, customResources]);
-
-  const handleNewResourceChange = (field: keyof TeacherResource, value: string) => {
-    setNewResource(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleAddResource = async () => {
-    // Basic validation
-    if (!newResource.title) {
-      toast({
-        title: "Validation Error",
-        description: "Please enter a title for the resource.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      // Create a copy of the resource to add and ensure it has an ID
-      const resourceToAdd: TeacherResource = { 
-        ...newResource,
-        id: newResource.id || `${bookId}-${unitId}-${newResource.resourceType}-${Date.now()}` 
-      };
-      
-      console.log('Adding resource:', resourceToAdd);
-      
-      // If a file was uploaded, handle it
-      if (uploadedFile && (newResource.resourceType === 'pdf' || newResource.resourceType === 'lesson')) {
-        // In a real implementation, you would upload the file to S3 or your server
-        console.log('File to upload:', uploadedFile);
-        resourceToAdd.fileUrl = URL.createObjectURL(uploadedFile);
-      }
-
-      // For videos, ensure embedCode is properly set if it's a YouTube URL
-      if (newResource.resourceType === 'video' && newResource.sourceUrl && !newResource.embedCode) {
-        if (newResource.sourceUrl.includes('youtube.com') || newResource.sourceUrl.includes('youtu.be')) {
-          // Extract video ID from YouTube URL
-          let videoId = '';
-          if (newResource.sourceUrl.includes('youtube.com/watch?v=')) {
-            videoId = new URL(newResource.sourceUrl).searchParams.get('v') || '';
-          } else if (newResource.sourceUrl.includes('youtu.be/')) {
-            videoId = newResource.sourceUrl.split('youtu.be/')[1]?.split('?')[0] || '';
-          }
-          
-          if (videoId) {
-            resourceToAdd.embedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-          }
-        }
-      }
-      
-      // Generate similar embed code for Wordwall games if needed
-      if (newResource.resourceType === 'game' && newResource.sourceUrl && !newResource.embedCode) {
-        if (newResource.sourceUrl.includes('wordwall.net/resource/')) {
-          // Extract resource ID from Wordwall URL
-          const resourceMatch = newResource.sourceUrl.match(/wordwall\.net\/resource\/([^/]+)/);
-          const resourceId = resourceMatch?.[1];
-          
-          if (resourceId) {
-            resourceToAdd.embedCode = `<iframe style="max-width:100%" src="https://wordwall.net/embed/${resourceId}?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`;
-          }
-        }
-      }
-
-      // If this is a special book/unit with predefined resources
-      if (isSpecialBookUnit) {
-        // Add custom resource to our state - using separate state update to ensure it's tracked
-        const updatedCustomResources = [...customResources, resourceToAdd];
-        setCustomResources(updatedCustomResources);
-        
-        // For special book units, we need to save ONLY the custom resources to the server
-        // This keeps our storage clean and lets us separate built-in from custom resources
-        await saveMutation.mutateAsync(updatedCustomResources);
-        
-        // The useEffect will handle combining predefined and custom resources automatically
-        // No need to manually update resources state here
-      } else {
-        // For regular books, save directly to the server
-        const updatedResources = [...resources, resourceToAdd];
-        await saveMutation.mutateAsync(updatedResources);
-      }
-      
-      toast({
-        title: "Resource Added",
-        description: `${resourceToAdd.title} has been added successfully.`,
-      });
-      
-      // Reset form
-      setNewResource({
-        bookId,
-        unitId,
-        title: '',
-        resourceType: 'video',
-        provider: '',
-        sourceUrl: '',
-        embedCode: '',
-      });
-      setUploadedFile(null);
-      setIsAdding(false);
-      
-    } catch (error) {
-      console.error('Error adding resource:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add resource. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleDeleteResource = async (resource: TeacherResource) => {
-    try {
-      // For special book units, we need to handle predefined vs custom resources differently
-      if (isSpecialBookUnit) {
-        // Get the base predefined resources
-        const bookUnitRes = getMoreUnitResources(bookId, unitId);
-        const bookPdfRes = getBookUnitResources(bookId, unitId);
-        const baseResources = bookPdfRes.length > 0 ? bookPdfRes : bookUnitRes;
-        
-        // Check if this is a predefined resource or a custom one
-        const isPredefined = baseResources.some(r => r.id === resource.id);
-        
-        if (isPredefined) {
-          // Show a message that predefined resources can't be deleted
-          toast({
-            title: "Cannot Delete",
-            description: "Predefined resources cannot be deleted. You can only delete custom resources.",
-            variant: "destructive",
-          });
-          setConfirmDelete(null);
-          return;
-        } else {
-          // Update customResources state to remove the resource
-          setCustomResources(prev => prev.filter(r => r.id !== resource.id));
-        }
-      }
-      
-      // Update resources appropriately based on whether this is a special book unit
-      if (isSpecialBookUnit) {
-        // For special book units, we only save the custom resources to the server
-        // The useEffect will handle combining these with the predefined resources
-        const updatedCustomResources = customResources.filter(r => r.id !== resource.id);
-        await saveMutation.mutateAsync(updatedCustomResources);
-      } else {
-        // For regular book units, update and save the complete resources list
-        const updatedResources = resources.filter(r => r.id !== resource.id);
-        await saveMutation.mutateAsync(updatedResources);
-      }
-      
-      setConfirmDelete(null);
-      
-      toast({
-        title: "Resource Deleted",
-        description: "The resource has been successfully deleted.",
-      });
-    } catch (error) {
-      console.error('Error deleting resource:', error);
-      toast({
-        title: "Error",
-        description: "Failed to delete resource. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Unit 1: Movie Genres Vocabulary Lesson Plan
-  const movieGenresLessonPlan: LessonPlan = {
-    id: 'film-genres-1',
-    title: 'Movie Genres Vocabulary - Part 1',
-    duration: '45 minutes',
-    level: '',
-    objectives: [
-      'Identify and name common film genres in English',
-      'Match film genres with their characteristics',
-      'Express preferences about different movie genres using simple structures',
-      'Practice listening comprehension with authentic examples of film genre vocabulary'
-    ],
-    materials: [
-      'Visual English Book 7, Unit 1 slides (01 A - 05 D)',
-      'Wordwall interactive game - Film Genres matching',
-      'YouTube video: "Movie Genres Vocabulary Epic ESL Guessing Game"',
-      'Film genre flashcards',
-      'Handout with movie posters from different genres'
-    ],
-    steps: [
-      {
-        title: 'Warm-up: Film Preferences',
-        duration: '5 mins',
-        description: 'Start by asking students about their favorite films and what types of movies they enjoy watching.',
-        instructions: [
-          "Ask students: 'What was the last film you watched?'",
-          "Follow up with: 'Did you enjoy it? Why or why not?'",
-          "Use the opportunity to pre-teach some basic vocabulary that might come up in their responses."
-        ],
-        teacherNotes: 'This activity helps assess prior knowledge and creates context for the lesson.'
-      },
-      {
-        title: 'Presentation: Film Genres Introduction',
-        duration: '10 mins',
-        description: 'Introduce key film genres using Visual English Book 7 slides and flashcards.',
-        materials: [
-          'Book 7, Unit 1 slides (01 A - 03 C)',
-          'Film genre flashcards'
-        ],
-        instructions: [
-          'Display Book 7, Unit 1 slides showing different film genres',
-          'For each genre, ask: "What kind of film is this?"',
-          'Drill pronunciation of each genre name',
-          'Briefly explain the characteristics of each genre using simple language'
-        ]
-      },
-      {
-        title: 'Vocabulary Development: Movie Genres Video',
-        duration: '10 mins',
-        description: 'Watch the "Movie Genres Vocabulary Epic ESL Guessing Game" video to reinforce genre vocabulary.',
-        materials: [
-          'YouTube video from Teacher Resources',
-          'Simple worksheet with movie genres listed'
-        ],
-        instructions: [
-          'Play the video once all the way through',
-          'Play again, pausing after each section to discuss the genres shown',
-          'Have students mark on their worksheets which genres they recognize'
-        ],
-        teacherNotes: 'This video provides authentic examples and pronunciation of genre vocabulary.'
-      },
-      {
-        title: 'Guided Practice: Genre Matching Activity',
-        duration: '15 mins',
-        description: 'Students match movie descriptions or images to the correct genre.',
-        materials: [
-          'Handout with movie posters and descriptions',
-          'Book 7, Unit 1 slides (04 A - 05 D)'
-        ],
-        instructions: [
-          'Distribute handouts with movie posters from different genres',
-          'Students work in pairs to match each poster to the correct genre',
-          'Review the answers as a class using the Book 7 slides',
-          'For each answer, ask students to explain how they knew the genre'
-        ]
-      },
-      {
-        title: 'Wrap-up: Personal Preferences',
-        duration: '5 mins',
-        description: 'Students share their favorite film genres and explain why they like them.',
-        instructions: [
-          'Have students complete the sentence: "I like ___ films because..."',
-          'Allow 3-4 students to share their preferences with the class',
-          'Summarize the key genre vocabulary learned in the lesson'
-        ]
-      }
-    ],
-    assessmentTips: 'Assess students through their participation in the matching activity and their ability to identify genres correctly during the video activity.',
-    homeworkIdeas: [
-      'Write 3-5 sentences about your favorite movie, including its genre and why you like it.',
-      'Find and bring a movie poster to the next class (can be digital or printed).'
-    ],
-    additionalResources: [
-      {
-        title: 'Wordwall Film Genres Game 1',
-        url: 'https://wordwall.net/resource/dcc6034981ea455d9bfa88f6740c720f'
-      },
-      {
-        title: 'Movie Genres Vocabulary Video',
-        url: 'https://www.youtube.com/watch?v=FTuQIwl7j3k'
-      }
-    ]
-  };
-
-  // Unit 1: Film Production Roles Lesson Plan
-  const filmProductionLessonPlan: LessonPlan = {
-    id: 'film-production-1',
-    title: 'Film Production Roles - Part 1',
-    duration: '45 minutes',
-    level: '',
-    objectives: [
-      'Identify key roles in film production (director, actor, stuntman, etc.)',
-      'Describe job responsibilities using simple present tense',
-      'Use question forms to ask about film production jobs',
-      'Develop vocabulary related to filmmaking process'
-    ],
-    materials: [
-      'Visual English Book 7, Unit 1 slides (15 A - 17 E)',
-      'Wordwall interactive game - Film Production Roles',
-      'YouTube video: "Guess the Film Genre"',
-      'Role cards with job descriptions',
-      'Simple scripts for role-playing'
-    ],
-    steps: [
-      {
-        title: 'Warm-up: Behind the Scenes',
-        duration: '5 mins',
-        description: 'Show images from behind the scenes of popular movies and ask students what they know about making films.',
-        instructions: [
-          "Ask students: 'What happens behind the camera when making a film?'",
-          "Follow up with: 'What jobs do people have in making movies?'",
-          "Note down student responses on the board to reference later"
-        ]
-      },
-      {
-        title: 'Presentation: Film Production Roles',
-        duration: '12 mins',
-        description: 'Introduce key film production roles using Visual English Book 7 slides.',
-        materials: [
-          'Book 7, Unit 1 slides (15 A - 16 F)',
-          'Role cards'
-        ],
-        instructions: [
-          'Display slides showing different film production roles',
-          'For each role, ask: "Who is this? What do they do?"',
-          'Teach key vocabulary for each role (director, actor, costume designer, etc.)',
-          'Practice job responsibility phrases: "A director directs the film"'
-        ],
-        teacherNotes: 'Use simple language to explain each role. Focus on the action each person performs.'
-      },
-      {
-        title: 'Guided Practice: Job Description Matching',
-        duration: '10 mins',
-        description: 'Students match job titles with their responsibilities in film production.',
-        materials: [
-          'Handout with job titles and descriptions',
-          'Book 7, Unit 1 slides (16 A - 17 B)'
-        ],
-        instructions: [
-          'Distribute handouts with film roles and descriptions',
-          'Students work individually to match jobs with responsibilities',
-          'Check answers as a class using the slides',
-          'Practice the question form: "What does a [role] do?" and answer "A [role] [action]"'
-        ]
-      },
-      {
-        title: 'Interactive Activity: Wordwall Game',
-        duration: '13 mins',
-        description: 'Use the Wordwall game to reinforce vocabulary and job responsibilities in a fun, interactive format.',
-        materials: [
-          'Wordwall game from Teacher Resources',
-          'Projector or interactive whiteboard'
-        ],
-        instructions: [
-          'Play the Wordwall game as a whole class activity',
-          'Have students take turns coming to the board to match items',
-          'After each correct match, have students create a sentence about that role',
-          'Keep track of points for additional motivation'
-        ],
-        teacherNotes: 'If technology is not available, you can recreate this activity using printed cards for a physical matching game.'
-      },
-      {
-        title: 'Wrap-up: Role-Play Activity',
-        duration: '5 mins',
-        description: 'Students demonstrate understanding by role-playing simple film production scenarios.',
-        materials: [
-          'Simple scenario cards'
-        ],
-        instructions: [
-          'Assign roles to different students (director, actor, camera operator, etc.)',
-          'Give a simple scene to act out (e.g., filming someone walking into a room)',
-          'Have students use phrases learned during the lesson as they perform their roles',
-          'Discuss the roles and responsibilities after the role-play'
-        ]
-      }
-    ],
-    assessmentTips: 'Evaluate students based on their participation in the matching activity and their use of vocabulary during the role-play.',
-    homeworkIdeas: [
-      'Write 5 sentences about different film production roles and what they do.',
-      'If possible, watch a "behind the scenes" video clip and note down 3 jobs you observe.'
-    ],
-    additionalResources: [
-      {
-        title: 'Wordwall Film Production Game',
-        url: 'https://wordwall.net/resource/1e211e293d514f56b1786cfbf6ed146b'
-      },
-      {
-        title: 'Behind the Scenes of a Movie',
-        url: 'https://www.youtube.com/watch?v=p57KyLojoHU'
-      }
-    ]
-  };
-  
-  // Unit 2: Body Piercings Vocabulary Lesson Plan
-  const bodyPiercingsLessonPlan: LessonPlan = {
-    id: 'body-piercings-1',
-    title: 'Body Piercings Vocabulary - Part 1',
-    duration: '45 minutes',
-    level: '',
-    objectives: [
-      'Identify and name common types of body piercings in English',
-      'Use appropriate prepositions to describe piercing locations on the body',
-      'Express opinions about different types of piercings using simple structures',
-      'Ask and answer questions about piercings using the present simple tense'
-    ],
-    materials: [
-      'Visual English Book 7, Unit 2 slides (01 A - 01 H Ed)',
-      'Wordwall interactive game - Body Piercings vocabulary',
-      'YouTube video: "Body Modification - English Vocabulary"',
-      'Body parts diagram with piercing locations labeled',
-      'Opinion cards with expressions (beautiful, ugly, disgusting, amazing, etc.)'
-    ],
-    steps: [
-      {
-        title: 'Warm-up: Personal Experience',
-        duration: '5 mins',
-        description: 'Begin by asking students about their experiences with or opinions on body piercings.',
-        instructions: [
-          "Ask students: 'Do you have any piercings? Where?'",
-          "Follow up with: 'Do you know anyone who has piercings? What kind?'",
-          "Use the opportunity to gauge student comfort with the topic and pre-teach some basic vocabulary."
-        ],
-        teacherNotes: 'Be sensitive to cultural differences regarding body modifications. Keep the discussion respectful.'
-      },
-      {
-        title: 'Vocabulary Introduction: Types of Piercings',
-        duration: '12 mins',
-        description: 'Introduce vocabulary for different types of piercings using Visual English Book 7 slides.',
-        materials: [
-          'Book 7, Unit 2 slides (01 A - 01 H Ba)',
-          'Body parts diagram'
-        ],
-        instructions: [
-          'Display slides showing different piercing types',
-          'For each type, ask: "What is this called? Where is it located?"',
-          'Teach prepositions of location: "The piercing is on/in the ear/nose/lip/etc."',
-          'Have students repeat the vocabulary to practice pronunciation'
-        ]
-      },
-      {
-        title: 'Question Practice: Ask and Answer',
-        duration: '10 mins',
-        description: 'Students practice asking and answering questions about piercings using the target structures.',
-        materials: [
-          'Book 7, Unit 2 slides (01 H Ab - 01 H Ca)',
-          'Question prompts on the board'
-        ],
-        instructions: [
-          'Model question and answer patterns: "Do you have piercings?" "Yes, I do/No, I don\'t"',
-          '"Where is the piercing?" "It\'s on/in the ___"',
-          'Have students work in pairs to practice asking and answering questions',
-          'Monitor and provide feedback on grammar and pronunciation'
-        ]
-      },
-      {
-        title: 'Opinion Activity: What Do You Think?',
-        duration: '13 mins',
-        description: 'Students express and justify opinions about different types of piercings.',
-        materials: [
-          'Book 7, Unit 2 slides (01 H Ac - 01 H Ed)',
-          'Opinion cards with expressions (beautiful, ugly, disgusting, amazing, etc.)'
-        ],
-        instructions: [
-          'Display slides showing different piercing styles',
-          'Model expressing opinions: "I think ____ piercings are beautiful/interesting/etc. because..."',
-          'Distribute opinion cards and have students discuss in small groups',
-          'Each student must use at least 3 different opinion expressions'
-        ],
-        teacherNotes: 'Remind students to be respectful of different opinions. This is about practicing language, not judging others.'
-      },
-      {
-        title: 'Wrap-up: Class Survey',
-        duration: '5 mins',
-        description: 'Conduct a quick class survey about piercing preferences.',
-        instructions: [
-          'Ask students to raise hands: "Who has piercings? Who wants to get piercings?"',
-          'Count responses and write numbers on the board',
-          'Ask 2-3 students to share their reasons for their preferences',
-          'Summarize the key vocabulary and structures learned in the lesson'
-        ]
-      }
-    ],
-    assessmentTips: 'Evaluate students based on their participation in pair work and their ability to use the target vocabulary and question forms accurately.',
-    homeworkIdeas: [
-      'Write 5 sentences about your opinion on different types of piercings using the vocabulary from class.',
-      'Find a picture of someone with piercings and write 3-5 sentences describing where the piercings are located.'
-    ],
-    additionalResources: [
-      {
-        title: 'Wordwall Body Piercing Vocabulary Game',
-        url: 'https://wordwall.net/resource/8156271/body-piercings-vocabulary'
-      },
-      {
-        title: 'Body Modification - English Vocabulary Video',
-        url: 'https://www.youtube.com/watch?v=LfX_UpuJJjs'
-      }
-    ]
-  };
-
-  // Unit 2: Hairstyles Vocabulary Lesson Plan
-  const hairstylesLessonPlan: LessonPlan = {
-    id: 'hairstyles-1',
-    title: 'Hairstyles and Hair Types - Part 1',
-    duration: '45 minutes',
-    level: '',
-    objectives: [
-      'Identify and name common hairstyles in English (mohawk, bald, fringe, braids, etc.)',
-      'Describe people\'s hair using appropriate adjectives',
-      'Express preferences about hairstyles using simple structures',
-      'Ask and answer questions about hairstyles using present tense forms'
-    ],
-    materials: [
-      'Visual English Book 7, Unit 2 slides (02 M - 02 M Dc)',
-      'Wordwall interactive game - Hairstyles vocabulary',
-      'YouTube video: "English Vocabulary: Hair and Hairstyles"',
-      'Pictures of different hairstyles',
-      'Basic hairstyle flashcards'
-    ],
-    steps: [
-      {
-        title: 'Warm-up: Celebrity Hairstyles',
-        duration: '5 mins',
-        description: 'Show pictures of celebrities with distinctive hairstyles and elicit descriptions from students.',
-        instructions: [
-          "Show 4-5 pictures of celebrities with different hairstyles",
-          "Ask: 'Can you describe this person\'s hair?'",
-          "Note key vocabulary on the board as students respond"
-        ],
-        teacherNotes: 'Use this activity to assess prior knowledge and introduce the topic in an engaging way.'
-      },
-      {
-        title: 'Vocabulary Presentation: Hairstyle Types',
-        duration: '12 mins',
-        description: 'Introduce vocabulary for different hairstyles using Visual English Book 7 slides.',
-        materials: [
-          'Book 7, Unit 2 slides (02 M - 02 M Ca)',
-          'Hairstyle flashcards'
-        ],
-        instructions: [
-          'Display slides showing different hairstyles',
-          'For each style, ask: "What hairstyle is this? What\'s it called?"',
-          'Teach descriptive vocabulary (mohawk, bald, fringe, braids, etc.)',
-          'Have students repeat the new vocabulary to practice pronunciation'
-        ]
-      },
-      {
-        title: 'Question Practice: Personal Experience',
-        duration: '10 mins',
-        description: 'Students practice asking and answering questions about hairstyles.',
-        materials: [
-          'Book 7, Unit 2 slides (02 M Bc - 02 M Cd)',
-          'Question prompts written on the board'
-        ],
-        instructions: [
-          'Model question and answer patterns: "Do you know anyone who is bald/has a fringe?"',
-          '"Do you want to have a mohawk/braids?" "Yes, I do/No, I don\'t"',
-          'Have students work in pairs to practice asking and answering',
-          'Monitor for accurate use of vocabulary and grammar'
-        ]
-      },
-      {
-        title: 'Interactive Activity: Hairstyle Opinions',
-        duration: '13 mins',
-        description: 'Students discuss and express opinions about different hairstyles.',
-        materials: [
-          'Book 7, Unit 2 slides (02 M Ad - 02 M Bd)',
-          'Opinion phrases on cards or the board (beautiful, ugly, cool, strange, etc.)'
-        ],
-        instructions: [
-          'Display slides showing different hairstyles',
-          'Model expressing opinions: "I think mohawks are cool because..."',
-          'In small groups, students discuss what they think about each style',
-          'Each group reports their most interesting opinions to the class'
-        ],
-        teacherNotes: 'Encourage students to explain their opinions using "because" to practice more complex sentence structures.'
-      },
-      {
-        title: 'Wrap-up: Hairstyle Survey',
-        duration: '5 mins',
-        description: 'Students conduct a quick survey about hairstyle preferences in the class.',
-        instructions: [
-          'Students ask 3-4 classmates: "What\'s your favorite hairstyle?"',
-          'Students note responses and report back to class',
-          'Teacher creates a quick bar graph on board showing most popular styles',
-          'Summarize the key vocabulary learned in the lesson'
-        ]
-      }
-    ],
-    assessmentTips: 'Evaluate students based on their participation in group activities and their ability to correctly use hairstyle vocabulary when describing pictures and expressing opinions.',
-    homeworkIdeas: [
-      'Write a short paragraph describing your current hairstyle and a style you would like to try in the future.',
-      'Find pictures of 3 different hairstyles online and write 2 sentences about each one using vocabulary from the lesson.'
-    ],
-    additionalResources: [
-      {
-        title: 'Wordwall Hairstyles Vocabulary Game',
-        url: 'https://wordwall.net/resource/11736815/hairstyles-vocabulary'
-      },
-      {
-        title: 'English Vocabulary: Hair and Hairstyles',
-        url: 'https://www.youtube.com/watch?v=EjRAnkHF1FU'
-      }
-    ]
-  };
-  
-  // Unit 2: Fashion Styles Vocabulary Lesson Plan
-  const fashionStylesLessonPlan: LessonPlan = {
-    id: 'fashion-styles-1',
-    title: 'Fashion Styles Vocabulary',
-    duration: '45 minutes',
-    level: '',
-    objectives: [
-      'Identify and name different fashion styles in English (punk, hippie, metal, etc.)',
-      'Express opinions about different fashion styles using simple structures',
-      'Ask and answer questions about fashion preferences using present tense forms',
-      'Use descriptive vocabulary to talk about clothing and style elements'
-    ],
-    materials: [
-      'Visual English Book 7, Unit 2 slides (07 M A - 07 M L)',
-      'Wordwall interactive game - Fashion Styles vocabulary',
-      'Fashion style images organized by category',
-      'Opinion cards with expressions (beautiful, ugly, cool, trendy, etc.)'
-    ],
-    steps: [
-      {
-        title: 'Warm-up: Fashion Recognition',
-        duration: '5 mins',
-        description: 'Show students a variety of fashion style images and elicit what they already know.',
-        instructions: [
-          'Display the slides with different fashion styles (punk, hippie, metal, etc.)',
-          "Ask: 'What style is this? Do you know what it's called?'",
-          'Have students describe what they see - colors, clothing items, accessories',
-          'Note key vocabulary on the board as students respond'
-        ],
-        teacherNotes: 'Accept all reasonable answers at this stage to build confidence and assess existing knowledge.'
-      },
-      {
-        title: 'Vocabulary Presentation: Fashion Styles',
-        duration: '12 mins',
-        description: 'Introduce vocabulary for different fashion styles using Visual English Book 7 slides.',
-        materials: [
-          'Book 7, Unit 2 slides (07 M A - 07 M E)',
-          'Fashion style images'
-        ],
-        instructions: [
-          'Present each fashion style one by one: punk, hippie, metal, emo, rasta',
-          'For each style, ask: "What fashion is it? What are the key features?"',
-          'Teach style-specific vocabulary (leather jacket, dreadlocks, tie-dye, etc.)',
-          'Have students repeat the new vocabulary to practice pronunciation'
-        ]
-      },
-      {
-        title: 'Question Practice: Fashion Preferences',
-        duration: '10 mins',
-        description: 'Students practice asking and answering questions about fashion styles.',
-        materials: [
-          'Book 7, Unit 2 slides (07 M Ab - 07 M Kc)',
-          'Question pattern cards'
-        ],
-        instructions: [
-          'Model question and answer patterns: "Do you like punk fashion?" "Yes, I do/No, I don\'t"',
-          '"Do you wear hippie fashion?" "Sometimes I do/No, I don\'t"',
-          '"Is metal fashion trendy?" "Yes, it is/No, it isn\'t"',
-          'Have students work in pairs to practice asking and answering about different styles',
-          'Monitor for accurate use of vocabulary and grammar'
-        ]
-      },
-      {
-        title: 'Opinion Activity: Fashion Critique',
-        duration: '13 mins',
-        description: 'Students express opinions about different fashion styles and justify their views.',
-        materials: [
-          'Book 7, Unit 2 slides (07 M Ad - 07 M Ld)',
-          'Opinion phrases on cards'
-        ],
-        instructions: [
-          'Focus on the "What is your opinion on..." slides for different fashion styles',
-          'Model expressing opinions: "I think punk fashion is interesting because..."',
-          'In small groups, students discuss what they think about each fashion style',
-          'Each student should use the phrases: beautiful, ugly, disgusting, amazing, or "don\'t mind"',
-          'Groups share their most interesting opinions with the class'
-        ],
-        teacherNotes: 'Emphasize that this is an opportunity to practice language, not to judge others for their style preferences.'
-      },
-      {
-        title: 'Wrap-up: Fashion Style Quiz',
-        duration: '5 mins',
-        description: 'Quick quiz to review vocabulary and gauge understanding.',
-        instructions: [
-          'Show mixed images of fashion styles without labels',
-          'Students identify the correct fashion style name',
-          'Ask follow-up questions: "Is this fashion trendy now?" "Who might wear this style?"',
-          'End with a quick poll: "Which fashion style do you like best?"'
-        ]
-      }
-    ],
-    assessmentTips: 'Evaluate students based on their participation in group activities, correct identification of fashion styles, and ability to express opinions using target language.',
-    homeworkIdeas: [
-      'Write a paragraph describing your personal fashion style using vocabulary from the lesson.',
-      'Find pictures of 3 different fashion styles not covered in class and write 2-3 sentences about each one.',
-      'Interview a family member about fashion styles they liked when they were younger.'
-    ],
-    additionalResources: [
-      {
-        title: 'Wordwall Fashion Styles Game',
-        url: 'https://wordwall.net/resource/29461275/fashion-styles-vocabulary'
-      },
-      {
-        title: 'Fashion Vocabulary in English',
-        url: 'https://www.youtube.com/watch?v=4vGLON1qRSI'
-      }
-    ]
-  };
-
-  // View more resources handler
-  const handleViewMore = (resource: TeacherResource) => {
-    // Based on resource type, perform different actions
-    if ((resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && resource.fileUrl) {
-      // For PDF files, use our embedded PDF viewer
-      setViewingPdf(resource);
-    } else if (resource.sourceUrl) {
-      window.open(resource.sourceUrl, '_blank');
-    } else if (resource.fileUrl) {
-      window.open(resource.fileUrl, '_blank');
-    } else {
-      toast({
-        title: "Resource Unavailable",
-        description: "No external link or file is available for this resource.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  // UI for rendering resources with a unified card-based layout
-  const renderResources = (type: string | null = null) => {
-    // Filter out PDF resources as per user request
-    let allResources = resources.filter(r => r.resourceType !== 'pdf');
-    let filteredResources = allResources;
-    
-    if (type) {
-      filteredResources = allResources.filter(r => r.resourceType === type);
-    }
-
-    if (filteredResources.length === 0) {
+    // Return early if there are no resources
+    if (allResources.length === 0) {
       return (
-        <div className="text-center py-8 text-muted-foreground">
-          {isEditMode && (
-            <p>No resources found. Click the "Add Resource" button to add some.</p>
-          )}
+        <div className="py-8 text-center text-muted-foreground">
+          No {resourceType === 'pdf' ? 'PDF' : resourceType} resources available for this unit.
+          {isEditMode && <div className="mt-2">Click "Add Resource" to add one.</div>}
         </div>
       );
     }
 
-    // Unified card-based grid layout for all resource types
     return (
-      <div className="resources-grid mt-4">
-        {filteredResources.map((resource, index) => (
-          <Card 
-            key={resource.id || index} 
-            className="resource-card"
-          >
-            <CardHeader className="pb-2">
-              <div className="flex justify-between items-center">
-                <div className="text-lg font-medium truncate mr-2">{resource.title}</div>
-                <Badge variant="outline" className="rounded-full px-2 py-0.5 text-xs whitespace-nowrap">
-                  {resource.resourceType === 'video' && <Video className="h-3 w-3 mr-1" />}
-                  {resource.resourceType === 'game' && <Gamepad2 className="h-3 w-3 mr-1" />}
-                  {resource.resourceType === 'pdf' && <FileText className="h-3 w-3 mr-1" />}
-                  {resource.resourceType === 'lesson' && <Book className="h-3 w-3 mr-1" />}
-                  {resource.provider || resource.resourceType.charAt(0).toUpperCase() + resource.resourceType.slice(1)}
-                </Badge>
-              </div>
-              {resource.provider && (
-                <CardDescription className="text-xs">
-                  Provider: {resource.provider}
-                </CardDescription>
-              )}
-            </CardHeader>
-            
-            <CardContent className="p-3 pt-0 flex-grow">
-              {/* Video Content */}
-              {resource.resourceType === 'video' && (
-                <div className="resource-thumbnail video mb-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        {allResources.map((resource, index) => {
+          if (resourceType === 'video') {
+            return (
+              <Card key={resource.id || index} className="overflow-hidden hover:shadow-md transition-shadow">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-base">{resource.title}</CardTitle>
+                    <Badge variant="outline" className="ml-2">
+                      <Video className="h-3 w-3 mr-1" />
+                      Video
+                    </Badge>
+                  </div>
+                  {resource.provider && (
+                    <CardDescription className="text-xs">
+                      Provider: {resource.provider}
+                    </CardDescription>
+                  )}
+                </CardHeader>
+                <CardContent className="pt-2">
                   {resource.embedCode ? (
-                    <div className="w-full overflow-hidden rounded" 
-                         dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
+                    <div 
+                      className="aspect-video w-full rounded overflow-hidden bg-muted" 
+                      dangerouslySetInnerHTML={{ __html: resource.embedCode }}
+                    />
                   ) : (
-                    <div className="aspect-video w-full flex items-center justify-center rounded border bg-gradient-to-br from-slate-100 to-slate-200">
-                      <div className="text-center">
-                        <Video className="h-12 w-12 text-primary/70 mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground">Video Preview</p>
+                    <div className="aspect-video w-full rounded overflow-hidden bg-muted flex items-center justify-center">
+                      <div className="text-center p-4">
+                        <Video className="h-10 w-10 mx-auto mb-2 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">Video preview not available</p>
                       </div>
                     </div>
                   )}
-                </div>
-              )}
-              
-              {/* Game Content */}
-              {resource.resourceType === 'game' && (
-                <div className="resource-thumbnail game mb-3">
-                  {resource.embedCode ? (
-                    <div className="w-full overflow-hidden rounded" 
-                         dangerouslySetInnerHTML={{ __html: resource.embedCode }} />
-                  ) : (
-                    <KahootThumbnail title={resource.title} />
-                  )}
-                </div>
-              )}
-              
-              {/* PDF/Lesson Content */}
-              {(resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && (
-                <div 
-                  className="resource-thumbnail pdf mb-3 border rounded cursor-pointer bg-gradient-to-br from-slate-50 to-slate-100"
-                  onClick={() => resource.fileUrl && setViewingPdf(resource)}
-                >
-                  <div className="pdf-overlay">
-                    <div className="bg-white/90 px-4 py-2 rounded shadow-sm">
-                      <div className="flex items-center">
-                        <FileText className="h-5 w-5 text-primary mr-2" />
-                        <span className="text-sm font-medium">Preview PDF</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="w-full h-full flex items-center justify-center p-4">
-                    <FileText className="h-16 w-16 text-primary/40" />
-                  </div>
-                </div>
-              )}
-            </CardContent>
-            
-            <CardFooter>
-              <div className="flex justify-between w-full">
-                {/* Resource action buttons in a horizontal group */}
-                <div className="button-group">
-                  {(resource.resourceType === 'pdf' || resource.resourceType === 'lesson') && resource.fileUrl && (
-                    <>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        className="text-xs"
-                        onClick={() => setViewingPdf(resource)}
-                      >
-                        <Maximize2 className="h-3 w-3 mr-1" />
-                        Preview
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        className="text-xs"
-                        onClick={() => window.open(resource.fileUrl, '_blank')}
-                      >
-                        <ExternalLink className="h-3 w-3 mr-1" />
-                        Open
-                      </Button>
-                    </>
-                  )}
-                  
-                  {(resource.resourceType === 'video' || resource.resourceType === 'game') && (
+                </CardContent>
+                <CardFooter className="flex justify-between bg-muted/20 pt-3 pb-3">
+                  {resource.sourceUrl && (
                     <Button 
-                      variant="outline" 
+                      variant="secondary" 
                       size="sm"
-                      className="text-xs"
-                      onClick={() => handleViewMore(resource)}
+                      onClick={() => window.open(resource.sourceUrl, '_blank')}
                     >
-                      <ExternalLink className="h-3 w-3 mr-1" />
-                      Open
+                      <ExternalLink className="h-3 w-3 mr-2" />
+                      Watch Source
                     </Button>
                   )}
-                </div>
-
-                {/* Edit controls */}
-                {isEditMode && (
-                  <div className="flex space-x-1">
+                  {isEditMode && (
                     <Button 
                       variant="ghost" 
                       size="sm"
-                      className="text-xs"
-                      onClick={() => {
-                        setNewResource({ ...resource });
-                        setIsAdding(true);
-                      }}
-                    >
-                      <Pencil className="h-3 w-3 mr-1" />
-                      Edit
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="text-xs text-destructive" 
+                      className="ml-auto text-destructive"
                       onClick={() => setConfirmDelete(resource)}
                     >
                       <Trash2 className="h-3 w-3 mr-1" />
                       Delete
                     </Button>
+                  )}
+                </CardFooter>
+              </Card>
+            );
+          }
+          
+          if (resourceType === 'game') {
+            return (
+              <Card key={resource.id || index} className="overflow-hidden hover:shadow-md transition-shadow">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-base">{resource.title}</CardTitle>
+                    <Badge variant="outline" className="ml-2">
+                      <Gamepad2 className="h-3 w-3 mr-1" />
+                      Game
+                    </Badge>
                   </div>
-                )}
-              </div>
-            </CardFooter>
-          </Card>
-        ))}
+                  {resource.provider && (
+                    <CardDescription className="text-xs">
+                      Provider: {resource.provider}
+                    </CardDescription>
+                  )}
+                </CardHeader>
+                <CardContent className="pt-2">
+                  {resource.embedCode ? (
+                    <div 
+                      className="w-full rounded overflow-hidden bg-muted" 
+                      dangerouslySetInnerHTML={{ __html: resource.embedCode }}
+                    />
+                  ) : resource.provider?.toLowerCase().includes('kahoot') ? (
+                    <KahootThumbnail title={resource.title} />
+                  ) : (
+                    <div className="aspect-video w-full rounded overflow-hidden bg-muted flex items-center justify-center">
+                      <div className="text-center p-4">
+                        <Gamepad2 className="h-10 w-10 mx-auto mb-2 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">Game preview not available</p>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+                <CardFooter className="flex justify-between bg-muted/20 pt-3 pb-3">
+                  {resource.sourceUrl && (
+                    <Button 
+                      variant="secondary" 
+                      size="sm"
+                      onClick={() => window.open(resource.sourceUrl, '_blank')}
+                    >
+                      <ExternalLink className="h-3 w-3 mr-2" />
+                      Play Game
+                    </Button>
+                  )}
+                  {isEditMode && (
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="ml-auto text-destructive"
+                      onClick={() => setConfirmDelete(resource)}
+                    >
+                      <Trash2 className="h-3 w-3 mr-1" />
+                      Delete
+                    </Button>
+                  )}
+                </CardFooter>
+              </Card>
+            );
+          }
+
+          if (resourceType === 'pdf' || resourceType === 'lesson') {
+            return (
+              <Card key={resource.id || index} className="overflow-hidden hover:shadow-md transition-shadow">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-base">{resource.title}</CardTitle>
+                    <Badge variant="outline" className="ml-2">
+                      <FileText className="h-3 w-3 mr-1" />
+                      {resourceType === 'pdf' ? 'PDF' : 'Lesson'}
+                    </Badge>
+                  </div>
+                  {resource.provider && (
+                    <CardDescription className="text-xs">
+                      Provider: {resource.provider}
+                    </CardDescription>
+                  )}
+                </CardHeader>
+                <CardContent className="pt-2">
+                  <div className="rounded overflow-hidden mb-4 border bg-white hover:shadow-md transition-all cursor-pointer"
+                       onClick={() => resource.fileUrl && setViewingPdf(resource)}
+                  >
+                    <div className="p-4 flex flex-col items-center">
+                      <div className="bg-muted/20 w-16 h-24 flex items-center justify-center rounded mb-3 border relative overflow-hidden hover:border-primary/50 transition-all">
+                        <FileText className="h-8 w-8 text-primary/60" />
+                        <div className="absolute bottom-0 left-0 right-0 bg-primary/10 text-center text-xs py-1 font-medium">PDF</div>
+                      </div>
+                      <h4 className="text-sm font-medium text-center mb-1">{resource.title}</h4>
+                      <p className="text-xs text-muted-foreground text-center">{resource.provider || 'Visual English'}</p>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-between bg-muted/20 pt-3 pb-3">
+                  {(resource.fileUrl || resource.sourceUrl) && (
+                    <Button 
+                      variant="secondary" 
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => {
+                        if (resource.fileUrl) {
+                          setViewingPdf(resource);
+                        } else if (resource.sourceUrl) {
+                          window.open(resource.sourceUrl, '_blank');
+                        }
+                      }}
+                    >
+                      {resource.fileUrl ? (
+                        <>
+                          <Maximize2 className="h-3 w-3 mr-2" />
+                          View PDF
+                        </>
+                      ) : (
+                        <>
+                          <ExternalLink className="h-3 w-3 mr-2" />
+                          View Resource
+                        </>
+                      )}
+                    </Button>
+                  )}
+                  {isEditMode && (
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="ml-2 text-destructive"
+                      onClick={() => setConfirmDelete(resource)}
+                    >
+                      <Trash2 className="h-3 w-3 mr-1" />
+                      Delete
+                    </Button>
+                  )}
+                </CardFooter>
+              </Card>
+            );
+          }
+          
+          return null;
+        })}
       </div>
     );
   };
 
-  // Define all the lesson plans first
-  const musicalInstrumentsLessonPlan: LessonPlan = {
-    id: "musical-instruments-1",
-    title: "Musical Instruments and Music",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to musical instruments",
-      "Practice asking and answering questions about playing instruments",
-      "Develop listening skills through music-related activities"
-    ],
-    materials: [
-      "Images of various musical instruments (accordion, bagpipes, violin, etc.)",
-      "Short audio samples of different instruments",
-      "Flashcards with instruments and related vocabulary"
-    ],
-    steps: [
-      {
-        title: "Instrument Introduction",
-        duration: "10 min",
-        description: "Show images of different musical instruments (accordion, bagpipe, drums, etc.) and introduce their names. Practice pronunciation and have students repeat after you."
-      },
-      {
-        title: "Play or Don't Play",
-        duration: "10 min",
-        description: "Practice questions and answers: 'Can you play the accordion?' 'Yes, I can' or 'No, I can't.' Students work in pairs asking and answering about different instruments using the target language patterns."
-      },
-      {
-        title: "Musical Difficulty Ranking",
-        duration: "10 min",
-        description: "Discuss different instruments and whether they are easy or difficult to play. Students discuss in groups and then share their opinions using phrases like 'The violin is difficult to play because...' or 'The drums are easy to play because...'"
-      },
-      {
-        title: "Would You Like To?",
-        duration: "10 min",
-        description: "Practice conversation patterns: 'Would you like to play the accordion?' 'Yes, I would like to learn' or 'No, I wouldn't like to learn'. Students circulate and ask each other about various instruments."
-      },
-      {
-        title: "Music Preferences",
-        duration: "5 min",
-        description: "Wrap up with a brief discussion about students' favorite types of music and instruments, reinforcing vocabulary and question patterns learned."
-      }
-    ],
-    assessmentTips: "Evaluate students' use of target vocabulary and question/answer patterns during pair work activities.",
-    homeworkIdeas: ["Students create a simple poster about a musical instrument they would like to learn, including 5 facts about it."]
-  };
-  
-  const artsCultureLessonPlan: LessonPlan = {
-    id: "arts-culture-1",
-    title: "Arts and Culture",
-    level: "", 
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to arts, culture, and entertainment",
-      "Practice discussing preferences regarding different art forms",
-      "Develop critical thinking skills through art appreciation activities"
-    ],
-    materials: [
-      "Images of famous paintings, sculptures, and other art forms",
-      "List of cultural venues and events vocabulary",
-      "Simple art appreciation worksheet"
-    ],
-    steps: [
-      {
-        title: "Art Forms Vocabulary",
-        duration: "10 min",
-        description: "Introduce vocabulary for different art forms (painting, sculpture, music, dance, theater, etc.) and cultural venues (museum, gallery, concert hall, theater). Use images and have students match terms to pictures."
-      },
-      {
-        title: "Art Appreciation",
-        duration: "10 min",
-        description: "Show images of famous artworks and practice descriptive language. Guide students to express opinions using phrases like 'I think this painting is beautiful/interesting/strange because...'"
-      },
-      {
-        title: "Cultural Venues Discussion",
-        duration: "10 min",
-        description: "Discuss different places where people can experience art and culture. Practice questions like 'Have you ever been to a museum/concert/theater?' and responses 'Yes, I have' or 'No, I haven't.'"
-      },
-      {
-        title: "Arts and Culture Survey",
-        duration: "10 min",
-        description: "Students interview each other about cultural preferences using prepared questions: 'Do you like modern art?' 'What kind of music do you enjoy?' 'How often do you go to concerts?'"
-      },
-      {
-        title: "Create an Exhibition",
-        duration: "5 min",
-        description: "In small groups, students plan a mini art exhibition or cultural event, deciding what type of art to showcase and where to hold it."
-      }
-    ],
-    assessmentTips: "Monitor students' use of arts and culture vocabulary during pair and group activities. Note their ability to express preferences and opinions about different art forms.",
-    homeworkIdeas: ["Students research a famous artist or musician from their country and prepare a simple presentation."]
-  };
-  
-  const sportsLessonPlan: LessonPlan = {
-    id: "sports-activities-1",
-    title: "Sports and Physical Activities",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to different sports and physical activities",
-      "Practice discussing sports preferences and frequency",
-      "Develop conversation skills through sports-themed discussions"
-    ],
-    materials: [
-      "Images of various sports and activities",
-      "Sports equipment flashcards",
-      "Sports frequency questionnaire"
-    ],
-    steps: [
-      {
-        title: "Sports Vocabulary Introduction",
-        duration: "8 min",
-        description: "Introduce vocabulary for different sports (football, basketball, tennis, swimming, etc.) using images. Practice pronunciation and categorize sports as individual/team and indoor/outdoor."
-      },
-      {
-        title: "Sports Preferences",
-        duration: "10 min",
-        description: "Practice asking and answering: 'Do you like playing football?' 'Yes, I like playing football' or 'No, I don't like playing football'. Students work in pairs asking about different sports."
-      },
-      {
-        title: "Frequency Expressions",
-        duration: "10 min",
-        description: "Teach frequency expressions (always, usually, sometimes, hardly ever, never) and practice with questions like 'How often do you play tennis?' 'I sometimes play tennis.'"
-      },
-      {
-        title: "Sports in Your Country",
-        duration: "10 min",
-        description: "Discuss which sports are popular in different countries. Students use phrases like 'Football is popular in my country' and practice asking 'Is basketball popular in your country?'"
-      },
-      {
-        title: "Sports Fan Discussion",
-        duration: "7 min",
-        description: "Students discuss whether they are sports fans, what teams they support, and if they watch sports on TV, using target language structures."
-      }
-    ],
-    assessmentTips: "Evaluate students' use of sports vocabulary and their ability to discuss preferences and habits using the correct frequency expressions.",
-    homeworkIdeas: ["Students create a sports diary for one week, noting what sports they play or watch and how often."]
-  };
-  
-  const naturalDisastersLessonPlan: LessonPlan = {
-    id: "natural-disasters-1",
-    title: "Natural Disasters and Emergency Preparedness",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to different natural disasters",
-      "Practice discussing emergency preparedness and safety measures",
-      "Develop critical thinking about disaster response"
-    ],
-    materials: [
-      "Images or videos of different natural disasters",
-      "Emergency preparedness checklist",
-      "Safety measure flashcards"
-    ],
-    steps: [
-      {
-        title: "Disaster Vocabulary",
-        duration: "10 min",
-        description: "Introduce vocabulary for different natural disasters (earthquake, flood, hurricane, tornado, wildfire, etc.) using images. Discuss characteristics of each disaster type."
-      },
-      {
-        title: "Experience Sharing",
-        duration: "8 min",
-        description: "Practice asking and answering 'Have you ever seen an earthquake/flood?' with responses 'Yes, I have seen...' or 'No, I haven't seen... yet.' Students share any experiences with natural disasters."
-      },
-      {
-        title: "Safety Measures",
-        duration: "12 min",
-        description: "Discuss safety measures for different disaster types. Practice structures like 'What should you do during an earthquake?' and responses 'You should take cover under a sturdy table.'"
-      },
-      {
-        title: "Indoor or Outdoor Safety",
-        duration: "8 min",
-        description: "Discuss whether it's better to be indoors or outdoors during different disasters. Students use phrases like 'It's better to be outdoors during an earthquake because...'"
-      },
-      {
-        title: "Emergency Kit Planning",
-        duration: "7 min",
-        description: "In small groups, students create a list of items needed in an emergency kit, practicing vocabulary for essential supplies."
-      }
-    ],
-    assessmentTips: "Monitor students' use of disaster vocabulary and safety instructions. Note their ability to give advice using modal verbs.",
-    homeworkIdeas: ["Students research a major natural disaster that occurred in their country or region and write 5-8 sentences about it."]
-  };
-  
-  const holidaysLessonPlan: LessonPlan = {
-    id: "holidays-travel-1",
-    title: "Holidays and Travel",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to travel, vacations and holiday activities",
-      "Practice talking about past and future holiday plans",
-      "Develop conversation skills through travel-themed discussions"
-    ],
-    materials: [
-      "Images of different holiday destinations and activities",
-      "Travel vocabulary flashcards",
-      "Simple travel brochures or advertisements"
-    ],
-    steps: [
-      {
-        title: "Holiday Vocabulary",
-        duration: "8 min",
-        description: "Introduce vocabulary for different types of holidays (beach vacation, city break, camping trip, etc.) and travel activities using images. Practice pronunciation and categorization."
-      },
-      {
-        title: "Destination Preferences",
-        duration: "10 min",
-        description: "Practice asking and answering: 'Do you prefer beach holidays or mountain trips?' Students discuss preferences for different types of vacation destinations and activities."
-      },
-      {
-        title: "Past Holiday Experiences",
-        duration: "10 min",
-        description: "Students practice talking about past holidays using simple past tense: 'Where did you go on your last holiday?' 'I went to the seaside.' 'What did you do there?' 'I swam and relaxed.'"
-      },
-      {
-        title: "Future Travel Plans",
-        duration: "10 min",
-        description: "Discuss future travel plans using 'going to' structure: 'Where are you going to travel next summer?' 'I'm going to visit London.' Students interview each other about future travel intentions."
-      },
-      {
-        title: "Dream Vacation Planning",
-        duration: "7 min",
-        description: "In pairs, students describe their dream vacation, including destination, accommodation, activities, and who they would travel with."
-      }
-    ],
-    assessmentTips: "Evaluate students' use of travel vocabulary and their ability to discuss past experiences and future plans using appropriate tense structures.",
-    homeworkIdeas: ["Students create a simple travel itinerary for a three-day trip to a destination of their choice, including activities for each day."]
-  };
-  
-  const crimeLessonPlan: LessonPlan = {
-    id: "crime-vocabulary-1",
-    title: "Crime Vocabulary & Law Enforcement",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to crime and law enforcement",
-      "Practice describing different crimes and punishments",
-      "Develop speaking skills through discussion of criminal justice"
-    ],
-    materials: [
-      "Images of various crimes (theft, robbery, vandalism, etc.)",
-      "Vocabulary cards for law enforcement terms",
-      "Simple crime scenarios for role-play"
-    ],
-    steps: [
-      {
-        title: "Crime Scene Investigation",
-        duration: "5 min",
-        description: "Show students a picture of a crime scene (e.g., broken window, items missing) and ask them to describe what they think happened. Introduce key vocabulary."
-      },
-      {
-        title: "Crime Vocabulary Matching",
-        duration: "15 min",
-        description: "Students match crime terms with definitions and images. Include vocabulary like: theft, robbery, smuggling, vandalism, prison, judge, police officer, criminal."
-      },
-      {
-        title: "Law & Order Role Play",
-        duration: "15 min",
-        description: "Students work in small groups to role-play different scenarios: reporting a crime, interviewing witnesses, or a simple court case. Provide role cards with key vocabulary to use."
-      },
-      {
-        title: "Crime Prevention Poster",
-        duration: "10 min",
-        description: "In pairs, students create a simple crime prevention poster using the vocabulary learned in class. They should include at least 5 crime-related terms."
-      }
-    ],
-    assessmentTips: "Evaluate students' use of target vocabulary during role-play activities and in their crime prevention posters.",
-    homeworkIdeas: ["Students can write a short crime story using at least 10 vocabulary words from the lesson."]
-  };
-
-  const accommodationLessonPlan: LessonPlan = {
-    id: "accommodation-hotels-1",
-    title: "Accommodation & Hotels",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to different types of accommodation",
-      "Practice making hotel reservations and handling inquiries",
-      "Compare and evaluate different lodging options"
-    ],
-    materials: [
-      "Pictures of different types of accommodation (hotel, hostel, B&B, etc.)",
-      "Hotel booking dialogue cards",
-      "Travel brochures or accommodation listings"
-    ],
-    steps: [
-      {
-        title: "Accommodation Types",
-        duration: "10 min",
-        description: "Introduce vocabulary for different types of accommodation (hotel, motel, hostel, B&B, resort, apartment, campsite). Students match descriptions to images and discuss advantages of each."
-      },
-      {
-        title: "Hotel Facilities Vocabulary",
-        duration: "10 min",
-        description: "Teach vocabulary related to hotel facilities and amenities (reception, concierge, room service, housekeeping, spa, Wi-Fi, etc.)."
-      },
-      {
-        title: "Booking Role-play",
-        duration: "15 min",
-        description: "Students practice dialogues for making reservations, checking in, asking about facilities, and dealing with problems at a hotel."
-      },
-      {
-        title: "Accommodation Review",
-        duration: "10 min",
-        description: "Students read sample accommodation reviews and then write their own short review of an imaginary stay, using at least 8 vocabulary items from the lesson."
-      }
-    ],
-    assessmentTips: "Evaluate students' use of accommodation vocabulary in their role-plays and written reviews.",
-    homeworkIdeas: ["Students research and compare prices and facilities for different types of accommodation in a city of their choice."]
-  };
-  
-  const governmentLessonPlan: LessonPlan = {
-    id: "government-vocabulary-1",
-    title: "Government and Politics Vocabulary",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to government structures and political systems",
-      "Practice discussing political processes and civic duties",
-      "Develop critical thinking about different forms of government"
-    ],
-    materials: [
-      "Images of government buildings and political figures",
-      "Political systems infographic",
-      "Simplified political vocabulary glossary"
-    ],
-    steps: [
-      {
-        title: "Government Brainstorm",
-        duration: "5 min",
-        description: "Students brainstorm words related to government and politics. Create a mind map on the board categorizing terms (officials, buildings, processes, etc.)."
-      },
-      {
-        title: "Political Systems Comparison",
-        duration: "15 min",
-        description: "Introduce different political systems (democracy, monarchy, dictatorship). Students complete a comparison chart highlighting key features of each system."
-      },
-      {
-        title: "Government Roles Matching",
-        duration: "10 min",
-        description: "Students match government positions (president, prime minister, mayor, judge, etc.) with their responsibilities and powers."
-      },
-      {
-        title: "Mini-Debate",
-        duration: "10 min",
-        description: "Students debate simple political questions in small groups using target vocabulary (e.g., 'Should voting be mandatory?')"
-      },
-      {
-        title: "Ideal Government",
-        duration: "5 min",
-        description: "Students briefly describe their ideal government structure, using at least 5 vocabulary terms from the lesson."
-      }
-    ],
-    assessmentTips: "Monitor students' use of target vocabulary during debates and in their final descriptions of ideal governments.",
-    homeworkIdeas: ["Students research the government structure of an English-speaking country and prepare a short presentation."]
-  };
-
-  const schoolLessonPlan: LessonPlan = {
-    id: "school-subjects-1",
-    title: "School Subjects and Activities",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to school subjects and after-school activities",
-      "Practice expressing preferences about school subjects",
-      "Compare school systems across different countries"
-    ],
-    materials: [
-      "School subject flashcards",
-      "After-school club images",
-      "School timetable template"
-    ],
-    steps: [
-      {
-        title: "School Days",
-        duration: "5 min",
-        description: "Ask students about their favorite and least favorite school subjects. List subjects on the board as they are mentioned."
-      },
-      {
-        title: "Subject Vocabulary",
-        duration: "10 min",
-        description: "Introduce or review school subject vocabulary with images (mathematics, science, history, geography, art, music, physical education, etc.)."
-      },
-      {
-        title: "School Clubs Exploration",
-        duration: "10 min",
-        description: "Present various after-school activities and clubs. Students discuss which they would join and why, using expressions like 'I'm interested in...' or 'I'm good at...'"
-      },
-      {
-        title: "Dream Timetable",
-        duration: "15 min",
-        description: "Students create their ideal school timetable, including subjects and after-school activities. They should include at least 3 core subjects and 2 extracurricular activities."
-      },
-      {
-        title: "School Comparison",
-        duration: "5 min",
-        description: "Discuss differences between schools in different countries, focusing on subjects taught and activities offered."
-      }
-    ],
-    assessmentTips: "Evaluate students' use of school vocabulary in their dream timetables and during discussions.",
-    homeworkIdeas: ["Students can create a poster or brochure for a new after-school club they would like to start."]
-  };
-  
-  const moneyLessonPlan: LessonPlan = {
-    id: "money-shopping-1",
-    title: "Money and Shopping Vocabulary",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to money, banking, and shopping",
-      "Practice conversations about prices and transactions",
-      "Develop numeracy skills in English through money-related activities"
-    ],
-    materials: [
-      "Fake money (various currencies if available)",
-      "Price tags and product images",
-      "Role-play cards for shopping scenarios"
-    ],
-    steps: [
-      {
-        title: "Money Around the World",
-        duration: "5 min",
-        description: "Show examples of different currencies and discuss their names. Ask students what they know about money in English-speaking countries."
-      },
-      {
-        title: "Banking Vocabulary",
-        duration: "10 min",
-        description: "Introduce vocabulary related to banking (account, deposit, withdraw, ATM, credit card, etc.) with visual aids and example sentences."
-      },
-      {
-        title: "Shopping Role-play",
-        duration: "15 min",
-        description: "Students practice shopping dialogues in pairs, using phrases like 'How much is this?', 'I'd like to buy...', 'Do you accept credit cards?', etc."
-      },
-      {
-        title: "Budget Challenge",
-        duration: "10 min",
-        description: "Give students a budget and a list of items with prices. They must plan purchases within their budget, explaining their choices."
-      },
-      {
-        title: "Money Idioms",
-        duration: "5 min",
-        description: "Introduce a few common money idioms (e.g., 'cost an arm and a leg', 'save for a rainy day') and have students try to use them in sentences."
-      }
-    ],
-    assessmentTips: "Evaluate students' use of money vocabulary during role-plays and the budget challenge.",
-    homeworkIdeas: ["Students can research and compare prices of common items in different countries, presenting their findings to the class."]
-  };
-  
-  const currencyLessonPlan: LessonPlan = {
-    id: "currency-exchange-1",
-    title: "Currency Exchange & Foreign Money",
-    level: "",
-    duration: "45 min",
-    objectives: [
-      "Learn vocabulary related to currency exchange and international money",
-      "Practice converting between different currencies",
-      "Understand cultural aspects of money around the world"
-    ],
-    materials: [
-      "Currency examples from different countries",
-      "Exchange rate charts",
-      "Travel situation role-play cards"
-    ],
-    steps: [
-      {
-        title: "World Currencies Identification",
-        duration: "10 min",
-        description: "Show images of different currencies and have students identify them. Focus on major currencies (Dollar, Euro, Pound, Yen) and their symbols ($, €, £, ¥)."
-      },
-      {
-        title: "Exchange Rate Practice",
-        duration: "10 min",
-        description: "Provide simple exchange rate charts and have students practice converting between currencies with basic math problems."
-      },
-      {
-        title: "Tourist Role-Play",
-        duration: "15 min",
-        description: "Students role-play scenarios where tourists need to exchange money, pay in foreign currency, or ask about prices in different countries."
-      },
-      {
-        title: "Currency Design",
-        duration: "10 min",
-        description: "Discuss what appears on the currency of different countries and what it says about their culture and values. Students can design a simple bank note for an imaginary country."
-      }
-    ],
-    assessmentTips: "Observe students' ability to use currency vocabulary accurately during role-plays and evaluate their currency conversion calculations.",
-    homeworkIdeas: ["Students research a country's currency and create a presentation about its design, history, and current exchange rate."]
-  };
-  
   const renderLessonPlans = () => {
     // First, check if there are any lesson plans specifically for this book/unit in the resources list
     const lessonPlansFromResources = resources.filter(r => r.resourceType === 'lesson');
@@ -3490,49 +568,25 @@ useEffect(() => {
                         onClick={() => window.open(resource.fileUrl, '_blank')}
                       >
                         <FileText className="h-3 w-3 mr-2" />
-                        Open Lesson Plan
+                        View Lesson Plan
                       </Button>
                     </div>
                   </div>
                 )}
               </CardContent>
-              
-              <CardFooter className="bg-muted/30 pt-2 pb-2">
-                <div className="flex justify-between w-full">
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="text-xs flex items-center" 
-                    onClick={() => handleViewMore(resource)}
-                  >
-                    <ExternalLink className="h-3 w-3 mr-1" />
-                    View More
-                  </Button>
-
+              <CardFooter className="bg-muted/20 pt-3 pb-3">
+                <div className="w-full flex justify-between items-center">
+                  <span className="text-xs text-muted-foreground">Created with Visual English</span>
                   {isEditMode && (
-                    <div className="flex space-x-1">
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center" 
-                        onClick={() => {
-                          setNewResource({ ...resource });
-                          setIsAdding(true);
-                        }}
-                      >
-                        <Pencil className="h-3 w-3 mr-1" />
-                        Edit
-                      </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete(resource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-destructive"
+                      onClick={() => setConfirmDelete(resource)}
+                    >
+                      <Trash2 className="h-3 w-3 mr-1" />
+                      Delete
+                    </Button>
                   )}
                 </div>
               </CardFooter>
@@ -3547,738 +601,94 @@ useEffect(() => {
 
     // Book 7 Units specific lesson plans
     // Check if this book/unit combination has built-in lesson plans and render them if available
-    if (bookId === '7' && unitId === '1') {
-      builtInLessonPlans = (
-        <div className="mt-6 space-y-8">
-          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
-          <div className="lesson-plan-grid">
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Movie Genres Vocabulary</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription></CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'film-genres-1', title: 'Movie Genres Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={movieGenresLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Film Production Roles</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription></CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'film-production-1', title: 'Film Production Roles', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={filmProductionLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (bookId === '7' && unitId === '2') {
-      builtInLessonPlans = (
-        <div className="mt-6 space-y-8">
-          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
-          <div className="lesson-plan-grid">
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg truncate">
-                        <span>Body Piercings Vocabulary</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription className="truncate"></CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'body-piercings-1', title: 'Body Piercings Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={bodyPiercingsLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg truncate">
-                        <span>Hairstyles and Hair Types</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription className="truncate"></CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'hairstyles-1', title: 'Hairstyles and Hair Types', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={hairstylesLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg truncate">
-                        <span>Fashion Styles Vocabulary</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription className="truncate"></CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'fashion-styles-1', title: 'Fashion Styles Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={fashionStylesLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (bookId === '7' && unitId === '3') {
-      builtInLessonPlans = (
-        <div className="mt-6 space-y-8">
-          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
-          <div className="lesson-plan-grid">
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Crime Vocabulary & Law Enforcement</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription>A1-A2</CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'crime-vocabulary-1', title: 'Crime Vocabulary & Law Enforcement', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={crimeLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Police & Detective Work</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription>A1-A2</CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'detective-work-1', title: 'Police & Detective Work', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={crimeLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (bookId === '7' && unitId === '4') {
-      // Define hotels and accommodation lesson plan
-      const hotelAccommodationLessonPlan: LessonPlan = {
-        id: "hotels-accommodation-1",
-        title: "Types of Vacation and Accommodation",
-        level: "Intermediate", 
-        duration: "45-60 minutes",
-        objectives: [
-          "Identify and describe different types of vacation experiences",
-          "Learn vocabulary related to hotels and accommodation options",
-          "Practice expressing preferences about vacation types",
-          "Compare different accommodation options using appropriate adjectives"
-        ],
-        materials: [
-          "Visual English Book 7, Unit 4 slides",
-          "Hotel vocabulary handouts",
-          "Vacation preference worksheets",
-          "Hotel booking role-play cards"
-        ],
-        steps: [
-          {
-            title: "Warm-up: Vacation Experiences",
-            duration: "10 mins",
-            description: "Activate prior knowledge about vacations and accommodation.",
-            instructions: [
-              "Ask students to share their favorite vacation experiences",
-              "Have them describe where they stayed during that vacation",
-              "Create a list of vacation types and accommodation words on the board",
-              "Introduce the topic of the lesson: 'Types of Vacation and Accommodation'"
-            ],
-            teacherNotes: "This initial discussion helps to assess students' prior knowledge and vocabulary related to travel and accommodation."
-          },
-          {
-            title: "Vocabulary: Accommodation Types",
-            duration: "15 mins",
-            description: "Introduce different types of accommodation using Visual English slides.",
-            materials: [
-              "Book 7, Unit 4 slides (03-04)",
-              "Hotel vocabulary handouts"
-            ],
-            instructions: [
-              "Present vocabulary for different accommodation types: 5-star hotel, budget hotel, hostel, villa, log cabin, etc.",
-              "For each type, discuss key features and typical amenities",
-              "Teach adjectives for describing accommodation: comfortable, uncomfortable, expensive, cheap",
-              "Practice pronunciation and have students repeat new vocabulary",
-              "Have students categorize accommodations by price range and comfort level"
-            ]
-          },
-          {
-            title: "Vocabulary: Hotel Facilities and Services",
-            duration: "10 mins",
-            description: "Learn vocabulary related to hotel facilities, services, and amenities.",
-            materials: [
-              "Book 7, Unit 4 slides (04-05)"
-            ],
-            instructions: [
-              "Show slides with hotel amenities: room service, swimming pool, gym, restaurant, etc.",
-              "Ask 'What amenity can you see in the picture?'",
-              "Discuss which amenities are important/unimportant when on holiday",
-              "Practice structure: 'Is a [facility] important or unimportant when you are on holiday?'",
-              "Students work in pairs asking about preferences for different hotel facilities"
-            ]
-          },
-          {
-            title: "Conversation Practice: Vacation Types",
-            duration: "10 mins",
-            description: "Practice conversations about different vacation types.",
-            materials: [
-              "Book 7, Unit 4 slides (01-02)",
-              "Vacation preference worksheets"
-            ],
-            instructions: [
-              "Review different vacation types: city, camping, hiking, cruise, etc.",
-              "Introduce conversation patterns: 'Would you like to go on a city vacation?'",
-              "Students practice responses: 'Yes, I would like to...' or 'No, I wouldn't like to...'",
-              "Students work in pairs to discuss vacation preferences using target language",
-              "Have several pairs share their conversations with the class"
-            ]
-          },
-          {
-            title: "Role-play: Hotel Booking",
-            duration: "15 mins",
-            description: "Practice real-life conversations in a hotel setting.",
-            materials: [
-              "Hotel booking role-play cards"
-            ],
-            instructions: [
-              "Divide students into pairs: one as hotel receptionist, one as guest",
-              "Distribute role-play cards with different scenarios",
-              "Students practice booking a room, asking about amenities, etc.",
-              "Encourage use of vocabulary from the lesson",
-              "Have 2-3 pairs perform their dialogues for the class"
-            ],
-            teacherNotes: "Role-play cards should include scenarios like booking a single/double room, asking about hotel services, or requesting special accommodations."
-          }
-        ],
-        assessmentTips: "Evaluate students on their ability to correctly use accommodation vocabulary, express preferences about vacation types, and participate effectively in the role-play activity.",
-        homeworkIdeas: [
-          "Write a paragraph describing your ideal vacation and accommodation",
-          "Design a hotel brochure highlighting its amenities and room types",
-          "Complete the online vocabulary games on Wordwall about hotel vocabulary"
-        ],
-        additionalResources: [
-          {
-            title: "Hotel Vocabulary - ISL Collective",
-            url: "https://en.islcollective.com/english-esl-video-lessons/297369"
-          },
-          {
-            title: "Hotel Vocabulary Wordwall Game",
-            url: "https://wordwall.net/resource/ead2718ebb544050a5077cc541d2e2a2"
-          }
-        ]
-      };
-      
-      // Hotel booking role play lesson plan
-      const hotelBookingLessonPlan: LessonPlan = {
-        id: "hotel-booking-1",
-        title: "Hotel Booking and Check-in",
-        level: "Intermediate", 
-        duration: "45-60 minutes",
-        objectives: [
-          "Practice using functional language for hotel bookings",
-          "Learn vocabulary for checking in/out of a hotel",
-          "Role-play common hotel service scenarios",
-          "Develop confidence in real-world travel communication"
-        ],
-        materials: [
-          "Visual English Book 7, Unit 4 slides",
-          "Hotel check-in forms",
-          "Role-play scenario cards",
-          "Hotel services vocabulary list"
-        ],
-        steps: [
-          {
-            title: "Introduction: Hotel Services",
-            duration: "10 mins",
-            description: "Review key vocabulary related to hotel services and staff.",
-            instructions: [
-              "Show slides with hotel staff: receptionist, concierge, bellboy, etc.",
-              "Discuss the roles of different hotel employees",
-              "Introduce key phrases for hotel interactions",
-              "Have students match job titles with descriptions"
-            ],
-            teacherNotes: "This activity establishes the basic vocabulary needed for the role-plays later in the lesson."
-          },
-          {
-            title: "Dialogue Practice: Making a Reservation",
-            duration: "15 mins",
-            description: "Practice common phrases used when making hotel reservations.",
-            materials: [
-              "Book 7, Unit 4 slides (06-08)",
-              "Dialogue handouts"
-            ],
-            instructions: [
-              "Present a model dialogue for making a hotel reservation",
-              "Highlight key phrases: 'I'd like to book a room', 'How much is it per night?', etc.",
-              "Practice the dialogue as a class, focusing on pronunciation",
-              "Have students work in pairs to practice substituting different details",
-              "Ask volunteers to perform their dialogues for the class"
-            ]
-          },
-          {
-            title: "Vocabulary: Hotel Room Types and Amenities",
-            duration: "10 mins",
-            description: "Learn vocabulary for different room types and hotel amenities.",
-            materials: [
-              "Book 7, Unit 4 slides (09-10)"
-            ],
-            instructions: [
-              "Introduce vocabulary: single room, double room, twin room, suite",
-              "Discuss room amenities: mini-bar, safe, hairdryer, toiletries",
-              "Have students describe what they expect in different hotel categories",
-              "Practice asking questions about room amenities: 'Does the room have...?'"
-            ]
-          },
-          {
-            title: "Role-play: Hotel Check-in",
-            duration: "15 mins",
-            description: "Practice the language used during hotel check-in procedures.",
-            materials: [
-              "Hotel check-in forms",
-              "Role-play scenario cards"
-            ],
-            instructions: [
-              "Model a hotel check-in dialogue with a student volunteer",
-              "Distribute role-play cards with different scenarios",
-              "Students work in pairs to practice check-in dialogues",
-              "Each scenario should include at least one problem to solve",
-              "Have 2-3 pairs perform their check-in dialogues for the class"
-            ],
-            teacherNotes: "Problems could include: room not ready, reservation not found, requesting room change, etc."
-          },
-          {
-            title: "Problem-solving: Hotel Complaints",
-            duration: "10 mins",
-            description: "Practice language for dealing with common hotel problems.",
-            instructions: [
-              "Present vocabulary for common hotel problems: noisy room, no hot water, etc.",
-              "Teach polite complaint language: 'I'm afraid there's a problem with...'",
-              "Students role-play making complaints and responding appropriately",
-              "Discuss cultural differences in handling complaints"
-            ]
-          }
-        ],
-        assessmentTips: "Evaluate students on their ability to use appropriate language in the role-plays, their use of polite forms for requests and complaints, and their ability to solve problems in English.",
-        homeworkIdeas: [
-          "Write a dialogue for a hotel check-out situation",
-          "Create a list of recommendations for hotel services in your city",
-          "Research and compare hotel booking websites"
-        ],
-        additionalResources: [
-          {
-            title: "Hotel Vocabulary Wordwall Game",
-            url: "https://wordwall.net/resource/ead2718ebb544050a5077cc541d2e2a2"
-          },
-          {
-            title: "Hotel English Dialogues - ESL Collective",
-            url: "https://en.islcollective.com/english-esl-worksheets/vocabulary/hotel/hotel-dialogues-crossword-puzzle/53678"
-          }
-        ]
-      };
+    if (bookId === '7' && unitId === '6') {
+      // Get Unit 6 lesson plans
+      const unit6Plans = getUnit6LessonPlans();
       
       builtInLessonPlans = (
         <div className="mt-6 space-y-8">
-          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
+          <h3 className="text-lg font-semibold mb-4">Money-Themed Lesson Plans</h3>
           <div className="lesson-plan-grid">
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Hotels and Accommodation Vocabulary</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription>B1-B2</CardDescription>
+            {unit6Plans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `money-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
                     </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'hotels-accommodation-1', title: 'Hotels and Accommodation Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={hotelAccommodationLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Hotel Booking Role Play</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription>B1-B2</CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'hotel-booking-1', title: 'Hotel Booking Role Play', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={hotelBookingLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (bookId === '7' && unitId === '5') {
-      builtInLessonPlans = (
-        <div className="mt-6 space-y-8">
-          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
-          <div className="lesson-plan-grid">
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>School Subjects and Activities</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription>A1-A2</CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'school-vocabulary-1', title: 'School Subjects and Activities', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={schoolLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Education Systems Around the World</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription>A1-A2</CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'education-systems-1', title: 'Education Systems Around the World', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={schoolLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (bookId === '7' && unitId === '6') {
-      builtInLessonPlans = getUnit6LessonPlans(bookId, unitId, isEditMode, setConfirmDelete);
-      // Using new implementation from unit6-implementation.tsx
-      /* Legacy code - keeping for reference
-      builtInLessonPlans = (
-        <div className="mt-6 space-y-8">
-          <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
-          <div className="lesson-plan-grid">
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Money and Shopping Vocabulary</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription></CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'money-vocabulary-1', title: 'Money and Shopping Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={moneyLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-            <div>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="flex justify-between text-lg">
-                        <span>Currency Exchange & Foreign Money</span>
-                        <span className="text-sm font-normal ml-2">45 min</span>
-                      </CardTitle>
-                      <CardDescription></CardDescription>
-                    </div>
-                    {isEditMode && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'currency-exchange-1', title: 'Currency Exchange & Foreign Money', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={currencyLessonPlan} />
-                </CardContent>
-                <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
           </div>
         </div>
       );
     }
     
-    // If we have either uploaded resource lesson plans or built-in lesson plans, show them
-    if (resourceLessonPlans || builtInLessonPlans) {
-      return (
-        <div className="space-y-8">
-          {resourceLessonPlans}
-          {builtInLessonPlans}
-        </div>
-      );
-    }
-    
-    // No lesson plans of either type
+    // Return both resource plans and built-in plans
     return (
-      <div className="text-center py-8 text-muted-foreground">
-        <p>No lesson plans available for this unit yet.</p>
+      <div className="space-y-8">
+        {resourceLessonPlans}
+        {builtInLessonPlans}
+        {!resourceLessonPlans && !builtInLessonPlans && (
+          <div className="py-8 text-center text-muted-foreground">
+            No lesson plans available for this unit.
+            {isEditMode && <div className="mt-2">Click "Add Resource" to add one.</div>}
+          </div>
+        )}
       </div>
     );
+  };
+
+  const handleNewResourceChange = (field: keyof TeacherResource, value: string) => {
+    setNewResource(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleAddResource = async () => {
+    if (!newResource.title) {
+      toast({
+        title: 'Missing Information',
+        description: 'Please provide at least a title for the resource.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    addResourceMutation.mutate(newResource);
+  };
+
+  const handleDeleteResource = async (resource: TeacherResource) => {
+    setConfirmDelete(null);
+    deleteResourceMutation.mutate(resource);
   };
 
   if (isLoading) {
@@ -4287,213 +697,213 @@ useEffect(() => {
 
   return (
     <div className="container mx-auto p-4">
-      {/* PDF Viewer Dialog */}
-      
-
-      {/* Main Content */}  
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h2 className="text-2xl font-bold">Teacher Resources for Book {bookId}, Unit {unitId}</h2>
-        <div className="flex items-center gap-3 self-end md:self-auto">
-          {isEditMode ? (
-            <>
-              <Button onClick={() => setIsAdding(true)} className="bg-green-600 hover:bg-green-700">
-                <Plus className="h-4 w-4 mr-2" /> Add Resource
-              </Button>
+      <div className="flex flex-col space-y-4">
+        {/* Main Content Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+          <h2 className="text-2xl font-bold">Teacher Resources for Book {bookId}, Unit {unitId}</h2>
+          <div className="flex items-center gap-3 self-end md:self-auto">
+            {isEditMode ? (
+              <>
+                <Button onClick={() => setIsAdding(true)} className="bg-green-600 hover:bg-green-700">
+                  <Plus className="h-4 w-4 mr-2" /> Add Resource
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="text-muted-foreground" 
+                  onClick={() => setIsEditMode(false)}
+                >
+                  <CheckCircle className="h-4 w-4 mr-2" /> Done Editing
+                </Button>
+              </>
+            ) : (
               <Button 
                 variant="outline" 
-                className="text-muted-foreground" 
-                onClick={() => setIsEditMode(false)}
+                onClick={() => setIsEditMode(true)}
+                className="whitespace-nowrap"
               >
-                <CheckCircle className="h-4 w-4 mr-2" /> Done Editing
+                <PenLine className="h-4 w-4 mr-2" /> Manage Resources
               </Button>
-            </>
-          ) : (
-            <Button 
-              variant="outline" 
-              onClick={() => setIsEditMode(true)}
-              className="whitespace-nowrap"
-            >
-              <PenLine className="h-4 w-4 mr-2" /> Manage Resources
-            </Button>
-          )}
+            )}
+          </div>
         </div>
-      </div>
 
-      <Tabs defaultValue="videos">
-        <TabsList className="mb-4">
-          <TabsTrigger value="videos" className="flex items-center">
-            <Video className="h-4 w-4 mr-2" />
-            Videos
-          </TabsTrigger>
-          <TabsTrigger value="games" className="flex items-center">
-            <Gamepad2 className="h-4 w-4 mr-2" />
-            Games
-          </TabsTrigger>
-          <TabsTrigger value="materials" className="flex items-center">
-            <FileText className="h-4 w-4 mr-2" />
-            PDF Lesson
-          </TabsTrigger>
-          <TabsTrigger value="lessonplans" className="flex items-center">
-            <FileText className="h-4 w-4 mr-2" />
-            45-min Lesson Plans
-          </TabsTrigger>
-        </TabsList>
+        {/* Tabs Navigation */}
+        <Tabs defaultValue="videos">
+          <TabsList className="mb-4">
+            <TabsTrigger value="videos" className="flex items-center">
+              <Video className="h-4 w-4 mr-2" />
+              Videos
+            </TabsTrigger>
+            <TabsTrigger value="games" className="flex items-center">
+              <Gamepad2 className="h-4 w-4 mr-2" />
+              Games
+            </TabsTrigger>
+            <TabsTrigger value="materials" className="flex items-center">
+              <FileText className="h-4 w-4 mr-2" />
+              PDF Lesson
+            </TabsTrigger>
+            <TabsTrigger value="lessonplans" className="flex items-center">
+              <FileText className="h-4 w-4 mr-2" />
+              45-min Lesson Plans
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="videos">
-          {renderResources('video')}
-        </TabsContent>
+          <TabsContent value="videos">
+            {renderResources('video')}
+          </TabsContent>
 
-        <TabsContent value="games">
-          {renderResources('game')}
-        </TabsContent>
+          <TabsContent value="games">
+            {renderResources('game')}
+          </TabsContent>
 
-        <TabsContent value="materials">
-          {/* Using the same grid layout for PDFs/Lessons */}
-          {renderResources('pdf')}
-          {renderResources('lesson')}
-        </TabsContent>
+          <TabsContent value="materials">
+            {/* Using the same grid layout for PDFs/Lessons */}
+            {renderResources('pdf')}
+            {renderResources('lesson')}
+          </TabsContent>
 
-        <TabsContent value="lessonplans">
-          {renderLessonPlans()}
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="lessonplans">
+            {renderLessonPlans()}
+          </TabsContent>
+        </Tabs>
 
-      {/* Add Resource Dialog */}
-      <Dialog open={isAdding} onOpenChange={setIsAdding}>
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>{editingResource ? 'Edit Resource' : 'Add New Resource'}</DialogTitle>
-            <DialogDescription>
-              Complete the form below to add a new teacher resource for this unit.
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <span className="text-right font-medium">Title:</span>
-              <Input 
-                className="col-span-3" 
-                value={newResource.title} 
-                onChange={(e) => handleNewResourceChange('title', e.target.value)} 
-                placeholder="Resource title" 
-              />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <span className="text-right font-medium">Type:</span>
-              <div className="col-span-3">
-                <select 
-                  className="w-full p-2 border rounded-md" 
-                  value={newResource.resourceType} 
-                  onChange={(e) => handleNewResourceChange('resourceType', e.target.value as any)}
-                >
-                  <option value="video">Video</option>
-                  <option value="game">Game</option>
-                  <option value="lesson">Worksheet/Lesson</option>
-                  <option value="pdf">PDF</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <span className="text-right font-medium">Provider:</span>
-              <Input 
-                className="col-span-3" 
-                value={newResource.provider || ''} 
-                onChange={(e) => handleNewResourceChange('provider', e.target.value)} 
-                placeholder="e.g., YouTube, Wordwall, etc." 
-              />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <span className="text-right font-medium">URL:</span>
-              <Input 
-                className="col-span-3" 
-                value={newResource.sourceUrl || ''} 
-                onChange={(e) => handleNewResourceChange('sourceUrl', e.target.value)} 
-                placeholder="External link to resource" 
-              />
-            </div>
-
-            {(newResource.resourceType === 'video' || newResource.resourceType === 'game') && (
-              <div className="grid grid-cols-4 items-start gap-4">
-                <span className="text-right font-medium">Embed Code:</span>
-                <textarea 
-                  className="col-span-3 p-2 border rounded-md min-h-[100px]" 
-                  value={newResource.embedCode || ''} 
-                  onChange={(e) => handleNewResourceChange('embedCode', e.target.value)} 
-                  placeholder="<iframe ...>" 
+        {/* Add Resource Dialog */}
+        <Dialog open={isAdding} onOpenChange={setIsAdding}>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle>{editingResource ? 'Edit Resource' : 'Add New Resource'}</DialogTitle>
+              <DialogDescription>
+                Complete the form below to add a new teacher resource for this unit.
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <span className="text-right font-medium">Title:</span>
+                <Input 
+                  className="col-span-3" 
+                  value={newResource.title} 
+                  onChange={(e) => handleNewResourceChange('title', e.target.value)} 
+                  placeholder="Resource title" 
                 />
               </div>
-            )}
 
-            {(newResource.resourceType === 'pdf' || newResource.resourceType === 'lesson') && (
               <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-right font-medium">File:</span>
+                <span className="text-right font-medium">Type:</span>
                 <div className="col-span-3">
-                  <Input 
-                    type="file" 
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        setUploadedFile(e.target.files[0]);
-                      }
-                    }} 
-                  />
-                  <p className="text-xs mt-1 text-muted-foreground">
-                    {uploadedFile ? `Selected: ${uploadedFile.name}` : 'No file chosen'}
-                  </p>
+                  <select 
+                    className="w-full p-2 border rounded-md" 
+                    value={newResource.resourceType} 
+                    onChange={(e) => handleNewResourceChange('resourceType', e.target.value as any)}
+                  >
+                    <option value="video">Video</option>
+                    <option value="game">Game</option>
+                    <option value="lesson">Worksheet/Lesson</option>
+                    <option value="pdf">PDF</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
               </div>
-            )}
-          </div>
-          
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsAdding(false)}>Cancel</Button>
-            <Button onClick={handleAddResource}>Save Resource</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
-      {/* Confirm Delete Dialog */}
-      <Dialog open={!!confirmDelete} onOpenChange={(open) => !open && setConfirmDelete(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Confirm Delete</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete this resource? This action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setConfirmDelete(null)}>Cancel</Button>
-            <Button 
-              variant="destructive" 
-              onClick={() => confirmDelete && handleDeleteResource(confirmDelete)}
-            >
-              Delete
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <span className="text-right font-medium">Provider:</span>
+                <Input 
+                  className="col-span-3" 
+                  value={newResource.provider || ''} 
+                  onChange={(e) => handleNewResourceChange('provider', e.target.value)} 
+                  placeholder="e.g., YouTube, Wordwall, etc." 
+                />
+              </div>
 
-      {/* PDF Viewer Dialog */}
-      <Dialog 
-        open={!!viewingPdf} 
-        onOpenChange={(open) => !open && setViewingPdf(null)}
-      >
-        <DialogContent className="max-w-3xl w-[90vw] max-h-[90vh] overflow-hidden">
-          <DialogHeader>
-            <DialogTitle className="text-center mb-4">
-              {viewingPdf?.title}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="flex-1 overflow-auto flex items-center justify-center">
-            {viewingPdf?.fileUrl && (
-              <PDFViewer pdfUrl={viewingPdf.fileUrl} />
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <span className="text-right font-medium">URL:</span>
+                <Input 
+                  className="col-span-3" 
+                  value={newResource.sourceUrl || ''} 
+                  onChange={(e) => handleNewResourceChange('sourceUrl', e.target.value)} 
+                  placeholder="External link to resource" 
+                />
+              </div>
+
+              {(newResource.resourceType === 'video' || newResource.resourceType === 'game') && (
+                <div className="grid grid-cols-4 items-start gap-4">
+                  <span className="text-right font-medium">Embed Code:</span>
+                  <textarea 
+                    className="col-span-3 p-2 border rounded-md min-h-[100px]" 
+                    value={newResource.embedCode || ''} 
+                    onChange={(e) => handleNewResourceChange('embedCode', e.target.value)} 
+                    placeholder="<iframe ...>" 
+                  />
+                </div>
+              )}
+
+              {(newResource.resourceType === 'pdf' || newResource.resourceType === 'lesson') && (
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-right font-medium">File:</span>
+                  <div className="col-span-3">
+                    <Input 
+                      type="file" 
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          setUploadedFile(e.target.files[0]);
+                        }
+                      }} 
+                    />
+                    <p className="text-xs mt-1 text-muted-foreground">
+                      {uploadedFile ? `Selected: ${uploadedFile.name}` : 'No file chosen'}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsAdding(false)}>Cancel</Button>
+              <Button onClick={handleAddResource}>Save Resource</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Confirm Delete Dialog */}
+        <Dialog open={!!confirmDelete} onOpenChange={(open) => !open && setConfirmDelete(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Confirm Delete</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to delete this resource? This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setConfirmDelete(null)}>Cancel</Button>
+              <Button 
+                variant="destructive" 
+                onClick={() => confirmDelete && handleDeleteResource(confirmDelete)}
+              >
+                Delete
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* PDF Viewer Dialog */}
+        <Dialog 
+          open={!!viewingPdf} 
+          onOpenChange={(open) => !open && setViewingPdf(null)}
+        >
+          <DialogContent className="max-w-3xl w-[90vw] max-h-[90vh] overflow-hidden">
+            <DialogHeader>
+              <DialogTitle className="text-center mb-4">
+                {viewingPdf?.title}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="flex-1 overflow-auto flex items-center justify-center">
+              {viewingPdf?.fileUrl && (
+                <PDFViewer pdfUrl={viewingPdf.fileUrl} />
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 };
