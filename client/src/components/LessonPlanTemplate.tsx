@@ -171,6 +171,11 @@ const LessonPlanTemplate: React.FC<LessonPlanTemplateProps> = ({
         <Button variant="outline" size="sm" onClick={handlePrint}>
           <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
         </Button>
+        {onDownload && (
+          <Button variant="outline" size="sm" onClick={onDownload}>
+            <Download className="h-4 w-4 mr-2" /> Download PDF
+          </Button>
+        )}
       </div>
 
       {secondaryPlan ? (
