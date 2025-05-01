@@ -37,6 +37,12 @@ import { getBook6Unit2LessonPlans, getBook6Unit2Resources } from '@/data/book6-u
 import { getBook6Unit3LessonPlans, getBook6Unit3Resources } from '@/data/book6-unit3-implementation';
 import { getBook6Unit4LessonPlans, getBook6Unit4Resources } from '@/data/book6-unit4-implementation';
 
+// Book 6 resources (direct imports)
+import { book6Unit1Resources } from '@/data/book6-unit1-resources';
+import { book6Unit2Resources } from '@/data/book6-unit2-resources';
+import { book6Unit3Resources } from '@/data/book6-unit3-resources';
+import { book6Unit4Resources } from '@/data/book6-unit4-resources';
+
 export interface TeacherResource {
   id?: string;
   bookId: string;
@@ -400,7 +406,15 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 6, Unit 1 - Jobs and Occupations
     if (bookId === '6' && unitId === '1') {
       try {
-        return getBook6Unit1Resources(bookId, unitId);
+        console.log('Loading Book 6 Unit 1 resources');
+        // Get resources directly from the imported resources module
+        const resources = book6Unit1Resources.map((resource: Omit<TeacherResource, 'id' | 'bookId' | 'unitId'>) => ({
+          id: `book6-unit1-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
+          bookId,
+          unitId,
+          ...resource
+        }));
+        return resources;
       } catch (error) {
         console.error('Error getting Book 6 Unit 1 resources:', error);
         return [];
@@ -410,7 +424,14 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 6, Unit 2 - Household Appliances
     if (bookId === '6' && unitId === '2') {
       try {
-        return getBook6Unit2Resources(bookId, unitId);
+        // Get resources directly from the imported resources module
+        const resources = book6Unit2Resources.map((resource: Omit<TeacherResource, 'id' | 'bookId' | 'unitId'>) => ({
+          id: `book6-unit2-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
+          bookId,
+          unitId,
+          ...resource
+        }));
+        return resources;
       } catch (error) {
         console.error('Error getting Book 6 Unit 2 resources:', error);
         return [];
@@ -420,7 +441,14 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 6, Unit 3 - Future
     if (bookId === '6' && unitId === '3') {
       try {
-        return getBook6Unit3Resources(bookId, unitId);
+        // Get resources directly from the imported resources module
+        const resources = book6Unit3Resources.map((resource: Omit<TeacherResource, 'id' | 'bookId' | 'unitId'>) => ({
+          id: `book6-unit3-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
+          bookId,
+          unitId,
+          ...resource
+        }));
+        return resources;
       } catch (error) {
         console.error('Error getting Book 6 Unit 3 resources:', error);
         return [];
@@ -430,7 +458,14 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 6, Unit 4 - Animal Classification
     if (bookId === '6' && unitId === '4') {
       try {
-        return getBook6Unit4Resources(bookId, unitId);
+        // Get resources directly from the imported resources module
+        const resources = book6Unit4Resources.map((resource: Omit<TeacherResource, 'id' | 'bookId' | 'unitId'>) => ({
+          id: `book6-unit4-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
+          bookId,
+          unitId,
+          ...resource
+        }));
+        return resources;
       } catch (error) {
         console.error('Error getting Book 6 Unit 4 resources:', error);
         return [];
