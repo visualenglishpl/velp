@@ -15,6 +15,7 @@ import BooksPage from "@/pages/BooksPage";
 import UnitsPage from "@/pages/UnitsPage";
 import LessonPlansPage from "@/pages/LessonPlansPage";
 import FlaggedQuestions from "@/pages/admin/FlaggedQuestions";
+import TestTeacherResources from "@/pages/TestTeacherResources";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -216,6 +217,11 @@ function Router() {
       {/* Book-specific Lesson Plans */}
       <Route path="/book/:bookId/unit/:unitId/lesson-plans">
         {() => <ProtectedRoute component={LessonPlansPage} requireAuth={false} />}
+      </Route>
+      
+      {/* Test Teacher Resources Page */}
+      <Route path="/test-resources">
+        {() => <ProtectedRoute component={TestTeacherResources} requireAuth={false} />}
       </Route>
       
       {/* Fallback for any other book/unit pattern - Allow public access with premium content controls */}
