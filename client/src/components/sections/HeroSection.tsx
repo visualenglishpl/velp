@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { FileText } from "lucide-react";
 
 const HeroSection = () => {
   return (

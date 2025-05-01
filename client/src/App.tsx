@@ -1,5 +1,6 @@
 import { Switch, Route, useLocation } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
+import { Suspense } from "react";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import AuthPage from "@/pages/auth-page";
@@ -167,6 +168,26 @@ function Router() {
       <Route path="/lesson-plans">
         {() => <ProtectedRoute component={LessonPlansPage} requireAuth={false} />}
       </Route>
+
+      {/* Test PDF Viewer */}
+      <Route path="/pdf-test" component={() => {
+        const PDFViewerTest = () => {
+          // Import PDFViewer dynamically to avoid cyclic dependencies
+          const PDFViewer = require("@/components/PDFViewer").default;
+          return (
+            <div className="container mx-auto p-4">
+              <h1 className="text-2xl font-bold mb-4">PDF Viewer Test</h1>
+              <div className="flex justify-center">
+                <PDFViewer 
+                  pdfUrl="/test/sample.pdf" 
+                  title="Sample PDF Document"
+                />
+              </div>
+            </div>
+          );
+        };
+        return <PDFViewerTest />;
+      }} />
       
       {/* Book-specific Lesson Plans */}
       <Route path="/book/:bookId/unit/:unitId/lesson-plans">
