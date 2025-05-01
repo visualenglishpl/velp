@@ -122,92 +122,93 @@ export const jobsVocabularyLessonPlan = {
   ]
 };
 
-// Lesson plan data for Workplace Communication
+// Lesson plan data for Teen Jobs and Career Exploration
 export const workplaceCommunicationLessonPlan = {
-  id: "workplace-communication-lesson",
-  title: "Workplace Communication Skills",
+  id: "teen-jobs-career-exploration",
+  title: "Teen Jobs and Career Exploration",
   duration: "45 minutes",
   level: "Intermediate",
   objectives: [
-    "Learn vocabulary for workplace communication",
-    "Practice common workplace conversations and expressions",
-    "Develop email and phone communication skills",
-    "Understand workplace etiquette in English-speaking contexts"
+    "Learn vocabulary for common teenage jobs and part-time work",
+    "Discuss skills development through early work experiences",
+    "Explore career paths and job requirements",
+    "Practice job interview skills relevant to teenagers"
   ],
   materials: [
     "Visual English Book 7, Unit 9 slides",
-    "Workplace dialogue cards",
-    "Email templates handout",
-    "Role-play scenario cards",
-    "Workplace etiquette guidance sheet"
+    "Teen jobs flashcards",
+    "Career path charts",
+    "Simple job application forms",
+    "Interview question cards"
   ],
   steps: [
     {
-      title: "Introduction to Workplace Communication",
+      title: "Introduction: Teen Work Experiences",
       duration: "5 minutes",
-      description: "Discuss the importance of effective communication in the workplace",
+      description: "Discuss common jobs and work experiences for teenagers",
       instructions: [
-        "Ask students about communication challenges they might face at work",
-        "Introduce key concepts: clarity, formality, channels of communication",
-        "Show examples of different workplace communication situations"
+        "Ask students if any of them have had work experience",
+        "Brainstorm types of jobs teenagers can do in your country",
+        "Discuss reasons why teens might want to work part-time"
       ]
     },
     {
-      title: "Email Language Practice",
+      title: "Teen Jobs Vocabulary",
       duration: "10 minutes",
-      description: "Learn and practice language for professional emails",
-      materials: ["Email templates handout"],
+      description: "Learn vocabulary for common teenage and entry-level jobs",
+      materials: ["Teen jobs flashcards"],
       instructions: [
-        "Present common email expressions and structures",
-        "Highlight differences between formal and informal email language",
-        "Students complete gap-fill email exercises",
-        "Review answers and discuss appropriate tone"
+        "Present vocabulary for teen-friendly jobs: babysitter, dog walker, server, retail assistant, tutor, etc.",
+        "For each job, discuss typical responsibilities and required skills",
+        "Students sort jobs by category: working with people, working with things, etc.",
+        "Discuss which jobs they would find interesting and why"
       ],
-      teacherNotes: "Emphasize the importance of subject lines, greetings, and sign-offs"
+      teacherNotes: "Emphasize that early job experiences build valuable transferable skills"
     },
     {
-      title: "Phone Conversation Role-Play",
+      title: "Job Application Activity",
       duration: "15 minutes",
-      description: "Practice professional telephone conversations through role-play",
-      materials: ["Workplace dialogue cards"],
+      description: "Practice completing simple job applications",
+      materials: ["Simple job application forms"],
       instructions: [
-        "Model a professional phone conversation",
-        "Present useful phrases: 'May I speak to...', 'I'll put you through', 'Could you hold?'",
-        "Students practice dialogues in pairs using role cards",
-        "Switch roles to ensure all students practice different parts"
+        "Review vocabulary for job applications: experience, availability, reference, etc.",
+        "Present example of a completed application form",
+        "Students complete an application for a part-time job they'd be interested in",
+        "In pairs, students review each other's applications and provide feedback"
       ]
     },
     {
-      title: "Workplace Etiquette Discussion",
+      title: "Mock Interview Practice",
       duration: "10 minutes",
-      description: "Learn about appropriate behavior and communication in the workplace",
-      materials: ["Workplace etiquette guidance sheet"],
+      description: "Learn and practice basic job interview skills",
+      materials: ["Interview question cards"],
       instructions: [
-        "Present key workplace etiquette rules in English-speaking countries",
-        "Discuss cultural differences in workplace communication",
-        "Students identify appropriate and inappropriate workplace behaviors"
+        "Present common interview questions for teen jobs",
+        "Model appropriate responses and body language",
+        "In pairs, students take turns being interviewer and interviewee",
+        "Provide feedback on communication skills and answers"
       ]
     },
     {
-      title: "Wrap-up: Mini Problem-Solving",
+      title: "Future Career Exploration",
       duration: "5 minutes",
-      description: "Apply workplace communication skills to solve a simple problem",
+      description: "Connect current interests to potential future careers",
       instructions: [
-        "Present a workplace communication problem",
-        "In pairs, students discuss solutions and appropriate language",
-        "Share best approaches with the class"
+        "Students identify skills they already have that could be useful in jobs",
+        "Discuss how teen job experiences can lead to future career options",
+        "Students share their long-term career interests with the class"
       ]
     }
   ],
-  assessmentTips: "Evaluate students based on their participation in role-plays, appropriate use of formal/informal language, and their understanding of workplace etiquette.",
+  assessmentTips: "Evaluate students on their ability to discuss job options appropriate for teenagers, complete applications correctly, and participate effectively in mock interviews.",
   homeworkIdeas: [
-    "Write a professional email applying for a job", 
-    "Create a dialogue for a challenging workplace situation and how to resolve it"
+    "Research three jobs you might be interested in doing as a teenager and describe the skills needed", 
+    "Write a short paragraph explaining how a part-time job now could help with your future career goals"
   ],
   additionalResources: [
     {
-      title: "Business English Resources",
-      url: "https://www.businessenglishresources.com/"
+      title: "Teen Job Guide",
+      url: "https://www.indeed.com/career-advice/finding-a-job/jobs-for-teens"
     }
   ]
 };
