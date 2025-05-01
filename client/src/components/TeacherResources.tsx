@@ -3661,7 +3661,7 @@ useEffect(() => {
       builtInLessonPlans = (
         <div className="mt-6 space-y-8">
           <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <div className="lesson-plan-grid">
             <div>
               <Card className="h-full">
                 <CardHeader className="pb-2">

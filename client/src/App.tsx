@@ -164,6 +164,30 @@ function Router() {
         }}
       </Route>
       
+      {/* Support for books/bookId/unitId pattern */}
+      <Route path="/books/:bookPath/:unitPath">
+        {(params) => {
+          let bookId, unitId;
+          
+          // Handle both formats: book7/unit6 or just 7/6
+          if (params.bookPath.startsWith('book')) {
+            bookId = params.bookPath;
+          } else {
+            bookId = `book${params.bookPath}`;
+          }
+          
+          if (params.unitPath.startsWith('unit')) {
+            unitId = params.unitPath;
+          } else {
+            unitId = `unit${params.unitPath}`;
+          }
+          
+          console.log(`Redirecting from books pattern to: ${bookId}/${unitId}`);
+          window.location.href = `/${bookId}/${unitId}`;
+          return null;
+        }}
+      </Route>
+      
       {/* Lesson Plans Page */}
       <Route path="/lesson-plans">
         {() => <ProtectedRoute component={LessonPlansPage} requireAuth={false} />}
