@@ -30,6 +30,7 @@ type PatternType =
   | 'game'
   | 'video'
   | 'can-do'
+  | 'hotels'
   | 'unknown';
 
 // Define units that we know about
@@ -116,6 +117,11 @@ export function determinePatternType(filename: string, unitId: string = ''): Pat
     const unitNumber = unitMatch ? unitMatch[1] : null;
     
     if (unitNumber) {
+      // Check for book7/unit4 specifically
+      if (unitId.includes('book7') && unitNumber === '4') {
+        return 'hotels';
+      }
+    
       switch (unitNumber) {
         case '8': return 'shapes';
         case '4': return 'emotions';
@@ -205,6 +211,92 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
   
   // Different handling based on pattern type
   switch (patternType) {
+    case 'hotels': {
+      // Hotel-specific questions from Book 7 Unit 4
+      
+      // Check for vacation type questions
+      if (filename.toLowerCase().includes('what vacation is it')) {
+        // Extract vacation type
+        const vacationMatch = filename.toLowerCase().match(/what vacation is it[^a-z]*(?:–|-)\s*(?:it is|a)\s*(?:a|an)?\s*([a-z\s]+?)(?:vacation)?\s*(?:\.|$)/i);
+        const vacationType = vacationMatch && vacationMatch[1] ? vacationMatch[1].trim() : '';
+        
+        if (vacationType) {
+          return {
+            question: 'What vacation is it?',
+            answer: `It is a ${vacationType} vacation.`,
+            generatedBy: 'pattern-engine'
+          };
+        }
+      }
+      
+      // Check for "I think X vacations are interesting or boring"
+      if (filename.toLowerCase().includes('interesting or boring')) {
+        // Extract vacation type
+        const vacationMatch = filename.toLowerCase().match(/i think ([a-z\s]+?) vacations are interesting/i);
+        const vacationType = vacationMatch && vacationMatch[1] ? vacationMatch[1].trim() : '';
+        
+        if (vacationType) {
+          return {
+            question: `Do I think ${vacationType} vacations are interesting or boring?`,
+            answer: `I think ${vacationType} vacations are interesting.`,
+            generatedBy: 'pattern-engine'
+          };
+        }
+      }
+      
+      // Check for "Do you go on X vacations"
+      if (filename.toLowerCase().includes('do you go on') && filename.toLowerCase().includes('vacation')) {
+        // Extract vacation type
+        const vacationMatch = filename.toLowerCase().match(/do you go on ([a-z\s]+?) vacations/i);
+        const vacationType = vacationMatch && vacationMatch[1] ? vacationMatch[1].trim() : '';
+        
+        if (vacationType) {
+          return {
+            question: `Do you go on ${vacationType} vacations?`,
+            answer: `Yes, I go on ${vacationType} vacations./No, I don't go on ${vacationType} vacations.`,
+            generatedBy: 'pattern-engine'
+          };
+        }
+      }
+      
+      // Check for "Would you like to go on a X vacation"
+      if (filename.toLowerCase().includes('would you like to go on')) {
+        // Extract vacation type
+        const vacationMatch = filename.toLowerCase().match(/would you like to go on a ([a-z\s]+?) vacation/i);
+        const vacationType = vacationMatch && vacationMatch[1] ? vacationMatch[1].trim() : '';
+        
+        if (vacationType) {
+          return {
+            question: `Would you like to go on a ${vacationType} vacation?`,
+            answer: `Yes, I would like to go on a ${vacationType} vacation./No, I wouldn't.`,
+            generatedBy: 'pattern-engine'
+          };
+        }
+      }
+      
+      // Check for accommodation type questions
+      if (filename.toLowerCase().includes('what is it') && filename.toLowerCase().includes('accommodation')) {
+        // Extract accommodation type
+        const accommodationMatch = filename.toLowerCase().match(/what is it[^a-z]*(?:–|-)\s*(?:it is|a)\s*(?:a|an)?\s*([a-z\s]+?)\s*(?:\.|$)/i);
+        const accommodationType = accommodationMatch && accommodationMatch[1] ? accommodationMatch[1].trim() : '';
+        
+        if (accommodationType) {
+          return {
+            question: 'What is it?',
+            answer: `It is a ${accommodationType}.`,
+            generatedBy: 'pattern-engine'
+          };
+        }
+      }
+      
+      // Use generic question for other hotel/accommodation content
+      return {
+        question: 'What type of accommodation is shown in the picture?',
+        answer: 'This is a [type of accommodation].', 
+        generatedBy: 'pattern-engine'
+      };
+    }
+    
     case 'color-question': {
       const object = extractObjectFromFilename(filename);
       const color = extractColorFromFilename(filename);
