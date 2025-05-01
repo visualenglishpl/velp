@@ -125,3 +125,97 @@ export const healthyLifestyleLessonPlan = {
     }
   ]
 };
+
+// Second lesson plan for Unit 12: Fitness and Exercise
+export const fitnessExerciseLessonPlan = {
+  id: "fitness-exercise-lesson",
+  title: "Fitness and Exercise",
+  duration: "45 minutes",
+  level: "Intermediate",
+  objectives: [
+    "Learn vocabulary related to physical activities and sports",
+    "Understand the importance of regular exercise",
+    "Practice describing different fitness activities",
+    "Develop language for discussing exercise preferences and routines"
+  ],
+  materials: [
+    "Visual English Book 7, Unit 12 slides",
+    "Pictures of various physical activities and sports",
+    "Exercise routine cards or handouts",
+    "Simple fitness equipment (optional)",
+    "Fitness routine videos (short clips)"
+  ],
+  steps: [
+    {
+      title: "Warm-up: Physical Activity Survey",
+      duration: "5 minutes",
+      description: "Assess student exercise habits and preferences",
+      instructions: [
+        "Ask students to stand up and stretch",
+        "Conduct a quick survey: 'Who exercises every day?' 'Who plays sports?' etc.",
+        "Have students briefly share their favorite physical activities",
+        "Create a class chart showing popular activities"
+      ]
+    },
+    {
+      title: "Vocabulary Building",
+      duration: "10 minutes",
+      description: "Introduce fitness and exercise terminology",
+      materials: ["Visual English Book 7, Unit 12 slides", "Pictures of activities"],
+      instructions: [
+        "Present vocabulary: cardio, strength training, flexibility, endurance, etc.",
+        "Show images of different exercise types and sports",
+        "Practice pronunciation and have students repeat each term",
+        "Group exercises by type (team sports, individual activities, gym exercises)"
+      ]
+    },
+    {
+      title: "Benefits of Exercise Discussion",
+      duration: "10 minutes",
+      description: "Explore why physical activity is important",
+      instructions: [
+        "Brainstorm benefits of regular exercise (health, mood, energy, etc.)",
+        "Create a mind map on the board with different benefits",
+        "Have students construct sentences using 'Exercise helps/improves/prevents...'",
+        "Discuss consequences of inactivity or sedentary lifestyle"
+      ]
+    },
+    {
+      title: "Exercise Routine Creation",
+      duration: "15 minutes",
+      description: "Design personalized fitness routines",
+      materials: ["Exercise routine cards", "Fitness videos"],
+      instructions: [
+        "Show short clips of different exercise routines",
+        "Distribute exercise routine cards with various activities",
+        "In pairs, have students create a weekly exercise plan",
+        "Include variety of activities (strength, cardio, flexibility, etc.)",
+        "Students present their routines to the class using target vocabulary"
+      ]
+    },
+    {
+      title: "Mini Movement Break",
+      duration: "5 minutes",
+      description: "Practice giving and following exercise instructions",
+      materials: ["Simple fitness equipment (optional)"],
+      instructions: [
+        "Have students stand up and clear space around them",
+        "Teach simple exercise instruction phrases",
+        "Students take turns leading the class in a simple exercise",
+        "Practice language like 'bend your knees', 'stretch your arms', etc."
+      ]
+    }
+  ],
+  assessmentTips: "Evaluate students on their use of exercise-related vocabulary, ability to discuss fitness benefits, and participation in the exercise routine planning activity.",
+  homeworkIdeas: [
+    "Track physical activities for one week in an exercise journal", 
+    "Research a sport or exercise not discussed in class and create a presentation",
+    "Design a poster promoting the benefits of regular exercise"
+  ],
+  additionalResources: [
+    {
+      title: "Physical Activity Guidelines - World Health Organization",
+      url: "https://www.who.int/news-room/fact-sheets/detail/physical-activity"
+    }
+  ]
+};

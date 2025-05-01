@@ -35,7 +35,7 @@ export const unit11Resources = [
 export const naturalDisastersLessonPlan = {
   id: "natural-disasters-lesson",
   title: "Understanding Natural Disasters",
-  duration: "50 minutes",
+  duration: "45 minutes",
   level: "Intermediate",
   objectives: [
     "Learn vocabulary related to natural disasters and extreme weather",
@@ -102,7 +102,7 @@ export const naturalDisastersLessonPlan = {
     },
     {
       title: "Emergency Preparedness Discussion",
-      duration: "10 minutes",
+      duration: "5 minutes",
       description: "Learn about safety measures and emergency planning",
       materials: ["Emergency kit items or pictures"],
       instructions: [
@@ -126,3 +126,102 @@ export const naturalDisastersLessonPlan = {
     }
   ]
 };
+
+// Second lesson plan for Unit 11: Disaster Response and Relief
+export const disasterResponseLessonPlan = {
+  id: "disaster-response-lesson",
+  title: "Disaster Response and Relief",
+  duration: "45 minutes",
+  level: "Intermediate",
+  objectives: [
+    "Learn vocabulary related to disaster response and relief efforts",
+    "Understand the roles of different organizations in disaster management",
+    "Practice using language for offering help and support",
+    "Develop empathy and global awareness through discussing humanitarian aid"
+  ],
+  materials: [
+    "Visual English Book 7, Unit 11 slides",
+    "Pictures of relief workers and aid organizations",
+    "Role play cards for emergency scenarios",
+    "Simple maps for evacuation planning",
+    "News articles or simplified reports about disaster relief"
+  ],
+  steps: [
+    {
+      title: "Warm-up: Relief Organizations",
+      duration: "5 minutes",
+      description: "Introduce humanitarian aid organizations",
+      instructions: [
+        "Show logos of major disaster relief organizations (Red Cross, UNICEF, etc.)",
+        "Ask students if they recognize any of them",
+        "Briefly explain the role of these organizations",
+        "Discuss why international cooperation is important during disasters"
+      ]
+    },
+    {
+      title: "Vocabulary Building",
+      duration: "10 minutes",
+      description: "Learn key terms related to disaster response",
+      materials: ["Visual English Book 7, Unit 11 slides"],
+      instructions: [
+        "Introduce vocabulary: relief, aid, shelter, evacuation, volunteer, donation, etc.",
+        "Show images representing different aspects of disaster response",
+        "Practice pronunciation and have students repeat each term",
+        "Create word associations on the board (e.g., flood → sandbags → volunteers)"
+      ]
+    },
+    {
+      title: "Reading Activity: Disaster Response Stories",
+      duration: "10 minutes",
+      description: "Read simplified news articles about relief efforts",
+      materials: ["Simplified news articles or reports"],
+      instructions: [
+        "Distribute short, simplified news articles about recent disaster relief efforts",
+        "Have students read in pairs and underline key vocabulary",
+        "Ask comprehension questions about the texts",
+        "Discuss what impressed them most about the relief efforts described"
+      ]
+    },
+    {
+      title: "Role Play: Emergency Response",
+      duration: "15 minutes",
+      description: "Practice language for emergency situations",
+      materials: ["Role play cards", "Simple maps for evacuation planning"],
+      instructions: [
+        "Divide students into small groups and distribute role play cards",
+        "Assign roles: emergency coordinator, relief worker, affected resident, etc.",
+        "Have groups act out emergency scenarios using target vocabulary",
+        "Practice phrases for offering help, giving instructions, and requesting assistance",
+        "Groups present their role plays to the class"
+      ]
+    },
+    {
+      title: "Discussion: Local Preparedness",
+      duration: "5 minutes",
+      description: "Connect global issues to local preparedness",
+      instructions: [
+        "Discuss disaster preparedness in the local community",
+        "Ask students if they know about local emergency plans",
+        "Brainstorm ways individuals can contribute to community resilience",
+        "Reflect on the importance of being prepared for emergencies"
+      ]
+    }
+  ],
+  assessmentTips: "Evaluate students on their use of appropriate vocabulary for disaster response, their ability to communicate effectively in role plays, and their understanding of humanitarian aid concepts.",
+  homeworkIdeas: [
+    "Research a humanitarian organization and create a fact sheet about their work", 
+    "Interview a family member about how they would respond to a local emergency",
+    "Design a poster for a disaster relief fundraising campaign"
+  ],
+  additionalResources: [
+    {
+      title: "International Federation of Red Cross and Red Crescent Societies",
+      url: "https://www.ifrc.org/"
+    },
+    {
+      title: "United Nations Office for Disaster Risk Reduction",
+      url: "https://www.undrr.org/"
+    }
+  ]
+};
+
