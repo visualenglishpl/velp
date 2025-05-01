@@ -1059,7 +1059,13 @@ export default function SlickContentViewer() {
                               style={{ 
                                 maxHeight: isZoomed ? 'none' : '100%',
                                 transform: `scale(${isZoomed ? zoomLevel : 1})`,
-                                transformOrigin: 'center center'
+                                transformOrigin: 'center center',
+                                // Make the Book 7 - Unit 1 Overview card smaller
+                                maxWidth: material.path.includes('/00 A.png') && (bookPath === 'book7' && unitPath === 'unit1') ? '50%' : '100%',
+                                // Add additional scaling for specific overview card
+                                transform: material.path.includes('/00 A.png') && (bookPath === 'book7' && unitPath === 'unit1') 
+                                  ? 'scale(0.8)' 
+                                  : `scale(${isZoomed ? zoomLevel : 1})`
                               }}
                               loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
                               onError={(e) => {
