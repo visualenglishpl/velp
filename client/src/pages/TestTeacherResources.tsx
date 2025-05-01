@@ -60,7 +60,7 @@ const TestTeacherResources = () => {
             <div className="self-end">
               <Button 
                 variant="default"
-                onClick={() => window.location.href = `/test-resources?book=${bookId}&unit=${unitId}`}
+                onClick={() => window.location.href = `/test-teacher-resources?book=${bookId}&unit=${unitId}`}
               >
                 Load Resources
               </Button>

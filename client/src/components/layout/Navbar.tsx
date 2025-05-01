@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, LogOut, User, Book, BookOpen, LayoutDashboard } from "lucide-react";
+import { Menu, LogOut, User, Book, BookOpen, LayoutDashboard, Briefcase, GraduationCap } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 const Navbar = () => {
@@ -118,6 +118,12 @@ const Navbar = () => {
                     Bookstore
                   </Button>
                 </Link>
+                <Link href="/test-teacher-resources">
+                  <Button variant="secondary" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                    <GraduationCap className="h-4 w-4 mr-1" />
+                    Teacher Resources
+                  </Button>
+                </Link>
                 <Button 
                   variant="outline" 
                   className="border-gray-300 text-gray-700"
@@ -147,6 +153,12 @@ const Navbar = () => {
                   <Button variant="default" className="bg-black hover:bg-gray-800 text-white">
                     <Book className="h-4 w-4 mr-1" />
                     Bookstore
+                  </Button>
+                </Link>
+                <Link href="/test-teacher-resources">
+                  <Button variant="secondary" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                    <GraduationCap className="h-4 w-4 mr-1" />
+                    Teacher Resources
                   </Button>
                 </Link>
                 <Button 
@@ -224,6 +236,15 @@ const Navbar = () => {
                     Bookstore
                   </Button>
                 </Link>
+                <Link href="/test-teacher-resources" className="block mt-1">
+                  <Button 
+                    variant="secondary" 
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white w-full justify-start"
+                  >
+                    <GraduationCap className="h-4 w-4 mr-1" />
+                    Teacher Resources
+                  </Button>
+                </Link>
                 <Button 
                   variant="outline" 
                   className="border-gray-300 text-gray-700 w-full justify-start mt-1"
@@ -256,6 +277,15 @@ const Navbar = () => {
                   >
                     <Book className="h-4 w-4 mr-1" />
                     Bookstore
+                  </Button>
+                </Link>
+                <Link href="/test-teacher-resources" className="block mt-1">
+                  <Button 
+                    variant="secondary" 
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white w-full justify-start"
+                  >
+                    <GraduationCap className="h-4 w-4 mr-1" />
+                    Teacher Resources
                   </Button>
                 </Link>
                 <Button 
