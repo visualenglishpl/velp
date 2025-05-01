@@ -211,7 +211,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center mx-auto" style={{ maxWidth: '300px' }}>
+    <div className="flex flex-col items-center mx-auto w-full" style={{ maxWidth: '500px' }}>
       {title && <h3 className="text-lg font-medium mb-2">{title}</h3>}
       
       {!useFallback && (
@@ -260,7 +260,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         </div>
       )}
       
-      <div className="w-full overflow-auto border rounded-md p-2 bg-white min-h-[250px] max-h-[300px] flex items-center justify-center shadow-md">
+      <div className="w-full overflow-auto border rounded-md p-3 bg-white min-h-[350px] max-h-[450px] flex items-center justify-center shadow-md transition-all duration-200 hover:shadow-lg">
         {loading && !useFallback && (
           <div className="flex flex-col items-center justify-center p-4">
             <Loader2 className="h-10 w-10 text-primary/60 animate-spin mb-2" />
@@ -299,7 +299,7 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
         )}
 
         {useFallback && (
-          <div className="w-full h-[250px]">
+          <div className="w-full h-[350px]">
             <iframe 
               src={proxyUrl} // Use the proxy URL instead of direct S3 URL
               className="w-full h-full border-0"
@@ -313,10 +313,10 @@ const PDFViewer = ({ pdfUrl, title }: PDFViewerProps) => {
 
       <div className="mt-4 flex gap-2">
         <Button 
-          variant="outline" 
+          variant="default" 
           onClick={() => window.open(proxyUrl, '_blank')}
           size="sm"
-          className="mx-auto"
+          className="mx-auto shadow-sm hover:shadow transition-all duration-200"
         >
           <ExternalLink className="mr-2 h-4 w-4" />
           Download PDF

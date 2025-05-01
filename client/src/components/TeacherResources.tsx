@@ -4269,7 +4269,7 @@ useEffect(() => {
               {viewingPdf?.title}
             </DialogTitle>
           </DialogHeader>
-          <div className="flex-1 overflow-auto mx-auto">
+          <div className="flex-1 overflow-auto flex items-center justify-center">
             {viewingPdf?.fileUrl && (
               <PDFViewer pdfUrl={viewingPdf.fileUrl} />
             )}
