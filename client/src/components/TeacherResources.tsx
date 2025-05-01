@@ -1141,7 +1141,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
     // Resources for Book 7, Unit 6 - Money
     if (bookId === '7' && unitId === '6') {
+      // Using new resources from unit6-resources.tsx
+      const mappedResources = unit6Resources.map((resource, index) => ({
+        id: `book7-unit6-${resource.resourceType}${index + 1}`,
+        bookId,
+        unitId,
+        ...resource
+      }));
+      
       return [
+        // PDF overview first
         {
           id: "book7-unit6-pdf1",
           bookId,
@@ -1150,58 +1159,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           resourceType: "pdf" as const,
           provider: "Visual English",
           sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf",
-          embedCode: ""
+          fileUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book7/unit6/00%20A%20Book%207%20%E2%80%93%20Unit%206.pdf"
         },
-        {
-          id: "book7-unit6-video1",
-          bookId,
-          unitId,
-          title: "Learn English Money from 1p to 50 Pounds",
-          resourceType: "video" as const,
-          provider: "YouTube",
-          sourceUrl: "https://www.youtube.com/embed/Vcoi6l0D6ak",
-          embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Vcoi6l0D6ak?si=cYTh99UmUthwy1yO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit6-lesson1",
-          bookId,
-          unitId,
-          title: "British Currency Worksheet to Print",
-          resourceType: "lesson" as const,
-          provider: "ISL Collective",
-          sourceUrl: "https://en.islcollective.com/english-esl-worksheets/general-topic/countries/british-currency/18577",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit6-game1",
-          bookId,
-          unitId,
-          title: "Money Kahoot Game",
-          resourceType: "game" as const,
-          provider: "Kahoot",
-          sourceUrl: "https://create.kahoot.it/share/currency/f87e8719-291e-440a-a340-22344175fedb",
-          embedCode: ""
-        },
-        {
-          id: "book7-unit6-game2",
-          bookId,
-          unitId,
-          title: "Money Wordwall Game 1",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/463ad4520fbb4edd9ea903446f182971",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/463ad4520fbb4edd9ea903446f182971?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        },
-        {
-          id: "book7-unit6-game3",
-          bookId,
-          unitId,
-          title: "Money Wordwall Game 2",
-          resourceType: "game" as const,
-          provider: "Wordwall",
-          sourceUrl: "https://wordwall.net/resource/2108e23e264b487b9f5c8022145d22d8",
-          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2108e23e264b487b9f5c8022145d22d8?themeId=41&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-        }
+        // Add all the mapped resources from unit6-resources.tsx
+        ...mappedResources
       ];
     }
 
@@ -4222,6 +4183,9 @@ useEffect(() => {
         </div>
       );
     } else if (bookId === '7' && unitId === '6') {
+      builtInLessonPlans = getUnit6LessonPlans(bookId, unitId, isEditMode, setConfirmDelete);
+      // Using new implementation from unit6-implementation.tsx
+      /* Legacy code - keeping for reference
       builtInLessonPlans = (
         <div className="mt-6 space-y-8">
           <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
@@ -4324,27 +4288,9 @@ useEffect(() => {
   return (
     <div className="container mx-auto p-4">
       {/* PDF Viewer Dialog */}
-      <Dialog open={!!viewingPdf} onOpenChange={(open) => !open && setViewingPdf(null)}>
-        <DialogContent className="max-w-5xl w-[95vw] max-h-[95vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="flex items-center justify-between">
-              {viewingPdf?.title}
-              <Button variant="ghost" size="sm" onClick={() => setViewingPdf(null)} className="h-8 w-8 p-0">
-                <span className="sr-only">Close</span>
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
-                </svg>
-              </Button>
-            </DialogTitle>
-          </DialogHeader>
-          
-          {viewingPdf?.fileUrl && (
-            <div className="mt-6">
-              <PDFViewer pdfUrl={viewingPdf.fileUrl} />
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      
+
+      {/* Main Content */}  
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold">Teacher Resources for Book {bookId}, Unit {unitId}</h2>
         <div className="flex items-center gap-3 self-end md:self-auto">

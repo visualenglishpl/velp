@@ -2,142 +2,317 @@ import { LessonPlan } from '@/components/LessonPlanTemplate';
 
 // British Currency Lesson Plan
 export const britishCurrencyLessonPlan: LessonPlan = {
-  id: "british-currency-1",
-  title: "British Currency and Money",
-  level: "",
-  duration: "45 min",
+  id: 'british-currency-1',
+  title: 'British Currency and Money',
+  duration: '45 minutes',
+  level: 'Beginner to Pre-Intermediate',
   objectives: [
-    "Learn vocabulary related to British money and currency",
-    "Identify and describe various coins and banknotes in British pounds",
-    "Practice conversations about prices and making payments"
+    'Identify and name British coins and notes (1p to £50)',
+    'Practice pronunciation of currency amounts',
+    'Learn vocabulary related to money and payments',
+    'Practice simple shopping dialogues using price expressions'
   ],
   materials: [
-    "Images of British coins (1p, 2p, 5p, 10p, 20p, 50p, £1, £2)",
-    "Images of British banknotes (£5, £10, £20, £50)",
-    "Handout with money-related vocabulary",
-    "Price tags for role-play activities"
+    'Visual English Book 7, Unit 6 slides',
+    'British currency flashcards or images',
+    'Price tag handouts',
+    'YouTube video: "Learn English Money from 1p to 50 Pounds"',
+    'Wordwall interactive game - British Currency'
   ],
   steps: [
     {
-      title: "British Money Introduction",
-      duration: "10 min",
-      description: "Present different denominations of British currency using visual aids. Introduce terminology (pound, penny/pence) and practice pronunciation. Explain the symbols £ and p."
+      title: 'Warm-up: Money Vocabulary',
+      duration: '5 mins',
+      description: 'Begin by asking students about their experience with British money.',
+      instructions: [
+        "Ask students: 'Have you ever seen British money?'",
+        "Follow up with: 'What coins and notes do you know?'",
+        "Pre-teach some basic vocabulary: coin, note, pound, pence"
+      ],
+      teacherNotes: 'This activity helps assess prior knowledge and creates context for the lesson.'
     },
     {
-      title: "Currency Recognition",
-      duration: "10 min",
-      description: "Practice identifying coins and notes. Students match values to images and practice saying amounts: 'This is a fifty pence coin' or 'This is a twenty pound note.'"
+      title: 'Presentation: British Currency Introduction',
+      duration: '10 mins',
+      description: 'Introduce British coins and notes using Visual English Book 7 slides.',
+      materials: [
+        'Book 7, Unit 6 slides showing currency',
+        'Currency flashcards'
+      ],
+      instructions: [
+        'Display slides showing different British coins (1p, 2p, 5p, 10p, 20p, 50p, £1, £2)',
+        'For each coin, ask: "What coin is this? How much is it worth?"',
+        'Introduce British notes (£5, £10, £20, £50)',
+        'Drill pronunciation of each currency amount',
+        'Explain the symbols "p" for pence and "£" for pounds'
+      ]
     },
     {
-      title: "Price Reading Practice",
-      duration: "10 min",
-      description: "Students practice reading various prices written in British format: £1.50, £24.99, etc. Discuss how prices are said in British English ('one pound fifty', 'twenty-four pounds ninety-nine')."
+      title: 'Vocabulary Development: Currency Video',
+      duration: '10 mins',
+      description: 'Watch the "Learn English Money from 1p to 50 Pounds" video to reinforce currency recognition.',
+      materials: [
+        'YouTube video from Teacher Resources',
+        'Simple worksheet with currency items listed'
+      ],
+      instructions: [
+        'Play the video once all the way through',
+        'Play again, pausing after each section to practice pronunciation',
+        'Have students complete their worksheets as they watch',
+        'Check answers as a class'
+      ],
+      teacherNotes: 'This video provides authentic examples and pronunciation of British currency.'
     },
     {
-      title: "Shopping Role-play",
-      duration: "10 min",
-      description: "Students work in pairs to practice shopping conversations using target language: 'How much is this?' 'It's £5.99.' 'Can I pay by card?' 'Do you have change for a twenty pound note?'"
+      title: 'Guided Practice: Price Expressions',
+      duration: '15 mins',
+      description: 'Students practice saying and writing prices in British currency.',
+      materials: [
+        'Handout with various price tags',
+        'Book 7, Unit 6 slides with shopping items'
+      ],
+      instructions: [
+        'Teach how to say prices in English: "£1.50 = one pound fifty", "£2.99 = two pounds ninety-nine"',
+        'Distribute price tag handouts with various items and prices',
+        'Students work in pairs practicing saying the prices',
+        'Ask volunteers to read prices aloud to the class',
+        'Practice writing prices with the £ symbol and decimal points'
+      ]
     },
     {
-      title: "Money Math Activity",
-      duration: "5 min",
-      description: "Students solve simple problems involving British currency: calculating change, adding up purchases, or comparing prices."
+      title: 'Wrap-up: Currency Matching Game',
+      duration: '5 mins',
+      description: 'Play a quick matching game to reinforce learning.',
+      instructions: [
+        'Use the Wordwall interactive game from Teacher Resources',
+        'Students match coins/notes to their correct values',
+        'Review any challenging items',
+        'Summarize the key currency vocabulary learned in the lesson'
+      ]
     }
   ],
-  assessmentTips: "Evaluate students' ability to correctly identify British currency and use appropriate language when discussing prices and payments.",
-  homeworkIdeas: ["Students create a price list for a shop or cafe with at least 10 items, then write short dialogues for purchasing these items."]
+  assessmentTips: 'Assess students through their participation in the price expression activity and their ability to correctly identify currency during the video activity.',
+  homeworkIdeas: [
+    'Create a simple shopping list with prices in British currency',
+    'Research and draw the main features of British coins and notes'
+  ],
+  additionalResources: [
+    {
+      title: 'British Currency Worksheet',
+      url: 'https://en.islcollective.com/english-esl-worksheets/general-topic/countries/british-currency/18577'
+    },
+    {
+      title: 'Currency Matching Game',
+      url: 'https://wordwall.net/embed/2108e23e264b487b9f5c8022145d22d8'
+    }
+  ]
 };
 
 // International Money Lesson Plan
 export const internationalMoneyLessonPlan: LessonPlan = {
-  id: "international-money-1",
-  title: "International Money and Exchange",
-  level: "",
-  duration: "45 min",
+  id: 'international-money-1',
+  title: 'International Money and Exchange',
+  duration: '45 minutes',
+  level: 'Pre-Intermediate',
   objectives: [
-    "Learn vocabulary related to international currencies",
-    "Practice language for currency exchange situations",
-    "Develop understanding of currency conversion concepts"
+    'Learn vocabulary related to currency exchange',
+    'Identify major world currencies and their symbols',
+    'Practice conversation patterns for exchanging money',
+    'Develop awareness of exchange rates and calculations'
   ],
   materials: [
-    "Images of various currencies (Dollar, Euro, Yen, etc.)",
-    "Exchange rate chart handout",
-    "Role-play cards for currency exchange scenarios"
+    'Visual English Book 7, Unit 6 slides',
+    'World currency flashcards',
+    'Exchange rate chart handouts',
+    'Currency exchange role-play cards',
+    'Kahoot quiz on international currencies'
   ],
   steps: [
     {
-      title: "International Currencies",
-      duration: "10 min",
-      description: "Introduce major world currencies (US Dollar, Euro, Japanese Yen, etc.) with their symbols and countries. Practice pronunciation and discuss which countries use which currencies."
+      title: 'Warm-up: World Currencies',
+      duration: '5 mins',
+      description: 'Begin by discussing different currencies from around the world.',
+      instructions: [
+        "Ask students: 'What currencies do you know from different countries?'",
+        "Follow up with: 'What currency is used in your country?'",
+        "Create a list of currencies on the board (dollar, euro, yen, etc.)"
+      ],
+      teacherNotes: 'This helps connect to students' prior knowledge and personal experiences.'
     },
     {
-      title: "Currency Exchange Vocabulary",
-      duration: "10 min",
-      description: "Present essential vocabulary: exchange rate, commission, bureau de change, foreign currency, etc. Demonstrate how to read an exchange rate chart."
+      title: 'Presentation: International Currencies',
+      duration: '10 mins',
+      description: 'Introduce major world currencies using Visual English Book 7 slides.',
+      materials: [
+        'Book 7, Unit 6 slides',
+        'Currency flashcards'
+      ],
+      instructions: [
+        'Display slides showing different currencies (Dollar, Euro, Yen, etc.)',
+        'For each currency, identify: the country/region, the symbol, and example amounts',
+        'Practice pronunciation of currency names',
+        'Compare and contrast currencies (size, color, denominations)'
+      ]
     },
     {
-      title: "Conversion Practice",
-      duration: "10 min",
-      description: "Students practice simple currency conversions using a rate chart. For example: 'How many dollars can I get for 100 pounds?' or 'How many euros is 50 pounds worth?'"
+      title: 'Currency Exchange Vocabulary',
+      duration: '10 mins',
+      description: 'Teach key vocabulary for currency exchange situations.',
+      materials: [
+        'Vocabulary list with exchange terms',
+        'Book 7, Unit 6 slides with dialogue examples'
+      ],
+      instructions: [
+        'Introduce vocabulary: exchange rate, commission, bureau de change, foreign currency',
+        'Explain how to read an exchange rate chart',
+        'Demonstrate simple calculations: "If £1 = €1.15, how much is £10 in euros?"',
+        'Have students practice with simple conversion exercises'
+      ],
+      teacherNotes: 'Focus on practical vocabulary needed in real-life travel situations.'
     },
     {
-      title: "Exchange Office Role-play",
-      duration: "10 min",
-      description: "Students practice dialogues for exchanging currency at a bureau de change. Include phrases like 'I'd like to exchange pounds for euros' and 'What's the exchange rate today?'"
+      title: 'Guided Practice: Exchange Office Role-play',
+      duration: '15 mins',
+      description: 'Students practice dialogues for exchanging currency at a bureau de change.',
+      materials: [
+        'Role-play cards with scenarios',
+        'Exchange rate chart handouts'
+      ],
+      instructions: [
+        'Model a dialogue for exchanging currency',
+        'Teach phrases like: "I'd like to exchange pounds for euros" and "What's the exchange rate today?"',
+        'Divide students into pairs and distribute role-play cards',
+        'Students practice dialogues using the exchange rate charts',
+        'Have 2-3 pairs perform their dialogues for the class'
+      ]
     },
     {
-      title: "Travel Budget Activity",
-      duration: "5 min",
-      description: "Students plan a budget for a day trip to a country with a different currency, calculating costs in both the foreign currency and pounds."
+      title: 'Wrap-up: Currency Quiz',
+      duration: '5 mins',
+      description: 'Play a quick Kahoot quiz about world currencies.',
+      instructions: [
+        'Launch the Kahoot Currency Game',
+        'Students identify currencies, symbols, and countries',
+        'Review any challenging questions',
+        'Summarize the key vocabulary and concepts learned'
+      ]
     }
   ],
-  assessmentTips: "Monitor students' use of currency vocabulary and their ability to perform basic conversions during pair activities.",
-  homeworkIdeas: ["Students research the current exchange rates for three different currencies and create a set of conversion problems."]
+  assessmentTips: 'Evaluate students' understanding through their participation in role-plays and their ability to calculate currency conversions using the exchange rate charts.',
+  homeworkIdeas: [
+    'Research the currency of a country you would like to visit and create a short presentation',
+    'Complete a worksheet with currency conversion problems'
+  ],
+  additionalResources: [
+    {
+      title: 'KAHOOT: Currency Game',
+      url: 'https://create.kahoot.it/share/currency/f87e8719-291e-440a-a340-22344175fedb'
+    },
+    {
+      title: 'Money Vocabulary Game',
+      url: 'https://wordwall.net/embed/463ad4520fbb4edd9ea903446f182971'
+    }
+  ]
 };
 
-// Spending and Saving Money Lesson Plan
+// Spending and Saving Lesson Plan
 export const spendingSavingLessonPlan: LessonPlan = {
-  id: "spending-saving-1",
-  title: "Spending and Saving Money",
-  level: "",
-  duration: "45 min",
+  id: 'spending-saving-1',
+  title: 'Spending and Saving Money',
+  duration: '45 minutes',
+  level: 'Pre-Intermediate to Intermediate',
   objectives: [
-    "Learn vocabulary related to personal finance",
-    "Practice conversations about spending habits and saving",
-    "Develop language for discussing financial priorities"
+    'Learn vocabulary related to spending and saving money',
+    'Practice discussing financial habits and priorities',
+    'Develop skills for budgeting and making spending decisions',
+    'Use comparative language to discuss prices and value'
   ],
   materials: [
-    "Budget template handouts",
-    "Images representing different spending categories",
-    "Vocabulary cards with financial terms"
+    'Visual English Book 7, Unit 6 slides',
+    'Budget planning worksheets',
+    'Shopping scenario cards',
+    'Price comparison handouts'
   ],
   steps: [
     {
-      title: "Money Management Vocabulary",
-      duration: "10 min",
-      description: "Introduce vocabulary related to personal finance: budget, save, spend, afford, expense, income, etc. Elicit examples from students about what they spend money on."
+      title: 'Warm-up: Money Habits Discussion',
+      duration: '5 mins',
+      description: 'Begin by discussing spending and saving habits.',
+      instructions: [
+        "Ask students: 'Are you a spender or a saver?'",
+        "Follow up with: 'What's the last thing you bought for yourself?'",
+        "Introduce the concept of budgeting: 'Do you plan how to spend your money?'"
+      ],
+      teacherNotes: 'Keep this light and fun - avoid putting students in uncomfortable positions regarding personal finances.'
     },
     {
-      title: "Spending Categories",
-      duration: "10 min",
-      description: "Present different spending categories (essentials, entertainment, education, etc.) and discuss examples of each. Students classify various expenses into the appropriate categories."
+      title: 'Presentation: Money Vocabulary',
+      duration: '10 mins',
+      description: 'Introduce vocabulary related to spending, saving, and financial decisions.',
+      materials: [
+        'Book 7, Unit 6 slides',
+        'Vocabulary cards'
+      ],
+      instructions: [
+        'Present vocabulary in categories: Spending (buy, purchase, cost, expensive, cheap)',
+        'Saving vocabulary (save up, budget, afford, discount, bargain)',
+        'Banking terms (account, withdraw, deposit, cash, credit card)',
+        'Practice pronunciation and example sentences for each term'
+      ]
     },
     {
-      title: "Saving Goals Discussion",
-      duration: "10 min",
-      description: "Students practice talking about saving money for different goals using target phrases: 'I'm saving for a holiday' or 'I need to save money to buy a new phone.'"
+      title: 'Comparative Shopping Language',
+      duration: '10 mins',
+      description: 'Teach comparative structures for discussing prices and value.',
+      materials: [
+        'Price comparison handouts with various items',
+        'Book 7, Unit 6 slides with examples'
+      ],
+      instructions: [
+        'Introduce comparative structures: "This is more/less expensive than that", "This costs twice as much as that"',
+        'Present expressions of value: "It's worth it", "It's a good deal", "It's overpriced"',
+        'Show examples of items with different prices',
+        'Have students practice making comparative statements about the items'
+      ],
+      teacherNotes: 'Emphasize that "cheap" can have negative connotations (poor quality) while "inexpensive" is more neutral.'
     },
     {
-      title: "Budget Planning",
-      duration: "10 min",
-      description: "Students work with a simple budget template to allocate a set amount of money across different categories, then explain their choices to a partner."
+      title: 'Guided Practice: Budget Planning',
+      duration: '15 mins',
+      description: 'Students practice creating a simple budget for a specific scenario.',
+      materials: [
+        'Budget planning worksheets',
+        'Shopping scenario cards'
+      ],
+      instructions: [
+        'Divide students into pairs and give each pair a scenario card (e.g., "Planning a birthday party", "A weekend trip")',
+        'Distribute budget planning worksheets with categories for expenses',
+        'Students work together to allocate a fixed budget (e.g., £100) across categories',
+        'Pairs present their budgets to the class, explaining their priorities',
+        'Class discusses different approaches to budgeting'
+      ]
     },
     {
-      title: "Money Advice Role-play",
-      duration: "5 min",
-      description: "In pairs, students take turns giving advice about saving money using modal verbs: 'You should spend less on entertainment' or 'You could make lunch at home instead of eating out.'"
+      title: 'Wrap-up: Spending Wisdom',
+      duration: '5 mins',
+      description: 'Share and discuss money-saving tips and wise spending habits.',
+      instructions: [
+        'Ask each student to share one tip for saving money or spending wisely',
+        'Collect ideas on the board',
+        'Discuss cultural differences in attitudes toward money and spending',
+        'Summarize key vocabulary and concepts from the lesson'
+      ]
     }
   ],
-  assessmentTips: "Evaluate students' use of financial vocabulary and their ability to express opinions about spending and saving priorities.",
-  homeworkIdeas: ["Students create a personal savings plan for a specific goal, describing how much they need to save and for how long."]
+  assessmentTips: 'Evaluate students' use of appropriate vocabulary and comparative structures during the budget planning activity. Assess their ability to express priorities and explain financial decisions.',
+  homeworkIdeas: [
+    'Create a personal budget for a week, including all expected expenses',
+    'Write a short paragraph comparing prices of similar items in different shops'
+  ],
+  additionalResources: [
+    {
+      title: 'ESL Money Vocabulary Resources',
+      url: 'https://en.islcollective.com/english-esl-worksheets/vocabulary/money'
+    }
+  ]
 };
