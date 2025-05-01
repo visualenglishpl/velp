@@ -15,6 +15,9 @@ import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Pr
 import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
 import PDFViewer from '@/components/PDFViewer';
 
+// Import Unit 6 implementation
+import { getUnit6LessonPlans, getUnit6Resources } from '@/data/unit6-implementation';
+
 export interface TeacherResource {
   id?: string;
   bookId: string;
