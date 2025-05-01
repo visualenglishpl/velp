@@ -317,6 +317,52 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   // Helper function to get additional unit-specific resources
   const getMoreUnitResources = (bookId: string, unitId: string): TeacherResource[] => {
+    // Book 7, Unit 4 - Hotels vocabulary
+    if (bookId === '7' && unitId === '4') {
+      return [
+        {
+          id: "book7-unit4-video1",
+          bookId,
+          unitId,
+          title: "Hotel Vocabulary - ESL Collective",
+          resourceType: "video" as const,
+          provider: "ISL Collective",
+          sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/297369", 
+          embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/297369" width="100%" height="500" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
+        },
+        {
+          id: "book7-unit4-game1",
+          bookId,
+          unitId,
+          title: "Hotel Vocabulary Game 1",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/ead2718ebb544050a5077cc541d2e2a2",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ead2718ebb544050a5077cc541d2e2a2?themeId=1&templateId=2&fontStackId=0" width="100%" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit4-game2",
+          bookId,
+          unitId,
+          title: "Hotel Vocabulary Game 2",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/8a41f00f851f4c63b560c5a8e3b0622c",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8a41f00f851f4c63b560c5a8e3b0622c?themeId=1&templateId=3&fontStackId=0" width="100%" height="380" frameborder="0" allowfullscreen></iframe>`
+        },
+        {
+          id: "book7-unit4-game3",
+          bookId,
+          unitId,
+          title: "Hotel Vocabulary Game 3",
+          resourceType: "game" as const,
+          provider: "Wordwall",
+          sourceUrl: "https://wordwall.net/resource/4d43ce661a25430eb84b3fe4e94a20ab",
+          embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4d43ce661a25430eb84b3fe4e94a20ab?themeId=1&templateId=3&fontStackId=0" width="100%" height="380" frameborder="0" allowfullscreen></iframe>`
+        }
+      ];
+    }
+    
     // Book 7, Unit 1 - Film genres
     if (bookId === '7' && unitId === '1') {
       return [

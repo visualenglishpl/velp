@@ -1,0 +1,1000 @@
+ 																									
+00 A Book 7 – Unit 4.pdf																									
+00 A Unit 4_Page_1.jpg																									
+00 A.png																									
+01 M A Vacation City.png		 																							
+01 M Aa What Vacation is It – It is A City Vacation.jpg	"What vacation is it?"	"It is a city vacation."																							
+01 M Ab I Think City Vacations are Interesting or Boring.gif	"Do I think city vacations are interesting or boring?"	"I think city vacations are interesting."																							
+01 M Ad Do You Go on City Vacations.gif	"Do you go on city vacations?"	"Yes, I go on city vacations./No, I don't go on city vacations."																							
+01 M Ad Where Would You Like to Go on A City Vacation.jpg	"Where would you like to go on a city vacation?"	"I would like to go to [city name]."																							
+01 M Ae What City Vacation Have You been To.gif	"What city vacation have you been to?"	"I have been to [city name]."																							
+01 M B Vacation Camping.png		 																							
+01 M Ba What Vacation is It – It is A Camping Vacation.gif	"What vacation is it?"	"It is a camping vacation."																							
+01 M Bb I Think Camping Vacations are Interesting or Boring.gif	"Do I think camping vacations are interesting or boring?"	"I think camping vacations are interesting."																							
+01 M Bc Do You Prefer Camping Vacations with Family or Friends.gif	"Do you prefer camping vacations with family or friends?"	"I prefer camping vacations with [family/friends]."																							
+01 M Bd Do You Go on Camping Vacations.gif	"Do you go on camping vacations?"	"Yes, I go on camping vacations./No, I don't go on camping vacations."																							
+01 M Bd Would You Like to Go on A Camping Vacation.gif	"Would you like to go on a camping vacation?"	"Yes, I would like to go on a camping vacation./No, I wouldn't."																							
+01 M C Vacation Hiking.png		 																							
+01 M Ca What Vacation is It – A Hiking Vacation.gif	"What vacation is it?"	"It is a hiking vacation."																							
+01 M Cb I Think Hiking Vacations are Interesting or Boring.gif	"Do I think hiking vacations are interesting or boring?"	"I think hiking vacations are interesting."																							
+01 M Cd Do You Go on Hiking Vacations.gif	"Do you go on hiking vacations?"	"Yes, I go on hiking vacations./No, I don't go on hiking vacations."																							
+01 M Cd Where Do People Go on Hiking Vacation – in the Mountains.gif	"Where do people go on hiking vacations?"	"People go on hiking vacations in the mountains."																							
+01 M Cd Would You Like to Go on A Hiking Vacation.gif	"Would you like to go on a hiking vacation?"	"Yes, I would like to go on a hiking vacation./No, I wouldn't."																							
+01 M D Vacation Cruise.png		 																							
+01 M Da What Vacation is It – A Cruise Vacation.gif	"What vacation is it?"	"It is a cruise vacation."																							
+01 M Db I Think Cruise Vacations are Interesting or Boring.gif	"Do I think cruise vacations are interesting or boring?"	"I think cruise vacations are interesting."																							
+01 M Dd Do You Go on Cruise Vacations.gif	"Do you go on cruise vacations?"	"Yes, I go on cruise vacations./No, I don't go on cruise vacations."																							
+01 M Dd Where Do People Go on Cruise Vacation – in the Sea.gif	"Where do people go on cruise vacations?"	"People go on cruise vacations in the sea."																							
+01 M Dd Would You Like to Go on A Cruise Vacation.gif	"Would you like to go on a cruise vacation?"	"Yes, I would like to go on a cruise vacation./No, I wouldn't."																							
+01 M E Vacation Safari.png		 																							
+01 M Ea What Vacation is It – A Safari Vacation.gif	"What vacation is it?"	"It is a safari vacation."																							
+01 M Eb I Think Safari Vacations are Interesting or Boring.gif	"Do I think safari vacations are interesting or boring?"	"I think safari vacations are interesting."																							
+01 M Ed Do You Go on Safari Vacations.gif	"Do you go on safari vacations?"	"Yes, I go on safari vacations./No, I don't go on safari vacations."																							
+01 M Ed Where Do People Go on Safari Vacation – to Africa.gif	"Where do people go on safari vacations?"	"People go on safari vacations to Africa."																							
+01 M Ed Would You Like to Go on A Safari Vacation.gif	"Would you like to go on a safari vacation?"	"Yes, I would like to go on a safari vacation./No, I wouldn't."																							
+01 M F Vacation Luxury.png		 																							
+01 M Fa What Vacation is It – A Luxury Vacation.gif	"What vacation is it?"	"It is a luxury vacation."																							
+01 M Fb I Think Luxury Vacations are Interesting or Boring.gif	"Do I think luxury vacations are interesting or boring?"	"I think luxury vacations are interesting."																							
+01 M Fd Do You Go on Luxury Vacations.gif	"Do you go on luxury vacations?"	"Yes, I go on luxury vacations./No, I don't go on luxury vacations."																							
+01 M Fd I Think Luxury Vacations Cheap or Expensive.gif	"Do I think luxury vacations are cheap or expensive?"	"I think luxury vacations are expensive."																							
+01 M Fd Would You Like to Go on A Luxury Vacation.gif	"Would you like to go on a luxury vacation?"	"Yes, I would like to go on a luxury vacation./No, I wouldn't."																							
+01 M G Vacation Sailing.png		 																							
+01 M Ga What Vacation is It – A Sailing Vacation.jpg	"What vacation is it?"	"It is a sailing vacation."																							
+01 M Gb I Think Sailing Vacations are Interesting or Boring.gif	"Do I think sailing vacations are interesting or boring?"	"I think sailing vacations are interesting."																							
+01 M Gd Do You Go on Sailing Vacations.gif	"Do you go on sailing vacations?"	"Yes, I go on sailing vacations./No, I don't go on sailing vacations."																							
+01 M Gd Where Do People Go on Sailing Vacation – on the Sea – Lake.gif	"Where do people go on sailing vacations?"	"People go on sailing vacations on the sea or lake."																							
+01 M Gd Would You Like to Go on A Sailing Vacation.gif	"Would you like to go on a sailing vacation?"	"Yes, I would like to go on a sailing vacation./No, I wouldn't."																							
+01 M H Vacation Spa.png		 																							
+01 M Ha What Vacation is It – A Spa Vacation.gif	"What vacation is it?"	"It is a spa vacation."																							
+01 M Hb I Think Spa Vacations are Interesting or Boring.gif	"Do I think spa vacations are interesting or boring?"	"I think spa vacations are interesting."																							
+01 M Hd Do You Go on Spa Vacations.gif	"Do you go on spa vacations?"	"Yes, I go on spa vacations./No, I don't go on spa vacations."																							
+01 M Hd I Think Spa Vacations Cheap or Expensive.jpg	"Do I think spa vacations are cheap or expensive?"	"I think spa vacations are expensive."																							
+01 M Hd Would You Like to Go on A Spa Vacation.gif	"Would you like to go on a spa vacation?"	"Yes, I would like to go on a spa vacation./No, I wouldn't."																							
+01 M I Vacation Beach.png		 																							
+01 M Ia What Vacation is It – A Beach Vacation.gif	"What vacation is it?"	"It is a beach vacation."																							
+01 M Ib I Think Beach Vacations are Interesting or Boring.jpg	"Do I think beach vacations are interesting or boring?"	"I think beach vacations are interesting."																							
+01 M Id Do You Go on Beach Vacations.gif	"Do you go on beach vacations?"	"Yes, I go on beach vacations./No, I don't go on beach vacations."																							
+01 M Id I Think Beach Vacations Stressful or Relaxing.gif	"Do I think beach vacations are stressful or relaxing?"	"I think beach vacations are relaxing."																							
+01 M Id Would You Like to Go on A Beach Vacation.gif	"Would you like to go on a beach vacation?"	"Yes, I would like to go on a beach vacation./No, I wouldn't."																							
+01 M J Vacation Shopping.png		 																							
+01 M Ja What Vacation is It – A Shopping Vacation.gif	"What vacation is it?"	"It is a shopping vacation."																							
+01 M Jb I Think Shopping Vacations are Interesting or Boring.gif	"Do I think shopping vacations are interesting or boring?"	"I think shopping vacations are interesting."																							
+01 M Jd Do You Go on Shopping Vacations.gif	"Do you go on shopping vacations?"	"Yes, I go on shopping vacations./No, I don't go on shopping vacations."																							
+01 M Jd I Think Shopping Vacations Stressful or Relaxing.gif	"Do I think shopping vacations are stressful or relaxing?"	"I think shopping vacations are relaxing."																							
+01 M Jd Would You Like to Go on A Shopping Vacation.gif	"Would you like to go on a shopping vacation?"	"Yes, I would like to go on a shopping vacation./No, I wouldn't."																							
+01 M K Vacation Winter.png		 																							
+01 M Ka What Vacation is It – A Winter Vacation.gif	"What vacation is it?"	"It is a winter vacation."																							
+01 M Kb I Think Winter Vacations are Interesting or Boring.gif	"Do I think winter vacations are interesting or boring?"	"I think winter vacations are interesting."																							
+01 M Kd Do You Go on Winter Vacations.gif	"Do you go on winter vacations?"	"Yes, I go on winter vacations./No, I don't go on winter vacations."																							
+01 M Kd Do You Prefer Winter Vacations with Family or Friends.gif	"Do you prefer winter vacations with family or friends?"	"I prefer winter vacations with [family/friends]."																							
+01 M Kd Where Do People Go on Winter Vacation – in the Mountains.gif	"Where do people go on winter vacations?"	"People go on winter vacations in the mountains."																							
+01 M L Vacation Sightseeing.png		 																							
+01 M La What Vacation is It – A Sightseeing Vacation.jpg	"What vacation is it?"	"It is a sightseeing vacation."																							
+01 M Lb I Think Sightseeing Vacations are Cheap or Expensive.jpg	"Do I think sightseeing vacations are cheap or expensive?"	"I think sightseeing vacations are expensive."																							
+01 M Ld Do You Go on Sightseeing Vacations.gif	"Do you go on sightseeing vacations?"	"Yes, I go on sightseeing vacations./No, I don't go on sightseeing vacations."																							
+01 M Ld Do You Prefer Sightseeing Vacations with Family or Friends.gif	"Do you prefer sightseeing vacations with family or friends?"	"I prefer sightseeing vacations with [family/friends]."																							
+01 M Ld Would You Like to Go on A Sightseeing Vacation.jpg	"Would you like to go on a sightseeing vacation?"	"Yes, I would like to go on a sightseeing vacation./No, I wouldn't."																							
+01 M Vacation.png		 																							
+02 E A Vacation with Family.png		 																							
+02 E Aa Do You Go on Vacation with Your Family.jpg	"Do you go on vacation with your family?"	"Yes, I go on vacation with my family./No, I don't go on vacation with my family."																							
+02 E Ab I Think Going on Vacation with My Family is Fun – Boring.jpg	"Do I think going on vacation with my family is fun or boring?"	"I think going on vacation with my family is fun."																							
+02 E B Vacation with Friends.png		 																							
+02 E Ba Do You Go on Vacation with Your Friends.jpg	"Do you go on vacation with your friends?"	"Yes, I go on vacation with my friends./No, I don't go on vacation with my friends."																							
+02 E Ba I Think Going on Vacation with My Friends is Fun – Boring.png	"Do I think going on vacation with my friends is fun or boring?"	"I think going on vacation with my friends is fun."																							
+02 E C Vacation Alone.png		 																							
+02 E Ca Do You Go on Vacation Alone.gif	"Do you go on vacation alone?"	"Yes, I go on vacation alone./No, I don't go on vacation alone."																							
+02 E Cb I Think Going on Vacation Alone is Fun – Boring.jpeg	"Do I think going on vacation alone is fun or boring?"	"I think going on vacation alone is fun."																							
+02 E D Vacation with Pets.png		 																							
+02 E Da Do You Go on Vacation with Your Pets.jpg	"Do you go on vacation with your pets?"	"Yes, I go on vacation with my pets./No, I don't go on vacation with my pets."																							
+02 E Db I Think Going on Vacation with My Family is Easy or Difficult.jpeg	"Do I think going on vacation with my family is easy or difficult?"	"I think going on vacation with my family is easy."																							
+02 E Vacation with Who.png		 																							
+03 Q A Accommodation Log Cabin.png		 																							
+03 Q Aa What is It – It is A Log Cabin.gif	"What is it?"	"It is a log cabin."																							
+03 Q Ab Would You Like to Stay in A Log Cabin.jpg	"Would you like to stay in a log cabin?"	"Yes, I would like to stay in a log cabin./No, I wouldn't."																							
+03 Q Ac Have You Ever Stayed in A Log Cabin – Yes – Not Yet.jpg	"Have you ever stayed in a log cabin?"	"Yes, I have stayed in a log cabin./No, I have not stayed in a log cabin."																							
+03 Q Ad I Think Log Cabins are Comfortable – Uncomfortable.jpg	"Do I think log cabins are comfortable or uncomfortable?"	"I think log cabins are comfortable."																							
+03 Q Ae You Can See Log Cabins in the – Mountains.jpg	"Where can you see log cabins?"	"You can see log cabins in the mountains."																							
+03 Q B Accommodation Campsite.png		 																							
+03 Q B What is It – It is A Campsite.jpg	"What is it?"	"It is a campsite."																							
+03 Q Bb Would You Like to Stay in A Campsite.gif	"Would you like to stay in a campsite?"	"Yes, I would like to stay in a campsite./No, I wouldn't."																							
+03 Q Bc Have You Ever Stayed in A Campsite – Yes – Not Yet.gif	"Have you ever stayed in a campsite?"	"Yes, I have stayed in a campsite./No, I have not stayed in a campsite."																							
+03 Q Bd I Think Campsites are Expensive – Cheap.jpg	"Do I think campsites are expensive or cheap?"	"I think campsites are cheap."																							
+03 Q Bdi Think Sleeping in Campsites is are Comfortable – Uncomfortable.gif	"Do I think sleeping in campsites is comfortable or uncomfortable?"	"I think sleeping in campsites is comfortable."																							
+03 Q C Accommodation Hotel Capsule.png		 																							
+03 Q C What is It – It is A Hotel Capsule.jpg	"What is it?"	"It is a hotel capsule."																							
+03 Q Cb Would You Like to Stay in A Hotel Capsule.gif	"Would you like to stay in a hotel capsule?"	"Yes, I would like to stay in a hotel capsule./No, I wouldn't."																							
+03 Q Cc Have You Ever Stayed in A Hotel Capsule – Yes – Not Yet.gif	"Have you ever stayed in a hotel capsule?"	"Yes, I have stayed in a hotel capsule./No, I have not stayed in a hotel capsule."																							
+03 Q Cd I Think Hotel Capsules are Comfortable – Uncomfortable.gif	"Do I think hotel capsules are comfortable or uncomfortable?"	"I think hotel capsules are comfortable."																							
+03 Q Cd I Think Hotel Capsules are Too Small – Too Big.gif	"Do I think hotel capsules are too small or too big?"	"I think hotel capsules are too small."																							
+03 Q D Accommodation Holiday Resort.png		 																							
+03 Q D What is It – It is A Holiday Resort.jpg	"What is it?"	"It is a holiday resort."																							
+03 Q Db Would You Like to Stay in A Holiday Resort.jpg	"Would you like to stay in a holiday resort?"	"Yes, I would like to stay in a holiday resort./No, I wouldn't."																							
+03 Q Dc Have You Ever Stayed in A Holiday Resort – Yes – Not Yet.jpg	"Have you ever stayed in a holiday resort?"	"Yes, I have stayed in a holiday resort./No, I have not stayed in a holiday resort."																							
+03 Q Dd I Think Holiday Resorts are Comfortable – Uncomfortable.jpg	"Do I think holiday resorts are comfortable or uncomfortable?"	"I think holiday resorts are comfortable."																							
+03 Q Dd I Think Holiday Resorts are Expensive – Cheap.jpg	"Do I think holiday resorts are expensive or cheap?"	"I think holiday resorts are expensive."																							
+03 Q E Accommodation Camper.png		 																							
+03 Q E What is It – It is A Caravan.gif	"What is it?"	"It is a caravan."																							
+03 Q Eb Would You Like to Stay in A Caravan.gif	"Would you like to stay in a caravan?"	"Yes, I would like to stay in a caravan./No, I wouldn't."																							
+03 Q Ec Have You Ever Stayed in A Caravan – Yes – Not Yet.gif	"Have you ever stayed in a caravan?"	"Yes, I have stayed in a caravan./No, I have not stayed in a caravan."																							
+03 Q Ed I Think Caravans are Comfortable – Uncomfortable.gif	"Do I think caravans are comfortable or uncomfortable?"	"I think caravans are comfortable."																							
+03 Q Ed I Think Staying in Caravans is Boring – Exciting.gif	"Do I think staying in caravans is boring or exciting?"	"I think staying in caravans is exciting."																							
+03 Q F Accommodation Water Bungalow.png		 																							
+03 Q F What is It – It is A Water Bungalow.gif	"What is it?"	"It is a water bungalow."																							
+03 Q Fb Would You Like to Stay in A Water Bungalow.gif	"Would you like to stay in a water bungalow?"	"Yes, I would like to stay in a water bungalow./No, I wouldn't."																							
+03 Q Fc Have You Ever Stayed in A Water Bungalow – Yes – Not Yet.gif	"Have you ever stayed in a water bungalow?"	"Yes, I have stayed in a water bungalow./No, I have not stayed in a water bungalow."																							
+03 Q Fd I Think Staying in Water Bungalows are Boring – Exciting.gif	"Do I think staying in water bungalows is boring or exciting?"	"I think staying in water bungalows is exciting."																							
+03 Q Fd I Think Water Bungalows are Expensive – Cheap.gif	"Do I think water bungalows are expensive or cheap?"	"I think water bungalows are expensive."																							
+03 Q G Accommodation Bed and Breakfast.png		 																							
+03 Q G What is It – It is A Bed and Breakfast.jpg	"What is it?"	"It is a bed and breakfast."																							
+03 Q Gb Would You Like to Stay in A Bed and Breakfast.jpg	"Would you like to stay in a bed and breakfast?"	"Yes, I would like to stay in a bed and breakfast./No, I wouldn't."																							
+03 Q Gc Have You Ever Stayed in A Bed and Breakfast – Yes – Not Yet.jpg	"Have you ever stayed in a bed and breakfast?"	"Yes, I have stayed in a bed and breakfast./No, I have not stayed in a bed and breakfast."																							
+03 Q Gd I Think Bed and Breakfasts are Expensive – Cheap.jpg	"Do I think bed and breakfasts are expensive or cheap?"	"I think bed and breakfasts are cheap."																							
+03 Q Gd I Think Bed and Budget are Comfortable – Uncomfortable.mp4	"Do I think bed and breakfasts are comfortable or uncomfortable?"	"I think bed and breakfasts are comfortable."																							
+03 Q H Accommodation Budget Hotel.png		 																							
+03 Q H What is It – It is A Budget Hotel.jpg	"What is it?"	"It is a budget hotel."																							
+03 Q Hb Would You Like to Stay in A Budget Hotel.gif	"Would you like to stay in a budget hotel?"	"Yes, I would like to stay in a budget hotel./No, I wouldn't."																							
+03 Q Hc Have You Ever Stayed in A Budget Hotel – Yes – Not Yet.jpg	"Have you ever stayed in a budget hotel?"	"Yes, I have stayed in a budget hotel./No, I have not stayed in a budget hotel."																							
+03 Q Hd I Think Budget Hotels are Comfortable – Uncomfortable.jpg	"Do I think budget hotels are comfortable or uncomfortable?"	"I think budget hotels are comfortable."																							
+03 Q Hd I Think Budget Hotels are Expensive – Cheap.jpg	"Do I think budget hotels are expensive or cheap?"	"I think budget hotels are cheap."																							
+03 Q I Accommodation 5 Star Hotel.png		 																							
+03 Q I What is It – It is A 5 Star Hotel.jpg	"What is it?"	"It is a 5-star hotel."																							
+03 Q Ib Would You Like to Stay in A 5 Star Hotel.jpg	"Would you like to stay in a 5-star hotel?"	"Yes, I would like to stay in a 5-star hotel./No, I wouldn't."																							
+03 Q Ic Have You Ever Stayed in A 5 Star Hotel – Yes – Not Yet.jpg	"Have you ever stayed in a 5-star hotel?"	"Yes, I have stayed in a 5-star hotel./No, I have not stayed in a 5-star hotel."																							
+03 Q Id I Think 5 Star Hotels are Comfortable – Uncomfortable.gif	"Do I think 5-star hotels are comfortable or uncomfortable?"	"I think 5-star hotels are comfortable."																							
+03 Q Id I Think 5 Star Hotels are Expensive – Cheap.jpg	"Do I think 5-star hotels are expensive or cheap?"	"I think 5-star hotels are expensive."																							
+03 Q J Accommodation Hostel.png		 																							
+03 Q Ja What is It – It is A Hostel.jpg	"What is it?"	"It is a hostel."																							
+03 Q Jb Would You Like to Stay in A Hostel.jpg	"Would you like to stay in a hostel?"	"Yes, I would like to stay in a hostel./No, I wouldn't."																							
+03 Q Jc Have You Ever Stayed in A Hostel.jpg	"Have you ever stayed in a hostel?"	"Yes, I have stayed in a hostel./No, I have not stayed in a hostel."																							
+03 Q Jd I Think Hostels are Cheap or Expensive.jpg	"Do I think hostels are cheap or expensive?"	"I think hostels are cheap."																							
+03 Q Jd I Think Hostels are Comfortable or Uncomfortable.jpeg	"Do I think hostels are comfortable or uncomfortable?"	"I think hostels are comfortable."																							
+03 Q K Accommodation Villa.png		 																							
+03 Q Ka What is It – It is A Villa.gif	"What is it?"	"It is a villa."																							
+03 Q Kb Have You Ever Stayed in A Villa.gif	"Have you ever stayed in a villa?"	"Yes, I have stayed in a villa./No, I have not stayed in a villa."																							
+03 Q Kb Would You Like to Stay in A Villa.gif	"Would you like to stay in a villa?"	"Yes, I would like to stay in a villa./No, I wouldn't."																							
+03 Q Kc I Think Villas are Cheap or Expensive.gif	"Do I think villas are cheap or expensive?"	"I think villas are expensive."																							
+03 Q Kc I Think Villas Comfortable or Uncomfortable.gif	"Do I think villas are comfortable or uncomfortable?"	"I think villas are comfortable."																							
+03 Q L Accommodation Motel.png		 																							
+03 Q La What is It – It is A Motel.gif	"What is it?"	"It is a motel."																							
+03 Q Lb Would You Like to Stay in A Motel.gif	"Would you like to stay in a motel?"	"Yes, I would like to stay in a motel./No, I wouldn't."																							
+03 Q Lc Have You Ever Stayed in A Motel.gif	"Have you ever stayed in a motel?"	"Yes, I have stayed in a motel./No, I have not stayed in a motel."																							
+03 Q Ld I Think Motels are Cheap or Expensive.gif	"Do I think motels are cheap or expensive?"	"I think motels are cheap."																							
+03 Q Ld I Think Motels are Comfortable or Uncomfortable.gif	"Do I think motels are comfortable or uncomfortable?"	"I think motels are comfortable."																							
+03 Q M Accommodation All Inclusive.png		 																							
+03 Q Ma What is It – It is an All Inclusive Hotel.jpg	"What is it?"	"It is an all-inclusive hotel."																							
+03 Q Mb Would You Like to Stay in an All Inclusive Hotel.gif	"Would you like to stay in an all-inclusive hotel?"	"Yes, I would like to stay in an all-inclusive hotel./No, I wouldn't."																							
+03 Q Mc Have You Ever Stayed in an All Inclusive Hotel.gif	"Have you ever stayed in an all-inclusive hotel?"	"Yes, I have stayed in an all-inclusive hotel./No, I have not stayed in an all-inclusive hotel."																							
+03 Q Md I Think All Inclusive Hotels are Cheap or Expensive.jpg	"Do I think all-inclusive hotels are cheap or expensive?"	"I think all-inclusive hotels are expensive."																							
+03 Q Md I Think All Inclusive Hotels are Interesting – Boring.jpg	"Do I think all-inclusive hotels are interesting or boring?"	"I think all-inclusive hotels are interesting."																							
+03 Q N Accommodation Homestay.png		 																							
+03 Q Na What is It – It is A Homestay.jpg	"What is it?"	"It is a homestay."																							
+03 Q Nb Would You Like to Stay in A Home on Holiday.jpg	"Would you like to stay in a home on holiday?"	"Yes, I would like to stay in a home on holiday./No, I wouldn't."																							
+03 Q Nc Have You Stayed in A Homestay on Holiday.jpg	"Have you stayed in a homestay on holiday?"	"Yes, I have stayed in a homestay on holiday./No, I haven't stayed in a homestay on holiday."																							
+03 Q Nd I Think Homestays are Cheap or Expensive.jpg	"Do I think homestays are cheap or expensive?"	"I think homestays are cheap."																							
+03 Q Nd I Think Homestays are Comfortable – Uncomfortable.gif	"Do I think homestays are comfortable or uncomfortable?"	"I think homestays are comfortable."																							
+03 Q O Accommodation Cruise Ship.png		 																							
+03 Q Oa What is It It is A Cruise.gif	"What is it?"	"It is a cruise."																							
+03 Q Ob Would You Like to Go on A Cruise Vacation.jpg	"Would you like to go on a cruise vacation?"	"Yes, I would like to go on a cruise vacation./No, I wouldn't."																							
+03 Q Oc Have You Ever Stayed on A Cruise.gif	"Have you ever stayed on a cruise?"	"Yes, I have stayed on a cruise./No, I haven't stayed on a cruise."																							
+03 Q Od I Think Cruise Vacations are Interesting or Boring.gif	"Do I think cruise vacations are interesting or boring?"	"I think cruise vacations are interesting."																							
+03 Q Od I Think Cruises are Cheap – Expensive.jpg	"Do I think cruises are cheap or expensive?"	"I think cruises are expensive."																							
+03 Q P Accommodationhut.png		 																							
+03 Q Pa What is It – It is A Hut.jpg	"What is it?"	"It is a hut."																							
+03 Q Pb Would You Like to Stay in A Hut.gif	"Would you like to stay in a hut?"	"Yes, I would like to stay in a hut./No, I wouldn't."																							
+03 Q Pb Would You Like to Stay in A Hut.jpg	"Would you like to stay in a hut?"	"Yes, I would like to stay in a hut./No, I wouldn't."																							
+03 Q Pc Have You Ever Stayed in A Hut.jpg	"Have you ever stayed in a hut?"	"Yes, I have stayed in a hut./No, I haven't stayed in a hut."																							
+03 Q Pd I Think Huts are Cheap – Expensive.jpg	"Do I think huts are cheap or expensive?"	"I think huts are cheap."																							
+03 Q Pd I Think Huts are Comfortable – Unconfortable.jpg	"Do I think huts are comfortable or uncomfortable?"	"I think huts are comfortable."																							
+04 J A Hotel Facilities, Services and Amenities – Twin Room.png		 																							
+04 J Aa What Type of Room is It – Twin Room.gif	"What type of room is it?"	"It is a twin room."																							
+04 J Ab Would You Like to Sleep in A Twin Room.png	"Would you like to sleep in a twin room?"	"Yes, I would like to sleep in a twin room./No, I wouldn't."																							
+04 J B Hotel Facilities, Services and Amenities – Double Room.png		 																							
+04 J Ba What Type of Room is It – Double Room.gif	"What type of room is it?"	"It is a double room."																							
+04 J Bb Would You Like to Sleep in A Twin Room.jpg	"Would you like to sleep in a twin room?"	"Yes, I would like to sleep in a twin room./No, I wouldn't."																							
+04 J C Hotel Facilities, Services and Amenities – Double Room.png		 																							
+04 J Ca What Type of Room is It – Single Room.png	"What type of room is it?"	"It is a single room."																							
+04 J Cb Would You Like to Sleep in A Single Room.jpg	"Would you like to sleep in a single room?"	"Yes, I would like to sleep in a single room./No, I wouldn't."																							
+04 J D Hotel Facilities, Services and Amenities – Bunk Bed Room.png		 																							
+04 J Da What Type of Room is It – Bunkbed Room.gif	"What type of room is it?"	"It is a bunk bed room."																							
+04 J Db Would You Like to Sleep in A Room with Bunkbeds.png	"Would you like to sleep in a room with bunk beds?"	"Yes, I would like to sleep in a room with bunk beds./No, I wouldn't."																							
+04 J E Hotel Facilities, Services and Amenities – Room View.png		 																							
+04 J Eb What Type of View Can You See – A Sea View.jpg	"What type of view can you see?"	"You can see a sea view."																							
+04 J Ec What Type of View Can You See – A Pool Side View.jpg	"What type of view can you see?"	"You can see a poolside view."																							
+04 J Ed is This A Beautiful or an Ugly Hotel Room View.jpg	"Is this a beautiful or an ugly hotel room view?"	"This is a beautiful hotel room view."																							
+04 J Ee is A Hotel View Important or Unimportant When You are on Holiday.gif	"Is a hotel view important or unimportant when you are on holiday?"	"A hotel view is important when I am on holiday."																							
+04 J F Hotel Facilities, Services and Amenities – Buffet Breakfast.png		 																							
+04 J Fa What Amenity Can You See in the Picture – Breakfast.jpg	"What amenity can you see in the picture?"	"I can see breakfast in the picture."																							
+04 J Fb Do You Prefer to Have A Hotel Room with or Without Breakfast in the Morning.jpeg	"Do you prefer to have a hotel room with or without breakfast in the morning?"	"I prefer to have a hotel room with breakfast in the morning."																							
+04 J Fc is A Hotel Breakfast Important or Unimportant When You are on Holiday.jpg	"Is a hotel breakfast important or unimportant when you are on holiday?"	"A hotel breakfast is important when I am on holiday."																							
+04 J G Hotel Facilities, Services and Amenities – Balcony.png		 																							
+04 J Ga What Amenity Can You See in the Picture – A Balcony.jpg	"What amenity can you see in the picture?"	"I can see a balcony in the picture."																							
+04 J Gb Do You Prefer A Hotel Room with or Without A Balcony.jpg	"Do you prefer a hotel room with or without a balcony?"	"I prefer a hotel room with a balcony."																							
+04 J Gc Do You Use the Room Balcony When You are on Holiday.jpg	"Do you use the room balcony when you are on holiday?"	"Yes, I use the room balcony when I am on holiday./No, I don't use the room balcony."																							
+04 J H Hotel Facilities, Services and Amenities – Jacuzzi.png		 																							
+04 J Ha What Amenity Can You See in the Picture – A Jacuzzi.gif	"What amenity can you see in the picture?"	"I can see a jacuzzi in the picture."																							
+04 J Hb Do You Use the Jacuzzi When You are on Holiday.gif	"Do you use the jacuzzi when you are on holiday?"	"Yes, I use the jacuzzi when I am on holiday./No, I don't use the jacuzzi."																							
+04 J Hc is A Jacuzzi Important or Unimportant When You are on Holiday.gif	"Is a jacuzzi important or unimportant when you are on holiday?"	"A jacuzzi is important when I am on holiday."																							
+04 J Hotel Facilities, Services and Amenities.png		 																							
+04 J I Hotel Facilities Services and Amenities – Minibar.png																									
+04 J Ia What Amenities Can You See in the Picture – Mini Room Bar.png	"What amenities can you see in the picture?"	"I can see a mini bar in the picture."																							
+04 J Ib Do You Use the Minibar When You are on Holiday.png	"Do you use the minibar when you are on holiday?"	"Yes, I use the minibar when I am on holiday./No, I don't use the minibar."																							
+04 J Ii is A Hotel Mini Bar Important or Unimportant When You are on Holiday.jpg	"Is a hotel mini bar important or unimportant when you are on holiday?"	"A hotel mini bar is important when I am on holiday."																							
+05 Y A Hotel Facilities, Services and Amenities – Hairdresser.png		 																							
+05 Y Aa What Service Can You See in the Picture – Hairdresser.png	"What service can you see in the picture?"	"I can see a hairdresser service in the picture."																							
+05 Y Ab Do You Use Hairdresser Services When You are on Holiday.gif	"Do you use hairdresser services when you are on holiday?"	"Yes, I use hairdresser services on holiday./No, I don't use hairdresser services on holiday."																							
+05 Y Ac are Hairdressing Services Important or Unimportant on Holiday.png	"Are hairdressing services important or unimportant on holiday?"	"Hairdressing services are important on holiday."																							
+05 Y B Hotel Facilities, Services and Amenities – Restaurant.png		 																							
+05 Y Ba What Facility Can You See in the Picture – A Restaurant.png	"What facility can you see in the picture?"	"I can see a restaurant in the picture."																							
+05 Y Bb Do You Prefer A Hotel with or Without A Restaurant.png	"Do you prefer a hotel with or without a restaurant?"	"I prefer a hotel with a restaurant."																							
+05 Y Bc is A Restaurant Important or Unimportant When You are on Holiday.gif	"Is a restaurant important or unimportant when you are on holiday?"	"A restaurant is important when I am on holiday."																							
+05 Y C Hotel Facilities, Services and Amenities – Taxi Services.png		 																							
+05 Y Ca What Service Can You See in the Picture – Taxi Services.png	"What service can you see in the picture?"	"I can see taxi services in the picture."																							
+05 Y Cb Do You Use Taxi Services When You are on Holiday.png	"Do you use taxi services when you are on holiday?"	"Yes, I use taxi services when I am on holiday./No, I don't use taxi services."																							
+05 Y Cc are Taxi Services Important or Unimportant on Holiday.jpg	"Are taxi services important or unimportant on holiday?"	"Taxi services are important on holiday."																							
+05 Y D Hotel Facilities, Services and Amenities – Satellite Tv.png		 																							
+05 Y Da What Amenity Can You See on the Picture – A Tv.png	"What amenity can you see in the picture?"	"I can see a TV in the picture."																							
+05 Y Db Do You Watch Tv When You are on Holiday.png	"Do you watch TV when you are on holiday?"	"Yes, I watch TV when I am on holiday./No, I don't watch TV."																							
+05 Y Dc is Tv Important or Unimportant When You are on Holiday.png	"Is TV important or unimportant when you are on holiday?"	"TV is important when I am on holiday."																							
+05 Y E Hotel Facilities, Services and Amenities – Ac Air Conditioner.png		 																							
+05 Y Ea What Amenity Can You See in the Picture – Ac Air Conditioning.png	"What amenity can you see in the picture?"	"I can see air conditioning in the picture."																							
+05 Y Eb Do You Use Ac When You are on Holiday.png	"Do you use air conditioning when you are on holiday?"	"Yes, I use air conditioning when I am on holiday./No, I don't use it."																							
+05 Y Ec is Ac Important or Unimportant When You are on Holiday.gif	"Is air conditioning important or unimportant when you are on holiday?"	"Air conditioning is important when I am on holiday."																							
+05 Y F Hotel Facilities, Services and Amenities – Safe.png		 																							
+05 Y Fa What Amenity Can You See in the Picture – A Safe.png	"What amenity can you see in the picture?"	"I can see a safe in the picture."																							
+05 Y Fb Do You Use the Safe When You are on Holiday.png	"Do you use the safe when you are on holiday?"	"Yes, I use the safe when I am on holiday./No, I don't use the safe."																							
+05 Y Fc is A Safe Important or Unimportant on Holiday.png	"Is a safe important or unimportant on holiday?"	"A safe is important on holiday."																							
+05 Y G Hotel Facilities Services and Amenities – Room Service.png		 																							
+05 Y Ga What Service Can You See in the Picture – Room Service.png	"What service can you see in the picture?"	"I can see room service in the picture."																							
+05 Y Gb Do You Use Room Service When You are on Holiday.png	"Do you use room service when you are on holiday?"	"Yes, I use room service when I am on holiday./No, I don't use room service."																							
+05 Y Gc is Room Service Important or Unimportant on Holiday.jpg	"Is room service important or unimportant on holiday?"	"Room service is important on holiday."																							
+05 Y H Hotel Facilities, Services and Amenities – Swimming Pool.png		 																							
+05 Y Ha What Facility Can You See in the Picture – A Swimming Pool.png	"What facility can you see in the picture?"	"I can see a swimming pool in the picture."																							
+05 Y Hb Do You Use the Swimming Pool When You are on Holiday.gif	"Do you use the swimming pool when you are on holiday?"	"Yes, I use the swimming pool when I am on holiday./No, I don't use it."																							
+05 Y Hc are Swimming Pool Facilities Important or Unimportant on Holiday.png	"Are swimming pool facilities important or unimportant on holiday?"	"Swimming pool facilities are important on holiday."																							
+05 Y Hotel Facilities, Services and Amenities 1.png		 																							
+05 Y Hotel Facilities, Services and Amenities 2.png		 																							
+05 Y I Hotel Facilities, Services and Amenities – Free Wifi.png		 																							
+05 Y Ia What Amenity Can You See in the Picture – Free Wifi.png	"What amenity can you see in the picture?"	"I can see free Wi-Fi in the picture."																							
+05 Y Ib Do You Use Free Wifi When You are on Holiday.png	"Do you use free Wi-Fi when you are on holiday?"	"Yes, I use free Wi-Fi when I am on holiday./No, I don't use free Wi-Fi."																							
+05 Y Ic is Free Wifi Important or Unimportant on Holiday.png	"Is free Wi-Fi important or unimportant on holiday?"	"Free Wi-Fi is important on holiday."																							
+05 Y J Hotel Facilities Services and Amenities – Bar.png		 																							
+05 Y Ja What Facility Can You See in the Picture – A Hotel Bar.png	"What facility can you see in the picture?"	"I can see a hotel bar in the picture."																							
+05 Y Jb Do You Use Hotel Bar Facilities When You are on Holiday.png	"Do you use hotel bar facilities when you are on holiday?"	"Yes, I use hotel bar facilities when I am on holiday./No, I don't use them."																							
+05 Y Jc is A Hotel Bar Important or Unimportant on Holiday.gif	"Is a hotel bar important or unimportant on holiday?"	"A hotel bar is important on holiday."																							
+05 Y K Hotel Facilities Services and Amenities – Gift Shop.png		 																							
+05 Y Ka What Facility Can You See in the Picture – A Gift Shop.png	"What facility can you see in the picture?"	"I can see a gift shop in the picture."																							
+05 Y Kb Do You Buy Gifts When You are on Holiday.png	"Do you buy gifts when you are on holiday?"	"Yes, I buy gifts when I am on holiday./No, I don't buy gifts."																							
+05 Y Kc is A Gift Shop Important or Unimportant on Holiday.jpg	"Is a gift shop important or unimportant on holiday?"	"A gift shop is important on holiday."																							
+05 Y L Hotel Facilities, Services and Amenities – Lounge.png		 																							
+05 Y La What Facility Can You See in the Picture – A Lounge.jpg	"What facility can you see in the picture?"	"I can see a lounge in the picture."																							
+05 Y Lb Do You Use the Hotel Lounge When You are on Holiday.jpg	"Do you use the hotel lounge when you are on holiday?"	"Yes, I use the hotel lounge when I am on holiday./No, I don't use it."																							
+05 Y Lc are Lounges Important or Unimportant on Holiday.jpg	"Are lounges important or unimportant on holiday?"	"Lounges are important on holiday."																							
+05 Y M Hotel Facilities, Services and Amenities – Free Toiletries.png		 																							
+05 Y Ma What Amenity Can You See on the Picture – Free Toiletries.png	"What amenity can you see in the picture?"	"I can see free toiletries in the picture."																							
+05 Y Mb Do You Use Hotel Toiletries When You are in the Hotel.png	"Do you use hotel toiletries when you are in the hotel?"	"Yes, I use hotel toiletries when I am in the hotel./No, I don't use them."																							
+05 Y Mc are Free Toiletries Important or Unimportant on Holiday.jpg	"Are free toiletries important or unimportant on holiday?"	"Free toiletries are important on holiday."																							
+05 Y N Hotel Facilities, Services and Amenities – Gym.png		 																							
+05 Y Na What Facility Can You See in the Picture – A Gym.png	"What facility can you see in the picture?"	"I can see a gym in the picture."																							
+05 Y Nb Do You Use the Gym When You are on Holiday.png	"Do you use the gym when you are on holiday?"	"Yes, I use the gym when I am on holiday./No, I don't use the gym."																							
+05 Y Nc is A Gym Important or Unimportant When You are on Holiday.png	"Is a gym important or unimportant when you are on holiday?"	"A gym is important when I am on holiday."																							
+05 Y O Hotel Facilities, Services and Amenities – Car Park.png		 																							
+05 Y Oa What Facility Can You See in the Picture – A Parking.png	"What facility can you see in the picture?"	"I can see a parking facility in the picture."																							
+05 Y Ob Do You Use Car Parking Facilities When You are on Holiday.png	"Do you use car parking facilities when you are on holiday?"	"Yes, I use car parking facilities when I am on holiday./No, I don't use them."																							
+05 Y Oc are Car Parking Facilities Important or Unimportant When You are on Holiday.gif	"Are car parking facilities important or unimportant when you are on holiday?"	"Car parking facilities are important when I am on holiday."																							
+05 Y P Hotel Facilities, Services and Amenities – Health Spa.png		 																							
+05 Y Pa What Facility Can You See in the Picture – A Health Spa.png	"What facility can you see in the picture?"	"I can see a health spa in the picture."																							
+05 Y Pb Do You Use Health Spa Services When You are on Holiday.gif	"Do you use health spa services when you are on holiday?"	"Yes, I use health spa services when I am on holiday./No, I don't use them."																							
+05 Y Pc is A Health Spa Important or Unimportant When You are on Holiday.jpg	"Is a health spa important or unimportant when you are on holiday?"	"A health spa is important when I am on holiday."																							
+05 Y Q Hotel Facilities, Services and Amenities – Money Exchange Office.png		 																							
+05 Y Qa What Facility Can You See in the Picture – A Money Exchange Office.png	"What facility can you see in the picture?"	"I can see a money exchange office in the picture."																							
+05 Y Qb Do You Use the Money Exchange Office When You are on Holiday.png	"Do you use the money exchange office when you are on holiday?"	"Yes, I use the money exchange office when I am on holiday./No, I don't use it."																							
+05 Y Qc is A Money Exchange Facility Important or Unimportant When You are on Holiday.jpg	"Is a money exchange facility important or unimportant when you are on holiday?"	"A money exchange facility is important when I am on holiday."																							
+05 Y R Hotel Facilities, Services and Amenities – Housekeeping Services.png		 																							
+05 Y Ra What Service Can You See in the Picture – Housekeeping Services.png	"What service can you see in the picture?"	"I can see housekeeping services in the picture."																							
+05 Y Rb Do You Use Housekeeping Services When You are on Holiday.jpg	"Do you use housekeeping services when you are on holiday?"	"Yes, I use housekeeping services when I am on holiday./No, I don't use them."																							
+05 Y Rr are Housekeeping Services Important or Unimportant on Holiday.png	"Are housekeeping services important or unimportant on holiday?"	"Housekeeping services are important on holiday."																							
+05 Y S Hotel Facilities, Services and Amenities – Conference Room.png		 																							
+05 Y Sa What Facility Can You See in the Picture – A Conference Room.png	"What facility can you see in the picture?"	"I can see a conference room in the picture."																							
+05 Y Sb Do You Use the Conference Room When You Go on Holiday.png	"Do you use the conference room when you go on holiday?"	"Yes, I use the conference room when I go on holiday./No, I don't use it."																							
+05 Y Sc is A Conference Room Facility Important or Unimportant on Holiday.jpg	"Is a conference room facility important or unimportant on holiday?"	"A conference room facility is unimportant on holiday."																							
+05 Y T Hotel Facilities, Services and Amenities – Disabled Access.png		 																							
+05 Y Ta What Amenity Can You See on the Picture – Disabled Access.png	"What amenity can you see in the picture?"	"I can see disabled access in the picture."																							
+05 Y Tb Do You Use Disabled Access Amenities When You are on Holiday.png	"Do you use disabled access amenities when you are on holiday?"	"Yes, I use disabled access amenities when I am on holiday./No, I don't use them."																							
+05 Y Tc are Disabled Access Amenities Important or Unimportant for People on Holiday.png	"Are disabled access amenities important or unimportant for people on holiday?"	"Disabled access amenities are important for people on holiday."																							
+05 Y U Hotel Facilities, Services and Amenities – Hotel Reception.png		 																							
+05 Y Ua What Facility Can You See in the Picture – A Hotel Reception.png	"What facility can you see in the picture?"	"I can see a hotel reception in the picture."																							
+05 Y Ub Do You Use There Reception desk When You are on Holiday – to Check Out – to Get Information Etc.gif	"Do you use the reception desk when you are on holiday (to check out, get information, etc.)?"	"Yes, I use the reception desk when I am on holiday./No, I don't use it."																							
+05 Y Uc is A Hotel Reception Important or Unimportant When You are on Holiday.jpg	"Is a hotel reception important or unimportant when you are on holiday?"	"A hotel reception is important when I am on holiday."																							
+05 Y V Hotel Facilities, Services and Amenities – Daycare Services.png		 																							
+05 Y Va What Service Can You See in the Picture – Day Care.png	"What service can you see in the picture?"	"I can see daycare services in the picture."																							
+05 Y Vb Do You Use Daycare Services When You Go on Holiday.png	"Do you use daycare services when you go on holiday?"	"Yes, I use daycare services when I go on holiday./No, I don't use them."																							
+05 Y Vc are Daycare Services Important or Unimportant When You are on Holiday.jpg	"Are daycare services important or unimportant when you are on holiday?"	"Daycare services are important when I am on holiday."																							
+05 Y W Hotel Facilities, Services and Amenities – Playground.png		 																							
+05 Y Wa What Facility Can You See in the Picture – A Playground.png	"What facility can you see in the picture?"	"I can see a playground in the picture."																							
+05 Y Wb Do You Use the Playground When You Go on Holiday.png	"Do you use the playground when you go on holiday?"	"Yes, I use the playground when I go on holiday./No, I don't use it."																							
+05 Y Wc is A Playground Facility Important or Unimportant When You are on Holiday.jpg	"Is a playground facility important or unimportant when you are on holiday?"	"A playground facility is important when I am on holiday."																							
+05 Y X Hotel Facilities, Services and Amenities – Casino.png		 																							
+05 Y Xa What Facility Can You See in the Picture – A Casino.png	"What facility can you see in the picture?"	"I can see a casino in the picture."																							
+05 Y Xb Do You Use the Casino When You are on Holiday.png	"Do you use the casino when you are on holiday?"	"Yes, I use the casino when I am on holiday./No, I don't use it."																							
+05 Y Xc are Casinos Important or Unimportant When You are on Holiday.gif	"Are casinos important or unimportant when you are on holiday?"	"Casinos are unimportant when I am on holiday."																							
+06 A Writing My Dream Vacation.png																									
+07 D A Online Game Wordwall.png																									
+07 D B Online Game Wordwall.png																									
+07 D C Online Game Wordwall.png																									
+07 D Links to Online Games and Films.pdf																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
+																									
