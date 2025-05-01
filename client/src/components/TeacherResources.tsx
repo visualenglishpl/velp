@@ -18,8 +18,12 @@ import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Pr
 import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
 import PDFViewer from '@/components/PDFViewer';
 
-// Import Unit 6 implementation
+// Import Unit implementations
 import { getUnit6LessonPlans, getUnit6Resources } from '@/data/unit6-implementation';
+import { getUnit7LessonPlans, getUnit7Resources } from '@/data/unit7-implementation';
+import { getUnit8LessonPlans, getUnit8Resources } from '@/data/unit8-implementation';
+import { getUnit9LessonPlans, getUnit9Resources } from '@/data/unit9-implementation';
+import { getUnit10LessonPlans, getUnit10Resources } from '@/data/unit10-implementation';
 
 export interface TeacherResource {
   id?: string;
