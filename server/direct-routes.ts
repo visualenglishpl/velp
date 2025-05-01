@@ -59,10 +59,8 @@ const s3Client = new S3Client({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ""
   },
-  // Explicitly set the endpoint with the correct regional endpoint
-  endpoint: 'https://s3.eu-north-1.amazonaws.com',
-  // Use path style access to fix permanent redirect issues
-  forcePathStyle: true
+  // Explicitly set the endpoint to avoid redirects
+  endpoint: 'https://s3.eu-north-1.amazonaws.com'
 });
 
 // Check the bucket redirect immediately

@@ -15,37 +15,21 @@ import TeacherResources from '@/components/TeacherResources';
 import { 
   DndContext, 
   DragEndEvent,
-  DragStartEvent,
   closestCenter,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
+  DragStartEvent,
   DragOverlay,
-  UniqueIdentifier,
+  UniqueIdentifier
 } from '@dnd-kit/core';
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
+import { 
+  SortableContext, 
   horizontalListSortingStrategy,
-  useSortable,
+  useSortable
 } from '@dnd-kit/sortable';
 import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
-import { v4 as uuidv4 } from 'uuid';
-
-type Annotation = {
-  id: string;
-  type: 'text' | 'highlight' | 'arrow';
-  content: string;
-  position: {
-    x: number;
-    y: number;
-  };
-  color: string;
-};
-
-type AnnotationsMap = Record<number, Annotation[]>;
 
 type S3Material = {
   id: number;
@@ -76,368 +60,475 @@ export default function SlickContentViewer() {
   
   // State for the viewer
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [bookId, setBookId] = useState<string | null>(null);
-  const [unitNumber, setUnitNumber] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [annotations, setAnnotations] = useState<AnnotationsMap>({});
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [activeAnnotation, setActiveAnnotation] = useState<{ type: 'text' | 'highlight' | 'arrow', color: string } | null>(null);
-  const [isRemoving, setIsRemoving] = useState(false);
-  const [slideToRemove, setSlideToRemove] = useState<S3Material | null>(null);
-  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [zoomLevel, setZoomLevel] = useState(1);
+  
+  // State for slide annotations (when in edit mode)
+  const [annotations, setAnnotations] = useState<Record<number, Array<{
+    id: string;
+    type: 'text' | 'highlight' | 'arrow';
+    content?: string;
+    position: { x: number; y: number };
+    size?: { width: number; height: number };
+    color: string;
+    slideId: number;
+  }>>>({});
+  
+  // Current annotation being created
+  const [activeAnnotation, setActiveAnnotation] = useState<{
+    type: 'text' | 'highlight' | 'arrow';
+    position: { x: number; y: number } | null;
+    content?: string;
+    color: string;
+  } | null>(null);
+  
+  // State for saving annotations
+  // Note: We use the isPending from the useMutation hook instead
+  
+  // State for drag and drop
+  const [materials, setMaterials] = useState<S3Material[]>([]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   
-  // Context from URL
-  const pathParts = location.split('/');
-  const bookPath = pathParts[1] || '';
-  const unitPath = pathParts[2] || '';
+  // State for slide removal
+  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
+  const [slideToRemove, setSlideToRemove] = useState<S3Material | null>(null);
   
-  // Auth context
-  const { user } = useAuth();
-  const { toast } = useToast();
-  const hasPaidAccess = !!user; // TODO: Check for actual subscription status
+  // State for image zoom
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [isZoomed, setIsZoomed] = useState(false);
   
-  // Controls how many slides are available for free
-  const freeSlideLimit = 10; // Default for standard books
+  // State for question visibility - default to hidden per user request
+  const [showQuestions, setShowQuestions] = useState(true);
   
-  // Use sensors for drag and drop
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 5, // 5px of movement required before dragging starts
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
-
-  // Fetch materials for this unit
-  const { data: materials = [], refetch } = useQuery<S3Material[]>({ 
-    queryKey: [`/api/materials/${bookPath}/${unitPath}`],
-    enabled: !!bookPath && !!unitPath,
-    onError: (error: Error) => {
-      console.error('Error fetching materials:', error);
-      setError('Failed to load materials. Please try again.');
-      toast({
-        title: 'Error',
-        description: 'Failed to load materials. Please try again.',
-        variant: 'destructive',
-      });
-    },
-  });
+  // Extract bookId and unitNumber from URL path
+  let bookId: string | null = null;
+  let unitNumber: string | null = null;
   
-  // Fetch book/unit info
-  const { data: unitInfo } = useQuery<UnitInfo>({ 
-    queryKey: [`/api/unit-info/${bookPath}/${unitPath}`],
-    enabled: !!bookPath && !!unitPath,
-    onError: (error: Error) => {
-      console.error('Error fetching unit info:', error);
-    },
-  });
+  // Handle different URL patterns:
+  // 1. /book/1/13 format (with slashes)
+  // 2. /book1/unit13 format (legacy)
   
-  // Fetch annotations data for this unit
-  const { data: annotationsData } = useQuery({ 
-    queryKey: [`/api/annotations/${bookPath}/${unitPath}`],
-    enabled: !!bookPath && !!unitPath && isEditMode,
-    onError: (error: Error) => {
-      console.error('Error fetching annotations:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to load annotations.',
-        variant: 'destructive',
-      });
-    },
-  });
+  // First try the new format: /book/:bookId/:unitId
+  const newFormatRegex = /\/book\/([a-zA-Z0-9]+)\/([a-zA-Z0-9]+)/;
+  const newFormatMatch = location.match(newFormatRegex);
   
-  // Save annotations mutation
-  const saveAnnotationsMutation = useMutation({
-    mutationFn: async (data: { unitId: string, annotations: AnnotationsMap }) => {
-      const response = await apiRequest('POST', '/api/annotations', data);
-      return response.json();
-    },
-    onSuccess: () => {
-      toast({
-        title: 'Success',
-        description: 'Annotations saved successfully!',
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: 'Error',
-        description: 'Failed to save annotations. ' + error.message,
-        variant: 'destructive',
-      });
+  if (newFormatMatch) {
+    bookId = newFormatMatch[1];
+    // If unitId starts with "unit", strip it
+    unitNumber = newFormatMatch[2].replace(/^unit/i, '');
+    console.log(`New format match: Book ${bookId}, Unit ${unitNumber}`);
+  } else {
+    // Try legacy format: /book1/unit13
+    const legacyRegex = /\/book([a-zA-Z0-9]+)\/unit(\d+)/;
+    const legacyMatch = location.match(legacyRegex);
+    
+    if (legacyMatch) {
+      bookId = legacyMatch[1];
+      unitNumber = legacyMatch[2];
+      console.log(`Legacy format match: Book ${bookId}, Unit ${unitNumber}`);
+    } else {
+      // Fallback to URL parameters
+      const params = new URLSearchParams(window.location.search);
+      bookId = params.get('bookId');
+      unitNumber = params.get('unitNumber');
+      console.log(`URL parameters: Book ${bookId}, Unit ${unitNumber}`);
     }
+  }
+  
+  // Build paths for API requests
+  const bookPath = `book${bookId}`;
+  const unitPath = `unit${unitNumber}`;
+  
+  console.log(`SlickContentViewer: Book=${bookPath}, Unit=${unitPath}`);
+  
+  // Authentication
+  const { user } = useAuth();
+  
+  // IMPORTANT: For non-authenticated users viewing public content
+  if (!user) {
+    console.log("Non-authenticated user accessing public content");
+  }
+  
+  // Check if user has paid access based on authentication status
+  const hasPaidAccess = Boolean(user);
+  
+  // Apply free content limits based on book series:
+  // - For Books 0a/0b/0c: blur from 3rd image (index 2)
+  // - For standard books: first 10 slides available as preview
+  const freeSlideLimit = /^0[a-c]$/i.test(bookId || '') ? 2 : 10;
+  
+  // Fetch unit information
+  const { 
+    data: unitData,
+    error: unitError,
+    isLoading: unitLoading
+  } = useQuery<UnitInfo>({
+    queryKey: [`/api/direct/${bookPath}/${unitPath}`],
+    enabled: Boolean(bookPath && unitPath)
   });
   
-  // Reorder slides mutation
-  const reorderSlidesMutation = useMutation({
-    mutationFn: async (data: { unitId: string, materialIds: number[] }) => {
-      const response = await apiRequest('POST', '/api/materials/reorder', data);
-      return response.json();
-    },
-    onSuccess: () => {
-      refetch();
-      toast({
-        title: 'Success',
-        description: 'Slides reordered successfully!',
+  // Fetch materials from S3
+  const {
+    data: fetchedMaterials, 
+    error: materialsError,
+    isLoading: materialsLoading
+  } = useQuery<S3Material[]>({
+    queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
+    enabled: Boolean(bookPath && unitPath)
+  });
+  
+  // Fetch saved order
+  const {
+    data: savedOrderData,
+    isLoading: isSavedOrderLoading
+  } = useQuery<{ success: boolean, hasCustomOrder: boolean, order: number[] }>({
+    queryKey: [`/api/direct/${bookPath}/${unitPath}/savedOrder`],
+    enabled: Boolean(bookPath && unitPath)
+  });
+  
+  // Get toast for notifications
+  const { toast } = useToast();
+  
+  // Save order mutation
+  const { mutate: saveOrder, isPending: isSaving } = useMutation({
+    mutationFn: async (materialsToSave: S3Material[]) => {
+      return await apiRequest("POST", `/api/direct/${bookPath}/${unitPath}/saveOrder`, {
+        materials: materialsToSave
       });
     },
-    onError: (error) => {
+    onSuccess: () => {
       toast({
-        title: 'Error',
-        description: 'Failed to reorder slides. ' + error.message,
-        variant: 'destructive',
+        title: "Order saved",
+        description: "The slide order has been saved successfully.",
+      });
+      queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/savedOrder`] });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error saving order",
+        description: error.message,
+        variant: "destructive",
       });
     }
   });
   
   // Remove slide mutation
-  const removeSlidesMutation = useMutation({
-    mutationFn: async (materialId: number) => {
-      const response = await apiRequest('DELETE', `/api/materials/${materialId}`);
-      return response.json();
-    },
-    onSuccess: () => {
-      refetch();
-      toast({
-        title: 'Success',
-        description: 'Slide removed successfully!',
+  const { mutate: removeSlide, isPending: isRemoving } = useMutation({
+    mutationFn: async (slideId: number) => {
+      return await apiRequest("POST", `/api/direct/${bookPath}/${unitPath}/removeSlide`, {
+        slideId
       });
     },
-    onError: (error) => {
+    onSuccess: (_, slideId) => {
+      // Remove the slide from local state to immediately update the UI
+      setMaterials(currentMaterials => currentMaterials.filter(m => m.id !== slideId));
+      
       toast({
-        title: 'Error',
-        description: 'Failed to remove slide. ' + error.message,
-        variant: 'destructive',
+        title: "Slide removed",
+        description: "The slide has been removed from this unit.",
+      });
+      
+      // Invalidate both the materials and savedOrder queries
+      queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/savedOrder`] });
+      
+      // Reset states
+      setShowRemoveDialog(false);
+      setSlideToRemove(null);
+      
+      // If the current slide is the one being removed, go to slide 0
+      if (currentIndex !== null && materials[currentIndex]?.id === slideId) {
+        goToSlide(0);
+      }
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error removing slide",
+        description: error.message,
+        variant: "destructive",
+      });
+      setShowRemoveDialog(false);
+      setSlideToRemove(null);
+    }
+  });
+  
+  // Handler for slide removal confirmation
+  const confirmRemoveSlide = (id: number) => {
+    // Find the slide object and then trigger the mutation
+    const slideToBeRemoved = materials.find(m => m.id === id);
+    if (slideToBeRemoved) {
+      setSlideToRemove(slideToBeRemoved);
+      removeSlide(id);
+    }
+  };
+  
+  // Save annotations mutation
+  const { mutate: saveAnnotations, isPending: isSavingAnnotations } = useMutation({
+    mutationFn: async (annotationsToSave: Record<number, Array<any>>) => {
+      return await apiRequest("POST", `/api/direct/${bookPath}/${unitPath}/saveAnnotations`, {
+        annotations: annotationsToSave
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Annotations saved",
+        description: "Your annotations have been saved successfully.",
+      });
+      queryClient.invalidateQueries({ queryKey: [`/api/direct/${bookPath}/${unitPath}/annotations`] });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error saving annotations",
+        description: error.message,
+        variant: "destructive",
       });
     }
   });
   
-  // Parse the URL to set initial state
+  // Fetch saved annotations
+  const { data: savedAnnotations } = useQuery<{ 
+    success: boolean, 
+    annotations: Record<number, Array<{
+      id: string;
+      type: 'text' | 'highlight' | 'arrow';
+      content?: string;
+      position: { x: number; y: number };
+      color: string;
+      slideId: number;
+    }>> 
+  }>({
+    queryKey: [`/api/direct/${bookPath}/${unitPath}/annotations`],
+    enabled: Boolean(bookPath && unitPath && isEditMode)
+  });
+  
+  // Handle save button click
+  const handleSaveOrder = () => {
+    saveOrder(materials);
+  };
+  
+  // Process materials when fetched
   useEffect(() => {
-    if (pathParts.length >= 3) {
-      const book = pathParts[1];
-      const unit = pathParts[2];
+    if (!fetchedMaterials) return;
+    
+    // Filter out PDFs and SWFs
+    const filteredMaterials = fetchedMaterials.filter(material => {
+      const content = material.content.toLowerCase();
+      return !(
+        material.contentType === 'PDF' || 
+        material.contentType === 'SWF' || 
+        content.endsWith('.pdf') || 
+        content.endsWith('.swf')
+      );
+    });
+    
+    // First sort materials by default order
+    let sortedMaterials = [...filteredMaterials].sort((a, b) => {
+      const aContent = a.content.toLowerCase();
+      const bContent = b.content.toLowerCase();
       
-      if (book && unit) {
-        setBookId(book);
-        setUnitNumber(parseInt(unit.replace('unit', '')));
+      // Sort by numeric prefix if both have them
+      const aNumMatch = aContent.match(/^(\d+)/);
+      const bNumMatch = bContent.match(/^(\d+)/);
+      
+      if (aNumMatch && bNumMatch) {
+        return parseInt(aNumMatch[1]) - parseInt(bNumMatch[1]);
       }
-    }
-  }, [location, pathParts]);
-  
-  // Set up annotations when they are loaded
-  useEffect(() => {
-    if (annotationsData) {
-      setAnnotations(annotationsData);
-    }
-  }, [annotationsData]);
-  
-  // Initialize annotations object for new materials
-  useEffect(() => {
-    if (materials.length > 0) {
-      const newAnnotations = { ...annotations };
-      let changed = false;
       
-      // Create empty annotation arrays for materials that don't have them
-      materials.forEach(material => {
-        if (!newAnnotations[material.id]) {
-          newAnnotations[material.id] = [];
-          changed = true;
+      // If only one has numeric prefix, prioritize it
+      if (aNumMatch) return -1;
+      if (bNumMatch) return 1;
+      
+      // Otherwise sort alphabetically
+      return aContent.localeCompare(bContent);
+    });
+    
+    // Apply saved order if available
+    if (savedOrderData?.hasCustomOrder && savedOrderData.order) {
+      // Create a map for quick lookup of materials
+      const materialsMap = new Map(sortedMaterials.map(m => [m.id, m]));
+      
+      // Create a new array following the saved order
+      const orderedMaterials: S3Material[] = [];
+      
+      // First add materials that exist in the saved order
+      savedOrderData.order.forEach(id => {
+        const material = materialsMap.get(id);
+        if (material) {
+          orderedMaterials.push(material);
+          materialsMap.delete(id);
         }
       });
       
-      if (changed) {
-        setAnnotations(newAnnotations);
-      }
+      // Then add any materials that weren't in the saved order
+      materialsMap.forEach(material => {
+        orderedMaterials.push(material);
+      });
+      
+      sortedMaterials = orderedMaterials;
     }
-  }, [materials, annotations]);
+    
+    setMaterials(sortedMaterials);
+  }, [fetchedMaterials, savedOrderData]);
   
-  // Function to navigate between slides
+  // Set up sensors for drag and drop
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor)
+  );
+  
+  // Navigation functions
   const goToSlide = useCallback((index: number) => {
     if (sliderRef.current) {
+      console.log(`Manually going to slide ${index}`);
       sliderRef.current.slickGoTo(index);
       setCurrentIndex(index);
     }
   }, []);
   
-  const goToNextSlide = useCallback(() => {
-    if (sliderRef.current && currentIndex < materials.length - 1) {
-      sliderRef.current.slickNext();
-      setCurrentIndex(currentIndex + 1);
-    }
-  }, [currentIndex, materials.length]);
-  
-  const goToPrevSlide = useCallback(() => {
+  const goToPrevSlide = useCallback((e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     if (sliderRef.current && currentIndex > 0) {
+      console.log(`Going to previous slide from ${currentIndex}`);
       sliderRef.current.slickPrev();
-      setCurrentIndex(currentIndex - 1);
+      // Don't set index here, let the beforeChange/afterChange handlers do it
     }
   }, [currentIndex]);
   
-  // Handle keyboard navigation
+  const goToNextSlide = useCallback((e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    if (sliderRef.current && currentIndex < materials.length - 1) {
+      console.log(`Going to next slide from ${currentIndex}`);
+      sliderRef.current.slickNext();
+      // Don't set index here, let the beforeChange/afterChange handlers do it
+    }
+  }, [currentIndex, materials.length]);
+  
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Only handle keyboard events when not in edit mode
-      if (!isEditMode) {
-        switch (e.key) {
-          case 'ArrowRight':
-            goToNextSlide();
-            break;
-          case 'ArrowLeft':
-            goToPrevSlide();
-            break;
-          case 'Home':
-            goToSlide(0);
-            break;
-          case 'End':
-            goToSlide(materials.length - 1);
-            break;
-          default:
-            break;
-        }
+      if (e.key === 'ArrowLeft') {
+        goToPrevSlide();
+      } else if (e.key === 'ArrowRight') {
+        goToNextSlide();
+      } else if (e.key === 'Escape' && isFullscreen) {
+        setIsFullscreen(false);
+      } else if (e.key === 'f' || e.key === 'F') {
+        setIsFullscreen(!isFullscreen);
       }
     };
     
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [goToNextSlide, goToPrevSlide, goToSlide, materials.length, isEditMode]);
+  }, [goToPrevSlide, goToNextSlide, isFullscreen]);
   
-  // Toggle fullscreen mode
-  const toggleFullScreen = () => {
-    if (!document.fullscreenElement) {
-      containerRef.current?.requestFullscreen().catch(err => {
-        console.error(`Error attempting to enable fullscreen: ${err.message}`);
-      });
-      setIsFullScreen(true);
-    } else {
-      document.exitFullscreen();
-      setIsFullScreen(false);
-    }
-  };
-  
-  // Handle fullscreen change events
+  // Handle fullscreen
   useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullScreen(!!document.fullscreenElement);
-    };
+    if (!containerRef.current) return;
     
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
-  
-  // Add a new annotation when clicking in edit mode
-  const handleImageClick = (e: React.MouseEvent<HTMLDivElement>, materialId: number) => {
-    if (isEditMode && activeAnnotation) {
-      // Get the position relative to the element
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      // Create a new annotation
-      const newAnnotation: Annotation = {
-        id: uuidv4(),
-        type: activeAnnotation.type,
-        content: activeAnnotation.type === 'text' ? 'Text note' : '',
-        position: { x, y },
-        color: activeAnnotation.color,
-      };
-      
-      // Add it to the state
-      const updatedAnnotations = { ...annotations };
-      if (!updatedAnnotations[materialId]) {
-        updatedAnnotations[materialId] = [];
-      }
-      updatedAnnotations[materialId].push(newAnnotation);
-      setAnnotations(updatedAnnotations);
-    }
-  };
-  
-  // Save annotations
-  const saveAnnotations = () => {
-    if (bookId && unitNumber) {
-      const unitId = `${bookId}/unit${unitNumber}`;
-      saveAnnotationsMutation.mutate({ unitId, annotations });
-    }
-  };
-  
-  // Handle drag and drop reordering
-  const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id);
-  };
-  
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    
-    if (over && active.id !== over.id) {
-      // Extract the material IDs from the thumbnail IDs
-      const activeId = parseInt(String(active.id).replace('thumbnail-', ''));
-      const overId = parseInt(String(over.id).replace('thumbnail-', ''));
-      
-      // Find indices for the materials
-      const oldIndex = materials.findIndex(m => m.id === activeId);
-      const newIndex = materials.findIndex(m => m.id === overId);
-      
-      if (oldIndex !== -1 && newIndex !== -1) {
-        // Update local state for immediate feedback
-        const reorderedMaterials = arrayMove(materials, oldIndex, newIndex);
-        // Extract the IDs in the new order
-        const materialIds = reorderedMaterials.map(m => m.id);
-        
-        // Save the new order to the server
-        if (bookId && unitNumber) {
-          reorderSlidesMutation.mutate({
-            unitId: `${bookId}/unit${unitNumber}`,
-            materialIds
-          });
+    if (isFullscreen) {
+      try {
+        if (document.fullscreenElement !== containerRef.current) {
+          containerRef.current.requestFullscreen();
         }
+      } catch (error) {
+        console.error('Error entering fullscreen:', error);
+      }
+    } else if (document.fullscreenElement) {
+      try {
+        document.exitFullscreen();
+      } catch (error) {
+        console.error('Error exiting fullscreen:', error);
       }
     }
+  }, [isFullscreen]);
+  
+  // Initialize with first slide
+  useEffect(() => {
+    if (!materials.length) return;
     
-    setActiveId(null);
+    // Try to find a "00" prefixed slide to start with
+    const startIndex = materials.findIndex(
+      material => material.content.startsWith('00')
+    );
+    
+    if (startIndex !== -1) {
+      goToSlide(startIndex);
+    } else {
+      goToSlide(0);
+    }
+  }, [materials, goToSlide]);
+  
+  // Load saved annotations
+  useEffect(() => {
+    if (savedAnnotations?.annotations && Object.keys(savedAnnotations.annotations).length > 0) {
+      setAnnotations(savedAnnotations.annotations);
+    }
+  }, [savedAnnotations]);
+  
+  // Custom after change handler for Slick
+  const handleAfterChange = (current: number) => {
+    setCurrentIndex(current);
   };
   
-  // Open remove slide confirmation
-  const openRemoveDialog = (material: S3Material) => {
-    setSlideToRemove(material);
-    setShowRemoveDialog(true);
-  };
-  
-  // Confirm removal of slide
-  const confirmRemoveSlide = (materialId: number) => {
-    setIsRemoving(true);
-    removeSlidesMutation.mutate(materialId, {
-      onSettled: () => {
-        setIsRemoving(false);
-        setShowRemoveDialog(false);
-        setSlideToRemove(null);
-      }
-    });
-  };
-  
-  // Go to home page
-  const goToHome = () => navigate('/');
-  
-  // Slider settings
+  // Settings for react-slick
   const slickSettings = {
     dots: false,
     infinite: false,
     speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false,
-    beforeChange: (_: number, next: number) => {
+    arrows: false, // We're using custom arrows
+    swipe: true,
+    adaptiveHeight: false,
+    afterChange: handleAfterChange,
+    lazyLoad: 'ondemand' as 'ondemand',
+    beforeChange: (current: number, next: number) => {
+      console.log(`Slide changing from ${current} to ${next}`);
       setCurrentIndex(next);
-      // Reset zoom when changing slides
-      setIsZoomed(false);
-      setZoomLevel(1);
-    },
+    }
+  };
+  
+  // Handle drag start
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id);
+  };
+  
+  // Handle drag end
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (over && active.id !== over.id) {
+      // Find the indices
+      const oldIndex = materials.findIndex(item => `thumbnail-${item.id}` === active.id);
+      const newIndex = materials.findIndex(item => `thumbnail-${item.id}` === over.id);
+      
+      // Create a new array with the updated order
+      const newMaterials = [...materials];
+      const [movedItem] = newMaterials.splice(oldIndex, 1);
+      newMaterials.splice(newIndex, 0, movedItem);
+      
+      // Update state
+      setMaterials(newMaterials);
+      
+      // Go to the selected slide
+      goToSlide(newIndex);
+      
+      // Save the new order to persist across sessions
+      if (user) {
+        saveOrder(newMaterials);
+        toast({
+          title: "Order saved",
+          description: "The slide order has been saved and will persist when you log back in.",
+          duration: 3000,
+        });
+      }
+    }
+    
+    setActiveId(null);
   };
   
   // Sortable thumbnail component
@@ -448,25 +539,43 @@ export default function SlickContentViewer() {
       setNodeRef,
       transform,
       transition,
-    } = useSortable({
+    } = useSortable({ 
       id: `thumbnail-${material.id}`,
+      data: { index }
     });
     
     const style = {
       transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
       transition,
-      cursor: isEditMode ? 'grab' : 'pointer',
     };
+    
+    const isActive = currentIndex === index;
     
     return (
       <div 
         ref={setNodeRef}
-        style={style} 
-        {...(isEditMode ? { ...attributes, ...listeners } : {})}
-        onClick={() => !isEditMode && goToSlide(index)}
-        className={`relative h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-md border-2 transition-all ${index === currentIndex ? 'border-blue-500 shadow-md' : 'border-gray-200 hover:border-blue-200'} ${!hasPaidAccess && index >= freeSlideLimit ? 'opacity-50' : 'opacity-100'}`}
+        style={style}
+        className={`group cursor-grab relative h-12 w-12 md:h-16 md:w-16 flex-shrink-0 overflow-hidden rounded-md border ${isActive ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-gray-50 hover:bg-gray-100'}`}
+        onClick={() => goToSlide(index)}
+        data-slide-index={index}
+        {...attributes}
+        {...listeners}
       >
-        {/* The thumbnail content */}
+        {/* Admin delete button */}
+        {user && user.username === 'admin' && (
+          <button
+            className="absolute top-1 right-1 z-10 h-5 w-5 rounded-full bg-red-500 text-white opacity-0 hover:opacity-100 flex items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSlideToRemove(material);
+              setShowRemoveDialog(true);
+            }}
+            title="Remove slide"
+          >
+            ×
+          </button>
+        )}
+        
         {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
           <>
             <img 
@@ -485,211 +594,338 @@ export default function SlickContentViewer() {
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
               {material.path.toLowerCase().endsWith('.jpg') ? 'JPG' : 
                material.path.toLowerCase().endsWith('.png') ? 'PNG' : 
-               material.path.toLowerCase().endsWith('.gif') ? 'GIF' : 'IMG'}
+               material.path.toLowerCase().endsWith('.gif') ? 'GIF' :
+               material.path.toLowerCase().endsWith('.avif') ? 'AVIF' : 'IMG'}
             </div>
           </>
         ) : material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
           <>
-            <div className="flex h-full w-full items-center justify-center bg-gray-800">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <div className="relative h-full w-full bg-gray-800 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">VIDEO</div>
+            {/* File extension badge */}
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              MP4
+            </div>
           </>
         ) : material.contentType === 'PDF' || material.path.endsWith('.pdf') ? (
           <>
-            <div className="flex h-full w-full items-center justify-center bg-blue-50">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <div className="flex h-full w-full items-center justify-center bg-blue-50 text-blue-700">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">PDF</div>
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              PDF
+            </div>
           </>
         ) : material.path.endsWith('.swf') ? (
           <>
-            <div className="flex h-full w-full items-center justify-center bg-yellow-50">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ca8a04" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 5-5 5 5 5"/><path d="M4 5v5h5"/><path d="M4 14h5v5"/><path d="M9 9h5v5"/><path d="M14 9h1v1"/><path d="M19 9h1v1"/><path d="M19 4v5h-5"/><path d="M14 14h5v5"/></svg>
+            <div className="flex h-full w-full items-center justify-center bg-yellow-50 text-yellow-700">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">SWF</div>
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              SWF
+            </div>
           </>
         ) : (
           <>
-            <div className="flex h-full w-full items-center justify-center bg-gray-100">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7"/></svg>
+            <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7"/></svg>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">FILE</div>
+            {/* Extract extension from path if possible */}
+            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[7px] text-white text-center py-[1px] truncate">
+              {material.path.split('.').pop()?.toUpperCase() || 'FILE'}
+            </div>
           </>
         )}
-        
-        {/* Slide number */}
-        <div className="absolute top-0 left-0 h-4 w-4 bg-white/80 text-[8px] font-medium flex items-center justify-center">{index + 1}</div>
-        
-        {/* Edit mode controls */}
-        {isEditMode && (
-          <button 
-            className="absolute top-0 right-0 h-5 w-5 bg-red-500 text-white rounded-bl-md flex items-center justify-center text-xs"
-            onClick={(e) => {
-              e.stopPropagation();
-              openRemoveDialog(material);
-            }}
-            title="Remove slide"
-          >
-            <Trash2 className="h-3 w-3" />
-          </button>
-        )}
+        <div className="pointer-events-none absolute inset-0 flex items-start justify-end p-1">
+          <GripVertical className="h-3 w-3 text-gray-400 opacity-50 group-hover:opacity-100" />
+        </div>
       </div>
     );
   };
   
-  if (error) {
+  // Show loading while data is being fetched
+  if (materialsLoading || unitLoading) {
     return (
-      <div className="flex h-full items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-600">Error</h2>
-          <p className="mt-2 text-gray-600">{error}</p>
-          <Button 
-            onClick={() => navigate('/')} 
-            className="mt-4"
-          >
-            Go Back
-          </Button>
+      <div className="flex min-h-[80vh] w-full items-center justify-center">
+        <div className="flex flex-col items-center gap-2">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+          <p className="text-muted-foreground">Loading learning materials...</p>
         </div>
       </div>
     );
   }
   
-  return (
-    <div 
-      ref={containerRef}
-      className={`flex flex-col w-full h-[calc(100vh-64px)] ${isFullScreen ? 'fixed inset-0 z-50 bg-white' : ''}`}
-    >
-      {/* Top bar with navigation and controls */}
-      <div className="border-b px-4 py-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Button 
-              size="sm" 
-              variant="ghost" 
-              onClick={goToHome}
-              className="text-gray-600 hover:text-gray-900"
+  // Show error message if data fetch failed
+  if (materialsError || unitError) {
+    return (
+      <div className="flex min-h-[80vh] w-full items-center justify-center">
+        <div className="max-w-md rounded-lg bg-red-50 p-6 text-center">
+          <h2 className="mb-4 text-xl font-semibold text-red-600">Error Loading Content</h2>
+          <p className="text-red-700">
+            {materialsError 
+              ? `Failed to load materials: ${materialsError.message}` 
+              : `Failed to load unit data: ${unitError?.message}`}
+          </p>
+          <div className="mt-6 flex justify-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => navigate('/')}
+              className="gap-2"
             >
-              <Home className="h-4 w-4 mr-1" />
-              Home
+              <Home className="h-4 w-4" /> Home
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.location.reload()}
+              className="gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21h5v-5"></path></svg>
+              Retry
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // If no materials found
+  if (!materials || materials.length === 0) {
+    return (
+      <div className="flex min-h-[80vh] w-full items-center justify-center">
+        <div className="max-w-md rounded-lg bg-yellow-50 p-6 text-center">
+          <h2 className="mb-4 text-xl font-semibold text-yellow-600">No Content Found</h2>
+          <p className="text-yellow-700">
+            There are no learning materials available for this unit yet.
+          </p>
+          <div className="mt-6 flex justify-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => navigate(`/book/${bookId}/units`)}
+              className="gap-2"
+            >
+              <Book className="h-4 w-4" /> Back to Units
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.location.reload()}
+              className="gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21h5v-5"></path></svg>
+              Refresh
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Main content viewer
+  return (
+    <div ref={containerRef} className={`flex flex-col ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'min-h-[75vh] mt-2'}`}>
+      {/* Header / Navigation */}
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2 bg-white shadow-sm rounded-md mb-2">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate(`/book/${bookId}/units`)}
+            className="rounded-full bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700 transition-all shadow-sm"
+          >
+            <Book className="mr-2 h-4 w-4" />
+            <span className="hidden sm:inline">Back to Units</span>
+          </Button>
+          
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-semibold text-blue-700">
+              {unitData ? unitData.title : `${bookPath}/${unitPath}`}
+            </h1>
+          </div>
+        </div>
+        
+        {/* Admin controls */}
+        {user && user.username === 'admin' && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSaveOrder}
+              disabled={isSaving}
+              className="rounded-full shadow-sm bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-600 transition-all"
+            >
+              {isSaving ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="mr-2 h-4 w-4" />
+              )}
+              Save Order
             </Button>
             
-            {unitInfo && (
-              <div className="flex items-center">
-                <Book className="h-4 w-4 mr-2 text-blue-600" />
-                <span className="font-medium">{unitInfo.bookId.toUpperCase()} - Unit {unitInfo.unitNumber}</span>
-                {unitInfo.title && <span className="ml-2 text-gray-500">{unitInfo.title}</span>}
+            <Button
+              variant={isEditMode ? "secondary" : "outline"}
+              size="sm"
+              onClick={() => setIsEditMode(!isEditMode)}
+              className={`rounded-full shadow-sm transition-all ${isEditMode 
+                ? "bg-orange-100 hover:bg-orange-200 border-orange-200 text-orange-700" 
+                : "bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700"}`}
+            >
+              <Pencil className="mr-2 h-4 w-4" />
+              {isEditMode ? "Exit Edit Mode" : "Edit Slides"}
+            </Button>
+            
+            {isEditMode && (
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => saveAnnotations(annotations)}
+                  disabled={isSavingAnnotations}
+                  className="rounded-full shadow-sm bg-green-50 hover:bg-green-100 border-green-200 text-green-600 transition-all"
+                >
+                  {isSavingAnnotations ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Save className="mr-2 h-4 w-4" />
+                  )}
+                  Save Annotations
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={(e) => {
+                    // Stop propagation to prevent triggering parent events
+                    e.stopPropagation();
+                    if (materials[currentIndex]) {
+                      setSlideToRemove(materials[currentIndex]);
+                      setShowRemoveDialog(true);
+                    }
+                  }}
+                  disabled={isRemoving}
+                  className="rounded-full shadow-sm bg-red-50 hover:bg-red-100 border-red-200 text-red-600 transition-all"
+                >
+                  {isRemoving ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Trash2 className="mr-2 h-4 w-4" />
+                  )}
+                  Delete Slide
+                </Button>
+              </>
+            )}
+            
+            {isEditMode && (
+              <div className="flex items-center gap-1 border rounded-full p-1 bg-white shadow-sm">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
+                  onClick={() => setActiveAnnotation({
+                    type: 'text',
+                    position: null,
+                    content: 'New text',
+                    color: '#000000'
+                  })}
+                  title="Add Text"
+                >
+                  <Type className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
+                  onClick={() => setActiveAnnotation({
+                    type: 'highlight',
+                    position: null,
+                    color: '#ffff00'
+                  })}
+                  title="Add Highlight"
+                >
+                  <Square className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
+                  onClick={() => setActiveAnnotation({
+                    type: 'arrow',
+                    position: null,
+                    color: '#ff0000'
+                  })}
+                  title="Add Arrow"
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                </Button>
+                <div className="h-5 border-l mx-1"></div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
+                  onClick={() => {
+                    // Clear all annotations for current slide
+                    const newAnnotations = { ...annotations };
+                    const currentMaterialId = materials[currentIndex]?.id;
+                    if (currentMaterialId) {
+                      newAnnotations[currentMaterialId] = [];
+                      setAnnotations(newAnnotations);
+                    }
+                  }}
+                  title="Clear Annotations"
+                >
+                  <Eraser className="h-4 w-4" />
+                </Button>
               </div>
             )}
           </div>
-          
-          <div className="flex items-center space-x-2">
-            {/* Edit mode toggle */}
-            {user && (
-              <Button 
-                size="sm" 
-                variant={isEditMode ? "default" : "outline"} 
-                onClick={() => setIsEditMode(!isEditMode)}
-                className={isEditMode ? "bg-orange-500 hover:bg-orange-600" : ""}
-              >
-                <Pencil className="h-4 w-4 mr-1" />
-                {isEditMode ? "Exit Edit Mode" : "Edit"}
-              </Button>
-            )}
-            
-            {/* Save annotations button */}
-            {isEditMode && (
-              <Button 
-                size="sm" 
-                variant="outline" 
-                onClick={saveAnnotations}
-                disabled={saveAnnotationsMutation.isPending}
-                className="bg-green-50 text-green-700 border-green-200 hover:bg-green-100 hover:text-green-800"
-              >
-                {saveAnnotationsMutation.isPending && <Loader2 className="h-3 w-3 mr-1 animate-spin" />}
-                <Save className="h-4 w-4 mr-1" />
-                Save
-              </Button>
-            )}
-            
-            {/* Annotation tools */}
-            {isEditMode && (
-              <div className="flex items-center space-x-1 border rounded-md p-1 bg-gray-50">
-                <button 
-                  className={`p-1 rounded ${activeAnnotation?.type === 'text' ? 'bg-blue-100 text-blue-800' : 'text-gray-600 hover:bg-gray-100'}`} 
-                  onClick={() => setActiveAnnotation({ type: 'text', color: '#000000' })}
-                  title="Add text note"
-                >
-                  <Type className="h-4 w-4" />
-                </button>
-                <button 
-                  className={`p-1 rounded ${activeAnnotation?.type === 'highlight' ? 'bg-blue-100 text-blue-800' : 'text-gray-600 hover:bg-gray-100'}`} 
-                  onClick={() => setActiveAnnotation({ type: 'highlight', color: '#ffff00' })}
-                  title="Add highlight"
-                >
-                  <Square className="h-4 w-4" />
-                </button>
-                <button 
-                  className={`p-1 rounded ${activeAnnotation?.type === 'arrow' ? 'bg-blue-100 text-blue-800' : 'text-gray-600 hover:bg-gray-100'}`} 
-                  onClick={() => setActiveAnnotation({ type: 'arrow', color: '#ff0000' })}
-                  title="Add arrow"
-                >
-                  <ArrowUpRight className="h-4 w-4" />
-                </button>
-                <button 
-                  className="p-1 rounded text-gray-600 hover:bg-gray-100" 
-                  onClick={() => setActiveAnnotation(null)}
-                  title="Clear selection"
-                >
-                  <Eraser className="h-4 w-4" />
-                </button>
-                {activeAnnotation && (
-                  <div className="p-1 border rounded flex items-center gap-1 bg-white">
-                    <div className="text-[10px] font-medium">Color:</div>
-                    <button 
-                      onClick={() => setActiveAnnotation({ ...activeAnnotation, color: '#000000' })}
-                      className={`h-4 w-4 rounded-full bg-black ${activeAnnotation.color === '#000000' ? 'ring-2 ring-blue-500' : ''}`}
-                    />
-                    <button 
-                      onClick={() => setActiveAnnotation({ ...activeAnnotation, color: '#ff0000' })}
-                      className={`h-4 w-4 rounded-full bg-red-500 ${activeAnnotation.color === '#ff0000' ? 'ring-2 ring-blue-500' : ''}`}
-                    />
-                    <button 
-                      onClick={() => setActiveAnnotation({ ...activeAnnotation, color: '#00ff00' })}
-                      className={`h-4 w-4 rounded-full bg-green-500 ${activeAnnotation.color === '#00ff00' ? 'ring-2 ring-blue-500' : ''}`}
-                    />
-                    <button 
-                      onClick={() => setActiveAnnotation({ ...activeAnnotation, color: '#0000ff' })}
-                      className={`h-4 w-4 rounded-full bg-blue-500 ${activeAnnotation.color === '#0000ff' ? 'ring-2 ring-blue-500' : ''}`}
-                    />
-                    <button 
-                      onClick={() => setActiveAnnotation({ ...activeAnnotation, color: '#ffff00' })}
-                      className={`h-4 w-4 rounded-full bg-yellow-400 ${activeAnnotation.color === '#ffff00' ? 'ring-2 ring-blue-500' : ''}`}
-                    />
-                  </div>
-                )}
-              </div>
-            )}
-            
-            {/* Fullscreen toggle */}
-            <Button 
-              size="icon" 
-              variant="ghost" 
-              onClick={toggleFullScreen}
-              className="text-gray-600 hover:text-gray-900"
-              title={isFullScreen ? "Exit fullscreen" : "Fullscreen"}
+        )}
+        
+        <div className="flex items-center gap-2">
+          {/* Question visibility toggle */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowQuestions(!showQuestions)}
+            className={`rounded-full w-8 h-8 p-0 ${showQuestions ? 'bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-600' : 'bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-500'} shadow-sm transition-all`}
+            title={showQuestions ? "Hide questions" : "Show questions"}
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-4 w-4" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor" 
+              strokeWidth={2}
             >
-              {isFullScreen ? (
-                <Minimize2 className="h-4 w-4" />
-              ) : (
-                <Maximize2 className="h-4 w-4" />
-              )}
-            </Button>
-            
-            {/* Slide counter */}
-            <div className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium border border-gray-200 shadow-sm">
-              {currentIndex + 1} / {materials.length}
-            </div>
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                d={showQuestions 
+                  ? "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" 
+                  : "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"}
+              />
+            </svg>
+          </Button>
+
+          {/* Answers are always available but need to be clicked to reveal */}
+
+          {/* Fullscreen toggle */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsFullscreen(!isFullscreen)}
+            className="rounded-full w-8 h-8 p-0 bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700 shadow-sm transition-all"
+            title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+          >
+            {isFullscreen ? (
+              <Minimize2 className="h-4 w-4" />
+            ) : (
+              <Maximize2 className="h-4 w-4" />
+            )}
+          </Button>
+          
+          {/* Slide counter */}
+          <div className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium border border-gray-200 shadow-sm">
+            {currentIndex + 1} / {materials.length}
           </div>
         </div>
       </div>
@@ -709,37 +945,122 @@ export default function SlickContentViewer() {
               }
               
               return (
-                <div key={material.id} className="flex h-full items-center justify-center outline-none">
-                  <div 
-                    className={`relative h-full w-full max-w-7xl mx-auto ${isZoomed ? 'cursor-move' : ''} ${isEditMode ? 'cursor-crosshair' : ''}`}
-                    style={{ 
-                      transform: isZoomed ? `scale(${zoomLevel})` : 'none',
-                      transition: 'transform 0.2s ease-out',
+                <div key={index} className="outline-none h-[50vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
+                  {/* Top section with question-answer */}
+                  <div className="w-full mb-4">
+                    <QuestionAnswerDisplay 
+                      material={material} 
+                      isEditMode={isEditMode} 
+                      showQuestions={showQuestions}
+                      bookId={bookPath || undefined}
+                      unitId={unitPath || undefined}
+                      hasPaidAccess={hasPaidAccess}
+                      index={index}
+                      freeSlideLimit={freeSlideLimit}
+                      onSlideDelete={(id) => confirmRemoveSlide(id)}
+                    />
+                  </div>
+                  
+                  {/* Middle section with centered image - symmetrical layout */}
+                  <div className="flex items-center justify-center h-full">
+                    <div 
+                      className={`w-full h-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
+                      onClick={(e) => {
+                      // Only handle clicks in edit mode and when user is admin
+                      if (isEditMode && user && user.username === 'admin' && activeAnnotation && index === currentIndex) {
+                        // Get click position relative to the container
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        // Create a new annotation
+                        const newAnnotation = {
+                          id: `annotation-${Date.now()}`,
+                          type: activeAnnotation.type,
+                          content: activeAnnotation.content,
+                          position: { x, y },
+                          color: activeAnnotation.color,
+                          slideId: material.id
+                        };
+                        
+                        // Add the annotation to the current slide's annotations
+                        const updatedAnnotations = { ...annotations };
+                        if (!updatedAnnotations[material.id]) {
+                          updatedAnnotations[material.id] = [];
+                        }
+                        updatedAnnotations[material.id].push(newAnnotation);
+                        setAnnotations(updatedAnnotations);
+                        
+                        // Reset active annotation if it's not text (to allow multiple annotations)
+                        if (activeAnnotation.type !== 'text') {
+                          setActiveAnnotation(null);
+                        }
+                      }
                     }}
                   >
-                    {material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
-                      <div 
-                        className="relative p-4 w-full h-full flex flex-col items-center justify-center"
-                        onClick={(e) => {
-                          if (isEditMode && activeAnnotation) {
-                            handleImageClick(e, material.id);
-                          } else if (!isEditMode) {
-                            // Toggle zoom on click when not editing
-                            setIsZoomed(!isZoomed);
-                            setZoomLevel(isZoomed ? 1 : 2);
-                          }
-                        }}
-                      >
-                        <div className="relative w-full h-full flex items-center justify-center">
-                          <div className="flex items-center justify-center w-full">
+                    {material.contentType === 'VIDEO' || material.path.endsWith('.mp4') ? (
+                      <div className="relative h-full flex items-center justify-center">
+                        <video 
+                          src={material.path}
+                          controls
+                          className={`h-auto w-auto max-w-full mx-auto object-contain ${isEditMode ? 'cursor-crosshair' : ''} 
+                            ${!hasPaidAccess ? 'blur-lg brightness-75' : ''}
+                          `}
+                          style={{ maxHeight: '100%' }}
+                          onError={(e) => {
+                            console.error(`Error loading video at ${material.path}`, e);
+                          }}
+                          autoPlay={index === currentIndex}
+                          playsInline
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                        
+                        {/* Premium content overlay for videos - show for ALL videos when not logged in */}
+                        {!hasPaidAccess && (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
+                            <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
+                            <p className="text-sm mb-4">Subscribe to access all learning materials</p>
+                            <Button 
+                              size="sm" 
+                              variant="default"
+                              className="bg-primary text-white hover:bg-primary/90"
+                              onClick={() => window.location.href = '/checkout/single_lesson'}
+                            >
+                              Upgrade Now
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    ) : material.contentType === 'IMAGE' || material.path.endsWith('.jpg') || material.path.endsWith('.png') || material.path.endsWith('.gif') || material.path.endsWith('.avif') ? (
+                      <div className="relative h-full flex items-center justify-center">
+                        <div 
+                          className={`relative ${isZoomed ? 'cursor-zoom-out overflow-auto' : 'cursor-zoom-in'}`} 
+                          style={{ 
+                            width: '100%', 
+                            height: '100%',
+                            overflowX: isZoomed ? 'auto' : 'hidden',
+                            overflowY: isZoomed ? 'auto' : 'hidden',
+                          }}
+                          onClick={() => {
+                            if (!isEditMode) {
+                              setIsZoomed(!isZoomed);
+                              setZoomLevel(isZoomed ? 1 : 2);
+                            }
+                          }}
+                        >
+                          <div className="relative w-full h-full flex items-center justify-center">
                             <img 
                               src={material.path}
                               alt={`Learning material slide ${index + 1}`}
-                              className={`h-auto object-contain mx-auto transition-transform duration-200 
-                                ${isEditMode ? 'cursor-crosshair' : ''}
+                              className={`h-auto w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''} transition-transform duration-200 
                                 ${!hasPaidAccess && index >= freeSlideLimit ? 'blur-lg brightness-75' : ''}
-                                ${material.path.includes('/00 A.png') && (bookPath === 'book7' && unitPath === 'unit1') ? 'max-w-[50%]' : 'max-w-full'}
                               `}
+                              style={{ 
+                                maxHeight: isZoomed ? 'none' : '100%',
+                                transform: `scale(${isZoomed ? zoomLevel : 1})`,
+                                transformOrigin: 'center center'
+                              }}
                               loading={index === currentIndex || index === currentIndex + 1 || index === currentIndex - 1 ? "eager" : "lazy"}
                               onError={(e) => {
                                 console.error(`Error loading image at ${material.path}`, e);
@@ -748,67 +1069,146 @@ export default function SlickContentViewer() {
                                 e.currentTarget.classList.add('error-image');
                               }}
                             />
+                            
+                            {/* Premium content overlay */}
+                            {!hasPaidAccess && index >= freeSlideLimit && (
+                              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
+                                <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
+                                <p className="text-sm mb-4">Subscribe to access all learning materials</p>
+                                <Button 
+                                  size="sm" 
+                                  variant="default"
+                                  className="bg-primary text-white hover:bg-primary/90"
+                                  onClick={() => window.location.href = '/checkout/single_lesson'}
+                                >
+                                  Upgrade Now
+                                </Button>
+                              </div>
+                            )}
                           </div>
                           
-                          {/* Premium content overlay */}
-                          {!hasPaidAccess && index >= freeSlideLimit && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white z-10 p-4 text-center">
-                              <h3 className="text-xl font-semibold mb-2">Premium Content</h3>
-                              <p className="text-sm mb-4">Subscribe to access all learning materials</p>
-                              <Button 
-                                size="sm" 
-                                variant="default"
-                                className="bg-primary text-white hover:bg-primary/90"
-                                onClick={() => window.location.href = '/checkout/single_lesson'}
+                          {/* Zoom controls - only show when current slide is active */}
+                          {index === currentIndex && !isEditMode && (
+                            <div className="absolute bottom-2 right-2 bg-white/80 rounded-lg shadow-md flex items-center p-1 z-10">
+                              <button 
+                                className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (zoomLevel > 1) {
+                                    setZoomLevel(prev => Math.max(1, prev - 0.5));
+                                  } else {
+                                    setIsZoomed(false);
+                                  }
+                                }}
+                                title="Zoom out"
                               >
-                                Upgrade Now
-                              </Button>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                              </button>
+                              <button 
+                                className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setIsZoomed(true);
+                                  setZoomLevel(prev => Math.min(4, prev + 0.5));
+                                }}
+                                title="Zoom in"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                              </button>
+                              <div className="mx-1 text-xs font-medium text-gray-700">{Math.round(zoomLevel * 100)}%</div>
+                              <button 
+                                className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setIsZoomed(false);
+                                  setZoomLevel(1);
+                                }}
+                                title="Reset zoom"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"></path><path d="m19 19-3.5-3.5"></path><path d="M2 12h10"></path><path d="M12 2v10"></path></svg>
+                              </button>
                             </div>
                           )}
                         </div>
                         
-                        {/* Zoom controls - only show when current slide is active */}
-                        {index === currentIndex && !isEditMode && (
-                          <div className="absolute bottom-2 right-2 bg-white/80 rounded-lg shadow-md flex items-center p-1 z-10">
-                            <button 
-                              className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (zoomLevel > 1) {
-                                  setZoomLevel(prev => Math.max(1, prev - 0.5));
-                                } else {
-                                  setIsZoomed(false);
-                                }
-                              }}
-                              title="Zoom out"
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                            </button>
-                            <button 
-                              className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setIsZoomed(true);
-                                setZoomLevel(prev => Math.min(4, prev + 0.5));
-                              }}
-                              title="Zoom in"
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                            </button>
-                            <div className="mx-1 text-xs font-medium text-gray-700">{Math.round(zoomLevel * 100)}%</div>
-                            <button 
-                              className="p-1.5 hover:bg-gray-200 rounded-md text-gray-700" 
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setIsZoomed(false);
-                                setZoomLevel(1);
-                              }}
-                              title="Reset zoom"
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"></path><path d="m19 19-3.5-3.5"></path><path d="M2 12h10"></path><path d="M12 2v10"></path></svg>
-                            </button>
+                        {/* Render annotations for this slide */}
+                        {isEditMode && index === currentIndex && annotations[material.id]?.map((annotation, i) => (
+                          <div 
+                            key={annotation.id}
+                            className="absolute pointer-events-auto"
+                            style={{ 
+                              left: `${annotation.position.x}px`, 
+                              top: `${annotation.position.y}px`,
+                              zIndex: 50 + i
+                            }}
+                          >
+                            {annotation.type === 'text' && (
+                              <div 
+                                className="min-w-[100px] min-h-[24px] px-2 py-1 text-sm rounded shadow-sm"
+                                style={{ backgroundColor: annotation.color === '#000000' ? 'white' : annotation.color, borderColor: annotation.color }}
+                                contentEditable={true}
+                                suppressContentEditableWarning={true}
+                                onBlur={(e) => {
+                                  // Update text content when edited
+                                  const updatedAnnotations = { ...annotations };
+                                  const annotationIndex = updatedAnnotations[material.id].findIndex(a => a.id === annotation.id);
+                                  if (annotationIndex !== -1) {
+                                    updatedAnnotations[material.id][annotationIndex].content = e.currentTarget.textContent || '';
+                                    setAnnotations(updatedAnnotations);
+                                  }
+                                }}
+                              >
+                                {annotation.content}
+                              </div>
+                            )}
+                            
+                            {annotation.type === 'highlight' && (
+                              <div 
+                                className="w-16 h-16 rounded opacity-50 border-2 resize cursor-move"
+                                style={{ 
+                                  backgroundColor: annotation.color,
+                                  borderColor: annotation.color === '#ffff00' ? '#ffcc00' : annotation.color
+                                }}
+                              />
+                            )}
+                            
+                            {annotation.type === 'arrow' && (
+                              <div className="relative h-12 w-12">
+                                <div
+                                  className="absolute inset-0"
+                                  style={{
+                                    transform: 'rotate(45deg)',
+                                    borderLeft: `2px solid ${annotation.color}`,
+                                    borderBottom: `2px solid ${annotation.color}`
+                                  }}
+                                />
+                                <div
+                                  className="absolute right-0 top-0 h-3 w-3"
+                                  style={{
+                                    borderRight: `2px solid ${annotation.color}`,
+                                    borderTop: `2px solid ${annotation.color}`,
+                                    transform: 'rotate(45deg) translate(70%, -70%)'
+                                  }}
+                                />
+                              </div>
+                            )}
+                            
+                            {isEditMode && (
+                              <button
+                                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Remove this annotation
+                                  const updatedAnnotations = { ...annotations };
+                                  updatedAnnotations[material.id] = updatedAnnotations[material.id].filter(a => a.id !== annotation.id);
+                                  setAnnotations(updatedAnnotations);
+                                }}
+                              >
+                                ×
+                              </button>
+                            )}
                           </div>
-                        )}
+                        ))}
                       </div>
                     ) : material.contentType === 'PDF' || material.path.endsWith('.pdf') ? (
                       <div className="flex flex-col items-center justify-center p-4 rounded bg-blue-50 text-blue-700">
@@ -829,29 +1229,30 @@ export default function SlickContentViewer() {
                         <p className="text-xs text-center mt-1">This content type cannot be displayed</p>
                       </div>
                     )}
-                    
-                    {/* Edit mode indicator */}
-                    {isEditMode && index === currentIndex && (
-                      <div className="absolute top-2 right-2 px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">
-                        Edit Mode: {activeAnnotation ? (
-                          activeAnnotation.type === 'text' ? 'Adding Text' :
-                          activeAnnotation.type === 'highlight' ? 'Adding Highlight' :
-                          'Adding Arrow'
-                        ) : 'Select Tool'}
-                      </div>
-                    )}
-                    
-                    {/* Premium content overlay */}
-                    {shouldBlur && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                        <div className="rounded-lg bg-white p-4 text-center shadow-lg">
-                          <h3 className="text-lg font-semibold text-blue-700">Premium Content</h3>
-                          <p className="mb-4 text-sm text-gray-700">Sign in to access all slides in this unit.</p>
-                          <Button onClick={() => window.location.href = '/auth'}>Sign In</Button>
-                        </div>
-                      </div>
-                    )}
                   </div>
+                  </div>
+                  
+                  {/* Edit mode indicator */}
+                  {isEditMode && index === currentIndex && (
+                    <div className="absolute top-2 right-2 px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">
+                      Edit Mode: {activeAnnotation ? (
+                        activeAnnotation.type === 'text' ? 'Adding Text' :
+                        activeAnnotation.type === 'highlight' ? 'Adding Highlight' :
+                        'Adding Arrow'
+                      ) : 'Select Tool'}
+                    </div>
+                  )}
+                  
+                  {/* Premium content overlay */}
+                  {shouldBlur && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                      <div className="rounded-lg bg-white p-4 text-center shadow-lg">
+                        <h3 className="text-lg font-semibold text-blue-700">Premium Content</h3>
+                        <p className="mb-4 text-sm text-gray-700">Sign in to access all slides in this unit.</p>
+                        <Button onClick={() => window.location.href = '/auth'}>Sign In</Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -950,7 +1351,7 @@ export default function SlickContentViewer() {
                     } else if (material.path.endsWith('.swf')) {
                       return (
                         <div className="flex h-full w-full items-center justify-center bg-yellow-50 text-yellow-700">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 5-5 5 5 5"/><path d="M4 5v5h5"/><path d="M4 14h5v5"/><path d="M9 9h5v5"/><path d="M14 9h1v1"/><path d="M19 9h1v1"/><path d="M19 4v5h-5"/><path d="M14 14h5v5"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                         </div>
                       );
                     } else {
@@ -968,22 +1369,11 @@ export default function SlickContentViewer() {
         </div>
       </div>
       
-      {/* Question and Answer Display */}
-      {currentIndex !== null && materials[currentIndex] && (
-        <div className="border-t pt-4 pb-4">
-          <QuestionAnswerDisplay 
-            imageFileName={materials[currentIndex].path.split('/').pop() || ''}
-            unitNumber={unitNumber}
-            bookId={bookId}
-          />
-        </div>
-      )}
-      
       {/* Teacher Resources Section */}
       <div className="max-w-full w-full mx-auto px-4 pb-12">
         <TeacherResources 
-          bookId={bookId || ''} 
-          unitId={unitNumber?.toString() || ''}
+          bookId={bookId || undefined} 
+          unitId={unitNumber || undefined}
           isEditMode={isEditMode}
         />
       </div>

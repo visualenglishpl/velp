@@ -356,13 +356,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // These routes don't use database IDs and directly match the S3 path structure
   registerDirectRoutes(app);
 
-  // Test endpoint for PDF viewer
-  app.get("/test/sample.pdf", (req, res) => {
-    console.log("Serving sample PDF from public directory");
-    res.setHeader('Content-Type', 'application/pdf');
-    res.sendFile('test/sample.pdf', { root: './public' });
-  });
-
   // ----- CONTENT MANAGEMENT API ROUTES -----
   
   // S3 Assets API
