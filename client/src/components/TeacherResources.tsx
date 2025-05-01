@@ -407,14 +407,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '6' && unitId === '1') {
       try {
         console.log('Loading Book 6 Unit 1 resources');
-        // Get resources directly from the imported resources module
-        const resources = book6Unit1Resources.map((resource: Omit<TeacherResource, 'id' | 'bookId' | 'unitId'>) => ({
-          id: `book6-unit1-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-          bookId,
-          unitId,
-          ...resource
-        }));
-        return resources;
+        // Use the getBook6Unit1Resources function from the implementation file
+        return getBook6Unit1Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 1 resources:', error);
         return [];
@@ -424,14 +418,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 6, Unit 2 - Household Appliances
     if (bookId === '6' && unitId === '2') {
       try {
-        // Get resources directly from the imported resources module
-        const resources = book6Unit2Resources.map((resource: Omit<TeacherResource, 'id' | 'bookId' | 'unitId'>) => ({
-          id: `book6-unit2-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-          bookId,
-          unitId,
-          ...resource
-        }));
-        return resources;
+        console.log('Loading Book 6 Unit 2 resources');
+        // Use the getBook6Unit2Resources function from the implementation file
+        return getBook6Unit2Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 2 resources:', error);
         return [];
@@ -441,14 +430,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 6, Unit 3 - Future
     if (bookId === '6' && unitId === '3') {
       try {
-        // Get resources directly from the imported resources module
-        const resources = book6Unit3Resources.map((resource: Omit<TeacherResource, 'id' | 'bookId' | 'unitId'>) => ({
-          id: `book6-unit3-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-          bookId,
-          unitId,
-          ...resource
-        }));
-        return resources;
+        console.log('Loading Book 6 Unit 3 resources');
+        // Use the getBook6Unit3Resources function from the implementation file
+        return getBook6Unit3Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 3 resources:', error);
         return [];
@@ -458,14 +442,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     // Resources for Book 6, Unit 4 - Animal Classification
     if (bookId === '6' && unitId === '4') {
       try {
-        // Get resources directly from the imported resources module
-        const resources = book6Unit4Resources.map((resource: Omit<TeacherResource, 'id' | 'bookId' | 'unitId'>) => ({
-          id: `book6-unit4-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-          bookId,
-          unitId,
-          ...resource
-        }));
-        return resources;
+        console.log('Loading Book 6 Unit 4 resources');
+        // Use the getBook6Unit4Resources function from the implementation file
+        return getBook6Unit4Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 4 resources:', error);
         return [];
