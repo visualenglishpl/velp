@@ -24,6 +24,9 @@ import { getUnit7LessonPlans, getUnit7Resources } from '@/data/unit7-implementat
 import { getUnit8LessonPlans, getUnit8Resources } from '@/data/unit8-implementation';
 import { getUnit9LessonPlans, getUnit9Resources } from '@/data/unit9-implementation';
 import { getUnit10LessonPlans, getUnit10Resources } from '@/data/unit10-implementation';
+import { getUnit11LessonPlans, getUnit11Resources } from '@/data/unit11-implementation';
+import { getUnit12LessonPlans, getUnit12Resources } from '@/data/unit12-implementation';
+import { getUnit13LessonPlans, getUnit13Resources } from '@/data/unit13-implementation';
 
 export interface TeacherResource {
   id?: string;
@@ -314,6 +317,39 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return getUnit10Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Unit 10 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 7, Unit 11 - Natural Disasters
+    if (bookId === '7' && unitId === '11') {
+      // Using resources from unit11-implementation.tsx
+      try {
+        return getUnit11Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 11 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 7, Unit 12 - Healthy Lifestyle
+    if (bookId === '7' && unitId === '12') {
+      // Using resources from unit12-implementation.tsx
+      try {
+        return getUnit12Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 12 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 7, Unit 13 - City Tour
+    if (bookId === '7' && unitId === '13') {
+      // Using resources from unit13-implementation.tsx
+      try {
+        return getUnit13Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 13 resources:', error);
         return [];
       }
     }
