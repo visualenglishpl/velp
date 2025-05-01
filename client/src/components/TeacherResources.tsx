@@ -3844,6 +3844,227 @@ useEffect(() => {
         </div>
       );
     } else if (bookId === '7' && unitId === '4') {
+      // Define hotels and accommodation lesson plan
+      const hotelAccommodationLessonPlan: LessonPlan = {
+        id: "hotels-accommodation-1",
+        title: "Types of Vacation and Accommodation",
+        level: "Intermediate", 
+        duration: "45-60 minutes",
+        objectives: [
+          "Identify and describe different types of vacation experiences",
+          "Learn vocabulary related to hotels and accommodation options",
+          "Practice expressing preferences about vacation types",
+          "Compare different accommodation options using appropriate adjectives"
+        ],
+        materials: [
+          "Visual English Book 7, Unit 4 slides",
+          "Hotel vocabulary handouts",
+          "Vacation preference worksheets",
+          "Hotel booking role-play cards"
+        ],
+        steps: [
+          {
+            title: "Warm-up: Vacation Experiences",
+            duration: "10 mins",
+            description: "Activate prior knowledge about vacations and accommodation.",
+            instructions: [
+              "Ask students to share their favorite vacation experiences",
+              "Have them describe where they stayed during that vacation",
+              "Create a list of vacation types and accommodation words on the board",
+              "Introduce the topic of the lesson: 'Types of Vacation and Accommodation'"
+            ],
+            teacherNotes: "This initial discussion helps to assess students' prior knowledge and vocabulary related to travel and accommodation."
+          },
+          {
+            title: "Vocabulary: Accommodation Types",
+            duration: "15 mins",
+            description: "Introduce different types of accommodation using Visual English slides.",
+            materials: [
+              "Book 7, Unit 4 slides (03-04)",
+              "Hotel vocabulary handouts"
+            ],
+            instructions: [
+              "Present vocabulary for different accommodation types: 5-star hotel, budget hotel, hostel, villa, log cabin, etc.",
+              "For each type, discuss key features and typical amenities",
+              "Teach adjectives for describing accommodation: comfortable, uncomfortable, expensive, cheap",
+              "Practice pronunciation and have students repeat new vocabulary",
+              "Have students categorize accommodations by price range and comfort level"
+            ]
+          },
+          {
+            title: "Vocabulary: Hotel Facilities and Services",
+            duration: "10 mins",
+            description: "Learn vocabulary related to hotel facilities, services, and amenities.",
+            materials: [
+              "Book 7, Unit 4 slides (04-05)"
+            ],
+            instructions: [
+              "Show slides with hotel amenities: room service, swimming pool, gym, restaurant, etc.",
+              "Ask 'What amenity can you see in the picture?'",
+              "Discuss which amenities are important/unimportant when on holiday",
+              "Practice structure: 'Is a [facility] important or unimportant when you are on holiday?'",
+              "Students work in pairs asking about preferences for different hotel facilities"
+            ]
+          },
+          {
+            title: "Conversation Practice: Vacation Types",
+            duration: "10 mins",
+            description: "Practice conversations about different vacation types.",
+            materials: [
+              "Book 7, Unit 4 slides (01-02)",
+              "Vacation preference worksheets"
+            ],
+            instructions: [
+              "Review different vacation types: city, camping, hiking, cruise, etc.",
+              "Introduce conversation patterns: 'Would you like to go on a city vacation?'",
+              "Students practice responses: 'Yes, I would like to...' or 'No, I wouldn't like to...'",
+              "Students work in pairs to discuss vacation preferences using target language",
+              "Have several pairs share their conversations with the class"
+            ]
+          },
+          {
+            title: "Role-play: Hotel Booking",
+            duration: "15 mins",
+            description: "Practice real-life conversations in a hotel setting.",
+            materials: [
+              "Hotel booking role-play cards"
+            ],
+            instructions: [
+              "Divide students into pairs: one as hotel receptionist, one as guest",
+              "Distribute role-play cards with different scenarios",
+              "Students practice booking a room, asking about amenities, etc.",
+              "Encourage use of vocabulary from the lesson",
+              "Have 2-3 pairs perform their dialogues for the class"
+            ],
+            teacherNotes: "Role-play cards should include scenarios like booking a single/double room, asking about hotel services, or requesting special accommodations."
+          }
+        ],
+        assessmentTips: "Evaluate students on their ability to correctly use accommodation vocabulary, express preferences about vacation types, and participate effectively in the role-play activity.",
+        homeworkIdeas: [
+          "Write a paragraph describing your ideal vacation and accommodation",
+          "Design a hotel brochure highlighting its amenities and room types",
+          "Complete the online vocabulary games on Wordwall about hotel vocabulary"
+        ],
+        additionalResources: [
+          {
+            title: "Hotel Vocabulary - ISL Collective",
+            url: "https://en.islcollective.com/english-esl-video-lessons/297369"
+          },
+          {
+            title: "Hotel Vocabulary Wordwall Game",
+            url: "https://wordwall.net/resource/ead2718ebb544050a5077cc541d2e2a2"
+          }
+        ]
+      };
+      
+      // Hotel booking role play lesson plan
+      const hotelBookingLessonPlan: LessonPlan = {
+        id: "hotel-booking-1",
+        title: "Hotel Booking and Check-in",
+        level: "Intermediate", 
+        duration: "45-60 minutes",
+        objectives: [
+          "Practice using functional language for hotel bookings",
+          "Learn vocabulary for checking in/out of a hotel",
+          "Role-play common hotel service scenarios",
+          "Develop confidence in real-world travel communication"
+        ],
+        materials: [
+          "Visual English Book 7, Unit 4 slides",
+          "Hotel check-in forms",
+          "Role-play scenario cards",
+          "Hotel services vocabulary list"
+        ],
+        steps: [
+          {
+            title: "Introduction: Hotel Services",
+            duration: "10 mins",
+            description: "Review key vocabulary related to hotel services and staff.",
+            instructions: [
+              "Show slides with hotel staff: receptionist, concierge, bellboy, etc.",
+              "Discuss the roles of different hotel employees",
+              "Introduce key phrases for hotel interactions",
+              "Have students match job titles with descriptions"
+            ],
+            teacherNotes: "This activity establishes the basic vocabulary needed for the role-plays later in the lesson."
+          },
+          {
+            title: "Dialogue Practice: Making a Reservation",
+            duration: "15 mins",
+            description: "Practice common phrases used when making hotel reservations.",
+            materials: [
+              "Book 7, Unit 4 slides (06-08)",
+              "Dialogue handouts"
+            ],
+            instructions: [
+              "Present a model dialogue for making a hotel reservation",
+              "Highlight key phrases: 'I'd like to book a room', 'How much is it per night?', etc.",
+              "Practice the dialogue as a class, focusing on pronunciation",
+              "Have students work in pairs to practice substituting different details",
+              "Ask volunteers to perform their dialogues for the class"
+            ]
+          },
+          {
+            title: "Vocabulary: Hotel Room Types and Amenities",
+            duration: "10 mins",
+            description: "Learn vocabulary for different room types and hotel amenities.",
+            materials: [
+              "Book 7, Unit 4 slides (09-10)"
+            ],
+            instructions: [
+              "Introduce vocabulary: single room, double room, twin room, suite",
+              "Discuss room amenities: mini-bar, safe, hairdryer, toiletries",
+              "Have students describe what they expect in different hotel categories",
+              "Practice asking questions about room amenities: 'Does the room have...?'"
+            ]
+          },
+          {
+            title: "Role-play: Hotel Check-in",
+            duration: "15 mins",
+            description: "Practice the language used during hotel check-in procedures.",
+            materials: [
+              "Hotel check-in forms",
+              "Role-play scenario cards"
+            ],
+            instructions: [
+              "Model a hotel check-in dialogue with a student volunteer",
+              "Distribute role-play cards with different scenarios",
+              "Students work in pairs to practice check-in dialogues",
+              "Each scenario should include at least one problem to solve",
+              "Have 2-3 pairs perform their check-in dialogues for the class"
+            ],
+            teacherNotes: "Problems could include: room not ready, reservation not found, requesting room change, etc."
+          },
+          {
+            title: "Problem-solving: Hotel Complaints",
+            duration: "10 mins",
+            description: "Practice language for dealing with common hotel problems.",
+            instructions: [
+              "Present vocabulary for common hotel problems: noisy room, no hot water, etc.",
+              "Teach polite complaint language: 'I'm afraid there's a problem with...'",
+              "Students role-play making complaints and responding appropriately",
+              "Discuss cultural differences in handling complaints"
+            ]
+          }
+        ],
+        assessmentTips: "Evaluate students on their ability to use appropriate language in the role-plays, their use of polite forms for requests and complaints, and their ability to solve problems in English.",
+        homeworkIdeas: [
+          "Write a dialogue for a hotel check-out situation",
+          "Create a list of recommendations for hotel services in your city",
+          "Research and compare hotel booking websites"
+        ],
+        additionalResources: [
+          {
+            title: "Hotel Vocabulary Wordwall Game",
+            url: "https://wordwall.net/resource/ead2718ebb544050a5077cc541d2e2a2"
+          },
+          {
+            title: "Hotel English Dialogues - ESL Collective",
+            url: "https://en.islcollective.com/english-esl-worksheets/vocabulary/hotel/hotel-dialogues-crossword-puzzle/53678"
+          }
+        ]
+      };
+      
       builtInLessonPlans = (
         <div className="mt-6 space-y-8">
           <h3 className="text-lg font-semibold mb-4">Built-in Lesson Plans</h3>
@@ -3854,7 +4075,7 @@ useEffect(() => {
                   <div className="flex justify-between items-start">
                     <div>
                       <CardTitle className="flex justify-between text-lg">
-                        <span>Government and Politics Vocabulary</span>
+                        <span>Hotels and Accommodation Vocabulary</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
                       <CardDescription>B1-B2</CardDescription>
@@ -3864,7 +4085,7 @@ useEffect(() => {
                         variant="ghost" 
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'government-vocabulary-1', title: 'Government and Politics Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        onClick={() => setConfirmDelete({ id: 'hotels-accommodation-1', title: 'Hotels and Accommodation Vocabulary', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
@@ -3873,7 +4094,7 @@ useEffect(() => {
                   </div>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={governmentLessonPlan} />
+                  <LessonPlanTemplate plan={hotelAccommodationLessonPlan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
                   <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
@@ -3888,7 +4109,7 @@ useEffect(() => {
                   <div className="flex justify-between items-start">
                     <div>
                       <CardTitle className="flex justify-between text-lg">
-                        <span>Accommodation & Hotels</span>
+                        <span>Hotel Booking Role Play</span>
                         <span className="text-sm font-normal ml-2">45 min</span>
                       </CardTitle>
                       <CardDescription>B1-B2</CardDescription>
@@ -3898,7 +4119,7 @@ useEffect(() => {
                         variant="ghost" 
                         size="sm" 
                         className="text-xs flex items-center text-destructive" 
-                        onClick={() => setConfirmDelete({ id: 'accommodation-hotels-1', title: 'Accommodation & Hotels', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        onClick={() => setConfirmDelete({ id: 'hotel-booking-1', title: 'Hotel Booking Role Play', bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                       >
                         <Trash2 className="h-3 w-3 mr-1" />
                         Delete
@@ -3907,7 +4128,7 @@ useEffect(() => {
                   </div>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto">
-                  <LessonPlanTemplate plan={governmentLessonPlan} />
+                  <LessonPlanTemplate plan={hotelBookingLessonPlan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
                   <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
