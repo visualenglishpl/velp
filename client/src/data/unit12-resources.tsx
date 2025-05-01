@@ -2,118 +2,126 @@
 
 export const unit12Resources = [
   {
-    title: "ISL Collective - Burnout Video Lesson",
+    title: "Healthy Lifestyle | 7 Habits of Happy & Healthy People",
     resourceType: "video" as const,
-    provider: "ISL Collective",
-    sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/embed/1102668",
-    embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/1102668" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/embed/yFcvSz0AEJw",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/yFcvSz0AEJw?si=iXwK1DzpbsXixSWB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    title: "Wordwall - Should vs. Shouldn't Game",
-    resourceType: "game" as const,
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/37bd90b81ab549adab6f3d3c074889ed",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/37bd90b81ab549adab6f3d3c074889ed?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    title: "Healthy vs Unhealthy Food Challenge",
+    resourceType: "video" as const,
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/embed/_Yt0W3nZ1hc",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/_Yt0W3nZ1hc?si=sQXELz9a95RGe4mK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    title: "Wordwall - Healthy vs. Unhealthy Game",
+    title: "Wordwall - Healthy Lifestyle Vocabulary",
     resourceType: "game" as const,
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/ee74009d2b384b808714e36062a0801a",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ee74009d2b384b808714e36062a0801a?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: "https://wordwall.net/embed/bf2b1f1c5f784a9f9d0ce5a41ea71a13",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/bf2b1f1c5f784a9f9d0ce5a41ea71a13?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Wordwall - Healthy vs Unhealthy Foods",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/09d64b12bed34c3b9c10b83a5a53c4b4",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/09d64b12bed34c3b9c10b83a5a53c4b4?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 
 // Lesson plan data for Healthy Lifestyle
 export const healthyLifestyleLessonPlan = {
   id: "healthy-lifestyle-lesson",
-  title: "Healthy Lifestyle Choices",
+  title: "Promoting a Healthy Lifestyle",
   duration: "45 minutes",
   level: "Intermediate",
   objectives: [
-    "Learn vocabulary related to healthy and unhealthy habits",
-    "Practice using 'should' and 'shouldn't' for giving advice",
-    "Understand the components of a balanced lifestyle",
-    "Develop awareness of burnout and stress management"
+    "Learn vocabulary related to health, fitness, and nutrition",
+    "Understand components of a healthy lifestyle",
+    "Compare healthy and unhealthy habits",
+    "Develop basic health communication skills"
   ],
   materials: [
     "Visual English Book 7, Unit 12 slides",
-    "Healthy/unhealthy habits flashcards",
-    "ISL Collective Burnout video",
-    "Wordwall Should/Shouldn't game",
-    "Wordwall Healthy/Unhealthy game",
-    "Lifestyle advice worksheet"
+    "Healthy Lifestyle video",
+    "Healthy vs Unhealthy Food Challenge video",
+    "Wordwall Healthy Lifestyle game",
+    "Wordwall Healthy vs Unhealthy Foods game",
+    "Food pyramid diagram",
+    "Pictures of various activities and foods"
   ],
   steps: [
     {
-      title: "Warm-up: Lifestyle Discussion",
+      title: "Warm-up: Health Check",
       duration: "5 minutes",
-      description: "Activate prior knowledge about healthy and unhealthy habits",
+      description: "Activate prior knowledge about healthy habits",
       instructions: [
-        "Ask students what they do to stay healthy",
+        "Ask students to rate their own lifestyle on a scale of 1-10",
+        "Have them share one healthy and one unhealthy habit they have",
         "Create two columns on the board: 'Healthy Habits' and 'Unhealthy Habits'",
-        "Have students contribute ideas to each column"
+        "Add student examples to the appropriate columns"
       ]
     },
     {
       title: "Vocabulary Introduction",
       duration: "10 minutes",
-      description: "Present key healthy lifestyle vocabulary with visuals",
-      materials: ["Healthy/unhealthy habits flashcards", "Book 7, Unit 12 slides"],
+      description: "Present key vocabulary related to health and fitness",
+      materials: ["Visual English Book 7, Unit 12 slides"],
       instructions: [
-        "Introduce vocabulary related to health: exercise, balanced diet, sleep, stress, junk food, etc.",
-        "Sort vocabulary into categories: diet, exercise, mental health, rest, etc.",
-        "Practice pronunciation and have students repeat each term",
-        "Have students categorize activities as healthy or unhealthy"
-      ],
-      teacherNotes: "Make sure to emphasize that balance is key - even healthy activities can become unhealthy in excess"
-    },
-    {
-      title: "Should/Shouldn't for Advice",
-      duration: "10 minutes",
-      description: "Practice using modal verbs for giving health advice",
-      materials: ["Lifestyle advice worksheet"],
-      instructions: [
-        "Explain how to use 'should' and 'shouldn't' for giving advice",
-        "Model sentences: 'You should exercise regularly.' 'You shouldn't eat too much junk food.'",
-        "Students complete worksheet sentences with appropriate advice",
-        "In pairs, students take turns giving each other lifestyle advice using should/shouldn't"
+        "Introduce vocabulary: nutrition, exercise, balanced diet, hydration, etc.",
+        "Show images representing different healthy activities and foods",
+        "Practice pronunciation and have students repeat key terms",
+        "Categorize vocabulary into groups: nutrition, exercise, mental health, etc."
       ]
     },
     {
-      title: "Video: Burnout Awareness",
+      title: "Video: Healthy Lifestyle Habits",
       duration: "10 minutes",
-      description: "Watch ISL Collective video about burnout and discuss",
-      materials: ["ISL Collective Burnout video"],
+      description: "Watch video about creating healthy habits",
+      materials: ["Healthy Lifestyle video"],
       instructions: [
-        "Introduce the concept of burnout",
-        "Play the video about burnout",
-        "Ask comprehension questions about signs and causes of burnout",
-        "Discuss strategies for avoiding burnout and managing stress"
+        "Play the Healthy Lifestyle video",
+        "Ask students to take notes on the 7 habits mentioned",
+        "After watching, create a mind map of the 7 habits on the board",
+        "Discuss which habits students already practice and which they could adopt"
       ]
     },
     {
-      title: "Interactive Games: Health Choices",
+      title: "Healthy Food Choices",
       duration: "10 minutes",
-      description: "Play Wordwall games to reinforce healthy vs. unhealthy choices",
-      materials: ["Wordwall Should/Shouldn't game", "Wordwall Healthy/Unhealthy game"],
+      description: "Learn about nutrition and making good food choices",
+      materials: ["Healthy vs Unhealthy Food Challenge video", "Food pyramid diagram"],
       instructions: [
-        "Divide class into teams",
-        "Play the Wordwall games as team competitions",
-        "Award points for correct answers",
-        "Discuss any challenging concepts that arise during the games"
+        "Display a food pyramid and discuss food groups",
+        "Play the Healthy vs Unhealthy Food Challenge video",
+        "Pause periodically and have students identify healthy alternatives",
+        "After watching, have students create a one-day healthy meal plan"
+      ]
+    },
+    {
+      title: "Interactive Games",
+      duration: "10 minutes",
+      description: "Practice health vocabulary through interactive games",
+      materials: ["Wordwall Healthy Lifestyle game", "Wordwall Healthy vs Unhealthy Foods game"],
+      instructions: [
+        "Have students play the Healthy Lifestyle vocabulary game in pairs",
+        "Follow with the Healthy vs Unhealthy Foods sorting game",
+        "Award points for correct answers and discuss any challenging concepts"
       ]
     }
   ],
-  assessmentTips: "Evaluate students on their ability to correctly use health vocabulary, give appropriate advice using should/shouldn't, and identify healthy versus unhealthy habits.",
+  assessmentTips: "Evaluate students on their ability to correctly use health-related vocabulary, identify healthy choices, and explain components of a healthy lifestyle.",
   homeworkIdeas: [
-    "Create a weekly health plan with daily goals for a balanced lifestyle", 
-    "Write five pieces of advice for someone suffering from stress or burnout"
+    "Keep a food and activity journal for three days", 
+    "Create a poster promoting three healthy habits with illustrations",
+    "Research traditional healthy foods from different cultures"
   ],
   additionalResources: [
     {
-      title: "Healthy Lifestyle Resources for Teens",
-      url: "https://kidshealth.org/en/teens/healthy-lifestyle.html"
+      title: "World Health Organization - Healthy Living",
+      url: "https://www.who.int/health-topics/healthy-lifestyle"
     }
   ]
 };

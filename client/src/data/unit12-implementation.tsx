@@ -22,31 +22,41 @@ export const getUnit12Resources = (bookId: string, unitId: string): TeacherResou
       id: "unit12-video-1",
       bookId,
       unitId,
-      title: "ISL Collective - Burnout Video Lesson",
+      title: "Healthy Lifestyle | 7 Habits of Happy & Healthy People",
       resourceType: "video" as const,
-      provider: "ISL Collective",
-      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/embed/1102668",
-      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/1102668" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/embed/yFcvSz0AEJw",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/yFcvSz0AEJw?si=iXwK1DzpbsXixSWB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    },
+    {
+      id: "unit12-video-2",
+      bookId,
+      unitId,
+      title: "Healthy vs Unhealthy Food Challenge",
+      resourceType: "video" as const,
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/embed/_Yt0W3nZ1hc",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/_Yt0W3nZ1hc?si=sQXELz9a95RGe4mK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
     },
     {
       id: "unit12-game-1",
       bookId,
       unitId,
-      title: "Wordwall - Should vs. Shouldn't Game",
+      title: "Wordwall - Healthy Lifestyle Vocabulary",
       resourceType: "game" as const,
       provider: "Wordwall",
-      sourceUrl: "https://wordwall.net/embed/37bd90b81ab549adab6f3d3c074889ed",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/37bd90b81ab549adab6f3d3c074889ed?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      sourceUrl: "https://wordwall.net/embed/bf2b1f1c5f784a9f9d0ce5a41ea71a13",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/bf2b1f1c5f784a9f9d0ce5a41ea71a13?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
       id: "unit12-game-2",
       bookId,
       unitId,
-      title: "Wordwall - Healthy vs. Unhealthy Game",
+      title: "Wordwall - Healthy vs Unhealthy Foods",
       resourceType: "game" as const,
       provider: "Wordwall",
-      sourceUrl: "https://wordwall.net/embed/ee74009d2b384b808714e36062a0801a",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ee74009d2b384b808714e36062a0801a?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      sourceUrl: "https://wordwall.net/embed/09d64b12bed34c3b9c10b83a5a53c4b4",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/09d64b12bed34c3b9c10b83a5a53c4b4?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
       id: "unit12-pdf-1",

@@ -22,31 +22,41 @@ export const getUnit13Resources = (bookId: string, unitId: string): TeacherResou
       id: "unit13-video-1",
       bookId,
       unitId,
-      title: "10 Things to do in NEW YORK CITY WITH KIDS",
+      title: "City Tour of London",
       resourceType: "video" as const,
       provider: "YouTube",
-      sourceUrl: "https://www.youtube.com/embed/Ceib2bv7BlA",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Ceib2bv7BlA?si=g7i3HSCPRzdhdsFx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+      sourceUrl: "https://www.youtube.com/embed/P9D2kkUMClE",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/P9D2kkUMClE?si=RCZLXGQFf3KAD9Jz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    },
+    {
+      id: "unit13-video-2",
+      bookId,
+      unitId,
+      title: "City Buildings and Places Vocabulary",
+      resourceType: "video" as const,
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/embed/dEB7_XH8K5o",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/dEB7_XH8K5o?si=NrVWR2Qf9aw2ysPL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
     },
     {
       id: "unit13-game-1",
       bookId,
       unitId,
-      title: "Wordwall - Shops Game",
+      title: "Wordwall - Places in the City",
       resourceType: "game" as const,
       provider: "Wordwall",
-      sourceUrl: "https://wordwall.net/embed/411d9dcb9eb041b8b1be990c120d6931",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/411d9dcb9eb041b8b1be990c120d6931?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      sourceUrl: "https://wordwall.net/embed/20c14a4f7eca49a58c75a4e5bc9e3141",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/20c14a4f7eca49a58c75a4e5bc9e3141?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
       id: "unit13-game-2",
       bookId,
       unitId,
-      title: "Wordwall - Places in the City",
+      title: "Wordwall - City Facilities Matching",
       resourceType: "game" as const,
       provider: "Wordwall",
-      sourceUrl: "https://wordwall.net/embed/1b0157e89e6442009e1385bda1661fbf",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1b0157e89e6442009e1385bda1661fbf?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      sourceUrl: "https://wordwall.net/embed/e4df8a8d99e54721afcdafedaa90badf",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e4df8a8d99e54721afcdafedaa90badf?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
       id: "unit13-pdf-1",

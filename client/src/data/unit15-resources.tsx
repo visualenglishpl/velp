@@ -28,20 +28,6 @@ export const unit15Resources = [
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/embed/c52506eabcd4406cbd3681a0d184060e",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c52506eabcd4406cbd3681a0d184060e?themeId=1&templateId=50&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-  },
-  {
-    title: "Wordwall - World Celebrations",
-    resourceType: "game" as const,
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/143919e90a414397ba99e8744fcbf7a3",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/143919e90a414397ba99e8744fcbf7a3?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-  },
-  {
-    title: "Wordwall - Family Celebrations",
-    resourceType: "game" as const,
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/ab22249eb83043d8940f69a78058f725",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ab22249eb83043d8940f69a78058f725?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 
@@ -52,92 +38,91 @@ export const holidaysAndFestivalsLessonPlan = {
   duration: "45 minutes",
   level: "Intermediate",
   objectives: [
-    "Learn vocabulary related to holidays, festivals, and celebrations",
-    "Explore cultural diversity through worldwide celebrations",
-    "Practice describing events and traditions",
-    "Develop awareness of cultural similarities and differences"
+    "Learn vocabulary related to celebrations, holidays, and festivals",
+    "Explore cultural traditions from around the world",
+    "Practice discussing special events and celebrations",
+    "Develop cultural awareness and appreciation"
   ],
   materials: [
     "Visual English Book 7, Unit 15 slides",
-    "Weird Holidays video",
-    "Guess the Festival video",
-    "Wordwall games (Months, World Celebrations, Family Celebrations)",
-    "Calendar templates",
-    "Festival flashcards"
+    "World festivals video",
+    "Unique holidays video",
+    "Wordwall months of the year game",
+    "Wordwall months matching game",
+    "Calendar",
+    "World map"
   ],
   steps: [
     {
-      title: "Warm-up: Celebration Brainstorm",
+      title: "Warm-up: Calendar of Celebrations",
       duration: "5 minutes",
-      description: "Activate prior knowledge about holidays and festivals",
+      description: "Activate prior knowledge about holidays",
       instructions: [
-        "Ask students what holidays they celebrate in their cultures",
-        "List different holidays and festivals on the board",
-        "Group celebrations by type (religious, national, seasonal, etc.)"
+        "Show a calendar and ask students to name holidays and celebrations they know",
+        "Create a list of holidays by month on the board",
+        "Ask students which holidays they personally celebrate"
       ]
     },
     {
       title: "Vocabulary Introduction",
       duration: "10 minutes",
-      description: "Present key vocabulary related to celebrations with visuals",
-      materials: ["Festival flashcards", "Book 7, Unit 15 slides"],
+      description: "Present key vocabulary related to celebrations",
       instructions: [
-        "Introduce vocabulary: holiday, festival, celebration, parade, tradition, costume, etc.",
-        "Show images of different festivals around the world",
+        "Introduce vocabulary: festival, celebration, tradition, ceremony, custom, etc.",
+        "Show images of different celebrations from around the world",
         "Practice pronunciation and have students repeat each term",
-        "Review months of the year and connect them to specific holidays"
-      ],
-      teacherNotes: "Emphasize both global celebrations and local/regional festivals"
+        "Use Visual English Book 7, Unit 15 slides to illustrate concepts"
+      ]
     },
     {
-      title: "Video: Unique Festivals Around the World",
+      title: "Video: Unique Holidays and Festivals",
       duration: "10 minutes",
-      description: "Watch videos about unusual and famous festivals",
-      materials: ["Weird Holidays video", "Guess the Festival video"],
+      description: "Watch videos about unusual celebrations around the world",
+      materials: [
+        "Weird Holidays Celebrated Around the World video",
+        "Guess the festival video",
+        "World map"
+      ],
       instructions: [
-        "Introduce the videos about unusual and famous festivals",
-        "Ask students to note 2-3 festivals they find interesting",
-        "Play the videos",
-        "After watching, discuss which festivals were most surprising or interesting",
-        "Have students share which festivals they would like to attend and why"
+        "Play the videos about unique festivals and holidays",
+        "After each holiday is shown, locate the country on a world map",
+        "Ask students to identify similarities and differences between celebrations",
+        "Discuss which festival they would most like to attend and why"
       ]
     },
     {
-      title: "Festival Description Activity",
-      duration: "15 minutes",
-      description: "Practice describing holidays and festivals",
+      title: "Calendar Skills Activities",
+      duration: "10 minutes",
+      description: "Practice months, dates, and time expressions",
+      materials: ["Wordwall months of the year game", "Wordwall months matching game"],
       instructions: [
-        "Divide students into small groups",
-        "Assign each group a different festival or holiday",
-        "Groups prepare a short presentation about their assigned celebration including:",
-        "- When and where it takes place",
-        "- What people do during the celebration",
-        "- Special food, clothing, or traditions associated with it",
-        "Each group presents their festival to the class"
+        "Have students play the Wordwall months of the year game as a class",
+        "Follow with the months matching game",
+        "Practice saying dates for different holidays (e.g., 'Christmas is on December 25th')",
+        "Review ordinal numbers and time expressions for talking about events"
       ]
     },
     {
-      title: "Interactive Games: Celebrations",
-      duration: "5 minutes",
-      description: "Reinforce vocabulary with Wordwall games",
-      materials: ["Wordwall games (Months, World Celebrations, Family Celebrations)"],
+      title: "Cultural Celebration Sharing",
+      duration: "10 minutes",
+      description: "Students share about their own cultural celebrations",
       instructions: [
-        "Play the Wordwall games as class competitions",
-        "Start with the Months of the Year game to review calendar vocabulary",
-        "Continue with the celebrations games to reinforce festival vocabulary",
-        "Award points for correct answers and discuss any challenging questions"
+        "Divide students into pairs or small groups",
+        "Each student describes an important celebration from their culture or country",
+        "Encourage them to explain when it happens, what people do, what food they eat, etc.",
+        "Groups share the most interesting celebration they learned about with the class"
       ]
     }
   ],
-  assessmentTips: "Evaluate students on their ability to describe holidays/festivals, use celebration vocabulary correctly, and demonstrate cultural awareness in discussions.",
+  assessmentTips: "Evaluate students on their ability to correctly use vocabulary related to celebrations, describe events using proper date formats, and demonstrate cultural awareness.",
   homeworkIdeas: [
-    "Create a calendar marking important celebrations throughout the year", 
-    "Research and write about an unusual festival from another country"
+    "Research an unusual holiday or festival not mentioned in class and prepare a short presentation", 
+    "Create a calendar marking important celebrations from different cultures around the world"
   ],
   additionalResources: [
     {
-      title: "UNESCO Intangible Cultural Heritage List",
-      url: "https://ich.unesco.org/en/lists"
+      title: "Holidays Around the World",
+      url: "https://www.timeanddate.com/holidays/"
     }
   ]
 };

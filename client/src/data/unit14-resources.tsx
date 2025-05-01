@@ -1,111 +1,132 @@
-// This file contains resources for Book 7, Unit 14 (Climate Change themed content)
+// This file contains resources for Book 7, Unit 14 (Climate Change and Migration themed content)
 
 export const unit14Resources = [
   {
-    title: "Migrants | Award-Winning CG Animated Short Film about Climate change",
+    title: "Climate Change - What can be done?",
     resourceType: "video" as const,
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/embed/ugPJi8kMK8Q",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ugPJi8kMK8Q?si=aj_dlhbAyjFFNf0G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: "https://www.youtube.com/embed/VTfgNFz1DBM",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/VTfgNFz1DBM?si=1zHMvg37xRbqmmJo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    title: "Wordwall - Climate Change Game",
+    title: "MIGRANTS - Award-Winning CG Animated Short Film",
+    resourceType: "video" as const,
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/embed/LtWdrDqS_uc",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/LtWdrDqS_uc?si=EyWUNJqFAOkNdEVE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    title: "Climate Change Vocabulary",
     resourceType: "game" as const,
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/693f7afb993242929b59236c929717a5",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/693f7afb993242929b59236c929717a5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: "https://wordwall.net/embed/7f0c2e9ff2e1426f92f9a42c93b3e5ec",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7f0c2e9ff2e1426f92f9a42c93b3e5ec?themeId=1&templateId=50&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Migration Vocabulary",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/3e56b5ac92a646e0afc5ea5c4bb0b82e",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3e56b5ac92a646e0afc5ea5c4bb0b82e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 
-// Lesson plan data for Climate Change
-export const climateChangeLessonPlan = {
-  id: "climate-change-lesson",
-  title: "Climate Change Awareness",
-  duration: "45 minutes",
-  level: "Intermediate",
+// Lesson plan data for Migration and Climate Change
+export const migrationClimateLessonPlan = {
+  id: "migration-climate-lesson",
+  title: "Migration and Climate Change",
+  duration: "50 minutes",
+  level: "Intermediate to Advanced",
   objectives: [
-    "Learn vocabulary related to climate change and environmental issues",
-    "Discuss causes and effects of climate change",
-    "Understand the concept of migration due to environmental changes",
-    "Develop critical thinking about sustainability and conservation"
+    "Learn vocabulary related to climate change and migration",
+    "Understand the connection between climate change and human migration",
+    "Develop critical thinking about global challenges",
+    "Practice discussing complex social issues in English"
   ],
   materials: [
     "Visual English Book 7, Unit 14 slides",
-    "Migrants animated short film",
-    "Wordwall Climate Change game",
-    "Climate change vocabulary cards",
-    "Discussion questions handout"
+    "'MIGRANTS' animated short film",
+    "Climate Change video",
+    "Climate Change vocabulary game",
+    "Migration vocabulary game",
+    "World map",
+    "Chart paper and markers"
   ],
   steps: [
     {
-      title: "Warm-up: Environmental Knowledge",
+      title: "Warm-up: Climate Change Knowledge",
       duration: "5 minutes",
-      description: "Activate prior knowledge about environmental issues",
+      description: "Activate prior knowledge and introduce the topic",
       instructions: [
         "Ask students what they know about climate change",
-        "Create a mind map on the board with their responses",
-        "Discuss which environmental problems affect their local area"
+        "Create a mind map on the board with student contributions",
+        "Introduce key vocabulary: migration, refugee, climate crisis, global warming, etc."
       ]
     },
     {
-      title: "Vocabulary Introduction",
+      title: "Video: Climate Change - What can be done?",
       duration: "10 minutes",
-      description: "Present key climate change vocabulary with visuals",
-      materials: ["Climate change vocabulary cards", "Book 7, Unit 14 slides"],
+      description: "Watch video to build understanding of climate issues",
+      materials: ["Climate Change video"],
       instructions: [
-        "Introduce vocabulary: global warming, climate change, carbon footprint, renewable energy, etc.",
-        "Discuss meanings and provide examples for each term",
-        "Practice pronunciation and have students repeat each term",
-        "Have students sort vocabulary into causes, effects, and solutions categories"
-      ],
-      teacherNotes: "Adjust vocabulary difficulty based on students' level"
+        "Play the climate change video",
+        "Have students take notes on key points",
+        "After watching, discuss in pairs what solutions were presented",
+        "Create a class list of possible actions to address climate change"
+      ]
     },
     {
-      title: "Video: Migrants Animated Short",
+      title: "MIGRANTS Short Film Analysis",
       duration: "15 minutes",
-      description: "Watch and discuss the animated film about climate migration",
-      materials: ["Migrants animated short film", "Discussion questions handout"],
+      description: "Watch and analyze the animated film about migration",
+      materials: ["'MIGRANTS' animated short film", "World map"],
       instructions: [
-        "Introduce the animated short film 'Migrants'",
-        "Ask students to watch for specific themes or messages in the film",
-        "Play the video",
-        "After watching, discuss the main message and symbolism in the film",
-        "Have students work in pairs to answer discussion questions",
-        "Share responses as a class"
+        "Introduce the short film 'MIGRANTS' as a metaphor for climate migration",
+        "Watch the animated short film",
+        "Guide discussion questions: What happened in the film? Who were the characters? What did they represent?",
+        "Locate regions on a world map that are currently affected by climate migration",
+        "Discuss the symbolism in the animation and how it relates to real-world issues"
       ]
     },
     {
-      title: "Climate Change Causes and Effects",
+      title: "Vocabulary Building",
       duration: "10 minutes",
-      description: "Analyze causes and effects of climate change",
+      description: "Develop climate and migration vocabulary through interactive games",
+      materials: ["Climate Change vocabulary game", "Migration vocabulary game"],
       instructions: [
-        "Divide the board into two sections: 'Causes' and 'Effects'",
-        "Ask students to contribute ideas to each section",
-        "Discuss the relationship between human activities and climate change",
-        "Connect effects to the migration theme from the film"
+        "Have students play the climate change vocabulary game in small groups",
+        "Follow with the migration vocabulary game",
+        "After each game, ask students to use three new words in sentences",
+        "Create a class vocabulary wall with new terms"
       ]
     },
     {
-      title: "Wordwall Game: Climate Change",
-      duration: "5 minutes",
-      description: "Reinforce vocabulary with interactive game",
-      materials: ["Wordwall Climate Change game"],
+      title: "Discussion and Reflection",
+      duration: "10 minutes",
+      description: "Apply learning to real-world situations and personal values",
+      materials: ["Chart paper and markers"],
       instructions: [
-        "Play the Wordwall game as a class competition",
-        "Divide students into teams and award points for correct answers",
-        "Review any challenging vocabulary or concepts from the game"
+        "Divide students into small groups",
+        "Give each group a discussion prompt: How might climate change affect your country/region? What responsibilities do countries have toward climate migrants?",
+        "Groups create a poster with their ideas and present to the class",
+        "End with a reflective writing prompt: 'What can I do to help address climate change?'"
       ]
     }
   ],
-  assessmentTips: "Evaluate students on their understanding of climate change vocabulary, ability to discuss environmental issues, and participation in class discussions.",
+  assessmentTips: "Evaluate students on their participation in discussions, appropriate use of vocabulary, and ability to express complex ideas about climate change and migration.",
   homeworkIdeas: [
-    "Research and write about one solution to climate change", 
-    "Create a poster showing ways to reduce your carbon footprint"
+    "Research a region affected by climate migration and prepare a short presentation", 
+    "Write a creative story about the journey of a climate refugee",
+    "Create an infographic showing the connection between climate change and migration"
   ],
   additionalResources: [
     {
-      title: "NASA Climate Kids",
-      url: "https://climatekids.nasa.gov/"
+      title: "Environmental Migration Portal",
+      url: "https://environmentalmigration.iom.int/"
+    },
+    {
+      title: "Climate Change Knowledge Portal",
+      url: "https://climateknowledgeportal.worldbank.org/"
     }
   ]
 };

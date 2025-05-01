@@ -2,117 +2,127 @@
 
 export const unit11Resources = [
   {
-    title: "ISL Collective - Natural Disasters Video Lesson",
+    title: "Natural Disasters: What to Know",
     resourceType: "video" as const,
-    provider: "ISL Collective",
-    sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/embed/718198",
-    embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/718198" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/embed/v9KU5jxbIeQ",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/v9KU5jxbIeQ?si=mNY5t6Aaq1mFxhXG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    title: "Wordwall - Natural Disaster",
+    title: "Natural Disasters for Kids",
+    resourceType: "video" as const,
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/embed/VlEg8MGHVOQ",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/VlEg8MGHVOQ?si=LTDY3ZLIlhLzfajO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    title: "Wordwall - Natural Disasters Vocabulary",
     resourceType: "game" as const,
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/e2fdc9e3360e49aaa27816818a1179d6",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e2fdc9e3360e49aaa27816818a1179d6?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: "https://wordwall.net/embed/a1a4d4ffe0a747e3800e1c0532f48a34",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a1a4d4ffe0a747e3800e1c0532f48a34?themeId=1&templateId=11&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    title: "Kahoot - Visual English 7 Unit 11 Natural Disasters",
+    title: "Wordwall - Extreme Weather Terms",
     resourceType: "game" as const,
-    provider: "Kahoot",
-    sourceUrl: "https://create.kahoot.it/share/visual-english-7-unit-11-natural-disasters/49b6cfd8-e8b3-479c-bda3-e2192412a301",
-    embedCode: ""
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/d1c9dc45c25f4d53bda1e89f3b2c3b9d",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d1c9dc45c25f4d53bda1e89f3b2c3b9d?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 
 // Lesson plan data for Natural Disasters
 export const naturalDisastersLessonPlan = {
   id: "natural-disasters-lesson",
-  title: "Natural Disasters Vocabulary and Safety",
-  duration: "45 minutes",
+  title: "Understanding Natural Disasters",
+  duration: "50 minutes",
   level: "Intermediate",
   objectives: [
-    "Learn vocabulary related to different natural disasters",
-    "Understand basic safety procedures during emergencies",
-    "Practice describing causes and effects of natural disasters",
-    "Develop disaster preparedness awareness"
+    "Learn vocabulary related to natural disasters and extreme weather",
+    "Understand causes and effects of different natural phenomena",
+    "Develop safety awareness and emergency preparedness knowledge",
+    "Practice discussing environmental phenomena in English"
   ],
   materials: [
     "Visual English Book 7, Unit 11 slides",
-    "Natural disasters flashcards",
-    "ISL Collective Natural Disasters video",
+    "Natural Disasters video",
+    "Natural Disasters for Kids video",
     "Wordwall Natural Disasters game",
-    "Safety procedure handouts"
+    "Wordwall Extreme Weather game",
+    "World map",
+    "Emergency kit items (or pictures of them)"
   ],
   steps: [
     {
-      title: "Warm-up: Disasters Brainstorm",
+      title: "Warm-up: Disaster Knowledge",
       duration: "5 minutes",
-      description: "Activate prior knowledge about different natural disasters",
+      description: "Activate prior knowledge about natural disasters",
       instructions: [
-        "Ask students what natural disasters they know about",
-        "Create a mind map on the board with different disaster types",
-        "Briefly discuss which disasters are common in your region"
+        "Show images of various natural disasters",
+        "Ask students to name each disaster in English",
+        "Create a mind map on the board categorizing different types of disasters",
+        "Discuss if students have experienced any natural disasters"
       ]
     },
     {
       title: "Vocabulary Introduction",
       duration: "10 minutes",
-      description: "Present key natural disaster vocabulary with visuals",
-      materials: ["Natural disaster flashcards", "Book 7, Unit 11 slides"],
+      description: "Present key disaster and emergency vocabulary",
+      materials: ["Visual English Book 7, Unit 11 slides"],
       instructions: [
-        "Introduce vocabulary: earthquake, flood, hurricane/typhoon, tornado, wildfire, volcanic eruption, etc.",
-        "For each disaster, discuss what causes it and its effects",
+        "Introduce vocabulary: earthquake, tsunami, hurricane, tornado, flood, drought, etc.",
+        "Present related emergency terms: evacuation, shelter, warning, etc.",
         "Practice pronunciation and have students repeat each term",
-        "Review related words: evacuate, shelter, emergency, warning, etc."
-      ],
-      teacherNotes: "Ensure you explain the difference between similar terms like hurricane/typhoon/cyclone based on region"
+        "Show examples of each disaster type from the slides"
+      ]
     },
     {
       title: "Video: Natural Disasters",
-      duration: "10 minutes",
-      description: "Watch ISL Collective video about natural disasters",
-      materials: ["ISL Collective Natural Disasters video"],
-      instructions: [
-        "Introduce the video and what to watch for",
-        "Play the video once",
-        "Ask comprehension questions about the disasters shown",
-        "Play again if needed, pausing to discuss key points"
-      ]
-    },
-    {
-      title: "Safety Procedures Activity",
       duration: "15 minutes",
-      description: "Learn and practice safety procedures for different disasters",
-      materials: ["Safety procedure handouts"],
+      description: "Watch informational videos about natural disasters",
+      materials: ["Natural Disasters video", "Natural Disasters for Kids video", "World map"],
       instructions: [
-        "Divide students into small groups",
-        "Assign each group a different natural disaster",
-        "Groups read about safety procedures for their assigned disaster",
-        "Groups create a safety poster or present a role-play showing proper safety measures",
-        "Each group presents to the class"
+        "Play the Natural Disasters video",
+        "After watching, identify which disasters are most common in different regions",
+        "Mark disaster-prone areas on a world map",
+        "Play the Natural Disasters for Kids video focusing on safety tips",
+        "Have students take notes on what to do during different emergencies"
       ]
     },
     {
-      title: "Wordwall Game: Natural Disasters",
-      duration: "5 minutes",
-      description: "Reinforce vocabulary with interactive game",
-      materials: ["Wordwall Natural Disasters game"],
+      title: "Interactive Vocabulary Games",
+      duration: "10 minutes",
+      description: "Practice disaster vocabulary through games",
+      materials: ["Wordwall Natural Disasters game", "Wordwall Extreme Weather game"],
       instructions: [
-        "Play the Wordwall game as a class or in small groups",
-        "Review any challenging vocabulary that appears in the game",
-        "Discuss strategies for remembering the terms"
+        "Have students play the Wordwall Natural Disasters vocabulary game as a class competition",
+        "Continue with the Extreme Weather Terms game",
+        "Award points for correct answers and discuss any challenging vocabulary"
+      ]
+    },
+    {
+      title: "Emergency Preparedness Discussion",
+      duration: "10 minutes",
+      description: "Learn about safety measures and emergency planning",
+      materials: ["Emergency kit items or pictures"],
+      instructions: [
+        "Show items that should be in an emergency kit (or pictures)",
+        "Discuss what to do during different types of natural disasters",
+        "In small groups, have students create a simple emergency plan for a specific disaster",
+        "Groups present their emergency plans to the class"
       ]
     }
   ],
-  assessmentTips: "Evaluate students on their ability to correctly use disaster vocabulary, explain basic safety procedures, and participate in group activities.",
+  assessmentTips: "Evaluate students on their ability to correctly use disaster vocabulary, understand safety procedures, and communicate effectively about emergency situations.",
   homeworkIdeas: [
-    "Create a family emergency plan for one type of natural disaster", 
-    "Research a major natural disaster from history and write 5-7 sentences about its impact"
+    "Research a famous historical natural disaster and write a short report", 
+    "Create an emergency plan for your home and family",
+    "Design an informational poster about a specific natural disaster"
   ],
   additionalResources: [
     {
-      title: "National Geographic Kids - Natural Disasters",
-      url: "https://kids.nationalgeographic.com/science/topic/natural-disasters"
+      title: "National Geographic - Natural Disasters",
+      url: "https://www.nationalgeographic.com/environment/natural-disasters/"
     }
   ]
 };

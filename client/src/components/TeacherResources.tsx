@@ -356,6 +356,39 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return [];
       }
     }
+
+    // Resources for Book 7, Unit 14 - Climate Change
+    if (bookId === '7' && unitId === '14') {
+      // Using resources from unit14-implementation.tsx
+      try {
+        return getUnit14Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 14 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 7, Unit 15 - Holidays and Festivals
+    if (bookId === '7' && unitId === '15') {
+      // Using resources from unit15-implementation.tsx
+      try {
+        return getUnit15Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 15 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 7, Unit 16 - Food and Cuisine
+    if (bookId === '7' && unitId === '16') {
+      // Using resources from unit16-implementation.tsx
+      try {
+        return getUnit16Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Unit 16 resources:', error);
+        return [];
+      }
+    }
     
     // If no specific resources, return an empty array
     return [];
