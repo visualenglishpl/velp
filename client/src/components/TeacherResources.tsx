@@ -768,7 +768,63 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
     // Now render the built-in lesson plans depending on book and unit
     let builtInLessonPlans = null;
-
+    
+    // Book 6 Unit 5 - Theme Park Stalls lesson plans
+    if (bookId === '6' && unitId === '5') {
+      // Get Book 6 Unit 5 lesson plans
+      let themeParkPlans: LessonPlan[] = [];
+      try {
+        themeParkPlans = getBook6Unit5LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 5 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Theme Park Themed Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {themeParkPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `theme-park-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
     // Book 7 Units specific lesson plans
     // Check if this book/unit combination has built-in lesson plans and render them if available
     if (isBook7Unit6) {
