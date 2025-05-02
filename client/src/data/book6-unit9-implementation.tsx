@@ -17,39 +17,43 @@ type TeacherResource = {
   sourceUrl?: string;
   embedCode?: string;
   fileUrl?: string;
-  lessonPlan?: any; // Using any to avoid circular import issues
+  lessonPlan?: LessonPlan; // Using imported LessonPlan type
 };
 
-// Import resources from the resources file
-import {
-  book6Unit9Resources,
-  presentPerfectLessonPlan,
-  experiencesLessonPlan
+// Import the resources and lesson plans
+import { 
+  book6Unit9Resources, 
+  presentPerfectStructureLessonPlan, 
+  presentPerfectVsPastSimpleLessonPlan 
 } from './book6-unit9-resources';
 
-// Function to get lesson plans for this unit
-export const getBook6Unit9LessonPlans = (): LessonPlan[] => {
-  return [
-    presentPerfectLessonPlan,
-    experiencesLessonPlan
-  ];
-};
-
-// Function to get resources for this unit
-export const getBook6Unit9Resources = (bookId: string, unitId: string): TeacherResource[] => {
+/**
+ * Get Book 6 Unit 9 resources - Present Perfect: What Has Just Happened
+ */
+export function getBook6Unit9Resources(): TeacherResource[] {
   return book6Unit9Resources.map(resource => ({
+    ...resource,
     id: `book6-unit9-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-    bookId,
-    unitId,
-    ...resource
+    bookId: '6',
+    unitId: '9'
   }));
-};
+}
+
+/**
+ * Get Book 6 Unit 9 lesson plans
+ */
+export function getBook6Unit9LessonPlans(): LessonPlan[] {
+  return [
+    presentPerfectStructureLessonPlan,
+    presentPerfectVsPastSimpleLessonPlan
+  ];
+}
 
 // Export the resources for this unit (for backward compatibility)
 export const unitResources = book6Unit9Resources;
 
 // Export the lesson plans for this unit (for backward compatibility)
 export const lessonPlans = [
-  presentPerfectLessonPlan,
-  experiencesLessonPlan
+  presentPerfectStructureLessonPlan,
+  presentPerfectVsPastSimpleLessonPlan
 ];
