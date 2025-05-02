@@ -9,8 +9,20 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
-// Import resources for Book 7, Unit 6
+// Import sample resources for Book 7, Unit 6
 import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from '@/data/unit6-resources';
+
+// Define fallback functions for resource getters
+// These functions will be used if the dynamic imports fail
+const defaultResourceGetter = (bookId: string, unitId: string) => {
+  console.log(`Using default resource getter for Book ${bookId}, Unit ${unitId}`);
+  return [];
+};
+
+const defaultLessonPlanGetter = () => {
+  console.log('Using default lesson plan getter');
+  return [];
+};
 
 // Add CSS for responsive grid layout
 import "@/styles/teacher-resources-grid.css";
