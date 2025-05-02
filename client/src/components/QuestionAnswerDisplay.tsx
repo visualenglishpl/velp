@@ -5,6 +5,16 @@ import { Flag, Check, X, RefreshCw, EyeOff, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useExcelQA } from "@/hooks/use-excel-qa";
 
+// Debug level configuration (0: none, 1: critical only, 2: verbose)
+const DEBUG_LEVEL = 0;
+
+// Centralized debug logging function
+function logDebug(message: string, level: number = 1): void {
+  if (DEBUG_LEVEL >= level) {
+    console.log(message);
+  }
+}
+
 interface QAData {
   country: string;
   question: string;
@@ -150,19 +160,18 @@ import { getQAForFilename } from "@/lib/pattern-mapper";
 
 // Debug helper function to log information about scissors content detection
 function debugScissorsDetection(content: string): void {
-  if (content.toLowerCase().includes('scissors')) {
-    console.log(`📊 SCISSORS DEBUG INFO for "${content}":`);
-    console.log(`  • Contains '12 N G': ${content.includes('12 N G')}`);
-    console.log(`  • Contains 'green scissors': ${content.toLowerCase().includes('green scissors')}`);
-    console.log(`  • Regex match for /12\\s*N\\s*G/i: ${Boolean(content.match(/12\s*N\s*G/i))}`);
-    
-    const sectionMatch = content.match(/(\d{1,2})\s*([A-Za-z])\s*([A-Za-z])/i);
-    if (sectionMatch) {
-      console.log(`  • Section pattern extracted: ${sectionMatch[1]} ${sectionMatch[2]} ${sectionMatch[3]}`);
-    } else {
-      console.log(`  • No section pattern extracted`);
-    }
-  }
+  if (DEBUG_LEVEL < 2 || !content.toLowerCase().includes('scissors')) return;
+  
+  const sectionMatch = content.match(/(\d{1,2})\s*([A-Za-z])\s*([A-Za-z])/i);
+  const debugInfo = {
+    contentSnippet: content.substring(0, 50) + (content.length > 50 ? '...' : ''),
+    contains12NG: content.includes('12 N G'),
+    containsGreenScissors: content.toLowerCase().includes('green scissors'),
+    regexMatch: Boolean(content.match(/12\s*N\s*G/i)),
+    sectionPattern: sectionMatch ? `${sectionMatch[1]} ${sectionMatch[2]} ${sectionMatch[3]}` : 'None'
+  };
+  
+  logDebug(`SCISSORS DEBUG: ${JSON.stringify(debugInfo)}`, 2);
 }
 
 function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
@@ -183,7 +192,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   if (content.includes('12 N G Do You Have Green Scissors') || 
       content.includes('12 N G Green Scissors') || 
       content.includes('12NG Do You Have Green Scissors')) {
-    console.log('🎯 EXACT FILENAME MATCH FOR 12 N G GREEN SCISSORS');
+    logDebug('EXACT FILENAME MATCH FOR 12 N G GREEN SCISSORS', 1);
     return {
       country: country,
       question: "Do you have green scissors?",
@@ -194,7 +203,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   
   // Check if the filename starts with "12 N G" pattern
   if (content.match(/^12\s*N\s*G/i)) {
-    console.log('🔎 FILENAME STARTS WITH 12 N G PATTERN');
+    logDebug('FILENAME STARTS WITH 12 N G PATTERN', 1);
     return {
       country: country,
       question: "Do you have green scissors?",
@@ -205,7 +214,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   
   // Special case for the scissors pattern with 12 N G anywhere in the string
   if (content.includes('12 N G') && content.toLowerCase().includes('scissors')) {
-    console.log('✂️ SPECIAL DIRECT MAPPING FOR SCISSORS in QuestionAnswerDisplay');
+    logDebug('SPECIAL DIRECT MAPPING FOR SCISSORS in QuestionAnswerDisplay', 1);
     return {
       country: country,
       question: "Do you have green scissors?",
@@ -231,22 +240,20 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   
   // SECTION 12 - SCISSORS DETECTION
   if (content.toLowerCase().includes('scissors')) {
-    console.log('🔎 VISUAL DETECTION FOR SCISSORS SLIDES ACTIVATED');
-    // Log the entire content string to see exactly what's in the file
-    console.log('SLIDE CONTENT STRING:', content);
+    logDebug('VISUAL DETECTION FOR SCISSORS SLIDES ACTIVATED', 2);
     
     // ENHANCED SCISSORS DETECTION - works regardless of the actual filename pattern
     
     // General pattern for 12 N X where X is a letter
     const scissorsCodeMatch = content.match(/12\s*N\s*([A-Z])/i);
     const variantCode = scissorsCodeMatch ? scissorsCodeMatch[1].toUpperCase() : '';
-    console.log(`🔍 SCISSORS VARIANT DETECTED: ${variantCode || 'NONE'}`);
+    logDebug(`SCISSORS VARIANT DETECTED: ${variantCode || 'NONE'}`, 2);
     
     // COMPREHENSIVE VISUAL MATCHING - content-based detection for specific variants
     
     // Check for the most problematic cases by content, not just by section code
     if (content.toLowerCase().includes('green scissors') || content.includes('12 N G')) {
-      console.log('🟢 OVERRIDING WITH DIRECT VISUAL DETECTION: GREEN SCISSORS');
+      logDebug('OVERRIDING WITH DIRECT VISUAL DETECTION: GREEN SCISSORS', 1);
       return {
         country: country,
         question: "Do you have green scissors?",
@@ -257,7 +264,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // For basic scissors identification
     if (content.includes('12 N.png') || (content.toLowerCase().includes('scissors') && !variantCode)) {
-      console.log('⚠️ DETECTED BASIC SCISSORS CASE');
+      logDebug('DETECTED BASIC SCISSORS CASE', 1);
       return {
         country: country,
         question: "What are they?",
@@ -269,7 +276,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     // For purple scissors
     if (content.toLowerCase().includes('purple scissors') || 
         (content.includes('12 N H') && content.toLowerCase().includes('purple'))) {
-      console.log('💜 DETECTED PURPLE SCISSORS');
+      logDebug('DETECTED PURPLE SCISSORS', 1);
       return {
         country: country,
         question: "What color are the scissors?",
@@ -281,7 +288,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     // For yellow scissors
     if (content.toLowerCase().includes('yellow scissors') || 
         (content.includes('12 N J') && content.toLowerCase().includes('yellow'))) {
-      console.log('💛 DETECTED YELLOW SCISSORS');
+      logDebug('DETECTED YELLOW SCISSORS', 1);
       return {
         country: country,
         question: "What color are the scissors?",
@@ -292,7 +299,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // For scissors you like
     if (content.toLowerCase().includes('what scissors do you like') || content.includes('12 N K')) {
-      console.log('👍 DETECTED SCISSORS PREFERENCE QUESTION');
+      logDebug('DETECTED SCISSORS PREFERENCE QUESTION', 1);
       return {
         country: country,
         question: "What scissors do you like?",
@@ -307,11 +314,11 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   if (material && material.content && typeof unitId === 'string') {
     const currentUnitId = unitId; // Make it clear this is coming from the parameter
     // The unitId is passed as a prop to this component
-    console.log(`Using pattern engine for ${content} in book/${currentUnitId}`);
+    logDebug(`Using pattern engine for ${content} in book/${currentUnitId}`, 1);
     const patternEngineResult = getQuestionAnswer(content, currentUnitId);
     
     if (patternEngineResult) {
-      console.log(`Pattern engine generated Q&A for ${content}:`, patternEngineResult);
+      logDebug(`Pattern engine generated Q&A for ${content.substring(0, 30)}...`, 1);
       return {
         country: country,
         question: patternEngineResult.question,
@@ -326,7 +333,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   // This provides a consistent mapping across all sections and units
   const patternMapping = getQAForFilename(content);
   if (patternMapping.hasMapping) {
-    console.log(`Using standardized pattern mapping system for ${content}`);
+    logDebug(`Using standardized pattern mapping for ${content.substring(0, 30)}...`, 2);
     return {
       country: country,
       question: patternMapping.question,
@@ -339,7 +346,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   // Examples: "What is it – It is a pencil.gif", "Where is this flag from – It is from Poland.jpg"
   const extractedFromFilename = formatText.extractQuestionsFromFilename(content);
   if (extractedFromFilename) {
-    console.log("Extracted question/answer from filename:", extractedFromFilename);
+    logDebug("Extracted question/answer from filename pattern", 2);
     return {
       country: country,
       question: extractedFromFilename.question,
@@ -353,11 +360,11 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   
   // Special case for scissors - especially the 12 N G pattern
   if (lowerContent.includes('scissors')) {
-    console.log('🔍 SCISSORS SPECIAL SECTION DETECTED: ' + content);
+    logDebug('SCISSORS SPECIAL SECTION DETECTED: ' + content.substring(0, 30) + '...', 2);
     
     // HIGHEST PRIORITY: Exact match for "12 N G Do You Have Green Scissors"
     if (content.includes('12 N G') && lowerContent.includes('green scissors')) {
-      console.log('💚 GREEN SCISSORS EXACT PATTERN MATCH FOUND');
+      logDebug('GREEN SCISSORS EXACT PATTERN MATCH FOUND', 1);
       return {
         country: country,
         question: "Do you have green scissors?",
@@ -369,7 +376,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     // Look for partial matches - any 12 N G pattern
     const scissorsMatch = content.match(/12\s*N\s*G/i);
     if (scissorsMatch) {
-      console.log('🎯 12 N G SCISSORS PATTERN MATCH FOUND');
+      logDebug('12 N G SCISSORS PATTERN MATCH FOUND', 1);
       return {
         country: country,
         question: "Do you have green scissors?",
@@ -380,7 +387,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // Look for "green scissors" anywhere in the content
     if (lowerContent.includes('green scissors')) {
-      console.log('🧩 GREEN SCISSORS CONTENT MATCH FOUND');
+      logDebug('GREEN SCISSORS CONTENT MATCH FOUND', 1);
       return {
         country: country,
         question: "Do you have green scissors?",
@@ -394,7 +401,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
       const scissorsCodeMatch = content.match(/12\s*N\s*([A-Z])/i);
       const variantCode = scissorsCodeMatch ? scissorsCodeMatch[1].toUpperCase() : '';
       
-      console.log('✂️ SCISSORS CODE DETECTED: 12 N ' + variantCode);
+      logDebug('SCISSORS CODE DETECTED: 12 N ' + variantCode, 2);
       
       switch (variantCode) {
         case 'A':
@@ -495,7 +502,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   
   // Sharpener section with specific pattern matching for 08 M patterns
   if (lowerContent.includes('sharpener')) {
-    console.log("Processing sharpener section with code pattern checks");
+    logDebug("Processing sharpener section with code pattern checks", 2);
     
     // Special handling for exact patterns from the provided mapping
     // First, try to extract the exact section pattern (08 M A, 08 M B, etc.)
@@ -507,7 +514,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
       
       // Check if it's section 08 M with various subpatterns
       if (sectionNum === '8' && typeCode === 'M') {
-        console.log(`Found exact sharpener pattern match: 08 ${typeCode} ${subCode}`);
+        logDebug(`Found exact sharpener pattern match: 08 ${typeCode} ${subCode}`, 2);
         
         // Handle specific subpatterns
         switch (subCode) {
@@ -632,7 +639,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     }
     
     // General fallback for any sharpener
-    console.log("Using general hardcoded fallback for sharpener section");
+    logDebug("Using general hardcoded fallback for sharpener section", 2);
     return {
       country: country,
       question: "What is this?",
@@ -651,11 +658,11 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
       const typeCode = rulerMatches[2].toUpperCase();
       const subCode = rulerMatches[3].toUpperCase();
       
-      console.log(`Processing ruler pattern match: ${sectionNum} ${typeCode} ${subCode}`);
+      logDebug(`Processing ruler pattern match: ${sectionNum} ${typeCode} ${subCode}`, 2);
       
       // Check if it's section 10 N with various subpatterns
       if (sectionNum === '10' && typeCode === 'N') {
-        console.log(`Found exact ruler pattern match: ${sectionNum} ${typeCode} ${subCode}`);
+        logDebug(`Found exact ruler pattern match: ${sectionNum} ${typeCode} ${subCode}`, 2);
         
         // Handle specific subpatterns based on the provided mapping
         switch (subCode) {
@@ -671,7 +678,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
             // Animal-shaped rulers need special handling
             if (lowerContent.includes('shark') || lowerContent.includes('lion') || lowerContent.includes('crocodile') || 
                 lowerContent.includes('animal')) {
-              console.log("Found animal-shaped rulers pattern");
+              logDebug("Found animal-shaped rulers pattern", 2);
               return {
                 country: country,
                 question: "What are they?",
@@ -774,7 +781,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
             
           case 'M':
             // Handle "How many" questions with exact count from your reference data
-            console.log("Found 10 N M 'How Many Rulers' pattern match - using exact mapping");
+            logDebug("Found 10 N M 'How Many Rulers' pattern match - using exact mapping", 2);
             return {
               country: country,
               question: "How many rulers are there?",
@@ -797,7 +804,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
                && (typeCode === 'N' || typeCode === 'M')) {
         
         if (sectionNum === '08') {
-          console.log("Using precise hardcoded pattern match for section 08 ruler");
+          logDebug("Using precise hardcoded pattern match for section 08 ruler", 2);
           return {
             country: country,
             question: "What is this?",
@@ -806,7 +813,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
           };
         }
         else if (sectionNum === '09') {
-          console.log("Using precise hardcoded pattern match for section 09 ruler");
+          logDebug("Using precise hardcoded pattern match for section 09 ruler", 2);
           return {
             country: country,
             question: "What is this?",
@@ -815,7 +822,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
           };
         }
         else if (sectionNum === '11') {
-          console.log("Using precise hardcoded pattern match for section 11 ruler");
+          logDebug("Using precise hardcoded pattern match for section 11 ruler", 2);
           return {
             country: country,
             question: "What is this?",
@@ -824,7 +831,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
           };
         }
         else if (sectionNum === '12') {
-          console.log("Using precise hardcoded pattern match for section 12 ruler");
+          logDebug("Using precise hardcoded pattern match for section 12 ruler", 2);
           return {
             country: country,
             question: "What is this?",
@@ -839,7 +846,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // Section 08 Rulers - by basic pattern
     if (/08.*ruler/i.test(content)) {
-      console.log("Using basic pattern match for section 08 ruler");
+      logDebug("Using basic pattern match for section 08 ruler", 3);
       return {
         country: country,
         question: "What is this?",
@@ -850,7 +857,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // Section 09 Rulers - by basic pattern
     if (/09.*ruler/i.test(content)) {
-      console.log("Using basic pattern match for section 09 ruler");
+      logDebug("Using basic pattern match for section 09 ruler", 3);
       return {
         country: country,
         question: "What is this?",
@@ -861,7 +868,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // Section 10 Rulers - direct pattern match
     if (/10.*ruler/i.test(content)) {
-      console.log("Using basic pattern match for section 10 ruler");
+      logDebug("Using basic pattern match for section 10 ruler", 3);
       
       // Special check for animal-shaped rulers (shark, lion, crocodile)
       if (content.toLowerCase().includes('shark') || 
@@ -869,7 +876,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
           content.toLowerCase().includes('crocodile') || 
           content.toLowerCase().includes('animal')) {
         
-        console.log("ANIMAL-SHAPED RULER DETECTED - Using direct hardcoded QA");
+        logDebug("ANIMAL-SHAPED RULER DETECTED - Using direct hardcoded QA", 2);
         return {
           country: country,
           question: "What are they?",
@@ -898,7 +905,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // Section 11 Rulers - by basic pattern
     if (/11.*ruler/i.test(content)) {
-      console.log("Using basic pattern match for section 11 ruler");
+      logDebug("Using basic pattern match for section 11 ruler", 3);
       return {
         country: country,
         question: "What is this?",
@@ -909,7 +916,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // Section 12 Rulers - by basic pattern
     if (/12.*ruler/i.test(content)) {
-      console.log("Using basic pattern match for section 12 ruler");
+      logDebug("Using basic pattern match for section 12 ruler", 3);
       return {
         country: country,
         question: "What is this?",
@@ -920,7 +927,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     
     // General fallback for any other ruler sections not caught above
     if ((/0[8-9]|1[0-2]/).test(content)) {
-      console.log("Using general hardcoded fallback for ruler section 08-12");
+      logDebug("Using general hardcoded fallback for ruler section 08-12", 3);
       return {
         country: country,
         question: "What is this?",
@@ -930,7 +937,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     }
     
     // Final fallback for any ruler content
-    console.log("Using final fallback for ruler content");
+    logDebug("Using final fallback for ruler content", 3);
     return {
       country: country,
       question: "What is this?",
@@ -941,7 +948,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   
   // Scissors section with specific pattern matching for 12 N patterns
   if (lowerContent.includes('scissors')) {
-    console.log("Processing scissors section with code pattern checks");
+    logDebug("Processing scissors section with code pattern checks", 2);
     
     // First, try to extract the exact section pattern (12 N A, 12 N B, etc.)
     const scissorsMatches = content.match(/([0-9]{2})\s*([A-Za-z])\s*([A-Za-z])/i);
@@ -952,7 +959,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
       
       // Check if it's section 12 N with various subpatterns
       if (sectionNum === '12' && typeCode === 'N') {
-        console.log(`Found exact scissors pattern match: ${sectionNum} ${typeCode} ${subCode}`);
+        logDebug(`Found exact scissors pattern match: ${sectionNum} ${typeCode} ${subCode}`, 2);
         
         // Handle specific subpatterns based on the provided mapping
         switch (subCode) {
@@ -1031,7 +1038,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
             
           case 'L':
             // Exact mapping from your reference data for "12 N L"
-            console.log("Found 12 N L 'How Many Scissors' pattern - using exact mapping");
+            logDebug("Found 12 N L 'How Many Scissors' pattern - using exact mapping", 2);
             return {
               country: country,
               question: "How many scissors are there?",
@@ -1041,7 +1048,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
             
           case 'M':
             // Exact mapping from your reference data for "12 N M"
-            console.log("Found 12 N M 'How Many Scissors' pattern - using exact mapping");
+            logDebug("Found 12 N M 'How Many Scissors' pattern - using exact mapping", 2);
             return {
               country: country,
               question: "How many scissors are there?",
@@ -1062,7 +1069,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     }
     
     // General fallback for scissors
-    console.log("Using general hardcoded fallback for scissors section");
+    logDebug("Using general hardcoded fallback for scissors section", 3);
     return {
       country: country,
       question: "What are these?",
@@ -1073,7 +1080,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
   
   // Bag section - with specific pattern matching for 09 N patterns
   if (lowerContent.includes('bag')) {
-    console.log("Processing bag section with code pattern checks");
+    logDebug("Processing bag section with code pattern checks", 2);
     
     // First, try to extract the exact section pattern (09 N A, 09 N B, etc.)
     const bagMatches = content.match(/0([0-9])\s*([A-Za-z])\s*([A-Za-z])/i);
@@ -1084,7 +1091,7 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
       
       // Check if it's section 09 N with various subpatterns
       if (sectionNum === '9' && typeCode === 'N') {
-        console.log(`Found exact bag pattern match: 09 ${typeCode} ${subCode}`);
+        logDebug(`Found exact bag pattern match: 09 ${typeCode} ${subCode}`, 2);
         
         // Handle specific subpatterns based on the provided mapping
         switch (subCode) {
@@ -1283,15 +1290,15 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         // Fetch Excel QA data for this specific book and unit
         const res = await apiRequest('GET', `/api/direct/${bookId}/${unitId}/excel-qa`);
         if (!res.ok) {
-          console.log(`Error loading Excel QA data for ${bookId}/${unitId}: ${res.statusText}`);
+          logDebug(`Error loading Excel QA data for ${bookId}/${unitId}: ${res.statusText}`, 1);
           return { success: false, entries: [] };
         }
         
         const data = await res.json();
-        console.log(`Loaded ${data.entries?.length || 0} QA entries from Excel for ${bookId}/${unitId}`);
+        logDebug(`Loaded ${data.entries?.length || 0} QA entries from Excel for ${bookId}/${unitId}`, 1);
         return data;
       } catch (error) {
-        console.error("Error fetching Excel QA data:", error);
+        logDebug(`Error fetching Excel QA data: ${error}`, 1);
         return { success: false, entries: [] };
       }
     },
@@ -1339,7 +1346,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
           }
         }
       } catch (error) {
-        console.error("Error loading saved Q&A data from localStorage:", error);
+        logDebug(`Error loading saved Q&A data from localStorage: ${error}`, 1);
       }
       
       // Then try to fetch from server (which will override localStorage if newer)
@@ -1391,7 +1398,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             }
           }
         } catch (error) {
-          console.error("Error fetching content edits from server:", error);
+          logDebug(`Error fetching content edits from server: ${error}`, 1);
         }
       };
       
@@ -1413,19 +1420,19 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
     // FIRST APPROACH: Try our enhanced JSON-based mapping (most reliable)
     // This uses the improved pattern matching algorithms
     if (!isLoadingJsonMappings && jsonMappings && Object.keys(jsonMappings).length > 0) {
-      console.log("Using enhanced JSON-based Q&A mapping system");
+      logDebug("Using enhanced JSON-based Q&A mapping system", 2);
       const filename = material.content;
       
       // Filter mappings by unitId if provided
       const currentUnitId = unitId || '';
-      console.log(`Loaded ${Object.values(jsonMappings).filter(qa => qa.unitId === currentUnitId).length} QA entries from Excel for ${bookId}/${currentUnitId}`);
+      logDebug(`Loaded ${Object.values(jsonMappings).filter(qa => qa.unitId === currentUnitId).length} QA entries from Excel for ${bookId}/${currentUnitId}`, 2);
       
       // Pass the currentUnitId to the findMatchingQA function to filter by unit
       const matchingQA = findMatchingQA(filename, currentUnitId);
       
       // Check if we found a matching question
       if (matchingQA) {
-        console.log("✅ FOUND MATCH using enhanced JSON-based mapping for:", filename);
+        logDebug(`✅ FOUND MATCH using enhanced JSON-based mapping for: ${filename}`, 1);
         setQAData({
           country: formatText.determineCountry(filename),
           question: matchingQA.question,
@@ -1435,7 +1442,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         });
         return;
       } else {
-        console.log("❌ No match found using enhanced JSON-based mapping for:", filename);
+        logDebug(`❌ No match found using enhanced JSON-based mapping for: ${filename}`, 2);
       }
     }
     
@@ -1453,19 +1460,19 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         if (lowerText.includes('ruler')) {
           // Directly detect problematic section codes
           if (/08/i.test(text)) {
-            console.log("Using special ruler mapping for section 08");
+            logDebug("Using special ruler mapping for section 08", 3);
             return "08 N";
           } else if (/09/i.test(text)) {
-            console.log("Using special ruler mapping for section 09");
+            logDebug("Using special ruler mapping for section 09", 3);
             return "09 N";
           } else if (/10/i.test(text)) {
-            console.log("Using special ruler mapping for section 10");
+            logDebug("Using special ruler mapping for section 10", 3);
             return "10 N";
           } else if (/11/i.test(text)) {
-            console.log("Using special ruler mapping for section 11");
+            logDebug("Using special ruler mapping for section 11", 3);
             return "11 N";
           } else if (/12/i.test(text)) {
-            console.log("Using special ruler mapping for section 12");
+            logDebug("Using special ruler mapping for section 12", 3);
             return "12 N";
           }
         }
@@ -1479,7 +1486,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
           let specialMatches = text.match(/(\d{2})\s*([A-Za-z])\s*([A-Za-z])(?:\s+|$)/i);
           if (specialMatches) {
             let specialPattern = `${specialMatches[1]} ${specialMatches[2].toUpperCase()} ${specialMatches[3].toUpperCase()}`;
-            console.log("Extracted special section pattern:", specialPattern, "from filename:", filename);
+            logDebug(`Extracted special section pattern: ${specialPattern} from filename: ${filename}`, 3);
             return specialPattern;
           }
           
