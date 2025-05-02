@@ -40,6 +40,7 @@ import { getBook6Unit5LessonPlans, getBook6Unit5Resources } from '@/data/book6-u
 import { getBook6Unit6LessonPlans, getBook6Unit6Resources } from '@/data/book6-unit6-implementation';
 import { getBook6Unit7LessonPlans, getBook6Unit7Resources } from '@/data/book6-unit7-implementation';
 import { getBook6Unit8LessonPlans, getBook6Unit8Resources } from '@/data/book6-unit8-implementation';
+import { getBook6Unit9LessonPlans, getBook6Unit9Resources } from '@/data/book6-unit9-implementation';
 
 // Book 6 resources (direct imports)
 import { book6Unit1Resources } from '@/data/book6-unit1-resources';
@@ -50,6 +51,7 @@ import { book6Unit5Resources } from '@/data/book6-unit5-resources';
 import { book6Unit6Resources } from '@/data/book6-unit6-resources';
 import { book6Unit7Resources } from '@/data/book6-unit7-resources';
 import { book6Unit8Resources } from '@/data/book6-unit8-resources';
+import { book6Unit9Resources } from '@/data/book6-unit9-resources';
 
 export interface TeacherResource {
   id?: string;
@@ -503,6 +505,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return getBook6Unit8Resources();
       } catch (error) {
         console.error('Error getting Book 6 Unit 8 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 9 - Present Perfect - What Has Just Happened
+    if (bookId === '6' && unitId === '9') {
+      try {
+        console.log('Loading Book 6 Unit 9 resources');
+        // Use the getBook6Unit9Resources function from the implementation file
+        return getBook6Unit9Resources();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 9 resources:', error);
         return [];
       }
     }
@@ -1012,6 +1026,62 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                           size="sm" 
                           className="text-xs flex items-center text-destructive" 
                           onClick={() => setConfirmDelete({ id: `past-simple-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 9 - Present Perfect - What Has Just Happened lesson plans
+    if (bookId === '6' && unitId === '9') {
+      // Get Book 6 Unit 9 lesson plans
+      let presentPerfectPlans: LessonPlan[] = [];
+      try {
+        presentPerfectPlans = getBook6Unit9LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 9 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Present Perfect Tense Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {presentPerfectPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `present-perfect-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                         >
                           <Trash2 className="h-3 w-3 mr-1" />
                           Delete
