@@ -12,6 +12,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 // Import sample resources for Book 7, Unit 6
 import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from '@/data/unit6-resources';
 
+// Import implementation functions for Book 6 Units
+import { getBook6Unit9Resources, getBook6Unit9LessonPlans } from '@/data/book6-unit9-implementation';
+import { getBook6Unit10Resources, getBook6Unit10LessonPlans } from '@/data/book6-unit10-implementation';
+
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
 const defaultResourceGetter = (bookId: string, unitId: string) => {
@@ -810,7 +814,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '6' && unitId === '10') {
       try {
         console.log('Loading Book 6 Unit 10 resources');
-        // Use the getBook6Unit10Resources function from the implementation file
+        // Using the directly imported function
         return getBook6Unit10Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 10 resources:', error);
@@ -1489,6 +1493,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 10 lesson plans
       let techSavvyPlans: LessonPlan[] = [];
       try {
+        // Using directly imported function
         techSavvyPlans = getBook6Unit10LessonPlans();
       } catch (error) {
         console.error('Error getting Book 6 Unit 10 lesson plans:', error);
