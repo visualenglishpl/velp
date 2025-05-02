@@ -2,23 +2,15 @@
 
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { TeacherResource } from '@/components/TeacherResources';
-import { bodyActionsLessonPlan, physicalAbilitiesLessonPlan, book6Unit7Resources } from './book6-unit7-resources';
+import { bodySystemsLessonPlan, healthAndIllnessLessonPlan, book6Unit7Resources, book6Unit7LessonPlans } from './book6-unit7-resources';
 
 // Function to get lesson plans for this unit
 export function getBook6Unit7LessonPlans(): LessonPlan[] {
-  return [
-    bodyActionsLessonPlan,
-    physicalAbilitiesLessonPlan
-  ];
+  return book6Unit7LessonPlans;
 }
 
 // Function to get additional resources for the unit
-export function getBook6Unit7Resources(): TeacherResource[] {
-  // Return resources with proper typing for TeacherResource
-  return book6Unit7Resources.map(resource => ({
-    ...resource,
-    id: `book6-unit7-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-    bookId: '6',
-    unitId: '7'
-  }));
+export function getBook6Unit7Resources(bookId: string, unitId: string): TeacherResource[] {
+  // Just return the resources directly since they already have the correct properties
+  return book6Unit7Resources;
 }
