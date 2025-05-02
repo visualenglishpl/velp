@@ -3,6 +3,9 @@ import { TeacherResource } from '@/components/TeacherResources';
 // What Your Body Can Do - Unit 7 Resources
 export const book6Unit7Resources: TeacherResource[] = [
   {
+    id: "book6-unit7-game1",
+    bookId: "6",
+    unitId: "7",
     title: "Illness Vocabulary Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -10,6 +13,9 @@ export const book6Unit7Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/34904fd94f30404192d2bdab3f028260?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit7-game2",
+    bookId: "6",
+    unitId: "7",
     title: "Internal Body Parts Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -17,6 +23,9 @@ export const book6Unit7Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4fbc8cd964f04a51aebc1e96f382140e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit7-game3",
+    bookId: "6",
+    unitId: "7",
     title: "What Your Body Can Do Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -24,6 +33,9 @@ export const book6Unit7Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5cec72b501b54381b2f536e9c82a1c5c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit7-video1",
+    bookId: "6",
+    unitId: "7",
     title: "Human Body Systems",
     resourceType: "video" as const,
     provider: "YouTube",
@@ -34,11 +46,7 @@ export const book6Unit7Resources: TeacherResource[] = [
 
 // Create the implementation function to expose the resources
 export function getBook6Unit7Resources(bookId: string, unitId: string): TeacherResource[] {
-  return book6Unit7Resources.map(resource => ({
-    ...resource,
-    bookId,
-    unitId
-  }));
+  return book6Unit7Resources;
 }
 
 // Sample lesson plans for Unit 7

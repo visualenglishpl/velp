@@ -3,6 +3,9 @@ import { TeacherResource } from '@/components/TeacherResources';
 // Book 6 Unit 12 - Are You Eco - Environment Resources
 export const book6Unit12Resources: TeacherResource[] = [
   {
+    id: "book6-unit12-game1",
+    bookId: "6",
+    unitId: "12",
     title: "Solar System Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -10,6 +13,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2753bac717214441a38d76fda2cc33b8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit12-game2",
+    bookId: "6",
+    unitId: "12",
     title: "Types of Pollution Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -17,6 +23,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f07c8c0eebfb48d9a771d2c7cad81f3d?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit12-game3",
+    bookId: "6",
+    unitId: "12",
     title: "Can You Recycle? Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -24,6 +33,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/98fd4453f46240f0ac6bb612b5945960?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit12-game4",
+    bookId: "6",
+    unitId: "12",
     title: "Endangered or Extinct Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -31,6 +43,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f04d2f477ff8484db0456922be236071?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit12-game5",
+    bookId: "6",
+    unitId: "12",
     title: "Endangered Animals Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -38,6 +53,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/db58fd0165464c08a4c385c035325f3b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit12-video1",
+    bookId: "6",
+    unitId: "12",
     title: "Earth Song",
     resourceType: "video" as const,
     provider: "YouTube",
@@ -45,6 +63,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/S2SMvfGe72U?si=lNL1zDC02ILXCMju" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit12-video2",
+    bookId: "6",
+    unitId: "12",
     title: "Environmental Pollution Vocabulary",
     resourceType: "video" as const,
     provider: "ISL Collective",
@@ -52,6 +73,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/79022" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
   },
   {
+    id: "book6-unit12-video3",
+    bookId: "6",
+    unitId: "12",
     title: "Environmental Animation",
     resourceType: "video" as const,
     provider: "ISL Collective",
@@ -59,6 +83,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/262369" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
   },
   {
+    id: "book6-unit12-video4",
+    bookId: "6",
+    unitId: "12",
     title: "Planets & Stars Size Comparison",
     resourceType: "video" as const,
     provider: "YouTube",
@@ -66,6 +93,9 @@ export const book6Unit12Resources: TeacherResource[] = [
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/HEheh1BH34Q?si=-L7XXOZqHjFsV3TT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit12-video5",
+    bookId: "6",
+    unitId: "12",
     title: "Environmental Protection",
     resourceType: "video" as const,
     provider: "YouTube",
@@ -76,11 +106,7 @@ export const book6Unit12Resources: TeacherResource[] = [
 
 // Create the implementation function to expose the resources
 export function getBook6Unit12Resources(bookId: string, unitId: string): TeacherResource[] {
-  return book6Unit12Resources.map(resource => ({
-    ...resource,
-    bookId,
-    unitId
-  }));
+  return book6Unit12Resources;
 }
 
 // Sample lesson plans for Unit 12
