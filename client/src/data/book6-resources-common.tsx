@@ -28,6 +28,10 @@ export const BOOK6_UNIT_TITLES: Record<string, string> = {
 };
 
 // Wordwall games mapped by unit with their embed codes
+/**
+ * Collection of games for each Book 6 unit
+ * These are organized by unit number and will be added to the resources list
+ */
 const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embedCode: string, provider?: string }[]> = {
   '1': [
     {
@@ -374,15 +378,14 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
   ],
   '11': [
     {
-      title: "Transportation and Travel Vocabulary",
-      sourceUrl: "https://www.youtube.com/watch?v=biX6aOuLKh0",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/biX6aOuLKh0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+      title: "Extreme Sports Introduction",
+      sourceUrl: "https://www.youtube.com/watch?v=cM2vxZWGmes",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/cM2vxZWGmes" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
     },
     {
-      title: "Means of Transportation Vocabulary",
-      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/15928",
-      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/15928" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
-      provider: 'ISL Collective'
+      title: "Mountain Climbing Safety",
+      sourceUrl: "https://www.youtube.com/watch?v=3xHnBDY-EPs",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/3xHnBDY-EPs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
     }
   ],
   '12': [
