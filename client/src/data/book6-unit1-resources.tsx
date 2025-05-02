@@ -3,6 +3,9 @@ import { TeacherResource } from '@/components/TeacherResources';
 // Book 6 Unit 1 - Jobs and Occupations Resources
 export const book6Unit1Resources: TeacherResource[] = [
   {
+    id: "book6-unit1-game1",
+    bookId: "6",
+    unitId: "1",
     title: "Jobs and Occupations Game 1",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -10,6 +13,9 @@ export const book6Unit1Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/52d2810af010454d9363eec201d2f23f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit1-game2",
+    bookId: "6",
+    unitId: "1",
     title: "Jobs and Occupations Game 2",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -17,6 +23,9 @@ export const book6Unit1Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7f0da57d5aea4ea1b9786ec62492b5bf?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit1-game3",
+    bookId: "6",
+    unitId: "1",
     title: "Jobs and Occupations Game 3",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -24,6 +33,9 @@ export const book6Unit1Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e202e8707b1b46eda206429e021b78cf?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit1-video1",
+    bookId: "6",
+    unitId: "1",
     title: "Jobs ESL Guessing Game 1",
     resourceType: "video" as const,
     provider: "YouTube",
@@ -31,6 +43,9 @@ export const book6Unit1Resources: TeacherResource[] = [
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/wipXsbFTX-U?si=u5G9MH5UdS7srqY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit1-video2",
+    bookId: "6",
+    unitId: "1",
     title: "Jobs ESL Guessing Game 2",
     resourceType: "video" as const,
     provider: "YouTube",
@@ -41,11 +56,7 @@ export const book6Unit1Resources: TeacherResource[] = [
 
 // Create the implementation function to expose the resources
 export function getBook6Unit1Resources(bookId: string, unitId: string): TeacherResource[] {
-  return book6Unit1Resources.map(resource => ({
-    ...resource,
-    bookId,
-    unitId
-  }));
+  return book6Unit1Resources;
 }
 
 // Sample lesson plans for Unit 1

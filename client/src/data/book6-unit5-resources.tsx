@@ -3,6 +3,9 @@ import { TeacherResource } from '@/components/TeacherResources';
 // Theme Park Stalls - Unit 5 Resources
 export const book6Unit5Resources: TeacherResource[] = [
   {
+    id: "book6-unit5-game1",
+    bookId: "6",
+    unitId: "5",
     title: "Theme Park Stalls Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -10,6 +13,9 @@ export const book6Unit5Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6b7661ae6d51420397ca4b290370c0a5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit5-game2",
+    bookId: "6",
+    unitId: "5",
     title: "Theme Park Rides Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -17,6 +23,9 @@ export const book6Unit5Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8080784ba2f2495287e30b926bf38bcb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit5-game3",
+    bookId: "6",
+    unitId: "5",
     title: "Theme Park Food Game",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -24,6 +33,9 @@ export const book6Unit5Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/64d32b0e4bcb44df9a8ca4b84dce6ac4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit5-video1",
+    bookId: "6",
+    unitId: "5",
     title: "Guess the Rides",
     resourceType: "video" as const,
     provider: "YouTube",
@@ -34,11 +46,7 @@ export const book6Unit5Resources: TeacherResource[] = [
 
 // Create the implementation function to expose the resources
 export function getBook6Unit5Resources(bookId: string, unitId: string): TeacherResource[] {
-  return book6Unit5Resources.map(resource => ({
-    ...resource,
-    bookId,
-    unitId
-  }));
+  return book6Unit5Resources;
 }
 
 // Sample lesson plans for Unit 5

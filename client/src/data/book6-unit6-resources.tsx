@@ -3,6 +3,9 @@ import { TeacherResource } from '@/components/TeacherResources';
 // In the Kitchen - Unit 6 Resources
 export const book6Unit6Resources: TeacherResource[] = [
   {
+    id: "book6-unit6-game1",
+    bookId: "6",
+    unitId: "6",
     title: "In the Kitchen Kahoot",
     resourceType: "game" as const,
     provider: "Kahoot",
@@ -10,6 +13,9 @@ export const book6Unit6Resources: TeacherResource[] = [
     embedCode: ""
   },
   {
+    id: "book6-unit6-game2",
+    bookId: "6",
+    unitId: "6",
     title: "Kitchen Utensils Game 1",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -17,6 +23,9 @@ export const book6Unit6Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5eedd77a9110462a9111a38f2f52fda5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit6-game3",
+    bookId: "6",
+    unitId: "6",
     title: "Kitchen Utensils Game 2",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -24,6 +33,9 @@ export const book6Unit6Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8080784ba2f2495287e30b926bf38bcb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit6-game4",
+    bookId: "6",
+    unitId: "6",
     title: "Cooking Methods Game 1",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -31,6 +43,9 @@ export const book6Unit6Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ecb2dd96232d4c4e9f9103f738de561c?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit6-game5",
+    bookId: "6",
+    unitId: "6",
     title: "Cooking Methods Game 2",
     resourceType: "game" as const,
     provider: "Wordwall",
@@ -38,6 +53,9 @@ export const book6Unit6Resources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c12666ce8e1640e299be713f24762d8c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
+    id: "book6-unit6-video1",
+    bookId: "6",
+    unitId: "6",
     title: "Kitchen Vocabulary Video",
     resourceType: "video" as const,
     provider: "YouTube",
@@ -48,11 +66,7 @@ export const book6Unit6Resources: TeacherResource[] = [
 
 // Create the implementation function to expose the resources
 export function getBook6Unit6Resources(bookId: string, unitId: string): TeacherResource[] {
-  return book6Unit6Resources.map(resource => ({
-    ...resource,
-    bookId,
-    unitId
-  }));
+  return book6Unit6Resources;
 }
 
 // Sample lesson plans for Unit 6
