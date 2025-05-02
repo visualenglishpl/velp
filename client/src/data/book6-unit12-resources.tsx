@@ -186,6 +186,62 @@ export const book6Unit12Resources = [
     title: "Solar System Game",
     resourceType: "game" as const,
     provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/2753bac717214441a38d76fda2cc33b8",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2753bac717214441a38d76fda2cc33b8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Types of Pollution Game",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/f07c8c0eebfb48d9a771d2c7cad81f3d",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f07c8c0eebfb48d9a771d2c7cad81f3d?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Can You Recycle? Game",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/98fd4453f46240f0ac6bb612b5945960",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/98fd4453f46240f0ac6bb612b5945960?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Endangered or Extinct Game",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/f04d2f477ff8484db0456922be236071",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f04d2f477ff8484db0456922be236071?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Endangered Animals Game",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/db58fd0165464c08a4c385c035325f3b",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/db58fd0165464c08a4c385c035325f3b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Earth Song",
+    resourceType: "video" as const,
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/embed/S2SMvfGe72U",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/S2SMvfGe72U?si=lNL1zDC02ILXCMju" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+  },
+  {
+    title: "Environmental Pollution Animation",
+    resourceType: "video" as const,
+    provider: "ISL Collective",
+    sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/vocabulary-practice/general-vocabulary-practice/word-classes/environmental-pollution-vocabulary/79022",
+    embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/79022" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
+  },
+  {
+    title: "Environment Animation",
+    resourceType: "video" as const,
+    provider: "ISL Collective",
+    sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/future-tenses/environmental-animation/262369",
+    embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/262369" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
+  }
+  {
+    title: "Solar System Game",
+    resourceType: "game" as const,
+    provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/2753bac717214441a38d76fda2cc33b8",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2753bac717214441a38d76fda2cc33b8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
