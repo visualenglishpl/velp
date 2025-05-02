@@ -8,46 +8,139 @@ import { LessonPlan } from '@/components/LessonPlanTemplate';
  */
 
 // Wordwall games mapped by unit with their embed codes
-const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embedCode: string }[]> = {
+const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embedCode: string, provider?: string }[]> = {
   '1': [
     {
-      title: "Jobs and Occupations",
-      sourceUrl: "https://wordwall.net/resource/5f4a631cd6854eeda345a1a79e4f0f11",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5f4a631cd6854eeda345a1a79e4f0f11?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Jobs Game 1", 
+      sourceUrl: "https://wordwall.net/resource/52d2810af010454d9363eec201d2f23f",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/52d2810af010454d9363eec201d2f23f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
-      title: "Dream Jobs Quiz", 
-      sourceUrl: "https://wordwall.net/resource/1b30c69bc4774aebb0b3c04cc1f08b56",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1b30c69bc4774aebb0b3c04cc1f08b56?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Jobs Game 2", 
+      sourceUrl: "https://wordwall.net/resource/7f0da57d5aea4ea1b9786ec62492b5bf",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7f0da57d5aea4ea1b9786ec62492b5bf?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Jobs Game 3", 
+      sourceUrl: "https://wordwall.net/resource/e202e8707b1b46eda206429e021b78cf",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e202e8707b1b46eda206429e021b78cf?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '2': [
+    {
+      title: "Appliances Game 1", 
+      sourceUrl: "https://wordwall.net/resource/618c61ec94e44892a33f2e4db491b222",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/618c61ec94e44892a33f2e4db491b222?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Appliances Game 2",
+      sourceUrl: "https://wordwall.net/resource/52d2810af010454d9363eec201d2f23f",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/52d2810af010454d9363eec201d2f23f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Appliances Game 3",
+      sourceUrl: "https://wordwall.net/resource/618c61ec94e44892a33f2e4db491b222",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/618c61ec94e44892a33f2e4db491b222?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '3': [
+    {
+      title: "Future - What Will You Do Game 1",
+      sourceUrl: "https://wordwall.net/resource/5aa489c7d8c24523a73d5ddc958bb415",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5aa489c7d8c24523a73d5ddc958bb415?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Future - What Will You Do Game 2",
+      sourceUrl: "https://wordwall.net/resource/53399cf8c14a468abc6ab84a193110f1",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/53399cf8c14a468abc6ab84a193110f1?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Life in the Future Game",
+      sourceUrl: "https://wordwall.net/resource/1920f9692e4c4619880faf22a4d1446c",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1920f9692e4c4619880faf22a4d1446c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '4': [
+    {
+      title: "Animal Classification Game 1",
+      sourceUrl: "https://wordwall.net/resource/b8fdaeeaebd94b3a967f74bb089c4fb1",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/b8fdaeeaebd94b3a967f74bb089c4fb1?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Animal Classification Game 2",
+      sourceUrl: "https://wordwall.net/resource/cbb7f7c79a734d7486a4305d4a7b4522",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/cbb7f7c79a734d7486a4305d4a7b4522?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Animal Classification Game 3",
+      sourceUrl: "https://wordwall.net/resource/d32038b5e08a423db5e45bea20e3f991",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d32038b5e08a423db5e45bea20e3f991?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Animal Classification Game 4",
+      sourceUrl: "https://wordwall.net/resource/ba7c9ec7e68d499898a42c537c62cc7c",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ba7c9ec7e68d499898a42c537c62cc7c?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Animal Classification Game 5",
+      sourceUrl: "https://wordwall.net/resource/dfc836366f9643b58ac49ead018e7512",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/dfc836366f9643b58ac49ead018e7512?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Animal Group Classification Game",
+      sourceUrl: "https://www.sheppardsoftware.com/science/animals/games/animal-characteristics/",
+      embedCode: `<iframe src="https://www.sheppardsoftware.com/science/animals/games/animal-characteristics/" width="100%" height="500" frameborder="0" allowfullscreen></iframe>`,
+      provider: "Shepard Software"
     }
   ],
   '5': [
     {
-      title: "Theme Park Attractions", 
-      sourceUrl: "https://wordwall.net/resource/19a3f2475cff43e98a217bc24b6fa0b7",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/19a3f2475cff43e98a217bc24b6fa0b7?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Theme Park Stalls Game",
+      sourceUrl: "https://wordwall.net/resource/6b7661ae6d51420397ca4b290370c0a5",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6b7661ae6d51420397ca4b290370c0a5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
-      title: "Theme Park Vocabulary", 
-      sourceUrl: "https://wordwall.net/resource/e824bd6f7dfa4dcaa32b3428d7cf9e8a",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e824bd6f7dfa4dcaa32b3428d7cf9e8a?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Theme Park Rides Game",
+      sourceUrl: "https://wordwall.net/resource/8080784ba2f2495287e30b926bf38bcb",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8080784ba2f2495287e30b926bf38bcb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Theme Park Food Game",
+      sourceUrl: "https://wordwall.net/resource/64d32b0e4bcb44df9a8ca4b84dce6ac4",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/64d32b0e4bcb44df9a8ca4b84dce6ac4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '6': [
     {
-      title: "Home Appliances Game", 
-      sourceUrl: "https://wordwall.net/resource/b1feb9c7e0e64156b44e38a03c97e1d4",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/b1feb9c7e0e64156b44e38a03c97e1d4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "In the Kitchen Kahoot",
+      sourceUrl: "https://create.kahoot.it/share/in-the-kitchen/b683184e-f723-4784-a02a-d51e3678c3af",
+      embedCode: `<iframe src="https://create.kahoot.it/share/in-the-kitchen/b683184e-f723-4784-a02a-d51e3678c3af" width="100%" height="500" frameborder="0" allowfullscreen></iframe>`,
+      provider: "Kahoot"
     },
     {
-      title: "Kitchen Appliances Quiz", 
-      sourceUrl: "https://wordwall.net/resource/2a77fe1f92404eff89b58ff9fbe3dbff",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2a77fe1f92404eff89b58ff9fbe3dbff?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Kitchen Utensils Game 1",
+      sourceUrl: "https://wordwall.net/resource/5eedd77a9110462a9111a38f2f52fda5",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5eedd77a9110462a9111a38f2f52fda5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Kitchen Utensils Game 2",
+      sourceUrl: "https://wordwall.net/resource/8080784ba2f2495287e30b926bf38bcb",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8080784ba2f2495287e30b926bf38bcb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Cooking Methods Game 1",
+      sourceUrl: "https://wordwall.net/resource/ecb2dd96232d4c4e9f9103f738de561c",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ecb2dd96232d4c4e9f9103f738de561c?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Cooking Methods Game 2",
+      sourceUrl: "https://wordwall.net/resource/c12666ce8e1640e299be713f24762d8c",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c12666ce8e1640e299be713f24762d8c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '7': [
     {
-      title: "Illness Vocabulary Game",
+      title: "Illness Game",
       sourceUrl: "https://wordwall.net/resource/34904fd94f30404192d2bdab3f028260",
       embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/34904fd94f30404192d2bdab3f028260?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
@@ -64,26 +157,36 @@ const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embed
   ],
   '8': [
     {
-      title: "Baking and Cooking Vocabulary",
-      sourceUrl: "https://wordwall.net/resource/f5f8ab129c0245a2be4fc2e4e7f9b8c5",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f5f8ab129c0245a2be4fc2e4e7f9b8c5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Past Tense Verbs Game 1",
+      sourceUrl: "https://wordwall.net/resource/a95c4a46b32447f0916d3b6f2093cac3",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a95c4a46b32447f0916d3b6f2093cac3?themeId=1&templateId=54&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
-      title: "Kitchen Utensils Game",
-      sourceUrl: "https://wordwall.net/resource/936e0d47a00a4fc69c32a9b7db8ace34",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/936e0d47a00a4fc69c32a9b7db8ace34?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Past Tense Verbs Game 2",
+      sourceUrl: "https://wordwall.net/resource/b5a88799031c431e971373a669bfb5c7",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/b5a88799031c431e971373a669bfb5c7?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Past Tense Verbs Game 3",
+      sourceUrl: "https://wordwall.net/resource/6c4f1e98c0f24f5fbf63d959bba397ce",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6c4f1e98c0f24f5fbf63d959bba397ce?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '9': [
     {
-      title: "Present Perfect Tense Practice",
-      sourceUrl: "https://wordwall.net/resource/5ae8ba7fbcad46ceb8b7d881a29a9d08",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5ae8ba7fbcad46ceb8b7d881a29a9d08?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Present Perfect Tense Verbs Game 1",
+      sourceUrl: "https://wordwall.net/resource/885efcf090f04b169ba976a1db08187d",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/885efcf090f04b169ba976a1db08187d?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
-      title: "Present Perfect with Just",
-      sourceUrl: "https://wordwall.net/resource/33cbf62b2fb0453786f26cb0511febc4",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/33cbf62b2fb0453786f26cb0511febc4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Present Perfect Tense Verbs Game 2",
+      sourceUrl: "https://wordwall.net/resource/971dcc6b738b4ee6b50d2f0d3108fb9e",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/971dcc6b738b4ee6b50d2f0d3108fb9e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Present Perfect Tense Verbs Game 3",
+      sourceUrl: "https://wordwall.net/resource/8caa6d3e98844ee9ad346e2127b3caf6",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8caa6d3e98844ee9ad346e2127b3caf6?themeId=1&templateId=54&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '10': [
@@ -96,6 +199,29 @@ const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embed
       title: "Computer Verbs Practice",
       sourceUrl: "https://wordwall.net/resource/124ba44470124539ac4168b97714f02a",
       embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/124ba44470124539ac4168b97714f02a?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Technology Gadgets Game 1",
+      sourceUrl: "https://wordwall.net/resource/023ea996683742539d4e330a7ec8f9ed",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/023ea996683742539d4e330a7ec8f9ed?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Technology Gadgets Game 2",
+      sourceUrl: "https://wordwall.net/resource/589446a1c2674dcc964dc2115c3c119f",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/589446a1c2674dcc964dc2115c3c119f?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Find the Gadgets Game",
+      sourceUrl: "https://www.abcya.com/games/find_the_tech",
+      embedCode: `<iframe src="https://www.abcya.com/games/find_the_tech" width="100%" height="500" frameborder="0" allowfullscreen></iframe>`,
+      provider: 'ABCya'
+    }
+  ],
+  '11': [
+    {
+      title: "Traditional Food Vocabulary",
+      sourceUrl: "https://wordwall.net/resource/9b4c3e1d5a6f47829c0d8e7b1f2a3e5d",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/9b4c3e1d5a6f47829c0d8e7b1f2a3e5d?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '12': [
@@ -110,29 +236,84 @@ const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embed
       embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/82f30a9fa3804bc1ad7b4db75f59a8da?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
+  '13': [
+    {
+      title: "World Locations Game",
+      sourceUrl: "https://wordwall.net/resource/7bd4e92c1a3f48d9b0c5e6a8f1d2c3b4",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7bd4e92c1a3f48d9b0c5e6a8f1d2c3b4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '14': [
+    {
+      title: "Seasons Vocabulary",
+      sourceUrl: "https://wordwall.net/resource/6c5d4e3b2a1f48d7c9b0a8e6f5d4c3b2",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6c5d4e3b2a1f48d7c9b0a8e6f5d4c3b2?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '15': [
+    {
+      title: "Simple vs Continuous Tenses",
+      sourceUrl: "https://wordwall.net/resource/5a4b3c2d1e6f7g8h9i0j1k2l3m4n5o6p",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5a4b3c2d1e6f7g8h9i0j1k2l3m4n5o6p?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '16': [
+    {
+      title: "Passive Voice Practice",
+      sourceUrl: "https://wordwall.net/resource/4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ]
 };
 
 // YouTube videos mapped by unit with their embed codes
-const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embedCode: string }[]> = {
+const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embedCode: string, provider?: string }[]> = {
   '1': [
     {
-      title: "Jobs and Occupations Vocabulary",
-      sourceUrl: "https://www.youtube.com/watch?v=fcKC1Vc8UYM",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/fcKC1Vc8UYM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+      title: "Jobs ESL Guessing Game 1",
+      sourceUrl: "https://www.youtube.com/watch?v=wipXsbFTX-U",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/wipXsbFTX-U?si=u5G9MH5UdS7srqY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Jobs ESL Guessing Game 2",
+      sourceUrl: "https://www.youtube.com/watch?v=nfzYoNTcAn8",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/nfzYoNTcAn8?si=Ocr5dth1nB5wUbxe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    }
+  ],
+  '2': [
+    {
+      title: "Guess the Appliance",
+      sourceUrl: "https://www.youtube.com/watch?v=1ZPStTtE7JI",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/1ZPStTtE7JI?si=VBo8KA4cD2fUAbyT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    }
+  ],
+  '3': [
+    {
+      title: "What Will Happen",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/678492",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/678492" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
+    }
+  ],
+  '4': [
+    {
+      title: "Animal Classification Song",
+      sourceUrl: "https://www.youtube.com/watch?v=4VixROiu8Qg",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4VixROiu8Qg?si=IGYwf2OAfcTSrmK5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
     }
   ],
   '5': [
     {
-      title: "Theme Park Virtual Tour",
-      sourceUrl: "https://www.youtube.com/watch?v=op7STir1HA0",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/op7STir1HA0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+      title: "Guess the Rides",
+      sourceUrl: "https://www.youtube.com/watch?v=AYqEc3mKJek",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/AYqEc3mKJek?si=b29JX3KdOmEHLs92" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
     }
   ],
   '6': [
     {
-      title: "Kitchen Appliances Explained",
-      sourceUrl: "https://www.youtube.com/watch?v=PBwJiG38CHU",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/PBwJiG38CHU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+      title: "Kitchen and Cooking Video",
+      sourceUrl: "https://www.youtube.com/watch?v=6BIFnvjpquk",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/6BIFnvjpquk?si=31dsztCC97dUIu18" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
     }
   ],
   '7': [
@@ -144,16 +325,18 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
   ],
   '8': [
     {
-      title: "Baking Basics for Beginners",
-      sourceUrl: "https://www.youtube.com/watch?v=yCxRmIVt6tU",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/yCxRmIVt6tU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+      title: "Past Simple Video Lesson",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/772028",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/772028" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
     }
   ],
   '9': [
     {
-      title: "Present Perfect Tense Explained",
-      sourceUrl: "https://www.youtube.com/watch?v=_GhAWaVV0Gk",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/_GhAWaVV0Gk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+      title: "Present Perfect Video Lesson",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/3360",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/3360" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
     }
   ],
   '10': [
@@ -161,6 +344,12 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "Technology Devices Vocabulary",
       sourceUrl: "https://www.youtube.com/watch?v=AVKzuuZRdKA",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/AVKzuuZRdKA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Technology and Gadgets Video Lesson",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/1015142",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/1015142" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
     }
   ],
   '12': [
@@ -169,7 +358,7 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       sourceUrl: "https://www.youtube.com/watch?v=Jwr1Dzx0ycs",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Jwr1Dzx0ycs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
     }
-  ],
+  ]
 };
 
 // Default resources for units that don't have specific resources defined
@@ -226,7 +415,7 @@ export function generateBook6UnitResources(bookId: string, unitId: string): Teac
       unitId,
       title: video.title,
       resourceType: 'video',
-      provider: 'YouTube',
+      provider: video.provider || 'YouTube',
       sourceUrl: video.sourceUrl,
       embedCode: video.embedCode
     });
