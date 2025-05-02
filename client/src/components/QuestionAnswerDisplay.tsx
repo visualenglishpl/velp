@@ -1599,11 +1599,11 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         });
         
         if (matchingEntry) {
-          console.log(`Found match using code pattern "${extractedCodePattern}" against entry with pattern "${matchingEntry.codePattern}"`);
+          logDebug(`Found match using code pattern "${extractedCodePattern}" against entry with pattern "${matchingEntry.codePattern}"`, 1);
         } else {
-          console.log(`No entries matched the code pattern "${extractedCodePattern}"`);
+          logDebug(`No entries matched the code pattern "${extractedCodePattern}"`, 2);
           // Debug - print all available code patterns
-          console.log("Available code patterns:", excelData.entries.map((e: ExcelQAEntry) => e.codePattern).join(", "));
+          logDebug(`Available code patterns: ${excelData.entries.map((e: ExcelQAEntry) => e.codePattern).join(", ")}`, 3);
         }
       }
       
@@ -1614,7 +1614,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         );
         
         if (matchingEntry) {
-          console.log("Found code pattern contained in filename:", matchingEntry.codePattern);
+          logDebug(`Found code pattern contained in filename: ${matchingEntry.codePattern}`, 2);
         }
       }
       
@@ -1631,14 +1631,14 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
           // Direct hardcoded mapping for sections 08-12
           if (lowercaseFilename.includes('ruler') && 
               (/08|09|10|11|12/).test(filename)) {
-            console.log("CRITICAL SECTION: Detected ruler section 08-12:", filename);
+            logDebug(`CRITICAL SECTION: Detected ruler section 08-12: ${filename}`, 1);
             
             // For these exact numbered sections, try to find the right question based on both
             // the object type and the section number
             const sectionNumber = filename.match(/\b(0[8-9]|1[0-2])\b/);
             if (sectionNumber) {
               const sectionNum = sectionNumber[1];
-              console.log("Extracted section number for special mapping:", sectionNum);
+              logDebug(`Extracted section number for special mapping: ${sectionNum}`, 2);
               
               // First try to find exact matches for both ruler AND section number
               matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => {
@@ -1651,7 +1651,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
               });
               
               if (matchingEntry) {
-                console.log("FOUND PERFECT MATCH for ruler section " + sectionNum + ":", matchingEntry.question);
+                logDebug(`FOUND PERFECT MATCH for ruler section ${sectionNum}: ${matchingEntry.question}`, 1);
               } else {
                 // If no exact match, find ANY question about rulers
                 // But prioritize questions with matching section numbers
@@ -1668,11 +1668,11 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                   if (matchingNumberEntries.length > 0) {
                     // Use the first match with both ruler and matching section number
                     matchingEntry = matchingNumberEntries[0];
-                    console.log("Found section number match for ruler:", matchingEntry.question);
+                    logDebug(`Found section number match for ruler: ${matchingEntry.question}`, 2);
                   } else {
                     // Fall back to any ruler question
                     matchingEntry = rulerEntries[0];
-                    console.log("Using fallback ruler question:", matchingEntry.question);
+                    logDebug(`Using fallback ruler question: ${matchingEntry.question}`, 2);
                   }
                 }
               }
@@ -1691,7 +1691,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             });
             
             if (matchingEntry) {
-              console.log("Found special section match based on object type:", matchingEntry.question);
+              logDebug(`Found special section match based on object type: ${matchingEntry.question}`, 2);
             }
           }
           
@@ -1703,7 +1703,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             );
             
             if (matchingEntry) {
-              console.log("Found fallback sharpener match:", matchingEntry.question);
+              logDebug(`Found fallback sharpener match: ${matchingEntry.question}`, 2);
             }
           }
           
