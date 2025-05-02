@@ -12,7 +12,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 // Import sample resources for Book 7, Unit 6
 import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from '@/data/unit6-resources';
 
-// Import implementation functions for Book 6 Units
+// Import centralized resources for Book 6
+import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans } from '@/data/book6-resources-common';
+
+// Import any specific implementation functions
 import { getBook6Unit9Resources, getBook6Unit9LessonPlans } from '@/data/book6-unit9-implementation';
 import { getBook6Unit10Resources, getBook6Unit10LessonPlans } from '@/data/book6-unit10-implementation';
 
@@ -524,6 +527,32 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   // Function to get additional resources for specific book/unit combinations
   const getMoreUnitResources = useCallback((): TeacherResource[] => {
+    // Book 6 units - use centralized resource generator
+    if (bookId === '6') {
+      // Special cases for units 9 and 10 which have their own implementation
+      if (unitId === '9') {
+        try {
+          console.log('Loading Book 6 Unit 9 resources from implementation');
+          return getBook6Unit9Resources(bookId, unitId);
+        } catch (error) {
+          console.error('Error getting Book 6 Unit 9 resources, falling back to common resources:', error);
+          return generateBook6UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '10') {
+        try {
+          console.log('Loading Book 6 Unit 10 resources from implementation');
+          return getBook6Unit10Resources(bookId, unitId);
+        } catch (error) {
+          console.error('Error getting Book 6 Unit 10 resources, falling back to common resources:', error);
+          return generateBook6UnitResources(bookId, unitId);
+        }
+      } else {
+        // For all other units, use the centralized resource generator
+        console.log(`Loading centralized resources for Book 6 Unit ${unitId}`);
+        return generateBook6UnitResources(bookId, unitId);
+      }
+    }
+    
     // Resources for Book 7, Unit 4 - Accommodation
     if (bookId === '7' && unitId === '4') {
       return [
