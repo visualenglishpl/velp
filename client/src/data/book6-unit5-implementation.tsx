@@ -1,8 +1,8 @@
 // This file imports and exports the resources and lesson plans for Book 6, Unit 5
 
-import { book6Unit5Resources, themeParkVocabularyLessonPlan, themeParkExperienceLessonPlan } from './book6-unit5-resources';
+import { book6Unit5Resources, themeParkAttractionsLessonPlan, themeParkStallsLessonPlan } from './book6-unit5-resources';
 
-// Use type definition directly to avoid circular dependencies
+// Use type definition directly since importing from components can cause circular dependencies
 type TeacherResource = {
   id?: string;
   bookId: string;
@@ -25,8 +25,8 @@ type LessonPlan = ImportedLessonPlan;
 // Function to get lesson plans for this unit
 export const getBook6Unit5LessonPlans = (): LessonPlan[] => {
   return [
-    themeParkVocabularyLessonPlan,
-    themeParkExperienceLessonPlan
+    themeParkAttractionsLessonPlan,
+    themeParkStallsLessonPlan
   ];
 };
 
@@ -45,6 +45,6 @@ export const unitResources = book6Unit5Resources;
 
 // Export the lesson plans for this unit (for backward compatibility)
 export const lessonPlans = [
-  themeParkVocabularyLessonPlan,
-  themeParkExperienceLessonPlan
+  themeParkAttractionsLessonPlan,
+  themeParkStallsLessonPlan
 ];

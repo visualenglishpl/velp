@@ -36,12 +36,14 @@ import { getBook6Unit1LessonPlans, getBook6Unit1Resources } from '@/data/book6-u
 import { getBook6Unit2LessonPlans, getBook6Unit2Resources } from '@/data/book6-unit2-implementation';
 import { getBook6Unit3LessonPlans, getBook6Unit3Resources } from '@/data/book6-unit3-implementation';
 import { getBook6Unit4LessonPlans, getBook6Unit4Resources } from '@/data/book6-unit4-implementation';
+import { getBook6Unit5LessonPlans, getBook6Unit5Resources } from '@/data/book6-unit5-implementation';
 
 // Book 6 resources (direct imports)
 import { book6Unit1Resources } from '@/data/book6-unit1-resources';
 import { book6Unit2Resources } from '@/data/book6-unit2-resources';
 import { book6Unit3Resources } from '@/data/book6-unit3-resources';
 import { book6Unit4Resources } from '@/data/book6-unit4-resources';
+import { book6Unit5Resources } from '@/data/book6-unit5-resources';
 
 export interface TeacherResource {
   id?: string;
@@ -447,6 +449,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return getBook6Unit4Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 4 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 5 - Theme Park Stalls
+    if (bookId === '6' && unitId === '5') {
+      try {
+        console.log('Loading Book 6 Unit 5 resources');
+        // Use the getBook6Unit5Resources function from the implementation file
+        return getBook6Unit5Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 5 resources:', error);
         return [];
       }
     }
