@@ -13,7 +13,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from '@/data/unit6-resources';
 
 // Import centralized resources for Book 6
-import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans } from '@/data/book6-resources-common';
+import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans, BOOK6_UNIT_TITLES } from '@/data/book6-resources-common';
 
 // Import any specific implementation functions
 import { getBook6Unit9Resources, getBook6Unit9LessonPlans } from '@/data/book6-unit9-implementation';
@@ -313,12 +313,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         if ((resourcesModule as any).games) extractResources('games', 'game');
         if ((resourcesModule as any).pdfs) extractResources('pdfs', 'pdf');
         
-        // Try special getter functions for Book 6 resources
+        // Handle centralized Book 6 resources
         if (bookId === '6') {
+          // Use our centralized resource generator for Book 6
+          const book6Resources = generateBook6UnitResources(bookId, unitId);
+          resources.push(...book6Resources);
+          
           try {
             // Check for specific resource getter functions using type assertion
             const typedResourcesModule = resourcesModule as any;
-            
+              
             if (unitNum === 1 && typedResourcesModule.getBook6Unit1Resources) {
               console.log('Using getBook6Unit1Resources');
               resources = typedResourcesModule.getBook6Unit1Resources(bookId, unitId);
@@ -370,9 +374,14 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         if ((implModule as any).lessonPlans) extractLessonPlans('lessonPlans');
         if ((implModule as any).unitLessonPlans) extractLessonPlans('unitLessonPlans');
         
-        // Try special getter functions for Book 6 lesson plans
+        // Handle centralized Book 6 lesson plans
         if (bookId === '6') {
           try {
+            // Use our centralized lesson plan generator for Book 6
+            const unitTitle = BOOK6_UNIT_TITLES[unitId] || `Unit ${unitId}`;
+            const defaultPlans = generateDefaultBook6UnitLessonPlans(unitId, unitTitle);
+            lessonPlans.push(...defaultPlans);
+            
             // Check for specific lesson plan getter functions using type assertion
             const typedImplModule = implModule as any;
             

@@ -7,6 +7,26 @@ import { LessonPlan } from '@/components/LessonPlanTemplate';
  * for any unit in Book 6.
  */
 
+// Unit titles for reference in lesson plans and resources
+export const BOOK6_UNIT_TITLES: Record<string, string> = {
+  '1': 'Jobs And Occupations',
+  '2': 'Health And Illnesses',
+  '3': 'Eating Out',
+  '4': 'Who Lives Where',
+  '5': 'Shopping',
+  '6': 'What Your Body Can Do',
+  '7': 'Theme Park Stalls',
+  '8': 'At The Gym',
+  '9': 'Present Perfect: What Has Just Happened',
+  '10': 'Are You Tech Savvy?',
+  '11': 'Transportation And Travel',
+  '12': 'Are You Eco? Environment',
+  '13': 'Clothes And Fashion',
+  '14': 'Cinema And Movies',
+  '15': 'Rules And Regulations',
+  '16': 'Heroes And Inspirational People'
+};
+
 // Wordwall games mapped by unit with their embed codes
 const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embedCode: string, provider?: string }[]> = {
   '1': [
@@ -401,7 +421,7 @@ export function generateBook6UnitResources(bookId: string, unitId: string): Teac
       unitId,
       title: game.title,
       resourceType: 'game',
-      provider: 'Wordwall',
+      provider: game.provider || 'Wordwall',
       sourceUrl: game.sourceUrl,
       embedCode: game.embedCode
     });
@@ -418,6 +438,22 @@ export function generateBook6UnitResources(bookId: string, unitId: string): Teac
       provider: video.provider || 'YouTube',
       sourceUrl: video.sourceUrl,
       embedCode: video.embedCode
+    });
+  });
+  
+  // Add default lesson plans
+  const unitTitle = BOOK6_UNIT_TITLES[unitId] || `Unit ${unitId}`;
+  const lessonPlans = generateDefaultBook6UnitLessonPlans(unitId, unitTitle);
+  
+  lessonPlans.forEach(lessonPlan => {
+    resources.push({
+      id: lessonPlan.id,
+      bookId,
+      unitId,
+      title: lessonPlan.title,
+      resourceType: 'lesson',
+      provider: 'Visual English',
+      lessonPlan: lessonPlan
     });
   });
   
