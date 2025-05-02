@@ -281,7 +281,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Set dynamic resources if available
       if (resourcesModule) {
         // Try to extract resources from the module
-        const resources: TeacherResource[] = [];
+        let resources: TeacherResource[] = [];
         
         // Function to extract and collect resources
         const extractResources = (key: string, type: 'video' | 'game' | 'pdf' | 'lesson' = 'video') => {
@@ -302,13 +302,33 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         if (resourcesModule.games) extractResources('games', 'game');
         if (resourcesModule.pdfs) extractResources('pdfs', 'pdf');
         
+        // Try special getter functions for Book 6 resources
+        if (bookId === '6') {
+          try {
+            // Check for specific resource getter functions
+            if (resourcesModule.getBook6Unit1Resources && unitNum === 1) {
+              resources = resourcesModule.getBook6Unit1Resources(bookId, unitId);
+            } else if (resourcesModule.getBook6Unit5Resources && unitNum === 5) {
+              resources = resourcesModule.getBook6Unit5Resources(bookId, unitId);
+            } else if (resourcesModule.getBook6Unit6Resources && unitNum === 6) {
+              resources = resourcesModule.getBook6Unit6Resources(bookId, unitId);
+            } else if (resourcesModule.getBook6Unit7Resources && unitNum === 7) {
+              resources = resourcesModule.getBook6Unit7Resources(bookId, unitId);
+            } else if (resourcesModule.getBook6Unit12Resources && unitNum === 12) {
+              resources = resourcesModule.getBook6Unit12Resources(bookId, unitId);
+            }
+          } catch (error) {
+            console.error(`Error getting Book 6 Unit ${unitNum} resources:`, error);
+          }
+        }
+        
         setDynamicResources(resources);
       }
       
       // Set dynamic lesson plans if available
       if (implModule) {
         // Try to extract lesson plans from the module
-        const lessonPlans: LessonPlan[] = [];
+        let lessonPlans: LessonPlan[] = [];
         
         // Function to extract and collect lesson plans
         const extractLessonPlans = (key: string) => {
@@ -321,6 +341,24 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         // Try to extract lesson plans by different naming patterns
         if (implModule.lessonPlans) extractLessonPlans('lessonPlans');
         if (implModule.unitLessonPlans) extractLessonPlans('unitLessonPlans');
+        
+        // Try special getter functions for Book 6 lesson plans
+        if (bookId === '6') {
+          try {
+            // Check for specific lesson plan getter functions
+            if (implModule.getBook6Unit5LessonPlans && unitNum === 5) {
+              lessonPlans = implModule.getBook6Unit5LessonPlans();
+            } else if (implModule.getBook6Unit6LessonPlans && unitNum === 6) {
+              lessonPlans = implModule.getBook6Unit6LessonPlans();
+            } else if (implModule.getBook6Unit7LessonPlans && unitNum === 7) {
+              lessonPlans = implModule.getBook6Unit7LessonPlans();
+            } else if (implModule.getBook6Unit12LessonPlans && unitNum === 12) {
+              lessonPlans = implModule.getBook6Unit12LessonPlans();
+            }
+          } catch (error) {
+            console.error(`Error getting Book 6 Unit ${unitNum} lesson plans:`, error);
+          }
+        }
         
         setDynamicLessonPlans(lessonPlans);
       }
