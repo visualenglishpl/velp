@@ -23,12 +23,7 @@ const HeroSection = () => {
               Visit Bookstore
             </Button>
           </Link>
-          <Link href="/pdf-test">
-            <Button className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 text-sm">
-              <FileText className="mr-1 h-4 w-4" />
-              Test PDF Viewer
-            </Button>
-          </Link>
+          {/* PDF Viewer button removed as requested */}
         </div>
       </div>
     </section>
