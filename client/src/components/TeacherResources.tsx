@@ -246,6 +246,11 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Create custom constants for specific books and units to check for special resources
   const isBook7Unit6 = bookId === '7' && unitId === '6';
   
+  // State for dynamically loaded resources and lesson plans
+  const [dynamicResources, setDynamicResources] = useState<TeacherResource[]>([]);
+  const [dynamicLessonPlans, setDynamicLessonPlans] = useState<LessonPlan[]>([]);
+  const [isLoadingDynamic, setIsLoadingDynamic] = useState(false);
+  
   // Handle initial data loading - bookUnitResources, local storage resources
   const { data: bookUnitResources = [], isLoading, error } = useQuery<TeacherResource[]>({
     queryKey: [`/api/teacher-resources/${bookId}/${unitId}`],
@@ -347,6 +352,224 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookUnitResources]);  // Intentionally omit resources to prevent infinite loop
+  
+  // Dynamic loading of resources based on book and unit
+  const loadResourcesAndLessonPlans = useCallback(async () => {
+    if (!isSpecialBookUnit) return;
+    
+    try {
+      setIsLoadingDynamic(true);
+      const unitNum = parseInt(unitId, 10);
+      
+      // Load resources
+      const resourceModule = await dynamicResourceImport(bookId, unitNum);
+      let loadedResources: TeacherResource[] = [];
+      
+      if (resourceModule) {
+        // Extract specific resource variable based on book/unit
+        if (bookId === '7' || !bookId) {
+          switch(unitNum) {
+            case 6: 
+              loadedResources = resourceModule.unit6Resources || [];
+              break;
+            case 7:
+              loadedResources = resourceModule.unit7Resources || [];
+              break;
+            case 8:
+              loadedResources = resourceModule.unit8Resources || [];
+              break;
+            case 9:
+              loadedResources = resourceModule.unit9Resources || [];
+              break;
+            case 10:
+              loadedResources = resourceModule.unit10Resources || [];
+              break;
+            case 11:
+              loadedResources = resourceModule.unit11Resources || [];
+              break;
+            case 12:
+              loadedResources = resourceModule.unit12Resources || [];
+              break;
+            case 13:
+              loadedResources = resourceModule.unit13Resources || [];
+              break;
+            case 14:
+              loadedResources = resourceModule.unit14Resources || [];
+              break;
+            case 15:
+              loadedResources = resourceModule.unit15Resources || [];
+              break;
+            case 16:
+              loadedResources = resourceModule.unit16Resources || [];
+              break;
+          }
+        } else if (bookId === '6') {
+          switch(unitNum) {
+            case 1:
+              loadedResources = resourceModule.book6Unit1Resources || [];
+              break;
+            case 2:
+              loadedResources = resourceModule.book6Unit2Resources || [];
+              break;
+            case 3:
+              loadedResources = resourceModule.book6Unit3Resources || [];
+              break;
+            case 4:
+              loadedResources = resourceModule.book6Unit4Resources || [];
+              break;
+            case 5:
+              loadedResources = resourceModule.book6Unit5Resources || [];
+              break;
+            case 6:
+              loadedResources = resourceModule.book6Unit6Resources || [];
+              break;
+            case 7:
+              loadedResources = resourceModule.book6Unit7Resources || [];
+              break;
+            case 8:
+              loadedResources = resourceModule.book6Unit8Resources || [];
+              break;
+            case 9:
+              loadedResources = resourceModule.book6Unit9Resources || [];
+              break;
+            case 10:
+              loadedResources = resourceModule.book6Unit10Resources || [];
+              break;
+            case 11:
+              loadedResources = resourceModule.book6Unit11Resources || [];
+              break;
+            case 12:
+              loadedResources = resourceModule.book6Unit12Resources || [];
+              break;
+            case 13:
+              loadedResources = resourceModule.book6Unit13Resources || [];
+              break;
+            case 14:
+              loadedResources = resourceModule.book6Unit14Resources || [];
+              break;
+            case 15:
+              loadedResources = resourceModule.book6Unit15Resources || [];
+              break;
+            case 16:
+              loadedResources = resourceModule.book6Unit16Resources || [];
+              break;
+          }
+        }
+      }
+      
+      // Set the dynamically loaded resources
+      setDynamicResources(loadedResources);
+      
+      // Load implementation (for lesson plans)
+      const implModule = await dynamicImplImport(bookId, unitNum);
+      let loadedLessonPlans: LessonPlan[] = [];
+      
+      if (implModule) {
+        // Extract specific lesson plan function based on book/unit
+        if (bookId === '7' || !bookId) {
+          switch(unitNum) {
+            case 6: 
+              loadedLessonPlans = implModule.getUnit6LessonPlans ? implModule.getUnit6LessonPlans() : [];
+              break;
+            case 7:
+              loadedLessonPlans = implModule.getUnit7LessonPlans ? implModule.getUnit7LessonPlans() : [];
+              break;
+            case 8:
+              loadedLessonPlans = implModule.getUnit8LessonPlans ? implModule.getUnit8LessonPlans() : [];
+              break;
+            case 9:
+              loadedLessonPlans = implModule.getUnit9LessonPlans ? implModule.getUnit9LessonPlans() : [];
+              break;
+            case 10:
+              loadedLessonPlans = implModule.getUnit10LessonPlans ? implModule.getUnit10LessonPlans() : [];
+              break;
+            case 11:
+              loadedLessonPlans = implModule.getUnit11LessonPlans ? implModule.getUnit11LessonPlans() : [];
+              break;
+            case 12:
+              loadedLessonPlans = implModule.getUnit12LessonPlans ? implModule.getUnit12LessonPlans() : [];
+              break;
+            case 13:
+              loadedLessonPlans = implModule.getUnit13LessonPlans ? implModule.getUnit13LessonPlans() : [];
+              break;
+            case 14:
+              loadedLessonPlans = implModule.getUnit14LessonPlans ? implModule.getUnit14LessonPlans() : [];
+              break;
+            case 15:
+              loadedLessonPlans = implModule.getUnit15LessonPlans ? implModule.getUnit15LessonPlans() : [];
+              break;
+            case 16:
+              loadedLessonPlans = implModule.getUnit16LessonPlans ? implModule.getUnit16LessonPlans() : [];
+              break;
+          }
+        } else if (bookId === '6') {
+          switch(unitNum) {
+            case 1:
+              loadedLessonPlans = implModule.getBook6Unit1LessonPlans ? implModule.getBook6Unit1LessonPlans() : [];
+              break;
+            case 2:
+              loadedLessonPlans = implModule.getBook6Unit2LessonPlans ? implModule.getBook6Unit2LessonPlans() : [];
+              break;
+            case 3:
+              loadedLessonPlans = implModule.getBook6Unit3LessonPlans ? implModule.getBook6Unit3LessonPlans() : [];
+              break;
+            case 4:
+              loadedLessonPlans = implModule.getBook6Unit4LessonPlans ? implModule.getBook6Unit4LessonPlans() : [];
+              break;
+            case 5:
+              loadedLessonPlans = implModule.getBook6Unit5LessonPlans ? implModule.getBook6Unit5LessonPlans() : [];
+              break;
+            case 6:
+              loadedLessonPlans = implModule.getBook6Unit6LessonPlans ? implModule.getBook6Unit6LessonPlans() : [];
+              break;
+            case 7:
+              loadedLessonPlans = implModule.getBook6Unit7LessonPlans ? implModule.getBook6Unit7LessonPlans() : [];
+              break;
+            case 8:
+              loadedLessonPlans = implModule.getBook6Unit8LessonPlans ? implModule.getBook6Unit8LessonPlans() : [];
+              break;
+            case 9:
+              loadedLessonPlans = implModule.getBook6Unit9LessonPlans ? implModule.getBook6Unit9LessonPlans() : [];
+              break;
+            case 10:
+              loadedLessonPlans = implModule.getBook6Unit10LessonPlans ? implModule.getBook6Unit10LessonPlans() : [];
+              break;
+            case 11:
+              loadedLessonPlans = implModule.getBook6Unit11LessonPlans ? implModule.getBook6Unit11LessonPlans() : [];
+              break;
+            case 12:
+              loadedLessonPlans = implModule.getBook6Unit12LessonPlans ? implModule.getBook6Unit12LessonPlans() : [];
+              break;
+            case 13:
+              loadedLessonPlans = implModule.getBook6Unit13LessonPlans ? implModule.getBook6Unit13LessonPlans() : [];
+              break;
+            case 14:
+              loadedLessonPlans = implModule.getBook6Unit14LessonPlans ? implModule.getBook6Unit14LessonPlans() : [];
+              break;
+            case 15:
+              loadedLessonPlans = implModule.getBook6Unit15LessonPlans ? implModule.getBook6Unit15LessonPlans() : [];
+              break;
+            case 16:
+              loadedLessonPlans = implModule.getBook6Unit16LessonPlans ? implModule.getBook6Unit16LessonPlans() : [];
+              break;
+          }
+        }
+      }
+      
+      // Set the dynamically loaded lesson plans
+      setDynamicLessonPlans(loadedLessonPlans);
+      
+    } catch (error) {
+      console.error(`Error dynamically loading resources for Book ${bookId}, Unit ${unitId}:`, error);
+    } finally {
+      setIsLoadingDynamic(false);
+    }
+  }, [bookId, unitId, isSpecialBookUnit]);
+  
+  // Effect to load dynamic resources when book/unit changes
+  useEffect(() => {
+    loadResourcesAndLessonPlans();
+  }, [loadResourcesAndLessonPlans]);
 
   // Function to get additional resources for specific book/unit combinations
   const getMoreUnitResources = useCallback((): TeacherResource[] => {
