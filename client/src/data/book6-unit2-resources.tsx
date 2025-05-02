@@ -1,5 +1,7 @@
 // This file contains resources for Book 6, Unit 2 (Household Appliances themed content)
 
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
+
 export const book6Unit2Resources = [
   {
     title: "Guess the Appliance",

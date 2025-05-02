@@ -1,6 +1,6 @@
 // Resources for Book 6, Unit 8 - Free Time - Past Simple
 
-import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
 // Lesson Plans
 export const pastTenseVerbsLessonPlan: LessonPlan = {
@@ -57,7 +57,7 @@ export const pastTenseVerbsLessonPlan: LessonPlan = {
       ]
     },
     {
-      title: 'Yesterday's Activities',
+      title: "Yesterday's Activities",
       duration: '15 minutes',
       description: 'Practice using past tense in meaningful context',
       instructions: [

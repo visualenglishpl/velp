@@ -1,6 +1,6 @@
 // Resources for Book 6, Unit 5 - Theme Park Stalls
 
-import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
 // Lesson Plans
 export const themeParkVocabularyLessonPlan: LessonPlan = {

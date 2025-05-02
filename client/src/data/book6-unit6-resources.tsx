@@ -1,6 +1,6 @@
 // Resources for Book 6, Unit 6 - In the Kitchen
 
-import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
 // Lesson Plans
 export const kitchenUtensilsLessonPlan: LessonPlan = {

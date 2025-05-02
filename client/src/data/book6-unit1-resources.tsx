@@ -1,5 +1,7 @@
 // This file contains resources for Book 6, Unit 1 (Jobs and Occupations themed content)
 
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
+
 export const book6Unit1Resources = [
   {
     title: "Jobs ESL Guessing Game 1",

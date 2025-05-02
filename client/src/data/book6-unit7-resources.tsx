@@ -1,6 +1,6 @@
 // Resources for Book 6, Unit 7 - What Your Body Can Do
 
-import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
 // Lesson Plans
 export const bodyPartsLessonPlan: LessonPlan = {
