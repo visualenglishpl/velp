@@ -1,5 +1,5 @@
 /**
- * Resources for Book 6 Unit 13 - Clothes And Fashion
+ * Resources for Book 6 Unit 13 - City Life
  */
 import { TeacherResource } from '@/components/TeacherResources';
 import type { LessonPlan } from '@/components/LessonPlanTemplate';
@@ -20,43 +20,43 @@ export function getBook6Unit13Resources(bookId: string, unitId: string): Teacher
 export function getBook6Unit13LessonPlans(): LessonPlan[] {
   return [
     {
-      id: "book6-unit13-fashion-lesson",
-      title: "Clothes and Fashion Vocabulary",
+      id: "book6-unit13-city-life-lesson",
+      title: "City Life Vocabulary",
       duration: "45-60 minutes",
       level: "Intermediate",
       objectives: [
-        "Learn vocabulary related to clothing and fashion",
-        "Describe clothing items and styles",
-        "Express preferences about fashion",
-        "Practice using adjectives to describe clothing"
+        "Learn vocabulary related to city life and urban environments",
+        "Describe features and locations in a city",
+        "Compare rural and urban living",
+        "Use prepositions to describe locations in a city"
       ],
       materials: [
         "Visual English Book 6 Unit 13 slides",
-        "Clothing vocabulary flashcards",
-        "Fashion magazines or images",
-        "Wordwall games on clothing items"
+        "City maps or images",
+        "Urban vocabulary flashcards",
+        "Wordwall games on city vocabulary"
       ],
       steps: [
         {
           title: "Warm-up",
           duration: "5-10 minutes",
-          description: "Fashion discussion and vocabulary activation",
+          description: "City discussion and vocabulary activation",
           instructions: [
-            "Show images of different clothing styles",
-            "Ask students what they're wearing today",
-            "Elicit vocabulary they already know about clothing"
+            "Show images of different cities around the world",
+            "Ask students what places they can identify in a city",
+            "Elicit vocabulary they already know about urban areas"
           ]
         },
         {
           title: "Vocabulary Presentation",
           duration: "15 minutes",
-          description: "Present clothing and fashion terms",
+          description: "Present urban vocabulary terms",
           materials: [
-            "Visual English slides on clothing items",
-            "Fashion vocabulary list"
+            "Visual English slides on city features",
+            "City vocabulary list"
           ],
           instructions: [
-            "Introduce vocabulary categories: tops, bottoms, footwear, accessories",
+            "Introduce vocabulary categories: buildings, transportation, public spaces",
             "Show examples of each category",
             "Practice pronunciation and have students repeat"
           ]
@@ -64,33 +64,33 @@ export function getBook6Unit13LessonPlans(): LessonPlan[] {
         {
           title: "Interactive Learning",
           duration: "15-20 minutes",
-          description: "Play Wordwall games on fashion vocabulary",
+          description: "Play Wordwall games on city vocabulary",
           materials: [
             "Devices with internet access",
-            "Wordwall fashion games"
+            "City Life vocabulary games"
           ],
           instructions: [
             "Divide students into pairs or small groups",
-            "Have them play the 'Clothing Items Game' and 'Fashion Accessories Game'",
+            "Have them play the 'City Life Vocabulary Games'",
             "Discuss their scores and review challenging vocabulary"
           ]
         },
         {
-          title: "Fashion Show Activity",
+          title: "City Planning Activity",
           duration: "10-15 minutes",
-          description: "Students describe and present outfits",
+          description: "Students design their own ideal city",
           instructions: [
-            "Students work in pairs to describe each other's clothing",
-            "Each student presents their partner's outfit to the class",
-            "Encourage the use of adjectives and fashion terminology"
+            "Provide blank paper for students to design a city map",
+            "They should label at least 10 places using the new vocabulary",
+            "Have students present their ideal city design to a partner or the class"
           ]
         }
       ],
-      assessmentTips: "Monitor vocabulary use during pair work. Check correct application of adjectives to describe clothing. Evaluate students' ability to express preferences about fashion items.",
+      assessmentTips: "Monitor vocabulary use during pair work. Check correct application of prepositions when describing locations. Evaluate students' ability to compare urban and rural environments.",
       homeworkIdeas: [
-        "Create a fashion magazine page with descriptions of different outfits",
-        "Research fashion trends in different countries and prepare a short presentation",
-        "Write a paragraph describing their favorite outfit using the new vocabulary"
+        "Write a paragraph comparing city life to country life",
+        "Create a brochure for tourists visiting your city highlighting key attractions",
+        "Research and describe a famous city around the world"
       ]
     }
   ];

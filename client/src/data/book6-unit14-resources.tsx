@@ -1,5 +1,5 @@
 /**
- * Resources for Book 6 Unit 14 - Cinema And Movies
+ * Resources for Book 6 Unit 14 - At The Airport
  */
 import { TeacherResource } from '@/components/TeacherResources';
 import type { LessonPlan } from '@/components/LessonPlanTemplate';
@@ -20,43 +20,43 @@ export function getBook6Unit14Resources(bookId: string, unitId: string): Teacher
 export function getBook6Unit14LessonPlans(): LessonPlan[] {
   return [
     {
-      id: "book6-unit14-cinema-lesson",
-      title: "Cinema and Movies Vocabulary",
+      id: "book6-unit14-airport-lesson",
+      title: "At The Airport Vocabulary",
       duration: "45-60 minutes",
       level: "Intermediate",
       objectives: [
-        "Learn key vocabulary related to cinema and movies",
-        "Identify and describe different film genres",
-        "Express opinions about movies",
-        "Discuss the process of filmmaking"
+        "Learn key vocabulary related to airports and air travel",
+        "Understand airport procedures and announcements",
+        "Practice dialogues related to checking in and security",
+        "Use travel phrasal verbs correctly"
       ],
       materials: [
         "Visual English Book 6 Unit 14 slides",
-        "Movie posters or images",
-        "Short film clips",
-        "Wordwall games on movie vocabulary"
+        "Airport signs and announcement printouts",
+        "Boarding pass templates",
+        "Wordwall games on airport vocabulary"
       ],
       steps: [
         {
           title: "Warm-up",
           duration: "5-10 minutes",
-          description: "Movie discussion and genre identification",
+          description: "Airport experience discussion",
           instructions: [
-            "Show images of different film genres",
-            "Ask students about their favorite movies",
-            "Elicit vocabulary they already know about cinema"
+            "Ask students about their experiences at airports",
+            "Show images of different parts of an airport",
+            "Elicit vocabulary they already know about air travel"
           ]
         },
         {
           title: "Vocabulary Introduction",
           duration: "15 minutes",
-          description: "Present cinema and movie terminology",
+          description: "Present airport terminology",
           materials: [
-            "Visual English slides on film vocabulary",
-            "Movie industry vocabulary list"
+            "Visual English slides on airport zones",
+            "Airport vocabulary list"
           ],
           instructions: [
-            "Introduce vocabulary categories: genres, production roles, cinema vocabulary",
+            "Introduce vocabulary categories: check-in, security, boarding, arrival",
             "Show examples of each with visual aids",
             "Practice pronunciation and meaning"
           ]
@@ -64,33 +64,33 @@ export function getBook6Unit14LessonPlans(): LessonPlan[] {
         {
           title: "Interactive Learning",
           duration: "15-20 minutes",
-          description: "Play Wordwall games on movie terminology",
+          description: "Play Wordwall games on airport terminology",
           materials: [
             "Devices with internet access",
-            "Film genres and movie vocabulary games"
+            "Airport vocabulary games"
           ],
           instructions: [
-            "Students play 'Film Genres Quiz Game' and 'Movie Vocabulary Game'",
+            "Students play 'Airport Vocabulary Games'",
             "Review challenging vocabulary as a class",
-            "Discuss different types of films"
+            "Discuss different airport procedures"
           ]
         },
         {
-          title: "Movie Review Activity",
+          title: "Role-Play Activity",
           duration: "10-15 minutes",
-          description: "Students create mini movie reviews",
+          description: "Students act out airport scenarios",
           instructions: [
-            "In pairs, students describe a movie they have seen",
-            "They should use the new vocabulary to discuss plot, genre, and opinion",
-            "Some pairs present their reviews to the class"
+            "Divide students into pairs with assigned roles (passenger/staff)",
+            "Provide scenario cards for different airport situations",
+            "Have students perform their dialogues for the class"
           ]
         }
       ],
-      assessmentTips: "Observe students' use of cinema vocabulary. Check understanding of different film genres. Evaluate ability to express opinions about movies using appropriate terminology.",
+      assessmentTips: "Observe students' use of airport vocabulary during role-plays. Check understanding of airport procedures. Evaluate ability to form questions and give information about air travel.",
       homeworkIdeas: [
-        "Write a short review of a favorite film using the new vocabulary",
-        "Create a movie poster with descriptions using film terminology",
-        "Research a famous director or actor and prepare a brief presentation"
+        "Write a short dialogue between a passenger and airport staff",
+        "Create a guide for first-time travelers with important airport vocabulary",
+        "Research and describe the main features of a famous international airport"
       ]
     }
   ];
