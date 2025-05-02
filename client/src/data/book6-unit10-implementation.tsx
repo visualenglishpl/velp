@@ -1,4 +1,4 @@
-// Book 6 Unit 10 implementation file - Past Continuous: What Was Happening
+// Book 6 Unit 10 implementation file - Are You Tech Savvy
 
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { TeacherResource } from '@/components/TeacherResources';

@@ -1,8 +1,38 @@
 import { TeacherResource } from '@/components/TeacherResources';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans } from './book6-resources-common';
 
-// Past Continuous - Unit 10 Resources
-export const book6Unit10Resources: TeacherResource[] = generateBook6UnitResources('6', '10');
+// Are You Tech Savvy - Unit 10 Resources
+
+// Base resources generated from common module
+const baseResources = generateBook6UnitResources('6', '10');
+
+// Additional specific resources from the document
+const additionalResources: TeacherResource[] = [
+  {
+    id: "book6-unit10-game3",
+    bookId: '6',
+    unitId: '10',
+    title: "Technology Gadgets Game 1",
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: "https://wordwall.net/resource/023ea996683742539d4e330a7ec8f9ed",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/023ea996683742539d4e330a7ec8f9ed?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    id: "book6-unit10-game4",
+    bookId: '6',
+    unitId: '10',
+    title: "Technology Gadgets Game 2",
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: "https://wordwall.net/resource/589446a1c2674dcc964dc2115c3c119f",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/589446a1c2674dcc964dc2115c3c119f?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  }
+];
+
+// Combine base resources with additional specific resources
+export const book6Unit10Resources = [...baseResources, ...additionalResources];
 
 // Create the implementation function to expose the resources
 export function getBook6Unit10Resources(bookId: string, unitId: string): TeacherResource[] {
@@ -10,115 +40,114 @@ export function getBook6Unit10Resources(bookId: string, unitId: string): Teacher
 }
 
 // Unit 10 specific lesson plans
-export const pastContinuousLessonPlan = {
-  id: "book6-unit10-past-continuous-lesson",
-  title: "Past Continuous: What Was Happening",
+export const technologyVocabularyLessonPlan = {
+  id: "book6-unit10-tech-vocabulary-lesson",
+  title: "Technology Vocabulary Development",
   duration: "45-60 minutes",
   level: "Intermediate",
   objectives: [
-    "Understand and use the past continuous tense",
-    "Describe actions in progress in the past",
-    "Contrast past simple and past continuous"
+    "Learn key vocabulary related to modern technology",
+    "Practice describing technology devices and their functions",
+    "Develop confidence in discussing technology in English"
   ],
   materials: [
     "Visual English Book 6 Unit 10 slides",
-    "Situation pictures for past continuous",
-    "Past continuous worksheet"
+    "Technology Gadgets Wordwall games",
+    "Pictures of various modern devices"
   ],
   steps: [
     {
       title: "Warm-up", 
       duration: "10 minutes",
-      description: "Introduce past continuous through visual contexts",
-      instructions: ["Show pictures of actions in progress", "Ask students what was happening in each picture", "Highlight the structure: was/were + verb-ing"]
+      description: "Introduce technology vocabulary through visual aids",
+      instructions: ["Show pictures of various technology devices", "Ask students to name any devices they recognize", "Create a mind map of technology categories on the board"]
     },
     {
-      title: "Grammar Presentation",
+      title: "Vocabulary Presentation",
       duration: "15 minutes",
-      description: "Present the form and function of past continuous",
-      materials: ["Visual examples", "Grammar chart"],
-      instructions: ["Present affirmative, negative and question forms", "Demonstrate how to describe ongoing past actions", "Show examples in context with timelines"]
+      description: "Present key technology vocabulary and functions",
+      materials: ["Visual examples", "Vocabulary handout"],
+      instructions: ["Present devices, parts and functions vocabulary", "Model pronunciation of technical terms", "Explain basic functions of each technology"]
     },
     {
       title: "Practice",
       duration: "15 minutes",
-      description: "Guided practice using past continuous",
-      materials: ["Past Continuous Wordwall game"],
-      instructions: ["Play interactive game to identify past continuous sentences", "Have students create their own examples", "Monitor for correct form and usage"]
+      description: "Interactive practice with technology vocabulary",
+      materials: ["Technology Gadgets Wordwall games"],
+      instructions: ["Use interactive games to practice identifying devices", "Have students match devices with their functions", "Monitor for proper terminology use"]
     },
     {
       title: "Activity", 
       duration: "15 minutes",
-      description: "Past continuous storytelling",
-      materials: ["Story sequence cards"],
-      instructions: ["Distribute story cards with scenes", "Students work in pairs to describe what was happening", "Share stories with the class"]
+      description: "Technology explanation speaking activity",
+      materials: ["Technology device cards"],
+      instructions: ["Assign students devices to explain", "Have them describe what the device is used for", "Encourage use of target vocabulary in explanations"]
     }
   ],
-  assessmentTips: "Check formation of past continuous in written work. Listen for proper usage of was/were + verb-ing. Evaluate storytelling for appropriate use of tense.",
+  assessmentTips: "Evaluate accurate use of technology vocabulary. Listen for proper terminology and function descriptions. Check ability to identify devices and explain their purposes.",
   homeworkIdeas: [
-    "Write a short paragraph about what you were doing at specific times yesterday",
-    "Complete past continuous exercises in workbook",
-    "Create a comic strip showing actions in progress in the past"
+    "Create a technology vocabulary notebook with illustrations",
+    "Write instructions for how to use a specific technology device",
+    "Prepare a short presentation about your favorite gadget"
   ]
 };
 
-export const pastContinuousInterruptionLessonPlan = {
-  id: "book6-unit10-past-continuous-interruption-lesson",
-  title: "Past Continuous: Interrupted Actions",
+export const digitalLiteracyLessonPlan = {
+  id: "book6-unit10-digital-literacy-lesson",
+  title: "Digital Literacy: Being Tech Savvy",
   duration: "45-60 minutes",
   level: "Intermediate",
   objectives: [
-    "Use past continuous for interrupted actions",
-    "Combine past continuous and past simple",
-    "Create narrative sequences with both tenses"
+    "Discuss what it means to be 'tech savvy'",
+    "Learn phrases to describe technology skills",
+    "Practice discussing technology capabilities"
   ],
   materials: [
     "Visual English Book 6 Unit 10 slides",
-    "Interruption scenario cards",
-    "Interactive whiteboard activities"
+    "Tech survey handout",
+    "Digital literacy checklist"
   ],
   steps: [
     {
-      title: "Review",
+      title: "Introduction",
       duration: "10 minutes",
-      description: "Review past continuous from previous lesson",
-      instructions: ["Quick recall of past continuous form", "Elicit example sentences", "Introduce the concept of interrupted actions"]
+      description: "Explore the concept of being 'tech savvy'",
+      instructions: ["Discuss what 'tech savvy' means", "Have students rate their own tech skills", "Brainstorm common technology tasks"]
     },
     {
-      title: "Presentation",
+      title: "Language Focus",
       duration: "15 minutes",
-      description: "Introduce interrupted actions with 'when' and 'while'",
-      materials: ["Sentence structure charts", "Visual examples"],
-      instructions: ["Present the structure: 'while + past continuous, past simple'", "Show examples with illustrations", "Demonstrate how to connect the two tenses"]
+      description: "Introduce useful expressions for technology skills",
+      materials: ["Expressions handout", "Example conversations"],
+      instructions: ["Present useful phrases like 'I can...', 'I know how to...'", "Demonstrate asking about tech abilities", "Model conversations about technology skills"]
     },
     {
-      title: "Practice",
+      title: "Survey Activity",
       duration: "15 minutes",
-      description: "Guided practice with interrupted actions",
-      materials: ["When/While Wordwall activity"],
-      instructions: ["Guide students through the online activity", "Have them connect sentence halves using when/while", "Check answers as a class"]
+      description: "Technology skills survey",
+      materials: ["Survey worksheets"],
+      instructions: ["Students interview classmates about tech abilities", "Complete the tech survey form", "Identify the most and least common tech skills"]
     },
     {
-      title: "Activity",
-      duration: "15 minutes",
-      description: "Creating interrupted action stories",
-      materials: ["Scenario cards"],
-      instructions: ["Pair students with scenario prompts", "Have them create short stories with interrupted actions", "Share stories and provide feedback"]
+      title: "Discussion",
+      duration: "10 minutes",
+      description: "Discuss advantages of being tech savvy",
+      instructions: ["Group discussion about technology's importance", "Share ideas about essential tech skills for today", "Talk about how to improve digital literacy"]
     }
   ],
-  assessmentTips: "Check for proper coordination of tenses. Ensure 'when' and 'while' are used correctly. Evaluate students' ability to create logical sequences of events.",
+  assessmentTips: "Observe students' ability to discuss technology confidently. Check use of target expressions. Evaluate survey completion accuracy and presentation of findings.",
   homeworkIdeas: [
-    "Write about a time when you were interrupted while doing something",
-    "Complete the exercises connecting past simple and past continuous",
-    "Create a timeline of events showing main actions and interruptions"
+    "Complete a self-assessment of your technology skills",
+    "Write about a technology skill you want to learn",
+    "Research and write about a new technology trend"
   ]
 };
 
 export const book6Unit10LessonPlans = [
-  pastContinuousLessonPlan,
-  pastContinuousInterruptionLessonPlan
+  technologyVocabularyLessonPlan,
+  digitalLiteracyLessonPlan
 ];
 
-export function getBook6Unit10LessonPlans() {
+export function getBook6Unit10LessonPlans(): LessonPlan[] {
   return book6Unit10LessonPlans;
 }

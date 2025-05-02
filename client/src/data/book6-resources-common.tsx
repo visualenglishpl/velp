@@ -158,9 +158,9 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
   ],
   '10': [
     {
-      title: "Past Continuous Tense Tutorial",
-      sourceUrl: "https://www.youtube.com/watch?v=gZJWVNz7xZA",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gZJWVNz7xZA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+      title: "Technology Devices Vocabulary",
+      sourceUrl: "https://www.youtube.com/watch?v=AVKzuuZRdKA",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/AVKzuuZRdKA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
     }
   ],
   '12': [
