@@ -1,50 +1,24 @@
-// This file imports and exports the resources and lesson plans for Book 6, Unit 7
+// Book 6 Unit 7 implementation file - What Your Body Can Do
 
-import { book6Unit7Resources, bodyPartsLessonPlan, healthAndIllnessLessonPlan } from './book6-unit7-resources';
-
-// Use type definition directly to avoid circular dependencies
-type TeacherResource = {
-  id?: string;
-  bookId: string;
-  unitId: string;
-  title: string;
-  resourceType: 'video' | 'game' | 'lesson' | 'pdf' | 'other';
-  provider?: string;
-  sourceUrl?: string;
-  embedCode?: string;
-  fileUrl?: string;
-  lessonPlan?: any; // Using any to avoid circular import issues
-};
-
-// Import types from LessonPlanTemplate to ensure compatibility
-import { LessonPlan as ImportedLessonPlan } from '@/components/LessonPlanTemplate';
-
-// Use imported type to ensure compatibility
-type LessonPlan = ImportedLessonPlan;
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { TeacherResource } from '@/components/TeacherResources';
+import { bodyActionsLessonPlan, physicalAbilitiesLessonPlan, book6Unit7Resources } from './book6-unit7-resources';
 
 // Function to get lesson plans for this unit
-export const getBook6Unit7LessonPlans = (): LessonPlan[] => {
+export function getBook6Unit7LessonPlans(): LessonPlan[] {
   return [
-    bodyPartsLessonPlan,
-    healthAndIllnessLessonPlan
+    bodyActionsLessonPlan,
+    physicalAbilitiesLessonPlan
   ];
-};
+}
 
-// Function to get resources for this unit
-export const getBook6Unit7Resources = (bookId: string, unitId: string): TeacherResource[] => {
+// Function to get additional resources for the unit
+export function getBook6Unit7Resources(): TeacherResource[] {
+  // Return resources with proper typing for TeacherResource
   return book6Unit7Resources.map(resource => ({
+    ...resource,
     id: `book6-unit7-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-    bookId,
-    unitId,
-    ...resource
+    bookId: '6',
+    unitId: '7'
   }));
-};
-
-// Export the resources for this unit (for backward compatibility)
-export const unitResources = book6Unit7Resources;
-
-// Export the lesson plans for this unit (for backward compatibility)
-export const lessonPlans = [
-  bodyPartsLessonPlan,
-  healthAndIllnessLessonPlan
-];
+}

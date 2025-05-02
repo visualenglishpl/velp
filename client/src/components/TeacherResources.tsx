@@ -38,6 +38,7 @@ import { getBook6Unit3LessonPlans, getBook6Unit3Resources } from '@/data/book6-u
 import { getBook6Unit4LessonPlans, getBook6Unit4Resources } from '@/data/book6-unit4-implementation';
 import { getBook6Unit5LessonPlans, getBook6Unit5Resources } from '@/data/book6-unit5-implementation';
 import { getBook6Unit6LessonPlans, getBook6Unit6Resources } from '@/data/book6-unit6-implementation';
+import { getBook6Unit7LessonPlans, getBook6Unit7Resources } from '@/data/book6-unit7-implementation';
 
 // Book 6 resources (direct imports)
 import { book6Unit1Resources } from '@/data/book6-unit1-resources';
@@ -46,6 +47,7 @@ import { book6Unit3Resources } from '@/data/book6-unit3-resources';
 import { book6Unit4Resources } from '@/data/book6-unit4-resources';
 import { book6Unit5Resources } from '@/data/book6-unit5-resources';
 import { book6Unit6Resources } from '@/data/book6-unit6-resources';
+import { book6Unit7Resources } from '@/data/book6-unit7-resources';
 
 export interface TeacherResource {
   id?: string;
@@ -475,6 +477,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return getBook6Unit6Resources();
       } catch (error) {
         console.error('Error getting Book 6 Unit 6 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 7 - What Your Body Can Do
+    if (bookId === '6' && unitId === '7') {
+      try {
+        console.log('Loading Book 6 Unit 7 resources');
+        // Use the getBook6Unit7Resources function from the implementation file
+        return getBook6Unit7Resources();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 7 resources:', error);
         return [];
       }
     }
