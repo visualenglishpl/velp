@@ -439,6 +439,109 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       sourceUrl: "https://wordwall.net/resource/db58fd0165464c08a4c385c035325f3b",
       embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/db58fd0165464c08a4c385c035325f3b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
+  ],
+  '13': [
+    {
+      title: "Clothes and Fashion Vocabulary",
+      sourceUrl: "https://www.youtube.com/watch?v=Jhd1XbZdLHo",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Jhd1XbZdLHo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Fashion Vocabulary",
+      sourceUrl: "https://wordwall.net/resource/4bb6a92e13534b3fb9c2347f9be6d88b",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4bb6a92e13534b3fb9c2347f9be6d88b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Clothing Items Game",
+      sourceUrl: "https://wordwall.net/resource/7d42d91a84614f899af2a1a04bda80ef",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7d42d91a84614f899af2a1a04bda80ef?themeId=1&templateId=11&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Shoe Types Game",
+      sourceUrl: "https://wordwall.net/resource/b4d81df242e343618ac2e5fbabb5a68b",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/b4d81df242e343618ac2e5fbabb5a68b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Fashion Accessories Game",
+      sourceUrl: "https://wordwall.net/resource/c9ec2fc34fd9417f94ce6b73ee7a63bd",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c9ec2fc34fd9417f94ce6b73ee7a63bd?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '14': [
+    {
+      title: "Cinema and Movies Vocabulary",
+      sourceUrl: "https://www.youtube.com/watch?v=YWbYeTp35_o",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/YWbYeTp35_o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Film Genres Quiz Game",
+      sourceUrl: "https://wordwall.net/resource/5ac95a3ca17a44f5bc3a42d7ea48d293",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5ac95a3ca17a44f5bc3a42d7ea48d293?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Movie Vocabulary Game",
+      sourceUrl: "https://wordwall.net/resource/eb56e7fe3a1c4fb68aa48be15f86c0df",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/eb56e7fe3a1c4fb68aa48be15f86c0df?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Cinema Jobs Game",
+      sourceUrl: "https://wordwall.net/resource/a6fa7b04df3b4e61a5ff1d37a6e56ed2",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a6fa7b04df3b4e61a5ff1d37a6e56ed2?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '15': [
+    {
+      title: "Rules and Regulations - Modal Verbs",
+      sourceUrl: "https://www.youtube.com/watch?v=BhPqiGfqo0M",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/BhPqiGfqo0M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Modal Verbs Game",
+      sourceUrl: "https://wordwall.net/resource/af4e3f292ad04cc181e9b73b34f16bc0",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/af4e3f292ad04cc181e9b73b34f16bc0?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "School Rules Game",
+      sourceUrl: "https://wordwall.net/resource/99aa3cc7af424cc09ea0fa3d1af9e4ff",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/99aa3cc7af424cc09ea0fa3d1af9e4ff?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Road Signs Game",
+      sourceUrl: "https://wordwall.net/resource/5c4ba0e1fe0f4cc5812b3b7f6b29be3f",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5c4ba0e1fe0f4cc5812b3b7f6b29be3f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Must vs. Should Game",
+      sourceUrl: "https://wordwall.net/resource/5f38bdace8c9490eb62cd53a6cce4e64",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5f38bdace8c9490eb62cd53a6cce4e64?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '16': [
+    {
+      title: "Heroes and Inspirational People",
+      sourceUrl: "https://www.youtube.com/watch?v=DA1ZV6NOpGw",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/DA1ZV6NOpGw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Famous People Quiz Game",
+      sourceUrl: "https://wordwall.net/resource/cd4d92e1b9de4b9d84e9edcdf7a4d49c",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/cd4d92e1b9de4b9d84e9edcdf7a4d49c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Inspiring Qualities Game",
+      sourceUrl: "https://wordwall.net/resource/63e2359e16684889a10fdfd4fa67b57f",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/63e2359e16684889a10fdfd4fa67b57f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Inspirational Leaders Game",
+      sourceUrl: "https://wordwall.net/resource/1a34a89e1b024e19a4e33a0fb2e79abd",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1a34a89e1b024e19a4e33a0fb2e79abd?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Heroes and Achievements Game",
+      sourceUrl: "https://wordwall.net/resource/d9c4f03e5ff94cdebcde74a9e5c0e863",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d9c4f03e5ff94cdebcde74a9e5c0e863?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
   ]
 };
 
