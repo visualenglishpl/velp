@@ -1,50 +1,24 @@
-// This file imports and exports the resources and lesson plans for Book 6, Unit 8
+import { TeacherResource } from '@/components/TeacherResources';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { book6Unit8Resources, pastSimpleVerbsLessonPlan, freeTimeActivitiesLessonPlan } from './book6-unit8-resources';
 
-import { book6Unit8Resources, pastTenseVerbsLessonPlan, talkingAboutPastActivitiesLessonPlan } from './book6-unit8-resources';
-
-// Use type definition directly to avoid circular dependencies
-type TeacherResource = {
-  id?: string;
-  bookId: string;
-  unitId: string;
-  title: string;
-  resourceType: 'video' | 'game' | 'lesson' | 'pdf' | 'other';
-  provider?: string;
-  sourceUrl?: string;
-  embedCode?: string;
-  fileUrl?: string;
-  lessonPlan?: any; // Using any to avoid circular import issues
-};
-
-// Import types from LessonPlanTemplate to ensure compatibility
-import { LessonPlan as ImportedLessonPlan } from '@/components/LessonPlanTemplate';
-
-// Use imported type to ensure compatibility
-type LessonPlan = ImportedLessonPlan;
-
-// Function to get lesson plans for this unit
-export const getBook6Unit8LessonPlans = (): LessonPlan[] => {
-  return [
-    pastTenseVerbsLessonPlan,
-    talkingAboutPastActivitiesLessonPlan
-  ];
-};
-
-// Function to get resources for this unit
-export const getBook6Unit8Resources = (bookId: string, unitId: string): TeacherResource[] => {
+/**
+ * Get Book 6 Unit 8 resources - Free Time - Past Simple
+ */
+export function getBook6Unit8Resources(): TeacherResource[] {
   return book6Unit8Resources.map(resource => ({
-    id: `book6-unit8-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-    bookId,
-    unitId,
-    ...resource
+    ...resource,
+    bookId: "6",
+    unitId: "8"
   }));
-};
+}
 
-// Export the resources for this unit (for backward compatibility)
-export const unitResources = book6Unit8Resources;
-
-// Export the lesson plans for this unit (for backward compatibility)
-export const lessonPlans = [
-  pastTenseVerbsLessonPlan,
-  talkingAboutPastActivitiesLessonPlan
-];
+/**
+ * Get Book 6 Unit 8 lesson plans
+ */
+export function getBook6Unit8LessonPlans(): LessonPlan[] {
+  return [
+    pastSimpleVerbsLessonPlan,
+    freeTimeActivitiesLessonPlan
+  ];
+}

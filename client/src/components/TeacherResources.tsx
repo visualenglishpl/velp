@@ -39,6 +39,7 @@ import { getBook6Unit4LessonPlans, getBook6Unit4Resources } from '@/data/book6-u
 import { getBook6Unit5LessonPlans, getBook6Unit5Resources } from '@/data/book6-unit5-implementation';
 import { getBook6Unit6LessonPlans, getBook6Unit6Resources } from '@/data/book6-unit6-implementation';
 import { getBook6Unit7LessonPlans, getBook6Unit7Resources } from '@/data/book6-unit7-implementation';
+import { getBook6Unit8LessonPlans, getBook6Unit8Resources } from '@/data/book6-unit8-implementation';
 
 // Book 6 resources (direct imports)
 import { book6Unit1Resources } from '@/data/book6-unit1-resources';
