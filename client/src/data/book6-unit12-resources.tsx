@@ -265,3 +265,49 @@ export const book6Unit12Resources = [
     lessonPlan: sustainabilityLessonPlan
   }
 ];
+import { TeacherResource } from "@/components/TeacherResources";
+
+export const environmentResources: TeacherResource[] = [
+  {
+    title: "Solar System Game",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/2753bac717214441a38d76fda2cc33b8",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2753bac717214441a38d76fda2cc33b8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Types of Pollution Game",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/f07c8c0eebfb48d9a771d2c7cad81f3d",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/f07c8c0eebfb48d9a771d2c7cad81f3d?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Can You Recycle?",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/98fd4453f46240f0ac6bb612b5945960",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/98fd4453f46240f0ac6bb612b5945960?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Endangered or Extinct",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/f04d2f477ff8484db0456922be236071",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/f04d2f477ff8484db0456922be236071?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Endangered Animals",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/db58fd0165464c08a4c385c035325f3b",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/db58fd0165464c08a4c385c035325f3b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Earth Song",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/embed/S2SMvfGe72U",
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/S2SMvfGe72U?si=lNL1zDC02ILXCMju" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
+  }
+];

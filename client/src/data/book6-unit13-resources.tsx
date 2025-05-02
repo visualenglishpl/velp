@@ -226,3 +226,28 @@ export const travelProblemsSolutionsLessonPlan = {
     }
   ]
 };
+import { TeacherResource } from "@/components/TeacherResources";
+
+export const airportResources: TeacherResource[] = [
+  {
+    title: "Airport Vocabulary Game 1",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/ccb5b022c55d4267a1f7a53031171834",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ccb5b022c55d4267a1f7a53031171834?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Airport Vocabulary Game 2",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/4924741921d44b4c9cd142bf981cb4c2",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/4924741921d44b4c9cd142bf981cb4c2?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Airport Vocabulary Game 3",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/b2e5db302e2a4448bfed489e232a1587",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/b2e5db302e2a4448bfed489e232a1587?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
+];

@@ -241,3 +241,35 @@ export const fashionTrendsShoppingLessonPlan = {
     }
   ]
 };
+import { TeacherResource } from "@/components/TeacherResources";
+
+export const fashionResources: TeacherResource[] = [
+  {
+    title: "Fashion Accessories Game 1",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/5d2783ba0ff64d5c84bd49992b7ab734",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/5d2783ba0ff64d5c84bd49992b7ab734?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Fashion Accessories Game 2",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/909a9c5e5ebb4e64892f86ed18f6d581",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/909a9c5e5ebb4e64892f86ed18f6d581?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Fashion Accessories Game 3",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/a74d3e4d720144bb85d9aaf10eccb1dc",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/a74d3e4d720144bb85d9aaf10eccb1dc?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "Fashion Accessories Game 4",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/62ec7fa4d36f47b9b5c3bdf4bb68d8d4",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/62ec7fa4d36f47b9b5c3bdf4bb68d8d4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
+];

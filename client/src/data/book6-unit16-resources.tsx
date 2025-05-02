@@ -247,3 +247,35 @@ export const urbanRuralLifeLessonPlan = {
     }
   ]
 };
+import { TeacherResource } from "@/components/TeacherResources";
+
+export const cityLifeResources: TeacherResource[] = [
+  {
+    title: "City Life Game 1",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/eee1bf3b774142c3933bc71166544636",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/eee1bf3b774142c3933bc71166544636?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "City Life Game 2",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/16b62317675e46cfb1a822f77d3ea319",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/16b62317675e46cfb1a822f77d3ea319?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "City Life Game 3",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/d3a07d614e964c408aec558d6f1c0aa9",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/d3a07d614e964c408aec558d6f1c0aa9?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    title: "City Life Game 4",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/9226ab267a0f47cfbb747b16c94f7396",
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9226ab267a0f47cfbb747b16c94f7396?themeId=1&templateId=54&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
+];
