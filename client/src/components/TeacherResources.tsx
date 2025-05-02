@@ -41,6 +41,10 @@ import { getBook6Unit6LessonPlans, getBook6Unit6Resources } from '@/data/book6-u
 import { getBook6Unit7LessonPlans, getBook6Unit7Resources } from '@/data/book6-unit7-implementation';
 import { getBook6Unit8LessonPlans, getBook6Unit8Resources } from '@/data/book6-unit8-implementation';
 import { getBook6Unit9LessonPlans, getBook6Unit9Resources } from '@/data/book6-unit9-implementation';
+import { getBook6Unit10LessonPlans, getBook6Unit10Resources } from '@/data/book6-unit10-implementation';
+import { getBook6Unit11LessonPlans, getBook6Unit11Resources } from '@/data/book6-unit11-implementation';
+import { getBook6Unit12LessonPlans, getBook6Unit12Resources } from '@/data/book6-unit12-implementation';
+import { getBook6Unit13LessonPlans, getBook6Unit13Resources } from '@/data/book6-unit13-implementation';
 
 // Book 6 resources (direct imports)
 import { book6Unit1Resources } from '@/data/book6-unit1-resources';
@@ -52,6 +56,10 @@ import { book6Unit6Resources } from '@/data/book6-unit6-resources';
 import { book6Unit7Resources } from '@/data/book6-unit7-resources';
 import { book6Unit8Resources } from '@/data/book6-unit8-resources';
 import { book6Unit9Resources } from '@/data/book6-unit9-resources';
+import { book6Unit10Resources } from '@/data/book6-unit10-resources';
+import { book6Unit11Resources } from '@/data/book6-unit11-resources';
+import { book6Unit12Resources } from '@/data/book6-unit12-resources';
+import { book6Unit13Resources } from '@/data/book6-unit13-resources';
 
 export interface TeacherResource {
   id?: string;
@@ -517,6 +525,54 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return getBook6Unit9Resources();
       } catch (error) {
         console.error('Error getting Book 6 Unit 9 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 10 - Are You Tech Savvy?
+    if (bookId === '6' && unitId === '10') {
+      try {
+        console.log('Loading Book 6 Unit 10 resources');
+        // Use the getBook6Unit10Resources function from the implementation file
+        return getBook6Unit10Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 10 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 11 - Extreme Sports
+    if (bookId === '6' && unitId === '11') {
+      try {
+        console.log('Loading Book 6 Unit 11 resources');
+        // Use the getBook6Unit11Resources function from the implementation file
+        return getBook6Unit11Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 11 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 12 - Are You Eco: Environment
+    if (bookId === '6' && unitId === '12') {
+      try {
+        console.log('Loading Book 6 Unit 12 resources');
+        // Use the getBook6Unit12Resources function from the implementation file
+        return getBook6Unit12Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 12 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 13 - At the Airport
+    if (bookId === '6' && unitId === '13') {
+      try {
+        console.log('Loading Book 6 Unit 13 resources');
+        // Use the getBook6Unit13Resources function from the implementation file
+        return getBook6Unit13Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 13 resources:', error);
         return [];
       }
     }
@@ -1082,6 +1138,230 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                           size="sm" 
                           className="text-xs flex items-center text-destructive" 
                           onClick={() => setConfirmDelete({ id: `present-perfect-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 10 - Are You Tech Savvy? lesson plans
+    if (bookId === '6' && unitId === '10') {
+      // Get Book 6 Unit 10 lesson plans
+      let techSavvyPlans: LessonPlan[] = [];
+      try {
+        techSavvyPlans = getBook6Unit10LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 10 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Technology and Digital Literacy Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {techSavvyPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `tech-savvy-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 11 - Extreme Sports lesson plans
+    if (bookId === '6' && unitId === '11') {
+      // Get Book 6 Unit 11 lesson plans
+      let extremeSportsPlans: LessonPlan[] = [];
+      try {
+        extremeSportsPlans = getBook6Unit11LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 11 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Extreme Sports and Adventure Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {extremeSportsPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `extreme-sports-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 12 - Are You Eco: Environment lesson plans
+    if (bookId === '6' && unitId === '12') {
+      // Get Book 6 Unit 12 lesson plans
+      let environmentLessonPlans: LessonPlan[] = [];
+      try {
+        environmentLessonPlans = getBook6Unit12LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 12 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Environmental Awareness Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {environmentLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `environment-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 13 - At the Airport lesson plans
+    if (bookId === '6' && unitId === '13') {
+      // Get Book 6 Unit 13 lesson plans
+      let airportLessonPlans: LessonPlan[] = [];
+      try {
+        airportLessonPlans = getBook6Unit13LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 13 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Airport and Travel Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {airportLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `airport-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                         >
                           <Trash2 className="h-3 w-3 mr-1" />
                           Delete
