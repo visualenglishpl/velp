@@ -45,6 +45,9 @@ import { getBook6Unit10LessonPlans, getBook6Unit10Resources } from '@/data/book6
 import { getBook6Unit11LessonPlans, getBook6Unit11Resources } from '@/data/book6-unit11-implementation';
 import { getBook6Unit12LessonPlans, getBook6Unit12Resources } from '@/data/book6-unit12-implementation';
 import { getBook6Unit13LessonPlans, getBook6Unit13Resources } from '@/data/book6-unit13-implementation';
+import { getBook6Unit14LessonPlans, getBook6Unit14Resources } from '@/data/book6-unit14-implementation';
+import { getBook6Unit15LessonPlans, getBook6Unit15Resources } from '@/data/book6-unit15-implementation';
+import { getBook6Unit16LessonPlans, getBook6Unit16Resources } from '@/data/book6-unit16-implementation';
 
 // Book 6 resources (direct imports)
 import { book6Unit1Resources } from '@/data/book6-unit1-resources';
@@ -60,6 +63,9 @@ import { book6Unit10Resources } from '@/data/book6-unit10-resources';
 import { book6Unit11Resources } from '@/data/book6-unit11-resources';
 import { book6Unit12Resources } from '@/data/book6-unit12-resources';
 import { book6Unit13Resources } from '@/data/book6-unit13-resources';
+import { book6Unit14Resources } from '@/data/book6-unit14-resources';
+import { book6Unit15Resources } from '@/data/book6-unit15-resources';
+import { book6Unit16Resources } from '@/data/book6-unit16-resources';
 
 export interface TeacherResource {
   id?: string;
@@ -573,6 +579,42 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return getBook6Unit13Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 13 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 14 - Are You a Survivor?
+    if (bookId === '6' && unitId === '14') {
+      try {
+        console.log('Loading Book 6 Unit 14 resources');
+        // Use the getBook6Unit14Resources function from the implementation file
+        return getBook6Unit14Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 14 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 15 - Fashion Accessories
+    if (bookId === '6' && unitId === '15') {
+      try {
+        console.log('Loading Book 6 Unit 15 resources');
+        // Use the getBook6Unit15Resources function from the implementation file
+        return getBook6Unit15Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 15 resources:', error);
+        return [];
+      }
+    }
+    
+    // Resources for Book 6, Unit 16 - City Life
+    if (bookId === '6' && unitId === '16') {
+      try {
+        console.log('Loading Book 6 Unit 16 resources');
+        // Use the getBook6Unit16Resources function from the implementation file
+        return getBook6Unit16Resources(bookId, unitId);
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 16 resources:', error);
         return [];
       }
     }
@@ -1374,6 +1416,174 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   </CardContent>
                   <CardFooter className="bg-muted/20 pt-3 pb-3">
                     <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 14 - Are You a Survivor? lesson plans
+    if (bookId === '6' && unitId === '14') {
+      // Get Book 6 Unit 14 lesson plans
+      let survivorLessonPlans: LessonPlan[] = [];
+      try {
+        survivorLessonPlans = getBook6Unit14LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 14 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Survival and Emergency Preparedness Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {survivorLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2 bg-amber-50/50 border-b border-amber-100">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `survivor-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-amber-50/30 pt-3 pb-3 border-t border-amber-100">
+                    <Button variant="secondary" size="sm" className="w-full border-amber-200 hover:border-amber-300 hover:bg-amber-50" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 15 - Fashion Accessories lesson plans
+    if (bookId === '6' && unitId === '15') {
+      // Get Book 6 Unit 15 lesson plans
+      let fashionLessonPlans: LessonPlan[] = [];
+      try {
+        fashionLessonPlans = getBook6Unit15LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 15 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Fashion and Style Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {fashionLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2 bg-purple-50/50 border-b border-purple-100">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `fashion-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-purple-50/30 pt-3 pb-3 border-t border-purple-100">
+                    <Button variant="secondary" size="sm" className="w-full border-purple-200 hover:border-purple-300 hover:bg-purple-50" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 16 - City Life lesson plans
+    if (bookId === '6' && unitId === '16') {
+      // Get Book 6 Unit 16 lesson plans
+      let cityLifeLessonPlans: LessonPlan[] = [];
+      try {
+        cityLifeLessonPlans = getBook6Unit16LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 16 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Urban Life and City Navigation Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {cityLifeLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2 bg-teal-50/50 border-b border-teal-100">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `city-life-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-teal-50/30 pt-3 pb-3 border-t border-teal-100">
+                    <Button variant="secondary" size="sm" className="w-full border-teal-200 hover:border-teal-300 hover:bg-teal-50" onClick={() => window.print()}>
                       <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
                     </Button>
                   </CardFooter>
