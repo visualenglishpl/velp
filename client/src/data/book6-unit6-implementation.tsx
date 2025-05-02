@@ -1,50 +1,24 @@
-// This file imports and exports the resources and lesson plans for Book 6, Unit 6
+// This file contains implementation details for Book 6, Unit 6 (In the Kitchen)
 
-import { book6Unit6Resources, kitchenUtensilsLessonPlan, cookingMethodsLessonPlan } from './book6-unit6-resources';
+import { LessonPlan } from "@/components/LessonPlanTemplate";
+import { kitchenVocabularyLessonPlan, cookingVerbsLessonPlan, book6Unit6Resources } from "./book6-unit6-resources";
 
-// Use type definition directly to avoid circular dependencies
-type TeacherResource = {
-  id?: string;
-  bookId: string;
-  unitId: string;
-  title: string;
-  resourceType: 'video' | 'game' | 'lesson' | 'pdf' | 'other';
-  provider?: string;
-  sourceUrl?: string;
-  embedCode?: string;
-  fileUrl?: string;
-  lessonPlan?: any; // Using any to avoid circular import issues
-};
-
-// Import types from LessonPlanTemplate to ensure compatibility
-import { LessonPlan as ImportedLessonPlan } from '@/components/LessonPlanTemplate';
-
-// Use imported type to ensure compatibility
-type LessonPlan = ImportedLessonPlan;
-
-// Function to get lesson plans for this unit
-export const getBook6Unit6LessonPlans = (): LessonPlan[] => {
+// Function to get the lesson plans for the unit
+export function getBook6Unit6LessonPlans(): LessonPlan[] {
+  // Return the two 45-minute lesson plans for this unit
   return [
-    kitchenUtensilsLessonPlan,
-    cookingMethodsLessonPlan
+    kitchenVocabularyLessonPlan,
+    cookingVerbsLessonPlan
   ];
-};
+}
 
-// Function to get resources for this unit
-export const getBook6Unit6Resources = (bookId: string, unitId: string): TeacherResource[] => {
+// Function to get additional resources for the unit
+export function getBook6Unit6Resources() {
+  // Return resources with proper typing for TeacherResource
   return book6Unit6Resources.map(resource => ({
+    ...resource,
     id: `book6-unit6-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-    bookId,
-    unitId,
-    ...resource
+    bookId: '6',
+    unitId: '6'
   }));
-};
-
-// Export the resources for this unit (for backward compatibility)
-export const unitResources = book6Unit6Resources;
-
-// Export the lesson plans for this unit (for backward compatibility)
-export const lessonPlans = [
-  kitchenUtensilsLessonPlan,
-  cookingMethodsLessonPlan
-];
+}

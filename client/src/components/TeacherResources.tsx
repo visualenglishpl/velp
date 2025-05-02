@@ -37,6 +37,7 @@ import { getBook6Unit2LessonPlans, getBook6Unit2Resources } from '@/data/book6-u
 import { getBook6Unit3LessonPlans, getBook6Unit3Resources } from '@/data/book6-unit3-implementation';
 import { getBook6Unit4LessonPlans, getBook6Unit4Resources } from '@/data/book6-unit4-implementation';
 import { getBook6Unit5LessonPlans, getBook6Unit5Resources } from '@/data/book6-unit5-implementation';
+import { getBook6Unit6LessonPlans, getBook6Unit6Resources } from '@/data/book6-unit6-implementation';
 
 // Book 6 resources (direct imports)
 import { book6Unit1Resources } from '@/data/book6-unit1-resources';
@@ -44,6 +45,7 @@ import { book6Unit2Resources } from '@/data/book6-unit2-resources';
 import { book6Unit3Resources } from '@/data/book6-unit3-resources';
 import { book6Unit4Resources } from '@/data/book6-unit4-resources';
 import { book6Unit5Resources } from '@/data/book6-unit5-resources';
+import { book6Unit6Resources } from '@/data/book6-unit6-resources';
 
 export interface TeacherResource {
   id?: string;
@@ -465,6 +467,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       }
     }
     
+    // Resources for Book 6, Unit 6 - In the Kitchen
+    if (bookId === '6' && unitId === '6') {
+      try {
+        console.log('Loading Book 6 Unit 6 resources');
+        // Use the getBook6Unit6Resources function from the implementation file
+        return getBook6Unit6Resources();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 6 resources:', error);
+        return [];
+      }
+    }
+    
     // If no specific resources, return an empty array
     return [];
   }, [bookId, unitId]);
@@ -802,6 +816,62 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                           size="sm" 
                           className="text-xs flex items-center text-destructive" 
                           onClick={() => setConfirmDelete({ id: `theme-park-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 6 Unit 6 - In the Kitchen lesson plans
+    if (bookId === '6' && unitId === '6') {
+      // Get Book 6 Unit 6 lesson plans
+      let kitchenPlans: LessonPlan[] = [];
+      try {
+        kitchenPlans = getBook6Unit6LessonPlans();
+      } catch (error) {
+        console.error('Error getting Book 6 Unit 6 lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Kitchen Themed Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {kitchenPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `kitchen-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                         >
                           <Trash2 className="h-3 w-3 mr-1" />
                           Delete
