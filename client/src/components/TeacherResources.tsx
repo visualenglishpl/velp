@@ -690,7 +690,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       try {
         console.log('Loading Book 6 Unit 6 resources');
         // Use the getBook6Unit6Resources function from the implementation file
-        return getBook6Unit6Resources();
+        return getBook6Unit6Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 6 resources:', error);
         return [];
@@ -702,7 +702,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       try {
         console.log('Loading Book 6 Unit 7 resources');
         // Use the getBook6Unit7Resources function from the implementation file
-        return getBook6Unit7Resources();
+        return getBook6Unit7Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 7 resources:', error);
         return [];
@@ -714,7 +714,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       try {
         console.log('Loading Book 6 Unit 8 resources');
         // Use the getBook6Unit8Resources function from the implementation file
-        return getBook6Unit8Resources();
+        return getBook6Unit8Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 8 resources:', error);
         return [];
@@ -726,7 +726,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       try {
         console.log('Loading Book 6 Unit 9 resources');
         // Use the getBook6Unit9Resources function from the implementation file
-        return getBook6Unit9Resources();
+        return getBook6Unit9Resources(bookId, unitId);
       } catch (error) {
         console.error('Error getting Book 6 Unit 9 resources:', error);
         return [];
