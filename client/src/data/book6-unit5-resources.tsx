@@ -1,4 +1,4 @@
-// Resources for Book 6, Unit 5 - Theme Parks
+// Resources for Book 6, Unit 5 - Theme Park Stalls
 
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 
@@ -9,199 +9,218 @@ export const themeParkVocabularyLessonPlan: LessonPlan = {
   duration: '45 minutes',
   level: 'Intermediate',
   objectives: [
-    'Identify and name common theme park attractions and rides',
-    'Use appropriate adjectives to describe theme park experiences',
-    'Practice asking and answering questions about theme park preferences'
+    'Learn vocabulary related to theme parks and attractions',
+    'Identify and name different types of theme park stalls and rides',
+    'Practice describing theme park experiences',
+    'Use comparative and superlative forms to discuss attractions'
   ],
   materials: [
     'Visual English Book 6, Unit 5',
     'Digital projector or interactive whiteboard',
-    'Theme park vocabulary flashcards',
-    'Handout with theme park vocabulary exercises',
-    'Audio recordings of theme park sounds (optional)'
+    'Theme park photos and flashcards',
+    'Wordwall games on theme park vocabulary',
+    'Handout with theme park map exercise'
   ],
   steps: [
     {
       title: 'Warm-up',
       duration: '5 minutes',
-      description: 'Activate prior knowledge about theme parks and build student interest',
+      description: 'Activate prior knowledge about theme parks',
       instructions: [
-        'Show students pictures of famous theme parks (Disneyland, Universal Studios, etc.)',
-        'Ask students if they have visited a theme park before and what they enjoyed',
-        'Have students brainstorm words they associate with theme parks'
+        'Show photos of different theme parks around the world',
+        'Ask students if they have ever visited a theme park',
+        'Create a mind map on the board with theme park vocabulary students already know',
+        'Discuss what makes theme parks exciting and fun'
       ]
     },
     {
       title: 'Vocabulary Presentation',
       duration: '15 minutes',
-      description: 'Introduce key theme park vocabulary using Visual English materials',
+      description: 'Present key theme park vocabulary using Visual English materials',
       instructions: [
-        'Present the vocabulary from Book 6, Unit 5 using the Visual English slides',
-        'Categorize vocabulary into groups: rides, attractions, people, food, etc.',
+        'Present vocabulary related to theme park attractions using Visual English slides',
+        'Categorize vocabulary: rides (roller coaster, ferris wheel, carousel), stalls (food stands, game booths, souvenir shops)',
         'Model correct pronunciation and have students repeat',
-        'Use gestures and sounds to reinforce meaning of key terms'
+        'Teach related verbs and expressions: ride, play, win, queue up, etc.',
+        'Show examples of theme park maps and discuss the layout and attractions'
       ]
     },
     {
-      title: 'Practice Activity',
-      duration: '15 minutes',
-      description: 'Students practice using theme park vocabulary in context',
-      instructions: [
-        'Divide students into pairs',
-        'Distribute theme park vocabulary handouts with gap-fill exercises',
-        'Have students complete sentences describing theme park experiences',
-        'Students take turns asking and answering questions about theme park preferences using the target vocabulary'
-      ]
-    },
-    {
-      title: 'Theme Park Design',
+      title: 'Comparative Game',
       duration: '10 minutes',
-      description: 'Creative application of vocabulary in a collaborative task',
+      description: 'Practice using comparative and superlative forms with theme park vocabulary',
       instructions: [
-        'Divide students into small groups',
-        'Each group designs a section of their ideal theme park',
-        'Groups must label at least 5 attractions using vocabulary from the lesson',
-        'Groups present their theme park section to the class'
+        'Review comparative and superlative forms (-er/-est, more/most)',
+        'Provide adjectives suitable for describing attractions: exciting, scary, fast, fun, expensive',
+        'Show pictures of different rides and have students compare them using the target language',
+        'Example: "The roller coaster is more exciting than the carousel" or "The water ride is the wettest attraction"',
+        'Award points for grammatically correct comparisons'
+      ]
+    },
+    {
+      title: 'Theme Park Map Activity',
+      duration: '15 minutes',
+      description: 'Practice vocabulary through a map-based activity',
+      instructions: [
+        'Distribute blank theme park map templates',
+        'In small groups, students design their own theme park with at least 8 attractions',
+        'Students must label each attraction and stall using vocabulary from the lesson',
+        'Groups present their theme park maps to the class, describing what visitors can do at each attraction',
+        'Listeners ask questions about the attractions using the target vocabulary'
       ]
     }
   ],
-  assessmentTips: 'Assess students\'s vocabulary retention through their theme park designs and their ability to use descriptive language appropriately. Note students who struggle with pronunciation or meaning of key terms for follow-up support.',
+  assessmentTips: 'Assess students\'s vocabulary acquisition through their theme park designs and presentations. Note their use of comparative and superlative forms when describing attractions.',
   homeworkIdeas: [
-    'Write a short paragraph describing a visit to a theme park (real or imaginary)',
-    'Create a brochure advertising a new theme park ride',
-    'Complete vocabulary matching exercises in the workbook'
+    'Write a paragraph describing your ideal theme park',
+    'Create a brochure for a new theme park attraction',
+    'Research a famous theme park and list 10 attractions with descriptions'
   ],
   additionalResources: [
     {
-      title: 'Theme Park Rides Wordwall Game',
-      url: 'https://wordwall.net/embed/8080784ba2f2495287e30b926bf38bcb'
+      title: 'Theme Park Vocabulary Wordwall Game',
+      url: 'https://wordwall.net/embed/d0824e08d2604155975d2e94af5c21fb'
     },
     {
-      title: 'Theme Park Food Wordwall Game',
-      url: 'https://wordwall.net/embed/64d32b0e4bcb44df9a8ca4b84dce6ac4'
+      title: 'Virtual Theme Park Tours',
+      url: 'https://www.youtube.com/watch?v=TOBXkj-n4Uo'
     }
   ]
 };
 
 export const themeParkExperienceLessonPlan: LessonPlan = {
   id: 'book6-unit5-theme-park-experience',
-  title: 'A Day at the Theme Park',
+  title: 'Theme Park Experiences',
   duration: '45 minutes',
   level: 'Intermediate',
   objectives: [
-    'Describe a sequence of events using appropriate time expressions',
-    'Use adjectives to express feelings and opinions about theme park experiences',
-    'Practice speaking about personal preferences related to theme parks'
+    'Practice talking about past visits to theme parks or similar attractions',
+    'Learn vocabulary for expressing opinions and preferences about attractions',
+    'Develop fluency in describing experiences and emotions',
+    'Practice asking and answering questions about leisure activities'
   ],
   materials: [
     'Visual English Book 6, Unit 5',
     'Digital projector or interactive whiteboard',
-    'Timeline template handout',
-    'Audio or video clip of a theme park experience',
-    'Exit ticket forms'
+    'Theme park experience cards',
+    'Opinion and emotion flashcards',
+    'Theme park conversations worksheet'
   ],
   steps: [
     {
       title: 'Warm-up',
       duration: '5 minutes',
-      description: 'Activate students\'s schema and build interest in the topic',
+      description: 'Share theme park experiences and feelings',
       instructions: [
-        'Show a short video clip of people enjoying different theme park rides',
-        'Ask students: "Which ride looks most exciting? Which one would you avoid?"',
-        'Have students share brief responses with a partner'
+        'Show photos of people having different experiences at theme parks (excitement, fear, happiness, etc.)',
+        'Ask students to share emotions they have felt at theme parks or similar attractions',
+        'Create a vocabulary list of emotions and reactions on the board',
+        'Discuss why different people might have different reactions to the same attractions'
       ]
     },
     {
-      title: 'Listening Activity',
+      title: 'Opinion Vocabulary',
       duration: '10 minutes',
-      description: 'Develop listening comprehension skills with theme park context',
+      description: 'Learn vocabulary for expressing opinions about theme park attractions',
       instructions: [
-        'Play an audio description of someone\'s day at a theme park',
-        'Have students listen for time expressions and sequence words',
-        'Students complete a timeline of the person\'s day using the handout',
-        'Review the timeline as a class, focusing on sequence markers'
+        'Present vocabulary for expressing opinions: I think..., In my opinion..., I prefer..., etc.',
+        'Introduce adjectives for describing attractions: thrilling, disappointing, amazing, overpriced, etc.',
+        'Model structures for expressing preferences: "I prefer roller coasters to water rides" or "I\'d rather go on the carousel than the drop tower"',
+        'Have students practice these structures in pairs, discussing various theme park attractions'
       ]
     },
     {
-      title: 'Guided Practice',
+      title: 'Experience Sharing Activity',
       duration: '15 minutes',
-      description: 'Students practice using target language to describe experiences',
+      description: 'Practice talking about past theme park experiences',
       instructions: [
-        'Present model sentences for describing theme park experiences',
-        'Highlight adjectives and time expressions in the examples',
-        'Have students work in pairs to create their own sentences about different rides and attractions',
-        'Ask volunteer pairs to share their best sentences with the class'
+        'Distribute theme park experience cards with different scenarios',
+        'Students work in small groups to share real or imagined experiences based on the cards',
+        'Example card: "Talk about a time when you were scared on a ride" or "Describe winning a prize at a game stall"',
+        'Encourage students to ask follow-up questions to each other',
+        'Focus on past tense forms and descriptive language'
       ]
     },
     {
-      title: 'Plan Your Dream Day',
+      title: 'Role-Play: Theme Park Conversations',
       duration: '15 minutes',
-      description: 'Apply vocabulary and structures in a personalized context',
+      description: 'Practice functional language for theme park situations',
       instructions: [
-        'Distribute handouts with a map of an imaginary theme park',
-        'Students plan their ideal day at this theme park',
-        'They must include at least 5 different attractions and appropriate time expressions',
-        'Students share their plans in small groups, explaining their choices'
+        'Distribute theme park conversations worksheet with different scenarios',
+        'In pairs, students prepare and practice dialogues for situations like:',
+        '- Asking for directions to an attraction',
+        '- Ordering food at a theme park stall',
+        '- Convincing a friend to go on a scary ride',
+        '- Complaining about a long queue',
+        'Pairs perform their conversations for the class',
+        'Class provides feedback on language use and suggestions for improvement'
       ]
     }
   ],
-  assessmentTips: 'Evaluate students\' use of appropriate sequence markers and time expressions. Note their ability to express preferences with supporting reasons. Check for correct use of adjectives when describing experiences.',
+  assessmentTips: 'Evaluate students\'s ability to express opinions clearly, use appropriate vocabulary for theme park experiences, and engage in natural conversations about leisure activities.',
   homeworkIdeas: [
-    'Write a diary entry about a memorable day at a theme park (real or imaginary)',
-    'Create a dialogue between two friends discussing their day at a theme park',
-    'Research a famous theme park and prepare 5 interesting facts to share'
+    'Write a review of a theme park you have visited or would like to visit',
+    'Create a dialogue between friends planning a visit to a theme park',
+    'Design an advertisement for a new theme park stall or ride'
   ],
   additionalResources: [
     {
-      title: 'Theme Park Stalls Wordwall Game',
-      url: 'https://wordwall.net/embed/6b7661ae6d51420397ca4b290370c0a5'
+      title: 'Theme Park Wordwall Activities',
+      url: 'https://wordwall.net/resource/16551215/theme-park-stalls'
     },
     {
-      title: 'Guess the Rides Video',
-      url: 'https://www.youtube.com/embed/AYqEc3mKJek'
+      title: 'ESL Theme Park Vocabulary Games',
+      url: 'https://www.gamestolearnenglish.com/'
     }
   ]
 };
 
-// Book 6, Unit 5 (Theme Parks) Resources
+// Book 6, Unit 5 (Theme Park Stalls) Resources
 export const book6Unit5Resources = [
   {
     title: "Theme Park Stalls Game",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/6b7661ae6d51420397ca4b290370c0a5",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6b7661ae6d51420397ca4b290370c0a5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: "https://wordwall.net/resource/16551215/theme-park-stalls",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d0824e08d2604155975d2e94af5c21fb?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    title: "Theme Park Rides Game",
-    resourceType: "game",
+    title: "Theme Park Vocabulary Game",
+    resourceType: "game" as const,
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/8080784ba2f2495287e30b926bf38bcb",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8080784ba2f2495287e30b926bf38bcb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: "https://wordwall.net/resource/16551215/theme-park-vocabulary",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c29b5db7f99a492e83c3d9c6f90de44c?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    title: "Theme Park Food Game",
-    resourceType: "game",
+    title: "Theme Park Online Game",
+    resourceType: "game" as const,
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/64d32b0e4bcb44df9a8ca4b84dce6ac4",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/64d32b0e4bcb44df9a8ca4b84dce6ac4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: "https://wordwall.net/embed/a6efba6b1aac4ee4ba8b1d845c75c2a5",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a6efba6b1aac4ee4ba8b1d845c75c2a5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    title: "Guess the Rides",
-    resourceType: "video",
+    title: "Virtual Theme Park Tour",
+    resourceType: "video" as const,
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=AYqEc3mKJek",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/AYqEc3mKJek?si=b29JX3KdOmEHLs92" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: "https://www.youtube.com/watch?v=TOBXkj-n4Uo",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/TOBXkj-n4Uo?si=rDHbLY9IijLjc6p6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+  },
+  {
+    title: "Theme Park Stalls - Interactive Game",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/embed/16f7d3b5a71c4cc6babd0de7fef483b1",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/16f7d3b5a71c4cc6babd0de7fef483b1" width="560" height="315" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Theme Park Vocabulary Lesson Plan",
-    resourceType: "lesson",
+    resourceType: "lesson" as const,
     provider: "Visual English",
     lessonPlan: themeParkVocabularyLessonPlan
   },
   {
-    title: "A Day at the Theme Park Lesson Plan",
-    resourceType: "lesson",
+    title: "Theme Park Experiences Lesson Plan",
+    resourceType: "lesson" as const,
     provider: "Visual English",
     lessonPlan: themeParkExperienceLessonPlan
   }
