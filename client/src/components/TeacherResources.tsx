@@ -375,6 +375,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 7 && typedImplModule.getBook6Unit7LessonPlans) {
               console.log('Using getBook6Unit7LessonPlans');
               lessonPlans = typedImplModule.getBook6Unit7LessonPlans();
+            } else if (unitNum === 8 && typedImplModule.getBook6Unit8LessonPlans) {
+              console.log('Using getBook6Unit8LessonPlans');
+              lessonPlans = typedImplModule.getBook6Unit8LessonPlans();
             } else if (unitNum === 12 && typedImplModule.getBook6Unit12LessonPlans) {
               console.log('Using getBook6Unit12LessonPlans');
               lessonPlans = typedImplModule.getBook6Unit12LessonPlans();
