@@ -18,54 +18,155 @@ import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Pr
 import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
 import PDFViewer from '@/components/PDFViewer';
 
-// Import Unit implementations
-import { getUnit6LessonPlans, getUnit6Resources } from '@/data/unit6-implementation';
-import { getUnit7LessonPlans, getUnit7Resources } from '@/data/unit7-implementation';
-import { getUnit8LessonPlans, getUnit8Resources } from '@/data/unit8-implementation';
-import { getUnit9LessonPlans, getUnit9Resources } from '@/data/unit9-implementation';
-import { getUnit10LessonPlans, getUnit10Resources } from '@/data/unit10-implementation';
-import { getUnit11LessonPlans, getUnit11Resources } from '@/data/unit11-implementation';
-import { getUnit12LessonPlans, getUnit12Resources } from '@/data/unit12-implementation';
-import { getUnit13LessonPlans, getUnit13Resources } from '@/data/unit13-implementation';
-import { getUnit14LessonPlans, getUnit14Resources } from '@/data/unit14-implementation';
-import { getUnit15LessonPlans, getUnit15Resources } from '@/data/unit15-implementation';
-import { getUnit16LessonPlans, getUnit16Resources } from '@/data/unit16-implementation';
+// Dynamic imports for unit implementations
+const dynamicImplImport = async (book: string, unit: number) => {
+  try {
+    if (book === '7' || !book) { // Default to book 7 if no book specified
+      switch(unit) {
+        case 6:
+          return import('@/data/unit6-implementation');
+        case 7:
+          return import('@/data/unit7-implementation');
+        case 8:
+          return import('@/data/unit8-implementation');
+        case 9:
+          return import('@/data/unit9-implementation');
+        case 10:
+          return import('@/data/unit10-implementation');
+        case 11:
+          return import('@/data/unit11-implementation');
+        case 12:
+          return import('@/data/unit12-implementation');
+        case 13:
+          return import('@/data/unit13-implementation');
+        case 14:
+          return import('@/data/unit14-implementation');
+        case 15:
+          return import('@/data/unit15-implementation');
+        case 16:
+          return import('@/data/unit16-implementation');
+        default:
+          return null;
+      }
+    } else if (book === '6') {
+      switch(unit) {
+        case 1:
+          return import('@/data/book6-unit1-implementation');
+        case 2:
+          return import('@/data/book6-unit2-implementation');
+        case 3:
+          return import('@/data/book6-unit3-implementation');
+        case 4:
+          return import('@/data/book6-unit4-implementation');
+        case 5:
+          return import('@/data/book6-unit5-implementation');
+        case 6:
+          return import('@/data/book6-unit6-implementation');
+        case 7:
+          return import('@/data/book6-unit7-implementation');
+        case 8:
+          return import('@/data/book6-unit8-implementation');
+        case 9:
+          return import('@/data/book6-unit9-implementation');
+        case 10:
+          return import('@/data/book6-unit10-implementation');
+        case 11:
+          return import('@/data/book6-unit11-implementation');
+        case 12:
+          return import('@/data/book6-unit12-implementation');
+        case 13:
+          return import('@/data/book6-unit13-implementation');
+        case 14:
+          return import('@/data/book6-unit14-implementation');
+        case 15:
+          return import('@/data/book6-unit15-implementation');
+        case 16:
+          return import('@/data/book6-unit16-implementation');
+        default:
+          return null;
+      }
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error loading implementation for Book ${book}, Unit ${unit}:`, error);
+    return null;
+  }
+};
 
-// Book 6 implementations
-import { getBook6Unit1LessonPlans, getBook6Unit1Resources } from '@/data/book6-unit1-implementation';
-import { getBook6Unit2LessonPlans, getBook6Unit2Resources } from '@/data/book6-unit2-implementation';
-import { getBook6Unit3LessonPlans, getBook6Unit3Resources } from '@/data/book6-unit3-implementation';
-import { getBook6Unit4LessonPlans, getBook6Unit4Resources } from '@/data/book6-unit4-implementation';
-import { getBook6Unit5LessonPlans, getBook6Unit5Resources } from '@/data/book6-unit5-implementation';
-import { getBook6Unit6LessonPlans, getBook6Unit6Resources } from '@/data/book6-unit6-implementation';
-import { getBook6Unit7LessonPlans, getBook6Unit7Resources } from '@/data/book6-unit7-implementation';
-import { getBook6Unit8LessonPlans, getBook6Unit8Resources } from '@/data/book6-unit8-implementation';
-import { getBook6Unit9LessonPlans, getBook6Unit9Resources } from '@/data/book6-unit9-implementation';
-import { getBook6Unit10LessonPlans, getBook6Unit10Resources } from '@/data/book6-unit10-implementation';
-import { getBook6Unit11LessonPlans, getBook6Unit11Resources } from '@/data/book6-unit11-implementation';
-import { getBook6Unit12LessonPlans, getBook6Unit12Resources } from '@/data/book6-unit12-implementation';
-import { getBook6Unit13LessonPlans, getBook6Unit13Resources } from '@/data/book6-unit13-implementation';
-import { getBook6Unit14LessonPlans, getBook6Unit14Resources } from '@/data/book6-unit14-implementation';
-import { getBook6Unit15LessonPlans, getBook6Unit15Resources } from '@/data/book6-unit15-implementation';
-import { getBook6Unit16LessonPlans, getBook6Unit16Resources } from '@/data/book6-unit16-implementation';
-
-// Book 6 resources (direct imports)
-import { book6Unit1Resources } from '@/data/book6-unit1-resources';
-import { book6Unit2Resources } from '@/data/book6-unit2-resources';
-import { book6Unit3Resources } from '@/data/book6-unit3-resources';
-import { book6Unit4Resources } from '@/data/book6-unit4-resources';
-import { book6Unit5Resources } from '@/data/book6-unit5-resources';
-import { book6Unit6Resources } from '@/data/book6-unit6-resources';
-import { book6Unit7Resources } from '@/data/book6-unit7-resources';
-import { book6Unit8Resources } from '@/data/book6-unit8-resources';
-import { book6Unit9Resources } from '@/data/book6-unit9-resources';
-import { book6Unit10Resources } from '@/data/book6-unit10-resources';
-import { book6Unit11Resources } from '@/data/book6-unit11-resources';
-import { book6Unit12Resources } from '@/data/book6-unit12-resources';
-import { book6Unit13Resources } from '@/data/book6-unit13-resources';
-import { book6Unit14Resources } from '@/data/book6-unit14-resources';
-import { book6Unit15Resources } from '@/data/book6-unit15-resources';
-import { book6Unit16Resources } from '@/data/book6-unit16-resources';
+// Resource imports via dynamic loading
+const dynamicResourceImport = async (book: string, unit: number) => {
+  try {
+    if (book === '7' || !book) { // Default to book 7 if no book specified
+      switch(unit) {
+        case 6:
+          return import('@/data/unit6-resources');
+        case 7:
+          return import('@/data/unit7-resources');
+        case 8:
+          return import('@/data/unit8-resources');
+        case 9:
+          return import('@/data/unit9-resources');
+        case 10:
+          return import('@/data/unit10-resources');
+        case 11:
+          return import('@/data/unit11-resources');
+        case 12:
+          return import('@/data/unit12-resources');
+        case 13:
+          return import('@/data/unit13-resources');
+        case 14:
+          return import('@/data/unit14-resources');
+        case 15:
+          return import('@/data/unit15-resources');
+        case 16:
+          return import('@/data/unit16-resources');
+        default:
+          return null;
+      }
+    } else if (book === '6') {
+      switch(unit) {
+        case 1:
+          return import('@/data/book6-unit1-resources');
+        case 2:
+          return import('@/data/book6-unit2-resources');
+        case 3:
+          return import('@/data/book6-unit3-resources');
+        case 4:
+          return import('@/data/book6-unit4-resources');
+        case 5:
+          return import('@/data/book6-unit5-resources');
+        case 6:
+          return import('@/data/book6-unit6-resources');
+        case 7:
+          return import('@/data/book6-unit7-resources');
+        case 8:
+          return import('@/data/book6-unit8-resources');
+        case 9:
+          return import('@/data/book6-unit9-resources');
+        case 10:
+          return import('@/data/book6-unit10-resources');
+        case 11:
+          return import('@/data/book6-unit11-resources');
+        case 12:
+          return import('@/data/book6-unit12-resources');
+        case 13:
+          return import('@/data/book6-unit13-resources');
+        case 14:
+          return import('@/data/book6-unit14-resources');
+        case 15:
+          return import('@/data/book6-unit15-resources');
+        case 16:
+          return import('@/data/book6-unit16-resources');
+        default:
+          return null;
+      }
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error loading resources for Book ${book}, Unit ${unit}:`, error);
+    return null;
+  }
+};
 
 export interface TeacherResource {
   id?: string;
