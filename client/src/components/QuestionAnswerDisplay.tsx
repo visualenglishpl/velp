@@ -1495,7 +1495,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
           specialMatches = text.match(/(\d{2})\s*([A-Za-z])/i);
           if (specialMatches) {
             let specialSimplePattern = `${specialMatches[1]} ${specialMatches[2].toUpperCase()}`;
-            console.log("Extracted simplified special section pattern:", specialSimplePattern, "from filename:", filename);
+            logDebug(`Extracted simplified special section pattern: ${specialSimplePattern} from filename: ${filename}`, 3);
             return specialSimplePattern;
           }
         }
@@ -1505,7 +1505,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         if (matches) {
           // Standardize the code pattern format as "XX Y Z" (e.g., "01 I A")
           let extractedCodePattern = `${matches[1]} ${matches[2].toUpperCase()} ${matches[3].toUpperCase()}`;
-          console.log("Extracted standard code pattern:", extractedCodePattern, "from filename:", filename);
+          logDebug(`Extracted standard code pattern: ${extractedCodePattern} from filename: ${filename}`, 3);
           return extractedCodePattern;
         }
         
@@ -1514,7 +1514,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         if (matches) {
           // Standardize as "XX Y" (e.g., "01 I")
           let extractedCodePattern = `${matches[1]} ${matches[2].toUpperCase()}`;
-          console.log("Extracted simplified code pattern:", extractedCodePattern, "from filename:", filename);
+          logDebug(`Extracted simplified code pattern: ${extractedCodePattern} from filename: ${filename}`, 3);
           return extractedCodePattern;
         }
         
@@ -1522,7 +1522,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         matches = text.match(/^.*?(\d{2}).*$/i);
         if (matches) {
           let extractedCodePattern = matches[1];
-          console.log("Extracted numeric code pattern:", extractedCodePattern, "from filename:", filename);
+          logDebug(`Extracted numeric code pattern: ${extractedCodePattern} from filename: ${filename}`, 3);
           return extractedCodePattern;
         }
         
@@ -1535,8 +1535,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       );
       
       if (matchingEntry) {
-        console.log("Found exact match for:", filename);
-        console.log("Found local Excel mapping for:", filename);
+        logDebug(`Found exact match for: ${filename}`, 2);
+        logDebug(`Found local Excel mapping for: ${filename}`, 2);
         setQAData({ 
           country: formatText.determineCountry(filename),
           question: matchingEntry.question, 
@@ -1549,7 +1549,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       // 2. Try to match code pattern
       const extractedCodePattern = extractCodePattern(filename);
       if (extractedCodePattern) {
-        console.log(`Searching for match with extracted code pattern: "${extractedCodePattern}"`);
+        logDebug(`Searching for match with extracted code pattern: "${extractedCodePattern}"`, 2);
         
         // Convert to more flexible matching by standardizing both sides
         matchingEntry = excelData.entries.find((entry: ExcelQAEntry) => {
@@ -1558,14 +1558,14 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
           
           // Try exact match
           if (normalizedEntryPattern === normalizedExtractedPattern) {
-            console.log(`Found exact code pattern match: "${entry.codePattern}" = "${extractedCodePattern}"`);
+            logDebug(`Found exact code pattern match: "${entry.codePattern}" = "${extractedCodePattern}"`, 2);
             return true;
           }
           
           // Try prefix match (e.g., "01 I" matches "01 I A")
           if (normalizedEntryPattern.startsWith(normalizedExtractedPattern) || 
               normalizedExtractedPattern.startsWith(normalizedEntryPattern)) {
-            console.log(`Found prefix code pattern match: "${entry.codePattern}" starts with "${extractedCodePattern}" (or vice versa)`);
+            logDebug(`Found prefix code pattern match: "${entry.codePattern}" starts with "${extractedCodePattern}" (or vice versa)`, 2);
             return true;
           }
           
@@ -1581,7 +1581,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             
             if (entryNumeric && extractedNumeric && entryNumeric[1] === extractedNumeric[1]) {
               // If the numeric parts match (11, 12, 07, etc.), this is likely a match
-              console.log(`Found special section numeric match: "${entry.codePattern}" and "${extractedCodePattern}" share numeric part ${extractedNumeric[1]}`);
+              logDebug(`Found special section numeric match: "${entry.codePattern}" and "${extractedCodePattern}" share numeric part ${extractedNumeric[1]}`, 2);
               return true;
             }
             
@@ -1590,7 +1590,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             if ((filename.toLowerCase().includes('scissors') && questionLower.includes('scissors')) ||
                 (filename.toLowerCase().includes('ruler') && questionLower.includes('ruler')) ||
                 (filename.toLowerCase().includes('sharpener') && questionLower.includes('sharpener'))) {
-              console.log(`Found match based on special section name in question: "${entry.question}"`);
+              logDebug(`Found match based on special section name in question: "${entry.question}"`, 2);
               return true;
             }
           }
