@@ -21,10 +21,10 @@ export const BOOK6_UNIT_TITLES: Record<string, string> = {
   '10': 'Are You Tech Savvy?',
   '11': 'Transportation And Travel',
   '12': 'Are You Eco? Environment',
-  '13': 'Clothes And Fashion',
-  '14': 'Cinema And Movies',
-  '15': 'Rules And Regulations',
-  '16': 'Heroes And Inspirational People'
+  '13': 'City Life',
+  '14': 'At The Airport',
+  '15': 'Are You A Survivor',
+  '16': 'Fashion Accessories'
 };
 
 // Wordwall games mapped by unit with their embed codes
