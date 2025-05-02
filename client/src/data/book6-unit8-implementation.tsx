@@ -1,24 +1,15 @@
-import { TeacherResource } from '@/components/TeacherResources';
-import { LessonPlan } from '@/components/LessonPlanTemplate';
-import { book6Unit8Resources, pastSimpleVerbsLessonPlan, freeTimeActivitiesLessonPlan } from './book6-unit8-resources';
+// Book 6 Unit 8 implementation file - Baking & Cooking
 
-/**
- * Get Book 6 Unit 8 resources - Free Time - Past Simple
- */
-export function getBook6Unit8Resources(): TeacherResource[] {
-  return book6Unit8Resources.map(resource => ({
-    ...resource,
-    bookId: "6",
-    unitId: "8"
-  }));
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { TeacherResource } from '@/components/TeacherResources';
+import { book6Unit8Resources, book6Unit8LessonPlans } from './book6-unit8-resources';
+
+// Function to get resources for this unit
+export function getBook6Unit8Resources(bookId: string, unitId: string): TeacherResource[] {
+  return book6Unit8Resources;
 }
 
-/**
- * Get Book 6 Unit 8 lesson plans
- */
+// Function to get lesson plans for this unit
 export function getBook6Unit8LessonPlans(): LessonPlan[] {
-  return [
-    pastSimpleVerbsLessonPlan,
-    freeTimeActivitiesLessonPlan
-  ];
+  return book6Unit8LessonPlans;
 }
