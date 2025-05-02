@@ -1715,7 +1715,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
             );
             
             if (matchingEntry) {
-              console.log("Found fallback bag match:", matchingEntry.question);
+              logDebug(`Found fallback bag match: ${matchingEntry.question}`, 2);
             }
           }
         }
@@ -1729,7 +1729,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         });
         
         if (matchingEntry) {
-          console.log("Found question match in filename for:", matchingEntry.question);
+          logDebug(`Found question match in filename for: ${matchingEntry.question}`, 2);
         }
       }
       
@@ -1740,13 +1740,13 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         );
         
         if (matchingEntry) {
-          console.log("Found code pattern in description:", matchingEntry.codePattern);
+          logDebug(`Found code pattern in description: ${matchingEntry.codePattern}`, 2);
         }
       }
       
       // If we found a match from Excel data, use it
       if (matchingEntry) {
-        console.log("Using Excel entry:", matchingEntry);
+        logDebug(`Using Excel entry: ${JSON.stringify(matchingEntry)}`, 1);
         setQAData({ 
           country: formatText.determineCountry(filename),
           question: matchingEntry.question, 
@@ -1857,7 +1857,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                   });
                 }
               } catch (error) {
-                console.error('Error resetting content on server:', error);
+                logDebug(`Error resetting content on server: ${error}`, 1);
                 toast({
                   title: "Partial reset",
                   description: "Content has been reset on this device but the server reset failed.",
