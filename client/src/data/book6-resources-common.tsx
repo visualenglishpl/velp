@@ -386,6 +386,21 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "Mountain Climbing Safety",
       sourceUrl: "https://www.youtube.com/watch?v=3xHnBDY-EPs",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/3xHnBDY-EPs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Extreme Sports Vocabulary Game 1", 
+      sourceUrl: "https://wordwall.net/resource/2b1bfd6c1f8847efa2fb3e88c0c38b38",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2b1bfd6c1f8847efa2fb3e88c0c38b38?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Extreme Sports Vocabulary Game 2", 
+      sourceUrl: "https://wordwall.net/resource/cf7b2f4cf1514a12bfce2d5f5cb72301",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/cf7b2f4cf1514a12bfce2d5f5cb72301?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Extreme Sports Matching Game", 
+      sourceUrl: "https://wordwall.net/resource/a3b98acfc83c42899a0e43d23c47b77b",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a3b98acfc83c42899a0e43d23c47b77b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '12': [
@@ -398,6 +413,31 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "Earth Song",
       sourceUrl: "https://www.youtube.com/watch?v=S2SMvfGe72U",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/S2SMvfGe72U?si=lNL1zDC02ILXCMju" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    },
+    {
+      title: "Solar System Game",
+      sourceUrl: "https://wordwall.net/resource/2753bac717214441a38d76fda2cc33b8",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2753bac717214441a38d76fda2cc33b8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Types of Pollution Game",
+      sourceUrl: "https://wordwall.net/resource/f07c8c0eebfb48d9a771d2c7cad81f3d",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f07c8c0eebfb48d9a771d2c7cad81f3d?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Can You Recycle? Game",
+      sourceUrl: "https://wordwall.net/resource/98fd4453f46240f0ac6bb612b5945960",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/98fd4453f46240f0ac6bb612b5945960?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Endangered or Extinct Game",
+      sourceUrl: "https://wordwall.net/resource/f04d2f477ff8484db0456922be236071",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f04d2f477ff8484db0456922be236071?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Endangered Animals Game",
+      sourceUrl: "https://wordwall.net/resource/db58fd0165464c08a4c385c035325f3b",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/db58fd0165464c08a4c385c035325f3b?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ]
 };
