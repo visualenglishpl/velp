@@ -272,6 +272,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Convert unitId to number for dynamic imports
       const unitNum = parseInt(unitId);
       
+      console.log(`Loading Book ${bookId} Unit ${unitNum} resources`);
+      
       // Load implementation module
       const implModule = await dynamicImplImport(bookId, unitNum);
       
@@ -283,9 +285,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         // Try to extract resources from the module
         let resources: TeacherResource[] = [];
         
-        // Function to extract and collect resources
+        // Function to extract and collect resources using type assertion
         const extractResources = (key: string, type: 'video' | 'game' | 'pdf' | 'lesson' = 'video') => {
-          const resourcesArray = resourcesModule[key];
+          // Use type assertion to avoid TypeScript errors
+          const resourcesArray = (resourcesModule as any)[key];
           if (Array.isArray(resourcesArray)) {
             resources.push(...resourcesArray.map(r => ({
               ...r,
@@ -297,26 +300,37 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         };
         
         // Try to extract resources by different naming patterns
-        if (resourcesModule.resources) extractResources('resources');
-        if (resourcesModule.videos) extractResources('videos', 'video');
-        if (resourcesModule.games) extractResources('games', 'game');
-        if (resourcesModule.pdfs) extractResources('pdfs', 'pdf');
+        // Use type assertion to avoid TypeScript errors
+        if ((resourcesModule as any).resources) extractResources('resources');
+        if ((resourcesModule as any).videos) extractResources('videos', 'video');
+        if ((resourcesModule as any).games) extractResources('games', 'game');
+        if ((resourcesModule as any).pdfs) extractResources('pdfs', 'pdf');
         
         // Try special getter functions for Book 6 resources
         if (bookId === '6') {
           try {
-            // Check for specific resource getter functions
-            if (resourcesModule.getBook6Unit1Resources && unitNum === 1) {
-              resources = resourcesModule.getBook6Unit1Resources(bookId, unitId);
-            } else if (resourcesModule.getBook6Unit5Resources && unitNum === 5) {
-              resources = resourcesModule.getBook6Unit5Resources(bookId, unitId);
-            } else if (resourcesModule.getBook6Unit6Resources && unitNum === 6) {
-              resources = resourcesModule.getBook6Unit6Resources(bookId, unitId);
-            } else if (resourcesModule.getBook6Unit7Resources && unitNum === 7) {
-              resources = resourcesModule.getBook6Unit7Resources(bookId, unitId);
-            } else if (resourcesModule.getBook6Unit12Resources && unitNum === 12) {
-              resources = resourcesModule.getBook6Unit12Resources(bookId, unitId);
+            // Check for specific resource getter functions using type assertion
+            const typedResourcesModule = resourcesModule as any;
+            
+            if (unitNum === 1 && typedResourcesModule.getBook6Unit1Resources) {
+              console.log('Using getBook6Unit1Resources');
+              resources = typedResourcesModule.getBook6Unit1Resources(bookId, unitId);
+            } else if (unitNum === 5 && typedResourcesModule.getBook6Unit5Resources) {
+              console.log('Using getBook6Unit5Resources');
+              resources = typedResourcesModule.getBook6Unit5Resources(bookId, unitId);
+            } else if (unitNum === 6 && typedResourcesModule.getBook6Unit6Resources) {
+              console.log('Using getBook6Unit6Resources');
+              resources = typedResourcesModule.getBook6Unit6Resources(bookId, unitId);
+            } else if (unitNum === 7 && typedResourcesModule.getBook6Unit7Resources) {
+              console.log('Using getBook6Unit7Resources');
+              resources = typedResourcesModule.getBook6Unit7Resources(bookId, unitId);
+            } else if (unitNum === 12 && typedResourcesModule.getBook6Unit12Resources) {
+              console.log('Using getBook6Unit12Resources');
+              resources = typedResourcesModule.getBook6Unit12Resources(bookId, unitId);
             }
+            
+            // Log resources for debugging
+            console.log(`Found ${resources.length} resources for Book ${bookId} Unit ${unitNum}`);
           } catch (error) {
             console.error(`Error getting Book 6 Unit ${unitNum} resources:`, error);
           }
@@ -330,31 +344,40 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         // Try to extract lesson plans from the module
         let lessonPlans: LessonPlan[] = [];
         
-        // Function to extract and collect lesson plans
+        // Function to extract and collect lesson plans using type assertion
         const extractLessonPlans = (key: string) => {
-          const plansArray = implModule[key];
+          // Use type assertion to avoid TypeScript errors
+          const plansArray = (implModule as any)[key];
           if (Array.isArray(plansArray)) {
             lessonPlans.push(...plansArray);
           }
         };
         
-        // Try to extract lesson plans by different naming patterns
-        if (implModule.lessonPlans) extractLessonPlans('lessonPlans');
-        if (implModule.unitLessonPlans) extractLessonPlans('unitLessonPlans');
+        // Try to extract lesson plans by different naming patterns with type assertion
+        if ((implModule as any).lessonPlans) extractLessonPlans('lessonPlans');
+        if ((implModule as any).unitLessonPlans) extractLessonPlans('unitLessonPlans');
         
         // Try special getter functions for Book 6 lesson plans
         if (bookId === '6') {
           try {
-            // Check for specific lesson plan getter functions
-            if (implModule.getBook6Unit5LessonPlans && unitNum === 5) {
-              lessonPlans = implModule.getBook6Unit5LessonPlans();
-            } else if (implModule.getBook6Unit6LessonPlans && unitNum === 6) {
-              lessonPlans = implModule.getBook6Unit6LessonPlans();
-            } else if (implModule.getBook6Unit7LessonPlans && unitNum === 7) {
-              lessonPlans = implModule.getBook6Unit7LessonPlans();
-            } else if (implModule.getBook6Unit12LessonPlans && unitNum === 12) {
-              lessonPlans = implModule.getBook6Unit12LessonPlans();
+            // Check for specific lesson plan getter functions using type assertion
+            const typedImplModule = implModule as any;
+            
+            if (unitNum === 5 && typedImplModule.getBook6Unit5LessonPlans) {
+              console.log('Using getBook6Unit5LessonPlans');
+              lessonPlans = typedImplModule.getBook6Unit5LessonPlans();
+            } else if (unitNum === 6 && typedImplModule.getBook6Unit6LessonPlans) {
+              console.log('Using getBook6Unit6LessonPlans');
+              lessonPlans = typedImplModule.getBook6Unit6LessonPlans();
+            } else if (unitNum === 7 && typedImplModule.getBook6Unit7LessonPlans) {
+              console.log('Using getBook6Unit7LessonPlans');
+              lessonPlans = typedImplModule.getBook6Unit7LessonPlans();
+            } else if (unitNum === 12 && typedImplModule.getBook6Unit12LessonPlans) {
+              console.log('Using getBook6Unit12LessonPlans');
+              lessonPlans = typedImplModule.getBook6Unit12LessonPlans();
             }
+            
+            console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
           } catch (error) {
             console.error(`Error getting Book 6 Unit ${unitNum} lesson plans:`, error);
           }
