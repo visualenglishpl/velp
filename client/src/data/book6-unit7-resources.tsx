@@ -168,41 +168,41 @@ export const healthAndIllnessLessonPlan: LessonPlan = {
 export const book6Unit7Resources = [
   {
     title: "Illness Vocabulary Game",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/34904fd94f30404192d2bdab3f028260",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/34904fd94f30404192d2bdab3f028260?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Internal Body Parts Game",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/4fbc8cd964f04a51aebc1e96f382140e",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4fbc8cd964f04a51aebc1e96f382140e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Body Actions Game",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/5cec72b501b54381b2f536e9c82a1c5c",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5cec72b501b54381b2f536e9c82a1c5c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Human Body Systems Video",
-    resourceType: "video",
+    resourceType: "video" as const,
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=2q9Jb-f7cAE",
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/2q9Jb-f7cAE?si=8EK5FiTjeWF9kXHT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     title: "Body Parts Lesson Plan",
-    resourceType: "lesson",
+    resourceType: "lesson" as const,
     provider: "Visual English",
     lessonPlan: bodyPartsLessonPlan
   },
   {
     title: "Health and Illness Lesson Plan",
-    resourceType: "lesson",
+    resourceType: "lesson" as const,
     provider: "Visual English",
     lessonPlan: healthAndIllnessLessonPlan
   }

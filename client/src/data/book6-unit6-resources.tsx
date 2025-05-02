@@ -167,54 +167,54 @@ export const cookingMethodsLessonPlan: LessonPlan = {
 export const book6Unit6Resources = [
   {
     title: "Kahoot: In The Kitchen",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Kahoot",
     sourceUrl: "https://create.kahoot.it/share/in-the-kitchen/b683184e-f723-4784-a02a-d51e3678c3af"
   },
   {
     title: "Kitchen Utensils Game 1",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/5eedd77a9110462a9111a38f2f52fda5",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5eedd77a9110462a9111a38f2f52fda5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Kitchen Utensils Game 2",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/8080784ba2f2495287e30b926bf38bcb",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8080784ba2f2495287e30b926bf38bcb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Cooking Methods Game 1",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/ecb2dd96232d4c4e9f9103f738de561c",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ecb2dd96232d4c4e9f9103f738de561c?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Cooking Methods Game 2",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/c12666ce8e1640e299be713f24762d8c",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c12666ce8e1640e299be713f24762d8c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Kitchen Utensils Video",
-    resourceType: "video",
+    resourceType: "video" as const,
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=6BIFnvjpquk",
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/6BIFnvjpquk?si=31dsztCC97dUIu18" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     title: "Kitchen Utensils Lesson Plan",
-    resourceType: "lesson",
+    resourceType: "lesson" as const,
     provider: "Visual English",
     lessonPlan: kitchenUtensilsLessonPlan
   },
   {
     title: "Cooking Methods Lesson Plan",
-    resourceType: "lesson",
+    resourceType: "lesson" as const,
     provider: "Visual English",
     lessonPlan: cookingMethodsLessonPlan
   }

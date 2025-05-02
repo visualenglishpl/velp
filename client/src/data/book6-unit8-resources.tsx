@@ -173,41 +173,41 @@ export const talkingAboutPastActivitiesLessonPlan: LessonPlan = {
 export const book6Unit8Resources = [
   {
     title: "Past Tense Verbs Game 1",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/a95c4a46b32447f0916d3b6f2093cac3",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a95c4a46b32447f0916d3b6f2093cac3?themeId=1&templateId=54&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Past Tense Verbs Game 2",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/b5a88799031c431e971373a669bfb5c7",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/b5a88799031c431e971373a669bfb5c7?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Past Tense Verbs Game 3",
-    resourceType: "game",
+    resourceType: "game" as const,
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/6c4f1e98c0f24f5fbf63d959bba397ce",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6c4f1e98c0f24f5fbf63d959bba397ce?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     title: "Past Simple Activities Video",
-    resourceType: "video",
+    resourceType: "video" as const,
     provider: "ISL Collective",
     sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/772028",
     embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/772028" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
   },
   {
     title: "Past Tense Verbs Lesson Plan",
-    resourceType: "lesson",
+    resourceType: "lesson" as const,
     provider: "Visual English",
     lessonPlan: pastTenseVerbsLessonPlan
   },
   {
     title: "Talking About Past Activities Lesson Plan",
-    resourceType: "lesson",
+    resourceType: "lesson" as const,
     provider: "Visual English",
     lessonPlan: talkingAboutPastActivitiesLessonPlan
   }

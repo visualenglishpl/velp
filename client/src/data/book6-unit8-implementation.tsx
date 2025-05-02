@@ -16,28 +16,11 @@ type TeacherResource = {
   lessonPlan?: any; // Using any to avoid circular import issues
 };
 
-// Use type definition directly to avoid circular dependencies
-type LessonPlan = {
-  id: string;
-  title: string;
-  duration: string;
-  level: string;
-  objectives: string[];
-  materials: string[];
-  steps: {
-    title: string;
-    duration: string;
-    description: string;
-    materials?: string[];
-    instructions: string[];
-  }[];
-  assessmentTips: string;
-  homeworkIdeas: string[];
-  additionalResources?: {
-    title: string;
-    url: string;
-  }[];
-};
+// Import types from LessonPlanTemplate to ensure compatibility
+import { LessonPlan as ImportedLessonPlan } from '@/components/LessonPlanTemplate';
+
+// Use imported type to ensure compatibility
+type LessonPlan = ImportedLessonPlan;
 
 // Function to get lesson plans for this unit
 export const getBook6Unit8LessonPlans = (): LessonPlan[] => {
