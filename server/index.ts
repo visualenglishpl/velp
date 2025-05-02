@@ -8,10 +8,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  // Add caching for static assets
-  if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|ico)$/)) {
-    res.setHeader('Cache-Control', 'public, max-age=86400'); // 24 hours
-  }
   const start = Date.now();
   const path = req.path;
   let capturedJsonResponse: Record<string, any> | undefined = undefined;
