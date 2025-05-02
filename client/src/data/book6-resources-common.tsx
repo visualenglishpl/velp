@@ -88,14 +88,14 @@ const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embed
   ],
   '10': [
     {
-      title: "Past Continuous Tense Game",
-      sourceUrl: "https://wordwall.net/resource/7bce5c6eaf814ce9ba0dc62c6c8dbd86",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7bce5c6eaf814ce9ba0dc62c6c8dbd86?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Google Technology Quiz",
+      sourceUrl: "https://wordwall.net/resource/3a895f34745a45009993054359e15e3f",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3a895f34745a45009993054359e15e3f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
     {
-      title: "While and When Practice",
-      sourceUrl: "https://wordwall.net/resource/d40fc8f4c50d43f2a30f5c5aeb93ca2a",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d40fc8f4c50d43f2a30f5c5aeb93ca2a?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+      title: "Computer Verbs Practice",
+      sourceUrl: "https://wordwall.net/resource/124ba44470124539ac4168b97714f02a",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/124ba44470124539ac4168b97714f02a?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '12': [

@@ -28,6 +28,26 @@ const additionalResources: TeacherResource[] = [
     provider: 'Wordwall',
     sourceUrl: "https://wordwall.net/resource/589446a1c2674dcc964dc2115c3c119f",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/589446a1c2674dcc964dc2115c3c119f?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    id: "book6-unit10-game5",
+    bookId: '6',
+    unitId: '10',
+    title: "Find the Gadgets Game",
+    resourceType: 'game',
+    provider: 'ABCya',
+    sourceUrl: "https://www.abcya.com/games/find_the_tech",
+    embedCode: `<iframe src="https://www.abcya.com/games/find_the_tech" width="100%" height="500" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    id: "book6-unit10-video2",
+    bookId: '6',
+    unitId: '10',
+    title: "Technology and Gadgets Video Lesson",
+    resourceType: 'video',
+    provider: 'ISL Collective',
+    sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/1015142",
+    embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/1015142" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`
   }
 ];
 
