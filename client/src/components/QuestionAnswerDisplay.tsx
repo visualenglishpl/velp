@@ -1924,7 +1924,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                             : "The question has been removed and this change will persist across devices.",
                         });
                       } else {
-                        console.error('Error saving deletion to server:', result.error);
+                        logDebug(`Error saving deletion to server: ${result.error}`, 1);
                         toast({
                           title: "Question removed",
                           description: "The question has been removed from this slide but the change could not be saved to the server.",
@@ -1937,7 +1937,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                       });
                     }
                   } catch (error) {
-                    console.error('Error saving deletion to server:', error);
+                    logDebug(`Error saving deletion to server: ${error}`, 1);
                     toast({
                       title: "Question removed",
                       description: "The question has been removed from this slide but the change could not be saved to the server.",
@@ -1990,7 +1990,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                             : "The question has been hidden and this change will persist across devices.",
                         });
                       } else {
-                        console.error('Error saving deletion to server:', result.error);
+                        logDebug(`Error saving deletion to server: ${result.error}`, 1);
                         toast({
                           title: "Question hidden",
                           description: "The question has been hidden from this slide but the change could not be saved to the server.",
@@ -2003,7 +2003,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                       });
                     }
                   } catch (error) {
-                    console.error('Error saving deletion to server:', error);
+                    logDebug(`Error saving deletion to server: ${error}`, 1);
                     toast({
                       title: "Question hidden",
                       description: "The question has been hidden from this slide but the change could not be saved to the server.",
@@ -2080,7 +2080,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                             : "Your edits have been saved to the server and will persist across devices.",
                         });
                       } else {
-                        console.error('Error saving to server:', result.error);
+                        logDebug(`Error saving to server: ${result.error}`, 1);
                         toast({
                           title: "Changes saved locally",
                           description: "Your edits could not be saved to the server but are saved on this device.",
@@ -2093,7 +2093,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                       });
                     }
                   } catch (error) {
-                    console.error('Error saving edit to server:', error);
+                    logDebug(`Error saving edit to server: ${error}`, 1);
                     toast({
                       title: "Changes saved locally",
                       description: "Your edits could not be saved to the server but are saved on this device.",
