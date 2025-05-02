@@ -327,6 +327,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 8 && typedResourcesModule.getBook6Unit8Resources) {
               console.log('Using getBook6Unit8Resources');
               resources = typedResourcesModule.getBook6Unit8Resources(bookId, unitId);
+            } else if (unitNum === 9 && typedResourcesModule.getBook6Unit9Resources) {
+              console.log('Using getBook6Unit9Resources');
+              resources = typedResourcesModule.getBook6Unit9Resources(bookId, unitId);
             } else if (unitNum === 12 && typedResourcesModule.getBook6Unit12Resources) {
               console.log('Using getBook6Unit12Resources');
               resources = typedResourcesModule.getBook6Unit12Resources(bookId, unitId);
@@ -378,6 +381,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 8 && typedImplModule.getBook6Unit8LessonPlans) {
               console.log('Using getBook6Unit8LessonPlans');
               lessonPlans = typedImplModule.getBook6Unit8LessonPlans();
+            } else if (unitNum === 9 && typedImplModule.getBook6Unit9LessonPlans) {
+              console.log('Using getBook6Unit9LessonPlans');
+              lessonPlans = typedImplModule.getBook6Unit9LessonPlans();
             } else if (unitNum === 12 && typedImplModule.getBook6Unit12LessonPlans) {
               console.log('Using getBook6Unit12LessonPlans');
               lessonPlans = typedImplModule.getBook6Unit12LessonPlans();

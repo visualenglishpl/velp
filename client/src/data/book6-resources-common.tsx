@@ -74,6 +74,30 @@ const BOOK6_UNIT_GAMES: Record<string, { title: string, sourceUrl: string, embed
       embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/936e0d47a00a4fc69c32a9b7db8ace34?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
+  '9': [
+    {
+      title: "Present Perfect Tense Practice",
+      sourceUrl: "https://wordwall.net/resource/5ae8ba7fbcad46ceb8b7d881a29a9d08",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5ae8ba7fbcad46ceb8b7d881a29a9d08?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "Present Perfect with Just",
+      sourceUrl: "https://wordwall.net/resource/33cbf62b2fb0453786f26cb0511febc4",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/33cbf62b2fb0453786f26cb0511febc4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
+  '10': [
+    {
+      title: "Past Continuous Tense Game",
+      sourceUrl: "https://wordwall.net/resource/7bce5c6eaf814ce9ba0dc62c6c8dbd86",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7bce5c6eaf814ce9ba0dc62c6c8dbd86?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    {
+      title: "While and When Practice",
+      sourceUrl: "https://wordwall.net/resource/d40fc8f4c50d43f2a30f5c5aeb93ca2a",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d40fc8f4c50d43f2a30f5c5aeb93ca2a?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    }
+  ],
   '12': [
     {
       title: "Environmental Problems Game",
@@ -123,6 +147,20 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "Baking Basics for Beginners",
       sourceUrl: "https://www.youtube.com/watch?v=yCxRmIVt6tU",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/yCxRmIVt6tU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    }
+  ],
+  '9': [
+    {
+      title: "Present Perfect Tense Explained",
+      sourceUrl: "https://www.youtube.com/watch?v=_GhAWaVV0Gk",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/_GhAWaVV0Gk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    }
+  ],
+  '10': [
+    {
+      title: "Past Continuous Tense Tutorial",
+      sourceUrl: "https://www.youtube.com/watch?v=gZJWVNz7xZA",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gZJWVNz7xZA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
     }
   ],
   '12': [
