@@ -1790,6 +1790,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         throw new Error('Failed to flag question');
       }
     } catch (error) {
+      logDebug(`Error flagging question: ${error}`, 1);
       toast({
         title: "Error flagging question",
         description: "There was a problem submitting your feedback. Please try again.",
