@@ -249,7 +249,80 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // State for dynamically loaded resources and lesson plans
   const [dynamicResources, setDynamicResources] = useState<TeacherResource[]>([]);
   const [dynamicLessonPlans, setDynamicLessonPlans] = useState<LessonPlan[]>([]);
-  const [isLoadingDynamic, setIsLoadingDynamic] = useState(false);
+  const [isLoadingDynamic, setIsLoadingDynamic] = useState<boolean>(false);
+  
+  // Function to load resources and lesson plans dynamically based on current book and unit
+  const loadResourcesAndLessonPlans = useCallback(async () => {
+    if (!bookId || !unitId) return;
+    
+    setIsLoadingDynamic(true);
+    try {
+      // Convert unitId to number for dynamic imports
+      const unitNum = parseInt(unitId);
+      
+      // Load implementation module
+      const implModule = await dynamicImplImport(bookId, unitNum);
+      
+      // Load resources module
+      const resourcesModule = await dynamicResourceImport(bookId, unitNum);
+      
+      // Set dynamic resources if available
+      if (resourcesModule) {
+        // Try to extract resources from the module
+        const resources: TeacherResource[] = [];
+        
+        // Function to extract and collect resources
+        const extractResources = (key: string, type: 'video' | 'game' | 'pdf' | 'lesson' = 'video') => {
+          const resourcesArray = resourcesModule[key];
+          if (Array.isArray(resourcesArray)) {
+            resources.push(...resourcesArray.map(r => ({
+              ...r,
+              resourceType: r.resourceType || type,
+              bookId,
+              unitId
+            })));
+          }
+        };
+        
+        // Try to extract resources by different naming patterns
+        if (resourcesModule.resources) extractResources('resources');
+        if (resourcesModule.videos) extractResources('videos', 'video');
+        if (resourcesModule.games) extractResources('games', 'game');
+        if (resourcesModule.pdfs) extractResources('pdfs', 'pdf');
+        
+        setDynamicResources(resources);
+      }
+      
+      // Set dynamic lesson plans if available
+      if (implModule) {
+        // Try to extract lesson plans from the module
+        const lessonPlans: LessonPlan[] = [];
+        
+        // Function to extract and collect lesson plans
+        const extractLessonPlans = (key: string) => {
+          const plansArray = implModule[key];
+          if (Array.isArray(plansArray)) {
+            lessonPlans.push(...plansArray);
+          }
+        };
+        
+        // Try to extract lesson plans by different naming patterns
+        if (implModule.lessonPlans) extractLessonPlans('lessonPlans');
+        if (implModule.unitLessonPlans) extractLessonPlans('unitLessonPlans');
+        
+        setDynamicLessonPlans(lessonPlans);
+      }
+    } catch (error) {
+      console.error('Error loading dynamic resources:', error);
+    } finally {
+      setIsLoadingDynamic(false);
+    }
+  }, [bookId, unitId]);
+  
+  // Effect to load resources when book or unit changes
+  useEffect(() => {
+    loadResourcesAndLessonPlans();
+  }, [loadResourcesAndLessonPlans]);
   
   // Handle initial data loading - bookUnitResources, local storage resources
   const { data: bookUnitResources = [], isLoading, error } = useQuery<TeacherResource[]>({
@@ -353,220 +426,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookUnitResources]);  // Intentionally omit resources to prevent infinite loop
   
-  // Dynamic loading of resources based on book and unit
-  const loadResourcesAndLessonPlans = useCallback(async () => {
-    if (!isSpecialBookUnit) return;
-    
-    try {
-      setIsLoadingDynamic(true);
-      const unitNum = parseInt(unitId, 10);
-      
-      // Load resources
-      const resourceModule = await dynamicResourceImport(bookId, unitNum);
-      let loadedResources: TeacherResource[] = [];
-      
-      if (resourceModule) {
-        // Extract specific resource variable based on book/unit
-        if (bookId === '7' || !bookId) {
-          switch(unitNum) {
-            case 6: 
-              loadedResources = resourceModule.unit6Resources || [];
-              break;
-            case 7:
-              loadedResources = resourceModule.unit7Resources || [];
-              break;
-            case 8:
-              loadedResources = resourceModule.unit8Resources || [];
-              break;
-            case 9:
-              loadedResources = resourceModule.unit9Resources || [];
-              break;
-            case 10:
-              loadedResources = resourceModule.unit10Resources || [];
-              break;
-            case 11:
-              loadedResources = resourceModule.unit11Resources || [];
-              break;
-            case 12:
-              loadedResources = resourceModule.unit12Resources || [];
-              break;
-            case 13:
-              loadedResources = resourceModule.unit13Resources || [];
-              break;
-            case 14:
-              loadedResources = resourceModule.unit14Resources || [];
-              break;
-            case 15:
-              loadedResources = resourceModule.unit15Resources || [];
-              break;
-            case 16:
-              loadedResources = resourceModule.unit16Resources || [];
-              break;
-          }
-        } else if (bookId === '6') {
-          switch(unitNum) {
-            case 1:
-              loadedResources = resourceModule.book6Unit1Resources || [];
-              break;
-            case 2:
-              loadedResources = resourceModule.book6Unit2Resources || [];
-              break;
-            case 3:
-              loadedResources = resourceModule.book6Unit3Resources || [];
-              break;
-            case 4:
-              loadedResources = resourceModule.book6Unit4Resources || [];
-              break;
-            case 5:
-              loadedResources = resourceModule.book6Unit5Resources || [];
-              break;
-            case 6:
-              loadedResources = resourceModule.book6Unit6Resources || [];
-              break;
-            case 7:
-              loadedResources = resourceModule.book6Unit7Resources || [];
-              break;
-            case 8:
-              loadedResources = resourceModule.book6Unit8Resources || [];
-              break;
-            case 9:
-              loadedResources = resourceModule.book6Unit9Resources || [];
-              break;
-            case 10:
-              loadedResources = resourceModule.book6Unit10Resources || [];
-              break;
-            case 11:
-              loadedResources = resourceModule.book6Unit11Resources || [];
-              break;
-            case 12:
-              loadedResources = resourceModule.book6Unit12Resources || [];
-              break;
-            case 13:
-              loadedResources = resourceModule.book6Unit13Resources || [];
-              break;
-            case 14:
-              loadedResources = resourceModule.book6Unit14Resources || [];
-              break;
-            case 15:
-              loadedResources = resourceModule.book6Unit15Resources || [];
-              break;
-            case 16:
-              loadedResources = resourceModule.book6Unit16Resources || [];
-              break;
-          }
-        }
-      }
-      
-      // Set the dynamically loaded resources
-      setDynamicResources(loadedResources);
-      
-      // Load implementation (for lesson plans)
-      const implModule = await dynamicImplImport(bookId, unitNum);
-      let loadedLessonPlans: LessonPlan[] = [];
-      
-      if (implModule) {
-        // Extract specific lesson plan function based on book/unit
-        if (bookId === '7' || !bookId) {
-          switch(unitNum) {
-            case 6: 
-              loadedLessonPlans = implModule.getUnit6LessonPlans ? implModule.getUnit6LessonPlans() : [];
-              break;
-            case 7:
-              loadedLessonPlans = implModule.getUnit7LessonPlans ? implModule.getUnit7LessonPlans() : [];
-              break;
-            case 8:
-              loadedLessonPlans = implModule.getUnit8LessonPlans ? implModule.getUnit8LessonPlans() : [];
-              break;
-            case 9:
-              loadedLessonPlans = implModule.getUnit9LessonPlans ? implModule.getUnit9LessonPlans() : [];
-              break;
-            case 10:
-              loadedLessonPlans = implModule.getUnit10LessonPlans ? implModule.getUnit10LessonPlans() : [];
-              break;
-            case 11:
-              loadedLessonPlans = implModule.getUnit11LessonPlans ? implModule.getUnit11LessonPlans() : [];
-              break;
-            case 12:
-              loadedLessonPlans = implModule.getUnit12LessonPlans ? implModule.getUnit12LessonPlans() : [];
-              break;
-            case 13:
-              loadedLessonPlans = implModule.getUnit13LessonPlans ? implModule.getUnit13LessonPlans() : [];
-              break;
-            case 14:
-              loadedLessonPlans = implModule.getUnit14LessonPlans ? implModule.getUnit14LessonPlans() : [];
-              break;
-            case 15:
-              loadedLessonPlans = implModule.getUnit15LessonPlans ? implModule.getUnit15LessonPlans() : [];
-              break;
-            case 16:
-              loadedLessonPlans = implModule.getUnit16LessonPlans ? implModule.getUnit16LessonPlans() : [];
-              break;
-          }
-        } else if (bookId === '6') {
-          switch(unitNum) {
-            case 1:
-              loadedLessonPlans = implModule.getBook6Unit1LessonPlans ? implModule.getBook6Unit1LessonPlans() : [];
-              break;
-            case 2:
-              loadedLessonPlans = implModule.getBook6Unit2LessonPlans ? implModule.getBook6Unit2LessonPlans() : [];
-              break;
-            case 3:
-              loadedLessonPlans = implModule.getBook6Unit3LessonPlans ? implModule.getBook6Unit3LessonPlans() : [];
-              break;
-            case 4:
-              loadedLessonPlans = implModule.getBook6Unit4LessonPlans ? implModule.getBook6Unit4LessonPlans() : [];
-              break;
-            case 5:
-              loadedLessonPlans = implModule.getBook6Unit5LessonPlans ? implModule.getBook6Unit5LessonPlans() : [];
-              break;
-            case 6:
-              loadedLessonPlans = implModule.getBook6Unit6LessonPlans ? implModule.getBook6Unit6LessonPlans() : [];
-              break;
-            case 7:
-              loadedLessonPlans = implModule.getBook6Unit7LessonPlans ? implModule.getBook6Unit7LessonPlans() : [];
-              break;
-            case 8:
-              loadedLessonPlans = implModule.getBook6Unit8LessonPlans ? implModule.getBook6Unit8LessonPlans() : [];
-              break;
-            case 9:
-              loadedLessonPlans = implModule.getBook6Unit9LessonPlans ? implModule.getBook6Unit9LessonPlans() : [];
-              break;
-            case 10:
-              loadedLessonPlans = implModule.getBook6Unit10LessonPlans ? implModule.getBook6Unit10LessonPlans() : [];
-              break;
-            case 11:
-              loadedLessonPlans = implModule.getBook6Unit11LessonPlans ? implModule.getBook6Unit11LessonPlans() : [];
-              break;
-            case 12:
-              loadedLessonPlans = implModule.getBook6Unit12LessonPlans ? implModule.getBook6Unit12LessonPlans() : [];
-              break;
-            case 13:
-              loadedLessonPlans = implModule.getBook6Unit13LessonPlans ? implModule.getBook6Unit13LessonPlans() : [];
-              break;
-            case 14:
-              loadedLessonPlans = implModule.getBook6Unit14LessonPlans ? implModule.getBook6Unit14LessonPlans() : [];
-              break;
-            case 15:
-              loadedLessonPlans = implModule.getBook6Unit15LessonPlans ? implModule.getBook6Unit15LessonPlans() : [];
-              break;
-            case 16:
-              loadedLessonPlans = implModule.getBook6Unit16LessonPlans ? implModule.getBook6Unit16LessonPlans() : [];
-              break;
-          }
-        }
-      }
-      
-      // Set the dynamically loaded lesson plans
-      setDynamicLessonPlans(loadedLessonPlans);
-      
-    } catch (error) {
-      console.error(`Error dynamically loading resources for Book ${bookId}, Unit ${unitId}:`, error);
-    } finally {
-      setIsLoadingDynamic(false);
-    }
-  }, [bookId, unitId, isSpecialBookUnit]);
+  // The loadResourcesAndLessonPlans function was defined above and will load all resources correctly
   
-  // Effect to load dynamic resources when book/unit changes
+  // Ensure we load resources when component mounts or bookId/unitId changes
   useEffect(() => {
     loadResourcesAndLessonPlans();
   }, [loadResourcesAndLessonPlans]);
@@ -949,8 +811,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   // Function to render resources based on type
   const renderResources = (resourceType: 'video' | 'game' | 'pdf' | 'lesson') => {
-    // Get all resources of the specified type
-    const allResources = [...resources, ...getMoreUnitResources()]
+    // Get all resources of the specified type, including dynamically loaded ones
+    const allResources = [...resources, ...getMoreUnitResources(), ...dynamicResources]
       .filter(r => r.resourceType === resourceType);
 
     // Return early if there are no resources
@@ -1169,6 +1031,16 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const renderLessonPlans = () => {
     // First, check if there are any lesson plans specifically for this book/unit in the resources list
     const lessonPlansFromResources = resources.filter(r => r.resourceType === 'lesson');
+    
+    // Add loading indicator when loading dynamic resources
+    if (isLoadingDynamic) {
+      return (
+        <div className="py-8 text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          <p className="mt-4 text-muted-foreground">Loading lesson plans...</p>
+        </div>
+      );
+    }
     
     // If there are any lesson plans in resources, render them first
     const resourceLessonPlans = lessonPlansFromResources.length > 0 ? (
@@ -2368,12 +2240,59 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     }
     
-    // Return both resource plans and built-in plans
+    // Render dynamically loaded lesson plans
+    const dynamicLessonPlansSection = dynamicLessonPlans.length > 0 ? (
+      <div className="mt-6 space-y-8">
+        <h3 className="text-lg font-semibold mb-4">Dynamically Loaded Lesson Plans</h3>
+        <div className="lesson-plan-grid">
+          {dynamicLessonPlans.map((plan, index) => (
+            <div key={index}>
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-lg truncate">
+                        <span>{plan.title}</span>
+                      </CardTitle>
+                      <CardDescription className="text-xs mt-1">
+                        45-minute lesson plan by Visual English
+                      </CardDescription>
+                    </div>
+                    {isEditMode && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-xs flex items-center text-destructive" 
+                        onClick={() => setConfirmDelete({ id: `dynamic-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="max-h-[500px] overflow-y-auto">
+                  <LessonPlanTemplate plan={plan} />
+                </CardContent>
+                <CardFooter className="bg-muted/20 pt-3 pb-3">
+                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          ))}
+        </div>
+      </div>
+    ) : null;
+    
+    // Return all lesson plan types
     return (
       <div className="space-y-8">
         {resourceLessonPlans}
+        {dynamicLessonPlansSection}
         {builtInLessonPlans}
-        {!resourceLessonPlans && !builtInLessonPlans && (
+        {!resourceLessonPlans && !dynamicLessonPlansSection && !builtInLessonPlans && (
           <div className="py-8 text-center text-muted-foreground">
             No lesson plans available for this unit.
             {isEditMode && <div className="mt-2">Click "Add Resource" to add one.</div>}
