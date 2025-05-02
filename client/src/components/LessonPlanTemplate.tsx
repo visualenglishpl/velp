@@ -50,117 +50,60 @@ const LessonPlanTemplate: React.FC<LessonPlanTemplateProps> = ({
     }
   };
 
-  const renderPlan = (lessonPlan: LessonPlan) => (
+  const renderPlan = (lessonPlan: any) => (
     <Card className="shadow-md border-primary/10 h-full overflow-auto">
       <CardHeader className="bg-gradient-to-b from-primary/10 to-transparent pb-4">
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-2xl font-bold text-primary">{lessonPlan.title}</CardTitle>
-            <CardDescription className="mt-1">
-              <span className="font-medium">Duration:</span> {lessonPlan.duration}
-            </CardDescription>
+            <CardTitle className="text-xl font-bold text-primary">{lessonPlan.title}</CardTitle>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-6 pb-4">
+      <CardContent className="space-y-4 pb-4">
         <div>
-          <h3 className="text-lg font-semibold mb-2 text-primary/80">Learning Objectives</h3>
+          <h3 className="text-md font-semibold mb-2 text-primary/80">Objectives</h3>
           <ul className="list-disc pl-5 space-y-1">
-            {lessonPlan.objectives.map((objective, index) => (
+            {lessonPlan.objectives && lessonPlan.objectives.map((objective: string, index: number) => (
               <li key={index} className="text-sm">{objective}</li>
             ))}
           </ul>
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold mb-2 text-primary/80">Materials Needed</h3>
+          <h3 className="text-md font-semibold mb-2 text-primary/80">Materials</h3>
           <ul className="list-disc pl-5 space-y-1">
-            {lessonPlan.materials.map((material, index) => (
+            {lessonPlan.materials && lessonPlan.materials.map((material: string, index: number) => (
               <li key={index} className="text-sm">{material}</li>
             ))}
           </ul>
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold mb-2 text-primary/80">Lesson Procedure</h3>
-          <div className="space-y-4">
-            {lessonPlan.steps.map((step, index) => (
-              <div key={index} className="border-l-2 border-primary/30 pl-4 py-1">
-                <div className="flex justify-between items-center mb-1">
-                  <h4 className="font-semibold text-primary">{step.title}</h4>
-                  <span className="text-xs bg-primary/10 px-2 py-1 rounded-full">{step.duration}</span>
-                </div>
-                <p className="text-sm mb-2">{step.description}</p>
-                
-                {step.instructions && step.instructions.length > 0 && (
-                  <div className="mb-2">
-                    <h5 className="text-xs font-semibold mb-1">Instructions:</h5>
-                    <ol className="list-decimal pl-5 text-xs space-y-1">
-                      {step.instructions.map((instruction, i) => (
-                        <li key={i}>{instruction}</li>
-                      ))}
-                    </ol>
-                  </div>
-                )}
-                
-                {step.materials && step.materials.length > 0 && (
-                  <div className="mb-2">
-                    <h5 className="text-xs font-semibold mb-1">Materials for this step:</h5>
-                    <ul className="list-disc pl-5 text-xs space-y-1">
-                      {step.materials.map((material, i) => (
-                        <li key={i}>{material}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {step.teacherNotes && (
-                  <div className="bg-yellow-50 border border-yellow-200 p-2 rounded text-xs mt-2">
-                    <h5 className="font-semibold mb-1 text-yellow-700">Teacher Note:</h5>
-                    <p className="text-yellow-800">{step.teacherNotes}</p>
-                  </div>
-                )}
-              </div>
+          <h3 className="text-md font-semibold mb-2 text-primary/80">Procedure</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            {lessonPlan.procedure && lessonPlan.procedure.map((step: string, index: number) => (
+              <li key={index} className="text-sm">{step}</li>
             ))}
-          </div>
+          </ul>
         </div>
 
-        {lessonPlan.assessmentTips && (
-          <div>
-            <h3 className="text-lg font-semibold mb-2 text-primary/80">Assessment Tips</h3>
-            <p className="text-sm">{lessonPlan.assessmentTips}</p>
-          </div>
-        )}
+        <div>
+          <h3 className="text-md font-semibold mb-2 text-primary/80">Assessment</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            {lessonPlan.assessment && lessonPlan.assessment.map((item: string, index: number) => (
+              <li key={index} className="text-sm">{item}</li>
+            ))}
+          </ul>
+        </div>
 
-        {lessonPlan.homeworkIdeas && lessonPlan.homeworkIdeas.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold mb-2 text-primary/80">Homework Ideas</h3>
-            <ul className="list-disc pl-5 space-y-1">
-              {lessonPlan.homeworkIdeas.map((homework, index) => (
-                <li key={index} className="text-sm">{homework}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {lessonPlan.additionalResources && lessonPlan.additionalResources.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold mb-2 text-primary/80">Additional Resources</h3>
-            <ul className="list-disc pl-5 space-y-1">
-              {lessonPlan.additionalResources.map((resource, index) => (
-                <li key={index} className="text-sm">
-                  {resource.url ? (
-                    <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center">
-                      {resource.title} <ExternalLink className="h-3 w-3 ml-1" />
-                    </a>
-                  ) : (
-                    resource.title
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <div>
+          <h3 className="text-md font-semibold mb-2 text-primary/80">Extensions</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            {lessonPlan.extensions && lessonPlan.extensions.map((extension: string, index: number) => (
+              <li key={index} className="text-sm">{extension}</li>
+            ))}
+          </ul>
+        </div>
       </CardContent>
     </Card>
   );

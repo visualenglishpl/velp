@@ -1,238 +1,129 @@
-// This file contains resources for Book 6, Unit 6 (In the Kitchen themed content)
+import { TeacherResource } from '@/components/TeacherResources';
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-
-export const book6Unit6Resources = [
+// In the Kitchen - Unit 6 Resources
+export const book6Unit6Resources: TeacherResource[] = [
   {
-    title: "Kitchen Vocabulary Game",
+    title: "In the Kitchen Kahoot",
     resourceType: "game" as const,
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/2a3df8dade174b7daa1a03df20a5f06a",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2a3df8dade174b7daa1a03df20a5f06a?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    provider: "Kahoot",
+    sourceUrl: "https://create.kahoot.it/share/in-the-kitchen/b683184e-f723-4784-a02a-d51e3678c3af",
+    embedCode: ""
   },
   {
-    title: "Kitchen Appliances Matching Game",
+    title: "Kitchen Utensils Game 1",
     resourceType: "game" as const,
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/3c86b8f6b92745b1aef9551a65d4a273",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/3c86b8f6b92745b1aef9551a65d4a273?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: "https://wordwall.net/resource/5eedd77a9110462a9111a38f2f52fda5",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5eedd77a9110462a9111a38f2f52fda5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    title: "Cooking Verbs Video",
+    title: "Kitchen Utensils Game 2",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/8080784ba2f2495287e30b926bf38bcb",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8080784ba2f2495287e30b926bf38bcb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Cooking Methods Game 1",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/ecb2dd96232d4c4e9f9103f738de561c",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ecb2dd96232d4c4e9f9103f738de561c?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Cooking Methods Game 2",
+    resourceType: "game" as const,
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/c12666ce8e1640e299be713f24762d8c",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c12666ce8e1640e299be713f24762d8c?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    title: "Kitchen Vocabulary Video",
     resourceType: "video" as const,
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/embed/XemfrXbBb6Q",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XemfrXbBb6Q?si=DrM9Cm4Y1XKeFqUa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-  },
-  {
-    title: "Kitchen Safety Quiz",
-    resourceType: "game" as const,
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/embed/f18d924c2c0a47ffa69fcd22b4b5d17e",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f18d924c2c0a47ffa69fcd22b4b5d17e?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: "https://www.youtube.com/watch?v=6BIFnvjpquk",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/6BIFnvjpquk?si=31dsztCC97dUIu18" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   }
 ];
 
-// Lesson plan data for Kitchen Vocabulary
+// Create the implementation function to expose the resources
+export function getBook6Unit6Resources(bookId: string, unitId: string): TeacherResource[] {
+  return book6Unit6Resources.map(resource => ({
+    ...resource,
+    bookId,
+    unitId
+  }));
+}
+
+// Sample lesson plans for Unit 6
 export const kitchenVocabularyLessonPlan = {
-  id: "kitchen-vocabulary-lesson",
-  title: "Kitchen Vocabulary and Equipment",
-  duration: "45 minutes",
-  level: "Intermediate",
+  title: "Kitchen Vocabulary and Utensils",
   objectives: [
-    "Learn vocabulary related to kitchen items and appliances",
-    "Practice describing kitchen equipment and their uses",
-    "Develop language for following recipes and cooking instructions",
-    "Build speaking skills through kitchen-themed conversations"
+    "Identify common kitchen utensils and their uses",
+    "Practice vocabulary related to the kitchen environment",
+    "Understand instructions for basic food preparation"
   ],
   materials: [
-    "Visual English Book 6, Unit 6 slides",
-    "Kitchen Vocabulary Game",
-    "Kitchen Appliances Matching Game",
-    "Kitchen equipment flashcards",
-    "Recipe handouts"
+    "Visual English Book 6 Unit 6 slides",
+    "Wordwall games on kitchen utensils",
+    "Picture cards of kitchen items"
   ],
-  steps: [
-    {
-      title: "Warm-up: Kitchen Experience",
-      duration: "5 minutes",
-      description: "Activate prior knowledge about kitchen experiences",
-      instructions: [
-        "Ask students: 'Do you cook at home? What do you like to cook?'",
-        "Create a mind map on the board with students' favorite dishes",
-        "Briefly discuss what equipment is needed to make those dishes",
-        "Ask about students' favorite kitchen gadgets or appliances"
-      ]
-    },
-    {
-      title: "Vocabulary Introduction",
-      duration: "10 minutes",
-      description: "Present key vocabulary related to kitchen equipment",
-      materials: ["Visual English Book 6, Unit 6 slides", "Kitchen equipment flashcards"],
-      instructions: [
-        "Introduce kitchen item vocabulary: pot, pan, blender, oven, microwave, etc.",
-        "Present kitchen utensil vocabulary: knife, spoon, spatula, whisk, etc.",
-        "Teach related adjectives: sharp, hot, cold, clean, dirty, etc.",
-        "Show kitchen equipment flashcards and have students identify the items",
-        "Practice pronunciation paying attention to word stress"
-      ]
-    },
-    {
-      title: "Interactive Games: Kitchen Vocabulary",
-      duration: "10 minutes",
-      description: "Reinforce vocabulary through digital games",
-      materials: ["Kitchen Vocabulary Game", "Kitchen Appliances Matching Game"],
-      instructions: [
-        "Have students play the Kitchen Vocabulary Game",
-        "Continue with the Kitchen Appliances Matching Game",
-        "Review any challenging vocabulary items",
-        "Ask students to categorize items into groups (cooking, cleaning, storing, etc.)"
-      ]
-    },
-    {
-      title: "Equipment Description Activity",
-      duration: "10 minutes",
-      description: "Practice describing kitchen equipment and their uses",
-      materials: ["Kitchen equipment flashcards"],
-      instructions: [
-        "Divide students into pairs",
-        "Give each pair several kitchen equipment flashcards",
-        "Student A describes the item and its use without naming it",
-        "Student B guesses which kitchen item is being described",
-        "Encourage use of descriptive language and specific vocabulary",
-        "Provide sentence starters: 'This is used for...', 'You need this when...', etc.",
-        "Pairs switch roles and continue with new cards"
-      ]
-    },
-    {
-      title: "Recipe Instructions Practice",
-      duration: "10 minutes",
-      description: "Practice following and giving cooking instructions",
-      materials: ["Recipe handouts"],
-      instructions: [
-        "Distribute simple recipe handouts to small groups",
-        "Each group reads their recipe and identifies all kitchen equipment needed",
-        "Groups then take turns explaining how to make their dish",
-        "Focus on sequence words (first, then, next, finally) and imperatives",
-        "Other students can ask questions about the process",
-        "Discuss which recipes sound most interesting or delicious"
-      ]
-    }
+  procedure: [
+    "Introduction: Show images of different kitchens and discuss",
+    "Vocabulary: Present kitchen utensil vocabulary with matching images",
+    "Practice: Use Wordwall games to reinforce vocabulary",
+    "Activity: 'What's missing?' kitchen items memory game",
+    "Speaking: Role-play giving instructions using kitchen vocabulary"
   ],
-  assessmentTips: "Evaluate students on their appropriate use of kitchen vocabulary, ability to describe kitchen equipment in detail, and participation in the recipe instructions activity.",
-  homeworkIdeas: [
-    "Write a paragraph describing your kitchen at home", 
-    "Create a recipe for your favorite dish including all equipment needed",
-    "Draw and label five kitchen items you use regularly"
+  assessment: [
+    "Vocabulary quiz on kitchen items and utensils",
+    "Practical demonstration of kitchen item identification",
+    "Follow-the-instruction listening assessment"
   ],
-  additionalResources: [
-    {
-      title: "ESL Kitchen Vocabulary Activities",
-      url: "https://en.islcollective.com/english-esl-worksheets/vocabulary/kitchen"
-    }
+  extensions: [
+    "Create a kitchen safety poster using key vocabulary",
+    "Research different types of specialist kitchen equipment",
+    "Write simple recipes using the vocabulary learned"
   ]
 };
 
-// Second lesson plan for Unit 6: Cooking Verbs and Kitchen Safety
-export const cookingVerbsLessonPlan = {
-  id: "cooking-verbs-lesson",
-  title: "Cooking Verbs and Kitchen Safety",
-  duration: "45 minutes",
-  level: "Intermediate",
+export const cookingMethodsLessonPlan = {
+  title: "Cooking Methods and Techniques",
   objectives: [
-    "Learn vocabulary related to cooking verbs and actions",
-    "Practice giving and following cooking instructions",
-    "Develop language for kitchen safety rules",
-    "Build confidence in describing cooking processes"
+    "Learn vocabulary related to cooking methods (boil, fry, bake, etc.)",
+    "Practice describing food preparation processes",
+    "Understand and follow recipe instructions"
   ],
   materials: [
-    "Visual English Book 6, Unit 6 slides",
-    "Cooking Verbs Video",
-    "Kitchen Safety Quiz",
-    "Action cards with cooking verbs",
-    "Kitchen safety posters"
+    "Visual English Book 6 Unit 6 slides",
+    "Cooking methods flashcards",
+    "Simple recipe cards",
+    "Wordwall games on cooking methods"
   ],
-  steps: [
-    {
-      title: "Warm-up: Cooking Show",
-      duration: "5 minutes",
-      description: "Engage students with cooking demonstrations",
-      instructions: [
-        "Ask students: 'Do you watch cooking shows? What actions do chefs perform?'",
-        "Mime some cooking actions and have students guess the verbs",
-        "List cooking verbs on the board as students identify them",
-        "Briefly discuss favorite cooking shows or famous chefs"
-      ]
-    },
-    {
-      title: "Cooking Verbs Video",
-      duration: "10 minutes",
-      description: "Learn common cooking verbs through video",
-      materials: ["Cooking Verbs Video"],
-      instructions: [
-        "Play the Cooking Verbs Video",
-        "Ask students to note any new cooking verbs they hear",
-        "After watching, create a comprehensive list of cooking verbs",
-        "Group verbs by cooking method (heat-based, mixing, cutting, etc.)",
-        "Practice the pronunciation of challenging verbs",
-        "Have students mime the actions as you say the verbs"
-      ]
-    },
-    {
-      title: "Cooking Instructions Practice",
-      duration: "10 minutes",
-      description: "Practice using cooking verbs in instructions",
-      materials: ["Action cards with cooking verbs"],
-      instructions: [
-        "Divide students into small groups",
-        "Distribute action cards with cooking verbs to each group",
-        "Groups create a short cooking demonstration using the verbs on their cards",
-        "Encourage use of sequence markers and time expressions",
-        "Each group presents their cooking demonstration to the class",
-        "Other students identify all the cooking verbs used"
-      ]
-    },
-    {
-      title: "Kitchen Safety Discussion",
-      duration: "10 minutes",
-      description: "Learn about kitchen safety rules and vocabulary",
-      materials: ["Visual English Book 6, Unit 6 slides", "Kitchen safety posters"],
-      instructions: [
-        "Present key kitchen safety vocabulary",
-        "Show kitchen safety posters and discuss the rules shown",
-        "Teach important imperatives for kitchen safety: 'Be careful with...', 'Never leave... unattended'",
-        "Discuss potential dangers in the kitchen and how to avoid them",
-        "Have students share any kitchen accidents they've witnessed or experienced"
-      ]
-    },
-    {
-      title: "Kitchen Safety Quiz Game",
-      duration: "10 minutes",
-      description: "Test knowledge of kitchen safety rules",
-      materials: ["Kitchen Safety Quiz"],
-      instructions: [
-        "Have students complete the Kitchen Safety Quiz individually",
-        "Review answers as a class",
-        "For each safety rule, have students explain why it's important",
-        "Ask students to create their own kitchen safety rule",
-        "Vote on the most important kitchen safety rules"
-      ]
-    }
+  procedure: [
+    "Warm-up: Match cooking method to food items",
+    "Vocabulary: Present cooking verbs with visual examples",
+    "Practice: Interactive Wordwall games on cooking methods",
+    "Activity: Sequence cooking steps in the correct order",
+    "Project: Create a simple illustrated recipe using target vocabulary"
   ],
-  assessmentTips: "Evaluate students on their proper use of cooking verbs, ability to give clear cooking instructions, and understanding of kitchen safety rules.",
-  homeworkIdeas: [
-    "Create a poster illustrating five important kitchen safety rules", 
-    "Write a paragraph explaining how to prepare a simple dish using at least 8 cooking verbs",
-    "Record a short video of yourself demonstrating cooking actions and explaining what you're doing"
+  assessment: [
+    "Cooking methods vocabulary test",
+    "Recipe sequencing assessment",
+    "Oral presentation of a simple cooking procedure"
   ],
-  additionalResources: [
-    {
-      title: "Cooking Verbs Dictionary",
-      url: "https://www.vocabulary.cl/Lists/Cooking_Verbs.htm"
-    },
-    {
-      title: "Kitchen Safety for Kids",
-      url: "https://kidshealth.org/en/kids/kitchen-safety.html"
-    }
+  extensions: [
+    "Compare cooking methods across different cultures",
+    "Create a cooking video script using the vocabulary",
+    "Research healthy vs. unhealthy cooking methods"
   ]
 };
+
+export const book6Unit6LessonPlans = [
+  kitchenVocabularyLessonPlan,
+  cookingMethodsLessonPlan
+];
+
+export function getBook6Unit6LessonPlans() {
+  return book6Unit6LessonPlans;
+}
