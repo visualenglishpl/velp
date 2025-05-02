@@ -372,11 +372,29 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       provider: 'ISL Collective'
     }
   ],
+  '11': [
+    {
+      title: "Transportation and Travel Vocabulary",
+      sourceUrl: "https://www.youtube.com/watch?v=biX6aOuLKh0",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/biX6aOuLKh0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Means of Transportation Vocabulary",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/15928",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/15928" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
+    }
+  ],
   '12': [
     {
       title: "Environmental Conservation Explained",
       sourceUrl: "https://www.youtube.com/watch?v=Jwr1Dzx0ycs",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Jwr1Dzx0ycs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Earth Song",
+      sourceUrl: "https://www.youtube.com/watch?v=S2SMvfGe72U",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/S2SMvfGe72U?si=lNL1zDC02ILXCMju" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
     }
   ]
 };
