@@ -1,14 +1,58 @@
+/**
+ * Resources for Book 6 Unit 9 - Present Perfect - What Has Just Happened
+ */
 import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans } from './book6-resources-common';
 
-// Present Perfect: What Has Just Happened - Unit 9 Resources
-
 // Base resources generated from common module
 const baseResources = generateBook6UnitResources('6', '9');
 
-// Additional specific resources from the document
-const additionalResources: TeacherResource[] = [
+// Additional specific resources for present perfect unit
+const presentPerfectResources: TeacherResource[] = [
+  {
+    id: 'book6-unit9-video1',
+    bookId: '6',
+    unitId: '9',
+    title: 'Present Perfect Tense Explained',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/O1SFZvZHuEM',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/O1SFZvZHuEM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book6-unit9-video2',
+    bookId: '6',
+    unitId: '9',
+    title: 'Using Just, Already and Yet',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/hKMjcaa7-t8',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/hKMjcaa7-t8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book6-unit9-game1',
+    bookId: '6',
+    unitId: '9',
+    title: 'Present Perfect Just Happened Game',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/de1c24a4684e4e0ba5e63bb95bfadac9',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/de1c24a4684e4e0ba5e63bb95bfadac9" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book6-unit9-game2',
+    bookId: '6',
+    unitId: '9',
+    title: 'Already, Yet, Just Quiz',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/2da15ee876bb4a83a564c4c9a3d78dbc',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2da15ee876bb4a83a564c4c9a3d78dbc" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+
+  // Additional existing resources
+
   {
     id: "book6-unit9-game3",
     bookId: '6',
@@ -51,8 +95,8 @@ const additionalResources: TeacherResource[] = [
   }
 ];
 
-// Combine base resources with additional specific resources
-export const book6Unit9Resources = [...baseResources, ...additionalResources];
+// Combine base resources with present perfect specific resources
+export const book6Unit9Resources = [...baseResources, ...presentPerfectResources];
 
 // Create the implementation function to expose the resources
 export function getBook6Unit9Resources(bookId: string, unitId: string): TeacherResource[] {

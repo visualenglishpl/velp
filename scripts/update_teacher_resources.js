@@ -1,9 +1,17 @@
 /**
- * Update Teacher Resources Component
+ * Update Teacher Resources Script
  * 
- * This script updates the TeacherResources.tsx file to include support for all books (0A-7).
- * It modifies the dynamic import functions and adds the necessary book title constants.
+ * This script generates the necessary code changes for TeacherResources.tsx
+ * to import and use all generated resources across all books and units.
  */
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Book configuration
 const BOOKS = [
@@ -14,204 +22,193 @@ const BOOKS = [
   { id: '2', name: 'VISUAL 2', units: 18, requiresLessonPlans: false },
   { id: '3', name: 'VISUAL 3', units: 18, requiresLessonPlans: false },
   { id: '4', name: 'VISUAL 4', units: 16, requiresLessonPlans: false },
-  { id: '5', name: 'VISUAL 5', units: 16, requiresLessonPlans: false },
-  { id: '6', name: 'VISUAL 6', units: 16, requiresLessonPlans: false },
-  { id: '7', name: 'VISUAL 7', units: 16, requiresLessonPlans: false }
+  { id: '5', name: 'VISUAL 5', units: 16, requiresLessonPlans: true },
+  { id: '6', name: 'VISUAL 6', units: 16, requiresLessonPlans: true },
+  { id: '7', name: 'VISUAL 7', units: 16, requiresLessonPlans: true }
 ];
 
-// Special unit configurations (units with no teacher resources)
-const SPECIAL_UNITS = {
-  '5': ['2', '3', '4', '6', '7', '8', '10']
-};
-
-// Generate dynamic import functions
-function generateDynamicImportFunctions() {
-  let implImport = `const dynamicImplImport = async (book: string, unit: number) => {\n`;
-  implImport += `  try {\n`;
+// Main function to update teacher resources
+async function main() {
+  console.log('Updating TeacherResources.tsx with all book and unit resources...');
   
-  // Generate implementation import for each book
-  BOOKS.forEach(book => {
-    implImport += `    if (book === '${book.id}') {\n`;
-    implImport += `      switch(unit) {\n`;
+  const targetFile = path.join(__dirname, '..', 'client', 'src', 'components', 'TeacherResources.tsx');
+  
+  if (!fs.existsSync(targetFile)) {
+    console.error(`⚠️ Error: ${targetFile} does not exist`);
+    return;
+  }
+  
+  // Read current file content
+  const currentContent = fs.readFileSync(targetFile, 'utf8');
+  
+  // Generate imports for all units
+  const imports = generateResourceImports();
+  
+  // Generate resource mapping functions
+  const resourceMappings = generateResourceMappings();
+  
+  // Update the file with new imports and mappings
+  let updatedContent = insertImports(currentContent, imports);
+  updatedContent = insertResourceMappings(updatedContent, resourceMappings);
+  
+  // Create backup of original file
+  const backupFile = `${targetFile}.backup`;
+  fs.writeFileSync(backupFile, currentContent);
+  console.log(`✅ Created backup of original file at ${backupFile}`);
+  
+  // Write updated content
+  fs.writeFileSync(targetFile, updatedContent);
+  console.log(`✅ Updated ${targetFile} with all resource imports and mappings`);
+  
+  console.log('\nNext steps:');
+  console.log('1. Check the updated TeacherResources.tsx file');
+  console.log('2. Test the application to make sure all resources are available');
+  console.log('3. Make any necessary adjustments to specific resources');
+}
+
+// Generate import statements for all resources
+function generateResourceImports() {
+  let imports = '// AUTO-GENERATED IMPORTS - DO NOT MODIFY MANUALLY\n';
+  
+  for (const book of BOOKS) {
+    imports += `// Book ${book.id.toUpperCase()} resources\n`;
     
-    // Generate cases for each unit
-    for (let i = 1; i <= book.units; i++) {
-      // Skip special units that don't have resources
-      if (SPECIAL_UNITS[book.id] && SPECIAL_UNITS[book.id].includes(i.toString())) {
-        continue;
+    // Import common resource helpers
+    imports += `import { generateBook${book.id}UnitResources } from '@/data/book${book.id}-resources-common';\n`;
+    
+    // Import each unit implementation
+    for (let unitId = 1; unitId <= book.units; unitId++) {
+      imports += `import { getBook${book.id}Unit${unitId}Resources`;
+      
+      if (book.requiresLessonPlans) {
+        imports += `, getBook${book.id}Unit${unitId}LessonPlans`;
       }
       
-      implImport += `        case ${i}:\n`;
-      implImport += `          return import('@/data/book${book.id}-unit${i}-implementation');\n`;
+      imports += ` } from '@/data/book${book.id}-unit${unitId}-implementation';\n`;
     }
     
-    implImport += `        default:\n`;
-    implImport += `          return null;\n`;
-    implImport += `      }\n`;
-    implImport += `    }\n`;
-  });
+    imports += '\n';
+  }
   
-  implImport += `    return null;\n`;
-  implImport += `  } catch (error) {\n`;
-  implImport += `    console.error(\`Error loading implementation for Book \${book}, Unit \${unit}:\`, error);\n`;
-  implImport += `    return null;\n`;
-  implImport += `  }\n`;
-  implImport += `};\n\n`;
+  return imports;
+}
+
+// Generate resource mapping functions
+function generateResourceMappings() {
+  let mappings = '// AUTO-GENERATED RESOURCE MAPPINGS - DO NOT MODIFY MANUALLY\n\n';
   
-  // Resources import function
-  let resourceImport = `const dynamicResourceImport = async (book: string, unit: number) => {\n`;
-  resourceImport += `  try {\n`;
+  // Create getResourcesForBookUnit function
+  mappings += 'export function getResourcesForBookUnit(bookId: string, unitId: string): TeacherResource[] {\n';
+  mappings += '  // Return resources based on book and unit ID\n';
+  mappings += '  switch (bookId) {\n';
   
-  // Generate resource import for each book
-  BOOKS.forEach(book => {
-    resourceImport += `    if (book === '${book.id}') {\n`;
-    resourceImport += `      switch(unit) {\n`;
+  for (const book of BOOKS) {
+    mappings += `    case '${book.id}': {\n`;
+    mappings += '      switch (unitId) {\n';
     
-    // Generate cases for each unit
-    for (let i = 1; i <= book.units; i++) {
-      // Skip special units that don't have resources
-      if (SPECIAL_UNITS[book.id] && SPECIAL_UNITS[book.id].includes(i.toString())) {
-        continue;
+    for (let unitId = 1; unitId <= book.units; unitId++) {
+      mappings += `        case '${unitId}': return getBook${book.id}Unit${unitId}Resources();\n`;
+    }
+    
+    mappings += '        default: return generateBook' + book.id + 'UnitResources(bookId, unitId);\n';
+    mappings += '      }\n';
+    mappings += '    }\n';
+  }
+  
+  mappings += '    default: return [];\n';
+  mappings += '  }\n';
+  mappings += '}\n\n';
+  
+  // Create getLessonPlansForBookUnit function
+  mappings += 'export function getLessonPlansForBookUnit(bookId: string, unitId: string): LessonPlan[] {\n';
+  mappings += '  // Return lesson plans based on book and unit ID\n';
+  mappings += '  switch (bookId) {\n';
+  
+  for (const book of BOOKS) {
+    if (book.requiresLessonPlans) {
+      mappings += `    case '${book.id}': {\n`;
+      mappings += '      switch (unitId) {\n';
+      
+      for (let unitId = 1; unitId <= book.units; unitId++) {
+        mappings += `        case '${unitId}': return getBook${book.id}Unit${unitId}LessonPlans();\n`;
       }
       
-      resourceImport += `        case ${i}:\n`;
-      resourceImport += `          return import('@/data/book${book.id}-unit${i}-resources');\n`;
+      mappings += '        default: return [];\n';
+      mappings += '      }\n';
+      mappings += '    }\n';
     }
-    
-    resourceImport += `        default:\n`;
-    resourceImport += `          return null;\n`;
-    resourceImport += `      }\n`;
-    resourceImport += `    }\n`;
-  });
+  }
   
-  resourceImport += `    return null;\n`;
-  resourceImport += `  } catch (error) {\n`;
-  resourceImport += `    console.error(\`Error loading resources for Book \${book}, Unit \${unit}:\`, error);\n`;
-  resourceImport += `    return null;\n`;
-  resourceImport += `  }\n`;
-  resourceImport += `};\n`;
+  mappings += '    default: return [];\n';
+  mappings += '  }\n';
+  mappings += '}\n';
   
-  return implImport + resourceImport;
+  return mappings;
 }
 
-// Generate book title constants
-function generateBookTitleConstants() {
-  let constants = '';
+// Helper function to insert imports into content
+function insertImports(content, imports) {
+  // Find a good location to insert imports (after existing imports)
+  const importRegex = /import.*from.*;\s*$/m;
+  const lastImportMatch = content.match(new RegExp(importRegex, 'g'));
   
-  BOOKS.forEach(book => {
-    constants += `// Unit titles for Book ${book.id}\n`;
-    constants += `const BOOK${book.id.toUpperCase()}_UNIT_TITLES: Record<string, string> = {\n`;
+  if (lastImportMatch && lastImportMatch.length > 0) {
+    const lastImport = lastImportMatch[lastImportMatch.length - 1];
+    const lastImportPos = content.lastIndexOf(lastImport) + lastImport.length;
     
-    for (let i = 1; i <= book.units; i++) {
-      constants += `  '${i}': 'Unit ${i}',\n`;
-    }
-    
-    constants += `};\n\n`;
-  });
+    return content.substring(0, lastImportPos) + '\n\n' + imports + content.substring(lastImportPos);
+  }
   
-  return constants;
+  // If no imports found, add after file header comments
+  const headerEnd = content.indexOf('*/') + 2;
+  if (headerEnd > 2) {
+    return content.substring(0, headerEnd) + '\n\n' + imports + content.substring(headerEnd);
+  }
+  
+  // If all else fails, add at the beginning
+  return imports + content;
 }
 
-// Generate isSpecialBookUnit function
-function generateIsSpecialBookUnitFunction() {
-  let func = `// Check if this is a special book/unit with predefined resources\n`;
+// Helper function to insert resource mappings into content
+function insertResourceMappings(content, mappings) {
+  // Look for existing resource mappings to replace
+  const mappingsStartMarker = '// AUTO-GENERATED RESOURCE MAPPINGS';
+  const mappingsEndMarker = '// END AUTO-GENERATED RESOURCE MAPPINGS';
   
-  // Add comments for special unit configurations
-  Object.entries(SPECIAL_UNITS).forEach(([bookId, units]) => {
-    func += `// For Book ${bookId}, units ${units.join(', ')} have no teacher resources\n`;
-  });
+  const startIndex = content.indexOf(mappingsStartMarker);
   
-  func += `const isSpecialBookUnit = \n`;
-  
-  // Generate conditions for each book
-  BOOKS.forEach((book, index) => {
-    const units = [];
+  if (startIndex !== -1) {
+    const endIndex = content.indexOf(mappingsEndMarker);
     
-    for (let i = 1; i <= book.units; i++) {
-      // Skip special units that don't have resources
-      if (SPECIAL_UNITS[book.id] && SPECIAL_UNITS[book.id].includes(i.toString())) {
-        continue;
-      }
-      
-      units.push(`'${i}'`);
+    if (endIndex !== -1 && endIndex > startIndex) {
+      return content.substring(0, startIndex) + mappings + '\n' + mappingsEndMarker + content.substring(endIndex + mappingsEndMarker.length);
     }
-    
-    func += `  (bookId === '${book.id}' && [${units.join(', ')}].includes(unitId))`;
-    
-    if (index < BOOKS.length - 1) {
-      func += ` ||\n`;
-    } else {
-      func += `;\n`;
-    }
-  });
+  }
   
-  return func;
+  // If no existing mappings, find a good spot to insert them
+  // Typically, this would be after component interfaces/type definitions and before component implementation
+  const componentStart = content.indexOf('export function TeacherResources');
+  
+  if (componentStart !== -1) {
+    return content.substring(0, componentStart) + '\n' + mappings + '\n' + content.substring(componentStart);
+  }
+  
+  // If component function not found, try to find the last export declaration
+  const lastExportMatch = content.match(/export .*$/gm);
+  
+  if (lastExportMatch && lastExportMatch.length > 0) {
+    const lastExport = lastExportMatch[0];
+    const lastExportPos = content.lastIndexOf(lastExport);
+    
+    return content.substring(0, lastExportPos) + '\n' + mappings + '\n' + content.substring(lastExportPos);
+  }
+  
+  // If all else fails, append to the end
+  return content + '\n\n' + mappings;
 }
 
-// Generate resource generation function for getMoreUnitResources
-function generateResourceGenerationFunction() {
-  let func = `// Function to get additional resources for specific book/unit combinations\n`;
-  func += `const getMoreUnitResources = useCallback((): TeacherResource[] => {\n`;
-  
-  // Generate conditions for each book
-  BOOKS.forEach(book => {
-    func += `  // Book ${book.id} units - use centralized resource generator\n`;
-    func += `  if (bookId === '${book.id}') {\n`;
-    
-    // Generate special cases for each unit
-    for (let i = 1; i <= book.units; i++) {
-      // Skip special units that don't have resources
-      if (SPECIAL_UNITS[book.id] && SPECIAL_UNITS[book.id].includes(i.toString())) {
-        continue;
-      }
-      
-      func += `    // Special case for Unit ${i}\n`;
-      func += `    if (unitId === '${i}') {\n`;
-      func += `      try {\n`;
-      func += `        console.log('Loading Book ${book.id} Unit ${i} resources from implementation');\n`;
-      func += `        return getBook${book.id}Unit${i}Resources(bookId, unitId);\n`;
-      func += `      } catch (error) {\n`;
-      func += `        console.error('Error getting Book ${book.id} Unit ${i} resources, falling back to common resources:', error);\n`;
-      func += `        return generateBook${book.id}UnitResources(bookId, unitId);\n`;
-      func += `      }\n`;
-      func += `    }\n`;
-    }
-    
-    func += `    // For other units, use the centralized resource generator\n`;
-    func += `    const resources = generateBook${book.id}UnitResources(bookId, unitId);\n`;
-    func += `    console.log(\`Generated \${resources.length} resources for Book ${book.id} Unit \${unitId}\`);\n`;
-    func += `    return resources;\n`;
-    func += `  }\n`;
-  });
-  
-  func += `  // Default resource generation\n`;
-  func += `  console.log(\`No specific resource generator for Book \${bookId} Unit \${unitId}, using empty array\`);\n`;
-  func += `  return [];\n`;
-  func += `}, [bookId, unitId]);\n`;
-  
-  return func;
-}
-
-// Generate the complete updated file content
-function generateUpdatedFile() {
-  const dynamicImportFunctions = generateDynamicImportFunctions();
-  const bookTitleConstants = generateBookTitleConstants();
-  const isSpecialBookUnitFunction = generateIsSpecialBookUnitFunction();
-  const resourceGenerationFunction = generateResourceGenerationFunction();
-  
-  console.log('Generated dynamic import functions');
-  console.log('Generated book title constants');
-  console.log('Generated isSpecialBookUnit function');
-  console.log('Generated resource generation function');
-  
-  console.log('\nTo update TeacherResources.tsx:\n');
-  console.log('1. Replace the dynamicImplImport and dynamicResourceImport functions');
-  console.log('2. Add the book title constants at the top of the file');
-  console.log('3. Replace the isSpecialBookUnit function');
-  console.log('4. Replace the getMoreUnitResources function');
-  
-  console.log('\nGenerated code is ready for use.');
-}
-
-// Run the generation
-generateUpdatedFile();
+// Run the main function
+main().catch(error => {
+  console.error('Error:', error);
+  process.exit(1);
+});

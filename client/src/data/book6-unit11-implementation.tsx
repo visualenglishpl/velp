@@ -1,5 +1,6 @@
-// Implementation file for Book 6, Unit 11 - Transportation And Travel
+// Book 6 Unit 11 implementation file - Extreme Sports
 
+// Implementation for Extreme Sports
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { TeacherResource } from '@/components/TeacherResources';
 import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans } from './book6-resources-common';

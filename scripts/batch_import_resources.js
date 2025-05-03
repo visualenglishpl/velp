@@ -22,7 +22,7 @@ const BOOKS = [
 
 // Special unit configurations (units with no teacher resources)
 const SPECIAL_UNITS = {
-  '5': ['2', '3', '4', '6', '7', '8', '10']
+  // All units should have resources now - empty configuration
 };
 
 // Implementation steps

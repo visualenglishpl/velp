@@ -1,0 +1,59 @@
+import { TeacherResource } from '@/components/TeacherResources';
+
+/**
+ * Resources for Book 2 Unit 3
+ */
+
+// Videos for Unit 3
+export const videos: TeacherResource[] = [
+  {
+    id: `book2-unit3-video-1`,
+    bookId: '2',
+    unitId: '3',
+    title: 'VISUAL 2 Unit 3 Video 1',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/placeholder',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+  },
+  {
+    id: `book2-unit3-video-2`,
+    bookId: '2',
+    unitId: '3',
+    title: 'VISUAL 2 Unit 3 Video 2',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/placeholder',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+  }
+];
+
+// Games for Unit 3
+export const games: TeacherResource[] = [
+  {
+    id: `book2-unit3-game-1`,
+    bookId: '2',
+    unitId: '3',
+    title: 'VISUAL 2 Unit 3 Game 1',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/placeholder',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    id: `book2-unit3-game-2`,
+    bookId: '2',
+    unitId: '3',
+    title: 'VISUAL 2 Unit 3 Game 2',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/placeholder',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
+];
+
+// Combined resources for this unit
+export const resources: TeacherResource[] = [...videos, ...games];
+
+// Main export for backward compatibility
+export const book2Unit3Resources = resources;

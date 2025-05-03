@@ -1,4 +1,7 @@
+// Book 6 Unit 14 implementation file - Are You a Survivor?
+
 import { TeacherResource } from '@/components/TeacherResources';
+// Implementation for Are You a Survivor?
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { generateBook6Unit14Resources } from './book6-unit14-resources';
 import { BOOK6_UNIT_TITLES } from './book6-resources-common';

@@ -1,0 +1,7 @@
+// Implementation file for Book 2 Unit 2
+
+import { TeacherResource } from '@/components/TeacherResources';
+import { resources } from './book2-unit2-resources';
+
+// Function to get resources for this unit
+export const getBook2Unit2Resources = (): TeacherResource[] => resources;
