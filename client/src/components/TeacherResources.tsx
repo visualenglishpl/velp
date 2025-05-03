@@ -18,6 +18,10 @@ import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans, BOOK6_
 // Import any specific implementation functions
 import { getBook6Unit9Resources, getBook6Unit9LessonPlans } from '@/data/book6-unit9-implementation';
 import { getBook6Unit10Resources, getBook6Unit10LessonPlans } from '@/data/book6-unit10-implementation';
+import { generateBook6Unit13Content, generateUnit13LessonPlans } from '@/data/book6-unit13-implementation';
+import { generateBook6Unit14Content, generateUnit14LessonPlans } from '@/data/book6-unit14-implementation';
+import { generateBook6Unit15Content, generateUnit15LessonPlans } from '@/data/book6-unit15-implementation';
+import { generateBook6Unit16Content, generateUnit16LessonPlans } from '@/data/book6-unit16-implementation';
 
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
@@ -403,6 +407,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 12 && typedImplModule.getBook6Unit12LessonPlans) {
               console.log('Using getBook6Unit12LessonPlans');
               lessonPlans = typedImplModule.getBook6Unit12LessonPlans();
+            } else if (unitNum === 13 && typedImplModule.generateUnit13LessonPlans) {
+              console.log('Using generateUnit13LessonPlans');
+              lessonPlans = typedImplModule.generateUnit13LessonPlans();
+            } else if (unitNum === 14 && typedImplModule.generateUnit14LessonPlans) {
+              console.log('Using generateUnit14LessonPlans');
+              lessonPlans = typedImplModule.generateUnit14LessonPlans();
+            } else if (unitNum === 15 && typedImplModule.generateUnit15LessonPlans) {
+              console.log('Using generateUnit15LessonPlans');
+              lessonPlans = typedImplModule.generateUnit15LessonPlans();
+            } else if (unitNum === 16 && typedImplModule.generateUnit16LessonPlans) {
+              console.log('Using generateUnit16LessonPlans');
+              lessonPlans = typedImplModule.generateUnit16LessonPlans();
             }
             
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
@@ -553,6 +569,38 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           return getBook6Unit10Resources(bookId, unitId);
         } catch (error) {
           console.error('Error getting Book 6 Unit 10 resources, falling back to common resources:', error);
+          return generateBook6UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '13') {
+        try {
+          console.log('Loading Book 6 Unit 13 resources from implementation');
+          return generateBook6Unit13Content(bookId);
+        } catch (error) {
+          console.error('Error getting Book 6 Unit 13 resources, falling back to common resources:', error);
+          return generateBook6UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '14') {
+        try {
+          console.log('Loading Book 6 Unit 14 resources from implementation');
+          return generateBook6Unit14Content(bookId);
+        } catch (error) {
+          console.error('Error getting Book 6 Unit 14 resources, falling back to common resources:', error);
+          return generateBook6UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '15') {
+        try {
+          console.log('Loading Book 6 Unit 15 resources from implementation');
+          return generateBook6Unit15Content(bookId);
+        } catch (error) {
+          console.error('Error getting Book 6 Unit 15 resources, falling back to common resources:', error);
+          return generateBook6UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '16') {
+        try {
+          console.log('Loading Book 6 Unit 16 resources from implementation');
+          return generateBook6Unit16Content(bookId);
+        } catch (error) {
+          console.error('Error getting Book 6 Unit 16 resources, falling back to common resources:', error);
           return generateBook6UnitResources(bookId, unitId);
         }
       } else {
