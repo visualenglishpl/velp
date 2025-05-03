@@ -455,6 +455,23 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/S2SMvfGe72U?si=lNL1zDC02ILXCMju" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
     },
     {
+      title: "Planets & Stars Size Comparison",
+      sourceUrl: "https://www.youtube.com/watch?v=HEheh1BH34Q",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/HEheh1BH34Q?si=-L7XXOZqHjFsV3TT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    },
+    {
+      title: "Environmental Pollution Vocabulary",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/79022",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/79022" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
+    },
+    {
+      title: "Environmental Animation",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/262369",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/262369" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
+    },
+    {
       title: "Solar System Game",
       sourceUrl: "https://wordwall.net/resource/2753bac717214441a38d76fda2cc33b8",
       embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2753bac717214441a38d76fda2cc33b8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
@@ -490,6 +507,12 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "City Places Vocabulary",
       sourceUrl: "https://www.youtube.com/watch?v=SKs3WKe7VPw",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/SKs3WKe7VPw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "City Life Video Lesson",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/1101928",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/1101928" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
     }
   ],
   '14': [
@@ -502,6 +525,12 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "At The Airport: Checking In",
       sourceUrl: "https://www.youtube.com/watch?v=NlHI2oXVHfk",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/NlHI2oXVHfk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Airport Conversations",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/546172",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/546172" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
     }
   ],
   '15': [
@@ -514,6 +543,12 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "Outdoor Survival Equipment",
       sourceUrl: "https://www.youtube.com/watch?v=4aAXF1qMCsQ",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4aAXF1qMCsQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Wilderness Survival",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/837363",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/837363" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
     }
   ],
   '16': [
@@ -526,6 +561,12 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "Fashion Accessories Vocabulary",
       sourceUrl: "https://www.youtube.com/watch?v=lZZm-Z2JFf8",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/lZZm-Z2JFf8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    },
+    {
+      title: "Fashion Accessories Video Lesson",
+      sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/266409",
+      embedCode: `<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/266409" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>`,
+      provider: 'ISL Collective'
     },
     {
       title: "Fashion Accessories Game 1",
