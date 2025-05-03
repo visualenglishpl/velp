@@ -16,7 +16,7 @@ export const book1Unit4VideoResources: TeacherResource[] = [
     resourceType: "video",
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=TJhfl5vdxp4",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/TJhfl5vdxp4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/TJhfl5vdxp4?si=vY8T6XncJ4BpR1oY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "A catchy song that introduces basic shapes with clear animations and repetitive lyrics."
   },
   {
@@ -27,7 +27,7 @@ export const book1Unit4VideoResources: TeacherResource[] = [
     resourceType: "video",
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=JsCn-pxZWzE",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/JsCn-pxZWzE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/JsCn-pxZWzE?si=7PtaJERmVQl5BzPM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "Learn basic geometric shapes with this engaging song that features clear visuals and catchy melody."
   },
   {
@@ -38,7 +38,7 @@ export const book1Unit4VideoResources: TeacherResource[] = [
     resourceType: "video",
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=8hIq9fXSrfx",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8hIq9fXSrfx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8hIq9fXSrfx?si=ZCIzgT30a0vtFWw_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "A fun creative activity that uses shapes to build a robot face, reinforcing shape vocabulary in a practical context."
   },
   {
@@ -49,7 +49,7 @@ export const book1Unit4VideoResources: TeacherResource[] = [
     resourceType: "video",
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=ZnZYK83utu0",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ZnZYK83utu0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ZnZYK83utu0?si=NdqhMpZ1wPfNJw6I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "This song introduces 3D shapes like spheres, cylinders, and cubes with real-world examples."
   }
 ];
@@ -60,33 +60,33 @@ export const book1Unit4GameResources: TeacherResource[] = [
     id: "book1-unit4-game1",
     bookId: "1",
     unitId: "4",
-    title: "Shapes - Memory Match",
+    title: "WORDWALL - SHAPES (1)",
     resourceType: "game",
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/42540/shapes-memory-match",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/42540/shapes-memory-match?themeId=1&templateId=11&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/42540/shapes-memory-match?themeId=1&templateId=11&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "Match shape words with their corresponding images in this memory match game."
   },
   {
     id: "book1-unit4-game2",
     bookId: "1",
     unitId: "4",
-    title: "Shapes - Quiz",
+    title: "WORDWALL - SHAPES (2)",
     resourceType: "game",
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/483357/shapes-quiz",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/483357/shapes-quiz?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/483357/shapes-quiz?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "Test your knowledge of basic shapes with this interactive quiz."
   },
   {
     id: "book1-unit4-game3",
     bookId: "1",
     unitId: "4",
-    title: "Find the Shape - Interactive Game",
+    title: "WORDWALL - SHAPES (3)",
     resourceType: "game",
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/21986291/shapes",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/21986291/shapes?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/21986291/shapes?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "Practice identifying different shapes with this fun interactive game."
   }
 ];
