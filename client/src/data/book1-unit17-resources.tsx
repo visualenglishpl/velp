@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 17
+ * Visual English Book 1, Unit 17: Weather and Seasons
+ * Resources including videos and games
  */
 
-// Videos for Unit 17
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit17-video-1`,
-    bookId: '1',
-    unitId: '17',
-    title: 'VISUAL 1 Unit 17 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit17-video-2`,
-    bookId: '1',
-    unitId: '17',
-    title: 'VISUAL 1 Unit 17 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 17
+export const book1Unit17VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    17, 1,
+    "How's the Weather? - Super Simple Songs",
+    "rD6FRDd9Hew",
+    "A fun song about different weather conditions"
+  ),
+  createBook1VideoResource(
+    17, 2,
+    "Seasons Song - Have Fun Teaching",
+    "8ZjpI6fgYSY",
+    "An educational song about the four seasons"
+  ),
+  createBook1VideoResource(
+    17, 3,
+    "Weather Song - The Singing Walrus",
+    "XcW9Ct000yY",
+    "Learn vocabulary for different types of weather"
+  ),
+  createBook1VideoResource(
+    17, 4,
+    "Four Seasons Song - Pancake Manor",
+    "ksGiLaIx39c",
+    "A catchy and fun song about the four seasons"
+  )
 ];
 
-// Games for Unit 17
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit17-game-1`,
-    bookId: '1',
-    unitId: '17',
-    title: 'VISUAL 1 Unit 17 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit17-game-2`,
-    bookId: '1',
-    unitId: '17',
-    title: 'VISUAL 1 Unit 17 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 17
+export const book1Unit17GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    17, 1,
+    "Weather Vocabulary - Matching",
+    "a8d2a2b6d4724687aa997b8ab54bc3e6",
+    "1", "3", "0",
+    "Match the weather pictures to their names"
+  ),
+  createBook1GameResource(
+    17, 2,
+    "Seasons and Weather - Quiz",
+    "b4c93edccf984d9ea25d4a8c5ab27c94",
+    "1", "5", "0",
+    "Test your knowledge of seasons and weather"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 17
+export const book1Unit17Resources: TeacherResource[] = [
+  ...book1Unit17VideoResources,
+  ...book1Unit17GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit17Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit17Resources = () => book1Unit17Resources;
+
+export default book1Unit17Resources;

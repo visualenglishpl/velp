@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 18
+ * Visual English Book 1, Unit 18: Animals at the Zoo
+ * Resources including videos and games
  */
 
-// Videos for Unit 18
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit18-video-1`,
-    bookId: '1',
-    unitId: '18',
-    title: 'VISUAL 1 Unit 18 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit18-video-2`,
-    bookId: '1',
-    unitId: '18',
-    title: 'VISUAL 1 Unit 18 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 18
+export const book1Unit18VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    18, 1,
+    "Walking in the Jungle - Super Simple Songs",
+    "GoSq-iCbsSY",
+    "A fun song about jungle animals"
+  ),
+  createBook1VideoResource(
+    18, 2,
+    "Zoo Song - Kids Music Mania",
+    "G-ACF_YToFU",
+    "A catchy song about different zoo animals"
+  ),
+  createBook1VideoResource(
+    18, 3,
+    "Let's Go to the Zoo - Bounce Patrol",
+    "OwRmivbNgQk",
+    "An energetic song about a trip to the zoo"
+  ),
+  createBook1VideoResource(
+    18, 4,
+    "Zoo Animals - Maple Leaf Learning",
+    "W7DpAUoZm2A",
+    "Learn vocabulary for various zoo animals"
+  )
 ];
 
-// Games for Unit 18
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit18-game-1`,
-    bookId: '1',
-    unitId: '18',
-    title: 'VISUAL 1 Unit 18 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit18-game-2`,
-    bookId: '1',
-    unitId: '18',
-    title: 'VISUAL 1 Unit 18 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 18
+export const book1Unit18GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    18, 1,
+    "Zoo Animals - Matching Game",
+    "c94c7a75b5fe4ca9be42dc8ca5b78b6d",
+    "1", "3", "0",
+    "Match the zoo animal pictures to their names"
+  ),
+  createBook1GameResource(
+    18, 2,
+    "Wild Animals - Quiz",
+    "d7f436c86f20444ca47e7e7a7ac9bd57",
+    "1", "5", "0",
+    "Test your knowledge of wild animals"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 18
+export const book1Unit18Resources: TeacherResource[] = [
+  ...book1Unit18VideoResources,
+  ...book1Unit18GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit18Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit18Resources = () => book1Unit18Resources;
+
+export default book1Unit18Resources;
