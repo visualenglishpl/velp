@@ -786,8 +786,24 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         if ((implModule as any).lessonPlans) extractLessonPlans('lessonPlans');
         if ((implModule as any).unitLessonPlans) extractLessonPlans('unitLessonPlans');
         
+        // Handle Book 1 lesson plans
+        if (bookId === '1') {
+          try {
+            // Check for specific lesson plan getter functions using type assertion
+            const typedImplModule = implModule as any;
+            
+            if (unitNum === 1 && typedImplModule.generateUnit1LessonPlans) {
+              console.log('Using generateUnit1LessonPlans for Book 1');
+              lessonPlans = typedImplModule.generateUnit1LessonPlans();
+            }
+            
+            console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
+          } catch (error) {
+            console.error(`Error getting Book 1 Unit ${unitNum} lesson plans:`, error);
+          }
+        }
         // Handle centralized Book 5 lesson plans
-        if (bookId === '5') {
+        else if (bookId === '5') {
           try {
             // Use our centralized lesson plan generator for Book 5
             const unitTitle = BOOK5_UNIT_TITLES[unitId] || `Unit ${unitId}`;
