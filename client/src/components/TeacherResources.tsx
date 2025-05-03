@@ -33,7 +33,15 @@ import { generateBook5Unit13Content, generateUnit13LessonPlans } from '@/data/bo
 
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
+import { generateUnit2LessonPlans as generateBook1Unit2LessonPlans } from '@/data/book1-unit2-implementation';
+import { generateUnit3LessonPlans as generateBook1Unit3LessonPlans } from '@/data/book1-unit3-implementation';
+import { generateUnit4LessonPlans as generateBook1Unit4LessonPlans } from '@/data/book1-unit4-implementation';
+import { generateUnit5LessonPlans as generateBook1Unit5LessonPlans } from '@/data/book1-unit5-implementation';
 import { book1Unit1Resources, book1Unit1VideoResources, book1Unit1GameResources } from '@/data/book1-unit1-resources';
+import { book1Unit2Resources, book1Unit2VideoResources, book1Unit2GameResources } from '@/data/book1-unit2-resources';
+import { book1Unit3Resources, book1Unit3VideoResources, book1Unit3GameResources } from '@/data/book1-unit3-resources';
+import { book1Unit4Resources, book1Unit4VideoResources, book1Unit4GameResources } from '@/data/book1-unit4-resources';
+import { book1Unit5Resources, book1Unit5VideoResources, book1Unit5GameResources } from '@/data/book1-unit5-resources';
 
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
@@ -799,6 +807,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             if (unitNum === 1) {
               console.log('Using generateUnit1LessonPlans for Book 1');
               lessonPlans = generateBook1Unit1LessonPlans();
+            } else if (unitNum === 2) {
+              console.log('Using generateUnit2LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit2LessonPlans();
+            } else if (unitNum === 3) {
+              console.log('Using generateUnit3LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit3LessonPlans();
+            } else if (unitNum === 4) {
+              console.log('Using generateUnit4LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit4LessonPlans();
+            } else if (unitNum === 5) {
+              console.log('Using generateUnit5LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit5LessonPlans();
             }
             
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
@@ -1015,6 +1035,18 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       if (unitId === '1') {
         console.log('Loading Book 1 Unit 1 resources');
         return book1Unit1Resources;
+      } else if (unitId === '2') {
+        console.log('Loading Book 1 Unit 2 resources');
+        return book1Unit2Resources;
+      } else if (unitId === '3') {
+        console.log('Loading Book 1 Unit 3 resources');
+        return book1Unit3Resources;
+      } else if (unitId === '4') {
+        console.log('Loading Book 1 Unit 4 resources');
+        return book1Unit4Resources;
+      } else if (unitId === '5') {
+        console.log('Loading Book 1 Unit 5 resources');
+        return book1Unit5Resources;
       }
       // Add more Book 1 unit resources as they are implemented
       return [];

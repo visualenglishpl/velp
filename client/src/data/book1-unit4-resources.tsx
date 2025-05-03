@@ -1,5 +1,5 @@
 /**
- * Visual English Book 1, Unit 4: My Family
+ * Visual English Book 1, Unit 4: Shapes
  * Resources including videos and games
  */
 
@@ -8,48 +8,87 @@ import { createBook1VideoResource, createBook1GameResource } from './book1-resou
 
 // Video resources for Unit 4
 export const book1Unit4VideoResources: TeacherResource[] = [
-  createBook1VideoResource(
-    4, 1,
-    "The Family Song - The Singing Walrus",
-    "d_WQEUzS-mY",
-    "Learn family vocabulary with this catchy song"
-  ),
-  createBook1VideoResource(
-    4, 2,
-    "My Family - Kids Educational Songs",
-    "FHaObkHEkHQ",
-    "A fun song about family members"
-  ),
-  createBook1VideoResource(
-    4, 3,
-    "Family Finger Song - Super Simple Songs",
-    "bxl-kAUWRuo",
-    "A finger play song about family members"
-  ),
-  createBook1VideoResource(
-    4, 4,
-    "Where Is My Family - Maple Leaf Learning",
-    "GkJSc9A1KwI",
-    "Learn to identify family members in this simple song"
-  )
+  {
+    id: "book1-unit4-video1",
+    bookId: "1",
+    unitId: "4",
+    title: "The Shapes Song - Super Simple Songs",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=TJhfl5vdxp4",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/TJhfl5vdxp4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    description: "A catchy song that introduces basic shapes with clear animations and repetitive lyrics."
+  },
+  {
+    id: "book1-unit4-video2",
+    bookId: "1",
+    unitId: "4",
+    title: "Shapes Song - The Singing Walrus",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=JsCn-pxZWzE",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/JsCn-pxZWzE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    description: "Learn basic geometric shapes with this engaging song that features clear visuals and catchy melody."
+  },
+  {
+    id: "book1-unit4-video3",
+    bookId: "1",
+    unitId: "4",
+    title: "Make a Robot Face - WATTS ENGLISH",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=8hIq9fXSrfx",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8hIq9fXSrfx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    description: "A fun creative activity that uses shapes to build a robot face, reinforcing shape vocabulary in a practical context."
+  },
+  {
+    id: "book1-unit4-video4",
+    bookId: "1",
+    unitId: "4",
+    title: "3D Shapes I Know - Dream English",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=ZnZYK83utu0",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ZnZYK83utu0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    description: "This song introduces 3D shapes like spheres, cylinders, and cubes with real-world examples."
+  }
 ];
 
 // Game resources for Unit 4
 export const book1Unit4GameResources: TeacherResource[] = [
-  createBook1GameResource(
-    4, 1,
-    "Family Members - Matching Game",
-    "4c9c0b738fb64d91a63e97d20a9cbb04",
-    "1", "3", "0",
-    "Match pictures of family members to their names"
-  ),
-  createBook1GameResource(
-    4, 2,
-    "My Family - Quiz",
-    "d3f436c86f2044ca47e7e7a7ac9bd57",
-    "1", "5", "0",
-    "Test your knowledge of family vocabulary"
-  )
+  {
+    id: "book1-unit4-game1",
+    bookId: "1",
+    unitId: "4",
+    title: "Shapes - Memory Match",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/42540/shapes-memory-match",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/42540/shapes-memory-match?themeId=1&templateId=11&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Match shape words with their corresponding images in this memory match game."
+  },
+  {
+    id: "book1-unit4-game2",
+    bookId: "1",
+    unitId: "4",
+    title: "Shapes - Quiz",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/483357/shapes-quiz",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/483357/shapes-quiz?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Test your knowledge of basic shapes with this interactive quiz."
+  },
+  {
+    id: "book1-unit4-game3",
+    bookId: "1",
+    unitId: "4",
+    title: "Find the Shape - Interactive Game",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/21986291/shapes",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/21986291/shapes?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Practice identifying different shapes with this fun interactive game."
+  }
 ];
 
 // Combined resources for Unit 4
