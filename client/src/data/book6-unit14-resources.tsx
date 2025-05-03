@@ -1,101 +1,58 @@
-/**
- * Resources for Book 6 Unit 14 - At The Airport
- */
 import { TeacherResource } from '@/components/TeacherResources';
-import type { LessonPlan } from '@/components/LessonPlanTemplate';
-import { generateBook6UnitResources } from './book6-resources-common';
+import { BOOK6_UNIT_TITLES, generateBook6UnitResources } from './book6-resources-common';
 
 /**
- * Get resources for Book 6 Unit 14
- * This uses the centralized resource management approach
+ * Generate resources specific to Book 6 Unit 14 (At The Airport)
+ * This extends the common resources with additional specific content
  */
-export function getBook6Unit14Resources(bookId: string, unitId: string): TeacherResource[] {
-  return generateBook6UnitResources(bookId, unitId);
-}
+export function generateBook6Unit14Resources(bookId: string): TeacherResource[] {
+  // Get the standard resources first
+  const resources = generateBook6UnitResources(bookId, '14');
+  
+  // Add specific Airport Word Wall games
+  resources.push({
+    id: 'book6-unit14-game1',
+    bookId,
+    unitId: '14',
+    title: 'Airport Vocabulary Game 1',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/25946376',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/07be00511a0b455095dd11ac8cb62ff8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  });
 
-/**
- * Get lesson plans for Book 6 Unit 14
- * This uses the centralized lesson plan generator
- */
-export function getBook6Unit14LessonPlans(): LessonPlan[] {
-  return [
-    {
-      id: "book6-unit14-airport-lesson",
-      title: "At The Airport Vocabulary",
-      duration: "45-60 minutes",
-      level: "Intermediate",
-      objectives: [
-        "Learn key vocabulary related to airports and air travel",
-        "Understand airport procedures and announcements",
-        "Practice dialogues related to checking in and security",
-        "Use travel phrasal verbs correctly"
-      ],
-      materials: [
-        "Visual English Book 6 Unit 14 slides",
-        "Airport signs and announcement printouts",
-        "Boarding pass templates",
-        "Wordwall games on airport vocabulary"
-      ],
-      steps: [
-        {
-          title: "Warm-up",
-          duration: "5-10 minutes",
-          description: "Airport experience discussion",
-          instructions: [
-            "Ask students about their experiences at airports",
-            "Show images of different parts of an airport",
-            "Elicit vocabulary they already know about air travel"
-          ]
-        },
-        {
-          title: "Vocabulary Introduction",
-          duration: "15 minutes",
-          description: "Present airport terminology",
-          materials: [
-            "Visual English slides on airport zones",
-            "Airport vocabulary list"
-          ],
-          instructions: [
-            "Introduce vocabulary categories: check-in, security, boarding, arrival",
-            "Show examples of each with visual aids",
-            "Practice pronunciation and meaning"
-          ]
-        },
-        {
-          title: "Interactive Learning",
-          duration: "15-20 minutes",
-          description: "Play Wordwall games on airport terminology",
-          materials: [
-            "Devices with internet access",
-            "Airport vocabulary games"
-          ],
-          instructions: [
-            "Students play 'Airport Vocabulary Games'",
-            "Review challenging vocabulary as a class",
-            "Discuss different airport procedures"
-          ]
-        },
-        {
-          title: "Role-Play Activity",
-          duration: "10-15 minutes",
-          description: "Students act out airport scenarios",
-          instructions: [
-            "Divide students into pairs with assigned roles (passenger/staff)",
-            "Provide scenario cards for different airport situations",
-            "Have students perform their dialogues for the class"
-          ]
-        }
-      ],
-      assessmentTips: "Observe students' use of airport vocabulary during role-plays. Check understanding of airport procedures. Evaluate ability to form questions and give information about air travel.",
-      homeworkIdeas: [
-        "Write a short dialogue between a passenger and airport staff",
-        "Create a guide for first-time travelers with important airport vocabulary",
-        "Research and describe the main features of a famous international airport"
-      ]
-    }
-  ];
-}
+  resources.push({
+    id: 'book6-unit14-game2',
+    bookId,
+    unitId: '14',
+    title: 'Airport Vocabulary Game 2',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/1882093',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/27fb8eb4af7c4afcbffbc55c9c5caec5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  });
 
-// This is just a sample implementation to satisfy TypeScript imports
-// The actual resources are now managed in a centralized manner in book6-resources-common.tsx
-export const resources: TeacherResource[] = [];
+  resources.push({
+    id: 'book6-unit14-game3',
+    bookId,
+    unitId: '14',
+    title: 'Airport Vocabulary Game 3',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/9235677',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/aec3bb63b33a4b88a3e2ae6deacd2ede?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  });
+
+  resources.push({
+    id: 'book6-unit14-game4',
+    bookId,
+    unitId: '14',
+    title: 'Airport Vocabulary Game 4',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/38531814',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c3a3d7682c56433e9e40ca37b86a0b10?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  });
+
+  return resources;
+}
