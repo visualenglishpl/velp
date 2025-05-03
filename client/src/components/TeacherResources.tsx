@@ -39,6 +39,18 @@ import { generateUnit4LessonPlans as generateBook1Unit4LessonPlans } from '@/dat
 import { generateUnit5LessonPlans as generateBook1Unit5LessonPlans } from '@/data/book1-unit5-implementation';
 import { generateUnit6LessonPlans as generateBook1Unit6LessonPlans } from '@/data/book1-unit6-implementation';
 import { getBook1Unit6Resources } from '@/data/book1-unit6-implementation';
+import { getBook1Unit7Resources, generateUnit7LessonPlans as generateBook1Unit7LessonPlans } from '@/data/book1-unit7-implementation';
+import { getBook1Unit8Resources, generateUnit8LessonPlans as generateBook1Unit8LessonPlans } from '@/data/book1-unit8-implementation';
+import { getBook1Unit9Resources, generateUnit9LessonPlans as generateBook1Unit9LessonPlans } from '@/data/book1-unit9-implementation';
+import { getBook1Unit10Resources, generateUnit10LessonPlans as generateBook1Unit10LessonPlans } from '@/data/book1-unit10-implementation';
+import { getBook1Unit11Resources, generateUnit11LessonPlans as generateBook1Unit11LessonPlans } from '@/data/book1-unit11-implementation';
+import { getBook1Unit12Resources, generateUnit12LessonPlans as generateBook1Unit12LessonPlans } from '@/data/book1-unit12-implementation';
+import { getBook1Unit13Resources, generateUnit13LessonPlans as generateBook1Unit13LessonPlans } from '@/data/book1-unit13-implementation';
+import { getBook1Unit14Resources, generateUnit14LessonPlans as generateBook1Unit14LessonPlans } from '@/data/book1-unit14-implementation';
+import { getBook1Unit15Resources, generateUnit15LessonPlans as generateBook1Unit15LessonPlans } from '@/data/book1-unit15-implementation';
+import { getBook1Unit16Resources, generateUnit16LessonPlans as generateBook1Unit16LessonPlans } from '@/data/book1-unit16-implementation';
+import { getBook1Unit17Resources, generateUnit17LessonPlans as generateBook1Unit17LessonPlans } from '@/data/book1-unit17-implementation';
+import { getBook1Unit18Resources, generateUnit18LessonPlans as generateBook1Unit18LessonPlans } from '@/data/book1-unit18-implementation';
 
 import { book1Unit1Resources, book1Unit1VideoResources, book1Unit1GameResources } from '@/data/book1-unit1-resources';
 import { book1Unit2Resources, book1Unit2VideoResources, book1Unit2GameResources } from '@/data/book1-unit2-resources';
@@ -46,6 +58,18 @@ import { book1Unit3Resources, book1Unit3VideoResources, book1Unit3GameResources 
 import { book1Unit4Resources, book1Unit4VideoResources, book1Unit4GameResources } from '@/data/book1-unit4-resources';
 import { book1Unit5Resources, book1Unit5VideoResources, book1Unit5GameResources } from '@/data/book1-unit5-resources';
 import { book1Unit6Resources } from '@/data/book1-unit6-resources';
+import { book1Unit7Resources } from '@/data/book1-unit7-resources';
+import { book1Unit8Resources } from '@/data/book1-unit8-resources';
+import { book1Unit9Resources } from '@/data/book1-unit9-resources';
+import { book1Unit10Resources } from '@/data/book1-unit10-resources';
+import { book1Unit11Resources } from '@/data/book1-unit11-resources';
+import { book1Unit12Resources } from '@/data/book1-unit12-resources';
+import { book1Unit13Resources } from '@/data/book1-unit13-resources';
+import { book1Unit14Resources } from '@/data/book1-unit14-resources';
+import { book1Unit15Resources } from '@/data/book1-unit15-resources';
+import { book1Unit16Resources } from '@/data/book1-unit16-resources';
+import { book1Unit17Resources } from '@/data/book1-unit17-resources';
+import { book1Unit18Resources } from '@/data/book1-unit18-resources';
 
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
@@ -823,6 +847,45 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 5) {
               console.log('Using generateUnit5LessonPlans for Book 1');
               lessonPlans = generateBook1Unit5LessonPlans();
+            } else if (unitNum === 6) {
+              console.log('Using generateUnit6LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit6LessonPlans();
+            } else if (unitNum === 7) {
+              console.log('Using generateUnit7LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit7LessonPlans();
+            } else if (unitNum === 8) {
+              console.log('Using generateUnit8LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit8LessonPlans();
+            } else if (unitNum === 9) {
+              console.log('Using generateUnit9LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit9LessonPlans();
+            } else if (unitNum === 10) {
+              console.log('Using generateUnit10LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit10LessonPlans();
+            } else if (unitNum === 11) {
+              console.log('Using generateUnit11LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit11LessonPlans();
+            } else if (unitNum === 12) {
+              console.log('Using generateUnit12LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit12LessonPlans();
+            } else if (unitNum === 13) {
+              console.log('Using generateUnit13LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit13LessonPlans();
+            } else if (unitNum === 14) {
+              console.log('Using generateUnit14LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit14LessonPlans();
+            } else if (unitNum === 15) {
+              console.log('Using generateUnit15LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit15LessonPlans();
+            } else if (unitNum === 16) {
+              console.log('Using generateUnit16LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit16LessonPlans();
+            } else if (unitNum === 17) {
+              console.log('Using generateUnit17LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit17LessonPlans();
+            } else if (unitNum === 18) {
+              console.log('Using generateUnit18LessonPlans for Book 1');
+              lessonPlans = generateBook1Unit18LessonPlans();
             }
             
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
@@ -1051,8 +1114,47 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       } else if (unitId === '5') {
         console.log('Loading Book 1 Unit 5 resources');
         return book1Unit5Resources;
+      } else if (unitId === '6') {
+        console.log('Loading Book 1 Unit 6 resources');
+        return book1Unit6Resources;
+      } else if (unitId === '7') {
+        console.log('Loading Book 1 Unit 7 resources');
+        return book1Unit7Resources;
+      } else if (unitId === '8') {
+        console.log('Loading Book 1 Unit 8 resources');
+        return book1Unit8Resources;
+      } else if (unitId === '9') {
+        console.log('Loading Book 1 Unit 9 resources');
+        return book1Unit9Resources;
+      } else if (unitId === '10') {
+        console.log('Loading Book 1 Unit 10 resources');
+        return book1Unit10Resources;
+      } else if (unitId === '11') {
+        console.log('Loading Book 1 Unit 11 resources');
+        return book1Unit11Resources;
+      } else if (unitId === '12') {
+        console.log('Loading Book 1 Unit 12 resources');
+        return book1Unit12Resources;
+      } else if (unitId === '13') {
+        console.log('Loading Book 1 Unit 13 resources');
+        return book1Unit13Resources;
+      } else if (unitId === '14') {
+        console.log('Loading Book 1 Unit 14 resources');
+        return book1Unit14Resources;
+      } else if (unitId === '15') {
+        console.log('Loading Book 1 Unit 15 resources');
+        return book1Unit15Resources;
+      } else if (unitId === '16') {
+        console.log('Loading Book 1 Unit 16 resources');
+        return book1Unit16Resources;
+      } else if (unitId === '17') {
+        console.log('Loading Book 1 Unit 17 resources');
+        return book1Unit17Resources;
+      } else if (unitId === '18') {
+        console.log('Loading Book 1 Unit 18 resources');
+        return book1Unit18Resources;
       }
-      // Add more Book 1 unit resources as they are implemented
+      // All Book 1 units implemented
       return [];
     }
     // Book 5 units - use centralized resource generator
@@ -1215,7 +1317,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (isBook7Unit6) {
       // Using resources from unit6-implementation.tsx
       try {
-        return getUnit6Resources(bookId, unitId);
+        return getBook1Unit6Resources();
       } catch (error) {
         console.error('Error getting Unit 6 resources:', error);
         return [];
@@ -1226,7 +1328,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '7') {
       // Using resources from unit7-implementation.tsx
       try {
-        return getUnit7Resources(bookId, unitId);
+        return getBook1Unit7Resources();
       } catch (error) {
         console.error('Error getting Unit 7 resources:', error);
         return [];
@@ -1237,7 +1339,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '8') {
       // Using resources from unit8-implementation.tsx
       try {
-        return getUnit8Resources(bookId, unitId);
+        return getBook1Unit8Resources();
       } catch (error) {
         console.error('Error getting Unit 8 resources:', error);
         return [];
@@ -1248,7 +1350,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '9') {
       // Using resources from unit9-implementation.tsx
       try {
-        return getUnit9Resources(bookId, unitId);
+        return getBook1Unit9Resources();
       } catch (error) {
         console.error('Error getting Unit 9 resources:', error);
         return [];
@@ -1259,7 +1361,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '10') {
       // Using resources from unit10-implementation.tsx
       try {
-        return getUnit10Resources(bookId, unitId);
+        return getBook1Unit10Resources();
       } catch (error) {
         console.error('Error getting Unit 10 resources:', error);
         return [];
@@ -1270,7 +1372,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '11') {
       // Using resources from unit11-implementation.tsx
       try {
-        return getUnit11Resources(bookId, unitId);
+        return getBook1Unit11Resources();
       } catch (error) {
         console.error('Error getting Unit 11 resources:', error);
         return [];
@@ -1281,7 +1383,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '12') {
       // Using resources from unit12-implementation.tsx
       try {
-        return getUnit12Resources(bookId, unitId);
+        return getBook1Unit12Resources();
       } catch (error) {
         console.error('Error getting Unit 12 resources:', error);
         return [];
@@ -1292,7 +1394,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '13') {
       // Using resources from unit13-implementation.tsx
       try {
-        return getUnit13Resources(bookId, unitId);
+        return getBook1Unit13Resources();
       } catch (error) {
         console.error('Error getting Unit 13 resources:', error);
         return [];
@@ -1303,7 +1405,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '14') {
       // Using resources from unit14-implementation.tsx
       try {
-        return getUnit14Resources(bookId, unitId);
+        return getBook1Unit14Resources();
       } catch (error) {
         console.error('Error getting Unit 14 resources:', error);
         return [];
@@ -1314,7 +1416,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '15') {
       // Using resources from unit15-implementation.tsx
       try {
-        return getUnit15Resources(bookId, unitId);
+        return getBook1Unit15Resources();
       } catch (error) {
         console.error('Error getting Unit 15 resources:', error);
         return [];
@@ -1325,7 +1427,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     if (bookId === '7' && unitId === '16') {
       // Using resources from unit16-implementation.tsx
       try {
-        return getUnit16Resources(bookId, unitId);
+        return getBook1Unit16Resources();
       } catch (error) {
         console.error('Error getting Unit 16 resources:', error);
         return [];

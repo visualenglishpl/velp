@@ -1,72 +1,67 @@
-/**
- * Visual English Book 1, Unit 12: Home Sweet Home
- * Resources including videos and games
- */
-
 import { TeacherResource } from '@/components/TeacherResources';
 import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
-// Video resources for Unit 12
-export const book1Unit12VideoResources: TeacherResource[] = [
-  createBook1VideoResource(
-    12, 1,
-    "Rooms Of The House Song - Planet Pop",
-    "168xwPpHF-s",
-    "A catchy song about different rooms in a house by Planet Pop"
-  ),
-  createBook1VideoResource(
-    12, 2,
-    "Rooms in the House - Watts English",
-    "mV-TnrvUJ9Q",
-    "A story about rooms in the house by Watts English"
-  ),
-  createBook1VideoResource(
-    12, 3,
-    "Rooms of the House Game",
-    "kIg__488rCs",
-    "Interactive quiz game for learning house vocabulary"
-  )
-];
+/**
+ * Resources for Book 1 Unit 12: Clothing
+ * 
+ * This file contains video and game resources for teaching
+ * clothing vocabulary and related expressions
+ */
 
-// Game resources for Unit 12
-export const book1Unit12GameResources: TeacherResource[] = [
+export const book1Unit12Resources: TeacherResource[] = [
+  // Videos
+  createBook1VideoResource(
+    12, 1,
+    'Clothing Song for Kids',
+    'Q_EwuVHDb5U',
+    'A catchy song about clothing with colorful visuals'
+  ),
+  createBook1VideoResource(
+    12, 2,
+    'Clothing Vocabulary',
+    'KDE6wWByiRw',
+    'Learn clothing vocabulary with clear pronunciation'
+  ),
+  createBook1VideoResource(
+    12, 3,
+    'Clothing in Action',
+    'taoCF1cKZSY',
+    'See clothing used in real-life contexts'
+  ),
+  createBook1VideoResource(
+    12, 4,
+    'Clothing Story Time',
+    '1GDp3sVBqDw',
+    'A story featuring clothing vocabulary'
+  ),
+  
+  // Games
   createBook1GameResource(
     12, 1,
-    "Rooms in the House - Match Game",
-    "64037ab981484c46a7fdd820ecbe0ca1",
-    "1", "38", "0",
-    "Match the rooms in the house with their names"
+    'Clothing Matching Game',
+    'https://wordwall.net/embed/c75f7bb2a4ff443b816d7faac2e219cc',
+    'Match clothing pictures with their English names'
   ),
   createBook1GameResource(
     12, 2,
-    "Rooms in the House - Group Sort",
-    "f80c09de5f2a431ba2eadc93b12cac3c",
-    "1", "22", "0",
-    "Sort items into their correct rooms"
+    'Clothing Spelling Practice',
+    'https://wordwall.net/embed/2bef7060b8854a15b1b8bca4c9e32c70',
+    'Practice spelling clothing vocabulary'
   ),
   createBook1GameResource(
     12, 3,
-    "Rooms in the House - Image Match",
-    "a2e9207ad2234b8d8ab2daf8c9e439c5",
-    "1", "38", "0",
-    "Match images with the correct room names"
+    'Clothing Quiz',
+    'https://wordwall.net/embed/714f2e1e61144fd48fc48fca4c20bb0a',
+    'Test knowledge of clothing vocabulary through an interactive quiz'
   ),
   createBook1GameResource(
     12, 4,
-    "Rooms in the House - Quiz",
-    "62517d93002d490d8ede52bb5c748ebc",
-    "23", "46", "0",
-    "Test your knowledge about rooms in the house"
+    'Clothing Groups',
+    'https://wordwall.net/embed/f4c47b65e2c74ffca84ace36e7a10d2a',
+    'Sort clothing into different categories'
   )
 ];
 
-// Combined resources for Unit 12
-export const book1Unit12Resources: TeacherResource[] = [
-  ...book1Unit12VideoResources,
-  ...book1Unit12GameResources
-];
-
-// Export a getter function to match the pattern used elsewhere
-export const getBook1Unit12Resources = () => book1Unit12Resources;
-
-export default book1Unit12Resources;
+// Export video and game resource arrays separately for filtering
+export const book1Unit12VideoResources = book1Unit12Resources.filter(resource => resource.resourceType === 'video');
+export const book1Unit12GameResources = book1Unit12Resources.filter(resource => resource.resourceType === 'game');

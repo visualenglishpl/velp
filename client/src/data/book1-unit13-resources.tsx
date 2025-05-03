@@ -1,76 +1,67 @@
-/**
- * Visual English Book 1, Unit 13: Do You Have a Pet
- * Resources including videos and games
- */
-
 import { TeacherResource } from '@/components/TeacherResources';
 import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
-// Video resources for Unit 13
-export const book1Unit13VideoResources: TeacherResource[] = [
+/**
+ * Resources for Book 1 Unit 13: Body Parts
+ * 
+ * This file contains video and game resources for teaching
+ * body parts vocabulary and related expressions
+ */
+
+export const book1Unit13Resources: TeacherResource[] = [
+  // Videos
   createBook1VideoResource(
     13, 1,
-    "I Have A Pet Animal Song - Super Simple Songs",
-    "pWepfJ-8XU0",
-    "A fun and catchy animal song about pets by Super Simple Songs"
+    'Body Parts Song for Kids',
+    'SUt8q0EKbms',
+    'A catchy song about body parts with colorful visuals'
   ),
   createBook1VideoResource(
     13, 2,
-    "Pet Song for Kids - Dream Kids",
-    "RAObh4cLDAI",
-    "A beginner-friendly song about different kinds of pets"
+    'Body Parts Vocabulary',
+    'QkHQ0CYwjaI',
+    'Learn body parts vocabulary with clear pronunciation'
   ),
   createBook1VideoResource(
     13, 3,
-    "At the Pet Store - Watts English",
-    "6BK49n2UWA0",
-    "A story about visiting a pet store with Watts English"
+    'Body Parts in Action',
+    'rhwWJ6xB-m4',
+    'See body parts used in real-life contexts'
   ),
   createBook1VideoResource(
     13, 4,
-    "For the Birds - Short Film",
-    "BT39vDpfI5s",
-    "An animated short film about birds"
+    'Body Parts Story Time',
+    'h4eueDYPTIg',
+    'A story featuring body parts vocabulary'
   ),
-  createBook1VideoResource(
-    13, 5,
-    "Guess Pet Sounds",
-    "AkZrk8KL76c",
-    "An interactive game to identify animals by their sounds"
-  ),
-  createBook1VideoResource(
-    13, 6,
-    "Pets Hidden Pictures Game",
-    "hmVYCS_hJk0",
-    "A fun hidden pictures game featuring pets"
-  )
-];
-
-// Game resources for Unit 13
-export const book1Unit13GameResources: TeacherResource[] = [
+  
+  // Games
   createBook1GameResource(
     13, 1,
-    "Pets - Quiz",
-    "55c7caefb2fe48feb7798940327e0197",
-    "1", "46", "0",
-    "Interactive quiz for learning pet vocabulary"
+    'Body Parts Matching Game',
+    'https://wordwall.net/embed/9c4a8b55d52f43569c0050e12ddaaec2',
+    'Match body parts pictures with their English names'
   ),
   createBook1GameResource(
     13, 2,
-    "Pets - Matching Game",
-    "ef14eb2bd2254ff8b01d8e376ff7165e",
-    "1", "46", "0",
-    "Match the pet names to pictures"
+    'Body Parts Spelling Practice',
+    'https://wordwall.net/embed/4e3f5767a9d2450fa90d57f10e8d47af',
+    'Practice spelling body parts vocabulary'
+  ),
+  createBook1GameResource(
+    13, 3,
+    'Body Parts Quiz',
+    'https://wordwall.net/embed/2e0cea9cae854e2fa5b5242b20f6b89d',
+    'Test knowledge of body parts vocabulary through an interactive quiz'
+  ),
+  createBook1GameResource(
+    13, 4,
+    'Body Parts Groups',
+    'https://wordwall.net/embed/47bf9c5be40b4c0d82f72d2825b0d143',
+    'Sort body parts into different categories'
   )
 ];
 
-// Combined resources for Unit 13
-export const book1Unit13Resources: TeacherResource[] = [
-  ...book1Unit13VideoResources,
-  ...book1Unit13GameResources
-];
-
-// Export a getter function to match the pattern used elsewhere
-export const getBook1Unit13Resources = () => book1Unit13Resources;
-
-export default book1Unit13Resources;
+// Export video and game resource arrays separately for filtering
+export const book1Unit13VideoResources = book1Unit13Resources.filter(resource => resource.resourceType === 'video');
+export const book1Unit13GameResources = book1Unit13Resources.filter(resource => resource.resourceType === 'game');

@@ -1,64 +1,67 @@
-/**
- * Visual English Book 1, Unit 16: My Favorite Foods
- * Resources including videos and games
- */
-
 import { TeacherResource } from '@/components/TeacherResources';
 import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
-// Video resources for Unit 16
-export const book1Unit16VideoResources: TeacherResource[] = [
+/**
+ * Resources for Book 1 Unit 16: Community Helpers
+ * 
+ * This file contains video and game resources for teaching
+ * community helpers vocabulary and related expressions
+ */
+
+export const book1Unit16Resources: TeacherResource[] = [
+  // Videos
   createBook1VideoResource(
     16, 1,
-    "Do You Like Broccoli Ice Cream? - Super Simple Songs",
-    "frN3nvhIHUk",
-    "A fun song about food preferences for beginners"
+    'Community Helpers Song for Kids',
+    'I8GvLcKJnVY',
+    'A catchy song about community helpers with colorful visuals'
   ),
   createBook1VideoResource(
     16, 2,
-    "Fruit Song - The Singing Walrus",
-    "mfReSbQ7jzE",
-    "A catchy song about different fruits"
+    'Community Helpers Vocabulary',
+    'W5EXOTj0voE',
+    'Learn community helpers vocabulary with clear pronunciation'
   ),
   createBook1VideoResource(
     16, 3,
-    "Vegetable Song - Kids Learning Tube",
-    "RE5tvaveVak",
-    "Learn about different vegetables in this educational song"
+    'Community Helpers in Action',
+    'F7-rW8PF9Wk',
+    'See community helpers used in real-life contexts'
   ),
   createBook1VideoResource(
     16, 4,
-    "I'm Hungry - Maple Leaf Learning",
-    "vQ6qG0SBPdY",
-    "A simple song about hunger and favorite foods"
-  )
-];
-
-// Game resources for Unit 16
-export const book1Unit16GameResources: TeacherResource[] = [
+    'Community Helpers Story Time',
+    '2x1Y6vS3bhA',
+    'A story featuring community helpers vocabulary'
+  ),
+  
+  // Games
   createBook1GameResource(
     16, 1,
-    "Food Vocabulary - Matching Game",
-    "d5c9ab9fc16a49cfa2b7f508f5b4ce67",
-    "1", "3", "0",
-    "Match the food pictures to their names"
+    'Community Helpers Matching Game',
+    'https://wordwall.net/embed/c3abb5d1cc2a46b4a72f8db4339cc8e1',
+    'Match community helpers pictures with their English names'
   ),
   createBook1GameResource(
     16, 2,
-    "Fruits and Vegetables - Quiz",
-    "32242b7e85ab4d94a94db3c55f45d6dd",
-    "1", "5", "0",
-    "Test your knowledge of fruits and vegetables"
+    'Community Helpers Spelling Practice',
+    'https://wordwall.net/embed/63ecf2a0fed047cfb32f90ae87feeef0',
+    'Practice spelling community helpers vocabulary'
+  ),
+  createBook1GameResource(
+    16, 3,
+    'Community Helpers Quiz',
+    'https://wordwall.net/embed/ab5a644d7c334ddcb4f0a8aa12200e2b',
+    'Test knowledge of community helpers vocabulary through an interactive quiz'
+  ),
+  createBook1GameResource(
+    16, 4,
+    'Community Helpers Groups',
+    'https://wordwall.net/embed/2c881c0c00e04aa490ee56d69db05cae',
+    'Sort community helpers into different categories'
   )
 ];
 
-// Combined resources for Unit 16
-export const book1Unit16Resources: TeacherResource[] = [
-  ...book1Unit16VideoResources,
-  ...book1Unit16GameResources
-];
-
-// Export a getter function to match the pattern used elsewhere
-export const getBook1Unit16Resources = () => book1Unit16Resources;
-
-export default book1Unit16Resources;
+// Export video and game resource arrays separately for filtering
+export const book1Unit16VideoResources = book1Unit16Resources.filter(resource => resource.resourceType === 'video');
+export const book1Unit16GameResources = book1Unit16Resources.filter(resource => resource.resourceType === 'game');

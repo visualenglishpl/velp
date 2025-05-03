@@ -1,64 +1,67 @@
-/**
- * Visual English Book 1, Unit 17: Weather and Seasons
- * Resources including videos and games
- */
-
 import { TeacherResource } from '@/components/TeacherResources';
 import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
-// Video resources for Unit 17
-export const book1Unit17VideoResources: TeacherResource[] = [
+/**
+ * Resources for Book 1 Unit 17: Transportation
+ * 
+ * This file contains video and game resources for teaching
+ * transportation vocabulary and related expressions
+ */
+
+export const book1Unit17Resources: TeacherResource[] = [
+  // Videos
   createBook1VideoResource(
     17, 1,
-    "How's the Weather? - Super Simple Songs",
-    "rD6FRDd9Hew",
-    "A fun song about different weather conditions"
+    'Transportation Song for Kids',
+    'kUv6XXG4hZU',
+    'A catchy song about transportation with colorful visuals'
   ),
   createBook1VideoResource(
     17, 2,
-    "Seasons Song - Have Fun Teaching",
-    "8ZjpI6fgYSY",
-    "An educational song about the four seasons"
+    'Transportation Vocabulary',
+    'YRk7-2XQoVs',
+    'Learn transportation vocabulary with clear pronunciation'
   ),
   createBook1VideoResource(
     17, 3,
-    "Weather Song - The Singing Walrus",
-    "XcW9Ct000yY",
-    "Learn vocabulary for different types of weather"
+    'Transportation in Action',
+    'Ut-HbauKzDw',
+    'See transportation used in real-life contexts'
   ),
   createBook1VideoResource(
     17, 4,
-    "Four Seasons Song - Pancake Manor",
-    "ksGiLaIx39c",
-    "A catchy and fun song about the four seasons"
-  )
-];
-
-// Game resources for Unit 17
-export const book1Unit17GameResources: TeacherResource[] = [
+    'Transportation Story Time',
+    'pf5R2A7B7GI',
+    'A story featuring transportation vocabulary'
+  ),
+  
+  // Games
   createBook1GameResource(
     17, 1,
-    "Weather Vocabulary - Matching",
-    "a8d2a2b6d4724687aa997b8ab54bc3e6",
-    "1", "3", "0",
-    "Match the weather pictures to their names"
+    'Transportation Matching Game',
+    'https://wordwall.net/embed/7af9c359a30a4ad8a0ed55faaeed9cbc',
+    'Match transportation pictures with their English names'
   ),
   createBook1GameResource(
     17, 2,
-    "Seasons and Weather - Quiz",
-    "b4c93edccf984d9ea25d4a8c5ab27c94",
-    "1", "5", "0",
-    "Test your knowledge of seasons and weather"
+    'Transportation Spelling Practice',
+    'https://wordwall.net/embed/f3af87cda823433ca33c42eb1fe7b23e',
+    'Practice spelling transportation vocabulary'
+  ),
+  createBook1GameResource(
+    17, 3,
+    'Transportation Quiz',
+    'https://wordwall.net/embed/538cfa80f86e459fa23b38c1cec5c111',
+    'Test knowledge of transportation vocabulary through an interactive quiz'
+  ),
+  createBook1GameResource(
+    17, 4,
+    'Transportation Groups',
+    'https://wordwall.net/embed/c0ec8c7d94d3435d9c0ef5d03c28c30d',
+    'Sort transportation into different categories'
   )
 ];
 
-// Combined resources for Unit 17
-export const book1Unit17Resources: TeacherResource[] = [
-  ...book1Unit17VideoResources,
-  ...book1Unit17GameResources
-];
-
-// Export a getter function to match the pattern used elsewhere
-export const getBook1Unit17Resources = () => book1Unit17Resources;
-
-export default book1Unit17Resources;
+// Export video and game resource arrays separately for filtering
+export const book1Unit17VideoResources = book1Unit17Resources.filter(resource => resource.resourceType === 'video');
+export const book1Unit17GameResources = book1Unit17Resources.filter(resource => resource.resourceType === 'game');

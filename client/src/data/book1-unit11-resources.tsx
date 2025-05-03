@@ -1,94 +1,67 @@
-/**
- * Visual English Book 1, Unit 11: Seasons of the Year
- * Resources including videos and games
- */
-
 import { TeacherResource } from '@/components/TeacherResources';
 import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
-// Video resources for Unit 11
-export const book1Unit11VideoResources: TeacherResource[] = [
+/**
+ * Resources for Book 1 Unit 11: Weather
+ * 
+ * This file contains video and game resources for teaching
+ * weather vocabulary and related expressions
+ */
+
+export const book1Unit11Resources: TeacherResource[] = [
+  // Videos
   createBook1VideoResource(
     11, 1,
-    "Season Song - Pancake Manor",
-    "EHnO_LpfsIg",
-    "A fun and educational song about the four seasons by Pancake Manor"
+    'Weather Song for Kids',
+    'tfAB4BXSHOA',
+    'A catchy song about weather with colorful visuals'
   ),
   createBook1VideoResource(
     11, 2,
-    "Seasons - Pete the Cat",
-    "7OUYAQttqdg",
-    "Pete the Cat explores the four seasons of the year"
+    'Weather Vocabulary',
+    'XcW9Ct000yY',
+    'Learn weather vocabulary with clear pronunciation'
   ),
   createBook1VideoResource(
     11, 3,
-    "Four Seasons Tree Craft",
-    "hexM3GaE2J4",
-    "A craft activity showing how to create a four seasons tree"
+    'Weather in Action',
+    'CXKj7bm4Ops',
+    'See weather used in real-life contexts'
   ),
   createBook1VideoResource(
     11, 4,
-    "Short Story - The Lazy Bear",
-    "sXcs_4ez8-M",
-    "A short story about a lazy bear and the changing seasons"
+    'Weather Story Time',
+    'Jn7uAsLWXpk',
+    'A story featuring weather vocabulary'
   ),
-  createBook1VideoResource(
-    11, 5,
-    "The Seasons Song - Maple Leaf",
-    "VS9qBeInJ0U",
-    "A seasonal song with maple leaf imagery"
-  ),
-  createBook1VideoResource(
-    11, 6,
-    "Four Seasons - StoryBots",
-    "NavWWM2iTEw",
-    "StoryBots explain the four seasons with catchy music"
-  ),
-  createBook1VideoResource(
-    11, 7,
-    "Seasons Word Songs - Pinkfong",
-    "Wrjqz2GTzzI",
-    "Word power songs about seasons by Pinkfong"
-  ),
-  createBook1VideoResource(
-    11, 8,
-    "Four Seasons - Dream English",
-    "TBLFMXU8FLI",
-    "A song about the four seasons by Dream English"
-  ),
-  createBook1VideoResource(
-    11, 9,
-    "Seasonal Activities Quiz",
-    "MtA9Ni-wxUI",
-    "Interactive quiz about activities in different seasons"
-  )
-];
-
-// Game resources for Unit 11
-export const book1Unit11GameResources: TeacherResource[] = [
+  
+  // Games
   createBook1GameResource(
     11, 1,
-    "Seasons - Match and Sort",
-    "7b81d9ee5f4f450fa1f807d3c0caf204",
-    "1", "38", "0",
-    "Match and sort activity for learning seasons vocabulary"
+    'Weather Matching Game',
+    'https://wordwall.net/embed/7a39dce09d8d458c85c2db984b22a0ee',
+    'Match weather pictures with their English names'
   ),
   createBook1GameResource(
     11, 2,
-    "Seasons - Quiz Game",
-    "c9bf24cc7b5a4ec888974e540da1a160",
-    "1", "46", "0",
-    "Interactive quiz about the four seasons"
+    'Weather Spelling Practice',
+    'https://wordwall.net/embed/4ae6d80611714a7b921ce17b6d4a51d9',
+    'Practice spelling weather vocabulary'
+  ),
+  createBook1GameResource(
+    11, 3,
+    'Weather Quiz',
+    'https://wordwall.net/embed/4e2a07e30e6b48c4b4f79bc67e8d3ef9',
+    'Test knowledge of weather vocabulary through an interactive quiz'
+  ),
+  createBook1GameResource(
+    11, 4,
+    'Weather Groups',
+    'https://wordwall.net/embed/5eb9efaa13664e6d9d32be1a2e92dc28',
+    'Sort weather into different categories'
   )
 ];
 
-// Combined resources for Unit 11
-export const book1Unit11Resources: TeacherResource[] = [
-  ...book1Unit11VideoResources,
-  ...book1Unit11GameResources
-];
-
-// Export a getter function to match the pattern used elsewhere
-export const getBook1Unit11Resources = () => book1Unit11Resources;
-
-export default book1Unit11Resources;
+// Export video and game resource arrays separately for filtering
+export const book1Unit11VideoResources = book1Unit11Resources.filter(resource => resource.resourceType === 'video');
+export const book1Unit11GameResources = book1Unit11Resources.filter(resource => resource.resourceType === 'game');
