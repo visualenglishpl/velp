@@ -10,24 +10,36 @@ import { createBook1VideoResource, createBook1GameResource } from './book1-resou
 export const book1Unit1VideoResources: TeacherResource[] = [
   createBook1VideoResource(
     1, 1,
-    "Good Morning - PINKFONG",
-    "7CuZr1Dz3sk",
+    "Good Morning - PINKFONG (New)",
+    "0LDArAJf7-c",
     "A cheerful Good Morning song for beginners learning morning greetings. Perfect for young ESL learners to start the day with positive energy."
   ),
   createBook1VideoResource(
     1, 2,
+    "Listen to Your Heart - Roxette",
+    "mebfKDQ4dLo",
+    "A classic song that can be used for practicing listening skills and discussing lyrics with more advanced students."
+  ),
+  createBook1VideoResource(
+    1, 3,
+    "Good Morning - PINKFONG (Original)",
+    "7CuZr1Dz3sk",
+    "A cheerful Good Morning song for beginners learning morning greetings. Perfect for young ESL learners to start the day with positive energy."
+  ),
+  createBook1VideoResource(
+    1, 4,
     "Good Morning, Good Night - LITTLE FOX",
     "CXUm9wQQ9iU",
     "Learn to say good morning and good night with this delightful song from Little Fox. Clear pronunciation and engaging visuals for young learners."
   ),
   createBook1VideoResource(
-    1, 3,
+    1, 5,
     "Hello! - Super Simple Songs",
     "tVlcKp3bWH8",
     "A fun hello song for beginners learning introductions. This catchy song introduces basic greetings with simple lyrics and engaging visuals, perfect for young ESL learners."
   ),
   createBook1VideoResource(
-    1, 4,
+    1, 6,
     "Goodbye Song - The Singing Walrus",
     "STMl4yjPnPk",
     "A catchy goodbye song with simple vocabulary. This song teaches different ways to say goodbye with fun animations and clear pronunciation."
