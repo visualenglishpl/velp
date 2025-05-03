@@ -1,50 +1,27 @@
-// This file imports and exports the resources and lesson plans for Book 6, Unit 16
+// Book 6 Unit 16 - Fashion Accessories - Implementation
 
-import { book6Unit16Resources, cityLifeVocabularyLessonPlan, urbanRuralLifeLessonPlan } from './book6-unit16-resources';
-
-// Use type definition directly since importing from components can cause circular dependencies
-type TeacherResource = {
-  id?: string;
-  bookId: string;
-  unitId: string;
-  title: string;
-  resourceType: 'video' | 'game' | 'lesson' | 'pdf' | 'other';
-  provider?: string;
-  sourceUrl?: string;
-  embedCode?: string;
-  fileUrl?: string;
-  lessonPlan?: any; // Using any to avoid circular import issues
-};
+// Import functions from resources file
+import { getBook6Unit16Resources as importedGetResources, getBook6Unit16LessonPlans as importedGetLessonPlans } from './book6-unit16-resources';
 
 // Import types from LessonPlanTemplate to ensure compatibility
-import { LessonPlan as ImportedLessonPlan } from '@/components/LessonPlanTemplate';
-
-// Use imported type to ensure compatibility
-type LessonPlan = ImportedLessonPlan;
-
-// Function to get lesson plans for this unit
-export const getBook6Unit16LessonPlans = (): LessonPlan[] => {
-  return [
-    cityLifeVocabularyLessonPlan,
-    urbanRuralLifeLessonPlan
-  ];
-};
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { TeacherResource } from '@/components/TeacherResources';
 
 // Function to get resources for this unit
-export const getBook6Unit16Resources = (bookId: string, unitId: string): TeacherResource[] => {
-  return book6Unit16Resources.map(resource => ({
-    id: `book6-unit16-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
-    bookId,
-    unitId,
-    ...resource
-  }));
-};
+export function getBook6Unit16Resources(bookId: string, unitId: string): TeacherResource[] {
+  return importedGetResources(bookId, unitId);
+}
 
-// Export the resources for this unit (for backward compatibility)
-export const unitResources = book6Unit16Resources;
+// Function to get lesson plans for this unit
+export function getBook6Unit16LessonPlans(): LessonPlan[] {
+  return importedGetLessonPlans();
+}
 
-// Export the lesson plans for this unit (for backward compatibility)
-export const lessonPlans = [
-  cityLifeVocabularyLessonPlan,
-  urbanRuralLifeLessonPlan
-];
+// Export the lesson plans for backward compatibility
+export const lessonPlans = importedGetLessonPlans();
+
+// Export empty array for backward compatibility
+export const unitResources: TeacherResource[] = [];
+
+// Export special fashion-specific lesson plans (if needed in the future)
+export const fashionAccessoriesLessonPlan = lessonPlans[0];
