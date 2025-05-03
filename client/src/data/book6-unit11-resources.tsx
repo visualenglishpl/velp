@@ -1,17 +1,12 @@
 /**
- * Resources for Book 6 Unit 11 - Extreme Sports
+ * Resources for Book 6 Unit 11 - Transportation and Travel
  */
-import { TeacherResource, LessonPlan } from '@/components/TeacherResources';
-import { generateBook6UnitResources } from './book6-resources-common';
+import { TeacherResource } from '@/components/TeacherResources';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans } from './book6-resources-common';
 
-/**
- * Get resources for Book 6 Unit 11
- * This uses the centralized resource management approach
- */
-export function getBook6Unit11Resources(bookId: string, unitId: string): TeacherResource[] {
-  return generateBook6UnitResources(bookId, unitId);
-}
+// This is now handled in the implementation file directly
+export const book6Unit11Resources: TeacherResource[] = [];
 
-// This is just a sample implementation to satisfy TypeScript imports
-// The actual resources are now managed in a centralized manner in book6-resources-common.tsx
-export const resources: TeacherResource[] = [];
+// This is now handled in the implementation file directly
+export const book6Unit11LessonPlans: LessonPlan[] = [];
