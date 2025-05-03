@@ -33,6 +33,7 @@ import { generateBook5Unit13Content, generateUnit13LessonPlans } from '@/data/bo
 
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
+import { book1Unit1Resources, book1Unit1VideoResources, book1Unit1GameResources } from '@/data/book1-unit1-resources';
 
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
@@ -1009,8 +1010,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
 
   // Function to get additional resources for specific book/unit combinations
   const getMoreUnitResources = useCallback((): TeacherResource[] => {
+    // Book 1 units
+    if (bookId === '1') {
+      if (unitId === '1') {
+        console.log('Loading Book 1 Unit 1 resources');
+        return book1Unit1Resources;
+      }
+      // Add more Book 1 unit resources as they are implemented
+      return [];
+    }
     // Book 5 units - use centralized resource generator
-    if (bookId === '5') {
+    else if (bookId === '5') {
       // Special cases for units with their own implementation
       if (unitId === '1') {
         try {
