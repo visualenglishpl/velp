@@ -23,6 +23,10 @@ const TestTeacherResources: React.FC = () => {
   }
 
   // State for lesson plans and resources
+  const [book1Plans, setBook1Plans] = useState<PlanCollection>({
+    unit1: []
+  });
+
   const [book5Plans, setBook5Plans] = useState<PlanCollection>({
     unit1: [],
     unit5: [],
@@ -39,6 +43,10 @@ const TestTeacherResources: React.FC = () => {
   });
 
   // Group the resources
+  const [book1Resources, setBook1Resources] = useState<ResourceCollection>({
+    unit1: []
+  });
+
   const [book6Resources, setBook6Resources] = useState<ResourceCollection>({
     unit9: [],
     unit11: [],
@@ -52,6 +60,23 @@ const TestTeacherResources: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       setIsLoadingInitialData(true);
+      
+      // Load lesson plans for Book 1
+      try {
+        const book1Unit1Module = await import('@/data/book1-unit1-implementation');
+        const book1Unit1ResourcesModule = await import('@/data/book1-unit1-resources');
+        
+        setBook1Plans({
+          unit1: book1Unit1Module.generateUnit1LessonPlans()
+        });
+        
+        // Load resources for Book 1
+        setBook1Resources({
+          unit1: book1Unit1ResourcesModule.book1Unit1Resources.filter((r: TeacherResource) => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4)
+        });
+      } catch (error) {
+        console.error('Error loading Book 1 data:', error);
+      }
       
       // Load lesson plans for Book 5 (these are now loaded dynamically at runtime rather than at import time)
       try {
@@ -193,11 +218,32 @@ const TestTeacherResources: React.FC = () => {
         </TabsList>
         
         <TabsContent value="lessonPlans">
-          <Tabs defaultValue="book5" className="w-full">
+          <Tabs defaultValue="book1" className="w-full">
             <TabsList className="mb-4">
+              <TabsTrigger value="book1">Book 1</TabsTrigger>
               <TabsTrigger value="book5">Book 5</TabsTrigger>
               <TabsTrigger value="book6">Book 6</TabsTrigger>
             </TabsList>
+            
+            <TabsContent value="book1">
+              <h2 className="text-2xl font-bold mb-4">Book 1 Lesson Plans</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Unit 1 - Hello and Goodbye</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ScrollArea className="h-[500px] overflow-y-auto">
+                      {book1Plans.unit1.map((plan: LessonPlan, index: number) => (
+                        <div key={plan.id || index} className="mb-8">
+                          <LessonPlanDisplay lessonPlan={plan} />
+                        </div>
+                      ))}
+                    </ScrollArea>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
             
             <TabsContent value="book5">
               <h2 className="text-2xl font-bold mb-4">Book 5 Lesson Plans</h2>
@@ -348,10 +394,19 @@ const TestTeacherResources: React.FC = () => {
         
         <TabsContent value="resources">
           <h2 className="text-2xl font-bold mb-4">Sample Resources</h2>
-          <p className="mb-4">These are sample videos and games from selected units in Book 6.</p>
+          <p className="mb-4">These are sample videos and games from selected units in Book 1 and Book 6.</p>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold mb-4">Unit 9 - Present Perfect - What Has Just Happened</h3>
+            <h3 className="text-xl font-bold mb-4">Book 1 - Unit 1 - Hello and Goodbye</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {book1Resources.unit1.map((resource: TeacherResource, index: number) => (
+                <ResourceDisplay key={resource.id || index} resource={resource} />
+              ))}
+            </div>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-xl font-bold mb-4">Book 6 - Unit 9 - Present Perfect - What Has Just Happened</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {book6Resources.unit9.map((resource: TeacherResource, index: number) => (
                 <ResourceDisplay key={resource.id || index} resource={resource} />
@@ -360,7 +415,7 @@ const TestTeacherResources: React.FC = () => {
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold mb-4">Unit 11 - Extreme Sports</h3>
+            <h3 className="text-xl font-bold mb-4">Book 6 - Unit 11 - Extreme Sports</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {book6Resources.unit11.map((resource: TeacherResource, index: number) => (
                 <ResourceDisplay key={resource.id || index} resource={resource} />
@@ -369,7 +424,7 @@ const TestTeacherResources: React.FC = () => {
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold mb-4">Unit 14 - Are You a Survivor?</h3>
+            <h3 className="text-xl font-bold mb-4">Book 6 - Unit 14 - Are You a Survivor?</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {book6Resources.unit14.map((resource: TeacherResource, index: number) => (
                 <ResourceDisplay key={resource.id || index} resource={resource} />
