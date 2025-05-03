@@ -495,11 +495,6 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "City Places Vocabulary",
       sourceUrl: "https://www.youtube.com/watch?v=SKs3WKe7VPw",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/SKs3WKe7VPw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-    },
-    {
-      title: "City Places Game",
-      sourceUrl: "https://wordwall.net/resource/16b62317675e46cfb1a822f77d3ea319",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/16b62317675e46cfb1a822f77d3ea319?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '14': [
@@ -512,16 +507,6 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "At The Airport: Checking In",
       sourceUrl: "https://www.youtube.com/watch?v=NlHI2oXVHfk",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/NlHI2oXVHfk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-    },
-    {
-      title: "Airport Vocabulary Game 1",
-      sourceUrl: "https://wordwall.net/resource/ccb5b022c55d4267a1f7a53031171834",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ccb5b022c55d4267a1f7a53031171834?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-    },
-    {
-      title: "Airport Vocabulary Game 2",
-      sourceUrl: "https://wordwall.net/resource/4924741921d44b4c9cd142bf981cb4c2",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4924741921d44b4c9cd142bf981cb4c2?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '15': [
@@ -534,16 +519,6 @@ const BOOK6_UNIT_VIDEOS: Record<string, { title: string, sourceUrl: string, embe
       title: "Outdoor Survival Equipment",
       sourceUrl: "https://www.youtube.com/watch?v=4aAXF1qMCsQ",
       embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4aAXF1qMCsQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-    },
-    {
-      title: "Survival Vocabulary Game 1",
-      sourceUrl: "https://wordwall.net/resource/2ae89f748cba464fa7153978e294ef98",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2ae89f748cba464fa7153978e294ef98?themeId=1&templateId=37&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-    },
-    {
-      title: "Survival Vocabulary Game 2",
-      sourceUrl: "https://wordwall.net/resource/c9cc186823c946288c52e6160ceaeb37",
-      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c9cc186823c946288c52e6160ceaeb37?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     }
   ],
   '16': [
