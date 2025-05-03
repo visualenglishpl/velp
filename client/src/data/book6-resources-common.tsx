@@ -16,7 +16,7 @@ export const BOOK6_UNIT_TITLES: Record<string, string> = {
   '5': 'Shopping',
   '6': 'What Your Body Can Do',
   '7': 'Theme Park Stalls',
-  '8': 'At The Gym',
+  '8': 'Free Time - Past Simple',
   '9': 'Present Perfect: What Has Just Happened',
   '10': 'Are You Tech Savvy?',
   '11': 'Transportation And Travel',

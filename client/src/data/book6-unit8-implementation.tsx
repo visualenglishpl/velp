@@ -4,133 +4,125 @@ import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { TeacherResource } from '@/components/TeacherResources';
 import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans } from './book6-resources-common';
 
-// Unit 8 specific gym-related resources
+// Unit 8 specific free time and past simple resources
 export const book6Unit8Resources: TeacherResource[] = generateBook6UnitResources('6', '8');
 
 // Unit 8 lesson plans
-export const gymVocabularyLessonPlan: LessonPlan = {
-  id: "book6-unit8-gym-lesson",
-  title: "Gym Equipment and Activities",
+export const pastTenseVerbsLessonPlan: LessonPlan = {
+  id: "book6-unit8-past-tense-lesson",
+  title: "Past Simple Tense - Regular and Irregular Verbs",
   duration: "45-60 minutes",
   level: "Intermediate",
   objectives: [
-    "Learn vocabulary related to gym equipment",
-    "Understand and use vocabulary for fitness activities",
-    "Practice describing gym routines"
+    "Learn regular and irregular past tense forms",
+    "Practice using past simple in context",
+    "Describe past activities and free time events"
   ],
   materials: [
     "Visual English Book 6 Unit 8 slides",
-    "Pictures of gym equipment",
-    "Fitness activity cards"
+    "Past tense verb flashcards",
+    "Wordwall games on past tense verbs"
   ],
   steps: [
     {
       title: "Warm-up",
       duration: "10 minutes",
-      description: "Activate prior knowledge about fitness and gym activities",
+      description: "Activate knowledge of past activities",
       instructions: [
-        "Ask students if they go to a gym and what activities they do",
-        "Discuss different types of fitness activities"
+        "Ask students what they did last weekend",
+        "Make a list of past tense verbs from their answers"
       ]
     },
     {
-      title: "Vocabulary Introduction",
+      title: "Grammar Review",
       duration: "15 minutes",
-      description: "Introduce gym-related vocabulary",
+      description: "Review past simple formation rules",
       instructions: [
-        "Present gym equipment vocabulary using slides",
-        "Demonstrate proper pronunciation of new terms"
+        "Explain regular past tense formation (-ed ending)",
+        "Present common irregular past tense verbs",
+        "Sort verbs into regular and irregular categories"
       ]
     },
     {
-      title: "Guided Practice",
+      title: "Interactive Practice",
       duration: "15 minutes",
-      description: "Apply vocabulary in contextual activities",
+      description: "Use Wordwall games to reinforce past tense forms",
       instructions: [
-        "Match equipment names to images",
-        "Complete sentences about gym routines using new vocabulary"
+        "Have students play the past tense Wordwall games",
+        "Monitor and provide feedback on verb forms"
       ]
     },
     {
-      title: "Speaking Activity",
+      title: "Free Time Discussion",
       duration: "10 minutes",
-      description: "Practice using gym vocabulary in conversation",
+      description: "Apply past tense in context of leisure activities",
       instructions: [
-        "Role play: Giving advice about gym routines",
-        "Discuss personal fitness preferences"
+        "Discuss various free time activities using past tense",
+        "Ask and answer questions about past experiences"
       ]
     },
     {
       title: "Assessment",
       duration: "10 minutes",
-      description: "Check understanding of gym vocabulary",
+      description: "Check understanding of past simple tense",
       instructions: [
-        "Complete a vocabulary quiz",
-        "Create a personal workout routine using target vocabulary"
+        "Complete a gap-fill exercise with past tense verbs",
+        "Write short sentences about past weekend activities"
       ]
     }
   ]
 };
 
-export const fitnessRoutinesLessonPlan: LessonPlan = {
-  id: "book6-unit8-fitness-routines-lesson",
-  title: "Describing Fitness Routines",
+export const freeTimeActivitiesLessonPlan: LessonPlan = {
+  id: "book6-unit8-free-time-lesson",
+  title: "Free Time Activities in the Past",
   duration: "45-60 minutes",
   level: "Intermediate",
   objectives: [
-    "Practice describing exercise routines",
-    "Learn vocabulary for fitness goals",
-    "Use frequency adverbs to discuss workout schedules"
+    "Learn vocabulary for free time activities",
+    "Practice narrating past events",
+    "Develop speaking skills about leisure activities"
   ],
   materials: [
     "Visual English Book 6 Unit 8 slides",
-    "Workout schedule templates",
-    "Fitness goal cards"
+    "Free time activity images",
+    "Past simple worksheet"
   ],
   steps: [
     {
       title: "Introduction",
       duration: "10 minutes",
-      description: "Discuss workout routines and fitness goals",
+      description: "Introduce free time vocabulary",
       instructions: [
-        "Ask students about their exercise habits",
-        "Introduce concept of fitness goals and routines"
+        "Present various leisure activities with images",
+        "Discuss which activities students enjoy"
       ]
     },
     {
       title: "Vocabulary Building",
       duration: "15 minutes",
-      description: "Focus on specific vocabulary for fitness routines",
+      description: "Expand free time vocabulary",
       instructions: [
-        "Present vocabulary related to workout frequency and intensity",
-        "Introduce terms for describing fitness progress"
+        "Introduce additional leisure activity terms",
+        "Categorize activities (indoor, outdoor, social, etc.)"
       ]
     },
     {
-      title: "Grammar Focus",
-      duration: "10 minutes",
-      description: "Practice using frequency adverbs with workout descriptions",
-      instructions: [
-        "Review frequency adverbs (always, often, sometimes, rarely, never)",
-        "Practice sentence formation with frequency adverbs"
-      ]
-    },
-    {
-      title: "Pair Work",
+      title: "Past Tense Stories",
       duration: "15 minutes",
-      description: "Create and discuss fitness routines in pairs",
+      description: "Create past tense narratives about free time",
       instructions: [
-        "Create a weekly workout schedule with a partner",
-        "Discuss fitness goals and how to achieve them"
+        "Model a short story about a past weekend",
+        "Have students write their own past tense stories"
       ]
     },
     {
-      title: "Production",
-      duration: "10 minutes",
-      description: "Present fitness plans to the class",
+      title: "Speaking Practice",
+      duration: "15 minutes",
+      description: "Share past experiences in pairs",
       instructions: [
-        "Present created workout schedules to the class",
-        "Give feedback on others' fitness plans"
+        "Interview classmates about past leisure activities",
+        "Report findings to the class using past tense"
       ]
     }
   ]
@@ -138,8 +130,8 @@ export const fitnessRoutinesLessonPlan: LessonPlan = {
 
 // Combined lesson plans for Unit 8
 export const book6Unit8LessonPlans: LessonPlan[] = [
-  gymVocabularyLessonPlan,
-  fitnessRoutinesLessonPlan
+  pastTenseVerbsLessonPlan,
+  freeTimeActivitiesLessonPlan
 ];
 
 // Function to get resources for this unit

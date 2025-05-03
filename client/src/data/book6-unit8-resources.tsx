@@ -2,7 +2,7 @@ import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans } from './book6-resources-common';
 
-// At The Gym - Unit 8 Resources
+// Free Time - Past Simple - Unit 8 Resources
 // Export empty arrays for these resources as they are now fully defined in the implementation file
 export const book6Unit8Resources: TeacherResource[] = [];
 export const book6Unit8LessonPlans: LessonPlan[] = [];
