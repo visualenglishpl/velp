@@ -23,7 +23,10 @@ const ResourceDisplay: React.FC<ResourceDisplayProps> = ({ resource }) => {
         <iframe
           src={resource.sourceUrl}
           className="w-full rounded aspect-video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
+          frameBorder="0"
+          referrerPolicy="strict-origin-when-cross-origin"
           title={resource.title}
         />
       );
@@ -34,6 +37,10 @@ const ResourceDisplay: React.FC<ResourceDisplayProps> = ({ resource }) => {
         <iframe
           src={resource.sourceUrl}
           className="w-full rounded aspect-video"
+          style={{ maxWidth: '100%' }}
+          width="500"
+          height="380"
+          frameBorder="0"
           allowFullScreen
           title={resource.title}
         />
