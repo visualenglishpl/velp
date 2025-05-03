@@ -1,0 +1,54 @@
+Here's an improved and more structured version of your prompt for clarity and efficient implementation by your tech team or automation tool:
+
+---
+
+**Objective:**
+Integrate *Teacher Resources* (games, films, and other materials) into each unit of all Visual English books (0A–7) in a fast and efficient way, similar to how the questions were batch-uploaded into slides previously.
+
+---
+
+### 📁 **Files Location:**
+
+All teacher resource documents are located in the following S3 bucket:
+`s3://visualenglishmaterial/teacher resources/`
+
+---
+
+### 📘 **Books & Corresponding Files:**
+
+| Book    | Resource File                        |
+| ------- | ------------------------------------ |
+| Book 0A | `VISUAL 0A - VIDEO FILMS GAMES.docx` |
+| Book 0B | `VISUAL 0B - VIDEO FILMS GAMES.docx` |
+| Book 0C | `VISUAL 0C - VIDEO FILMS GAMES.docx` |
+| Book 1  | `VISUAL 1 - VIDEO FILMS GAMES.docx`  |
+| Book 2  | `VISUAL 2 - VIDEO FILMS GAMES.docx`  |
+| Book 3  | `VISUAL 3 - VIDEO FILMS GAMES.docx`  |
+| Book 4  | `VISUAL 4 - VIDEO FILMS GAMES.docx`  |
+| Book 5  | `VISUAL 5 - VIDEO FILMS GAMES.docx`  |
+| Book 6  | `VISUAL 6 - VIDEO FILMS GAMES.docx`  |
+| Book 7  | `VISUAL 7 - VIDEO FILMS GAMES.docx`  |
+
+---
+
+### ✅ **Implementation Requirements:**
+
+1. **Batch Upload Approach:**
+
+   * Automate the process of embedding these resources into the correct place for each unit, following the same logic/workflow used previously for inserting questions into slides.
+
+2. **Expected Output per Unit (in slides or lesson platforms):**
+
+   * Teacher Resources section with:
+
+     * 🎲 *Games*
+     * 🎬 *Films / Video links*
+     * 🔗 *External links or tasks if available*
+
+3. **Lesson Plans for Books 0A–0C:**
+
+   * In addition to video/games, please ensure that lesson plans are also integrated (if part of the docx file or stored elsewhere in the system).
+
+---
+
+Would you like me to help generate a script or metadata structure for automation based on the contents of one of the documents?

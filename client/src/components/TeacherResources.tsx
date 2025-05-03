@@ -297,8 +297,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   });
   
   // Check if this is a special book/unit with predefined resources
-  const isSpecialBookUnit = (bookId === '7' || bookId === '6' || bookId === '5') && 
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'].includes(unitId);
+  // For Book 5, units 2, 3, 4, 6, 7, 8, 10 have no teacher resources
+  const noResourcesBook5Units = ['2', '3', '4', '6', '7', '8', '10'];
+  const isSpecialBookUnit = 
+    (bookId === '7' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'].includes(unitId)) ||
+    (bookId === '6' && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'].includes(unitId)) ||
+    (bookId === '5' && ['1', '5', '9', '11', '12', '13', '14', '15', '16'].includes(unitId));
     
   // Create custom constants for specific books and units to check for special resources
   const isBook7Unit6 = bookId === '7' && unitId === '6';
