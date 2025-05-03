@@ -1,6 +1,6 @@
 import { Switch, Route, useLocation } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
@@ -16,11 +16,13 @@ import BooksPage from "@/pages/BooksPage";
 import UnitsPage from "@/pages/UnitsPage";
 import LessonPlansPage from "@/pages/LessonPlansPage";
 import FlaggedQuestions from "@/pages/admin/FlaggedQuestions";
-import TestTeacherResources from "@/pages/TestTeacherResources";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
 import { useAuth } from "@/hooks/use-auth";
+
+// Lazy load the TestTeacherResources component to improve performance
+const TestTeacherResources = React.lazy(() => import("@/pages/TestTeacherResources"));
 
 // Protected Route Component - redirects to login if authentication is required
 function ProtectedRoute({ component: Component, adminOnly = false, requireAuth = true }: { 
@@ -332,11 +334,19 @@ function Router() {
       
       {/* Test Teacher Resources Page */}
       <Route path="/test-teacher-resources">
-        {() => <ProtectedRoute component={TestTeacherResources} requireAuth={false} />}
+        {() => (
+          <Suspense fallback={<div className="p-8 flex justify-center"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div></div>}>
+            <ProtectedRoute component={TestTeacherResources} requireAuth={false} />
+          </Suspense>
+        )}
       </Route>
       {/* Alternate route for backward compatibility */}
       <Route path="/test-resources">
-        {() => <ProtectedRoute component={TestTeacherResources} requireAuth={false} />}
+        {() => (
+          <Suspense fallback={<div className="p-8 flex justify-center"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div></div>}>
+            <ProtectedRoute component={TestTeacherResources} requireAuth={false} />
+          </Suspense>
+        )}
       </Route>
       
       {/* Fallback for any other book/unit pattern - Allow public access with premium content controls */}

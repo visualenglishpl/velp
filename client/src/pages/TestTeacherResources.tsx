@@ -8,48 +8,83 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 
-// Import lesson plans for Book 5
-import { generateUnit1LessonPlans } from '@/data/book5-unit1-implementation';
-import { generateUnit5LessonPlans } from '@/data/book5-unit5-implementation';
-import { generateUnit9LessonPlans } from '@/data/book5-unit9-implementation';
-import { generateUnit13LessonPlans } from '@/data/book5-unit13-implementation';
-
-// Import lesson plans for Book 6
-import { getBook6Unit5LessonPlans } from '@/data/book6-unit5-implementation';
-import { getBook6Unit7LessonPlans } from '@/data/book6-unit7-implementation';
-import { getBook6Unit9LessonPlans } from '@/data/book6-unit9-resources';
-import { getBook6Unit11LessonPlans } from '@/data/book6-unit11-resources';
-import { getBook6Unit14LessonPlans } from '@/data/book6-unit14-resources';
-
-// Import resources for Book 6
-import { book6Unit9Resources } from '@/data/book6-unit9-resources';
-import { book6Unit11Resources } from '@/data/book6-unit11-resources';
-import { book6Unit14Resources } from '@/data/book6-unit14-resources';
+// Dynamically load these resources and lesson plans when needed, rather than at import time
+// This significantly improves initial load performance
 
 // TestTeacherResources component
 const TestTeacherResources: React.FC = () => {
-  // Group the lesson plans by book using getter functions
-  const book5Plans = {
-    unit1: generateUnit1LessonPlans(),
-    unit5: generateUnit5LessonPlans(),
-    unit9: generateUnit9LessonPlans(),
-    unit13: generateUnit13LessonPlans()
-  };
+  // State for lesson plans and resources
+  const [book5Plans, setBook5Plans] = useState<any>({
+    unit1: [],
+    unit5: [],
+    unit9: [],
+    unit13: []
+  });
 
-  const book6Plans = {
-    unit5: getBook6Unit5LessonPlans(),
-    unit7: getBook6Unit7LessonPlans(),
-    unit9: getBook6Unit9LessonPlans(),
-    unit11: getBook6Unit11LessonPlans(),
-    unit14: getBook6Unit14LessonPlans()
-  };
+  const [book6Plans, setBook6Plans] = useState<any>({
+    unit5: [],
+    unit7: [],
+    unit9: [],
+    unit11: [],
+    unit14: []
+  });
 
   // Group the resources
-  const book6Resources = {
-    unit9: book6Unit9Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4),
-    unit11: book6Unit11Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4),
-    unit14: book6Unit14Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4)
-  };
+  const [book6Resources, setBook6Resources] = useState<any>({
+    unit9: [],
+    unit11: [],
+    unit14: []
+  });
+  
+  // Load data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      // Load lesson plans for Book 5 (these are now loaded dynamically at runtime rather than at import time)
+      try {
+        const book5Unit1Module = await import('@/data/book5-unit1-implementation');
+        const book5Unit5Module = await import('@/data/book5-unit5-implementation');
+        const book5Unit9Module = await import('@/data/book5-unit9-implementation');
+        const book5Unit13Module = await import('@/data/book5-unit13-implementation');
+        
+        setBook5Plans({
+          unit1: book5Unit1Module.generateUnit1LessonPlans(),
+          unit5: book5Unit5Module.generateUnit5LessonPlans(),
+          unit9: book5Unit9Module.generateUnit9LessonPlans(),
+          unit13: book5Unit13Module.generateUnit13LessonPlans()
+        });
+      } catch (error) {
+        console.error('Error loading Book 5 lesson plans:', error);
+      }
+      
+      // Load lesson plans for Book 6
+      try {
+        const book6Unit5Module = await import('@/data/book6-unit5-implementation');
+        const book6Unit7Module = await import('@/data/book6-unit7-implementation');
+        const book6Unit9ResourcesModule = await import('@/data/book6-unit9-resources');
+        const book6Unit11ResourcesModule = await import('@/data/book6-unit11-resources');
+        const book6Unit14ResourcesModule = await import('@/data/book6-unit14-resources');
+        
+        setBook6Plans({
+          unit5: book6Unit5Module.getBook6Unit5LessonPlans(),
+          unit7: book6Unit7Module.getBook6Unit7LessonPlans(),
+          unit9: book6Unit9ResourcesModule.getBook6Unit9LessonPlans(),
+          unit11: book6Unit11ResourcesModule.getBook6Unit11LessonPlans(),
+          unit14: book6Unit14ResourcesModule.getBook6Unit14LessonPlans()
+        });
+        
+        // Load resources for Book 6
+        setBook6Resources({
+          unit9: book6Unit9ResourcesModule.book6Unit9Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4),
+          unit11: book6Unit11ResourcesModule.book6Unit11Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4),
+          unit14: book6Unit14ResourcesModule.book6Unit14Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4)
+        });
+      } catch (error) {
+        console.error('Error loading Book 6 data:', error);
+      }
+    };
+    
+    loadData();
+  }, []);
 
   // State for dynamic resource testing
   const [selectedBook, setSelectedBook] = useState('5');
