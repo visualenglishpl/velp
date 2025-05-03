@@ -1,64 +1,94 @@
+import { type ResourceItem as TeacherResource } from '@shared/schema';
+
 /**
- * Visual English Book 1, Unit 6: Classroom Objects
- * Resources including videos and games
+ * Resources for Book 1 Unit 6: My Favourite Colour
+ * 
+ * This file contains video and game resources for teaching
+ * colors and favorite color expressions
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
-import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
-
-// Video resources for Unit 6
-export const book1Unit6VideoResources: TeacherResource[] = [
-  createBook1VideoResource(
-    6, 1,
-    "School Supplies Song - Super Simple Songs",
-    "vjBxqdOvxPM",
-    "Learn vocabulary for classroom objects and school supplies"
-  ),
-  createBook1VideoResource(
-    6, 2,
-    "Classroom Objects - The Singing Walrus",
-    "taoCF1cKZfc",
-    "A fun song about different classroom objects"
-  ),
-  createBook1VideoResource(
-    6, 3,
-    "School Supplies - English Singsing",
-    "Kl097Xz6dFo",
-    "Learn about classroom objects with this educational song"
-  ),
-  createBook1VideoResource(
-    6, 4,
-    "What's in My Backpack - Maple Leaf Learning",
-    "1BZc0qF30_U",
-    "Song about school supplies and classroom objects"
-  )
-];
-
-// Game resources for Unit 6
-export const book1Unit6GameResources: TeacherResource[] = [
-  createBook1GameResource(
-    6, 1,
-    "Classroom Objects - Matching Game",
-    "6c9c0b738fb14d91a63e97d20a9cbb04",
-    "1", "3", "0",
-    "Match the classroom objects to their names"
-  ),
-  createBook1GameResource(
-    6, 2,
-    "School Supplies - Quiz",
-    "7af436c86f2a44ca47e7e7a7ac9bd57",
-    "1", "5", "0",
-    "Test your knowledge of classroom vocabulary"
-  )
-];
-
-// Combined resources for Unit 6
 export const book1Unit6Resources: TeacherResource[] = [
-  ...book1Unit6VideoResources,
-  ...book1Unit6GameResources
+  // Videos
+  {
+    id: 'book1-unit6-video1',
+    bookId: '1',
+    unitId: '6',
+    title: 'I See Something Blue - Super Simple Songs',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/jYAWf8Y91hA',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/jYAWf8Y91hA?si=b9qEwXN-0LtJVkre" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book1-unit6-video2',
+    bookId: '1',
+    unitId: '6',
+    title: 'I See Something Pink - Super Simple Songs',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/Asb8N0nz9OI',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Asb8N0nz9OI?si=5Oh9ii42PJzsv7mc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book1-unit6-video3',
+    bookId: '1',
+    unitId: '6',
+    title: 'What Colour Is It?',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/NUquLTPhMwg',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/NUquLTPhMwg?si=6GQoDS1m4JvkT-gj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book1-unit6-video4',
+    bookId: '1',
+    unitId: '6',
+    title: "What's Your Favorite Color - Super Simple Song",
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/zxIpA5nF_LY',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/zxIpA5nF_LY?si=MItpQRQKiUxtWmg_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book1-unit6-video5',
+    bookId: '1',
+    unitId: '6',
+    title: 'Colour Spelling',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/0LNuoKsAtN8',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/0LNuoKsAtN8?si=FM5PFJceDGSdGIW6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+
+  // Games
+  {
+    id: 'book1-unit6-game1',
+    bookId: '1',
+    unitId: '6',
+    title: 'Wordwall - Colours Game 1',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/embed/54d466d5a13948c6acbafc5729e6d887',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/54d466d5a13948c6acbafc5729e6d887?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book1-unit6-game2',
+    bookId: '1',
+    unitId: '6',
+    title: 'Wordwall - Colours Game 2',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/embed/360776cf889d4170872d084aa81d3995',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/360776cf889d4170872d084aa81d3995?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    id: 'book1-unit6-game3',
+    bookId: '1',
+    unitId: '6',
+    title: 'Wordwall - Favourite Colors Game',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/embed/6cd71a51f9554af39aaa00b2e7ce73a2',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6cd71a51f9554af39aaa00b2e7ce73a2?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
 ];
-
-// Export a getter function to match the pattern used elsewhere
-export const getBook1Unit6Resources = () => book1Unit6Resources;
-
-export default book1Unit6Resources;
