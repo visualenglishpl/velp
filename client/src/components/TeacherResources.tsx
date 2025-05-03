@@ -12,16 +12,24 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 // Import sample resources for Book 7, Unit 6
 import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from '@/data/unit6-resources';
 
-// Import centralized resources for Book 6
+// Import centralized resources for Books 5 and 6
 import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans, BOOK6_UNIT_TITLES } from '@/data/book6-resources-common';
+import { generateBook5UnitResources, generateDefaultBook5UnitLessonPlans, BOOK5_UNIT_TITLES } from '@/data/book5-resources-common';
 
 // Import any specific implementation functions
+// Book 6 implementations
 import { getBook6Unit9Resources, getBook6Unit9LessonPlans } from '@/data/book6-unit9-implementation';
 import { getBook6Unit10Resources, getBook6Unit10LessonPlans } from '@/data/book6-unit10-implementation';
-import { generateBook6Unit13Content, generateUnit13LessonPlans } from '@/data/book6-unit13-implementation';
-import { generateBook6Unit14Content, generateUnit14LessonPlans } from '@/data/book6-unit14-implementation';
-import { generateBook6Unit15Content, generateUnit15LessonPlans } from '@/data/book6-unit15-implementation';
-import { generateBook6Unit16Content, generateUnit16LessonPlans } from '@/data/book6-unit16-implementation';
+import { generateBook6Unit13Content, generateUnit13LessonPlans as generateBook6Unit13LessonPlans } from '@/data/book6-unit13-implementation';
+import { generateBook6Unit14Content, generateUnit14LessonPlans as generateBook6Unit14LessonPlans } from '@/data/book6-unit14-implementation';
+import { generateBook6Unit15Content, generateUnit15LessonPlans as generateBook6Unit15LessonPlans } from '@/data/book6-unit15-implementation';
+import { generateBook6Unit16Content, generateUnit16LessonPlans as generateBook6Unit16LessonPlans } from '@/data/book6-unit16-implementation';
+
+// Book 5 implementations
+import { generateBook5Unit1Content, generateUnit1LessonPlans } from '@/data/book5-unit1-implementation';
+import { generateBook5Unit5Content, generateUnit5LessonPlans } from '@/data/book5-unit5-implementation';
+import { generateBook5Unit9Content, generateUnit9LessonPlans } from '@/data/book5-unit9-implementation';
+import { generateBook5Unit13Content, generateUnit13LessonPlans } from '@/data/book5-unit13-implementation';
 
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
@@ -108,6 +116,19 @@ const dynamicImplImport = async (book: string, unit: number) => {
         default:
           return null;
       }
+    } else if (book === '5') {
+      switch(unit) {
+        case 1:
+          return import('@/data/book5-unit1-implementation');
+        case 5:
+          return import('@/data/book5-unit5-implementation');
+        case 9:
+          return import('@/data/book5-unit9-implementation');
+        case 13:
+          return import('@/data/book5-unit13-implementation');
+        default:
+          return null;
+      }
     }
     return null;
   } catch (error) {
@@ -180,6 +201,19 @@ const dynamicResourceImport = async (book: string, unit: number) => {
           return import('@/data/book6-unit15-resources');
         case 16:
           return import('@/data/book6-unit16-resources');
+        default:
+          return null;
+      }
+    } else if (book === '5') {
+      switch(unit) {
+        case 1:
+          return import('@/data/book5-unit1-resources');
+        case 5:
+          return import('@/data/book5-unit5-resources');
+        case 9:
+          return import('@/data/book5-unit9-resources');
+        case 13:
+          return import('@/data/book5-unit13-resources');
         default:
           return null;
       }
