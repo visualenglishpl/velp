@@ -1,118 +1,112 @@
+import { TeacherResource } from '@/components/TeacherResources';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+
 /**
- * Common resource definitions for Visual English Book 1
- * This includes reusable resource templates and utility functions
+ * This file contains common resources and helper functions for Book 1 that will be shared
+ * across multiple units. It provides functions to generate standardized resources
+ * for any unit in Book 1.
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
+// Unit titles for reference in lesson plans and resources
+export const BOOK1_UNIT_TITLES: Record<string, string> = {
+  '1': 'Hello and Goodbye',
+  '2': 'School Objects',
+  '3': 'Colors',
+  '4': 'Shapes',
+  '5': 'School Supplies',
+  '6': 'My Favourite Colour',
+  '7': 'Fruit', 
+  '8': 'Vegetables',
+  '9': 'Food', 
+  '10': 'Numbers 1-10',
+  '11': 'Numbers 11-20',
+  '12': 'Body Parts',
+  '13': 'Face Parts',
+  '14': 'My Family',
+  '15': 'Rooms of the House',
+  '16': 'Furniture',
+  '17': 'Animals',
+  '18': 'Pets'
+};
 
-// Common resource template functions for Book 1
-export const createBook1VideoResource = (
-  unit: number,
+/**
+ * Helper function to create a Book 1 video resource with consistent formatting
+ * @param unitNumber The unit number (1-18)
+ * @param index The index of the video within the unit
+ * @param title The title of the video
+ * @param youtubeId The YouTube video ID
+ * @param description Optional description of the video
+ * @returns A formatted TeacherResource object
+ */
+export function createBook1VideoResource(
+  unitNumber: number,
   index: number,
   title: string,
-  youtubeEmbedId: string,
+  youtubeId: string,
   description?: string
-): TeacherResource => ({
-  id: `book1-unit${unit}-video-${index}`,
-  title: title,
-  description: description || `A video resource for Book 1 Unit ${unit}: ${title}`,
-  resourceType: 'video',
-  content: {
-    type: 'youtube',
-    embedId: youtubeEmbedId,
-  },
-});
+): TeacherResource {
+  return {
+    id: `book1-unit${unitNumber}-video${index}`,
+    bookId: '1',
+    unitId: unitNumber.toString(),
+    title,
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: `https://www.youtube.com/embed/${youtubeId}`,
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/${youtubeId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description
+  };
+}
 
-export const createBook1GameResource = (
-  unit: number,
+/**
+ * Helper function to create a Book 1 Wordwall game resource with consistent formatting
+ * @param unitNumber The unit number (1-18)
+ * @param index The index of the game within the unit
+ * @param title The title of the game
+ * @param wordwallUrl The Wordwall embed URL
+ * @param description Optional description of the game
+ * @returns A formatted TeacherResource object
+ */
+export function createBook1GameResource(
+  unitNumber: number,
   index: number,
   title: string,
-  wordwallEmbedId: string,
-  themeId: string = '1',
-  templateId: string = '38',
-  fontStackId: string = '0',
+  wordwallUrl: string,
   description?: string
-): TeacherResource => ({
-  id: `book1-unit${unit}-game-${index}`,
-  title: title,
-  description: description || `An interactive game for Book 1 Unit ${unit}: ${title}`,
-  resourceType: 'game',
-  content: {
-    type: 'wordwall',
-    embedUrl: `https://wordwall.net/embed/${wordwallEmbedId}?themeId=${themeId}&templateId=${templateId}&fontStackId=${fontStackId}`,
-  },
-});
-
-// Function to extract YouTube video ID from full YouTube URL/embed code
-export const extractYouTubeId = (url: string): string => {
-  const regExp = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return match && match[1].length === 11 ? match[1] : url;
-};
-
-// Function to extract Wordwall ID from full Wordwall URL/embed code
-export const extractWordwallId = (embedCode: string): string => {
-  const regExp = /wordwall\.net\/embed\/([\w\d]+)/;
-  const match = embedCode.match(regExp);
-  return match ? match[1] : embedCode;
-};
-
-// Common video resources for all Book 1 units
-export const VideoResources: TeacherResource[] = [
-  {
-    id: 'book1-common-video-1',
-    title: 'Visual English Book 1 Introduction',
-    description: 'An introductory video for teachers on how to use Visual English Book 1',
-    resourceType: 'video',
-    content: {
-      type: 'youtube',
-      embedId: 'dQw4w9WgXcQ',  // This is a placeholder ID
-    },
-  },
-  {
-    id: 'book1-common-video-2',
-    title: 'ESL Teaching Methodologies',
-    description: 'Overview of effective ESL teaching methodologies applicable to all Book 1 units',
-    resourceType: 'video',
-    content: {
-      type: 'youtube',
-      embedId: '9bZkp7q19f0',  // This is a placeholder ID
-    },
-  },
-];
-
-// Common game resources for all Book 1 units
-export const GameResources: TeacherResource[] = [
-  {
-    id: 'book1-common-game-1',
-    title: 'English Vocabulary Practice',
-    description: 'A general vocabulary practice game suitable for all Book 1 units',
+): TeacherResource {
+  return {
+    id: `book1-unit${unitNumber}-game${index}`,
+    bookId: '1',
+    unitId: unitNumber.toString(),
+    title,
     resourceType: 'game',
-    content: {
-      type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/123456?themeId=1&templateId=38&fontStackId=0',
-    },
-  },
-  {
-    id: 'book1-common-game-2',
-    title: 'Grammar Foundations',
-    description: 'A grammar practice game covering basic concepts found throughout Book 1',
-    resourceType: 'game',
-    content: {
-      type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/789012?themeId=1&templateId=38&fontStackId=0',
-    },
-  },
-];
+    provider: 'Wordwall',
+    sourceUrl: wordwallUrl,
+    embedCode: `<iframe style="max-width:100%" src="${wordwallUrl}" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description
+  };
+}
 
-// Export default for compatibility with resource verification system
-export default {
-  VideoResources,
-  GameResources,
-  helpers: {
-    createBook1VideoResource,
-    createBook1GameResource,
-    extractYouTubeId,
-    extractWordwallId
-  }
-};
+/**
+ * Generates default resources for any Book 1 unit
+ * @param unitNumber The unit number (1-18)
+ * @returns An array of TeacherResource objects
+ */
+export function generateBook1UnitResources(unitNumber: number): TeacherResource[] {
+  // This is a placeholder function - each unit should implement its own resources
+  // Alternatively, if we have common resources, they can be defined here
+  return [];
+}
+
+/**
+ * Generates default lesson plans for any Book 1 unit
+ * @param unitNumber The unit number (1-18)
+ * @returns An array of LessonPlan objects
+ */
+export function generateDefaultBook1UnitLessonPlans(unitNumber: number): LessonPlan[] {
+  const unitTitle = BOOK1_UNIT_TITLES[unitNumber.toString()] || `Unit ${unitNumber}`;
+  
+  // This is a placeholder function - each unit should implement its own lesson plans
+  // Alternatively, if we have common lesson plan templates, they can be defined here
+  return [];
+}

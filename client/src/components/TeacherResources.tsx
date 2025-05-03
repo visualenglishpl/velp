@@ -37,7 +37,8 @@ import { generateUnit2LessonPlans as generateBook1Unit2LessonPlans } from '@/dat
 import { generateUnit3LessonPlans as generateBook1Unit3LessonPlans } from '@/data/book1-unit3-implementation';
 import { generateUnit4LessonPlans as generateBook1Unit4LessonPlans } from '@/data/book1-unit4-implementation';
 import { generateUnit5LessonPlans as generateBook1Unit5LessonPlans } from '@/data/book1-unit5-implementation';
-import { book1Unit6LessonPlans as generateBook1Unit6LessonPlans } from '@/data/book1-unit6-implementation';
+import { generateUnit6LessonPlans as generateBook1Unit6LessonPlans } from '@/data/book1-unit6-implementation';
+import { getBook1Unit6Resources } from '@/data/book1-unit6-implementation';
 
 import { book1Unit1Resources, book1Unit1VideoResources, book1Unit1GameResources } from '@/data/book1-unit1-resources';
 import { book1Unit2Resources, book1Unit2VideoResources, book1Unit2GameResources } from '@/data/book1-unit2-resources';
