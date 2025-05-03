@@ -21,8 +21,7 @@ import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
 import { useAuth } from "@/hooks/use-auth";
 
-// Lazy load the TestTeacherResources component to improve performance
-const TestTeacherResources = React.lazy(() => import("@/pages/TestTeacherResources"));
+// TestTeacherResources page has been removed as it's not necessary
 
 // Protected Route Component - redirects to login if authentication is required
 function ProtectedRoute({ component: Component, adminOnly = false, requireAuth = true }: { 
@@ -332,22 +331,7 @@ function Router() {
         {() => <ProtectedRoute component={LessonPlansPage} requireAuth={false} />}
       </Route>
       
-      {/* Test Teacher Resources Page */}
-      <Route path="/test-teacher-resources">
-        {() => (
-          <Suspense fallback={<div className="p-8 flex justify-center"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div></div>}>
-            <ProtectedRoute component={TestTeacherResources} requireAuth={false} />
-          </Suspense>
-        )}
-      </Route>
-      {/* Alternate route for backward compatibility */}
-      <Route path="/test-resources">
-        {() => (
-          <Suspense fallback={<div className="p-8 flex justify-center"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div></div>}>
-            <ProtectedRoute component={TestTeacherResources} requireAuth={false} />
-          </Suspense>
-        )}
-      </Route>
+      {/* Test Teacher Resources Page - Removed as it's not necessary */}
       
       {/* Fallback for any other book/unit pattern - Allow public access with premium content controls */}
       <Route path="/:bookPath/:unitPath">
