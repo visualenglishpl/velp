@@ -1,64 +1,67 @@
-/**
- * Visual English Book 1, Unit 8: Fruits and Vegetables
- * Resources including videos and games
- */
-
 import { TeacherResource } from '@/components/TeacherResources';
 import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
-// Video resources for Unit 8
-export const book1Unit8VideoResources: TeacherResource[] = [
+/**
+ * Resources for Book 1 Unit 8: Vegetables
+ * 
+ * This file contains video and game resources for teaching
+ * vegetables vocabulary and healthy eating habits
+ */
+
+export const book1Unit8Resources: TeacherResource[] = [
+  // Videos
   createBook1VideoResource(
     8, 1,
-    "Fruit Song - The Singing Walrus",
-    "mfReSbQ7jzE",
-    "A fun song about different fruits"
+    'The Vegetable Song - Super Simple Songs',
+    'RE5tvaveVak',
+    'Catchy song introducing different vegetables with colorful visuals'
   ),
   createBook1VideoResource(
     8, 2,
-    "The Vegetable Song - Kids Learning Tube",
-    "RE5tvaveVak",
-    "Learn vocabulary for different vegetables"
+    'Oliver\s Vegetables - Vivian French',
+    'UcCw2d_ybyo',
+    'Story about a boy discovering different vegetables in his grandpa\'s garden'
   ),
   createBook1VideoResource(
     8, 3,
-    "Fruits and Vegetables - English Singsing",
-    "utwgf_G91Eo",
-    "Vocabulary lesson for fruits and vegetables with pictures"
+    'Cooking Vegetables with Gus - Watts English',
+    '5OFrSNOqpOk',
+    'Learn vegetables vocabulary while cooking a healthy dish'
   ),
   createBook1VideoResource(
     8, 4,
-    "Do You Like Broccoli Ice Cream? - Super Simple Songs",
-    "frN3nvhIHUk",
-    "A fun song about food preferences featuring fruits and vegetables"
-  )
-];
-
-// Game resources for Unit 8
-export const book1Unit8GameResources: TeacherResource[] = [
+    'Vegetable Song for Kids - The Singing Walrus',
+    'ddDN30evKPc',
+    'Engaging song with vegetable vocabulary and visuals'
+  ),
+  
+  // Games
   createBook1GameResource(
     8, 1,
-    "Fruits - Matching Game",
-    "fc9c0b738fb64d91a63e97d20a9cbb04",
-    "1", "3", "0",
-    "Match the fruit pictures to their names"
+    'Vegetable Matching Game',
+    'https://wordwall.net/embed/7d0b4c6c8b1a43c09f9f982b9e59f4b1',
+    'Match vegetable pictures with their English names'
   ),
   createBook1GameResource(
     8, 2,
-    "Vegetables - Quiz",
-    "f3f436c86f2044ca47e7e7a7ac9bd57",
-    "1", "5", "0",
-    "Test your knowledge of vegetables vocabulary"
+    'Vegetables Spelling Practice',
+    'https://wordwall.net/embed/d39f4ea7d4fc4e789e97d94a55fba36c',
+    'Practice spelling vegetable vocabulary'
+  ),
+  createBook1GameResource(
+    8, 3,
+    'Vegetables Category Quiz',
+    'https://wordwall.net/embed/5c92fb9dd8c54e6e9b5bfbc1fd1aa05f',
+    'Sort vegetables by color and identify them'
+  ),
+  createBook1GameResource(
+    8, 4,
+    'Healthy Foods Sorting Game',
+    'https://wordwall.net/embed/1c99d3e2e0ab4a1983f9d2ddf4b9f3a4',
+    'Sort healthy and unhealthy foods with a focus on vegetables'
   )
 ];
 
-// Combined resources for Unit 8
-export const book1Unit8Resources: TeacherResource[] = [
-  ...book1Unit8VideoResources,
-  ...book1Unit8GameResources
-];
-
-// Export a getter function to match the pattern used elsewhere
-export const getBook1Unit8Resources = () => book1Unit8Resources;
-
-export default book1Unit8Resources;
+// Export video and game resource arrays separately for filtering
+export const book1Unit8VideoResources = book1Unit8Resources.filter(resource => resource.resourceType === 'video');
+export const book1Unit8GameResources = book1Unit8Resources.filter(resource => resource.resourceType === 'game');

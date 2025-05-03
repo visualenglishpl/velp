@@ -1,64 +1,67 @@
-/**
- * Visual English Book 1, Unit 9: Clothes
- * Resources including videos and games
- */
-
 import { TeacherResource } from '@/components/TeacherResources';
 import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
-// Video resources for Unit 9
-export const book1Unit9VideoResources: TeacherResource[] = [
+/**
+ * Resources for Book 1 Unit 9: Family
+ * 
+ * This file contains video and game resources for teaching
+ * family vocabulary and talking about family members
+ */
+
+export const book1Unit9Resources: TeacherResource[] = [
+  // Videos
   createBook1VideoResource(
     9, 1,
-    "Put On Your Shoes - Super Simple Songs",
-    "_jZJo-qCk-c",
-    "A fun song about getting dressed and clothing items"
+    'The Family Song - Super Simple Songs',
+    'GiRUF7hvWuM',
+    'A catchy song introducing family vocabulary'
   ),
   createBook1VideoResource(
     9, 2,
-    "Clothes Song - The Singing Walrus",
-    "KFQGvBxrsBU",
-    "Learn vocabulary for different clothing items"
+    'Family Members Song - English Tree TV',
+    'FHaObkHEkHQ',
+    'Educational video showing different family members with clear pronunciation'
   ),
   createBook1VideoResource(
     9, 3,
-    "Getting Dressed Song - English Singsing",
-    "q_Wt_JS0GRE",
-    "Learn about clothing with context of dressing for the weather"
+    'My Family - Maple Leaf Learning',
+    'foptl0BeXnY',
+    'Simple song for young learners about family members'
   ),
   createBook1VideoResource(
     9, 4,
-    "What Are You Wearing? - Maple Leaf Learning",
-    "xB8JJNTvuIU",
-    "Simple vocabulary lesson about clothing items"
-  )
-];
-
-// Game resources for Unit 9
-export const book1Unit9GameResources: TeacherResource[] = [
+    'My Family Your Family - Sesame English',
+    'pGO_F3T3aD4',
+    'Video showing different families and family structures for kids'
+  ),
+  
+  // Games
   createBook1GameResource(
     9, 1,
-    "Clothes - Matching Game",
-    "gc9c0b738fb64d91a63e97d20a9cbb04",
-    "1", "3", "0",
-    "Match the clothing items to their names"
+    'Family Vocabulary Matching Game',
+    'https://wordwall.net/embed/6fd4e1ea731c4cb4ae4e5ab5fcbf08dc',
+    'Match family member pictures with their English names'
   ),
   createBook1GameResource(
     9, 2,
-    "Clothing Vocabulary - Quiz",
-    "g3f436c86f2044ca47e7e7a7ac9bd57",
-    "1", "5", "0",
-    "Test your knowledge of clothes vocabulary"
+    'Family Members Quiz',
+    'https://wordwall.net/embed/24ea4ac8c8e94533a82ea50eb4f84400',
+    'Test knowledge of family vocabulary through an interactive quiz'
+  ),
+  createBook1GameResource(
+    9, 3,
+    'Family Tree Game',
+    'https://wordwall.net/embed/be62e6ed55774c23904bc3b2b0e1a49c',
+    'Place family members in the correct positions on a family tree'
+  ),
+  createBook1GameResource(
+    9, 4,
+    'My/Your Family Practice',
+    'https://wordwall.net/embed/f9c6a0eb87e342afa98b1fd1e5368e8a',
+    'Practice using possessive adjectives with family vocabulary'
   )
 ];
 
-// Combined resources for Unit 9
-export const book1Unit9Resources: TeacherResource[] = [
-  ...book1Unit9VideoResources,
-  ...book1Unit9GameResources
-];
-
-// Export a getter function to match the pattern used elsewhere
-export const getBook1Unit9Resources = () => book1Unit9Resources;
-
-export default book1Unit9Resources;
+// Export video and game resource arrays separately for filtering
+export const book1Unit9VideoResources = book1Unit9Resources.filter(resource => resource.resourceType === 'video');
+export const book1Unit9GameResources = book1Unit9Resources.filter(resource => resource.resourceType === 'game');
