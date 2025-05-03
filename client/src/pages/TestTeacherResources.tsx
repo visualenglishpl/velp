@@ -71,8 +71,15 @@ const TestTeacherResources: React.FC = () => {
         });
         
         // Load resources for Book 1
+        console.log('Book 1 Unit 1 resources loaded:', book1Unit1ResourcesModule.book1Unit1Resources);
+        
+        const filteredResources = book1Unit1ResourcesModule.book1Unit1Resources.filter(
+          (r: TeacherResource) => r.resourceType === 'video' || r.resourceType === 'game'
+        );
+        console.log('Filtered resources:', filteredResources);
+        
         setBook1Resources({
-          unit1: book1Unit1ResourcesModule.book1Unit1Resources.filter((r: TeacherResource) => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4)
+          unit1: filteredResources
         });
       } catch (error) {
         console.error('Error loading Book 1 data:', error);
