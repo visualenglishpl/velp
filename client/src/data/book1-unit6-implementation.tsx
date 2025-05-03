@@ -1,5 +1,5 @@
 import React from 'react';
-import { type LessonPlanItem as LessonPlan } from '@shared/schema';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
 
 /**
  * Implementation file for Book 1 Unit 6: My Favourite Colour
@@ -8,7 +8,8 @@ import { type LessonPlanItem as LessonPlan } from '@shared/schema';
  * "My favourite colour is..."
  */
 
-export const book1Unit6LessonPlans: LessonPlan[] = [
+export const generateUnit6LessonPlans = (): LessonPlan[] => [
+
   {
     id: 'book1-unit6-lesson1',
     bookId: '1',

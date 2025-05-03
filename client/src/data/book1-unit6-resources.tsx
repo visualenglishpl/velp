@@ -1,4 +1,4 @@
-import { type ResourceItem as TeacherResource } from '@shared/schema';
+import { TeacherResource } from '@/components/TeacherResources';
 
 /**
  * Resources for Book 1 Unit 6: My Favourite Colour

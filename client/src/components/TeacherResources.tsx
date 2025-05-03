@@ -37,11 +37,14 @@ import { generateUnit2LessonPlans as generateBook1Unit2LessonPlans } from '@/dat
 import { generateUnit3LessonPlans as generateBook1Unit3LessonPlans } from '@/data/book1-unit3-implementation';
 import { generateUnit4LessonPlans as generateBook1Unit4LessonPlans } from '@/data/book1-unit4-implementation';
 import { generateUnit5LessonPlans as generateBook1Unit5LessonPlans } from '@/data/book1-unit5-implementation';
+import { book1Unit6LessonPlans as generateBook1Unit6LessonPlans } from '@/data/book1-unit6-implementation';
+
 import { book1Unit1Resources, book1Unit1VideoResources, book1Unit1GameResources } from '@/data/book1-unit1-resources';
 import { book1Unit2Resources, book1Unit2VideoResources, book1Unit2GameResources } from '@/data/book1-unit2-resources';
 import { book1Unit3Resources, book1Unit3VideoResources, book1Unit3GameResources } from '@/data/book1-unit3-resources';
 import { book1Unit4Resources, book1Unit4VideoResources, book1Unit4GameResources } from '@/data/book1-unit4-resources';
 import { book1Unit5Resources, book1Unit5VideoResources, book1Unit5GameResources } from '@/data/book1-unit5-resources';
+import { book1Unit6Resources } from '@/data/book1-unit6-resources';
 
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
