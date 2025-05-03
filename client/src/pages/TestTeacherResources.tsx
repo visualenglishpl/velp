@@ -63,8 +63,35 @@ const TestTeacherResources: React.FC = () => {
     setIsLoading(true);
     setError(null);
     try {
-      // Dynamically import the resource module based on book and unit
-      const module = await import(`@/data/book${selectedBook}-unit${selectedUnit}-resources`);
+      // Dynamically import the resource module based on book and unit using a pattern Vite can analyze
+      // Using /* @vite-ignore */ to suppress Vite warnings about dynamic imports
+      let modulePath = '';
+      
+      if (selectedBook === '0a') {
+        modulePath = `book0a-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '0b') {
+        modulePath = `book0b-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '0c') {
+        modulePath = `book0c-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '1') {
+        modulePath = `book1-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '2') {
+        modulePath = `book2-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '3') {
+        modulePath = `book3-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '4') {
+        modulePath = `book4-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '5') {
+        modulePath = `book5-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '6') {
+        modulePath = `book6-unit${selectedUnit}-resources`;
+      } else if (selectedBook === '7') {
+        modulePath = `book7-unit${selectedUnit}-resources`;
+      }
+      
+      console.log(`Loading module: @/data/${modulePath}`);
+      const module = await import(/* @vite-ignore */ `@/data/${modulePath}`);
+      
       // Check if the module has a resources array or a getter function
       if (module.resources) {
         setResources(module.resources);
@@ -75,8 +102,16 @@ const TestTeacherResources: React.FC = () => {
       } else if (module[`book${selectedBook}Unit${selectedUnit}Resources`]) {
         setResources(module[`book${selectedBook}Unit${selectedUnit}Resources`]);
       } else {
-        setResources([]);
-        setError('Resources found but in an unknown format');
+        // Try common resource variable patterns
+        const commonVarName = `book${selectedBook}Unit${selectedUnit}Resources`;
+        if (module[commonVarName]) {
+          setResources(module[commonVarName]);
+        } else {
+          // If we got here, we found the module but couldn't extract resources
+          console.log('Module found but no recognizable resource pattern:', Object.keys(module));
+          setResources([]);
+          setError('Resources found but in an unknown format. Check console for details.');
+        }
       }
     } catch (error) {
       console.error('Error loading resources:', error);
