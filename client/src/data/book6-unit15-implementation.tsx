@@ -1,27 +1,28 @@
-// Book 6 Unit 15 - Are You A Survivor - Implementation
-
-// Import functions from resources file
-import { getBook6Unit15Resources as importedGetResources, getBook6Unit15LessonPlans as importedGetLessonPlans } from './book6-unit15-resources';
-
-// Import types from LessonPlanTemplate to ensure compatibility
-import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { TeacherResource } from '@/components/TeacherResources';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { generateBook6Unit15Resources } from './book6-unit15-resources';
+import { BOOK6_UNIT_TITLES, generateDefaultBook6UnitLessonPlans } from './book6-resources-common';
 
-// Function to get resources for this unit
-export function getBook6Unit15Resources(bookId: string, unitId: string): TeacherResource[] {
-  return importedGetResources(bookId, unitId);
+/**
+ * Implementation of resources for Book 6 Unit 15 - Are You A Survivor?
+ * This function generates all teaching resources for this unit
+ */
+export function generateBook6Unit15Content(bookId: string): TeacherResource[] {
+  return generateBook6Unit15Resources(bookId);
 }
 
-// Function to get lesson plans for this unit
-export function getBook6Unit15LessonPlans(): LessonPlan[] {
-  return importedGetLessonPlans();
+/**
+ * Lesson plans for Unit 15 - Are You A Survivor?
+ */
+export function generateUnit15LessonPlans(): LessonPlan[] {
+  const unitId = '15';
+  const unitTitle = BOOK6_UNIT_TITLES[unitId];
+  
+  // Get the default lesson plans for this unit
+  const lessonPlans = generateDefaultBook6UnitLessonPlans(unitId, unitTitle);
+  
+  // Add any unit-specific modifications here if needed
+  // For example, lessons focused on survival vocabulary and scenarios
+  
+  return lessonPlans;
 }
-
-// Export the lesson plans for backward compatibility
-export const lessonPlans = importedGetLessonPlans();
-
-// Export empty array for backward compatibility
-export const unitResources: TeacherResource[] = [];
-
-// Export special survival-specific lesson plans (if needed in the future)
-export const survivalLessonPlan = lessonPlans[0];

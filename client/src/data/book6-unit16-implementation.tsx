@@ -1,27 +1,29 @@
-// Book 6 Unit 16 - Fashion Accessories - Implementation
-
-// Import functions from resources file
-import { getBook6Unit16Resources as importedGetResources, getBook6Unit16LessonPlans as importedGetLessonPlans } from './book6-unit16-resources';
-
-// Import types from LessonPlanTemplate to ensure compatibility
-import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { TeacherResource } from '@/components/TeacherResources';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { generateBook6Unit16Resources } from './book6-unit16-resources';
+import { BOOK6_UNIT_TITLES, generateDefaultBook6UnitLessonPlans } from './book6-resources-common';
 
-// Function to get resources for this unit
-export function getBook6Unit16Resources(bookId: string, unitId: string): TeacherResource[] {
-  return importedGetResources(bookId, unitId);
+/**
+ * Implementation of resources for Book 6 Unit 16 - Fashion Accessories
+ * This function generates all teaching resources for this unit
+ */
+export function generateBook6Unit16Content(bookId: string): TeacherResource[] {
+  // Get unit-specific resources with the extra game
+  return generateBook6Unit16Resources(bookId);
 }
 
-// Function to get lesson plans for this unit
-export function getBook6Unit16LessonPlans(): LessonPlan[] {
-  return importedGetLessonPlans();
+/**
+ * Lesson plans for Unit 16 - Fashion Accessories
+ */
+export function generateUnit16LessonPlans(): LessonPlan[] {
+  const unitId = '16';
+  const unitTitle = BOOK6_UNIT_TITLES[unitId];
+  
+  // Get the default lesson plans for this unit
+  const lessonPlans = generateDefaultBook6UnitLessonPlans(unitId, unitTitle);
+  
+  // Add any unit-specific modifications here if needed
+  // Example: modify vocabulary objectives, add fashion-specific activities, etc.
+  
+  return lessonPlans;
 }
-
-// Export the lesson plans for backward compatibility
-export const lessonPlans = importedGetLessonPlans();
-
-// Export empty array for backward compatibility
-export const unitResources: TeacherResource[] = [];
-
-// Export special fashion-specific lesson plans (if needed in the future)
-export const fashionAccessoriesLessonPlan = lessonPlans[0];
