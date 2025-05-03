@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 5
+ * Visual English Book 1, Unit 5: Toys and Games
+ * Resources including videos and games
  */
 
-// Videos for Unit 5
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit5-video-1`,
-    bookId: '1',
-    unitId: '5',
-    title: 'VISUAL 1 Unit 5 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit5-video-2`,
-    bookId: '1',
-    unitId: '5',
-    title: 'VISUAL 1 Unit 5 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 5
+export const book1Unit5VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    5, 1,
+    "My Toys - Super Simple Songs",
+    "8-SWdNn5Nkk",
+    "Learn vocabulary for different toys in this fun song"
+  ),
+  createBook1VideoResource(
+    5, 2,
+    "Toys Song - Kids Learning Tube",
+    "jA-dDnbOTOo",
+    "A catchy song about different types of toys"
+  ),
+  createBook1VideoResource(
+    5, 3,
+    "Toys and Games - The Singing Walrus",
+    "vlhEzOB23nk",
+    "Learn about toys and games with this educational song"
+  ),
+  createBook1VideoResource(
+    5, 4,
+    "Toy Words for Kids - ELF Learning",
+    "RZFNRhxLrhE",
+    "Simple vocabulary introduction to common toys"
+  )
 ];
 
-// Games for Unit 5
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit5-game-1`,
-    bookId: '1',
-    unitId: '5',
-    title: 'VISUAL 1 Unit 5 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit5-game-2`,
-    bookId: '1',
-    unitId: '5',
-    title: 'VISUAL 1 Unit 5 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 5
+export const book1Unit5GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    5, 1,
+    "Toys - Matching Game",
+    "5b7da14cb49146c5b50f83e0ecc18d94",
+    "1", "3", "0",
+    "Match the toys to their names in this fun game"
+  ),
+  createBook1GameResource(
+    5, 2,
+    "Toys and Games - Quiz",
+    "b0c934edcf0841d59e77e7a7ac9bd57",
+    "1", "5", "0",
+    "Test your knowledge of toys and games vocabulary"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 5
+export const book1Unit5Resources: TeacherResource[] = [
+  ...book1Unit5VideoResources,
+  ...book1Unit5GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit5Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit5Resources = () => book1Unit5Resources;
+
+export default book1Unit5Resources;

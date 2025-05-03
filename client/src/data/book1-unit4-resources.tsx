@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 4
+ * Visual English Book 1, Unit 4: My Family
+ * Resources including videos and games
  */
 
-// Videos for Unit 4
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit4-video-1`,
-    bookId: '1',
-    unitId: '4',
-    title: 'VISUAL 1 Unit 4 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit4-video-2`,
-    bookId: '1',
-    unitId: '4',
-    title: 'VISUAL 1 Unit 4 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 4
+export const book1Unit4VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    4, 1,
+    "The Family Song - The Singing Walrus",
+    "d_WQEUzS-mY",
+    "Learn family vocabulary with this catchy song"
+  ),
+  createBook1VideoResource(
+    4, 2,
+    "My Family - Kids Educational Songs",
+    "FHaObkHEkHQ",
+    "A fun song about family members"
+  ),
+  createBook1VideoResource(
+    4, 3,
+    "Family Finger Song - Super Simple Songs",
+    "bxl-kAUWRuo",
+    "A finger play song about family members"
+  ),
+  createBook1VideoResource(
+    4, 4,
+    "Where Is My Family - Maple Leaf Learning",
+    "GkJSc9A1KwI",
+    "Learn to identify family members in this simple song"
+  )
 ];
 
-// Games for Unit 4
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit4-game-1`,
-    bookId: '1',
-    unitId: '4',
-    title: 'VISUAL 1 Unit 4 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit4-game-2`,
-    bookId: '1',
-    unitId: '4',
-    title: 'VISUAL 1 Unit 4 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 4
+export const book1Unit4GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    4, 1,
+    "Family Members - Matching Game",
+    "4c9c0b738fb64d91a63e97d20a9cbb04",
+    "1", "3", "0",
+    "Match pictures of family members to their names"
+  ),
+  createBook1GameResource(
+    4, 2,
+    "My Family - Quiz",
+    "d3f436c86f2044ca47e7e7a7ac9bd57",
+    "1", "5", "0",
+    "Test your knowledge of family vocabulary"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 4
+export const book1Unit4Resources: TeacherResource[] = [
+  ...book1Unit4VideoResources,
+  ...book1Unit4GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit4Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit4Resources = () => book1Unit4Resources;
+
+export default book1Unit4Resources;

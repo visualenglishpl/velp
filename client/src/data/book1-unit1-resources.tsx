@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 1
+ * Visual English Book 1, Unit 1: Hello and Goodbye
+ * Resources including videos and games
  */
 
-// Videos for Unit 1
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit1-video-1`,
-    bookId: '1',
-    unitId: '1',
-    title: 'VISUAL 1 Unit 1 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit1-video-2`,
-    bookId: '1',
-    unitId: '1',
-    title: 'VISUAL 1 Unit 1 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 1
+export const book1Unit1VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    1, 1,
+    "Hello! - Super Simple Songs",
+    "tVlcKp3bWH8",
+    "A fun hello song for beginners learning introductions"
+  ),
+  createBook1VideoResource(
+    1, 2,
+    "Goodbye Song - The Singing Walrus",
+    "STMl4yjPnPk",
+    "A catchy goodbye song with simple vocabulary"
+  ),
+  createBook1VideoResource(
+    1, 3,
+    "Hello Hello! Can You Clap Your Hands - Super Simple Songs",
+    "fN1Cyr0ZK9M",
+    "Interactive hello song with actions for young learners"
+  ),
+  createBook1VideoResource(
+    1, 4,
+    "Good Morning, Good Morning - Maple Leaf Learning",
+    "TFVjU-AZoqs",
+    "Learn greetings for different times of day"
+  )
 ];
 
-// Games for Unit 1
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit1-game-1`,
-    bookId: '1',
-    unitId: '1',
-    title: 'VISUAL 1 Unit 1 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit1-game-2`,
-    bookId: '1',
-    unitId: '1',
-    title: 'VISUAL 1 Unit 1 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 1
+export const book1Unit1GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    1, 1,
+    "Greetings - Matching Game",
+    "ab9c70a3a3ad475a9464c4bd6a318a9c",
+    "1", "3", "0",
+    "Match the greetings to the correct situations"
+  ),
+  createBook1GameResource(
+    1, 2,
+    "Hello and Goodbye - Quiz",
+    "8cdf1feaf44b467a9ab3c41ad0da0e62",
+    "1", "5", "0",
+    "Test your knowledge of basic greetings"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 1
+export const book1Unit1Resources: TeacherResource[] = [
+  ...book1Unit1VideoResources,
+  ...book1Unit1GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit1Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit1Resources = () => book1Unit1Resources;
+
+export default book1Unit1Resources;

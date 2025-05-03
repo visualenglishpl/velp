@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 2
+ * Visual English Book 1, Unit 2: Colors and Shapes
+ * Resources including videos and games
  */
 
-// Videos for Unit 2
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit2-video-1`,
-    bookId: '1',
-    unitId: '2',
-    title: 'VISUAL 1 Unit 2 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit2-video-2`,
-    bookId: '1',
-    unitId: '2',
-    title: 'VISUAL 1 Unit 2 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 2
+export const book1Unit2VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    2, 1,
+    "I See Something Blue - Super Simple Songs",
+    "jYAWf8Y91hA",
+    "A song about identifying different colors"
+  ),
+  createBook1VideoResource(
+    2, 2,
+    "The Shapes Song - The Singing Walrus",
+    "Umu58RxNL7I",
+    "Learn about different shapes with this fun song"
+  ),
+  createBook1VideoResource(
+    2, 3,
+    "What Color Is It? - ELF Learning",
+    "tRNy2i75tCc",
+    "A simple song teaching basic colors vocabulary"
+  ),
+  createBook1VideoResource(
+    2, 4,
+    "The Shape Song #1 - Super Simple Songs",
+    "TJhfl5vdxp4",
+    "Learn about circles, squares, triangles and more"
+  )
 ];
 
-// Games for Unit 2
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit2-game-1`,
-    bookId: '1',
-    unitId: '2',
-    title: 'VISUAL 1 Unit 2 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit2-game-2`,
-    bookId: '1',
-    unitId: '2',
-    title: 'VISUAL 1 Unit 2 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 2
+export const book1Unit2GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    2, 1,
+    "Colors - Memory Match",
+    "09ed3c7b2f1e409ab0a3a80e5ad11d42",
+    "1", "3", "0",
+    "Match the colors to their names in this memory game"
+  ),
+  createBook1GameResource(
+    2, 2,
+    "Shapes - Quiz",
+    "7b7da14cb49446c5b50f83e0ecc18d94",
+    "1", "5", "0",
+    "Test your knowledge of basic shapes"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 2
+export const book1Unit2Resources: TeacherResource[] = [
+  ...book1Unit2VideoResources,
+  ...book1Unit2GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit2Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit2Resources = () => book1Unit2Resources;
+
+export default book1Unit2Resources;

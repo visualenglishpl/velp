@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 7
+ * Visual English Book 1, Unit 7: My Pets
+ * Resources including videos and games
  */
 
-// Videos for Unit 7
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit7-video-1`,
-    bookId: '1',
-    unitId: '7',
-    title: 'VISUAL 1 Unit 7 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit7-video-2`,
-    bookId: '1',
-    unitId: '7',
-    title: 'VISUAL 1 Unit 7 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 7
+export const book1Unit7VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    7, 1,
+    "I Have a Pet - Super Simple Songs",
+    "pWepfJ-8XU0",
+    "A fun song about different pets and animals"
+  ),
+  createBook1VideoResource(
+    7, 2,
+    "My Pet - The Singing Walrus",
+    "Bv4GKlgRQcM",
+    "Learn about different pets with this catchy song"
+  ),
+  createBook1VideoResource(
+    7, 3,
+    "Pet Animals - English Singsing",
+    "1DJKN4mITUM",
+    "Learn vocabulary for common pet animals"
+  ),
+  createBook1VideoResource(
+    7, 4,
+    "What's Your Favorite Pet - Maple Leaf Learning",
+    "25_E1-MFPVA",
+    "A simple song about favorite pets and animals"
+  )
 ];
 
-// Games for Unit 7
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit7-game-1`,
-    bookId: '1',
-    unitId: '7',
-    title: 'VISUAL 1 Unit 7 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit7-game-2`,
-    bookId: '1',
-    unitId: '7',
-    title: 'VISUAL 1 Unit 7 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 7
+export const book1Unit7GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    7, 1,
+    "Pets - Matching Game",
+    "8c9c0b738fb64d91a63e97d20a9cbb04",
+    "1", "3", "0",
+    "Match the pets to their names in this fun game"
+  ),
+  createBook1GameResource(
+    7, 2,
+    "Pet Animals - Quiz",
+    "e3f436c86f2044ca47e7e7a7ac9bd57",
+    "1", "5", "0",
+    "Test your knowledge of pet animals vocabulary"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 7
+export const book1Unit7Resources: TeacherResource[] = [
+  ...book1Unit7VideoResources,
+  ...book1Unit7GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit7Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit7Resources = () => book1Unit7Resources;
+
+export default book1Unit7Resources;

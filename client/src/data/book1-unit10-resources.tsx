@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 10
+ * Visual English Book 1, Unit 10: My School
+ * Resources including videos and games
  */
 
-// Videos for Unit 10
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit10-video-1`,
-    bookId: '1',
-    unitId: '10',
-    title: 'VISUAL 1 Unit 10 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit10-video-2`,
-    bookId: '1',
-    unitId: '10',
-    title: 'VISUAL 1 Unit 10 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 10
+export const book1Unit10VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    10, 1,
+    "This Is My School - Dream English",
+    "2i4CbCINjWA",
+    "A fun song introducing school vocabulary"
+  ),
+  createBook1VideoResource(
+    10, 2,
+    "School Song - The Singing Walrus",
+    "hft6uJQIF4g",
+    "Learn vocabulary for different places in a school"
+  ),
+  createBook1VideoResource(
+    10, 3,
+    "At School Song - Kids Learning Tube",
+    "n1bvEZVX20I",
+    "Educational song about different rooms and areas in a school"
+  ),
+  createBook1VideoResource(
+    10, 4,
+    "Let's Go to School - Maple Leaf Learning",
+    "1Ts5d4do8TU",
+    "Simple vocabulary lesson about going to school"
+  )
 ];
 
-// Games for Unit 10
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit10-game-1`,
-    bookId: '1',
-    unitId: '10',
-    title: 'VISUAL 1 Unit 10 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit10-game-2`,
-    bookId: '1',
-    unitId: '10',
-    title: 'VISUAL 1 Unit 10 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 10
+export const book1Unit10GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    10, 1,
+    "School Places - Matching Game",
+    "h29c0b738fb64d91a63e97d20a9cbb04",
+    "1", "3", "0",
+    "Match the school locations to their names"
+  ),
+  createBook1GameResource(
+    10, 2,
+    "School Vocabulary - Quiz",
+    "h3f436c86f2044ca47e7e7a7ac9bd57",
+    "1", "5", "0",
+    "Test your knowledge of school-related vocabulary"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 10
+export const book1Unit10Resources: TeacherResource[] = [
+  ...book1Unit10VideoResources,
+  ...book1Unit10GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit10Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit10Resources = () => book1Unit10Resources;
+
+export default book1Unit10Resources;
