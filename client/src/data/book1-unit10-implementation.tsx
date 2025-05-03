@@ -1,7 +1,6 @@
 /**
- * Implementation file for Book 1 Unit 10: House and Home
- *
- * This unit focuses on teaching house and home vocabulary and related expressions
+ * Visual English Book 1, Unit 10: My Crazy Hair
+ * Lesson Plans Implementation
  */
 
 import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
@@ -16,118 +15,122 @@ export const getBook1Unit10Resources = (): TeacherResource[] => {
 // Export a function to get lesson plans for this unit
 export const generateUnit10LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to House and Home (45 minutes)
+    // Lesson Plan 1 - Introduction to Hair Vocabulary (45 minutes)
     {
       id: 'book1-unit10-lesson1',
-      title: 'Introduction to House and Home - Lesson 1',
+      title: 'Introduction to Hair Vocabulary',
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Learn basic house and home vocabulary',
-        'Identify different house and home items',
-        'Use simple sentences with house and home vocabulary'
+        'Learn basic hair-related vocabulary (hair, long, short, curly, straight, etc.)',
+        'Identify different hair styles and colors',
+        'Use simple sentences to describe hair'
       ],
       materials: [
         'Visual English Book 1 - Unit 10 slides',
-        'House and Home flashcards',
-        'House and Home videos from resources section',
-        'Drawing paper and colored pencils'
+        'Hair vocabulary flashcards',
+        'Hair - PANCAKE MANOR video from resources section',
+        'Drawing paper and colored pencils',
+        'Mirror for self-observation'
       ],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Hair Song Introduction',
           duration: '5 minutes',
-          description: 'Greet students and introduce the topic of house and home. Show flashcards one by one and ask students to repeat the vocabulary.'
+          description: 'Play the "Hair - PANCAKE MANOR" video. Have students watch and listen first time, then encourage them to sing along during the second viewing.'
         },
         {
-          title: 'Presentation',
+          title: 'Hair Vocabulary Introduction',
           duration: '10 minutes',
-          description: 'Play the House and Home vocabulary video. Pause at different points to reinforce vocabulary. Introduce key expressions related to house and home.'
+          description: 'Use flashcards to introduce hair vocabulary: long, short, curly, straight, blonde, brown, black, red, etc. Have students repeat each word and touch their own hair when applicable.'
         },
         {
-          title: 'Practice',
+          title: 'Descriptive Hair Phrases',
+          duration: '8 minutes',
+          description: 'Teach simple phrases: "I have long hair", "She has curly hair", "He has short hair". Have students practice these phrases in pairs, describing each other\'s hair.'
+        },
+        {
+          title: 'Crazy Hair Drawing Activity',
           duration: '15 minutes',
-          description: 'Pair activity: Students practice using the vocabulary in simple conversations. Teacher monitors and provides feedback.'
+          description: 'Give students drawing paper and have them create a "crazy hair" character with unique hair (different colors, styles, etc.). Then have them describe their character using vocabulary learned.'
         },
         {
-          title: 'Activity',
-          duration: '10 minutes',
-          description: 'Students complete a worksheet or game related to house and home vocabulary.'
-        },
-        {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review the vocabulary learned today. Play a quick game to reinforce learning. Assign simple homework related to the topic.'
+          title: 'Review and Game',
+          duration: '7 minutes',
+          description: 'Review the vocabulary using student drawings as examples. Play a quick "I spy" game: "I spy someone with short black hair" and students point to the appropriate drawing.'
         }
       ],
-      assessmentTips: 'Monitor students during pair work for proper use of vocabulary. Check worksheet completion for understanding.',
+      assessmentTips: 'Monitor students during pair work for proper use of hair vocabulary. Check drawings and descriptions for understanding.',
       homeworkIdeas: [
-        'Complete a related worksheet',
-        'Draw and label house and home items learned in class'
+        'Find and cut out pictures of different hairstyles from magazines',
+        'Draw family members and describe their hair'
       ],
       additionalResources: [
         {
-          title: 'House and Home Resources',
-          url: 'https://esl-kids.com/houseandhome'
+          title: 'Hair Vocabulary Resources',
+          url: 'https://www.eslkidstuff.com/'
         }
       ]
     },
     
-    // Lesson Plan 2 - House and Home In Practice (45 minutes)
+    // Lesson Plan 2 - Hair Styles and Descriptions (45 minutes)
     {
       id: 'book1-unit10-lesson2',
-      title: 'House and Home In Practice - Lesson 2',
+      title: 'Hair Styles and Descriptions',
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Review and expand house and home vocabulary',
-        'Practice using house and home in dialogues',
-        'Develop communication skills through themed activities'
+        'Expand hair vocabulary (ponytail, braid, bun, etc.)',
+        'Practice describing hair in more detail',
+        'Learn to ask and answer questions about hair'
       ],
       materials: [
         'Visual English Book 1 - Unit 10 slides',
-        'Interactive house and home games',
-        'Role-play cards',
-        'Art supplies for craft activity'
+        'Funny Haircut - WATTS ENGLISH video',
+        'Pictures of different hairstyles',
+        'Wordwall games from resources section',
+        'Toy hairdressing props (optional)'
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Review house and home vocabulary from previous lesson with a quick game.'
+          title: 'Review and Video',
+          duration: '7 minutes',
+          description: 'Review hair vocabulary from previous lesson. Then play the "Funny Haircut - WATTS ENGLISH" video, asking students to notice different hairstyles.'
         },
         {
-          title: 'Presentation',
+          title: 'New Vocabulary Introduction',
+          duration: '8 minutes',
+          description: 'Introduce new hairstyle vocabulary: ponytail, braid, bun, bangs, etc. Show pictures or demonstrate on willing students or dolls if available.'
+        },
+        {
+          title: 'Question Practice',
           duration: '10 minutes',
-          description: 'Introduce new concepts related to house and home. Show examples and model language patterns.'
+          description: 'Teach question forms: "What color is your hair?" "Is your hair long or short?" "Do you have curly hair?" Have students practice in pairs, asking and answering questions about their hair.'
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Group activity: Students work together on a task related to house and home. Each group presents their work to the class.'
-        },
-        {
-          title: 'Interactive Game',
+          title: 'Interactive Wordwall Game',
           duration: '10 minutes',
-          description: 'Use one of the Wordwall house and home games for interactive practice. Students take turns playing while others help.'
+          description: 'Use the "WORDWALL - MY CRAZY HAIR" games from the resources. Students take turns coming to the board to match hair vocabulary or complete hair-related activities.'
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review all vocabulary and concepts learned. Students share one new thing they learned about house and home today.'
+          title: 'Role Play Activity',
+          duration: '10 minutes',
+          description: 'Students role-play a hairdresser and customer scenario. The customer describes what kind of hairstyle they want, and the hairdresser responds appropriately. Use toy props if available.'
         }
       ],
-      assessmentTips: 'Check student understanding through game participation. Monitor use of language during the group activity.',
+      assessmentTips: 'Listen for correct use of descriptive vocabulary during role plays. Check comprehension through game participation.',
       homeworkIdeas: [
-        'Create a project related to house and home',
-        'Practice vocabulary with family members'
+        'Create a "hair styles around the world" mini-poster',
+        'Practice describing family members\' or friends\' hair'
       ],
       additionalResources: [
         {
-          title: 'House and Home Activity Ideas',
-          url: 'https://www.eslkidstuff.com/'
+          title: 'Hair Styles and Descriptions',
+          url: 'https://en.islcollective.com/'
         }
       ]
     }
   ];
 };
+
+export default generateUnit10LessonPlans;

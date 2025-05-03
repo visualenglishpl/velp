@@ -1,7 +1,6 @@
 /**
- * Implementation file for Book 1 Unit 12: Clothing
- *
- * This unit focuses on teaching clothing vocabulary and related expressions
+ * Visual English Book 1, Unit 12: Home Sweet Home
+ * Lesson Plans Implementation
  */
 
 import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
@@ -16,118 +15,123 @@ export const getBook1Unit12Resources = (): TeacherResource[] => {
 // Export a function to get lesson plans for this unit
 export const generateUnit12LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Clothing (45 minutes)
+    // Lesson Plan 1 - Introduction to Rooms in the House (45 minutes)
     {
       id: 'book1-unit12-lesson1',
-      title: 'Introduction to Clothing - Lesson 1',
+      title: 'Introduction to Rooms in the House',
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Learn basic clothing vocabulary',
-        'Identify different clothing items',
-        'Use simple sentences with clothing vocabulary'
+        'Learn names of the main rooms in a house (bathroom, bedroom, kitchen, living room)',
+        'Identify objects found in different rooms',
+        'Use simple sentences to name rooms and their functions'
       ],
       materials: [
         'Visual English Book 1 - Unit 12 slides',
-        'Clothing flashcards',
-        'Clothing videos from resources section',
-        'Drawing paper and colored pencils'
+        'House room flashcards',
+        'Rooms Of The House Song - Planet Pop video',
+        'Drawing paper and colored pencils',
+        'Pictures of rooms in a house'
       ],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'House Song Introduction',
           duration: '5 minutes',
-          description: 'Greet students and introduce the topic of clothing. Show flashcards one by one and ask students to repeat the vocabulary.'
+          description: 'Play the "Rooms Of The House Song - Planet Pop" video. Have students watch and listen first time, then encourage them to join in with actions during the second viewing.'
         },
         {
-          title: 'Presentation',
+          title: 'Room Vocabulary Introduction',
           duration: '10 minutes',
-          description: 'Play the Clothing vocabulary video. Pause at different points to reinforce vocabulary. Introduce key expressions related to clothing.'
+          description: 'Use flashcards to introduce the main rooms: bathroom, bedroom, kitchen, living room. For each room, discuss what we do there (sleep in bedroom, cook in kitchen, etc.).'
         },
         {
-          title: 'Practice',
+          title: 'Room Objects Matching',
+          duration: '8 minutes',
+          description: 'Show pictures of various household objects and have students identify which room they belong in. Ask: "Where is the [bed/stove/sofa]?" Students respond: "It\'s in the [room]."'
+        },
+        {
+          title: 'Dream House Drawing Activity',
           duration: '15 minutes',
-          description: 'Pair activity: Students practice using the vocabulary in simple conversations. Teacher monitors and provides feedback.'
+          description: 'Have students draw a simple floor plan of a house with different rooms. They should label each room and draw at least one object that belongs in each room.'
         },
         {
-          title: 'Activity',
-          duration: '10 minutes',
-          description: 'Students complete a worksheet or game related to clothing vocabulary.'
-        },
-        {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review the vocabulary learned today. Play a quick game to reinforce learning. Assign simple homework related to the topic.'
+          title: 'Room Location Game',
+          duration: '7 minutes',
+          description: 'Teacher calls out an action ("sleeping", "cooking", "washing") and students respond with the room name. Then reverse: teacher says a room and students mime an activity done there.'
         }
       ],
-      assessmentTips: 'Monitor students during pair work for proper use of vocabulary. Check worksheet completion for understanding.',
+      assessmentTips: 'Check if students can correctly name rooms and place objects in appropriate rooms. Listen for proper pronunciation of room names.',
       homeworkIdeas: [
-        'Complete a related worksheet',
-        'Draw and label clothing items learned in class'
+        'Draw and label their own bedroom or favorite room in their house',
+        'Complete a worksheet matching objects to different rooms'
       ],
       additionalResources: [
         {
-          title: 'Clothing Resources',
-          url: 'https://esl-kids.com/clothing'
+          title: 'House and Home Resources',
+          url: 'https://www.eslkidstuff.com/'
         }
       ]
     },
     
-    // Lesson Plan 2 - Clothing In Practice (45 minutes)
+    // Lesson Plan 2 - Objects in the House (45 minutes)
     {
       id: 'book1-unit12-lesson2',
-      title: 'Clothing In Practice - Lesson 2',
+      title: 'Objects in the House',
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Review and expand clothing vocabulary',
-        'Practice using clothing in dialogues',
-        'Develop communication skills through themed activities'
+        'Learn vocabulary for common household objects',
+        'Practice asking and answering "Where is...?" questions',
+        'Use prepositions of place with house objects',
+        'Develop descriptive language about houses'
       ],
       materials: [
         'Visual English Book 1 - Unit 12 slides',
-        'Interactive clothing games',
-        'Role-play cards',
-        'Art supplies for craft activity'
+        'VIDEO STORY Rooms in the House WATTS ENGLISH video',
+        'Pictures of household objects',
+        'Wordwall games from resources section',
+        'Simple house floor plan template'
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Review clothing vocabulary from previous lesson with a quick game.'
+          title: 'Review and Video',
+          duration: '7 minutes',
+          description: 'Review room names from previous lesson. Play the "VIDEO STORY Rooms in the House WATTS ENGLISH" video, asking students to notice the different rooms and objects shown.'
         },
         {
-          title: 'Presentation',
+          title: 'Household Objects Vocabulary',
+          duration: '8 minutes',
+          description: 'Introduce common household objects: bed, table, chair, sofa, TV, bathtub, toilet, sink, stove, fridge, etc. Students repeat the words and practice the question "What\'s this?" with the answer "It\'s a [object]."'
+        },
+        {
+          title: 'Where Is It? Practice',
           duration: '10 minutes',
-          description: 'Introduce new concepts related to clothing. Show examples and model language patterns.'
+          description: 'Using the house floor plan, place pictures of objects in different rooms. Practice asking "Where is the [object]?" with answers "It\'s in the [room]." Add prepositions for advanced students: "It\'s on the table in the kitchen."'
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Group activity: Students work together on a task related to clothing. Each group presents their work to the class.'
-        },
-        {
-          title: 'Interactive Game',
+          title: 'Room Quiz Game',
           duration: '10 minutes',
-          description: 'Use one of the Wordwall clothing games for interactive practice. Students take turns playing while others help.'
+          description: 'Play the "VIDEO QUIZ - Rooms of the House Game" from resources. Students take turns identifying rooms and objects, earning points for correct answers.'
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review all vocabulary and concepts learned. Students share one new thing they learned about clothing today.'
+          title: 'Interactive Wordwall Game',
+          duration: '10 minutes',
+          description: 'Use the "WORDWALL - ROOMS IN THE HOUSE" games from resources. Students practice matching rooms, objects, and activities.'
         }
       ],
-      assessmentTips: 'Check student understanding through game participation. Monitor use of language during the group activity.',
+      assessmentTips: 'Observe students\' ability to correctly place objects in appropriate rooms. Check comprehension of "Where is...?" questions through the interactive games.',
       homeworkIdeas: [
-        'Create a project related to clothing',
-        'Practice vocabulary with family members'
+        'Create a picture dictionary of household objects',
+        'Write 3-5 sentences about their favorite room at home'
       ],
       additionalResources: [
         {
-          title: 'Clothing Activity Ideas',
-          url: 'https://www.eslkidstuff.com/'
+          title: 'House and Home Activities',
+          url: 'https://en.islcollective.com/'
         }
       ]
     }
   ];
 };
+
+export default generateUnit12LessonPlans;

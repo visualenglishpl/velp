@@ -1,7 +1,7 @@
 /**
- * Implementation file for Book 1 Unit 13: Body Parts
+ * Implementation file for Book 1 Unit 13: Do You Have a Pet?
  *
- * This unit focuses on teaching body parts vocabulary and related expressions
+ * This unit focuses on teaching pet vocabulary and related expressions
  */
 
 import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
@@ -16,116 +16,116 @@ export const getBook1Unit13Resources = (): TeacherResource[] => {
 // Export a function to get lesson plans for this unit
 export const generateUnit13LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Body Parts (45 minutes)
+    // Lesson Plan 1 - Introduction to Pets (45 minutes)
     {
       id: 'book1-unit13-lesson1',
-      title: 'Introduction to Body Parts - Lesson 1',
+      title: 'Introduction to Pets - Lesson 1',
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Learn basic body parts vocabulary',
-        'Identify different body parts items',
-        'Use simple sentences with body parts vocabulary'
+        'Learn pet vocabulary (dog, cat, bird, fish, etc.)',
+        'Ask and answer "Do you have a pet?"',
+        'Describe pets using simple adjectives'
       ],
       materials: [
         'Visual English Book 1 - Unit 13 slides',
-        'Body Parts flashcards',
-        'Body Parts videos from resources section',
+        'Pet flashcards or pictures',
+        'Pet videos from resources section',
         'Drawing paper and colored pencils'
       ],
       steps: [
         {
           title: 'Warm-up',
           duration: '5 minutes',
-          description: 'Greet students and introduce the topic of body parts. Show flashcards one by one and ask students to repeat the vocabulary.'
+          description: 'Greet students and show pet pictures. Ask: "What is this?" Teach pet vocabulary using visual aids. Have students repeat after you.'
         },
         {
           title: 'Presentation',
           duration: '10 minutes',
-          description: 'Play the Body Parts vocabulary video. Pause at different points to reinforce vocabulary. Introduce key expressions related to body parts.'
+          description: 'Play the "I Have A Pet Animal Song" video. Pause at different animals to practice vocabulary. Teach the question "Do you have a pet?" and responses "Yes, I do" / "No, I don\'t".'
         },
         {
           title: 'Practice',
           duration: '15 minutes',
-          description: 'Pair activity: Students practice using the vocabulary in simple conversations. Teacher monitors and provides feedback.'
+          description: 'Students ask and answer "Do you have a pet?" in pairs or small groups. If they answer yes, they should describe their pet (color, size, name).'
         },
         {
           title: 'Activity',
           duration: '10 minutes',
-          description: 'Students complete a worksheet or game related to body parts vocabulary.'
+          description: 'Students draw their pet or a pet they would like to have. Then they present it to the class using "This is my pet [animal]. Its name is [name]."'
         },
         {
           title: 'Wrap-up',
           duration: '5 minutes',
-          description: 'Review the vocabulary learned today. Play a quick game to reinforce learning. Assign simple homework related to the topic.'
+          description: 'Review pet vocabulary learned today. Play a quick game: teacher says an animal and students must make that animal sound or movement.'
         }
       ],
-      assessmentTips: 'Monitor students during pair work for proper use of vocabulary. Check worksheet completion for understanding.',
+      assessmentTips: 'Monitor students during pair work for proper use of "Do you have a pet?" question and appropriate responses. Check drawings for understanding of vocabulary.',
       homeworkIdeas: [
-        'Complete a related worksheet',
-        'Draw and label body parts items learned in class'
+        'Complete a worksheet identifying different pets',
+        'Draw their favorite pet and write 3 sentences about it'
       ],
       additionalResources: [
         {
-          title: 'Body Parts Resources',
-          url: 'https://esl-kids.com/bodyparts'
+          title: 'Pet Vocabulary Resources',
+          url: 'https://supersimple.com/super-simple-songs/i-have-a-pet/'
         }
       ]
     },
     
-    // Lesson Plan 2 - Body Parts In Practice (45 minutes)
+    // Lesson Plan 2 - Pet Care and Descriptions (45 minutes)
     {
       id: 'book1-unit13-lesson2',
-      title: 'Body Parts In Practice - Lesson 2',
+      title: 'Pet Care and Descriptions - Lesson 2',
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Review and expand body parts vocabulary',
-        'Practice using body parts in dialogues',
-        'Develop communication skills through themed activities'
+        'Expand pet vocabulary with care-related words',
+        'Describe pets in more detail (size, color, behavior)',
+        'Learn about pet habitats and needs'
       ],
       materials: [
         'Visual English Book 1 - Unit 13 slides',
-        'Interactive body parts games',
-        'Role-play cards',
+        'Interactive pet games from resources section',
+        'Pet care items or pictures (food bowl, leash, pet bed, etc.)',
         'Art supplies for craft activity'
       ],
       steps: [
         {
           title: 'Warm-up',
           duration: '5 minutes',
-          description: 'Review body parts vocabulary from previous lesson with a quick game.'
+          description: 'Review pet vocabulary from previous lesson. Show images of pets and ask: "What pet is this?" and "Do you have this pet?"'
         },
         {
           title: 'Presentation',
           duration: '10 minutes',
-          description: 'Introduce new concepts related to body parts. Show examples and model language patterns.'
+          description: 'Play the "Pet Store" video from resources. Discuss what pets need: food, water, shelter, love. Introduce vocabulary for pet care items.'
         },
         {
           title: 'Practice',
           duration: '15 minutes',
-          description: 'Group activity: Students work together on a task related to body parts. Each group presents their work to the class.'
+          description: 'Group activity: Students discuss what different pets need. Give each group a pet to focus on (dog, cat, fish, bird) and have them create a list of items needed for that pet.'
         },
         {
           title: 'Interactive Game',
           duration: '10 minutes',
-          description: 'Use one of the Wordwall body parts games for interactive practice. Students take turns playing while others help.'
+          description: 'Use one of the Wordwall pet games from resources. After playing, have students design a pet house using the PBS Kids game, explaining what their pet needs.'
         },
         {
           title: 'Wrap-up',
           duration: '5 minutes',
-          description: 'Review all vocabulary and concepts learned. Students share one new thing they learned about body parts today.'
+          description: 'Review all vocabulary related to pets and pet care. Each student shares one important thing their pet (real or imaginary) needs.'
         }
       ],
-      assessmentTips: 'Check student understanding through game participation. Monitor use of language during the group activity.',
+      assessmentTips: 'Check student understanding of pet care concepts through the group activity. Listen for correct use of descriptive vocabulary during presentations.',
       homeworkIdeas: [
-        'Create a project related to body parts',
-        'Practice vocabulary with family members'
+        'Create a pet care poster for their favorite pet',
+        'Write 5 sentences about what their pet needs'
       ],
       additionalResources: [
         {
-          title: 'Body Parts Activity Ideas',
-          url: 'https://www.eslkidstuff.com/'
+          title: 'Pet Care Teaching Resources',
+          url: 'https://www.education.com/resources/pets/'
         }
       ]
     }

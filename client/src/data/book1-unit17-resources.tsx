@@ -1,67 +1,122 @@
-import { TeacherResource } from '@/components/TeacherResources';
-import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
-
 /**
- * Resources for Book 1 Unit 17: Transportation
- * 
- * This file contains video and game resources for teaching
- * transportation vocabulary and related expressions
+ * Visual English Book 1, Unit 17: HOW IS THE WEATHER?
+ * Resources including videos and games
  */
 
-export const book1Unit17Resources: TeacherResource[] = [
-  // Videos
-  createBook1VideoResource(
-    17, 1,
-    'Transportation Song for Kids',
-    'kUv6XXG4hZU',
-    'A catchy song about transportation with colorful visuals'
-  ),
-  createBook1VideoResource(
-    17, 2,
-    'Transportation Vocabulary',
-    'YRk7-2XQoVs',
-    'Learn transportation vocabulary with clear pronunciation'
-  ),
-  createBook1VideoResource(
-    17, 3,
-    'Transportation in Action',
-    'Ut-HbauKzDw',
-    'See transportation used in real-life contexts'
-  ),
-  createBook1VideoResource(
-    17, 4,
-    'Transportation Story Time',
-    'pf5R2A7B7GI',
-    'A story featuring transportation vocabulary'
-  ),
-  
-  // Games
-  createBook1GameResource(
-    17, 1,
-    'Transportation Matching Game',
-    'https://wordwall.net/embed/7af9c359a30a4ad8a0ed55faaeed9cbc',
-    'Match transportation pictures with their English names'
-  ),
-  createBook1GameResource(
-    17, 2,
-    'Transportation Spelling Practice',
-    'https://wordwall.net/embed/f3af87cda823433ca33c42eb1fe7b23e',
-    'Practice spelling transportation vocabulary'
-  ),
-  createBook1GameResource(
-    17, 3,
-    'Transportation Quiz',
-    'https://wordwall.net/embed/538cfa80f86e459fa23b38c1cec5c111',
-    'Test knowledge of transportation vocabulary through an interactive quiz'
-  ),
-  createBook1GameResource(
-    17, 4,
-    'Transportation Groups',
-    'https://wordwall.net/embed/c0ec8c7d94d3435d9c0ef5d03c28c30d',
-    'Sort transportation into different categories'
-  )
+import { TeacherResource } from '@/components/TeacherResources';
+
+export const book1Unit17VideoResources: TeacherResource[] = [
+  {
+    id: 'book1-unit17-video1',
+    bookId: '1',
+    unitId: '17',
+    title: 'How\'s the Weather? - Simple Skits MAPLE',
+    description: 'Fun skit showing conversations about different weather conditions.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=O2NwvUB41rA',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/O2NwvUB41rA?si=JySJcCT_p8wOTCYj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit17-video2',
+    bookId: '1',
+    unitId: '17',
+    title: 'How\'s the Weather Song - MAPLE',
+    description: 'Catchy song about weather vocabulary with visuals of different weather types.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=I8GeA3anPdo',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/I8GeA3anPdo?si=R4f9ElREGe8Xn4qr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit17-video3',
+    bookId: '1',
+    unitId: '17',
+    title: 'How\'s the Weather Skit',
+    description: 'Role-play demonstration teaching weather vocabulary and expressions.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=gpBuaU5OPi8',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gpBuaU5OPi8?si=YUXSCnQaN6RLzgcq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit17-video4',
+    bookId: '1',
+    unitId: '17',
+    title: 'Magic Weather for Kids - WATTS ENGLISH',
+    description: 'Story-based video about different weather types with a magical theme.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=pd5kLz3jc4o',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/pd5kLz3jc4o?si=gj5ZvP1kV4kccER7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit17-video5',
+    bookId: '1',
+    unitId: '17',
+    title: 'Rain Rain Go Away - Super Simple Songs',
+    description: 'Classic children\'s song with animations about rain and weather.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=c3v0rJqyCTM',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/c3v0rJqyCTM?si=07UxhHal_yXyjek-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit17-video6',
+    bookId: '1',
+    unitId: '17',
+    title: 'Partly Cloudy - Animated Short Film',
+    description: 'Beautiful animated film about clouds and weather that can be used for discussion.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=PfyJQEIsMt0',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/PfyJQEIsMt0?si=ppJFnPDjRoAaVOA_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  }
 ];
 
-// Export video and game resource arrays separately for filtering
-export const book1Unit17VideoResources = book1Unit17Resources.filter(resource => resource.resourceType === 'video');
-export const book1Unit17GameResources = book1Unit17Resources.filter(resource => resource.resourceType === 'game');
+export const book1Unit17GameResources: TeacherResource[] = [
+  {
+    id: 'book1-unit17-game1',
+    bookId: '1',
+    unitId: '17',
+    title: 'WORDWALL - WEATHER (1)',
+    description: 'Interactive game to practice identifying different weather conditions.',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/0d86e97d1d264023b65d07f200681c1b',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0d86e97d1d264023b65d07f200681c1b?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit17-game2',
+    bookId: '1',
+    unitId: '17',
+    title: 'WORDWALL - WEATHER (2)',
+    description: 'Match weather vocabulary with their pictures in this interactive game.',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/17f93ebd3a064bdbb6091669ff5f7318',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/17f93ebd3a064bdbb6091669ff5f7318?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit17-game3',
+    bookId: '1',
+    unitId: '17',
+    title: 'WORDWALL - WEATHER (3)',
+    description: 'Quiz about different weather types and conditions.',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/89a170a27647484d8c98c94a5f04f9e7',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/89a170a27647484d8c98c94a5f04f9e7?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  }
+];
+
+// Combined resources
+export const book1Unit17Resources: TeacherResource[] = [
+  ...book1Unit17VideoResources,
+  ...book1Unit17GameResources
+];
+
+// Export a function to get all resources for this unit
+export const getBook1Unit17Resources = () => book1Unit17Resources;
+
+export default book1Unit17Resources;

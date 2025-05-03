@@ -1,5 +1,5 @@
 /**
- * Visual English Book 1, Unit 5: School Supplies
+ * Visual English Book 1, Unit 5: Family
  * Resources including videos and games
  */
 
@@ -10,45 +10,56 @@ export const book1Unit5VideoResources: TeacherResource[] = [
     id: 'book1-unit5-video1',
     bookId: '1',
     unitId: '5',
-    title: 'School Supplies Song',
-    description: 'A fun song about school supplies to help students learn vocabulary.',
+    title: 'The Finger Family',
+    description: 'A catchy song that introduces family vocabulary through the finger family theme.',
     resourceType: 'video',
-    provider: 'English Tree TV',
-    sourceUrl: 'https://www.youtube.com/watch?v=AS5nhKzaOqo',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/AS5nhKzaOqo?si=UkRbD2hAw_q5jBM2" title="School Supplies Song" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=1EyrquyRg5s',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/1EyrquyRg5s?si=3Zq8IQRNRyPxT6CU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: 'book1-unit5-video2',
     bookId: '1',
     unitId: '5',
-    title: 'Back to School Mix',
-    description: 'A collection of back to school scenarios to help students learn vocabulary.',
+    title: 'My family - WATTS ENGLISH',
+    description: 'A fun video about family members and vocabulary for beginners.',
     resourceType: 'video',
-    provider: 'Watts English',
-    sourceUrl: 'https://www.youtube.com/watch?v=g2tKiX3ARdo',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/g2tKiX3ARdo?si=LKMeRxhCe4PgJtJN" title="Back to School Mix" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=VvrG4JguNQk',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/VvrG4JguNQk?si=MghyBpQyLCnOTu_H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: 'book1-unit5-video3',
     bookId: '1',
     unitId: '5',
-    title: 'What is in Your Bag Song',
-    description: 'A song about school supplies in a bag, ideal for practicing vocabulary.',
+    title: 'Baby Shark Dance - PINKFONG',
+    description: 'The popular Baby Shark song that introduces family members in a fun and engaging way.',
     resourceType: 'video',
-    provider: 'Dream English',
-    sourceUrl: 'https://www.youtube.com/watch?v=4dMbCLFMJmE',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4dMbCLFMJmE?si=Hw23MkQdP6XMbyKf" title="What is in Your Bag Song" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=XqZsoesa55w',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XqZsoesa55w?si=QTyqs9ClhhT3iApt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: 'book1-unit5-video4',
     bookId: '1',
     unitId: '5',
-    title: 'Magic Crayons',
-    description: 'A fun story about magic crayons to engage students in learning colors and school supplies.',
+    title: 'Baby Shark - SUPER SIMPLE SONGS',
+    description: 'Super Simple Songs version of the baby shark song focusing on family members.',
     resourceType: 'video',
-    provider: 'Watts English',
-    sourceUrl: 'https://www.youtube.com/watch?v=8YQ2amcQqZY',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8YQ2amcQqZY?si=BnQR8XYPevHqXWP8" title="Magic Crayons" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=GR2o6k8aPlI',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/GR2o6k8aPlI?si=tcGAuyQKEkEVZdJr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit5-video5',
+    bookId: '1',
+    unitId: '5',
+    title: 'Family - ENGLISH TREE',
+    description: 'A clear introduction to family vocabulary with simple examples.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=d_WQEw13TCo',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/d_WQEw13TCo?si=caFvmudI0NPkvY-_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   }
 ];
 
@@ -57,34 +68,34 @@ export const book1Unit5GameResources: TeacherResource[] = [
     id: 'book1-unit5-game1',
     bookId: '1',
     unitId: '5',
-    title: 'WORDWALL - SCHOOL SUPPLIES (1)',
-    description: 'Match the school supplies with their names.',
+    title: 'WORDWALL - FAMILY (1)',
+    description: 'Interactive game to practice family vocabulary.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/29163751/school-supplies',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/40d35a545aa94c26b01b53a33bad53f4?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/e5f62afa86814cc98336327469ce1554',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e5f62afa86814cc98336327469ce1554?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: 'book1-unit5-game2',
     bookId: '1',
     unitId: '5',
-    title: 'WORDWALL - SCHOOL SUPPLIES (2)',
-    description: 'Label the school objects with their correct names.',
+    title: 'WORDWALL - FAMILY (2)',
+    description: 'Match family member names with their corresponding images.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/18066347/school-objects',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5c9f25d0bbb04e23a92c2c5734a9a4de?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/d1bc1e8629a445468a696f03f372e5e9',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d1bc1e8629a445468a696f03f372e5e9?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: 'book1-unit5-game3',
     bookId: '1',
     unitId: '5',
-    title: 'WORDWALL - SCHOOL SUPPLIES (3)',
-    description: 'Quiz about school supplies that are in a pencil case.',
+    title: 'WORDWALL - FAMILY (3)',
+    description: 'Quiz to test knowledge of family vocabulary.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/1096018/in-my-pencil-case',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f47ca0a3ed604b6aa11a5be1121cbf9a?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/1c606c6af00643d692fc0199a60c2b2c',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1c606c6af00643d692fc0199a60c2b2c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   }
 ];
 

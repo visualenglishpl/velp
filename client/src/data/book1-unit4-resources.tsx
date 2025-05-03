@@ -1,5 +1,5 @@
 /**
- * Visual English Book 1, Unit 4: Shapes
+ * Visual English Book 1, Unit 4: How Are You?
  * Resources including videos and games
  */
 
@@ -12,45 +12,56 @@ export const book1Unit4VideoResources: TeacherResource[] = [
     id: "book1-unit4-video1",
     bookId: "1",
     unitId: "4",
-    title: "The Shapes Song - Super Simple Songs",
+    title: "Are You Happy Sad Hot Cold - WATTS ENGLISH",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=TJhfl5vdxp4",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/TJhfl5vdxp4?si=vY8T6XncJ4BpR1oY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A catchy song that introduces basic shapes with clear animations and repetitive lyrics."
+    sourceUrl: "https://www.youtube.com/watch?v=5su1M6NdG-I",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/5su1M6NdG-I?si=VDPLCxtaD7jlbp6l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A fun and engaging video about different feelings and physical states, perfect for teaching emotions vocabulary."
   },
   {
     id: "book1-unit4-video2",
     bookId: "1",
     unitId: "4",
-    title: "Shapes Song - The Singing Walrus",
+    title: "Are you Thirsty Hungry and Sick - WATTS ENGLISH",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=JsCn-pxZWzE",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/JsCn-pxZWzE?si=7PtaJERmVQl5BzPM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "Learn basic geometric shapes with this engaging song that features clear visuals and catchy melody."
+    sourceUrl: "https://www.youtube.com/watch?v=iztRyiYIwUs",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/iztRyiYIwUs?si=fVLZihbWVRUgpwXt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "Learn about physical states like being hungry, thirsty, or sick with this interactive video."
   },
   {
     id: "book1-unit4-video3",
     bookId: "1",
     unitId: "4",
-    title: "Make a Robot Face - WATTS ENGLISH",
+    title: "Are You Hungry Kids - SUPER SIMPLE SONGS",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=8hIq9fXSrfx",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8hIq9fXSrfx?si=ZCIzgT30a0vtFWw_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A fun creative activity that uses shapes to build a robot face, reinforcing shape vocabulary in a practical context."
+    sourceUrl: "https://www.youtube.com/watch?v=ykTR0uFGwE0",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ykTR0uFGwE0?si=Y5Ty39bwGYrdD-W6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A catchy song about being hungry and different foods children like to eat."
   },
   {
     id: "book1-unit4-video4",
     bookId: "1",
     unitId: "4",
-    title: "3D Shapes I Know - Dream English",
+    title: "How Are You Today - MAPLE LEAF",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=ZnZYK83utu0",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ZnZYK83utu0?si=NdqhMpZ1wPfNJw6I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "This song introduces 3D shapes like spheres, cylinders, and cubes with real-world examples."
+    sourceUrl: "https://www.youtube.com/watch?v=teMU8dHLqSI",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/teMU8dHLqSI?si=QuGLh_wOKnY8LR2k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A cheerful song teaching children how to ask and answer about feelings in English."
+  },
+  {
+    id: "book1-unit4-video5",
+    bookId: "1",
+    unitId: "4",
+    title: "SKIT How Are You Today - MAPLE LEAF",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=kR6Qcqx2fJE",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/kR6Qcqx2fJE?si=ZhzOtIlzF8guQFDx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A helpful skit demonstrating how to use 'How are you?' in everyday conversations."
   }
 ];
 
@@ -60,34 +71,23 @@ export const book1Unit4GameResources: TeacherResource[] = [
     id: "book1-unit4-game1",
     bookId: "1",
     unitId: "4",
-    title: "WORDWALL - SHAPES (1)",
+    title: "WORDWALL - HOW ARE YOU - HOW IS THE DOG",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/42540/shapes-memory-match",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/42540/shapes-memory-match?themeId=1&templateId=11&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "Match shape words with their corresponding images in this memory match game."
+    sourceUrl: "https://wordwall.net/resource/cc9df848c6a94c99b8dcf9c9b65caeb4",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/cc9df848c6a94c99b8dcf9c9b65caeb4?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "Practice asking and answering 'How are you?' questions with different characters."
   },
   {
     id: "book1-unit4-game2",
     bookId: "1",
     unitId: "4",
-    title: "WORDWALL - SHAPES (2)",
+    title: "WORDWALL - HOW ARE YOU",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/483357/shapes-quiz",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/483357/shapes-quiz?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "Test your knowledge of basic shapes with this interactive quiz."
-  },
-  {
-    id: "book1-unit4-game3",
-    bookId: "1",
-    unitId: "4",
-    title: "WORDWALL - SHAPES (3)",
-    resourceType: "game",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/21986291/shapes",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/21986291/shapes?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "Practice identifying different shapes with this fun interactive game."
+    sourceUrl: "https://wordwall.net/resource/61576e9315e949fd9a89477f5807ce46",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/61576e9315e949fd9a89477f5807ce46?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "An interactive game to practice different feelings and states."
   }
 ];
 

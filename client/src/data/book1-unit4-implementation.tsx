@@ -1,5 +1,5 @@
 /**
- * Visual English Book 1, Unit 4: Shapes
+ * Visual English Book 1, Unit 4: How Are You?
  * Lesson Plans Implementation
  */
 
@@ -7,106 +7,106 @@ import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
 export const generateUnit4LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Basic Shapes (45 minutes)
+    // Lesson Plan 1 - Introducing Feelings and States (45 minutes)
     {
       id: 'book1-unit4-lesson1',
-      title: 'Introduction to Basic Shapes',
+      title: 'Introducing Feelings and States',
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Learn and identify 6 basic shapes (circle, square, triangle, rectangle, star, heart)',
-        'Practice shape vocabulary through hands-on activities',
-        'Develop listening and speaking skills through shape-based songs and games'
+        'Learn to ask and answer the question "How are you?"',
+        'Identify and express 6 basic feelings/states (happy, sad, hungry, thirsty, hot, cold)',
+        'Develop facial expressions and gestures corresponding to different feelings'
       ],
       materials: [
         'Visual English Book 1 - Unit 4 (slides 1-15)',
-        'Shape flashcards',
-        'Shape cutouts in different colors',
-        'The Shapes Song video from Video Resources',
-        'Drawing paper and pencils'
+        'Emotion/state flashcards',
+        'Mirror for facial expressions practice',
+        'Are You Happy Sad Hot Cold video from Video Resources',
+        'Drawing paper and colored pencils'
       ],
       steps: [
         {
-          title: 'Shapes Song Introduction',
+          title: 'Feelings Song Introduction',
           duration: '5 minutes',
-          description: 'Play "The Shapes Song - Super Simple Songs" video. Have students watch and listen first time, then encourage them to make the shape outlines with their hands during the second viewing.'
+          description: 'Play "Are You Happy Sad Hot Cold - WATTS ENGLISH" video. Have students watch and listen the first time, then encourage them to mimic the facial expressions during the second viewing.'
         },
         {
-          title: 'Shape Flashcards Introduction',
+          title: 'Feelings/States Flashcards Introduction',
           duration: '10 minutes',
-          description: 'Introduce each shape using flashcards. Hold up a shape card, say the shape name clearly, have students repeat. Practice with: circle, square, triangle, rectangle, star, heart. Describe each shape\'s characteristics (e.g., "A square has 4 equal sides").'
+          description: 'Introduce each feeling/state using flashcards. Hold up a card, demonstrate the expression, say the word clearly, have students repeat and mimic. Practice with: happy, sad, hungry, thirsty, hot, cold.'
         },
         {
-          title: 'Shape Hunt Classroom Activity',
-          duration: '7 minutes',
-          description: 'Students look around the classroom to find real objects with different shapes. When they find one, they raise their hand and say "I found a [shape]. The [object] is a [shape]." Example: "I found a rectangle. The door is a rectangle."'
-        },
-        {
-          title: 'What Shape Is It?',
+          title: 'How Are You? Dialogue Practice',
           duration: '8 minutes',
-          description: 'Using Visual English Book 1 slides 5-10, practice the question "What shape is it?" and the answer "It is a [shape]." Show various shapes, ask the question, and have students respond.'
+          description: 'Using Visual English Book 1 slides 5-10, practice the question "How are you?" and various answers like "I am happy/sad/hungry/thirsty/hot/cold". Model the dialogue with a student, then have students practice in pairs.'
         },
         {
-          title: 'Shape Sorting Game',
+          title: 'Feelings Charades',
+          duration: '7 minutes',
+          description: 'Students take turns coming to the front of the class and acting out a feeling/state without speaking. The class guesses the feeling by asking "Are you (happy/sad/etc.)?" until they guess correctly.'
+        },
+        {
+          title: 'Feelings Survey Activity',
           duration: '10 minutes',
-          description: 'Divide students into small groups. Give each group a pile of mixed shape cutouts. Students take turns picking a shape, naming it, and placing it in the correct pile. Groups can compete to see who sorts their shapes correctly first.'
+          description: 'Give students a simple survey sheet with faces representing different feelings. Students walk around asking classmates "How are you?" and marking their responses. After gathering 5 responses, students report back: "[Name] is [feeling]."'
         },
         {
-          title: 'Review and Shape Drawing',
+          title: 'Review and Feelings Drawing',
           duration: '5 minutes',
-          description: 'Review all shapes learned. Then give students drawing paper and have them draw and label each shape. Early finishers can color their shapes.'
+          description: 'Review all feelings/states learned. Then give students drawing paper and have them draw a face showing one of the feelings/states and label it "I am [feeling/state]."'
         }
       ]
     },
-    // Lesson Plan 2 - Shapes in Our World (45 minutes)
+    // Lesson Plan 2 - More Feelings and Health States (45 minutes)
     {
       id: 'book1-unit4-lesson2',
-      title: 'Shapes in Our World',
+      title: 'More Feelings and Health States',
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Review and consolidate shape vocabulary',
-        'Learn to describe objects using shapes',
-        'Create artwork using different shapes',
-        'Introduce 3D shapes (cube, sphere, cylinder)'
+        'Expand vocabulary related to feelings and physical states',
+        'Learn to ask and answer about someone else\'s feelings',
+        'Introduce health-related vocabulary (sick, tired)',
+        'Practice appropriate responses to different states'
       ],
       materials: [
         'Visual English Book 1 - Unit 4 (slides 16-30)',
-        'Shape flashcards (2D and 3D)',
-        'Colorful construction paper, scissors, glue',
-        '3D shapes video from Video Resources',
-        'Real 3D objects (ball, box, can)'
+        'Additional feelings/states flashcards',
+        'Are you Thirsty Hungry and Sick video',
+        'Paper puppets with different facial expressions',
+        'Wordwall game from Game Resources'
       ],
       steps: [
         {
-          title: 'Shape Song Review',
+          title: 'Review and Expansion',
           duration: '5 minutes',
-          description: 'Play the "Shapes Song - The Singing Walrus" video. Students sing along and make shape gestures with their hands.'
+          description: 'Quick review of previously learned feelings/states. Introduce new vocabulary: tired, sick, good, great, okay.'
         },
         {
-          title: '2D Shape Vocabulary Review',
+          title: 'Video Activity',
           duration: '7 minutes',
-          description: 'Quick review of 2D shapes using flashcards. Then play a quick game of "Simon Says" with shapes. Example: "Simon says touch your head if you hear a square." Then say different shape words.'
+          description: 'Play the "Are you Thirsty Hungry and Sick - WATTS ENGLISH" video. After watching, ask students questions about the characters in the video: "How is the boy?" "Is he hungry?" etc.'
         },
         {
-          title: 'Introduction to 3D Shapes',
+          title: 'Third Person Questions',
           duration: '8 minutes',
-          description: 'Using Visual English Book 1 slides 16-20 and real objects, introduce three basic 3D shapes: cube (box), sphere (ball), and cylinder (can). Practice the question "What shape is this?" and answer "This is a [3D shape]."'
+          description: 'Using Visual English Book 1 slides 16-20, practice asking about a third person: "How is he/she?" and answering "He/She is [feeling/state]." Use pictures of children showing different emotions.'
         },
         {
-          title: '3D Shapes Video',
+          title: 'Face Puppet Activity',
+          duration: '10 minutes',
+          description: 'Give pairs of students paper puppets with different facial expressions. Students take turns asking "How are you?" and responding according to their puppet\'s expression. Then they switch to asking "How is he/she?" about their partner\'s puppet.'
+        },
+        {
+          title: 'What to Say Role Play',
+          duration: '10 minutes',
+          description: 'Practice appropriate responses to different states. Example: If someone says "I am hungry," what can you say? ("Here\'s some food" or "Let\'s eat"). Create mini-dialogues for different situations.'
+        },
+        {
+          title: 'Interactive Game',
           duration: '5 minutes',
-          description: 'Play the "3D Shapes I Know - Dream English" video to reinforce 3D shape vocabulary.'
-        },
-        {
-          title: 'Shape Art Project',
-          duration: '15 minutes',
-          description: 'Students create a picture using only shapes cut from colored construction paper. Examples: a house made of a square and triangle, a robot made of rectangles and circles, etc. Students then present their artwork using the sentence "I used a [shape] for the [part of picture]."'
-        },
-        {
-          title: 'Interactive Wordwall Game',
-          duration: '5 minutes',
-          description: 'Play the "Shapes - Memory Match" game from Game Resources. Have students come to the board to match shapes to their names.'
+          description: 'Play the "HOW ARE YOU" Wordwall game from Game Resources. Have students come to the board to practice questions and answers about feelings and states.'
         }
       ]
     }

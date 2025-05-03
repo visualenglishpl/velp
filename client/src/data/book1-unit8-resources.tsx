@@ -1,67 +1,100 @@
-import { TeacherResource } from '@/components/TeacherResources';
-import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
-
 /**
- * Resources for Book 1 Unit 8: Vegetables
- * 
- * This file contains video and game resources for teaching
- * vegetables vocabulary and healthy eating habits
+ * Visual English Book 1, Unit 8: Shapes
+ * Resources including videos and games
  */
 
-export const book1Unit8Resources: TeacherResource[] = [
-  // Videos
-  createBook1VideoResource(
-    8, 1,
-    'The Vegetable Song - Super Simple Songs',
-    'RE5tvaveVak',
-    'Catchy song introducing different vegetables with colorful visuals'
-  ),
-  createBook1VideoResource(
-    8, 2,
-    'Oliver\s Vegetables - Vivian French',
-    'UcCw2d_ybyo',
-    'Story about a boy discovering different vegetables in his grandpa\'s garden'
-  ),
-  createBook1VideoResource(
-    8, 3,
-    'Cooking Vegetables with Gus - Watts English',
-    '5OFrSNOqpOk',
-    'Learn vegetables vocabulary while cooking a healthy dish'
-  ),
-  createBook1VideoResource(
-    8, 4,
-    'Vegetable Song for Kids - The Singing Walrus',
-    'ddDN30evKPc',
-    'Engaging song with vegetable vocabulary and visuals'
-  ),
-  
-  // Games
-  createBook1GameResource(
-    8, 1,
-    'Vegetable Matching Game',
-    'https://wordwall.net/embed/7d0b4c6c8b1a43c09f9f982b9e59f4b1',
-    'Match vegetable pictures with their English names'
-  ),
-  createBook1GameResource(
-    8, 2,
-    'Vegetables Spelling Practice',
-    'https://wordwall.net/embed/d39f4ea7d4fc4e789e97d94a55fba36c',
-    'Practice spelling vegetable vocabulary'
-  ),
-  createBook1GameResource(
-    8, 3,
-    'Vegetables Category Quiz',
-    'https://wordwall.net/embed/5c92fb9dd8c54e6e9b5bfbc1fd1aa05f',
-    'Sort vegetables by color and identify them'
-  ),
-  createBook1GameResource(
-    8, 4,
-    'Healthy Foods Sorting Game',
-    'https://wordwall.net/embed/1c99d3e2e0ab4a1983f9d2ddf4b9f3a4',
-    'Sort healthy and unhealthy foods with a focus on vegetables'
-  )
+import { TeacherResource } from '@/components/TeacherResources';
+
+export const book1Unit8VideoResources: TeacherResource[] = [
+  {
+    id: 'book1-unit8-video1',
+    bookId: '1',
+    unitId: '8',
+    title: 'The Shape Song 1 - Super Simple Songs',
+    description: 'A catchy song that introduces basic shapes with clear animations.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=TJhfl5vdxp4',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/TJhfl5vdxp4?si=6rVtTBbIENScQqy-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit8-video2',
+    bookId: '1',
+    unitId: '8',
+    title: 'The Shape Song 2 - Super Simple Songs',
+    description: 'A continuation of the shape song with more advanced shapes.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=03pyY9C2Pm8',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/03pyY9C2Pm8?si=MIf13-bIxze2_vF_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit8-video3',
+    bookId: '1',
+    unitId: '8',
+    title: 'Shapes - PINKFONG',
+    description: 'A fun and colorful video teaching basic shapes through animation.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=0B6Ge0FzHG0',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/0B6Ge0FzHG0?si=pQL9a255hrzGG3Gv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit8-video4',
+    bookId: '1',
+    unitId: '8',
+    title: 'Shapes Song - ENGLISH TREE',
+    description: 'An educational song about different shapes with clear visuals.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=FOZLDVnvrZM',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/FOZLDVnvrZM?si=1qm7XlmfoLJJrH0f" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit8-video5',
+    bookId: '1',
+    unitId: '8',
+    title: 'Shapes - PINKFONG (Alternate)',
+    description: 'Another PINKFONG video about shapes with different examples and activities.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=lcl8uB2AWM0',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/lcl8uB2AWM0?si=-SHyNKki0N2YVjkR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book1-unit8-video6',
+    bookId: '1',
+    unitId: '8',
+    title: 'What Shape Is It - DREAM KIDS',
+    description: 'An interactive video asking children to identify different shapes.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=9GFEjNL0XXw',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/9GFEjNL0XXw?si=FADkhaPtpTyIi7au" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  }
 ];
 
-// Export video and game resource arrays separately for filtering
-export const book1Unit8VideoResources = book1Unit8Resources.filter(resource => resource.resourceType === 'video');
-export const book1Unit8GameResources = book1Unit8Resources.filter(resource => resource.resourceType === 'game');
+export const book1Unit8GameResources: TeacherResource[] = [
+  {
+    id: 'book1-unit8-game1',
+    bookId: '1',
+    unitId: '8',
+    title: 'WORDWALL - SHAPES',
+    description: 'Interactive game to practice identifying and naming different shapes.',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/a3dfd9e2aa764904a073828747936488',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a3dfd9e2aa764904a073828747936488?themeId=21&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  }
+];
+
+// Combined resources
+export const book1Unit8Resources: TeacherResource[] = [
+  ...book1Unit8VideoResources,
+  ...book1Unit8GameResources
+];
+
+// Export a function to get all resources for this unit
+export const getBook1Unit8Resources = () => book1Unit8Resources;
+
+export default book1Unit8Resources;
