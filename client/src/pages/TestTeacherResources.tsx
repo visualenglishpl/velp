@@ -13,15 +13,24 @@ import { Button } from '@/components/ui/button';
 
 // TestTeacherResources component
 const TestTeacherResources: React.FC = () => {
+  // Define interfaces for type safety
+  interface PlanCollection {
+    [key: string]: LessonPlan[];
+  }
+
+  interface ResourceCollection {
+    [key: string]: TeacherResource[];
+  }
+
   // State for lesson plans and resources
-  const [book5Plans, setBook5Plans] = useState<any>({
+  const [book5Plans, setBook5Plans] = useState<PlanCollection>({
     unit1: [],
     unit5: [],
     unit9: [],
     unit13: []
   });
 
-  const [book6Plans, setBook6Plans] = useState<any>({
+  const [book6Plans, setBook6Plans] = useState<PlanCollection>({
     unit5: [],
     unit7: [],
     unit9: [],
@@ -30,15 +39,20 @@ const TestTeacherResources: React.FC = () => {
   });
 
   // Group the resources
-  const [book6Resources, setBook6Resources] = useState<any>({
+  const [book6Resources, setBook6Resources] = useState<ResourceCollection>({
     unit9: [],
     unit11: [],
     unit14: []
   });
   
+  // Loading states
+  const [isLoadingInitialData, setIsLoadingInitialData] = useState(true);
+  
   // Load data on component mount
   useEffect(() => {
     const loadData = async () => {
+      setIsLoadingInitialData(true);
+      
       // Load lesson plans for Book 5 (these are now loaded dynamically at runtime rather than at import time)
       try {
         const book5Unit1Module = await import('@/data/book5-unit1-implementation');
@@ -74,12 +88,14 @@ const TestTeacherResources: React.FC = () => {
         
         // Load resources for Book 6
         setBook6Resources({
-          unit9: book6Unit9ResourcesModule.book6Unit9Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4),
-          unit11: book6Unit11ResourcesModule.book6Unit11Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4),
-          unit14: book6Unit14ResourcesModule.book6Unit14Resources.filter(r => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4)
+          unit9: book6Unit9ResourcesModule.book6Unit9Resources.filter((r: TeacherResource) => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4),
+          unit11: book6Unit11ResourcesModule.book6Unit11Resources.filter((r: TeacherResource) => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4),
+          unit14: book6Unit14ResourcesModule.book6Unit14Resources.filter((r: TeacherResource) => r.resourceType === 'video' || r.resourceType === 'game').slice(0, 4)
         });
       } catch (error) {
         console.error('Error loading Book 6 data:', error);
+      } finally {
+        setIsLoadingInitialData(false);
       }
     };
     
@@ -162,7 +178,14 @@ const TestTeacherResources: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6">Teacher Resources Test Page</h1>
       <p className="mb-8">This page demonstrates the lesson plans and resources that have been created for specific units in Book 5 and Book 6.</p>
       
-      <Tabs defaultValue="lessonPlans" className="w-full">
+      {isLoadingInitialData ? (
+        <div className="w-full flex flex-col items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mb-4"></div>
+          <p className="text-lg">Loading resources...</p>
+          <p className="text-sm text-muted-foreground mt-2">This may take a moment as resources are being loaded dynamically</p>
+        </div>
+      ) : (
+        <Tabs defaultValue="lessonPlans" className="w-full">
         <TabsList className="mb-4">
           <TabsTrigger value="lessonPlans">Lesson Plans</TabsTrigger>
           <TabsTrigger value="resources">Resources</TabsTrigger>
@@ -437,6 +460,7 @@ const TestTeacherResources: React.FC = () => {
           )}
         </TabsContent>
       </Tabs>
+      )}
     </div>
   );
 };
