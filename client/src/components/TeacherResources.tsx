@@ -52,82 +52,264 @@ import PDFViewer from '@/components/PDFViewer';
 // Dynamic imports for unit implementations
 const dynamicImplImport = async (book: string, unit: number) => {
   try {
-    if (book === '7' || !book) { // Default to book 7 if no book specified
+    // Book 0A implementations
+    if (book === '0a') {
       switch(unit) {
-        case 6:
-          return import('@/data/unit6-implementation');
-        case 7:
-          return import('@/data/unit7-implementation');
-        case 8:
-          return import('@/data/unit8-implementation');
-        case 9:
-          return import('@/data/unit9-implementation');
-        case 10:
-          return import('@/data/unit10-implementation');
-        case 11:
-          return import('@/data/unit11-implementation');
-        case 12:
-          return import('@/data/unit12-implementation');
-        case 13:
-          return import('@/data/unit13-implementation');
-        case 14:
-          return import('@/data/unit14-implementation');
-        case 15:
-          return import('@/data/unit15-implementation');
-        case 16:
-          return import('@/data/unit16-implementation');
-        default:
-          return null;
+        case 1: return import('@/data/book0a-unit1-implementation');
+        case 2: return import('@/data/book0a-unit2-implementation');
+        case 3: return import('@/data/book0a-unit3-implementation');
+        case 4: return import('@/data/book0a-unit4-implementation');
+        case 5: return import('@/data/book0a-unit5-implementation');
+        case 6: return import('@/data/book0a-unit6-implementation');
+        case 7: return import('@/data/book0a-unit7-implementation');
+        case 8: return import('@/data/book0a-unit8-implementation');
+        case 9: return import('@/data/book0a-unit9-implementation');
+        case 10: return import('@/data/book0a-unit10-implementation');
+        case 11: return import('@/data/book0a-unit11-implementation');
+        case 12: return import('@/data/book0a-unit12-implementation');
+        case 13: return import('@/data/book0a-unit13-implementation');
+        case 14: return import('@/data/book0a-unit14-implementation');
+        case 15: return import('@/data/book0a-unit15-implementation');
+        case 16: return import('@/data/book0a-unit16-implementation');
+        case 17: return import('@/data/book0a-unit17-implementation');
+        case 18: return import('@/data/book0a-unit18-implementation');
+        case 19: return import('@/data/book0a-unit19-implementation');
+        case 20: return import('@/data/book0a-unit20-implementation');
+        default: return null;
       }
-    } else if (book === '6') {
+    }
+    // Book 0B implementations
+    else if (book === '0b') {
       switch(unit) {
-        case 1:
-          return import('@/data/book6-unit1-implementation');
-        case 2:
-          return import('@/data/book6-unit2-implementation');
-        case 3:
-          return import('@/data/book6-unit3-implementation');
-        case 4:
-          return import('@/data/book6-unit4-implementation');
-        case 5:
-          return import('@/data/book6-unit5-implementation');
-        case 6:
-          return import('@/data/book6-unit6-implementation');
-        case 7:
-          return import('@/data/book6-unit7-implementation');
-        case 8:
-          return import('@/data/book6-unit8-implementation');
-        case 9:
-          return import('@/data/book6-unit9-implementation');
-        case 10:
-          return import('@/data/book6-unit10-implementation');
-        case 11:
-          return import('@/data/book6-unit11-implementation');
-        case 12:
-          return import('@/data/book6-unit12-implementation');
-        case 13:
-          return import('@/data/book6-unit13-implementation');
-        case 14:
-          return import('@/data/book6-unit14-implementation');
-        case 15:
-          return import('@/data/book6-unit15-implementation');
-        case 16:
-          return import('@/data/book6-unit16-implementation');
-        default:
-          return null;
+        case 1: return import('@/data/book0b-unit1-implementation');
+        case 2: return import('@/data/book0b-unit2-implementation');
+        case 3: return import('@/data/book0b-unit3-implementation');
+        case 4: return import('@/data/book0b-unit4-implementation');
+        case 5: return import('@/data/book0b-unit5-implementation');
+        case 6: return import('@/data/book0b-unit6-implementation');
+        case 7: return import('@/data/book0b-unit7-implementation');
+        case 8: return import('@/data/book0b-unit8-implementation');
+        case 9: return import('@/data/book0b-unit9-implementation');
+        case 10: return import('@/data/book0b-unit10-implementation');
+        case 11: return import('@/data/book0b-unit11-implementation');
+        case 12: return import('@/data/book0b-unit12-implementation');
+        case 13: return import('@/data/book0b-unit13-implementation');
+        case 14: return import('@/data/book0b-unit14-implementation');
+        case 15: return import('@/data/book0b-unit15-implementation');
+        case 16: return import('@/data/book0b-unit16-implementation');
+        case 17: return import('@/data/book0b-unit17-implementation');
+        case 18: return import('@/data/book0b-unit18-implementation');
+        case 19: return import('@/data/book0b-unit19-implementation');
+        case 20: return import('@/data/book0b-unit20-implementation');
+        default: return null;
       }
-    } else if (book === '5') {
+    }
+    // Book 0C implementations
+    else if (book === '0c') {
       switch(unit) {
-        case 1:
-          return import('@/data/book5-unit1-implementation');
-        case 5:
-          return import('@/data/book5-unit5-implementation');
-        case 9:
-          return import('@/data/book5-unit9-implementation');
-        case 13:
-          return import('@/data/book5-unit13-implementation');
-        default:
-          return null;
+        case 1: return import('@/data/book0c-unit1-implementation');
+        case 2: return import('@/data/book0c-unit2-implementation');
+        case 3: return import('@/data/book0c-unit3-implementation');
+        case 4: return import('@/data/book0c-unit4-implementation');
+        case 5: return import('@/data/book0c-unit5-implementation');
+        case 6: return import('@/data/book0c-unit6-implementation');
+        case 7: return import('@/data/book0c-unit7-implementation');
+        case 8: return import('@/data/book0c-unit8-implementation');
+        case 9: return import('@/data/book0c-unit9-implementation');
+        case 10: return import('@/data/book0c-unit10-implementation');
+        case 11: return import('@/data/book0c-unit11-implementation');
+        case 12: return import('@/data/book0c-unit12-implementation');
+        case 13: return import('@/data/book0c-unit13-implementation');
+        case 14: return import('@/data/book0c-unit14-implementation');
+        case 15: return import('@/data/book0c-unit15-implementation');
+        case 16: return import('@/data/book0c-unit16-implementation');
+        case 17: return import('@/data/book0c-unit17-implementation');
+        case 18: return import('@/data/book0c-unit18-implementation');
+        case 19: return import('@/data/book0c-unit19-implementation');
+        case 20: return import('@/data/book0c-unit20-implementation');
+        default: return null;
+      }
+    }
+    // Book 1 implementations
+    else if (book === '1') {
+      switch(unit) {
+        case 1: return import('@/data/book1-unit1-implementation');
+        case 2: return import('@/data/book1-unit2-implementation');
+        case 3: return import('@/data/book1-unit3-implementation');
+        case 4: return import('@/data/book1-unit4-implementation');
+        case 5: return import('@/data/book1-unit5-implementation');
+        case 6: return import('@/data/book1-unit6-implementation');
+        case 7: return import('@/data/book1-unit7-implementation');
+        case 8: return import('@/data/book1-unit8-implementation');
+        case 9: return import('@/data/book1-unit9-implementation');
+        case 10: return import('@/data/book1-unit10-implementation');
+        case 11: return import('@/data/book1-unit11-implementation');
+        case 12: return import('@/data/book1-unit12-implementation');
+        case 13: return import('@/data/book1-unit13-implementation');
+        case 14: return import('@/data/book1-unit14-implementation');
+        case 15: return import('@/data/book1-unit15-implementation');
+        case 16: return import('@/data/book1-unit16-implementation');
+        case 17: return import('@/data/book1-unit17-implementation');
+        case 18: return import('@/data/book1-unit18-implementation');
+        default: return null;
+      }
+    }
+    // Book 2 implementations
+    else if (book === '2') {
+      switch(unit) {
+        case 1: return import('@/data/book2-unit1-implementation');
+        case 2: return import('@/data/book2-unit2-implementation');
+        case 3: return import('@/data/book2-unit3-implementation');
+        case 4: return import('@/data/book2-unit4-implementation');
+        case 5: return import('@/data/book2-unit5-implementation');
+        case 6: return import('@/data/book2-unit6-implementation');
+        case 7: return import('@/data/book2-unit7-implementation');
+        case 8: return import('@/data/book2-unit8-implementation');
+        case 9: return import('@/data/book2-unit9-implementation');
+        case 10: return import('@/data/book2-unit10-implementation');
+        case 11: return import('@/data/book2-unit11-implementation');
+        case 12: return import('@/data/book2-unit12-implementation');
+        case 13: return import('@/data/book2-unit13-implementation');
+        case 14: return import('@/data/book2-unit14-implementation');
+        case 15: return import('@/data/book2-unit15-implementation');
+        case 16: return import('@/data/book2-unit16-implementation');
+        case 17: return import('@/data/book2-unit17-implementation');
+        case 18: return import('@/data/book2-unit18-implementation');
+        default: return null;
+      }
+    }
+    // Book 3 implementations
+    else if (book === '3') {
+      switch(unit) {
+        case 1: return import('@/data/book3-unit1-implementation');
+        case 2: return import('@/data/book3-unit2-implementation');
+        case 3: return import('@/data/book3-unit3-implementation');
+        case 4: return import('@/data/book3-unit4-implementation');
+        case 5: return import('@/data/book3-unit5-implementation');
+        case 6: return import('@/data/book3-unit6-implementation');
+        case 7: return import('@/data/book3-unit7-implementation');
+        case 8: return import('@/data/book3-unit8-implementation');
+        case 9: return import('@/data/book3-unit9-implementation');
+        case 10: return import('@/data/book3-unit10-implementation');
+        case 11: return import('@/data/book3-unit11-implementation');
+        case 12: return import('@/data/book3-unit12-implementation');
+        case 13: return import('@/data/book3-unit13-implementation');
+        case 14: return import('@/data/book3-unit14-implementation');
+        case 15: return import('@/data/book3-unit15-implementation');
+        case 16: return import('@/data/book3-unit16-implementation');
+        case 17: return import('@/data/book3-unit17-implementation');
+        case 18: return import('@/data/book3-unit18-implementation');
+        default: return null;
+      }
+    }
+    // Book 4 implementations
+    else if (book === '4') {
+      switch(unit) {
+        case 1: return import('@/data/book4-unit1-implementation');
+        case 2: return import('@/data/book4-unit2-implementation');
+        case 3: return import('@/data/book4-unit3-implementation');
+        case 4: return import('@/data/book4-unit4-implementation');
+        case 5: return import('@/data/book4-unit5-implementation');
+        case 6: return import('@/data/book4-unit6-implementation');
+        case 7: return import('@/data/book4-unit7-implementation');
+        case 8: return import('@/data/book4-unit8-implementation');
+        case 9: return import('@/data/book4-unit9-implementation');
+        case 10: return import('@/data/book4-unit10-implementation');
+        case 11: return import('@/data/book4-unit11-implementation');
+        case 12: return import('@/data/book4-unit12-implementation');
+        case 13: return import('@/data/book4-unit13-implementation');
+        case 14: return import('@/data/book4-unit14-implementation');
+        case 15: return import('@/data/book4-unit15-implementation');
+        case 16: return import('@/data/book4-unit16-implementation');
+        default: return null;
+      }
+    }
+    // Book 5 implementations
+    else if (book === '5') {
+      switch(unit) {
+        case 1: return import('@/data/book5-unit1-implementation');
+        case 2: return import('@/data/book5-unit2-implementation');
+        case 3: return import('@/data/book5-unit3-implementation');
+        case 4: return import('@/data/book5-unit4-implementation');
+        case 5: return import('@/data/book5-unit5-implementation');
+        case 6: return import('@/data/book5-unit6-implementation');
+        case 7: return import('@/data/book5-unit7-implementation');
+        case 8: return import('@/data/book5-unit8-implementation');
+        case 9: return import('@/data/book5-unit9-implementation');
+        case 10: return import('@/data/book5-unit10-implementation');
+        case 11: return import('@/data/book5-unit11-implementation');
+        case 12: return import('@/data/book5-unit12-implementation');
+        case 13: return import('@/data/book5-unit13-implementation');
+        case 14: return import('@/data/book5-unit14-implementation');
+        case 15: return import('@/data/book5-unit15-implementation');
+        case 16: return import('@/data/book5-unit16-implementation');
+        default: return null;
+      }
+    }
+    // Book 6 implementations
+    else if (book === '6') {
+      switch(unit) {
+        case 1: return import('@/data/book6-unit1-implementation');
+        case 2: return import('@/data/book6-unit2-implementation');
+        case 3: return import('@/data/book6-unit3-implementation');
+        case 4: return import('@/data/book6-unit4-implementation');
+        case 5: return import('@/data/book6-unit5-implementation');
+        case 6: return import('@/data/book6-unit6-implementation');
+        case 7: return import('@/data/book6-unit7-implementation');
+        case 8: return import('@/data/book6-unit8-implementation');
+        case 9: return import('@/data/book6-unit9-implementation');
+        case 10: return import('@/data/book6-unit10-implementation');
+        case 11: return import('@/data/book6-unit11-implementation');
+        case 12: return import('@/data/book6-unit12-implementation');
+        case 13: return import('@/data/book6-unit13-implementation');
+        case 14: return import('@/data/book6-unit14-implementation');
+        case 15: return import('@/data/book6-unit15-implementation');
+        case 16: return import('@/data/book6-unit16-implementation');
+        default: return null;
+      }
+    }
+    // Book 7 implementations - support both with and without prefix for backwards compatibility
+    else if (book === '7' || !book) { // Default to book 7 if no book specified
+      switch(unit) {
+        case 1: return import('@/data/book7-unit1-implementation');
+        case 2: return import('@/data/book7-unit2-implementation');
+        case 3: return import('@/data/book7-unit3-implementation');
+        case 4: return import('@/data/book7-unit4-implementation');
+        case 5: return import('@/data/book7-unit5-implementation');
+        case 6: 
+          try { return import('@/data/book7-unit6-implementation'); } 
+          catch { return import('@/data/unit6-implementation'); }
+        case 7: 
+          try { return import('@/data/book7-unit7-implementation'); } 
+          catch { return import('@/data/unit7-implementation'); }
+        case 8: 
+          try { return import('@/data/book7-unit8-implementation'); } 
+          catch { return import('@/data/unit8-implementation'); }
+        case 9: 
+          try { return import('@/data/book7-unit9-implementation'); } 
+          catch { return import('@/data/unit9-implementation'); }
+        case 10: 
+          try { return import('@/data/book7-unit10-implementation'); } 
+          catch { return import('@/data/unit10-implementation'); }
+        case 11: 
+          try { return import('@/data/book7-unit11-implementation'); } 
+          catch { return import('@/data/unit11-implementation'); }
+        case 12: 
+          try { return import('@/data/book7-unit12-implementation'); } 
+          catch { return import('@/data/unit12-implementation'); }
+        case 13: 
+          try { return import('@/data/book7-unit13-implementation'); } 
+          catch { return import('@/data/unit13-implementation'); }
+        case 14: 
+          try { return import('@/data/book7-unit14-implementation'); } 
+          catch { return import('@/data/unit14-implementation'); }
+        case 15: 
+          try { return import('@/data/book7-unit15-implementation'); } 
+          catch { return import('@/data/unit15-implementation'); }
+        case 16: 
+          try { return import('@/data/book7-unit16-implementation'); } 
+          catch { return import('@/data/unit16-implementation'); }
+        default: return null;
       }
     }
     return null;
@@ -140,82 +322,264 @@ const dynamicImplImport = async (book: string, unit: number) => {
 // Resource imports via dynamic loading
 const dynamicResourceImport = async (book: string, unit: number) => {
   try {
-    if (book === '7' || !book) { // Default to book 7 if no book specified
+    // Book 0A resources
+    if (book === '0a') {
       switch(unit) {
-        case 6:
-          return import('@/data/unit6-resources');
-        case 7:
-          return import('@/data/unit7-resources');
-        case 8:
-          return import('@/data/unit8-resources');
-        case 9:
-          return import('@/data/unit9-resources');
-        case 10:
-          return import('@/data/unit10-resources');
-        case 11:
-          return import('@/data/unit11-resources');
-        case 12:
-          return import('@/data/unit12-resources');
-        case 13:
-          return import('@/data/unit13-resources');
-        case 14:
-          return import('@/data/unit14-resources');
-        case 15:
-          return import('@/data/unit15-resources');
-        case 16:
-          return import('@/data/unit16-resources');
-        default:
-          return null;
+        case 1: return import('@/data/book0a-unit1-resources');
+        case 2: return import('@/data/book0a-unit2-resources');
+        case 3: return import('@/data/book0a-unit3-resources');
+        case 4: return import('@/data/book0a-unit4-resources');
+        case 5: return import('@/data/book0a-unit5-resources');
+        case 6: return import('@/data/book0a-unit6-resources');
+        case 7: return import('@/data/book0a-unit7-resources');
+        case 8: return import('@/data/book0a-unit8-resources');
+        case 9: return import('@/data/book0a-unit9-resources');
+        case 10: return import('@/data/book0a-unit10-resources');
+        case 11: return import('@/data/book0a-unit11-resources');
+        case 12: return import('@/data/book0a-unit12-resources');
+        case 13: return import('@/data/book0a-unit13-resources');
+        case 14: return import('@/data/book0a-unit14-resources');
+        case 15: return import('@/data/book0a-unit15-resources');
+        case 16: return import('@/data/book0a-unit16-resources');
+        case 17: return import('@/data/book0a-unit17-resources');
+        case 18: return import('@/data/book0a-unit18-resources');
+        case 19: return import('@/data/book0a-unit19-resources');
+        case 20: return import('@/data/book0a-unit20-resources');
+        default: return null;
       }
-    } else if (book === '6') {
+    }
+    // Book 0B resources
+    else if (book === '0b') {
       switch(unit) {
-        case 1:
-          return import('@/data/book6-unit1-resources');
-        case 2:
-          return import('@/data/book6-unit2-resources');
-        case 3:
-          return import('@/data/book6-unit3-resources');
-        case 4:
-          return import('@/data/book6-unit4-resources');
-        case 5:
-          return import('@/data/book6-unit5-resources');
-        case 6:
-          return import('@/data/book6-unit6-resources');
-        case 7:
-          return import('@/data/book6-unit7-resources');
-        case 8:
-          return import('@/data/book6-unit8-resources');
-        case 9:
-          return import('@/data/book6-unit9-resources');
-        case 10:
-          return import('@/data/book6-unit10-resources');
-        case 11:
-          return import('@/data/book6-unit11-resources');
-        case 12:
-          return import('@/data/book6-unit12-resources');
-        case 13:
-          return import('@/data/book6-unit13-resources');
-        case 14:
-          return import('@/data/book6-unit14-resources');
-        case 15:
-          return import('@/data/book6-unit15-resources');
-        case 16:
-          return import('@/data/book6-unit16-resources');
-        default:
-          return null;
+        case 1: return import('@/data/book0b-unit1-resources');
+        case 2: return import('@/data/book0b-unit2-resources');
+        case 3: return import('@/data/book0b-unit3-resources');
+        case 4: return import('@/data/book0b-unit4-resources');
+        case 5: return import('@/data/book0b-unit5-resources');
+        case 6: return import('@/data/book0b-unit6-resources');
+        case 7: return import('@/data/book0b-unit7-resources');
+        case 8: return import('@/data/book0b-unit8-resources');
+        case 9: return import('@/data/book0b-unit9-resources');
+        case 10: return import('@/data/book0b-unit10-resources');
+        case 11: return import('@/data/book0b-unit11-resources');
+        case 12: return import('@/data/book0b-unit12-resources');
+        case 13: return import('@/data/book0b-unit13-resources');
+        case 14: return import('@/data/book0b-unit14-resources');
+        case 15: return import('@/data/book0b-unit15-resources');
+        case 16: return import('@/data/book0b-unit16-resources');
+        case 17: return import('@/data/book0b-unit17-resources');
+        case 18: return import('@/data/book0b-unit18-resources');
+        case 19: return import('@/data/book0b-unit19-resources');
+        case 20: return import('@/data/book0b-unit20-resources');
+        default: return null;
       }
-    } else if (book === '5') {
+    }
+    // Book 0C resources
+    else if (book === '0c') {
       switch(unit) {
-        case 1:
-          return import('@/data/book5-unit1-resources');
-        case 5:
-          return import('@/data/book5-unit5-resources');
-        case 9:
-          return import('@/data/book5-unit9-resources');
-        case 13:
-          return import('@/data/book5-unit13-resources');
-        default:
-          return null;
+        case 1: return import('@/data/book0c-unit1-resources');
+        case 2: return import('@/data/book0c-unit2-resources');
+        case 3: return import('@/data/book0c-unit3-resources');
+        case 4: return import('@/data/book0c-unit4-resources');
+        case 5: return import('@/data/book0c-unit5-resources');
+        case 6: return import('@/data/book0c-unit6-resources');
+        case 7: return import('@/data/book0c-unit7-resources');
+        case 8: return import('@/data/book0c-unit8-resources');
+        case 9: return import('@/data/book0c-unit9-resources');
+        case 10: return import('@/data/book0c-unit10-resources');
+        case 11: return import('@/data/book0c-unit11-resources');
+        case 12: return import('@/data/book0c-unit12-resources');
+        case 13: return import('@/data/book0c-unit13-resources');
+        case 14: return import('@/data/book0c-unit14-resources');
+        case 15: return import('@/data/book0c-unit15-resources');
+        case 16: return import('@/data/book0c-unit16-resources');
+        case 17: return import('@/data/book0c-unit17-resources');
+        case 18: return import('@/data/book0c-unit18-resources');
+        case 19: return import('@/data/book0c-unit19-resources');
+        case 20: return import('@/data/book0c-unit20-resources');
+        default: return null;
+      }
+    }
+    // Book 1 resources
+    else if (book === '1') {
+      switch(unit) {
+        case 1: return import('@/data/book1-unit1-resources');
+        case 2: return import('@/data/book1-unit2-resources');
+        case 3: return import('@/data/book1-unit3-resources');
+        case 4: return import('@/data/book1-unit4-resources');
+        case 5: return import('@/data/book1-unit5-resources');
+        case 6: return import('@/data/book1-unit6-resources');
+        case 7: return import('@/data/book1-unit7-resources');
+        case 8: return import('@/data/book1-unit8-resources');
+        case 9: return import('@/data/book1-unit9-resources');
+        case 10: return import('@/data/book1-unit10-resources');
+        case 11: return import('@/data/book1-unit11-resources');
+        case 12: return import('@/data/book1-unit12-resources');
+        case 13: return import('@/data/book1-unit13-resources');
+        case 14: return import('@/data/book1-unit14-resources');
+        case 15: return import('@/data/book1-unit15-resources');
+        case 16: return import('@/data/book1-unit16-resources');
+        case 17: return import('@/data/book1-unit17-resources');
+        case 18: return import('@/data/book1-unit18-resources');
+        default: return null;
+      }
+    }
+    // Book 2 resources
+    else if (book === '2') {
+      switch(unit) {
+        case 1: return import('@/data/book2-unit1-resources');
+        case 2: return import('@/data/book2-unit2-resources');
+        case 3: return import('@/data/book2-unit3-resources');
+        case 4: return import('@/data/book2-unit4-resources');
+        case 5: return import('@/data/book2-unit5-resources');
+        case 6: return import('@/data/book2-unit6-resources');
+        case 7: return import('@/data/book2-unit7-resources');
+        case 8: return import('@/data/book2-unit8-resources');
+        case 9: return import('@/data/book2-unit9-resources');
+        case 10: return import('@/data/book2-unit10-resources');
+        case 11: return import('@/data/book2-unit11-resources');
+        case 12: return import('@/data/book2-unit12-resources');
+        case 13: return import('@/data/book2-unit13-resources');
+        case 14: return import('@/data/book2-unit14-resources');
+        case 15: return import('@/data/book2-unit15-resources');
+        case 16: return import('@/data/book2-unit16-resources');
+        case 17: return import('@/data/book2-unit17-resources');
+        case 18: return import('@/data/book2-unit18-resources');
+        default: return null;
+      }
+    }
+    // Book 3 resources
+    else if (book === '3') {
+      switch(unit) {
+        case 1: return import('@/data/book3-unit1-resources');
+        case 2: return import('@/data/book3-unit2-resources');
+        case 3: return import('@/data/book3-unit3-resources');
+        case 4: return import('@/data/book3-unit4-resources');
+        case 5: return import('@/data/book3-unit5-resources');
+        case 6: return import('@/data/book3-unit6-resources');
+        case 7: return import('@/data/book3-unit7-resources');
+        case 8: return import('@/data/book3-unit8-resources');
+        case 9: return import('@/data/book3-unit9-resources');
+        case 10: return import('@/data/book3-unit10-resources');
+        case 11: return import('@/data/book3-unit11-resources');
+        case 12: return import('@/data/book3-unit12-resources');
+        case 13: return import('@/data/book3-unit13-resources');
+        case 14: return import('@/data/book3-unit14-resources');
+        case 15: return import('@/data/book3-unit15-resources');
+        case 16: return import('@/data/book3-unit16-resources');
+        case 17: return import('@/data/book3-unit17-resources');
+        case 18: return import('@/data/book3-unit18-resources');
+        default: return null;
+      }
+    }
+    // Book 4 resources
+    else if (book === '4') {
+      switch(unit) {
+        case 1: return import('@/data/book4-unit1-resources');
+        case 2: return import('@/data/book4-unit2-resources');
+        case 3: return import('@/data/book4-unit3-resources');
+        case 4: return import('@/data/book4-unit4-resources');
+        case 5: return import('@/data/book4-unit5-resources');
+        case 6: return import('@/data/book4-unit6-resources');
+        case 7: return import('@/data/book4-unit7-resources');
+        case 8: return import('@/data/book4-unit8-resources');
+        case 9: return import('@/data/book4-unit9-resources');
+        case 10: return import('@/data/book4-unit10-resources');
+        case 11: return import('@/data/book4-unit11-resources');
+        case 12: return import('@/data/book4-unit12-resources');
+        case 13: return import('@/data/book4-unit13-resources');
+        case 14: return import('@/data/book4-unit14-resources');
+        case 15: return import('@/data/book4-unit15-resources');
+        case 16: return import('@/data/book4-unit16-resources');
+        default: return null;
+      }
+    }
+    // Book 5 resources
+    else if (book === '5') {
+      switch(unit) {
+        case 1: return import('@/data/book5-unit1-resources');
+        case 2: return import('@/data/book5-unit2-resources');
+        case 3: return import('@/data/book5-unit3-resources');
+        case 4: return import('@/data/book5-unit4-resources');
+        case 5: return import('@/data/book5-unit5-resources');
+        case 6: return import('@/data/book5-unit6-resources');
+        case 7: return import('@/data/book5-unit7-resources');
+        case 8: return import('@/data/book5-unit8-resources');
+        case 9: return import('@/data/book5-unit9-resources');
+        case 10: return import('@/data/book5-unit10-resources');
+        case 11: return import('@/data/book5-unit11-resources');
+        case 12: return import('@/data/book5-unit12-resources');
+        case 13: return import('@/data/book5-unit13-resources');
+        case 14: return import('@/data/book5-unit14-resources');
+        case 15: return import('@/data/book5-unit15-resources');
+        case 16: return import('@/data/book5-unit16-resources');
+        default: return null;
+      }
+    }
+    // Book 6 resources
+    else if (book === '6') {
+      switch(unit) {
+        case 1: return import('@/data/book6-unit1-resources');
+        case 2: return import('@/data/book6-unit2-resources');
+        case 3: return import('@/data/book6-unit3-resources');
+        case 4: return import('@/data/book6-unit4-resources');
+        case 5: return import('@/data/book6-unit5-resources');
+        case 6: return import('@/data/book6-unit6-resources');
+        case 7: return import('@/data/book6-unit7-resources');
+        case 8: return import('@/data/book6-unit8-resources');
+        case 9: return import('@/data/book6-unit9-resources');
+        case 10: return import('@/data/book6-unit10-resources');
+        case 11: return import('@/data/book6-unit11-resources');
+        case 12: return import('@/data/book6-unit12-resources');
+        case 13: return import('@/data/book6-unit13-resources');
+        case 14: return import('@/data/book6-unit14-resources');
+        case 15: return import('@/data/book6-unit15-resources');
+        case 16: return import('@/data/book6-unit16-resources');
+        default: return null;
+      }
+    }
+    // Book 7 resources - support both with and without prefix for backwards compatibility
+    else if (book === '7' || !book) { // Default to book 7 if no book specified
+      switch(unit) {
+        case 1: return import('@/data/book7-unit1-resources');
+        case 2: return import('@/data/book7-unit2-resources');
+        case 3: return import('@/data/book7-unit3-resources');
+        case 4: return import('@/data/book7-unit4-resources');
+        case 5: return import('@/data/book7-unit5-resources');
+        case 6: 
+          try { return import('@/data/book7-unit6-resources'); } 
+          catch { return import('@/data/unit6-resources'); }
+        case 7: 
+          try { return import('@/data/book7-unit7-resources'); } 
+          catch { return import('@/data/unit7-resources'); }
+        case 8: 
+          try { return import('@/data/book7-unit8-resources'); } 
+          catch { return import('@/data/unit8-resources'); }
+        case 9: 
+          try { return import('@/data/book7-unit9-resources'); } 
+          catch { return import('@/data/unit9-resources'); }
+        case 10: 
+          try { return import('@/data/book7-unit10-resources'); } 
+          catch { return import('@/data/unit10-resources'); }
+        case 11: 
+          try { return import('@/data/book7-unit11-resources'); } 
+          catch { return import('@/data/unit11-resources'); }
+        case 12: 
+          try { return import('@/data/book7-unit12-resources'); } 
+          catch { return import('@/data/unit12-resources'); }
+        case 13: 
+          try { return import('@/data/book7-unit13-resources'); } 
+          catch { return import('@/data/unit13-resources'); }
+        case 14: 
+          try { return import('@/data/book7-unit14-resources'); } 
+          catch { return import('@/data/unit14-resources'); }
+        case 15: 
+          try { return import('@/data/book7-unit15-resources'); } 
+          catch { return import('@/data/unit15-resources'); }
+        case 16: 
+          try { return import('@/data/book7-unit16-resources'); } 
+          catch { return import('@/data/unit16-resources'); }
+        default: return null;
       }
     }
     return null;
