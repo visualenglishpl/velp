@@ -12,25 +12,25 @@ export const book1Unit1VideoResources: TeacherResource[] = [
     1, 1,
     "Hello! - Super Simple Songs",
     "tVlcKp3bWH8",
-    "A fun hello song for beginners learning introductions"
+    "A fun hello song for beginners learning introductions. This catchy song introduces basic greetings with simple lyrics and engaging visuals, perfect for young ESL learners."
   ),
   createBook1VideoResource(
     1, 2,
     "Goodbye Song - The Singing Walrus",
     "STMl4yjPnPk",
-    "A catchy goodbye song with simple vocabulary"
+    "A catchy goodbye song with simple vocabulary. This song teaches different ways to say goodbye with fun animations and clear pronunciation."
   ),
   createBook1VideoResource(
     1, 3,
     "Hello Hello! Can You Clap Your Hands - Super Simple Songs",
     "fN1Cyr0ZK9M",
-    "Interactive hello song with actions for young learners"
+    "Interactive hello song with actions for young learners. This song combines greetings with physical movements to engage kinesthetic learners."
   ),
   createBook1VideoResource(
     1, 4,
-    "Good Morning, Good Morning - Maple Leaf Learning",
+    "Good Morning, Good Afternoon, Good Night - Maple Leaf Learning",
     "TFVjU-AZoqs",
-    "Learn greetings for different times of day"
+    "Learn greetings for different times of day. This educational video teaches children when to use different time-specific greetings through colorful visuals and repetition."
   )
 ];
 
@@ -38,17 +38,17 @@ export const book1Unit1VideoResources: TeacherResource[] = [
 export const book1Unit1GameResources: TeacherResource[] = [
   createBook1GameResource(
     1, 1,
-    "Greetings - Matching Game",
-    "ab9c70a3a3ad475a9464c4bd6a318a9c",
+    "Greetings and Farewells - Matching Game",
+    "1ed82c92dabc4dfe8b8afaedcafd7aae",
     "1", "3", "0",
-    "Match the greetings to the correct situations"
+    "Match different greetings and farewells to the correct situations. Students learn when to use different expressions like 'good morning', 'hello', 'goodbye', and 'see you later'."
   ),
   createBook1GameResource(
     1, 2,
-    "Hello and Goodbye - Quiz",
-    "8cdf1feaf44b467a9ab3c41ad0da0e62",
+    "Hello and Goodbye - Interactive Quiz",
+    "5c19e5bc4efa4a99b9bc9f1a7ce9d5f5",
     "1", "5", "0",
-    "Test your knowledge of basic greetings"
+    "Test your knowledge of basic greetings and farewells with this interactive quiz. Features audio pronunciation and visual cues for beginning English learners."
   )
 ];
 
