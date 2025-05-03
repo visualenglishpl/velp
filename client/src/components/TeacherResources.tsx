@@ -31,6 +31,9 @@ import { generateBook5Unit5Content, generateUnit5LessonPlans } from '@/data/book
 import { generateBook5Unit9Content, generateUnit9LessonPlans } from '@/data/book5-unit9-implementation';
 import { generateBook5Unit13Content, generateUnit13LessonPlans } from '@/data/book5-unit13-implementation';
 
+// Book 1 implementations
+import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
+
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
 const defaultResourceGetter = (bookId: string, unitId: string) => {
@@ -792,9 +795,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             // Check for specific lesson plan getter functions using type assertion
             const typedImplModule = implModule as any;
             
-            if (unitNum === 1 && typedImplModule.generateUnit1LessonPlans) {
+            if (unitNum === 1) {
               console.log('Using generateUnit1LessonPlans for Book 1');
-              lessonPlans = typedImplModule.generateUnit1LessonPlans();
+              lessonPlans = generateBook1Unit1LessonPlans();
             }
             
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
