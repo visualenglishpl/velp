@@ -1,59 +1,76 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 13
+ * Visual English Book 1, Unit 13: Do You Have a Pet
+ * Resources including videos and games
  */
 
-// Videos for Unit 13
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit13-video-1`,
-    bookId: '1',
-    unitId: '13',
-    title: 'VISUAL 1 Unit 13 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit13-video-2`,
-    bookId: '1',
-    unitId: '13',
-    title: 'VISUAL 1 Unit 13 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 13
+export const book1Unit13VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    13, 1,
+    "I Have A Pet Animal Song - Super Simple Songs",
+    "pWepfJ-8XU0",
+    "A fun and catchy animal song about pets by Super Simple Songs"
+  ),
+  createBook1VideoResource(
+    13, 2,
+    "Pet Song for Kids - Dream Kids",
+    "RAObh4cLDAI",
+    "A beginner-friendly song about different kinds of pets"
+  ),
+  createBook1VideoResource(
+    13, 3,
+    "At the Pet Store - Watts English",
+    "6BK49n2UWA0",
+    "A story about visiting a pet store with Watts English"
+  ),
+  createBook1VideoResource(
+    13, 4,
+    "For the Birds - Short Film",
+    "BT39vDpfI5s",
+    "An animated short film about birds"
+  ),
+  createBook1VideoResource(
+    13, 5,
+    "Guess Pet Sounds",
+    "AkZrk8KL76c",
+    "An interactive game to identify animals by their sounds"
+  ),
+  createBook1VideoResource(
+    13, 6,
+    "Pets Hidden Pictures Game",
+    "hmVYCS_hJk0",
+    "A fun hidden pictures game featuring pets"
+  )
 ];
 
-// Games for Unit 13
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit13-game-1`,
-    bookId: '1',
-    unitId: '13',
-    title: 'VISUAL 1 Unit 13 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit13-game-2`,
-    bookId: '1',
-    unitId: '13',
-    title: 'VISUAL 1 Unit 13 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 13
+export const book1Unit13GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    13, 1,
+    "Pets - Quiz",
+    "55c7caefb2fe48feb7798940327e0197",
+    "1", "46", "0",
+    "Interactive quiz for learning pet vocabulary"
+  ),
+  createBook1GameResource(
+    13, 2,
+    "Pets - Matching Game",
+    "ef14eb2bd2254ff8b01d8e376ff7165e",
+    "1", "46", "0",
+    "Match the pet names to pictures"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 13
+export const book1Unit13Resources: TeacherResource[] = [
+  ...book1Unit13VideoResources,
+  ...book1Unit13GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit13Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit13Resources = () => book1Unit13Resources;
+
+export default book1Unit13Resources;

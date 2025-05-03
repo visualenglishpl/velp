@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 15
+ * Visual English Book 1, Unit 15: Parts of the Body
+ * Resources including videos and games
  */
 
-// Videos for Unit 15
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit15-video-1`,
-    bookId: '1',
-    unitId: '15',
-    title: 'VISUAL 1 Unit 15 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit15-video-2`,
-    bookId: '1',
-    unitId: '15',
-    title: 'VISUAL 1 Unit 15 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 15
+export const book1Unit15VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    15, 1,
+    "Parts of the Body - Super Simple Songs",
+    "SUt8q0EKbms",
+    "A fun sing-along song about body parts for beginners"
+  ),
+  createBook1VideoResource(
+    15, 2,
+    "Head, Shoulders, Knees & Toes - CoComelon",
+    "RuqvGiEq_g4",
+    "The classic head, shoulders, knees and toes song with actions"
+  ),
+  createBook1VideoResource(
+    15, 3,
+    "My Face - Maple Leaf Learning",
+    "QFAqoJzzCP0",
+    "Learn vocabulary for parts of the face"
+  ),
+  createBook1VideoResource(
+    15, 4,
+    "Body Parts Song - English Singsing",
+    "j6g_OPGVQus",
+    "A comprehensive song about body parts with pictures"
+  )
 ];
 
-// Games for Unit 15
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit15-game-1`,
-    bookId: '1',
-    unitId: '15',
-    title: 'VISUAL 1 Unit 15 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit15-game-2`,
-    bookId: '1',
-    unitId: '15',
-    title: 'VISUAL 1 Unit 15 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 15
+export const book1Unit15GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    15, 1,
+    "Parts of the Body - Matching",
+    "f16e44cb7c52424998aeaae1bcd9bf9c",
+    "1", "3", "0",
+    "Match the parts of the body to their names"
+  ),
+  createBook1GameResource(
+    15, 2,
+    "Parts of the Face - Quiz",
+    "2b2f0ff0d1644d25bcaa08c15a5ab54f",
+    "1", "5", "0",
+    "A quiz about parts of the face"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 15
+export const book1Unit15Resources: TeacherResource[] = [
+  ...book1Unit15VideoResources,
+  ...book1Unit15GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit15Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit15Resources = () => book1Unit15Resources;
+
+export default book1Unit15Resources;

@@ -1,59 +1,64 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 1 Unit 14
+ * Visual English Book 1, Unit 14: Rooms in a House
+ * Resources including videos and games
  */
 
-// Videos for Unit 14
-export const videos: TeacherResource[] = [
-  {
-    id: `book1-unit14-video-1`,
-    bookId: '1',
-    unitId: '14',
-    title: 'VISUAL 1 Unit 14 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit14-video-2`,
-    bookId: '1',
-    unitId: '14',
-    title: 'VISUAL 1 Unit 14 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
+import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+
+// Video resources for Unit 14
+export const book1Unit14VideoResources: TeacherResource[] = [
+  createBook1VideoResource(
+    14, 1,
+    "Rooms of the House Song - Planet Pop",
+    "mYzWJjeeukU",
+    "A fun song about different rooms in a house"
+  ),
+  createBook1VideoResource(
+    14, 2,
+    "Where Is It? - Maple Leaf Learning",
+    "8F0NYBBKdMU",
+    "Learn about different rooms and locations in a house"
+  ),
+  createBook1VideoResource(
+    14, 3,
+    "House Song - DreamEnglish",
+    "R9intHqlzhc",
+    "A catchy song about rooms in a house by Dream English"
+  ),
+  createBook1VideoResource(
+    14, 4,
+    "Parts of a House Vocabulary",
+    "qWcU7Y6YeDQ",
+    "Learn vocabulary related to different parts of a house"
+  )
 ];
 
-// Games for Unit 14
-export const games: TeacherResource[] = [
-  {
-    id: `book1-unit14-game-1`,
-    bookId: '1',
-    unitId: '14',
-    title: 'VISUAL 1 Unit 14 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book1-unit14-game-2`,
-    bookId: '1',
-    unitId: '14',
-    title: 'VISUAL 1 Unit 14 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+// Game resources for Unit 14
+export const book1Unit14GameResources: TeacherResource[] = [
+  createBook1GameResource(
+    14, 1,
+    "Rooms in a House - Matching",
+    "9b0d55f9a27a43da8c10d4b33d46df77",
+    "1", "3", "0",
+    "Match the rooms in a house to their names"
+  ),
+  createBook1GameResource(
+    14, 2,
+    "Furniture and Rooms - Quiz",
+    "e50d5711eea742eeb1c9b26a8b0a4de0",
+    "1", "5", "0",
+    "A quiz about furniture and which rooms they belong in"
+  )
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources for Unit 14
+export const book1Unit14Resources: TeacherResource[] = [
+  ...book1Unit14VideoResources,
+  ...book1Unit14GameResources
+];
 
-// Main export for backward compatibility
-export const book1Unit14Resources = resources;
+// Export a getter function to match the pattern used elsewhere
+export const getBook1Unit14Resources = () => book1Unit14Resources;
+
+export default book1Unit14Resources;

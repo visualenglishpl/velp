@@ -1,56 +1,58 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * This file contains common resources for Book 1
+ * Common resource definitions for Visual English Book 1
+ * This includes reusable resource templates and utility functions
  */
 
-// Unit titles for Book 1
-export const BOOK1_TITLE = 'VISUAL 1';
-export const BOOK1_UNIT_TITLES: Record<string, string> = {
-  '1': 'Unit 1',
-  '2': 'Unit 2',
-  '3': 'Unit 3',
-  '4': 'Unit 4',
-  '5': 'Unit 5',
-  '6': 'Unit 6',
-  '7': 'Unit 7',
-  '8': 'Unit 8',
-  '9': 'Unit 9',
-  '10': 'Unit 10',
-  '11': 'Unit 11',
-  '12': 'Unit 12',
-  '13': 'Unit 13',
-  '14': 'Unit 14',
-  '15': 'Unit 15',
-  '16': 'Unit 16',
-  '17': 'Unit 17',
-  '18': 'Unit 18',
+import { TeacherResource } from '@/components/TeacherResources';
+
+// Common resource template functions for Book 1
+export const createBook1VideoResource = (
+  unit: number,
+  index: number,
+  title: string,
+  youtubeEmbedId: string,
+  description?: string
+): TeacherResource => ({
+  id: `book1-unit${unit}-video-${index}`,
+  title: title,
+  description: description || `A video resource for Book 1 Unit ${unit}: ${title}`,
+  resourceType: 'video',
+  content: {
+    type: 'youtube',
+    embedId: youtubeEmbedId,
+  },
+});
+
+export const createBook1GameResource = (
+  unit: number,
+  index: number,
+  title: string,
+  wordwallEmbedId: string,
+  themeId: string = '1',
+  templateId: string = '38',
+  fontStackId: string = '0',
+  description?: string
+): TeacherResource => ({
+  id: `book1-unit${unit}-game-${index}`,
+  title: title,
+  description: description || `An interactive game for Book 1 Unit ${unit}: ${title}`,
+  resourceType: 'game',
+  content: {
+    type: 'wordwall',
+    embedUrl: `https://wordwall.net/embed/${wordwallEmbedId}?themeId=${themeId}&templateId=${templateId}&fontStackId=${fontStackId}`,
+  },
+});
+
+// Function to extract YouTube video ID from full YouTube URL/embed code
+export const extractYouTubeId = (url: string): string => {
+  const regExp = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return match && match[1].length === 11 ? match[1] : url;
 };
 
-// Generate default resources for any unit
-export function generateBook1UnitResources(bookId: string, unitId: string): TeacherResource[] {
-  const unitTitle = BOOK1_UNIT_TITLES[unitId] || `Unit ${unitId}`;
-
-  return [
-    {
-      id: `book1-unit${unitId}-default-video`,
-      bookId,
-      unitId,
-      title: `${unitTitle} - Video Resource`,
-      resourceType: 'video',
-      provider: 'YouTube',
-      sourceUrl: 'https://www.youtube.com/embed/placeholder',
-      embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-    },
-    {
-      id: `book1-unit${unitId}-default-game`,
-      bookId,
-      unitId,
-      title: `${unitTitle} - Interactive Game`,
-      resourceType: 'game',
-      provider: 'Wordwall',
-      sourceUrl: 'https://wordwall.net/resource/placeholder',
-      embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-    }
-  ];
-}
+// Function to extract Wordwall ID from full Wordwall URL/embed code
+export const extractWordwallId = (embedCode: string): string => {
+  const regExp = /wordwall\.net\/embed\/([\w\d]+)/;
+  const match = embedCode.match(regExp);
+  return match ? match[1] : embedCode;
+};
