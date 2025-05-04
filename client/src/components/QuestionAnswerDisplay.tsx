@@ -1804,6 +1804,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
   }
   
   // If there's no question and no answer, don't render anything
+  // If there's no question and no answer, don't render anything
+  // This ensures images without linked Q&A appear blank as per requirement
   if (!qaData.hasData || (qaData.question === '' && qaData.answer === '')) {
     return null;
   }
