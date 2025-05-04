@@ -1,59 +1,89 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 2 Unit 14
+ * Visual English Book 2, Unit 14: WHAT SPORTS DO YOU LIKE?
+ * Resources including videos and games
  */
 
-// Videos for Unit 14
-export const videos: TeacherResource[] = [
+import { TeacherResource } from '@/components/TeacherResources';
+
+export const book2Unit14VideoResources: TeacherResource[] = [
   {
-    id: `book2-unit14-video-1`,
+    id: 'book2-unit14-video1',
     bookId: '2',
     unitId: '14',
-    title: 'VISUAL 2 Unit 14 Video 1',
+    title: 'Guess the Word Sports - Video Quiz',
+    description: 'Interactive quiz to practice sports vocabulary.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    sourceUrl: 'https://www.youtube.com/watch?v=dl7_ZgWq6Rg',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/dl7_ZgWq6Rg?si=AcAnKXVmmEUP6KKu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    id: `book2-unit14-video-2`,
+    id: 'book2-unit14-video2',
     bookId: '2',
     unitId: '14',
-    title: 'VISUAL 2 Unit 14 Video 2',
+    title: 'Sports Vocabulary English Vocabulary Games',
+    description: 'Another quiz format for practicing sports vocabulary.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    sourceUrl: 'https://www.youtube.com/watch?v=mHwf5wMG2pU',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/mHwf5wMG2pU?si=K9oaoEcEGYLvY0dD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book2-unit14-video3',
+    bookId: '2',
+    unitId: '14',
+    title: 'What Sport is This - Guessing Song for Kids - Pancake Manor',
+    description: 'Fun song that asks children to guess different sports.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=EZXI7l3eaOs',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/EZXI7l3eaOs?si=vY9cFFs1hogcNKHz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: 'book2-unit14-video4',
+    bookId: '2',
+    unitId: '14',
+    title: 'What sports do you like - ENGLISH SING SING',
+    description: 'Educational song about different sports and preferences.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=qkWlGmhBZVs',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/qkWlGmhBZVs?si=SJFYD15O8XOX30uB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   }
 ];
 
-// Games for Unit 14
-export const games: TeacherResource[] = [
+export const book2Unit14GameResources: TeacherResource[] = [
   {
-    id: `book2-unit14-game-1`,
+    id: 'book2-unit14-game1',
     bookId: '2',
     unitId: '14',
-    title: 'VISUAL 2 Unit 14 Game 1',
+    title: 'WORDWALL - SPORTS GROUPS',
+    description: 'Interactive game to categorize different types of sports.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/f65a900b86cc40d69cfcce92d570dee9',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f65a900b86cc40d69cfcce92d570dee9?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    id: `book2-unit14-game-2`,
+    id: 'book2-unit14-game2',
     bookId: '2',
     unitId: '14',
-    title: 'VISUAL 2 Unit 14 Game 2',
+    title: 'WORDWALL - SPORTS',
+    description: 'Game for learning and practicing sports vocabulary.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/022ad691de2d4533a43eb46effe8c9ff',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/022ad691de2d4533a43eb46effe8c9ff?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources
+export const book2Unit14Resources: TeacherResource[] = [
+  ...book2Unit14VideoResources,
+  ...book2Unit14GameResources
+];
 
-// Main export for backward compatibility
-export const book2Unit14Resources = resources;
+// Export a function to get all resources for this unit
+export const getBook2Unit14Resources = () => book2Unit14Resources;
+
+export default book2Unit14Resources;

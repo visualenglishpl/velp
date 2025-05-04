@@ -2131,8 +2131,8 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
         </div>
       )}
       
-      {/* Display question and answer - unless it's been deleted */}
-      {!isLoadingExcel && qaData.hasData && !isDeleted && (
+      {/* Display question and answer - unless it's been deleted or no question/answer exists */}
+      {!isLoadingExcel && qaData.hasData && !isDeleted && qaData.question && qaData.question.trim() !== '' && (
         <div className="p-2 text-center relative">
           {isEditing ? (
             <div className="space-y-2">

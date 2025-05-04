@@ -1,59 +1,45 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 2 Unit 12
+ * Visual English Book 2, Unit 12: AT THE DOCTORS
+ * Resources including videos and games
  */
 
-// Videos for Unit 12
-export const videos: TeacherResource[] = [
+import { TeacherResource } from '@/components/TeacherResources';
+
+export const book2Unit12VideoResources: TeacherResource[] = [
   {
-    id: `book2-unit12-video-1`,
+    id: 'book2-unit12-video1',
     bookId: '2',
     unitId: '12',
-    title: 'VISUAL 2 Unit 12 Video 1',
+    title: 'Robot Doctor - D Billions Kids Songs',
+    description: 'Fun song about visiting the doctor with a robot theme.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book2-unit12-video-2`,
-    bookId: '2',
-    unitId: '12',
-    title: 'VISUAL 2 Unit 12 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    sourceUrl: 'https://www.youtube.com/watch?v=ZNX0uTBp7_U',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ZNX0uTBp7_U?si=drUntNtdT_ES956w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   }
 ];
 
-// Games for Unit 12
-export const games: TeacherResource[] = [
+export const book2Unit12GameResources: TeacherResource[] = [
   {
-    id: `book2-unit12-game-1`,
+    id: 'book2-unit12-game1',
     bookId: '2',
     unitId: '12',
-    title: 'VISUAL 2 Unit 12 Game 1',
+    title: "WORDWALL - WHAT IS THE MATTER - AT THE DOCTOR'S",
+    description: 'Interactive game about common health problems and doctor visits.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book2-unit12-game-2`,
-    bookId: '2',
-    unitId: '12',
-    title: 'VISUAL 2 Unit 12 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/78bd65ffe1734badb1e563f03fe3cea4',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/78bd65ffe1734badb1e563f03fe3cea4?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
+// Combined resources
+export const book2Unit12Resources: TeacherResource[] = [
+  ...book2Unit12VideoResources,
+  ...book2Unit12GameResources
+];
 
-// Main export for backward compatibility
-export const book2Unit12Resources = resources;
+// Export a function to get all resources for this unit
+export const getBook2Unit12Resources = () => book2Unit12Resources;
+
+export default book2Unit12Resources;
