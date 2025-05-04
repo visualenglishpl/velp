@@ -1,79 +1,75 @@
 /**
  * Visual English Book 2, Unit 14: WHAT SPORTS DO YOU LIKE?
- * Resources including videos and games
+ * Resources including videos and games about sports
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
 
+// Video resources for this unit
 export const book2Unit14VideoResources: TeacherResource[] = [
   {
-    id: 'book2-unit14-video1',
-    bookId: '2',
-    unitId: '14',
-    title: 'Guess the Word Sports - Video Quiz',
-    description: 'Interactive quiz to practice sports vocabulary.',
+    title: 'Guess the Word - Sports Quiz',
+    description: 'Interactive quiz to guess different sports from visual clues',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=dl7_ZgWq6Rg',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/dl7_ZgWq6Rg?si=AcAnKXVmmEUP6KKu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    content: {
+      type: 'youtube',
+      embedId: 'dl7_ZgWq6Rg'
+    }
   },
   {
-    id: 'book2-unit14-video2',
-    bookId: '2',
-    unitId: '14',
-    title: 'Sports Vocabulary English Vocabulary Games',
-    description: 'Another quiz format for practicing sports vocabulary.',
+    title: 'Sports Vocabulary English Game',
+    description: 'Learn sports vocabulary through an engaging quiz game',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=mHwf5wMG2pU',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/mHwf5wMG2pU?si=K9oaoEcEGYLvY0dD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    content: {
+      type: 'youtube',
+      embedId: 'mHwf5wMG2pU'
+    }
   },
   {
-    id: 'book2-unit14-video3',
-    bookId: '2',
-    unitId: '14',
-    title: 'What Sport is This - Guessing Song for Kids - Pancake Manor',
-    description: 'Fun song that asks children to guess different sports.',
+    title: 'What Sport is This - Guessing Song',
+    description: 'Fun guessing song for kids from Pancake Manor to learn sports',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=EZXI7l3eaOs',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/EZXI7l3eaOs?si=vY9cFFs1hogcNKHz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    content: {
+      type: 'youtube',
+      embedId: 'EZXI7l3eaOs'
+    }
   },
   {
-    id: 'book2-unit14-video4',
-    bookId: '2',
-    unitId: '14',
-    title: 'What sports do you like - ENGLISH SING SING',
-    description: 'Educational song about different sports and preferences.',
+    title: 'What Sports Do You Like?',
+    description: 'English Sing Sing presents a song about sports preferences',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=qkWlGmhBZVs',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/qkWlGmhBZVs?si=SJFYD15O8XOX30uB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    content: {
+      type: 'youtube',
+      embedId: 'qkWlGmhBZVs'
+    }
   }
 ];
 
+// Game resources for this unit
 export const book2Unit14GameResources: TeacherResource[] = [
   {
-    id: 'book2-unit14-game1',
-    bookId: '2',
-    unitId: '14',
-    title: 'WORDWALL - SPORTS GROUPS',
-    description: 'Interactive game to categorize different types of sports.',
+    title: 'Sports Groups - Wordwall',
+    description: 'Interactive game to group different sports categories',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/f65a900b86cc40d69cfcce92d570dee9',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f65a900b86cc40d69cfcce92d570dee9?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    content: {
+      type: 'wordwall',
+      embedId: 'f65a900b86cc40d69cfcce92d570dee9'
+    }
   },
   {
-    id: 'book2-unit14-game2',
-    bookId: '2',
-    unitId: '14',
-    title: 'WORDWALL - SPORTS',
-    description: 'Game for learning and practicing sports vocabulary.',
+    title: 'Sports Vocabulary - Wordwall',
+    description: 'Practice sports vocabulary with interactive exercises',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/022ad691de2d4533a43eb46effe8c9ff',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/022ad691de2d4533a43eb46effe8c9ff?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    content: {
+      type: 'wordwall',
+      embedId: '022ad691de2d4533a43eb46effe8c9ff'
+    }
   }
 ];
 

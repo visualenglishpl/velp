@@ -1,79 +1,75 @@
 /**
  * Visual English Book 2, Unit 17: WHERE ARE YOU FROM?
- * Resources including videos and games
+ * Resources including videos and games about nationalities
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
 
+// Video resources for this unit
 export const book2Unit17VideoResources: TeacherResource[] = [
   {
-    id: 'book2-unit17-video1',
-    bookId: '2',
-    unitId: '17',
-    title: 'What is your Nationality',
-    description: 'Song teaching different nationalities and countries.',
+    title: 'What is your Nationality?',
+    description: 'Song teaching nationality vocabulary and questions',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=LIUWCSD11MM',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/LIUWCSD11MM?si=cK9NQhQkhEQpnhbj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    content: {
+      type: 'youtube',
+      embedId: 'LIUWCSD11MM'
+    }
   },
   {
-    id: 'book2-unit17-video2',
-    bookId: '2',
-    unitId: '17',
-    title: 'Where Are You From - MAPLE LEAF LEARNING 1',
-    description: 'Song for practicing country names and nationality questions.',
+    title: 'Where Are You From? - Song',
+    description: 'Maple Leaf Learning song about countries and nationalities',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=l6A2EFkjXq4',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/l6A2EFkjXq4?si=K8EWqtZgwHBsaohS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    content: {
+      type: 'youtube',
+      embedId: 'l6A2EFkjXq4'
+    }
   },
   {
-    id: 'book2-unit17-video3',
-    bookId: '2',
-    unitId: '17',
-    title: 'Where Are You From - MAPLE LEAF LEARNING 2',
-    description: 'Another version of the country and nationality song.',
+    title: 'Where Are You From? - Flags and Countries',
+    description: 'Maple Leaf Learning song that connects country flags with nationality',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=XfFCaTgsW-I',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XfFCaTgsW-I?si=36cSpkLWM-cRwlkh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    content: {
+      type: 'youtube',
+      embedId: 'XfFCaTgsW-I'
+    }
   },
   {
-    id: 'book2-unit17-video4',
-    bookId: '2',
-    unitId: '17',
-    title: 'RAP Whats Your Nationality - ESL Music for Kids',
-    description: 'Rap song about different nationalities for kids.',
+    title: "What's Your Nationality? - Rap",
+    description: 'ESL Music for Kids presents a fun rap about nationalities',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=VPvLduIe_lI',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/VPvLduIe_lI?si=CrwYoIaDIgosA-Ih" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    content: {
+      type: 'youtube',
+      embedId: 'VPvLduIe_lI'
+    }
   }
 ];
 
+// Game resources for this unit
 export const book2Unit17GameResources: TeacherResource[] = [
   {
-    id: 'book2-unit17-game1',
-    bookId: '2',
-    unitId: '17',
-    title: 'WORDWALL - WHERE ARE YOU FROM (1)',
-    description: 'Interactive game to practice country names and nationalities.',
+    title: 'Where Are You From? - Wordwall',
+    description: 'Interactive matching game for countries and nationalities',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/714fe36db01541a99a77b717a178223b',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/714fe36db01541a99a77b717a178223b?themeId=23&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    content: {
+      type: 'wordwall',
+      embedId: '714fe36db01541a99a77b717a178223b'
+    }
   },
   {
-    id: 'book2-unit17-game2',
-    bookId: '2',
-    unitId: '17',
-    title: 'WORDWALL - WHERE ARE YOU FROM (2)',
-    description: 'Another game format for practicing country and nationality vocabulary.',
+    title: 'Countries and Nationalities - Wordwall',
+    description: 'Practice matching countries with their nationalities',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/2342d6382619465d81a2acf23a5ea9d0',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/2342d6382619465d81a2acf23a5ea9d0?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    content: {
+      type: 'wordwall',
+      embedId: '2342d6382619465d81a2acf23a5ea9d0'
+    }
   }
 ];
 

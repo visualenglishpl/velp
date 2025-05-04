@@ -961,6 +961,15 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 6 && typedImplModule.generateUnit6LessonPlans) {
               console.log('Using generateUnit6LessonPlans for Book 2');
               lessonPlans = typedImplModule.generateUnit6LessonPlans();
+            } else if (unitNum === 7 && typedImplModule.generateUnit7LessonPlans) {
+              console.log('Using generateUnit7LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit7LessonPlans();
+            } else if (unitNum === 8 && typedImplModule.generateUnit8LessonPlans) {
+              console.log('Using generateUnit8LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit8LessonPlans();
+            } else if (unitNum === 9 && typedImplModule.generateUnit9LessonPlans) {
+              console.log('Using generateUnit9LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit9LessonPlans();
             }
             
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
