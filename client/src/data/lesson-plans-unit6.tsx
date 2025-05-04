@@ -137,7 +137,7 @@ export const internationalMoneyLessonPlan: LessonPlan = {
         "Follow up with: 'What currency is used in your country?'",
         "Create a list of currencies on the board (dollar, euro, yen, etc.)"
       ],
-      teacherNotes: 'This helps connect to students' prior knowledge and personal experiences.'
+      teacherNotes: "This helps connect to students' prior knowledge and personal experiences."
     },
     {
       title: 'Presentation: International Currencies',
@@ -180,7 +180,7 @@ export const internationalMoneyLessonPlan: LessonPlan = {
       ],
       instructions: [
         'Model a dialogue for exchanging currency',
-        'Teach phrases like: "I'd like to exchange pounds for euros" and "What's the exchange rate today?"',
+        "Teach phrases like: 'I'd like to exchange pounds for euros' and 'What's the exchange rate today?'",
         'Divide students into pairs and distribute role-play cards',
         'Students practice dialogues using the exchange rate charts',
         'Have 2-3 pairs perform their dialogues for the class'
@@ -198,7 +198,7 @@ export const internationalMoneyLessonPlan: LessonPlan = {
       ]
     }
   ],
-  assessmentTips: 'Evaluate students' understanding through their participation in role-plays and their ability to calculate currency conversions using the exchange rate charts.',
+  assessmentTips: "Evaluate students' understanding through their participation in role-plays and their ability to calculate currency conversions using the exchange rate charts.",
   homeworkIdeas: [
     'Research the currency of a country you would like to visit and create a short presentation',
     'Complete a worksheet with currency conversion problems'
@@ -269,8 +269,8 @@ export const spendingSavingLessonPlan: LessonPlan = {
         'Book 7, Unit 6 slides with examples'
       ],
       instructions: [
-        'Introduce comparative structures: "This is more/less expensive than that", "This costs twice as much as that"',
-        'Present expressions of value: "It's worth it", "It's a good deal", "It's overpriced"',
+        "Introduce comparative structures: 'This is more/less expensive than that', 'This costs twice as much as that'",
+        "Present expressions of value: 'It\'s worth it', 'It\'s a good deal', 'It\'s overpriced'",
         'Show examples of items with different prices',
         'Have students practice making comparative statements about the items'
       ],
@@ -304,7 +304,7 @@ export const spendingSavingLessonPlan: LessonPlan = {
       ]
     }
   ],
-  assessmentTips: 'Evaluate students' use of appropriate vocabulary and comparative structures during the budget planning activity. Assess their ability to express priorities and explain financial decisions.',
+  assessmentTips: "Evaluate students' use of appropriate vocabulary and comparative structures during the budget planning activity. Assess their ability to express priorities and explain financial decisions.",
   homeworkIdeas: [
     'Create a personal budget for a week, including all expected expenses',
     'Write a short paragraph comparing prices of similar items in different shops'
