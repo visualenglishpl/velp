@@ -5,7 +5,7 @@
 
 import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 import { TeacherResource } from '@/components/TeacherResources';
-import { book2Unit1Resources } from './book2-resources';
+import { book2Unit1Resources } from './book2-unit1-resources';
 
 // Function to get resources for this unit
 export function getBook2Unit1Resources(): TeacherResource[] {
