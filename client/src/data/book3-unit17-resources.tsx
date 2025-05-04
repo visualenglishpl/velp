@@ -1,59 +1,73 @@
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 
 /**
- * Resources for Book 3 Unit 17
+ * Book 3 Unit 17 - HOUSE CHORES
+ * Resources including videos and games based on the DOCX attachment
  */
 
-// Videos for Unit 17
-export const videos: TeacherResource[] = [
+export const book3Unit17Resources: TeacherResource[] = [
+  // Videos
   {
-    id: `book3-unit17-video-1`,
-    bookId: '3',
-    unitId: '17',
-    title: 'VISUAL 3 Unit 17 Video 1',
+    title: 'House Chores Song for Kids',
+    description: 'A fun song teaching children about different household chores',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'Ot53mer1xIk'
+    }
   },
   {
-    id: `book3-unit17-video-2`,
-    bookId: '3',
-    unitId: '17',
-    title: 'VISUAL 3 Unit 17 Video 2',
+    title: 'Do the Chores',
+    description: 'Interactive vocabulary video about house chores',
+    resourceType: 'video',
+    provider: 'ISL Collective',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://en.islcollective.com/english-esl-video-lessons/embed/193628'
+    }
+  },
+  {
+    title: 'Household Chores ESL Vocabulary',
+    description: 'Learn vocabulary related to household tasks',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
-];
-
-// Games for Unit 17
-export const games: TeacherResource[] = [
+    content: {
+      type: 'youtube',
+      embedId: 'Kke9CnYEOGc'
+    }
+  },
+  
+  // Games
   {
-    id: `book3-unit17-game-1`,
-    bookId: '3',
-    unitId: '17',
-    title: 'VISUAL 3 Unit 17 Game 1',
+    title: 'WORDWALL - House Chores (1)',
+    description: 'Interactive game for learning house chore vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/60508097a6234699b83aa543998513b5?themeId=1&templateId=3&fontStackId=0'
+    }
   },
   {
-    id: `book3-unit17-game-2`,
-    bookId: '3',
-    unitId: '17',
-    title: 'VISUAL 3 Unit 17 Game 2',
+    title: 'WORDWALL - House Chores (2)',
+    description: 'Additional practice for house chore vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/6e52398f1a794e8b8b2e8c952cb3e967?themeId=1&templateId=3&fontStackId=0'
+    }
+  },
+  {
+    title: 'WORDWALL - House Chores (3)',
+    description: 'More practice activities for house chore vocabulary',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/6bf5a510ebb649b7824c72039a167e6c?themeId=1&templateId=3&fontStackId=0'
+    }
+  },
 ];
-
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
-
-// Main export for backward compatibility
-export const book3Unit17Resources = resources;

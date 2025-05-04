@@ -9,8 +9,8 @@ import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 export const book3Unit18Resources: TeacherResource[] = [
   // Videos
   {
-    title: 'Movie Genres Video',
-    description: 'Video explaining different movie and film genres',
+    title: 'Movie Genres - Super Easy Learning',
+    description: 'Learn vocabulary related to different movie genres',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
@@ -19,8 +19,8 @@ export const book3Unit18Resources: TeacherResource[] = [
     }
   },
   {
-    title: 'Film Vocabulary',
-    description: 'Learn about important film vocabulary and movie-related terms',
+    title: 'English Vocabulary: Movies & Films',
+    description: 'Comprehensive vocabulary related to movies and cinema',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
@@ -31,8 +31,8 @@ export const book3Unit18Resources: TeacherResource[] = [
   
   // Games
   {
-    title: 'WORDWALL - Movies - Films (1)',
-    description: 'Interactive game for learning movie genre vocabulary',
+    title: 'WORDWALL - Movies - Films - Anagram',
+    description: 'Anagram puzzle game with movies vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {
@@ -41,8 +41,8 @@ export const book3Unit18Resources: TeacherResource[] = [
     }
   },
   {
-    title: 'WORDWALL - Movies - Films (2)',
-    description: 'Match movie genres with their definitions',
+    title: 'WORDWALL - Movies - Films (1)',
+    description: 'Interactive game for learning movie genre vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {
@@ -51,8 +51,8 @@ export const book3Unit18Resources: TeacherResource[] = [
     }
   },
   {
-    title: 'WORDWALL - Movies - Films (3)',
-    description: 'Practice film vocabulary through an interactive game',
+    title: 'WORDWALL - Movies - Films (2)',
+    description: 'Additional practice for cinema and movie vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {

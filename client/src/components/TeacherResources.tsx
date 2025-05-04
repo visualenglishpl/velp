@@ -299,7 +299,15 @@ const dynamicImplImport = async (book: string, unit: number) => {
         case 13: return import('@/data/book3-unit13-implementation');
         case 14: return import('@/data/book3-unit14-implementation');
         case 15: return import('@/data/book3-unit15-implementation');
-        case 16: return import('@/data/book3-unit16-implementation');
+        case 16: 
+          const unit16Type = window.location.pathname.includes('sports') ? 'sports' : 'house-chores';
+          if (unit16Type === 'sports') {
+            console.log('Loading Sports implementation for Unit 16');
+            return import('@/data/book3-unit16-sports-implementation');
+          } else {
+            console.log('Loading House Chores implementation for Unit 16');
+            return import('@/data/book3-unit16-implementation');
+          }
         case 17: return import('@/data/book3-unit17-implementation');
         case 18: return import('@/data/book3-unit18-implementation');
         default: return null;
@@ -577,7 +585,15 @@ const dynamicResourceImport = async (book: string, unit: number) => {
         case 13: return import('@/data/book3-unit13-resources');
         case 14: return import('@/data/book3-unit14-resources');
         case 15: return import('@/data/book3-unit15-resources');
-        case 16: return import('@/data/book3-unit16-resources');
+        case 16: 
+          const unit16ResType = window.location.pathname.includes('sports') ? 'sports' : 'house-chores';
+          if (unit16ResType === 'sports') {
+            console.log('Loading Sports resources for Unit 16');
+            return import('@/data/book3-unit16-sports-resources');
+          } else {
+            console.log('Loading House Chores resources for Unit 16');
+            return import('@/data/book3-unit16-resources');
+          }
         case 17: return import('@/data/book3-unit17-resources');
         case 18: return import('@/data/book3-unit18-resources');
         default: return null;
