@@ -1,123 +1,83 @@
 /**
- * Visual English Book 2, Unit 4: FASHION WEEK
+ * Visual English Book 2, Unit 4: WEATHER
  * Resources including videos and games
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK2_TITLE, BOOK2_UNIT_TITLES } from './book2-resources-common';
+
+const unitNumber = '4';
+const unitTitle = BOOK2_UNIT_TITLES[unitNumber];
 
 export const book2Unit4VideoResources: TeacherResource[] = [
   {
-    id: 'book2-unit4-video1',
+    id: `book2-unit${unitNumber}-video1`,
     bookId: '2',
-    unitId: '4',
-    title: 'Fashion Show Song',
-    description: 'Catchy song about fashion and clothing vocabulary.',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - How's the Weather? Song`,
+    description: 'Fun song teaching weather vocabulary and expressions.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=ZkIzvwfvpGg',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ZkIzvwfvpGg?si=BoGi927I_mQP-i37" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://www.youtube.com/watch?v=rD6FRDd9Hew',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/rD6FRDd9Hew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit4-video2',
+    id: `book2-unit${unitNumber}-video2`,
     bookId: '2',
-    unitId: '4',
-    title: 'Put On Your Shoes - Super Simple Songs 1',
-    description: 'Song about getting dressed with simple clothing vocabulary.',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Weather Song for Kids`,
+    description: 'Catchy song about different weather types.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=-jBfb33_KHU',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/-jBfb33_KHU?si=5IPyJatrIZpP9uNv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://www.youtube.com/watch?v=XcW9Ct000yY',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XcW9Ct000yY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit4-video3',
+    id: `book2-unit${unitNumber}-video3`,
     bookId: '2',
-    unitId: '4',
-    title: 'Put On Your Shoes - Super Simple Songs 2',
-    description: 'Another version of the dressing song with different animations.',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What's the Weather Like Today?`,
+    description: 'Video about asking and answering weather questions.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=AsZwvuUmHGU',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/AsZwvuUmHGU?si=J_MMF9UFrzwv5uR9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book2-unit4-video4',
-    bookId: '2',
-    unitId: '4',
-    title: 'Put On Your Shoes - Super Simple Songs 3',
-    description: 'Third version of the song with different clothing vocabulary.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=rWuYWpG_PN4',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/rWuYWpG_PN4?si=s6yCYPZk6XRX_9zY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book2-unit4-video5',
-    bookId: '2',
-    unitId: '4',
-    title: 'Put On Your Shoes - Super Simple Songs 4',
-    description: 'Fourth version with more clothing vocabulary practice.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=HN3etziOMyo',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/HN3etziOMyo?si=1WmQSt9s1YbnOaJ1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book2-unit4-video6',
-    bookId: '2',
-    unitId: '4',
-    title: 'Put On Your Shoes - Super Simple Songs 5',
-    description: 'Fifth variation with additional clothing vocabulary.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=VTo1DsFiXdM',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/VTo1DsFiXdM?si=rQbuV9cII5U5kfzA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book2-unit4-video7',
-    bookId: '2',
-    unitId: '4',
-    title: 'Clothes Vocabulary Guessing Game',
-    description: 'Interactive video quiz about clothing vocabulary.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=rAtqLPCiTpk',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/rAtqLPCiTpk?si=fzqmzqdeXyEunGV_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://www.youtube.com/watch?v=DnGKfOX5bVQ',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/DnGKfOX5bVQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   }
 ];
 
 export const book2Unit4GameResources: TeacherResource[] = [
   {
-    id: 'book2-unit4-game1',
+    id: `book2-unit${unitNumber}-game1`,
     bookId: '2',
-    unitId: '4',
-    title: 'WORDWALL - CLOTHES',
-    description: 'Interactive game to practice clothing vocabulary.',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WEATHER VOCABULARY (1)`,
+    description: 'Interactive game to practice weather vocabulary.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/d3f76d6242dd4223a9b80244dcb7f20c',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d3f76d6242dd4223a9b80244dcb7f20c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit4-game2',
+    id: `book2-unit${unitNumber}-game2`,
     bookId: '2',
-    unitId: '4',
-    title: 'WORDWALL - FUNNY CLOTHES',
-    description: 'Fun game with unusual clothing combinations.',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - HOW'S THE WEATHER? (2)`,
+    description: 'Practice asking and answering "How\'s the weather?" questions.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/42e3e417f8b84f54b4804df5a45f9886',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/42e3e417f8b84f54b4804df5a45f9886?themeId=1&templateId=54&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit4-game3',
+    id: `book2-unit${unitNumber}-game3`,
     bookId: '2',
-    unitId: '4',
-    title: 'WORDWALL - CLOTHES',
-    description: 'Another clothing vocabulary game with different format.',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WEATHER AND CLOTHES (3)`,
+    description: 'Match appropriate clothing with different weather conditions.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/46dac4d85f3d4080b88c4e5c9181ddfc',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/46dac4d85f3d4080b88c4e5c9181ddfc?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 
