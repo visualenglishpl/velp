@@ -84,6 +84,7 @@ import { book1Unit18Resources } from '@/data/book1-unit18-resources';
 
 // Book 2 resource imports
 import { book2Unit5Resources } from '@/data/book2-unit5-resources';
+import { book2Unit8Resources } from '@/data/book2-unit8-resources';
 import { book2Unit10Resources } from '@/data/book2-unit10-resources';
 import { book2Unit11Resources } from '@/data/book2-unit11-resources';
 import { book2Unit12Resources } from '@/data/book2-unit12-resources';
@@ -1308,7 +1309,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return book2Unit5Resources;
       } else if (unitId === '8') {
         console.log('Loading Book 2 Unit 8 resources');
-        return getBook2Unit8Resources();
+        return book2Unit8Resources;
       } else if (unitId === '10') {
         console.log('Loading Book 2 Unit 10 resources');
         return book2Unit10Resources;
