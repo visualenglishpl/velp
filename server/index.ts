@@ -2,10 +2,64 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { registerContentEndpoints } from "./content-endpoints";
+import compression from "compression";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import timeout from "express-timeout-handler";
+
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+// Enable compression to reduce response size
+app.use(compression());
+
+// Set security headers
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable CSP for development/iframe embedding
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: { policy: "cross-origin" } // Allow cross-origin loading of resources
+}));
+
+// Set request timeout to prevent hanging requests
+app.use(timeout.handler({
+  timeout: 60000, // 60 second timeout
+  onTimeout: (req: Request, res: Response) => {
+    res.status(503).json({ error: "Request timeout" });
+  },
+  disable: ['write', 'setHeaders', 'send', 'json', 'end']
+}));
+
+// Rate limiting to prevent abuse
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 300, // 300 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later" }
+});
+
+// Apply rate limiting to API routes only
+app.use("/api/", apiLimiter);
+
+// Enable JSON parsing with increased limit for larger payloads
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: false, limit: "5mb" }));
+
+// Set caching headers for static assets
+app.use((req, res, next) => {
+  // Set cache for static assets but not for API calls
+  if (!req.path.startsWith('/api/') && req.method === 'GET') {
+    // Images, fonts, and other static assets cache for 1 day
+    if (req.path.match(/\.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$/i)) {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+    }
+    // CSS/JS files cache for 2 hours
+    else if (req.path.match(/\.(css|js)$/i)) {
+      res.setHeader('Cache-Control', 'public, max-age=7200');
+    }
+  }
+  next();
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -76,17 +130,30 @@ app.use((req, res, next) => {
   
   // Handle termination signals properly
   // Enhanced error handling for the server
+  let retryCount = 0;
+  const maxRetries = 3;
+  
   server.on('error', (error: Error) => {
     log(`Server error: ${error.message}`);
     // Attempt to recover from certain types of errors
     if ((error as any).code === 'EADDRINUSE') {
-      log('Address in use, retrying in 1 second...');
-      setTimeout(() => {
-        server.close();
-        server.listen(port as number, host, () => {
-          log('Server restarted successfully after address was in use');
+      if (retryCount < maxRetries) {
+        retryCount++;
+        log(`Address in use, retrying in 1 second... (Attempt ${retryCount}/${maxRetries})`);
+        setTimeout(() => {
+          server.close();
+          server.listen(port as number, host, () => {
+            log('Server restarted successfully after address was in use');
+          });
+        }, 1000);
+      } else {
+        log(`Failed to bind to port ${port} after ${maxRetries} attempts. Using a different port.`);
+        // Try using a different port
+        const alternatePort = 5001;
+        server.listen(alternatePort, host, () => {
+          log(`Server running at http://${host}:${alternatePort} (alternate port)`);
         });
-      }, 1000);
+      }
     }
   });
 

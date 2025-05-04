@@ -169,16 +169,59 @@ async function getS3PresignedUrl(key: string, expiresIn = 3600): Promise<string 
     // DEBUG: Log the exact key we're trying to access
     console.log(`Requesting S3 presigned URL for key: "${key}"`);
     
+    // Validate the key to prevent errors
+    if (!key || key.trim() === '') {
+      console.error('Empty key provided to getS3PresignedUrl');
+      return null;
+    }
+    
     const command = new GetObjectCommand({
       Bucket: S3_BUCKET,
       Key: key
     });
     
-    const url = await getSignedUrl(s3Client, command, { expiresIn });
-    console.log(`Generated presigned URL for key: "${key}" - Success`);
-    return url;
-  } catch (error) {
-    console.error(`Error generating presigned URL for ${key}:`, error);
+    // Add retry logic for network issues
+    let retries = 0;
+    const maxRetries = 3;
+    
+    while (retries < maxRetries) {
+      try {
+        const url = await getSignedUrl(s3Client, command, { expiresIn });
+        console.log(`Generated presigned URL for key: "${key}" - Success`);
+        return url;
+      } catch (retryError: any) {
+        retries++;
+        // Only retry on network errors or throttling, not on permission issues
+        if (retries >= maxRetries || 
+            retryError.name === 'AccessDenied' || 
+            retryError.name === 'NoSuchKey') {
+          throw retryError; // Re-throw to be caught by outer catch
+        }
+        console.log(`Retry ${retries}/${maxRetries} for key: ${key} due to error: ${retryError.message}`);
+        // Exponential backoff: wait longer between each retry
+        await new Promise(r => setTimeout(r, 500 * Math.pow(2, retries)));
+      }
+    }
+    
+    // This should never be reached due to the throw in the catch above
+    throw new Error('Max retries exceeded');
+  } catch (error: any) {
+    // More detailed error logging with specific error types
+    if (error.name === 'AccessDenied') {
+      console.error(`Access denied for S3 object: ${key} - Check IAM permissions`);
+    } else if (error.name === 'NoSuchKey') {
+      console.error(`S3 object not found: ${key}`);
+    } else if (error.name === 'NoSuchBucket') {
+      console.error(`S3 bucket not found: ${S3_BUCKET}`);
+    } else {
+      console.error(`Error generating presigned URL for ${key}:`, error);
+    }
+    
+    // Log HTTP status code if available
+    if (error.$metadata?.httpStatusCode) {
+      console.error(`HTTP Status Code: ${error.$metadata.httpStatusCode}`);
+    }
+    
     return null;
   }
 }
