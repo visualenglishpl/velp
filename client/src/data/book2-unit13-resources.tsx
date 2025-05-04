@@ -1,5 +1,5 @@
 /**
- * Visual English Book 2, Unit 13: WILD ANIMALS
+ * Visual English Book 2, Unit 13: WHAT ARE YOU DOING
  * Resources including videos and games
  */
 
@@ -15,7 +15,7 @@ export const book2Unit13VideoResources: TeacherResource[] = [
     bookId: '2',
     unitId: unitNumber,
     title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Video 1`,
-    description: 'Educational video about wild animals.',
+    description: 'Educational video about activities and actions.',
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/watch?v=HrHqq8xJiU4',
@@ -26,7 +26,7 @@ export const book2Unit13VideoResources: TeacherResource[] = [
     bookId: '2',
     unitId: unitNumber,
     title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Video 2`,
-    description: 'Educational video about wild animals and their habitats.',
+    description: 'Educational video about ongoing activities.',
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/watch?v=jeZ40aFoJPw',
@@ -37,7 +37,7 @@ export const book2Unit13VideoResources: TeacherResource[] = [
     bookId: '2',
     unitId: unitNumber,
     title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Video 3`,
-    description: 'Educational video about wild animals.',
+    description: 'Educational video about present continuous actions.',
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/watch?v=AhL6LZjRgKI',
@@ -50,8 +50,8 @@ export const book2Unit13GameResources: TeacherResource[] = [
     id: `book2-unit${unitNumber}-game1`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - Wild Animals Game 1`,
-    description: 'Interactive game to practice wild animal vocabulary.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - Present Continuous Game 1`,
+    description: 'Interactive game to practice present continuous tense.',
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/9b2894f2dd12456cae7777ab904c0ab7',
@@ -61,8 +61,8 @@ export const book2Unit13GameResources: TeacherResource[] = [
     id: `book2-unit${unitNumber}-game2`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - Wild Animals Game 2`,
-    description: 'Interactive game about wild animals.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - Action Verbs Game`,
+    description: 'Interactive game about action verbs.',
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/de1ddb02eff54d04a39272e4347a55ee',
