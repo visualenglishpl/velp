@@ -9,65 +9,69 @@ import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 export const book3Unit12Resources: TeacherResource[] = [
   // Videos
   {
-    title: 'Describing People - Appearance Vocabulary',
-    description: 'Learn vocabulary for describing people\'s physical appearance',
+    title: 'Describing People - Who Is It ESL',
+    description: 'Learning to describe people with visual examples',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
       type: 'youtube',
-      embedId: 'OcpJYBMzpak'
+      embedId: 'YsDfuAiIzDE'
     }
   },
   {
-    title: 'What Do They Look Like? - ELF Learning',
-    description: 'Fun song about describing physical appearance',
+    title: 'Describing People Song',
+    description: 'Song by Planet Pop for describing people\'s appearances',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
       type: 'youtube',
-      embedId: '1pF7JpyC9sc'
-    }
-  },
-  {
-    title: 'Physical Description Song',
-    description: 'Catchy song to remember words for describing people',
-    resourceType: 'video',
-    provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'QkHQ0CYwjaI'
+      embedId: 'vihFVjXGv-Y'
     }
   },
   
   // Games
   {
-    title: 'WORDWALL - Describing People',
-    description: 'Practice vocabulary for physical descriptions',
+    title: 'WORDWALL - Describing a Person (1)',
+    description: 'Interactive game for describing people\'s appearance',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {
       type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/d0d0ea8a5c8c40f5852ecb5c9f9eeafc?themeId=1&templateId=3&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/35cf87e7a749442cb411eccf267de0a5?themeId=1&templateId=3&fontStackId=0'
     }
   },
   {
-    title: 'WORDWALL - Physical Appearance Quiz',
-    description: 'Test your knowledge of appearance vocabulary',
+    title: 'WORDWALL - Describing a Person - Anagram (1)',
+    description: 'Anagram game with vocabulary for describing people',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {
       type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/7193c0f7f240499c9e05ec57e6d11c59?themeId=1&templateId=5&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/31c82d13f7eb4e6ba92de04172cdd2f0?themeId=1&templateId=38&fontStackId=0'
     }
   },
   {
-    title: 'WORDWALL - Match Physical Descriptions',
-    description: 'Match physical descriptions with corresponding images',
+    title: 'WORDWALL - Describing a Person (2)',
+    description: 'Additional practice for describing appearance vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {
       type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/3f33d8f11a2a40cdbfea6b54d02e4e9a?themeId=1&templateId=46&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/0ad1a35ddfd144828247d74b0bef4e02?themeId=1&templateId=3&fontStackId=0'
     }
+  },
+  {
+    title: 'Avatar Maker',
+    description: 'Create your own character with specific appearance features',
+    resourceType: 'game',
+    provider: 'External',
+    sourceUrl: 'https://avatarmaker.com/female/'
+  },
+  {
+    title: 'Wimpy Yourself',
+    description: 'Create a Diary of a Wimpy Kid style character of yourself',
+    resourceType: 'game',
+    provider: 'External',
+    sourceUrl: 'https://wimpykid.com/wimpyourself/'
   },
 ];

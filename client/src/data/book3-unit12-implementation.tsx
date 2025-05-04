@@ -12,5 +12,5 @@ export const getBook3Unit12Resources = (): TeacherResource[] => book3Unit12Resou
 
 // Generate lesson plans for this unit
 export const generateBook3Unit12LessonPlans = () => {
-  return generateDefaultBook3UnitLessonPlans('12', BOOK3_UNIT_TITLES[11]);
+  return generateDefaultBook3UnitLessonPlans('12', 'What Do You Look Like');
 };

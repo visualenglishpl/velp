@@ -1,78 +1,73 @@
 import { TeacherResource } from '@/components/TeacherResources';
-import { BOOK3_TITLE } from './book3-resources-common';
+import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 
 /**
  * Book 3 Unit 15 - BUGS
  * Resources including videos and games based on the DOCX attachment
  */
 
-const unitNumber = '15';
-const unitTitle = 'BUGS';
-
 export const book3Unit15Resources: TeacherResource[] = [
-  // Video Resources
+  // Videos
   {
-    id: `book3-unit${unitNumber}-video-1`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What Do You See Insects Song`,
+    title: 'What Do You See - Insects Song (1)',
+    description: 'Song about different types of insects and bugs',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/bn8QLdWJYl8',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/bn8QLdWJYl8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'bn8QLdWJYl8'
+    }
   },
   {
-    id: `book3-unit${unitNumber}-video-2`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Bugs and Crawly Things Song`,
+    title: 'What Do You See - Insects Song (2)',
+    description: 'Additional song for learning insect vocabulary',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/llZwHR_Y_Es',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/llZwHR_Y_Es" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'llZwHR_Y_Es'
+    }
   },
   {
-    id: `book3-unit${unitNumber}-video-3`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Caterpillar Shoes Story`,
+    title: 'Caterpillar Shoes - Story',
+    description: 'Animated story about a caterpillar meeting different insects',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/tYa6OLQHrEc',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tYa6OLQHrEc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'tYa6OLQHrEc'
+    }
   },
   
-  // Game Resources
+  // Games
   {
-    id: `book3-unit${unitNumber}-game-1`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - BUGS ANAGRAM`,
+    title: 'WORDWALL - Bugs (1)',
+    description: 'Interactive vocabulary game for learning about bugs',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/8d16140de3bc4f18b01da41ab409b8b3',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/8d16140de3bc4f18b01da41ab409b8b3?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/8d16140de3bc4f18b01da41ab409b8b3?themeId=1&templateId=38&fontStackId=0'
+    }
   },
   {
-    id: `book3-unit${unitNumber}-game-2`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - BUGS (1)`,
+    title: 'WORDWALL - Bugs (2)',
+    description: 'Match bugs with their names',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/f49aa2731b464239bc342f74b3b9db68',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/f49aa2731b464239bc342f74b3b9db68?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/f49aa2731b464239bc342f74b3b9db68?themeId=1&templateId=46&fontStackId=0'
+    }
   },
   {
-    id: `book3-unit${unitNumber}-game-3`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - BUGS (2)`,
+    title: 'WORDWALL - Bugs (3)',
+    description: 'Additional practice for insect vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/76a1a0d4a10d486680c6d0614236085c',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/76a1a0d4a10d486680c6d0614236085c?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/76a1a0d4a10d486680c6d0614236085c?themeId=1&templateId=46&fontStackId=0'
+    }
+  },
 ];
-
-export default book3Unit15Resources;

@@ -66,6 +66,11 @@ import { getBook3Unit7SolarResources, generateBook3Unit7SolarLessonPlans } from 
 import { getBook3Unit8Resources, generateBook3Unit8LessonPlans } from '@/data/book3-unit8-implementation';
 import { getBook3Unit10Resources, generateBook3Unit10LessonPlans } from '@/data/book3-unit10-implementation';
 import { getBook3Unit12Resources, generateBook3Unit12LessonPlans } from '@/data/book3-unit12-implementation';
+import { getBook3Unit13Resources, generateBook3Unit13LessonPlans } from '@/data/book3-unit13-implementation';
+import { getBook3Unit14Resources, generateBook3Unit14LessonPlans } from '@/data/book3-unit14-implementation';
+import { getBook3Unit15Resources, generateBook3Unit15LessonPlans } from '@/data/book3-unit15-implementation';
+import { getBook3Unit16Resources, generateBook3Unit16LessonPlans } from '@/data/book3-unit16-implementation';
+import { getBook3Unit18Resources, generateBook3Unit18LessonPlans } from '@/data/book3-unit18-implementation';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES, generateDefaultBook3UnitLessonPlans } from '@/data/book3-resources-common';
 
 // Book 1 implementations
@@ -978,6 +983,30 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 9 && typedResourcesModule.getBook3Unit9Resources) {
               console.log('Using getBook3Unit9Resources function');
               resources = typedResourcesModule.getBook3Unit9Resources();
+            } else if (unitNum === 8 && typedResourcesModule.getBook3Unit8Resources) {
+              console.log('Using getBook3Unit8Resources function');
+              resources = typedResourcesModule.getBook3Unit8Resources();
+            } else if (unitNum === 10 && typedResourcesModule.getBook3Unit10Resources) {
+              console.log('Using getBook3Unit10Resources function');
+              resources = typedResourcesModule.getBook3Unit10Resources();
+            } else if (unitNum === 12 && typedResourcesModule.getBook3Unit12Resources) {
+              console.log('Using getBook3Unit12Resources function');
+              resources = typedResourcesModule.getBook3Unit12Resources();
+            } else if (unitNum === 13 && typedResourcesModule.getBook3Unit13Resources) {
+              console.log('Using getBook3Unit13Resources function');
+              resources = typedResourcesModule.getBook3Unit13Resources();
+            } else if (unitNum === 14 && typedResourcesModule.getBook3Unit14Resources) {
+              console.log('Using getBook3Unit14Resources function');
+              resources = typedResourcesModule.getBook3Unit14Resources();
+            } else if (unitNum === 15 && typedResourcesModule.getBook3Unit15Resources) {
+              console.log('Using getBook3Unit15Resources function');
+              resources = typedResourcesModule.getBook3Unit15Resources();
+            } else if (unitNum === 16 && typedResourcesModule.getBook3Unit16Resources) {
+              console.log('Using getBook3Unit16Resources function');
+              resources = typedResourcesModule.getBook3Unit16Resources();
+            } else if (unitNum === 18 && typedResourcesModule.getBook3Unit18Resources) {
+              console.log('Using getBook3Unit18Resources function');
+              resources = typedResourcesModule.getBook3Unit18Resources();
             }
             
             // Log resources for debugging
@@ -1218,6 +1247,30 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 9 && typedImplModule.generateUnit9LessonPlans) {
               console.log('Using generateUnit9LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateUnit9LessonPlans();
+            } else if (unitNum === 8 && typedImplModule.generateBook3Unit8LessonPlans) {
+              console.log('Using generateBook3Unit8LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit8LessonPlans();
+            } else if (unitNum === 10 && typedImplModule.generateBook3Unit10LessonPlans) {
+              console.log('Using generateBook3Unit10LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit10LessonPlans();
+            } else if (unitNum === 12 && typedImplModule.generateBook3Unit12LessonPlans) {
+              console.log('Using generateBook3Unit12LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit12LessonPlans();
+            } else if (unitNum === 13 && typedImplModule.generateBook3Unit13LessonPlans) {
+              console.log('Using generateBook3Unit13LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit13LessonPlans();
+            } else if (unitNum === 14 && typedImplModule.generateBook3Unit14LessonPlans) {
+              console.log('Using generateBook3Unit14LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit14LessonPlans();
+            } else if (unitNum === 15 && typedImplModule.generateBook3Unit15LessonPlans) {
+              console.log('Using generateBook3Unit15LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit15LessonPlans();
+            } else if (unitNum === 16 && typedImplModule.generateBook3Unit16LessonPlans) {
+              console.log('Using generateBook3Unit16LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit16LessonPlans();
+            } else if (unitNum === 18 && typedImplModule.generateBook3Unit18LessonPlans) {
+              console.log('Using generateBook3Unit18LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit18LessonPlans();
             }
             
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);

@@ -12,5 +12,5 @@ export const getBook3Unit8Resources = (): TeacherResource[] => book3Unit8Resourc
 
 // Generate lesson plans for this unit
 export const generateBook3Unit8LessonPlans = () => {
-  return generateDefaultBook3UnitLessonPlans('8', BOOK3_UNIT_TITLES[7]);
+  return generateDefaultBook3UnitLessonPlans('8', 'Let\'s Go Shopping - How Much Is It?');
 };

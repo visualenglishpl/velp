@@ -9,65 +9,55 @@ import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 export const book3Unit10Resources: TeacherResource[] = [
   // Videos
   {
-    title: 'GENKI - What\'s your favorite subject?',
-    description: 'Engaging song about school subjects with clear visuals',
+    title: 'What\'s Your Favorite Subject - GENKI Song',
+    description: 'Engaging song teaching about school subjects vocabulary',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
       type: 'youtube',
-      embedId: 'W_tb1U_Tlow'
+      embedId: 'tt2_2EP7TE8'
     }
   },
   {
-    title: 'Learn School Subjects Vocabulary',
-    description: 'Vocabulary introduction to different school subjects',
+    title: 'School Subjects - Song',
+    description: 'Song helping students learn different school subjects',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
       type: 'youtube',
-      embedId: 'aHixmxhKsYk'
+      embedId: 'Ow_gbuqQC-k'
     }
   },
   {
-    title: 'School Subjects with Peppa Pig',
-    description: 'Peppa Pig shows different school subjects in a fun way',
+    title: 'This is Britain - School',
+    description: 'Informational video about schools in Britain',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
       type: 'youtube',
-      embedId: 'cmqyQSz5RVA'
+      embedId: 'yMUJKH1fFF0'
     }
   },
   
   // Games
   {
-    title: 'WORDWALL - School Subjects Match-Up',
-    description: 'Match school subjects with their descriptions',
+    title: 'WORDWALL - School Subjects (1)',
+    description: 'Interactive game for practicing school subject vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {
       type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/5c55e4a1d1124a87b9dc99d09a17a7dc?themeId=1&templateId=3&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/ab50864505224481860ed6886ac6de89?themeId=1&templateId=5&fontStackId=0'
     }
   },
   {
-    title: 'WORDWALL - Favourite School Subjects Quiz',
-    description: 'A quiz to test knowledge about school subjects vocabulary',
+    title: 'WORDWALL - School Subjects (2)',
+    description: 'Additional practice game for school subjects',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {
       type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/ccd09d0b7e5a479ab57519cd51d9faba?themeId=1&templateId=5&fontStackId=0'
-    }
-  },
-  {
-    title: 'WORDWALL - School Subjects Word Search',
-    description: 'Find the names of different school subjects in this word search puzzle',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/b1fd8daf18c04e16bacc6b6f0cad9a1c?themeId=1&templateId=46&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/ab50864505224481860ed6886ac6de89?themeId=1&templateId=5&fontStackId=0'
     }
   },
 ];

@@ -9,45 +9,65 @@ import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 export const book3Unit8Resources: TeacherResource[] = [
   // Videos
   {
-    title: 'ELF Learning - 10 to 100 Song',
-    description: 'Learn to count by tens from 10 to 100 with this catchy song',
+    title: '10 to 100 Song by ELF Learning',
+    description: 'Song teaching numbers from 10 to 100 for shopping',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
       type: 'youtube',
-      embedId: '8WWHpBs2iiw'
+      embedId: 'Kn05P3da9hw'
     }
   },
   {
-    title: 'Let\'s Go Shopping Song',
-    description: 'A fun song teaching shopping phrases and vocabulary',
+    title: 'How Much Is It? - RAP Song',
+    description: 'Rap song teaching how to ask and answer about prices',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
       type: 'youtube',
-      embedId: 'dlGjV_c0H7I'
+      embedId: 'MLyFZyh7mM0'
     }
   },
   {
-    title: 'Money Song - Bills and Coins',
-    description: 'Learn about different money denominations through a catchy song',
+    title: 'How Much! Classroom Skit',
+    description: 'Classroom skit demonstrating shopping conversations',
     resourceType: 'video',
     provider: 'YouTube',
     content: {
       type: 'youtube',
-      embedId: 'vs0-3iKWOWg'
+      embedId: 'lkUVY8BJr-4'
+    }
+  },
+  {
+    title: 'The Big Numbers Song',
+    description: 'Song for learning bigger numbers for shopping',
+    resourceType: 'video',
+    provider: 'YouTube',
+    content: {
+      type: 'youtube',
+      embedId: 'e0dJWfQHF8Y'
     }
   },
   
   // Games
   {
-    title: 'WORDWALL - Shopping Vocabulary',
-    description: 'Interactive game to learn shopping vocabulary',
+    title: 'WORDWALL - Numbers 10 - Tens',
+    description: 'Game for practicing counting by tens',
     resourceType: 'game',
     provider: 'Wordwall',
     content: {
       type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/cb1fd923ebdd47758e9975979a0a61b9?themeId=1&templateId=3&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/38b043ed6bc04bdca87b01461e3452f7?themeId=1&templateId=3&fontStackId=0'
+    }
+  },
+  {
+    title: 'WORDWALL - Numbers 10 - 100',
+    description: 'Interactive game for learning numbers from 10 to 100',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/fdb7d185bcb24b23b99b889de4f0b70e?themeId=1&templateId=3&fontStackId=0'
     }
   },
   {
@@ -57,17 +77,7 @@ export const book3Unit8Resources: TeacherResource[] = [
     provider: 'Wordwall',
     content: {
       type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/b183f9de92e749deb12db1c9c8ba89da?themeId=1&templateId=5&fontStackId=0'
-    }
-  },
-  {
-    title: 'WORDWALL - Money and Prices',
-    description: 'Match prices with the correct items',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/7ffb0bc66ed04f22bc7a60dae4bb7b0e?themeId=1&templateId=11&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/dcf9609f4690435197e1171ce2b68c39?themeId=1&templateId=3&fontStackId=0'
     }
   },
 ];

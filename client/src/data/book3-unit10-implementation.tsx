@@ -12,5 +12,5 @@ export const getBook3Unit10Resources = (): TeacherResource[] => book3Unit10Resou
 
 // Generate lesson plans for this unit
 export const generateBook3Unit10LessonPlans = () => {
-  return generateDefaultBook3UnitLessonPlans('10', BOOK3_UNIT_TITLES[9]);
+  return generateDefaultBook3UnitLessonPlans('10', 'My Favourite Subject');
 };
