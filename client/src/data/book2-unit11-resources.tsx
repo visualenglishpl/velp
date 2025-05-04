@@ -4,6 +4,10 @@
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK2_TITLE, BOOK2_UNIT_TITLES } from './book2-resources-common';
+
+const unitNumber = '11';
+const unitTitle = BOOK2_UNIT_TITLES[unitNumber];
 
 export const book2Unit11VideoResources: TeacherResource[] = [
   {

@@ -4,13 +4,17 @@
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK2_TITLE, BOOK2_UNIT_TITLES } from './book2-resources-common';
+
+const unitNumber = '15';
+const unitTitle = BOOK2_UNIT_TITLES[unitNumber];
 
 export const book2Unit15VideoResources: TeacherResource[] = [
   {
-    id: 'book2-unit15-video1',
+    id: `book2-unit${unitNumber}-video1`,
     bookId: '2',
-    unitId: '15',
-    title: 'Farm Animals Song',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Farm Animals Song`,
     description: 'Catchy song teaching names of farm animals.',
     resourceType: 'video',
     provider: 'YouTube',
@@ -18,10 +22,10 @@ export const book2Unit15VideoResources: TeacherResource[] = [
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ryzNlBQC1oQ?si=1J5jD26HCmllSJan" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit15-video2',
+    id: `book2-unit${unitNumber}-video2`,
     bookId: '2',
-    unitId: '15',
-    title: 'What Do You See Song',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What Do You See Song`,
     description: 'Interactive song asking about different farm animals.',
     resourceType: 'video',
     provider: 'YouTube',
@@ -29,10 +33,10 @@ export const book2Unit15VideoResources: TeacherResource[] = [
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/DnDMUoo1mjU?si=QlmERsDW3ayEoHdd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit15-video3',
+    id: `book2-unit${unitNumber}-video3`,
     bookId: '2',
-    unitId: '15',
-    title: 'THE THREE LITTLE PIGS STORY KIDS',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - THE THREE LITTLE PIGS STORY KIDS`,
     description: 'Classic story using farm animals for language learning.',
     resourceType: 'video',
     provider: 'YouTube',
@@ -40,10 +44,10 @@ export const book2Unit15VideoResources: TeacherResource[] = [
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/cgzAmpIDXp8?si=57cNAv0QpmYoCHFh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit15-video4',
+    id: `book2-unit${unitNumber}-video4`,
     bookId: '2',
-    unitId: '15',
-    title: 'THE THREE LITTLE PIGS STORY KIDS 2',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - THE THREE LITTLE PIGS STORY KIDS 2`,
     description: 'Another version of the Three Little Pigs story.',
     resourceType: 'video',
     provider: 'YouTube',
@@ -54,10 +58,10 @@ export const book2Unit15VideoResources: TeacherResource[] = [
 
 export const book2Unit15GameResources: TeacherResource[] = [
   {
-    id: 'book2-unit15-game1',
+    id: `book2-unit${unitNumber}-game1`,
     bookId: '2',
-    unitId: '15',
-    title: 'WORDWALL - FARM ANIMALS (1)',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - FARM ANIMALS (1)`,
     description: 'Interactive game for learning farm animal vocabulary.',
     resourceType: 'game',
     provider: 'Wordwall',
@@ -65,10 +69,10 @@ export const book2Unit15GameResources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f715845f760c4731ac851d1b8ca512a4?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit15-game2',
+    id: `book2-unit${unitNumber}-game2`,
     bookId: '2',
-    unitId: '15',
-    title: 'WORDWALL - FARM ANIMALS (2)',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - FARM ANIMALS (2)`,
     description: 'Second game format for farm animals vocabulary practice.',
     resourceType: 'game',
     provider: 'Wordwall',
@@ -76,10 +80,10 @@ export const book2Unit15GameResources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c42531f633444f29a6cb24bcc2f30ade?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit15-game3',
+    id: `book2-unit${unitNumber}-game3`,
     bookId: '2',
-    unitId: '15',
-    title: 'WORDWALL - FARM ANIMALS (3)',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - FARM ANIMALS (3)`,
     description: 'Third type of game for learning about farm animals.',
     resourceType: 'game',
     provider: 'Wordwall',
@@ -87,10 +91,10 @@ export const book2Unit15GameResources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/5e1db204ee9b4460a29bde6266ae5e43?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit15-game4',
+    id: `book2-unit${unitNumber}-game4`,
     bookId: '2',
-    unitId: '15',
-    title: 'WORDWALL - FARM ANIMALS (4)',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - FARM ANIMALS (4)`,
     description: 'Fourth game with activities for farm animal vocabulary.',
     resourceType: 'game',
     provider: 'Wordwall',
@@ -98,10 +102,10 @@ export const book2Unit15GameResources: TeacherResource[] = [
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c7cbc1fe585e4ecca7c4d55f3380717b?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
-    id: 'book2-unit15-game5',
+    id: `book2-unit${unitNumber}-game5`,
     bookId: '2',
-    unitId: '15',
-    title: 'WORDWALL - FARM ANIMALS PAIRS',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - FARM ANIMALS PAIRS`,
     description: 'Matching game with farm animal vocabulary.',
     resourceType: 'game',
     provider: 'Wordwall',

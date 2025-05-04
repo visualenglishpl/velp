@@ -4,13 +4,17 @@
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK2_TITLE, BOOK2_UNIT_TITLES } from './book2-resources-common';
+
+const unitNumber = '12';
+const unitTitle = BOOK2_UNIT_TITLES[unitNumber];
 
 export const book2Unit12VideoResources: TeacherResource[] = [
   {
-    id: 'book2-unit12-video1',
+    id: `book2-unit${unitNumber}-video1`,
     bookId: '2',
-    unitId: '12',
-    title: 'Robot Doctor - D Billions Kids Songs',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Robot Doctor - D Billions Kids Songs`,
     description: 'Fun song about visiting the doctor with a robot theme.',
     resourceType: 'video',
     provider: 'YouTube',
@@ -21,10 +25,10 @@ export const book2Unit12VideoResources: TeacherResource[] = [
 
 export const book2Unit12GameResources: TeacherResource[] = [
   {
-    id: 'book2-unit12-game1',
+    id: `book2-unit${unitNumber}-game1`,
     bookId: '2',
-    unitId: '12',
-    title: "WORDWALL - WHAT IS THE MATTER - AT THE DOCTOR'S",
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WHAT IS THE MATTER - AT THE DOCTOR'S`,
     description: 'Interactive game about common health problems and doctor visits.',
     resourceType: 'game',
     provider: 'Wordwall',

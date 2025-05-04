@@ -26,8 +26,8 @@ export const BOOK2_UNIT_TITLES: Record<string, string> = {
   '14': 'JOBS',
   '15': 'FEELINGS AND EMOTIONS',
   '16': 'TRANSPORT',
-  '17': 'SPORTS',
-  '18': 'NATURE'
+  '17': 'WHERE ARE YOU FROM?',
+  '18': 'IN THE GARDEN'
 };
 
 /**
