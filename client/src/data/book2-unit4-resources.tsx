@@ -9,6 +9,7 @@ import { BOOK2_TITLE, BOOK2_UNIT_TITLES } from './book2-resources-common';
 const unitNumber = '4';
 const unitTitle = BOOK2_UNIT_TITLES[unitNumber];
 
+// Weather videos - imported from authentic content
 export const book2Unit4VideoResources: TeacherResource[] = [
   {
     id: `book2-unit${unitNumber}-video1`,
@@ -19,7 +20,7 @@ export const book2Unit4VideoResources: TeacherResource[] = [
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/watch?v=rD6FRDd9Hew',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/rD6FRDd9Hew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/rD6FRDd9Hew?si=DLT3lznrF8WMw2ye" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: `book2-unit${unitNumber}-video2`,
@@ -30,7 +31,7 @@ export const book2Unit4VideoResources: TeacherResource[] = [
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/watch?v=XcW9Ct000yY',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XcW9Ct000yY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XcW9Ct000yY?si=xtMYjcL9dXvCCv5C" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: `book2-unit${unitNumber}-video3`,
@@ -41,43 +42,44 @@ export const book2Unit4VideoResources: TeacherResource[] = [
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/watch?v=DnGKfOX5bVQ',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/DnGKfOX5bVQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/DnGKfOX5bVQ?si=YRr9Ey4A1YQ_lM8R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   }
 ];
 
+// Weather games - imported from authentic content
 export const book2Unit4GameResources: TeacherResource[] = [
   {
     id: `book2-unit${unitNumber}-game1`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WEATHER VOCABULARY (1)`,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WEATHER VOCABULARY`,
     description: 'Interactive game to practice weather vocabulary.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/07a8802120a84ba4b20b0e962e0abea2',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/07a8802120a84ba4b20b0e962e0abea2?themeId=1&templateId=50&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     id: `book2-unit${unitNumber}-game2`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - HOW'S THE WEATHER? (2)`,
-    description: 'Practice asking and answering "How\'s the weather?" questions.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - MONTHS AND SEASONS`,
+    description: 'Learn about months and seasonal changes.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/f57988beef3c45abaf56f437166d60da',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f57988beef3c45abaf56f437166d60da?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     id: `book2-unit${unitNumber}-game3`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WEATHER AND CLOTHES (3)`,
-    description: 'Match appropriate clothing with different weather conditions.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WEATHER MATCHING`,
+    description: 'Match weather vocabulary with pictures.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/947229a373254e199d8894dab724a595',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/947229a373254e199d8894dab724a595?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 

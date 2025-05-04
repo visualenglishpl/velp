@@ -7,77 +7,112 @@ import { TeacherResource } from '@/components/TeacherResources';
 import { BOOK2_TITLE, BOOK2_UNIT_TITLES } from './book2-resources-common';
 
 const unitNumber = '6';
-const unitTitle = BOOK2_UNIT_TITLES[unitNumber];
+const unitTitle = 'LETS GO TO THE ZOO'; // Title from attached content
 
+// Zoo Animals videos - imported from authentic content
 export const book2Unit6VideoResources: TeacherResource[] = [
   {
     id: `book2-unit${unitNumber}-video1`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Toys and Games Song`,
-    description: 'Fun song teaching various toys and games vocabulary.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Let's Go To The Zoo Song`,
+    description: 'Fun song about going to the zoo and seeing different animals.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=8-SWzpdcl6E',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8-SWzpdcl6E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://www.youtube.com/watch?v=c8xLYucaawE',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/c8xLYucaawE?si=Yvl-v0t-9RuZt3Tk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: `book2-unit${unitNumber}-video2`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - This is My Toy - Kids Song`,
-    description: 'Catchy song about different toys.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What Do You See Wild Animals Song`,
+    description: 'Song about seeing wild animals at the zoo.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=8jaWcB7tJpE',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8jaWcB7tJpE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://www.youtube.com/watch?v=p5qwOxlvyhk',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/p5qwOxlvyhk?si=WQETSA_xRNbcKa4P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   },
   {
     id: `book2-unit${unitNumber}-video3`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Let's Play with Toys`,
-    description: 'Educational video showing different toys and how to play with them.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Wild Animal Safari - Watts English`,
+    description: 'Educational video showing different animals on a safari.',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=CoQMtz-Jj7E',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/CoQMtz-Jj7E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    sourceUrl: 'https://www.youtube.com/watch?v=qck_LYQ_4bA',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/qck_LYQ_4bA?si=lxriRzL4dSccQ2Nw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: `book2-unit${unitNumber}-video4`,
+    bookId: '2',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - In the Zoo - Watts English`,
+    description: 'Engaging video about visiting the zoo.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=qb1oKClLzRM',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/qb1oKClLzRM?si=1bEYj56M8a_lk3b5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: `book2-unit${unitNumber}-video5`,
+    bookId: '2',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Story Time - Good Night Gorilla`,
+    description: 'Bedtime story about a zoo gorilla.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=nbN2Y5h2ze0',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/nbN2Y5h2ze0?si=UdNlGWRiBo7VbnXS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  },
+  {
+    id: `book2-unit${unitNumber}-video6`,
+    bookId: '2',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Let's Go To The Zoo Song (Alternative)`,
+    description: 'Another fun song about visiting the zoo.',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=OwRmivbNgQk',
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/OwRmivbNgQk?si=dwwcg2X577AsP9QW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   }
 ];
 
+// Zoo animals games - imported from authentic content
 export const book2Unit6GameResources: TeacherResource[] = [
   {
     id: `book2-unit${unitNumber}-game1`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - TOYS VOCABULARY (1)`,
-    description: 'Interactive game to practice toys vocabulary.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - TYPES OF SHOPS`,
+    description: 'Learn about different types of shops.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3h4',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3h4?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/faccf70603a342069c3ada20b85c03d8',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/faccf70603a342069c3ada20b85c03d8?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     id: `book2-unit${unitNumber}-game2`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - IS IT A TOY OR A GAME? (2)`,
-    description: 'Sort items into toys or games categories.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - TYPES OF SHOPS (2)`,
+    description: 'Match items with the appropriate shops.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/t0u1v2w3x4y5z6a7b8c9d0e1f2g3h4i5',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/t0u1v2w3x4y5z6a7b8c9d0e1f2g3h4i5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/0e06a64038bf41c38b6e79a0885a53bc',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0e06a64038bf41c38b6e79a0885a53bc?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   },
   {
     id: `book2-unit${unitNumber}-game3`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WHAT'S YOUR FAVORITE TOY? (3)`,
-    description: 'Practice asking and answering about favorite toys.',
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - TYPES OF SHOPS (3)`,
+    description: 'Interactive game about different types of shops.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/u1v2w3x4y5z6a7b8c9d0e1f2g3h4i5j6',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/u1v2w3x4y5z6a7b8c9d0e1f2g3h4i5j6?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/ad812048d0e94751bc927275863173d8',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ad812048d0e94751bc927275863173d8?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 

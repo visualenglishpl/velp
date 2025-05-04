@@ -11,6 +11,7 @@ import book2Unit2Resources from './book2-unit2-resources';
 import book2Unit3Resources from './book2-unit3-resources';
 import book2Unit4Resources from './book2-unit4-resources';
 import book2Unit5Resources from './book2-unit5-resources';
+import book2Unit6Resources from './book2-unit6-resources';
 import book2Unit8Resources from './book2-unit8-resources';
 import book2Unit10Resources from './book2-unit10-resources';
 import book2Unit13Resources from './book2-unit13-resources';
@@ -23,6 +24,7 @@ export const book2ResourcesByUnit: Record<string, TeacherResource[]> = {
   '3': book2Unit3Resources,
   '4': book2Unit4Resources,
   '5': book2Unit5Resources,
+  '6': book2Unit6Resources,
   '8': book2Unit8Resources,
   '10': book2Unit10Resources,
   '13': book2Unit13Resources,
@@ -51,6 +53,7 @@ export {
   book2Unit3Resources,
   book2Unit4Resources,
   book2Unit5Resources,
+  book2Unit6Resources,
   book2Unit8Resources,
   book2Unit10Resources,
   book2Unit13Resources,

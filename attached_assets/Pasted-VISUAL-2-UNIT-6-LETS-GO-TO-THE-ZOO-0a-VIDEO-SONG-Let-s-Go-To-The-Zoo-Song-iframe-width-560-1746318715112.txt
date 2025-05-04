@@ -1,0 +1,15 @@
+VISUAL 2 - UNIT 6 - LETS GO TO THE ZOO
+0a VIDEO SONG - Let's Go To The Zoo Song
+<iframe width="560" height="315" src="https://www.youtube.com/embed/c8xLYucaawE?si=Yvl-v0t-9RuZt3Tk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0a VIDEO SONG What Do You See Wild animals song
+<iframe width="560" height="315" src="https://www.youtube.com/embed/p5qwOxlvyhk?si=WQETSA_xRNbcKa4P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0b VIDEO FILM Wild Animal Safari Watts English
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qck_LYQ_4bA?si=lxriRzL4dSccQ2Nw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+0c VIDEO FILM In the zoo Watts English
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qb1oKClLzRM?si=1bEYj56M8a_lk3b5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+13b VIDEO STORY TIME - Good Night Gorilla
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nbN2Y5h2ze0?si=UdNlGWRiBo7VbnXS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+14a VIDEO Let's Go To The Zoo
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OwRmivbNgQk?si=dwwcg2X577AsP9QW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
