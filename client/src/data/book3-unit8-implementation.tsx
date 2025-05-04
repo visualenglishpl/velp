@@ -1,7 +1,16 @@
-// Implementation file for Book 3 Unit 8
-
+import { book3Unit8Resources } from './book3-unit8-resources';
 import { TeacherResource } from '@/components/TeacherResources';
-import { resources } from './book3-unit8-resources';
+import { BOOK3_TITLE, BOOK3_UNIT_TITLES, generateDefaultBook3UnitLessonPlans } from './book3-resources-common';
 
-// Function to get resources for this unit
-export const getBook3Unit8Resources = (): TeacherResource[] => resources;
+/**
+ * Visual English Book 3, Unit 8 - LET'S GO SHOPPING - HOW MUCH IS IT?
+ * Implementation file for unit resources and lesson plans
+ */
+
+// Export resources getter function
+export const getBook3Unit8Resources = (): TeacherResource[] => book3Unit8Resources;
+
+// Generate lesson plans for this unit
+export const generateBook3Unit8LessonPlans = () => {
+  return generateDefaultBook3UnitLessonPlans('8', BOOK3_UNIT_TITLES[7]);
+};

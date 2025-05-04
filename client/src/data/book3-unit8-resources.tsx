@@ -1,88 +1,73 @@
 import { TeacherResource } from '@/components/TeacherResources';
-import { BOOK3_TITLE } from './book3-resources-common';
+import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 
 /**
  * Book 3 Unit 8 - LET'S GO SHOPPING - HOW MUCH IS IT?
  * Resources including videos and games based on the DOCX attachment
  */
 
-const unitNumber = '8';
-const unitTitle = "LET'S GO SHOPPING - HOW MUCH IS IT?";
-
 export const book3Unit8Resources: TeacherResource[] = [
-  // Video Resources
+  // Videos
   {
-    id: `book3-unit${unitNumber}-video-1`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - 10 to 100 Song`,
+    title: 'ELF Learning - 10 to 100 Song',
+    description: 'Learn to count by tens from 10 to 100 with this catchy song',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/Kn05P3da9hw',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Kn05P3da9hw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: '8WWHpBs2iiw'
+    }
   },
   {
-    id: `book3-unit${unitNumber}-video-2`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - How Much Is It?`,
+    title: 'Let\'s Go Shopping Song',
+    description: 'A fun song teaching shopping phrases and vocabulary',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/MLyFZyh7mM0',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/MLyFZyh7mM0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'dlGjV_c0H7I'
+    }
   },
   {
-    id: `book3-unit${unitNumber}-video-3`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Classroom Skit: How Much!`,
+    title: 'Money Song - Bills and Coins',
+    description: 'Learn about different money denominations through a catchy song',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/lkUVY8BJr-4',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/lkUVY8BJr-4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
-  },
-  {
-    id: `book3-unit${unitNumber}-video-4`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - The Big Numbers Song`,
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/e0dJWfQHF8Y',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/e0dJWfQHF8Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'vs0-3iKWOWg'
+    }
   },
   
-  // Game Resources
+  // Games
   {
-    id: `book3-unit${unitNumber}-game-1`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - NUMBERS 10 - TENS`,
+    title: 'WORDWALL - Shopping Vocabulary',
+    description: 'Interactive game to learn shopping vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/38b043ed6bc04bdca87b01461e3452f7',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/38b043ed6bc04bdca87b01461e3452f7?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/cb1fd923ebdd47758e9975979a0a61b9?themeId=1&templateId=3&fontStackId=0'
+    }
   },
   {
-    id: `book3-unit${unitNumber}-game-2`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - NUMBERS 10 - 100`,
+    title: 'WORDWALL - How Much Is It?',
+    description: 'Practice asking and answering about prices',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/fdb7d185bcb24b23b99b889de4f0b70e',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/fdb7d185bcb24b23b99b889de4f0b70e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/b183f9de92e749deb12db1c9c8ba89da?themeId=1&templateId=5&fontStackId=0'
+    }
   },
   {
-    id: `book3-unit${unitNumber}-game-3`,
-    bookId: '3',
-    unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - HOW MUCH IS IT?`,
+    title: 'WORDWALL - Money and Prices',
+    description: 'Match prices with the correct items',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/dcf9609f4690435197e1171ce2b68c39',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/dcf9609f4690435197e1171ce2b68c39?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/7ffb0bc66ed04f22bc7a60dae4bb7b0e?themeId=1&templateId=11&fontStackId=0'
+    }
+  },
 ];
-
-export default book3Unit8Resources;

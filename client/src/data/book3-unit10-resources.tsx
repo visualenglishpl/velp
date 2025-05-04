@@ -1,59 +1,73 @@
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 
 /**
- * Resources for Book 3 Unit 10
+ * Book 3 Unit 10 - MY FAVOURITE SUBJECT
+ * Resources including videos and games based on the DOCX attachment
  */
 
-// Videos for Unit 10
-export const videos: TeacherResource[] = [
+export const book3Unit10Resources: TeacherResource[] = [
+  // Videos
   {
-    id: `book3-unit10-video-1`,
-    bookId: '3',
-    unitId: '10',
-    title: 'VISUAL 3 Unit 10 Video 1',
+    title: 'GENKI - What\'s your favorite subject?',
+    description: 'Engaging song about school subjects with clear visuals',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'W_tb1U_Tlow'
+    }
   },
   {
-    id: `book3-unit10-video-2`,
-    bookId: '3',
-    unitId: '10',
-    title: 'VISUAL 3 Unit 10 Video 2',
+    title: 'Learn School Subjects Vocabulary',
+    description: 'Vocabulary introduction to different school subjects',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  }
-];
-
-// Games for Unit 10
-export const games: TeacherResource[] = [
-  {
-    id: `book3-unit10-game-1`,
-    bookId: '3',
-    unitId: '10',
-    title: 'VISUAL 3 Unit 10 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'aHixmxhKsYk'
+    }
   },
   {
-    id: `book3-unit10-game-2`,
-    bookId: '3',
-    unitId: '10',
-    title: 'VISUAL 3 Unit 10 Game 2',
+    title: 'School Subjects with Peppa Pig',
+    description: 'Peppa Pig shows different school subjects in a fun way',
+    resourceType: 'video',
+    provider: 'YouTube',
+    content: {
+      type: 'youtube',
+      embedId: 'cmqyQSz5RVA'
+    }
+  },
+  
+  // Games
+  {
+    title: 'WORDWALL - School Subjects Match-Up',
+    description: 'Match school subjects with their descriptions',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/5c55e4a1d1124a87b9dc99d09a17a7dc?themeId=1&templateId=3&fontStackId=0'
+    }
+  },
+  {
+    title: 'WORDWALL - Favourite School Subjects Quiz',
+    description: 'A quiz to test knowledge about school subjects vocabulary',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/ccd09d0b7e5a479ab57519cd51d9faba?themeId=1&templateId=5&fontStackId=0'
+    }
+  },
+  {
+    title: 'WORDWALL - School Subjects Word Search',
+    description: 'Find the names of different school subjects in this word search puzzle',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/b1fd8daf18c04e16bacc6b6f0cad9a1c?themeId=1&templateId=46&fontStackId=0'
+    }
+  },
 ];
-
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
-
-// Main export for backward compatibility
-export const book3Unit10Resources = resources;

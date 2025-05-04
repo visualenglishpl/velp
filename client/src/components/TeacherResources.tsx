@@ -61,6 +61,11 @@ import { getBook3Unit5Resources } from '@/data/book3-unit5-implementation';
 import { getBook3Unit6Resources } from '@/data/book3-unit6-implementation';
 import { getBook3Unit7ShoppingResources } from '@/data/book3-unit7-shopping-implementation';
 import { getBook3Unit9Resources } from '@/data/book3-unit9-implementation';
+// New Book 3 resources
+import { getBook3Unit7SolarResources } from '@/data/book3-unit7-solar-implementation';
+import { getBook3Unit8Resources } from '@/data/book3-unit8-implementation';
+import { getBook3Unit10Resources } from '@/data/book3-unit10-implementation';
+import { getBook3Unit12Resources } from '@/data/book3-unit12-implementation';
 
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
@@ -271,7 +276,15 @@ const dynamicImplImport = async (book: string, unit: number) => {
         case 4: return import('@/data/book3-unit4-implementation');
         case 5: return import('@/data/book3-unit5-implementation');
         case 6: return import('@/data/book3-unit6-implementation');
-        case 7: return import('@/data/book3-unit7-implementation');
+        case 7: 
+          const unitImpl = window.location.pathname.includes('solar') ? 'solar' : 'shopping';
+          if (unitImpl === 'solar') {
+            console.log('Loading Solar System implementation for Unit 7');
+            return import('@/data/book3-unit7-solar-implementation');
+          } else {
+            console.log('Loading Shopping implementation for Unit 7');
+            return import('@/data/book3-unit7-shopping-implementation');
+          }
         case 8: return import('@/data/book3-unit8-implementation');
         case 9: return import('@/data/book3-unit9-implementation');
         case 10: return import('@/data/book3-unit10-implementation');
@@ -542,12 +555,13 @@ const dynamicResourceImport = async (book: string, unit: number) => {
         case 5: return import('@/data/book3-unit5-resources');
         case 6: return import('@/data/book3-unit6-resources');
         case 7: 
-          try { 
-            // Special case for Unit 7 Shopping implementation
+          const unitType = window.location.pathname.includes('solar') ? 'solar' : 'shopping';
+          if (unitType === 'solar') {
+            console.log('Loading Solar System resources for Unit 7');
+            return import('@/data/book3-unit7-solar-resources');
+          } else {
+            console.log('Loading Shopping resources for Unit 7');
             return import('@/data/book3-unit7-shopping-resources');
-          } catch (error) {
-            console.log('Falling back to standard Unit 7 resources');
-            return import('@/data/book3-unit7-resources');
           }
         case 8: return import('@/data/book3-unit8-resources');
         case 9: return import('@/data/book3-unit9-resources');
