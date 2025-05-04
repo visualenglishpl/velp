@@ -34,6 +34,7 @@ import { generateBook5Unit13Content, generateUnit13LessonPlans } from '@/data/bo
 
 // Book 2 implementations
 import { getBook2Unit5Resources, generateUnit5LessonPlans as generateBook2Unit5LessonPlans } from '@/data/book2-unit5-implementation';
+import { getBook2Unit8Resources, generateUnit8LessonPlans as generateBook2Unit8LessonPlans } from '@/data/book2-unit8-implementation';
 import { getBook2Unit10Resources, generateUnit10LessonPlans } from '@/data/book2-unit10-implementation';
 import { getBook2Unit14Resources, generateUnit14LessonPlans } from '@/data/book2-unit14-implementation';
 import { getBook2Unit15Resources, generateUnit15LessonPlans } from '@/data/book2-unit15-implementation';
@@ -1305,6 +1306,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       if (unitId === '5') {
         console.log('Loading Book 2 Unit 5 resources');
         return book2Unit5Resources;
+      } else if (unitId === '8') {
+        console.log('Loading Book 2 Unit 8 resources');
+        return getBook2Unit8Resources();
       } else if (unitId === '10') {
         console.log('Loading Book 2 Unit 10 resources');
         return book2Unit10Resources;
