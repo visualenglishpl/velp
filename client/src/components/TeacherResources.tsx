@@ -47,6 +47,21 @@ import { getBook2Unit17Resources, generateUnit17LessonPlans } from '@/data/book2
 import { getBook2Unit18Resources, generateUnit18LessonPlans } from '@/data/book2-unit18-implementation';
 import { generateUnit4LessonPlans } from '@/data/book2-unit4-implementation';
 
+// Book 3 implementations
+import { book3Unit1Resources } from '@/data/book3-unit1-resources';
+import { book3Unit2Resources } from '@/data/book3-unit2-resources';
+import { book3Unit3Resources } from '@/data/book3-unit3-resources';
+import { book3Unit4Resources } from '@/data/book3-unit4-resources';
+import { book3Unit5Resources } from '@/data/book3-unit5-resources';
+import { book3Unit6Resources } from '@/data/book3-unit6-resources';
+import { book3Unit7Resources } from '@/data/book3-unit7-resources';
+import { book3Unit7ShoppingResources } from '@/data/book3-unit7-shopping-resources';
+import { book3Unit9Resources } from '@/data/book3-unit9-resources';
+import { getBook3Unit5Resources } from '@/data/book3-unit5-implementation';
+import { getBook3Unit6Resources } from '@/data/book3-unit6-implementation';
+import { getBook3Unit7ShoppingResources } from '@/data/book3-unit7-shopping-implementation';
+import { getBook3Unit9Resources } from '@/data/book3-unit9-implementation';
+
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
 import { generateUnit2LessonPlans as generateBook1Unit2LessonPlans } from '@/data/book1-unit2-implementation';
@@ -526,7 +541,14 @@ const dynamicResourceImport = async (book: string, unit: number) => {
         case 4: return import('@/data/book3-unit4-resources');
         case 5: return import('@/data/book3-unit5-resources');
         case 6: return import('@/data/book3-unit6-resources');
-        case 7: return import('@/data/book3-unit7-resources');
+        case 7: 
+          try { 
+            // Special case for Unit 7 Shopping implementation
+            return import('@/data/book3-unit7-shopping-resources');
+          } catch (error) {
+            console.log('Falling back to standard Unit 7 resources');
+            return import('@/data/book3-unit7-resources');
+          }
         case 8: return import('@/data/book3-unit8-resources');
         case 9: return import('@/data/book3-unit9-resources');
         case 10: return import('@/data/book3-unit10-resources');
@@ -874,6 +896,81 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             console.error(`Error getting Book 2 Unit ${unitNum} resources:`, error);
           }
         }
+        // Handle Book 3 resources
+        else if (bookId === '3') {
+          try {
+            // Check for specific resource getter functions using type assertion
+            const typedResourcesModule = resourcesModule as any;
+              
+            if (unitNum === 1 && typedResourcesModule.book3Unit1Resources) {
+              console.log('Using book3Unit1Resources directly');
+              resources = typedResourcesModule.book3Unit1Resources;
+            } else if (unitNum === 2 && typedResourcesModule.book3Unit2Resources) {
+              console.log('Using book3Unit2Resources directly');
+              resources = typedResourcesModule.book3Unit2Resources;
+            } else if (unitNum === 3 && typedResourcesModule.book3Unit3Resources) {
+              console.log('Using book3Unit3Resources directly');
+              resources = typedResourcesModule.book3Unit3Resources;
+            } else if (unitNum === 4 && typedResourcesModule.book3Unit4Resources) {
+              console.log('Using book3Unit4Resources directly');
+              resources = typedResourcesModule.book3Unit4Resources;
+            } else if (unitNum === 5 && typedResourcesModule.book3Unit5Resources) {
+              console.log('Using book3Unit5Resources directly');
+              resources = typedResourcesModule.book3Unit5Resources;
+            } else if (unitNum === 6 && typedResourcesModule.book3Unit6Resources) {
+              console.log('Using book3Unit6Resources directly');
+              resources = typedResourcesModule.book3Unit6Resources;
+            } else if (unitNum === 7) {
+              // Special handling for Unit 7 which has two versions (Solar System and Shopping)
+              // Try to determine the right one based on title or requested content
+              if (typedResourcesModule.book3Unit7ShoppingResources) {
+                console.log('Using book3Unit7ShoppingResources directly');
+                resources = typedResourcesModule.book3Unit7ShoppingResources;
+              } else if (typedResourcesModule.book3Unit7Resources) {
+                console.log('Using book3Unit7Resources directly');
+                resources = typedResourcesModule.book3Unit7Resources;
+              }
+            } else if (unitNum === 9 && typedResourcesModule.book3Unit9Resources) {
+              console.log('Using book3Unit9Resources directly');
+              resources = typedResourcesModule.book3Unit9Resources;
+            } else if (unitNum === 1 && typedResourcesModule.getBook3Unit1Resources) {
+              console.log('Using getBook3Unit1Resources function');
+              resources = typedResourcesModule.getBook3Unit1Resources();
+            } else if (unitNum === 2 && typedResourcesModule.getBook3Unit2Resources) {
+              console.log('Using getBook3Unit2Resources function');
+              resources = typedResourcesModule.getBook3Unit2Resources();
+            } else if (unitNum === 3 && typedResourcesModule.getBook3Unit3Resources) {
+              console.log('Using getBook3Unit3Resources function');
+              resources = typedResourcesModule.getBook3Unit3Resources();
+            } else if (unitNum === 4 && typedResourcesModule.getBook3Unit4Resources) {
+              console.log('Using getBook3Unit4Resources function');
+              resources = typedResourcesModule.getBook3Unit4Resources();
+            } else if (unitNum === 5 && typedResourcesModule.getBook3Unit5Resources) {
+              console.log('Using getBook3Unit5Resources function');
+              resources = typedResourcesModule.getBook3Unit5Resources();
+            } else if (unitNum === 6 && typedResourcesModule.getBook3Unit6Resources) {
+              console.log('Using getBook3Unit6Resources function');
+              resources = typedResourcesModule.getBook3Unit6Resources();
+            } else if (unitNum === 7) {
+              // Special handling for Unit 7 getter functions
+              if (typedResourcesModule.getBook3Unit7ShoppingResources) {
+                console.log('Using getBook3Unit7ShoppingResources function');
+                resources = typedResourcesModule.getBook3Unit7ShoppingResources();
+              } else if (typedResourcesModule.getBook3Unit7Resources) {
+                console.log('Using getBook3Unit7Resources function');
+                resources = typedResourcesModule.getBook3Unit7Resources();
+              }
+            } else if (unitNum === 9 && typedResourcesModule.getBook3Unit9Resources) {
+              console.log('Using getBook3Unit9Resources function');
+              resources = typedResourcesModule.getBook3Unit9Resources();
+            }
+            
+            // Log resources for debugging
+            console.log(`Found ${resources.length} resources for Book ${bookId} Unit ${unitNum}`);
+          } catch (error) {
+            console.error(`Error getting Book 3 Unit ${unitNum} resources:`, error);
+          }
+        }
         // Handle centralized Book 6 resources
         else if (bookId === '6') {
           // Use our centralized resource generator for Book 6
@@ -1067,6 +1164,50 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
           } catch (error) {
             console.error(`Error getting Book 2 Unit ${unitNum} lesson plans:`, error);
+          }
+        }
+        // Handle Book 3 lesson plans
+        else if (bookId === '3') {
+          try {
+            // Check for specific lesson plan getter functions using type assertion
+            const typedImplModule = implModule as any;
+            
+            // Book 3 lesson plans
+            if (unitNum === 1 && typedImplModule.generateUnit1LessonPlans) {
+              console.log('Using generateUnit1LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateUnit1LessonPlans();
+            } else if (unitNum === 2 && typedImplModule.generateUnit2LessonPlans) {
+              console.log('Using generateUnit2LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateUnit2LessonPlans();
+            } else if (unitNum === 3 && typedImplModule.generateUnit3LessonPlans) {
+              console.log('Using generateUnit3LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateUnit3LessonPlans();
+            } else if (unitNum === 4 && typedImplModule.generateUnit4LessonPlans) {
+              console.log('Using generateUnit4LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateUnit4LessonPlans();
+            } else if (unitNum === 5 && typedImplModule.generateUnit5LessonPlans) {
+              console.log('Using generateUnit5LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateUnit5LessonPlans();
+            } else if (unitNum === 6 && typedImplModule.generateUnit6LessonPlans) {
+              console.log('Using generateUnit6LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateUnit6LessonPlans();
+            } else if (unitNum === 7) {
+              // Special handling for Unit 7 which has two versions
+              if (typedImplModule.generateUnit7ShoppingLessonPlans) {
+                console.log('Using generateUnit7ShoppingLessonPlans for Book 3');
+                lessonPlans = typedImplModule.generateUnit7ShoppingLessonPlans();
+              } else if (typedImplModule.generateUnit7LessonPlans) {
+                console.log('Using generateUnit7LessonPlans for Book 3');
+                lessonPlans = typedImplModule.generateUnit7LessonPlans();
+              }
+            } else if (unitNum === 9 && typedImplModule.generateUnit9LessonPlans) {
+              console.log('Using generateUnit9LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateUnit9LessonPlans();
+            }
+            
+            console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
+          } catch (error) {
+            console.error(`Error getting Book 3 Unit ${unitNum} lesson plans:`, error);
           }
         }
         // Handle centralized Book 5 lesson plans
@@ -1344,6 +1485,36 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return book2Unit18Resources;
       }
       // For other Book 2 units that don't have specific implementations
+      return [];
+    }
+    // Book 3 units
+    else if (bookId === '3') {
+      if (unitId === '1') {
+        console.log('Loading Book 3 Unit 1 resources');
+        return book3Unit1Resources || [];
+      } else if (unitId === '2') {
+        console.log('Loading Book 3 Unit 2 resources');
+        return book3Unit2Resources || [];
+      } else if (unitId === '3') {
+        console.log('Loading Book 3 Unit 3 resources');
+        return book3Unit3Resources || [];
+      } else if (unitId === '4') {
+        console.log('Loading Book 3 Unit 4 resources');
+        return book3Unit4Resources || [];
+      } else if (unitId === '5') {
+        console.log('Loading Book 3 Unit 5 resources');
+        return book3Unit5Resources || [];
+      } else if (unitId === '6') {
+        console.log('Loading Book 3 Unit 6 resources');
+        return book3Unit6Resources || [];
+      } else if (unitId === '7') {
+        console.log('Loading Book 3 Unit 7 resources (Shopping)');
+        return book3Unit7ShoppingResources || [];
+      } else if (unitId === '9') {
+        console.log('Loading Book 3 Unit 9 resources');
+        return book3Unit9Resources || [];
+      }
+      // For other Book 3 units that don't have specific implementations
       return [];
     }
     // Book 5 units - use centralized resource generator

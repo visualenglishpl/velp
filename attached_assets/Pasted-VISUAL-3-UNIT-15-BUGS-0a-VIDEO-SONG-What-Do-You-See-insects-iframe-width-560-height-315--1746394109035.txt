@@ -1,0 +1,80 @@
+VISUAL 3 - UNIT 15 - BUGS
+0a VIDEO - SONG What Do You See insects
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/bn8QLdWJYl8?si=RoOwJePsFolnIaNz" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+0b VIDEO - SONG What Do You See insects
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/llZwHR_Y_Es?si=PmlefiDeymklwcAF" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+19a ONLINE GAME WORDWALL - BUGS
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/8d16140de3bc4f18b01da41ab409b8b3?themeId=1&templateId=38&fo
+ntStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+19b ONLINE GAME WORDWALL - BUGS
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/f49aa2731b464239bc342f74b3b9db68?themeId=1&templateId=46&fon
+tStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+19c ONLINE GAME WORDWALL - BUGS
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/76a1a0d4a10d486680c6d0614236085c?themeId=1&templateId=46&fon
+tStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+17a VIDEO STORY Caterpillar Shoes
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/tYa6OLQHrEc?si=74zEZkA19vrf7p76" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+
+
+VISUAL 3 - UNIT 16 - SPORTS
+16a VIDEO - GAME - What Sport is This - Guessing Song for Kids - Pancake Manor
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/EZXI7l3eaOs?si=-JTYM06uxspgveFH" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+16b VIDEO Guess the Word _ Sports
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/dl7_ZgWq6Rg?si=Z0HXBtJRqObr3Lm9" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+16c VIDEO - SONG - ENGLISH SING SING - WHAT SPORTS DO YOU LIKE
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/tgUSHk6JaTY?si=6eYn2Alf8VZQ_kKH" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+16d VIDEO Sports Vocabulary _ English Vocabulary Games
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/mHwf5wMG2pU?si=xGevHGuxo0kANyd1" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+17a ONLINE GAME WORDWALL - SPORTS
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/88a5e76ac82b4106bdc874d188a4cc0a?themeId=1&templateId=46&fo
+ntStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+17b ONLINE GAME WORDWALL - SPORTS.png
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/9fc6f32a6a154cb7936ca91da554d85d?themeId=1&templateId=5&font
+StackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+17c ONLINE GAME WORDWALL - SPORTS.png
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/13af43954e62474b8d3d40b7c169783a?themeId=1&templateId=54&fon
+tStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+17d ONLINE GAME WORDWALL - SPORTS.png
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/bd75f8bdb6554bf7b11cec6307786498?themeId=1&templateId=2&font
+StackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+17e ONLINE GAME WORDWALL - SPORTS.png
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/31331ed5d7c44a9f80f037d81314def4?themeId=21&templateId=3&font
+StackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+
+

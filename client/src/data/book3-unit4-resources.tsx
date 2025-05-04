@@ -1,54 +1,49 @@
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK3_TITLE } from './book3-resources-common';
 
 /**
- * Resources for Book 3 Unit 4
+ * Book 3 Unit 4 - FREE TIME - HOBBIES
+ * Resources including videos and games
  */
+
+const unitNumber = '4';
+const unitTitle = 'FREE TIME - HOBBIES';
 
 // Videos for Unit 4
 export const videos: TeacherResource[] = [
   {
-    id: `book3-unit4-video-1`,
+    id: `book3-unit${unitNumber}-video-1`,
     bookId: '3',
-    unitId: '4',
-    title: 'VISUAL 3 Unit 4 Video 1',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Hobbies and Free Time`,
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book3-unit4-video-2`,
-    bookId: '3',
-    unitId: '4',
-    title: 'VISUAL 3 Unit 4 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    sourceUrl: 'https://www.youtube.com/embed/vjJuXqvFBD0',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/vjJuXqvFBD0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   }
 ];
 
 // Games for Unit 4
 export const games: TeacherResource[] = [
   {
-    id: `book3-unit4-game-1`,
+    id: `book3-unit${unitNumber}-game-1`,
     bookId: '3',
-    unitId: '4',
-    title: 'VISUAL 3 Unit 4 Game 1',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - FREE TIME (1)`,
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/2150eec2dde04b2a9fceccbfbe8bc1d1',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2150eec2dde04b2a9fceccbfbe8bc1d1?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    id: `book3-unit4-game-2`,
+    id: `book3-unit${unitNumber}-game-2`,
     bookId: '3',
-    unitId: '4',
-    title: 'VISUAL 3 Unit 4 Game 2',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - FREE TIME (2)`,
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/f0c4c65de73740e5aa910e66b951e291',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/f0c4c65de73740e5aa910e66b951e291?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   }
 ];
 
@@ -57,3 +52,5 @@ export const resources: TeacherResource[] = [...videos, ...games];
 
 // Main export for backward compatibility
 export const book3Unit4Resources = resources;
+
+export default resources;

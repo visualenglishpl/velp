@@ -1,4 +1,9 @@
-// Implementation file for Book 3 Unit 5
+/**
+ * Visual English Book 3, Unit 5 - SEVEN CONTINENTS
+ * Implementation file for unit resources and lesson plans
+ * 
+ * Note: This unit handles slides without questions by leaving them blank
+ */
 
 import { TeacherResource } from '@/components/TeacherResources';
 import book3Unit5Resources from './book3-unit5-resources';

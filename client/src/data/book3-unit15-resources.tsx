@@ -1,59 +1,78 @@
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK3_TITLE } from './book3-resources-common';
 
 /**
- * Resources for Book 3 Unit 15
+ * Book 3 Unit 15 - BUGS
+ * Resources including videos and games based on the DOCX attachment
  */
 
-// Videos for Unit 15
-export const videos: TeacherResource[] = [
+const unitNumber = '15';
+const unitTitle = 'BUGS';
+
+export const book3Unit15Resources: TeacherResource[] = [
+  // Video Resources
   {
-    id: `book3-unit15-video-1`,
+    id: `book3-unit${unitNumber}-video-1`,
     bookId: '3',
-    unitId: '15',
-    title: 'VISUAL 3 Unit 15 Video 1',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What Do You See Insects Song`,
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    sourceUrl: 'https://www.youtube.com/embed/bn8QLdWJYl8',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/bn8QLdWJYl8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: `book3-unit15-video-2`,
+    id: `book3-unit${unitNumber}-video-2`,
     bookId: '3',
-    unitId: '15',
-    title: 'VISUAL 3 Unit 15 Video 2',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Bugs and Crawly Things Song`,
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    sourceUrl: 'https://www.youtube.com/embed/llZwHR_Y_Es',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/llZwHR_Y_Es" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  {
+    id: `book3-unit${unitNumber}-video-3`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Caterpillar Shoes Story`,
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/tYa6OLQHrEc',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tYa6OLQHrEc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  
+  // Game Resources
+  {
+    id: `book3-unit${unitNumber}-game-1`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - BUGS ANAGRAM`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/8d16140de3bc4f18b01da41ab409b8b3',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/8d16140de3bc4f18b01da41ab409b8b3?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    id: `book3-unit${unitNumber}-game-2`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - BUGS (1)`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/f49aa2731b464239bc342f74b3b9db68',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/f49aa2731b464239bc342f74b3b9db68?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    id: `book3-unit${unitNumber}-game-3`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - BUGS (2)`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/76a1a0d4a10d486680c6d0614236085c',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/76a1a0d4a10d486680c6d0614236085c?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   }
 ];
 
-// Games for Unit 15
-export const games: TeacherResource[] = [
-  {
-    id: `book3-unit15-game-1`,
-    bookId: '3',
-    unitId: '15',
-    title: 'VISUAL 3 Unit 15 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book3-unit15-game-2`,
-    bookId: '3',
-    unitId: '15',
-    title: 'VISUAL 3 Unit 15 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
-];
-
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
-
-// Main export for backward compatibility
-export const book3Unit15Resources = resources;
+export default book3Unit15Resources;
