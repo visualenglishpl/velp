@@ -59,13 +59,14 @@ import { book3Unit7ShoppingResources } from '@/data/book3-unit7-shopping-resourc
 import { book3Unit9Resources } from '@/data/book3-unit9-resources';
 import { getBook3Unit5Resources } from '@/data/book3-unit5-implementation';
 import { getBook3Unit6Resources } from '@/data/book3-unit6-implementation';
-import { getBook3Unit7ShoppingResources } from '@/data/book3-unit7-shopping-implementation';
+import { getBook3Unit7ShoppingResources, generateBook3Unit7ShoppingLessonPlans } from '@/data/book3-unit7-shopping-implementation';
 import { getBook3Unit9Resources } from '@/data/book3-unit9-implementation';
 // New Book 3 resources
-import { getBook3Unit7SolarResources } from '@/data/book3-unit7-solar-implementation';
-import { getBook3Unit8Resources } from '@/data/book3-unit8-implementation';
-import { getBook3Unit10Resources } from '@/data/book3-unit10-implementation';
-import { getBook3Unit12Resources } from '@/data/book3-unit12-implementation';
+import { getBook3Unit7SolarResources, generateBook3Unit7SolarLessonPlans } from '@/data/book3-unit7-solar-implementation';
+import { getBook3Unit8Resources, generateBook3Unit8LessonPlans } from '@/data/book3-unit8-implementation';
+import { getBook3Unit10Resources, generateBook3Unit10LessonPlans } from '@/data/book3-unit10-implementation';
+import { getBook3Unit12Resources, generateBook3Unit12LessonPlans } from '@/data/book3-unit12-implementation';
+import { BOOK3_TITLE, BOOK3_UNIT_TITLES, generateDefaultBook3UnitLessonPlans } from '@/data/book3-resources-common';
 
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
