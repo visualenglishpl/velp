@@ -36,6 +36,8 @@ import { generateBook5Unit13Content, generateUnit13LessonPlans } from '@/data/bo
 import { getBook2Unit5Resources, generateUnit5LessonPlans as generateBook2Unit5LessonPlans } from '@/data/book2-unit5-implementation';
 import { getBook2Unit10Resources, generateUnit10LessonPlans } from '@/data/book2-unit10-implementation';
 import { getBook2Unit14Resources, generateUnit14LessonPlans } from '@/data/book2-unit14-implementation';
+import { getBook2Unit15Resources, generateUnit15LessonPlans } from '@/data/book2-unit15-implementation';
+import { getBook2Unit16Resources, generateUnit16LessonPlans } from '@/data/book2-unit16-implementation';
 import { getBook2Unit17Resources, generateUnit17LessonPlans } from '@/data/book2-unit17-implementation';
 import { getBook2Unit18Resources, generateUnit18LessonPlans } from '@/data/book2-unit18-implementation';
 
@@ -86,6 +88,8 @@ import { book2Unit11Resources } from '@/data/book2-unit11-resources';
 import { book2Unit12Resources } from '@/data/book2-unit12-resources';
 import { book2Unit13Resources } from '@/data/book2-unit13-resources';
 import { book2Unit14Resources } from '@/data/book2-unit14-resources';
+import { book2Unit15Resources } from '@/data/book2-unit15-resources';
+import { book2Unit16Resources } from '@/data/book2-unit16-resources';
 import { book2Unit17Resources } from '@/data/book2-unit17-resources';
 import { book2Unit18Resources } from '@/data/book2-unit18-resources';
 
@@ -1039,6 +1043,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 14 && typedImplModule.generateUnit14LessonPlans) {
               console.log('Using generateUnit14LessonPlans for Book 2');
               lessonPlans = typedImplModule.generateUnit14LessonPlans();
+            } else if (unitNum === 15 && typedImplModule.generateUnit15LessonPlans) {
+              console.log('Using generateUnit15LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit15LessonPlans();
+            } else if (unitNum === 16 && typedImplModule.generateUnit16LessonPlans) {
+              console.log('Using generateUnit16LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit16LessonPlans();
             } else if (unitNum === 17 && typedImplModule.generateUnit17LessonPlans) {
               console.log('Using generateUnit17LessonPlans for Book 2');
               lessonPlans = typedImplModule.generateUnit17LessonPlans();
@@ -1310,6 +1320,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       } else if (unitId === '14') {
         console.log('Loading Book 2 Unit 14 resources');
         return book2Unit14Resources;
+      } else if (unitId === '15') {
+        console.log('Loading Book 2 Unit 15 resources');
+        return book2Unit15Resources;
+      } else if (unitId === '16') {
+        console.log('Loading Book 2 Unit 16 resources');
+        return book2Unit16Resources;
       } else if (unitId === '17') {
         console.log('Loading Book 2 Unit 17 resources');
         return book2Unit17Resources;
