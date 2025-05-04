@@ -1291,7 +1291,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
     }
     // Book 2 units
     else if (bookId === '2') {
-      if (unitId === '10') {
+      if (unitId === '5') {
+        console.log('Loading Book 2 Unit 5 resources');
+        return book2Unit5Resources;
+      } else if (unitId === '10') {
         console.log('Loading Book 2 Unit 10 resources');
         return book2Unit10Resources;
       } else if (unitId === '14') {
