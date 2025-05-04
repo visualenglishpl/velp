@@ -765,8 +765,52 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         if ((resourcesModule as any).games) extractResources('games', 'game');
         if ((resourcesModule as any).pdfs) extractResources('pdfs', 'pdf');
         
+        // Handle centralized Book 2 resources
+        if (bookId === '2') {
+          try {
+            // Check for specific resource getter functions using type assertion
+            const typedResourcesModule = resourcesModule as any;
+              
+            if (unitNum === 1 && typedResourcesModule.book2Unit1Resources) {
+              console.log('Using book2Unit1Resources directly');
+              resources = typedResourcesModule.book2Unit1Resources;
+            } else if (unitNum === 2 && typedResourcesModule.book2Unit2Resources) {
+              console.log('Using book2Unit2Resources directly');
+              resources = typedResourcesModule.book2Unit2Resources;
+            } else if (unitNum === 3 && typedResourcesModule.book2Unit3Resources) {
+              console.log('Using book2Unit3Resources directly');
+              resources = typedResourcesModule.book2Unit3Resources;
+            } else if (unitNum === 4 && typedResourcesModule.book2Unit4Resources) {
+              console.log('Using book2Unit4Resources directly');
+              resources = typedResourcesModule.book2Unit4Resources;
+            } else if (unitNum === 6 && typedResourcesModule.book2Unit6Resources) {
+              console.log('Using book2Unit6Resources directly');
+              resources = typedResourcesModule.book2Unit6Resources;
+            } else if (unitNum === 1 && typedResourcesModule.getBook2Unit1Resources) {
+              console.log('Using getBook2Unit1Resources function');
+              resources = typedResourcesModule.getBook2Unit1Resources();
+            } else if (unitNum === 2 && typedResourcesModule.getBook2Unit2Resources) {
+              console.log('Using getBook2Unit2Resources function');
+              resources = typedResourcesModule.getBook2Unit2Resources();
+            } else if (unitNum === 3 && typedResourcesModule.getBook2Unit3Resources) {
+              console.log('Using getBook2Unit3Resources function');
+              resources = typedResourcesModule.getBook2Unit3Resources();
+            } else if (unitNum === 4 && typedResourcesModule.getBook2Unit4Resources) {
+              console.log('Using getBook2Unit4Resources function');
+              resources = typedResourcesModule.getBook2Unit4Resources();
+            } else if (unitNum === 6 && typedResourcesModule.getBook2Unit6Resources) {
+              console.log('Using getBook2Unit6Resources function');
+              resources = typedResourcesModule.getBook2Unit6Resources();
+            }
+            
+            // Log resources for debugging
+            console.log(`Found ${resources.length} resources for Book ${bookId} Unit ${unitNum}`);
+          } catch (error) {
+            console.error(`Error getting Book 2 Unit ${unitNum} resources:`, error);
+          }
+        }
         // Handle centralized Book 6 resources
-        if (bookId === '6') {
+        else if (bookId === '6') {
           // Use our centralized resource generator for Book 6
           const book6Resources = generateBook6UnitResources(bookId, unitId);
           resources.push(...book6Resources);
@@ -891,6 +935,37 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
           } catch (error) {
             console.error(`Error getting Book 1 Unit ${unitNum} lesson plans:`, error);
+          }
+        }
+        // Handle Book 2 lesson plans
+        else if (bookId === '2') {
+          try {
+            // Check for specific lesson plan getter functions using type assertion
+            const typedImplModule = implModule as any;
+            
+            if (unitNum === 1 && typedImplModule.generateUnit1LessonPlans) {
+              console.log('Using generateUnit1LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit1LessonPlans();
+            } else if (unitNum === 2 && typedImplModule.generateUnit2LessonPlans) {
+              console.log('Using generateUnit2LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit2LessonPlans();
+            } else if (unitNum === 3 && typedImplModule.generateUnit3LessonPlans) {
+              console.log('Using generateUnit3LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit3LessonPlans();
+            } else if (unitNum === 4 && typedImplModule.generateUnit4LessonPlans) {
+              console.log('Using generateUnit4LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit4LessonPlans();
+            } else if (unitNum === 5 && typedImplModule.generateUnit5LessonPlans) {
+              console.log('Using generateUnit5LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit5LessonPlans();
+            } else if (unitNum === 6 && typedImplModule.generateUnit6LessonPlans) {
+              console.log('Using generateUnit6LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit6LessonPlans();
+            }
+            
+            console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
+          } catch (error) {
+            console.error(`Error getting Book 2 Unit ${unitNum} lesson plans:`, error);
           }
         }
         // Handle centralized Book 5 lesson plans
