@@ -31,6 +31,11 @@ import { generateBook5Unit5Content, generateUnit5LessonPlans } from '@/data/book
 import { generateBook5Unit9Content, generateUnit9LessonPlans } from '@/data/book5-unit9-implementation';
 import { generateBook5Unit13Content, generateUnit13LessonPlans } from '@/data/book5-unit13-implementation';
 
+// Book 2 implementations
+import { getBook2Unit10Resources, generateUnit10LessonPlans } from '@/data/book2-unit10-implementation';
+import { getBook2Unit14Resources, generateUnit14LessonPlans } from '@/data/book2-unit14-implementation';
+import { getBook2Unit17Resources, generateUnit17LessonPlans } from '@/data/book2-unit17-implementation';
+
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
 import { generateUnit2LessonPlans as generateBook1Unit2LessonPlans } from '@/data/book1-unit2-implementation';
@@ -70,6 +75,11 @@ import { book1Unit15Resources } from '@/data/book1-unit15-resources';
 import { book1Unit16Resources } from '@/data/book1-unit16-resources';
 import { book1Unit17Resources } from '@/data/book1-unit17-resources';
 import { book1Unit18Resources } from '@/data/book1-unit18-resources';
+
+// Book 2 resource imports
+import { book2Unit10Resources } from '@/data/book2-unit10-resources';
+import { book2Unit14Resources } from '@/data/book2-unit14-resources';
+import { book2Unit17Resources } from '@/data/book2-unit17-resources';
 
 // Define fallback functions for resource getters
 // These functions will be used if the dynamic imports fail
@@ -801,6 +811,24 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 6 && typedResourcesModule.getBook2Unit6Resources) {
               console.log('Using getBook2Unit6Resources function');
               resources = typedResourcesModule.getBook2Unit6Resources();
+            } else if (unitNum === 7 && typedResourcesModule.getBook2Unit7Resources) {
+              console.log('Using getBook2Unit7Resources function');
+              resources = typedResourcesModule.getBook2Unit7Resources();
+            } else if (unitNum === 8 && typedResourcesModule.getBook2Unit8Resources) {
+              console.log('Using getBook2Unit8Resources function');
+              resources = typedResourcesModule.getBook2Unit8Resources();
+            } else if (unitNum === 9 && typedResourcesModule.getBook2Unit9Resources) {
+              console.log('Using getBook2Unit9Resources function');
+              resources = typedResourcesModule.getBook2Unit9Resources();
+            } else if (unitNum === 10 && typedResourcesModule.getBook2Unit10Resources) {
+              console.log('Using getBook2Unit10Resources function');
+              resources = typedResourcesModule.getBook2Unit10Resources();
+            } else if (unitNum === 14 && typedResourcesModule.getBook2Unit14Resources) {
+              console.log('Using getBook2Unit14Resources function');
+              resources = typedResourcesModule.getBook2Unit14Resources();
+            } else if (unitNum === 17 && typedResourcesModule.getBook2Unit17Resources) {
+              console.log('Using getBook2Unit17Resources function');
+              resources = typedResourcesModule.getBook2Unit17Resources();
             }
             
             // Log resources for debugging
@@ -970,6 +998,15 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 9 && typedImplModule.generateUnit9LessonPlans) {
               console.log('Using generateUnit9LessonPlans for Book 2');
               lessonPlans = typedImplModule.generateUnit9LessonPlans();
+            } else if (unitNum === 10 && typedImplModule.generateUnit10LessonPlans) {
+              console.log('Using generateUnit10LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit10LessonPlans();
+            } else if (unitNum === 14 && typedImplModule.generateUnit14LessonPlans) {
+              console.log('Using generateUnit14LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit14LessonPlans();
+            } else if (unitNum === 17 && typedImplModule.generateUnit17LessonPlans) {
+              console.log('Using generateUnit17LessonPlans for Book 2');
+              lessonPlans = typedImplModule.generateUnit17LessonPlans();
             }
             
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
