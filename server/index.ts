@@ -31,15 +31,22 @@ app.use(timeout.handler({
 
 // Rate limiting to prevent abuse
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // 300 requests per window
+  windowMs: 15 * 60 * 1000, // 15 minutes (increased from 5 minutes)
+  max: 500, // 500 requests per window (increased from 300)
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: "Too many requests, please try again later" }
 });
 
-// Apply rate limiting to API routes only
-app.use("/api/", apiLimiter);
+// Apply rate limiting to API routes except content-related endpoints
+app.use("/api/", (req, res, next) => {
+  // Skip rate limiting for content-related endpoints
+  if (req.path.includes("/content/") || req.path.includes("/direct/")) {
+    return next();
+  }
+  return apiLimiter(req, res, next);
+});
+
 
 // Enable JSON parsing with increased limit for larger payloads
 app.use(express.json({ limit: "5mb" }));
