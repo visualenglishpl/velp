@@ -12,13 +12,17 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 // Import sample resources for Book 7, Unit 6
 import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from '@/data/unit6-resources';
 
-// Import centralized resources for Books 5 and 6
+// Import centralized resources for Books 5, 6, and 7
 import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans, BOOK6_UNIT_TITLES } from '@/data/book6-resources-common';
 import { generateBook5UnitResources, generateDefaultBook5UnitLessonPlans, BOOK5_UNIT_TITLES } from '@/data/book5-resources-common';
+import { generateBook7UnitResources, generateDefaultBook7UnitLessonPlans, BOOK7_UNIT_TITLES } from '@/data/book7-resources-common';
 
 // Import any specific implementation functions
 // Book 6 implementations
 import { getBook6Unit5Resources, getBook6Unit5LessonPlans } from '@/data/book6-unit5-implementation';
+import { getBook6Unit6Resources, getBook6Unit6LessonPlans } from '@/data/book6-unit6-implementation';
+import { getBook6Unit7Resources, getBook6Unit7LessonPlans } from '@/data/book6-unit7-implementation';
+import { getBook6Unit8Resources, getBook6Unit8LessonPlans } from '@/data/book6-unit8-implementation';
 import { getBook6Unit9Resources, getBook6Unit9LessonPlans } from '@/data/book6-unit9-implementation';
 import { getBook6Unit10Resources, getBook6Unit10LessonPlans } from '@/data/book6-unit10-implementation';
 import { generateBook6Unit13Content, generateUnit13LessonPlans as generateBook6Unit13LessonPlans } from '@/data/book6-unit13-implementation';
@@ -41,6 +45,7 @@ import { getBook2Unit15Resources, generateUnit15LessonPlans } from '@/data/book2
 import { getBook2Unit16Resources, generateUnit16LessonPlans } from '@/data/book2-unit16-implementation';
 import { getBook2Unit17Resources, generateUnit17LessonPlans } from '@/data/book2-unit17-implementation';
 import { getBook2Unit18Resources, generateUnit18LessonPlans } from '@/data/book2-unit18-implementation';
+import { generateUnit4LessonPlans } from '@/data/book2-unit4-implementation';
 
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
@@ -2009,7 +2014,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 6 lesson plans
       let kitchenPlans: LessonPlan[] = [];
       try {
-        kitchenPlans = getBook6Unit6LessonPlans();
+        try {
+          kitchenPlans = getBook6Unit6LessonPlans();
+        } catch (error) {
+          console.error('Error loading Book 6 Unit 6 lesson plans:', error);
+          kitchenPlans = generateDefaultBook6UnitLessonPlans('6', '6');
+        }
       } catch (error) {
         console.error('Error getting Book 6 Unit 6 lesson plans:', error);
       }
@@ -2065,7 +2075,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 7 lesson plans
       let bodyPlans: LessonPlan[] = [];
       try {
-        bodyPlans = getBook6Unit7LessonPlans();
+        try {
+          bodyPlans = getBook6Unit7LessonPlans();
+        } catch (error) {
+          console.error('Error loading Book 6 Unit 7 lesson plans:', error);
+          bodyPlans = generateDefaultBook6UnitLessonPlans('6', '7');
+        }
       } catch (error) {
         console.error('Error getting Book 6 Unit 7 lesson plans:', error);
       }
@@ -2121,7 +2136,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 8 lesson plans
       let pastSimplePlans: LessonPlan[] = [];
       try {
-        pastSimplePlans = getBook6Unit8LessonPlans();
+        try {
+          pastSimplePlans = getBook6Unit8LessonPlans();
+        } catch (error) {
+          console.error('Error loading Book 6 Unit 8 lesson plans:', error);
+          pastSimplePlans = generateDefaultBook6UnitLessonPlans('6', '8');
+        }
       } catch (error) {
         console.error('Error getting Book 6 Unit 8 lesson plans:', error);
       }
@@ -2285,12 +2305,13 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       );
     }
     
-    // Book 6 Unit 11 - Extreme Sports lesson plans
+    // Book 6 Unit 11 - Transportation and Travel lesson plans
     if (bookId === '6' && unitId === '11') {
       // Get Book 6 Unit 11 lesson plans
       let extremeSportsPlans: LessonPlan[] = [];
       try {
-        extremeSportsPlans = getBook6Unit11LessonPlans();
+        // Use the generateDefaultBook6UnitLessonPlans function as a fallback
+        extremeSportsPlans = generateDefaultBook6UnitLessonPlans('11', BOOK6_UNIT_TITLES['11'] || 'Transportation and Travel');
       } catch (error) {
         console.error('Error getting Book 6 Unit 11 lesson plans:', error);
       }
@@ -2346,7 +2367,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 12 lesson plans
       let environmentLessonPlans: LessonPlan[] = [];
       try {
-        environmentLessonPlans = getBook6Unit12LessonPlans();
+        // Use the generateDefaultBook6UnitLessonPlans function as a fallback
+        environmentLessonPlans = generateDefaultBook6UnitLessonPlans('12', BOOK6_UNIT_TITLES['12'] || 'Are You Eco? Environment');
       } catch (error) {
         console.error('Error getting Book 6 Unit 12 lesson plans:', error);
       }
@@ -2402,9 +2424,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 13 lesson plans
       let airportLessonPlans: LessonPlan[] = [];
       try {
-        airportLessonPlans = getBook6Unit13LessonPlans();
+        // First try to use the imported generator function if available
+        if (typeof generateBook6Unit13LessonPlans === 'function') {
+          airportLessonPlans = generateBook6Unit13LessonPlans();
+        } else {
+          // Use default generator as fallback
+          airportLessonPlans = generateDefaultBook6UnitLessonPlans('13', BOOK6_UNIT_TITLES['13'] || 'At the Airport');
+        }
       } catch (error) {
         console.error('Error getting Book 6 Unit 13 lesson plans:', error);
+        // Fallback to default lesson plans
+        airportLessonPlans = generateDefaultBook6UnitLessonPlans('13', BOOK6_UNIT_TITLES['13'] || 'At the Airport');
       }
       
       builtInLessonPlans = (
@@ -2458,9 +2488,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 14 lesson plans
       let survivorLessonPlans: LessonPlan[] = [];
       try {
-        survivorLessonPlans = getBook6Unit14LessonPlans();
+        // First try to use the imported generator function if available
+        if (typeof generateBook6Unit14LessonPlans === 'function') {
+          survivorLessonPlans = generateBook6Unit14LessonPlans();
+        } else {
+          // Use default generator as fallback
+          survivorLessonPlans = generateDefaultBook6UnitLessonPlans('14', BOOK6_UNIT_TITLES['14'] || 'Are You a Survivor?');
+        }
       } catch (error) {
         console.error('Error getting Book 6 Unit 14 lesson plans:', error);
+        // Fallback to default lesson plans
+        survivorLessonPlans = generateDefaultBook6UnitLessonPlans('14', BOOK6_UNIT_TITLES['14'] || 'Are You a Survivor?');
       }
       
       builtInLessonPlans = (
@@ -2514,9 +2552,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 15 lesson plans
       let fashionLessonPlans: LessonPlan[] = [];
       try {
-        fashionLessonPlans = getBook6Unit15LessonPlans();
+        // First try to use the imported generator function if available
+        if (typeof generateBook6Unit15LessonPlans === 'function') {
+          fashionLessonPlans = generateBook6Unit15LessonPlans();
+        } else {
+          // Use default generator as fallback
+          fashionLessonPlans = generateDefaultBook6UnitLessonPlans('15', BOOK6_UNIT_TITLES['15'] || 'Fashion Accessories');
+        }
       } catch (error) {
         console.error('Error getting Book 6 Unit 15 lesson plans:', error);
+        // Fallback to default lesson plans
+        fashionLessonPlans = generateDefaultBook6UnitLessonPlans('15', BOOK6_UNIT_TITLES['15'] || 'Fashion Accessories');
       }
       
       builtInLessonPlans = (
@@ -2570,9 +2616,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 6 Unit 16 lesson plans
       let cityLifeLessonPlans: LessonPlan[] = [];
       try {
-        cityLifeLessonPlans = getBook6Unit16LessonPlans();
+        // First try to use the imported generator function if available
+        if (typeof generateBook6Unit16LessonPlans === 'function') {
+          cityLifeLessonPlans = generateBook6Unit16LessonPlans();
+        } else {
+          // Use default generator as fallback
+          cityLifeLessonPlans = generateDefaultBook6UnitLessonPlans('16', BOOK6_UNIT_TITLES['16'] || 'City Life');
+        }
       } catch (error) {
         console.error('Error getting Book 6 Unit 16 lesson plans:', error);
+        // Fallback to default lesson plans
+        cityLifeLessonPlans = generateDefaultBook6UnitLessonPlans('16', BOOK6_UNIT_TITLES['16'] || 'City Life');
       }
       
       builtInLessonPlans = (
@@ -2627,9 +2681,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Unit 6 lesson plans
       let unit6Plans: LessonPlan[] = [];
       try {
-        unit6Plans = getUnit6LessonPlans();
+        // First try to use the imported generator function if available
+        if (typeof generateBook7Unit6LessonPlans === 'function') {
+          unit6Plans = generateBook7Unit6LessonPlans();
+        } else {
+          // Use default generator as fallback
+          unit6Plans = generateDefaultBook7UnitLessonPlans('6', 'Money Matters');
+        }
       } catch (error) {
         console.error('Error getting Unit 6 lesson plans:', error);
+        // Fallback to default lesson plans
+        unit6Plans = generateDefaultBook7UnitLessonPlans('6', 'Money Matters');
       }
       
       builtInLessonPlans = (
@@ -2683,9 +2745,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Unit 7 lesson plans
       let unit7Plans: LessonPlan[] = [];
       try {
-        unit7Plans = getUnit7LessonPlans();
+        // First try to use the imported generator function if available
+        if (typeof generateBook7Unit7LessonPlans === 'function') {
+          unit7Plans = generateBook7Unit7LessonPlans();
+        } else {
+          // Use default generator as fallback
+          unit7Plans = generateDefaultBook7UnitLessonPlans('7', BOOK7_UNIT_TITLES['7'] || 'DIY & Tools');
+        }
       } catch (error) {
         console.error('Error getting Unit 7 lesson plans:', error);
+        // Fallback to default lesson plans
+        unit7Plans = generateDefaultBook7UnitLessonPlans('7', BOOK7_UNIT_TITLES['7'] || 'DIY & Tools');
       }
       
       builtInLessonPlans = (
@@ -2739,9 +2809,17 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Unit 8 lesson plans
       let unit8Plans: LessonPlan[] = [];
       try {
-        unit8Plans = getUnit8LessonPlans();
+        // First try to use the imported generator function if available
+        if (typeof generateBook7Unit8LessonPlans === 'function') {
+          unit8Plans = generateBook7Unit8LessonPlans();
+        } else {
+          // Use default generator as fallback
+          unit8Plans = generateDefaultBook7UnitLessonPlans('8', BOOK7_UNIT_TITLES['8'] || 'Musical Instruments');
+        }
       } catch (error) {
         console.error('Error getting Unit 8 lesson plans:', error);
+        // Fallback to default lesson plans
+        unit8Plans = generateDefaultBook7UnitLessonPlans('8', BOOK7_UNIT_TITLES['8'] || 'Musical Instruments');
       }
       
       builtInLessonPlans = (
