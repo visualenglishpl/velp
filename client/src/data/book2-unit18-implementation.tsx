@@ -1,29 +1,35 @@
 /**
  * Visual English Book 2, Unit 18: IN THE GARDEN
  * Implementation file for unit resources and lesson plans
+ * 
+ * Note: This unit handles slides without questions by leaving them blank
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { BOOK2_TITLE, BOOK2_UNIT_TITLES } from './book2-resources-common';
 import { TeacherResource } from '@/components/TeacherResources';
 import { book2Unit18Resources } from './book2-unit18-resources';
+
+const unitNumber = '18';
+const unitTitle = BOOK2_UNIT_TITLES[unitNumber];
 
 // Function to get resources for this unit
 export function getBook2Unit18Resources(): TeacherResource[] {
   return book2Unit18Resources;
 }
 
-// Generate 45-minute lesson plans for this unit
+// Generate 45-minute lesson plans for this unit (formatted to match Book 2 Unit 13 structure)
 export function generateUnit18LessonPlans(): LessonPlan[] {
   return [
     {
-      id: 'book2-unit18-lesson1',
-      title: 'Garden Vocabulary - Lesson 1',
+      id: `book2-unit${unitNumber}-lesson1`,
+      title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 1`,
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Students will learn vocabulary for common garden items and plants',
-        'Students will practice pronunciation of garden-related words',
-        'Students will identify different garden tools and plants'
+        'Learn vocabulary for common garden items and plants',
+        'Practice pronunciation of garden-related words',
+        'Identify different garden tools and plants'
       ],
       materials: [
         'Visual English Book 2 Unit 18 slides',
@@ -41,27 +47,42 @@ export function generateUnit18LessonPlans(): LessonPlan[] {
         {
           title: 'Vocabulary Introduction',
           duration: '10 minutes',
-          description: 'Present garden vocabulary with flashcards showing garden tools (rake, shovel, watering can) and plants (flower, tree, bush). Practice pronunciation with the whole class.'
+          description: 'Present garden vocabulary using visual aids.',
+          instructions: [
+            'Use flashcards showing garden tools (rake, shovel, watering can)',
+            'Introduce common plants (flower, tree, bush)',
+            'Practice pronunciation with the whole class'
+          ]
         },
         {
           title: 'BBQ Garden Song',
           duration: '8 minutes',
-          description: 'Play the "BBQ Garden Song" by Maple Leaf Learning. First have students listen, then play it again and encourage them to sing along and do the actions.'
+          description: 'Use the "BBQ Garden Song" to reinforce vocabulary.',
+          teacherNotes: 'First have students listen, then play it again and encourage them to sing along and do the actions'
         },
         {
           title: 'Garden Tools Mime',
           duration: '10 minutes',
-          description: 'Demonstrate different garden tools and activities through mime (digging, planting, watering). Have students guess the action, then have them take turns miming while others guess.'
+          description: 'Use mime activity to reinforce garden vocabulary.',
+          instructions: [
+            'Demonstrate different garden tools through mime actions',
+            'Have students guess what you\'re doing',
+            'Let students take turns miming while others guess'
+          ]
         },
         {
           title: 'Garden Vocabulary Sorting',
-          duration: '10 minutes',
-          description: 'Create categories on the board (tools, plants, parts of plants) and have students help categorize garden vocabulary into appropriate groups.'
+          duration: '7 minutes',
+          description: 'Classify garden vocabulary into categories.',
+          instructions: [
+            'Create categories on the board (tools, plants, parts of plants)',
+            'Have students help categorize vocabulary into appropriate groups'
+          ]
         },
         {
-          title: 'Interactive Game',
+          title: 'Wrap-up Game',
           duration: '5 minutes',
-          description: 'Play the "In the Garden - Wordwall" game as a class activity to reinforce garden vocabulary.'
+          description: 'Play the "In the Garden - Wordwall" game to reinforce garden vocabulary.'
         }
       ],
       assessmentTips: 'Listen for correct pronunciation of garden vocabulary and observe students\'s ability to categorize garden items.',
@@ -71,14 +92,14 @@ export function generateUnit18LessonPlans(): LessonPlan[] {
       ]
     },
     {
-      id: 'book2-unit18-lesson2',
-      title: 'Parts of Plants - Lesson 2',
+      id: `book2-unit${unitNumber}-lesson2`,
+      title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 2`,
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Students will learn vocabulary for parts of plants (root, stem, leaf, flower)',
-        'Students will understand the basic growth cycle of plants',
-        'Students will create a simple diagram of a plant and label its parts'
+        'Learn vocabulary for parts of plants (root, stem, leaf, flower)',
+        'Understand the basic growth cycle of plants',
+        'Create a simple diagram of a plant and label its parts'
       ],
       materials: [
         'Visual English Book 2 Unit 18 slides',
@@ -96,27 +117,43 @@ export function generateUnit18LessonPlans(): LessonPlan[] {
         {
           title: 'Parts of Plants Introduction',
           duration: '10 minutes',
-          description: 'Introduce the main parts of a plant (root, stem, leaf, flower, seed) using visuals or a real plant if available. Explain the basic function of each part in simple terms.'
+          description: 'Teach the main parts of a plant and their functions.',
+          instructions: [
+            'Show the main parts (root, stem, leaf, flower, seed)',
+            'Use visuals or a real plant if available',
+            'Explain the basic function of each part in simple terms'
+          ]
         },
         {
           title: 'Plant Lifecycle',
           duration: '8 minutes',
-          description: 'Show a simple diagram of a plant lifecycle from seed to flower. Use gestures to represent growing from a small seed to a tall plant.'
+          description: 'Explain the plant growth process visually.',
+          teacherNotes: 'Use gestures to represent growing from a small seed to a tall plant'
         },
         {
           title: 'Plant Parts Labeling',
           duration: '10 minutes',
-          description: 'Give students a worksheet with a picture of a plant. Have them color and label the parts of the plant using the vocabulary learned.'
+          description: 'Reinforce plant vocabulary with a hands-on activity.',
+          instructions: [
+            'Give students a worksheet with a picture of a plant',
+            'Have them color and label the plant parts',
+            'Check accuracy of labels as students work'
+          ]
         },
         {
           title: 'Plant Parts Action Game',
           duration: '7 minutes',
-          description: 'Assign different actions for each plant part (crouch down for roots, stand up straight for stem, arms out for leaves, hands cupped above head for flower). Call out different parts and have students do the corresponding actions.'
+          description: 'Use physical movements to reinforce plant part vocabulary.',
+          instructions: [
+            'Assign actions for each plant part (crouch for roots, stand straight for stem, etc.)',
+            'Call out different parts for students to act out',
+            'Speed up calls to make the game more challenging'
+          ]
         },
         {
-          title: 'Parts of Plant Game',
-          duration: '8 minutes',
-          description: 'Play the "Parts of the Plant - Wordwall" games to reinforce vocabulary and assess learning.'
+          title: 'Wrap-up Game',
+          duration: '5 minutes',
+          description: 'Play the "Parts of the Plant - Wordwall" game to reinforce vocabulary and assess learning.'
         }
       ],
       assessmentTips: 'Check students\' labeled plant diagrams for accuracy. Observe their participation in the action game to assess understanding of plant parts.',

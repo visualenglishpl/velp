@@ -1,29 +1,35 @@
 /**
  * Visual English Book 2, Unit 17: WHERE ARE YOU FROM?
  * Implementation file for unit resources and lesson plans
+ * 
+ * Note: This unit handles slides without questions by leaving them blank
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { BOOK2_TITLE, BOOK2_UNIT_TITLES } from './book2-resources-common';
 import { TeacherResource } from '@/components/TeacherResources';
 import { book2Unit17Resources } from './book2-unit17-resources';
+
+const unitNumber = '17';
+const unitTitle = BOOK2_UNIT_TITLES[unitNumber];
 
 // Function to get resources for this unit
 export function getBook2Unit17Resources(): TeacherResource[] {
   return book2Unit17Resources;
 }
 
-// Generate 45-minute lesson plans for this unit
+// Generate 45-minute lesson plans for this unit (formatted to match Book 2 Unit 13 structure)
 export function generateUnit17LessonPlans(): LessonPlan[] {
   return [
     {
-      id: 'book2-unit17-lesson1',
-      title: 'Countries and Nationalities - Lesson 1',
+      id: `book2-unit${unitNumber}-lesson1`,
+      title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 1`,
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Students will learn vocabulary for common countries and their nationalities',
-        'Students will practice saying country names and nationalities correctly',
-        'Students will identify various country flags'
+        'Learn vocabulary for common countries and their nationalities',
+        'Practice saying country names and nationalities correctly',
+        'Identify various country flags'
       ],
       materials: [
         'Visual English Book 2 Unit 17 slides',
@@ -41,22 +47,33 @@ export function generateUnit17LessonPlans(): LessonPlan[] {
         {
           title: 'Vocabulary Introduction',
           duration: '10 minutes',
-          description: 'Present 10-12 common countries with their flags and corresponding nationalities. Practice pronunciation with the whole class, focusing on nationality suffixes (-ish, -ian, -ese, etc.).'
+          description: 'Present common countries with their flags and corresponding nationalities.',
+          instructions: [
+            'Practice pronunciation with the whole class',
+            'Focus on nationality suffixes (-ish, -ian, -ese, etc.)',
+            'Connect countries to their flags visually'
+          ]
         },
         {
           title: 'Where Are You From? Song',
           duration: '8 minutes',
-          description: 'Play "Where Are You From?" song by Maple Leaf Learning. First, have students listen, then play it again and encourage them to sing along.'
+          description: 'Use the nationality song to reinforce vocabulary.',
+          teacherNotes: 'First have students listen, then play again and encourage them to sing along'
         },
         {
           title: 'Country-Nationality Matching',
           duration: '10 minutes',
-          description: 'Divide the class into pairs and give each pair a set of cards with country names and nationalities. Have them match countries with the correct nationalities.'
+          description: 'Divide the class into pairs for matching activity.',
+          instructions: [
+            'Give each pair cards with country names and nationalities',
+            'Have them match countries with the correct nationalities',
+            'Check answers as a class'
+          ]
         },
         {
           title: 'Flag Identification',
-          duration: '10 minutes',
-          description: 'Show students various country flags and have them identify the country and nationality. Use the "Where Are You From? - Flags and Countries" video as a reference.'
+          duration: '7 minutes',
+          description: 'Show students various country flags and have them identify the country and nationality.'
         },
         {
           title: 'Interactive Game',
@@ -71,14 +88,14 @@ export function generateUnit17LessonPlans(): LessonPlan[] {
       ]
     },
     {
-      id: 'book2-unit17-lesson2',
-      title: 'Where Are You From? - Lesson 2',
+      id: `book2-unit${unitNumber}-lesson2`,
+      title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 2`,
       duration: '45 minutes',
       level: 'Beginner',
       objectives: [
-        'Students will learn to ask and answer "Where are you from?"',
-        'Students will practice saying "I am from [country]. I am [nationality]."',
-        'Students will create a class map of nationalities'
+        'Learn to ask and answer "Where are you from?"',
+        'Practice saying "I am from [country]. I am [nationality]."',
+        'Create a class map of nationalities'
       ],
       materials: [
         'Visual English Book 2 Unit 17 slides',
@@ -96,27 +113,38 @@ export function generateUnit17LessonPlans(): LessonPlan[] {
         {
           title: 'Dialogue Introduction',
           duration: '8 minutes',
-          description: 'Teach the question "Where are you from?" and the response structures "I am from [country]. I am [nationality]." Model with several examples using the world map.'
+          description: 'Teach conversation patterns for discussing nationality.',
+          instructions: [
+            'Introduce "Where are you from?"',
+            'Practice "I am from [country]. I am [nationality]."',
+            'Model with several examples using the world map'
+          ]
         },
         {
           title: 'Nationality Rap',
           duration: '7 minutes',
-          description: 'Play the "What\'s Your Nationality? - Rap" video. Have students listen first, then play again having them focus on the question-answer pattern.'
+          description: 'Use the "What\'s Your Nationality?" rap video to reinforce question-answer patterns.',
+          teacherNotes: 'Have students listen first, then play again with focus on the language patterns'
         },
         {
           title: 'Interview Activity',
           duration: '10 minutes',
-          description: 'Give students role-play identities from different countries. Have them mingle around the classroom, asking each other "Where are you from?" and responding with their assigned identities.'
+          description: 'Role-play conversations about nationality.',
+          instructions: [
+            'Give students identities from different countries',
+            'Have them mingle asking "Where are you from?"',
+            'Students respond with their assigned identities'
+          ]
         },
         {
           title: 'Class Nationality Map',
           duration: '10 minutes',
-          description: 'Place a large world map on the wall. Have each student choose a country they would like to be from, and place a flag or pin on that country with their name written on it.'
+          description: 'Create a visual representation of students\'s chosen nationalities on a world map.'
         },
         {
-          title: 'Nationality Matching Game',
-          duration: '8 minutes',
-          description: 'Play the "Countries and Nationalities - Wordwall" game to assess and reinforce learning.'
+          title: 'Wrap-up Game',
+          duration: '5 minutes',
+          description: 'Play the "Countries and Nationalities" Wordwall game to assess and reinforce learning.'
         }
       ],
       assessmentTips: 'Observe students\' ability to ask and respond to "Where are you from?" correctly. Check for proper pronunciation of country names and nationalities.',
