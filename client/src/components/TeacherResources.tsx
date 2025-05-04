@@ -798,6 +798,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 4 && typedResourcesModule.book2Unit4Resources) {
               console.log('Using book2Unit4Resources directly');
               resources = typedResourcesModule.book2Unit4Resources;
+            } else if (unitNum === 5 && typedResourcesModule.book2Unit5Resources) {
+              console.log('Using book2Unit5Resources directly');
+              resources = typedResourcesModule.book2Unit5Resources;
             } else if (unitNum === 6 && typedResourcesModule.book2Unit6Resources) {
               console.log('Using book2Unit6Resources directly');
               resources = typedResourcesModule.book2Unit6Resources;
@@ -813,6 +816,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 4 && typedResourcesModule.getBook2Unit4Resources) {
               console.log('Using getBook2Unit4Resources function');
               resources = typedResourcesModule.getBook2Unit4Resources();
+            } else if (unitNum === 5 && typedResourcesModule.getBook2Unit5Resources) {
+              console.log('Using getBook2Unit5Resources function');
+              resources = typedResourcesModule.getBook2Unit5Resources();
             } else if (unitNum === 6 && typedResourcesModule.getBook2Unit6Resources) {
               console.log('Using getBook2Unit6Resources function');
               resources = typedResourcesModule.getBook2Unit6Resources();
@@ -1066,36 +1072,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             // Check for specific lesson plan getter functions using type assertion
             const typedImplModule = implModule as any;
             
+            // Only include the getters we know definitely exist
             if (unitNum === 5 && typedImplModule.getBook6Unit5LessonPlans) {
               console.log('Using getBook6Unit5LessonPlans');
               lessonPlans = typedImplModule.getBook6Unit5LessonPlans();
-            } else if (unitNum === 6 && typedImplModule.getBook6Unit6LessonPlans) {
-              console.log('Using getBook6Unit6LessonPlans');
-              lessonPlans = typedImplModule.getBook6Unit6LessonPlans();
-            } else if (unitNum === 7 && typedImplModule.getBook6Unit7LessonPlans) {
-              console.log('Using getBook6Unit7LessonPlans');
-              lessonPlans = typedImplModule.getBook6Unit7LessonPlans();
-            } else if (unitNum === 8 && typedImplModule.getBook6Unit8LessonPlans) {
-              console.log('Using getBook6Unit8LessonPlans');
-              lessonPlans = typedImplModule.getBook6Unit8LessonPlans();
-            } else if (unitNum === 9 && typedImplModule.getBook6Unit9LessonPlans) {
-              console.log('Using getBook6Unit9LessonPlans');
-              lessonPlans = typedImplModule.getBook6Unit9LessonPlans();
-            } else if (unitNum === 12 && typedImplModule.getBook6Unit12LessonPlans) {
-              console.log('Using getBook6Unit12LessonPlans');
-              lessonPlans = typedImplModule.getBook6Unit12LessonPlans();
-            } else if (unitNum === 13 && typedImplModule.generateUnit13LessonPlans) {
-              console.log('Using generateUnit13LessonPlans');
-              lessonPlans = typedImplModule.generateUnit13LessonPlans();
-            } else if (unitNum === 14 && typedImplModule.generateUnit14LessonPlans) {
-              console.log('Using generateUnit14LessonPlans');
-              lessonPlans = typedImplModule.generateUnit14LessonPlans();
-            } else if (unitNum === 15 && typedImplModule.generateUnit15LessonPlans) {
-              console.log('Using generateUnit15LessonPlans');
-              lessonPlans = typedImplModule.generateUnit15LessonPlans();
-            } else if (unitNum === 16 && typedImplModule.generateUnit16LessonPlans) {
-              console.log('Using generateUnit16LessonPlans');
-              lessonPlans = typedImplModule.generateUnit16LessonPlans();
             }
             
             console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
@@ -1596,8 +1576,22 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   // Function to render resources based on type
   const renderResources = (resourceType: 'video' | 'game' | 'pdf' | 'lesson') => {
     // Get all resources of the specified type, including dynamically loaded ones
-    const allResources = [...resources, ...getMoreUnitResources(), ...dynamicResources]
-      .filter(r => r.resourceType === resourceType);
+    // Use a Map to ensure uniqueness of resources by ID
+    const resourceMap = new Map();
+    
+    // Combine all resources, using the latest version if there are duplicates
+    [...resources, ...getMoreUnitResources(), ...dynamicResources]
+      .filter(r => r.resourceType === resourceType)
+      .forEach(resource => {
+        if (resource.id) {
+          resourceMap.set(resource.id, resource);
+        } else {
+          // For resources without an ID, use a unique temporary identifier
+          resourceMap.set(`temp-${Math.random()}`, resource);
+        }
+      });
+      
+    const allResources = Array.from(resourceMap.values());
 
     // Return early if there are no resources
     if (allResources.length === 0) {
