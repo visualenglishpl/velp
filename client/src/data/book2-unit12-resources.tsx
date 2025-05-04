@@ -28,12 +28,23 @@ export const book2Unit12GameResources: TeacherResource[] = [
     id: `book2-unit${unitNumber}-game1`,
     bookId: '2',
     unitId: unitNumber,
-    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WHAT IS THE MATTER - AT THE DOCTOR'S`,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WHAT IS THE MATTER - AT THE DOCTOR'S (1)`,
     description: 'Interactive game about common health problems and doctor visits.',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/78bd65ffe1734badb1e563f03fe3cea4',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/78bd65ffe1734badb1e563f03fe3cea4?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    sourceUrl: 'https://wordwall.net/resource/f09b2fc9e4d4413e9485eabd9a58d559',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f09b2fc9e4d4413e9485eabd9a58d559?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+  },
+  {
+    id: `book2-unit${unitNumber}-game2`,
+    bookId: '2',
+    unitId: unitNumber,
+    title: `${BOOK2_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - WHAT IS THE MATTER - AT THE DOCTOR'S (2)`,
+    description: 'Second interactive game about health problems and doctor visits.',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/c20c731038e1473c933d26b8124e99b3',
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c20c731038e1473c933d26b8124e99b3?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
   }
 ];
 
