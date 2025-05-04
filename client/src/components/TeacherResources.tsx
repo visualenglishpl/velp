@@ -70,6 +70,11 @@ import { getBook3Unit13Resources, generateBook3Unit13LessonPlans } from '@/data/
 import { getBook3Unit14Resources, generateBook3Unit14LessonPlans } from '@/data/book3-unit14-implementation';
 import { getBook3Unit15Resources, generateBook3Unit15LessonPlans } from '@/data/book3-unit15-implementation';
 import { getBook3Unit16Resources, generateBook3Unit16LessonPlans } from '@/data/book3-unit16-implementation';
+import { getBook3Unit16SportsResources, generateBook3Unit16SportsLessonPlans } from '@/data/book3-unit16-sports-implementation';
+import { book3Unit16SportsResources } from '@/data/book3-unit16-sports-resources';
+import { book3Unit16Resources } from '@/data/book3-unit16-resources';
+import { getBook3Unit17Resources, generateBook3Unit17LessonPlans } from '@/data/book3-unit17-implementation';
+import { book3Unit17Resources } from '@/data/book3-unit17-resources';
 import { getBook3Unit18Resources, generateBook3Unit18LessonPlans } from '@/data/book3-unit18-implementation';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES, generateDefaultBook3UnitLessonPlans } from '@/data/book3-resources-common';
 
@@ -569,14 +574,8 @@ const dynamicResourceImport = async (book: string, unit: number) => {
         case 5: return import('@/data/book3-unit5-resources');
         case 6: return import('@/data/book3-unit6-resources');
         case 7: 
-          const unitType = window.location.pathname.includes('solar') ? 'solar' : 'shopping';
-          if (unitType === 'solar') {
-            console.log('Loading Solar System resources for Unit 7');
-            return import('@/data/book3-unit7-solar-resources');
-          } else {
-            console.log('Loading Shopping resources for Unit 7');
-            return import('@/data/book3-unit7-shopping-resources');
-          }
+          console.log('Loading Solar System resources for Unit 7');
+          return import('@/data/book3-unit7-solar-resources');
         case 8: return import('@/data/book3-unit8-resources');
         case 9: return import('@/data/book3-unit9-resources');
         case 10: return import('@/data/book3-unit10-resources');
@@ -586,8 +585,12 @@ const dynamicResourceImport = async (book: string, unit: number) => {
         case 14: return import('@/data/book3-unit14-resources');
         case 15: return import('@/data/book3-unit15-resources');
         case 16: 
-          const unit16ResType = window.location.pathname.includes('sports') ? 'sports' : 'house-chores';
-          if (unit16ResType === 'sports') {
+          // Check if we should load Sports or House Chores based on URL parameter
+          const urlParams = new URLSearchParams(window.location.search);
+          const unitType = urlParams.get('type');
+          const useSports = unitType === 'sports';
+          
+          if (useSports) {
             console.log('Loading Sports resources for Unit 16');
             return import('@/data/book3-unit16-sports-resources');
           } else {
@@ -776,6 +779,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
   const { toast } = useToast();
   const urlParams = new URLSearchParams(window.location.search);
   const [isEditMode, setIsEditMode] = useState(urlParams.get('edit') === 'true');
+  
+  // For Book 3 Unit 16 which has two versions: House Chores and Sports
+  const initialUnitType = urlParams.get('type') === 'sports' ? 'sports' : 'housechores';
+  const [unit16Type, setUnit16Type] = useState<string>(initialUnitType);
+  const isUnit16 = bookId === '3' && unitId === '16';
+  
   const [resources, setResources] = useState<TeacherResource[]>([]);
   const [customResources, setCustomResources] = useState<TeacherResource[]>([]);
   const [isAdding, setIsAdding] = useState(false);
@@ -1252,23 +1261,26 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               console.log('Using generateUnit6LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateUnit6LessonPlans();
             } else if (unitNum === 7) {
-              // Special handling for Unit 7 which has two versions
-              if (typedImplModule.generateUnit7ShoppingLessonPlans) {
-                console.log('Using generateUnit7ShoppingLessonPlans for Book 3');
-                lessonPlans = typedImplModule.generateUnit7ShoppingLessonPlans();
+              // Using Solar System lesson plans for Unit 7
+              if (typedImplModule.generateBook3Unit7SolarLessonPlans) {
+                console.log('Using generateBook3Unit7SolarLessonPlans for Book 3');
+                lessonPlans = typedImplModule.generateBook3Unit7SolarLessonPlans();
               } else if (typedImplModule.generateUnit7LessonPlans) {
                 console.log('Using generateUnit7LessonPlans for Book 3');
                 lessonPlans = typedImplModule.generateUnit7LessonPlans();
               }
-            } else if (unitNum === 9 && typedImplModule.generateUnit9LessonPlans) {
-              console.log('Using generateUnit9LessonPlans for Book 3');
-              lessonPlans = typedImplModule.generateUnit9LessonPlans();
+            } else if (unitNum === 9 && typedImplModule.generateBook3Unit9LessonPlans) {
+              console.log('Using generateBook3Unit9LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit9LessonPlans();
             } else if (unitNum === 8 && typedImplModule.generateBook3Unit8LessonPlans) {
               console.log('Using generateBook3Unit8LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateBook3Unit8LessonPlans();
             } else if (unitNum === 10 && typedImplModule.generateBook3Unit10LessonPlans) {
               console.log('Using generateBook3Unit10LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateBook3Unit10LessonPlans();
+            } else if (unitNum === 11 && typedImplModule.generateBook3Unit11LessonPlans) {
+              console.log('Using generateBook3Unit11LessonPlans for Book 3');
+              lessonPlans = typedImplModule.generateBook3Unit11LessonPlans();
             } else if (unitNum === 12 && typedImplModule.generateBook3Unit12LessonPlans) {
               console.log('Using generateBook3Unit12LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateBook3Unit12LessonPlans();
@@ -1281,9 +1293,20 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 15 && typedImplModule.generateBook3Unit15LessonPlans) {
               console.log('Using generateBook3Unit15LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateBook3Unit15LessonPlans();
-            } else if (unitNum === 16 && typedImplModule.generateBook3Unit16LessonPlans) {
-              console.log('Using generateBook3Unit16LessonPlans for Book 3');
-              lessonPlans = typedImplModule.generateBook3Unit16LessonPlans();
+            } else if (unitNum === 16) {
+              // Special handling for Unit 16 which has two versions: House Chores and Sports
+              // Check if we should show Sports or House Chores based on URL
+              const urlParams = new URLSearchParams(window.location.search);
+              const unitType = urlParams.get('type');
+              const useSports = unitType === 'sports';
+              
+              if (useSports && typedImplModule.generateBook3Unit16SportsLessonPlans) {
+                console.log('Using generateBook3Unit16SportsLessonPlans for Book 3');
+                lessonPlans = typedImplModule.generateBook3Unit16SportsLessonPlans();
+              } else if (typedImplModule.generateBook3Unit16LessonPlans) {
+                console.log('Using generateBook3Unit16LessonPlans for Book 3');
+                lessonPlans = typedImplModule.generateBook3Unit16LessonPlans();
+              }
             } else if (unitNum === 18 && typedImplModule.generateBook3Unit18LessonPlans) {
               console.log('Using generateBook3Unit18LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateBook3Unit18LessonPlans();
@@ -1597,6 +1620,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       } else if (unitId === '9') {
         console.log('Loading Book 3 Unit 9 resources');
         return book3Unit9Resources || [];
+      } else if (unitId === '16') {
+        console.log('Loading Book 3 Unit 16 Sports resources');
+        return book3Unit16SportsResources || [];
+      } else if (unitId === '17') {
+        console.log('Loading Book 3 Unit 17 House Chores resources');
+        return book3Unit17Resources || [];
       }
       // For other Book 3 units that don't have specific implementations
       return [];
@@ -2919,6 +2948,130 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                   </CardContent>
                   <CardFooter className="bg-teal-50/30 pt-3 pb-3 border-t border-teal-100">
                     <Button variant="secondary" size="sm" className="w-full border-teal-200 hover:border-teal-300 hover:bg-teal-50" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 3 Unit 16 - Sports lesson plans
+    if (bookId === '3' && unitId === '16') {
+      // Get Book 3 Unit 16 Sports lesson plans
+      let sportsPlans: LessonPlan[] = [];
+      try {
+        try {
+          console.log('Loading Book 3 Unit 16 Sports lesson plans');
+          sportsPlans = generateBook3Unit16SportsLessonPlans();
+        } catch (error) {
+          console.error('Error loading Book 3 Unit 16 Sports lesson plans:', error);
+          sportsPlans = generateDefaultBook3UnitLessonPlans('16', 'Sports');
+        }
+      } catch (error) {
+        console.error('Error getting Book 3 Unit 16 Sports lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Sports Themed Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {sportsPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2 bg-blue-50/50 border-b border-blue-100">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `sports-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-blue-50/30 pt-3 pb-3 border-t border-blue-100">
+                    <Button variant="secondary" size="sm" className="w-full border-blue-200 hover:border-blue-300 hover:bg-blue-50" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 3 Unit 17 - House Chores lesson plans
+    if (bookId === '3' && unitId === '17') {
+      // Get Book 3 Unit 17 House Chores lesson plans
+      let housePlans: LessonPlan[] = [];
+      try {
+        try {
+          console.log('Loading Book 3 Unit 17 House Chores lesson plans');
+          housePlans = generateBook3Unit17LessonPlans();
+        } catch (error) {
+          console.error('Error loading Book 3 Unit 17 House Chores lesson plans:', error);
+          housePlans = generateDefaultBook3UnitLessonPlans('17', 'House Chores');
+        }
+      } catch (error) {
+        console.error('Error getting Book 3 Unit 17 House Chores lesson plans:', error);
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">House Chores Themed Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {housePlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2 bg-green-50/50 border-b border-green-100">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `house-chores-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-green-50/30 pt-3 pb-3 border-t border-green-100">
+                    <Button variant="secondary" size="sm" className="w-full border-green-200 hover:border-green-300 hover:bg-green-50" onClick={() => window.print()}>
                       <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
                     </Button>
                   </CardFooter>

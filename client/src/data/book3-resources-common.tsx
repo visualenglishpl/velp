@@ -12,7 +12,7 @@ export const BOOK3_UNIT_TITLES: Record<string, string> = {
   '4': 'Free Time - Hobbies',
   '5': 'Seven Continents',
   '6': 'When Is Your Birthday',
-  '7': 'Solar System / Let\'s Go Shopping',
+  '7': 'The Solar System',
   '8': 'Let\'s Go Shopping - How Much Is It?',
   '9': 'Let\'s Eat Out',
   '10': 'My Favourite Subject',

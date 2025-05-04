@@ -12,5 +12,5 @@ export const getBook3Unit7SolarResources = (): TeacherResource[] => book3Unit7So
 
 // Generate lesson plans for this unit
 export const generateBook3Unit7SolarLessonPlans = () => {
-  return generateDefaultBook3UnitLessonPlans('7', BOOK3_UNIT_TITLES[6]);
+  return generateDefaultBook3UnitLessonPlans('7', 'THE SOLAR SYSTEM');
 };
