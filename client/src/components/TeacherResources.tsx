@@ -18,6 +18,7 @@ import { generateBook5UnitResources, generateDefaultBook5UnitLessonPlans, BOOK5_
 
 // Import any specific implementation functions
 // Book 6 implementations
+import { getBook6Unit5Resources, getBook6Unit5LessonPlans } from '@/data/book6-unit5-implementation';
 import { getBook6Unit9Resources, getBook6Unit9LessonPlans } from '@/data/book6-unit9-implementation';
 import { getBook6Unit10Resources, getBook6Unit10LessonPlans } from '@/data/book6-unit10-implementation';
 import { generateBook6Unit13Content, generateUnit13LessonPlans as generateBook6Unit13LessonPlans } from '@/data/book6-unit13-implementation';
@@ -32,6 +33,7 @@ import { generateBook5Unit9Content, generateUnit9LessonPlans } from '@/data/book
 import { generateBook5Unit13Content, generateUnit13LessonPlans } from '@/data/book5-unit13-implementation';
 
 // Book 2 implementations
+import { getBook2Unit5Resources, generateUnit5LessonPlans as generateBook2Unit5LessonPlans } from '@/data/book2-unit5-implementation';
 import { getBook2Unit10Resources, generateUnit10LessonPlans } from '@/data/book2-unit10-implementation';
 import { getBook2Unit14Resources, generateUnit14LessonPlans } from '@/data/book2-unit14-implementation';
 import { getBook2Unit17Resources, generateUnit17LessonPlans } from '@/data/book2-unit17-implementation';
@@ -78,6 +80,7 @@ import { book1Unit17Resources } from '@/data/book1-unit17-resources';
 import { book1Unit18Resources } from '@/data/book1-unit18-resources';
 
 // Book 2 resource imports
+import { book2Unit5Resources } from '@/data/book2-unit5-resources';
 import { book2Unit10Resources } from '@/data/book2-unit10-resources';
 import { book2Unit14Resources } from '@/data/book2-unit14-resources';
 import { book2Unit17Resources } from '@/data/book2-unit17-resources';

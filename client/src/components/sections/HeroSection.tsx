@@ -1,13 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { FileText } from "lucide-react";
+import { testFunction } from "@/data/app-test";
+
+// Log test information to verify application loading
+console.log('HeroSection loaded');
+console.log(testFunction());
 
 const HeroSection = () => {
   return (
     <section className="py-4 md:py-6 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">
-          Flexible Plans for Teachers and Schools
+        <h1 className="text-3xl md:text-4xl font-bold text-red-600 mb-1">
+          APPLICATION IS WORKING! - Flexible Plans for Teachers and Schools
         </h1>
         <p className="max-w-3xl mx-auto text-lg text-gray-600 mb-3">
           Access engaging visual lessons, interactive games, worksheets, and more – designed for young learners and busy classrooms.
