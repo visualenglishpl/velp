@@ -1278,6 +1278,21 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // All Book 1 units implemented
       return [];
     }
+    // Book 2 units
+    else if (bookId === '2') {
+      if (unitId === '10') {
+        console.log('Loading Book 2 Unit 10 resources');
+        return book2Unit10Resources;
+      } else if (unitId === '14') {
+        console.log('Loading Book 2 Unit 14 resources');
+        return book2Unit14Resources;
+      } else if (unitId === '17') {
+        console.log('Loading Book 2 Unit 17 resources');
+        return book2Unit17Resources;
+      }
+      // For other Book 2 units that don't have specific implementations
+      return [];
+    }
     // Book 5 units - use centralized resource generator
     else if (bookId === '5') {
       // Special cases for units with their own implementation
