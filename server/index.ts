@@ -47,9 +47,11 @@ app.use((req, res, next) => {
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
+    
+    console.error(`Error: ${message}`, err);
     res.status(status).json({ message });
-    throw err;
+    // Don't throw the error again as it might crash the server
+    // instead, just log it and continue
   });
 
   // importantly only setup vite in development and after
@@ -64,31 +66,46 @@ app.use((req, res, next) => {
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = process.env.PORT || 5000;
+  const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
   const host = '0.0.0.0';
   
-  server.listen(port, host, (err) => {
-    if (err) {
-      log(`Error starting server: ${err}`);
-      return;
-    }
+  // Type issues: TypeScript expects a number for port, but we need to be explicit for TypeScript
+  server.listen(port as number, host, () => {
     log(`Server running at http://${host}:${port}`);
   });
   
   // Handle termination signals properly
-  process.on('SIGINT', () => {
-    log('Received SIGINT signal, shutting down server...');
+  // Enhanced error handling for the server
+  server.on('error', (error: Error) => {
+    log(`Server error: ${error.message}`);
+    // Attempt to recover from certain types of errors
+    if ((error as any).code === 'EADDRINUSE') {
+      log('Address in use, retrying in 1 second...');
+      setTimeout(() => {
+        server.close();
+        server.listen(port as number, host, () => {
+          log('Server restarted successfully after address was in use');
+        });
+      }, 1000);
+    }
+  });
+
+  // Handle process termination signals with grace period
+  const gracefulShutdown = (signal: string) => {
+    log(`Received ${signal} signal, shutting down server...`);
+    // Set a timeout to force exit if graceful shutdown takes too long
+    const forceExit = setTimeout(() => {
+      log('Forcing server shutdown after timeout');
+      process.exit(1);
+    }, 10000); // 10 second timeout
+    
     server.close(() => {
-      log('Server closed');
+      clearTimeout(forceExit);
+      log('Server closed gracefully');
       process.exit(0);
     });
-  });
+  };
   
-  process.on('SIGTERM', () => {
-    log('Received SIGTERM signal, shutting down server...');
-    server.close(() => {
-      log('Server closed');
-      process.exit(0);
-    });
-  });
+  process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 })();
