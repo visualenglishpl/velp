@@ -1,7 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import { registerContentEndpoints } from "./content-endpoints";
+import { registerContentEndpoints } from "./optimized-content-endpoints";
 import compression from "compression";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
