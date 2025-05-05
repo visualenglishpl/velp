@@ -1,59 +1,45 @@
 import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 13
+ * Resources for Book 4 Unit 13 - AT THE PLAYGROUND
  */
 
-// Videos for Unit 13
-export const videos: TeacherResource[] = [
+const unitNumber = '13';
+const unitTitle = 'AT THE PLAYGROUND';
+
+export const book4Unit13Resources: TeacherResource[] = [
   {
-    id: `book4-unit13-video-1`,
+    id: `book4-unit${unitNumber}-playground-1`,
     bookId: '4',
-    unitId: '13',
-    title: 'VISUAL 4 Unit 13 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - AT THE PLAYGROUND GAME 1`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/c50669484ab247c4ab66b98e3c94f4af',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c50669484ab247c4ab66b98e3c94f4af?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/c50669484ab247c4ab66b98e3c94f4af?themeId=1&templateId=3&fontStackId=0'
+    }
   },
   {
-    id: `book4-unit13-video-2`,
+    id: `book4-unit${unitNumber}-playground-2`,
     bookId: '4',
-    unitId: '13',
-    title: 'VISUAL 4 Unit 13 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - AT THE PLAYGROUND GAME 2`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/ca514af1b9ce49429181a2475142de6a',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ca514af1b9ce49429181a2475142de6a?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/ca514af1b9ce49429181a2475142de6a?themeId=1&templateId=38&fontStackId=0'
+    }
   }
 ];
 
-// Games for Unit 13
-export const games: TeacherResource[] = [
-  {
-    id: `book4-unit13-game-1`,
-    bookId: '4',
-    unitId: '13',
-    title: 'VISUAL 4 Unit 13 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book4-unit13-game-2`,
-    bookId: '4',
-    unitId: '13',
-    title: 'VISUAL 4 Unit 13 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
-];
-
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
-
-// Main export for backward compatibility
-export const book4Unit13Resources = resources;
+// Getter function for backward compatibility
+export function getBook4Unit13Resources(): TeacherResource[] {
+  return book4Unit13Resources;
+}
