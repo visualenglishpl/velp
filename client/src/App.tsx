@@ -20,6 +20,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
 import { useAuth } from "@/hooks/use-auth";
+// Fix the import path to avoid extension errors
+import TestUnits from "./test-units";
 
 // TestTeacherResources page has been removed as it's not necessary
 
@@ -201,6 +203,9 @@ function Router() {
       <Route path="/lesson-plans">
         {() => <ProtectedRoute component={LessonPlansPage} requireAuth={false} />}
       </Route>
+
+      {/* Test Units Component */}
+      <Route path="/test-units" component={TestUnits} />
 
       {/* Test PDF Viewer */}
       <Route path="/pdf-test" component={() => {
