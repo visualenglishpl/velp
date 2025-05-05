@@ -46,15 +46,15 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
             const module = await import('@/data/book4-unit2-resources');
             if (module.getBook4Unit2Resources) {
               return module.getBook4Unit2Resources();
-            } else if (module.resources) {
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.book4Unit2Resources) {
+              return (module as any).resources;
+            } else if ('book4Unit2Resources' in module) {
               // Try specialized export
-              return module.book4Unit2Resources;
-            } else if (module.default) {
+              return (module as any).book4Unit2Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -67,15 +67,15 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
             const module = await import('@/data/book4-unit3-resources');
             if (module.getBook4Unit3Resources) {
               return module.getBook4Unit3Resources();
-            } else if (module.resources) {
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.book4Unit3Resources) {
+              return (module as any).resources;
+            } else if ('book4Unit3Resources' in module) {
               // Try specialized export
-              return module.book4Unit3Resources;
-            } else if (module.default) {
+              return (module as any).book4Unit3Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -88,15 +88,15 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
             const module = await import('@/data/book4-unit4-resources');
             if (module.getBook4Unit4Resources) {
               return module.getBook4Unit4Resources();
-            } else if (module.resources) {
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.book4Unit4Resources) {
+              return (module as any).resources;
+            } else if ('book4Unit4Resources' in module) {
               // Try specialized export
-              return module.book4Unit4Resources;
-            } else if (module.default) {
+              return (module as any).book4Unit4Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -109,15 +109,15 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
             const module = await import('@/data/book4-unit5-resources');
             if (module.getBook4Unit5Resources) {
               return module.getBook4Unit5Resources();
-            } else if (module.resources) {
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.book4Unit5Resources) {
+              return (module as any).resources;
+            } else if ('book4Unit5Resources' in module) {
               // Try specialized export
-              return module.book4Unit5Resources;
-            } else if (module.default) {
+              return (module as any).book4Unit5Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -130,15 +130,15 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
             const module = await import('@/data/book4-unit6-resources');
             if (module.getBook4Unit6Resources) {
               return module.getBook4Unit6Resources();
-            } else if (module.resources) {
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.book4Unit6Resources) {
+              return (module as any).resources;
+            } else if ('book4Unit6Resources' in module) {
               // Try specialized export
-              return module.book4Unit6Resources;
-            } else if (module.default) {
+              return (module as any).book4Unit6Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -151,15 +151,15 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
             const module = await import('@/data/book4-unit7-resources');
             if (module.getBook4Unit7Resources) {
               return module.getBook4Unit7Resources();
-            } else if (module.resources) {
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.book4Unit7Resources) {
+              return (module as any).resources;
+            } else if ('book4Unit7Resources' in module) {
               // Try specialized export
-              return module.book4Unit7Resources;
-            } else if (module.default) {
+              return (module as any).book4Unit7Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -172,15 +172,15 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
             const module = await import('@/data/book4-unit8-resources');
             if (module.getBook4Unit8Resources) {
               return module.getBook4Unit8Resources();
-            } else if (module.resources) {
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.book4Unit8Resources) {
+              return (module as any).resources;
+            } else if ('book4Unit8Resources' in module) {
               // Try specialized export
-              return module.book4Unit8Resources;
-            } else if (module.default) {
+              return (module as any).book4Unit8Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -193,15 +193,15 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
             const module = await import('@/data/book4-unit9-resources');
             if (module.getBook4Unit9Resources) {
               return module.getBook4Unit9Resources();
-            } else if (module.resources) {
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.book4Unit9Resources) {
+              return (module as any).resources;
+            } else if ('book4Unit9Resources' in module) {
               // Try specialized export
-              return module.book4Unit9Resources;
-            } else if (module.default) {
+              return (module as any).book4Unit9Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -241,10 +241,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 1: {
           try {
             const module = await import('@/data/book4-unit1-resources');
-            if (module.getBook4Unit1LessonPlans) {
-              return module.getBook4Unit1LessonPlans();
-            } else if (module.book4Unit1LessonPlans) {
-              return module.book4Unit1LessonPlans;
+            if ('getBook4Unit1LessonPlans' in module) {
+              return (module as any).getBook4Unit1LessonPlans();
+            } else if ('book4Unit1LessonPlans' in module) {
+              return (module as any).book4Unit1LessonPlans;
             } else {
               return [];
             }
@@ -256,10 +256,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 2: {
           try {
             const module = await import('@/data/book4-unit2-resources');
-            if (module.getBook4Unit2LessonPlans) {
-              return module.getBook4Unit2LessonPlans();
-            } else if (module.book4Unit2LessonPlans) {
-              return module.book4Unit2LessonPlans;
+            if ('getBook4Unit2LessonPlans' in module) {
+              return (module as any).getBook4Unit2LessonPlans();
+            } else if ('book4Unit2LessonPlans' in module) {
+              return (module as any).book4Unit2LessonPlans;
             } else {
               return [];
             }
