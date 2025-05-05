@@ -21,7 +21,7 @@ export const BOOK3_UNIT_TITLES: Record<string, string> = {
   '13': 'Animal Body Parts',
   '14': 'My Town - Excuse Me Where Is The?',
   '15': 'Bugs',
-  '16': 'House Chores',
+  '16': 'Sports',
   '17': 'Future Tense - Going to',
   '18': 'Movies - Films'
 };
