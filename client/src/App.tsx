@@ -24,6 +24,8 @@ import { useAuth } from "@/hooks/use-auth";
 import TestUnits from "./test-units";
 import ResourceDiagnostic from "./resource-diagnostic";
 import MinimalTest from "./minimal-test";
+import UltraMinimalTest from "./ultra-minimal-test";
+import ResourcesTest from "./resources-test";
 
 // TestTeacherResources page has been removed as it's not necessary
 
@@ -214,6 +216,12 @@ function Router() {
       
       {/* Minimal Test Component */}
       <Route path="/minimal-test" component={MinimalTest} />
+      
+      {/* Ultra Minimal Test Component (zero imports) */}
+      <Route path="/ultra-minimal-test" component={UltraMinimalTest} />
+      
+      {/* Resources Test with Optimized Loading */}
+      <Route path="/resources-test" component={ResourcesTest} />
 
       {/* Test PDF Viewer */}
       <Route path="/pdf-test" component={() => {
