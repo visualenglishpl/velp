@@ -20,12 +20,6 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/hooks/use-auth";
 import { useAuth } from "@/hooks/use-auth";
-// Fix the import path to avoid extension errors
-import TestUnits from "./test-units";
-import ResourceDiagnostic from "./resource-diagnostic";
-import MinimalTest from "./minimal-test";
-import UltraMinimalTest from "./ultra-minimal-test";
-import ResourcesTest from "./resources-test";
 
 // TestTeacherResources page has been removed as it's not necessary
 
@@ -207,21 +201,6 @@ function Router() {
       <Route path="/lesson-plans">
         {() => <ProtectedRoute component={LessonPlansPage} requireAuth={false} />}
       </Route>
-
-      {/* Test Units Component */}
-      <Route path="/test-units" component={TestUnits} />
-      
-      {/* Resource Diagnostic Tool */}
-      <Route path="/resource-diagnostic" component={ResourceDiagnostic} />
-      
-      {/* Minimal Test Component */}
-      <Route path="/minimal-test" component={MinimalTest} />
-      
-      {/* Ultra Minimal Test Component (zero imports) */}
-      <Route path="/ultra-minimal-test" component={UltraMinimalTest} />
-      
-      {/* Resources Test with Optimized Loading */}
-      <Route path="/resources-test" component={ResourcesTest} />
 
       {/* Test PDF Viewer */}
       <Route path="/pdf-test" component={() => {

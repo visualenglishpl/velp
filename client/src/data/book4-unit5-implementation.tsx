@@ -1,50 +1,7 @@
-/**
- * Visual English Book 4, Unit 5 - PERSONALITY
- * Implementation file for unit resources and lesson plans
- * 
- * This unit follows the standardized pattern with clear separation of
- * resources and implementation logic
- */
+// Implementation file for Book 4 Unit 5
 
 import { TeacherResource } from '@/components/TeacherResources';
-import { LessonPlan } from '@/components/LessonPlanTemplate';
-import { resources, videos, games, externalResources } from './book4-unit5-resources';
-import { BOOK4_TITLE, generateDefaultBook4UnitLessonPlans } from './book4-resources-common';
+import { resources } from './book4-unit5-resources';
 
-// Flag for showing blank for unmapped Q&A
-export const showBlankIfUnmapped = true;
-
-// Function to get resources for this unit (for backward compatibility)
-export function getBook4Unit5Resources(): TeacherResource[] {
-  return resources;
-}
-
-// Function to get videos for this unit
-export function getBook4Unit5Videos(): TeacherResource[] {
-  return videos;
-}
-
-// Function to get games for this unit
-export function getBook4Unit5Games(): TeacherResource[] {
-  return games;
-}
-
-// Function to get external resources for this unit
-export function getBook4Unit5ExternalResources(): TeacherResource[] {
-  return externalResources;
-}
-
-// Get lesson plans for this unit
-export function getBook4Unit5LessonPlans(): LessonPlan[] {
-  return generateDefaultBook4UnitLessonPlans('5', 'PERSONALITY');
-}
-
-// Generate lesson plans for this unit
-const lessonPlans = getBook4Unit5LessonPlans();
-
-// Direct exports for consistent importing
-export const unitResources = resources;
-export { lessonPlans };
-
-// Default export for backward compatibility
-export default resources;
+// Function to get resources for this unit
+export const getBook4Unit5Resources = (): TeacherResource[] => resources;
