@@ -10,6 +10,49 @@ import { TeacherResource } from "@/types/teacher-resources";
  * Resources for Book 4 Unit 3 (Home Sweet Home)
  */
 export const book4Unit3Resources: TeacherResource[] = [
+  // Video resources
+  {
+    id: "book4-unit3-video-1",
+    bookId: "4",
+    unitId: "3",
+    resourceType: "video",
+    title: "Rooms of the House Song",
+    description: "Fun song teaching rooms of the house vocabulary",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=qZyJPZxsmZE",
+    content: {
+      type: "youtube",
+      embedId: "qZyJPZxsmZE"
+    }
+  },
+  {
+    id: "book4-unit3-video-2",
+    bookId: "4",
+    unitId: "3",
+    resourceType: "video",
+    title: "Types of Houses Vocabulary",
+    description: "Video explaining different types of houses",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=j31XZfPBPvc",
+    content: {
+      type: "youtube",
+      embedId: "j31XZfPBPvc"
+    }
+  },
+  {
+    id: "book4-unit3-video-3",
+    bookId: "4",
+    unitId: "3",
+    resourceType: "video",
+    title: "Furniture Vocabulary",
+    description: "Video teaching furniture vocabulary for different rooms",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=LoJBRS0kiW0",
+    content: {
+      type: "youtube",
+      embedId: "LoJBRS0kiW0"
+    }
+  },
   // Wordwall games
   {
     id: "book4-unit3-wordwall-1",
@@ -218,6 +261,28 @@ export const book4Unit3Resources: TeacherResource[] = [
     content: {
       type: "markdown",
       embedUrl: ""
+    },
+    lessonPlan: {
+      title: "Types of Houses",
+      objectives: [
+        "Introduce students to different types of houses vocabulary",
+        "Practice describing houses using appropriate terms",
+        "Develop speaking skills through house description activities"
+      ],
+      materials: [
+        "Visual English Book 4",
+        "House type flashcards",
+        "Pictures of different houses"
+      ],
+      warmUp: "Show pictures of different houses and ask students what they know about them.",
+      mainActivities: [
+        "Presentation: Introduce key house type vocabulary with visual aids.",
+        "Practice: Pair activity - students describe different houses using the new vocabulary.",
+        "Game: 'House Memory Game' - Match house types with their descriptions."
+      ],
+      extension: "Students create a poster about their dream house and describe the type.",
+      assessment: "Students identify different house types from descriptions or pictures.",
+      conclusion: "Review the key house types and discuss cultural differences in housing."
     }
   },
   {
@@ -230,6 +295,28 @@ export const book4Unit3Resources: TeacherResource[] = [
     content: {
       type: "markdown",
       embedUrl: ""
+    },
+    lessonPlan: {
+      title: "Rooms and Parts of a House",
+      objectives: [
+        "Learn vocabulary related to rooms and parts of a house",
+        "Practice describing the location of rooms using prepositions",
+        "Develop understanding of room functions and features"
+      ],
+      materials: [
+        "Visual English Book 4",
+        "Room flashcards",
+        "House floor plan worksheets"
+      ],
+      warmUp: "Ask students to name as many rooms in a house as they can in two minutes.",
+      mainActivities: [
+        "Presentation: Teach vocabulary for rooms and parts of the house with visual aids.",
+        "Practice: Students label a house floor plan with the correct room names.",
+        "Production: Students describe their own homes identifying rooms and locations."
+      ],
+      extension: "Students design their dream house floor plan and present it to the class.",
+      assessment: "Complete a matching activity connecting room names with their functions or items found there.",
+      conclusion: "Review room vocabulary and discuss cultural differences in home layouts."
     }
   }
 ];

@@ -12,49 +12,65 @@ import { TeacherResource } from "@/types/teacher-resources";
 export const book4Unit6Resources: TeacherResource[] = [
   // Video Resources
   {
-    id: "b4u6-vid-1",
+    id: "book4-unit6-video-1",
     bookId: "4",
     unitId: "6",
-    title: "Collections and Collectibles Song",
-    description: "A fun song about collections and collectibles",
+    title: "Building a Coin Collection for Beginners",
+    description: "Learn how to start a coin collection",
     resourceType: "video",
     provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=DMKcEdjZKEs",
     content: {
       type: "youtube",
-      embedId: "dQw4w9WgXcQ"
+      embedId: "DMKcEdjZKEs"
+    }
+  },
+  {
+    id: "book4-unit6-video-2",
+    bookId: "4",
+    unitId: "6",
+    title: "Stamp Collecting for Beginners",
+    description: "How to start collecting stamps",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=fXUsuyvtT0c",
+    content: {
+      type: "youtube",
+      embedId: "fXUsuyvtT0c"
     }
   },
   
   // Game Resources
   {
-    id: "b4u6-game-1",
+    id: "book4-unit6-wordwall-1",
     bookId: "4",
     unitId: "6",
-    title: "Collections Game",
-    description: "Interactive game about various collections",
+    title: "Collections - Wordwall Game",
+    description: "Interactive Wordwall game about different types of collections",
     resourceType: "game",
     provider: "Wordwall",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7b5b9c1cb8a1466eb4dc4f9e5a5240b4?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    sourceUrl: "https://wordwall.net/resource/6bcdbdd1f33a4700968fcc126d42c323",
     content: {
-      type: "iframe",
-      embedUrl: "https://wordwall.net/embed/7b5b9c1cb8a1466eb4dc4f9e5a5240b4?themeId=1&templateId=3&fontStackId=0"
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/6bcdbdd1f33a4700968fcc126d42c323?themeId=1&templateId=3&fontStackId=0"
+    }
+  },
+  {
+    id: "book4-unit6-kahoot-1",
+    bookId: "4",
+    unitId: "6",
+    title: "Collecting Things - Kahoot Game",
+    description: "Interactive Kahoot quiz about collections",
+    resourceType: "game",
+    provider: "Kahoot",
+    sourceUrl: "https://create.kahoot.it/share/collecting-things/cde5c17a-250c-4764-be4a-cadc750ce300",
+    content: {
+      type: "external",
+      embedUrl: "https://create.kahoot.it/share/collecting-things/cde5c17a-250c-4764-be4a-cadc750ce300"
     }
   },
   
-  // PDF Resources
-  {
-    id: "b4u6-pdf-1",
-    bookId: "4",
-    unitId: "6",
-    title: "Collections Vocabulary Guide",
-    description: "Vocabulary guide for collections and collectibles",
-    resourceType: "pdf",
-    fileUrl: "https://example.com/collections-vocabulary.pdf",
-    content: {
-      type: "pdf",
-      embedUrl: "https://example.com/collections-vocabulary.pdf"
-    }
-  }
+  // Note: No PDF resources currently available for this unit
 ];
 
 /**
@@ -68,6 +84,10 @@ export const book4Unit6LessonPlans: TeacherResource[] = [
     title: "Introduction to Collections",
     description: "Lesson plan introducing students to various types of collections",
     resourceType: "lesson",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    },
     lessonPlan: {
       title: "Introduction to Collections",
       objectives: [
@@ -98,6 +118,10 @@ export const book4Unit6LessonPlans: TeacherResource[] = [
     title: "Comparing Collections",
     description: "Lesson plan focused on comparing different collections using comparative language",
     resourceType: "lesson",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    },
     lessonPlan: {
       title: "Comparing Collections",
       objectives: [

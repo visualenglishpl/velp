@@ -150,6 +150,28 @@ export const book4Unit4Resources: TeacherResource[] = [
     content: {
       type: "markdown",
       embedUrl: ""
+    },
+    lessonPlan: {
+      title: "Family Members",
+      objectives: [
+        "Introduce vocabulary related to family members",
+        "Practice describing family relationships",
+        "Develop speaking skills through family-related activities"
+      ],
+      materials: [
+        "Visual English Book 4",
+        "Family tree diagrams",
+        "Family member flashcards"
+      ],
+      warmUp: "Students share how many people are in their family and who they are.",
+      mainActivities: [
+        "Presentation: Introduce family vocabulary using a family tree diagram.",
+        "Practice: Students complete a family tree using the new vocabulary.",
+        "Game: 'Guess Who?' with family members descriptions."
+      ],
+      extension: "Students create their own family tree with pictures or drawings.",
+      assessment: "Students describe their family members using the target vocabulary.",
+      conclusion: "Review family vocabulary and discuss the importance of family in different cultures."
     }
   },
   {
@@ -162,6 +184,28 @@ export const book4Unit4Resources: TeacherResource[] = [
     content: {
       type: "markdown",
       embedUrl: ""
+    },
+    lessonPlan: {
+      title: "Describing People's Appearance",
+      objectives: [
+        "Learn vocabulary to describe physical appearance",
+        "Practice describing height, build, hair, eyes, and other physical characteristics",
+        "Develop the ability to identify people based on descriptions"
+      ],
+      materials: [
+        "Visual English Book 4",
+        "Pictures of people with different physical characteristics",
+        "Description worksheet"
+      ],
+      warmUp: "Show pictures of famous people and ask students to describe their physical appearance.",
+      mainActivities: [
+        "Presentation: Teach vocabulary for describing hair (color, length, style), height, build, and facial features.",
+        "Practice: Students work in pairs to describe people in pictures using target vocabulary.",
+        "Activity: 'Who am I?' - Students write descriptions of classmates without names, then read aloud for others to guess."
+      ],
+      extension: "Students create 'Wanted' posters with detailed physical descriptions and drawings.",
+      assessment: "Students complete a gap-fill exercise with physical description vocabulary.",
+      conclusion: "Review key descriptive vocabulary and discuss the importance of looking beyond physical appearance."
     }
   }
 ];

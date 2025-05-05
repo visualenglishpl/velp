@@ -12,49 +12,51 @@ import { TeacherResource } from "@/types/teacher-resources";
 export const book4Unit5Resources: TeacherResource[] = [
   // Video Resources
   {
-    id: "b4u5-vid-1",
+    id: "book4-unit5-video-1",
     bookId: "4",
     unitId: "5",
-    title: "Personality Types Video",
-    description: "A fun video about different personality types",
+    title: "Personality Traits Video",
+    description: "Learn about different personality traits and characteristics",
     resourceType: "video",
     provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=D7ZjMjfasfU",
     content: {
       type: "youtube",
-      embedId: "dQw4w9WgXcQ"
+      embedId: "D7ZjMjfasfU"
     }
   },
   
   // Game Resources
   {
-    id: "b4u5-game-1",
+    id: "book4-unit5-wordwall-1",
     bookId: "4",
     unitId: "5",
-    title: "Personality Traits Game",
-    description: "Interactive game about personality traits",
+    title: "Personality Traits Game 1",
+    description: "Interactive Wordwall game about personality traits",
     resourceType: "game",
     provider: "Wordwall",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/8a61ab72662b4c459eae4f09de42c0fa?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    sourceUrl: "https://wordwall.net/resource/339ab9a507314c98aa8ad268f9dbd2fc",
     content: {
-      type: "iframe",
-      embedUrl: "https://wordwall.net/embed/8a61ab72662b4c459eae4f09de42c0fa?themeId=1&templateId=5&fontStackId=0"
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/339ab9a507314c98aa8ad268f9dbd2fc?themeId=1&templateId=2&fontStackId=0"
+    }
+  },
+  {
+    id: "book4-unit5-wordwall-2",
+    bookId: "4",
+    unitId: "5",
+    title: "Personality Traits Game 2",
+    description: "Interactive Wordwall game about personality traits",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/c6d609be7c0a4370adf35d199dd1001d",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/c6d609be7c0a4370adf35d199dd1001d?themeId=1&templateId=5&fontStackId=0"
     }
   },
   
-  // PDF Resources
-  {
-    id: "b4u5-pdf-1",
-    bookId: "4",
-    unitId: "5",
-    title: "Personality Traits Vocabulary Guide",
-    description: "Vocabulary guide for personality traits and descriptions",
-    resourceType: "pdf",
-    fileUrl: "https://example.com/personality-vocabulary.pdf",
-    content: {
-      type: "pdf",
-      embedUrl: "https://example.com/personality-vocabulary.pdf"
-    }
-  }
+  // Note: No PDF resources currently available for this unit
 ];
 
 /**
@@ -68,6 +70,10 @@ export const book4Unit5LessonPlans: TeacherResource[] = [
     title: "Introduction to Personality Traits",
     description: "Lesson plan introducing personality traits vocabulary and concepts",
     resourceType: "lesson",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    },
     lessonPlan: {
       title: "Introduction to Personality Traits",
       objectives: [
@@ -98,6 +104,10 @@ export const book4Unit5LessonPlans: TeacherResource[] = [
     title: "Describing Personalities in Detail",
     description: "Lesson plan focused on giving detailed personality descriptions",
     resourceType: "lesson",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    },
     lessonPlan: {
       title: "Describing Personalities in Detail",
       objectives: [
