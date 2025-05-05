@@ -13,9 +13,14 @@ const unitNumber = '16';
 const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'SPORTS';
 
 // Export resources getter function
-export const getBook3Unit16SportsResources = (): TeacherResource[] => {
-  return book3Unit16Resources;
-};
+export function getBook3Unit16SportsResources(): TeacherResource[] {
+  return book3Unit16Resources.map(resource => ({
+    ...resource,
+    id: resource.id || `book3-unit16-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
+    bookId: '3',
+    unitId: '16'
+  }));
+}
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit16LessonPlans = (): LessonPlan[] => {

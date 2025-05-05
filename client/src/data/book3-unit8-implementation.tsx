@@ -13,9 +13,14 @@ const unitNumber = '8';
 const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'LET\'S GO SHOPPING - HOW MUCH IS IT?';
 
 // Export resources getter function
-export const getBook3Unit8Resources = (): TeacherResource[] => {
-  return book3Unit8Resources;
-};
+export function getBook3Unit8Resources(): TeacherResource[] {
+  return book3Unit8Resources.map(resource => ({
+    ...resource,
+    id: resource.id || `book3-unit8-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
+    bookId: '3',
+    unitId: '8'
+  }));
+}
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit8LessonPlans = (): LessonPlan[] => {

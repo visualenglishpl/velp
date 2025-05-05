@@ -29,6 +29,8 @@ import { getBook3Unit16SportsResources } from './book3-unit16-sports-implementat
 import { getBook3Unit17Resources } from './book3-unit17-implementation';
 import { getBook3Unit18Resources } from './book3-unit18-implementation';
 
+// Note: Using getter functions to avoid direct resource imports
+
 // Store references to getter function results for consistency
 const unit7Resources = getBook3Unit7Resources();
 const unit7SolarResources = getBook3Unit7SolarResources();
@@ -92,33 +94,24 @@ export {
   unit7SolarResources,
   book3Unit7ShoppingResources,
   unit8Resources,
-  book3Unit8Resources,
   getBook3Unit8Resources,
   book3Unit9Resources,
   unit10Resources,
-  book3Unit10Resources,
   getBook3Unit10Resources,
   unit11Resources,
-  book3Unit11Resources,
   getBook3Unit11Resources,
   unit12Resources,
-  book3Unit12Resources,
   getBook3Unit12Resources,
   unit13Resources,
-  book3Unit13Resources,
   getBook3Unit13Resources,
   unit14Resources,
-  book3Unit14Resources,
   getBook3Unit14Resources,
   unit15Resources,
-  book3Unit15Resources,
   getBook3Unit15Resources,
   unit16SportsResources,
   getBook3Unit16SportsResources,
   unit17Resources,
-  book3Unit17Resources,
   getBook3Unit17Resources,
   unit18Resources,
-  book3Unit18Resources,
   getBook3Unit18Resources,
 };

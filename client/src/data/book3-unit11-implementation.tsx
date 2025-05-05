@@ -13,9 +13,14 @@ const unitNumber = '11';
 const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'GET WELL SOON';
 
 // Export resources getter function
-export const getBook3Unit11Resources = (): TeacherResource[] => {
-  return book3Unit11Resources;
-};
+export function getBook3Unit11Resources(): TeacherResource[] {
+  return book3Unit11Resources.map(resource => ({
+    ...resource,
+    id: resource.id || `book3-unit11-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
+    bookId: '3',
+    unitId: '11'
+  }));
+}
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit11LessonPlans = (): LessonPlan[] => {

@@ -13,9 +13,14 @@ const unitNumber = '12';
 const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'WHAT DO YOU LOOK LIKE';
 
 // Export resources getter function
-export const getBook3Unit12Resources = (): TeacherResource[] => {
-  return book3Unit12Resources;
-};
+export function getBook3Unit12Resources(): TeacherResource[] {
+  return book3Unit12Resources.map(resource => ({
+    ...resource,
+    id: resource.id || `book3-unit12-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
+    bookId: '3',
+    unitId: '12'
+  }));
+}
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit12LessonPlans = (): LessonPlan[] => {
