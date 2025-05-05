@@ -39,7 +39,7 @@ import { book3Unit18Resources } from './book3-unit18-resources';
 // Store references to getter function results for consistency
 const unit7Resources = getBook3Unit7Resources();
 const unit7SolarResources = getBook3Unit7SolarResources();
-const unit8Resources = getBook3Unit8Resources();
+const unit8Resources = getBook3Unit8Resources(); // This is used for reference in the mapping
 const unit10Resources = getBook3Unit10Resources();
 const unit11Resources = getBook3Unit11Resources();
 const unit12Resources = getBook3Unit12Resources();
