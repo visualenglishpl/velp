@@ -15,7 +15,7 @@ import { LessonPlan, LessonStep } from "@/components/LessonPlanTemplate";
  * @param resource Teacher resource containing a legacy lesson plan
  * @returns A properly formatted LessonPlan object
  */
-function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
+export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
   const legacyPlan = resource.lessonPlan;
   if (!legacyPlan) {
     throw new Error(`No lesson plan found in resource: ${resource.id}`);
@@ -104,11 +104,10 @@ export function getTeacherResources(): TeacherResource[] {
 
 /**
  * Get lesson plans for Book 4 Unit 6
- * @returns Array of lesson plans properly formatted
+ * @returns Array of teacher resources with lesson plans
  */
-export function getLessonPlans(): LessonPlan[] {
-  const resources = getBook4Unit6LessonPlans();
-  return resources.map(resource => convertLegacyLessonPlan(resource));
+export function getLessonPlans(): TeacherResource[] {
+  return getBook4Unit6LessonPlans();
 }
 
 /**

@@ -20,11 +20,11 @@ import { generateBook4UnitResources, generateDefaultBook4UnitLessonPlans, BOOK4_
 
 // Import Book 4 implementations
 import { getBook4Unit1Resources, getBook4Unit1LessonPlans } from '@/data/book4-unit1-implementation';
-import { getTeacherResources as getBook4Unit2Resources, getLessonPlans as getBook4Unit2LessonPlans } from '@/data/book4-unit2-implementation';
-import { getTeacherResources as getBook4Unit3Resources, getLessonPlans as getBook4Unit3LessonPlans } from '@/data/book4-unit3-implementation';
-import { getTeacherResources as getBook4Unit4Resources, getLessonPlans as getBook4Unit4LessonPlans } from '@/data/book4-unit4-implementation';
-import { getTeacherResources as getBook4Unit5Resources, getLessonPlans as getBook4Unit5LessonPlans } from '@/data/book4-unit5-implementation';
-import { getTeacherResources as getBook4Unit6Resources, getLessonPlans as getBook4Unit6LessonPlans } from '@/data/book4-unit6-implementation';
+import { getTeacherResources as getBook4Unit2Resources, getLessonPlans as getBook4Unit2LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit2 } from '@/data/book4-unit2-implementation';
+import { getTeacherResources as getBook4Unit3Resources, getLessonPlans as getBook4Unit3LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit3 } from '@/data/book4-unit3-implementation';
+import { getTeacherResources as getBook4Unit4Resources, getLessonPlans as getBook4Unit4LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit4 } from '@/data/book4-unit4-implementation';
+import { getTeacherResources as getBook4Unit5Resources, getLessonPlans as getBook4Unit5LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit5 } from '@/data/book4-unit5-implementation';
+import { getTeacherResources as getBook4Unit6Resources, getLessonPlans as getBook4Unit6LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit6 } from '@/data/book4-unit6-implementation';
 
 // Import any specific implementation functions
 // Book 6 implementations
@@ -2808,8 +2808,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 4 Unit 2 lesson plans
       let gadgetsLessonPlans: LessonPlan[] = [];
       try {
-        // Using directly imported function
-        gadgetsLessonPlans = getBook4Unit2LessonPlans() as LessonPlan[];
+        // Using teacher resources with lesson plans
+        const resources = getBook4Unit2LessonPlans();
+        // Extract and convert lesson plans
+        gadgetsLessonPlans = resources
+          .filter(resource => resource.lessonPlan)
+          .map(resource => convertLegacyLessonPlanUnit2(resource));
       } catch (error) {
         console.error('Error getting Book 4 Unit 2 lesson plans:', error);
         // Fallback to default lesson plans
@@ -2867,8 +2871,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 4 Unit 3 lesson plans
       let homeLessonPlans: LessonPlan[] = [];
       try {
-        // Using directly imported function
-        homeLessonPlans = getBook4Unit3LessonPlans() as LessonPlan[];
+        // Using teacher resources with lesson plans
+        const resources = getBook4Unit3LessonPlans();
+        // Extract and convert lesson plans
+        homeLessonPlans = resources
+          .filter(resource => resource.lessonPlan)
+          .map(resource => convertLegacyLessonPlanUnit3(resource));
       } catch (error) {
         console.error('Error getting Book 4 Unit 3 lesson plans:', error);
         // Fallback to default lesson plans
@@ -2926,8 +2934,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 4 Unit 4 lesson plans
       let familyLessonPlans: LessonPlan[] = [];
       try {
-        // Using directly imported function
-        familyLessonPlans = getBook4Unit4LessonPlans() as LessonPlan[];
+        // Using teacher resources with lesson plans
+        const resources = getBook4Unit4LessonPlans();
+        // Extract and convert lesson plans
+        familyLessonPlans = resources
+          .filter(resource => resource.lessonPlan)
+          .map(resource => convertLegacyLessonPlanUnit4(resource));
       } catch (error) {
         console.error('Error getting Book 4 Unit 4 lesson plans:', error);
         // Fallback to default lesson plans
@@ -2985,8 +2997,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 4 Unit 5 lesson plans
       let personalityLessonPlans: LessonPlan[] = [];
       try {
-        // Using directly imported function
-        personalityLessonPlans = getBook4Unit5LessonPlans() as LessonPlan[];
+        // Using teacher resources with lesson plans
+        const resources = getBook4Unit5LessonPlans();
+        // Extract and convert lesson plans
+        personalityLessonPlans = resources
+          .filter(resource => resource.lessonPlan)
+          .map(resource => convertLegacyLessonPlanUnit5(resource));
       } catch (error) {
         console.error('Error getting Book 4 Unit 5 lesson plans:', error);
         // Fallback to default lesson plans
@@ -3044,8 +3060,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 4 Unit 6 lesson plans
       let collectionsLessonPlans: LessonPlan[] = [];
       try {
-        // Using directly imported function
-        collectionsLessonPlans = getBook4Unit6LessonPlans() as LessonPlan[];
+        // Using teacher resources with lesson plans
+        const resources = getBook4Unit6LessonPlans();
+        // Extract and convert lesson plans
+        collectionsLessonPlans = resources
+          .filter(resource => resource.lessonPlan)
+          .map(resource => convertLegacyLessonPlanUnit6(resource));
       } catch (error) {
         console.error('Error getting Book 4 Unit 6 lesson plans:', error);
         // Fallback to default lesson plans

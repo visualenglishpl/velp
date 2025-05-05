@@ -68,7 +68,21 @@ export const book4Unit2Resources: TeacherResource[] = [
     }
   },
   {
-    id: "book4-unit2-youtube-gadgets",
+    id: "book4-unit2-youtube-gadgets-1",
+    bookId: "4",
+    unitId: "2",
+    resourceType: "video",
+    title: "Gadgets and Technology Video",
+    description: "YouTube video about gadgets and technology in everyday life",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=08BoI6zFDTw",
+    content: {
+      type: "youtube",
+      embedId: "08BoI6zFDTw"
+    }
+  },
+  {
+    id: "book4-unit2-youtube-gadgets-2",
     bookId: "4",
     unitId: "2",
     resourceType: "video",
