@@ -21,7 +21,7 @@ export const BOOK4_UNIT_TITLES: Record<string, string> = {
   '12': 'AT THE FARM',
   '13': 'AT THE PLAYGROUND',
   '14': 'WHAT CAN YOU DO',
-  '15': 'DESCRIBING THINGS',
+  '15': 'AT THE CIRCUS',
   '16': 'FREE TIME ACTIVITIES',
 };
 
