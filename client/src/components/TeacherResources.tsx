@@ -1631,11 +1631,31 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return book3Unit6Resources || [];
       } else if (unitId === '7') {
         console.log('Loading Book 3 Unit 7 resources (Solar)');
-        // Use getter function instead of direct import
         return getBook3Unit7Resources();
+      } else if (unitId === '8') {
+        console.log('Loading Book 3 Unit 8 resources');
+        return book3Unit8Resources || [];
       } else if (unitId === '9') {
         console.log('Loading Book 3 Unit 9 resources');
         return book3Unit9Resources || [];
+      } else if (unitId === '10') {
+        console.log('Loading Book 3 Unit 10 resources');
+        return book3Unit10Resources || [];
+      } else if (unitId === '11') {
+        console.log('Loading Book 3 Unit 11 resources');
+        return book3Unit11Resources || [];
+      } else if (unitId === '12') {
+        console.log('Loading Book 3 Unit 12 resources');
+        return book3Unit12Resources || [];
+      } else if (unitId === '13') {
+        console.log('Loading Book 3 Unit 13 resources');
+        return book3Unit13Resources || [];
+      } else if (unitId === '14') {
+        console.log('Loading Book 3 Unit 14 resources');
+        return book3Unit14Resources || [];
+      } else if (unitId === '15') {
+        console.log('Loading Book 3 Unit 15 resources');
+        return book3Unit15Resources || [];
       } else if (unitId === '16') {
         console.log('Loading Book 3 Unit 16 Sports resources');
         return book3Unit16Resources || [];
