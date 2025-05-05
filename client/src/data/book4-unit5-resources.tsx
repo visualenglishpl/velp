@@ -25,6 +25,20 @@ export const book4Unit5Resources: TeacherResource[] = [
       embedId: "wXJPMf5ZuMw"
     }
   },
+  {
+    id: "book4-unit5-video-2",
+    bookId: "4",
+    unitId: "5",
+    title: "Personality Types Video",
+    description: "Educational video about different personality types and characteristics",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=D7ZjMjfasfU",
+    content: {
+      type: "youtube",
+      embedId: "D7ZjMjfasfU"
+    }
+  },
   
   // Game Resources
   {
@@ -39,6 +53,34 @@ export const book4Unit5Resources: TeacherResource[] = [
     content: {
       type: "wordwall",
       embedUrl: "https://wordwall.net/embed/6bcdbdd1f33a4700968fcc126d42c323?themeId=1&templateId=3&fontStackId=0"
+    }
+  },
+  {
+    id: "book4-unit5-wordwall-2",
+    bookId: "4",
+    unitId: "5",
+    title: "Personality Game 1",
+    description: "Interactive Wordwall game about personality traits and characteristics",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/339ab9a507314c98aa8ad268f9dbd2fc",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/339ab9a507314c98aa8ad268f9dbd2fc?themeId=1&templateId=2&fontStackId=0"
+    }
+  },
+  {
+    id: "book4-unit5-wordwall-3",
+    bookId: "4",
+    unitId: "5",
+    title: "Personality Game 2",
+    description: "Another interactive Wordwall game focused on personality vocabulary",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/c6d609be7c0a4370adf35d199dd1001d",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/c6d609be7c0a4370adf35d199dd1001d?themeId=1&templateId=5&fontStackId=0"
     }
   },
   
