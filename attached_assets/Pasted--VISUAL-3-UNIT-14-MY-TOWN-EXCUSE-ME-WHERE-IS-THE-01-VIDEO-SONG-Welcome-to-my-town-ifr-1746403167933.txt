@@ -1,0 +1,62 @@
+
+VISUAL 3 - UNIT 14 - MY TOWN - EXCUSE ME WHERE IS THE?
+01 VIDEO - SONG - Welcome to my town
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/MB2iBFjKRQo?si=ubg1PhldgkttYsWU" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+01 VIDEO - SONG go left - go right - go straight
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/Who2jztho0U?si=EpHFn_-zf4iryw-R" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+01 VIDEO QUIZ - BETWEEN NEXT TO OPPOSITE
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/rQTgRHwTt5c?si=t7J-X-2IRna6HRwQ" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+28a ONLINE GAME WORDWALL - PLACES IN THE TOWN
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/cd0147c3f73b4e48a9e987d05b417882?themeId=1&templateId=3&font
+StackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+28b ONLINE GAME WORDWALL - WHERE IS
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/481081b962d1415584156c01ed0957d8?themeId=1&templateId=5&font
+StackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe
+
+
+VISUAL 3 - UNIT 15 - BUGS
+0a VIDEO - SONG What Do You See insects
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/bn8QLdWJYl8?si=RoOwJePsFolnIaNz" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+0b VIDEO - SONG What Do You See insects
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/llZwHR_Y_Es?si=PmlefiDeymklwcAF" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+19a ONLINE GAME WORDWALL - BUGS
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/8d16140de3bc4f18b01da41ab409b8b3?themeId=1&templateId=38&fo
+ntStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+19b ONLINE GAME WORDWALL - BUGS
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/f49aa2731b464239bc342f74b3b9db68?themeId=1&templateId=46&fon
+tStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+19c ONLINE GAME WORDWALL - BUGS
+<iframe style="max-width:100%"
+src="https://wordwall.net/embed/76a1a0d4a10d486680c6d0614236085c?themeId=1&templateId=46&fon
+tStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+17a VIDEO STORY Caterpillar Shoes
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/tYa6OLQHrEc?si=74zEZkA19vrf7p76" title="YouTube video
+player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+allowfullscreen></iframe>
+

@@ -1,83 +1,68 @@
 import { TeacherResource } from '@/components/TeacherResources';
-import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
+import { BOOK3_TITLE } from './book3-resources-common';
 
 /**
  * Book 3 Unit 10 - MY FAVOURITE SUBJECT
- * Resources including videos and games based on the provided content
+ * Resources including videos and games
  */
 
+const unitNumber = '10';
+const unitTitle = 'MY FAVOURITE SUBJECT';
+
 export const book3Unit10Resources: TeacherResource[] = [
-  // Videos
+  // Video Resources
   {
-    id: 'book3-unit10-video-1',
+    id: `book3-unit${unitNumber}-video-1`,
     bookId: '3',
-    unitId: '10',
-    title: 'GENKI - What\'s Your Favorite Subject',
-    description: 'Engaging song teaching about school subjects vocabulary',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What's your favorite subject?`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/tt2_2EP7TE8',
-    content: {
-      type: 'youtube',
-      embedId: 'tt2_2EP7TE8'
-    }
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tt2_2EP7TE8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: 'book3-unit10-video-2',
+    id: `book3-unit${unitNumber}-video-2`,
     bookId: '3',
-    unitId: '10',
-    title: 'School Subjects - Song',
-    description: 'Song helping students learn different school subjects',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - School Subjects`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/Ow_gbuqQC-k',
-    content: {
-      type: 'youtube',
-      embedId: 'Ow_gbuqQC-k'
-    }
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow_gbuqQC-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: 'book3-unit10-video-3',
+    id: `book3-unit${unitNumber}-video-3`,
     bookId: '3',
-    unitId: '10',
-    title: 'This is Britain - School',
-    description: 'Informational video about schools in Britain',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - This is Britain - School`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/yMUJKH1fFF0',
-    content: {
-      type: 'youtube',
-      embedId: 'yMUJKH1fFF0'
-    }
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/yMUJKH1fFF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   
-  // Games
+  // Game Resources
   {
-    id: 'book3-unit10-game-1',
+    id: `book3-unit${unitNumber}-game-1`,
     bookId: '3',
-    unitId: '10',
-    title: 'WORDWALL - SCHOOL SUBJECTS (1)',
-    description: 'Interactive game for practicing school subject vocabulary',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - SCHOOL SUBJECTS (1)`,
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/ab50864505224481860ed6886ac6de89',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/ab50864505224481860ed6886ac6de89?themeId=1&templateId=5&fontStackId=0'
-    }
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ab50864505224481860ed6886ac6de89?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    id: 'book3-unit10-game-2',
+    id: `book3-unit${unitNumber}-game-2`,
     bookId: '3',
-    unitId: '10',
-    title: 'WORDWALL - SCHOOL SUBJECTS (2)',
-    description: 'Additional practice game for school subjects',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - SCHOOL SUBJECTS (2)`,
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/ab50864505224481860ed6886ac6de89',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/ab50864505224481860ed6886ac6de89?themeId=1&templateId=5&fontStackId=0'
-    }
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ab50864505224481860ed6886ac6de89?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   }
 ];
+
+export default book3Unit10Resources;

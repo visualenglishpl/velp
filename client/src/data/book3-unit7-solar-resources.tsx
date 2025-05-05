@@ -1,143 +1,148 @@
 import { TeacherResource } from '@/components/TeacherResources';
-import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
+import { BOOK3_TITLE } from './book3-resources-common';
 
 /**
  * Book 3 Unit 7 - THE SOLAR SYSTEM
  * Resources including videos and games based on the provided attachment
  */
 
+const unitNumber = '7';
+const unitTitle = 'THE SOLAR SYSTEM';
+
 export const book3Unit7SolarResources: TeacherResource[] = [
-  // Videos
+  // Video Resources
   {
-    title: 'SINGING WALRUS - Planets Song (Solar System Song)',
-    description: 'Engaging song about planets in our solar system with good visuals',
+    id: `book3-unit${unitNumber}-solar-video-1`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - SINGING WALRUS - Planets Song Solar System Song`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'stnU6xfbjew'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/stnU6xfbjew',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/stnU6xfbjew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: 'STORYBOTS - The Planet Rap',
-    description: 'Fun rap song about planets in our solar system',
+    id: `book3-unit${unitNumber}-solar-video-2`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - STORYBOTS - The Planet Rap`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'ZHAqT4hXnMw'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/ZHAqT4hXnMw',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ZHAqT4hXnMw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: 'How Big is the Solar System',
-    description: 'Educational video about the scale of our solar system',
+    id: `book3-unit${unitNumber}-solar-video-3`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - How Big is the Solar System`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'MK5E_7hOi-k'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/MK5E_7hOi-k',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/MK5E_7hOi-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: "STORYBOTS - I'm So Hot (The Sun)",
-    description: 'Fun animated song about the Sun',
+    id: `book3-unit${unitNumber}-solar-video-4`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - STORYBOTS - I'm So Hot (The Sun)`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 't-kzdR93bqw'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/t-kzdR93bqw',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/t-kzdR93bqw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: "STORYBOTS - I'm A Star",
-    description: 'Animated video teaching about stars',
+    id: `book3-unit${unitNumber}-solar-video-5`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - STORYBOTS - I'm A Star`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: '7t3aXb3LpWg'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/7t3aXb3LpWg',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/7t3aXb3LpWg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: 'Planets & Stars Size Comparison',
-    description: 'Visual comparison of planets and stars sizes',
+    id: `book3-unit${unitNumber}-solar-video-6`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Planets & Stars Size Comparison`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: '7T1LO6nOUdw'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/7T1LO6nOUdw',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/7T1LO6nOUdw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: "Zoom Zoom Zoom, We're Going to the Moon",
-    description: 'Fun song about traveling to the moon',
+    id: `book3-unit${unitNumber}-solar-video-7`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Zoom Zoom Zoom, We're Going to the Moon`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'DEHBrmZxAf8'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/DEHBrmZxAf8',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/DEHBrmZxAf8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: 'Mr. President and Aliens - Short Film',
-    description: 'Short film about aliens and the president',
+    id: `book3-unit${unitNumber}-solar-video-8`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Mr. President and Aliens - Short Film`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'mLVmocdbJbw'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/mLVmocdbJbw',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/mLVmocdbJbw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: 'Space Shuttle Launch Audio',
-    description: 'Real audio from a space shuttle launch',
+    id: `book3-unit${unitNumber}-solar-video-9`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Space Shuttle Launch Audio`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'OnoNITE-CLc'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/OnoNITE-CLc',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/OnoNITE-CLc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   
-  // Games
+  // Game Resources
   {
-    title: 'WORDWALL - PLANETS',
-    description: 'Interactive game for learning about planets',
+    id: `book3-unit${unitNumber}-solar-game-1`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - PLANETS`,
     resourceType: 'game',
     provider: 'Wordwall',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/ddfca3c6dd424a038b16104c109e2585?themeId=1&templateId=5&fontStackId=0'
-    }
+    sourceUrl: 'https://wordwall.net/resource/ddfca3c6dd424a038b16104c109e2585',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ddfca3c6dd424a038b16104c109e2585?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    title: 'WORDWALL - PLANETS LABEL (1)',
-    description: 'Label the planets in our solar system',
+    id: `book3-unit${unitNumber}-solar-game-2`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - PLANETS LABEL (1)`,
     resourceType: 'game',
     provider: 'Wordwall',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/6848de723c0541a7aa4ec961768efba7?themeId=1&templateId=22&fontStackId=0'
-    }
+    sourceUrl: 'https://wordwall.net/resource/6848de723c0541a7aa4ec961768efba7',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6848de723c0541a7aa4ec961768efba7?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    title: 'WORDWALL - PLANETS LABEL (2)',
-    description: 'Another planet labeling activity',
+    id: `book3-unit${unitNumber}-solar-game-3`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - PLANETS LABEL (2)`,
     resourceType: 'game',
     provider: 'Wordwall',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/7eebe178fe2c476eabd9ca6c428ffbdb?themeId=1&templateId=22&fontStackId=0'
-    }
+    sourceUrl: 'https://wordwall.net/resource/7eebe178fe2c476eabd9ca6c428ffbdb',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/7eebe178fe2c476eabd9ca6c428ffbdb?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    title: 'WORDWALL - PLANETS QUIZ',
-    description: 'Test your knowledge about planets',
+    id: `book3-unit${unitNumber}-solar-game-4`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - PLANETS QUIZ`,
     resourceType: 'game',
     provider: 'Wordwall',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/275c9bfc53e84633b4340bedb8e966ed?themeId=1&templateId=3&fontStackId=0'
-    }
+    sourceUrl: 'https://wordwall.net/resource/275c9bfc53e84633b4340bedb8e966ed',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/275c9bfc53e84633b4340bedb8e966ed?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   }
 ];
+
+export default book3Unit7SolarResources;

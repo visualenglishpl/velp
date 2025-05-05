@@ -1,63 +1,58 @@
 import { TeacherResource } from '@/components/TeacherResources';
-import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
+import { BOOK3_TITLE } from './book3-resources-common';
 
 /**
- * Book 3 Unit 14 - MY TOWN - EXCUSE ME WHERE IS THE?
- * Resources including videos and games based on the DOCX attachment
+ * Book 3 Unit 14
+ * Resources including videos and games
  */
 
+const unitNumber = '14';
+const unitTitle = 'JOBS';
+
 export const book3Unit14Resources: TeacherResource[] = [
-  // Videos
+  // Video Resources
   {
-    title: 'Welcome to my town - Song',
-    description: 'Engaging song about places in town',
+    id: `book3-unit${unitNumber}-video-1`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Jobs Song`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'MB2iBFjKRQo'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/ckKQclquAXU',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ckKQclquAXU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: 'Go Left - Go Right - Go Straight Song',
-    description: 'Song teaching directions vocabulary',
+    id: `book3-unit${unitNumber}-video-2`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - People Who Help Us`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'Who2jztho0U'
-    }
-  },
-  {
-    title: 'Video Quiz - Between, Next To, Opposite',
-    description: 'Interactive quiz on prepositions of place',
-    resourceType: 'video',
-    provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'rQTgRHwTt5c'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/M8Psza6N2Os',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/M8Psza6N2Os" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   
-  // Games
+  // Game Resources
   {
-    title: 'WORDWALL - Places in the Town',
-    description: 'Interactive game for learning town vocabulary',
+    id: `book3-unit${unitNumber}-game-1`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - JOBS (1)`,
     resourceType: 'game',
     provider: 'Wordwall',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/cd0147c3f73b4e48a9e987d05b417882?themeId=1&templateId=3&fontStackId=0'
-    }
+    sourceUrl: 'https://wordwall.net/resource/2035975/jobs',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/2035975/jobs" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    title: 'WORDWALL - Where Is',
-    description: 'Practice asking and answering about locations',
+    id: `book3-unit${unitNumber}-game-2`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - JOBS (2)`,
     resourceType: 'game',
     provider: 'Wordwall',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/481081b962d1415584156c01ed0957d8?themeId=1&templateId=5&fontStackId=0'
-    }
-  },
+    sourceUrl: 'https://wordwall.net/resource/11609918/jobs',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/11609918/jobs" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
 ];
+
+export default book3Unit14Resources;

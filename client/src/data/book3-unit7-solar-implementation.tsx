@@ -1,4 +1,4 @@
-import { book3Unit7SolarResources } from './book3-unit7-solar-resources';
+import book3Unit7SolarResources from './book3-unit7-solar-resources';
 import { TeacherResource } from '@/components/TeacherResources';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES, generateDefaultBook3UnitLessonPlans } from './book3-resources-common';
 
