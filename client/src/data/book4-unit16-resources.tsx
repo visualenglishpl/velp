@@ -1,59 +1,59 @@
 import { TeacherResource } from '@/components/TeacherResources';
-import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 16 - FREE TIME ACTIVITIES
+ * Resources for Book 4 Unit 16
  */
 
-const unitNumber = '16';
-const unitTitle = 'FREE TIME ACTIVITIES';
-
-export const book4Unit16Resources: TeacherResource[] = [
+// Videos for Unit 16
+export const videos: TeacherResource[] = [
   {
-    id: `book4-unit${unitNumber}-free-time-activities-1`,
+    id: `book4-unit16-video-1`,
     bookId: '4',
-    unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - FREE TIME ACTIVITIES GAME 1`,
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/ba588163d9c4497d9f86c6aca1479354',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ba588163d9c4497d9f86c6aca1479354?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-    content: {
-      type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/ba588163d9c4497d9f86c6aca1479354?themeId=1&templateId=46&fontStackId=0'
-    }
-  },
-  {
-    id: `book4-unit${unitNumber}-free-time-activities-2`,
-    bookId: '4',
-    unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - FREE TIME ACTIVITIES GAME 2`,
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/9d97f106652e47cd86c4416269c4fd86',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9d97f106652e47cd86c4416269c4fd86?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-    content: {
-      type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/9d97f106652e47cd86c4416269c4fd86?themeId=1&templateId=38&fontStackId=0'
-    }
-  },
-  {
-    id: `book4-unit${unitNumber}-video-lesson`,
-    bookId: '4',
-    unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Video Lesson`,
+    unitId: '16',
+    title: 'VISUAL 4 Unit 16 Video 1',
     resourceType: 'video',
-    provider: 'ISL Collective',
-    sourceUrl: 'https://en.islcollective.com/english-esl-video-lessons/692775',
-    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/692775" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://en.islcollective.com/english-esl-video-lessons/embed/692775'
-    }
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/placeholder',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+  },
+  {
+    id: `book4-unit16-video-2`,
+    bookId: '4',
+    unitId: '16',
+    title: 'VISUAL 4 Unit 16 Video 2',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/placeholder',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
   }
 ];
 
-// Getter function for backward compatibility
-export function getBook4Unit16Resources(): TeacherResource[] {
-  return book4Unit16Resources;
-}
+// Games for Unit 16
+export const games: TeacherResource[] = [
+  {
+    id: `book4-unit16-game-1`,
+    bookId: '4',
+    unitId: '16',
+    title: 'VISUAL 4 Unit 16 Game 1',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/placeholder',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    id: `book4-unit16-game-2`,
+    bookId: '4',
+    unitId: '16',
+    title: 'VISUAL 4 Unit 16 Game 2',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/placeholder',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
+];
+
+// Combined resources for this unit
+export const resources: TeacherResource[] = [...videos, ...games];
+
+// Main export for backward compatibility
+export const book4Unit16Resources = resources;

@@ -1,87 +1,59 @@
 import { TeacherResource } from '@/components/TeacherResources';
-import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 11 - DAILY ROUTINES
+ * Resources for Book 4 Unit 11
  */
 
-const unitNumber = '11';
-const unitTitle = 'DAILY ROUTINES';
-
-export const book4Unit11Resources: TeacherResource[] = [
+// Videos for Unit 11
+export const videos: TeacherResource[] = [
   {
-    id: `book4-unit${unitNumber}-daily-routines-1`,
+    id: `book4-unit11-video-1`,
     bookId: '4',
-    unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - DAILY ROUTINES GAME 1`,
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/06b2e108c57843bc86f50245c245854a',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/06b2e108c57843bc86f50245c245854a?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-    content: {
-      type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/06b2e108c57843bc86f50245c245854a?themeId=1&templateId=5&fontStackId=0'
-    }
-  },
-  {
-    id: `book4-unit${unitNumber}-daily-routines-2`,
-    bookId: '4',
-    unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - DAILY ROUTINES GAME 2`,
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/459e14c3d21a459f9423a4eb7097e5fc',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/459e14c3d21a459f9423a4eb7097e5fc?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
-    content: {
-      type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/459e14c3d21a459f9423a4eb7097e5fc?themeId=1&templateId=3&fontStackId=0'
-    }
-  },
-  {
-    id: `book4-unit${unitNumber}-daily-routines-video`,
-    bookId: '4',
-    unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Daily Routines Song`,
+    unitId: '11',
+    title: 'VISUAL 4 Unit 11 Video 1',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=z9DTNWzunw0',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/z9DTNWzunw0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
-    content: {
-      type: 'youtube',
-      embedId: 'z9DTNWzunw0'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/placeholder',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
   },
   {
-    id: `book4-unit${unitNumber}-video-lesson`,
+    id: `book4-unit11-video-2`,
     bookId: '4',
-    unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Video Lesson`,
+    unitId: '11',
+    title: 'VISUAL 4 Unit 11 Video 2',
     resourceType: 'video',
-    provider: 'ISL Collective',
-    sourceUrl: 'https://en.islcollective.com/english-esl-video-lessons/666270',
-    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/666270" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://en.islcollective.com/english-esl-video-lessons/embed/666270'
-    }
-  },
-  {
-    id: `book4-unit${unitNumber}-daily-routines-game`,
-    bookId: '4',
-    unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Daily Routines Game`,
-    resourceType: 'game',
-    provider: 'Games to Learn English',
-    sourceUrl: 'https://www.gamestolearnenglish.com/daily-routines/',
-    embedCode: '<a href="https://www.gamestolearnenglish.com/daily-routines/" target="_blank">Daily Routines Game</a>',
-    content: {
-      type: 'link',
-      embedUrl: 'https://www.gamestolearnenglish.com/daily-routines/'
-    }
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/placeholder',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
   }
 ];
 
-// Getter function for backward compatibility
-export function getBook4Unit11Resources(): TeacherResource[] {
-  return book4Unit11Resources;
-}
+// Games for Unit 11
+export const games: TeacherResource[] = [
+  {
+    id: `book4-unit11-game-1`,
+    bookId: '4',
+    unitId: '11',
+    title: 'VISUAL 4 Unit 11 Game 1',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/placeholder',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  },
+  {
+    id: `book4-unit11-game-2`,
+    bookId: '4',
+    unitId: '11',
+    title: 'VISUAL 4 Unit 11 Game 2',
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/placeholder',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
+];
+
+// Combined resources for this unit
+export const resources: TeacherResource[] = [...videos, ...games];
+
+// Main export for backward compatibility
+export const book4Unit11Resources = resources;
