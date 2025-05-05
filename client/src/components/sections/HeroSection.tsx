@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import { Link } from "wouter";
 import { FileText } from "lucide-react";
-import { testFunction } from "@/data/app-test";
+import { testFunction } from "../../data/app-test";
 
 // Log test information to verify application loading
 console.log('HeroSection loaded');

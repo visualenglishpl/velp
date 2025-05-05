@@ -1,25 +1,25 @@
 import { Switch, Route, useLocation } from "wouter";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "./components/ui/toaster";
 import React, { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
-import NotFound from "@/pages/not-found";
-import Home from "@/pages/Home";
-import AuthPage from "@/pages/auth-page";
-import AdminDashboard from "@/pages/admin/Dashboard";
-import BooksManagement from "@/pages/admin/BooksManagement";
-import ShopManagement from "@/pages/admin/ShopManagement";
-import ContentOrganizer from "@/pages/admin/ContentOrganizer";
-import SlickContentViewer from "@/pages/SlickContentViewer";
-import CheckoutPage from "@/pages/checkout";
-import PrintedBookCheckout from "@/pages/PrintedBookCheckout";
-import BooksPage from "@/pages/BooksPage";
-import UnitsPage from "@/pages/UnitsPage";
-import LessonPlansPage from "@/pages/LessonPlansPage";
-import FlaggedQuestions from "@/pages/admin/FlaggedQuestions";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import { AuthProvider } from "@/hooks/use-auth";
-import { useAuth } from "@/hooks/use-auth";
+import NotFound from "./pages/not-found";
+import Home from "./pages/Home";
+import AuthPage from "./pages/auth-page";
+import AdminDashboard from "./pages/admin/Dashboard";
+import BooksManagement from "./pages/admin/BooksManagement";
+import ShopManagement from "./pages/admin/ShopManagement";
+import ContentOrganizer from "./pages/admin/ContentOrganizer";
+import SlickContentViewer from "./pages/SlickContentViewer";
+import CheckoutPage from "./pages/checkout";
+import PrintedBookCheckout from "./pages/PrintedBookCheckout";
+import BooksPage from "./pages/BooksPage";
+import UnitsPage from "./pages/UnitsPage";
+import LessonPlansPage from "./pages/LessonPlansPage";
+import FlaggedQuestions from "./pages/admin/FlaggedQuestions";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import { AuthProvider } from "./hooks/use-auth";
+import { useAuth } from "./hooks/use-auth";
 
 // TestTeacherResources page has been removed as it's not necessary
 
@@ -206,7 +206,7 @@ function Router() {
       <Route path="/pdf-test" component={() => {
         const PDFViewerTest = () => {
           // Import PDFViewer dynamically to avoid cyclic dependencies
-          const PDFViewer = require("@/components/PDFViewer").default;
+          const PDFViewer = require("./components/PDFViewer").default;
           return (
             <div className="container mx-auto p-4">
               <h1 className="text-2xl font-bold mb-4">PDF Viewer Test</h1>

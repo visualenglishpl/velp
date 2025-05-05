@@ -6,16 +6,18 @@
  */
 
 import { getBook4Unit6Resources, getBook4Unit6LessonPlans } from "./book4-unit6-resources";
-import { TeacherResource } from "@/types/teacher-resources";
-import { BookUnit } from "@/types/book-unit";
-import { LessonPlan, LessonStep } from "@/components/LessonPlanTemplate";
+
+// Import types using relative paths to avoid module resolution issues
+import type { TeacherResource } from "../types/teacher-resources";
+import type { BookUnit } from "../types/book-unit";
+import type { LessonPlan, LessonStep } from "../components/LessonPlanTemplate";
 
 /**
  * Convert legacy lesson plan format to the new LessonPlan format
  * @param resource Teacher resource containing a legacy lesson plan
  * @returns A properly formatted LessonPlan object
  */
-function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
+export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
   const legacyPlan = resource.lessonPlan;
   if (!legacyPlan) {
     throw new Error(`No lesson plan found in resource: ${resource.id}`);

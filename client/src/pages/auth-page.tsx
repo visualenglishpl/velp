@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import VelpLogo from "@/components/ui/velp-logo";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import VelpLogo from "../components/ui/velp-logo";
 import { User, UserRound, Laptop, School, BookOpen, Globe, Check, Loader2 } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "../hooks/use-auth";
 import { Redirect, useLocation } from "wouter";
 
 const AuthPage = () => {

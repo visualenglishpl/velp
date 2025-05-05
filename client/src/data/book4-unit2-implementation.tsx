@@ -6,9 +6,11 @@
  */
 
 import { getBook4Unit2Resources, getBook4Unit2LessonPlans } from "./book4-unit2-resources";
-import { TeacherResource } from "@/types/teacher-resources";
-import { BookUnit } from "@/types/book-unit";
-import { LessonPlan, LessonStep } from "@/components/LessonPlanTemplate";
+
+// Import types using relative paths to avoid module resolution issues
+import type { TeacherResource } from "../types/teacher-resources";
+import type { BookUnit } from "../types/book-unit";
+import type { LessonPlan, LessonStep } from "../components/LessonPlanTemplate";
 
 /**
  * Convert legacy lesson plan format to the new LessonPlan format

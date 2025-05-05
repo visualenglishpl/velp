@@ -4,7 +4,7 @@
  * This file contains all the external resources (videos, games, etc.) for Book 4 Unit 5
  */
 
-import { TeacherResource } from "@/types/teacher-resources";
+import { TeacherResource } from "../types/teacher-resources";
 
 /**
  * Resources for Book 4 Unit 5 (Personality)

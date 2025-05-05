@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import { Menu, LogOut, User, Book, BookOpen, LayoutDashboard, Briefcase, GraduationCap } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "../../hooks/use-auth";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

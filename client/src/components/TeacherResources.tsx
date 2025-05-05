@@ -19,12 +19,12 @@ import { generateBook7UnitResources, generateDefaultBook7UnitLessonPlans, BOOK7_
 import { generateBook4UnitResources, generateDefaultBook4UnitLessonPlans, BOOK4_TITLE, BOOK4_UNIT_TITLES } from '@/data/book4-resources-common';
 
 // Import Book 4 implementations
-import { getBook4Unit1Resources, getBook4Unit1LessonPlans } from '@/data/book4-unit1-implementation';
-import { getTeacherResources as getBook4Unit2Resources, getLessonPlans as getBook4Unit2LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit2 } from '@/data/book4-unit2-implementation';
-import { getTeacherResources as getBook4Unit3Resources, getLessonPlans as getBook4Unit3LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit3 } from '@/data/book4-unit3-implementation';
-import { getTeacherResources as getBook4Unit4Resources, getLessonPlans as getBook4Unit4LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit4 } from '@/data/book4-unit4-implementation';
-import { getTeacherResources as getBook4Unit5Resources, getLessonPlans as getBook4Unit5LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit5 } from '@/data/book4-unit5-implementation';
-import { getTeacherResources as getBook4Unit6Resources, getLessonPlans as getBook4Unit6LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit6 } from '@/data/book4-unit6-implementation';
+import { getBook4Unit1Resources, getBook4Unit1LessonPlans } from '../data/book4-unit1-implementation';
+import { getTeacherResources as getBook4Unit2Resources, getLessonPlans as getBook4Unit2LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit2 } from '../data/book4-unit2-implementation';
+import { getTeacherResources as getBook4Unit3Resources, getLessonPlans as getBook4Unit3LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit3 } from '../data/book4-unit3-implementation';
+import { getTeacherResources as getBook4Unit4Resources, getLessonPlans as getBook4Unit4LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit4 } from '../data/book4-unit4-implementation';
+import { getTeacherResources as getBook4Unit5Resources, getLessonPlans as getBook4Unit5LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit5 } from '../data/book4-unit5-implementation';
+import { getTeacherResources as getBook4Unit6Resources, getLessonPlans as getBook4Unit6LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit6 } from '../data/book4-unit6-implementation';
 
 // Import any specific implementation functions
 // Book 6 implementations
@@ -151,10 +151,10 @@ const defaultLessonPlanGetter = () => {
 };
 
 // Add CSS for responsive grid layout
-import "@/styles/teacher-resources-grid.css";
+import "../styles/teacher-resources-grid.css";
 import { Gamepad2, Video, FileText, Pencil, Trash2, Plus, ExternalLink, Book, Printer, Image, PenLine, CheckCircle, Maximize2 } from 'lucide-react';
-import LessonPlanTemplate, { LessonPlan } from '@/components/LessonPlanTemplate';
-import PDFViewer from '@/components/PDFViewer';
+import LessonPlanTemplate, { LessonPlan } from './LessonPlanTemplate';
+import PDFViewer from './PDFViewer';
 
 // Dynamic imports for unit implementations
 const dynamicImplImport = async (book: string, unit: number) => {
@@ -3060,8 +3060,12 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 4 Unit 6 lesson plans
       let collectionsLessonPlans: LessonPlan[] = [];
       try {
-        // Using directly imported function
-        collectionsLessonPlans = getBook4Unit6LessonPlans() as LessonPlan[];
+        // Using directly imported function with conversion
+        const resources = getBook4Unit6LessonPlans();
+        // Extract and convert lesson plans
+        collectionsLessonPlans = resources
+          .filter(resource => resource.lessonPlan)
+          .map(resource => convertLegacyLessonPlanUnit6(resource));
       } catch (error) {
         console.error('Error getting Book 4 Unit 6 lesson plans:', error);
         // Fallback to default lesson plans
