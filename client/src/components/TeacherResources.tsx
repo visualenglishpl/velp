@@ -21,6 +21,10 @@ import { generateBook4UnitResources, generateDefaultBook4UnitLessonPlans, BOOK4_
 // Import Book 4 implementations
 import { getBook4Unit1Resources, getBook4Unit1LessonPlans } from '@/data/book4-unit1-implementation';
 import { getBook4Unit3Resources, getBook4Unit3LessonPlans } from '@/data/book4-unit3-implementation';
+import { getBook4Unit4Resources, getBook4Unit4LessonPlans, getBook4Unit4Videos, getBook4Unit4Games, getBook4Unit4ExternalResources } from '@/data/book4-unit4-implementation';
+import { getBook4Unit5Resources, getBook4Unit5LessonPlans, getBook4Unit5Videos, getBook4Unit5Games, getBook4Unit5ExternalResources } from '@/data/book4-unit5-implementation';
+import { getBook4Unit6Resources, getBook4Unit6LessonPlans, getBook4Unit6Videos, getBook4Unit6Games, getBook4Unit6ExternalResources } from '@/data/book4-unit6-implementation';
+import { getBook4Unit7Resources, getBook4Unit7LessonPlans, getBook4Unit7Videos, getBook4Unit7Games, getBook4Unit7ExternalResources } from '@/data/book4-unit7-implementation';
 
 // Import any specific implementation functions
 // Book 6 implementations
