@@ -19,10 +19,10 @@ export const book4Unit4Resources: TeacherResource[] = [
     title: "Types of Hair - Wordwall Game",
     description: "Interactive wordwall game about types of hair",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/0268bf9e65734957a7b291700fc07eee",
+    sourceUrl: "https://wordwall.net/resource/64639983/types-hair",
     content: {
       type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/0268bf9e65734957a7b291700fc07eee?themeId=1&templateId=5&fontStackId=0"
+      embedUrl: "https://wordwall.net/embed/0ae4c4c69dff4d27beffd9bad7fc5107?themeId=1&templateId=5&fontStackId=0"
     }
   },
   {
@@ -33,10 +33,10 @@ export const book4Unit4Resources: TeacherResource[] = [
     title: "Describing People - Wordwall Game",
     description: "Interactive wordwall game about describing people",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/6c610a5d0f4e4b72be38e5deebf55425",
+    sourceUrl: "https://wordwall.net/resource/32245748/describing-people",
     content: {
       type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/6c610a5d0f4e4b72be38e5deebf55425?themeId=1&templateId=5&fontStackId=0"
+      embedUrl: "https://wordwall.net/embed/5a8f5e3456c7416f8ef3b9f19bf1d0d7?themeId=1&templateId=5&fontStackId=0"
     }
   },
   {
@@ -47,10 +47,10 @@ export const book4Unit4Resources: TeacherResource[] = [
     title: "Family - Wordwall Game",
     description: "Interactive wordwall game about family vocabulary",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/1373ff4429454b2c8c63824e64176643",
+    sourceUrl: "https://wordwall.net/resource/11529455/family-members",
     content: {
       type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/1373ff4429454b2c8c63824e64176643?themeId=1&templateId=38&fontStackId=0"
+      embedUrl: "https://wordwall.net/embed/b1bfc9c2b39c46cc8e45e6b3c93064fa?themeId=1&templateId=38&fontStackId=0"
     }
   },
   // YouTube videos

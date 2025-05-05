@@ -19,10 +19,10 @@ export const book4Unit5Resources: TeacherResource[] = [
     description: "Learn about different personality traits and characteristics",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=D7ZjMjfasfU",
+    sourceUrl: "https://www.youtube.com/watch?v=wXJPMf5ZuMw",
     content: {
       type: "youtube",
-      embedId: "D7ZjMjfasfU"
+      embedId: "wXJPMf5ZuMw"
     }
   },
   
@@ -31,28 +31,14 @@ export const book4Unit5Resources: TeacherResource[] = [
     id: "book4-unit5-wordwall-1",
     bookId: "4",
     unitId: "5",
-    title: "Personality Traits Game 1",
+    title: "Personality Traits Game",
     description: "Interactive Wordwall game about personality traits",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/339ab9a507314c98aa8ad268f9dbd2fc",
+    sourceUrl: "https://wordwall.net/resource/6bcdbdd1f33a4700968fcc126d42c323",
     content: {
       type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/339ab9a507314c98aa8ad268f9dbd2fc?themeId=1&templateId=2&fontStackId=0"
-    }
-  },
-  {
-    id: "book4-unit5-wordwall-2",
-    bookId: "4",
-    unitId: "5",
-    title: "Personality Traits Game 2",
-    description: "Interactive Wordwall game about personality traits",
-    resourceType: "game",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/c6d609be7c0a4370adf35d199dd1001d",
-    content: {
-      type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/c6d609be7c0a4370adf35d199dd1001d?themeId=1&templateId=5&fontStackId=0"
+      embedUrl: "https://wordwall.net/embed/6bcdbdd1f33a4700968fcc126d42c323?themeId=1&templateId=3&fontStackId=0"
     }
   },
   

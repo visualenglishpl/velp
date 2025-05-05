@@ -7,21 +7,91 @@
 
 import { getBook4Unit4Resources, getBook4Unit4LessonPlans } from "./book4-unit4-resources";
 import { TeacherResource } from "@/types/teacher-resources";
+import { BookUnit } from "@/types/book-unit";
+import { LessonPlan, LessonStep } from "@/components/LessonPlanTemplate";
 
-// BookUnit interface
-interface BookUnit {
-  bookId: string;
-  unitId: string;
-  title: string;
-  hasTeacherResources: boolean;
-  hasMappedContent: boolean;
-  slides: {
-    mappingSource: 'inline' | 'json' | 'pattern';
-    showBlankIfUnmapped?: boolean;
-    mappings?: Record<string, { question: string; answer: string }>;
+/**
+ * Convert legacy lesson plan format to the new LessonPlan format
+ * @param resource Teacher resource containing a legacy lesson plan
+ * @returns A properly formatted LessonPlan object
+ */
+function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
+  const legacyPlan = resource.lessonPlan;
+  if (!legacyPlan) {
+    throw new Error(`No lesson plan found in resource: ${resource.id}`);
+  }
+
+  // Create steps from legacy format
+  const steps: LessonStep[] = [];
+  
+  // Add warm-up step
+  if (legacyPlan.warmUp) {
+    steps.push({
+      title: 'Warm-up',
+      duration: '5-10 minutes',
+      description: legacyPlan.warmUp,
+      instructions: []
+    });
+  }
+  
+  // Add main activity steps
+  if (legacyPlan.mainActivities && legacyPlan.mainActivities.length > 0) {
+    legacyPlan.mainActivities.forEach((activity, index) => {
+      steps.push({
+        title: `Activity ${index + 1}`,
+        duration: '10-15 minutes',
+        description: activity,
+        instructions: []
+      });
+    });
+  }
+  
+  // Add extension step
+  if (legacyPlan.extension) {
+    steps.push({
+      title: 'Extension',
+      duration: '10 minutes',
+      description: legacyPlan.extension,
+      instructions: []
+    });
+  }
+  
+  // Add assessment step
+  if (legacyPlan.assessment) {
+    steps.push({
+      title: 'Assessment',
+      duration: '5-10 minutes',
+      description: legacyPlan.assessment,
+      instructions: []
+    });
+  }
+  
+  // Add conclusion step
+  if (legacyPlan.conclusion) {
+    steps.push({
+      title: 'Conclusion',
+      duration: '5 minutes',
+      description: legacyPlan.conclusion,
+      instructions: []
+    });
+  }
+
+  // Create new LessonPlan
+  return {
+    id: resource.id || `book4-unit4-${legacyPlan.title.toLowerCase().replace(/\s+/g, '-')}`,
+    title: legacyPlan.title,
+    duration: '45 minutes',
+    level: 'Elementary to Pre-Intermediate',
+    objectives: legacyPlan.objectives || [],
+    materials: legacyPlan.materials || [],
+    steps: steps,
+    assessmentTips: legacyPlan.assessment,
+    homeworkIdeas: [
+      'Review vocabulary from the lesson',
+      'Complete exercises in the workbook',
+      'Prepare a short presentation for next class'
+    ]
   };
-  getTeacherResources?: () => TeacherResource[];
-  getLessonPlans?: () => TeacherResource[];
 }
 
 /**
@@ -34,10 +104,11 @@ export function getTeacherResources(): TeacherResource[] {
 
 /**
  * Get lesson plans for Book 4 Unit 4
- * @returns Array of lesson plan resources
+ * @returns Array of lesson plans properly formatted
  */
-export function getLessonPlans(): TeacherResource[] {
-  return getBook4Unit4LessonPlans();
+export function getLessonPlans(): LessonPlan[] {
+  const resources = getBook4Unit4LessonPlans();
+  return resources.map(resource => convertLegacyLessonPlan(resource));
 }
 
 /**

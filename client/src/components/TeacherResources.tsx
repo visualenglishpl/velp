@@ -22,6 +22,7 @@ import { generateBook4UnitResources, generateDefaultBook4UnitLessonPlans, BOOK4_
 import { getBook4Unit1Resources, getBook4Unit1LessonPlans } from '@/data/book4-unit1-implementation';
 import { getTeacherResources as getBook4Unit2Resources, getLessonPlans as getBook4Unit2LessonPlans } from '@/data/book4-unit2-implementation';
 import { getTeacherResources as getBook4Unit3Resources, getLessonPlans as getBook4Unit3LessonPlans } from '@/data/book4-unit3-implementation';
+import { getTeacherResources as getBook4Unit4Resources, getLessonPlans as getBook4Unit4LessonPlans } from '@/data/book4-unit4-implementation';
 import { getTeacherResources as getBook4Unit5Resources, getLessonPlans as getBook4Unit5LessonPlans } from '@/data/book4-unit5-implementation';
 import { getTeacherResources as getBook4Unit6Resources, getLessonPlans as getBook4Unit6LessonPlans } from '@/data/book4-unit6-implementation';
 
@@ -1739,12 +1740,44 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           console.error('Error getting Book 4 Unit 1 resources, falling back to common resources:', error);
           return generateBook4UnitResources(bookId, unitId);
         }
+      } else if (unitId === '2') {
+        try {
+          console.log('Loading Book 4 Unit 2 resources from implementation');
+          return getBook4Unit2Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 2 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
       } else if (unitId === '3') {
         try {
           console.log('Loading Book 4 Unit 3 resources from implementation');
           return getBook4Unit3Resources();
         } catch (error) {
           console.error('Error getting Book 4 Unit 3 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '4') {
+        try {
+          console.log('Loading Book 4 Unit 4 resources from implementation');
+          return getBook4Unit4Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 4 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '5') {
+        try {
+          console.log('Loading Book 4 Unit 5 resources from implementation');
+          return getBook4Unit5Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 5 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '6') {
+        try {
+          console.log('Loading Book 4 Unit 6 resources from implementation');
+          return getBook4Unit6Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 6 resources, falling back to common resources:', error);
           return generateBook4UnitResources(bookId, unitId);
         }
       }
@@ -2688,6 +2721,360 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
                           size="sm" 
                           className="text-xs flex items-center text-destructive" 
                           onClick={() => setConfirmDelete({ id: `tech-savvy-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 4 Unit 1 - Nationalities lesson plans
+    if (bookId === '4' && unitId === '1') {
+      // Get Book 4 Unit 1 lesson plans
+      let nationalitiesLessonPlans: LessonPlan[] = [];
+      try {
+        // Using directly imported function
+        nationalitiesLessonPlans = getBook4Unit1LessonPlans() as LessonPlan[];
+      } catch (error) {
+        console.error('Error getting Book 4 Unit 1 lesson plans:', error);
+        // Fallback to default lesson plans
+        nationalitiesLessonPlans = generateDefaultBook4UnitLessonPlans('1', BOOK4_UNIT_TITLES['1'] || 'Nationalities');
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Nationalities and Countries Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {nationalitiesLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `nationalities-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 4 Unit 2 - Gadgets lesson plans
+    if (bookId === '4' && unitId === '2') {
+      // Get Book 4 Unit 2 lesson plans
+      let gadgetsLessonPlans: LessonPlan[] = [];
+      try {
+        // Using directly imported function
+        gadgetsLessonPlans = getBook4Unit2LessonPlans() as LessonPlan[];
+      } catch (error) {
+        console.error('Error getting Book 4 Unit 2 lesson plans:', error);
+        // Fallback to default lesson plans
+        gadgetsLessonPlans = generateDefaultBook4UnitLessonPlans('2', BOOK4_UNIT_TITLES['2'] || 'Gadgets');
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Gadgets and Technology Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {gadgetsLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `gadgets-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // Book 4 Unit 3 - Home Sweet Home lesson plans
+    if (bookId === '4' && unitId === '3') {
+      // Get Book 4 Unit 3 lesson plans
+      let homeLessonPlans: LessonPlan[] = [];
+      try {
+        // Using directly imported function
+        homeLessonPlans = getBook4Unit3LessonPlans() as LessonPlan[];
+      } catch (error) {
+        console.error('Error getting Book 4 Unit 3 lesson plans:', error);
+        // Fallback to default lesson plans
+        homeLessonPlans = generateDefaultBook4UnitLessonPlans('3', BOOK4_UNIT_TITLES['3'] || 'Home Sweet Home');
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Home and Housing Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {homeLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `home-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Book 4 Unit 4 - Family: Describing People lesson plans
+    if (bookId === '4' && unitId === '4') {
+      // Get Book 4 Unit 4 lesson plans
+      let familyLessonPlans: LessonPlan[] = [];
+      try {
+        // Using directly imported function
+        familyLessonPlans = getBook4Unit4LessonPlans() as LessonPlan[];
+      } catch (error) {
+        console.error('Error getting Book 4 Unit 4 lesson plans:', error);
+        // Fallback to default lesson plans
+        familyLessonPlans = generateDefaultBook4UnitLessonPlans('4', BOOK4_UNIT_TITLES['4'] || 'Family: Describing People');
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Family and Appearance Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {familyLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `family-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Book 4 Unit 5 - Personality lesson plans
+    if (bookId === '4' && unitId === '5') {
+      // Get Book 4 Unit 5 lesson plans
+      let personalityLessonPlans: LessonPlan[] = [];
+      try {
+        // Using directly imported function
+        personalityLessonPlans = getBook4Unit5LessonPlans() as LessonPlan[];
+      } catch (error) {
+        console.error('Error getting Book 4 Unit 5 lesson plans:', error);
+        // Fallback to default lesson plans
+        personalityLessonPlans = generateDefaultBook4UnitLessonPlans('5', BOOK4_UNIT_TITLES['5'] || 'Personality');
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Personality Traits Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {personalityLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `personality-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="max-h-[500px] overflow-y-auto">
+                    <LessonPlanTemplate plan={plan} />
+                  </CardContent>
+                  <CardFooter className="bg-muted/20 pt-3 pb-3">
+                    <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                      <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Book 4 Unit 6 - Collections lesson plans
+    if (bookId === '4' && unitId === '6') {
+      // Get Book 4 Unit 6 lesson plans
+      let collectionsLessonPlans: LessonPlan[] = [];
+      try {
+        // Using directly imported function
+        collectionsLessonPlans = getBook4Unit6LessonPlans() as LessonPlan[];
+      } catch (error) {
+        console.error('Error getting Book 4 Unit 6 lesson plans:', error);
+        // Fallback to default lesson plans
+        collectionsLessonPlans = generateDefaultBook4UnitLessonPlans('6', BOOK4_UNIT_TITLES['6'] || 'Collections');
+      }
+      
+      builtInLessonPlans = (
+        <div className="mt-6 space-y-8">
+          <h3 className="text-lg font-semibold mb-4">Collections and Hobbies Lesson Plans</h3>
+          <div className="lesson-plan-grid">
+            {collectionsLessonPlans.map((plan, index) => (
+              <div key={index}>
+                <Card className="h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg truncate">
+                          <span>{plan.title}</span>
+                        </CardTitle>
+                        <CardDescription className="text-xs mt-1">
+                          45-minute lesson plan by Visual English
+                        </CardDescription>
+                      </div>
+                      {isEditMode && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs flex items-center text-destructive" 
+                          onClick={() => setConfirmDelete({ id: `collections-${index}`, title: plan.title, bookId, unitId, resourceType: 'lesson' } as TeacherResource)}
                         >
                           <Trash2 className="h-3 w-3 mr-1" />
                           Delete

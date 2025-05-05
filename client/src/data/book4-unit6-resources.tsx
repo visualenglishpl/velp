@@ -49,10 +49,10 @@ export const book4Unit6Resources: TeacherResource[] = [
     description: "Interactive Wordwall game about different types of collections",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/6bcdbdd1f33a4700968fcc126d42c323",
+    sourceUrl: "https://wordwall.net/resource/5329387/collections",
     content: {
       type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/6bcdbdd1f33a4700968fcc126d42c323?themeId=1&templateId=3&fontStackId=0"
+      embedUrl: "https://wordwall.net/embed/e4ce3183f5944e87823d6fef00f3f7b3?themeId=1&templateId=3&fontStackId=0"
     }
   },
   {

@@ -75,10 +75,10 @@ export const book4Unit2Resources: TeacherResource[] = [
     title: "Gadgets Video",
     description: "YouTube video about gadgets and technology",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=08BoI6zFDTw",
+    sourceUrl: "https://www.youtube.com/watch?v=BsK4tX28Jcs",
     content: {
       type: "youtube",
-      embedId: "08BoI6zFDTw"
+      embedId: "BsK4tX28Jcs"
     }
   },
   // Lesson Plans
@@ -92,6 +92,28 @@ export const book4Unit2Resources: TeacherResource[] = [
     content: {
       type: "markdown",
       embedUrl: ""
+    },
+    lessonPlan: {
+      title: "Introduction to Gadgets",
+      objectives: [
+        "Introduce vocabulary related to common gadgets",
+        "Practice asking and answering questions about gadgets",
+        "Develop speaking skills through technology-related activities"
+      ],
+      materials: [
+        "Visual English Book 4",
+        "Pictures of different gadgets",
+        "Gadget flashcards"
+      ],
+      warmUp: "Show students various gadgets or pictures and ask them to name them if they can.",
+      mainActivities: [
+        "Presentation: Introduce gadget vocabulary using visual aids.",
+        "Practice: Students complete matching exercises connecting gadgets with their functions.",
+        "Game: 'What is it?' - Teacher describes a gadget and students guess which one it is."
+      ],
+      extension: "Students create a poster about their favorite gadget with labeled parts.",
+      assessment: "Students identify and name various gadgets in pictures.",
+      conclusion: "Review gadget vocabulary and discuss how these devices help us in daily life."
     }
   },
   {
@@ -104,6 +126,28 @@ export const book4Unit2Resources: TeacherResource[] = [
     content: {
       type: "markdown",
       embedUrl: ""
+    },
+    lessonPlan: {
+      title: "Technology in Daily Life",
+      objectives: [
+        "Learn vocabulary related to technology usage",
+        "Practice discussing how we use gadgets in everyday situations",
+        "Develop the ability to express preferences about technology"
+      ],
+      materials: [
+        "Visual English Book 4",
+        "Technology usage worksheet",
+        "Pictures showing people using various gadgets"
+      ],
+      warmUp: "Ask students to share how many hours they spend using different gadgets each day.",
+      mainActivities: [
+        "Presentation: Teach vocabulary for different technology uses (communication, entertainment, work, etc.).",
+        "Practice: Students work in pairs to discuss how they use technology in their daily routines.",
+        "Activity: 'Tech Survey' - Students interview classmates about their technology preferences and create a simple chart."
+      ],
+      extension: "Students create a 'day without technology' plan, describing what would be different.",
+      assessment: "Students complete a speaking task explaining how they use 3-4 different gadgets in their lives.",
+      conclusion: "Discuss the benefits and challenges of technology in our daily lives."
     }
   }
 ];

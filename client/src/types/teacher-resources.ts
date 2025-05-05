@@ -13,17 +13,41 @@ export type ResourceType =
   | 'other';   // Other resource type
 
 /**
+ * Lesson step structure
+ */
+export interface LessonStep {
+  title: string;
+  duration: string;
+  description: string;
+  materials?: string[];
+  instructions?: string[];
+  teacherNotes?: string;
+}
+
+/**
  * Lesson plan structure
  */
 export interface LessonPlan {
+  id: string;
   title: string;
+  duration: string;
+  level: string;
   objectives: string[];
   materials: string[];
-  warmUp: string;
-  mainActivities: string[];
-  extension: string;
-  assessment: string;
-  conclusion: string;
+  steps: LessonStep[];
+  assessmentTips?: string;
+  homeworkIdeas?: string[];
+  additionalResources?: {
+    title: string;
+    url?: string;
+  }[];
+  
+  // Legacy fields for backward compatibility
+  warmUp?: string;
+  mainActivities?: string[];
+  extension?: string;
+  assessment?: string;
+  conclusion?: string;
 }
 
 /**
