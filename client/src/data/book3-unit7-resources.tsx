@@ -3,7 +3,7 @@ import { BOOK3_TITLE } from './book3-resources-common';
 
 /**
  * Book 3 Unit 7 - THE SOLAR SYSTEM
- * Resources including videos and games
+ * Resources including videos and games based on the attached file
  */
 
 const unitNumber = '7';

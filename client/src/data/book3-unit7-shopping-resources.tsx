@@ -6,27 +6,30 @@ import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
  * Resources including videos and games based on the DOCX attachment
  */
 
+const unitNumber = '7';
+const unitTitle = 'LET\'S GO SHOPPING';
+
 export const book3Unit7ShoppingResources: TeacherResource[] = [
   // Videos
   {
-    title: 'Let\'s Go Shopping Song 1',
-    description: 'Fun animated song about shopping',
+    id: `book3-unit${unitNumber}-shopping-video-1`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Let's Go Shopping Song 1`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: 'zXEq-QO3xTg'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/zXEq-QO3xTg',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/zXEq-QO3xTg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    title: '10 to 100 Song by ELF Learning',
-    description: 'Counting song to practice numbers used in shopping',
+    id: `book3-unit${unitNumber}-shopping-video-2`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - 10 to 100 Song by ELF Learning`,
     resourceType: 'video',
     provider: 'YouTube',
-    content: {
-      type: 'youtube',
-      embedId: '50-GjHYdKHs'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/50-GjHYdKHs',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/50-GjHYdKHs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
     title: 'How Much Is It? - English Conversation',
