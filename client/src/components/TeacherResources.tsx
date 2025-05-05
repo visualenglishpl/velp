@@ -3060,12 +3060,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Book 4 Unit 6 lesson plans
       let collectionsLessonPlans: LessonPlan[] = [];
       try {
-        // Using teacher resources with lesson plans
-        const resources = getBook4Unit6LessonPlans();
-        // Extract and convert lesson plans
-        collectionsLessonPlans = resources
-          .filter(resource => resource.lessonPlan)
-          .map(resource => convertLegacyLessonPlanUnit6(resource));
+        // Using directly imported function
+        collectionsLessonPlans = getBook4Unit6LessonPlans() as LessonPlan[];
       } catch (error) {
         console.error('Error getting Book 4 Unit 6 lesson plans:', error);
         // Fallback to default lesson plans

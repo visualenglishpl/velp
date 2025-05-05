@@ -15,7 +15,7 @@ import { LessonPlan, LessonStep } from "@/components/LessonPlanTemplate";
  * @param resource Teacher resource containing a legacy lesson plan
  * @returns A properly formatted LessonPlan object
  */
-export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
+function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
   const legacyPlan = resource.lessonPlan;
   if (!legacyPlan) {
     throw new Error(`No lesson plan found in resource: ${resource.id}`);
