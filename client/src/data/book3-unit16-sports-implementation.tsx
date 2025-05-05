@@ -3,6 +3,8 @@ import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 // Import resources directly
 import { book3Unit16Resources } from './book3-unit16-resources';
+// Import sports resources
+import { book3Unit16SportsResources, getBook3Unit16SportsResources } from './book3-unit16-sports-resources';
 
 /**
  * Book 3 Unit 16 - SPORTS
@@ -152,5 +154,9 @@ export const generateBook3Unit16LessonPlans = (): LessonPlan[] => {
 // Export default functions to maintain consistency with other units
 export default {
   getBook3Unit16Resources,
+  getBook3Unit16SportsResources,
   generateBook3Unit16LessonPlans
 };
+
+// Re-export the sports resources function to comply with imports in TeacherResources.tsx
+export { getBook3Unit16SportsResources };
