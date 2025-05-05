@@ -19,6 +19,9 @@ import { getBook3Unit8Resources } from './book3-unit8-implementation';
 import { getBook3Unit10Resources } from './book3-unit10-implementation';
 import { getBook3Unit11Resources } from './book3-unit11-implementation';
 import { getBook3Unit12Resources } from './book3-unit12-implementation';
+import { getBook3Unit13Resources } from './book3-unit13-implementation';
+import { getBook3Unit14Resources } from './book3-unit14-implementation';
+import { getBook3Unit15Resources } from './book3-unit15-implementation';
 import book3Unit8Resources from './book3-unit8-resources';
 import book3Unit9Resources from './book3-unit9-resources';
 import book3Unit10Resources from './book3-unit10-resources';
@@ -37,6 +40,10 @@ const unit7SolarResources = getBook3Unit7SolarResources();
 const unit8Resources = getBook3Unit8Resources();
 const unit10Resources = getBook3Unit10Resources();
 const unit11Resources = getBook3Unit11Resources();
+const unit12Resources = getBook3Unit12Resources();
+const unit13Resources = getBook3Unit13Resources();
+const unit14Resources = getBook3Unit14Resources();
+const unit15Resources = getBook3Unit15Resources();
 const unit16SportsResources = getBook3Unit16SportsResources();
 
 // Create a mapping of all available resources by unit
@@ -54,10 +61,10 @@ export const book3ResourcesByUnit: Record<string, TeacherResource[]> = {
   '9': book3Unit9Resources,
   '10': unit10Resources,
   '11': unit11Resources,
-  '12': book3Unit12Resources,
-  '13': book3Unit13Resources,
-  '14': book3Unit14Resources,
-  '15': book3Unit15Resources,
+  '12': unit12Resources,
+  '13': unit13Resources,
+  '14': unit14Resources,
+  '15': unit15Resources,
   '16': unit16SportsResources,
   '16-sports': unit16SportsResources,
   '17': book3Unit17Resources, // Empty resources as per requirement
@@ -97,10 +104,18 @@ export {
   unit11Resources,
   book3Unit11Resources,
   getBook3Unit11Resources,
+  unit12Resources,
   book3Unit12Resources,
+  getBook3Unit12Resources,
+  unit13Resources,
   book3Unit13Resources,
+  getBook3Unit13Resources,
+  unit14Resources,
   book3Unit14Resources,
+  getBook3Unit14Resources,
+  unit15Resources,
   book3Unit15Resources,
+  getBook3Unit15Resources,
   unit16SportsResources,
   getBook3Unit16SportsResources,
   book3Unit17Resources,

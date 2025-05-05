@@ -1,6 +1,7 @@
 import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
+// Import resources directly
 import book3Unit15Resources from './book3-unit15-resources';
 
 /**
@@ -12,7 +13,9 @@ const unitNumber = '15';
 const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'BUGS';
 
 // Export resources getter function
-export const getBook3Unit15Resources = (): TeacherResource[] => book3Unit15Resources;
+export const getBook3Unit15Resources = (): TeacherResource[] => {
+  return book3Unit15Resources;
+};
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit15LessonPlans = (): LessonPlan[] => {
@@ -22,118 +25,151 @@ export const generateBook3Unit15LessonPlans = (): LessonPlan[] => {
       title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 1`,
       duration: '45 minutes',
       level: 'Elementary',
-      objectives: ['Learn vocabulary for different bugs/insects', 'Identify and name common insects', 'Use basic descriptive language for bugs'],
-      materials: ['Bug/insect flashcards', 'Visual English 3 textbook', 'Insect stickers or cutouts', 'Colored pencils/markers'],
+      objectives: ['Learn vocabulary for common bugs/insects', 'Identify different bugs by their characteristics', 'Use descriptive language to talk about insects'],
+      materials: ['Visual English 3 textbook', 'Bug/insect picture cards', 'Insect fact cards', 'Drawing paper and colored pencils'],
       steps: [
         {
           title: 'Warm-up',
           duration: '5 minutes',
-          description: 'Show pictures of different bugs and elicit what students know.'
-        },
-        {
-          title: 'Vocabulary Introduction',
-          duration: '10 minutes',
-          description: 'Teach key bug/insect vocabulary.',
+          description: 'Introduction to bugs vocabulary with pictures.',
           instructions: [
-            'Present flashcards with different bugs: ant, bee, butterfly, ladybug, etc.',
-            'Model pronunciation and have students repeat.',
-            'Discuss basic features (wings, legs, antennae).'
+            'Show flashcards of different bugs/insects.',
+            'Ask students to name any bugs they know in English.',
+            'Introduce key vocabulary: ant, bee, butterfly, ladybug, spider, fly, mosquito, etc.'
           ]
         },
         {
-          title: 'Video: What Do You See (Insects)',
-          duration: '8 minutes',
-          description: 'Watch the first "What Do You See (Insects)" video.',
+          title: 'Vocabulary Development',
+          duration: '10 minutes',
+          description: 'Teach and practice insect vocabulary.',
           instructions: [
-            'Play the video once through.',
-            'Play again, pausing to review vocabulary.',
-            'Encourage students to sing along with the song.'
-          ],
-          teacherNotes: 'The song has a simple pattern that students can easily follow. Use gestures to help reinforce vocabulary.'
+            'Present each insect card with its name.',
+            'Practice pronunciation as a class.',
+            'Ask simple questions: "Is a butterfly big or small? What color is it?"',
+            'Have students repeat sentences: "The butterfly is colorful."'
+          ]
         },
         {
-          title: 'Bug Sorting Activity',
-          duration: '10 minutes',
-          description: 'Students categorize insects based on features.',
+          title: '"What Do You See" Video',
+          duration: '8 minutes',
+          description: 'Watch the insect video and practice identification.',
           instructions: [
-            'Divide class into small groups.',
-            'Give each group a set of insect pictures.',
-            'Students sort them by features: insects with wings, insects with six legs, etc.',
-            'Groups share their sorting criteria with the class.'
+            'Play the "What Do You See (Insects)" video.',
+            'Pause after each insect is shown and have students identify it.',
+            'Practice the phrase: "I see a _____."',
+            'Ask follow-up questions about each insect.'
+          ],
+          teacherNotes: 'Encourage students to use full sentences when responding.'
+        },
+        {
+          title: 'Insect Description Game',
+          duration: '10 minutes',
+          description: 'Students practice describing insects.',
+          instructions: [
+            'Divide students into pairs.',
+            'Give each pair a set of insect cards face down.',
+            'Student A picks a card without showing it and describes the insect.',
+            'Student B guesses which insect it is.',
+            'Students switch roles and continue.'
           ]
         },
         {
           title: 'Wordwall Game',
-          duration: '7 minutes',
-          description: 'Play one of the Wordwall Bugs games together.',
-          teacherNotes: 'Use the classroom projector to play as a whole class activity or allow students to play in pairs if devices are available.'
+          duration: '8 minutes',
+          description: 'Play the Wordwall BUGS game as a class.',
+          instructions: [
+            'Display the Wordwall BUGS game on the board.',
+            'Have students take turns matching insects to their names or descriptions.',
+            'Award points for correct matches.'
+          ]
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review key vocabulary with a quick memory game.'
+          title: 'Wrap-up Activity',
+          duration: '4 minutes',
+          description: 'Review vocabulary through a quick drawing activity.',
+          instructions: [
+            'Call out an insect name.',
+            'Students quickly draw it on their paper.',
+            'Show drawings and name the insects together.'
+          ]
         }
       ],
-      assessmentTips: 'Check students\' ability to correctly identify and name common insects. Observe their use of descriptive language for bugs.',
-      homeworkIdeas: ['Draw and label your favorite insect.', 'Complete the insect matching worksheet.']
+      assessmentTips: 'Check students\' ability to correctly identify and name common bugs. Listen for proper pronunciation and sentence structure when describing insects.',
+      homeworkIdeas: ['Draw and label your favorite insect.', 'Find pictures of three insects in magazines or online and write their names.']
     },
     {
       id: `book3-unit${unitNumber}-lesson2`,
       title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 2`,
       duration: '45 minutes',
       level: 'Elementary',
-      objectives: ['Understand basic insect life cycles', 'Compare different insects', 'Create a bug-themed craft project'],
-      materials: ['Life cycle diagrams (butterfly, ladybug)', 'Visual English 3 textbook', 'Construction paper, pipe cleaners, googly eyes for craft', 'Video: Caterpillar Shoes'],
+      objectives: ['Learn about insect body parts', 'Describe insects using simple sentences', 'Compare different insects'],
+      materials: ['Visual English 3 textbook', 'Insect diagrams', 'Craft materials (pipe cleaners, paper, etc.)', 'Caterpillar Shoes story video'],
       steps: [
         {
-          title: 'Warm-up Review',
+          title: 'Review',
           duration: '5 minutes',
-          description: 'Quick review of bug vocabulary with flashcards.'
-        },
-        {
-          title: 'Life Cycle Introduction',
-          duration: '10 minutes',
-          description: 'Teach about insect life cycles, focusing on butterflies.',
+          description: 'Quick review of insect vocabulary from previous lesson.',
           instructions: [
-            'Show images of butterfly life cycle stages: egg, caterpillar, chrysalis, butterfly.',
-            'Teach vocabulary for each stage.',
-            'Compare with one other insect life cycle (e.g., ladybug).'
+            'Show flashcards of insects from the previous lesson.',
+            'Students call out the names quickly.',
+            'Ask: "Who remembers what a butterfly looks like?"'
           ]
         },
         {
-          title: 'Video: Caterpillar Shoes',
+          title: 'Insect Body Parts',
+          duration: '10 minutes',
+          description: 'Teach vocabulary for insect body parts.',
+          instructions: [
+            'Show diagrams of insects with labeled parts.',
+            'Introduce vocabulary: head, thorax, abdomen, wings, legs, antennae.',
+            'Have students point to each part as you name it.',
+            'Practice simple sentences: "A butterfly has two antennae. A spider has eight legs."'
+          ]
+        },
+        {
+          title: 'Caterpillar Shoes Story',
           duration: '8 minutes',
-          description: 'Watch the "Caterpillar Shoes" story video.',
-          teacherNotes: 'This is a good opportunity to reinforce both insect vocabulary and life cycle concepts.'
-        },
-        {
-          title: 'Bug Description Game',
-          duration: '7 minutes',
-          description: 'Practice describing insects.',
+          description: 'Watch the Caterpillar Shoes story video.',
           instructions: [
-            'Show pictures of insects one at a time.',
-            'Students must describe each using at least 2-3 features.',
-            'Example: "It has six legs. It has black and yellow stripes. It can fly. What is it?"'
+            'Play the video, pausing occasionally to ask comprehension questions.',
+            'Ask about the different insects in the story.',
+            'Discuss how many legs each insect has.'
           ]
         },
         {
-          title: 'Bug Craft',
+          title: 'Compare Insects Activity',
           duration: '10 minutes',
-          description: 'Students create an insect craft.',
+          description: 'Students practice comparing different insects.',
           instructions: [
-            'Provide materials for students to create their own bug/insect.',
-            'Encourage them to include the correct features (number of legs, wings, antennae).',
-            'Students should be able to name the parts of their insect in English.'
+            'Display pictures of two different insects side by side.',
+            'Guide students to compare them: "The butterfly has wings, but the ant doesn\'t."',
+            'Have students work in pairs to compare two other insects.',
+            'Share comparisons with the class.'
+          ],
+          teacherNotes: 'Focus on the structures: "has/have" and "can/can\'t"'
+        },
+        {
+          title: 'Bug Craft Activity',
+          duration: '8 minutes',
+          description: 'Create simple bug crafts while practicing vocabulary.',
+          instructions: [
+            'Provide materials for students to create an insect of their choice.',
+            'As they work, ask them to name the parts they are adding.',
+            'Have students present their bugs: "This is my butterfly. It has two antennae and four wings."'
           ]
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Students present their bug crafts, describing the features using target vocabulary.'
+          title: 'Closing Game',
+          duration: '4 minutes',
+          description: 'Play Wordwall BUGS (2) or (3) game to reinforce learning.',
+          instructions: [
+            'Use one of the remaining Wordwall games not played in the first lesson.',
+            'Play as a whole class, with students taking turns.'
+          ]
         }
       ],
-      assessmentTips: 'Evaluate students\' understanding of insect characteristics and life cycles through their craft projects and descriptions.',
-      homeworkIdeas: ['Complete online Wordwall activities about bugs.', 'Record observations of bugs seen in your garden/park over the weekend (draw, name, and describe).'] 
+      assessmentTips: 'Evaluate students\' ability to name and identify insect body parts. Check their use of "has/have" when describing insects.',
+      homeworkIdeas: ['Complete one of the Wordwall activities online.', 'Make a fact sheet about your favorite insect with at least three facts.']
     }
   ];
 };

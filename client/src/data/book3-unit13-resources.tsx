@@ -19,7 +19,11 @@ export const book3Unit13Resources: TeacherResource[] = [
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/57658f0b3d9b4515b8df3df9b939d23f',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/57658f0b3d9b4515b8df3df9b939d23f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/57658f0b3d9b4515b8df3df9b939d23f?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/57658f0b3d9b4515b8df3df9b939d23f?themeId=1&templateId=3&fontStackId=0'
+    }
   },
   {
     id: `book3-unit${unitNumber}-game-2`,
@@ -29,7 +33,11 @@ export const book3Unit13Resources: TeacherResource[] = [
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/6a89079f91e04dfa9ddef933b9f8bdef',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6a89079f91e04dfa9ddef933b9f8bdef?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6a89079f91e04dfa9ddef933b9f8bdef?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/6a89079f91e04dfa9ddef933b9f8bdef?themeId=1&templateId=22&fontStackId=0'
+    }
   },
   {
     id: `book3-unit${unitNumber}-game-3`,
@@ -39,7 +47,11 @@ export const book3Unit13Resources: TeacherResource[] = [
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/3166dd8c0aca41c49e67c931b15f33e5',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/3166dd8c0aca41c49e67c931b15f33e5?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/3166dd8c0aca41c49e67c931b15f33e5?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/3166dd8c0aca41c49e67c931b15f33e5?themeId=1&templateId=2&fontStackId=0'
+    }
   },
   
   // ISL Collective Video Lessons
@@ -51,7 +63,11 @@ export const book3Unit13Resources: TeacherResource[] = [
     resourceType: 'lesson',
     provider: 'ISL Collective',
     sourceUrl: 'https://en.islcollective.com/english-esl-video-lessons/486113',
-    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/486113" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>'
+    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/486113" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>',
+    content: {
+      type: 'external-embed',
+      embedUrl: 'https://en.islcollective.com/english-esl-video-lessons/embed/486113'
+    }
   },
   {
     id: `book3-unit${unitNumber}-video-lesson-2`,
@@ -61,7 +77,11 @@ export const book3Unit13Resources: TeacherResource[] = [
     resourceType: 'lesson',
     provider: 'ISL Collective',
     sourceUrl: 'https://en.islcollective.com/english-esl-video-lessons/486106',
-    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/486106" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>'
+    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/486106" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>',
+    content: {
+      type: 'external-embed',
+      embedUrl: 'https://en.islcollective.com/english-esl-video-lessons/embed/486106'
+    }
   }
 ];
 

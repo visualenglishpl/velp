@@ -17,7 +17,11 @@ export const book3Unit17Resources: TeacherResource[] = [
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/watch?v=bVu7Sps7EBA',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/bVu7Sps7EBA?si=F4RPwpWkP0hKBLte" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/bVu7Sps7EBA?si=F4RPwpWkP0hKBLte" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    content: {
+      type: 'youtube',
+      embedId: 'bVu7Sps7EBA'
+    }
   },
   {
     id: 'book3-unit17-video-2',
@@ -27,7 +31,11 @@ export const book3Unit17Resources: TeacherResource[] = [
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/watch?v=Z2ppOux48xQ',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Z2ppOux48xQ?si=m6bwzr-sWz7thkfi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Z2ppOux48xQ?si=m6bwzr-sWz7thkfi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    content: {
+      type: 'youtube',
+      embedId: 'Z2ppOux48xQ'
+    }
   },
   {
     id: 'book3-unit17-video-3',
