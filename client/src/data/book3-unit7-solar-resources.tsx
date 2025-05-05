@@ -1,4 +1,4 @@
-import { TeacherResource } from '@/components/TeacherResources';
+import type { TeacherResource } from '../components/TeacherResources';
 import { BOOK3_TITLE } from './book3-resources-common';
 
 /**

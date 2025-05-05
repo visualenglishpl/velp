@@ -1,6 +1,6 @@
 import book3Unit7SolarResources from './book3-unit7-solar-resources';
-import { TeacherResource } from '@/components/TeacherResources';
-import { LessonPlan } from '@/components/LessonPlanTemplate';
+import type { TeacherResource } from '../components/TeacherResources';
+import type { LessonPlan } from '../components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 
 /**
@@ -12,10 +12,12 @@ const unitNumber = '7';
 const unitTitle = BOOK3_UNIT_TITLES[unitNumber];
 
 // Export resources getter function
-export const getBook3Unit7SolarResources = (): TeacherResource[] => book3Unit7SolarResources;
+export function getBook3Unit7SolarResources(): TeacherResource[] {
+  return book3Unit7SolarResources;
+}
 
 // Generate specific lesson plans for this unit
-export const generateBook3Unit7SolarLessonPlans = (): LessonPlan[] => {
+export function generateBook3Unit7SolarLessonPlans(): LessonPlan[] {
   return [
     {
       id: `book3-unit${unitNumber}-lesson1`,
@@ -132,3 +134,6 @@ export const generateBook3Unit7SolarLessonPlans = (): LessonPlan[] => {
     }
   ];
 };
+
+// Export resources directly for easier importing
+export { book3Unit7SolarResources };

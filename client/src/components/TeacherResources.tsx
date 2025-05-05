@@ -55,15 +55,12 @@ import { book3Unit4Resources } from '@/data/book3-unit4-resources';
 import { getBook3Unit4Resources, generateBook3Unit4LessonPlans } from '@/data/book3-unit4-implementation';
 import { book3Unit5Resources } from '@/data/book3-unit5-resources';
 import { book3Unit6Resources } from '@/data/book3-unit6-resources';
-import { book3Unit7Resources } from '@/data/book3-unit7-resources';
-import { book3Unit7ShoppingResources } from '@/data/book3-unit7-shopping-resources';
 import { book3Unit9Resources } from '@/data/book3-unit9-resources';
 import { getBook3Unit5Resources } from '@/data/book3-unit5-implementation';
 import { getBook3Unit6Resources } from '@/data/book3-unit6-implementation';
+import { getBook3Unit7Resources, generateBook3Unit7LessonPlans } from '@/data/book3-unit7-implementation';
 import { getBook3Unit7ShoppingResources, generateBook3Unit7ShoppingLessonPlans } from '@/data/book3-unit7-shopping-implementation';
 import { getBook3Unit9Resources } from '@/data/book3-unit9-implementation';
-// New Book 3 resources
-import { getBook3Unit7SolarResources, generateBook3Unit7SolarLessonPlans } from '@/data/book3-unit7-solar-implementation';
 import { getBook3Unit8Resources, generateBook3Unit8LessonPlans } from '@/data/book3-unit8-implementation';
 import { getBook3Unit10Resources, generateBook3Unit10LessonPlans } from '@/data/book3-unit10-implementation';
 import { getBook3Unit12Resources, generateBook3Unit12LessonPlans } from '@/data/book3-unit12-implementation';
@@ -288,13 +285,14 @@ const dynamicImplImport = async (book: string, unit: number) => {
         case 5: return import('@/data/book3-unit5-implementation');
         case 6: return import('@/data/book3-unit6-implementation');
         case 7: 
-          const unitImpl = window.location.pathname.includes('solar') ? 'solar' : 'shopping';
-          if (unitImpl === 'solar') {
-            console.log('Loading Solar System implementation for Unit 7');
-            return import('@/data/book3-unit7-solar-implementation');
-          } else {
+          // Default to Solar System implementation unless explicitly requesting shopping
+          const useShopping = window.location.pathname.includes('shopping');
+          if (useShopping) {
             console.log('Loading Shopping implementation for Unit 7');
             return import('@/data/book3-unit7-shopping-implementation');
+          } else {
+            console.log('Loading Solar System implementation for Unit 7');
+            return import('@/data/book3-unit7-implementation');
           }
         case 8: return import('@/data/book3-unit8-implementation');
         case 9: return import('@/data/book3-unit9-implementation');
@@ -574,8 +572,9 @@ const dynamicResourceImport = async (book: string, unit: number) => {
         case 5: return import('@/data/book3-unit5-resources');
         case 6: return import('@/data/book3-unit6-resources');
         case 7: 
-          console.log('Loading Solar System resources for Unit 7');
-          return import('@/data/book3-unit7-solar-resources');
+          // Default to Solar System resources
+          console.log('Loading resources for Unit 7');
+          return import('@/data/book3-unit7-resources');
         case 8: return import('@/data/book3-unit8-resources');
         case 9: return import('@/data/book3-unit9-resources');
         case 10: return import('@/data/book3-unit10-resources');
@@ -969,25 +968,25 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               } catch (error) {
                 console.error('Error using getBook3Unit4Resources:', error);
               }
-            } else if (unitNum === 5 && typedResourcesModule.book3Unit5Resources) {
-              console.log('Using book3Unit5Resources directly');
-              resources = typedResourcesModule.book3Unit5Resources;
-            } else if (unitNum === 6 && typedResourcesModule.book3Unit6Resources) {
-              console.log('Using book3Unit6Resources directly');
-              resources = typedResourcesModule.book3Unit6Resources;
+            } else if (unitNum === 5 && typedResourcesModule.getBook3Unit5Resources) {
+              console.log('Using getBook3Unit5Resources function');
+              resources = typedResourcesModule.getBook3Unit5Resources();
+            } else if (unitNum === 6 && typedResourcesModule.getBook3Unit6Resources) {
+              console.log('Using getBook3Unit6Resources function');
+              resources = typedResourcesModule.getBook3Unit6Resources();
             } else if (unitNum === 7) {
               // Special handling for Unit 7 which has two versions (Solar System and Shopping)
               // Try to determine the right one based on title or requested content
-              if (typedResourcesModule.book3Unit7ShoppingResources) {
-                console.log('Using book3Unit7ShoppingResources directly');
-                resources = typedResourcesModule.book3Unit7ShoppingResources;
-              } else if (typedResourcesModule.book3Unit7Resources) {
-                console.log('Using book3Unit7Resources directly');
-                resources = typedResourcesModule.book3Unit7Resources;
+              if (typedResourcesModule.getBook3Unit7ShoppingResources) {
+                console.log('Using getBook3Unit7ShoppingResources function');
+                resources = typedResourcesModule.getBook3Unit7ShoppingResources();
+              } else if (typedResourcesModule.getBook3Unit7Resources) {
+                console.log('Using getBook3Unit7Resources function');
+                resources = typedResourcesModule.getBook3Unit7Resources();
               }
-            } else if (unitNum === 9 && typedResourcesModule.book3Unit9Resources) {
-              console.log('Using book3Unit9Resources directly');
-              resources = typedResourcesModule.book3Unit9Resources;
+            } else if (unitNum === 9 && typedResourcesModule.getBook3Unit9Resources) {
+              console.log('Using getBook3Unit9Resources function');
+              resources = typedResourcesModule.getBook3Unit9Resources();
             } else if (unitNum === 1 && typedResourcesModule.getBook3Unit1Resources) {
               console.log('Using getBook3Unit1Resources function');
               resources = typedResourcesModule.getBook3Unit1Resources();
@@ -1008,7 +1007,10 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
               resources = typedResourcesModule.getBook3Unit6Resources();
             } else if (unitNum === 7) {
               // Special handling for Unit 7 getter functions
-              if (typedResourcesModule.getBook3Unit7ShoppingResources) {
+              if (typedResourcesModule.getBook3Unit7SolarResources) {
+                console.log('Using getBook3Unit7SolarResources function');
+                resources = typedResourcesModule.getBook3Unit7SolarResources();
+              } else if (typedResourcesModule.getBook3Unit7ShoppingResources) {
                 console.log('Using getBook3Unit7ShoppingResources function');
                 resources = typedResourcesModule.getBook3Unit7ShoppingResources();
               } else if (typedResourcesModule.getBook3Unit7Resources) {
@@ -1628,8 +1630,9 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         console.log('Loading Book 3 Unit 6 resources');
         return book3Unit6Resources || [];
       } else if (unitId === '7') {
-        console.log('Loading Book 3 Unit 7 resources (Shopping)');
-        return book3Unit7ShoppingResources || [];
+        console.log('Loading Book 3 Unit 7 resources (Solar)');
+        // Use getter function instead of direct import
+        return getBook3Unit7Resources();
       } else if (unitId === '9') {
         console.log('Loading Book 3 Unit 9 resources');
         return book3Unit9Resources || [];
