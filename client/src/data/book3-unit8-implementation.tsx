@@ -1,6 +1,7 @@
 import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
+// Import resources directly
 import book3Unit8Resources from './book3-unit8-resources';
 
 /**
@@ -9,10 +10,12 @@ import book3Unit8Resources from './book3-unit8-resources';
  */
 
 const unitNumber = '8';
-const unitTitle = BOOK3_UNIT_TITLES[unitNumber];
+const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'LET\'S GO SHOPPING - HOW MUCH IS IT?';
 
 // Export resources getter function
-export const getBook3Unit8Resources = (): TeacherResource[] => book3Unit8Resources;
+export const getBook3Unit8Resources = (): TeacherResource[] => {
+  return book3Unit8Resources;
+};
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit8LessonPlans = (): LessonPlan[] => {
@@ -22,113 +25,118 @@ export const generateBook3Unit8LessonPlans = (): LessonPlan[] => {
       title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 1`,
       duration: '45 minutes',
       level: 'Elementary',
-      objectives: ['Learn vocabulary related to shopping', 'Practice asking and answering about prices', 'Count by tens from 10-100'],
-      materials: ['Play money', 'Price tags', 'Flashcards of shop items', 'Visual English 3 textbook'],
+      objectives: ['Learn vocabulary for numbers 10-100', 'Ask and answer "How much is it?"', 'Use money expressions in a shopping context'],
+      materials: ['Number flashcards (10-100)', 'Play money', 'Price tags', 'Visual English 3 textbook', 'Shopping items pictures'],
       steps: [
         {
           title: 'Warm-up',
           duration: '5 minutes',
-          description: 'Review numbers 1-100 with a counting activity.'
+          description: 'Review numbers 1-10 and introduce tens (10, 20, 30...)'
+        },
+        {
+          title: 'Numbers 10-100 Song',
+          duration: '7 minutes',
+          description: 'Watch the "10 to 100 Song" video.',
+          instructions: [
+            'Play the video once through.',
+            'Play again, pausing to practice counting by tens.',
+            'Have students sing along with the video.'
+          ]
+        },
+        {
+          title: 'Numbers Practice',
+          duration: '8 minutes',
+          description: 'Teach numbers in multiples of 10 and practice counting.',
+          instructions: [
+            'Display flashcards with numbers 10-100 (by tens).',
+            'Model pronunciation and have students repeat.',
+            'Play a quick number recognition game.'
+          ]
         },
         {
           title: 'Shopping Vocabulary',
           duration: '10 minutes',
-          description: 'Introduce vocabulary related to shopping using flashcards.',
+          description: 'Introduce shopping-related phrases and vocabulary.',
           instructions: [
-            'Show images of common shop items with prices.',
-            'Have students repeat each word and practice pronunciation.'
-          ]
+            'Teach: "How much is it?" "It\'s ___ dollars/euros."',
+            'Show pictures of items with price tags.',
+            'Model dialogue and have students practice in pairs.'
+          ],
+          teacherNotes: 'Use play money to make the activity more engaging.'
         },
         {
-          title: 'Number Song',
-          duration: '5 minutes',
-          description: 'Play the "10 to 100 Song" video and have students sing along.',
-          teacherNotes: 'Focus on tens (10, 20, 30, etc.) to prepare for price activities.'
-        },
-        {
-          title: 'Price Question Practice',
+          title: 'Shopping Role-play',
           duration: '10 minutes',
-          description: 'Model and practice the question "How much is it?" with different items.',
+          description: 'Students practice shopping dialogues.',
           instructions: [
-            'Hold up an item with a price tag and ask "How much is it?"',
-            'Guide students to answer "It\'s (price)."',
-            'Have students take turns asking and answering.'
-          ]
-        },
-        {
-          title: 'Shopping Role Play',
-          duration: '10 minutes',
-          description: 'Students practice shopping dialogues in pairs.',
-          instructions: [
-            'Provide simple dialogue template: "Can I help you? Yes, please. How much is this? It\'s $X."',
-            'Distribute play money and price tags for realism.'
+            'Set up a simple store with items and price tags.',
+            'Have students take turns being shopkeeper and customer.',
+            'Encourage use of "How much is it?" and appropriate responses.'
           ]
         },
         {
           title: 'Wrap-up',
           duration: '5 minutes',
-          description: 'Play a quick price guessing game with classroom objects.'
+          description: 'Play the Wordwall "Numbers 10-Tens" game to reinforce vocabulary.'
         }
       ],
-      assessmentTips: 'Check for correct pronunciation of prices and understanding of the question "How much is it?"',
-      homeworkIdeas: ['Create price tags for 5 items at home.', 'Practice number sequences by counting by tens from 10 to 100.']
+      assessmentTips: 'Check students\' ability to correctly identify and say numbers from 10-100. Observe their use of "How much is it?" in shopping dialogues.',
+      homeworkIdeas: ['Practice numbers 10-100 with the online Wordwall game.', 'Create 5 price tags for items at home and write how much each item costs.']
     },
     {
       id: `book3-unit${unitNumber}-lesson2`,
       title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 2`,
       duration: '45 minutes',
       level: 'Elementary',
-      objectives: ['Compare prices using "cheaper" and "more expensive"', 'Practice shopping dialogues', 'Calculate simple costs'],
-      materials: ['Shopping items with price tags', 'Play money', 'Shopping worksheet', 'Visual English 3 textbook'],
+      objectives: ['Practice using numbers in real shopping scenarios', 'Expand shopping dialogue vocabulary', 'Role-play shopping interactions'],
+      materials: ['Play money', 'Shopping items with price tags', 'Shopping dialogue cards', 'Visual English 3 textbook'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Warm-up Review',
           duration: '5 minutes',
-          description: 'Review previous lesson with a quick "How much is it?" activity.'
+          description: 'Quick review of numbers and shopping phrases with flashcards.'
         },
         {
-          title: 'Price Comparison',
-          duration: '8 minutes',
-          description: 'Introduce comparing prices using "cheaper than" and "more expensive than".',
+          title: 'Video: How Much Is It?',
+          duration: '7 minutes',
+          description: 'Watch the "How Much Is It?" song/conversation video.',
+          teacherNotes: 'Pause the video at key moments to practice the phrases together.'
+        },
+        {
+          title: 'Extended Shopping Dialogues',
+          duration: '10 minutes',
+          description: 'Teach additional shopping phrases.',
           instructions: [
-            'Display pairs of items with different prices.',
-            'Model sentences like "The pencil is cheaper than the book" and "The book is more expensive than the pencil."'
+            'Introduce: "Can I help you?" "I would like..." "Here you are." "Thank you."',
+            'Model a complete shopping dialogue with a volunteer.',
+            'Have students practice extended dialogues in pairs.'
           ]
         },
         {
-          title: 'Shopping Video',
-          duration: '7 minutes',
-          description: 'Watch the "How Much is it?" song video.',
-          teacherNotes: 'Pause to practice dialogues from the video.'
-        },
-        {
-          title: 'Market Day Activity',
+          title: 'Market Day Game',
           duration: '15 minutes',
-          description: 'Set up a class market where students buy and sell items.',
+          description: 'Students create a class marketplace.',
           instructions: [
             'Divide class into shopkeepers and customers.',
-            'Customers have a shopping list and budget.',
-            'Shopkeepers try to sell their products using target language.',
-            'Students swap roles halfway through.'
+            'Give customers play money in different amounts.',
+            'Shopkeepers set up "stores" with items and prices.',
+            'Customers must buy at least 3 items, using proper dialogues.',
+            'Switch roles halfway through.'
           ]
         },
         {
-          title: 'Shopping Math',
+          title: 'Numbers Challenge',
           duration: '5 minutes',
-          description: 'Students calculate total costs for simple shopping problems.',
-          instructions: [
-            'Example: "If you buy 2 notebooks for $10 each, how much is it altogether?"',
-            'Focus on adding multiples of 10.'
-          ]
+          description: 'Play the Wordwall "HOW MUCH IS IT?" game as a class.'
         },
         {
           title: 'Wrap-up',
-          duration: '5 minutes',
+          duration: '3 minutes',
           description: 'Students share what they "bought" during Market Day and how much they spent.'
         }
       ],
-      assessmentTips: 'Evaluate correct use of "How much is it?" and price comparison terms during the Market Day activity.',
-      homeworkIdeas: ['Create a shopping list with 5 items and prices.', 'Compare prices of similar items from different stores using "cheaper than" and "more expensive than".']
+      assessmentTips: 'Evaluate students\' fluency in using shopping phrases and correct number usage in context. Check their ability to navigate a complete shopping dialogue.',
+      homeworkIdeas: ['Write a shopping dialogue with 5 exchanges.', 'Complete the online Wordwall activities about prices and numbers.']
     }
   ];
 };

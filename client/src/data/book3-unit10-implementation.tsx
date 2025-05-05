@@ -1,6 +1,7 @@
 import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
+// Import resources directly
 import book3Unit10Resources from './book3-unit10-resources';
 
 /**
@@ -9,10 +10,12 @@ import book3Unit10Resources from './book3-unit10-resources';
  */
 
 const unitNumber = '10';
-const unitTitle = BOOK3_UNIT_TITLES[unitNumber];
+const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'MY FAVOURITE SUBJECT';
 
 // Export resources getter function
-export const getBook3Unit10Resources = (): TeacherResource[] => book3Unit10Resources;
+export const getBook3Unit10Resources = (): TeacherResource[] => {
+  return book3Unit10Resources;
+};
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit10LessonPlans = (): LessonPlan[] => {
@@ -22,117 +25,121 @@ export const generateBook3Unit10LessonPlans = (): LessonPlan[] => {
       title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 1`,
       duration: '45 minutes',
       level: 'Elementary',
-      objectives: ['Learn vocabulary for school subjects', 'Express likes and dislikes about subjects', 'Ask and answer about favorite subjects'],
-      materials: ['School subject flashcards', 'Whiteboard', 'Visual English 3 textbook', 'Emoji faces (happy/neutral/sad)'],
+      objectives: ['Learn vocabulary for school subjects', 'Ask and answer about favorite subjects', 'Express preferences'],
+      materials: ['School subjects flashcards', 'Visual English 3 textbook', 'School timetable template', 'Colored pencils'],
       steps: [
         {
           title: 'Warm-up',
           duration: '5 minutes',
-          description: 'Have students name as many school subjects as they can.'
+          description: 'Show pictures of different school subjects and elicit names.'
         },
         {
-          title: 'Subject Vocabulary',
+          title: 'Vocabulary Introduction',
           duration: '10 minutes',
-          description: 'Introduce or review school subject vocabulary with flashcards.',
+          description: 'Teach key school subject vocabulary.',
           instructions: [
-            'Hold up each flashcard and say the subject name.',
-            'Have students repeat the pronunciation.',
-            'Ask simple comprehension questions about each subject.'
+            'Present flashcards with different subjects: math, science, art, music, etc.',
+            'Model pronunciation and have students repeat.',
+            'Ask students to mimic actions related to each subject (drawing for art, calculating for math).'
           ]
         },
         {
-          title: 'Video Song',
+          title: 'Video: What\'s Your Favorite Subject',
           duration: '8 minutes',
-          description: 'Play the "What\'s Your Favorite Subject?" video song.',
-          teacherNotes: 'Pause the video after each subject to have students repeat and point to the corresponding flashcard.'
+          description: 'Watch the "What\'s Your Favorite Subject" video.',
+          instructions: [
+            'Play the video once through.',
+            'Play again, pausing to practice the question and answers.',
+            'Have students repeat key phrases from the video.'
+          ],
+          teacherNotes: 'This video introduces the target question structure in a natural context.'
         },
         {
-          title: 'School Subject Likes',
-          duration: '10 minutes',
-          description: 'Practice expressing opinions about school subjects.',
+          title: 'Question & Answer Practice',
+          duration: '7 minutes',
+          description: 'Practice asking and answering about favorite subjects.',
           instructions: [
-            'Model sentences: "I like math. I don\'t like history."',
-            'Have students express their opinions about each subject using happy/neutral/sad emoji faces.',
-            'Write sample sentences on the board.'
+            'Model: "What\'s your favorite subject?" "My favorite subject is..."',
+            'Practice in pairs, then as whole class in a chain drill.',
+            'Extend by asking "Why?" and teaching simple responses like "It\'s fun/interesting/easy."'
           ]
         },
         {
-          title: 'Favorite Subject Survey',
-          duration: '7 minutes',
-          description: 'Students ask and answer about favorite subjects in pairs.',
+          title: 'School Timetable Activity',
+          duration: '10 minutes',
+          description: 'Students create their ideal school timetable.',
           instructions: [
-            'Model: "What\'s your favorite subject? My favorite subject is science."',
-            'Students walk around asking each other about favorite subjects.',
-            'They should talk to at least 5 classmates.'
+            'Give each student a blank timetable template.',
+            'Students fill in their dream schedule with favorite subjects.',
+            'Encourage them to add some unusual subjects like "dinosaur studies" or "chocolate making."',
+            'Students color and decorate their timetables.'
           ]
         },
         {
           title: 'Wrap-up',
           duration: '5 minutes',
-          description: 'Create a class chart showing the most popular subjects based on the survey.'
+          description: 'Play the Wordwall School Subjects game to reinforce vocabulary.'
         }
       ],
-      assessmentTips: 'Check for correct pronunciation of subject names and proper use of "favorite" in questions and answers.',
-      homeworkIdeas: ['Create a mini poster about your favorite subject.', 'Complete the subject vocabulary worksheet.']
+      assessmentTips: 'Check students\' ability to correctly identify and name school subjects. Observe their use of "What\'s your favorite subject?" and appropriate responses.',
+      homeworkIdeas: ['Complete the school subjects matching worksheet.', 'Ask family members about their favorite subjects and report findings.']
     },
     {
       id: `book3-unit${unitNumber}-lesson2`,
       title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 2`,
       duration: '45 minutes',
       level: 'Elementary',
-      objectives: ['Use adjectives to describe school subjects', 'Give reasons for liking or disliking subjects', 'Create a school schedule'],
-      materials: ['Subject flashcards', 'Adjective word cards', 'Blank schedule templates', 'Visual English 3 textbook'],
+      objectives: ['Review school subject vocabulary', 'Discuss reasons for subject preferences', 'Conduct a class survey about favorite subjects'],
+      materials: ['Chart paper', 'Sticky notes', 'Visual English 3 textbook', 'Subject survey handout'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Warm-up Review',
           duration: '5 minutes',
-          description: 'Quick review of subject vocabulary using flashcards.'
+          description: 'Play a quick memory game with school subjects vocabulary.'
         },
         {
-          title: 'Subject Adjectives',
-          duration: '8 minutes',
-          description: 'Teach adjectives for describing school subjects.',
-          instructions: [
-            'Introduce adjectives: interesting, boring, fun, difficult, easy, important.',
-            'Model sentences: "Math is difficult. Art is fun."',
-            'Practice using adjectives with different subjects.'
-          ]
-        },
-        {
-          title: 'School Subject Opinions',
-          duration: '10 minutes',
-          description: 'Students give reasons for liking or disliking subjects.',
-          instructions: [
-            'Model: "I like science because it\'s interesting." "I don\'t like history because it\'s boring."',
-            'Students write three sentences about subjects they like or dislike with reasons.',
-            'Share with a partner.'
-          ]
-        },
-        {
-          title: 'Video Activity',
+          title: 'Video: School Subjects Song',
           duration: '7 minutes',
-          description: 'Watch the "This is Britain - School" video.',
-          teacherNotes: 'Pause video at relevant points to discuss differences between British schools and local schools.'
+          description: 'Watch the "School Subjects Song" video.',
+          teacherNotes: 'This song helps reinforce vocabulary in a catchy way. Encourage students to sing along.'
         },
         {
-          title: 'School Schedule',
+          title: 'Reasons & Opinions',
           duration: '10 minutes',
-          description: 'Students create their ideal school schedule.',
+          description: 'Expand vocabulary for expressing opinions about subjects.',
           instructions: [
-            'Distribute blank schedule templates for Monday-Friday.',
-            'Students fill in their ideal subjects for each day.',
-            'Include at least 5 different subjects.',
-            'Label each with an adjective.'
+            'Teach useful phrases: "It\'s interesting/boring/difficult/easy/fun."',
+            'Create a simple mind map on the board with reasons for liking different subjects.',
+            'Model giving reasons: "I like art because it\'s creative."',
+            'Have students practice giving reasons for their preferences.'
           ]
         },
         {
-          title: 'Wrap-up',
+          title: 'Class Survey',
+          duration: '15 minutes',
+          description: 'Students conduct a favorite subject survey.',
+          instructions: [
+            'Give each student a survey sheet with classmates\' names and subject options.',
+            'Students circulate, asking "What\'s your favorite subject? Why?"',
+            'They record answers on their sheets.',
+            'After the survey, create a class graph showing the most popular subjects.',
+            'Discuss the results as a class.'
+          ]
+        },
+        {
+          title: 'This is Britain Video',
           duration: '5 minutes',
-          description: 'Students present their ideal schedules to the class or in small groups.'
+          description: 'Watch segments of the "This is Britain - School" video to compare schools.',
+          teacherNotes: 'Pause to discuss similarities and differences with schools in your country.'
+        },
+        {
+          title: 'Wrap-up Activity',
+          duration: '3 minutes',
+          description: 'Play the second Wordwall game to consolidate learning.'
         }
       ],
-      assessmentTips: 'Evaluate correct use of adjectives to describe subjects and ability to give reasons for preferences.',
-      homeworkIdeas: ['Interview a family member about their favorite school subject.', 'Create a comparison chart of your real schedule and your ideal schedule.']
+      assessmentTips: 'Evaluate students\' ability to express preferences with reasons. Check their comfort in asking survey questions and recording information.',
+      homeworkIdeas: ['Design a poster about your favorite subject explaining why you like it.', 'Complete the online Wordwall activities about school subjects.']
     }
   ];
 };

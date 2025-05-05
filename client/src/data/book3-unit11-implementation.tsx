@@ -1,6 +1,7 @@
 import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
+// Import resources directly
 import book3Unit11Resources from './book3-unit11-resources';
 
 /**
@@ -9,10 +10,12 @@ import book3Unit11Resources from './book3-unit11-resources';
  */
 
 const unitNumber = '11';
-const unitTitle = BOOK3_UNIT_TITLES[unitNumber];
+const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'GET WELL SOON';
 
 // Export resources getter function
-export const getBook3Unit11Resources = (): TeacherResource[] => book3Unit11Resources;
+export const getBook3Unit11Resources = (): TeacherResource[] => {
+  return book3Unit11Resources;
+};
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit11LessonPlans = (): LessonPlan[] => {
@@ -22,120 +25,135 @@ export const generateBook3Unit11LessonPlans = (): LessonPlan[] => {
       title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 1`,
       duration: '45 minutes',
       level: 'Elementary',
-      objectives: ['Learn vocabulary related to illnesses', 'Ask and answer "What\'s the matter?"', 'Express sympathy with "I\'m sorry to hear that."'],
-      materials: ['Illness flashcards', 'Get well cards', 'Visual English 3 textbook', 'Bandages and pretend medical kit (optional)'],
+      objectives: ['Learn vocabulary for common illness symptoms', 'Ask and answer "What\'s wrong?"', 'Express sympathy using "I\'m sorry to hear that"'],
+      materials: ['Illness flashcards', 'Visual English 3 textbook', 'Band-aids (prop)', 'Thermometer (prop)'],
       steps: [
         {
           title: 'Warm-up',
           duration: '5 minutes',
-          description: 'Discuss times when students have been sick and what happened.'
+          description: 'Mime different illness symptoms and have students guess.'
         },
         {
-          title: 'Illness Vocabulary',
+          title: 'Vocabulary Introduction',
           duration: '10 minutes',
-          description: 'Introduce vocabulary for common illnesses using flashcards.',
+          description: 'Teach key illness vocabulary.',
           instructions: [
-            'Show each flashcard with images of symptoms.',
-            'Introduce phrases like "I have a headache/cold/fever/cough."',
-            'Students repeat and mime each condition.'
+            'Present flashcards with different symptoms: headache, stomachache, cold, etc.',
+            'Model pronunciation and have students repeat.',
+            'Show props (thermometer, bandages) where appropriate.',
+            'Students touch relevant body parts when learning words like "headache" or "sore throat".'
           ]
         },
         {
-          title: 'What\'s the Matter?',
+          title: 'Question & Answer Practice',
           duration: '8 minutes',
-          description: 'Practice the question "What\'s the matter?" and responses.',
+          description: 'Practice asking and answering about health problems.',
           instructions: [
-            'Model dialogue: "What\'s the matter?" "I have a sore throat."',
-            'Practice in pairs with different symptoms.',
-            'Add sympathy: "I\'m sorry to hear that."'
-          ]
+            'Model dialogue: "What\'s wrong?" "I have a headache."',
+            'Teach sympathy response: "I\'m sorry to hear that."',
+            'Practice in pairs, using flashcards as prompts.',
+            'Make a circle and practice as a class, passing a prop (like a small toy thermometer).'
+          ],
+          teacherNotes: 'Make sure students use appropriate facial expressions to show they don\'t feel well.'
         },
         {
-          title: 'Doctor Role Play',
-          duration: '10 minutes',
-          description: 'Students role-play doctor and patient interactions.',
-          instructions: [
-            'Set up a simple doctor\'s office.',
-            'Patient explains symptoms, doctor responds with sympathy and advice.',
-            'Optional: Use props like bandages or thermometers.'
-          ]
-        },
-        {
-          title: 'Get Well Card',
+          title: 'Game: Wordwall Anagram',
           duration: '7 minutes',
-          description: 'Students create a simple get well card for a "sick" classmate.',
+          description: 'Play the "Get Well Soon - Anagram" Wordwall game as a class.',
           instructions: [
-            'Provide paper and coloring supplies.',
-            'Have students write a short message with "Get well soon" and "I\'m sorry to hear that you have a..."',
-            'Exchange cards with partners.'
+            'Display the Wordwall game on the board.',
+            'Divide class into teams.',
+            'Teams take turns unscrambling the illness vocabulary words.',
+            'Award points for correct answers.'
+          ]
+        },
+        {
+          title: 'Role-play: Doctor and Patient',
+          duration: '10 minutes',
+          description: 'Students practice dialogues about health problems.',
+          instructions: [
+            'Arrange students in pairs.',
+            'One student plays the doctor, the other the patient.',
+            'Doctor asks "What\'s wrong?" and patient describes symptoms.',
+            'Doctor responds with "I\'m sorry to hear that" and suggests a remedy.',
+            'Provide a simple worksheet with common remedies: "You should rest", "You should take medicine", etc.',
+            'Switch roles and repeat.'
           ]
         },
         {
           title: 'Wrap-up',
           duration: '5 minutes',
-          description: 'Play a quick "What\'s wrong?" guessing game using mime.'
+          description: 'Review vocabulary with a quick matching game.'
         }
       ],
-      assessmentTips: 'Check for correct use of illness vocabulary and sympathy expressions.',
-      homeworkIdeas: ['Create an illustrated mini-dictionary of illnesses and remedies.', 'Write a short dialogue between a doctor and a patient.']
+      assessmentTips: 'Check students\' ability to correctly identify and name common illness symptoms. Observe their use of "What\'s wrong?" and "I\'m sorry to hear that" in dialogue practice.',
+      homeworkIdeas: ['Complete the illness vocabulary matching worksheet.', 'Draw a picture of someone who is sick and write 2-3 sentences about what\'s wrong.']
     },
     {
       id: `book3-unit${unitNumber}-lesson2`,
       title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Lesson Plan 2`,
       duration: '45 minutes',
       level: 'Elementary',
-      objectives: ['Learn vocabulary for remedies and treatments', 'Give advice using "You should..."', 'Create a health poster'],
-      materials: ['Medicine/remedy flashcards', 'Poster paper', 'Art supplies', 'Visual English 3 textbook'],
+      objectives: ['Learn vocabulary for common remedies', 'Give advice using "You should"', 'Create a health advice poster'],
+      materials: ['Remedy pictures/flashcards', 'Visual English 3 textbook', 'Poster paper', 'Markers/colored pencils'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Warm-up Review',
           duration: '5 minutes',
-          description: 'Review illness vocabulary from previous lesson with a quick matching game.'
+          description: 'Play the Wordwall GET WELL SOON (1) game to review illness vocabulary from previous lesson.'
         },
         {
           title: 'Remedy Vocabulary',
+          duration: '10 minutes',
+          description: 'Introduce vocabulary for common remedies.',
+          instructions: [
+            'Present pictures of remedies: medicine, rest, drink water, etc.',
+            'Teach structure: "You should" + verb (rest, drink, take medicine).',
+            'Model pronunciation and have students repeat.',
+            'Create simple matching exercise on board - match problems with remedies.'
+          ]
+        },
+        {
+          title: 'Advice Chain',
           duration: '8 minutes',
-          description: 'Introduce vocabulary for common remedies and treatments.',
+          description: 'Practice giving health advice in a chain activity.',
           instructions: [
-            'Show flashcards with remedies: medicine, rest, drink water, etc.',
-            'Teach phrases like "take medicine," "get some rest," "drink plenty of water."',
-            'Students repeat and match remedies to illnesses.'
-          ]
+            'Start by saying a problem: "I have a headache."',
+            'Student 1 gives advice: "You should take medicine."',
+            'Student 1 then states a new problem, and Student 2 gives advice.',
+            'Continue around the class.'
+          ],
+          teacherNotes: 'Encourage creativity with reasonable advice. Make sure students use proper "should" form.'
         },
         {
-          title: 'Giving Advice',
-          duration: '10 minutes',
-          description: 'Practice giving advice using "You should..." for different illnesses.',
-          instructions: [
-            'Model: "I have a headache." "You should take an aspirin and rest."',
-            'Students work in pairs giving advice for different symptoms.',
-            'Create advice chains around the class.'
-          ]
-        },
-        {
-          title: 'Wordwall Activities',
+          title: 'Wordwall Games Practice',
           duration: '7 minutes',
-          description: 'Play interactive games using the Wordwall resources.',
-          teacherNotes: 'Use the "Get Well Soon" and "Remedies" Wordwall games from the resources section.'
+          description: 'Play one of the REMEDIES Wordwall games to reinforce vocabulary.',
+          instructions: [
+            'Students can take turns or work in small groups.',
+            'Focus on correctly matching remedies to health problems.'
+          ]
         },
         {
-          title: 'Health Poster',
+          title: 'Health Advice Poster',
           duration: '10 minutes',
-          description: 'Create a health advice poster in small groups.',
+          description: 'Students create a health advice poster.',
           instructions: [
-            'Assign each group a different illness.',
-            'Groups create a poster showing the symptoms and advice.',
-            'Include at least 3 "You should..." sentences on each poster.'
+            'Divide students into groups of 3-4.',
+            'Each group is assigned a different health problem.',
+            'Groups create a colorful poster showing the problem and 3-4 remedies.',
+            'Students write sentences using "You should..." structure.',
+            'Groups present their posters briefly.'
           ]
         },
         {
           title: 'Wrap-up',
           duration: '5 minutes',
-          description: 'Groups present their health posters to the class.'
+          description: 'Review lesson content with People and Places Wordwall game.'
         }
       ],
-      assessmentTips: 'Evaluate correct matching of remedies to illnesses and proper use of "You should..." for giving advice.',
-      homeworkIdeas: ['Interview a family member about what they do when they have a cold or headache.', 'Create a health advice brochure with remedies for common illnesses.']
+      assessmentTips: 'Evaluate students\' ability to match appropriate remedies to health problems. Check their use of the "You should" structure.',
+      homeworkIdeas: ['Complete the online Wordwall activities about remedies.', 'Write a short dialogue between a sick person and a doctor.']
     }
   ];
 };
