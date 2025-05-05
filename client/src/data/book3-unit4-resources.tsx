@@ -9,22 +9,20 @@ import { BOOK3_TITLE } from './book3-resources-common';
 const unitNumber = '4';
 const unitTitle = 'FREE TIME - HOBBIES';
 
-// Videos for Unit 4
-export const videos: TeacherResource[] = [
+export const book3Unit4Resources: TeacherResource[] = [
+  // Video Resources
   {
     id: `book3-unit${unitNumber}-video-1`,
     bookId: '3',
     unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Hobbies and Free Time`,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Free Time Activities`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/vjJuXqvFBD0',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/vjJuXqvFBD0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
-  }
-];
-
-// Games for Unit 4
-export const games: TeacherResource[] = [
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/vjJuXqvFBD0?si=vbVMW3_lpg7Xt4tp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  },
+  
+  // Game Resources
   {
     id: `book3-unit${unitNumber}-game-1`,
     bookId: '3',
@@ -47,10 +45,4 @@ export const games: TeacherResource[] = [
   }
 ];
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
-
-// Main export for backward compatibility
-export const book3Unit4Resources = resources;
-
-export default resources;
+export default book3Unit4Resources;

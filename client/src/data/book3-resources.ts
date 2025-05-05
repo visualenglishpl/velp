@@ -9,6 +9,7 @@ import { BOOK3_TITLE, BOOK3_UNIT_TITLES, generateDefaultBook3UnitResources } fro
 import book3Unit1Resources from './book3-unit1-resources';
 import book3Unit2Resources from './book3-unit2-resources';
 import book3Unit3Resources from './book3-unit3-resources';
+import book3Unit4Resources from './book3-unit4-resources';
 import book3Unit5Resources from './book3-unit5-resources';
 import book3Unit6Resources from './book3-unit6-resources';
 import book3Unit7Resources from './book3-unit7-resources';
@@ -31,6 +32,7 @@ export const book3ResourcesByUnit: Record<string, TeacherResource[]> = {
   '1': book3Unit1Resources,
   '2': book3Unit2Resources,
   '3': book3Unit3Resources,
+  '4': book3Unit4Resources,
   '5': book3Unit5Resources,
   '6': book3Unit6Resources,
   '7': book3Unit7SolarResources, // Solar System theme (correct theme for Unit 7)
@@ -65,6 +67,7 @@ export {
   book3Unit1Resources,
   book3Unit2Resources,
   book3Unit3Resources,
+  book3Unit4Resources,
   book3Unit5Resources,
   book3Unit6Resources,
   book3Unit7Resources,
