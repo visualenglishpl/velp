@@ -69,10 +69,9 @@ import { getBook3Unit12Resources, generateBook3Unit12LessonPlans } from '@/data/
 import { getBook3Unit13Resources, generateBook3Unit13LessonPlans } from '@/data/book3-unit13-implementation';
 import { getBook3Unit14Resources, generateBook3Unit14LessonPlans } from '@/data/book3-unit14-implementation';
 import { getBook3Unit15Resources, generateBook3Unit15LessonPlans } from '@/data/book3-unit15-implementation';
-import { getBook3Unit16Resources, generateBook3Unit16LessonPlans } from '@/data/book3-unit16-implementation';
-import { getBook3Unit16SportsResources, generateBook3Unit16SportsLessonPlans } from '@/data/book3-unit16-sports-implementation';
-import { book3Unit16SportsResources } from '@/data/book3-unit16-sports-resources';
-import { book3Unit16Resources } from '@/data/book3-unit16-resources';
+// Import the sports version of Unit 16 resources and lesson plans
+import { getBook3Unit16Resources, generateBook3Unit16LessonPlans } from '@/data/book3-unit16-sports-implementation';
+import { book3Unit16Resources } from '@/data/book3-unit16-sports-resources';
 import { getBook3Unit17Resources, generateBook3Unit17LessonPlans } from '@/data/book3-unit17-implementation';
 import { book3Unit17Resources } from '@/data/book3-unit17-resources';
 import { getBook3Unit18Resources, generateBook3Unit18LessonPlans } from '@/data/book3-unit18-implementation';
@@ -1622,7 +1621,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return book3Unit9Resources || [];
       } else if (unitId === '16') {
         console.log('Loading Book 3 Unit 16 Sports resources');
-        return book3Unit16SportsResources || [];
+        return book3Unit16Resources || [];
       } else if (unitId === '17') {
         console.log('Loading Book 3 Unit 17 House Chores resources');
         return book3Unit17Resources || [];
@@ -2966,7 +2965,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       try {
         try {
           console.log('Loading Book 3 Unit 16 Sports lesson plans');
-          sportsPlans = generateBook3Unit16SportsLessonPlans();
+          sportsPlans = generateBook3Unit16LessonPlans();
         } catch (error) {
           console.error('Error loading Book 3 Unit 16 Sports lesson plans:', error);
           sportsPlans = generateDefaultBook3UnitLessonPlans('16', 'Sports');
@@ -3090,8 +3089,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       let unit6Plans: LessonPlan[] = [];
       try {
         // First try to use the imported generator function if available
-        if (typeof generateBook7Unit6LessonPlans === 'function') {
-          unit6Plans = generateBook7Unit6LessonPlans();
+        if (typeof generateBook1Unit6LessonPlans === 'function') {
+          unit6Plans = generateBook1Unit6LessonPlans();
         } else {
           // Use default generator as fallback
           unit6Plans = generateDefaultBook7UnitLessonPlans('6', 'Money Matters');
@@ -3154,8 +3153,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       let unit7Plans: LessonPlan[] = [];
       try {
         // First try to use the imported generator function if available
-        if (typeof generateBook7Unit7LessonPlans === 'function') {
-          unit7Plans = generateBook7Unit7LessonPlans();
+        if (typeof generateBook1Unit7LessonPlans === 'function') {
+          unit7Plans = generateBook1Unit7LessonPlans();
         } else {
           // Use default generator as fallback
           unit7Plans = generateDefaultBook7UnitLessonPlans('7', BOOK7_UNIT_TITLES['7'] || 'DIY & Tools');
@@ -3218,8 +3217,8 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       let unit8Plans: LessonPlan[] = [];
       try {
         // First try to use the imported generator function if available
-        if (typeof generateBook7Unit8LessonPlans === 'function') {
-          unit8Plans = generateBook7Unit8LessonPlans();
+        if (typeof generateBook2Unit8LessonPlans === 'function') {
+          unit8Plans = generateBook2Unit8LessonPlans();
         } else {
           // Use default generator as fallback
           unit8Plans = generateDefaultBook7UnitLessonPlans('8', BOOK7_UNIT_TITLES['8'] || 'Musical Instruments');
@@ -3281,7 +3280,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Unit 9 lesson plans
       let unit9Plans: LessonPlan[] = [];
       try {
-        unit9Plans = getUnit9LessonPlans();
+        unit9Plans = getBook6Unit9LessonPlans();
       } catch (error) {
         console.error('Error getting Unit 9 lesson plans:', error);
       }
@@ -3337,7 +3336,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Unit 10 lesson plans
       let unit10Plans: LessonPlan[] = [];
       try {
-        unit10Plans = getUnit10LessonPlans();
+        unit10Plans = getBook6Unit10LessonPlans();
       } catch (error) {
         console.error('Error getting Unit 10 lesson plans:', error);
       }
@@ -3393,7 +3392,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Unit 11 lesson plans
       let unit11Plans: LessonPlan[] = [];
       try {
-        unit11Plans = getUnit11LessonPlans();
+        unit11Plans = generateUnit1LessonPlans();
       } catch (error) {
         console.error('Error getting Unit 11 lesson plans:', error);
       }
@@ -3449,7 +3448,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Unit 12 lesson plans
       let unit12Plans: LessonPlan[] = [];
       try {
-        unit12Plans = getUnit12LessonPlans();
+        unit12Plans = generateUnit1LessonPlans();
       } catch (error) {
         console.error('Error getting Unit 12 lesson plans:', error);
       }
@@ -3505,7 +3504,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // Get Unit 13 lesson plans
       let unit13Plans: LessonPlan[] = [];
       try {
-        unit13Plans = getUnit13LessonPlans();
+        unit13Plans = [];
       } catch (error) {
         console.error('Error getting Unit 13 lesson plans:', error);
       }
