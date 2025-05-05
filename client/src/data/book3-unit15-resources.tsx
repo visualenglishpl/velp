@@ -15,31 +15,31 @@ export const book3Unit15Resources: TeacherResource[] = [
     id: `book3-unit${unitNumber}-video-1`,
     bookId: '3',
     unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What Do You See - Insects Song (1)`,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What Do You See (Insects)`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/bn8QLdWJYl8',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/bn8QLdWJYl8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/bn8QLdWJYl8?si=RoOwJePsFolnIaNz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
     id: `book3-unit${unitNumber}-video-2`,
     bookId: '3',
     unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What Do You See - Insects Song (2)`,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What Do You See (Insects) 2`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/llZwHR_Y_Es',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/llZwHR_Y_Es" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/llZwHR_Y_Es?si=PmlefiDeymklwcAF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: `book3-unit${unitNumber}-video-3`,
+    id: `book3-unit${unitNumber}-video-story`,
     bookId: '3',
     unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Caterpillar Shoes - Story`,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Caterpillar Shoes Story`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/tYa6OLQHrEc',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tYa6OLQHrEc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tYa6OLQHrEc?si=74zEZkA19vrf7p76" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   
   // Game Resources

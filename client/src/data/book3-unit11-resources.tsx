@@ -3,7 +3,7 @@ import { BOOK3_TITLE } from './book3-resources-common';
 
 /**
  * Book 3 Unit 11 - GET WELL SOON
- * Resources including games based on the provided attachments
+ * Resources including videos and games
  */
 
 const unitNumber = '11';

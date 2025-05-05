@@ -41,25 +41,27 @@ export const book3Unit13Resources: TeacherResource[] = [
     sourceUrl: 'https://wordwall.net/resource/3166dd8c0aca41c49e67c931b15f33e5',
     embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/3166dd8c0aca41c49e67c931b15f33e5?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
+  
+  // ISL Collective Video Lessons
   {
-    id: `book3-unit${unitNumber}-game-4`,
+    id: `book3-unit${unitNumber}-video-lesson-1`,
     bookId: '3',
     unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - ISL Collective Video 1`,
-    resourceType: 'video',
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - ISL Collective Video Lesson 1`,
+    resourceType: 'lesson',
     provider: 'ISL Collective',
     sourceUrl: 'https://en.islcollective.com/english-esl-video-lessons/486113',
-    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/486113" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: 100%"></iframe>'
+    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/486113" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>'
   },
   {
-    id: `book3-unit${unitNumber}-game-5`,
+    id: `book3-unit${unitNumber}-video-lesson-2`,
     bookId: '3',
     unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - ISL Collective Video 2`,
-    resourceType: 'video',
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - ISL Collective Video Lesson 2`,
+    resourceType: 'lesson',
     provider: 'ISL Collective',
     sourceUrl: 'https://en.islcollective.com/english-esl-video-lessons/486106',
-    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/486106" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: 100%"></iframe>'
+    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/486106" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>'
   }
 ];
 

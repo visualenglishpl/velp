@@ -1,111 +1,88 @@
 import { TeacherResource } from '@/components/TeacherResources';
-import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
+import { BOOK3_TITLE } from './book3-resources-common';
 
 /**
  * Book 3 Unit 8 - LET'S GO SHOPPING - HOW MUCH IS IT?
- * Resources including videos and games based on the provided content
+ * Resources including videos and games
  */
 
+const unitNumber = '8';
+const unitTitle = 'LET\'S GO SHOPPING - HOW MUCH IS IT?';
+
 export const book3Unit8Resources: TeacherResource[] = [
-  // Videos
+  // Video Resources
   {
-    id: 'book3-unit8-video-1',
+    id: `book3-unit${unitNumber}-video-1`,
     bookId: '3',
-    unitId: '8',
-    title: '10 to 100 Song by ELF Learning',
-    description: 'Song teaching numbers from 10 to 100 for shopping',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - 10 to 100 Song`,
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=Kn05P3da9hw',
-    content: {
-      type: 'youtube',
-      embedId: 'Kn05P3da9hw'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/Kn05P3da9hw',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Kn05P3da9hw?si=IFfo19fF4hOfDMKk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: 'book3-unit8-video-2',
+    id: `book3-unit${unitNumber}-video-2`,
     bookId: '3',
-    unitId: '8',
-    title: 'How Much Is It? - RAP Song',
-    description: 'Rap song teaching how to ask and answer about prices',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - How Much is it? Song`,
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=MLyFZyh7mM0',
-    content: {
-      type: 'youtube',
-      embedId: 'MLyFZyh7mM0'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/MLyFZyh7mM0',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/MLyFZyh7mM0?si=GrmFeNLmpGMliSgc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: 'book3-unit8-video-3',
+    id: `book3-unit${unitNumber}-video-3`,
     bookId: '3',
-    unitId: '8',
-    title: 'How Much! Classroom Skit',
-    description: 'Classroom skit demonstrating shopping conversations',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - How Much! Classroom Skit`,
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=lkUVY8BJr-4',
-    content: {
-      type: 'youtube',
-      embedId: 'lkUVY8BJr-4'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/lkUVY8BJr-4',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/lkUVY8BJr-4?si=ShMw0A5hFIqvHQJA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: 'book3-unit8-video-4',
+    id: `book3-unit${unitNumber}-video-4`,
     bookId: '3',
-    unitId: '8',
-    title: 'The Big Numbers Song',
-    description: 'Song for learning bigger numbers for shopping',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - The Big Numbers Song`,
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=e0dJWfQHF8Y',
-    content: {
-      type: 'youtube',
-      embedId: 'e0dJWfQHF8Y'
-    }
+    sourceUrl: 'https://www.youtube.com/embed/e0dJWfQHF8Y',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/e0dJWfQHF8Y?si=0gxcQlnjb_9rH7Eo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   
-  // Games
+  // Game Resources
   {
-    id: 'book3-unit8-game-1',
+    id: `book3-unit${unitNumber}-game-1`,
     bookId: '3',
-    unitId: '8',
-    title: 'WORDWALL - NUMBERS 10 - TENS',
-    description: 'Game for practicing counting by tens',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - NUMBERS 10-TENS`,
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/38b043ed6bc04bdca87b01461e3452f7',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/38b043ed6bc04bdca87b01461e3452f7?themeId=1&templateId=3&fontStackId=0'
-    }
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/38b043ed6bc04bdca87b01461e3452f7?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    id: 'book3-unit8-game-2',
+    id: `book3-unit${unitNumber}-game-2`,
     bookId: '3',
-    unitId: '8',
-    title: 'WORDWALL - NUMBERS 10 - 100',
-    description: 'Interactive game for learning numbers from 10 to 100',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - NUMBERS 10-100`,
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/fdb7d185bcb24b23b99b889de4f0b70e',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/fdb7d185bcb24b23b99b889de4f0b70e?themeId=1&templateId=3&fontStackId=0'
-    }
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/fdb7d185bcb24b23b99b889de4f0b70e?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    id: 'book3-unit8-game-3',
+    id: `book3-unit${unitNumber}-game-3`,
     bookId: '3',
-    unitId: '8',
-    title: 'WORDWALL - HOW MUCH IS IT?',
-    description: 'Practice asking and answering about prices',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - WORDWALL - HOW MUCH IS IT?`,
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/dcf9609f4690435197e1171ce2b68c39',
-    content: {
-      type: 'iframe',
-      embedUrl: 'https://wordwall.net/embed/dcf9609f4690435197e1171ce2b68c39?themeId=1&templateId=3&fontStackId=0'
-    }
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/dcf9609f4690435197e1171ce2b68c39?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   }
 ];
+
+export default book3Unit8Resources;

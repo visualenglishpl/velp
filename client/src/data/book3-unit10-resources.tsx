@@ -15,21 +15,21 @@ export const book3Unit10Resources: TeacherResource[] = [
     id: `book3-unit${unitNumber}-video-1`,
     bookId: '3',
     unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What's your favorite subject?`,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - What's Your Favorite Subject?`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/tt2_2EP7TE8',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tt2_2EP7TE8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/tt2_2EP7TE8?si=k12loaQZvdWYfyr7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
     id: `book3-unit${unitNumber}-video-2`,
     bookId: '3',
     unitId: unitNumber,
-    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - School Subjects`,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - School Subjects Song`,
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/Ow_gbuqQC-k',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow_gbuqQC-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow_gbuqQC-k?si=C5oiYeK8aU2sXVpv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
     id: `book3-unit${unitNumber}-video-3`,
@@ -39,7 +39,7 @@ export const book3Unit10Resources: TeacherResource[] = [
     resourceType: 'video',
     provider: 'YouTube',
     sourceUrl: 'https://www.youtube.com/embed/yMUJKH1fFF0',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/yMUJKH1fFF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/yMUJKH1fFF0?si=BYMeFNXOO4OcD5nx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   
   // Game Resources
