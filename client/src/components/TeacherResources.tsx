@@ -1020,9 +1020,25 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 9 && typedResourcesModule.getBook3Unit9Resources) {
               console.log('Using getBook3Unit9Resources function');
               resources = typedResourcesModule.getBook3Unit9Resources();
-            } else if (unitNum === 8 && typedResourcesModule.getBook3Unit8Resources) {
-              console.log('Using getBook3Unit8Resources function');
-              resources = typedResourcesModule.getBook3Unit8Resources();
+            } else if (unitNum === 8) {
+              if (typedResourcesModule.getBook3Unit8Resources) {
+                console.log('Using getBook3Unit8Resources function');
+                resources = typedResourcesModule.getBook3Unit8Resources();
+              } else if (typedResourcesModule.book3Unit8Resources) {
+                console.log('Using book3Unit8Resources directly');
+                resources = typedResourcesModule.book3Unit8Resources;
+              } else {
+                console.log('Using unit8Resources from import');
+                // Import from the centralized resources file
+                import('@/data/book3-resources')
+                  .then(module => {
+                    if (module.unit8Resources) {
+                      resources = module.unit8Resources;
+                      setDynamicResources(resources);
+                    }
+                  })
+                  .catch(err => console.error('Error importing unit8Resources:', err));
+              }
             } else if (unitNum === 10 && typedResourcesModule.getBook3Unit10Resources) {
               console.log('Using getBook3Unit10Resources function');
               resources = typedResourcesModule.getBook3Unit10Resources();
@@ -1287,9 +1303,22 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             } else if (unitNum === 9 && typedImplModule.generateBook3Unit9LessonPlans) {
               console.log('Using generateBook3Unit9LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateBook3Unit9LessonPlans();
-            } else if (unitNum === 8 && typedImplModule.generateBook3Unit8LessonPlans) {
-              console.log('Using generateBook3Unit8LessonPlans for Book 3');
-              lessonPlans = typedImplModule.generateBook3Unit8LessonPlans();
+            } else if (unitNum === 8) {
+              if (typedImplModule.generateBook3Unit8LessonPlans) {
+                console.log('Using generateBook3Unit8LessonPlans for Book 3');
+                lessonPlans = typedImplModule.generateBook3Unit8LessonPlans();
+              } else {
+                console.log('Using fallback to import lesson plans for Book 3 Unit 8');
+                // Import from the implementation file directly
+                import('@/data/book3-unit8-implementation')
+                  .then(module => {
+                    if (module.generateBook3Unit8LessonPlans) {
+                      lessonPlans = module.generateBook3Unit8LessonPlans();
+                      setDynamicLessonPlans(lessonPlans);
+                    }
+                  })
+                  .catch(err => console.error('Error importing Book 3 Unit 8 lesson plans:', err));
+              }
             } else if (unitNum === 10 && typedImplModule.generateBook3Unit10LessonPlans) {
               console.log('Using generateBook3Unit10LessonPlans for Book 3');
               lessonPlans = typedImplModule.generateBook3Unit10LessonPlans();
@@ -1634,34 +1663,34 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
         return getBook3Unit7Resources();
       } else if (unitId === '8') {
         console.log('Loading Book 3 Unit 8 resources');
-        return book3Unit8Resources || [];
+        return getBook3Unit8Resources();
       } else if (unitId === '9') {
         console.log('Loading Book 3 Unit 9 resources');
-        return book3Unit9Resources || [];
+        return getBook3Unit9Resources();
       } else if (unitId === '10') {
         console.log('Loading Book 3 Unit 10 resources');
-        return book3Unit10Resources || [];
+        return getBook3Unit10Resources();
       } else if (unitId === '11') {
         console.log('Loading Book 3 Unit 11 resources');
-        return book3Unit11Resources || [];
+        return getBook3Unit11Resources();
       } else if (unitId === '12') {
         console.log('Loading Book 3 Unit 12 resources');
-        return book3Unit12Resources || [];
+        return getBook3Unit12Resources();
       } else if (unitId === '13') {
         console.log('Loading Book 3 Unit 13 resources');
-        return book3Unit13Resources || [];
+        return getBook3Unit13Resources();
       } else if (unitId === '14') {
         console.log('Loading Book 3 Unit 14 resources');
-        return book3Unit14Resources || [];
+        return getBook3Unit14Resources();
       } else if (unitId === '15') {
         console.log('Loading Book 3 Unit 15 resources');
-        return book3Unit15Resources || [];
+        return getBook3Unit15Resources();
       } else if (unitId === '16') {
         console.log('Loading Book 3 Unit 16 Sports resources');
-        return book3Unit16Resources || [];
+        return getBook3Unit16SportsResources();
       } else if (unitId === '17') {
         console.log('Loading Book 3 Unit 17 House Chores resources');
-        return book3Unit17Resources || [];
+        return getBook3Unit17Resources();
       }
       // For other Book 3 units that don't have specific implementations
       return [];

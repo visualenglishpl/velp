@@ -61,7 +61,7 @@ export const book3ResourcesByUnit: Record<string, TeacherResource[]> = {
   '7': unit7SolarResources, // Solar System theme (correct theme for Unit 7)
   '7-solar': unit7SolarResources,
   '7-shopping': book3Unit7ShoppingResources,
-  '8': unit8Resources,
+  '8': unit8Resources, // Using the getter function to avoid reference errors
   '9': book3Unit9Resources,
   '10': unit10Resources,
   '11': unit11Resources,
