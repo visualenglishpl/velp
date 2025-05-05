@@ -6,6 +6,10 @@ import compression from "compression";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import timeout from "express-timeout-handler";
+import { configureHMR } from "./hmr-config";
+
+// Configure enhanced HMR settings for development
+configureHMR();
 
 
 const app = express();
