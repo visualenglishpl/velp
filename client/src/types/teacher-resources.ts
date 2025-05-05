@@ -13,6 +13,20 @@ export type ResourceType =
   | 'other';   // Other resource type
 
 /**
+ * Lesson plan structure
+ */
+export interface LessonPlan {
+  title: string;
+  objectives: string[];
+  materials: string[];
+  warmUp: string;
+  mainActivities: string[];
+  extension: string;
+  assessment: string;
+  conclusion: string;
+}
+
+/**
  * Structure for teacher resources
  */
 export interface TeacherResource {
@@ -31,4 +45,5 @@ export interface TeacherResource {
     embedUrl?: string;
   };
   fileUrl?: string;
+  lessonPlan?: LessonPlan;
 }
