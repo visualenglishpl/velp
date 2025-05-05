@@ -108,7 +108,10 @@ export const book4Unit2Resources: TeacherResource[] = [
       embedUrl: ""
     },
     lessonPlan: {
+      id: "b4u2-lesson-1-plan",
       title: "Introduction to Gadgets",
+      duration: "45 minutes",
+      level: "Book 4",
       objectives: [
         "Introduce vocabulary related to common gadgets",
         "Practice asking and answering questions about gadgets",
@@ -119,6 +122,36 @@ export const book4Unit2Resources: TeacherResource[] = [
         "Pictures of different gadgets",
         "Gadget flashcards"
       ],
+      steps: [
+        {
+          title: "Warm-up",
+          duration: "5 minutes",
+          description: "Show students various gadgets or pictures and ask them to name them if they can."
+        },
+        {
+          title: "Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce gadget vocabulary using visual aids."
+        },
+        {
+          title: "Matching Exercise",
+          duration: "10 minutes",
+          description: "Students complete matching exercises connecting gadgets with their functions."
+        },
+        {
+          title: "'What is it?' Game",
+          duration: "10 minutes",
+          description: "Teacher describes a gadget and students guess which one it is."
+        },
+        {
+          title: "Conclusion",
+          duration: "10 minutes",
+          description: "Review gadget vocabulary and discuss how these devices help us in daily life."
+        }
+      ],
+      assessmentTips: "Students identify and name various gadgets in pictures.",
+      homeworkIdeas: ["Students create a poster about their favorite gadget with labeled parts."],
+      // Keep legacy fields for backward compatibility
       warmUp: "Show students various gadgets or pictures and ask them to name them if they can.",
       mainActivities: [
         "Presentation: Introduce gadget vocabulary using visual aids.",
@@ -142,7 +175,10 @@ export const book4Unit2Resources: TeacherResource[] = [
       embedUrl: ""
     },
     lessonPlan: {
+      id: "b4u2-lesson-2-plan",
       title: "Technology in Daily Life",
+      duration: "45 minutes",
+      level: "Book 4",
       objectives: [
         "Learn vocabulary related to technology usage",
         "Practice discussing how we use gadgets in everyday situations",
@@ -153,6 +189,36 @@ export const book4Unit2Resources: TeacherResource[] = [
         "Technology usage worksheet",
         "Pictures showing people using various gadgets"
       ],
+      steps: [
+        {
+          title: "Warm-up",
+          duration: "5 minutes",
+          description: "Ask students to share how many hours they spend using different gadgets each day."
+        },
+        {
+          title: "Vocabulary Presentation",
+          duration: "10 minutes",
+          description: "Teach vocabulary for different technology uses (communication, entertainment, work)."
+        },
+        {
+          title: "Pair Discussion",
+          duration: "8 minutes",
+          description: "Students work in pairs to discuss how they use technology in their daily routines."
+        },
+        {
+          title: "Tech Survey Activity",
+          duration: "15 minutes",
+          description: "Students interview classmates about their technology preferences and create a simple chart."
+        },
+        {
+          title: "Wrap-up Discussion",
+          duration: "7 minutes",
+          description: "Discuss the benefits and challenges of technology in our daily lives."
+        }
+      ],
+      assessmentTips: "Students complete a speaking task explaining how they use 3-4 different gadgets in their lives.",
+      homeworkIdeas: ["Students create a 'day without technology' plan, describing what would be different."],
+      // Keep legacy fields for backward compatibility
       warmUp: "Ask students to share how many hours they spend using different gadgets each day.",
       mainActivities: [
         "Presentation: Teach vocabulary for different technology uses (communication, entertainment, work, etc.).",

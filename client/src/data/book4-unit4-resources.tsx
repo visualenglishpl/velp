@@ -152,7 +152,10 @@ export const book4Unit4Resources: TeacherResource[] = [
       embedUrl: ""
     },
     lessonPlan: {
+      id: "b4u4-lesson-1-plan",
       title: "Family Members",
+      duration: "45 minutes",
+      level: "Book 4",
       objectives: [
         "Introduce vocabulary related to family members",
         "Practice describing family relationships",
@@ -163,6 +166,36 @@ export const book4Unit4Resources: TeacherResource[] = [
         "Family tree diagrams",
         "Family member flashcards"
       ],
+      steps: [
+        {
+          title: "Warm-up",
+          duration: "5 minutes",
+          description: "Students share how many people are in their family and who they are."
+        },
+        {
+          title: "Family Vocabulary",
+          duration: "10 minutes",
+          description: "Introduce family vocabulary using a family tree diagram."
+        },
+        {
+          title: "Family Tree Practice",
+          duration: "12 minutes",
+          description: "Students complete a family tree using the new vocabulary."
+        },
+        {
+          title: "'Guess Who?' Game",
+          duration: "13 minutes",
+          description: "Play 'Guess Who?' with family members descriptions."
+        },
+        {
+          title: "Review and Reflection",
+          duration: "5 minutes",
+          description: "Review family vocabulary and discuss the importance of family in different cultures."
+        }
+      ],
+      assessmentTips: "Students describe their family members using the target vocabulary.",
+      homeworkIdeas: ["Students create their own family tree with pictures or drawings."],
+      // Keep legacy fields for backward compatibility
       warmUp: "Students share how many people are in their family and who they are.",
       mainActivities: [
         "Presentation: Introduce family vocabulary using a family tree diagram.",
@@ -186,7 +219,10 @@ export const book4Unit4Resources: TeacherResource[] = [
       embedUrl: ""
     },
     lessonPlan: {
+      id: "b4u4-lesson-2-plan",
       title: "Describing People's Appearance",
+      duration: "45 minutes",
+      level: "Book 4",
       objectives: [
         "Learn vocabulary to describe physical appearance",
         "Practice describing height, build, hair, eyes, and other physical characteristics",
@@ -197,6 +233,36 @@ export const book4Unit4Resources: TeacherResource[] = [
         "Pictures of people with different physical characteristics",
         "Description worksheet"
       ],
+      steps: [
+        {
+          title: "Warm-up",
+          duration: "5 minutes",
+          description: "Show pictures of famous people and ask students to describe their physical appearance."
+        },
+        {
+          title: "Vocabulary Introduction",
+          duration: "12 minutes",
+          description: "Teach vocabulary for describing hair (color, length, style), height, build, and facial features."
+        },
+        {
+          title: "Pair Description Practice",
+          duration: "10 minutes",
+          description: "Students work in pairs to describe people in pictures using target vocabulary."
+        },
+        {
+          title: "'Who am I?' Activity",
+          duration: "13 minutes",
+          description: "Students write descriptions of classmates without names, then read aloud for others to guess."
+        },
+        {
+          title: "Review and Reflection",
+          duration: "5 minutes",
+          description: "Review key descriptive vocabulary and discuss the importance of looking beyond physical appearance."
+        }
+      ],
+      assessmentTips: "Students complete a gap-fill exercise with physical description vocabulary.",
+      homeworkIdeas: ["Students create 'Wanted' posters with detailed physical descriptions and drawings."],
+      // Keep legacy fields for backward compatibility
       warmUp: "Show pictures of famous people and ask students to describe their physical appearance.",
       mainActivities: [
         "Presentation: Teach vocabulary for describing hair (color, length, style), height, build, and facial features.",

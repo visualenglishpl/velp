@@ -4,7 +4,7 @@
  * This file contains all the external resources (videos, games, etc.) for Book 4 Unit 7
  */
 
-import { TeacherResource } from "../types/teacher-resources";
+import { ResourceCategory, TeacherResource } from "../types/teacher-resources";
 
 /**
  * Resources for Book 4 Unit 7 (Fashion Crazy)
@@ -19,6 +19,12 @@ export const book4Unit7Resources: TeacherResource[] = [
     description: "Learn vocabulary related to clothing and fashion",
     resourceType: "video",
     provider: "YouTube",
+    categories: ["tutorial"],
+    tags: ["clothing", "vocabulary", "fashion"],
+    dateAdded: "2024-05-05",
+    difficulty: "beginner",
+    ageGroup: "teens",
+    durationMinutes: 4,
     sourceUrl: "https://www.youtube.com/watch?v=ZkIzvwfvpGg",
     content: {
       type: "youtube",
@@ -33,6 +39,12 @@ export const book4Unit7Resources: TeacherResource[] = [
     description: "Video about different fashion styles and clothing types",
     resourceType: "video",
     provider: "YouTube",
+    categories: ["presentation"],
+    tags: ["fashion", "styles", "clothing"],
+    dateAdded: "2024-05-05",
+    difficulty: "intermediate",
+    ageGroup: "teens",
+    durationMinutes: 7,
     sourceUrl: "https://www.youtube.com/watch?v=ADXYVutW2k0",
     content: {
       type: "youtube",
@@ -49,6 +61,12 @@ export const book4Unit7Resources: TeacherResource[] = [
     description: "Interactive Wordwall game about clothes vocabulary",
     resourceType: "game",
     provider: "Wordwall",
+    categories: ["activity", "exercise"],
+    tags: ["clothing", "vocabulary", "interactive"],
+    dateAdded: "2024-05-05",
+    difficulty: "beginner",
+    ageGroup: "all",
+    durationMinutes: 10,
     sourceUrl: "https://wordwall.net/resource/4b5921b195f2437b91adf882adb32d07",
     content: {
       type: "wordwall",
@@ -63,6 +81,12 @@ export const book4Unit7Resources: TeacherResource[] = [
     description: "Interactive Wordwall game about clothes patterns",
     resourceType: "game",
     provider: "Wordwall",
+    categories: ["activity", "exercise"],
+    tags: ["patterns", "clothing", "matching"],
+    dateAdded: "2024-05-05",
+    difficulty: "intermediate",
+    ageGroup: "all",
+    durationMinutes: 10,
     sourceUrl: "https://wordwall.net/resource/31b10b47b8184627b05d45e372b69b62",
     content: {
       type: "wordwall",
@@ -77,6 +101,12 @@ export const book4Unit7Resources: TeacherResource[] = [
     description: "Another interactive Wordwall game focused on clothes patterns",
     resourceType: "game",
     provider: "Wordwall",
+    categories: ["activity", "assessment"],
+    tags: ["patterns", "clothing", "quiz"],
+    dateAdded: "2024-05-05",
+    difficulty: "intermediate",
+    ageGroup: "all",
+    durationMinutes: 15,
     sourceUrl: "https://wordwall.net/resource/87e2df1853c646db9f4a27d632cc9f48",
     content: {
       type: "wordwall",

@@ -12,6 +12,8 @@ export type ResourceType =
   | 'pdf'      // PDF document
   | 'other';   // Other resource type
 
+// ResourceCategory is defined below
+
 /**
  * Lesson step structure
  */
@@ -53,6 +55,21 @@ export interface LessonPlan {
 /**
  * Structure for teacher resources
  */
+/**
+ * Resource Category type for more fine-grained categorization
+ */
+export type ResourceCategory = 
+  | 'activity'        // Interactive classroom activity
+  | 'assessment'      // Assessments and quizzes
+  | 'flashcard'       // Flashcard set
+  | 'presentation'    // Slide presentation
+  | 'printable'       // Printable worksheets
+  | 'song'            // Educational songs
+  | 'animation'       // Animated content
+  | 'tutorial'        // How-to or step-by-step guides
+  | 'exercise'        // Practice exercises
+  | 'discussion';     // Discussion prompts or activities
+
 export interface TeacherResource {
   id: string;
   bookId?: string;
@@ -60,9 +77,19 @@ export interface TeacherResource {
   title: string;
   description?: string;
   resourceType: ResourceType;
+  categories?: ResourceCategory[];
+  tags?: string[];
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  ageGroup?: 'kids' | 'teens' | 'adults' | 'all';
+  durationMinutes?: number;
   provider?: string;
+  author?: string;
+  dateAdded?: string;
+  rating?: number;
+  reviewCount?: number;
   sourceUrl?: string;
   embedCode?: string;
+  thumbnailUrl?: string;
   content: {
     type: string;
     embedId?: string;
