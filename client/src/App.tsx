@@ -22,6 +22,7 @@ import { AuthProvider } from "@/hooks/use-auth";
 import { useAuth } from "@/hooks/use-auth";
 // Fix the import path to avoid extension errors
 import TestUnits from "./test-units";
+import ResourceDiagnostic from "./resource-diagnostic";
 
 // TestTeacherResources page has been removed as it's not necessary
 
@@ -206,6 +207,9 @@ function Router() {
 
       {/* Test Units Component */}
       <Route path="/test-units" component={TestUnits} />
+      
+      {/* Resource Diagnostic Tool */}
+      <Route path="/resource-diagnostic" component={ResourceDiagnostic} />
 
       {/* Test PDF Viewer */}
       <Route path="/pdf-test" component={() => {
