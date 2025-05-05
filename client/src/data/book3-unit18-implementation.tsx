@@ -2,7 +2,7 @@ import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 // Import resources directly
-import { book3Unit18Resources } from './book3-unit18-resources';
+import book3Unit18Resources from './book3-unit18-resources';
 
 /**
  * Book 3 Unit 18 - MOVIES & FILMS
@@ -14,7 +14,7 @@ const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'MOVIES & FILMS';
 
 // Export resources getter function
 export const getBook3Unit18Resources = (): TeacherResource[] => {
-  return book3Unit18Resources.map(resource => ({
+  return book3Unit18Resources.map((resource: TeacherResource) => ({
     ...resource,
     id: resource.id || `book3-unit18-${resource.title?.toLowerCase().replace(/\s+/g, '-')}`,
     bookId: '3',
@@ -180,4 +180,10 @@ export const generateBook3Unit18LessonPlans = (): LessonPlan[] => {
       homeworkIdeas: ['Write a short description of your favorite actor or actress.', 'Create a simple storyboard for a short movie scene with 4-6 panels.']
     }
   ];
+};
+
+// Export default functions to maintain consistency with other units
+export default {
+  getBook3Unit18Resources,
+  generateBook3Unit18LessonPlans
 };

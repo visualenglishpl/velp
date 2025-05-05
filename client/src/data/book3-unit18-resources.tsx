@@ -7,7 +7,7 @@ import { BOOK3_TITLE } from './book3-resources-common';
  */
 
 // Define Unit 18 resources for Movies & Films
-export const book3Unit18Resources: TeacherResource[] = [
+const book3Unit18Resources: TeacherResource[] = [
   // Game Resources
   {
     id: 'book3-unit18-game-1',
@@ -52,3 +52,6 @@ export const book3Unit18Resources: TeacherResource[] = [
     }
   }
 ];
+
+export { book3Unit18Resources };
+export default book3Unit18Resources;
