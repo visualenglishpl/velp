@@ -50,6 +50,35 @@ const book3Unit18Resources: TeacherResource[] = [
       type: 'wordwall',
       embedUrl: 'https://wordwall.net/embed/61111ee5734e4a07bde0447c09765df2?themeId=1&templateId=3&fontStackId=0'
     }
+  },
+  // Video Resources
+  {
+    id: 'book3-unit18-video-1',
+    bookId: '3',
+    unitId: '18',
+    title: 'VISUAL 3 - UNIT 18 - MOVIES - FILMS - Movie Vocabulary',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/Z2ppOux48xQ',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Z2ppOux48xQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    content: {
+      type: 'youtube',
+      embedId: 'Z2ppOux48xQ'
+    }
+  },
+  {
+    id: 'book3-unit18-video-2',
+    bookId: '3',
+    unitId: '18',
+    title: 'VISUAL 3 - UNIT 18 - MOVIES - FILMS - Movie Genres',
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/embed/bVu7Sps7EBA',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/bVu7Sps7EBA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    content: {
+      type: 'youtube',
+      embedId: 'bVu7Sps7EBA'
+    }
   }
 ];
 

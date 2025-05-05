@@ -25,7 +25,7 @@ import { getBook3Unit12Resources } from './book3-unit12-implementation';
 import { getBook3Unit13Resources } from './book3-unit13-implementation';
 import { getBook3Unit14Resources } from './book3-unit14-implementation';
 import { getBook3Unit15Resources } from './book3-unit15-implementation';
-import { getBook3Unit16SportsResources } from './book3-unit16-sports-implementation';
+import { getBook3Unit16Resources } from './book3-unit16-sports-implementation';
 import { getBook3Unit17Resources } from './book3-unit17-implementation';
 import { getBook3Unit18Resources } from './book3-unit18-implementation';
 
@@ -41,7 +41,7 @@ const unit12Resources = getBook3Unit12Resources();
 const unit13Resources = getBook3Unit13Resources();
 const unit14Resources = getBook3Unit14Resources();
 const unit15Resources = getBook3Unit15Resources();
-const unit16SportsResources = getBook3Unit16SportsResources();
+const unit16SportsResources = getBook3Unit16Resources();
 const unit17Resources = getBook3Unit17Resources();
 const unit18Resources = getBook3Unit18Resources();
 
@@ -109,7 +109,7 @@ export {
   unit15Resources,
   getBook3Unit15Resources,
   unit16SportsResources,
-  getBook3Unit16SportsResources,
+  getBook3Unit16Resources,
   unit17Resources,
   getBook3Unit17Resources,
   unit18Resources,

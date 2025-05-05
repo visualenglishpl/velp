@@ -13,7 +13,7 @@ const unitNumber = '16';
 const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'SPORTS';
 
 // Export resources getter function
-export function getBook3Unit16SportsResources(): TeacherResource[] {
+export function getBook3Unit16Resources(): TeacherResource[] {
   return book3Unit16Resources.map(resource => ({
     ...resource,
     id: resource.id || `book3-unit16-${resource.title?.toLowerCase().replace(/\s+/g, '-')}`,
@@ -147,4 +147,10 @@ export const generateBook3Unit16LessonPlans = (): LessonPlan[] => {
       homeworkIdeas: ['Complete online Wordwall activities about sports.', 'Survey family members about their favorite sports and report findings.'] 
     }
   ];
+};
+
+// Export default functions to maintain consistency with other units
+export default {
+  getBook3Unit16Resources,
+  generateBook3Unit16LessonPlans
 };
