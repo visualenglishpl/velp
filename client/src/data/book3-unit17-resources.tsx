@@ -45,7 +45,11 @@ export const book3Unit17Resources: TeacherResource[] = [
     resourceType: 'video',
     provider: 'islcollective',
     sourceUrl: 'https://en.islcollective.com/english-esl-video-lessons/embed/193628',
-    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/193628" width="800" height="600" frameborder="0" allowfullscreen style="max-width: inherit !important; max-height: inherit !important;"></iframe>'
+    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/193628" width="800" height="600" frameborder="0" allowfullscreen style="max-width: inherit !important; max-height: inherit !important;"></iframe>',
+    content: {
+      type: 'custom',
+      embedUrl: 'https://en.islcollective.com/english-esl-video-lessons/embed/193628'
+    }
   },
   
   // Game Resources
@@ -57,7 +61,11 @@ export const book3Unit17Resources: TeacherResource[] = [
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/60508097a6234699b83aa543998513b5',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/60508097a6234699b83aa543998513b5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/60508097a6234699b83aa543998513b5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/60508097a6234699b83aa543998513b5?themeId=1&templateId=3&fontStackId=0'
+    }
   },
   {
     id: 'book3-unit17-game-2',
@@ -67,7 +75,11 @@ export const book3Unit17Resources: TeacherResource[] = [
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/6e52398f1a794e8b8b2e8c952cb3e967',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6e52398f1a794e8b8b2e8c952cb3e967?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6e52398f1a794e8b8b2e8c952cb3e967?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/6e52398f1a794e8b8b2e8c952cb3e967?themeId=1&templateId=3&fontStackId=0'
+    }
   },
   {
     id: 'book3-unit17-game-3',
@@ -77,6 +89,10 @@ export const book3Unit17Resources: TeacherResource[] = [
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/6bf5a510ebb649b7824c72039a167e6c',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6bf5a510ebb649b7824c72039a167e6c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6bf5a510ebb649b7824c72039a167e6c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/6bf5a510ebb649b7824c72039a167e6c?themeId=1&templateId=3&fontStackId=0'
+    }
   }
 ];

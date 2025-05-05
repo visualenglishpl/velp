@@ -22,6 +22,8 @@ import { getBook3Unit12Resources } from './book3-unit12-implementation';
 import { getBook3Unit13Resources } from './book3-unit13-implementation';
 import { getBook3Unit14Resources } from './book3-unit14-implementation';
 import { getBook3Unit15Resources } from './book3-unit15-implementation';
+import { getBook3Unit17Resources } from './book3-unit17-implementation';
+import { getBook3Unit18Resources } from './book3-unit18-implementation';
 import book3Unit8Resources from './book3-unit8-resources';
 import book3Unit9Resources from './book3-unit9-resources';
 import book3Unit10Resources from './book3-unit10-resources';
@@ -45,6 +47,8 @@ const unit13Resources = getBook3Unit13Resources();
 const unit14Resources = getBook3Unit14Resources();
 const unit15Resources = getBook3Unit15Resources();
 const unit16SportsResources = getBook3Unit16SportsResources();
+const unit17Resources = getBook3Unit17Resources();
+const unit18Resources = getBook3Unit18Resources();
 
 // Create a mapping of all available resources by unit
 export const book3ResourcesByUnit: Record<string, TeacherResource[]> = {
@@ -67,8 +71,8 @@ export const book3ResourcesByUnit: Record<string, TeacherResource[]> = {
   '15': unit15Resources,
   '16': unit16SportsResources,
   '16-sports': unit16SportsResources,
-  '17': book3Unit17Resources, // Empty resources as per requirement
-  '18': book3Unit18Resources, // Empty resources as per requirement
+  '17': unit17Resources, // House Chores unit resources
+  '18': unit18Resources, // Movies & Films unit resources
 };
 
 // Function to get resources for a specific unit, or generate default ones if not available
@@ -118,6 +122,10 @@ export {
   getBook3Unit15Resources,
   unit16SportsResources,
   getBook3Unit16SportsResources,
+  unit17Resources,
   book3Unit17Resources,
+  getBook3Unit17Resources,
+  unit18Resources,
   book3Unit18Resources,
+  getBook3Unit18Resources,
 };
