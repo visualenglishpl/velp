@@ -63,6 +63,7 @@ import { getBook3Unit7ShoppingResources, generateBook3Unit7ShoppingLessonPlans }
 import { getBook3Unit9Resources } from '@/data/book3-unit9-implementation';
 import { getBook3Unit8Resources, generateBook3Unit8LessonPlans } from '@/data/book3-unit8-implementation';
 import { getBook3Unit10Resources, generateBook3Unit10LessonPlans } from '@/data/book3-unit10-implementation';
+import { getBook3Unit11Resources, generateBook3Unit11LessonPlans } from '@/data/book3-unit11-implementation';
 import { getBook3Unit12Resources, generateBook3Unit12LessonPlans } from '@/data/book3-unit12-implementation';
 import { getBook3Unit13Resources, generateBook3Unit13LessonPlans } from '@/data/book3-unit13-implementation';
 import { getBook3Unit14Resources, generateBook3Unit14LessonPlans } from '@/data/book3-unit14-implementation';

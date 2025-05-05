@@ -12,29 +12,22 @@ import book3Unit3Resources from './book3-unit3-resources';
 import book3Unit4Resources from './book3-unit4-resources';
 import book3Unit5Resources from './book3-unit5-resources';
 import book3Unit6Resources from './book3-unit6-resources';
+import book3Unit9Resources from './book3-unit9-resources';
+
 // Import unit resources using getter functions for consistent implementation
 import { getBook3Unit7Resources, getBook3Unit7SolarResources } from './book3-unit7-implementation';
 import { book3Unit7ShoppingResources } from './book3-unit7-shopping-resources';
 import { getBook3Unit8Resources } from './book3-unit8-implementation';
+import { getBook3Unit9Resources } from './book3-unit9-implementation';
 import { getBook3Unit10Resources } from './book3-unit10-implementation';
 import { getBook3Unit11Resources } from './book3-unit11-implementation';
 import { getBook3Unit12Resources } from './book3-unit12-implementation';
 import { getBook3Unit13Resources } from './book3-unit13-implementation';
 import { getBook3Unit14Resources } from './book3-unit14-implementation';
 import { getBook3Unit15Resources } from './book3-unit15-implementation';
+import { getBook3Unit16SportsResources } from './book3-unit16-sports-implementation';
 import { getBook3Unit17Resources } from './book3-unit17-implementation';
 import { getBook3Unit18Resources } from './book3-unit18-implementation';
-import book3Unit8Resources from './book3-unit8-resources';
-import book3Unit9Resources from './book3-unit9-resources';
-import book3Unit10Resources from './book3-unit10-resources';
-import book3Unit11Resources from './book3-unit11-resources';
-import book3Unit12Resources from './book3-unit12-resources';
-import book3Unit13Resources from './book3-unit13-resources';
-import book3Unit14Resources from './book3-unit14-resources';
-import book3Unit15Resources from './book3-unit15-resources';
-import { getBook3Unit16SportsResources } from './book3-unit16-sports-implementation';
-import { book3Unit17Resources } from './book3-unit17-resources';
-import { book3Unit18Resources } from './book3-unit18-resources';
 
 // Store references to getter function results for consistency
 const unit7Resources = getBook3Unit7Resources();
