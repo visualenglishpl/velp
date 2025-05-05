@@ -3,12 +3,16 @@
  * Implementation file for unit resources and lesson plans
  * 
  * Note: This unit handles slides without questions by leaving them blank
+ * using the showBlankIfUnmapped flag
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import book3Unit4Resources from './book3-unit4-resources';
 import { BOOK3_TITLE } from './book3-resources-common';
+
+// Flag for showing blank for unmapped Q&A
+export const showBlankIfUnmapped = true;
 
 // Function to get resources for this unit
 export function getBook3Unit4Resources(): TeacherResource[] {
@@ -132,6 +136,13 @@ export function generateBook3Unit4LessonPlans(): LessonPlan[] {
   ];
 };
 
-// Export resources directly for easier importing
-export { book3Unit4Resources };
+// Generate lesson plans for this unit
+const lessonPlans = generateBook3Unit4LessonPlans();
 
+// Direct exports for consistent importing
+export const unitResources = book3Unit4Resources;
+export const resources = book3Unit4Resources; // Alias for compatibility
+export { lessonPlans };
+
+// Getter functions for backward compatibility
+export const getBook3Unit4LessonPlans = (): LessonPlan[] => lessonPlans;

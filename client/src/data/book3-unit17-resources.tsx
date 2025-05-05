@@ -57,42 +57,42 @@ export const book3Unit17Resources: TeacherResource[] = [
     id: 'book3-unit17-game-1',
     bookId: '3',
     unitId: '17',
-    title: 'VISUAL 3 - UNIT 17 - HOUSE CHORES - WORDWALL - HOUSE CHORES (1)',
+    title: 'VISUAL 3 - UNIT 17 - HOUSE CHORES - Household Chores (1)',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/60508097a6234699b83aa543998513b5',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/60508097a6234699b83aa543998513b5?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    sourceUrl: 'https://wordwall.net/resource/44511773/household-chores',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/44511773/household-chores?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
       type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/60508097a6234699b83aa543998513b5?themeId=1&templateId=3&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/44511773/household-chores?themeId=1&templateId=3&fontStackId=0'
     }
   },
   {
     id: 'book3-unit17-game-2',
     bookId: '3',
     unitId: '17',
-    title: 'VISUAL 3 - UNIT 17 - HOUSE CHORES - WORDWALL - HOUSE CHORES (2)',
+    title: 'VISUAL 3 - UNIT 17 - HOUSE CHORES - Chores Word Match',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/6e52398f1a794e8b8b2e8c952cb3e967',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6e52398f1a794e8b8b2e8c952cb3e967?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    sourceUrl: 'https://wordwall.net/resource/11419290/household-chores',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/11419290/household-chores?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
       type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/6e52398f1a794e8b8b2e8c952cb3e967?themeId=1&templateId=3&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/11419290/household-chores?themeId=1&templateId=3&fontStackId=0'
     }
   },
   {
     id: 'book3-unit17-game-3',
     bookId: '3',
     unitId: '17',
-    title: 'VISUAL 3 - UNIT 17 - HOUSE CHORES - WORDWALL - HOUSE CHORES (3)',
+    title: 'VISUAL 3 - UNIT 17 - HOUSE CHORES - Household Chores Matching',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/6bf5a510ebb649b7824c72039a167e6c',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6bf5a510ebb649b7824c72039a167e6c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    sourceUrl: 'https://wordwall.net/resource/46370566/household-chores',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/46370566/household-chores?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
       type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/6bf5a510ebb649b7824c72039a167e6c?themeId=1&templateId=3&fontStackId=0'
+      embedUrl: 'https://wordwall.net/embed/46370566/household-chores?themeId=1&templateId=3&fontStackId=0'
     }
   }
 ];
