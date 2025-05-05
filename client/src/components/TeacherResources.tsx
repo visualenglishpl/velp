@@ -16,6 +16,11 @@ import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan
 import { generateBook6UnitResources, generateDefaultBook6UnitLessonPlans, BOOK6_UNIT_TITLES } from '@/data/book6-resources-common';
 import { generateBook5UnitResources, generateDefaultBook5UnitLessonPlans, BOOK5_UNIT_TITLES } from '@/data/book5-resources-common';
 import { generateBook7UnitResources, generateDefaultBook7UnitLessonPlans, BOOK7_UNIT_TITLES } from '@/data/book7-resources-common';
+import { generateBook4UnitResources, generateDefaultBook4UnitLessonPlans, BOOK4_TITLE, BOOK4_UNIT_TITLES } from '@/data/book4-resources-common';
+
+// Import Book 4 implementations
+import { getBook4Unit1Resources, getBook4Unit1LessonPlans } from '@/data/book4-unit1-implementation';
+import { getBook4Unit3Resources, getBook4Unit3LessonPlans } from '@/data/book4-unit3-implementation';
 
 // Import any specific implementation functions
 // Book 6 implementations
@@ -70,7 +75,7 @@ import { getBook3Unit14Resources, generateBook3Unit14LessonPlans } from '@/data/
 import { getBook3Unit15Resources, generateBook3Unit15LessonPlans } from '@/data/book3-unit15-implementation';
 // Import the sports version of Unit 16 resources and lesson plans
 import { getBook3Unit16SportsResources, generateBook3Unit16LessonPlans } from '@/data/book3-unit16-sports-implementation';
-import { book3Unit16Resources } from '@/data/book3-unit16-sports-resources';
+import { book3Unit16SportsResources } from '@/data/book3-unit16-sports-resources';
 import { getBook3Unit17Resources, generateBook3Unit17LessonPlans } from '@/data/book3-unit17-implementation';
 import { book3Unit17Resources } from '@/data/book3-unit17-resources';
 import { getBook3Unit18Resources, generateBook3Unit18LessonPlans } from '@/data/book3-unit18-implementation';
@@ -1362,6 +1367,30 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
             console.error(`Error getting Book 3 Unit ${unitNum} lesson plans:`, error);
           }
         }
+        // Handle Book 4 lesson plans
+        else if (bookId === '4') {
+          try {
+            // Use our centralized lesson plan generator for Book 4
+            const unitTitle = BOOK4_UNIT_TITLES[unitId] || `Unit ${unitId}`;
+            const defaultPlans = generateDefaultBook4UnitLessonPlans(unitId, unitTitle);
+            lessonPlans.push(...defaultPlans);
+            
+            // Check for specific lesson plan getter functions using type assertion
+            const typedImplModule = implModule as any;
+            
+            if (unitNum === 1 && typedImplModule.getBook4Unit1LessonPlans) {
+              console.log('Using getBook4Unit1LessonPlans for Book 4');
+              lessonPlans = typedImplModule.getBook4Unit1LessonPlans();
+            } else if (unitNum === 3 && typedImplModule.getBook4Unit3LessonPlans) {
+              console.log('Using getBook4Unit3LessonPlans for Book 4');
+              lessonPlans = typedImplModule.getBook4Unit3LessonPlans();
+            }
+            
+            console.log(`Found ${lessonPlans.length} lesson plans for Book ${bookId} Unit ${unitNum}`);
+          } catch (error) {
+            console.error(`Error getting Book 4 Unit ${unitNum} lesson plans:`, error);
+          }
+        }
         // Handle centralized Book 5 lesson plans
         else if (bookId === '5') {
           try {
@@ -1696,6 +1725,30 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       // For other Book 3 units that don't have specific implementations
       return [];
     }
+    // Book 4 units
+    else if (bookId === '4') {
+      // Special cases for units with their own implementation
+      if (unitId === '1') {
+        try {
+          console.log('Loading Book 4 Unit 1 resources from implementation');
+          return getBook4Unit1Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 1 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '3') {
+        try {
+          console.log('Loading Book 4 Unit 3 resources from implementation');
+          return getBook4Unit3Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 3 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      }
+      // For other Book 4 units, use the centralized resource generator
+      console.log(`Loading centralized resources for Book 4 Unit ${unitId}`);
+      return generateBook4UnitResources(bookId, unitId);
+    }
     // Book 5 units - use centralized resource generator
     else if (bookId === '5') {
       // Special cases for units with their own implementation
@@ -1752,7 +1805,7 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
       } else if (unitId === '10') {
         try {
           console.log('Loading Book 6 Unit 10 resources from implementation');
-          return getBook6Unit10Resources(bookId, unitId);
+          return getBook6Unit10Resources();
         } catch (error) {
           console.error('Error getting Book 6 Unit 10 resources, falling back to common resources:', error);
           return generateBook6UnitResources(bookId, unitId);
