@@ -83,7 +83,7 @@ export const book4Unit9LessonPlans: TeacherResource[] = [
     title: 'Introduction to Camping',
     description: 'A 45-minute lesson on camping essentials and vocabulary',
     resourceType: 'lesson',
-    categories: ['lesson'],
+    categories: ['activity', 'tutorial'],
     tags: ['camping', 'outdoor skills', 'vocabulary'],
     difficulty: 'beginner',
     ageGroup: 'all',
