@@ -1,178 +1,102 @@
-/**
- * Resources for Book 4 Unit 5 - Personality
- * 
- * This file contains all the external resources (videos, games, etc.) for Book 4 Unit 5
- */
-
-import { TeacherResource } from "../types/teacher-resources";
+import { TeacherResource } from '@/components/TeacherResources';
+import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 5 (Personality)
+ * Book 4 Unit 5 - PERSONALITY
+ * Resources including videos and games
  */
-export const book4Unit5Resources: TeacherResource[] = [
-  // Video Resources
-  {
-    id: "book4-unit5-video-1",
-    bookId: "4",
-    unitId: "5",
-    title: "Personality Traits Video",
-    description: "Learn about different personality traits and characteristics",
-    resourceType: "video",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=wXJPMf5ZuMw",
-    content: {
-      type: "youtube",
-      embedId: "wXJPMf5ZuMw"
-    }
-  },
-  {
-    id: "book4-unit5-video-2",
-    bookId: "4",
-    unitId: "5",
-    title: "Personality Types Video",
-    description: "Educational video about different personality types and characteristics",
-    resourceType: "video",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=D7ZjMjfasfU",
-    content: {
-      type: "youtube",
-      embedId: "D7ZjMjfasfU"
-    }
-  },
-  
-  // Game Resources
-  {
-    id: "book4-unit5-wordwall-1",
-    bookId: "4",
-    unitId: "5",
-    title: "Personality Traits Game",
-    description: "Interactive Wordwall game about personality traits",
-    resourceType: "game",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/6bcdbdd1f33a4700968fcc126d42c323",
-    content: {
-      type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/6bcdbdd1f33a4700968fcc126d42c323?themeId=1&templateId=3&fontStackId=0"
-    }
-  },
-  {
-    id: "book4-unit5-wordwall-2",
-    bookId: "4",
-    unitId: "5",
-    title: "Personality Game 1",
-    description: "Interactive Wordwall game about personality traits and characteristics",
-    resourceType: "game",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/339ab9a507314c98aa8ad268f9dbd2fc",
-    content: {
-      type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/339ab9a507314c98aa8ad268f9dbd2fc?themeId=1&templateId=2&fontStackId=0"
-    }
-  },
-  {
-    id: "book4-unit5-wordwall-3",
-    bookId: "4",
-    unitId: "5",
-    title: "Personality Game 2",
-    description: "Another interactive Wordwall game focused on personality vocabulary",
-    resourceType: "game",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/c6d609be7c0a4370adf35d199dd1001d",
-    content: {
-      type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/c6d609be7c0a4370adf35d199dd1001d?themeId=1&templateId=5&fontStackId=0"
-    }
-  },
-  
-  // Note: No PDF resources currently available for this unit
-];
 
-/**
- * Lesson plans for Book 4 Unit 5
- */
-export const book4Unit5LessonPlans: TeacherResource[] = [
+const unitNumber = '5';
+const unitTitle = 'PERSONALITY';
+
+// Videos for this unit
+export const videos: TeacherResource[] = [
   {
-    id: "b4u5-lesson-1",
-    bookId: "4",
-    unitId: "5",
-    title: "Introduction to Personality Traits",
-    description: "Lesson plan introducing personality traits vocabulary and concepts",
-    resourceType: "lesson",
+    id: `book4-unit${unitNumber}-video-1`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Personality Traits`,
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=wXJPMf5ZuMw',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/wXJPMf5ZuMw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
     content: {
-      type: "markdown",
-      embedUrl: ""
-    },
-    lessonPlan: {
-      title: "Introduction to Personality Traits",
-      objectives: [
-        "Introduce students to personality trait vocabulary",
-        "Practice describing people's personalities in English",
-        "Develop speaking skills through interactive activities"
-      ],
-      materials: [
-        "Visual English Book 4",
-        "Personality trait flashcards",
-        "Famous people pictures"
-      ],
-      warmUp: "Show pictures of famous people and ask students to describe their personality traits based on what they know.",
-      mainActivities: [
-        "Presentation: Introduce key personality trait vocabulary with visual aids and examples.",
-        "Practice: Pair activity - students describe themselves and a friend using the new vocabulary.",
-        "Game: 'Who am I?' - One student describes a famous person's personality and others guess."
-      ],
-      extension: "Students create a personality profile for their ideal friend or partner.",
-      assessment: "Students complete a matching activity connecting personality traits with behaviors/actions.",
-      conclusion: "Review the key personality traits and have students reflect on the traits they admire most."
+      type: 'youtube',
+      embedId: 'wXJPMf5ZuMw'
     }
   },
   {
-    id: "b4u5-lesson-2",
-    bookId: "4",
-    unitId: "5",
-    title: "Describing Personalities in Detail",
-    description: "Lesson plan focused on giving detailed personality descriptions",
-    resourceType: "lesson",
+    id: `book4-unit${unitNumber}-video-2`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Types`,
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=D7ZjMjfasfU',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/D7ZjMjfasfU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
     content: {
-      type: "markdown",
-      embedUrl: ""
-    },
-    lessonPlan: {
-      title: "Describing Personalities in Detail",
-      objectives: [
-        "Expand vocabulary for describing personality traits",
-        "Learn to use adjectives with intensifiers and modifiers",
-        "Practice writing short personality descriptions"
-      ],
-      materials: [
-        "Visual English Book 4",
-        "Personality trait word cards",
-        "Character profile worksheets"
-      ],
-      warmUp: "Students list as many personality adjectives as they can in two minutes in small groups.",
-      mainActivities: [
-        "Presentation: Teach intensifiers and modifiers to make personality descriptions more nuanced (quite shy, extremely confident, etc.).",
-        "Practice: Students use word cards to create personality descriptions with appropriate intensifiers.",
-        "Production: Students complete character profiles for fictional characters or celebrities using target language."
-      ],
-      extension: "Group activity: Students create a 'Personality Types' magazine with profiles of different types of people.",
-      assessment: "Students present their character profiles to the class using correct vocabulary and structures.",
-      conclusion: "Reflection activity: Students discuss how personality traits can be both positive and negative depending on the situation."
+      type: 'youtube',
+      embedId: 'D7ZjMjfasfU'
     }
   }
 ];
+
+// Games for this unit
+export const games: TeacherResource[] = [
+  {
+    id: `book4-unit${unitNumber}-game-1`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - PERSONALITY TRAITS`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/6bcdbdd1f33a4700968fcc126d42c323',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6bcdbdd1f33a4700968fcc126d42c323?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/6bcdbdd1f33a4700968fcc126d42c323?themeId=1&templateId=3&fontStackId=0'
+    }
+  },
+  {
+    id: `book4-unit${unitNumber}-game-2`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - PERSONALITY GAME 1`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/339ab9a507314c98aa8ad268f9dbd2fc',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/339ab9a507314c98aa8ad268f9dbd2fc?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/339ab9a507314c98aa8ad268f9dbd2fc?themeId=1&templateId=2&fontStackId=0'
+    }
+  },
+  {
+    id: `book4-unit${unitNumber}-game-3`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - PERSONALITY GAME 2`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/c6d609be7c0a4370adf35d199dd1001d',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c6d609be7c0a4370adf35d199dd1001d?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/c6d609be7c0a4370adf35d199dd1001d?themeId=1&templateId=5&fontStackId=0'
+    }
+  }
+];
+
+// Combine all resources for the unit
+export const resources: TeacherResource[] = [...videos, ...games];
+
+// Direct exports for consistent importing
+export default resources;
 
 /**
  * Get all resources for Book 4 Unit 5
  * @returns Array of teacher resources
  */
 export function getBook4Unit5Resources(): TeacherResource[] {
-  return book4Unit5Resources;
-}
-
-/**
- * Get lesson plans for Book 4 Unit 5
- * @returns Array of lesson plan resources
- */
-export function getBook4Unit5LessonPlans(): TeacherResource[] {
-  return book4Unit5LessonPlans;
+  return resources;
 }

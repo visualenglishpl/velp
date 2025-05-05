@@ -3,10 +3,10 @@ import { TeacherResource } from "@/types/teacher-resources";
 /**
  * Types exports to prevent type errors
  */
-export type ResourceLoaderModule = {
+export interface ResourceLoaderModule {
   dynamicResourceImport: (book: string, unit: number) => Promise<TeacherResource[]>;
   dynamicLessonPlanImport: (book: string, unit: number) => Promise<TeacherResource[]>;
-};
+}
 
 /**
  * Dynamically imports resources for a specific book and unit
@@ -17,8 +17,21 @@ export type ResourceLoaderModule = {
  */
 export const dynamicResourceImport = async (book: string, unit: number): Promise<TeacherResource[]> => {
   try {
-    // Standardize the book ID format
+    // Standardize the book ID format and validate input
+    if (!book || unit === undefined || unit === null) {
+      console.warn('Invalid book or unit parameters:', { book, unit });
+      return [];
+    }
+    
     const bookId = book.toString();
+    const unitInt = parseInt(unit.toString(), 10);
+    
+    if (isNaN(unitInt) || unitInt <= 0) {
+      console.warn('Invalid unit number:', unit);
+      return [];
+    }
+    
+    console.log(`Loading resources for Book ${bookId}, Unit ${unitInt}...`);
     
     // Book 4 resources
     if (bookId === '4') {
@@ -26,14 +39,17 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 1: {
           try {
             const module = await import('@/data/book4-unit1-resources');
-            if (module.getBook4Unit1Resources) {
-              return module.getBook4Unit1Resources();
-            } else if (module.resources) {
+            if ('getBook4Unit1Resources' in module) {
+              return (module as any).getBook4Unit1Resources();
+            } else if ('resources' in module) {
               // Backward compatibility with old resource format
-              return module.resources;
-            } else if (module.default) {
+              return (module as any).resources;
+            } else if ('book4Unit1Resources' in module) {
+              // Try specialized export
+              return (module as any).book4Unit1Resources;
+            } else if ('default' in module) {
               // Try default export
-              return module.default;
+              return (module as any).default;
             }
             return [];
           } catch (error) {
@@ -44,8 +60,8 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 2: {
           try {
             const module = await import('@/data/book4-unit2-resources');
-            if (module.getBook4Unit2Resources) {
-              return module.getBook4Unit2Resources();
+            if ('getBook4Unit2Resources' in module) {
+              return (module as any).getBook4Unit2Resources();
             } else if ('resources' in module) {
               // Backward compatibility with old resource format
               return (module as any).resources;
@@ -65,8 +81,8 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 3: {
           try {
             const module = await import('@/data/book4-unit3-resources');
-            if (module.getBook4Unit3Resources) {
-              return module.getBook4Unit3Resources();
+            if ('getBook4Unit3Resources' in module) {
+              return (module as any).getBook4Unit3Resources();
             } else if ('resources' in module) {
               // Backward compatibility with old resource format
               return (module as any).resources;
@@ -86,8 +102,8 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 4: {
           try {
             const module = await import('@/data/book4-unit4-resources');
-            if (module.getBook4Unit4Resources) {
-              return module.getBook4Unit4Resources();
+            if ('getBook4Unit4Resources' in module) {
+              return (module as any).getBook4Unit4Resources();
             } else if ('resources' in module) {
               // Backward compatibility with old resource format
               return (module as any).resources;
@@ -107,8 +123,8 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 5: {
           try {
             const module = await import('@/data/book4-unit5-resources');
-            if (module.getBook4Unit5Resources) {
-              return module.getBook4Unit5Resources();
+            if ('getBook4Unit5Resources' in module) {
+              return (module as any).getBook4Unit5Resources();
             } else if ('resources' in module) {
               // Backward compatibility with old resource format
               return (module as any).resources;
@@ -128,8 +144,8 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 6: {
           try {
             const module = await import('@/data/book4-unit6-resources');
-            if (module.getBook4Unit6Resources) {
-              return module.getBook4Unit6Resources();
+            if ('getBook4Unit6Resources' in module) {
+              return (module as any).getBook4Unit6Resources();
             } else if ('resources' in module) {
               // Backward compatibility with old resource format
               return (module as any).resources;
@@ -149,8 +165,8 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 7: {
           try {
             const module = await import('@/data/book4-unit7-resources');
-            if (module.getBook4Unit7Resources) {
-              return module.getBook4Unit7Resources();
+            if ('getBook4Unit7Resources' in module) {
+              return (module as any).getBook4Unit7Resources();
             } else if ('resources' in module) {
               // Backward compatibility with old resource format
               return (module as any).resources;
@@ -170,8 +186,8 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 8: {
           try {
             const module = await import('@/data/book4-unit8-resources');
-            if (module.getBook4Unit8Resources) {
-              return module.getBook4Unit8Resources();
+            if ('getBook4Unit8Resources' in module) {
+              return (module as any).getBook4Unit8Resources();
             } else if ('resources' in module) {
               // Backward compatibility with old resource format
               return (module as any).resources;
@@ -191,8 +207,8 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
         case 9: {
           try {
             const module = await import('@/data/book4-unit9-resources');
-            if (module.getBook4Unit9Resources) {
-              return module.getBook4Unit9Resources();
+            if ('getBook4Unit9Resources' in module) {
+              return (module as any).getBook4Unit9Resources();
             } else if ('resources' in module) {
               // Backward compatibility with old resource format
               return (module as any).resources;
@@ -232,8 +248,21 @@ export const dynamicResourceImport = async (book: string, unit: number): Promise
  */
 export const dynamicLessonPlanImport = async (book: string, unit: number): Promise<TeacherResource[]> => {
   try {
-    // Standardize the book ID format
+    // Standardize the book ID format and validate input
+    if (!book || unit === undefined || unit === null) {
+      console.warn('Invalid book or unit parameters for lesson plan import:', { book, unit });
+      return [];
+    }
+    
     const bookId = book.toString();
+    const unitInt = parseInt(unit.toString(), 10);
+    
+    if (isNaN(unitInt) || unitInt <= 0) {
+      console.warn('Invalid unit number for lesson plan import:', unit);
+      return [];
+    }
+    
+    console.log(`Loading lesson plans for Book ${bookId}, Unit ${unitInt}...`);
     
     // Book 4 lesson plans
     if (bookId === '4') {
@@ -271,10 +300,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 3: {
           try {
             const module = await import('@/data/book4-unit3-resources');
-            if (module.getBook4Unit3LessonPlans) {
-              return module.getBook4Unit3LessonPlans();
-            } else if (module.book4Unit3LessonPlans) {
-              return module.book4Unit3LessonPlans;
+            if ('getBook4Unit3LessonPlans' in module) {
+              return (module as any).getBook4Unit3LessonPlans();
+            } else if ('book4Unit3LessonPlans' in module) {
+              return (module as any).book4Unit3LessonPlans;
             } else {
               return [];
             }
@@ -286,10 +315,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 4: {
           try {
             const module = await import('@/data/book4-unit4-resources');
-            if (module.getBook4Unit4LessonPlans) {
-              return module.getBook4Unit4LessonPlans();
-            } else if (module.book4Unit4LessonPlans) {
-              return module.book4Unit4LessonPlans;
+            if ('getBook4Unit4LessonPlans' in module) {
+              return (module as any).getBook4Unit4LessonPlans();
+            } else if ('book4Unit4LessonPlans' in module) {
+              return (module as any).book4Unit4LessonPlans;
             } else {
               return [];
             }
@@ -301,10 +330,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 5: {
           try {
             const module = await import('@/data/book4-unit5-resources');
-            if (module.getBook4Unit5LessonPlans) {
-              return module.getBook4Unit5LessonPlans();
-            } else if (module.book4Unit5LessonPlans) {
-              return module.book4Unit5LessonPlans;
+            if ('getBook4Unit5LessonPlans' in module) {
+              return (module as any).getBook4Unit5LessonPlans();
+            } else if ('book4Unit5LessonPlans' in module) {
+              return (module as any).book4Unit5LessonPlans;
             } else {
               return [];
             }
@@ -316,10 +345,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 6: {
           try {
             const module = await import('@/data/book4-unit6-resources');
-            if (module.getBook4Unit6LessonPlans) {
-              return module.getBook4Unit6LessonPlans();
-            } else if (module.book4Unit6LessonPlans) {
-              return module.book4Unit6LessonPlans;
+            if ('getBook4Unit6LessonPlans' in module) {
+              return (module as any).getBook4Unit6LessonPlans();
+            } else if ('book4Unit6LessonPlans' in module) {
+              return (module as any).book4Unit6LessonPlans;
             } else {
               return [];
             }
@@ -331,10 +360,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 7: {
           try {
             const module = await import('@/data/book4-unit7-resources');
-            if (module.getBook4Unit7LessonPlans) {
-              return module.getBook4Unit7LessonPlans();
-            } else if (module.book4Unit7LessonPlans) {
-              return module.book4Unit7LessonPlans;
+            if ('getBook4Unit7LessonPlans' in module) {
+              return (module as any).getBook4Unit7LessonPlans();
+            } else if ('book4Unit7LessonPlans' in module) {
+              return (module as any).book4Unit7LessonPlans;
             } else {
               return [];
             }
@@ -346,10 +375,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 8: {
           try {
             const module = await import('@/data/book4-unit8-resources');
-            if (module.getBook4Unit8LessonPlans) {
-              return module.getBook4Unit8LessonPlans();
-            } else if (module.book4Unit8LessonPlans) {
-              return module.book4Unit8LessonPlans;
+            if ('getBook4Unit8LessonPlans' in module) {
+              return (module as any).getBook4Unit8LessonPlans();
+            } else if ('book4Unit8LessonPlans' in module) {
+              return (module as any).book4Unit8LessonPlans;
             } else {
               return [];
             }
@@ -361,10 +390,10 @@ export const dynamicLessonPlanImport = async (book: string, unit: number): Promi
         case 9: {
           try {
             const module = await import('@/data/book4-unit9-resources');
-            if (module.getBook4Unit9LessonPlans) {
-              return module.getBook4Unit9LessonPlans();
-            } else if (module.book4Unit9LessonPlans) {
-              return module.book4Unit9LessonPlans;
+            if ('getBook4Unit9LessonPlans' in module) {
+              return (module as any).getBook4Unit9LessonPlans();
+            } else if ('book4Unit9LessonPlans' in module) {
+              return (module as any).book4Unit9LessonPlans;
             } else {
               return [];
             }

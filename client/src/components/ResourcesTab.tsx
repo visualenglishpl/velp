@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { TeacherResource } from '@/types/teacher-resources';
 import { Gamepad2, Video } from 'lucide-react';
-import { dynamicResourceImport, type ResourceLoaderModule } from '@/lib/resource-loader';
+import { dynamicResourceImport } from '../lib/resource-loader';
 
 interface ResourcesTabProps {
   bookId?: string;
