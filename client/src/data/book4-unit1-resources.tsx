@@ -1,4 +1,4 @@
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
 import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
@@ -106,3 +106,11 @@ export const resources: TeacherResource[] = [...videos, ...games];
 
 // Direct exports for consistent importing
 export default resources;
+
+/**
+ * Get all resources for Book 4 Unit 1
+ * @returns Array of teacher resources
+ */
+export function getBook4Unit1Resources(): TeacherResource[] {
+  return resources;
+}

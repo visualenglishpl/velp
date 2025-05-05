@@ -168,7 +168,7 @@ export const book4Unit9LessonPlans: TeacherResource[] = [
     title: 'Camping Safety and Survival Skills',
     description: 'A 45-minute lesson on staying safe during camping trips',
     resourceType: 'lesson',
-    categories: ['lesson'],
+    categories: ['activity', 'tutorial'],
     tags: ['camping safety', 'survival', 'outdoor education'],
     difficulty: 'beginner',
     ageGroup: 'all',

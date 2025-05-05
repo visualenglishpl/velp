@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { TeacherResource } from '@/types/teacher-resources';
 import { Gamepad2, Video } from 'lucide-react';
-import { dynamicResourceImport } from '@/lib/resource-loader';
+import { dynamicResourceImport, type ResourceLoaderModule } from '@/lib/resource-loader';
 
 interface ResourcesTabProps {
   bookId?: string;
@@ -30,8 +30,8 @@ export default function ResourcesTab({ bookId, unitId, hasPaidAccess = false }: 
         
         if (resources) {
           // Filter resources by type
-          const fetchedVideos = resources.filter(r => r.resourceType === 'video');
-          const fetchedGames = resources.filter(r => r.resourceType === 'game');
+          const fetchedVideos = resources.filter((r: TeacherResource) => r.resourceType === 'video');
+          const fetchedGames = resources.filter((r: TeacherResource) => r.resourceType === 'game');
           
           setVideos(fetchedVideos);
           setGames(fetchedGames);
