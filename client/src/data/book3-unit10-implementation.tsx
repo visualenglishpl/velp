@@ -14,7 +14,14 @@ const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'MY FAVOURITE SUBJECT';
 
 // Export resources getter function
 export const getBook3Unit10Resources = (): TeacherResource[] => {
-  return book3Unit10Resources;
+  return book3Unit10Resources.map(resource => ({
+    ...resource,
+    id: resource.id || `book3-unit10-${resource.title?.toLowerCase().replace(/\s+/g, '-')}`,
+    bookId: '3',
+    unitId: '10',
+    // Flag for resources without QA mappings to render blank on content slides
+    showBlankIfUnmapped: true
+  }));
 };
 
 // Generate specific lesson plans for this unit

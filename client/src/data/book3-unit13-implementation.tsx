@@ -14,7 +14,14 @@ const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'ANIMAL BODY PARTS';
 
 // Export resources getter function
 export const getBook3Unit13Resources = (): TeacherResource[] => {
-  return book3Unit13Resources;
+  return book3Unit13Resources.map(resource => ({
+    ...resource,
+    id: resource.id || `book3-unit13-${resource.title?.toLowerCase().replace(/\s+/g, '-')}`,
+    bookId: '3',
+    unitId: '13',
+    // Flag for resources without QA mappings to render blank on content slides
+    showBlankIfUnmapped: true
+  }));
 };
 
 // Generate specific lesson plans for this unit
