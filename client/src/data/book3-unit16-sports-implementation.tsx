@@ -1,7 +1,8 @@
 import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
-// Using the resources from book3-unit16-resources.tsx
+// Import resources directly
+import { book3Unit16Resources } from './book3-unit16-sports-resources';
 
 /**
  * Book 3 Unit 16 - SPORTS
@@ -12,15 +13,8 @@ const unitNumber = '16';
 const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'SPORTS';
 
 // Export resources getter function
-export const getBook3Unit16Resources = (): TeacherResource[] => {
-  try {
-    // Dynamically import to avoid circular dependency
-    const resourcesModule = require('./book3-unit16-resources');
-    return resourcesModule.book3Unit16Resources;
-  } catch (error) {
-    console.error('Error loading Book 3 Unit 16 Sports resources:', error);
-    return [];
-  }
+export const getBook3Unit16SportsResources = (): TeacherResource[] => {
+  return book3Unit16Resources;
 };
 
 // Generate specific lesson plans for this unit

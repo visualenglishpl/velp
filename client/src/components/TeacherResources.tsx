@@ -68,7 +68,7 @@ import { getBook3Unit13Resources, generateBook3Unit13LessonPlans } from '@/data/
 import { getBook3Unit14Resources, generateBook3Unit14LessonPlans } from '@/data/book3-unit14-implementation';
 import { getBook3Unit15Resources, generateBook3Unit15LessonPlans } from '@/data/book3-unit15-implementation';
 // Import the sports version of Unit 16 resources and lesson plans
-import { getBook3Unit16Resources, generateBook3Unit16LessonPlans } from '@/data/book3-unit16-sports-implementation';
+import { getBook3Unit16SportsResources, generateBook3Unit16LessonPlans } from '@/data/book3-unit16-sports-implementation';
 import { book3Unit16Resources } from '@/data/book3-unit16-sports-resources';
 import { getBook3Unit17Resources, generateBook3Unit17LessonPlans } from '@/data/book3-unit17-implementation';
 import { book3Unit17Resources } from '@/data/book3-unit17-resources';
