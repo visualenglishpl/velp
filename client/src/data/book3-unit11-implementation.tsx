@@ -18,7 +18,9 @@ export function getBook3Unit11Resources(): TeacherResource[] {
     ...resource,
     id: resource.id || `book3-unit11-${resource.title.toLowerCase().replace(/\s+/g, '-')}`,
     bookId: '3',
-    unitId: '11'
+    unitId: '11',
+    // Flag for resources without QA mappings to render blank on content slides
+    showBlankIfUnmapped: true
   }));
 }
 

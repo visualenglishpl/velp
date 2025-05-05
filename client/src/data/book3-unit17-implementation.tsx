@@ -10,7 +10,16 @@ import { book3Unit17Resources } from './book3-unit17-resources';
  */
 
 // Export resources getter function
-export const getBook3Unit17Resources = (): TeacherResource[] => book3Unit17Resources;
+export const getBook3Unit17Resources = (): TeacherResource[] => {
+  return book3Unit17Resources.map(resource => ({
+    ...resource,
+    id: resource.id || `book3-unit17-${resource.title?.toLowerCase().replace(/\s+/g, '-')}`,
+    bookId: '3',
+    unitId: '17',
+    // Flag for resources without QA mappings to render blank on content slides
+    showBlankIfUnmapped: true
+  }));
+};
 
 // Generate specific lesson plans for this unit
 export const generateBook3Unit17LessonPlans = (): LessonPlan[] => {

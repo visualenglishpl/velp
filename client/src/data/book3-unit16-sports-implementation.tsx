@@ -2,7 +2,7 @@ import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { BOOK3_TITLE, BOOK3_UNIT_TITLES } from './book3-resources-common';
 // Import resources directly
-import { book3Unit16Resources } from './book3-unit16-sports-resources';
+import { book3Unit16Resources } from './book3-unit16-resources';
 
 /**
  * Book 3 Unit 16 - SPORTS

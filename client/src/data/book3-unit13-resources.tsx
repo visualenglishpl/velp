@@ -54,6 +54,36 @@ export const book3Unit13Resources: TeacherResource[] = [
     }
   },
   
+  // Video Resources
+  {
+    id: `book3-unit${unitNumber}-video-1`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Animal Body Parts Song`,
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=p5qwOxlvyhk',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/p5qwOxlvyhk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+    content: {
+      type: 'youtube',
+      embedId: 'p5qwOxlvyhk'
+    }
+  },
+  {
+    id: `book3-unit${unitNumber}-video-2`,
+    bookId: '3',
+    unitId: unitNumber,
+    title: `${BOOK3_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Animal Body Parts Vocabulary`,
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=1lu3VhT4KGE',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/1lu3VhT4KGE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+    content: {
+      type: 'youtube',
+      embedId: '1lu3VhT4KGE'
+    }
+  },
+  
   // ISL Collective Video Lessons
   {
     id: `book3-unit${unitNumber}-video-lesson-1`,

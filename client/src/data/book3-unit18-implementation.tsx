@@ -14,7 +14,14 @@ const unitTitle = BOOK3_UNIT_TITLES[unitNumber] || 'MOVIES & FILMS';
 
 // Export resources getter function
 export const getBook3Unit18Resources = (): TeacherResource[] => {
-  return book3Unit18Resources;
+  return book3Unit18Resources.map(resource => ({
+    ...resource,
+    id: resource.id || `book3-unit18-${resource.title?.toLowerCase().replace(/\s+/g, '-')}`,
+    bookId: '3',
+    unitId: '18',
+    // Flag for resources without QA mappings to render blank on content slides
+    showBlankIfUnmapped: true
+  }));
 };
 
 // Generate specific lesson plans for this unit
