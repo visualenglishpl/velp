@@ -1,59 +1,125 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 4 Unit 2
+ * Resources for Book 4 Unit 2 - Gadgets
+ * 
+ * This file contains all the external resources (videos, games, etc.) for Book 4 Unit 2
  */
 
-// Videos for Unit 2
-export const videos: TeacherResource[] = [
+import { TeacherResource } from "@/types/teacher-resources";
+
+/**
+ * Resources for Book 4 Unit 2 (Gadgets)
+ */
+export const book4Unit2Resources: TeacherResource[] = [
+  // Wordwall games
   {
-    id: `book4-unit2-video-1`,
-    bookId: '4',
-    unitId: '2',
-    title: 'VISUAL 4 Unit 2 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    id: "book4-unit2-wordwall-1",
+    bookId: "4",
+    unitId: "2",
+    resourceType: "game",
+    title: "Gadgets 1 - Wordwall Game",
+    description: "Interactive wordwall game about gadgets",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/9b778eef10ff453b8ef30da1d667dadb",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/9b778eef10ff453b8ef30da1d667dadb?themeId=1&templateId=3&fontStackId=0"
+    }
   },
   {
-    id: `book4-unit2-video-2`,
-    bookId: '4',
-    unitId: '2',
-    title: 'VISUAL 4 Unit 2 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    id: "book4-unit2-wordwall-2",
+    bookId: "4",
+    unitId: "2",
+    resourceType: "game",
+    title: "Gadgets 2 - Wordwall Game",
+    description: "Interactive wordwall game about gadgets",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/7543280a4eab4edf90f4cbbe14a8f771",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/7543280a4eab4edf90f4cbbe14a8f771?themeId=1&templateId=3&fontStackId=0"
+    }
+  },
+  {
+    id: "book4-unit2-wordwall-3",
+    bookId: "4",
+    unitId: "2",
+    resourceType: "game",
+    title: "Gadgets 3 - Wordwall Game",
+    description: "Interactive wordwall game about gadgets",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/96418a9e2fce4091844ac3f35a855add",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/96418a9e2fce4091844ac3f35a855add?themeId=1&templateId=3&fontStackId=0"
+    }
+  },
+  {
+    id: "book4-unit2-abcya",
+    bookId: "4",
+    unitId: "2",
+    resourceType: "game",
+    title: "Find the Technology - ABCya Game",
+    description: "Find technology items in this interactive game",
+    provider: "ABCya",
+    sourceUrl: "https://www.abcya.com/games/find_the_tech",
+    content: {
+      type: "external",
+      embedUrl: "https://www.abcya.com/games/find_the_tech"
+    }
+  },
+  {
+    id: "book4-unit2-youtube-gadgets",
+    bookId: "4",
+    unitId: "2",
+    resourceType: "video",
+    title: "Gadgets Video",
+    description: "YouTube video about gadgets and technology",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=08BoI6zFDTw",
+    content: {
+      type: "youtube",
+      embedId: "08BoI6zFDTw"
+    }
+  },
+  // Lesson Plans
+  {
+    id: "book4-unit2-lesson-plan-1",
+    bookId: "4",
+    unitId: "2",
+    resourceType: "lesson",
+    title: "Lesson Plan 1 - Introduction to Gadgets",
+    description: "A 45-minute lesson plan introducing gadgets vocabulary and usage",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    }
+  },
+  {
+    id: "book4-unit2-lesson-plan-2",
+    bookId: "4",
+    unitId: "2",
+    resourceType: "lesson",
+    title: "Lesson Plan 2 - Technology in Daily Life",
+    description: "A 45-minute lesson plan focused on how we use technology in daily life",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    }
   }
 ];
 
-// Games for Unit 2
-export const games: TeacherResource[] = [
-  {
-    id: `book4-unit2-game-1`,
-    bookId: '4',
-    unitId: '2',
-    title: 'VISUAL 4 Unit 2 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book4-unit2-game-2`,
-    bookId: '4',
-    unitId: '2',
-    title: 'VISUAL 4 Unit 2 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
-];
+/**
+ * Get all resources for Book 4 Unit 2
+ * @returns Array of teacher resources
+ */
+export function getBook4Unit2Resources(): TeacherResource[] {
+  return book4Unit2Resources;
+}
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
-
-// Main export for backward compatibility
-export const book4Unit2Resources = resources;
+/**
+ * Get lesson plans for Book 4 Unit 2
+ * @returns Array of lesson plan resources
+ */
+export function getBook4Unit2LessonPlans(): TeacherResource[] {
+  return book4Unit2Resources.filter(resource => resource.resourceType === "lesson");
+}

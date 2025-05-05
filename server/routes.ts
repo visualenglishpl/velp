@@ -1,5 +1,6 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
+import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { setupPaymentRoutes } from "./payment-routes";
@@ -316,6 +317,14 @@ const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) 
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Add a direct route to the static test page for diagnostics
+  app.get('/test', (req, res) => {
+    const path = require('path');
+    const testPagePath = path.resolve(process.cwd(), 'client/public/test.html');
+    console.log('Serving test page from:', testPagePath);
+    res.sendFile(testPagePath);
+  });
+
   // Apply global rate limiting middleware
   app.use(standardLimiter);
   
@@ -1169,6 +1178,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+  
+  // Set up WebSocket server on a distinct path to avoid conflict with Vite HMR
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  
+  // Set up WebSocket event handlers
+  wss.on('connection', (ws) => {
+    console.log('WebSocket client connected');
+    
+    // Send a welcome message
+    ws.send(JSON.stringify({
+      type: 'connected',
+      message: 'Successfully connected to Visual English WebSocket server',
+      timestamp: new Date().toISOString()
+    }));
+    
+    // Handle incoming messages
+    ws.on('message', (message) => {
+      console.log('Received WebSocket message:', message.toString());
+      
+      try {
+        // You can add custom message handling here
+        const data = JSON.parse(message.toString());
+        
+        // Echo the message back as confirmation
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({
+            type: 'echo',
+            data,
+            timestamp: new Date().toISOString()
+          }));
+        }
+      } catch (error) {
+        console.error('Error processing WebSocket message:', error);
+      }
+    });
+    
+    // Handle disconnect
+    ws.on('close', () => {
+      console.log('WebSocket client disconnected');
+    });
+    
+    // Handle errors
+    ws.on('error', (error) => {
+      console.error('WebSocket error:', error);
+    });
+  });
 
   // Add a secure proxy endpoint for S3 content with fixed path structure
   // This prevents exposing AWS credentials to the frontend

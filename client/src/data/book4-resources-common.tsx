@@ -8,7 +8,7 @@ import { TeacherResource } from '@/components/TeacherResources';
 export const BOOK4_TITLE = 'VISUAL 4';
 export const BOOK4_UNIT_TITLES: Record<string, string> = {
   '1': 'NATIONALITIES',
-  '2': 'PLACES',
+  '2': 'GADGETS',
   '3': 'HOME SWEET HOME',
   '4': 'FAMILY - DESCRIBING PEOPLE',
   '5': 'DAILY ROUTINE',

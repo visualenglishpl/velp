@@ -1,59 +1,98 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 4 Unit 5
+ * Resources for Book 4 Unit 5 - Personality
+ * 
+ * This file contains all the external resources (videos, games, etc.) for Book 4 Unit 5
  */
 
-// Videos for Unit 5
-export const videos: TeacherResource[] = [
+import { TeacherResource } from "@/types/teacher-resources";
+
+/**
+ * Resources for Book 4 Unit 5 (Personality)
+ */
+export const book4Unit5Resources: TeacherResource[] = [
+  // Wordwall games
   {
-    id: `book4-unit5-video-1`,
-    bookId: '4',
-    unitId: '5',
-    title: 'VISUAL 4 Unit 5 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    id: "book4-unit5-wordwall-1",
+    bookId: "4",
+    unitId: "5",
+    resourceType: "game",
+    title: "Personality Traits - Wordwall Game 1",
+    description: "Interactive wordwall game about personality traits",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/339ab9a507314c98aa8ad268f9dbd2fc",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/339ab9a507314c98aa8ad268f9dbd2fc?themeId=1&templateId=2&fontStackId=0"
+    }
   },
   {
-    id: `book4-unit5-video-2`,
-    bookId: '4',
-    unitId: '5',
-    title: 'VISUAL 4 Unit 5 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    id: "book4-unit5-wordwall-2",
+    bookId: "4",
+    unitId: "5",
+    resourceType: "game",
+    title: "Personality Traits - Wordwall Game 2",
+    description: "Interactive wordwall game about personality traits",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/c6d609be7c0a4370adf35d199dd1001d",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/c6d609be7c0a4370adf35d199dd1001d?themeId=1&templateId=5&fontStackId=0"
+    }
+  },
+  // YouTube videos
+  {
+    id: "book4-unit5-youtube-1",
+    bookId: "4",
+    unitId: "5",
+    resourceType: "video",
+    title: "Personality Traits Vocabulary",
+    description: "Learn vocabulary to describe personality traits in English",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=D7ZjMjfasfU",
+    content: {
+      type: "youtube",
+      embedId: "D7ZjMjfasfU"
+    }
+  },
+  // Lesson Plans
+  {
+    id: "book4-unit5-lesson-plan-1",
+    bookId: "4",
+    unitId: "5",
+    resourceType: "lesson",
+    title: "Lesson Plan 1 - Personality Traits Introduction",
+    description: "A 45-minute lesson plan introducing personality traits vocabulary",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    }
+  },
+  {
+    id: "book4-unit5-lesson-plan-2",
+    bookId: "4",
+    unitId: "5",
+    resourceType: "lesson",
+    title: "Lesson Plan 2 - Describing Personalities",
+    description: "A 45-minute lesson plan focused on describing personalities in English",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    }
   }
 ];
 
-// Games for Unit 5
-export const games: TeacherResource[] = [
-  {
-    id: `book4-unit5-game-1`,
-    bookId: '4',
-    unitId: '5',
-    title: 'VISUAL 4 Unit 5 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book4-unit5-game-2`,
-    bookId: '4',
-    unitId: '5',
-    title: 'VISUAL 4 Unit 5 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
-];
+/**
+ * Get all resources for Book 4 Unit 5
+ * @returns Array of teacher resources
+ */
+export function getBook4Unit5Resources(): TeacherResource[] {
+  return book4Unit5Resources;
+}
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
-
-// Main export for backward compatibility
-export const book4Unit5Resources = resources;
+/**
+ * Get lesson plans for Book 4 Unit 5
+ * @returns Array of lesson plan resources
+ */
+export function getBook4Unit5LessonPlans(): TeacherResource[] {
+  return book4Unit5Resources.filter(resource => resource.resourceType === "lesson");
+}

@@ -1,59 +1,183 @@
-import { TeacherResource } from '@/components/TeacherResources';
-
 /**
- * Resources for Book 4 Unit 4
+ * Resources for Book 4 Unit 4 - Family - Describing People
+ * 
+ * This file contains all the external resources (videos, games, etc.) for Book 4 Unit 4
  */
 
-// Videos for Unit 4
-export const videos: TeacherResource[] = [
+import { TeacherResource } from "@/types/teacher-resources";
+
+/**
+ * Resources for Book 4 Unit 4 (Family - Describing People)
+ */
+export const book4Unit4Resources: TeacherResource[] = [
+  // Wordwall games
   {
-    id: `book4-unit4-video-1`,
-    bookId: '4',
-    unitId: '4',
-    title: 'VISUAL 4 Unit 4 Video 1',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    id: "book4-unit4-wordwall-1",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "game",
+    title: "Types of Hair - Wordwall Game",
+    description: "Interactive wordwall game about types of hair",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/0268bf9e65734957a7b291700fc07eee",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/0268bf9e65734957a7b291700fc07eee?themeId=1&templateId=5&fontStackId=0"
+    }
   },
   {
-    id: `book4-unit4-video-2`,
-    bookId: '4',
-    unitId: '4',
-    title: 'VISUAL 4 Unit 4 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    id: "book4-unit4-wordwall-2",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "game",
+    title: "Describing People - Wordwall Game",
+    description: "Interactive wordwall game about describing people",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/6c610a5d0f4e4b72be38e5deebf55425",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/6c610a5d0f4e4b72be38e5deebf55425?themeId=1&templateId=5&fontStackId=0"
+    }
+  },
+  {
+    id: "book4-unit4-wordwall-3",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "game",
+    title: "Family - Wordwall Game",
+    description: "Interactive wordwall game about family vocabulary",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/1373ff4429454b2c8c63824e64176643",
+    content: {
+      type: "wordwall",
+      embedUrl: "https://wordwall.net/embed/1373ff4429454b2c8c63824e64176643?themeId=1&templateId=38&fontStackId=0"
+    }
+  },
+  // YouTube videos
+  {
+    id: "book4-unit4-youtube-1",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "video",
+    title: "Describing People's Appearance",
+    description: "Learn vocabulary to describe people's physical appearance",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=dX1nlYuPDg8",
+    content: {
+      type: "youtube",
+      embedId: "dX1nlYuPDg8"
+    }
+  },
+  {
+    id: "book4-unit4-youtube-2",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "video",
+    title: "Family Members Vocabulary",
+    description: "Learn English vocabulary for family members",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=YsDfuAiIzDE",
+    content: {
+      type: "youtube",
+      embedId: "YsDfuAiIzDE"
+    }
+  },
+  {
+    id: "book4-unit4-youtube-3",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "video",
+    title: "Describing Physical Appearance",
+    description: "Vocabulary for describing physical appearance in English",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=vihFVjXGv-Y",
+    content: {
+      type: "youtube",
+      embedId: "vihFVjXGv-Y"
+    }
+  },
+  {
+    id: "book4-unit4-youtube-4",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "video",
+    title: "Parts of the Face",
+    description: "Learn the parts of the face in English",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=GhHbh9SVtVE",
+    content: {
+      type: "youtube",
+      embedId: "GhHbh9SVtVE"
+    }
+  },
+  {
+    id: "book4-unit4-youtube-5",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "video",
+    title: "Talking About Your Family",
+    description: "Learn how to talk about your family in English",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=RpuF57cIltw",
+    content: {
+      type: "youtube",
+      embedId: "RpuF57cIltw"
+    }
+  },
+  // ESL Collective Video Lesson
+  {
+    id: "book4-unit4-esl-collective",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "video",
+    title: "ESL Collective Video Lesson",
+    description: "Interactive ESL lesson about describing people",
+    provider: "ISL Collective",
+    sourceUrl: "https://en.islcollective.com/english-esl-video-lessons/embed/19368",
+    content: {
+      type: "external",
+      embedUrl: "https://en.islcollective.com/english-esl-video-lessons/embed/19368"
+    }
+  },
+  // Lesson Plans
+  {
+    id: "book4-unit4-lesson-plan-1",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "lesson",
+    title: "Lesson Plan 1 - Family Members",
+    description: "A 45-minute lesson plan introducing family vocabulary",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    }
+  },
+  {
+    id: "book4-unit4-lesson-plan-2",
+    bookId: "4",
+    unitId: "4",
+    resourceType: "lesson",
+    title: "Lesson Plan 2 - Describing People",
+    description: "A 45-minute lesson plan focused on describing physical appearance",
+    content: {
+      type: "markdown",
+      embedUrl: ""
+    }
   }
 ];
 
-// Games for Unit 4
-export const games: TeacherResource[] = [
-  {
-    id: `book4-unit4-game-1`,
-    bookId: '4',
-    unitId: '4',
-    title: 'VISUAL 4 Unit 4 Game 1',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book4-unit4-game-2`,
-    bookId: '4',
-    unitId: '4',
-    title: 'VISUAL 4 Unit 4 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  }
-];
+/**
+ * Get all resources for Book 4 Unit 4
+ * @returns Array of teacher resources
+ */
+export function getBook4Unit4Resources(): TeacherResource[] {
+  return book4Unit4Resources;
+}
 
-// Combined resources for this unit
-export const resources: TeacherResource[] = [...videos, ...games];
-
-// Main export for backward compatibility
-export const book4Unit4Resources = resources;
+/**
+ * Get lesson plans for Book 4 Unit 4
+ * @returns Array of lesson plan resources
+ */
+export function getBook4Unit4LessonPlans(): TeacherResource[] {
+  return book4Unit4Resources.filter(resource => resource.resourceType === "lesson");
+}

@@ -11,6 +11,16 @@ import { configureHMR } from "./hmr-config";
 // Configure enhanced HMR settings for development
 configureHMR();
 
+// Add global error handler for better resilience
+process.on('uncaughtException', (error) => {
+  console.error('UNCAUGHT EXCEPTION - keeping process alive:', error);
+});
+
+// Prevent unhandled promise rejections from crashing the app
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 
 const app = express();
 

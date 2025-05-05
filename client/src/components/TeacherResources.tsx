@@ -20,7 +20,10 @@ import { generateBook4UnitResources, generateDefaultBook4UnitLessonPlans, BOOK4_
 
 // Import Book 4 implementations
 import { getBook4Unit1Resources, getBook4Unit1LessonPlans } from '@/data/book4-unit1-implementation';
-import { getBook4Unit3Resources, getBook4Unit3LessonPlans } from '@/data/book4-unit3-implementation';
+import { getTeacherResources as getBook4Unit2Resources, getLessonPlans as getBook4Unit2LessonPlans } from '@/data/book4-unit2-implementation';
+import { getTeacherResources as getBook4Unit3Resources, getLessonPlans as getBook4Unit3LessonPlans } from '@/data/book4-unit3-implementation';
+import { getTeacherResources as getBook4Unit5Resources, getLessonPlans as getBook4Unit5LessonPlans } from '@/data/book4-unit5-implementation';
+import { getTeacherResources as getBook4Unit6Resources, getLessonPlans as getBook4Unit6LessonPlans } from '@/data/book4-unit6-implementation';
 
 // Import any specific implementation functions
 // Book 6 implementations
