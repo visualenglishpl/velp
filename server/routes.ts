@@ -1842,31 +1842,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
         };
       });
       
+      // Helper function to get the correct paths for a specific book
+      function getBookSpecificPaths(bookId: string, unitNumber: string): string[] {
+        // Base paths that work for most books
+        const basePaths = [
+          `book${bookId}/icons/thumbnailsuni${bookId}-${unitNumber}.png`,
+          `book${bookId}/thumbnails/unit${unitNumber}.png`,
+          `book${bookId}/icons/unit${unitNumber}.png`,
+          `book${bookId}/unit${unitNumber}/thumbnail.png`,
+          `thumbnails/book${bookId}-unit${unitNumber}.png`,
+        ];
+
+        // Book-specific path patterns based on our observations
+        if (bookId === "4") {
+          return [
+            `book4/icons/thumbnailsuni4-${unitNumber}.png`,
+            `book4/thumbnails/thumbnailsuni4-${unitNumber}.png`,
+            `book4/unit${unitNumber}/cover.png`,
+            ...basePaths
+          ];
+        } else if (bookId === "7") {
+          return [
+            `book7/icons/thumbnailsuni7-${unitNumber}.png`,
+            `book7/thumbnails/thumbnailsuni7-${unitNumber}.png`,
+            `book7/unit${unitNumber}/thumbnail.png`,
+            ...basePaths
+          ];
+        } else if (bookId.startsWith('0')) {
+          // Special case for books 0a, 0b, 0c
+          return [
+            `book${bookId}/icons/thumbnailsuni${bookId}-${unitNumber}.png`,
+            `book${bookId}/unit${unitNumber}/thumbnail.png`,
+            ...basePaths
+          ];
+        }
+        
+        // Default paths for other books
+        return basePaths;
+      }
+
       // Try to get thumbnail URLs for each unit
       const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
-        // Generate multiple possible thumbnail paths to try
-        // The path patterns look different for different books
-        // VERY IMPORTANT: Log the book ID to debug the path issue
-        console.log(`Looking for thumbnails for book ID: ${bookId}, unit ${unit.unitNumber}`);
+        // Get the correct paths for this specific book and unit
+        const possiblePaths = getBookSpecificPaths(bookId, unit.unitNumber);
         
-        const possiblePaths = [
-          // Primary pattern - most specific
-          `book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
-          
-          // Check with just the number for the main folder
-          `book${bookId}/icons/unit${unit.unitNumber}/thumbnail.png`,
-          `book${bookId}/thumbnails/unit${unit.unitNumber}/thumbnail.png`,
-          
-          // Check standard patterns
-          `book${bookId}/unit${unit.unitNumber}/thumbnail.png`,
-          `book${bookId}/icons/unit${unit.unitNumber}.png`,
-          `book${bookId}/thumbnails/unit${unit.unitNumber}.png`,
-          
-          // Check alternate naming conventions
-          `book${bookId}/unit${unit.unitNumber}/cover.png`,
-          `thumbnails/book${bookId}-unit${unit.unitNumber}.png`,
-          `book${bookId}/unit${unit.unitNumber}_thumbnail.png`,
-        ];
+        // Log the book ID and unit number for debugging
+        console.log(`Looking for thumbnails for book ID: ${bookId}, unit ${unit.unitNumber}`);
+        console.log(`Trying these paths: ${possiblePaths.join(', ')}`);
+        
         
         // Try each path to find a valid thumbnail URL
         let thumbnailUrl = null;
