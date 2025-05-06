@@ -16,7 +16,7 @@ const HeroSection = () => {
                   Interactive Language Learning
                 </div>
               </div>
-              <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
+              <h1 className="text-5xl md:text-6xl mb-6 tracking-wider">
                 <span className="block text-blue-900">VISUAL</span>
                 <span className="block text-blue-900">ENGLISH</span>
               </h1>
