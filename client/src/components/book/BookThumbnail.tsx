@@ -34,24 +34,24 @@ const BookThumbnail = ({
         <div className="relative">
           {/* Book cover image */}
           <img 
-            src={`/api/direct/test-s3?key=book${bookId}/cover.png`} 
+            src={`/api/direct/content/book${bookId}/cover.png`} 
             alt={`Book ${formattedBookId}`} 
             className="w-full h-auto" 
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = `/api/direct/test-s3?key=book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
+              target.src = `/api/direct/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
             }}
           />
           
           {/* GIF icon overlay */}
           <div className="absolute top-2 right-2 w-12 h-12">
             <img
-              src={`/api/direct/test-s3?key=icons/VISUAL ${bookId}.gif`}
+              src={`/api/direct/content/icons/VISUAL ${bookId}.gif`}
               alt="Book Icon"
               className="w-full h-full"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.src = `/api/direct/test-s3?key=icons/VISUAL 1.gif`;
+                target.src = `/api/direct/content/icons/VISUAL 1.gif`;
               }}
             />
           </div>

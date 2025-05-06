@@ -377,6 +377,29 @@ export function registerDirectRoutes(app: Express) {
     }
   });
   
+  // Direct content route for specific assets that should be publicly accessible
+  app.get("/api/direct/content/:path(*)", async (req, res) => {
+    try {
+      const key = req.params.path;
+      console.log(`Fetching direct content for key: ${key}`);
+      
+      // Generate a presigned URL for the specific content
+      const presignedUrl = await getS3PresignedUrl(key);
+      
+      if (!presignedUrl) {
+        console.error(`No presigned URL generated for key: ${key}`);
+        return res.status(404).json({ error: "Content not found" });
+      }
+      
+      // For most content types, we can redirect to the presigned URL
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      return res.redirect(presignedUrl);
+    } catch (error) {
+      console.error("Error fetching direct content:", error);
+      res.status(500).json({ error: "Failed to fetch content" });
+    }
+  });
+
   // Test route to verify S3 connectivity with detailed diagnostics
   app.get("/api/direct/test-s3", async (req, res) => {
     try {
