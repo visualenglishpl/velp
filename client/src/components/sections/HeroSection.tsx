@@ -40,11 +40,11 @@ const HeroSection = () => {
             {/* Right side illustration */}
             <div className="md:w-1/2 mt-8 md:mt-0">
               <div className="relative max-w-md mx-auto">
-                <div className="absolute -inset-1 bg-blue-500 rounded-xl blur-sm opacity-20"></div>
+                <div className="absolute -inset-1 bg-blue-100 rounded-xl blur-sm opacity-20"></div>
                 <img 
                   src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
                   alt="Visual English Learning"
-                  className="relative w-full h-auto rounded-xl shadow-lg" 
+                  className="relative w-full h-auto rounded-xl shadow-md" 
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.src = "/api/asset/icons/LOGO%20VISUAL%20ENGLISH.png";
