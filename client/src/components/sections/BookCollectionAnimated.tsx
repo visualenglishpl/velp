@@ -22,19 +22,19 @@ const BookCollectionAnimated: React.FC = () => {
         id: '0a',
         title: 'Book 0A - To The Moon',
         color: '#ffedcc',
-        gifUrl: '/api/content/book0a/book0a.gif'
+        gifUrl: '/api/content/icons/VISUAL 0a.gif'
       },
       {
         id: '0b',
         title: 'Book 0B - Barn In The Farm',
         color: '#e6f7ff',
-        gifUrl: '/api/content/book0b/book0b.gif'
+        gifUrl: '/api/content/icons/VISUAL 0b.gif'
       },
       {
         id: '0c',
         title: 'Book 0C - At The Farm',
         color: '#eaf7ea',
-        gifUrl: '/api/content/book0c/book0c.gif'
+        gifUrl: '/api/content/icons/VISUAL 0c.gif'
       },
       {
         id: '1',

@@ -10,7 +10,7 @@ import AdminPage from "./pages/AdminPage";
 
 function App() {
   console.log('Rendering full home page with layout');
-  
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
