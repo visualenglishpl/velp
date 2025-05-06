@@ -15,10 +15,16 @@ export const configureHMR = () => {
     process.env.VITE_HMR_POLLING_INTERVAL = '500'; // Reduced polling interval for faster updates
     process.env.VITE_HMR_TIMEOUT = '120000'; // Increased timeout for stability
     
-    // These settings help with Replit's proxy configuration
-    process.env.VITE_HMR_CLIENT_PORT = '443';
+    // Use the correct HMR settings for Replit
+    // Don't set client port to avoid localhost:undefined error
+    // process.env.VITE_HMR_CLIENT_PORT = '443'; 
     process.env.VITE_HMR_PROTOCOL = 'wss';
-    process.env.VITE_HMR_HOST = ''; // Let Vite determine the host automatically
+    // Use Replit's domain instead of localhost
+    const domain = process.env.REPLIT_SLUG || process.env.REPLIT_DOMAINS?.split(',')[0];
+    if (domain) {
+      console.log(`Using domain for HMR: ${domain}`);
+      process.env.VITE_HMR_HOST = domain;
+    }
     process.env.VITE_HMR_FORCE_FULL_RELOAD = 'false'; // Avoid full page reloads when possible
     
     // Set optimization flags for better performance
