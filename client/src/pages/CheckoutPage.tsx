@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ShoppingCart, CreditCard, ArrowLeft, CheckCircle, ShoppingBag, BookOpen, Book } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import WithdrawalConsent from '@/components/checkout/WithdrawalConsent';
+import UnitSelector from '@/components/checkout/UnitSelector';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface PlanDetails {
@@ -41,6 +42,7 @@ export default function CheckoutPage() {
   const [consent, setConsent] = useState(false);
   const [planDetails, setPlanDetails] = useState<PlanDetails | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
 
   // Parse query parameters
   const queryParams = new URLSearchParams(window.location.search);
@@ -181,6 +183,82 @@ export default function CheckoutPage() {
       toast({
         title: 'Error',
         description: 'Failed to add unit to cart. Please try again.',
+        variant: 'destructive'
+      });
+    }
+  };
+  
+  // Function to add multiple units to cart
+  const addMultipleUnitsToCart = (bookId: string, unitNumbers: string[]) => {
+    if (!unitNumbers.length) {
+      toast({
+        title: 'No units selected',
+        description: 'Please select at least one unit to purchase.',
+        variant: 'destructive'
+      });
+      return;
+    }
+    
+    try {
+      let cart = [];
+      const storedCart = localStorage.getItem('visualEnglishCart');
+      if (storedCart) {
+        cart = JSON.parse(storedCart);
+      }
+      
+      const formattedBookId = bookId.includes('0') 
+        ? bookId.replace(/^0([a-c])$/, "0$1").toUpperCase() 
+        : bookId;
+        
+      const isYearly = subscriptionPeriod === 'yearly';
+      const unitPrice = isYearly ? 40 : 5;
+      const period = isYearly ? 'year' : 'month';
+      let addedCount = 0;
+      
+      // Add each selected unit to cart if not already there
+      unitNumbers.forEach(unitNumber => {
+        const unitInCart = cart.some((item: any) => 
+          item.type === 'unit' && 
+          item.bookId === bookId && 
+          item.unitNumber === unitNumber
+        );
+        
+        if (!unitInCart) {
+          const newItem = {
+            id: `book${bookId}-unit${unitNumber}-${subscriptionPeriod}`,
+            type: 'unit',
+            bookId,
+            unitNumber,
+            subscriptionPeriod,
+            title: `Unit ${unitNumber} - Book ${formattedBookId} (${isYearly ? 'Yearly' : 'Monthly'})`,
+            price: unitPrice,
+          };
+          
+          cart.push(newItem);
+          addedCount++;
+        }
+      });
+      
+      if (addedCount > 0) {
+        localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
+        
+        // Trigger cart update event for navbar
+        window.dispatchEvent(new Event('storage'));
+        
+        toast({
+          title: `${addedCount} units added to cart`,
+          description: `${isYearly ? 'Yearly' : 'Monthly'} access for ${addedCount} units from Book ${formattedBookId} has been added to your cart (€${unitPrice * addedCount} total).`,
+        });
+      } else {
+        toast({
+          title: 'Units already in cart',
+          description: 'All selected units are already in your cart.',
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to add units to cart. Please try again.',
         variant: 'destructive'
       });
     }
@@ -539,6 +617,30 @@ export default function CheckoutPage() {
         ) : planDetails ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
+              {/* Unit Selector for single lesson purchases */}
+              {planId === 'single_lesson' && bookIdParam && (
+                <Card className="p-6 mb-6">
+                  <h2 className="text-xl font-bold mb-4">Select Units to Purchase</h2>
+                  <p className="text-sm text-gray-600 mb-4">
+                    You can select multiple units from Book {bookIdParam} to purchase together.
+                  </p>
+                  <UnitSelector 
+                    bookId={bookIdParam} 
+                    initialSelectedUnit={unitIdParam || undefined}
+                    onUnitsSelected={setSelectedUnits} 
+                  />
+                  <div className="mt-6 flex justify-end">
+                    <Button 
+                      onClick={() => addMultipleUnitsToCart(bookIdParam, selectedUnits)}
+                      disabled={selectedUnits.length === 0}
+                      className="bg-blue-600 hover:bg-blue-700"
+                    >
+                      Add {selectedUnits.length} Unit{selectedUnits.length !== 1 ? 's' : ''} to Cart
+                    </Button>
+                  </div>
+                </Card>
+              )}
+              
               <Card className="p-6">
                 <h2 className="text-xl font-bold mb-4">Payment Information</h2>
                 <form onSubmit={handleCheckout}>
