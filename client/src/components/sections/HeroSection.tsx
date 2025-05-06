@@ -11,16 +11,12 @@ const HeroSection = () => {
           <div className="flex flex-col md:flex-row items-center gap-12">
             {/* Left text content */}
             <div className="md:w-1/2 flex flex-col items-start">
-              <div className="flex items-center mb-6">
+              <div className="flex items-center justify-start mb-6">
                 <img 
                   src="/api/content/icons/LOGO%20VISUAL%20ENGLISH.png" 
                   alt="Visual English Logo" 
-                  className="h-16 mr-3"
+                  className="h-24"
                 />
-                <div className="font-light text-4xl tracking-wide text-gray-800 leading-none">
-                  <div>VISUAL</div>
-                  <div>ENGLISH</div>
-                </div>
               </div>
               <p className="text-xl text-blue-700 mb-10">
                 A distinctive and engaging English learning method tailored for young ESL learners.
@@ -40,12 +36,19 @@ const HeroSection = () => {
             </div>
             
             {/* Right side illustration */}
-            <div className="md:w-1/2 mt-8 md:mt-0">
+            <div className="md:w-1/2 mt-8 md:mt-0 relative">
               <img 
                 src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
                 alt="Visual English Learning Illustration"
-                className="w-full h-auto" 
+                className="w-full h-auto rounded-lg" 
               />
+              <div className="absolute -right-6 md:-right-8 bottom-0 hidden md:block">
+                <img 
+                  src="/api/content/VISUAL%20WEBSITE/sitting_teacher.png" 
+                  alt="Teacher sitting"
+                  className="h-40 w-auto" 
+                />
+              </div>
             </div>
           </div>
         </div>
