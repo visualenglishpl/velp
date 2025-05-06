@@ -10,6 +10,8 @@ import AdminPage from "./pages/AdminPage";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import TermsPage from "./pages/TermsPage";
 
 function App() {
   console.log('Rendering full home page with layout');
@@ -39,6 +41,12 @@ function App() {
           </Route>
           <Route path="/contact">
             <ContactPage />
+          </Route>
+          <Route path="/privacy">
+            <PrivacyPage />
+          </Route>
+          <Route path="/terms">
+            <TermsPage />
           </Route>
         </Switch>
       </main>

@@ -141,7 +141,7 @@ const Footer = () => {
               </Link>.
             </p>
             <p>
-              Spółka zarejestrowana w Polsce, NIP: 123-456-78-90 | Kapitał zakładowy: 5.000 PLN | Adres: ul. Przykładowa 123, 00-001 Warszawa
+              EDU-CENTRE DOLINA KARPIA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ | KRS: 0000806143 | NIP: 5492456552 | REGON: 384474200 | Adres: ul. RYNEK 2, 32-640 ZATOR, MAŁOPOLSKIE
             </p>
           </div>
         </div>
