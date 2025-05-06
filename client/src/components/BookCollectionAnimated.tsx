@@ -192,6 +192,7 @@ const BookCollectionAnimated: React.FC = () => {
                   src={showAnimated ? currentBook.animatedUrl : currentBook.coverUrl} 
                   alt={currentBook.title} 
                   className="w-full h-full object-contain"
+                  style={{ padding: "16px", objectFit: "contain" }}
                 />
               )}
             </CardContent>

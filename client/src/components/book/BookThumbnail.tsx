@@ -116,7 +116,7 @@ const BookThumbnail = ({
     <div className="h-full">
       <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md h-full flex flex-col`}>
         {/* Book cover with GIF thumbnail */}
-        <div className="relative flex items-center justify-center h-48 w-full aspect-square overflow-hidden">
+        <div className="relative flex items-center justify-center w-full aspect-square overflow-hidden">
           {/* Colored background */}
           <div className={`absolute inset-0 ${getTitleBgClass()}`}></div>
           
@@ -124,8 +124,8 @@ const BookThumbnail = ({
           <img 
             src={bookId === '3' ? `/api/direct/content/icons/VISUAL 3 .gif` : `/api/direct/content/icons/VISUAL ${bookId}.gif`} 
             alt={`Book ${formattedBookId}`}
-            className="h-full w-full object-cover z-10 relative"
-            style={{objectFit: "cover"}}
+            className="w-full h-full object-contain z-10 relative"
+            style={{objectFit: "contain", padding: "6px"}}
             loading="lazy"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
@@ -137,8 +137,9 @@ const BookThumbnail = ({
                 const pngImg = document.createElement('img');
                 pngImg.src = `/api/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
                 pngImg.alt = `Book ${formattedBookId}`;
-                pngImg.className = "h-full w-full object-cover z-10 relative";
-                pngImg.style.objectFit = "cover";
+                pngImg.className = "w-full h-full object-contain z-10 relative";
+                pngImg.style.objectFit = "contain";
+                pngImg.style.padding = "6px";
                 pngImg.onerror = () => {
                   pngImg.style.display = 'none';
                   // Finally use the fallback if all else fails
