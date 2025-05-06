@@ -1,7 +1,43 @@
+import React, { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ShoppingCart } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const Navbar = () => {
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+
+  // Update cart count when localStorage changes
+  useEffect(() => {
+    const updateCartCount = () => {
+      try {
+        const storedCart = localStorage.getItem('visualEnglishCart');
+        if (storedCart) {
+          const items = JSON.parse(storedCart);
+          setCartItemsCount(items.length);
+        } else {
+          setCartItemsCount(0);
+        }
+      } catch (error) {
+        console.error('Failed to load cart items:', error);
+        setCartItemsCount(0);
+      }
+    };
+
+    // Initial count
+    updateCartCount();
+
+    // Set up storage event listener for cross-tab synchronization
+    window.addEventListener('storage', updateCartCount);
+
+    // Check for cart updates every 2 seconds
+    const interval = setInterval(updateCartCount, 2000);
+
+    // Clean up
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+      clearInterval(interval);
+    };
+  }, []);
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
