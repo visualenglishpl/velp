@@ -1803,6 +1803,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Endpoint to get book thumbnails for the bookstore
+  app.get("/api/assets/book-thumbnails", async (req, res) => {
+    try {
+      // Sample data structure for books
+      const books = [
+        { bookId: "0a", title: "Visual English 0A", gifUrl: "", description: "Beginners level book" },
+        { bookId: "0b", title: "Visual English 0B", gifUrl: "", description: "Beginners level continuation" },
+        { bookId: "0c", title: "Visual English 0C", gifUrl: "", description: "Beginners level extension" },
+        { bookId: "1", title: "Visual English 1", gifUrl: "", description: "Elementary level book" },
+        { bookId: "2", title: "Visual English 2", gifUrl: "", description: "Pre-intermediate level book" },
+        { bookId: "3", title: "Visual English 3", gifUrl: "", description: "Intermediate level book" },
+        { bookId: "4", title: "Visual English 4", gifUrl: "", description: "Upper intermediate level book" },
+        { bookId: "5", title: "Visual English 5", gifUrl: "", description: "Advanced level book" },
+        { bookId: "6", title: "Visual English 6", gifUrl: "", description: "Advanced plus level book" },
+        { bookId: "7", title: "Visual English 7", gifUrl: "", description: "Proficiency level book" },
+      ];
+      
+      // Attach thumbnail URLs to each book
+      const booksWithThumbnails = await Promise.all(books.map(async (book) => {
+        // Format the main book thumbnail URL
+        // Use the book cover or a placeholder image for each book
+        const possiblePaths = [
+          `book${book.bookId}/cover.png`,
+          `book${book.bookId}/cover.jpg`,
+          `book${book.bookId}/cover.gif`,
+          `book${book.bookId}/icons/cover.png`,
+          `book${book.bookId}/icons/book${book.bookId}.png`,
+          `thumbnails/book${book.bookId}.png`
+        ];
+        
+        let thumbnailUrl = null;
+        
+        // Try each path until we find a valid one
+        for (const path of possiblePaths) {
+          try {
+            const url = await getS3PresignedUrl(path);
+            if (url) {
+              thumbnailUrl = url;
+              console.log(`Found thumbnail for book ${book.bookId}: ${path}`);
+              break;
+            }
+          } catch (error) {
+            console.log(`No thumbnail at path ${path} for book ${book.bookId}`);
+          }
+        }
+        
+        // Return the book with its thumbnail URL
+        return {
+          ...book,
+          gifUrl: thumbnailUrl || ""
+        };
+      }));
+      
+      return res.json(booksWithThumbnails);
+    } catch (error) {
+      console.error("Error fetching book thumbnails:", error);
+      res.status(500).json({ error: "Failed to fetch book thumbnails" });
+    }
+  });
+
   // Fallback route for older content paths
   app.get("/api/content/:key", isAuthenticated, async (req, res) => {
     try {
