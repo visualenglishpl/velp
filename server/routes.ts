@@ -1822,6 +1822,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Book ID is required" });
       }
       
+      // Check if the book exists in our storage
+      const book = await storage.getBookByBookId(bookId);
+      
+      // If the book ID is valid but doesn't exist in storage, create it dynamically 
+      if (!book && ['0a', '0b', '0c', '1', '2', '3', '4', '5', '6', '7'].includes(bookId)) {
+        console.log(`Book ID ${bookId} not found in storage but is a valid ID. Creating dynamic book.`);
+      } else if (!book) {
+        return res.status(404).json({ error: "Book not found" });
+      }
+      
       // Generate a standardized set of units based on the book ID
       // Books 0a/0b/0c have 20 units, Books 1-3 have 18 units, Books 4-7 have 16 units
       let unitCount = 16; // Default for Books 4-7
