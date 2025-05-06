@@ -234,7 +234,9 @@ const BookThumbnail = ({
             </Link>
             
             <button 
-              onClick={addToCart}
+              onClick={() => {
+                window.location.href = `/checkout/printed_book?book=${bookId}`;
+              }}
               className={`w-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1`}
             >
               <ShoppingBag size={14} />

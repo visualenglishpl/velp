@@ -42,10 +42,32 @@ export default function CheckoutPage() {
   const [planDetails, setPlanDetails] = useState<PlanDetails | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  // Get plan ID from params or cart
+  // Parse query parameters
+  const queryParams = new URLSearchParams(window.location.search);
+  const bookIdParam = queryParams.get('book');
+  const unitIdParam = queryParams.get('unit');
+  
+  // Get plan ID from params, URL or cart
   const planId = params.planId || 'default';
   const [selectedBookPurchaseType, setSelectedBookPurchaseType] = useState('physical');
   const [subscriptionPeriod, setSubscriptionPeriod] = useState('monthly');
+  
+  useEffect(() => {
+    // Handle checkout parameters from URL
+    if (bookIdParam) {
+      if (planId === 'whole_book') {
+        // If redirected from "Get Full Access" button with a book ID
+        addDigitalAccessToCart(bookIdParam);
+      } else if (planId === 'single_lesson' && unitIdParam) {
+        // If redirected from "Purchase Unit" button with book and unit ID
+        addSingleLessonToCart(bookIdParam, unitIdParam);
+      } else if (planId === 'printed_book') {
+        // If redirected from "Buy Printed Book" button
+        addPrintedBookToCart(bookIdParam);
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookIdParam, unitIdParam, planId]);
 
   // Function to add digital book access to cart
   const addDigitalAccessToCart = (bookId: string) => {
@@ -104,8 +126,68 @@ export default function CheckoutPage() {
     }
   };
 
-  // Function to add physical book to cart
-  const addBookToCart = (bookId: string) => {
+  // Function to add single lesson to cart
+  const addSingleLessonToCart = (bookId: string, unitNumber: string) => {
+    try {
+      let cart = [];
+      const storedCart = localStorage.getItem('visualEnglishCart');
+      if (storedCart) {
+        cart = JSON.parse(storedCart);
+      }
+      
+      // Check if this unit is already in cart
+      const unitInCart = cart.some((item: any) => 
+        item.type === 'unit' && 
+        item.bookId === bookId && 
+        item.unitNumber === unitNumber
+      );
+      
+      if (!unitInCart) {
+        const formattedBookId = bookId.includes('0') 
+          ? bookId.replace(/^0([a-c])$/, "0$1").toUpperCase() 
+          : bookId;
+          
+        const isYearly = subscriptionPeriod === 'yearly';
+        const price = isYearly ? 40 : 5;
+        const period = isYearly ? 'year' : 'month';
+        
+        const newItem = {
+          id: `book${bookId}-unit${unitNumber}-${subscriptionPeriod}`,
+          type: 'unit',
+          bookId,
+          unitNumber,
+          subscriptionPeriod,
+          title: `Unit ${unitNumber} - Book ${formattedBookId} (${isYearly ? 'Yearly' : 'Monthly'})`,
+          price,
+        };
+        
+        cart.push(newItem);
+        localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
+        
+        // Trigger cart update event for navbar
+        window.dispatchEvent(new Event('storage'));
+        
+        toast({
+          title: 'Unit added to cart',
+          description: `${isYearly ? 'Yearly' : 'Monthly'} access for Unit ${unitNumber} - Book ${formattedBookId} has been added to your cart (€${price}/${period}).`,
+        });
+      } else {
+        toast({
+          title: 'Unit already in cart',
+          description: `This unit is already in your cart.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to add unit to cart. Please try again.',
+        variant: 'destructive'
+      });
+    }
+  };
+  
+  // Function to add printed book to cart
+  const addPrintedBookToCart = (bookId: string) => {
     try {
       let cart = [];
       const storedCart = localStorage.getItem('visualEnglishCart');
@@ -155,6 +237,9 @@ export default function CheckoutPage() {
       });
     }
   };
+  
+  // Alias for addPrintedBookToCart for existing code
+  const addBookToCart = addPrintedBookToCart;
 
   // Calculate delivery fee for physical books (20 zł for DPD courier)
   const calculateDeliveryFee = (items: CartItem[]): number => {
