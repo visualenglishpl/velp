@@ -1,5 +1,6 @@
 import { Link } from "wouter";
-import { Facebook, Youtube } from "lucide-react";
+import { Facebook, Youtube, Instagram } from "lucide-react";
+import { SiTiktok } from "react-icons/si";
 
 const Footer = () => {
   const scrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
@@ -28,7 +29,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center mb-4">
               <img 
-                src="/api/asset/icons/LOGO%20VISUAL%20ENGLISH.png" 
+                src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
                 alt="Visual English Logo"
                 className="h-10 mr-3"
               />
@@ -42,6 +43,12 @@ const Footer = () => {
               </a>
               <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Youtube size={24} />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Instagram size={24} />
+              </a>
+              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <SiTiktok size={22} />
               </a>
             </div>
           </div>
@@ -114,8 +121,29 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Visual English. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-12 pt-8 text-gray-400">
+          <p className="text-sm mb-4 text-center">
+            &copy; {new Date().getFullYear()} Visual English. All rights reserved.
+          </p>
+          <div className="text-xs text-center max-w-4xl mx-auto">
+            <p className="mb-3">
+              Zgodnie z art. 13 ust. 1 i ust. 2 ogólnego rozporządzenia o ochronie danych osobowych z dnia 27 kwietnia 2016 r. (RODO) informujemy, 
+              iż administratorem Pani/Pana danych osobowych jest Visual English. Dane są przetwarzane w celach edukacyjnych i marketingowych.
+            </p>
+            <p className="mb-3">
+              Więcej informacji na temat przetwarzania danych osobowych znajdziesz w naszej{" "}
+              <Link href="/privacy" className="text-blue-400 hover:underline">
+                Polityce Prywatności
+              </Link>{" "}
+              oraz{" "}
+              <Link href="/terms" className="text-blue-400 hover:underline">
+                Regulaminie
+              </Link>.
+            </p>
+            <p>
+              Spółka zarejestrowana w Polsce, NIP: 123-456-78-90 | Kapitał zakładowy: 5.000 PLN | Adres: ul. Przykładowa 123, 00-001 Warszawa
+            </p>
+          </div>
         </div>
       </div>
     </footer>
