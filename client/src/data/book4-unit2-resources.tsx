@@ -1,249 +1,116 @@
-/**
- * Resources for Book 4 Unit 2 - Gadgets
- * 
- * This file contains all the external resources (videos, games, etc.) for Book 4 Unit 2
- */
-
-import { TeacherResource } from "../types/teacher-resources";
+import { TeacherResource } from '@/types/teacher-resources';
+import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 2 (Gadgets)
+ * Book 4 Unit 2 - GADGETS
+ * Resources including videos and games
  */
-export const book4Unit2Resources: TeacherResource[] = [
-  // Wordwall games
+
+const unitNumber = '2';
+const unitTitle = 'GADGETS';
+
+// Videos for this unit
+export const videos: TeacherResource[] = [
   {
-    id: "book4-unit2-wordwall-1",
-    bookId: "4",
-    unitId: "2",
-    resourceType: "game",
-    title: "Gadgets 1 - Wordwall Game",
-    description: "Interactive wordwall game about gadgets",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/9b778eef10ff453b8ef30da1d667dadb",
+    id: `book4-unit${unitNumber}-video-1`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Gadgets and Technology`,
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=08BoI6zFDTw',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/08BoI6zFDTw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
     content: {
-      type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/9b778eef10ff453b8ef30da1d667dadb?themeId=1&templateId=3&fontStackId=0"
+      type: 'youtube',
+      embedId: '08BoI6zFDTw'
     }
   },
   {
-    id: "book4-unit2-wordwall-2",
-    bookId: "4",
-    unitId: "2",
-    resourceType: "game",
-    title: "Gadgets 2 - Wordwall Game",
-    description: "Interactive wordwall game about gadgets",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/7543280a4eab4edf90f4cbbe14a8f771",
+    id: `book4-unit${unitNumber}-video-2`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Technology Video`,
+    resourceType: 'video',
+    provider: 'YouTube',
+    sourceUrl: 'https://www.youtube.com/watch?v=BsK4tX28Jcs',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/BsK4tX28Jcs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
     content: {
-      type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/7543280a4eab4edf90f4cbbe14a8f771?themeId=1&templateId=3&fontStackId=0"
-    }
-  },
-  {
-    id: "book4-unit2-wordwall-3",
-    bookId: "4",
-    unitId: "2",
-    resourceType: "game",
-    title: "Gadgets 3 - Wordwall Game",
-    description: "Interactive wordwall game about gadgets",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/96418a9e2fce4091844ac3f35a855add",
-    content: {
-      type: "wordwall",
-      embedUrl: "https://wordwall.net/embed/96418a9e2fce4091844ac3f35a855add?themeId=1&templateId=3&fontStackId=0"
-    }
-  },
-  {
-    id: "book4-unit2-abcya",
-    bookId: "4",
-    unitId: "2",
-    resourceType: "game",
-    title: "Find the Technology - ABCya Game",
-    description: "Find technology items in this interactive game",
-    provider: "ABCya",
-    sourceUrl: "https://www.abcya.com/games/find_the_tech",
-    content: {
-      type: "external",
-      embedUrl: "https://www.abcya.com/games/find_the_tech"
-    }
-  },
-  {
-    id: "book4-unit2-youtube-gadgets-1",
-    bookId: "4",
-    unitId: "2",
-    resourceType: "video",
-    title: "Gadgets and Technology Video",
-    description: "YouTube video about gadgets and technology in everyday life",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=08BoI6zFDTw",
-    content: {
-      type: "youtube",
-      embedId: "08BoI6zFDTw"
-    }
-  },
-  {
-    id: "book4-unit2-youtube-gadgets-2",
-    bookId: "4",
-    unitId: "2",
-    resourceType: "video",
-    title: "Gadgets Video",
-    description: "YouTube video about gadgets and technology",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=BsK4tX28Jcs",
-    content: {
-      type: "youtube",
-      embedId: "BsK4tX28Jcs"
-    }
-  },
-  // Lesson Plans
-  {
-    id: "book4-unit2-lesson-plan-1",
-    bookId: "4",
-    unitId: "2",
-    resourceType: "lesson",
-    title: "Lesson Plan 1 - Introduction to Gadgets",
-    description: "A 45-minute lesson plan introducing gadgets vocabulary and usage",
-    content: {
-      type: "markdown",
-      embedUrl: ""
-    },
-    lessonPlan: {
-      id: "b4u2-lesson-1-plan",
-      title: "Introduction to Gadgets",
-      duration: "45 minutes",
-      level: "Book 4",
-      objectives: [
-        "Introduce vocabulary related to common gadgets",
-        "Practice asking and answering questions about gadgets",
-        "Develop speaking skills through technology-related activities"
-      ],
-      materials: [
-        "Visual English Book 4",
-        "Pictures of different gadgets",
-        "Gadget flashcards"
-      ],
-      steps: [
-        {
-          title: "Warm-up",
-          duration: "5 minutes",
-          description: "Show students various gadgets or pictures and ask them to name them if they can."
-        },
-        {
-          title: "Vocabulary Introduction",
-          duration: "10 minutes",
-          description: "Introduce gadget vocabulary using visual aids."
-        },
-        {
-          title: "Matching Exercise",
-          duration: "10 minutes",
-          description: "Students complete matching exercises connecting gadgets with their functions."
-        },
-        {
-          title: "'What is it?' Game",
-          duration: "10 minutes",
-          description: "Teacher describes a gadget and students guess which one it is."
-        },
-        {
-          title: "Conclusion",
-          duration: "10 minutes",
-          description: "Review gadget vocabulary and discuss how these devices help us in daily life."
-        }
-      ],
-      assessmentTips: "Students identify and name various gadgets in pictures.",
-      homeworkIdeas: ["Students create a poster about their favorite gadget with labeled parts."],
-      // Keep legacy fields for backward compatibility
-      warmUp: "Show students various gadgets or pictures and ask them to name them if they can.",
-      mainActivities: [
-        "Presentation: Introduce gadget vocabulary using visual aids.",
-        "Practice: Students complete matching exercises connecting gadgets with their functions.",
-        "Game: 'What is it?' - Teacher describes a gadget and students guess which one it is."
-      ],
-      extension: "Students create a poster about their favorite gadget with labeled parts.",
-      assessment: "Students identify and name various gadgets in pictures.",
-      conclusion: "Review gadget vocabulary and discuss how these devices help us in daily life."
-    }
-  },
-  {
-    id: "book4-unit2-lesson-plan-2",
-    bookId: "4",
-    unitId: "2",
-    resourceType: "lesson",
-    title: "Lesson Plan 2 - Technology in Daily Life",
-    description: "A 45-minute lesson plan focused on how we use technology in daily life",
-    content: {
-      type: "markdown",
-      embedUrl: ""
-    },
-    lessonPlan: {
-      id: "b4u2-lesson-2-plan",
-      title: "Technology in Daily Life",
-      duration: "45 minutes",
-      level: "Book 4",
-      objectives: [
-        "Learn vocabulary related to technology usage",
-        "Practice discussing how we use gadgets in everyday situations",
-        "Develop the ability to express preferences about technology"
-      ],
-      materials: [
-        "Visual English Book 4",
-        "Technology usage worksheet",
-        "Pictures showing people using various gadgets"
-      ],
-      steps: [
-        {
-          title: "Warm-up",
-          duration: "5 minutes",
-          description: "Ask students to share how many hours they spend using different gadgets each day."
-        },
-        {
-          title: "Vocabulary Presentation",
-          duration: "10 minutes",
-          description: "Teach vocabulary for different technology uses (communication, entertainment, work)."
-        },
-        {
-          title: "Pair Discussion",
-          duration: "8 minutes",
-          description: "Students work in pairs to discuss how they use technology in their daily routines."
-        },
-        {
-          title: "Tech Survey Activity",
-          duration: "15 minutes",
-          description: "Students interview classmates about their technology preferences and create a simple chart."
-        },
-        {
-          title: "Wrap-up Discussion",
-          duration: "7 minutes",
-          description: "Discuss the benefits and challenges of technology in our daily lives."
-        }
-      ],
-      assessmentTips: "Students complete a speaking task explaining how they use 3-4 different gadgets in their lives.",
-      homeworkIdeas: ["Students create a 'day without technology' plan, describing what would be different."],
-      // Keep legacy fields for backward compatibility
-      warmUp: "Ask students to share how many hours they spend using different gadgets each day.",
-      mainActivities: [
-        "Presentation: Teach vocabulary for different technology uses (communication, entertainment, work, etc.).",
-        "Practice: Students work in pairs to discuss how they use technology in their daily routines.",
-        "Activity: 'Tech Survey' - Students interview classmates about their technology preferences and create a simple chart."
-      ],
-      extension: "Students create a 'day without technology' plan, describing what would be different.",
-      assessment: "Students complete a speaking task explaining how they use 3-4 different gadgets in their lives.",
-      conclusion: "Discuss the benefits and challenges of technology in our daily lives."
+      type: 'youtube',
+      embedId: 'BsK4tX28Jcs'
     }
   }
 ];
+
+// Games for this unit
+export const games: TeacherResource[] = [
+  {
+    id: `book4-unit${unitNumber}-game-1`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - GADGETS 1`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/9b778eef10ff453b8ef30da1d667dadb',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9b778eef10ff453b8ef30da1d667dadb?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/9b778eef10ff453b8ef30da1d667dadb?themeId=1&templateId=3&fontStackId=0'
+    }
+  },
+  {
+    id: `book4-unit${unitNumber}-game-2`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - GADGETS 2`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/7543280a4eab4edf90f4cbbe14a8f771',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/7543280a4eab4edf90f4cbbe14a8f771?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/7543280a4eab4edf90f4cbbe14a8f771?themeId=1&templateId=3&fontStackId=0'
+    }
+  },
+  {
+    id: `book4-unit${unitNumber}-game-3`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - GADGETS 3`,
+    resourceType: 'game',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/96418a9e2fce4091844ac3f35a855add',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/96418a9e2fce4091844ac3f35a855add?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/96418a9e2fce4091844ac3f35a855add?themeId=1&templateId=3&fontStackId=0'
+    }
+  },
+  {
+    id: `book4-unit${unitNumber}-game-4`,
+    bookId: '4',
+    unitId: unitNumber,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - FIND THE TECHNOLOGY`,
+    resourceType: 'game',
+    provider: 'ABCya',
+    sourceUrl: 'https://www.abcya.com/games/find_the_tech',
+    embedCode: '<iframe style="max-width:100%" src="https://www.abcya.com/games/find_the_tech" width="800" height="600" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'external',
+      embedUrl: 'https://www.abcya.com/games/find_the_tech'
+    }
+  }
+];
+
+// Combine all resources for the unit
+export const resources: TeacherResource[] = [...videos, ...games];
+
+// Direct exports for consistent importing
+export default resources;
 
 /**
  * Get all resources for Book 4 Unit 2
  * @returns Array of teacher resources
  */
 export function getBook4Unit2Resources(): TeacherResource[] {
-  return book4Unit2Resources;
-}
-
-/**
- * Get lesson plans for Book 4 Unit 2
- * @returns Array of lesson plan resources
- */
-export function getBook4Unit2LessonPlans(): TeacherResource[] {
-  return book4Unit2Resources.filter(resource => resource.resourceType === "lesson");
+  return resources;
 }

@@ -5,7 +5,7 @@
  * including Q&A mappings and teaching resources.
  */
 
-import { getBook4Unit4Resources, getBook4Unit4LessonPlans } from "./book4-unit4-resources";
+import { resources as unitResources } from "./book4-unit4-resources";
 import { TeacherResource } from "@/types/teacher-resources";
 import { BookUnit } from "@/types/book-unit";
 import { LessonPlan, LessonStep } from "@/components/LessonPlanTemplate";
@@ -99,7 +99,7 @@ export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
  * @returns Array of teacher resources
  */
 export function getTeacherResources(): TeacherResource[] {
-  return getBook4Unit4Resources();
+  return unitResources;
 }
 
 /**
@@ -107,7 +107,7 @@ export function getTeacherResources(): TeacherResource[] {
  * @returns Array of teacher resources with lesson plans
  */
 export function getLessonPlans(): TeacherResource[] {
-  return getBook4Unit4LessonPlans();
+  return unitResources.filter(resource => resource.resourceType === "lesson");
 }
 
 /**

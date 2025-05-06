@@ -1,18 +1,18 @@
-/**
- * Resources for Book 4 Unit 9 - Camping
- * 
- * This file contains all the external resources (videos, games, etc.) for Book 4 Unit 9
- */
-
 import { TeacherResource } from '@/types/teacher-resources';
+import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 9 (Camping)
+ * Book 4 Unit 9 - CAMPING
+ * Resources including videos and games
  */
-export const book4Unit9Resources: TeacherResource[] = [
-  // Videos
+
+const unitNumber = '9';
+const unitTitle = 'CAMPING';
+
+// Videos for this unit
+export const videos: TeacherResource[] = [
   {
-    id: 'book4-unit9-video1',
+    id: `book4-unit${unitNumber}-video-1`,
     bookId: '4',
     unitId: '9',
     title: 'Introduction to Camping',
@@ -30,10 +30,12 @@ export const book4Unit9Resources: TeacherResource[] = [
     },
     thumbnailUrl: 'https://img.youtube.com/vi/H9hqzIx43_0/mqdefault.jpg',
   },
-  
-  // Games
+];
+
+// Games for this unit
+export const games: TeacherResource[] = [
   {
-    id: 'book4-unit9-game1',
+    id: `book4-unit${unitNumber}-game-1`,
     bookId: '4',
     unitId: '9',
     title: 'Camping Verbs Game',
@@ -52,7 +54,7 @@ export const book4Unit9Resources: TeacherResource[] = [
     thumbnailUrl: 'https://www.wordwall.net/apple-touch-icon.png',
   },
   {
-    id: 'book4-unit9-game2',
+    id: `book4-unit${unitNumber}-game-2`,
     bookId: '4',
     unitId: '9',
     title: 'Camping Vocabulary Game',
@@ -72,12 +74,10 @@ export const book4Unit9Resources: TeacherResource[] = [
   },
 ];
 
-/**
- * Lesson plans for Book 4 Unit 9
- */
-export const book4Unit9LessonPlans: TeacherResource[] = [
+// Lesson plans for this unit
+export const lessonPlans: TeacherResource[] = [
   {
-    id: 'book4-unit9-lesson1',
+    id: `book4-unit${unitNumber}-lesson-1`,
     bookId: '4',
     unitId: '9',
     title: 'Introduction to Camping',
