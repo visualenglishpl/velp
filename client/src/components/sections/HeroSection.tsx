@@ -147,130 +147,50 @@ const HeroSection = () => {
             
             {/* Second row - Books 3-7 */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-              {/* Book 3 - Bugs (Lime Green) */}
-              <div className="">
-                <div className="bg-lime-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book3/cover.png" 
-                    alt="Book 3 - Bugs" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book3/icons/thumbnailsuni3-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-lime-800">VISUAL ENGLISH</h3>
-                    <p className="text-lime-700 font-medium">BOOK 3</p>
-                    <Link href="/books/3">
-                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-lime-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="3" 
+                title="Bugs" 
+                color="lime" 
+                bgColor="lime"
+                buttonColor="red"
+                buttonHoverColor="red"
+              />
               
-              {/* Book 4 - At The Circus (Pink) */}
-              <div className="">
-                <div className="bg-pink-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book4/cover.png" 
-                    alt="Book 4 - At The Circus" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book4/icons/thumbnailsuni4-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-pink-800">VISUAL ENGLISH</h3>
-                    <p className="text-pink-700 font-medium">BOOK 4</p>
-                    <Link href="/books/4">
-                      <button className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-pink-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="4" 
+                title="At The Circus" 
+                color="pink" 
+                bgColor="pink"
+                buttonColor="green"
+                buttonHoverColor="green"
+              />
               
-              {/* Book 5 - Movie Time (Red) */}
-              <div className="">
-                <div className="bg-red-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book5/cover.png" 
-                    alt="Book 5 - Movie Time" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book5/icons/thumbnailsuni5-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-red-800">VISUAL ENGLISH</h3>
-                    <p className="text-red-700 font-medium">BOOK 5</p>
-                    <Link href="/books/5">
-                      <button className="mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md font-extrabold text-sm shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-red-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="5" 
+                title="Movie Time" 
+                color="red" 
+                bgColor="red"
+                buttonColor="orange"
+                buttonHoverColor="orange"
+              />
               
-              {/* Book 6 - Fashion Accessories (Purple) */}
-              <div className="">
-                <div className="bg-purple-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book6/cover.png" 
-                    alt="Book 6 - Fashion Accessories" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book6/icons/thumbnailsuni6-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-purple-800">VISUAL ENGLISH</h3>
-                    <p className="text-purple-700 font-medium">BOOK 6</p>
-                    <Link href="/books/6">
-                      <button className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-purple-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="6" 
+                title="Fashion Accessories" 
+                color="purple" 
+                bgColor="purple"
+                buttonColor="purple"
+                buttonHoverColor="purple"
+              />
               
-              {/* Book 7 - Social Problems (Gray) */}
-              <div className="">
-                <div className="bg-gray-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book7/cover.png" 
-                    alt="Book 7 - Social Problems" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book7/icons/thumbnailsuni7-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-gray-800">VISUAL ENGLISH</h3>
-                    <p className="text-gray-700 font-medium">BOOK 7</p>
-                    <Link href="/books/7">
-                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-gray-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="7" 
+                title="Social Problems" 
+                color="gray" 
+                bgColor="gray"
+                buttonColor="red"
+                buttonHoverColor="red"
+              />
             </div>
           </div>
           
