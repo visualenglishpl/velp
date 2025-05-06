@@ -97,34 +97,51 @@ const BookThumbnail = ({
       buttonColorClass = 'bg-blue-600';
   }
   
+  // Get a deeper color variant for title backgrounds
+  const getTitleBgClass = () => {
+    if (bookId === '0a') return 'bg-blue-600';
+    if (bookId === '0b') return 'bg-orange-600';
+    if (bookId === '0c') return 'bg-amber-600';
+    if (bookId === '1') return 'bg-green-600';
+    if (bookId === '2') return 'bg-blue-600';
+    if (bookId === '3') return 'bg-lime-600';
+    if (bookId === '4') return 'bg-purple-600';
+    if (bookId === '5') return 'bg-red-600';
+    if (bookId === '6') return 'bg-purple-600';
+    if (bookId === '7') return 'bg-gray-600';
+    return 'bg-blue-600';
+  };
+
   return (
-    <div className="">
-      <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md`}>
-        <div>
-          {/* Book cover image with color background fallback */}
-          <div className="relative flex items-center justify-center h-40 md:h-52 w-full overflow-hidden">
-            <img 
-              src={`/api/direct/content/book${bookId}/cover.png`} 
-              alt={`Book ${formattedBookId}`} 
-              className="w-full h-auto"
-            />
-            {/* Colored background for the book */}
-            <div className={`absolute inset-0 ${bgColorClass} opacity-25`}></div>
-            {/* Book number watermark */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <div className={`text-5xl font-black ${subTextColorClass} opacity-30`}>{formattedBookId}</div>
-            </div>
+    <div className="h-full">
+      <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-lg h-full flex flex-col`}>
+        {/* Custom designed book cover */}
+        <div className={`relative ${getTitleBgClass()} flex items-center justify-center h-48 overflow-hidden`}>
+          {/* Book ID and title */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+            <div className="text-6xl font-black mb-1">{formattedBookId}</div>
+            <div className="text-sm uppercase tracking-wider font-medium px-4 text-center">{title}</div>
           </div>
+          
+          {/* Visual design elements */}
+          <div className="absolute top-0 left-0 right-0 h-8 bg-white opacity-10"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-white opacity-10"></div>
+          
+          {/* Decorative circles */}
+          <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white opacity-20"></div>
+          <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full bg-white opacity-20"></div>
         </div>
         
-        <div className="p-4 text-center">
+        <div className="p-4 text-center flex-grow flex flex-col bg-white">
           <h3 className={`font-extrabold ${textColorClass}`}>VISUAL ENGLISH</h3>
-          <p className={`${subTextColorClass} font-medium`}>BOOK {formattedBookId}</p>
-          <Link href={`/books/${bookId}`}>
-            <button className={`mt-3 w-full ${buttonColorClass} ${bookId === '5' ? 'text-red-700 border border-red-300' : 'text-white'} py-2 px-4 rounded-md font-extrabold text-sm shadow-md`}>
-              View Units
-            </button>
-          </Link>
+          <p className={`${subTextColorClass} font-medium mb-3`}>BOOK {formattedBookId}</p>
+          <div className="mt-auto">
+            <Link href={`/books/${bookId}`} className="block w-full">
+              <button className={`w-full ${buttonColorClass} ${bookId === '5' ? 'text-red-700 border border-red-300' : 'text-white'} py-3 px-4 rounded-md font-extrabold text-sm shadow-md`}>
+                View Units
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
