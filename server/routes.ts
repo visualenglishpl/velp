@@ -1842,8 +1842,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         };
       });
       
-      // Helper function to get the correct paths for a specific book
-      function getBookSpecificPaths(bookId: string, unitNumber: string): string[] {
+      // Get the correct paths for a specific book
+      const getBookSpecificPaths = (bookId: string, unitNumber: string): string[] => {
         // Base paths that work for most books
         const basePaths = [
           `book${bookId}/icons/thumbnailsuni${bookId}-${unitNumber}.png`,
@@ -1872,7 +1872,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Special case for books 0a, 0b, 0c
           return [
             `book${bookId}/icons/thumbnailsuni${bookId}-${unitNumber}.png`,
+            `book${bookId}/thumbnails/thumbnailsuni${bookId}-${unitNumber}.png`,
             `book${bookId}/unit${unitNumber}/thumbnail.png`,
+            `book${bookId}/units/unit${unitNumber}/thumbnail.png`,
             ...basePaths
           ];
         }
