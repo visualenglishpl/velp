@@ -115,21 +115,40 @@ const BookThumbnail = ({
   return (
     <div className="h-full">
       <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md h-full flex flex-col`}>
-        {/* Custom designed book cover */}
-        <div className={`relative ${getTitleBgClass()} flex items-center justify-center h-36 overflow-hidden`}>
-          {/* Book ID and title */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+        {/* Book cover with GIF thumbnail */}
+        <div className="relative flex items-center justify-center h-36 overflow-hidden">
+          {/* Colored background */}
+          <div className={`absolute inset-0 ${getTitleBgClass()}`}></div>
+          
+          {/* GIF Thumbnail from S3 */}
+          <img 
+            src={`/api/direct/content/icons/VISUAL ${bookId}.gif`} 
+            alt={`Book ${formattedBookId}`}
+            className="h-full w-auto object-contain z-10 relative"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              // Show fallback
+              const fallback = target.parentElement?.querySelector('.fallback-content');
+              if (fallback) {
+                (fallback as HTMLElement).style.display = 'flex';
+              }
+            }}
+          />
+          
+          {/* Fallback content if GIF fails to load */}
+          <div className="fallback-content absolute inset-0 flex-col items-center justify-center text-white hidden">
             <div className="text-5xl font-black">{formattedBookId}</div>
             <div className="text-xs uppercase tracking-wider font-medium px-3 text-center mt-1">{title}</div>
+            
+            {/* Visual design elements */}
+            <div className="absolute top-0 left-0 right-0 h-6 bg-white opacity-10"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-6 bg-white opacity-10"></div>
+            
+            {/* Decorative circles */}
+            <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white opacity-20"></div>
+            <div className="absolute -bottom-4 -left-4 w-14 h-14 rounded-full bg-white opacity-20"></div>
           </div>
-          
-          {/* Visual design elements */}
-          <div className="absolute top-0 left-0 right-0 h-6 bg-white opacity-10"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-6 bg-white opacity-10"></div>
-          
-          {/* Decorative circles */}
-          <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white opacity-20"></div>
-          <div className="absolute -bottom-4 -left-4 w-14 h-14 rounded-full bg-white opacity-20"></div>
         </div>
         
         <div className="p-3 text-center flex-grow flex flex-col bg-white">
