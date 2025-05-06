@@ -1,59 +1,94 @@
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
+import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 14
+ * Book 4 Unit 14 - WHAT CAN YOU DO
+ * Resources including videos and games
  */
 
-// Videos for Unit 14
+const unitNumber = '14';
+const unitTitle = 'WHAT CAN YOU DO';
+
+// Videos for this unit
 export const videos: TeacherResource[] = [
   {
-    id: `book4-unit14-video-1`,
+    id: `book4-unit${unitNumber}-video-1`,
     bookId: '4',
-    unitId: '14',
-    title: 'VISUAL 4 Unit 14 Video 1',
+    unitId: unitNumber,
+    title: 'I Can Sing a Rainbow',
+    description: 'Fun song teaching children about abilities and actions',
     resourceType: 'video',
     provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book4-unit14-video-2`,
-    bookId: '4',
-    unitId: '14',
-    title: 'VISUAL 4 Unit 14 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    sourceUrl: 'https://www.youtube.com/watch?v=radrRGGe-J0',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/radrRGGe-J0?si=ndOXJYESeEbYT_kX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    content: {
+      type: 'youtube',
+      embedId: 'radrRGGe-J0'
+    }
   }
 ];
 
-// Games for Unit 14
+// Games for this unit
 export const games: TeacherResource[] = [
   {
-    id: `book4-unit14-game-1`,
+    id: `book4-unit${unitNumber}-game-1`,
     bookId: '4',
-    unitId: '14',
-    title: 'VISUAL 4 Unit 14 Game 1',
+    unitId: unitNumber,
+    title: 'I Can Verbs Game',
+    description: 'Interactive game to practice "I can" with different verbs',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/cb60e7edbea74d8d81417cd3eeef28ed',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/cb60e7edbea74d8d81417cd3eeef28ed?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/cb60e7edbea74d8d81417cd3eeef28ed?themeId=1&templateId=3&fontStackId=0'
+    }
   },
   {
-    id: `book4-unit14-game-2`,
+    id: `book4-unit${unitNumber}-game-2`,
     bookId: '4',
-    unitId: '14',
-    title: 'VISUAL 4 Unit 14 Game 2',
+    unitId: unitNumber,
+    title: 'I Can Verbs Match',
+    description: 'Match "I can" phrases with their corresponding images',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/29b2dad99a9d447f8ea8823024d19216',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/29b2dad99a9d447f8ea8823024d19216?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/29b2dad99a9d447f8ea8823024d19216?themeId=1&templateId=3&fontStackId=0'
+    }
   }
 ];
 
-// Combined resources for this unit
+// Lesson plans for this unit
+export const lessonPlans: TeacherResource[] = [];
+
+// Combine all resources for this unit
 export const resources: TeacherResource[] = [...videos, ...games];
 
-// Main export for backward compatibility
-export const book4Unit14Resources = resources;
+// VideoResources for verification script
+export const VideoResources = videos;
+
+// GameResources for verification script
+export const GameResources = games;
+
+/**
+ * Get all resources for this unit
+ * @returns Array of teacher resources
+ */
+export function getResources(): TeacherResource[] {
+  return resources;
+}
+
+/**
+ * Get lesson plans for this unit
+ * @returns Array of lesson plan resources
+ */
+export function getLessonPlans(): TeacherResource[] {
+  return lessonPlans;
+}
+
+// Default export for backward compatibility
+export default resources;

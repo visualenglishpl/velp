@@ -1,59 +1,94 @@
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
+import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 16
+ * Book 4 Unit 16 - FREE TIME ACTIVITIES
+ * Resources including videos and games
  */
 
-// Videos for Unit 16
+const unitNumber = '16';
+const unitTitle = 'FREE TIME ACTIVITIES';
+
+// Videos for this unit
 export const videos: TeacherResource[] = [
   {
-    id: `book4-unit16-video-1`,
+    id: `book4-unit${unitNumber}-video-1`,
     bookId: '4',
-    unitId: '16',
-    title: 'VISUAL 4 Unit 16 Video 1',
+    unitId: unitNumber,
+    title: 'Free Time Activities Video',
+    description: 'Educational video teaching vocabulary related to free time and hobbies',
     resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book4-unit16-video-2`,
-    bookId: '4',
-    unitId: '16',
-    title: 'VISUAL 4 Unit 16 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    provider: 'ISL Collective',
+    sourceUrl: 'https://en.islcollective.com/english-esl-video-lessons/692775',
+    embedCode: '<iframe src="https://en.islcollective.com/english-esl-video-lessons/embed/692775" width="800" height="600" frameborder="0" allowfullscreen="" style="max-width: inherit !important; max-height: inherit !important;"></iframe>',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://en.islcollective.com/english-esl-video-lessons/embed/692775'
+    }
   }
 ];
 
-// Games for Unit 16
+// Games for this unit
 export const games: TeacherResource[] = [
   {
-    id: `book4-unit16-game-1`,
+    id: `book4-unit${unitNumber}-game-1`,
     bookId: '4',
-    unitId: '16',
-    title: 'VISUAL 4 Unit 16 Game 1',
+    unitId: unitNumber,
+    title: 'Free Time Activities Game',
+    description: 'Interactive game to practice free time activity vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/ba588163d9c4497d9f86c6aca1479354',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/ba588163d9c4497d9f86c6aca1479354?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/ba588163d9c4497d9f86c6aca1479354?themeId=1&templateId=46&fontStackId=0'
+    }
   },
   {
-    id: `book4-unit16-game-2`,
+    id: `book4-unit${unitNumber}-game-2`,
     bookId: '4',
-    unitId: '16',
-    title: 'VISUAL 4 Unit 16 Game 2',
+    unitId: unitNumber,
+    title: 'Free Time Activities Match',
+    description: 'Match free time activities with their corresponding images',
     resourceType: 'game',
     provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    sourceUrl: 'https://wordwall.net/resource/9d97f106652e47cd86c4416269c4fd86',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9d97f106652e47cd86c4416269c4fd86?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    content: {
+      type: 'iframe',
+      embedUrl: 'https://wordwall.net/embed/9d97f106652e47cd86c4416269c4fd86?themeId=1&templateId=38&fontStackId=0'
+    }
   }
 ];
 
-// Combined resources for this unit
+// Lesson plans for this unit
+export const lessonPlans: TeacherResource[] = [];
+
+// Combine all resources for this unit
 export const resources: TeacherResource[] = [...videos, ...games];
 
-// Main export for backward compatibility
-export const book4Unit16Resources = resources;
+// VideoResources for verification script
+export const VideoResources = videos;
+
+// GameResources for verification script
+export const GameResources = games;
+
+/**
+ * Get all resources for this unit
+ * @returns Array of teacher resources
+ */
+export function getResources(): TeacherResource[] {
+  return resources;
+}
+
+/**
+ * Get lesson plans for this unit
+ * @returns Array of lesson plan resources
+ */
+export function getLessonPlans(): TeacherResource[] {
+  return lessonPlans;
+}
+
+// Default export for backward compatibility
+export default resources;

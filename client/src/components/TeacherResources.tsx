@@ -27,6 +27,10 @@ import { getTeacherResources as getBook4Unit5Resources, getLessonPlans as getBoo
 import { getTeacherResources as getBook4Unit6Resources, getLessonPlans as getBook4Unit6LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit6 } from '../data/book4-unit6-implementation';
 import { getTeacherResources as getBook4Unit7Resources, getLessonPlans as getBook4Unit7LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit7 } from '../data/book4-unit7-implementation';
 import { getTeacherResources as getBook4Unit8Resources, getLessonPlans as getBook4Unit8LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit8 } from '../data/book4-unit8-implementation';
+import { getTeacherResources as getBook4Unit9Resources, getUnitLessonPlans as getBook4Unit9LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit9 } from '../data/book4-unit9-implementation';
+import { getTeacherResources as getBook4Unit10Resources, getUnitLessonPlans as getBook4Unit10LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit10 } from '../data/book4-unit10-implementation';
+import { getTeacherResources as getBook4Unit11Resources, getUnitLessonPlans as getBook4Unit11LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit11 } from '../data/book4-unit11-implementation';
+import { getTeacherResources as getBook4Unit12Resources, getUnitLessonPlans as getBook4Unit12LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit12 } from '../data/book4-unit12-implementation';
 
 // Import any specific implementation functions
 // Book 6 implementations
@@ -1780,6 +1784,46 @@ const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
           return getBook4Unit6Resources();
         } catch (error) {
           console.error('Error getting Book 4 Unit 6 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '7') {
+        try {
+          console.log('Loading Book 4 Unit 7 resources from implementation');
+          return getBook4Unit7Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 7 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '8') {
+        try {
+          console.log('Loading Book 4 Unit 8 resources from implementation');
+          return getBook4Unit8Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 8 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '9') {
+        try {
+          console.log('Loading Book 4 Unit 9 resources from implementation');
+          return getBook4Unit9Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 9 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '10') {
+        try {
+          console.log('Loading Book 4 Unit 10 resources from implementation');
+          return getBook4Unit10Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 10 resources, falling back to common resources:', error);
+          return generateBook4UnitResources(bookId, unitId);
+        }
+      } else if (unitId === '11') {
+        try {
+          console.log('Loading Book 4 Unit 11 resources from implementation');
+          return getBook4Unit11Resources();
+        } catch (error) {
+          console.error('Error getting Book 4 Unit 11 resources, falling back to common resources:', error);
           return generateBook4UnitResources(bookId, unitId);
         }
       }

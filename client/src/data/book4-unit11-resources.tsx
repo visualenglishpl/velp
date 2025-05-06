@@ -1,59 +1,73 @@
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
+import { BOOK4_TITLE } from './book4-resources-common';
 
 /**
- * Resources for Book 4 Unit 11
+ * Book 4 Unit 11 - SHOPPING
+ * Resources including videos and games
  */
 
-// Videos for Unit 11
+const unitNumber = '11';
+const unitTitle = 'SHOPPING';
+
+// Videos for this unit
 export const videos: TeacherResource[] = [
   {
-    id: `book4-unit11-video-1`,
+    id: `book4-unit${unitNumber}-video-1`,
     bookId: '4',
-    unitId: '11',
-    title: 'VISUAL 4 Unit 11 Video 1',
+    unitId: unitNumber,
+    title: 'Shopping Vocabulary',
+    description: 'Essential vocabulary for shopping in English',
     resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  },
-  {
-    id: `book4-unit11-video-2`,
-    bookId: '4',
-    unitId: '11',
-    title: 'VISUAL 4 Unit 11 Video 2',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/embed/placeholder',
-    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    content: {
+      type: 'youtube',
+      embedId: 'placeholder'
+    }
   }
 ];
 
-// Games for Unit 11
+// Games for this unit
 export const games: TeacherResource[] = [
   {
-    id: `book4-unit11-game-1`,
+    id: `book4-unit${unitNumber}-game-1`,
     bookId: '4',
-    unitId: '11',
-    title: 'VISUAL 4 Unit 11 Game 1',
+    unitId: unitNumber,
+    title: 'Shopping Vocabulary Game',
+    description: 'Interactive game to practice shopping vocabulary',
     resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
-  },
-  {
-    id: `book4-unit11-game-2`,
-    bookId: '4',
-    unitId: '11',
-    title: 'VISUAL 4 Unit 11 Game 2',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/placeholder',
-    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/placeholder" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+    content: {
+      type: 'iframe',
+      embedUrl: 'placeholder'
+    }
   }
 ];
 
-// Combined resources for this unit
+// Lesson plans for this unit
+export const lessonPlans: TeacherResource[] = [];
+
+// Combine all resources for this unit
 export const resources: TeacherResource[] = [...videos, ...games];
 
-// Main export for backward compatibility
-export const book4Unit11Resources = resources;
+// VideoResources for verification script
+export const VideoResources = videos;
+
+// GameResources for verification script
+export const GameResources = games;
+
+/**
+ * Get all resources for this unit
+ * @returns Array of teacher resources
+ */
+export function getResources(): TeacherResource[] {
+  return resources;
+}
+
+/**
+ * Get lesson plans for this unit
+ * @returns Array of lesson plan resources
+ */
+export function getLessonPlans(): TeacherResource[] {
+  return lessonPlans;
+}
+
+// Default export for backward compatibility
+export default resources;

@@ -162,7 +162,7 @@ export const lessonPlans: TeacherResource[] = [
     }
   },
   {
-    id: 'book4-unit9-lesson2',
+    id: `book4-unit${unitNumber}-lesson-2`,
     bookId: '4',
     unitId: '9',
     title: 'Camping Safety and Survival Skills',
@@ -255,18 +255,30 @@ export const lessonPlans: TeacherResource[] = [
   }
 ];
 
+// Combine all resources for this unit
+export const resources: TeacherResource[] = [...videos, ...games];
+
+// VideoResources for verification script
+export const VideoResources = videos;
+
+// GameResources for verification script
+export const GameResources = games;
+
 /**
- * Get all resources for Book 4 Unit 9
+ * Get all resources for this unit
  * @returns Array of teacher resources
  */
-export function getBook4Unit9Resources(): TeacherResource[] {
-  return book4Unit9Resources;
+export function getResources(): TeacherResource[] {
+  return resources;
 }
 
 /**
- * Get lesson plans for Book 4 Unit 9
+ * Get lesson plans for this unit
  * @returns Array of lesson plan resources
  */
-export function getBook4Unit9LessonPlans(): TeacherResource[] {
-  return book4Unit9LessonPlans;
+export function getLessonPlans(): TeacherResource[] {
+  return lessonPlans;
 }
+
+// Default export for backward compatibility
+export default resources;
