@@ -199,21 +199,21 @@ export default function CheckoutPage() {
     };
   }, []);
 
-  useEffect(() => {
-    // In a real app, this would fetch from an API
-    // For demonstration, we'll use hardcoded values
-    const plans: Record<string, PlanDetails> = {
+  // Update plan prices based on subscription period
+  const updatePlanPrices = () => {
+    const isYearly = subscriptionPeriod === 'yearly';
+    return {
       'single_lesson': {
         name: 'Single Lesson Access',
-        price: '€5/month',
-        description: 'Access to one complete lesson with all resources',
+        price: isYearly ? '€40/year' : '€5/month',
+        description: `Access to one complete lesson with all resources${isYearly ? ' - 33% savings' : ''}`,
         recurring: true,
         color: '#2e88f6'
       },
       'whole_book': {
         name: 'Whole Book Access',
-        price: '€25/month',
-        description: 'Full access to all units in one book',
+        price: isYearly ? '€180/year' : '€25/month',
+        description: `Full access to all units in one book${isYearly ? ' - 40% savings' : ''}`,
         recurring: true,
         color: '#b23cfd'
       },
@@ -239,9 +239,15 @@ export default function CheckoutPage() {
         color: '#5046e4'
       }
     };
+  };
+  
+  useEffect(() => {
+    // In a real app, this would fetch from an API
+    // For demonstration, we'll use hardcoded values
+    const plans: Record<string, PlanDetails> = updatePlanPrices();
 
     setPlanDetails(plans[planId] || plans.default);
-  }, [planId]);
+  }, [planId, subscriptionPeriod]);
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
@@ -563,6 +569,48 @@ export default function CheckoutPage() {
             <div>
               <Card className="p-6">
                 <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+                
+                {/* Subscription period selection for recurring plans */}
+                {planId !== 'default' && planDetails.recurring && (
+                  <div className="mb-4 pb-4 border-b">
+                    <p className="text-sm text-gray-600 mb-3">Choose your subscription period:</p>
+                    <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                      <div 
+                        className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all w-full sm:w-auto text-center ${subscriptionPeriod === 'monthly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
+                        onClick={() => setSubscriptionPeriod('monthly')}
+                      >
+                        <input 
+                          type="radio" 
+                          id="plan-monthly" 
+                          className="mr-2" 
+                          checked={subscriptionPeriod === 'monthly'} 
+                          onChange={() => setSubscriptionPeriod('monthly')}
+                        />
+                        <label htmlFor="plan-monthly" className="cursor-pointer">
+                          {planId === 'single_lesson' ? 'Monthly (€5/month)' : 'Monthly (€25/month)'}
+                        </label>
+                      </div>
+                      
+                      <div 
+                        className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all w-full sm:w-auto text-center ${subscriptionPeriod === 'yearly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
+                        onClick={() => setSubscriptionPeriod('yearly')}
+                      >
+                        <input 
+                          type="radio" 
+                          id="plan-yearly" 
+                          className="mr-2" 
+                          checked={subscriptionPeriod === 'yearly'} 
+                          onChange={() => setSubscriptionPeriod('yearly')}
+                        />
+                        <label htmlFor="plan-yearly" className="cursor-pointer">
+                          {planId === 'single_lesson' 
+                            ? 'Yearly (€40/year - 33% savings)' 
+                            : 'Yearly (€180/year - 40% savings)'}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 
                 {planId === 'default' ? (
                   // Cart checkout - show all items
