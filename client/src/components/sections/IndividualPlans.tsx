@@ -75,7 +75,7 @@ const PricingPlans = () => {
   ];
 
   return (
-    <section id="plans" className="pt-16 pb-24 bg-gray-50">
+    <section id="plans" className="pt-16 pb-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900">Find Your Perfect Learning Path</h2>
@@ -93,33 +93,39 @@ const PricingPlans = () => {
                   {plan.title}
                 </h3>
               </div>
+              
               {/* Content */}
               <div className="flex-grow p-6">
-                
-                <ul className="space-y-3 mb-6">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start">
-                      <Check className={`h-5 w-5 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
-                      <span className="text-gray-600 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="h-40 md:h-44">
+                  <ul className="space-y-3">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
+                        <Check className={`h-5 w-5 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
+                        <span className="text-gray-600 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               
               {/* Pricing */}
               <div className="p-6 border-t border-gray-100">
-                <div className="flex items-baseline mb-1">
-                  <div className="text-4xl font-bold">{plan.price}</div>
-                  {plan.priceNote && (
-                    <div className="ml-2 text-sm text-gray-500">{plan.priceNote}</div>
-                  )}
+                <div className="flex items-center h-16">
+                  <div>
+                    <div className="flex items-baseline">
+                      <div className="text-4xl font-bold">{plan.price}</div>
+                      {plan.priceNote && (
+                        <div className="ml-2 text-sm text-gray-500">{plan.priceNote}</div>
+                      )}
+                    </div>
+                    
+                    {plan.priceSavings && (
+                      <div className="text-sm text-gray-500">{plan.priceSavings}</div>
+                    )}
+                  </div>
                 </div>
                 
-                {plan.priceSavings && (
-                  <div className="text-sm text-gray-500 mb-4">{plan.priceSavings}</div>
-                )}
-                
-                <div className="mt-6">
+                <div className="mt-4">
                   <Link href={index === 0 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
                       className="w-full py-3 px-4 rounded-md font-medium text-white transition-all"
