@@ -6,7 +6,7 @@
  * resources and implementation logic
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { resources } from './book4-unit16-resources';
 import { BOOK4_TITLE } from './book4-resources-common';
@@ -19,7 +19,7 @@ export function getBook4Unit16Resources(): TeacherResource[] {
   return resources;
 }
 
-// Generate lesson plans for this unit based on the standard template
+// Generate lesson plans for this unit based on standard template
 export function generateBook4Unit16LessonPlans(): LessonPlan[] {
   const unitNumber = '16';
   const unitTitle = 'FREE TIME ACTIVITIES';
@@ -31,62 +31,63 @@ export function generateBook4Unit16LessonPlans(): LessonPlan[] {
       duration: '45 minutes',
       level: 'Elementary to Pre-Intermediate',
       objectives: [
-        'Students will learn vocabulary related to hobbies and free time activities',
-        'Students will practice talking about what they like to do in their free time',
-        'Students will identify and describe various leisure activities'
+        'Students will learn vocabulary related to free time activities',
+        'Students will identify different hobbies and pastimes',
+        'Students will practice talking about what they like to do in their free time'
       ],
-      materials: ['Flashcards with free time activities', 'Pictures of hobbies', 'Interactive board'],
+      materials: ['Hobby flashcards', 'Free time activity worksheet', 'Like/dislike cards'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Warm-up Discussion',
           duration: '5 minutes',
-          description: 'Introduction to free time activities vocabulary',
-          instructions: ['Show students pictures of people doing different hobbies', 'Ask what they like to do in their free time']
+          description: 'Begin with a discussion about free time',
+          instructions: ['Ask students what they like to do after school', 'Discuss the concept of "free time" and "hobbies"']
         },
         {
           title: 'Vocabulary Introduction',
-          duration: '15 minutes',
-          description: 'Teach vocabulary for common hobbies and free time activities',
-          materials: ['Flashcards with free time activities'],
+          duration: '10 minutes',
+          description: 'Present free time activity vocabulary with visual aids',
+          materials: ['Hobby flashcards'],
           instructions: [
-            'Show flashcards one by one: reading, swimming, playing sports, watching TV, etc.',
-            'Introduce each activity and discuss when people do these activities',
-            'Practice pronunciation of new vocabulary',
+            'Introduce vocabulary: playing sports, reading books, watching TV, playing video games, etc.',
+            'Have students repeat new words and match them to images',
             'Watch the Free Time Activities Video'
           ]
         },
         {
-          title: 'Practice Activity',
-          duration: '15 minutes',
-          description: 'Free time activities survey',
+          title: 'Like/Dislike Expressions',
+          duration: '10 minutes',
+          description: 'Learn expressions for talking about preferences',
+          materials: ['Like/dislike cards'],
           instructions: [
-            'Students create a simple survey sheet with 5 free time activities',
-            'Students ask classmates "Do you like...?" and record answers',
-            'Students report back: "Maria likes swimming but she doesn\'t like playing video games."'
+            'Teach phrases: "I like...", "I love...", "I don\'t like...", "I hate..."',
+            'Demonstrate using these phrases with free time activities',
+            'Have students practice the expressions with different activities'
+          ]
+        },
+        {
+          title: 'Guided Practice Activity',
+          duration: '10 minutes',
+          description: 'Practice talking about free time activities',
+          materials: ['Free time activity worksheet'],
+          instructions: [
+            'Distribute worksheets with images of various activities',
+            'Students write sentences about which activities they like/dislike',
+            'Have students share their sentences with partners'
           ]
         },
         {
           title: 'Interactive Game',
-          duration: '5 minutes',
-          description: 'Play the Free Time Activities Game from Wordwall',
+          duration: '10 minutes',
+          description: 'Review free time vocabulary with interactive game',
           instructions: [
-            'Open the Free Time Activities Game on the interactive board',
-            'Students take turns matching activities to pictures',
+            'Play the Free Time Activities Wordwall game',
             'Discuss any challenging vocabulary'
-          ]
-        },
-        {
-          title: 'Plenary',
-          duration: '5 minutes',
-          description: 'Review of key vocabulary through quick quiz',
-          instructions: [
-            'Show hobby pictures and have students express them using "I like..."',
-            'Review any challenging vocabulary'
           ]
         }
       ],
-      assessmentTips: 'Students can correctly identify and talk about free time activities using appropriate vocabulary.',
-      homeworkIdeas: ['Write about your favorite hobby', 'Complete free time activities matching worksheet']
+      assessmentTips: 'Evaluate students\' ability to use free time vocabulary correctly and express preferences',
+      homeworkIdeas: ['Create a poster showing your top 5 favorite free time activities', 'Write 5 sentences about what you like to do on weekends']
     },
     {
       id: `book4-unit${unitNumber}-lesson-2`,
@@ -94,56 +95,64 @@ export function generateBook4Unit16LessonPlans(): LessonPlan[] {
       duration: '45 minutes',
       level: 'Elementary to Pre-Intermediate',
       objectives: [
-        'Students will learn to express preferences about free time activities',
-        'Students will practice using "like" and "don\'t like" with different activities',
-        'Students will create a class graph showing favorite free time activities'
+        'Students will learn to ask questions about free time activities',
+        'Students will practice frequency expressions with hobbies',
+        'Students will create a class survey about free time preferences'
       ],
-      materials: ['Chart paper for preference graph', 'Free time activity cards', 'Art supplies'],
+      materials: ['Question prompt cards', 'Frequency expression cards', 'Free time survey template'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Review Activity',
           duration: '5 minutes',
-          description: 'Review free time activities vocabulary from previous lesson.',
-          instructions: ['Show pictures of activities and have students name them']
+          description: 'Review previously learned free time vocabulary',
+          instructions: ['Quiz students on free time vocabulary', 'Have students recall activities from the previous lesson']
         },
         {
-          title: 'Expressing Preferences',
-          duration: '15 minutes',
-          description: 'Practice expressing likes and dislikes for different activities',
-          materials: ['Free time activity cards'],
-          instructions: [
-            'Introduce structures: "I like...", "I don\'t like...", "I prefer...", "I enjoy..."',
-            'Students practice in pairs using activity cards',
-            'Play "Find Someone Who Likes" game where students circulate asking about preferences',
-            'Share findings with the class'
-          ]
-        },
-        {
-          title: 'Collaborative Activity',
-          duration: '15 minutes',
-          description: 'Create a Class Activity Preference Graph',
-          materials: ['Chart paper for preference graph', 'Art supplies'],
-          instructions: [
-            'Select 8-10 common free time activities',
-            'Create a bar graph on chart paper',
-            'Each student adds their vote for their favorite activity',
-            'Class discusses the results and identifies most/least popular activities',
-            'Students write sentences about the graph: "Most students like..."'
-          ]
-        },
-        {
-          title: 'Plenary',
+          title: 'Question Formation',
           duration: '10 minutes',
-          description: 'Review activity with interactive game',
+          description: 'Practice forming questions about free time activities',
+          materials: ['Question prompt cards'],
+          instructions: [
+            'Teach question patterns: "Do you like...?", "What do you do in your free time?"',
+            'Model asking and answering questions about free time activities',
+            'Have students practice asking and answering in pairs'
+          ]
+        },
+        {
+          title: 'Frequency Expressions',
+          duration: '10 minutes',
+          description: 'Learn expressions for how often activities are done',
+          materials: ['Frequency expression cards'],
+          instructions: [
+            'Introduce frequency expressions: always, usually, sometimes, never, etc.',
+            'Model sentences: "I always play soccer on Saturdays. I never watch horror movies."',
+            'Have students create sentences using frequency expressions and free time activities'
+          ]
+        },
+        {
+          title: 'Class Survey Activity',
+          duration: '15 minutes',
+          description: 'Conduct a survey about free time preferences',
+          materials: ['Free time survey template'],
+          instructions: [
+            'Distribute survey templates with questions about free time activities',
+            'Students circulate and ask classmates questions',
+            'Students record answers and frequency information',
+            'Discuss results as a class: "Most students like playing video games"'
+          ]
+        },
+        {
+          title: 'Interactive Match Game',
+          duration: '5 minutes',
+          description: 'Practice matching free time vocabulary with images',
           instructions: [
             'Play the Free Time Activities Match Wordwall game',
-            'Discuss cultural differences in free time activities around the world',
-            'Address any remaining questions'
+            'Review key vocabulary and phrases from the lesson'
           ]
         }
       ],
-      assessmentTips: 'Students can correctly express preferences about free time activities and understand other\'s preferences.',
-      homeworkIdeas: ['Interview family members about their favorite free time activities', 'Create a weekly schedule showing when you do different free time activities']
+      assessmentTips: 'Evaluate students\' ability to ask and answer questions about free time activities and use frequency expressions correctly',
+      homeworkIdeas: ['Interview a family member about their free time activities', 'Create a weekly schedule showing your free time activities and how often you do them']
     }
   ];
 };

@@ -6,7 +6,7 @@
  * resources and implementation logic
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { resources } from './book4-unit13-resources';
 import { BOOK4_TITLE } from './book4-resources-common';
@@ -19,7 +19,7 @@ export function getBook4Unit13Resources(): TeacherResource[] {
   return resources;
 }
 
-// Generate lesson plans for this unit based on the standard template
+// Generate lesson plans for this unit based on standard template
 export function generateBook4Unit13LessonPlans(): LessonPlan[] {
   const unitNumber = '13';
   const unitTitle = 'AT THE PLAYGROUND';
@@ -31,62 +31,63 @@ export function generateBook4Unit13LessonPlans(): LessonPlan[] {
       duration: '45 minutes',
       level: 'Elementary to Pre-Intermediate',
       objectives: [
-        'Students will learn vocabulary related to playground equipment',
-        'Students will practice action verbs associated with playground activities',
-        'Students will identify and describe playground objects'
+        'Students will learn playground vocabulary',
+        'Students will identify different playground equipment',
+        'Students will practice using playground action verbs'
       ],
-      materials: ['Flashcards with playground equipment', 'Pictures of playground scenes', 'Interactive board'],
+      materials: ['Playground equipment flashcards', 'Action verb cards', 'Playground safety rules handout'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Warm-up Discussion',
           duration: '5 minutes',
-          description: 'Introduction to playground vocabulary',
-          instructions: ['Show students pictures of a playground', 'Ask if they can name any playground equipment in English']
+          description: 'Begin with a discussion about playground experiences',
+          instructions: ['Ask students if they enjoy going to playgrounds', 'Discuss favorite playground activities']
         },
         {
           title: 'Vocabulary Introduction',
-          duration: '15 minutes',
-          description: 'Teach vocabulary for common playground equipment',
-          materials: ['Flashcards with playground equipment'],
+          duration: '10 minutes',
+          description: 'Present essential playground vocabulary with visual aids',
+          materials: ['Playground equipment flashcards'],
           instructions: [
-            'Show flashcards one by one: slide, swing, seesaw, monkey bars, sandbox, etc.',
-            'Introduce each piece of equipment and associated verbs',
-            'Practice pronunciation of new vocabulary',
+            'Introduce vocabulary: slide, swing, seesaw, monkey bars, sandbox, etc.',
+            'Have students repeat new words and match them to images',
             'Watch the Playground Vocabulary video'
           ]
         },
         {
-          title: 'Practice Activity',
-          duration: '15 minutes',
-          description: 'Playground action mime game',
+          title: 'Action Verb Practice',
+          duration: '10 minutes',
+          description: 'Practice action verbs associated with playground activities',
+          materials: ['Action verb cards'],
           instructions: [
-            'Students mime playground actions: sliding, swinging, climbing',
-            'Other students guess which equipment they are using',
-            'Students take turns describing what they can do at a playground'
+            'Teach verbs: slide, swing, climb, jump, dig, etc.',
+            'Demonstrate actions and have students mimic',
+            'Have students match verbs to playground equipment'
+          ]
+        },
+        {
+          title: 'Playground Safety Discussion',
+          duration: '10 minutes',
+          description: 'Learn about playground safety rules',
+          materials: ['Playground safety rules handout'],
+          instructions: [
+            'Discuss importance of playground safety',
+            'Introduce safety vocabulary: careful, wait your turn, hold on tight, etc.',
+            'Watch the Playground Safety Video'
           ]
         },
         {
           title: 'Interactive Game',
-          duration: '5 minutes',
-          description: 'Play the Playground Vocabulary Game from Wordwall',
+          duration: '10 minutes',
+          description: 'Review playground vocabulary with interactive game',
           instructions: [
-            'Open the Playground Vocabulary Game on the interactive board',
-            'Students take turns matching vocabulary to pictures',
+            'Play the Playground Vocabulary Wordwall game',
             'Discuss any challenging vocabulary'
-          ]
-        },
-        {
-          title: 'Plenary',
-          duration: '5 minutes',
-          description: 'Review of key vocabulary through quick quiz',
-          instructions: [
-            'Show playground equipment pictures and have students name them',
-            'Play the At The Playground Song video'
           ]
         }
       ],
-      assessmentTips: 'Students can correctly identify common playground equipment and describe actions associated with them.',
-      homeworkIdeas: ['Draw your favorite playground equipment and write what you can do with it', 'Complete playground vocabulary matching worksheet']
+      assessmentTips: 'Evaluate students\' ability to identify playground equipment and use related vocabulary correctly',
+      homeworkIdeas: ['Draw your ideal playground and label the equipment', 'Write 5 sentences about activities you enjoy at the playground']
     },
     {
       id: `book4-unit${unitNumber}-lesson-2`,
@@ -94,55 +95,63 @@ export function generateBook4Unit13LessonPlans(): LessonPlan[] {
       duration: '45 minutes',
       level: 'Elementary to Pre-Intermediate',
       objectives: [
-        'Students will learn about playground safety rules',
-        'Students will practice giving and following instructions',
-        'Students will create their ideal playground design'
+        'Students will learn playground conversation patterns',
+        'Students will practice asking and responding to playground-related questions',
+        'Students will create a playground-themed dialogue'
       ],
-      materials: ['Chart paper for safety rules', 'Art supplies for playground design', 'Pictures of various playgrounds'],
+      materials: ['Conversation cue cards', 'Dialogue worksheet', 'Role-play scenario cards'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Warm-up Song',
           duration: '5 minutes',
-          description: 'Review playground vocabulary from previous lesson.',
-          instructions: ['Show equipment and have students name and mime the actions']
+          description: 'Begin with a fun playground-themed song',
+          instructions: ['Play the At The Playground Song', 'Have students follow along with actions']
         },
         {
-          title: 'Playground Safety',
-          duration: '15 minutes',
-          description: 'Discuss playground safety rules and instructions',
-          materials: ['Chart paper for safety rules'],
-          instructions: [
-            'Introduce safety vocabulary: careful, safe, dangerous, wait, take turns',
-            'Create a list of playground safety rules with the class',
-            'Practice giving and following instructions: "Wait your turn on the slide"',
-            'Role-play safe playground behavior'
-          ]
-        },
-        {
-          title: 'Creative Activity',
-          duration: '15 minutes',
-          description: 'Design Your Dream Playground',
-          materials: ['Art supplies for playground design'],
-          instructions: [
-            'Students work in pairs to design their ideal playground',
-            'Students must include labels for at least 5 pieces of equipment',
-            'Students write 3 safety rules for their playground',
-            'Pairs present their designs to the class'
-          ]
-        },
-        {
-          title: 'Plenary',
+          title: 'Conversation Patterns',
           duration: '10 minutes',
-          description: 'Review activity with interactive game',
+          description: 'Introduce common playground conversation patterns',
+          materials: ['Conversation cue cards'],
+          instructions: [
+            'Teach phrases like "Can I have a turn?", "Will you play with me?", etc.',
+            'Model conversations between children at a playground',
+            'Have students practice the phrases in pairs'
+          ]
+        },
+        {
+          title: 'Guided Dialogue Practice',
+          duration: '10 minutes',
+          description: 'Work through a guided dialogue about playground activities',
+          materials: ['Dialogue worksheet'],
+          instructions: [
+            'Distribute dialogue worksheets with playground conversations',
+            'Practice the dialogue as a class',
+            'Have students practice in pairs with different roles'
+          ]
+        },
+        {
+          title: 'Role-play Activity',
+          duration: '15 minutes',
+          description: 'Create and act out playground scenarios',
+          materials: ['Role-play scenario cards'],
+          instructions: [
+            'Divide class into pairs or small groups',
+            'Distribute scenario cards (e.g., asking to join a game, resolving a conflict over turns)',
+            'Have groups create and perform short dialogues based on their scenarios'
+          ]
+        },
+        {
+          title: 'Interactive Activity',
+          duration: '5 minutes',
+          description: 'Practice playground activities vocabulary',
           instructions: [
             'Play the Playground Activities Match Wordwall game',
-            'Discuss what students learned about playground vocabulary and safety',
-            'Address any remaining questions'
+            'Review key vocabulary and phrases from the lesson'
           ]
         }
       ],
-      assessmentTips: 'Students can correctly use playground-related vocabulary and give clear safety instructions.',
-      homeworkIdeas: ['Write 5 safety rules for the playground', 'Complete a worksheet on playground vocabulary and actions']
+      assessmentTips: 'Evaluate students\' ability to create and perform appropriate playground dialogues',
+      homeworkIdeas: ['Write a short dialogue between two friends at a playground', 'Create a list of playground rules in English']
     }
   ];
 };

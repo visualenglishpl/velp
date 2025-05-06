@@ -6,7 +6,7 @@
  * resources and implementation logic
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { resources } from './book4-unit15-resources';
 import { BOOK4_TITLE } from './book4-resources-common';
@@ -19,7 +19,7 @@ export function getBook4Unit15Resources(): TeacherResource[] {
   return resources;
 }
 
-// Generate lesson plans for this unit based on the standard template
+// Generate lesson plans for this unit based on standard template
 export function generateBook4Unit15LessonPlans(): LessonPlan[] {
   const unitNumber = '15';
   const unitTitle = 'AT THE CIRCUS';
@@ -31,62 +31,63 @@ export function generateBook4Unit15LessonPlans(): LessonPlan[] {
       duration: '45 minutes',
       level: 'Elementary to Pre-Intermediate',
       objectives: [
-        'Students will learn vocabulary related to circus performers and acts',
-        'Students will practice describing circus performances',
-        'Students will identify different circus roles and acts'
+        'Students will learn circus vocabulary',
+        'Students will identify different circus performers and their roles',
+        'Students will practice describing circus performances'
       ],
-      materials: ['Flashcards with circus performers', 'Pictures of circus acts', 'Interactive board'],
+      materials: ['Circus performer flashcards', 'Circus animal cards', 'Circus poster or images'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Warm-up Song',
           duration: '5 minutes',
-          description: 'Introduction to circus vocabulary',
-          instructions: ['Show students pictures of a circus', 'Ask if they have been to a circus or what they know about circuses']
+          description: 'Begin with a fun circus-themed song',
+          instructions: ['Play the Circus Song for Kids', 'Have students follow along with actions']
         },
         {
           title: 'Vocabulary Introduction',
-          duration: '15 minutes',
-          description: 'Teach vocabulary for circus performers and acts',
-          materials: ['Flashcards with circus performers'],
+          duration: '10 minutes',
+          description: 'Present essential circus vocabulary with visual aids',
+          materials: ['Circus performer flashcards'],
           instructions: [
-            'Show flashcards one by one: clown, acrobat, juggler, ringmaster, tightrope walker, etc.',
-            'Introduce each performer and what they do',
-            'Practice pronunciation of new vocabulary',
-            'Watch the Circus Song for Kids video'
+            'Introduce circus performer vocabulary: clown, acrobat, ringmaster, juggler, lion tamer, etc.',
+            'Have students repeat new words and match them to images',
+            'Watch the Circus Vocabulary Video'
           ]
         },
         {
-          title: 'Practice Activity',
-          duration: '15 minutes',
-          description: 'Circus role-play',
+          title: 'Circus Animal Vocabulary',
+          duration: '10 minutes',
+          description: 'Learn about animals commonly found at the circus',
+          materials: ['Circus animal cards'],
           instructions: [
-            'Students mime different circus acts',
-            'Other students guess which performer they are portraying',
-            'Students practice saying "I can see a..." with the circus vocabulary'
+            'Introduce circus animal vocabulary: elephant, lion, tiger, horse, etc.',
+            'Discuss actions these animals perform: jump through hoops, stand on hind legs, etc.',
+            'Have students mime the animals and their actions'
+          ]
+        },
+        {
+          title: 'Describing Circus Performances',
+          duration: '10 minutes',
+          description: 'Practice describing circus performances',
+          materials: ['Circus poster or images'],
+          instructions: [
+            'Show images of circus performances',
+            'Model describing sentences: "The acrobat is swinging on the trapeze."',
+            'Have students practice describing different circus acts'
           ]
         },
         {
           title: 'Interactive Game',
-          duration: '5 minutes',
-          description: 'Play the Circus Vocabulary Game from Wordwall',
+          duration: '10 minutes',
+          description: 'Review circus vocabulary with interactive game',
           instructions: [
-            'Open the Circus Vocabulary Game on the interactive board',
-            'Students take turns matching vocabulary to pictures',
+            'Play the Circus Vocabulary Wordwall game',
             'Discuss any challenging vocabulary'
-          ]
-        },
-        {
-          title: 'Plenary',
-          duration: '5 minutes',
-          description: 'Review of key vocabulary through quick quiz',
-          instructions: [
-            'Show circus performer pictures and have students name them',
-            'Review what each performer does'
           ]
         }
       ],
-      assessmentTips: 'Students can correctly identify circus performers and describe what they do.',
-      homeworkIdeas: ['Draw your favorite circus performer and write what they do', 'Complete circus vocabulary matching worksheet']
+      assessmentTips: 'Evaluate students\' ability to use circus vocabulary correctly and form descriptive sentences',
+      homeworkIdeas: ['Draw your favorite circus performer and write 3 sentences describing what they do', 'Create a mini circus poster labeling different performers and animals']
     },
     {
       id: `book4-unit${unitNumber}-lesson-2`,
@@ -94,55 +95,64 @@ export function generateBook4Unit15LessonPlans(): LessonPlan[] {
       duration: '45 minutes',
       level: 'Elementary to Pre-Intermediate',
       objectives: [
-        'Students will learn about circus animals and their tricks',
-        'Students will practice describing circus performances in detail',
-        'Students will create their own circus program'
+        'Students will learn circus action verbs',
+        'Students will practice describing circus skills with present continuous tense',
+        'Students will create a circus performance dialogue'
       ],
-      materials: ['Circus animal pictures', 'Art supplies for circus program creation', 'Video clips of circus performances'],
+      materials: ['Action verb cards', 'Circus scene pictures', 'Mini circus props (optional)'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Review Activity',
           duration: '5 minutes',
-          description: 'Review circus vocabulary from previous lesson.',
-          instructions: ['Show pictures of circus performers and have students name them and what they do']
+          description: 'Review previously learned circus vocabulary',
+          instructions: ['Quiz students on circus performers and animals', 'Have students recall key vocabulary from the previous lesson']
         },
         {
-          title: 'Circus Animals',
-          duration: '15 minutes',
-          description: 'Introduce vocabulary related to circus animals and their tricks',
-          materials: ['Circus animal pictures'],
-          instructions: [
-            'Introduce vocabulary: elephant, lion, tiger, seal, monkey, etc.',
-            'Discuss what tricks each animal might perform',
-            'Play the Circus Animals Game',
-            'Watch the Circus Vocabulary Video'
-          ]
-        },
-        {
-          title: 'Creative Activity',
-          duration: '15 minutes',
-          description: 'Create a Circus Program',
-          materials: ['Art supplies for circus program creation'],
-          instructions: [
-            'Students work in small groups to create a circus program',
-            'Each program must include at least 5 acts with appropriate performers',
-            'Students must write short descriptions of each act',
-            'Groups present their circus program to the class'
-          ]
-        },
-        {
-          title: 'Plenary',
+          title: 'Circus Action Verbs',
           duration: '10 minutes',
-          description: 'Review activity with interactive game',
+          description: 'Introduce verbs associated with circus performances',
+          materials: ['Action verb cards'],
           instructions: [
-            'Play the Circus Vocabulary Match game',
-            'Discuss what students learned about circuses',
-            'Address any remaining questions'
+            'Teach action verbs: juggle, balance, swing, tame, perform, etc.',
+            'Demonstrate actions where possible',
+            'Have students match verbs to circus performers'
+          ]
+        },
+        {
+          title: 'Present Continuous Practice',
+          duration: '10 minutes',
+          description: 'Practice using present continuous to describe circus actions',
+          materials: ['Circus scene pictures'],
+          instructions: [
+            'Show pictures of circus performances',
+            'Model sentences: "The clown is juggling balls. The acrobat is swinging on the trapeze."',
+            'Have students create their own sentences about the pictures'
+          ]
+        },
+        {
+          title: 'Circus Performance Role-play',
+          duration: '15 minutes',
+          description: 'Create and act out circus performance scenarios',
+          materials: ['Mini circus props (optional)'],
+          instructions: [
+            'Divide class into small groups',
+            'Each group creates a short circus performance with dialogue',
+            'Groups present their performances to the class',
+            'Encourage use of circus vocabulary and present continuous tense'
+          ]
+        },
+        {
+          title: 'Interactive Activities',
+          duration: '5 minutes',
+          description: 'Review circus vocabulary with fun games',
+          instructions: [
+            'Play the Circus Vocabulary Match or Circus Animals Game',
+            'Review key vocabulary and phrases from the lesson'
           ]
         }
       ],
-      assessmentTips: 'Students can correctly use circus-related vocabulary and describe circus performances in detail.',
-      homeworkIdeas: ['Write a short story about a day at the circus', 'Complete a worksheet on circus animals and their tricks']
+      assessmentTips: 'Evaluate students\' ability to use present continuous tense to describe circus actions and their participation in role-play activities',
+      homeworkIdeas: ['Write a short paragraph about a visit to the circus', 'Create a set of 5 sentences describing what different circus performers are doing']
     }
   ];
 };

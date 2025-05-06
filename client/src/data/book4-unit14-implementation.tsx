@@ -6,7 +6,7 @@
  * resources and implementation logic
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { resources } from './book4-unit14-resources';
 import { BOOK4_TITLE } from './book4-resources-common';
@@ -19,7 +19,7 @@ export function getBook4Unit14Resources(): TeacherResource[] {
   return resources;
 }
 
-// Generate lesson plans for this unit based on the standard template
+// Generate lesson plans for this unit based on standard template
 export function generateBook4Unit14LessonPlans(): LessonPlan[] {
   const unitNumber = '14';
   const unitTitle = 'WHAT CAN YOU DO';
@@ -31,62 +31,63 @@ export function generateBook4Unit14LessonPlans(): LessonPlan[] {
       duration: '45 minutes',
       level: 'Elementary to Pre-Intermediate',
       objectives: [
-        'Students will learn to express abilities using "can"',
-        'Students will practice action verbs for different skills',
-        'Students will identify and describe various abilities'
+        'Students will learn to use "can" to talk about abilities',
+        'Students will identify different action verbs',
+        'Students will practice asking and answering about abilities'
       ],
-      materials: ['Flashcards with action verbs', 'Pictures of people performing different activities', 'Interactive board'],
+      materials: ['Action verb flashcards', 'Ability worksheet', 'Sentence strip cards'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Warm-up Song',
           duration: '5 minutes',
-          description: 'Introduction to abilities vocabulary',
-          instructions: ['Show students pictures of people doing different activities', 'Ask what activities they can do']
+          description: 'Begin with a song related to abilities',
+          instructions: ['Play the "I Can Sing a Rainbow" song', 'Have students follow along with actions']
         },
         {
-          title: 'Vocabulary Introduction',
-          duration: '15 minutes',
-          description: 'Teach vocabulary for common abilities and action verbs',
-          materials: ['Flashcards with action verbs'],
+          title: 'Grammar Introduction',
+          duration: '10 minutes',
+          description: 'Introduce the modal verb "can" for abilities',
+          materials: ['Action verb flashcards'],
           instructions: [
-            'Show flashcards one by one: run, jump, swim, sing, dance, etc.',
-            'Introduce the structure "I can..." with each verb',
-            'Practice pronunciation of new vocabulary',
-            'Watch the "I Can Sing a Rainbow" video'
+            'Model the structure: "I can" + verb',
+            'Demonstrate examples: "I can swim", "I can dance", "I can sing"',
+            'Introduce the question form: "Can you...?" and answers "Yes, I can." / "No, I can\'t."'
           ]
         },
         {
-          title: 'Practice Activity',
-          duration: '15 minutes',
-          description: 'Abilities survey',
+          title: 'Action Verb Practice',
+          duration: '10 minutes',
+          description: 'Practice different action verbs with "can"',
+          materials: ['Action verb flashcards'],
           instructions: [
-            'Students create a simple survey sheet with 5 abilities',
-            'Students ask classmates "Can you...?" and record answers',
-            'Students report back: "Maria can swim but she can\'t ride a bike."'
+            'Show flashcards of different actions',
+            'Have students say "I can" + the action shown',
+            'Practice pronunciation and intonation'
+          ]
+        },
+        {
+          title: 'Guided Practice Activity',
+          duration: '10 minutes',
+          description: 'Practice asking and answering about abilities',
+          materials: ['Ability worksheet'],
+          instructions: [
+            'Distribute worksheets with images of various activities',
+            'Model the dialogue: "Can you swim?" "Yes, I can." / "No, I can\'t."',
+            'Have students practice in pairs, asking and answering about the pictures'
           ]
         },
         {
           title: 'Interactive Game',
-          duration: '5 minutes',
-          description: 'Play the I Can Verbs Game from Wordwall',
+          duration: '10 minutes',
+          description: 'Review ability verbs with interactive game',
           instructions: [
-            'Open the I Can Verbs Game on the interactive board',
-            'Students take turns matching abilities to pictures',
+            'Play the I Can Verbs Wordwall game',
             'Discuss any challenging vocabulary'
-          ]
-        },
-        {
-          title: 'Plenary',
-          duration: '5 minutes',
-          description: 'Review of key vocabulary through quick quiz',
-          instructions: [
-            'Show action pictures and have students express them using "I can..."',
-            'Review any challenging vocabulary'
           ]
         }
       ],
-      assessmentTips: 'Students can correctly use "can" to express abilities and use action verbs appropriately.',
-      homeworkIdeas: ['Write 5 sentences about what you can do and 5 about what you can\'t do', 'Complete abilities matching worksheet']
+      assessmentTips: 'Evaluate students\' ability to correctly use "can" to express abilities and form questions',
+      homeworkIdeas: ['Write 5 sentences about things you can do', 'Draw pictures of 3 things you can do and 3 things you can\'t do']
     },
     {
       id: `book4-unit${unitNumber}-lesson-2`,
@@ -94,55 +95,64 @@ export function generateBook4Unit14LessonPlans(): LessonPlan[] {
       duration: '45 minutes',
       level: 'Elementary to Pre-Intermediate',
       objectives: [
-        'Students will ask and answer questions about abilities',
-        'Students will compare abilities with classmates',
-        'Students will create a talent show presentation'
+        'Students will expand their use of ability expressions',
+        'Students will practice talking about talents and skills',
+        'Students will create a class talent survey'
       ],
-      materials: ['Question and answer cards', 'Chart paper for talent show', 'Art supplies'],
+      materials: ['Talent survey template', 'Ability chart', 'Sentence strips with "can" sentences'],
       steps: [
         {
-          title: 'Warm-up',
+          title: 'Review Activity',
           duration: '5 minutes',
-          description: 'Review abilities vocabulary from previous lesson.',
-          instructions: ['Play a quick mime game where students act out abilities and others guess "Can you...?"']
+          description: 'Review previously learned ability expressions',
+          instructions: ['Review "can" and "can\'t" expressions', 'Have students share some abilities they discussed in the previous lesson']
         },
         {
-          title: 'Question Practice',
-          duration: '15 minutes',
-          description: 'Practice forming questions about abilities',
-          materials: ['Question and answer cards'],
-          instructions: [
-            'Introduce question form: "Can you...?" and short answers "Yes, I can." / "No, I can\'t."',
-            'Students practice in pairs using question cards',
-            'Play "Find Someone Who Can" game where students circulate to find classmates with specific abilities',
-            'Share findings with the class'
-          ]
-        },
-        {
-          title: 'Creative Activity',
-          duration: '15 minutes',
-          description: 'Class Talent Show',
-          materials: ['Chart paper for talent show', 'Art supplies'],
-          instructions: [
-            'Students work in small groups to create a talent show poster',
-            'Each student must contribute one ability they can perform',
-            'Groups create illustrations and descriptions for each talent',
-            'Groups present their talent show to the class'
-          ]
-        },
-        {
-          title: 'Plenary',
+          title: 'Expanding Ability Vocabulary',
           duration: '10 minutes',
-          description: 'Review activity with interactive game',
+          description: 'Introduce more complex ability expressions',
+          materials: ['Ability chart'],
+          instructions: [
+            'Introduce new verbs: play (an instrument), speak (a language), cook, draw, etc.',
+            'Use adverbs with abilities: "I can run fast", "She can sing beautifully"',
+            'Have students practice new vocabulary in pairs'
+          ]
+        },
+        {
+          title: 'Sentence Building Activity',
+          duration: '10 minutes',
+          description: 'Practice building complete sentences about abilities',
+          materials: ['Sentence strip cards'],
+          instructions: [
+            'Divide class into small groups',
+            'Give each group sentence strip cards with subjects, "can"/"can\'t", and verbs',
+            'Have groups create and read aloud grammatically correct sentences'
+          ]
+        },
+        {
+          title: 'Class Talent Survey',
+          duration: '15 minutes',
+          description: 'Create and conduct a class survey about abilities',
+          materials: ['Talent survey template'],
+          instructions: [
+            'Distribute survey templates with questions like "Can you ride a bike?"',
+            'Have students circulate and ask each other questions',
+            'Students record classmates\' responses',
+            'Discuss the results as a class: "Five students can swim"'
+          ]
+        },
+        {
+          title: 'Interactive Activity',
+          duration: '5 minutes',
+          description: 'Practice matching ability expressions with images',
           instructions: [
             'Play the I Can Verbs Match Wordwall game',
-            'Discuss what new abilities students would like to learn',
-            'Address any remaining questions'
+            'Review key vocabulary and phrases from the lesson'
           ]
         }
       ],
-      assessmentTips: 'Students can correctly ask and answer questions about abilities using "can" and "can\'t".',
-      homeworkIdeas: ['Interview a family member about their abilities', 'Complete a worksheet on abilities questions and answers']
+      assessmentTips: 'Evaluate students\' ability to use a variety of verbs with "can" and form accurate questions during the survey activity',
+      homeworkIdeas: ['Create a "My Family Abilities" poster showing what different family members can do', 'Write a short paragraph about something you want to learn to do']
     }
   ];
 };
