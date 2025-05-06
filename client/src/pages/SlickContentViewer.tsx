@@ -724,9 +724,9 @@ export default function SlickContentViewer() {
   
   // Main content viewer
   return (
-    <div ref={containerRef} className={`flex flex-col ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'min-h-[75vh] mt-2'}`}>
+    <div ref={containerRef} className={`flex flex-col ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'h-screen w-screen p-0 m-0'}`}>
       {/* Header / Navigation */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-2 bg-white shadow-sm rounded-md mb-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2 bg-white shadow-sm">
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
@@ -947,9 +947,9 @@ export default function SlickContentViewer() {
               }
               
               return (
-                <div key={index} className="outline-none h-[50vh] w-full grid grid-rows-[auto_1fr_auto] relative px-3">
+                <div key={index} className="outline-none h-[80vh] w-full grid grid-rows-[auto_1fr_auto] relative">
                   {/* Top section with question-answer */}
-                  <div className="w-full mb-4">
+                  <div className="w-full">
                     <QuestionAnswerDisplay 
                       material={material} 
                       isEditMode={isEditMode} 
@@ -963,7 +963,7 @@ export default function SlickContentViewer() {
                     />
                   </div>
                   
-                  {/* Middle section with centered image - symmetrical layout */}
+                  {/* Middle section with centered image - symmetrical layout - full width */}
                   <div className="flex items-center justify-center h-full">
                     <div 
                       className={`w-full h-full flex justify-center items-center ${shouldBlur ? 'filter blur-md' : ''} relative`}
@@ -1055,7 +1055,7 @@ export default function SlickContentViewer() {
                             <img 
                               src={material.path}
                               alt={`Learning material slide ${index + 1}`}
-                              className={`h-auto w-auto max-w-full object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''} transition-transform duration-200 
+                              className={`h-auto w-auto max-w-full max-h-[80vh] object-contain mx-auto ${isEditMode ? 'cursor-crosshair' : ''} transition-transform duration-200 
                                 ${!hasPaidAccess && index >= freeSlideLimit ? 'blur-lg brightness-75' : ''}
                               `}
                               style={{ 
