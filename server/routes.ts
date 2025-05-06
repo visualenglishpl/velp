@@ -7,11 +7,13 @@ import { setupAuth } from "./auth";
 import { setupPaymentRoutes } from "./payment-routes";
 import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@shared/schema";
 import { z } from "zod";
-import { S3Client, GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { registerDirectRoutes } from "./direct-routes";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
+import multer from "multer";
+import path from "path";
 
 // Authentication middleware to protect routes
 function isAuthenticated(req: Request, res: Response, next: Function) {
@@ -130,6 +132,43 @@ async function listS3Objects(prefix: string): Promise<string[]> {
   } catch (error) {
     console.error(`Error listing objects with prefix ${prefix}:`, error);
     return [];
+  }
+}
+
+// Configure multer for file uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB max file size
+  },
+  fileFilter: (req, file, cb) => {
+    // Check file extensions
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (allowedImageTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only jpeg, png, and gif files are allowed.'));
+    }
+  }
+});
+
+// Helper function to upload a file to S3
+async function uploadFileToS3(fileBuffer: Buffer, key: string, contentType: string): Promise<string> {
+  const params = {
+    Bucket: S3_BUCKET,
+    Key: key,
+    Body: fileBuffer,
+    ContentType: contentType
+  };
+
+  try {
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
+    console.log(`File uploaded successfully to ${S3_BUCKET}/${key}`);
+    return `https://${S3_BUCKET}.s3.eu-north-1.amazonaws.com/${key}`;
+  } catch (error) {
+    console.error('Error uploading file to S3:', error);
+    throw error;
   }
 }
 

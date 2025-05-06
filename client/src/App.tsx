@@ -6,6 +6,7 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import BooksPage from "./pages/BooksPage";
 import UnitsPage from "./pages/UnitsPage";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   console.log('Rendering full home page with layout');
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" component={Home} />
           <Route path="/books" component={BooksPage} />
           <Route path="/books/:bookId" component={UnitsPage} />
+          <Route path="/admin" component={AdminPage} />
         </Switch>
       </main>
       <Footer />
