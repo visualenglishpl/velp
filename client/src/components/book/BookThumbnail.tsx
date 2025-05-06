@@ -120,18 +120,32 @@ const BookThumbnail = ({
           {/* Colored background */}
           <div className={`absolute inset-0 ${getTitleBgClass()}`}></div>
           
-          {/* GIF Thumbnail from S3 */}
+          {/* Try to load GIF Thumbnail first */}
           <img 
             src={`/api/direct/content/icons/VISUAL ${bookId}.gif`} 
             alt={`Book ${formattedBookId}`}
             className="h-full w-auto object-contain z-10 relative"
+            loading="lazy"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
-              // Show fallback
-              const fallback = target.parentElement?.querySelector('.fallback-content');
-              if (fallback) {
-                (fallback as HTMLElement).style.display = 'flex';
+              // Try to load alternative thumbnail format
+              const parent = target.parentElement;
+              if (parent) {
+                // Add PNG thumbnail as alternative
+                const pngImg = document.createElement('img');
+                pngImg.src = `/api/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
+                pngImg.alt = `Book ${formattedBookId}`;
+                pngImg.className = "h-full w-auto object-contain z-10 relative";
+                pngImg.onerror = () => {
+                  pngImg.style.display = 'none';
+                  // Finally use the fallback if all else fails
+                  const fallback = parent.querySelector('.fallback-content');
+                  if (fallback) {
+                    (fallback as HTMLElement).style.display = 'flex';
+                  }
+                };
+                parent.insertBefore(pngImg, target.nextSibling);
               }
             }}
           />
