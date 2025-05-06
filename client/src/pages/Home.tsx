@@ -1,6 +1,6 @@
 import HeroSection from "../components/sections/HeroSection";
 import PricingPlans from "../components/sections/IndividualPlans";
-import BookShowcase from "../components/sections/BookShowcase";
+import BookCollectionAnimated from "../components/sections/BookCollectionAnimated";
 import FAQSection from "../components/sections/FAQSection";
 import EUProjectSection from "../components/sections/EUProjectSection";
 
@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <HeroSection />
-      <BookShowcase />
+      <BookCollectionAnimated />
       <PricingPlans />
       <FAQSection />
       <EUProjectSection />

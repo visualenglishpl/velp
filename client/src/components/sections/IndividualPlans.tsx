@@ -110,17 +110,17 @@ const PricingPlans = () => {
               
               {/* Pricing */}
               <div className="p-6 border-t border-gray-100">
-                <div className="flex items-center h-16">
-                  <div>
-                    <div className="flex items-baseline">
+                <div className="flex justify-center items-center h-16">
+                  <div className="text-center">
+                    <div className="flex flex-col items-center">
                       <div className="text-4xl font-bold">{plan.price}</div>
                       {plan.priceNote && (
-                        <div className="ml-2 text-sm text-gray-500">{plan.priceNote}</div>
+                        <div className="text-sm text-gray-500">{plan.priceNote}</div>
                       )}
                     </div>
                     
                     {plan.priceSavings && (
-                      <div className="text-sm text-gray-500">{plan.priceSavings}</div>
+                      <div className="text-sm text-gray-500 mt-1">{plan.priceSavings}</div>
                     )}
                   </div>
                 </div>
