@@ -1844,22 +1844,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Try to get thumbnail URLs for each unit
       const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
-        // Try multiple possible thumbnail paths based on book ID
+        // Generate multiple possible thumbnail paths to try
+        // The path patterns look different for different books
         const possiblePaths = [
+          // Primary pattern
           `book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
-          `book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
-          `thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
-          `thumbnails/book${bookId}/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
-          `book${bookId}/unit${unit.unitNumber}/thumbnail.png`
+          // Fall back to standard patterns
+          `book${bookId}/thumbnails/unit${unit.unitNumber}.png`,
+          `book${bookId}/icons/unit${unit.unitNumber}.png`,
+          `book${bookId}/unit${unit.unitNumber}/thumbnail.png`,
+          `thumbnails/book${bookId}-unit${unit.unitNumber}.png`,
         ];
         
         // Try each path to find a valid thumbnail URL
+        let thumbnailUrl = null;
         for (const path of possiblePaths) {
           try {
-            const thumbnailUrl = await getS3PresignedUrl(path);
-            if (thumbnailUrl) {
-              console.log(`Found thumbnail for Book ${bookId} Unit ${unit.unitNumber}: ${path}`);
-              return { ...unit, thumbnailUrl };
+            const url = await getS3PresignedUrl(path);
+            if (url) {
+              console.log(`Success: Generated thumbnail URL for unit ${unit.unitNumber}: ${path}`);
+              thumbnailUrl = url;
+              break;
             }
           } catch (error) {
             // Just log and continue to next path
@@ -1867,8 +1872,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
         
-        // If no thumbnail URL was found, return the unit without a thumbnail
-        return unit;
+        // Return the unit with thumbnail URL if found, otherwise without
+        return { ...unit, thumbnailUrl: thumbnailUrl };
       }));
       
       return res.json(unitsWithThumbnails);
