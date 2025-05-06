@@ -44,8 +44,61 @@ export default function CheckoutPage() {
 
   // Get plan ID from params or cart
   const planId = params.planId || 'default';
+  const [selectedBookPurchaseType, setSelectedBookPurchaseType] = useState('physical');
 
-  // Function to add book to cart
+  // Function to add digital book access to cart
+  const addDigitalAccessToCart = (bookId: string) => {
+    try {
+      let cart = [];
+      const storedCart = localStorage.getItem('visualEnglishCart');
+      if (storedCart) {
+        cart = JSON.parse(storedCart);
+      }
+      
+      // Check if digital access for this book is already in cart
+      const accessInCart = cart.some((item: any) => 
+        item.type === 'digital_access' && item.bookId === bookId
+      );
+      
+      if (!accessInCart) {
+        const formattedBookId = bookId.includes('0') 
+          ? bookId.replace(/^0([a-c])$/, "0$1").toUpperCase() 
+          : bookId;
+          
+        const newItem = {
+          id: `digital-access-${bookId}`,
+          type: 'digital_access',
+          bookId,
+          title: `Full Digital Access - Book ${formattedBookId}`,
+          price: 25,
+        };
+        
+        cart.push(newItem);
+        localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
+        
+        // Trigger cart update event for navbar
+        window.dispatchEvent(new Event('storage'));
+        
+        toast({
+          title: 'Digital access added to cart',
+          description: `Full digital access for Book ${formattedBookId} has been added to your cart.`,
+        });
+      } else {
+        toast({
+          title: 'Already in cart',
+          description: `Digital access for this book is already in your cart.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to add digital access to cart. Please try again.',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  // Function to add physical book to cart
   const addBookToCart = (bookId: string) => {
     try {
       let cart = [];
@@ -224,70 +277,156 @@ export default function CheckoutPage() {
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">Add More Books to Your Order</h2>
-              <span className="text-sm text-gray-500">Click on any book to add it to your cart (€20 each)</span>
             </div>
             
-            <div className="mb-4">
-              <h3 className="font-medium text-sm mb-2">Pre-School Books (Ages 4-6)</h3>
-              <div className="grid grid-cols-3 md:grid-cols-9 gap-3 mb-3">
-                {[
-                  { id: '0a', name: 'Book 0A' },
-                  { id: '0b', name: 'Book 0B' },
-                  { id: '0c', name: 'Book 0C' }
-                ].map(book => (
-                  <div 
-                    key={book.id} 
-                    className="cursor-pointer"
-                    onClick={() => addBookToCart(book.id)}
-                  >
-                    <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
-                      <img 
-                        src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
-                        alt={book.name}
-                        className="w-full aspect-square object-cover"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
-                        <ShoppingBag size={10} className="mr-1" />
-                        Add to Basket (€20)
-                      </div>
-                    </div>
-                    <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
-                  </div>
-                ))}
-              </div>
+            <Tabs defaultValue="physical" className="mb-6" onValueChange={setSelectedBookPurchaseType}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="physical" className="flex items-center">
+                  <Book className="mr-2 h-4 w-4" />
+                  Physical Books (€20)
+                </TabsTrigger>
+                <TabsTrigger value="digital" className="flex items-center">
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  Full Digital Access (€25)
+                </TabsTrigger>
+              </TabsList>
               
-              <h3 className="font-medium text-sm mb-2 mt-4">Primary School Books (Ages 7-15)</h3>
-              <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
-                {[
-                  { id: '1', name: 'Book 1' },
-                  { id: '2', name: 'Book 2' },
-                  { id: '3', name: 'Book 3' },
-                  { id: '4', name: 'Book 4' },
-                  { id: '5', name: 'Book 5' },
-                  { id: '6', name: 'Book 6' },
-                  { id: '7', name: 'Book 7' }
-                ].map(book => (
-                  <div 
-                    key={book.id} 
-                    className="cursor-pointer"
-                    onClick={() => addBookToCart(book.id)}
-                  >
-                    <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
-                      <img 
-                        src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
-                        alt={book.name}
-                        className="w-full aspect-square object-cover"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
-                        <ShoppingBag size={10} className="mr-1" />
-                        Add to Basket (€20)
+              <TabsContent value="physical" className="pt-4">
+                <div className="text-sm text-gray-600 mb-4">
+                  Purchase physical copies of our books - delivered right to your door
+                </div>
+                
+                <div className="mb-4">
+                  <h3 className="font-medium text-sm mb-2">Pre-School Books (Ages 4-6)</h3>
+                  <div className="grid grid-cols-3 md:grid-cols-9 gap-3 mb-3">
+                    {[
+                      { id: '0a', name: 'Book 0A' },
+                      { id: '0b', name: 'Book 0B' },
+                      { id: '0c', name: 'Book 0C' }
+                    ].map(book => (
+                      <div 
+                        key={book.id} 
+                        className="cursor-pointer"
+                        onClick={() => addBookToCart(book.id)}
+                      >
+                        <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
+                          <img 
+                            src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
+                            alt={book.name}
+                            className="w-full aspect-square object-cover"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                            <ShoppingBag size={10} className="mr-1" />
+                            Add to Basket (€20)
+                          </div>
+                        </div>
+                        <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
                       </div>
-                    </div>
-                    <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
+                  
+                  <h3 className="font-medium text-sm mb-2 mt-4">Primary School Books (Ages 7-15)</h3>
+                  <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
+                    {[
+                      { id: '1', name: 'Book 1' },
+                      { id: '2', name: 'Book 2' },
+                      { id: '3', name: 'Book 3' },
+                      { id: '4', name: 'Book 4' },
+                      { id: '5', name: 'Book 5' },
+                      { id: '6', name: 'Book 6' },
+                      { id: '7', name: 'Book 7' }
+                    ].map(book => (
+                      <div 
+                        key={book.id} 
+                        className="cursor-pointer"
+                        onClick={() => addBookToCart(book.id)}
+                      >
+                        <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
+                          <img 
+                            src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
+                            alt={book.name}
+                            className="w-full aspect-square object-cover"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                            <ShoppingBag size={10} className="mr-1" />
+                            Add to Basket (€20)
+                          </div>
+                        </div>
+                        <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="digital" className="pt-4">
+                <div className="text-sm text-gray-600 mb-4">
+                  Get full digital access to our books - instant online access to all materials
+                </div>
+                
+                <div className="mb-4">
+                  <h3 className="font-medium text-sm mb-2">Pre-School Books (Ages 4-6)</h3>
+                  <div className="grid grid-cols-3 md:grid-cols-9 gap-3 mb-3">
+                    {[
+                      { id: '0a', name: 'Book 0A' },
+                      { id: '0b', name: 'Book 0B' },
+                      { id: '0c', name: 'Book 0C' }
+                    ].map(book => (
+                      <div 
+                        key={book.id} 
+                        className="cursor-pointer"
+                        onClick={() => addDigitalAccessToCart(book.id)}
+                      >
+                        <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
+                          <img 
+                            src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
+                            alt={book.name}
+                            className="w-full aspect-square object-cover"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                            <BookOpen size={10} className="mr-1" />
+                            Full Access (€25)
+                          </div>
+                        </div>
+                        <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <h3 className="font-medium text-sm mb-2 mt-4">Primary School Books (Ages 7-15)</h3>
+                  <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
+                    {[
+                      { id: '1', name: 'Book 1' },
+                      { id: '2', name: 'Book 2' },
+                      { id: '3', name: 'Book 3' },
+                      { id: '4', name: 'Book 4' },
+                      { id: '5', name: 'Book 5' },
+                      { id: '6', name: 'Book 6' },
+                      { id: '7', name: 'Book 7' }
+                    ].map(book => (
+                      <div 
+                        key={book.id} 
+                        className="cursor-pointer"
+                        onClick={() => addDigitalAccessToCart(book.id)}
+                      >
+                        <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
+                          <img 
+                            src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
+                            alt={book.name}
+                            className="w-full aspect-square object-cover"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                            <BookOpen size={10} className="mr-1" />
+                            Full Access (€25)
+                          </div>
+                        </div>
+                        <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         )}
 
