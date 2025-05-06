@@ -1,7 +1,11 @@
 import { Helmet } from "react-helmet";
 import EUProjectSection from "../components/sections/EUProjectSection";
+import { useState } from "react";
+import { X } from "lucide-react";
 
 export default function MethodPage() {
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [zoomImageSrc, setZoomImageSrc] = useState("");
   return (
     <>
       <Helmet>
@@ -192,12 +196,23 @@ export default function MethodPage() {
             </h2>
             
             <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 items-center">
-              <div className="md:w-1/2">
+              <div className="md:w-1/2 relative group">
                 <img 
                   src="/api/direct/content/VISUAL WEBSITE/lesson.png" 
-                  alt="Visual English Material Example" 
-                  className="rounded-lg w-full h-auto"
+                  alt="Household Chores Unit Sample" 
+                  className="rounded-lg w-full h-auto cursor-pointer hover:opacity-90 transition-opacity shadow-md"
+                  onClick={() => {
+                    setZoomImageSrc("/api/direct/content/VISUAL WEBSITE/lesson.png");
+                    setShowImageModal(true);
+                  }}
                 />
+                <div className="absolute bottom-3 right-3 bg-white bg-opacity-80 rounded-full p-2 shadow-md opacity-80 group-hover:opacity-100 transition-opacity">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-700">
+                    <path d="M15 3h6v6"></path>
+                    <path d="M10 14 21 3"></path>
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  </svg>
+                </div>
               </div>
               <div className="md:w-1/2 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
                 <p className="text-gray-600 font-light mb-4">
@@ -245,6 +260,31 @@ export default function MethodPage() {
         {/* EU Project Section */}
         <EUProjectSection />
       </main>
+
+      {/* Image Zoom Modal */}
+      {showImageModal && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowImageModal(false)}
+        >
+          <div className="relative max-w-5xl max-h-[90vh] overflow-auto bg-white rounded-lg p-1">
+            <button 
+              className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowImageModal(false);
+              }}
+            >
+              <X className="h-6 w-6 text-gray-600" />
+            </button>
+            <img 
+              src={zoomImageSrc} 
+              alt="Enlarged View" 
+              className="max-w-full h-auto rounded"
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
