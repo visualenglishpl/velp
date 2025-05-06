@@ -77,15 +77,15 @@ export default function UnitsPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[...Array(16)].map((_, i) => (
               <Card key={i} className="overflow-hidden border-0 shadow-none">
+                <div className="px-4 pt-2 pb-1">
+                  <Skeleton className="h-6 w-1/3 mx-auto" />
+                </div>
                 <div className="aspect-square w-full">
                   <Skeleton className="h-full w-full" />
                 </div>
-                <CardHeader className="py-3 px-4">
-                  <Skeleton className="h-6 w-2/3" />
-                </CardHeader>
-                <CardFooter className="py-3 px-4">
-                  <Skeleton className="h-8 w-full" />
-                </CardFooter>
+                <div className="py-3 px-4 flex justify-center">
+                  <Skeleton className="h-10 w-32" />
+                </div>
               </Card>
             ))}
           </div>
@@ -93,6 +93,7 @@ export default function UnitsPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {units.map((unit) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col border-0 shadow-none">
+                <h3 className="text-xl font-medium text-center mt-2 mb-1">Unit {unit.unitNumber}</h3>
                 <div className="aspect-square relative overflow-hidden">
                   {unit.thumbnailUrl ? (
                     <img 
@@ -111,14 +112,11 @@ export default function UnitsPage() {
                     </div>
                   )}
                 </div>
-                <CardHeader className="py-3 px-4">
-                  <CardTitle className="text-lg">Unit {unit.unitNumber}</CardTitle>
-                </CardHeader>
-                <CardFooter className="py-3 px-4 mt-auto">
+                <div className="py-3 px-4 mt-auto flex justify-center">
                   <Link href={`/books/${bookId}/units/${unit.unitNumber}`}>
-                    <Button className="w-full">View Unit</Button>
+                    <Button className="px-8 py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700">View Unit</Button>
                   </Link>
-                </CardFooter>
+                </div>
               </Card>
             ))}
           </div>

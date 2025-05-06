@@ -1,0 +1,72 @@
+To ensure full compliance with Polish law (and EU law, particularly RODO/GDPR) for your Visual English website, you’re already covering a solid privacy base — but there are a few key elements still missing or needing refinement to be fully compliant with Polish data protection, e-commerce, and consumer law.
+
+✅ What Else Should Be Added
+🔹 1. Cookie Policy + Cookie Consent Banner (Obligatory)
+Even if you're not directly using cookies, third-party tools (e.g. Google Analytics, Stripe, YouTube) often do.
+
+What you need:
+
+A separate Cookie Policy or a dedicated section within your Privacy Policy
+
+A cookie consent banner that:
+
+Blocks non-essential cookies before consent
+
+Allows the user to accept, reject, or customize
+
+Is compliant with PEK (Prawo Telekomunikacyjne, Art. 173)
+
+🔹 2. Terms of Service (Regulamin Świadczenia Usług)
+This is legally required in Poland for any website offering digital services or sales (Ustawa o prawach konsumenta + Kodeks Cywilny).
+
+It should include:
+
+Who is the service provider (your company details)
+
+Description of services/products
+
+Pricing and payment methods
+
+Delivery or access terms (especially for downloads/digital access)
+
+Right of withdrawal (14 days for consumers)
+
+Complaint procedure (Reklamacje)
+
+Liability disclaimer
+
+Termination rules
+
+Applicable law and jurisdiction (typically: Polish law, courts in Wadowice or Kraków)
+
+🔹 3. Right of Withdrawal (Prawo odstąpienia)
+Polish law (Ustawa z dnia 30 maja 2014 r.) requires that consumers are informed about their 14-day withdrawal right — even for digital services (with some exceptions if they waive it).
+
+If you're offering instant access to digital content, you must:
+
+Inform the buyer before payment that they lose the right of withdrawal once access begins
+
+Obtain their explicit consent
+
+This can be done via a checkbox during checkout:
+
+☑️ “I agree to immediate access and acknowledge that I lose my right to withdraw from this purchase.”
+
+🔹 4. Data Processing Agreement (DPA) – If Schools Are Clients
+If you're processing student data on behalf of schools (as a processor under GDPR), schools may require a DPA (Umowa Powierzenia Przetwarzania Danych Osobowych) from you.
+
+You should be ready to:
+
+Sign a DPA when requested
+
+Clarify in your privacy docs that you act as a processor in such B2B contexts
+
+🔹 5. Language Availability
+Under Polish consumer protection law, the privacy policy, terms of service, and key notices must be available in Polish if you're targeting Polish consumers or institutions.
+
+Ensure:
+
+Privacy Policy and Terms are published in both Polish and English
+
+All legal notices, checkboxes, and consents during checkout are also in Polish
+
