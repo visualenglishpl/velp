@@ -46,8 +46,8 @@ const ContactPage = () => {
               className="w-full max-w-md"
             />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mt-8">Contact Us</h1>
-          <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-4xl font-medium text-gray-800 mt-8">Contact Us</h1>
+          <p className="mt-4 text-lg text-gray-500 max-w-3xl mx-auto font-light">
             We'd love to hear from you! Send us a message and we'll respond as soon as possible.
           </p>
         </div>
@@ -56,28 +56,28 @@ const ContactPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact details column */}
           <div className="bg-gray-50 p-8 rounded-xl shadow-sm">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Details</h2>
+            <h2 className="text-2xl font-medium text-gray-800 mb-6">Contact Details</h2>
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Our Location</h3>
-                <p className="text-gray-600">
+                <h3 className="text-lg font-medium text-gray-700 mb-2">Our Location</h3>
+                <p className="text-gray-500 font-light">
                   Rynek 2, Żator,<br />
                   32-640, Poland
                 </p>
               </div>
               
               <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Call Us</h3>
-                <p className="text-gray-600">
+                <h3 className="text-lg font-medium text-gray-700 mb-2">Call Us</h3>
+                <p className="text-gray-500 font-light">
                   +48 537 829 308<br />
                   +48 608 246 691
                 </p>
               </div>
               
               <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Our Email</h3>
-                <p className="text-gray-600">
+                <h3 className="text-lg font-medium text-gray-700 mb-2">Our Email</h3>
+                <p className="text-gray-500 font-light">
                   biuro@educentredk.pl<br />
                   platform@visualenglish.pl
                 </p>
@@ -87,7 +87,7 @@ const ContactPage = () => {
           
           {/* Find us column with map */}
           <div className="bg-gray-50 p-8 rounded-xl shadow-sm">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Find Us</h2>
+            <h2 className="text-2xl font-medium text-gray-800 mb-6">Find Us</h2>
             <div className="h-[300px] w-full bg-gray-200 rounded-lg overflow-hidden">
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2558.6873918080736!2d19.43545687689791!3d49.99710297700247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47169e8ba789160f%3A0xb8bdfa57939a8583!2sRynek%202%2C%2032-640%20Zator!5e0!3m2!1sen!2spl!4v1683654321000!5m2!1sen!2spl" 
@@ -104,11 +104,11 @@ const ContactPage = () => {
 
         {/* Contact form section */}
         <div className="max-w-3xl mx-auto mt-16 bg-white shadow-sm rounded-xl border border-gray-200 p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Send Us a Message</h2>
+          <h2 className="text-2xl font-medium text-gray-800 mb-6 text-center">Send Us a Message</h2>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="name" className="block text-sm font-normal text-gray-600 mb-1">
                 Name
               </label>
               <Input
@@ -122,7 +122,7 @@ const ContactPage = () => {
             </div>
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-normal text-gray-600 mb-1">
                 Email
               </label>
               <Input
@@ -137,7 +137,7 @@ const ContactPage = () => {
             </div>
             
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="subject" className="block text-sm font-normal text-gray-600 mb-1">
                 Subject
               </label>
               <Input
@@ -151,7 +151,7 @@ const ContactPage = () => {
             </div>
             
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="message" className="block text-sm font-normal text-gray-600 mb-1">
                 Message
               </label>
               <textarea
@@ -169,7 +169,7 @@ const ContactPage = () => {
             <div className="flex justify-center">
               <Button 
                 type="submit" 
-                className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-2 rounded-md text-base font-medium"
+                className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-2.5 rounded-md text-base font-normal shadow-sm"
               >
                 Send Message
               </Button>
