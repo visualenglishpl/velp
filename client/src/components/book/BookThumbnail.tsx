@@ -1,4 +1,6 @@
 import { Link } from "wouter";
+import { ShoppingBag } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface BookThumbnailProps {
   bookId: string;
@@ -17,6 +19,7 @@ const BookThumbnail = ({
   buttonColor, 
   buttonHoverColor 
 }: BookThumbnailProps) => {
+  const { toast } = useToast();
   // Format the book ID for display (e.g., "0a" -> "0A", "1" -> "1")
   const formattedBookId = bookId.includes('0') 
     ? bookId.replace(/^0([a-c])$/, "0$1").toUpperCase() 
@@ -111,6 +114,54 @@ const BookThumbnail = ({
     if (bookId === '7') return 'bg-gray-600';
     return 'bg-blue-600';
   };
+  
+  // Function to add the printed book to the cart
+  const addToCart = () => {
+    try {
+      let cart = [];
+      const storedCart = localStorage.getItem('visualEnglishCart');
+      if (storedCart) {
+        cart = JSON.parse(storedCart);
+      }
+      
+      // Check if book is already in cart
+      const bookInCart = cart.some((item: any) => 
+        item.type === 'printed_book' && item.bookId === bookId
+      );
+      
+      if (!bookInCart) {
+        const newItem = {
+          id: `printed-book-${bookId}`,
+          type: 'printed_book',
+          bookId,
+          title: `Printed Book ${formattedBookId}`,
+          price: 20,
+        };
+        
+        cart.push(newItem);
+        localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
+        
+        // Trigger cart update event for navbar
+        window.dispatchEvent(new Event('storage'));
+        
+        toast({
+          title: 'Book added to cart',
+          description: `Printed Book ${formattedBookId} has been added to your cart.`,
+        });
+      } else {
+        toast({
+          title: 'Book already in cart',
+          description: `Printed Book ${formattedBookId} is already in your cart.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to add book to cart. Please try again.',
+        variant: 'destructive'
+      });
+    }
+  };
 
   return (
     <div className="h-full">
@@ -171,7 +222,7 @@ const BookThumbnail = ({
         <div className="p-3 text-center flex-grow flex flex-col bg-white">
           <h3 className={`font-bold text-sm ${textColorClass}`}>VISUAL ENGLISH</h3>
           <p className={`${subTextColorClass} text-xs font-medium mb-2`}>BOOK {formattedBookId}</p>
-          <div className="mt-auto">
+          <div className="mt-auto space-y-2">
             <Link href={`/books/${bookId}`} className="block w-full">
               <button className={`w-full ${bookId === '5' ? 'bg-red-600 text-white' : buttonColorClass} py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
@@ -181,6 +232,14 @@ const BookThumbnail = ({
                 Explore Units
               </button>
             </Link>
+            
+            <button 
+              onClick={addToCart}
+              className={`w-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1`}
+            >
+              <ShoppingBag size={14} />
+              Buy Printed Book (€20)
+            </button>
           </div>
         </div>
       </div>
