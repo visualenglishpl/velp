@@ -416,6 +416,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Register direct routes that map 1:1 with S3 structure
   // These routes don't use database IDs and directly match the S3 path structure
   registerDirectRoutes(app);
+  
+  // Admin file upload routes for thumbnails and animated GIFs
+  app.post("/api/admin/upload/book/:bookId/cover", isAdmin, upload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+      
+      const { bookId } = req.params;
+      
+      // Check if the bookId is valid
+      const validBooks = ['0a', '0b', '0c', '1', '2', '3', '4', '5', '6', '7'];
+      if (!validBooks.includes(bookId)) {
+        return res.status(400).json({ error: "Invalid book ID" });
+      }
+      
+      // Determine the correct file extension based on mimetype
+      const fileExt = req.file.mimetype === 'image/jpeg' ? 'jpg' : 
+                    req.file.mimetype === 'image/png' ? 'png' : 'gif';
+      
+      // Upload to S3
+      const key = `book${bookId}/cover.${fileExt}`;
+      const url = await uploadFileToS3(req.file.buffer, key, req.file.mimetype);
+      
+      res.status(200).json({ message: "Cover image uploaded successfully", url });
+    } catch (error) {
+      console.error("Error uploading cover image:", error);
+      res.status(500).json({ error: "Failed to upload cover image" });
+    }
+  });
+  
+  app.post("/api/admin/upload/book/:bookId/animated", isAdmin, upload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+      
+      const { bookId } = req.params;
+      
+      // Check if the bookId is valid
+      const validBooks = ['0a', '0b', '0c', '1', '2', '3', '4', '5', '6', '7'];
+      if (!validBooks.includes(bookId)) {
+        return res.status(400).json({ error: "Invalid book ID" });
+      }
+      
+      // Check if the file is a GIF
+      if (req.file.mimetype !== 'image/gif') {
+        return res.status(400).json({ error: "Only GIF files are allowed for animations" });
+      }
+      
+      // Upload to S3
+      const key = `book${bookId}/animated.gif`;
+      const url = await uploadFileToS3(req.file.buffer, key, req.file.mimetype);
+      
+      res.status(200).json({ message: "Animated GIF uploaded successfully", url });
+    } catch (error) {
+      console.error("Error uploading animated GIF:", error);
+      res.status(500).json({ error: "Failed to upload animated GIF" });
+    }
+  });
 
   // ----- CONTENT MANAGEMENT API ROUTES -----
   
