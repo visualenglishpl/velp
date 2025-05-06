@@ -29,8 +29,12 @@ const HeroSection = () => {
                   </Button>
                 </Link>
                 <Link href="/method" className="w-full sm:w-1/2">
-                  <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-8 py-5 text-xl font-bold rounded-xl w-full">
-                    □ Explore
+                  <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-8 py-5 text-xl font-bold rounded-xl w-full flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    Explore
                   </Button>
                 </Link>
               </div>
@@ -196,7 +200,11 @@ const HeroSection = () => {
           
           <div className="text-center mt-12">
             <Link href="/method">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-10 py-5 text-xl font-extrabold rounded-lg shadow-xl">
+              <Button className="bg-green-600 hover:bg-green-700 text-white px-10 py-5 text-xl font-extrabold rounded-lg shadow-xl flex items-center justify-center gap-2 mx-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg>
                 Explore
               </Button>
             </Link>
