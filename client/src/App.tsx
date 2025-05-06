@@ -1,25 +1,6 @@
-import { Switch, Route, useLocation } from "wouter";
 import { Toaster } from "./components/ui/toaster";
-import React, { Suspense } from "react";
-import { useQuery } from "@tanstack/react-query";
-import NotFound from "./pages/not-found";
-import Home from "./pages/Home";
-import AuthPage from "./pages/auth-page";
-import AdminDashboard from "./pages/admin/Dashboard";
-import BooksManagement from "./pages/admin/BooksManagement";
-import ShopManagement from "./pages/admin/ShopManagement";
-import ContentOrganizer from "./pages/admin/ContentOrganizer";
-import SlickContentViewer from "./pages/SlickContentViewer";
-import CheckoutPage from "./pages/checkout";
-import PrintedBookCheckout from "./pages/PrintedBookCheckout";
-import BooksPage from "./pages/BooksPage";
-import UnitsPage from "./pages/UnitsPage";
-import LessonPlansPage from "./pages/LessonPlansPage";
-import FlaggedQuestions from "./pages/admin/FlaggedQuestions";
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
+import React from "react";
 import { AuthProvider } from "./hooks/use-auth";
-import { useAuth } from "./hooks/use-auth";
 
 // TestTeacherResources page has been removed as it's not necessary
 

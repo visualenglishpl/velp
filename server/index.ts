@@ -14,11 +14,45 @@ configureHMR();
 // Add global error handler for better resilience
 process.on('uncaughtException', (error) => {
   console.error('UNCAUGHT EXCEPTION - keeping process alive:', error);
+  // Log additional information if available
+  if (error.stack) {
+    console.error('Stack trace:', error.stack);
+  }
 });
 
 // Prevent unhandled promise rejections from crashing the app
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  console.error('Unhandled Rejection at:', promise);
+  // Provide more detailed error information
+  if (reason instanceof Error) {
+    console.error('Reason:', reason.message);
+    console.error('Stack:', reason.stack);
+  } else {
+    console.error('Reason:', reason);
+  }
+});
+
+// Add memory monitoring to prevent memory leaks
+const memoryMonitorInterval = setInterval(() => {
+  const memoryUsage = process.memoryUsage();
+  // Convert to MB for better readability
+  const memoryUsageMB = {
+    rss: Math.round(memoryUsage.rss / 1024 / 1024),
+    heapTotal: Math.round(memoryUsage.heapTotal / 1024 / 1024),
+    heapUsed: Math.round(memoryUsage.heapUsed / 1024 / 1024),
+    external: Math.round((memoryUsage.external || 0) / 1024 / 1024)
+  };
+  
+  // Only log if memory usage is high
+  if (memoryUsageMB.heapUsed > 500) { // If heap usage > 500MB
+    console.warn('Memory usage is high:', memoryUsageMB);
+  }
+}, 300000); // Check every 5 minutes
+
+// Clean up on exit
+process.on('exit', () => {
+  clearInterval(memoryMonitorInterval);
+  console.log('Application is shutting down...');
 });
 
 
