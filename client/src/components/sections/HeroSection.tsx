@@ -51,37 +51,8 @@ const HeroSection = () => {
         </div>
       </section>
 
-      {/* Full-width hero banner */}
-      <section className="relative">
-        {/* Full-width image with embedded text */}
-        <div className="w-full bg-white overflow-hidden border-b border-gray-200">
-          <img 
-            src="/api/direct/content/VISUAL WEBSITE/clay-kids-banner-with-text.png" 
-            alt="Visual English Children - Revolutionizing Language Learning for Young Minds"
-            className="w-full h-auto object-cover" 
-          />
-        </div>
-        
-        {/* Buttons below the image */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
-          <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
-            <Link href="/checkout/free_trial">
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 text-lg font-normal rounded-md shadow-sm">
-                ✓ Try a Free Sample
-              </Button>
-            </Link>
-            <Link href="/method">
-              <Button variant="outline" className="border-2 border-green-500 bg-white text-green-500 hover:bg-white hover:text-green-600 px-8 py-3 text-lg font-normal rounded-md flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </svg>
-                Explore
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Divider for separation between top section and features */}
+      <div className="w-full h-0.5 bg-gray-100"></div>
 
       {/* Why it works section */}
       <section className="py-16 bg-gray-50">
