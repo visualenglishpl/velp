@@ -3,7 +3,9 @@ import { Link } from "wouter";
 import { FileText } from "lucide-react";
 import { testFunction } from "../../data/app-test";
 
-// Just import testFunction, but don't log it
+// Log test information to verify application loading
+console.log('HeroSection loaded');
+console.log(testFunction());
 
 const HeroSection = () => {
   return (

@@ -5,7 +5,8 @@
 // This maps exact filenames to their specific questions and answers
 // Format: "filename.ext": { question: "Question Text?", answer: "Answer Text." }
 
-// Pattern mapper initialization
+// Log our debugging info
+console.log("Pattern-mapper.ts loaded - direct mapping system is active");
 
 interface QAMapping {
   question: string;

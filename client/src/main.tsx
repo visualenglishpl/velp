@@ -4,7 +4,9 @@ import { queryClient } from "./lib/queryClient";
 import App from "./App";
 import "./index.css";
 
-// Initialize React application
+// Log startup message to verify loading
+console.log('Visual English application starting...');
+
 // Create root
 const rootElement = document.getElementById("root");
 
@@ -22,12 +24,14 @@ const root = createRoot(rootElement || document.getElementById('root')!);
 
 // Add error boundary for improved stability
 try {
+  console.log('Rendering application...');
   // Render app with providers
   root.render(
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
   );
+  console.log('Application rendered successfully');
 } catch (error) {
   console.error('Error rendering application:', error);
   // Display fallback content in case of render failure

@@ -2,5 +2,5 @@
 console.log('App test file loaded successfully');
 
 export const testFunction = () => {
-  return 'Test function executed';
+  return 'Application is working correctly';
 };
