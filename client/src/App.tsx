@@ -9,6 +9,7 @@ import UnitsPage from "./pages/UnitsPage";
 import AdminPage from "./pages/AdminPage";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   console.log('Rendering full home page with layout');
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route path="/about">
             <AboutPage />
+          </Route>
+          <Route path="/contact">
+            <ContactPage />
           </Route>
         </Switch>
       </main>
