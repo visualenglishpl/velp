@@ -16,7 +16,7 @@ const PricingPlans = () => {
       ],
       price: "€20",
       priceNote: "+ delivery",
-      buttonText: "Order\nPrinted Book",
+      buttonText: "Order Printed Book",
       planId: "printed_book"
     },
     {
@@ -34,7 +34,7 @@ const PricingPlans = () => {
       price: "€5",
       priceNote: "per month",
       priceSavings: "€40/year (33% savings)",
-      buttonText: "Start\nLearning Now",
+      buttonText: "Start Learning Now",
       planId: "single_lesson"
     },
     {
@@ -52,7 +52,7 @@ const PricingPlans = () => {
       price: "€25",
       priceNote: "per month",
       priceSavings: "€180/year (40% savings)",
-      buttonText: "Get\nFull Access",
+      buttonText: "Get Full Access",
       planId: "whole_book"
     },
     {
@@ -69,7 +69,7 @@ const PricingPlans = () => {
       ],
       price: "Free",
       priceNote: "7-Day Trial",
-      buttonText: "Start\nFree Trial",
+      buttonText: "Start Free Trial",
       planId: "free_trial"
     },
   ];
@@ -129,10 +129,10 @@ const PricingPlans = () => {
                 <div className="mt-2">
                   <Link href={index === plans.length - 1 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
-                      className="w-full py-3 px-4 rounded-md font-bold text-white shadow-md text-base h-16 whitespace-pre-line"
+                      className="w-full py-3 px-4 rounded-md font-bold text-white shadow-md text-base h-16 flex items-center justify-center"
                       style={{ backgroundColor: plan.bgColor }}
                     >
-                      {plan.buttonText}
+                      <span className="text-center">{plan.buttonText}</span>
                     </button>
                   </Link>
                 </div>
