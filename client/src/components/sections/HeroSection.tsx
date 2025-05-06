@@ -6,29 +6,29 @@ const HeroSection = () => {
   return (
     <div className="bg-white">
       {/* Hero banner section */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-gray-50 rounded-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             {/* Left text content */}
             <div className="md:w-1/2 flex flex-col items-start">
-              <div className="flex items-center justify-start mb-6">
+              <div className="mb-8">
                 <img 
                   src="/api/content/icons/LOGO%20VISUAL%20ENGLISH.png" 
                   alt="Visual English Logo" 
-                  className="h-24"
+                  className="h-20"
                 />
               </div>
-              <p className="text-xl text-blue-700 mb-10">
+              <p className="text-xl text-blue-700 mb-12">
                 A distinctive and engaging English learning method tailored for young ESL learners.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 w-full">
                 <Link href="/checkout/free_trial">
-                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-6 text-lg font-bold rounded-lg w-full">
+                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-6 py-4 text-lg font-bold rounded-lg w-full">
                     ✓ Try a Free Sample
                   </Button>
                 </Link>
                 <Link href="/books">
-                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-600 hover:bg-white hover:text-green-600 px-8 py-6 text-lg font-medium rounded-lg w-full">
+                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-600 hover:bg-white hover:text-green-600 px-6 py-4 text-lg font-medium rounded-lg w-full">
                     □ Explore Books
                   </Button>
                 </Link>
@@ -42,11 +42,11 @@ const HeroSection = () => {
                 alt="Visual English Learning Illustration"
                 className="w-full h-auto rounded-lg" 
               />
-              <div className="absolute -right-6 md:-right-8 bottom-0 hidden md:block">
+              <div className="absolute right-0 bottom-0 hidden md:block">
                 <img 
                   src="/api/content/VISUAL%20WEBSITE/sitting_teacher.png" 
                   alt="Teacher sitting"
-                  className="h-40 w-auto" 
+                  className="h-28 w-auto" 
                 />
               </div>
             </div>
