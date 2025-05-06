@@ -1831,18 +1831,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Convert certain bookId formats for consistency
       // Some clients may send numeric IDs for special books
+      let normalizedBookId = bookId;
       if (bookId === "1" && await storage.getBookByBookId("0a")) {
         console.log("Redirecting numeric ID 1 to special book 0a");
-        bookId = "0a";
+        normalizedBookId = "0a";
       }
       
+      // Use the normalized book ID for the rest of the function
+      
       // Check if the book exists in our storage
-      let book = await storage.getBookByBookId(bookId);
-      console.log(`Searching for book with bookId ${bookId}, found:`, book ? book.bookId : "not found");
+      let book = await storage.getBookByBookId(normalizedBookId);
+      console.log(`Searching for book with bookId ${normalizedBookId}, found:`, book ? book.bookId : "not found");
       
       // If the book ID is valid but doesn't exist in storage, create it dynamically 
-      if (!book && ['0a', '0b', '0c', '1', '2', '3', '4', '5', '6', '7'].includes(bookId)) {
-        console.log(`Book ID ${bookId} not found in storage but is a valid ID. Creating dynamic book.`);
+      if (!book && ['0a', '0b', '0c', '1', '2', '3', '4', '5', '6', '7'].includes(normalizedBookId)) {
+        console.log(`Book ID ${normalizedBookId} not found in storage but is a valid ID. Creating dynamic book.`);
         
         // Create the book dynamically based on its ID
         const bookTitle = {
@@ -1856,7 +1859,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           '5': 'VISUAL ENGLISH BOOK 5',
           '6': 'VISUAL ENGLISH BOOK 6',
           '7': 'VISUAL ENGLISH BOOK 7',
-        }[bookId] || `VISUAL ENGLISH BOOK ${bookId}`;
+        }[normalizedBookId] || `VISUAL ENGLISH BOOK ${normalizedBookId}`;
         
         const bookLevel = {
           '0a': 'Beginner',
@@ -1869,7 +1872,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           '5': 'Advanced',
           '6': 'Advanced Plus',
           '7': 'Proficiency',
-        }[bookId] || 'Unknown';
+        }[normalizedBookId] || 'Unknown';
         
         // Create the book in storage
         try {
@@ -1887,7 +1890,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.error(`Failed to create dynamic book:`, error);
         }
       } else if (!book) {
-        console.log(`Book with ID ${bookId} is not in storage and is not a valid ID.`);
+        console.log(`Book with ID ${normalizedBookId} is not in storage and is not a valid ID.`);
         return res.status(404).json({ error: "Book not found" });
       }
       
@@ -1895,9 +1898,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Books 0a/0b/0c have 20 units, Books 1-3 have 18 units, Books 4-7 have 16 units
       let unitCount = 16; // Default for Books 4-7
       
-      if (bookId.startsWith('0')) {
+      if (normalizedBookId.startsWith('0')) {
         unitCount = 20; // For Books 0a, 0b, 0c
-      } else if (['1', '2', '3'].includes(bookId)) {
+      } else if (['1', '2', '3'].includes(normalizedBookId)) {
         unitCount = 18; // For Books 1-3
       }
       
@@ -1907,7 +1910,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           unitNumber,
           title: `Unit ${unitNumber}`,
           thumbnailUrl: null,
-          description: `Description for Book ${bookId} Unit ${unitNumber}`
+          description: `Description for Book ${normalizedBookId} Unit ${unitNumber}`
         };
       });
       
