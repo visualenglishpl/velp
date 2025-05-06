@@ -12,11 +12,11 @@ const HeroSection = () => {
           <div className="flex flex-col md:flex-row items-center gap-12">
             {/* Left text content */}
             <div className="md:w-1/2 flex flex-col items-start">
-              <div className="mb-8">
+              <div className="mb-10">
                 <img 
                   src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
                   alt="Visual English Logo" 
-                  className="h-20"
+                  className="h-36 max-w-full"
                 />
               </div>
               <p className="text-xl text-blue-700 mb-12">
@@ -29,8 +29,8 @@ const HeroSection = () => {
                   </Button>
                 </Link>
                 <Link href="/books">
-                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-600 hover:bg-white hover:text-green-600 px-6 py-4 text-lg font-medium rounded-lg w-full">
-                    □ Explore Books
+                  <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-6 py-4 text-lg font-bold rounded-lg w-full">
+                    □ View Books
                   </Button>
                 </Link>
               </div>

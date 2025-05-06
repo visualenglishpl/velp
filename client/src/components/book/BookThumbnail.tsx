@@ -108,7 +108,8 @@ const BookThumbnail = ({
             className="w-full h-auto" 
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = `/api/direct/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
+              // Try to use the GIF version directly
+              target.src = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-1.gif`;
             }}
           />
         </div>
