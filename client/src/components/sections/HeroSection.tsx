@@ -12,7 +12,7 @@ const HeroSection = () => {
             {/* Left text content */}
             <div className="md:w-1/2">
               <div className="mb-2">
-                <div className="inline-block text-blue-600 text-sm font-bold py-1 px-3 rounded-full border border-blue-200 bg-blue-50">
+                <div className="inline-block text-blue-600 text-sm font-extrabold py-1 px-3 rounded-full border border-blue-200 bg-blue-50">
                   Interactive Language Learning
                 </div>
               </div>
@@ -60,37 +60,37 @@ const HeroSection = () => {
       {/* Why it works section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-blue-600">Why Visual English Works</h2>
+          <h2 className="text-3xl font-extrabold text-center mb-12 text-blue-600">Why Visual English Works</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="bg-white rounded-xl p-8 text-center shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-blue-100">
+            <div className="bg-white rounded-xl p-8 text-center shadow-md  hover:shadow-lg border border-blue-100">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-500 rounded-full mb-6 shadow-md">
                 <CheckCircle2 className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-indigo-700">Visual-first learning</h3>
+              <h3 className="text-xl font-extrabold mb-4 text-indigo-700">Visual-first learning</h3>
               <p className="text-gray-600">
                 Images and visual cues help children remember vocabulary and language structures more effectively.
               </p>
             </div>
             
             {/* Feature 2 */}
-            <div className="bg-white rounded-xl p-8 text-center shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-pink-100">
+            <div className="bg-white rounded-xl p-8 text-center shadow-md  hover:shadow-lg border border-pink-100">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-pink-500 rounded-full mb-6 shadow-md">
                 <MessageCircle className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-rose-600">Real conversation practice</h3>
+              <h3 className="text-xl font-extrabold mb-4 text-rose-600">Real conversation practice</h3>
               <p className="text-gray-600">
                 Practical dialogue scenarios prepare students for real-world language use from day one.
               </p>
             </div>
             
             {/* Feature 3 */}
-            <div className="bg-white rounded-xl p-8 text-center shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-purple-100">
+            <div className="bg-white rounded-xl p-8 text-center shadow-md  hover:shadow-lg border border-purple-100">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-purple-500 rounded-full mb-6 shadow-md">
                 <Brain className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-violet-700">Perfect for ages 5–12</h3>
+              <h3 className="text-xl font-extrabold mb-4 text-violet-700">Perfect for ages 5–12</h3>
               <p className="text-gray-600">
                 Tailored for young learners with age-appropriate content that keeps them engaged and excited.
               </p>
@@ -102,14 +102,14 @@ const HeroSection = () => {
       {/* Book series section */}
       <section className="py-16 bg-mint-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-blue-600 mb-10">Our Book Series</h2>
+          <h2 className="text-3xl font-extrabold text-center text-blue-600 mb-10">Our Book Series</h2>
           
           {/* Grid of colorful books */}
           <div id="book-grid" className="mb-12">
             {/* First row - Special books (0a, 0b, 0c) and books 1-2 */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
               {/* Book 0a - To The Moon (Blue) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-blue-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book0a/cover.png" 
@@ -121,10 +121,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-blue-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-blue-800">VISUAL ENGLISH</h3>
                     <p className="text-blue-700 font-medium">BOOK 0A</p>
                     <Link href="/books/0a">
-                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -134,7 +134,7 @@ const HeroSection = () => {
               </div>
               
               {/* Book 0b - Barn In The Farm (Orange) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-orange-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book0b/cover.png" 
@@ -146,10 +146,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-orange-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-orange-800">VISUAL ENGLISH</h3>
                     <p className="text-orange-700 font-medium">BOOK 0B</p>
                     <Link href="/books/0b">
-                      <button className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -159,7 +159,7 @@ const HeroSection = () => {
               </div>
               
               {/* Book 0c - At The Farm (Brown) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-amber-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book0c/cover.png" 
@@ -171,10 +171,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-amber-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-amber-800">VISUAL ENGLISH</h3>
                     <p className="text-amber-700 font-medium">BOOK 0C</p>
                     <Link href="/books/0c">
-                      <button className="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-extrabold text-sm shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -184,7 +184,7 @@ const HeroSection = () => {
               </div>
               
               {/* Book 1 - Vegetables (Green) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-green-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book1/cover.png" 
@@ -196,10 +196,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-green-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-green-800">VISUAL ENGLISH</h3>
                     <p className="text-green-700 font-medium">BOOK 1</p>
                     <Link href="/books/1">
-                      <button className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -209,7 +209,7 @@ const HeroSection = () => {
               </div>
               
               {/* Book 2 - Sports (Light Blue) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-sky-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book2/cover.png" 
@@ -221,10 +221,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-sky-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-sky-800">VISUAL ENGLISH</h3>
                     <p className="text-sky-700 font-medium">BOOK 2</p>
                     <Link href="/books/2">
-                      <button className="mt-3 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md font-extrabold text-sm shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -237,7 +237,7 @@ const HeroSection = () => {
             {/* Second row - Books 3-7 */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
               {/* Book 3 - Bugs (Lime Green) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-lime-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book3/cover.png" 
@@ -249,10 +249,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-lime-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-lime-800">VISUAL ENGLISH</h3>
                     <p className="text-lime-700 font-medium">BOOK 3</p>
                     <Link href="/books/3">
-                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -262,7 +262,7 @@ const HeroSection = () => {
               </div>
               
               {/* Book 4 - At The Circus (Pink) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-pink-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book4/cover.png" 
@@ -274,10 +274,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-pink-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-pink-800">VISUAL ENGLISH</h3>
                     <p className="text-pink-700 font-medium">BOOK 4</p>
                     <Link href="/books/4">
-                      <button className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -287,7 +287,7 @@ const HeroSection = () => {
               </div>
               
               {/* Book 5 - Movie Time (Red) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-red-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book5/cover.png" 
@@ -299,10 +299,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-red-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-red-800">VISUAL ENGLISH</h3>
                     <p className="text-red-700 font-medium">BOOK 5</p>
                     <Link href="/books/5">
-                      <button className="mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md font-extrabold text-sm shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -312,7 +312,7 @@ const HeroSection = () => {
               </div>
               
               {/* Book 6 - Fashion Accessories (Purple) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-purple-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book6/cover.png" 
@@ -324,10 +324,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-purple-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-purple-800">VISUAL ENGLISH</h3>
                     <p className="text-purple-700 font-medium">BOOK 6</p>
                     <Link href="/books/6">
-                      <button className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -337,7 +337,7 @@ const HeroSection = () => {
               </div>
               
               {/* Book 7 - Social Problems (Gray) */}
-              <div className="transform transition-all duration-300 hover:scale-105">
+              <div className="">
                 <div className="bg-gray-100 rounded-xl overflow-hidden shadow-md">
                   <img 
                     src="/api/content/book7/cover.png" 
@@ -349,10 +349,10 @@ const HeroSection = () => {
                     }}
                   />
                   <div className="p-4 text-center">
-                    <h3 className="font-bold text-gray-800">VISUAL ENGLISH</h3>
+                    <h3 className="font-extrabold text-gray-800">VISUAL ENGLISH</h3>
                     <p className="text-gray-700 font-medium">BOOK 7</p>
                     <Link href="/books/7">
-                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md">
+                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
                         View Units
                       </button>
                     </Link>
@@ -365,7 +365,7 @@ const HeroSection = () => {
           
           <div className="text-center mt-12">
             <Link href="/books">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-10 py-5 text-xl font-bold rounded-lg shadow-xl transform transition-all duration-300 hover:scale-105">
+              <Button className="bg-green-600 hover:bg-green-700 text-white px-10 py-5 text-xl font-extrabold rounded-lg shadow-xl">
                 View All Books
               </Button>
             </Link>
