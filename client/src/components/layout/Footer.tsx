@@ -134,6 +134,12 @@ const Footer = () => {
               Więcej informacji na temat przetwarzania danych osobowych znajdziesz w naszej{" "}
               <Link href="/privacy" className="text-blue-400 hover:underline">
                 Polityce Prywatności
+              </Link>, {" "}
+              <Link href="/cookies" className="text-blue-400 hover:underline">
+                Polityce Cookies
+              </Link>, {" "}
+              <Link href="/withdrawal" className="text-blue-400 hover:underline">
+                Prawie odstąpienia
               </Link>{" "}
               oraz{" "}
               <Link href="/terms" className="text-blue-400 hover:underline">

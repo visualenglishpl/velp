@@ -12,6 +12,10 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
+import CookiesPage from "./pages/CookiesPage";
+import WithdrawalPage from "./pages/WithdrawalPage";
+import DpaPage from "./pages/DpaPage";
+import CookieConsent from "./components/CookieConsent";
 
 function App() {
   console.log('Rendering full home page with layout');
@@ -48,9 +52,19 @@ function App() {
           <Route path="/terms">
             <TermsPage />
           </Route>
+          <Route path="/cookies">
+            <CookiesPage />
+          </Route>
+          <Route path="/withdrawal">
+            <WithdrawalPage />
+          </Route>
+          <Route path="/dpa">
+            <DpaPage />
+          </Route>
         </Switch>
       </main>
       <Footer />
+      <CookieConsent />
       <Toaster />
     </div>
   );
