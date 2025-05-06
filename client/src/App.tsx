@@ -23,6 +23,7 @@ function App() {
           <Route path="/books/:bookId" component={UnitsPage} />
           <Route path="/admin" component={AdminPage} />
           <Route path="/method" component={MethodPage} />
+          <Route path="/about" component={AboutPage} />
         </Switch>
       </main>
       <Footer />
