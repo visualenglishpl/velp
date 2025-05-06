@@ -61,14 +61,14 @@ export const games: TeacherResource[] = [
     id: `book4-unit${unitNumber}-game-2`,
     bookId: '4',
     unitId: unitNumber,
-    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - COLLECTING THINGS`,
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - COLLECTIONS MATCH`,
     resourceType: 'game',
-    provider: 'Kahoot',
-    sourceUrl: 'https://create.kahoot.it/share/collecting-things/cde5c17a-250c-4764-be4a-cadc750ce300',
-    embedCode: '<iframe src="https://create.kahoot.it/share/collecting-things/cde5c17a-250c-4764-be4a-cadc750ce300" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
+    provider: 'Wordwall',
+    sourceUrl: 'https://wordwall.net/resource/9e68b7e80cce4a9d9e2fe2cca1f24bd9',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9e68b7e80cce4a9d9e2fe2cca1f24bd9?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
-      type: 'external',
-      embedUrl: 'https://create.kahoot.it/share/collecting-things/cde5c17a-250c-4764-be4a-cadc750ce300'
+      type: 'wordwall',
+      embedUrl: 'https://wordwall.net/embed/9e68b7e80cce4a9d9e2fe2cca1f24bd9?themeId=1&templateId=38&fontStackId=0'
     }
   }
 ];

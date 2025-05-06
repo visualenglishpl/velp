@@ -1,60 +1,167 @@
 /**
- * Implementation for Book 4 Unit 11 - Shopping
+ * Visual English Book 4, Unit 11 - SHOPPING
+ * Implementation file for unit resources and lesson plans
  * 
- * This file contains the implementation logic for Book 4 Unit 11 content,
- * including Q&A mappings and teaching resources.
+ * This unit follows the standardized pattern with clear separation of
+ * resources and implementation logic
  */
 
-import { BookUnit } from '../types/book-content';
-import { LessonPlan, TeacherResource } from '@/types/teacher-resources';
-import { getResources, getLessonPlans as getResourceLessonPlans } from './book4-unit11-resources';
+import { TeacherResource } from '@/components/TeacherResources';
+import { LessonPlan } from '@/components/LessonPlanTemplate';
+import { resources } from './book4-unit11-resources';
+import { BOOK4_TITLE } from './book4-resources-common';
 
-/**
- * Convert legacy lesson plan format to the new LessonPlan format
- * @param resource Teacher resource containing a legacy lesson plan
- * @returns A properly formatted LessonPlan object
- */
-export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
-  if (!resource.lessonPlan) {
-    return {
-      id: `${resource.id}-plan`,
-      title: resource.title,
+// Flag for showing blank for unmapped Q&A
+export const showBlankIfUnmapped = true;
+
+// Function to get resources for this unit (for backward compatibility)
+export function getBook4Unit11Resources(): TeacherResource[] {
+  return resources;
+}
+
+// Generate lesson plans for this unit based on standard template
+export function generateBook4Unit11LessonPlans(): LessonPlan[] {
+  const unitNumber = '11';
+  const unitTitle = 'SHOPPING';
+  
+  return [
+    {
+      id: `book4-unit${unitNumber}-lesson-1`,
+      title: `${BOOK4_TITLE} - Unit ${unitNumber} - ${unitTitle} - Lesson 1`,
       duration: '45 minutes',
-      level: 'Book 4',
-      objectives: [],
-      materials: [],
-      steps: [],
-    };
-  }
-  return resource.lessonPlan;
-}
+      level: 'Elementary to Pre-Intermediate',
+      objectives: [
+        'Students will learn essential shopping vocabulary',
+        'Students will identify common items found in shops',
+        'Students will practice asking about prices and availability'
+      ],
+      materials: ['Shopping vocabulary flashcards', 'Price tag cards', 'Store catalogs or flyers'],
+      steps: [
+        {
+          title: 'Warm-up',
+          duration: '5 minutes',
+          description: 'Begin with a discussion about shopping experiences',
+          instructions: ['Ask students where they like to shop', 'Discuss what kinds of shops they visit regularly']
+        },
+        {
+          title: 'Vocabulary Introduction',
+          duration: '10 minutes',
+          description: 'Present essential shopping vocabulary with visual aids',
+          materials: ['Shopping vocabulary flashcards'],
+          instructions: [
+            'Show pictures of different shops and items',
+            'Have students repeat new words and match them to images',
+            'Watch the Shopping Vocabulary video'
+          ]
+        },
+        {
+          title: 'Price Inquiry Practice',
+          duration: '15 minutes',
+          description: 'Practice asking and answering about prices',
+          materials: ['Price tag cards'],
+          instructions: [
+            'Demonstrate phrases like "How much is this?" and "How much does it cost?"',
+            'Distribute price tag cards to students',
+            'Have students practice asking and answering about prices in pairs'
+          ]
+        },
+        {
+          title: 'Shopping Role Play',
+          duration: '10 minutes',
+          description: 'Simulate shopping conversations',
+          materials: ['Store catalogs or flyers'],
+          instructions: [
+            'Divide class into pairs - customer and shop assistant',
+            'Distribute store catalogs for reference',
+            'Have students role-play shopping conversations'
+          ]
+        },
+        {
+          title: 'Interactive Game',
+          duration: '5 minutes',
+          description: 'Review shopping vocabulary with interactive game',
+          instructions: [
+            'Play the Shopping Vocabulary Wordwall game',
+            'Discuss any challenging vocabulary'
+          ]
+        }
+      ],
+      assessmentTips: 'Evaluate students\' ability to use shopping vocabulary and phrases in role-play activities',
+      homeworkIdeas: ['Create a shopping list in English', 'Write a short dialogue in a shop']
+    },
+    {
+      id: `book4-unit${unitNumber}-lesson-2`,
+      title: `${BOOK4_TITLE} - Unit ${unitNumber} - ${unitTitle} - Lesson 2`,
+      duration: '45 minutes',
+      level: 'Elementary to Pre-Intermediate',
+      objectives: [
+        'Students will learn vocabulary related to supermarket shopping',
+        'Students will understand how to ask for help in a shop',
+        'Students will practice shopping conversation patterns'
+      ],
+      materials: ['Supermarket section flashcards', 'Shopping conversation worksheets', 'Product packaging or pictures'],
+      steps: [
+        {
+          title: 'Supermarket Introduction',
+          duration: '5 minutes',
+          description: 'Discuss supermarket shopping and organization',
+          instructions: ['Ask students how supermarkets are organized', 'Discuss different sections of a supermarket']
+        },
+        {
+          title: 'Supermarket Sections Vocabulary',
+          duration: '10 minutes',
+          description: 'Introduce vocabulary related to supermarket sections and products',
+          materials: ['Supermarket section flashcards'],
+          instructions: [
+            'Present vocabulary for supermarket sections: produce, dairy, bakery, etc.',
+            'Match products to their correct sections',
+            'Watch the At the Supermarket video'
+          ]
+        },
+        {
+          title: 'Asking for Help Practice',
+          duration: '10 minutes',
+          description: 'Practice phrases for asking for assistance in shops',
+          materials: ['Shopping conversation worksheets'],
+          instructions: [
+            'Teach phrases like "Excuse me, where can I find...?" and "Do you have...?"',
+            'Have students practice asking for help finding specific items',
+            'Discuss polite expressions to use when shopping'
+          ]
+        },
+        {
+          title: 'Product Description Activity',
+          duration: '15 minutes',
+          description: 'Practice describing products and comparing options',
+          materials: ['Product packaging or pictures'],
+          instructions: [
+            'Show examples of similar products with different features',
+            'Teach comparative language for shopping: cheaper, more expensive, larger, etc.',
+            'Have students describe and compare products in pairs'
+          ]
+        },
+        {
+          title: 'Interactive Activity',
+          duration: '5 minutes',
+          description: 'Practice shopping conversation patterns',
+          instructions: [
+            'Play the Shopping Conversation Wordwall game',
+            'Review key phrases and vocabulary from the lesson'
+          ]
+        }
+      ],
+      assessmentTips: 'Evaluate students\' ability to navigate shopping conversations and compare products',
+      homeworkIdeas: ['Create a map of a supermarket with labeled sections', 'Write a conversation asking for help in a shop']
+    }
+  ];
+};
 
-/**
- * Get teacher resources for Book 4 Unit 11
- * @returns Array of teacher resources
- */
-export function getTeacherResources(): TeacherResource[] {
-  return getResources();
-}
+// Generate lesson plans for this unit
+const lessonPlans = generateBook4Unit11LessonPlans();
 
-/**
- * Get lesson plans for Book 4 Unit 11
- * @returns Array of teacher resources with lesson plans
- */
-export function getUnitLessonPlans(): TeacherResource[] {
-  return getResourceLessonPlans();
-}
+// Direct exports for consistent importing
+export const unitResources = resources;
+export { lessonPlans };
 
-/**
- * Get unit configuration for Book 4 Unit 11
- * @returns BookUnit configuration object
- */
-export function getUnitConfig(): BookUnit {
-  return {
-    id: '11',
-    bookId: '4',
-    title: 'SHOPPING',
-    description: 'Learn vocabulary and expressions related to shopping and consumer interactions.',
-    tags: ['shopping', 'retail', 'money', 'consumer']
-  };
-}
+// Getter functions for backward compatibility
+export const getBook4Unit11LessonPlans = (): LessonPlan[] => lessonPlans;

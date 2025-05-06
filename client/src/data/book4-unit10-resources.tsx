@@ -15,39 +15,31 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-1`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Introduction to Digital Technology',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Introduction to Digital Technology`,
     description: 'Learn about modern digital technology',
     resourceType: 'video',
-    categories: ['tutorial'],
-    tags: ['technology', 'digital', 'computers'],
-    difficulty: 'beginner',
-    ageGroup: 'all',
     provider: 'YouTube',
-    dateAdded: '2023-09-10',
+    sourceUrl: 'https://www.youtube.com/watch?v=krJkRJ4Lok4',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/krJkRJ4Lok4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
     content: {
       type: 'youtube',
-      embedId: 'placeholder'
-    },
-    thumbnailUrl: 'https://img.youtube.com/vi/placeholder/mqdefault.jpg'
+      embedId: 'krJkRJ4Lok4'
+    }
   },
   {
     id: `book4-unit${unitNumber}-video-2`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Using Digital Communication Tools',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Digital Communication Tools`,
     description: 'An overview of common digital communication tools and their uses',
     resourceType: 'video',
-    categories: ['tutorial'],
-    tags: ['technology', 'communication', 'digital'],
-    difficulty: 'beginner',
-    ageGroup: 'all',
     provider: 'YouTube',
-    dateAdded: '2023-09-12',
+    sourceUrl: 'https://www.youtube.com/watch?v=s6IbZYwjAcE',
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/s6IbZYwjAcE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
     content: {
       type: 'youtube',
-      embedId: 'placeholder'
-    },
-    thumbnailUrl: 'https://img.youtube.com/vi/placeholder/mqdefault.jpg'
+      embedId: 's6IbZYwjAcE'
+    }
   }
 ];
 
@@ -57,39 +49,31 @@ export const games: TeacherResource[] = [
     id: `book4-unit${unitNumber}-game-1`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Digital Technology Vocabulary Game',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Technology Vocabulary`,
     description: 'Interactive game to practice vocabulary related to digital technology',
     resourceType: 'game',
-    categories: ['activity', 'exercise'],
-    tags: ['technology', 'computers', 'vocabulary'],
-    difficulty: 'beginner',
-    ageGroup: 'all',
     provider: 'Wordwall',
-    dateAdded: '2023-09-15',
+    sourceUrl: 'https://wordwall.net/resource/6a45d9da12e948cca233bcc23a0edf59',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6a45d9da12e948cca233bcc23a0edf59?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
       type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/placeholder'
-    },
-    thumbnailUrl: 'https://www.wordwall.net/apple-touch-icon.png'
+      embedUrl: 'https://wordwall.net/embed/6a45d9da12e948cca233bcc23a0edf59?themeId=1&templateId=3&fontStackId=0'
+    }
   },
   {
     id: `book4-unit${unitNumber}-game-2`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Digital Communication Matching Game',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Digital Communication Matching`,
     description: 'Match digital communication tools with their functions',
     resourceType: 'game',
-    categories: ['activity', 'exercise'],
-    tags: ['communications', 'email', 'social media'],
-    difficulty: 'beginner',
-    ageGroup: 'all',
     provider: 'Wordwall',
-    dateAdded: '2023-09-18',
+    sourceUrl: 'https://wordwall.net/resource/8e1de0c8d90e478c9bbceac70e15f6e1',
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/8e1de0c8d90e478c9bbceac70e15f6e1?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
       type: 'wordwall',
-      embedUrl: 'https://wordwall.net/embed/placeholder'
-    },
-    thumbnailUrl: 'https://www.wordwall.net/apple-touch-icon.png'
+      embedUrl: 'https://wordwall.net/embed/8e1de0c8d90e478c9bbceac70e15f6e1?themeId=1&templateId=5&fontStackId=0'
+    }
   }
 ];
 

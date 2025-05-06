@@ -15,7 +15,7 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-1`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Circus Song for Kids',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Circus Song for Kids`,
     description: 'Fun song introducing circus vocabulary and performers',
     resourceType: 'video',
     provider: 'YouTube',
@@ -30,7 +30,7 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-2`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Circus Vocabulary Video',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Circus Vocabulary Video`,
     description: 'Educational video teaching circus-related vocabulary',
     resourceType: 'video',
     provider: 'ISL Collective',
@@ -49,14 +49,14 @@ export const games: TeacherResource[] = [
     id: `book4-unit${unitNumber}-game-1`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Circus Vocabulary Game',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Circus Vocabulary Game`,
     description: 'Interactive game to practice circus vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/94c4f083575e4321bd59f57bc024dbd3',
     embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/94c4f083575e4321bd59f57bc024dbd3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
-      type: 'iframe',
+      type: 'wordwall',
       embedUrl: 'https://wordwall.net/embed/94c4f083575e4321bd59f57bc024dbd3?themeId=1&templateId=3&fontStackId=0'
     }
   },
@@ -64,14 +64,14 @@ export const games: TeacherResource[] = [
     id: `book4-unit${unitNumber}-game-2`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Circus Vocabulary Match',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Circus Vocabulary Match`,
     description: 'Match circus-related words with their pictures',
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/6c0d9d6d5b1d40b78d0d23df4539e1e1',
     embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/6c0d9d6d5b1d40b78d0d23df4539e1e1?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
-      type: 'iframe',
+      type: 'wordwall',
       embedUrl: 'https://wordwall.net/embed/6c0d9d6d5b1d40b78d0d23df4539e1e1?themeId=1&templateId=3&fontStackId=0'
     }
   },
@@ -79,46 +79,35 @@ export const games: TeacherResource[] = [
     id: `book4-unit${unitNumber}-game-3`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Circus Animals Game',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Circus Animals Game`,
     description: 'Learn about animals commonly found in the circus',
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/1c724495ff684609895ed535379cbec0',
     embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/1c724495ff684609895ed535379cbec0?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
-      type: 'iframe',
+      type: 'wordwall',
       embedUrl: 'https://wordwall.net/embed/1c724495ff684609895ed535379cbec0?themeId=1&templateId=3&fontStackId=0'
     }
   }
 ];
 
-// Lesson plans for this unit
-export const lessonPlans: TeacherResource[] = [];
-
-// Combine all resources for this unit
+// Combine all resources for the unit
 export const resources: TeacherResource[] = [...videos, ...games];
+
+// Direct exports for consistent importing
+export default resources;
+
+/**
+ * Get all resources for Book 4 Unit 15
+ * @returns Array of teacher resources
+ */
+export function getBook4Unit15Resources(): TeacherResource[] {
+  return resources;
+}
 
 // VideoResources for verification script
 export const VideoResources = videos;
 
 // GameResources for verification script
 export const GameResources = games;
-
-/**
- * Get all resources for this unit
- * @returns Array of teacher resources
- */
-export function getResources(): TeacherResource[] {
-  return resources;
-}
-
-/**
- * Get lesson plans for this unit
- * @returns Array of lesson plan resources
- */
-export function getLessonPlans(): TeacherResource[] {
-  return lessonPlans;
-}
-
-// Default export for backward compatibility
-export default resources;

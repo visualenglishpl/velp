@@ -15,7 +15,7 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-1`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Old MacDonald Had A Farm',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Old MacDonald Had A Farm`,
     description: 'Classic children\'s song about farm animals and the sounds they make',
     resourceType: 'video',
     provider: 'YouTube',
@@ -30,7 +30,7 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-2`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Farm Animals and Their Sounds',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Farm Animals and Their Sounds`,
     description: 'Learn about different farm animals and the sounds they make',
     resourceType: 'video',
     provider: 'YouTube',
@@ -45,7 +45,7 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-3`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Farm Animals for Kids',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Farm Animals for Kids`,
     description: 'Educational video teaching children about different farm animals',
     resourceType: 'video',
     provider: 'YouTube',
@@ -60,7 +60,7 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-4`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'A Day at the Farm',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - A Day at the Farm`,
     description: 'Learn about daily activities and routines on a farm',
     resourceType: 'video',
     provider: 'YouTube',
@@ -75,7 +75,7 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-5`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Farm Animals Song',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Farm Animals Song`,
     description: 'Fun song teaching children about farm animals',
     resourceType: 'video',
     provider: 'YouTube',
@@ -90,7 +90,7 @@ export const videos: TeacherResource[] = [
     id: `book4-unit${unitNumber}-video-6`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Farm Animals Vocabulary',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Farm Animals Vocabulary`,
     description: 'Learn English vocabulary related to farm animals',
     resourceType: 'video',
     provider: 'ISL Collective',
@@ -109,14 +109,14 @@ export const games: TeacherResource[] = [
     id: `book4-unit${unitNumber}-game-1`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Farm Animals Game',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Farm Animals Game`,
     description: 'Interactive game to practice farm animal vocabulary',
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/9ac6bf8c618248c894a6ffaf6747f79f',
     embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/9ac6bf8c618248c894a6ffaf6747f79f?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
-      type: 'iframe',
+      type: 'wordwall',
       embedUrl: 'https://wordwall.net/embed/9ac6bf8c618248c894a6ffaf6747f79f?themeId=1&templateId=46&fontStackId=0'
     }
   },
@@ -124,14 +124,14 @@ export const games: TeacherResource[] = [
     id: `book4-unit${unitNumber}-game-2`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Farm Animals Match',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Farm Animals Match`,
     description: 'Match farm animals with their pictures',
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/c4c0f4a82d1e4fafa10a6cad72b201be',
     embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/c4c0f4a82d1e4fafa10a6cad72b201be?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
-      type: 'iframe',
+      type: 'wordwall',
       embedUrl: 'https://wordwall.net/embed/c4c0f4a82d1e4fafa10a6cad72b201be?themeId=1&templateId=46&fontStackId=0'
     }
   },
@@ -139,46 +139,29 @@ export const games: TeacherResource[] = [
     id: `book4-unit${unitNumber}-game-3`,
     bookId: '4',
     unitId: unitNumber,
-    title: 'Farm Animals Verbs',
+    title: `${BOOK4_TITLE} - UNIT ${unitNumber} - ${unitTitle} - Farm Animals Verbs`,
     description: 'Learn verbs associated with farm animals',
     resourceType: 'game',
     provider: 'Wordwall',
     sourceUrl: 'https://wordwall.net/resource/cdbb6e247e6049c0a53ab06a8ede7a00',
     embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/cdbb6e247e6049c0a53ab06a8ede7a00?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>',
     content: {
-      type: 'iframe',
+      type: 'wordwall',
       embedUrl: 'https://wordwall.net/embed/cdbb6e247e6049c0a53ab06a8ede7a00?themeId=1&templateId=5&fontStackId=0'
     }
   }
 ];
 
-// Lesson plans for this unit
-export const lessonPlans: TeacherResource[] = [];
-
-// Combine all resources for this unit
+// Combine all resources for the unit
 export const resources: TeacherResource[] = [...videos, ...games];
 
-// VideoResources for verification script
-export const VideoResources = videos;
-
-// GameResources for verification script
-export const GameResources = games;
+// Direct exports for consistent importing
+export default resources;
 
 /**
- * Get all resources for this unit
+ * Get all resources for Book 4 Unit 12
  * @returns Array of teacher resources
  */
-export function getResources(): TeacherResource[] {
+export function getBook4Unit12Resources(): TeacherResource[] {
   return resources;
 }
-
-/**
- * Get lesson plans for this unit
- * @returns Array of lesson plan resources
- */
-export function getLessonPlans(): TeacherResource[] {
-  return lessonPlans;
-}
-
-// Default export for backward compatibility
-export default resources;
