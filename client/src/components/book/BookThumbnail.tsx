@@ -101,17 +101,20 @@ const BookThumbnail = ({
     <div className="">
       <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md`}>
         <div>
-          {/* Book cover image */}
-          <img 
-            src={`/api/direct/content/book${bookId}/cover.png`} 
-            alt={`Book ${formattedBookId}`} 
-            className="w-full h-auto" 
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              // Fallback to static cover if GIFs aren't available
-              console.log(`Falling back to regular cover for book ${bookId}`);
-            }}
-          />
+          {/* Book cover image with color background fallback */}
+          <div className="relative flex items-center justify-center h-40 md:h-52 w-full overflow-hidden">
+            <img 
+              src={`/api/direct/content/book${bookId}/cover.png`} 
+              alt={`Book ${formattedBookId}`} 
+              className="w-full h-auto"
+            />
+            {/* Colored background for the book */}
+            <div className={`absolute inset-0 ${bgColorClass} opacity-25`}></div>
+            {/* Book number watermark */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <div className={`text-5xl font-black ${subTextColorClass} opacity-30`}>{formattedBookId}</div>
+            </div>
+          </div>
         </div>
         
         <div className="p-4 text-center">

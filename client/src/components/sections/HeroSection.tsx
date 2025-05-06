@@ -72,7 +72,7 @@ const HeroSection = () => {
               </div>
               <h3 className="text-xl font-extrabold mb-4 text-rose-600">Real conversation practice</h3>
               <p className="text-gray-600">
-                Practical dialogue scenarios prepare students for real-world language use from day one.
+                Non-stop engaging conversation for real-world language use from day one.
               </p>
             </div>
             
