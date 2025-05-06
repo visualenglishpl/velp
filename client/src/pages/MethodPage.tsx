@@ -34,17 +34,17 @@ export default function MethodPage() {
 
             <div className="space-y-6 max-w-4xl mx-auto">
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">🎯 1. Visual-Based Learning</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2"><span className="inline-block transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 1px 2px rgba(0,0,0,0.2)", filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.1))" }}>🎯</span> 1. Visual-Based Learning</h3>
                 <p className="text-gray-700">Each unit includes 200–300 vibrant images, making English lessons memorable, interactive, and age-appropriate.</p>
               </div>
 
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">🗣️ 2. Conversation-Driven Approach</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2"><span className="inline-block transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 1px 2px rgba(0,0,0,0.2)", filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.1))" }}>🗣️</span> 2. Conversation-Driven Approach</h3>
                 <p className="text-gray-700">Lessons are centered on real spoken interaction using structured questions and prompts tied directly to visuals.</p>
               </div>
 
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">⏱️ 3. Minimal Prep for Teachers</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2"><span className="inline-block transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 1px 2px rgba(0,0,0,0.2)", filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.1))" }}>⏱️</span> 3. Minimal Prep for Teachers</h3>
                 <p className="text-gray-700">Our materials are fully prepared — just open the book and start teaching. Perfect for busy educators.</p>
               </div>
             </div>
@@ -55,7 +55,7 @@ export default function MethodPage() {
         <section className="py-12 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-              👩‍🏫 4. Age-Specific Content
+              <span className="inline-block transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.2)", filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.15))" }}>👩‍🏫</span> 4. Age-Specific Content
             </h2>
             
             <div className="grid md:grid-cols-3 gap-8">
@@ -101,27 +101,27 @@ export default function MethodPage() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
               <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center text-center">
-                <div className="text-3xl mb-3">📸</div>
+                <div className="text-4xl mb-3 transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.2)" }}>📸</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">200–300 images per unit</h3>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center text-center">
-                <div className="text-3xl mb-3">🧠</div>
+                <div className="text-4xl mb-3 transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.2)", filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.15))" }}>🧠</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Structured questions for better retention</h3>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center text-center">
-                <div className="text-3xl mb-3">🧑‍🏫</div>
+                <div className="text-4xl mb-3 transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.2)", filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.15))" }}>🧑‍🏫</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">10 ready-made books</h3>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center text-center">
-                <div className="text-3xl mb-3">📽️</div>
+                <div className="text-4xl mb-3 transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.2)", filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.15))" }}>📽️</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Visuals, GIFs, and video content</h3>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center text-center">
-                <div className="text-3xl mb-3">🔁</div>
+                <div className="text-4xl mb-3 transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.2)", filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.15))" }}>🔁</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Direct method: teaching through speaking</h3>
               </div>
             </div>
