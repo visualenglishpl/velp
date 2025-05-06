@@ -45,6 +45,7 @@ export default function CheckoutPage() {
   // Get plan ID from params or cart
   const planId = params.planId || 'default';
   const [selectedBookPurchaseType, setSelectedBookPurchaseType] = useState('physical');
+  const [subscriptionPeriod, setSubscriptionPeriod] = useState('monthly');
 
   // Function to add digital book access to cart
   const addDigitalAccessToCart = (bookId: string) => {
@@ -65,12 +66,17 @@ export default function CheckoutPage() {
           ? bookId.replace(/^0([a-c])$/, "0$1").toUpperCase() 
           : bookId;
           
+        const isYearly = subscriptionPeriod === 'yearly';
+        const price = isYearly ? 180 : 25;
+        const period = isYearly ? 'year' : 'month';
+        
         const newItem = {
-          id: `digital-access-${bookId}`,
+          id: `digital-access-${bookId}-${subscriptionPeriod}`,
           type: 'digital_access',
           bookId,
-          title: `Full Digital Access - Book ${formattedBookId}`,
-          price: 25,
+          subscriptionPeriod,
+          title: `Full Digital Access - Book ${formattedBookId} (${isYearly ? 'Yearly' : 'Monthly'})`,
+          price,
         };
         
         cart.push(newItem);
@@ -81,7 +87,7 @@ export default function CheckoutPage() {
         
         toast({
           title: 'Digital access added to cart',
-          description: `Full digital access for Book ${formattedBookId} has been added to your cart.`,
+          description: `${isYearly ? 'Yearly' : 'Monthly'} digital access for Book ${formattedBookId} has been added to your cart (€${price}/${period}).`,
         });
       } else {
         toast({
@@ -331,7 +337,7 @@ export default function CheckoutPage() {
                       >
                         <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
                           <img 
-                            src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
+                            src={`/api/direct/content/icons/VISUAL ${book.id}${book.id === '3' ? ' ' : ''}.gif`}
                             alt={book.name}
                             className="w-full aspect-square object-cover"
                           />
@@ -350,6 +356,40 @@ export default function CheckoutPage() {
               <TabsContent value="digital" className="pt-4">
                 <div className="text-sm text-gray-600 mb-4">
                   Get full digital access to our books - instant online access to all materials
+                </div>
+                
+                <div className="flex items-center justify-center space-x-4 mb-6 bg-gray-50 p-3 rounded-md">
+                  <div 
+                    className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all ${subscriptionPeriod === 'monthly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
+                    onClick={() => setSubscriptionPeriod('monthly')}
+                  >
+                    <input 
+                      type="radio" 
+                      id="monthly" 
+                      className="mr-2" 
+                      checked={subscriptionPeriod === 'monthly'} 
+                      onChange={() => setSubscriptionPeriod('monthly')}
+                    />
+                    <label htmlFor="monthly" className="cursor-pointer">
+                      Monthly (€25/month)
+                    </label>
+                  </div>
+                  
+                  <div 
+                    className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all ${subscriptionPeriod === 'yearly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
+                    onClick={() => setSubscriptionPeriod('yearly')}
+                  >
+                    <input 
+                      type="radio" 
+                      id="yearly" 
+                      className="mr-2" 
+                      checked={subscriptionPeriod === 'yearly'} 
+                      onChange={() => setSubscriptionPeriod('yearly')}
+                    />
+                    <label htmlFor="yearly" className="cursor-pointer">
+                      Yearly (€180/year - 40% savings)
+                    </label>
+                  </div>
                 </div>
                 
                 <div className="mb-4">
@@ -373,13 +413,13 @@ export default function CheckoutPage() {
                       >
                         <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
                           <img 
-                            src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
+                            src={`/api/direct/content/icons/VISUAL ${book.id}${book.id === '3' ? ' ' : ''}.gif`}
                             alt={book.name}
                             className="w-full aspect-square object-cover"
                           />
                           <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
                             <BookOpen size={10} className="mr-1" />
-                            Full Access (€25)
+                            Full Access (€{subscriptionPeriod === 'yearly' ? '180/year' : '25/month'})
                           </div>
                         </div>
                         <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
@@ -534,7 +574,7 @@ export default function CheckoutPage() {
                             <div className="flex items-center">
                               <div className="w-8 h-8 relative overflow-hidden rounded mr-2">
                                 <img 
-                                  src={`/api/direct/content/icons/VISUAL ${item.bookId}.gif`}
+                                  src={`/api/direct/content/icons/VISUAL ${item.bookId}${item.bookId === '3' ? ' ' : ''}.gif`}
                                   alt={item.title}
                                   className="object-cover w-full h-full"
                                 />
