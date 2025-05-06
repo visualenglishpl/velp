@@ -1,229 +1,225 @@
-import { useState, useEffect } from 'react';
-import { X, Check, Settings } from 'lucide-react';
-import { Link } from 'wouter';
-import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
+import { useState, useEffect } from "react";
+import { Link } from "wouter";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogFooter, 
+  DialogHeader, 
+  DialogTitle 
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useToast } from "@/hooks/use-toast";
 
-export default function CookieConsent() {
-  // Define cookie consent state with three types of cookies
-  const [consent, setConsent] = useState<{
-    necessary: boolean;
-    analytics: boolean;
-    marketing: boolean;
-    preference: boolean;
-  }>({
+interface CookiePreferences {
+  necessary: boolean;
+  functional: boolean;
+  analytics: boolean;
+  marketing: boolean;
+}
+
+const CookieConsent = () => {
+  const [open, setOpen] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
+  const { toast } = useToast();
+  
+  const [preferences, setPreferences] = useState<CookiePreferences>({
     necessary: true, // Always required
+    functional: false,
     analytics: false,
     marketing: false,
-    preference: false,
   });
-  
-  // State to control the visibility of the banner
-  const [isVisible, setIsVisible] = useState(false);
-  // State to control the open/closed state of the customization dialog
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
-  // Check if user has already provided consent on component mount
+
   useEffect(() => {
-    const savedConsent = localStorage.getItem('cookieConsent');
-    if (!savedConsent) {
-      // If no consent found, show the banner
-      setIsVisible(true);
+    // Check if consent has been given before
+    const consentGiven = localStorage.getItem("cookieConsentGiven");
+    if (!consentGiven) {
+      // If not, show the cookie consent banner
+      setShowBanner(true);
     } else {
-      // If consent found, parse it and update state
+      // Load saved preferences
       try {
-        const parsedConsent = JSON.parse(savedConsent);
-        setConsent(parsedConsent);
+        const savedPreferences = JSON.parse(localStorage.getItem("cookiePreferences") || "{}");
+        setPreferences({
+          ...preferences,
+          ...savedPreferences,
+        });
       } catch (e) {
-        // If parsing fails, show the banner
-        setIsVisible(true);
+        console.error("Failed to parse saved cookie preferences");
       }
     }
   }, []);
-  
-  // Function to save consent to localStorage
-  const saveConsent = (newConsent: typeof consent) => {
-    localStorage.setItem('cookieConsent', JSON.stringify(newConsent));
-    setConsent(newConsent);
-    setIsVisible(false);
-    setIsDialogOpen(false);
+
+  const savePreferences = () => {
+    localStorage.setItem("cookieConsentGiven", "true");
+    localStorage.setItem("cookiePreferences", JSON.stringify(preferences));
+    setShowBanner(false);
+    setOpen(false);
+    
+    toast({
+      title: "Ustawienia plików cookie zapisane",
+      description: "Twoje preferencje dotyczące plików cookie zostały zapisane.",
+    });
   };
-  
-  // Handler for accepting all cookies
-  const handleAcceptAll = () => {
-    const allConsent = {
+
+  const acceptAll = () => {
+    const allEnabled = {
       necessary: true,
+      functional: true,
       analytics: true,
       marketing: true,
-      preference: true,
     };
-    saveConsent(allConsent);
+    setPreferences(allEnabled);
+    localStorage.setItem("cookieConsentGiven", "true");
+    localStorage.setItem("cookiePreferences", JSON.stringify(allEnabled));
+    setShowBanner(false);
+    
+    toast({
+      title: "Wszystkie pliki cookie zaakceptowane",
+      description: "Wszystkie kategorie plików cookie zostały zaakceptowane.",
+    });
   };
-  
-  // Handler for accepting only necessary cookies
-  const handleAcceptNecessary = () => {
-    const necessaryConsent = {
+
+  const rejectNonEssential = () => {
+    const essentialOnly = {
       necessary: true,
+      functional: false,
       analytics: false,
       marketing: false,
-      preference: false,
     };
-    saveConsent(necessaryConsent);
+    setPreferences(essentialOnly);
+    localStorage.setItem("cookieConsentGiven", "true");
+    localStorage.setItem("cookiePreferences", JSON.stringify(essentialOnly));
+    setShowBanner(false);
+    
+    toast({
+      title: "Tylko niezbędne pliki cookie zaakceptowane",
+      description: "Zaakceptowano tylko niezbędne pliki cookie.",
+    });
   };
-  
-  // Handler for saving custom cookie preferences
-  const handleSavePreferences = () => {
-    saveConsent(consent);
+
+  const handlePreferenceChange = (key: keyof CookiePreferences) => {
+    if (key === 'necessary') return; // Can't change necessary cookies
+    
+    setPreferences(prev => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
   };
-  
-  // Handler for cookie preference changes
-  const handleConsentChange = (type: keyof typeof consent) => {
-    if (type === 'necessary') return; // Cannot toggle necessary cookies
-    setConsent({ ...consent, [type]: !consent[type] });
+
+  const openSettings = () => {
+    setOpen(true);
+    setShowBanner(false);
   };
-  
-  // If banner is not visible, don't render anything
-  if (!isVisible) {
-    return null;
-  }
-  
+
   return (
     <>
-      {/* Main Cookie Consent Banner */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg p-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="flex-1">
-              <h3 className="text-lg font-medium text-gray-900">Polityka ciasteczek (Cookies)</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Ta strona używa ciasteczek, aby zapewnić najlepsze doświadczenia. Możesz dostosować swoje preferencje lub zaakceptować wszystkie ciasteczka.{' '}
-                <Link href="/cookies" className="underline text-blue-600 hover:text-blue-800">
-                  Dowiedz się więcej
-                </Link>
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsDialogOpen(true)}
-                className="whitespace-nowrap"
-              >
-                <Settings className="h-4 w-4 mr-2" />
-                Dostosuj
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleAcceptNecessary}
-                className="whitespace-nowrap"
-              >
-                Tylko niezbędne
-              </Button>
-              <Button
-                size="sm"
-                onClick={handleAcceptAll}
-                className="whitespace-nowrap bg-blue-600 hover:bg-blue-700"
-              >
-                <Check className="h-4 w-4 mr-2" />
-                Akceptuję wszystkie
-              </Button>
+      {/* Cookie Banner */}
+      {showBanner && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white border-t border-gray-200 shadow-md">
+          <div className="container mx-auto max-w-7xl">
+            <div className="grid gap-4 md:grid-cols-[2fr_1fr]">
+              <div>
+                <h2 className="text-lg font-semibold mb-2">Szanujemy Twoją prywatność</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                  Używamy plików cookie, aby zapewnić najlepsze doświadczenia na naszej stronie, dostosować treści i reklamy oraz analizować ruch na stronie. Przeczytaj naszą{" "}
+                  <Link href="/cookies" className="text-blue-600 hover:underline">
+                    Politykę Cookies
+                  </Link>{" "}
+                  i{" "}
+                  <Link href="/privacy" className="text-blue-600 hover:underline">
+                    Politykę Prywatności
+                  </Link>, aby dowiedzieć się więcej.
+                </p>
+              </div>
+              <div className="flex items-end justify-end gap-2 flex-wrap">
+                <Button variant="outline" onClick={rejectNonEssential}>
+                  Tylko niezbędne
+                </Button>
+                <Button variant="outline" onClick={openSettings}>
+                  Ustawienia
+                </Button>
+                <Button onClick={acceptAll}>
+                  Akceptuj wszystkie
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      {/* Cookie Preferences Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
+      )}
+
+      {/* Cookie Settings Dialog */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Ustawienia ciasteczek</DialogTitle>
+            <DialogTitle>Ustawienia plików cookie</DialogTitle>
             <DialogDescription>
-              Dostosuj swoje preferencje dotyczące ciasteczek. Ciasteczka niezbędne są zawsze włączone, ponieważ są konieczne do prawidłowego działania strony.
+              Wybierz, które rodzaje plików cookie chcesz zaakceptować. Twoja decyzja zostanie zapisana.
             </DialogDescription>
           </DialogHeader>
           
-          <div className="py-4 space-y-4">
-            <div className="flex items-start space-x-3 pt-2">
-              <Checkbox id="necessary" checked disabled />
-              <div>
-                <Label htmlFor="necessary" className="font-medium text-gray-900">
-                  Niezbędne ciasteczka
-                </Label>
-                <p className="text-sm text-gray-500">
-                  Te ciasteczka są niezbędne do prawidłowego funkcjonowania strony i nie mogą być wyłączone.
-                </p>
-              </div>
-            </div>
+          <div className="space-y-4 py-4">
+            <Alert>
+              <AlertDescription>
+                Niezbędne pliki cookie są zawsze włączone, ponieważ są konieczne, aby strona działała prawidłowo.
+              </AlertDescription>
+            </Alert>
             
-            <div className="flex items-start space-x-3 pt-2">
-              <Checkbox
-                id="analytics"
-                checked={consent.analytics}
-                onCheckedChange={() => handleConsentChange('analytics')}
-              />
-              <div>
-                <Label htmlFor="analytics" className="font-medium text-gray-900">
-                  Ciasteczka analityczne
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="necessary"
+                  checked={preferences.necessary}
+                  disabled
+                />
+                <Label htmlFor="necessary" className="text-sm font-medium">
+                  Niezbędne pliki cookie
                 </Label>
-                <p className="text-sm text-gray-500">
-                  Pomagają nam zrozumieć, w jaki sposób użytkownicy korzystają z naszej strony.
-                </p>
               </div>
-            </div>
-            
-            <div className="flex items-start space-x-3 pt-2">
-              <Checkbox
-                id="marketing"
-                checked={consent.marketing}
-                onCheckedChange={() => handleConsentChange('marketing')}
-              />
-              <div>
-                <Label htmlFor="marketing" className="font-medium text-gray-900">
-                  Ciasteczka marketingowe
+              
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="functional"
+                  checked={preferences.functional}
+                  onCheckedChange={() => handlePreferenceChange('functional')}
+                />
+                <Label htmlFor="functional" className="text-sm font-medium">
+                  Funkcjonalne pliki cookie
                 </Label>
-                <p className="text-sm text-gray-500">
-                  Używane do śledzenia odwiedzających na stronach internetowych w celu wyświetlania odpowiednich reklam.
-                </p>
               </div>
-            </div>
-            
-            <div className="flex items-start space-x-3 pt-2">
-              <Checkbox
-                id="preference"
-                checked={consent.preference}
-                onCheckedChange={() => handleConsentChange('preference')}
-              />
-              <div>
-                <Label htmlFor="preference" className="font-medium text-gray-900">
-                  Ciasteczka preferencji
+              
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="analytics"
+                  checked={preferences.analytics}
+                  onCheckedChange={() => handlePreferenceChange('analytics')}
+                />
+                <Label htmlFor="analytics" className="text-sm font-medium">
+                  Analityczne pliki cookie
                 </Label>
-                <p className="text-sm text-gray-500">
-                  Umożliwiają stronie zapamiętanie informacji, które zmieniają sposób, w jaki strona wygląda lub działa.
-                </p>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="marketing"
+                  checked={preferences.marketing}
+                  onCheckedChange={() => handlePreferenceChange('marketing')}
+                />
+                <Label htmlFor="marketing" className="text-sm font-medium">
+                  Marketingowe pliki cookie
+                </Label>
               </div>
             </div>
           </div>
           
           <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setIsDialogOpen(false)}
-            >
+            <Button variant="outline" onClick={() => setOpen(false)}>
               Anuluj
             </Button>
-            <Button type="button" onClick={handleSavePreferences}>
+            <Button onClick={savePreferences}>
               Zapisz preferencje
             </Button>
           </DialogFooter>
@@ -231,4 +227,6 @@ export default function CookieConsent() {
       </Dialog>
     </>
   );
-}
+};
+
+export default CookieConsent;

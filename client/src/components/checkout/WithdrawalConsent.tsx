@@ -1,59 +1,77 @@
-import { useState } from "react";
+import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link } from "wouter";
-import { InfoIcon } from "lucide-react";
 
 interface WithdrawalConsentProps {
+  checked: boolean;
   onChange: (checked: boolean) => void;
-  value: boolean;
+  language?: "pl" | "en";
 }
 
-const WithdrawalConsent = ({ onChange, value }: WithdrawalConsentProps) => {
-  const [showAlert, setShowAlert] = useState<boolean>(false);
-  
+const WithdrawalConsent: React.FC<WithdrawalConsentProps> = ({
+  checked,
+  onChange,
+  language = "pl", // Default to Polish
+}) => {
   return (
-    <div className="mt-6 space-y-4">
-      <div className="flex items-start space-x-3">
+    <div className="space-y-4 border-t pt-4 mt-4">
+      <div className="flex items-start space-x-2">
         <Checkbox 
           id="withdrawal-consent" 
-          checked={value}
-          onCheckedChange={(checked) => {
-            if (typeof checked === 'boolean') {
-              onChange(checked);
-              if (!checked) {
-                setShowAlert(true);
-              } else {
-                setShowAlert(false);
-              }
-            }
-          }}
+          checked={checked} 
+          onCheckedChange={onChange}
           className="mt-1"
+          required
         />
-        <div>
-          <Label htmlFor="withdrawal-consent" className="font-medium text-gray-900 text-sm">
-            Zgadzam się na natychmiastowy dostęp do treści cyfrowych i przyjmuję do wiadomości, że tracę prawo do odstąpienia od umowy po rozpoczęciu dostępu.
-            <span className="block mt-1 text-gray-500 text-xs">
-              (I agree to immediate access to digital content and acknowledge that I lose my right of withdrawal after access begins.)
-            </span>
+        <div className="space-y-1">
+          <Label 
+            htmlFor="withdrawal-consent" 
+            className="font-medium text-sm"
+          >
+            {language === "pl" 
+              ? "Wyrażam zgodę na rozpoczęcie świadczenia usługi przed upływem terminu do odstąpienia od umowy" 
+              : "I consent to the commencement of service provision before the expiry of the withdrawal period"}
           </Label>
-          <p className="text-xs text-gray-500 mt-1">
-            <Link href="/withdrawal" className="text-blue-600 hover:underline inline-flex items-center">
-              <InfoIcon className="h-3 w-3 mr-1" />
-              Dowiedz się więcej o prawie odstąpienia
-            </Link>
+          <p className="text-xs text-gray-500">
+            {language === "pl" 
+              ? "Zgodnie z art. 38 pkt 13 ustawy o prawach konsumenta, wyrażając tę zgodę przyjmuję do wiadomości, że utracę prawo do odstąpienia od umowy z chwilą pełnego wykonania usługi."
+              : "In accordance with Article 38(13) of the Consumer Rights Act, by expressing this consent, I acknowledge that I will lose the right to withdraw from the contract upon full performance of the service."}
+          </p>
+          <p className="text-xs">
+            {language === "pl"
+              ? <span>Szczegółowe informacje znajdują się w <Link href="/withdrawal" className="text-blue-600 hover:underline">warunkach odstąpienia od umowy</Link>.</span>
+              : <span>Detailed information can be found in the <Link href="/withdrawal" className="text-blue-600 hover:underline">withdrawal terms</Link>.</span>
+            }
           </p>
         </div>
       </div>
       
-      {showAlert && (
-        <Alert variant="destructive" className="mt-4">
-          <AlertDescription>
-            Zgoda na natychmiastowy dostęp jest wymagana. Zgodnie z prawem polskim (Ustawa o prawach konsumenta), bez tej zgody nie możemy udzielić natychmiastowego dostępu do treści cyfrowych.
-          </AlertDescription>
-        </Alert>
-      )}
+      <div className="flex items-start space-x-2">
+        <Checkbox 
+          id="terms-consent" 
+          checked={checked} 
+          onCheckedChange={onChange}
+          className="mt-1"
+          required
+        />
+        <div className="space-y-1">
+          <Label 
+            htmlFor="terms-consent" 
+            className="font-medium text-sm"
+          >
+            {language === "pl" 
+              ? "Potwierdzam zapoznanie się z Regulaminem oraz Polityką Prywatności i akceptuję ich postanowienia" 
+              : "I confirm that I have read the Terms of Service and Privacy Policy and accept their provisions"}
+          </Label>
+          <p className="text-xs">
+            {language === "pl"
+              ? <span>Kliknij, aby przeczytać <Link href="/terms" className="text-blue-600 hover:underline">Regulamin</Link> i <Link href="/privacy" className="text-blue-600 hover:underline">Politykę Prywatności</Link>.</span>
+              : <span>Click to read the <Link href="/terms" className="text-blue-600 hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>.</span>
+            }
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

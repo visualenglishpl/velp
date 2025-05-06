@@ -1,131 +1,194 @@
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const DpaPage = () => {
+  const [language, setLanguage] = useState<"pl" | "en">("pl"); // Default to Polish
+
   return (
-    <>
+    <div className="container mx-auto px-4 py-12">
       <Helmet>
-        <title>Umowa Powierzenia Danych | Visual English</title>
+        <title>
+          {language === "pl" ? "Umowa Powierzenia Danych" : "Data Processing Agreement"} | Visual English
+        </title>
+        <meta 
+          name="description" 
+          content={language === "pl" 
+            ? "Umowa powierzenia przetwarzania danych osobowych zgodnie z RODO"
+            : "Data Processing Agreement in accordance with GDPR"
+          } 
+        />
       </Helmet>
-      <div className="min-h-screen bg-white pt-20 pb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Umowa Powierzenia Przetwarzania Danych (DPA)</h1>
-          
-          <div className="prose prose-blue max-w-none">
-            <div className="mb-8">
-              <h2>Informacje o Umowie Powierzenia Przetwarzania Danych (Polish)</h2>
-              <h3>1. Czym jest Umowa Powierzenia Przetwarzania Danych?</h3>
-              <p>
-                Umowa Powierzenia Przetwarzania Danych (DPA) to formalna umowa zawierana między administratorem danych (szkołą lub instytucją edukacyjną) a podmiotem przetwarzającym (Visual English), regulująca zasady przetwarzania danych osobowych uczniów i nauczycieli.
-              </p>
-              
-              <h3>2. Kiedy wymagana jest Umowa Powierzenia?</h3>
-              <p>
-                Umowa Powierzenia jest wymagana zgodnie z art. 28 Rozporządzenia o Ochronie Danych Osobowych (RODO), gdy szkoła lub instytucja edukacyjna korzysta z naszej platformy Visual English do nauczania swoich uczniów, powierzając nam przetwarzanie ich danych osobowych.
-              </p>
-              
-              <h3>3. Co zawiera Umowa Powierzenia?</h3>
-              <p>
-                Standardowa Umowa Powierzenia Przetwarzania Danych obejmuje następujące elementy:
-              </p>
-              <ul>
-                <li>Przedmiot i czas trwania przetwarzania</li>
-                <li>Charakter i cel przetwarzania</li>
-                <li>Rodzaj danych osobowych i kategorie osób, których dane dotyczą</li>
-                <li>Obowiązki i prawa administratora (szkoły)</li>
-                <li>Obowiązki podmiotu przetwarzającego (Visual English)</li>
-                <li>Środki bezpieczeństwa danych</li>
-                <li>Zasady korzystania z podwykonawców</li>
-                <li>Procedury w przypadku naruszenia ochrony danych</li>
-              </ul>
-              
-              <h3>4. Jak uzyskać Umowę Powierzenia?</h3>
-              <p>
-                Jeśli reprezentujesz szkołę lub instytucję edukacyjną i potrzebujesz Umowy Powierzenia Przetwarzania Danych, skontaktuj się z nami pod adresem dpa@visualenglish.com. Prześlemy Ci standardowy wzór umowy lub przygotujemy dokument dostosowany do Twoich indywidualnych wymagań.
-              </p>
-              
-              <h3>5. Nasze zobowiązania jako Procesor Danych</h3>
-              <p>
-                Jako podmiot przetwarzający dane osobowe, zobowiązujemy się do:
-              </p>
-              <ul>
-                <li>Przetwarzania danych wyłącznie na udokumentowane polecenie administratora</li>
-                <li>Zapewnienia poufności danych</li>
-                <li>Wdrożenia odpowiednich środków technicznych i organizacyjnych</li>
-                <li>Wspierania administratora w realizacji praw osób, których dane dotyczą</li>
-                <li>Usunięcia lub zwrotu danych po zakończeniu świadczenia usług</li>
-                <li>Udostępnienia administratorowi wszelkich informacji niezbędnych do wykazania spełnienia obowiązków RODO</li>
-              </ul>
-              
-              <h3>6. Kontakt w sprawach DPA</h3>
-              <p>
-                W przypadku pytań dotyczących Umowy Powierzenia Przetwarzania Danych, prosimy o kontakt:
-              </p>
-              <p>
-                Email: dpa@visualenglish.com<br />
-                Tel: +48 123 456 789
-              </p>
-            </div>
-            
-            <div>
-              <h2>Data Processing Agreement Information (English)</h2>
-              <h3>1. What is a Data Processing Agreement?</h3>
-              <p>
-                A Data Processing Agreement (DPA) is a formal agreement between the data controller (school or educational institution) and the data processor (Visual English), regulating the processing of personal data of students and teachers.
-              </p>
-              
-              <h3>2. When is a DPA required?</h3>
-              <p>
-                A DPA is required under Article 28 of the General Data Protection Regulation (GDPR) when a school or educational institution uses our Visual English platform to teach their students, entrusting us with processing their personal data.
-              </p>
-              
-              <h3>3. What does a DPA include?</h3>
-              <p>
-                A standard Data Processing Agreement includes the following elements:
-              </p>
-              <ul>
-                <li>Subject matter and duration of processing</li>
-                <li>Nature and purpose of processing</li>
-                <li>Type of personal data and categories of data subjects</li>
-                <li>Obligations and rights of the controller (school)</li>
-                <li>Obligations of the processor (Visual English)</li>
-                <li>Data security measures</li>
-                <li>Rules for using subprocessors</li>
-                <li>Procedures in case of data breach</li>
-              </ul>
-              
-              <h3>4. How to obtain a DPA?</h3>
-              <p>
-                If you represent a school or educational institution and need a Data Processing Agreement, please contact us at dpa@visualenglish.com. We will send you a standard template or prepare a document tailored to your specific requirements.
-              </p>
-              
-              <h3>5. Our Commitments as a Data Processor</h3>
-              <p>
-                As a data processor, we commit to:
-              </p>
-              <ul>
-                <li>Processing data only on documented instructions from the controller</li>
-                <li>Ensuring data confidentiality</li>
-                <li>Implementing appropriate technical and organizational measures</li>
-                <li>Supporting the controller in fulfilling data subject rights</li>
-                <li>Deleting or returning data after the end of service provision</li>
-                <li>Providing the controller with all information necessary to demonstrate compliance with GDPR obligations</li>
-              </ul>
-              
-              <h3>6. DPA Contact Information</h3>
-              <p>
-                For questions regarding Data Processing Agreements, please contact:
-              </p>
-              <p>
-                Email: dpa@visualenglish.com<br />
-                Phone: +48 123 456 789
-              </p>
-            </div>
-            
-            <p className="text-right mt-8">Last Updated: May 6, 2025</p>
-          </div>
+      
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-center">
+          {language === "pl" ? "Umowa Powierzenia Przetwarzania Danych" : "Data Processing Agreement"}
+        </h1>
+        
+        <div className="mb-6 flex justify-center">
+          <Tabs value={language} onValueChange={(val) => setLanguage(val as "pl" | "en")}>
+            <TabsList>
+              <TabsTrigger value="pl">Polski</TabsTrigger>
+              <TabsTrigger value="en">English</TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
+        
+        {language === "pl" ? (
+          <div className="prose prose-blue max-w-none">
+            <p className="text-sm text-gray-500 mb-6 text-center">Ostatnia aktualizacja: 6 maja 2025</p>
+            
+            <h2>UMOWA POWIERZENIA PRZETWARZANIA DANYCH OSOBOWYCH</h2>
+            
+            <p>Zawarta pomiędzy:</p>
+            <p><strong>EDU-CENTRE DOLINA KARPIA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ</strong> z siedzibą przy ul. RYNEK 2, 32-640 ZATOR, wpisaną do rejestru przedsiębiorców prowadzonego przez Sąd Rejonowy, pod numerem KRS 0000806143, NIP 5492456552, REGON 384474200, reprezentowaną przez upoważnionych przedstawicieli, zwaną dalej "Administratorem"</p>
+            
+            <p>a</p>
+            
+            <p>Użytkownikiem Serwisu Visual English, zwanym dalej "Przetwarzającym"</p>
+            
+            <p>zwanymi dalej łącznie "Stronami", a każda z osobna "Stroną".</p>
+            
+            <h3>§1 PRZEDMIOT UMOWY</h3>
+            <ol>
+              <li>Na podstawie niniejszej Umowy Administrator powierza Przetwarzającemu przetwarzanie danych osobowych w swoim imieniu.</li>
+              <li>Przetwarzanie danych osobowych przez Przetwarzającego może odbywać się wyłącznie w celu i zakresie określonym w niniejszej Umowie oraz zgodnie z obowiązującymi przepisami prawa, w szczególności Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych, dalej "RODO").</li>
+            </ol>
+            
+            <h3>§2 ZAKRES I CEL PRZETWARZANIA DANYCH</h3>
+            <ol>
+              <li>Administrator powierza Przetwarzającemu przetwarzanie danych osobowych w zakresie niezbędnym do korzystania z usług Serwisu Visual English.</li>
+              <li>Przetwarzający zobowiązuje się do przetwarzania danych osobowych wyłącznie w celach związanych z realizacją Umowy i zgodnie z udokumentowanymi poleceniami Administratora.</li>
+              <li>Zakres przetwarzania obejmuje następujące kategorie danych osobowych:
+                <ul>
+                  <li>Dane identyfikacyjne (imię, nazwisko, adres e-mail, telefon)</li>
+                  <li>Dane rozliczeniowe (informacje o zakupionych produktach, historia płatności)</li>
+                  <li>Dane dotyczące aktywności w serwisie (logi, historia korzystania z materiałów edukacyjnych)</li>
+                </ul>
+              </li>
+            </ol>
+            
+            <h3>§3 OBOWIĄZKI PRZETWARZAJĄCEGO</h3>
+            <ol>
+              <li>Przetwarzający zobowiązuje się do:
+                <ol type="a">
+                  <li>Przetwarzania danych osobowych wyłącznie na udokumentowane polecenie Administratora;</li>
+                  <li>Zapewnienia, by osoby upoważnione do przetwarzania danych osobowych zobowiązały się do zachowania tajemnicy;</li>
+                  <li>Podjęcia wszelkich środków wymaganych na mocy art. 32 RODO (bezpieczeństwo przetwarzania);</li>
+                  <li>Przestrzegania warunków korzystania z usług innego podmiotu przetwarzającego, o których mowa w art. 28 ust. 2 i 4 RODO;</li>
+                  <li>Wspomagania Administratora w wywiązywaniu się z obowiązków określonych w art. 32-36 RODO;</li>
+                  <li>Po zakończeniu świadczenia usług związanych z przetwarzaniem, zależnie od decyzji Administratora, usunięcia lub zwrotu wszelkich danych osobowych oraz usunięcia wszelkich ich istniejących kopii, chyba że prawo Unii lub prawo państwa członkowskiego nakazują przechowywanie danych osobowych;</li>
+                  <li>Udostępnienia Administratorowi wszelkich informacji niezbędnych do wykazania spełnienia obowiązków określonych w niniejszej Umowie oraz umożliwienia Administratorowi lub audytorowi upoważnionemu przez Administratora przeprowadzania audytów, w tym inspekcji, i przyczyniania się do nich.</li>
+                </ol>
+              </li>
+            </ol>
+            
+            <h3>§4 OBOWIĄZKI ADMINISTRATORA</h3>
+            <ol>
+              <li>Administrator zobowiązany jest współdziałać z Przetwarzającym w wykonaniu Umowy, udzielać Przetwarzającemu wyjaśnień w przypadku wątpliwości co do legalności poleceń Administratora, jak również wywiązywać się terminowo ze swoich obowiązków.</li>
+            </ol>
+            
+            <h3>§5 BEZPIECZEŃSTWO DANYCH</h3>
+            <ol>
+              <li>Przetwarzający wdraża i stosuje odpowiednie środki techniczne i organizacyjne, w celu zapewnienia stopnia bezpieczeństwa odpowiedniego do ryzyka naruszenia praw lub wolności osób fizycznych, których dane przetwarza.</li>
+              <li>Przetwarzający zobowiązuje się do regularnego testowania, mierzenia i oceniania skuteczności wprowadzonych środków technicznych i organizacyjnych mających zapewnić bezpieczeństwo przetwarzania.</li>
+            </ol>
+            
+            <h3>§6 NARUSZENIE OCHRONY DANYCH OSOBOWYCH</h3>
+            <ol>
+              <li>Przetwarzający zobowiązuje się do informowania Administratora o wszelkich stwierdzonych naruszeniach ochrony danych osobowych, nie później niż w terminie 24 godzin od stwierdzenia naruszenia.</li>
+              <li>Zgłoszenie powinno zawierać informacje wymagane przez art. 33 ust. 3 RODO.</li>
+            </ol>
+            
+            <h3>§7 POSTANOWIENIA KOŃCOWE</h3>
+            <ol>
+              <li>Umowa została zawarta na czas obowiązywania Umowy głównej.</li>
+              <li>Wszelkie zmiany niniejszej Umowy wymagają formy pisemnej pod rygorem nieważności.</li>
+              <li>W sprawach nieuregulowanych niniejszą Umową mają zastosowanie przepisy RODO oraz Kodeksu cywilnego.</li>
+              <li>Umowa została sporządzona w dwóch jednobrzmiących egzemplarzach, po jednym dla każdej ze Stron.</li>
+            </ol>
+            
+            <p className="text-center mt-12">Akceptacja Umowy następuje poprzez korzystanie z Serwisu Visual English po uprzednim zapoznaniu się z jej treścią.</p>
+          </div>
+        ) : (
+          <div className="prose prose-blue max-w-none">
+            <p className="text-sm text-gray-500 mb-6 text-center">Last updated: May 6, 2025</p>
+            
+            <h2>DATA PROCESSING AGREEMENT</h2>
+            
+            <p>Entered into by and between:</p>
+            <p><strong>EDU-CENTRE DOLINA KARPIA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ</strong> with its registered office at ul. RYNEK 2, 32-640 ZATOR, entered in the Register of Entrepreneurs maintained by the District Court, under KRS number 0000806143, NIP 5492456552, REGON 384474200, represented by authorized representatives, hereinafter referred to as the "Controller"</p>
+            
+            <p>and</p>
+            
+            <p>The User of the Visual English Service, hereinafter referred to as the "Processor"</p>
+            
+            <p>hereinafter collectively referred to as the "Parties" and individually as a "Party".</p>
+            
+            <h3>§1 SUBJECT MATTER OF THE AGREEMENT</h3>
+            <ol>
+              <li>Under this Agreement, the Controller entrusts the processing of personal data to the Processor on the Controller's behalf.</li>
+              <li>The processing of personal data by the Processor may only take place for the purpose and to the extent specified in this Agreement and in accordance with applicable law, in particular Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation, hereinafter "GDPR").</li>
+            </ol>
+            
+            <h3>§2 SCOPE AND PURPOSE OF DATA PROCESSING</h3>
+            <ol>
+              <li>The Controller entrusts the Processor with the processing of personal data to the extent necessary to use the services of the Visual English Service.</li>
+              <li>The Processor undertakes to process personal data solely for purposes related to the performance of the Agreement and in accordance with the Controller's documented instructions.</li>
+              <li>The scope of processing includes the following categories of personal data:
+                <ul>
+                  <li>Identification data (name, surname, email address, phone number)</li>
+                  <li>Billing data (information about purchased products, payment history)</li>
+                  <li>Data concerning activity in the service (logs, history of using educational materials)</li>
+                </ul>
+              </li>
+            </ol>
+            
+            <h3>§3 OBLIGATIONS OF THE PROCESSOR</h3>
+            <ol>
+              <li>The Processor undertakes to:
+                <ol type="a">
+                  <li>Process personal data only on documented instructions from the Controller;</li>
+                  <li>Ensure that persons authorized to process personal data have committed themselves to confidentiality;</li>
+                  <li>Take all measures required pursuant to Article 32 of the GDPR (security of processing);</li>
+                  <li>Comply with the conditions for engaging another processor referred to in Article 28(2) and (4) of the GDPR;</li>
+                  <li>Assist the Controller in ensuring compliance with the obligations pursuant to Articles 32 to 36 of the GDPR;</li>
+                  <li>At the choice of the Controller, delete or return all personal data to the Controller after the end of the provision of services relating to processing, and delete existing copies unless Union or Member State law requires storage of the personal data;</li>
+                  <li>Make available to the Controller all information necessary to demonstrate compliance with the obligations laid down in this Agreement and allow for and contribute to audits, including inspections, conducted by the Controller or another auditor mandated by the Controller.</li>
+                </ol>
+              </li>
+            </ol>
+            
+            <h3>§4 OBLIGATIONS OF THE CONTROLLER</h3>
+            <ol>
+              <li>The Controller is obliged to cooperate with the Processor in the performance of the Agreement, to provide the Processor with explanations in case of doubt as to the legality of the Controller's instructions, as well as to fulfill its obligations in a timely manner.</li>
+            </ol>
+            
+            <h3>§5 DATA SECURITY</h3>
+            <ol>
+              <li>The Processor implements and applies appropriate technical and organizational measures to ensure a level of security appropriate to the risk of infringement of the rights or freedoms of the natural persons whose data it processes.</li>
+              <li>The Processor undertakes to regularly test, assess, and evaluate the effectiveness of technical and organizational measures implemented to ensure the security of processing.</li>
+            </ol>
+            
+            <h3>§6 PERSONAL DATA BREACH</h3>
+            <ol>
+              <li>The Processor undertakes to inform the Controller of any identified personal data breaches, no later than within 24 hours of identifying the breach.</li>
+              <li>The notification should contain information required by Article 33(3) of the GDPR.</li>
+            </ol>
+            
+            <h3>§7 FINAL PROVISIONS</h3>
+            <ol>
+              <li>The Agreement has been concluded for the duration of the Main Agreement.</li>
+              <li>Any changes to this Agreement require written form under pain of nullity.</li>
+              <li>In matters not regulated by this Agreement, the provisions of the GDPR and the Civil Code shall apply.</li>
+              <li>The Agreement has been drawn up in two identical copies, one for each Party.</li>
+            </ol>
+            
+            <p className="text-center mt-12">Acceptance of the Agreement occurs through the use of the Visual English Service after prior familiarization with its content.</p>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

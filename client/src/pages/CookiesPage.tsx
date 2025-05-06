@@ -1,121 +1,158 @@
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const CookiesPage = () => {
+  const [language, setLanguage] = useState<"pl" | "en">("pl"); // Default to Polish
+
   return (
-    <>
+    <div className="container mx-auto px-4 py-12">
       <Helmet>
         <title>Polityka Cookies | Visual English</title>
+        <meta name="description" content="Polityka Cookies serwisu Visual English" />
       </Helmet>
-      <div className="min-h-screen bg-white pt-20 pb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Polityka Cookies (Cookie Policy)</h1>
-          
-          <div className="prose prose-blue max-w-none">
-            <div className="mb-8">
-              <h2>Polityka Cookies (Polish)</h2>
-              <h3>1. Wprowadzenie</h3>
-              <p>
-                Niniejsza Polityka Cookies określa zasady przechowywania i dostępu do informacji na urządzeniach Użytkownika za pomocą plików Cookies, służących realizacji usług świadczonych drogą elektroniczną przez EDU-CENTRE DOLINA KARPIA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ ("Visual English").
-              </p>
-              
-              <h3>2. Czym są pliki Cookies?</h3>
-              <p>
-                Cookies to małe pliki tekstowe, które są zapisywane na urządzeniu końcowym Użytkownika podczas korzystania z naszej platformy. Pliki te pozwalają rozpoznać urządzenie Użytkownika podczas kolejnych wizyt na naszej stronie.
-              </p>
-              
-              <h3>3. Rodzaje wykorzystywanych Cookies</h3>
-              <p>Na naszej platformie wykorzystujemy następujące rodzaje plików Cookies:</p>
-              <ul>
-                <li><strong>Niezbędne</strong> - są konieczne do prawidłowego funkcjonowania strony (np. uwierzytelnianie, zapamiętywanie sesji)</li>
-                <li><strong>Analityczne</strong> - pomagają zrozumieć, w jaki sposób Użytkownicy korzystają z naszej platformy (np. Google Analytics)</li>
-                <li><strong>Marketingowe</strong> - umożliwiają wyświetlanie spersonalizowanych reklam</li>
-                <li><strong>Preferencji</strong> - zapamiętują preferencje i ustawienia Użytkownika</li>
-              </ul>
-              
-              <h3>4. Zarządzanie plikami Cookies</h3>
-              <p>
-                Użytkownik może w każdej chwili zmienić ustawienia dotyczące plików Cookies za pomocą ustawień swojej przeglądarki internetowej lub używając naszego banera zgody na pliki cookies. Szczegółowe informacje o możliwości i sposobach obsługi plików Cookies dostępne są w ustawieniach oprogramowania (przeglądarki internetowej).
-              </p>
-              
-              <h3>5. Konsekwencje wyłączenia Cookies</h3>
-              <p>
-                Ograniczenie stosowania plików Cookies może wpłynąć na niektóre funkcjonalności dostępne na stronie. Wyłączenie niezbędnych plików Cookies może uniemożliwić korzystanie z niektórych usług w ramach naszej platformy.
-              </p>
-              
-              <h3>6. Zmiany w Polityce Cookies</h3>
-              <p>
-                Zastrzegamy sobie prawo do wprowadzania zmian w niniejszej Polityce Cookies. O wszelkich zmianach będziemy informować poprzez zamieszczenie odpowiedniej informacji na naszej stronie internetowej.
-              </p>
-              
-              <h3>7. Kontakt</h3>
-              <p>
-                W przypadku pytań dotyczących naszej Polityki Cookies, prosimy o kontakt:
-              </p>
-              <p>
-                EDU-CENTRE DOLINA KARPIA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ<br />
-                ul. RYNEK 2<br />
-                32-640 ZATOR<br />
-                MAŁOPOLSKIE<br />
-                Email: contact@visualenglish.com<br />
-                Tel: +48 123 456 789
-              </p>
-            </div>
-            
-            <div>
-              <h2>Cookie Policy (English)</h2>
-              <h3>1. Introduction</h3>
-              <p>
-                This Cookie Policy defines the rules for storing and accessing information on User devices through Cookies, used to provide services by electronic means by EDU-CENTRE DOLINA KARPIA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ ("Visual English").
-              </p>
-              
-              <h3>2. What are Cookies?</h3>
-              <p>
-                Cookies are small text files that are stored on the User's end device when using our platform. These files allow us to recognize the User's device during subsequent visits to our website.
-              </p>
-              
-              <h3>3. Types of Cookies we use</h3>
-              <p>On our platform, we use the following types of Cookies:</p>
-              <ul>
-                <li><strong>Necessary</strong> - required for the proper functioning of the website (e.g., authentication, session remembering)</li>
-                <li><strong>Analytical</strong> - help understand how Users interact with our platform (e.g., Google Analytics)</li>
-                <li><strong>Marketing</strong> - enable the display of personalized advertisements</li>
-                <li><strong>Preferences</strong> - remember User preferences and settings</li>
-              </ul>
-              
-              <h3>4. Managing Cookies</h3>
-              <p>
-                Users can change their Cookie settings at any time using their web browser settings or our cookie consent banner. Detailed information about the possibility and methods of handling Cookies is available in the software settings (web browser).
-              </p>
-              
-              <h3>5. Consequences of disabling Cookies</h3>
-              <p>
-                Limiting the use of Cookies may affect some of the functionalities available on the website. Disabling necessary cookies may prevent the use of certain services within our platform.
-              </p>
-              
-              <h3>6. Changes to the Cookie Policy</h3>
-              <p>
-                We reserve the right to make changes to this Cookie Policy. We will inform about any changes by posting appropriate information on our website.
-              </p>
-              
-              <h3>7. Contact</h3>
-              <p>
-                If you have any questions regarding our Cookie Policy, please contact us:
-              </p>
-              <p>
-                EDU-CENTRE DOLINA KARPIA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ<br />
-                ul. RYNEK 2<br />
-                32-640 ZATOR<br />
-                MAŁOPOLSKIE<br />
-                Email: contact@visualenglish.com<br />
-                Phone: +48 123 456 789
-              </p>
-            </div>
-            
-            <p className="text-right mt-8">Last Updated: May 6, 2025</p>
-          </div>
+      
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-center">Polityka Cookies</h1>
+        
+        <div className="mb-6 flex justify-center">
+          <Tabs value={language} onValueChange={(val) => setLanguage(val as "pl" | "en")}>
+            <TabsList>
+              <TabsTrigger value="pl">Polski</TabsTrigger>
+              <TabsTrigger value="en">English</TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
+        
+        {language === "pl" ? (
+          <div className="prose prose-blue max-w-none">
+            <h2>Polityka dotycząca plików cookies</h2>
+            <p>Ostatnia aktualizacja: 6 maja 2025 r.</p>
+            
+            <h3>1. Wprowadzenie</h3>
+            <p>
+              Nasza strona internetowa, Visual English („Strona"), wykorzystuje pliki cookies i podobne technologie, aby odróżnić Cię od innych użytkowników naszej Strony. Pomaga nam to zapewnić Ci pozytywne doświadczenia podczas przeglądania naszej Strony, a także pozwala nam ją ulepszać.
+            </p>
+            <p>
+              Polityka ta dostarcza informacji na temat rodzajów plików cookies, które stosujemy, oraz sposobów, w jakie możesz kontrolować ich używanie. Korzystając z naszej Strony, wyrażasz zgodę na używanie plików cookies zgodnie z niniejszą Polityką.
+            </p>
+            
+            <h3>2. Czym są pliki cookies?</h3>
+            <p>
+              Pliki cookies są małymi plikami tekstowymi zawierającymi litery i cyfry, które są przechowywane na Twoim urządzeniu (komputerze, tablecie, smartfonie) podczas odwiedzania stron internetowych. Są one powszechnie wykorzystywane do usprawnienia działania stron internetowych lub zwiększenia ich wydajności, a także do dostarczania informacji właścicielom stron.
+            </p>
+            
+            <h3>3. Jak używamy plików cookies</h3>
+            <p>
+              Używamy następujących typów plików cookies:
+            </p>
+            <ul>
+              <li>
+                <strong>Niezbędne pliki cookies:</strong> Są to pliki cookies, które są niezbędne do prawidłowego funkcjonowania naszej Strony. Pozwalają na korzystanie z funkcji takich jak logowanie i dostęp do bezpiecznych obszarów Strony. Nie można ich wyłączyć w naszych systemach.
+              </li>
+              <li>
+                <strong>Funkcjonalne pliki cookies:</strong> Umożliwiają one zapamiętanie wyborów, których dokonujesz (takich jak Twój język lub region) i dostarczenie ulepszonych, bardziej spersonalizowanych funkcji.
+              </li>
+              <li>
+                <strong>Analityczne/wydajnościowe pliki cookies:</strong> Pozwalają nam rozpoznać i policzyć liczbę odwiedzających oraz zobaczyć, jak użytkownicy poruszają się po naszej Stronie. Pomaga nam to poprawić działanie naszej Strony, np. poprzez zapewnienie łatwego znajdowania szukanych informacji.
+              </li>
+              <li>
+                <strong>Marketingowe pliki cookies:</strong> Są one używane do śledzenia odwiedzających na różnych stronach internetowych. Celem jest wyświetlanie reklam, które są odpowiednie i interesujące dla indywidualnego użytkownika, a tym samym bardziej wartościowe dla wydawców i reklamodawców zewnętrznych.
+              </li>
+            </ul>
+            
+            <h3>4. Jak zarządzać plikami cookies</h3>
+            <p>
+              Większość przeglądarek internetowych jest domyślnie ustawiona na akceptowanie plików cookies. Jednakże, możesz zmienić ustawienia swojej przeglądarki, aby usunąć lub zapobiec akceptowaniu plików cookies lub określonych typów plików cookies lub aby otrzymywać powiadomienie, gdy strona internetowa chce zapisać plik cookie.
+            </p>
+            <p>
+              Prosimy zapoznać się z instrukcją obsługi lub funkcją pomocy przeglądarki internetowej, aby dowiedzieć się, jak dostosować lub zmienić ustawienia przeglądarki.
+            </p>
+            <p>
+              Ponadto, oferujemy panel ustawień plików cookies, który pozwala na kontrolowanie kategorii plików cookies, które akceptujesz. Możesz uzyskać dostęp do tego panelu w dowolnym momencie, klikając link "Ustawienia plików cookies" w stopce naszej Strony.
+            </p>
+            
+            <h3>5. Konsekwencje wyłączenia plików cookies</h3>
+            <p>
+              Jeśli zdecydujesz się wyłączyć lub zablokować pliki cookies, nadal będziesz mógł korzystać z naszej Strony, ale niektóre funkcje i obszary naszej Strony mogą nie działać prawidłowo.
+            </p>
+            
+            <h3>6. Zmiany w polityce cookies</h3>
+            <p>
+              Możemy aktualizować naszą Politykę dotyczącą plików cookies od czasu do czasu. Wszelkie zmiany w tej Polityce zostaną opublikowane na tej stronie.
+            </p>
+            
+            <h3>7. Kontakt</h3>
+            <p>
+              Jeśli masz jakiekolwiek pytania dotyczące naszej Polityki dotyczącej plików cookies, prosimy o kontakt pod adresem: contact@visualenglish.edu.pl
+            </p>
+          </div>
+        ) : (
+          <div className="prose prose-blue max-w-none">
+            <h2>Cookie Policy</h2>
+            <p>Last updated: May 6, 2025</p>
+            
+            <h3>1. Introduction</h3>
+            <p>
+              Our website, Visual English ("Site"), uses cookies and similar technologies to distinguish you from other users of our Site. This helps us provide you with a good experience when you browse our Site and also allows us to improve it.
+            </p>
+            <p>
+              This policy provides you with information about the types of cookies we use and the purposes for using them. By using our Site, you consent to our use of cookies in accordance with this policy.
+            </p>
+            
+            <h3>2. What are cookies?</h3>
+            <p>
+              Cookies are small text files containing letters and numbers that are stored on your device (computer, tablet, smartphone) when you visit websites. They are widely used to make websites work more efficiently, as well as to provide information to the owners of the site.
+            </p>
+            
+            <h3>3. How we use cookies</h3>
+            <p>
+              We use the following types of cookies:
+            </p>
+            <ul>
+              <li>
+                <strong>Necessary cookies:</strong> These are cookies that are essential for the operation of our Site. They enable core functionality such as security, network management, and account access. You cannot disable these cookies in our systems.
+              </li>
+              <li>
+                <strong>Functional cookies:</strong> These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third-party providers whose services we have added to our pages.
+              </li>
+              <li>
+                <strong>Analytical/performance cookies:</strong> These cookies allow us to recognize and count the number of visitors and to see how visitors move around our Site when they are using it. This helps us to improve the way our Site works, for example, by ensuring that users find what they are looking for easily.
+              </li>
+              <li>
+                <strong>Marketing cookies:</strong> These cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third-party advertisers.
+              </li>
+            </ul>
+            
+            <h3>4. How to manage cookies</h3>
+            <p>
+              Most internet browsers are initially set up to automatically accept cookies. However, you can change the settings of your browser to remove or prevent your browser from accepting cookies, or to alert you when a website is trying to place a cookie on your computer.
+            </p>
+            <p>
+              Please refer to your browser's manual or help function to learn how to adjust or modify your browser settings.
+            </p>
+            <p>
+              Additionally, we offer a cookie settings panel which allows you to control which categories of cookies you accept. You can access this panel at any time by clicking on the "Cookie settings" link in the footer of our Site.
+            </p>
+            
+            <h3>5. Consequences of disabling cookies</h3>
+            <p>
+              If you choose to disable or block cookies, you will still be able to use our Site, but some features and areas of our Site may not function properly.
+            </p>
+            
+            <h3>6. Changes to the cookie policy</h3>
+            <p>
+              We may update our Cookie Policy from time to time. Any changes we make to our Cookie Policy will be posted on this page.
+            </p>
+            
+            <h3>7. Contact us</h3>
+            <p>
+              If you have any questions about our Cookie Policy, please contact us at: contact@visualenglish.edu.pl
+            </p>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
