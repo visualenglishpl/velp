@@ -10,9 +10,14 @@ const Navbar = () => {
             <Link href="/">
               <div className="flex items-center cursor-pointer">
                 <img 
-                  src="/api/asset/icons/LOGO%20VISUAL%20ENGLISH.png" 
+                  src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
                   alt="Visual English Logo"
                   className="h-8 mr-2"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    console.log("Logo failed to load, trying fallback");
+                    target.src = "/api/direct/content/VISUAL WEBSITE/logo.png";
+                  }}
                 />
               </div>
             </Link>
