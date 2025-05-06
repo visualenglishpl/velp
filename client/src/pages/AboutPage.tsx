@@ -16,7 +16,7 @@ export default function AboutPage() {
               <img 
                 src="/api/direct/content/VISUAL WEBSITE/yuga iza.png" 
                 alt="Izabela and Yuga Buassa" 
-                className="max-w-md w-full h-auto mx-auto rounded-md shadow-md"
+                className="max-w-md w-full h-auto mx-auto rounded-md"
               />
             </div>
             
@@ -29,48 +29,44 @@ export default function AboutPage() {
             
             <div className="text-left space-y-6">
               <p className="text-gray-700 leading-relaxed">
-                We are Izabela and Yuga Buassa, the visionary minds of Visual English, which is a 
-                revolutionary approach to teaching English language learning for ESL young learners.
+                We are Izabela and Yuga Buassa, the visionary educators behind Visual English — a revolutionary 
+                teaching approach for young ESL learners.
               </p>
               
               <p className="text-gray-700 leading-relaxed">
-                After teaching for many years, we recognized the critical need for innovative educational 
-                materials to improve verbal communication, conversation, and direct interaction among 
-                young learners during lessons.
+                After many years of teaching, we saw a critical need for innovative resources that help improve 
+                verbal communication, real conversations, and student interaction in the classroom.
               </p>
               
               <p className="text-gray-700 leading-relaxed">
-                Spearheaded by Izabela Buassa, this initiative was ignited by creating a dynamic and 
-                engaging teaching approach that promotes meaningful conversations with young learners, 
-                using funny images, GIFs, and videos that children can relate to.
+                Driven by Izabela's passion for interactive teaching, we created a fun, visual-based method 
+                that uses GIFs, funny images, and relatable videos to spark conversation and engagement among 
+                young learners.
               </p>
               
               <p className="text-gray-700 leading-relaxed">
-                Recognizing the lack of resources for English teachers to create vibrant conversational 
-                content, we saw the challenges educators face in navigating different internet sources. 
-                The struggle to gather information from various places without a central hub hindered the 
-                possibility to create a captivating learning environment.
+                We recognized the challenges English teachers face — scattered resources, time-consuming 
+                lesson prep, and a lack of engaging content. This frustration inspired the Visual English 
+                platform: a central hub where teachers can access ready-made, interactive teaching materials.
               </p>
               
-              <p className="text-gray-700 leading-relaxed font-medium">
-                This realization ignited the Visual English Platform.
+              <p className="text-gray-700 leading-relaxed font-medium mt-8">
+                Today, Visual English empowers educators and language schools with:
+              </p>
+              
+              <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                <li>A 10-book series of printable units</li>
+                <li>200–300 image-based prompts per unit</li>
+                <li>Flashcards, games, and videos</li>
+                <li>Structured, conversation-based lessons</li>
+              </ul>
+              
+              <p className="text-gray-700 leading-relaxed font-medium mt-4">
+                Our goal is simple: Make English learning fun, visual, and effective.
               </p>
               
               <p className="text-gray-700 leading-relaxed">
-                Our platform addresses this gap by providing teachers and language schools with a 
-                convenient repository of ready-made materials. We offer a set of 10 books containing 
-                printable materials, as well as flashcards and video resources and games. This 
-                significantly reduces prep time for educators. Our Interactive Learning Materials are 
-                meticulously crafted to immerse students in 200–300 images per unit, ensuring a highly 
-                engaging learning experience.
-              </p>
-              
-              <p className="text-gray-700 leading-relaxed">
-                These materials also feature thoughtfully crafted questions, employing the direct method 
-                of teaching English. The key difference lies in students using images as a means of 
-                communication, promoting maximum engagement and fostering active student 
-                participation. This innovative approach not only enhances knowledge retention but also 
-                makes the learning experience more dynamic and interactive.
+                Join our mission to transform how children learn English — with materials that speak their language.
               </p>
             </div>
           </div>
@@ -84,8 +80,12 @@ export default function AboutPage() {
               Join the Visual English community and provide your students with engaging, interactive learning materials.
             </p>
             
-            <a href="/books" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-              <span className="mr-2">□</span> View Books
+            <a href="/books" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search mr-2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              Explore Our Books
             </a>
           </div>
         </section>
