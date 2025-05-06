@@ -54,15 +54,85 @@ export default function MethodPage() {
           </div>
         </section>
 
-        {/* Key Features Section */}
+        {/* Why Choose Visual English Section */}
         <section className="py-12 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+              Why Choose Visual English?
+            </h2>
+
+            <div className="space-y-6 max-w-4xl mx-auto">
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Interactive Learning Materials:</h3>
+                <p className="text-gray-700">Immerse in 200–300 images per unit for an engaging experience.</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Structured Questions for Maximum Engagement:</h3>
+                <p className="text-gray-700">Crafted to inspire student participation and enhance knowledge retention.</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Teacher-Friendly:</h3>
+                <p className="text-gray-700">Minimal prep time for educators, allowing a focus on impactful teaching.</p>
+              </div>
+            </div>
+
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+                Targeted to Young Learners Aged 4-15
+              </h2>
+              
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Ages 4-8</h3>
+                  <p className="text-gray-700 font-medium">Beginner Level</p>
+                  <ul className="mt-2 space-y-1 text-gray-700">
+                    <li>Simple phrases and vocabulary</li>
+                    <li>Short sentence</li>
+                  </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Ages 9-12</h3>
+                  <p className="text-gray-700 font-medium">Intermediate Level</p>
+                  <ul className="mt-2 space-y-1 text-gray-700">
+                    <li>Expansion of phrases and vocabulary</li>
+                    <li>Longer sentences</li>
+                  </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Ages 13-15</h3>
+                  <p className="text-gray-700 font-medium">Advanced Level</p>
+                  <ul className="mt-2 space-y-1 text-gray-700">
+                    <li>Complex sentences and grammar</li>
+                    <li>Focus on reading and writing skills</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 text-center">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                Join Our Learning Revolution
+              </h2>
+              <p className="text-gray-700 text-lg">
+                Let's make high-quality and engaging English learning accessible to all.
+              </p>
+            </div>
+          </div>
+        </section>
+        
+        {/* Key Features Section */}
+        <section className="py-12 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-10 text-center">
               Key Features.
             </h2>
 
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <h3 className="text-lg font-bold text-gray-900 mb-3">1. Engagement</h3>
                 <p className="text-gray-700">
                   Visual English taps into the natural curiosity and enthusiasm of young learners, making language learning 
@@ -70,7 +140,7 @@ export default function MethodPage() {
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <h3 className="text-lg font-bold text-gray-900 mb-3">2. Structured Approach</h3>
                 <p className="text-gray-700">
                   Each unit is meticulously designed with visuals, GIFs, photos, and videos, ensuring a well-rounded and 
@@ -78,7 +148,7 @@ export default function MethodPage() {
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <h3 className="text-lg font-bold text-gray-900 mb-3">3. Ease of Implementation</h3>
                 <p className="text-gray-700">
                   Visual English requires minimal preparation time for teachers, allowing them to focus on teaching rather 

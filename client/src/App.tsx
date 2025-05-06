@@ -8,6 +8,7 @@ import BooksPage from "./pages/BooksPage";
 import UnitsPage from "./pages/UnitsPage";
 import AdminPage from "./pages/AdminPage";
 import MethodPage from "./pages/MethodPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   console.log('Rendering full home page with layout');

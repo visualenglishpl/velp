@@ -22,12 +22,15 @@ const Navbar = () => {
               <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Home</span>
             </Link>
             <Link href="/method">
-              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Method</span>
+              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Our Method</span>
+            </Link>
+            <Link href="/about">
+              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">About Us</span>
             </Link>
             <Link href="/books">
               <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Books</span>
             </Link>
-            <Link href="/pricing">
+            <Link href="/#pricing">
               <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Pricing</span>
             </Link>
             <Link href="/contact">
