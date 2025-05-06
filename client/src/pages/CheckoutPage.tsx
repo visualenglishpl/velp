@@ -557,7 +557,9 @@ export default function CheckoutPage() {
                       ) : (
                         <>
                           <CreditCard className="mr-2" size={20} />
-                          Complete Payment
+                          {planDetails.recurring 
+                            ? `Subscribe - ${planDetails.price}` 
+                            : `Complete Payment - ${planDetails.price}`}
                         </>
                       )}
                     </Button>
