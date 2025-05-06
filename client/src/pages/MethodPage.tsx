@@ -19,15 +19,9 @@ export default function MethodPage() {
               {/* Left image */}
               <div className="md:w-2/5 rounded-lg overflow-hidden">
                 <img 
-                  src="/attached_assets/image_1746559756587.png"
+                  src="/api/direct/content/VISUAL WEBSITE/teaching_image.png"
                   alt="Visual English Teaching Method" 
-                  className="w-full h-auto object-cover rounded-lg"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    console.log("Image failed to load, trying fallback");
-                    // Try other paths as fallback
-                    target.src = "/api/asset/attached_assets/image_1746559756587.png";
-                  }}
+                  className="w-full h-auto object-cover rounded-lg shadow-md"
                 />
               </div>
 
