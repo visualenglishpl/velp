@@ -132,6 +132,17 @@ export default function UnitsPage() {
                   <Link href={`/books/${bookId}/units/${unit.unitNumber}`}>
                     <Button className="w-full px-8 py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700">View Unit</Button>
                   </Link>
+                  {!isAuthenticated && (
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => {
+                        window.location.href = `/checkout/single_lesson?book=${bookId}&unit=${unit.unitNumber}`;
+                      }}
+                    >
+                      Purchase Unit (€5)
+                    </Button>
+                  )}
                 </div>
               </Card>
             ))}

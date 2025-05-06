@@ -225,11 +225,11 @@ const BookThumbnail = ({
           <div className="mt-auto space-y-2">
             <Link href={`/books/${bookId}`} className="block w-full">
               <button className={`w-full ${bookId === '5' ? 'bg-red-600 text-white' : buttonColorClass} py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1`}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-book-open">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                 </svg>
-                Explore Units
+                View Book
               </button>
             </Link>
             
