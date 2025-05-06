@@ -4,7 +4,7 @@ import { Link } from "wouter";
 const PricingPlans = () => {
   const plans = [
     {
-      title: "Printed Book\nOnly",
+      title: "Printed Book Only",
       color: "bg-[#00c971]",
       textColor: "text-[#00c971]",
       checkColor: "text-[#00c971]",
@@ -20,7 +20,7 @@ const PricingPlans = () => {
       planId: "printed_book"
     },
     {
-      title: "Single Lesson\nAccess",
+      title: "Single Lesson Access",
       color: "bg-[#2e88f6]",
       textColor: "text-[#2e88f6]",
       checkColor: "text-[#2e88f6]",
@@ -38,7 +38,7 @@ const PricingPlans = () => {
       planId: "single_lesson"
     },
     {
-      title: "Full Book\nAccess",
+      title: "Whole Book Access",
       color: "bg-[#b23cfd]",
       textColor: "text-[#b23cfd]",
       checkColor: "text-[#b23cfd]",
@@ -56,7 +56,7 @@ const PricingPlans = () => {
       planId: "whole_book"
     },
     {
-      title: "Free\nTrial",
+      title: "Free Trial",
       color: "bg-[#ff9d22]",
       textColor: "text-[#ff9d22]",
       checkColor: "text-[#ff9d22]",
