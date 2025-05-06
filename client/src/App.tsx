@@ -15,6 +15,8 @@ import TermsPage from "./pages/TermsPage";
 import CookiesPage from "./pages/CookiesPage";
 import WithdrawalPage from "./pages/WithdrawalPage";
 import DpaPage from "./pages/DpaPage";
+import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
 import CookieConsent from "./components/CookieConsent";
 
 function App() {
@@ -60,6 +62,15 @@ function App() {
           </Route>
           <Route path="/dpa">
             <DpaPage />
+          </Route>
+          <Route path="/cart">
+            <CartPage />
+          </Route>
+          <Route path="/checkout">
+            <CheckoutPage />
+          </Route>
+          <Route path="/checkout/:planId">
+            <CheckoutPage />
           </Route>
         </Switch>
       </main>

@@ -64,13 +64,69 @@ export default function UnitsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center mb-6">
-          <Link href="/books">
-            <Button variant="outline" className="mr-4">
-              ← Back to Books
-            </Button>
-          </Link>
-          <h1 className="text-3xl font-bold">Book {bookId} Units</h1>
+        <div className="flex flex-wrap items-center justify-between mb-6">
+          <div className="flex items-center">
+            <Link href="/books">
+              <Button variant="outline" className="mr-4">
+                ← Back to Books
+              </Button>
+            </Link>
+            <h1 className="text-3xl font-bold">Book {bookId} Units</h1>
+          </div>
+          
+          {!isAuthenticated && (
+            <div className="mt-4 sm:mt-0">
+              <Button
+                className="bg-[#b23cfd] hover:bg-[#a020f0]"
+                onClick={() => {
+                  // Add full book to cart
+                  try {
+                    let cart = [];
+                    const storedCart = localStorage.getItem('visualEnglishCart');
+                    if (storedCart) {
+                      cart = JSON.parse(storedCart);
+                    }
+                    
+                    // Check if book is already in cart
+                    const bookInCart = cart.some((item: any) => 
+                      item.type === 'book' && item.bookId === bookId
+                    );
+                    
+                    if (!bookInCart) {
+                      const newItem = {
+                        id: `book${bookId}-full`,
+                        type: 'book',
+                        bookId,
+                        title: `Complete Book ${bookId}`,
+                        price: 25,
+                      };
+                      
+                      cart.push(newItem);
+                      localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
+                      
+                      toast({
+                        title: 'Book added to cart',
+                        description: `Book ${bookId} has been added to your cart.`,
+                      });
+                    } else {
+                      toast({
+                        title: 'Book already in cart',
+                        description: `Book ${bookId} is already in your cart.`,
+                      });
+                    }
+                  } catch (error) {
+                    toast({
+                      title: 'Error',
+                      description: 'Failed to add book to cart. Please try again.',
+                      variant: 'destructive'
+                    });
+                  }
+                }}
+              >
+                Get Whole Book Access (€25)
+              </Button>
+            </div>
+          )}
         </div>
         
         {isLoading ? (
@@ -112,10 +168,66 @@ export default function UnitsPage() {
                     </div>
                   )}
                 </div>
-                <div className="py-3 px-4 mt-auto flex justify-center">
+                <div className="py-3 px-4 mt-auto flex flex-col space-y-2">
                   <Link href={`/books/${bookId}/units/${unit.unitNumber}`}>
-                    <Button className="px-8 py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700">View Unit</Button>
+                    <Button className="w-full px-8 py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700">View Unit</Button>
                   </Link>
+                  {!isAuthenticated && (
+                    <Button
+                      variant="outline"
+                      className="w-full text-sm"
+                      onClick={() => {
+                        // Add unit to cart
+                        try {
+                          let cart = [];
+                          const storedCart = localStorage.getItem('visualEnglishCart');
+                          if (storedCart) {
+                            cart = JSON.parse(storedCart);
+                          }
+                          
+                          // Check if unit is already in cart
+                          const unitInCart = cart.some((item: any) => 
+                            item.type === 'unit' && 
+                            item.bookId === bookId && 
+                            item.unitNumber === unit.unitNumber
+                          );
+                          
+                          if (!unitInCart) {
+                            const newItem = {
+                              id: `book${bookId}-unit${unit.unitNumber}`,
+                              type: 'unit',
+                              bookId,
+                              unitNumber: unit.unitNumber,
+                              title: unit.title || `Unit ${unit.unitNumber}`,
+                              price: 5,
+                              thumbnailUrl: unit.thumbnailUrl
+                            };
+                            
+                            cart.push(newItem);
+                            localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
+                            
+                            toast({
+                              title: 'Unit added to cart',
+                              description: `Unit ${unit.unitNumber} has been added to your cart.`,
+                            });
+                          } else {
+                            toast({
+                              title: 'Unit already in cart',
+                              description: `Unit ${unit.unitNumber} is already in your cart.`,
+                            });
+                          }
+                        } catch (error) {
+                          toast({
+                            title: 'Error',
+                            description: 'Failed to add unit to cart. Please try again.',
+                            variant: 'destructive'
+                          });
+                        }
+                      }}
+                    >
+                      Purchase Unit (€5)
+                    </Button>
+                  )}
                 </div>
               </Card>
             ))}
