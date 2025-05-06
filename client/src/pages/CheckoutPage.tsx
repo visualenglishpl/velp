@@ -51,6 +51,7 @@ export default function CheckoutPage() {
   
   // Get plan ID from params, URL or cart
   const planId = params.planId || 'default';
+  const isFreeTrialPlan = planId === 'free_trial';
   const [selectedBookPurchaseType, setSelectedBookPurchaseType] = useState('physical');
   const [subscriptionPeriod, setSubscriptionPeriod] = useState('monthly');
   
@@ -199,11 +200,169 @@ export default function CheckoutPage() {
                 ? `Full Book Checkout - Book ${bookIdParam}`
                 : planId === 'printed_book'
                   ? `Printed Book Checkout - Book ${bookIdParam}`
-                  : "Checkout"}
+                  : planId === 'free_trial'
+                    ? `Free 7-Day Trial - Book ${bookIdParam}`
+                    : "Checkout"}
           </h1>
         </div>
         
-        {!isComplete && (
+        {isFreeTrialPlan && (
+          <Card className="p-6 mb-6">
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="w-full md:w-2/3">
+                <h2 className="text-xl font-bold mb-3">Start Your Free 7-Day Trial</h2>
+                <p className="text-gray-600 mb-4">
+                  Enjoy full access to all content in Book {bookIdParam} for 7 days, completely free!
+                  <br />A credit card is required to start your trial, but <strong>you won't be charged</strong> unless you choose to continue after the trial period.
+                </p>
+                
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input 
+                      id="name" 
+                      value={name} 
+                      onChange={(e) => setName(e.target.value)} 
+                      className="mt-1" 
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      value={email} 
+                      onChange={(e) => setEmail(e.target.value)} 
+                      className="mt-1" 
+                      placeholder="Enter your email address"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="card-number">Card Number</Label>
+                    <Input 
+                      id="card-number" 
+                      value={cardNumber} 
+                      onChange={(e) => setCardNumber(e.target.value)} 
+                      className="mt-1" 
+                      placeholder="1234 5678 9012 3456"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="expiry">Expiry Date</Label>
+                      <Input 
+                        id="expiry" 
+                        value={expiryDate} 
+                        onChange={(e) => setExpiryDate(e.target.value)} 
+                        className="mt-1" 
+                        placeholder="MM/YY"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="cvc">CVC</Label>
+                      <Input 
+                        id="cvc" 
+                        value={cvc} 
+                        onChange={(e) => setCvc(e.target.value)} 
+                        className="mt-1" 
+                        placeholder="123"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-2 mt-4">
+                    <Checkbox 
+                      id="consent" 
+                      checked={consent} 
+                      onCheckedChange={(value) => setConsent(!!value)} 
+                    />
+                    <Label htmlFor="consent" className="text-sm">
+                      I agree to the <Link href="/terms" className="text-blue-600 hover:underline">Terms and Conditions</Link> and understand that my free trial will automatically convert to a paid monthly subscription (€25/month) after 7 days unless I cancel. I can cancel anytime during the trial period without being charged.
+                    </Label>
+                  </div>
+                  
+                  <Button 
+                    className="w-full bg-green-600 hover:bg-green-700 mt-4"
+                    disabled={!name || !email || !cardNumber || !expiryDate || !cvc || !consent}
+                    onClick={() => {
+                      toast({
+                        title: "Free trial activated!",
+                        description: `Your 7-day free trial for Book ${bookIdParam} has been activated. Enjoy your unlimited access!`,
+                      });
+                      setIsComplete(true);
+                    }}
+                  >
+                    <CreditCard className="w-4 h-4 mr-2" />
+                    Start My Free Trial
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-1/3 bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-bold mb-3">What's Included:</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
+                    <span>Full access to all units in Book {bookIdParam}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
+                    <span>All activities and interactive materials</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
+                    <span>Teacher resources and lesson plans</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
+                    <span>No obligation to continue after trial</span>
+                  </li>
+                </ul>
+                
+                <div className="mt-6 p-3 bg-blue-50 border border-blue-100 rounded-md">
+                  <p className="text-sm text-blue-700">
+                    <strong>Remember:</strong> You won't be charged during the 7-day trial period. You can cancel anytime through your account settings.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        )}
+        
+        {isComplete && isFreeTrialPlan && (
+          <Card className="p-6 mb-6 border-green-200 bg-green-50">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
+                <CheckCircle className="w-8 h-8 text-green-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-green-700 mb-2">Free Trial Successfully Activated!</h2>
+              <p className="text-gray-600 mb-6">
+                Your 7-day free trial for Book {bookIdParam} has been activated. You now have full access to all units and materials.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button 
+                  className="bg-green-600 hover:bg-green-700"
+                  onClick={() => window.location.href = `/books/${bookIdParam}`}
+                >
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Start Learning Now
+                </Button>
+                <Button 
+                  variant="outline"
+                  onClick={() => window.location.href = '/'}
+                >
+                  Return to Home
+                </Button>
+              </div>
+            </div>
+          </Card>
+        )}
+        
+        {!isComplete && !isFreeTrialPlan && (
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">

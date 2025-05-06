@@ -73,7 +73,7 @@ export default function UnitsPage() {
           <h1 className="text-4xl font-bold">Book {bookId} Units</h1>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center">
           <Button
             className="w-full sm:w-auto py-6 text-lg bg-[#b23cfd] hover:bg-[#a020f0] shadow-md"
             onClick={() => {
@@ -87,19 +87,34 @@ export default function UnitsPage() {
           </Button>
           
           {!isAuthenticated && (
-            <Button
-              className="w-full sm:w-auto py-6 text-lg bg-[#2e88f6] hover:bg-blue-600 shadow-md"
-              onClick={() => {
-                window.location.href = `/checkout/single_lesson?book=${bookId}`;
-              }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-                <path d="M3 6h18"/>
-                <path d="M16 10a4 4 0 0 1-8 0"/>
-              </svg>
-              Select Multiple Units
-            </Button>
+            <>
+              <Button
+                className="w-full sm:w-auto py-6 text-lg bg-[#2e88f6] hover:bg-blue-600 shadow-md"
+                onClick={() => {
+                  window.location.href = `/checkout/single_lesson?book=${bookId}`;
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                  <path d="M3 6h18"/>
+                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Select Multiple Units
+              </Button>
+              
+              <Button
+                className="w-full sm:w-auto py-6 text-lg bg-green-600 hover:bg-green-700 shadow-md"
+                onClick={() => {
+                  window.location.href = `/checkout/free_trial?book=${bookId}`;
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                  <path d="M2 12h20" />
+                  <path d="M12 2v20" />
+                </svg>
+                Start Free 7-Day Trial
+              </Button>
+            </>
           )}
           
           {isAuthenticated && (
@@ -133,26 +148,38 @@ export default function UnitsPage() {
                   className="aspect-square relative overflow-hidden border rounded-md hover:border-gray-300 transition-all block"
                 >
                   {unit.thumbnailUrl ? (
-                    <img 
-                      src={`/api/direct/content/${unit.thumbnailUrl}`} 
-                      alt={`Thumbnail for unit ${unit.unitNumber}`} 
-                      className="object-cover w-full h-full"
-                      onError={(e) => {
-                        // If the thumbnail fails to load, show No Preview instead
-                        const img = e.currentTarget;
-                        img.style.display = "none";
-                        const container = img.parentElement;
-                        if (container) {
-                          const noPreview = document.createElement('div');
-                          noPreview.className = "h-full w-full bg-gray-100 flex items-center justify-center";
-                          noPreview.innerHTML = '<span class="text-gray-400 text-lg">No Preview</span>';
-                          container.appendChild(noPreview);
-                        }
-                      }} 
-                    />
+                    <>
+                      <img 
+                        src={`/api/direct/content/${unit.thumbnailUrl}`} 
+                        alt={`Thumbnail for unit ${unit.unitNumber}`} 
+                        className="object-cover w-full h-full"
+                        onError={(e) => {
+                          // If the thumbnail fails to load, show No Preview instead
+                          const img = e.currentTarget;
+                          img.style.display = "none";
+                          const container = img.parentElement;
+                          if (container) {
+                            const noPreview = document.createElement('div');
+                            noPreview.className = "h-full w-full bg-gray-100 flex items-center justify-center";
+                            noPreview.innerHTML = '<span class="text-gray-400 text-lg">No Preview</span>';
+                            container.appendChild(noPreview);
+                          }
+                        }} 
+                      />
+                      <div className="absolute top-0 left-0 bg-gray-800 bg-opacity-70 text-white p-2 rounded-br-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                        </svg>
+                      </div>
+                    </>
                   ) : (
                     <div className="h-full w-full bg-gray-100 flex items-center justify-center">
                       <span className="text-gray-400 text-lg">No Preview</span>
+                      <div className="absolute top-0 left-0 bg-gray-800 bg-opacity-70 text-white p-2 rounded-br-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                        </svg>
+                      </div>
                     </div>
                   )}
                 </Link>
