@@ -5,9 +5,10 @@ const PricingPlans = () => {
   const plans = [
     {
       title: "Printed Book Only",
-      color: "bg-green-500",
-      textColor: "text-green-600",
-      checkColor: "text-green-600",
+      color: "bg-[#00c971]",
+      textColor: "text-[#00c971]",
+      checkColor: "text-[#00c971]",
+      bgColor: "#00c971",
       features: [
         "Full-color physical book",
         "Delivered to your doorstep",
@@ -20,9 +21,10 @@ const PricingPlans = () => {
     },
     {
       title: "Single Lesson Digital Access",
-      color: "bg-blue-500",
-      textColor: "text-blue-600",
-      checkColor: "text-blue-500",
+      color: "bg-[#2e88f6]",
+      textColor: "text-[#2e88f6]",
+      checkColor: "text-[#2e88f6]",
+      bgColor: "#2e88f6",
       features: [
         "Access to one complete lesson",
         "Downloadable PDF of the unit",
@@ -37,9 +39,10 @@ const PricingPlans = () => {
     },
     {
       title: "Whole Book Digital Access",
-      color: "bg-purple-500",
-      textColor: "text-purple-600",
-      checkColor: "text-purple-500",
+      color: "bg-[#b23cfd]",
+      textColor: "text-[#b23cfd]",
+      checkColor: "text-[#b23cfd]",
+      bgColor: "#b23cfd",
       features: [
         "Full access to one entire book",
         "Download PDFs for all units",
@@ -54,9 +57,10 @@ const PricingPlans = () => {
     },
     {
       title: "Free Trial",
-      color: "bg-amber-500",
-      textColor: "text-amber-600",
-      checkColor: "text-amber-500",
+      color: "bg-[#ff9d22]",
+      textColor: "text-[#ff9d22]",
+      checkColor: "text-[#ff9d22]",
+      bgColor: "#ff9d22",
       features: [
         "Full free access for one week",
         "Browse all lessons and content",
@@ -83,11 +87,14 @@ const PricingPlans = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
             <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-md overflow-hidden">
-              {/* Content */}
-              <div className="flex-grow p-6">
-                <h3 className="text-xl font-bold mb-4">
+              {/* Header */}
+              <div className={`${plan.color} p-4 text-white text-center`}>
+                <h3 className="text-xl font-bold">
                   {plan.title}
                 </h3>
+              </div>
+              {/* Content */}
+              <div className="flex-grow p-6">
                 
                 <ul className="space-y-3 mb-6">
                   {plan.features.map((feature, i) => (
@@ -115,7 +122,8 @@ const PricingPlans = () => {
                 <div className="mt-6">
                   <Link href={index === 0 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
-                      className="w-full py-3 px-4 rounded-md font-medium bg-black hover:bg-gray-800 text-white transition-all"
+                      className="w-full py-3 px-4 rounded-md font-medium text-white transition-all"
+                      style={{ backgroundColor: plan.bgColor }}
                     >
                       {plan.buttonText}
                     </button>
