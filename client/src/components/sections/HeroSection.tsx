@@ -24,12 +24,12 @@ const HeroSection = () => {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/checkout/free_trial">
-                  <Button className="bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 text-white px-8 py-4 text-lg font-bold rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 border-2 border-yellow-400">
+                  <Button className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg font-bold rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 border-2 border-red-400">
                     ✅ Try a Free Sample
                   </Button>
                 </Link>
                 <Link href="/books">
-                  <Button variant="outline" className="border-4 border-green-500 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-bold rounded-lg transform transition-all duration-200 hover:scale-105 shadow-md">
+                  <Button variant="outline" className="border-4 border-green-600 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-bold rounded-lg transform transition-all duration-200 hover:scale-105 shadow-md">
                     📘 Explore Books
                   </Button>
                 </Link>
@@ -123,7 +123,7 @@ const HeroSection = () => {
                     <h3 className="font-bold text-blue-800">VISUAL ENGLISH</h3>
                     <p className="text-blue-700 font-medium">BOOK 0A</p>
                     <Link href="/books/0a">
-                      <button className="mt-3 w-full bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-yellow-400">
+                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-red-400">
                         View Units
                       </button>
                     </Link>
@@ -148,7 +148,7 @@ const HeroSection = () => {
                     <h3 className="font-bold text-orange-800">VISUAL ENGLISH</h3>
                     <p className="text-orange-700 font-medium">BOOK 0B</p>
                     <Link href="/books/0b">
-                      <button className="mt-3 w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-green-400">
+                      <button className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-green-400">
                         View Units
                       </button>
                     </Link>
@@ -173,7 +173,7 @@ const HeroSection = () => {
                     <h3 className="font-bold text-amber-800">VISUAL ENGLISH</h3>
                     <p className="text-amber-700 font-medium">BOOK 0C</p>
                     <Link href="/books/0c">
-                      <button className="mt-3 w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-blue-400">
+                      <button className="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-blue-400">
                         View Units
                       </button>
                     </Link>
@@ -198,7 +198,7 @@ const HeroSection = () => {
                     <h3 className="font-bold text-green-800">VISUAL ENGLISH</h3>
                     <p className="text-green-700 font-medium">BOOK 1</p>
                     <Link href="/books/1">
-                      <button className="mt-3 w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-pink-400">
+                      <button className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-purple-400">
                         View Units
                       </button>
                     </Link>
@@ -223,7 +223,7 @@ const HeroSection = () => {
                     <h3 className="font-bold text-sky-800">VISUAL ENGLISH</h3>
                     <p className="text-sky-700 font-medium">BOOK 2</p>
                     <Link href="/books/2">
-                      <button className="mt-3 w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-yellow-400">
+                      <button className="mt-3 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-yellow-400">
                         View Units
                       </button>
                     </Link>
