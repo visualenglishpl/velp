@@ -64,47 +64,47 @@ export default function UnitsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-wrap items-center justify-between mb-6">
-          <div className="flex items-center">
-            <Link href="/books">
-              <Button variant="outline" className="mr-4">
-                ← Back to Books
-              </Button>
-            </Link>
-            <h1 className="text-3xl font-bold">Book {bookId} Units</h1>
-          </div>
+        <div className="flex items-center mb-4">
+          <Link href="/books">
+            <Button variant="outline" className="mr-4">
+              ← Back to Books
+            </Button>
+          </Link>
+          <h1 className="text-4xl font-bold">Book {bookId} Units</h1>
+        </div>
+        
+        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          <Button
+            className="w-full sm:w-auto py-6 text-lg bg-[#b23cfd] hover:bg-[#a020f0] shadow-md"
+            onClick={() => {
+              window.location.href = `/checkout/whole_book?book=${bookId}`;
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+            </svg>
+            Subscribe to Full Book
+          </Button>
           
-          <div className="mt-4 sm:mt-0 flex space-x-3">
+          {!isAuthenticated && (
             <Button
-              className="bg-[#b23cfd] hover:bg-[#a020f0] shadow-md font-medium"
+              className="w-full sm:w-auto py-6 text-lg bg-[#2e88f6] hover:bg-blue-600 shadow-md"
               onClick={() => {
-                window.location.href = `/checkout/whole_book?book=${bookId}`;
+                window.location.href = `/checkout/single_lesson?book=${bookId}`;
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-sparkles mr-1">
-                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                <path d="M3 6h18"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
               </svg>
-              Subscribe to Full Book
+              Select Multiple Units
             </Button>
-            {!isAuthenticated && (
-              <Button
-                className="bg-[#2e88f6] hover:bg-blue-600 shadow-md font-medium"
-                onClick={() => {
-                  window.location.href = `/checkout/single_lesson?book=${bookId}`;
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag mr-1">
-                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-                  <path d="M3 6h18"/>
-                  <path d="M16 10a4 4 0 0 1-8 0"/>
-                </svg>
-                Select Multiple Units
-              </Button>
-            )}
-            {isAuthenticated && (
-              <Button variant="outline">My Subscription</Button>
-            )}
-          </div>
+          )}
+          
+          {isAuthenticated && (
+            <Button variant="outline" className="py-6 text-lg">My Subscription</Button>
+          )}
         </div>
         
         {isLoading ? (
@@ -128,7 +128,10 @@ export default function UnitsPage() {
             {units.map((unit) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col border-0 shadow-none">
                 <h3 className="text-xl font-medium text-center mt-2 mb-1">Unit {unit.unitNumber}</h3>
-                <div className="aspect-square relative overflow-hidden border rounded-md">
+                <Link 
+                  href={`/books/${bookId}/units/${unit.unitNumber}`} 
+                  className="aspect-square relative overflow-hidden border rounded-md hover:border-gray-300 transition-all block"
+                >
                   {unit.thumbnailUrl ? (
                     <img 
                       src={`/api/direct/content/${unit.thumbnailUrl}`} 
@@ -152,17 +155,18 @@ export default function UnitsPage() {
                       <span className="text-gray-400 text-lg">No Preview</span>
                     </div>
                   )}
-                </div>
-                <div className="py-3 mt-auto flex flex-col gap-2">
-                  <Link href={`/books/${bookId}/units/${unit.unitNumber}`} className="w-full">
-                    <Button className="w-full px-4 py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye mr-1">
-                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                      </svg>
-                      View Unit
-                    </Button>
-                  </Link>
+                </Link>
+                <div className="py-3 mt-auto flex flex-col gap-3">
+                  <Button 
+                    className="w-full py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700"
+                    onClick={() => window.location.href = `/books/${bookId}/units/${unit.unitNumber}`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    View Unit
+                  </Button>
                   {!isAuthenticated && (
                     <Button
                       variant="outline"
@@ -171,7 +175,7 @@ export default function UnitsPage() {
                         window.location.href = `/checkout/single_lesson?book=${bookId}&unit=${unit.unitNumber}`;
                       }}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag mr-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
                         <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
                         <path d="M3 6h18"/>
                         <path d="M16 10a4 4 0 0 1-8 0"/>
