@@ -9,16 +9,11 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center cursor-pointer">
-                <img 
-                  src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
-                  alt="Visual English Logo"
-                  className="h-8 mr-2"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    console.log("Logo failed to load, trying fallback");
-                    target.src = "/api/direct/content/VISUAL WEBSITE/logo.png";
-                  }}
-                />
+                <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                  <path d="M30.9375 22.5C30.9375 25.6066 29.3022 28.4812 26.7188 30C24.1353 28.4812 22.5 25.6066 22.5 22.5C22.5 19.3934 24.1353 16.5188 26.7188 15C29.3022 16.5188 30.9375 19.3934 30.9375 22.5Z" fill="#56BAD8"/>
+                  <path d="M32.8125 22.5C32.8125 26.3653 30.5841 29.7892 27.3214 31.4827C27.1314 31.582 26.9389 31.6753 26.7424 31.7623C26.5537 31.6753 26.3686 31.582 26.1873 31.4827C27.1072 30.9595 27.9191 30.2679 28.5839 29.4507C29.2487 28.6336 29.7539 27.7075 30.0719 26.7199C30.3899 25.7322 30.5147 24.6983 30.4398 23.6711" fill="#56BAD8"/>
+                </svg>
+                <div className="text-xl font-semibold text-gray-800">VISUAL ENGLISH</div>
               </div>
             </Link>
           </div>
