@@ -6,14 +6,14 @@ import BookThumbnail from "../book/BookThumbnail";
 const HeroSection = () => {
   return (
     <div className="bg-white">
-      {/* New hero section with logo, teacher, child, and buttons */}
+      {/* New hero section with logo, text and children image */}
       <section className="relative bg-white py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             {/* Left side: Logo and text */}
             <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
               <img 
-                src="/api/direct/content/icons/VISUAL 3 .gif"
+                src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
                 alt="Visual English Logo" 
                 className="h-24 mb-6"
               />
@@ -39,11 +39,11 @@ const HeroSection = () => {
               </div>
             </div>
             
-            {/* Right side: Children learning image */}
+            {/* Right side: Children image */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
               <img 
-                src="/api/direct/content/VISUAL WEBSITE/0E.png" 
-                alt="Children learning together" 
+                src="/api/direct/content/VISUAL WEBSITE/main page.png" 
+                alt="Visual English Children" 
                 className="max-w-full h-auto rounded-lg"
               />
             </div>
@@ -51,7 +51,7 @@ const HeroSection = () => {
         </div>
       </section>
 
-      {/* Original full-width hero banner with claymation characters */}
+      {/* Full-width hero banner */}
       <section className="relative">
         {/* Full-width image with embedded text */}
         <div className="w-full bg-white overflow-hidden border-b border-gray-200">
