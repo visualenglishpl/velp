@@ -1,7 +1,5 @@
 import { Helmet } from "react-helmet";
 import EUProjectSection from "../components/sections/EUProjectSection";
-import Footer from "../components/layout/Footer";
-import Navbar from "../components/layout/Navbar";
 
 export default function MethodPage() {
   return (
@@ -9,9 +7,8 @@ export default function MethodPage() {
       <Helmet>
         <title>The Method | Visual English</title>
       </Helmet>
-      <Navbar />
-
-      <main className="pt-16">
+      
+      <main>
         {/* Method Hero Section */}
         <section className="bg-white py-12 md:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -245,7 +242,6 @@ export default function MethodPage() {
         {/* EU Project Section */}
         <EUProjectSection />
       </main>
-      <Footer />
     </>
   );
 }

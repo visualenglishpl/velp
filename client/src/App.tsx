@@ -15,26 +15,30 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Switch>
-        <Route path="/">
-          <Home />
-        </Route>
-        <Route path="/books">
-          <BooksPage />
-        </Route>
-        <Route path="/books/:bookId">
-          <UnitsPage />
-        </Route>
-        <Route path="/admin">
-          <AdminPage />
-        </Route>
-        <Route path="/method">
-          <MethodPage />
-        </Route>
-        <Route path="/about">
-          <AboutPage />
-        </Route>
-      </Switch>
+      <Navbar />
+      <main className="flex-grow">
+        <Switch>
+          <Route path="/">
+            <Home />
+          </Route>
+          <Route path="/books">
+            <BooksPage />
+          </Route>
+          <Route path="/books/:bookId">
+            <UnitsPage />
+          </Route>
+          <Route path="/admin">
+            <AdminPage />
+          </Route>
+          <Route path="/method">
+            <MethodPage />
+          </Route>
+          <Route path="/about">
+            <AboutPage />
+          </Route>
+        </Switch>
+      </main>
+      <Footer />
       <Toaster />
     </div>
   );
