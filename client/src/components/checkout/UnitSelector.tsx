@@ -175,11 +175,16 @@ export default function UnitSelector({ bookId, initialSelectedUnit, onUnitsSelec
                   Unit {unit.unitNumber}
                 </Label>
                 {unit.thumbnailUrl && (
-                  <div className="mt-2 w-full h-12 relative overflow-hidden rounded">
+                  <div className="mt-2 w-full h-12 relative overflow-hidden rounded border">
                     <img 
                       src={`/api/direct/content/${unit.thumbnailUrl}`} 
                       alt={`Thumbnail for unit ${unit.unitNumber}`}
                       className="object-cover w-full h-full"
+                      onError={(e) => {
+                        // If thumbnail fails to load, hide it
+                        const img = e.currentTarget;
+                        img.style.display = "none";
+                      }}
                     />
                   </div>
                 )}

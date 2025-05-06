@@ -128,16 +128,23 @@ export default function UnitsPage() {
             {units.map((unit) => (
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col border-0 shadow-none">
                 <h3 className="text-xl font-medium text-center mt-2 mb-1">Unit {unit.unitNumber}</h3>
-                <div className="aspect-square relative overflow-hidden">
+                <div className="aspect-square relative overflow-hidden border rounded-md">
                   {unit.thumbnailUrl ? (
                     <img 
                       src={`/api/direct/content/${unit.thumbnailUrl}`} 
                       alt={`Thumbnail for unit ${unit.unitNumber}`} 
                       className="object-cover w-full h-full"
                       onError={(e) => {
-                        // If the thumbnail fails to load, set opacity to 0 to hide it
+                        // If the thumbnail fails to load, show No Preview instead
                         const img = e.currentTarget;
-                        img.style.opacity = "0";
+                        img.style.display = "none";
+                        const container = img.parentElement;
+                        if (container) {
+                          const noPreview = document.createElement('div');
+                          noPreview.className = "h-full w-full bg-gray-100 flex items-center justify-center";
+                          noPreview.innerHTML = '<span class="text-gray-400 text-lg">No Preview</span>';
+                          container.appendChild(noPreview);
+                        }
                       }} 
                     />
                   ) : (
@@ -146,9 +153,9 @@ export default function UnitsPage() {
                     </div>
                   )}
                 </div>
-                <div className="py-3 px-4 mt-auto flex flex-col space-y-2">
-                  <Link href={`/books/${bookId}/units/${unit.unitNumber}`}>
-                    <Button className="w-full px-8 py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700">
+                <div className="py-3 mt-auto flex flex-col gap-2">
+                  <Link href={`/books/${bookId}/units/${unit.unitNumber}`} className="w-full">
+                    <Button className="w-full px-4 py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye mr-1">
                         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
                         <circle cx="12" cy="12" r="3"/>
@@ -169,7 +176,7 @@ export default function UnitsPage() {
                         <path d="M3 6h18"/>
                         <path d="M16 10a4 4 0 0 1-8 0"/>
                       </svg>
-                      Buy This Unit (€5)
+                      Buy Unit (€5)
                     </Button>
                   )}
                 </div>
