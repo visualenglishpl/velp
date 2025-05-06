@@ -20,7 +20,7 @@ const PricingPlans = () => {
       planId: "printed_book"
     },
     {
-      title: "Single Lesson Digital Access",
+      title: "Single Lesson Access",
       color: "bg-[#2e88f6]",
       textColor: "text-[#2e88f6]",
       checkColor: "text-[#2e88f6]",
@@ -38,7 +38,7 @@ const PricingPlans = () => {
       planId: "single_lesson"
     },
     {
-      title: "Whole Book Digital Access",
+      title: "Full Book Access",
       color: "bg-[#b23cfd]",
       textColor: "text-[#b23cfd]",
       checkColor: "text-[#b23cfd]",

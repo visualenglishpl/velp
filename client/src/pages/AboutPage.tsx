@@ -16,7 +16,7 @@ export default function AboutPage() {
               <img 
                 src="/api/direct/content/VISUAL WEBSITE/yuga iza.png" 
                 alt="Izabela and Yuga Buassa" 
-                className="max-w-full h-auto mx-auto rounded-md shadow-md"
+                className="max-w-md w-full h-auto mx-auto rounded-md shadow-md"
               />
             </div>
             
