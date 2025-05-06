@@ -19,6 +19,11 @@ export function getBook4Unit10Resources(): TeacherResource[] {
   return resources;
 }
 
+// Function with standardized name for component compatibility
+export function getTeacherResources(): TeacherResource[] {
+  return resources;
+}
+
 // Generate lesson plans for this unit based on standard template
 export function generateBook4Unit10LessonPlans(): LessonPlan[] {
   const unitNumber = '10';
@@ -171,5 +176,10 @@ export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
 
 // Function to get lesson plans (for backward compatibility)
 export function getBook4Unit10LessonPlans(): LessonPlan[] {
+  return generateBook4Unit10LessonPlans();
+}
+
+// Function with standardized name for component compatibility
+export function getUnitLessonPlans(): LessonPlan[] {
   return generateBook4Unit10LessonPlans();
 }

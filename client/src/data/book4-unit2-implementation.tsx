@@ -20,7 +20,17 @@ import type { LessonPlan, LessonStep } from "../components/LessonPlanTemplate";
 export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
   const legacyPlan = resource.lessonPlan;
   if (!legacyPlan) {
-    throw new Error(`No lesson plan found in resource: ${resource.id}`);
+    return {
+      id: resource.id || '',
+      title: resource.title || '',
+      duration: '45 minutes',
+      level: 'Elementary to Pre-Intermediate',
+      objectives: [],
+      materials: [],
+      steps: [],
+      assessmentTips: '',
+      homeworkIdeas: []
+    };
   }
 
   // Create steps from legacy format

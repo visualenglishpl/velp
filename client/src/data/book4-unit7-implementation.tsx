@@ -16,8 +16,17 @@ import { generateDefaultBook4UnitLessonPlans } from "./book4-resources-common";
  * @deprecated Use the standardized lesson plan generators instead
  */
 export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
-  console.warn('convertLegacyLessonPlan is deprecated. Use standardized lesson plans instead.');
-  throw new Error('This function is deprecated. Please use the standardized lesson plan generators.');
+  return {
+    id: resource.id || '',
+    title: resource.title || '',
+    duration: resource.lessonPlan?.duration || '45 minutes',
+    level: resource.lessonPlan?.level || 'Elementary to Pre-Intermediate',
+    objectives: resource.lessonPlan?.objectives || [],
+    materials: resource.lessonPlan?.materials || [],
+    steps: resource.lessonPlan?.steps || [],
+    assessmentTips: resource.lessonPlan?.assessmentTips || '',
+    homeworkIdeas: resource.lessonPlan?.homeworkIdeas || []
+  };
 }
 
 /**

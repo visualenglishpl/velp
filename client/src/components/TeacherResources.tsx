@@ -31,6 +31,10 @@ import { getTeacherResources as getBook4Unit9Resources, getUnitLessonPlans as ge
 import { getTeacherResources as getBook4Unit10Resources, getUnitLessonPlans as getBook4Unit10LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit10 } from '../data/book4-unit10-implementation';
 import { getTeacherResources as getBook4Unit11Resources, getUnitLessonPlans as getBook4Unit11LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit11 } from '../data/book4-unit11-implementation';
 import { getTeacherResources as getBook4Unit12Resources, getUnitLessonPlans as getBook4Unit12LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit12 } from '../data/book4-unit12-implementation';
+import { getTeacherResources as getBook4Unit13Resources, getUnitLessonPlans as getBook4Unit13LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit13 } from '../data/book4-unit13-implementation';
+import { getTeacherResources as getBook4Unit14Resources, getUnitLessonPlans as getBook4Unit14LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit14 } from '../data/book4-unit14-implementation';
+import { getTeacherResources as getBook4Unit15Resources, getUnitLessonPlans as getBook4Unit15LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit15 } from '../data/book4-unit15-implementation';
+import { getTeacherResources as getBook4Unit16Resources, getUnitLessonPlans as getBook4Unit16LessonPlans, convertLegacyLessonPlan as convertLegacyLessonPlanUnit16 } from '../data/book4-unit16-implementation';
 
 // Import any specific implementation functions
 // Book 6 implementations
