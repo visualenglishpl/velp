@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import WithdrawalConsent from '@/components/checkout/WithdrawalConsent';
 import UnitSelector from '@/components/checkout/UnitSelector';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface PlanDetails {
   name: string;
