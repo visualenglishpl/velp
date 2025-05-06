@@ -6,7 +6,7 @@
  * resources and implementation logic
  */
 
-import { TeacherResource } from '@/types/teacher-resources';
+import { TeacherResource } from '@/components/TeacherResources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { resources } from './book5-unit3-resources';
 import { BOOK5_UNIT_TITLES } from './book5-resources-common';
