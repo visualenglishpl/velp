@@ -12,37 +12,37 @@ const Navbar = () => {
                 <img 
                   src="/api/asset/icons/LOGO%20VISUAL%20ENGLISH.png" 
                   alt="Visual English Logo"
-                  className="h-10 mr-2"
+                  className="h-8 mr-2"
                 />
               </div>
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-6">
             <Link href="/">
-              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Home</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Home</span>
             </Link>
             <Link href="/method">
-              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Our Method</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Our Method</span>
             </Link>
             <Link href="/about">
-              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">About Us</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">About Us</span>
             </Link>
             <Link href="/books">
-              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Books</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Books</span>
             </Link>
             <Link href="/#pricing">
-              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Pricing</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Pricing</span>
             </Link>
             <Link href="/contact">
-              <span className="text-gray-700 hover:text-teal-600 text-sm font-medium">Contact</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Contact</span>
             </Link>
             <Link href="/cart">
-              <div className="flex items-center text-gray-700 hover:text-teal-600 cursor-pointer">
+              <div className="flex items-center text-gray-600 hover:text-teal-600 cursor-pointer">
                 <ShoppingCart size={18} />
               </div>
             </Link>
             <Link href="/auth">
-              <span className="bg-teal-600 text-white hover:bg-teal-700 px-4 py-2 rounded-md text-sm font-medium">Sign In</span>
+              <span className="bg-teal-600 text-white hover:bg-teal-700 px-6 py-2 rounded-md text-sm font-medium">Sign In</span>
             </Link>
           </div>
           <div className="md:hidden flex items-center">
