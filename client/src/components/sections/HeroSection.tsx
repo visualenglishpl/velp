@@ -47,9 +47,9 @@ const HeroSection = () => {
           </div>
           
           {/* Right side image */}
-          <div className="md:w-1/2 mt-6 md:mt-0">
+          <div className="md:w-1/2 mt-6 md:mt-0 flex justify-center">
             <img 
-              src="/images/main-page.png" 
+              src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
               alt="Visual English Learning"
               className="max-w-full h-auto rounded-lg shadow-md" 
               onError={(e) => {
@@ -77,12 +77,12 @@ const HeroSection = () => {
             <Link key={bookId} href={`/books/${bookId}`}>
               <div className="bg-gray-100 p-3 rounded-lg hover:shadow-md transition-all cursor-pointer text-center">
                 <img 
-                  src={`/api/asset/thumbnails/book${bookId}.png`} 
+                  src={`/api/content/book${bookId}/cover.png`} 
                   alt={`Book ${bookId}`} 
                   className="w-full h-auto rounded-md" 
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = `/api/asset/icons/book${bookId}.png`;
+                    target.src = `/api/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
                   }}
                 />
                 <div className="mt-2 text-sm font-medium">BOOK {bookId.toUpperCase()}</div>
@@ -97,12 +97,12 @@ const HeroSection = () => {
             <Link key={bookId} href={`/books/${bookId}`}>
               <div className="bg-gray-100 p-3 rounded-lg hover:shadow-md transition-all cursor-pointer text-center">
                 <img 
-                  src={`/api/asset/thumbnails/book${bookId}.png`} 
+                  src={`/api/content/book${bookId}/cover.png`} 
                   alt={`Book ${bookId}`} 
                   className="w-full h-auto rounded-md" 
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = `/api/asset/icons/book${bookId}.png`;
+                    target.src = `/api/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
                   }}
                 />
                 <div className="mt-2 text-sm font-medium">BOOK {bookId}</div>
