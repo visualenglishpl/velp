@@ -1,7 +1,5 @@
 import { Helmet } from "react-helmet";
 import EUProjectSection from "../components/sections/EUProjectSection";
-import Footer from "../components/layout/Footer";
-import Navbar from "../components/layout/Navbar";
 
 export default function AboutPage() {
   return (
@@ -9,37 +7,17 @@ export default function AboutPage() {
       <Helmet>
         <title>About Us | Visual English</title>
       </Helmet>
-      <Navbar />
 
-      <main className="pt-16">
+      <main>
         {/* Hero Section */}
         <section className="bg-white py-12 md:py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="flex justify-center mb-10">
-              <div className="flex gap-4">
-                <div className="w-24 h-24 rounded-full overflow-hidden">
-                  <img 
-                    src="/api/direct/content/VISUAL WEBSITE/izabela.jpg" 
-                    alt="Izabela Buassa" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      // Fallback if image fails to load
-                      (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>';
-                    }}
-                  />
-                </div>
-                <div className="w-24 h-24 rounded-full overflow-hidden">
-                  <img 
-                    src="/api/direct/content/VISUAL WEBSITE/yuga.jpg" 
-                    alt="Yuga Buassa" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      // Fallback if image fails to load
-                      (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>';
-                    }}
-                  />
-                </div>
-              </div>
+            <div className="mb-10">
+              <img 
+                src="/api/direct/content/VISUAL WEBSITE/yuga iza.png" 
+                alt="Izabela and Yuga Buassa" 
+                className="max-w-full h-auto mx-auto rounded-md shadow-md"
+              />
             </div>
             
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -115,7 +93,6 @@ export default function AboutPage() {
         {/* EU Project Section */}
         <EUProjectSection />
       </main>
-      <Footer />
     </>
   );
 }
