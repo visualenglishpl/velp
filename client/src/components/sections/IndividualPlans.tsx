@@ -88,20 +88,20 @@ const PricingPlans = () => {
           {plans.map((plan, index) => (
             <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-md overflow-hidden">
               {/* Header */}
-              <div className={`${plan.color} p-5 text-white text-center`}>
-                <h3 className="text-xl font-bold">
+              <div className={`${plan.color} py-3 text-white text-center`}>
+                <h3 className="text-lg font-bold">
                   {plan.title}
                 </h3>
               </div>
               
               {/* Content */}
-              <div className="flex-grow p-6">
-                <div className="min-h-[160px]">
-                  <ul className="space-y-3">
+              <div className="flex-grow p-4">
+                <div className="min-h-[120px]">
+                  <ul className="space-y-2">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start">
-                        <Check className={`h-5 w-5 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
-                        <span className="text-gray-600 text-sm">{feature}</span>
+                        <Check className={`h-4 w-4 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
+                        <span className="text-gray-600 text-xs">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -109,26 +109,26 @@ const PricingPlans = () => {
               </div>
               
               {/* Pricing */}
-              <div className="p-6 border-t border-gray-100">
-                <div className="flex justify-center items-center h-16">
+              <div className="p-4 border-t border-gray-100">
+                <div className="flex justify-center items-center h-10">
                   <div className="text-center">
                     <div className="flex flex-col items-center">
-                      <div className="text-4xl font-bold">{plan.price}</div>
+                      <div className="text-xl font-bold">{plan.price}</div>
                       {plan.priceNote && (
-                        <div className="text-sm text-gray-500">{plan.priceNote}</div>
+                        <div className="text-xs text-gray-500">{plan.priceNote}</div>
                       )}
                     </div>
                     
                     {plan.priceSavings && (
-                      <div className="text-sm text-gray-500 mt-1">{plan.priceSavings}</div>
+                      <div className="text-xs text-gray-500 mt-0.5">{plan.priceSavings}</div>
                     )}
                   </div>
                 </div>
                 
-                <div className="mt-4">
+                <div className="mt-3">
                   <Link href={index === plans.length - 1 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
-                      className="w-full py-4 px-5 rounded-md font-extrabold text-white shadow-md text-lg"
+                      className="w-full py-2 px-3 rounded-md font-bold text-white shadow-sm text-sm"
                       style={{ backgroundColor: plan.bgColor }}
                     >
                       {plan.buttonText}

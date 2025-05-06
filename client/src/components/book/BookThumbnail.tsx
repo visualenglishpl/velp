@@ -114,30 +114,30 @@ const BookThumbnail = ({
 
   return (
     <div className="h-full">
-      <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-lg h-full flex flex-col`}>
+      <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md h-full flex flex-col`}>
         {/* Custom designed book cover */}
-        <div className={`relative ${getTitleBgClass()} flex items-center justify-center h-48 overflow-hidden`}>
+        <div className={`relative ${getTitleBgClass()} flex items-center justify-center h-36 overflow-hidden`}>
           {/* Book ID and title */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-            <div className="text-6xl font-black mb-1">{formattedBookId}</div>
-            <div className="text-sm uppercase tracking-wider font-medium px-4 text-center">{title}</div>
+            <div className="text-5xl font-black">{formattedBookId}</div>
+            <div className="text-xs uppercase tracking-wider font-medium px-3 text-center mt-1">{title}</div>
           </div>
           
           {/* Visual design elements */}
-          <div className="absolute top-0 left-0 right-0 h-8 bg-white opacity-10"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-white opacity-10"></div>
+          <div className="absolute top-0 left-0 right-0 h-6 bg-white opacity-10"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-6 bg-white opacity-10"></div>
           
           {/* Decorative circles */}
-          <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white opacity-20"></div>
-          <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full bg-white opacity-20"></div>
+          <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white opacity-20"></div>
+          <div className="absolute -bottom-4 -left-4 w-14 h-14 rounded-full bg-white opacity-20"></div>
         </div>
         
-        <div className="p-4 text-center flex-grow flex flex-col bg-white">
-          <h3 className={`font-extrabold ${textColorClass}`}>VISUAL ENGLISH</h3>
-          <p className={`${subTextColorClass} font-medium mb-3`}>BOOK {formattedBookId}</p>
+        <div className="p-3 text-center flex-grow flex flex-col bg-white">
+          <h3 className={`font-bold text-sm ${textColorClass}`}>VISUAL ENGLISH</h3>
+          <p className={`${subTextColorClass} text-xs font-medium mb-2`}>BOOK {formattedBookId}</p>
           <div className="mt-auto">
             <Link href={`/books/${bookId}`} className="block w-full">
-              <button className={`w-full ${buttonColorClass} ${bookId === '5' ? 'text-red-700 border border-red-300' : 'text-white'} py-3 px-4 rounded-md font-extrabold text-sm shadow-md`}>
+              <button className={`w-full ${buttonColorClass} ${bookId === '5' ? 'text-red-700 border border-red-300' : 'text-white'} py-2 px-3 rounded-md font-bold text-xs shadow-sm`}>
                 View Units
               </button>
             </Link>
