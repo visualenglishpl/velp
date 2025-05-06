@@ -13,21 +13,6 @@ const EUProjectSection = () => {
               alt="EU Flag" 
               className="h-16"
             />
-            <img 
-              src="/api/direct/content/VISUAL WEBSITE/leader-logo.png" 
-              alt="LEADER Logo" 
-              className="h-16"
-            />
-            <img 
-              src="/api/direct/content/VISUAL WEBSITE/naklejka PROW.pdf (1).png" 
-              alt="EU Project Logo" 
-              className="h-16"
-            />
-            <img 
-              src="/api/direct/content/VISUAL WEBSITE/lgd-logo.png" 
-              alt="LGD Logo" 
-              className="h-16"
-            />
           </div>
           
           <p className="text-sm text-gray-600 max-w-3xl text-center mb-4 text-blue-600 font-semibold">
