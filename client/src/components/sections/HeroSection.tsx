@@ -1,37 +1,37 @@
 import { Button } from "../ui/button";
 import { Link } from "wouter";
-import { CheckCircle2, MessageCircle, Brain } from "lucide-react";
+import { CheckCircle2, MessageCircle, Brain, Eye } from "lucide-react";
 
 const HeroSection = () => {
   return (
     <div className="bg-white">
       {/* Hero banner section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             {/* Left text content */}
             <div className="md:w-1/2">
-              <div className="mb-2">
-                <div className="inline-block text-blue-600 text-sm font-extrabold py-1 px-3 rounded-full border border-blue-200 bg-blue-50">
-                  Interactive Language Learning
+              <div className="flex items-center mb-4">
+                <div className="text-blue-500 mr-2">
+                  <Eye className="h-14 w-14" strokeWidth={1.5} />
+                </div>
+                <div className="font-light text-4xl tracking-wide text-gray-800">
+                  <div>VISUAL</div>
+                  <div>ENGLISH</div>
                 </div>
               </div>
-              <h1 className="text-5xl md:text-6xl mb-6 tracking-wider">
-                <span className="block text-blue-900">VISUAL</span>
-                <span className="block text-blue-900">ENGLISH</span>
-              </h1>
-              <p className="text-xl text-blue-900 mb-8">
+              <p className="text-xl text-blue-700 mb-10">
                 A distinctive and engaging English learning method tailored for young ESL learners.
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/checkout/free_trial">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-extrabold rounded-lg shadow-lg">
-                    ✅ Try a Free Sample
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-bold rounded-lg">
+                    ✓ Try a Free Sample
                   </Button>
                 </Link>
                 <Link href="/books">
-                  <Button variant="outline" className="border-4 border-green-500 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-extrabold rounded-lg shadow-md">
-                    📘 Explore Books
+                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-medium rounded-lg">
+                    □ Explore Books
                   </Button>
                 </Link>
               </div>
@@ -39,19 +39,16 @@ const HeroSection = () => {
             
             {/* Right side illustration */}
             <div className="md:w-1/2 mt-8 md:mt-0">
-              <div className="relative max-w-md mx-auto">
-                <div className="absolute -inset-1 bg-blue-100 rounded-xl blur-sm opacity-20"></div>
-                <img 
-                  src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
-                  alt="Visual English Learning"
-                  className="relative w-full h-auto rounded-xl shadow-md" 
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/api/asset/icons/LOGO%20VISUAL%20ENGLISH.png";
-                    target.className = "max-w-xs h-auto mx-auto";
-                  }}
-                />
-              </div>
+              <img 
+                src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
+                alt="Visual English Learning"
+                className="w-full h-auto" 
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "/api/asset/icons/LOGO%20VISUAL%20ENGLISH.png";
+                  target.className = "max-w-xs h-auto mx-auto";
+                }}
+              />
             </div>
           </div>
         </div>
