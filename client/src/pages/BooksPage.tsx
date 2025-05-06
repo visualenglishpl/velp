@@ -103,7 +103,7 @@ export default function BooksPage() {
                   <CardTitle className="text-center text-lg">{book.title}</CardTitle>
                 </CardHeader>
                 <CardFooter className="py-3 px-4 flex flex-col gap-2">
-                  <Link href={`/book/${book.bookId}/units`} className="w-full">
+                  <Link href={`/books/${book.bookId}`} className="w-full">
                     <Button className="w-full" variant="default">
                       View Units
                     </Button>

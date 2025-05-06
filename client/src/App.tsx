@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import BooksPage from "./pages/BooksPage";
+import UnitsPage from "./pages/UnitsPage";
 
 function App() {
   console.log('Rendering full home page with layout');
@@ -16,6 +17,7 @@ function App() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/books" component={BooksPage} />
+          <Route path="/books/:bookId" component={UnitsPage} />
         </Switch>
       </main>
       <Footer />

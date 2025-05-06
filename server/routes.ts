@@ -1813,6 +1813,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Endpoint to get units for a specific book
+  app.get("/api/books/:bookId/units", async (req, res) => {
+    try {
+      const { bookId } = req.params;
+      
+      if (!bookId) {
+        return res.status(400).json({ error: "Book ID is required" });
+      }
+      
+      // Generate a standardized set of units based on the book ID
+      // Books 0a/0b/0c have 20 units, Books 1-3 have 18 units, Books 4-7 have 16 units
+      let unitCount = 16; // Default for Books 4-7
+      
+      if (bookId.startsWith('0')) {
+        unitCount = 20; // For Books 0a, 0b, 0c
+      } else if (['1', '2', '3'].includes(bookId)) {
+        unitCount = 18; // For Books 1-3
+      }
+      
+      const units = Array.from({ length: unitCount }, (_, i) => {
+        const unitNumber = (i + 1).toString();
+        return {
+          unitNumber,
+          title: `Unit ${unitNumber}`,
+          thumbnailUrl: null,
+          description: `Description for Book ${bookId} Unit ${unitNumber}`
+        };
+      });
+      
+      // Try to get thumbnail URLs for each unit
+      const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
+        // Try multiple possible thumbnail paths based on book ID
+        const possiblePaths = [
+          `book${bookId}/icons/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
+          `book${bookId}/thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
+          `thumbnails/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
+          `thumbnails/book${bookId}/thumbnailsuni${bookId}-${unit.unitNumber}.png`,
+          `book${bookId}/unit${unit.unitNumber}/thumbnail.png`
+        ];
+        
+        // Try each path to find a valid thumbnail URL
+        for (const path of possiblePaths) {
+          try {
+            const thumbnailUrl = await getS3PresignedUrl(path);
+            if (thumbnailUrl) {
+              console.log(`Found thumbnail for Book ${bookId} Unit ${unit.unitNumber}: ${path}`);
+              return { ...unit, thumbnailUrl };
+            }
+          } catch (error) {
+            // Just log and continue to next path
+            console.log(`No thumbnail found at: ${path}`);
+          }
+        }
+        
+        // If no thumbnail URL was found, return the unit without a thumbnail
+        return unit;
+      }));
+      
+      return res.json(unitsWithThumbnails);
+    } catch (error) {
+      console.error("Error fetching units:", error);
+      res.status(500).json({ error: "Failed to fetch units" });
+    }
+  });
+  
   // Endpoint to get book thumbnails for the bookstore
   app.get("/api/assets/book-thumbnails", async (req, res) => {
     try {

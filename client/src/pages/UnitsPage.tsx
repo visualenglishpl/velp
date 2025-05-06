@@ -1,443 +1,131 @@
 import { useState, useEffect } from 'react';
-import { useRoute, Link } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
-import { 
-  Card, CardHeader, CardContent, CardTitle, CardFooter, 
-  CardDescription 
-} from '@/components/ui/card';
+import { Link, useParams } from 'wouter';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { LockIcon } from 'lucide-react';
+import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/hooks/use-auth';
+import { useQuery } from '@tanstack/react-query';
 
-type UnitInfo = {
+// Type for a unit with thumbnail URL
+type UnitWithThumbnail = {
   unitNumber: string;
   title: string;
-  description?: string;
   thumbnailUrl?: string;
+  description?: string;
 };
 
-// Interface for the component props when used directly with a bookId parameter
-interface UnitsPageBaseProps {
-  bookIdParam?: string;
-}
-
-// Main component that accepts standard route props or a direct bookId
-export default function UnitsPage(props: UnitsPageBaseProps = {}) {
-  const [, params] = useRoute('/book/:bookId/units');
-  
-  // Extract bookIdParam from props if it exists
-  const { bookIdParam } = props;
-  
-  // Use the direct bookIdParam if available, otherwise use route params
-  const bookId = bookIdParam || params?.bookId || '';
+export default function UnitsPage() {
   const { toast } = useToast();
-  
-  // Get authentication status from the useAuth hook
-  const { user } = useAuth();
-  
-  // Determine if the user has purchased access based on authentication status
-  const [hasPurchased, setHasPurchased] = useState(false);
-  
-  // Update hasPurchased whenever authentication status changes
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const params = useParams();
+  const bookId = params.bookId;
+
+  // Check if user is authenticated
   useEffect(() => {
-    // User is authenticated, so they have purchased access
-    if (user) {
-      setHasPurchased(true);
-    }
-  }, [user]);
-  
-  // Also check for query parameter indicating a successful purchase
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.get('purchased') === 'true') {
-      setHasPurchased(true);
-      toast({
-        title: "Access Granted!",
-        description: "You now have access to all content in this book.",
-        duration: 5000,
-      });
-    }
-  }, [toast]);
-  
-  // This would normally fetch from your API
-  const { data: units, isLoading } = useQuery({
-    queryKey: ['/api/books', bookId, 'units'],
+    const checkAuth = async () => {
+      try {
+        const response = await apiRequest('GET', '/api/user');
+        if (response.ok) {
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      }
+    };
+    
+    checkAuth();
+  }, []);
+
+  // Query to get units for a specific book
+  const { data: units, isLoading, error } = useQuery<UnitWithThumbnail[]>({
+    queryKey: [`/api/books/${bookId}/units`],
     queryFn: async () => {
-      // For demo purposes, generate sample units
-      // In a real app, this would be an API call
-      const demoUnits: UnitInfo[] = [];
-      
-      // Special cases for unit counts by book:
-      // - Book 0a, 0b, 0c have 20 units
-      // - Books 1, 2, 3 have 18 units
-      // - Books 4-7 have 16 units
-      let unitCount = 10;
-      
-      if (['0a', '0b', '0c'].includes(bookId)) {
-        unitCount = 20;
-      } else if (['1', '2', '3'].includes(bookId)) {
-        unitCount = 18;
-      } else if (['4', '5', '6', '7'].includes(bookId)) {
-        unitCount = 16;
+      const res = await apiRequest('GET', `/api/books/${bookId}/units`);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch units for book ${bookId}`);
       }
-      
-      for (let i = 1; i <= unitCount; i++) {
-        // Generate thumbnail URL based on book ID
-        // All books use the same pattern based on S3 path: s3://visualenglishmaterial/book1/icons/thumbnailsuni1-1.png
-        const thumbnailUrl = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${i}.png`;
-        
-        demoUnits.push({
-          unitNumber: i.toString(),
-          title: `UNIT ${i}`,
-          description: '', // Remove descriptions as requested
-          thumbnailUrl: thumbnailUrl
-        });
-      }
-      return demoUnits;
+      return await res.json();
     },
+    enabled: !!bookId, // Only run the query if bookId is available
   });
 
+  // Handle error
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: 'Error',
+        description: `Failed to load units for book ${bookId}. Please try again later.`,
+        variant: 'destructive'
+      });
+    }
+  }, [error, toast, bookId]);
+
   return (
-    <div className="container mx-auto px-4 py-10">
+    <div className="container mx-auto px-4 py-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-2">
-              <Link href="/books">
-                <Button variant="outline" className="mb-2 sm:mb-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4"><path d="m15 18-6-6 6-6"/></svg>
-                  Back to Books
-                </Button>
-              </Link>
-              <h1 className="text-3xl font-bold">{bookId.toUpperCase()} - Units</h1>
-            </div>
-          </div>
-          
-          {!hasPurchased && (
-            <Button 
-              onClick={() => window.location.href = `/checkout/whole_book?book=${bookId}`}
-              className="bg-gradient-to-r from-primary to-primary/80 whitespace-nowrap"
-            >
-              Purchase Full Access
+        <div className="flex items-center mb-6">
+          <Link href="/books">
+            <Button variant="outline" className="mr-4">
+              ← Back to Books
             </Button>
-          )}
+          </Link>
+          <h1 className="text-3xl font-bold">Book {bookId} Units</h1>
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {[...Array(10)].map((_, i) => (
-              <Card key={i} className="overflow-hidden flex flex-col border-0 shadow-none">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {[...Array(16)].map((_, i) => (
+              <Card key={i} className="overflow-hidden border-0 shadow-none">
                 <div className="aspect-square w-full">
                   <Skeleton className="h-full w-full" />
                 </div>
                 <CardHeader className="py-3 px-4">
                   <Skeleton className="h-6 w-2/3" />
                 </CardHeader>
-                <CardContent className="py-0 px-4">
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-3/4" />
-                </CardContent>
                 <CardFooter className="py-3 px-4">
-                  <Skeleton className="h-9 w-full" />
+                  <Skeleton className="h-8 w-full" />
                 </CardFooter>
               </Card>
             ))}
           </div>
         ) : units && units.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {units.map((unit, index) => (
-              <Card key={unit.unitNumber} className="overflow-hidden flex flex-col h-full border-0 shadow-none">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {units.map((unit) => (
+              <Card key={unit.unitNumber} className="overflow-hidden flex flex-col border-0 shadow-none">
                 <div className="aspect-square relative overflow-hidden">
-                  {!hasPurchased && (
-                    <div className="absolute top-2 right-2 bg-primary/90 rounded-full p-1 z-10">
-                      <LockIcon className="h-4 w-4 text-white" />
+                  {unit.thumbnailUrl ? (
+                    <img 
+                      src={unit.thumbnailUrl} 
+                      alt={`Thumbnail for unit ${unit.unitNumber}`} 
+                      className="object-cover w-full h-full"
+                      onError={(e) => {
+                        // If the thumbnail fails to load, set opacity to 0 to hide it
+                        const img = e.currentTarget;
+                        img.style.opacity = "0";
+                      }} 
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-gray-100 flex items-center justify-center">
+                      <span className="text-gray-400 text-lg">No Preview</span>
                     </div>
                   )}
-                  
-                  <div className="h-full w-full">
-                    {/* Generate direct S3 path to first image from the unit */}
-                    <div className="h-full w-full relative">
-                      {/* Styled unit background with gradient - only shown if image fails to load */}
-                      <div className="h-full w-full bg-gradient-to-br from-primary/5 to-primary/15 flex flex-col items-center justify-center absolute inset-0 z-0">
-                        <span className="text-3xl font-bold text-primary/90 drop-shadow-md">
-                          UNIT {unit.unitNumber}
-                        </span>
-                      </div>
-                      
-                      {/* Try multiple image patterns in order */}
-                      <img 
-                        src={
-                          // Dynamically determine the best starting path based on book and unit
-                          (() => {
-                            // All books use the same pattern for thumbnails in the S3 bucket
-                            // The exact format is: book{bookId}/icons/thumbnailsuni{bookId}-{number}.png
-                            const unitNum = parseInt(unit.unitNumber, 10);
-                            
-                            // Return thumbnail path using the same pattern for all books
-                            return `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-${unitNum}.png`;
-                          })()
-                        } 
-                        alt={`Thumbnail for ${unit.title}`}
-                        className="h-full w-full object-cover object-center relative z-10"
-                        onError={(e) => {
-                          // Try different common filenames in sequence
-                          const img = e.target as HTMLImageElement;
-                          
-                          // Book-specific filename patterns
-                          let tryFilenames: string[] = [];
-                          
-                          // For Book 0a, 0b, 0c with completely different structure
-                          if (bookId.startsWith("0")) {
-                            // Special handling for Book 0 series - try both regular paths and icons folder
-                            
-                            // First try the main unit folder paths
-                            tryFilenames = [
-                              "unit.png",
-                              "cover.png",
-                              "title.png",
-                              "00 E.png",
-                              "00 A.png",
-                              "00.png",
-                              "0.png",
-                              "1.png",
-                              "01.png", 
-                              "preview.png",
-                              "thumbnail.png",
-                              "index.png"
-                            ];
-                            
-                            // This custom handling tries all paths in the folder structure first,
-                            // then checks the special icons folder that holds thumbnails for book 0 series
-                            const book0IconCheck = () => {
-                              // Only try this path if the image is still failing to load
-                              if (img.style.opacity !== "0") return;
-                              
-                              // IMPORTANT DEBUGGING: Log each attempt for book 0 thumbnails
-                              console.log(`Book ${bookId}, Unit ${unit.unitNumber}: Trying Book 0 icons folder paths`);
-                              
-                              // CRITICAL FIX: Start with the confirmed working path format for Book 0 series
-                              // The exact format is "thumbnailsuni0a-1.png" etc.
-                              const unitNum = parseInt(unit.unitNumber, 10);
-                              
-                              // 1. First try the best format we've discovered in S3 bucket
-                              const thumbnailIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/thumbnailsuni${bookId}-${unitNum}.png`;
-                              console.log(`Trying exact thumbnail path: ${thumbnailIconPath}`);
-                              img.src = thumbnailIconPath;
-                              
-                              img.onerror = () => {
-                                // Try with 'unit' prefix in icons folder
-                                const genericIconPath = `/api/direct/book${bookId.slice(0, 3)}/icons/unit${unitNum}.png`;
-                                console.log(`Trying with unit prefix: ${genericIconPath}`);
-                                img.src = genericIconPath;
-                                
-                                img.onerror = () => {
-                                  // Try book-specific icons folder with numeric filename
-                                  const bookSpecificIconPath = `/api/direct/book${bookId}/icons/${unitNum}.png`;
-                                  console.log(`Trying book-specific icon path: ${bookSpecificIconPath}`);
-                                  img.src = bookSpecificIconPath;
-                                  
-                                  img.onerror = () => {
-                                    // Try book-specific icons folder with unit-prefixed filename
-                                    const unitPrefixedPath = `/api/direct/book${bookId}/icons/unit${unitNum}.png`;
-                                    console.log(`Trying unit-prefixed path: ${unitPrefixedPath}`);
-                                    img.src = unitPrefixedPath;
-                                    
-                                    img.onerror = () => {
-                                      // If all icon attempts fail, fall back to original approach
-                                      console.log(`All icon attempts failed for Book ${bookId}, Unit ${unit.unitNumber}`);
-                                      img.style.opacity = "0";
-                                    };
-                                  };
-                                };
-                              };
-                            };
-                            
-                            // Add this check to run after the main folder structure checks
-                            setTimeout(book0IconCheck, 500);
-                          }
-                          // For Book 1, some units have special format
-                          else if (bookId === "1" && ["1", "2", "5", "10"].includes(unit.unitNumber)) {
-                            tryFilenames = [
-                              "title.png",
-                              "unit.png",
-                              "cover.png",
-                              "00.png",
-                              "1.png"
-                            ];
-                          }
-                          // For Book 2, some units have special format
-                          else if (bookId === "2" && ["1", "4", "5", "8", "9", "10"].includes(unit.unitNumber)) {
-                            tryFilenames = [
-                              "title.png",
-                              "unit.png",
-                              "cover.png",
-                              "00.png",
-                              "1.png"
-                            ];
-                          }
-                          // For Book 3, some units have special format
-                          else if (bookId === "3" && ["3", "5", "7", "8", "10"].includes(unit.unitNumber)) {
-                            tryFilenames = [
-                              "title.png",
-                              "unit.png",
-                              "cover.png",
-                              "00.png",
-                              "1.png"
-                            ];
-                          }
-                          // For Book 4, use specific patterns
-                          else if (bookId === "4") {
-                            // Special handling for unit 14
-                            if (unit.unitNumber === "14") {
-                              // For Book 4 Unit 14, create a custom gradient background since image is missing
-                              img.style.opacity = "0";
-                              // Add a fallback check using direct path
-                              setTimeout(() => {
-                                // Try a direct path without the assets folder
-                                console.log("Trying direct path for Book 4 Unit 14");
-                                const directPath = `/api/direct/book4/unit14/thumbnail.png`;
-                                img.src = directPath;
-                                img.onerror = () => {
-                                  // Still failed, use the styled unit background
-                                  img.style.opacity = "0";
-                                };
-                              }, 300);
-                              
-                              return; // Skip normal file checks
-                            } else {
-                              tryFilenames = [
-                                "00.png",
-                                "00 A.png", 
-                                "00 B.png",
-                                "00 C.png",
-                                "00 D.png",
-                                "00 E.png",
-                                "001.png",
-                                "01.png",
-                                "1.png"
-                              ];
-                            }
-                          } 
-                          // For Book 5, 6, 7 problematic units
-                          else if ((bookId === "5" || bookId === "6" || bookId === "7") && 
-                                  ["5", "8", "13"].includes(unit.unitNumber)) {
-                            tryFilenames = [
-                              "title.png",
-                              "unit.png",
-                              "cover.png",
-                              "00.png",
-                              "00 A.png"
-                            ];
-                          }
-                          // Book 7 has additional problematic units
-                          else if (bookId === "7" && ["7", "14"].includes(unit.unitNumber)) {
-                            tryFilenames = [
-                              "title.png",
-                              "unit.png",
-                              "cover.png",
-                              "00.png",
-                              "00 A.png"
-                            ];
-                          }
-                          // Default patterns for all other cases
-                          else {
-                            tryFilenames = [
-                              "00 E.png",
-                              "00 A.png", 
-                              "00 B.png",
-                              "00 C.png",
-                              "00 D.png",
-                              "00.png",
-                              "01 A.png",
-                              "01.png",
-                              "001.png",
-                              "1.png",
-                              "unit.png",
-                              "title.png",
-                              "cover.png"
-                            ];
-                          }
-                          
-                          // Try next filename or hide if all fail
-                          const tryNextOrHide = (index = 0, inAssets = true) => {
-                            if (index >= tryFilenames.length) {
-                              if (inAssets) {
-                                // Try again outside the assets folder
-                                tryNextOrHide(0, false);
-                                return;
-                              } else {
-                                // All attempts failed, hide the image
-                                img.style.opacity = "0";
-                                return;
-                              }
-                            }
-                            
-                            // Try in assets folder first, then directly in unit folder
-                            const path = inAssets 
-                              ? `/api/direct/book${bookId}/unit${unit.unitNumber}/assets/${tryFilenames[index]}`
-                              : `/api/direct/book${bookId}/unit${unit.unitNumber}/${tryFilenames[index]}`;
-                              
-                            img.src = path;
-                            img.onerror = () => {
-                              tryNextOrHide(index + 1, inAssets);
-                            };
-                          };
-                          
-                          // For book 0 series, start directly with non-assets path as they typically don't use assets folder
-                          if (bookId.startsWith("0")) {
-                            tryNextOrHide(0, false);
-                          } else {
-                            tryNextOrHide(0, true);
-                          }
-                        }}
-                      />
-                    </div>
-                  </div>
                 </div>
-                
                 <CardHeader className="py-3 px-4">
-                  <CardTitle className="text-base font-bold text-center">
-                    {unit.title}
-                  </CardTitle>
-                  {unit.description && (
-                    <CardDescription className="text-xs text-center">
-                      {unit.description}
-                    </CardDescription>
-                  )}
+                  <CardTitle className="text-lg">Unit {unit.unitNumber}</CardTitle>
                 </CardHeader>
-                
-                <CardFooter className="pt-0 px-4 pb-4 mt-auto flex-col gap-2">
-                  {/* View Content button */}
-                  <Link href={`/book${bookId}/unit${unit.unitNumber}`} className="w-full">
-                    <Button 
-                      className="w-full h-10" 
-                      variant={hasPurchased ? "default" : "secondary"}
-                    >
-                      {hasPurchased ? 'View Content' : 'Free Sample'}
-                    </Button>
+                <CardFooter className="py-3 px-4 mt-auto">
+                  <Link href={`/books/${bookId}/units/${unit.unitNumber}`}>
+                    <Button className="w-full">View Unit</Button>
                   </Link>
-                  
-                  {/* Buy Access button - visible if not purchased and not the first unit */}
-                  {!hasPurchased && (
-                    <Button
-                      variant="outline"
-                      className="w-full h-10"
-                      onClick={() => window.location.href = `/checkout/single_lesson?book=${bookId}&unit=${unit.unitNumber}`}
-                    >
-                      Buy Lesson
-                    </Button>
-                  )}
                 </CardFooter>
               </Card>
             ))}
           </div>
         ) : (
           <div className="text-center py-12">
-            <h3 className="text-xl font-medium mb-2">No units found</h3>
-            <p className="text-gray-600">This book doesn't have any units yet.</p>
+            <h3 className="text-xl font-medium text-gray-700 mb-2">No units found</h3>
+            <p className="text-gray-500">This book has no units available yet.</p>
           </div>
         )}
       </div>
