@@ -123,7 +123,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 mt-12 pt-8 text-gray-400">
           <p className="text-sm mb-4 text-center">
-            &copy; {new Date().getFullYear()} Visual English. All rights reserved.
+            &copy; 2025 Visual English. All rights reserved.
           </p>
           <div className="text-xs text-center max-w-4xl mx-auto">
             <p className="mb-3">
@@ -140,8 +140,11 @@ const Footer = () => {
                 Regulaminie
               </Link>.
             </p>
-            <p>
+            <p className="mb-3">
               EDU-CENTRE DOLINA KARPIA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ | KRS: 0000806143 | NIP: 5492456552 | REGON: 384474200 | Adres: ul. RYNEK 2, 32-640 ZATOR, MAŁOPOLSKIE
+            </p>
+            <p className="mt-4">
+              Platform was designed and built by EDU-CENTRE DOLINA KARPIA. To build a similar platform, contact us.
             </p>
           </div>
         </div>
