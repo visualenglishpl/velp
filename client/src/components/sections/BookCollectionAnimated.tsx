@@ -121,7 +121,7 @@ const BookCollectionAnimated: React.FC = () => {
                     <img 
                       src={book.gifUrl} 
                       alt={`Book ${book.id} animation`} 
-                      className="w-full h-full object-contain transition-opacity duration-300 ease-in-out hover:opacity-90" 
+                      className="w-full h-full object-contain" 
                     />
                   </div>
                   <div className="p-4 flex flex-col flex-grow">
@@ -129,8 +129,7 @@ const BookCollectionAnimated: React.FC = () => {
                     <div className="mt-auto pt-2">
                       <Link href={`/books/${book.id}`}>
                         <Button 
-                          className="w-full" 
-                          variant="outline"
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold shadow-md" 
                         >
                           View Book
                         </Button>
@@ -145,7 +144,7 @@ const BookCollectionAnimated: React.FC = () => {
         
         <div className="mt-12 text-center">
           <Link href="/books">
-            <Button size="lg">View All Books</Button>
+            <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-md">View All Books</Button>
           </Link>
         </div>
       </div>
