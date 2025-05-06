@@ -4,7 +4,7 @@ import { Link } from "wouter";
 const PricingPlans = () => {
   const plans = [
     {
-      title: "Printed Book Only",
+      title: "Printed Book\nOnly",
       color: "bg-[#00c971]",
       textColor: "text-[#00c971]",
       checkColor: "text-[#00c971]",
@@ -16,11 +16,11 @@ const PricingPlans = () => {
       ],
       price: "€20",
       priceNote: "+ delivery",
-      buttonText: "Order Printed Book",
+      buttonText: "Order\nPrinted Book",
       planId: "printed_book"
     },
     {
-      title: "Single Lesson Access",
+      title: "Single Lesson\nAccess",
       color: "bg-[#2e88f6]",
       textColor: "text-[#2e88f6]",
       checkColor: "text-[#2e88f6]",
@@ -34,11 +34,11 @@ const PricingPlans = () => {
       price: "€5",
       priceNote: "per month",
       priceSavings: "€40/year (33% savings)",
-      buttonText: "Start Learning Now",
+      buttonText: "Start\nLearning Now",
       planId: "single_lesson"
     },
     {
-      title: "Full Book Access",
+      title: "Full Book\nAccess",
       color: "bg-[#b23cfd]",
       textColor: "text-[#b23cfd]",
       checkColor: "text-[#b23cfd]",
@@ -52,11 +52,11 @@ const PricingPlans = () => {
       price: "€25",
       priceNote: "per month",
       priceSavings: "€180/year (40% savings)",
-      buttonText: "Get Full Access",
+      buttonText: "Get\nFull Access",
       planId: "whole_book"
     },
     {
-      title: "Free Trial",
+      title: "Free\nTrial",
       color: "bg-[#ff9d22]",
       textColor: "text-[#ff9d22]",
       checkColor: "text-[#ff9d22]",
@@ -69,7 +69,7 @@ const PricingPlans = () => {
       ],
       price: "Free",
       priceNote: "7-Day Trial",
-      buttonText: "Start Free Trial",
+      buttonText: "Start\nFree Trial",
       planId: "free_trial"
     },
   ];
@@ -86,17 +86,18 @@ const PricingPlans = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
-            <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden" 
+                 style={{ minHeight: "540px" }}>
               {/* Header */}
               <div className={`${plan.color} py-4 text-white text-center`}>
-                <h3 className="text-xl font-bold">
+                <h3 className="text-xl font-bold leading-tight whitespace-pre-line h-14 flex items-center justify-center">
                   {plan.title}
                 </h3>
               </div>
               
               {/* Content */}
               <div className="flex-grow p-5">
-                <div className="min-h-[200px]">
+                <div className="min-h-[180px]">
                   <ul className="space-y-3">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start">
@@ -128,7 +129,7 @@ const PricingPlans = () => {
                 <div className="mt-2">
                   <Link href={index === plans.length - 1 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
-                      className="w-full py-3 px-4 rounded-md font-bold text-white shadow-md text-base"
+                      className="w-full py-3 px-4 rounded-md font-bold text-white shadow-md text-base h-16 whitespace-pre-line"
                       style={{ backgroundColor: plan.bgColor }}
                     >
                       {plan.buttonText}
