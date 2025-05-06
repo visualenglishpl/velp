@@ -145,7 +145,7 @@ export default function MethodPage() {
             <div className="max-w-4xl mx-auto">
               <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 shadow-sm">
                 <p className="text-gray-600 font-light text-center mb-6">
-                  Each 30–40 minute lesson includes:
+                  Each 45–60 minute lesson includes:
                 </p>
                 
                 <div className="space-y-6">
@@ -154,7 +154,7 @@ export default function MethodPage() {
                       <span className="text-blue-500 text-xl">🔹</span>
                     </div>
                     <div>
-                      <h3 className="text-md font-medium text-gray-700">Warm-up (5–10 min)</h3>
+                      <h3 className="text-md font-medium text-gray-700">Warm-up (10–15 min)</h3>
                       <p className="text-gray-600 font-light">Picture discussion or guessing game</p>
                     </div>
                   </div>
@@ -164,7 +164,7 @@ export default function MethodPage() {
                       <span className="text-green-500 text-xl">🔹</span>
                     </div>
                     <div>
-                      <h3 className="text-md font-medium text-gray-700">Main Practice (20 min)</h3>
+                      <h3 className="text-md font-medium text-gray-700">Main Practice (25-30 min)</h3>
                       <p className="text-gray-600 font-light">Guided Q&A with visual materials</p>
                     </div>
                   </div>
