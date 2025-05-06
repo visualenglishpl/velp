@@ -14,7 +14,7 @@ const HeroSection = () => {
             <div className="md:w-1/2 flex flex-col items-start">
               <div className="mb-8">
                 <img 
-                  src="/api/content/icons/LOGO%20VISUAL%20ENGLISH.png" 
+                  src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
                   alt="Visual English Logo" 
                   className="h-20"
                 />
@@ -39,7 +39,7 @@ const HeroSection = () => {
             {/* Right side illustration */}
             <div className="md:w-1/2 mt-8 md:mt-0">
               <img 
-                src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
+                src="/api/direct/content/VISUAL WEBSITE/main page.png" 
                 alt="Visual English Learning Illustration"
                 className="w-full h-auto rounded-lg" 
               />
