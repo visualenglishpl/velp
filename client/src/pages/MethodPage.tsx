@@ -194,21 +194,21 @@ export default function MethodPage() {
             <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 items-center">
               <div className="md:w-1/2">
                 <img 
-                  src="/api/direct/content/VISUAL WEBSITE/0E.png" 
+                  src="/api/direct/content/VISUAL WEBSITE/lesson.png" 
                   alt="Visual English Material Example" 
                   className="rounded-lg w-full h-auto"
                 />
               </div>
               <div className="md:w-1/2 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
                 <p className="text-gray-600 font-light mb-4">
-                  In "Daily Routines," students view images of brushing teeth, eating breakfast, and packing a bag. The teacher asks:
+                  In "Household Chores," students view images of cleaning activities. The teacher asks:
                 </p>
                 <div className="space-y-3 mb-4 pl-4 border-l-2 border-teal-100">
-                  <p className="font-medium text-gray-700">"What does she do in the morning?"</p>
-                  <p className="text-gray-600 font-light">→ Student: "She brushes her teeth."</p>
+                  <p className="font-medium text-gray-700">"Who is cleaning the house?"</p>
+                  <p className="text-gray-600 font-light">→ Student: "The children are cleaning the house."</p>
                   
-                  <p className="font-medium text-gray-700 mt-4">"Do you eat breakfast?"</p> 
-                  <p className="text-gray-600 font-light">→ Student: "Yes, I eat eggs."</p>
+                  <p className="font-medium text-gray-700 mt-4">"Do you help clean at home?"</p> 
+                  <p className="text-gray-600 font-light">→ Student: "Yes, I clean my room."</p>
                 </div>
               </div>
             </div>
