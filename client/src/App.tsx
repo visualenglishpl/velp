@@ -3,22 +3,19 @@ import React from "react";
 import Home from "./pages/Home";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import { AuthProvider } from "./hooks/use-auth";
 
 function App() {
   console.log('Rendering full home page with layout');
   
   return (
-    <AuthProvider>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Home />
-        </main>
-        <Footer />
-        <Toaster />
-      </div>
-    </AuthProvider>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow">
+        <Home />
+      </main>
+      <Footer />
+      <Toaster />
+    </div>
   );
 }
 
