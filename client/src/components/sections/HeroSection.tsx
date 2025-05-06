@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 import { Link } from "wouter";
-import { CheckCircle2, MessageCircle, Brain, Eye } from "lucide-react";
+import { CheckCircle2, MessageCircle, Brain } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -10,12 +10,14 @@ const HeroSection = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             {/* Left text content */}
-            <div className="md:w-1/2">
-              <div className="flex items-center mb-4">
-                <div className="text-blue-500 mr-2">
-                  <Eye className="h-14 w-14" strokeWidth={1.5} />
-                </div>
-                <div className="font-light text-4xl tracking-wide text-gray-800">
+            <div className="md:w-1/2 flex flex-col items-start">
+              <div className="flex items-center mb-6">
+                <img 
+                  src="/api/content/icons/LOGO%20VISUAL%20ENGLISH.png" 
+                  alt="Visual English Logo" 
+                  className="h-16 mr-3"
+                />
+                <div className="font-light text-4xl tracking-wide text-gray-800 leading-none">
                   <div>VISUAL</div>
                   <div>ENGLISH</div>
                 </div>
@@ -23,14 +25,14 @@ const HeroSection = () => {
               <p className="text-xl text-blue-700 mb-10">
                 A distinctive and engaging English learning method tailored for young ESL learners.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
                 <Link href="/checkout/free_trial">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-bold rounded-lg">
+                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-6 text-lg font-bold rounded-lg w-full">
                     ✓ Try a Free Sample
                   </Button>
                 </Link>
                 <Link href="/books">
-                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-medium rounded-lg">
+                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-600 hover:bg-white hover:text-green-600 px-8 py-6 text-lg font-medium rounded-lg w-full">
                     □ Explore Books
                   </Button>
                 </Link>
@@ -41,13 +43,8 @@ const HeroSection = () => {
             <div className="md:w-1/2 mt-8 md:mt-0">
               <img 
                 src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
-                alt="Visual English Learning"
+                alt="Visual English Learning Illustration"
                 className="w-full h-auto" 
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/api/asset/icons/LOGO%20VISUAL%20ENGLISH.png";
-                  target.className = "max-w-xs h-auto mx-auto";
-                }}
               />
             </div>
           </div>
