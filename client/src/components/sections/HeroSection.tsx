@@ -6,7 +6,52 @@ import BookThumbnail from "../book/BookThumbnail";
 const HeroSection = () => {
   return (
     <div className="bg-white">
-      {/* Full-width hero banner with claymation characters */}
+      {/* New hero section with logo, teacher, child, and buttons */}
+      <section className="relative bg-white py-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between">
+            {/* Left side: Logo and text */}
+            <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
+              <img 
+                src="/api/direct/content/icons/VISUAL 3 .gif"
+                alt="Visual English Logo" 
+                className="h-24 mb-6"
+              />
+              <h1 className="text-3xl md:text-4xl font-medium text-gray-800 leading-tight mb-4">
+                Visual English Children - Revolutionizing Language Learning for Young Minds
+              </h1>
+              <p className="text-lg text-gray-600 mb-8">
+                A unique visual approach to language learning that makes English fun and effective for children.
+              </p>
+              
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/checkout/free_trial">
+                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-2.5 text-base font-normal rounded-md w-full sm:w-auto">
+                    Try Free Sample
+                  </Button>
+                </Link>
+                <Link href="/method">
+                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-500 hover:bg-white hover:text-green-600 px-8 py-2.5 text-base font-normal rounded-md w-full sm:w-auto">
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            
+            {/* Right side: Children learning image */}
+            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+              <img 
+                src="/api/direct/content/VISUAL WEBSITE/0E.png" 
+                alt="Children learning together" 
+                className="max-w-full h-auto rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Original full-width hero banner with claymation characters */}
       <section className="relative">
         {/* Full-width image with embedded text */}
         <div className="w-full bg-white overflow-hidden border-b border-gray-200">
@@ -19,15 +64,14 @@ const HeroSection = () => {
         
         {/* Buttons below the image */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
-          
           <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
             <Link href="/checkout/free_trial">
-              <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-5 text-xl font-bold rounded-xl">
+              <Button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 text-lg font-normal rounded-md shadow-sm">
                 ✓ Try a Free Sample
               </Button>
             </Link>
             <Link href="/method">
-              <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-8 py-5 text-xl font-bold rounded-xl flex items-center justify-center gap-2">
+              <Button variant="outline" className="border-2 border-green-500 bg-white text-green-500 hover:bg-white hover:text-green-600 px-8 py-3 text-lg font-normal rounded-md flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.3-4.3"></path>
@@ -42,7 +86,7 @@ const HeroSection = () => {
       {/* Why it works section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center mb-12 text-black">Why Visual English Works</h2>
+          <h2 className="text-3xl font-medium text-center mb-12 text-gray-800">Why Visual English Works</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
@@ -50,8 +94,8 @@ const HeroSection = () => {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-500 rounded-full mb-6 shadow-md">
                 <CheckCircle2 className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4 text-indigo-700">Visual-first learning</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-medium mb-4 text-indigo-600">Visual-first learning</h3>
+              <p className="text-gray-500 font-light">
                 Images and visual cues help children remember vocabulary and language structures more effectively.
               </p>
             </div>
@@ -61,8 +105,8 @@ const HeroSection = () => {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-pink-500 rounded-full mb-6 shadow-md">
                 <MessageCircle className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4 text-rose-600">Real conversation practice</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-medium mb-4 text-rose-500">Real conversation practice</h3>
+              <p className="text-gray-500 font-light">
                 Non-stop engaging conversation for real-world language use from day one.
               </p>
             </div>
@@ -72,8 +116,8 @@ const HeroSection = () => {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-purple-500 rounded-full mb-6 shadow-md">
                 <Brain className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4 text-violet-700">Perfect for young learners</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-medium mb-4 text-violet-600">Perfect for young learners</h3>
+              <p className="text-gray-500 font-light">
                 Tailored for young learners with age-appropriate content that keeps them engaged and excited.
               </p>
             </div>
@@ -84,7 +128,7 @@ const HeroSection = () => {
       {/* Book series section */}
       <section className="py-16 bg-mint-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center text-black mb-10">Visual English Series</h2>
+          <h2 className="text-3xl font-medium text-center text-gray-800 mb-10">Visual English Series</h2>
           
           {/* Grid of colorful books */}
           <div id="book-grid" className="mb-12">
@@ -187,7 +231,7 @@ const HeroSection = () => {
           
           <div className="text-center mt-12">
             <Link href="/method">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-10 py-5 text-xl font-extrabold rounded-lg shadow-xl flex items-center justify-center gap-2 mx-auto">
+              <Button className="bg-green-500 hover:bg-green-600 text-white px-10 py-4 text-lg font-normal rounded-md shadow-sm flex items-center justify-center gap-2 mx-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.3-4.3"></path>
