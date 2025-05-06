@@ -6,18 +6,18 @@ const HeroSection = () => {
   return (
     <div className="bg-white">
       {/* Hero banner section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      <section className="py-16 md:py-24 bg-gradient-to-r from-blue-100 to-green-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             {/* Left text content */}
             <div className="md:w-1/2">
               <div className="mb-2">
-                <div className="inline-block bg-gradient-to-r from-indigo-500 to-purple-500 text-transparent bg-clip-text text-sm font-medium py-1 px-3 rounded-full">
+                <div className="inline-block bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text text-sm font-bold py-1 px-3 rounded-full border border-green-200">
                   Interactive Language Learning
                 </div>
               </div>
               <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
-                <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">Visual English</span>
+                <span className="block bg-gradient-to-r from-blue-600 to-green-500 text-transparent bg-clip-text">Visual English</span>
               </h1>
               <p className="text-xl text-gray-600 mb-8">
                 Fun, visual-based English learning designed specifically for young ESL learners ages 5-12.
@@ -39,7 +39,7 @@ const HeroSection = () => {
             {/* Right side image */}
             <div className="md:w-1/2 mt-8 md:mt-0">
               <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-pink-600 to-purple-600 rounded-xl blur opacity-20"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-green-500 rounded-xl blur-sm opacity-30"></div>
                 <img 
                   src="/api/content/VISUAL%20WEBSITE/new_hero_logo.png" 
                   alt="Visual English Logo"
@@ -57,9 +57,9 @@ const HeroSection = () => {
       </section>
 
       {/* Why it works section */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 via-indigo-50 to-violet-50">
+      <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">Why Visual English Works</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-500">Why Visual English Works</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
@@ -99,9 +99,9 @@ const HeroSection = () => {
       </section>
       
       {/* Book series section */}
-      <section className="py-16 bg-gradient-to-b from-blue-50 to-purple-50">
+      <section className="py-16 bg-gradient-to-b from-blue-50 to-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-10 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Our Book Series</h2>
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-10 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-500">Our Book Series</h2>
           
           {/* Grid of colorful books */}
           <div id="book-grid" className="mb-12">
