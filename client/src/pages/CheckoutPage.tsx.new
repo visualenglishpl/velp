@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ShoppingCart, CreditCard, ArrowLeft, CheckCircle } from 'lucide-react';
+import { ShoppingCart, CreditCard, ArrowLeft, CheckCircle, ShoppingBag } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import WithdrawalConsent from '@/components/checkout/WithdrawalConsent';
 
@@ -34,6 +34,58 @@ export default function CheckoutPage() {
 
   // Get plan ID from params or cart
   const planId = params.planId || 'default';
+
+  // Function to add book to cart
+  const addBookToCart = (bookId: string) => {
+    try {
+      let cart = [];
+      const storedCart = localStorage.getItem('visualEnglishCart');
+      if (storedCart) {
+        cart = JSON.parse(storedCart);
+      }
+      
+      // Check if book is already in cart
+      const bookInCart = cart.some((item: any) => 
+        item.type === 'printed_book' && item.bookId === bookId
+      );
+      
+      if (!bookInCart) {
+        const formattedBookId = bookId.includes('0') 
+          ? bookId.replace(/^0([a-c])$/, "0$1").toUpperCase() 
+          : bookId;
+          
+        const newItem = {
+          id: `printed-book-${bookId}`,
+          type: 'printed_book',
+          bookId,
+          title: `Printed Book ${formattedBookId}`,
+          price: 20,
+        };
+        
+        cart.push(newItem);
+        localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
+        
+        // Trigger cart update event for navbar
+        window.dispatchEvent(new Event('storage'));
+        
+        toast({
+          title: 'Book added to cart',
+          description: `Printed Book ${formattedBookId} has been added to your cart.`,
+        });
+      } else {
+        toast({
+          title: 'Book already in cart',
+          description: `This book is already in your cart.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to add book to cart. Please try again.',
+        variant: 'destructive'
+      });
+    }
+  };
 
   useEffect(() => {
     // In a real app, this would fetch from an API
@@ -128,6 +180,35 @@ export default function CheckoutPage() {
           </Link>
           <h1 className="text-3xl font-bold">Checkout</h1>
         </div>
+        
+        {!isComplete && planDetails && (
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Add More Books to Your Order</h2>
+              <span className="text-sm text-gray-500">Click on any book to add it to your cart (€20 each)</span>
+            </div>
+            
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-3 mb-6">
+              {['0a', '0b', '0c', '1', '2', '3', '4', '5'].map(bookId => (
+                <div 
+                  key={bookId} 
+                  className="relative cursor-pointer rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all"
+                  onClick={() => addBookToCart(bookId)}
+                >
+                  <img 
+                    src={bookId === '3' ? `/api/direct/content/icons/VISUAL 3 .gif` : `/api/direct/content/icons/VISUAL ${bookId}.gif`}
+                    alt={`Book ${bookId}`}
+                    className="w-full aspect-square object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                    <ShoppingBag size={10} className="mr-1" />
+                    Add to Basket (€20)
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {isComplete ? (
           <Card className="p-8 text-center">
@@ -285,143 +366,7 @@ export default function CheckoutPage() {
                 </div>
                 
                 <div className="mt-4 pt-4 border-t">
-                  <h3 className="font-medium text-sm mb-2">Want to add more books?</h3>
-                  <div className="grid grid-cols-4 gap-2 mb-3">
-                    {['0a', '0b', '0c', '1'].map(bookId => (
-                      <div 
-                        key={bookId} 
-                        className="relative cursor-pointer rounded-md overflow-hidden border hover:border-primary transition-colors"
-                        onClick={() => {
-                          // Add printed book to cart
-                          try {
-                            let cart = [];
-                            const storedCart = localStorage.getItem('visualEnglishCart');
-                            if (storedCart) {
-                              cart = JSON.parse(storedCart);
-                            }
-                            
-                            // Check if book is already in cart
-                            const bookInCart = cart.some((item: any) => 
-                              item.type === 'printed_book' && item.bookId === bookId
-                            );
-                            
-                            if (!bookInCart) {
-                              const formattedBookId = bookId.includes('0') 
-                                ? bookId.replace(/^0([a-c])$/, "0$1").toUpperCase() 
-                                : bookId;
-                                
-                              const newItem = {
-                                id: `printed-book-${bookId}`,
-                                type: 'printed_book',
-                                bookId,
-                                title: `Printed Book ${formattedBookId}`,
-                                price: 20,
-                              };
-                              
-                              cart.push(newItem);
-                              localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
-                              
-                              // Trigger cart update event for navbar
-                              window.dispatchEvent(new Event('storage'));
-                              
-                              toast({
-                                title: 'Book added to cart',
-                                description: `Printed Book ${formattedBookId} has been added to your cart.`,
-                              });
-                            } else {
-                              toast({
-                                title: 'Book already in cart',
-                                description: `This book is already in your cart.`,
-                              });
-                            }
-                          } catch (error) {
-                            toast({
-                              title: 'Error',
-                              description: 'Failed to add book to cart. Please try again.',
-                              variant: 'destructive'
-                            });
-                          }
-                        }}
-                      >
-                        <img 
-                          src={bookId === '3' ? `/api/direct/content/icons/VISUAL 3 .gif` : `/api/direct/content/icons/VISUAL ${bookId}.gif`}
-                          alt={`Book ${bookId}`}
-                          className="w-full aspect-square object-cover"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-1 text-white text-[10px] text-center">
-                          Add (€20)
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="grid grid-cols-4 gap-2">
-                    {['2', '3', '4', '5'].map(bookId => (
-                      <div 
-                        key={bookId} 
-                        className="relative cursor-pointer rounded-md overflow-hidden border hover:border-primary transition-colors"
-                        onClick={() => {
-                          // Add printed book to cart
-                          try {
-                            let cart = [];
-                            const storedCart = localStorage.getItem('visualEnglishCart');
-                            if (storedCart) {
-                              cart = JSON.parse(storedCart);
-                            }
-                            
-                            // Check if book is already in cart
-                            const bookInCart = cart.some((item: any) => 
-                              item.type === 'printed_book' && item.bookId === bookId
-                            );
-                            
-                            if (!bookInCart) {
-                              const formattedBookId = bookId;
-                              const newItem = {
-                                id: `printed-book-${bookId}`,
-                                type: 'printed_book',
-                                bookId,
-                                title: `Printed Book ${formattedBookId}`,
-                                price: 20,
-                              };
-                              
-                              cart.push(newItem);
-                              localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
-                              
-                              // Trigger cart update event for navbar
-                              window.dispatchEvent(new Event('storage'));
-                              
-                              toast({
-                                title: 'Book added to cart',
-                                description: `Printed Book ${formattedBookId} has been added to your cart.`,
-                              });
-                            } else {
-                              toast({
-                                title: 'Book already in cart',
-                                description: `This book is already in your cart.`,
-                              });
-                            }
-                          } catch (error) {
-                            toast({
-                              title: 'Error',
-                              description: 'Failed to add book to cart. Please try again.',
-                              variant: 'destructive'
-                            });
-                          }
-                        }}
-                      >
-                        <img 
-                          src={`/api/direct/content/icons/VISUAL ${bookId}.gif`}
-                          alt={`Book ${bookId}`}
-                          className="w-full aspect-square object-cover"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-1 text-white text-[10px] text-center">
-                          Add (€20)
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="mt-4 text-xs text-gray-500">
+                  <div className="text-xs text-gray-500">
                     <p>Payment secured with 256-bit encryption</p>
                   </div>
                 </div>
