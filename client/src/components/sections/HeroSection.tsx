@@ -326,7 +326,7 @@ const HeroSection = () => {
                     <h3 className="font-bold text-purple-800">VISUAL ENGLISH</h3>
                     <p className="text-purple-700 font-medium">BOOK 6</p>
                     <Link href="/books/6">
-                      <button className="mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md font-medium text-sm">
+                      <button className="mt-3 w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-purple-400">
                         View Units
                       </button>
                     </Link>
@@ -351,7 +351,7 @@ const HeroSection = () => {
                     <h3 className="font-bold text-gray-800">VISUAL ENGLISH</h3>
                     <p className="text-gray-700 font-medium">BOOK 7</p>
                     <Link href="/books/7">
-                      <button className="mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md font-medium text-sm">
+                      <button className="mt-3 w-full bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 text-white py-2 px-4 rounded-md font-bold text-sm transform transition-all duration-200 hover:scale-105 shadow-md border border-red-400">
                         View Units
                       </button>
                     </Link>
