@@ -1,0 +1,94 @@
+1. Top Navigation (Header)
+Left: Visual English logo
+
+Right Menu:
+Home | Method | Books | Pricing | Contact | Cart | 🇵🇱 | 🇬🇧
+
+2. Hero Banner
+Big Title: Visual English
+
+Subtitle: “Fun, visual-based English learning for young ESL learners.”
+
+Buttons:
+
+✅ Try a Free Sample
+
+📘 Explore the Program
+
+Image (optional): child using workbook or tablet with English visuals
+
+3. Highlights Section – Why It Works
+Title: “Why Visual English Works”
+Three features with icons or illustrations:
+
+🎨 Visual-first learning
+
+🗣️ Real conversation practice
+
+🧠 Perfect for ages 5–12
+
+4. 📚 Our Book Series (GIF Section)
+Title: “Our Book Series”
+
+Insert your animated GIF showing all book covers (Book 0A to 7)
+
+Centered on the page
+
+Optional caption:
+“From numbers and colors to confident communication – see the full journey!”
+
+5. Plans & Pricing
+Title: “Choose the Right Plan for You”
+
+Four pricing cards (in rows or columns):
+
+Printed Book Only – €20 + delivery
+
+Single Lesson Access – €5/month
+
+Whole Book Digital Access – €25/month
+
+Free Trial – 7 days access
+
+Each includes 3–4 key features and an action button (e.g., Start Now, Buy Print Book)
+
+6. Testimonials (Optional)
+Title: “Loved by Teachers & Parents”
+
+Add 2–3 short quotes with names or schools, plus visuals (smiling students, teachers)
+
+7. FAQ Section
+Title: “Frequently Asked Questions”
+
+Use collapsible elements or vertical list:
+
+How do I access the digital lessons?
+
+Are materials downloadable?
+
+Can I share with students?
+
+Shipping time?
+
+Bulk pricing for schools?
+
+8. 🇪🇺 EU Funding Section
+Title: “Co-Funded by the European Union”
+
+Display all required logos (EU flag, LEADER, LGD, etc.)
+
+Add required text:
+
+„Europejski Fundusz Rolny na rzecz Rozwoju Obszarów Wiejskich: Europa inwestująca w obszary wiejskie.”
+Strona współfinansowana ze środków Unii Europejskiej w ramach działania LEADER...
+
+Place this section just above the footer to satisfy EU visibility rules.
+
+9. Footer
+Left: Mini logo + site tagline
+“Interactive English learning for a visual generation.”
+
+Right Links: About | Method | Books | Contact | Legal | Privacy
+
+Social Icons: Facebook, YouTube (optional)
+
