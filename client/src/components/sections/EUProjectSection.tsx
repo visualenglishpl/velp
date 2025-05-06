@@ -9,14 +9,9 @@ const EUProjectSection = () => {
           
           <div className="flex flex-wrap justify-center items-center gap-10 mb-8">
             <img 
-              src="/api/direct/content/VISUAL WEBSITE/eu-flag-logo.png" 
-              alt="EU Flag" 
-              className="h-16"
-            />
-            <img 
               src="/api/direct/content/VISUAL WEBSITE/naklejka PROW.pdf (1).png" 
               alt="EU Project Logo" 
-              className="h-16"
+              className="h-24"
             />
           </div>
           
