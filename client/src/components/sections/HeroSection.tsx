@@ -17,19 +17,20 @@ const HeroSection = () => {
                 </div>
               </div>
               <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
-                <span className="block bg-gradient-to-r from-blue-600 to-green-500 text-transparent bg-clip-text">Visual English</span>
+                <span className="block bg-gradient-to-r from-blue-600 to-green-500 text-transparent bg-clip-text">VISUAL</span>
+                <span className="block bg-gradient-to-r from-blue-600 to-green-500 text-transparent bg-clip-text">ENGLISH</span>
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                Fun, visual-based English learning designed specifically for young ESL learners ages 5-12.
+                A distinctive and engaging English learning method tailored for young ESL learners.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/checkout/free_trial">
-                  <Button className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg font-bold rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 border-2 border-red-400">
+                  <Button className="bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white px-8 py-4 text-lg font-bold rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 border-2 border-blue-400">
                     ✅ Try a Free Sample
                   </Button>
                 </Link>
                 <Link href="/books">
-                  <Button variant="outline" className="border-4 border-green-600 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-bold rounded-lg transform transition-all duration-200 hover:scale-105 shadow-md">
+                  <Button variant="outline" className="border-4 border-green-500 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-bold rounded-lg transform transition-all duration-200 hover:scale-105 shadow-md">
                     📘 Explore Books
                   </Button>
                 </Link>
@@ -41,8 +42,8 @@ const HeroSection = () => {
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-green-500 rounded-xl blur-sm opacity-30"></div>
                 <img 
-                  src="/api/content/VISUAL%20WEBSITE/new_hero_logo.png" 
-                  alt="Visual English Logo"
+                  src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
+                  alt="Visual English Learning"
                   className="relative w-full h-auto rounded-xl shadow-xl transform transition-all duration-500 hover:scale-105" 
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
