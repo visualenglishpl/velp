@@ -51,7 +51,7 @@ const HeroSection = () => {
       {/* Why it works section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center mb-12 text-blue-600">Why Visual English Works</h2>
+          <h2 className="text-3xl font-extrabold text-center mb-12 text-black">Why Visual English Works</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
@@ -93,7 +93,7 @@ const HeroSection = () => {
       {/* Book series section */}
       <section className="py-16 bg-mint-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center text-blue-600 mb-10">Visual English Series</h2>
+          <h2 className="text-3xl font-extrabold text-center text-black mb-10">Visual English Series</h2>
           
           {/* Grid of colorful books */}
           <div id="book-grid" className="mb-12">

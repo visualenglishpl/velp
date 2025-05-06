@@ -116,7 +116,7 @@ const BookThumbnail = ({
     <div className="h-full">
       <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md h-full flex flex-col`}>
         {/* Book cover with GIF thumbnail */}
-        <div className="relative flex items-center justify-center h-36 overflow-hidden">
+        <div className="relative flex items-center justify-center h-48 overflow-hidden">
           {/* Colored background */}
           <div className={`absolute inset-0 ${getTitleBgClass()}`}></div>
           
@@ -124,7 +124,8 @@ const BookThumbnail = ({
           <img 
             src={`/api/direct/content/icons/VISUAL ${bookId}.gif`} 
             alt={`Book ${formattedBookId}`}
-            className="h-full w-auto object-contain z-10 relative"
+            className="h-full w-full object-fill z-10 relative"
+            style={{objectFit: "fill"}}
             loading="lazy"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
@@ -136,7 +137,8 @@ const BookThumbnail = ({
                 const pngImg = document.createElement('img');
                 pngImg.src = `/api/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
                 pngImg.alt = `Book ${formattedBookId}`;
-                pngImg.className = "h-full w-auto object-contain z-10 relative";
+                pngImg.className = "h-full w-full object-fill z-10 relative";
+                pngImg.style.objectFit = "fill";
                 pngImg.onerror = () => {
                   pngImg.style.display = 'none';
                   // Finally use the fallback if all else fails
