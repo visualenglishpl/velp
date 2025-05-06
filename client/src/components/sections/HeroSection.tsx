@@ -16,20 +16,20 @@ const HeroSection = () => {
                 <img 
                   src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
                   alt="Visual English Logo" 
-                  className="h-36 max-w-full"
+                  className="h-48 max-w-full"
                 />
               </div>
               <p className="text-xl text-blue-700 mb-12">
                 A distinctive and engaging English learning method tailored for young ESL learners.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <Link href="/checkout/free_trial">
-                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-6 py-4 text-lg font-bold rounded-lg w-full">
+              <div className="flex flex-col sm:flex-row gap-6 w-full">
+                <Link href="/checkout/free_trial" className="w-full sm:w-1/2">
+                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-5 text-xl font-bold rounded-xl w-full">
                     ✓ Try a Free Sample
                   </Button>
                 </Link>
-                <Link href="/books">
-                  <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-6 py-4 text-lg font-bold rounded-lg w-full">
+                <Link href="/books" className="w-full sm:w-1/2">
+                  <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-8 py-5 text-xl font-bold rounded-xl w-full">
                     □ View Books
                   </Button>
                 </Link>

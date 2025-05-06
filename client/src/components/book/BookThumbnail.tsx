@@ -108,8 +108,8 @@ const BookThumbnail = ({
             className="w-full h-auto" 
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              // Try to use the GIF version directly
-              target.src = `/api/direct/book${bookId}/icons/thumbnailsuni${bookId}-1.gif`;
+              // Fallback to static cover if GIFs aren't available
+              console.log(`Falling back to regular cover for book ${bookId}`);
             }}
           />
         </div>

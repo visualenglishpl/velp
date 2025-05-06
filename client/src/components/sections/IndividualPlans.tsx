@@ -88,7 +88,7 @@ const PricingPlans = () => {
           {plans.map((plan, index) => (
             <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-md overflow-hidden">
               {/* Header */}
-              <div className={`${plan.color} p-4 text-white text-center`}>
+              <div className={`${plan.color} p-5 text-white text-center`}>
                 <h3 className="text-xl font-bold">
                   {plan.title}
                 </h3>
@@ -96,7 +96,7 @@ const PricingPlans = () => {
               
               {/* Content */}
               <div className="flex-grow p-6">
-                <div className="h-40 md:h-44">
+                <div className="min-h-[160px]">
                   <ul className="space-y-3">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start">
@@ -126,9 +126,9 @@ const PricingPlans = () => {
                 </div>
                 
                 <div className="mt-4">
-                  <Link href={index === 0 ? `/checkout/${plan.planId}` : '/books'}>
+                  <Link href={index === plans.length - 1 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
-                      className="w-full py-3 px-4 rounded-md font-extrabold text-white shadow-md"
+                      className="w-full py-4 px-5 rounded-md font-extrabold text-white shadow-md text-lg"
                       style={{ backgroundColor: plan.bgColor }}
                     >
                       {plan.buttonText}
