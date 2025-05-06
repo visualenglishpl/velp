@@ -568,7 +568,7 @@ export default function CheckoutPage() {
                     Full Digital Access (€25)
                   </TabsTrigger>
                 </TabsList>
-                
+            
                 <TabsContent value="physical" className="pt-4">
                   <div className="text-sm text-gray-600 mb-4">
                     Purchase physical copies of our books - delivered right to your door
@@ -688,6 +688,104 @@ export default function CheckoutPage() {
                 </TabsContent>
               </Tabs>
             )}
+          </div>
+        )}
+
+        {isComplete ? (
+                        <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
+                          <img 
+                            src={`/api/direct/content/icons/VISUAL ${book.id}${book.id === '3' ? ' ' : ''}.gif`}
+                            alt={book.name}
+                            className="w-full aspect-square object-cover"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                            <ShoppingBag size={10} className="mr-1" />
+                            Add to Basket (€20)
+                          </div>
+                        </div>
+                        <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="digital" className="pt-4">
+                <div className="text-sm text-gray-600 mb-4">
+                  Get full digital access to our books - instant online access to all materials
+                </div>
+                
+                <div className="flex items-center justify-center space-x-4 mb-6 bg-gray-50 p-3 rounded-md">
+                  <div 
+                    className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all ${subscriptionPeriod === 'monthly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
+                    onClick={() => setSubscriptionPeriod('monthly')}
+                  >
+                    <input 
+                      type="radio" 
+                      id="monthly" 
+                      className="mr-2" 
+                      checked={subscriptionPeriod === 'monthly'} 
+                      onChange={() => setSubscriptionPeriod('monthly')}
+                    />
+                    <label htmlFor="monthly" className="cursor-pointer">
+                      Monthly (€25/month)
+                    </label>
+                  </div>
+                  
+                  <div 
+                    className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all ${subscriptionPeriod === 'yearly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
+                    onClick={() => setSubscriptionPeriod('yearly')}
+                  >
+                    <input 
+                      type="radio" 
+                      id="yearly" 
+                      className="mr-2" 
+                      checked={subscriptionPeriod === 'yearly'} 
+                      onChange={() => setSubscriptionPeriod('yearly')}
+                    />
+                    <label htmlFor="yearly" className="cursor-pointer">
+                      Yearly (€180/year - 40% savings)
+                    </label>
+                  </div>
+                </div>
+                
+                <div className="mb-4">
+                  <div className="grid grid-cols-3 md:grid-cols-10 gap-3">
+                    {[
+                      { id: '0a', name: 'Book 0A' },
+                      { id: '0b', name: 'Book 0B' },
+                      { id: '0c', name: 'Book 0C' },
+                      { id: '1', name: 'Book 1' },
+                      { id: '2', name: 'Book 2' },
+                      { id: '3', name: 'Book 3' },
+                      { id: '4', name: 'Book 4' },
+                      { id: '5', name: 'Book 5' },
+                      { id: '6', name: 'Book 6' },
+                      { id: '7', name: 'Book 7' }
+                    ].map(book => (
+                      <div 
+                        key={book.id} 
+                        className="cursor-pointer"
+                        onClick={() => addDigitalAccessToCart(book.id)}
+                      >
+                        <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
+                          <img 
+                            src={`/api/direct/content/icons/VISUAL ${book.id}${book.id === '3' ? ' ' : ''}.gif`}
+                            alt={book.name}
+                            className="w-full aspect-square object-cover"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                            <BookOpen size={10} className="mr-1" />
+                            Full Access (€{subscriptionPeriod === 'yearly' ? '180/year' : '25/month'})
+                          </div>
+                        </div>
+                        <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         )}
 
@@ -849,134 +947,138 @@ export default function CheckoutPage() {
               <Card className="p-6">
                 <h2 className="text-xl font-bold mb-4">Order Summary</h2>
                 
+                {/* Subscription period selection for recurring plans */}
+                {planId !== 'default' && planDetails.recurring && (
+                  <div className="mb-4 pb-4 border-b">
+                    <p className="text-sm text-gray-600 mb-3">Choose your subscription period:</p>
+                    <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                      <div 
+                        className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all w-full sm:w-auto text-center ${subscriptionPeriod === 'monthly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
+                        onClick={() => setSubscriptionPeriod('monthly')}
+                      >
+                        <input 
+                          type="radio" 
+                          id="plan-monthly" 
+                          className="mr-2" 
+                          checked={subscriptionPeriod === 'monthly'} 
+                          onChange={() => setSubscriptionPeriod('monthly')}
+                        />
+                        <label htmlFor="plan-monthly" className="cursor-pointer">
+                          {planId === 'single_lesson' ? 'Monthly (€5/month)' : 'Monthly (€25/month)'}
+                        </label>
+                      </div>
+                      
+                      <div 
+                        className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all w-full sm:w-auto text-center ${subscriptionPeriod === 'yearly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
+                        onClick={() => setSubscriptionPeriod('yearly')}
+                      >
+                        <input 
+                          type="radio" 
+                          id="plan-yearly" 
+                          className="mr-2" 
+                          checked={subscriptionPeriod === 'yearly'} 
+                          onChange={() => setSubscriptionPeriod('yearly')}
+                        />
+                        <label htmlFor="plan-yearly" className="cursor-pointer">
+                          {planId === 'single_lesson' 
+                            ? 'Yearly (€40/year - 33% savings)' 
+                            : 'Yearly (€180/year - 40% savings)'}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
                 {planId === 'default' ? (
-                  <>
+                  // Cart checkout - show all items
+                  <div className="border-b pb-4 mb-4">
                     {cartItems.length > 0 ? (
-                      <div className="space-y-4">
-                        <div className="space-y-2">
-                          {cartItems.map((item, index) => (
-                            <div key={index} className="flex justify-between items-center py-2 border-b">
-                              <div className="flex-1">
-                                <div className="font-medium">{item.title}</div>
-                                <div className="text-sm text-gray-500">
-                                  {item.type === 'digital_access' && 'Full Digital Access'}
-                                  {item.type === 'unit' && 'Unit Access'}
-                                  {item.type === 'printed_book' && 'Printed Book'}
-                                </div>
+                      <div className="space-y-3">
+                        {cartItems.map((item, index) => (
+                          <div key={item.id} className={`flex justify-between items-center ${index !== cartItems.length - 1 ? 'pb-2 border-b border-gray-100' : ''}`}>
+                            <div className="flex items-center">
+                              <div className="w-8 h-8 relative overflow-hidden rounded mr-2">
+                                <img 
+                                  src={`/api/direct/content/icons/VISUAL ${item.bookId}${item.bookId === '3' ? ' ' : ''}.gif`}
+                                  alt={item.title}
+                                  className="object-cover w-full h-full"
+                                />
                               </div>
-                              <div className="font-medium">
-                                €{item.price.toFixed(2)}
-                              </div>
+                              <span className="text-sm">{item.title}</span>
                             </div>
-                          ))}
-                        </div>
-                        
-                        <div className="flex justify-between items-center py-2 border-b">
-                          <div className="font-medium">Subtotal</div>
-                          <div className="font-medium">
-                            €{cartItems.reduce((sum, item) => sum + item.price, 0).toFixed(2)}
+                            <span className="font-medium">€{item.price}</span>
                           </div>
+                        ))}
+                        
+                        <div className="flex items-center justify-between pt-2">
+                          <span className="text-gray-600">Subtotal</span>
+                          <span className="font-medium">€{cartItems.reduce((total, item) => total + item.price, 0)}</span>
                         </div>
                         
+                        {/* Show delivery fee if there are physical books */}
                         {calculateDeliveryFee(cartItems) > 0 && (
-                          <div className="flex justify-between items-center py-2 border-b">
-                            <div className="font-medium">Delivery (DPD Courier)</div>
-                            <div className="font-medium">
-                              €{calculateDeliveryFee(cartItems).toFixed(2)}
-                            </div>
+                          <div className="flex items-center justify-between pt-2">
+                            <span className="text-gray-600">Delivery (DPD Courier)</span>
+                            <span className="font-medium">20 zł</span>
                           </div>
                         )}
-                        
-                        <div className="flex justify-between items-center py-2 text-lg font-bold">
-                          <div>Total</div>
-                          <div>
-                            €{calculateTotalWithDelivery(cartItems).toFixed(2)}
-                          </div>
-                        </div>
                       </div>
                     ) : (
-                      <div className="text-center py-8 text-gray-500">
-                        Your cart is empty
-                      </div>
+                      <p className="text-sm text-gray-600 mb-2">Your cart is empty.</p>
                     )}
-                  </>
+                  </div>
                 ) : (
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center py-2 border-b">
-                      <div className="font-medium">{planDetails.name}</div>
-                      <div className="font-medium">{planDetails.price}</div>
+                  // Single plan checkout
+                  <div className="border-b pb-4 mb-4">
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium">{planDetails.name}</span>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-2">{planDetails.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-600">Subtotal</span>
+                      <span className="font-medium">{planDetails.price}</span>
                     </div>
                     
+                    {/* Show delivery fee if this is a printed book plan */}
                     {planId === 'printed_book' && (
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <div className="font-medium">Delivery (DPD Courier)</div>
-                        <div className="font-medium">€20.00</div>
-                      </div>
-                    )}
-                    
-                    <div className="flex justify-between items-center py-2 text-lg font-bold">
-                      <div>Total</div>
-                      <div>
-                        {planId === 'printed_book' ? '€40.00' : planDetails.price}
-                      </div>
-                    </div>
-                    
-                    <div className="text-sm text-gray-600">
-                      {planDetails.description}
-                    </div>
-                    
-                    {planDetails.recurring && (
-                      <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                        <div 
-                          className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all ${subscriptionPeriod === 'monthly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
-                          onClick={() => setSubscriptionPeriod('monthly')}
-                        >
-                          <input 
-                            type="radio" 
-                            id="summary-monthly" 
-                            className="mr-2" 
-                            checked={subscriptionPeriod === 'monthly'} 
-                            onChange={() => setSubscriptionPeriod('monthly')}
-                          />
-                          <label htmlFor="summary-monthly" className="cursor-pointer">
-                            Monthly
-                          </label>
-                        </div>
-                        
-                        <div 
-                          className={`flex items-center px-4 py-2 rounded-full cursor-pointer transition-all ${subscriptionPeriod === 'yearly' ? 'bg-primary text-white font-medium' : 'bg-gray-100'}`}
-                          onClick={() => setSubscriptionPeriod('yearly')}
-                        >
-                          <input 
-                            type="radio" 
-                            id="summary-yearly" 
-                            className="mr-2" 
-                            checked={subscriptionPeriod === 'yearly'} 
-                            onChange={() => setSubscriptionPeriod('yearly')}
-                          />
-                          <label htmlFor="summary-yearly" className="cursor-pointer">
-                            Yearly (Save up to 40%)
-                          </label>
-                        </div>
+                      <div className="flex items-center justify-between pt-2">
+                        <span className="text-gray-600">Delivery (DPD Courier)</span>
+                        <span className="font-medium">20 zł</span>
                       </div>
                     )}
                   </div>
                 )}
+                
+                {planDetails.recurring && (
+                  <div className="mb-4 p-3 bg-gray-50 rounded-md text-sm">
+                    <p className="text-gray-600">
+                      This is a recurring payment. You can cancel anytime from your account settings.
+                    </p>
+                  </div>
+                )}
+                
+                <div className="flex justify-between text-lg font-bold">
+                  <span>Total</span>
+                  <span>
+                    {planId === 'default' 
+                      ? `€${cartItems.reduce((total, item) => total + item.price, 0)}${calculateDeliveryFee(cartItems) > 0 ? ' + 20 zł delivery' : ''}` 
+                      : planId === 'printed_book' 
+                        ? `${planDetails.price} + 20 zł delivery`
+                        : planDetails.price}
+                  </span>
+                </div>
+                
+                <div className="mt-4 pt-4 border-t">
+                  <div className="text-xs text-gray-500">
+                    <p>Payment secured with 256-bit encryption</p>
+                  </div>
+                </div>
               </Card>
-              
-              <div className="mt-4 text-xs text-gray-500">
-                <p>
-                  All prices include applicable taxes. By proceeding with the purchase, you agree to our Terms and Conditions and Privacy Policy.
-                </p>
-                <p className="mt-2">
-                  Payment processing is secure. We do not store your credit card information.
-                </p>
-              </div>
             </div>
           </div>
         ) : (
           <div className="flex justify-center py-12">
-            <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+            <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full"></div>
           </div>
         )}
       </div>
