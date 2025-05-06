@@ -122,7 +122,7 @@ const BookThumbnail = ({
           
           {/* Try to load GIF Thumbnail first */}
           <img 
-            src={`/api/direct/content/icons/VISUAL ${bookId}.gif`} 
+            src={bookId === '3' ? `/api/direct/content/icons/VISUAL 3 .gif` : `/api/direct/content/icons/VISUAL ${bookId}.gif`} 
             alt={`Book ${formattedBookId}`}
             className="h-full w-full object-cover z-10 relative"
             style={{objectFit: "cover"}}

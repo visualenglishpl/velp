@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
-import EUProjectSection from "@/components/sections/EUProjectSection";
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
+import EUProjectSection from "../components/sections/EUProjectSection";
+import Footer from "../components/layout/Footer";
+import Navbar from "../components/layout/Navbar";
 
 export default function MethodPage() {
   return (
@@ -128,8 +128,21 @@ export default function MethodPage() {
           </div>
         </section>
 
-        {/* Market Potential */}
+        {/* Additional Visual Material */}
         <section className="py-12 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center">
+              <img 
+                src="/api/direct/content/VISUAL WEBSITE/0E.png" 
+                alt="Visual English Material Example" 
+                className="max-w-full md:max-w-2xl rounded-lg shadow-md mb-8"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Market Potential */}
+        <section className="py-12 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
               Market Potential.
