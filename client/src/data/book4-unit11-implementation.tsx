@@ -6,7 +6,7 @@
  * resources and implementation logic
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/teacher-resources';
 import { LessonPlan } from '@/components/LessonPlanTemplate';
 import { resources } from './book4-unit11-resources';
 import { BOOK4_TITLE } from './book4-resources-common';
@@ -156,12 +156,22 @@ export function generateBook4Unit11LessonPlans(): LessonPlan[] {
   ];
 };
 
-// Generate lesson plans for this unit
-const lessonPlans = generateBook4Unit11LessonPlans();
+// Legacy function for compatibility with TeacherResources component
+export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
+  return {
+    id: resource.id || '',
+    title: resource.title || '',
+    duration: resource.lessonPlan?.duration || '45 minutes',
+    level: resource.lessonPlan?.level || 'Elementary to Pre-Intermediate',
+    objectives: resource.lessonPlan?.objectives || [],
+    materials: resource.lessonPlan?.materials || [],
+    steps: resource.lessonPlan?.steps || [],
+    assessmentTips: resource.lessonPlan?.assessmentTips || '',
+    homeworkIdeas: resource.lessonPlan?.homeworkIdeas || []
+  };
+}
 
-// Direct exports for consistent importing
-export const unitResources = resources;
-export { lessonPlans };
-
-// Getter functions for backward compatibility
-export const getBook4Unit11LessonPlans = (): LessonPlan[] => lessonPlans;
+// Function to get lesson plans (for backward compatibility)
+export function getBook4Unit11LessonPlans(): LessonPlan[] {
+  return generateBook4Unit11LessonPlans();
+}

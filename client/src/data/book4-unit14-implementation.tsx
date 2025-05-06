@@ -157,12 +157,22 @@ export function generateBook4Unit14LessonPlans(): LessonPlan[] {
   ];
 };
 
-// Generate lesson plans for this unit
-const lessonPlans = generateBook4Unit14LessonPlans();
+// Legacy function for compatibility with TeacherResources component
+export function convertLegacyLessonPlan(resource: TeacherResource): LessonPlan {
+  return {
+    id: resource.id || '',
+    title: resource.title || '',
+    duration: resource.lessonPlan?.duration || '45 minutes',
+    level: resource.lessonPlan?.level || 'Elementary to Pre-Intermediate',
+    objectives: resource.lessonPlan?.objectives || [],
+    materials: resource.lessonPlan?.materials || [],
+    steps: resource.lessonPlan?.steps || [],
+    assessmentTips: resource.lessonPlan?.assessmentTips || '',
+    homeworkIdeas: resource.lessonPlan?.homeworkIdeas || []
+  };
+}
 
-// Direct exports for consistent importing
-export const unitResources = resources;
-export { lessonPlans };
-
-// Getter functions for backward compatibility
-export const getBook4Unit14LessonPlans = (): LessonPlan[] => lessonPlans;
+// Function to get lesson plans (for backward compatibility)
+export function getBook4Unit14LessonPlans(): LessonPlan[] {
+  return generateBook4Unit14LessonPlans();
+}
