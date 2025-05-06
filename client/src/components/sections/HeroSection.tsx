@@ -36,19 +36,12 @@ const HeroSection = () => {
             </div>
             
             {/* Right side illustration */}
-            <div className="md:w-1/2 mt-8 md:mt-0 relative">
+            <div className="md:w-1/2 mt-8 md:mt-0">
               <img 
                 src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
                 alt="Visual English Learning Illustration"
                 className="w-full h-auto rounded-lg" 
               />
-              <div className="absolute right-0 bottom-0 hidden md:block">
-                <img 
-                  src="/api/content/VISUAL%20WEBSITE/sitting_teacher.png" 
-                  alt="Teacher sitting"
-                  className="h-28 w-auto" 
-                />
-              </div>
             </div>
           </div>
         </div>
