@@ -174,7 +174,7 @@ const BookThumbnail = ({
           <div className="mt-auto">
             <Link href={`/books/${bookId}`} className="block w-full">
               <button className={`w-full ${bookId === '5' ? 'bg-red-600 text-white' : buttonColorClass} py-2 px-3 rounded-md font-bold text-xs shadow-sm`}>
-                View Units
+                Explore Units
               </button>
             </Link>
           </div>

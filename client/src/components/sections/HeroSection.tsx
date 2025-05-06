@@ -28,9 +28,9 @@ const HeroSection = () => {
                     ✓ Try a Free Sample
                   </Button>
                 </Link>
-                <Link href="/books" className="w-full sm:w-1/2">
+                <Link href="/method" className="w-full sm:w-1/2">
                   <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-8 py-5 text-xl font-bold rounded-xl w-full">
-                    □ View Books
+                    □ Explore
                   </Button>
                 </Link>
               </div>
@@ -195,9 +195,9 @@ const HeroSection = () => {
           </div>
           
           <div className="text-center mt-12">
-            <Link href="/books">
+            <Link href="/method">
               <Button className="bg-green-600 hover:bg-green-700 text-white px-10 py-5 text-xl font-extrabold rounded-lg shadow-xl">
-                View All Books
+                Explore
               </Button>
             </Link>
           </div>
