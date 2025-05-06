@@ -1877,10 +1877,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Create the book in storage
         try {
           const newBook = await storage.createBook({
-            bookId: bookId,
+            bookId: normalizedBookId,
             title: bookTitle,
             description: `${bookLevel} level book`,
-            thumbnail: `/thumbnails/book${bookId}.jpg`,
+            thumbnail: `/thumbnails/book${normalizedBookId}.jpg`,
             level: bookLevel,
             isPublished: true,
           });
@@ -1958,10 +1958,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Try to get thumbnail URLs for each unit
       const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
         // Get the correct paths for this specific book and unit
-        const possiblePaths = getBookSpecificPaths(bookId, unit.unitNumber);
+        const possiblePaths = getBookSpecificPaths(normalizedBookId, unit.unitNumber);
         
         // Log the book ID and unit number for debugging
-        console.log(`Looking for thumbnails for book ID: ${bookId}, unit ${unit.unitNumber}`);
+        console.log(`Looking for thumbnails for book ID: ${normalizedBookId}, unit ${unit.unitNumber}`);
         console.log(`Trying these paths: ${possiblePaths.join(', ')}`);
         
         
