@@ -2,6 +2,7 @@ import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
+import { setupFixedRoutes } from "./fixed-routes";
 import { setupAuth } from "./auth";
 import { setupPaymentRoutes } from "./payment-routes";
 import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@shared/schema";
@@ -327,6 +328,8 @@ const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) 
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Set up the fixed routes for book/units handling
+  await setupFixedRoutes(app, getS3PresignedUrl);
   // Add a direct route to the static test page for diagnostics
   app.get('/test', (req, res) => {
     const path = require('path');
