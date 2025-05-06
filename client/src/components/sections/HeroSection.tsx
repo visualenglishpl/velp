@@ -1,6 +1,7 @@
 import { Button } from "../ui/button";
 import { Link } from "wouter";
 import { CheckCircle2, MessageCircle, Brain } from "lucide-react";
+import BookThumbnail from "../book/BookThumbnail";
 
 const HeroSection = () => {
   return (
@@ -80,7 +81,7 @@ const HeroSection = () => {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-purple-500 rounded-full mb-6 shadow-md">
                 <Brain className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4 text-violet-700">Perfect for ages 5–12</h3>
+              <h3 className="text-xl font-extrabold mb-4 text-violet-700">Perfect for young learners</h3>
               <p className="text-gray-600">
                 Tailored for young learners with age-appropriate content that keeps them engaged and excited.
               </p>
@@ -92,136 +93,56 @@ const HeroSection = () => {
       {/* Book series section */}
       <section className="py-16 bg-mint-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center text-blue-600 mb-10">Our Collection</h2>
+          <h2 className="text-3xl font-extrabold text-center text-blue-600 mb-10">Visual English Series</h2>
           
           {/* Grid of colorful books */}
           <div id="book-grid" className="mb-12">
             {/* First row - Special books (0a, 0b, 0c) and books 1-2 */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
-              {/* Book 0a - To The Moon (Blue) */}
-              <div className="">
-                <div className="bg-blue-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book0a/cover.png" 
-                    alt="Book 0A - To The Moon" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book0a/icons/thumbnailsuni0a-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-blue-800">VISUAL ENGLISH</h3>
-                    <p className="text-blue-700 font-medium">BOOK 0A</p>
-                    <Link href="/books/0a">
-                      <button className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-blue-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="0a" 
+                title="To The Moon" 
+                color="blue" 
+                bgColor="blue"
+                buttonColor="red"
+                buttonHoverColor="red"
+              />
               
-              {/* Book 0b - Barn In The Farm (Orange) */}
-              <div className="">
-                <div className="bg-orange-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book0b/cover.png" 
-                    alt="Book 0B - Barn In The Farm" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book0b/icons/thumbnailsuni0b-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-orange-800">VISUAL ENGLISH</h3>
-                    <p className="text-orange-700 font-medium">BOOK 0B</p>
-                    <Link href="/books/0b">
-                      <button className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-orange-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="0b" 
+                title="Barn In The Farm" 
+                color="orange" 
+                bgColor="orange"
+                buttonColor="green"
+                buttonHoverColor="green"
+              />
               
-              {/* Book 0c - At The Farm (Brown) */}
-              <div className="">
-                <div className="bg-amber-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book0c/cover.png" 
-                    alt="Book 0C - At The Farm" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book0c/icons/thumbnailsuni0c-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-amber-800">VISUAL ENGLISH</h3>
-                    <p className="text-amber-700 font-medium">BOOK 0C</p>
-                    <Link href="/books/0c">
-                      <button className="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md font-extrabold text-sm shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-amber-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="0c" 
+                title="At The Farm" 
+                color="amber" 
+                bgColor="amber"
+                buttonColor="blue"
+                buttonHoverColor="blue"
+              />
               
-              {/* Book 1 - Vegetables (Green) */}
-              <div className="">
-                <div className="bg-green-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book1/cover.png" 
-                    alt="Book 1 - Vegetables" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book1/icons/thumbnailsuni1-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-green-800">VISUAL ENGLISH</h3>
-                    <p className="text-green-700 font-medium">BOOK 1</p>
-                    <Link href="/books/1">
-                      <button className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-extrabold text-sm  shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-green-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="1" 
+                title="Vegetables" 
+                color="green" 
+                bgColor="green"
+                buttonColor="purple"
+                buttonHoverColor="purple"
+              />
               
-              {/* Book 2 - Sports (Light Blue) */}
-              <div className="">
-                <div className="bg-sky-100 rounded-xl overflow-hidden shadow-md">
-                  <img 
-                    src="/api/content/book2/cover.png" 
-                    alt="Book 2 - Sports" 
-                    className="w-full h-auto" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/content/book2/icons/thumbnailsuni2-1.png`;
-                    }}
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="font-extrabold text-sky-800">VISUAL ENGLISH</h3>
-                    <p className="text-sky-700 font-medium">BOOK 2</p>
-                    <Link href="/books/2">
-                      <button className="mt-3 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md font-extrabold text-sm shadow-md">
-                        View Units
-                      </button>
-                    </Link>
-                    <p className="mt-2 text-xs text-sky-600">Buy Whole Book Access</p>
-                  </div>
-                </div>
-              </div>
+              <BookThumbnail 
+                bookId="2" 
+                title="Sports" 
+                color="sky" 
+                bgColor="sky"
+                buttonColor="yellow"
+                buttonHoverColor="yellow"
+              />
             </div>
             
             {/* Second row - Books 3-7 */}
