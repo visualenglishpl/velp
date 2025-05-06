@@ -1824,11 +1824,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Debug the available books
       const allBooks = await storage.getBooks();
-      console.log("All available books in storage:", allBooks.map(b => ({ id: b.id, bookId: b.bookId, title: b.title })));
+      console.log("Available books in storage:", allBooks.map(b => ({ id: b.id, bookId: b.bookId, title: b.title })));
+      
+      // Convert certain bookId formats for consistency
+      // Some clients may send numeric IDs for special books
+      if (bookId === "1" && await storage.getBookByBookId("0a")) {
+        console.log("Redirecting numeric ID 1 to special book 0a");
+        bookId = "0a";
+      }
       
       // Check if the book exists in our storage
-      const book = await storage.getBookByBookId(bookId);
-      console.log(`Searching for book with bookId ${bookId}, found:`, book);
+      let book = await storage.getBookByBookId(bookId);
+      console.log(`Searching for book with bookId ${bookId}, found:`, book ? book.bookId : "not found");
       
       // If the book ID is valid but doesn't exist in storage, create it dynamically 
       if (!book && ['0a', '0b', '0c', '1', '2', '3', '4', '5', '6', '7'].includes(bookId)) {
