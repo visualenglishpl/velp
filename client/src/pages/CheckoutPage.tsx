@@ -213,9 +213,7 @@ export default function CheckoutPage() {
               <div className="w-full md:w-2/3">
                 <h2 className="text-xl font-bold mb-3">Start Your Free 7-Day Trial</h2>
                 <p className="text-gray-600 mb-4">
-                  {unitIdParam 
-                    ? `Enjoy free access to Unit ${unitIdParam} of Book ${bookIdParam} for 7 days!` 
-                    : `Enjoy full access to all content in Book ${bookIdParam} for 7 days, completely free!`}
+                  Enjoy full access to all 10 Visual English books for 7 days with 3 free downloads!
                   <br />A credit card is required to start your trial, but <strong>you won't be charged</strong> unless you choose to continue after the trial period.
                 </p>
                 
@@ -284,7 +282,7 @@ export default function CheckoutPage() {
                       onCheckedChange={(value) => setConsent(!!value)} 
                     />
                     <Label htmlFor="consent" className="text-sm">
-                      I agree to the <Link href="/terms" className="text-blue-600 hover:underline">Terms and Conditions</Link> and understand that my free trial includes a limit of 5 downloads and will automatically convert to a paid monthly subscription (€25/month) after 7 days unless I cancel. I can cancel anytime during the trial period without being charged.
+                      I agree to the <Link href="/terms" className="text-blue-600 hover:underline">Terms and Conditions</Link> and understand that my free trial includes full access to all books with a limit of 3 downloads total. The trial will automatically convert to a paid monthly subscription (€25/month) after 7 days unless I cancel. I can cancel anytime during the trial period without being charged.
                     </Label>
                   </div>
                   
@@ -294,9 +292,7 @@ export default function CheckoutPage() {
                     onClick={() => {
                       toast({
                         title: "Free trial activated!",
-                        description: unitIdParam 
-                          ? `Your 7-day free trial for Unit ${unitIdParam} of Book ${bookIdParam} has been activated with a limit of 5 downloads!` 
-                          : `Your 7-day free trial for Book ${bookIdParam} has been activated with a limit of 5 downloads!`,
+                        description: "Your 7-day free trial has been activated! You now have full access to all 10 books with a limit of 3 downloads.",
                       });
                       setIsComplete(true);
                     }}
@@ -312,9 +308,7 @@ export default function CheckoutPage() {
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
-                    <span>{unitIdParam 
-                      ? `Access to Unit ${unitIdParam} of Book ${bookIdParam}` 
-                      : `Full access to all units in Book ${bookIdParam}`}</span>
+                    <span>Full access to all 10 Visual English books</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
@@ -326,7 +320,7 @@ export default function CheckoutPage() {
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
-                    <span>Limit of 3 downloads during trial period</span>
+                    <span>Limit of 3 downloads from any book</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
@@ -352,9 +346,7 @@ export default function CheckoutPage() {
               </div>
               <h2 className="text-2xl font-bold text-green-700 mb-2">Free Trial Successfully Activated!</h2>
               <p className="text-gray-600 mb-6">
-                {unitIdParam 
-                  ? `Your 7-day free trial for Unit ${unitIdParam} of Book ${bookIdParam} has been activated. You now have full access to the platform with a limit of 3 downloads from any of our 10 books.`
-                  : `Your 7-day free trial for Book ${bookIdParam} has been activated. You now have full access to the platform with a limit of 3 downloads from any of our 10 books.`}
+                Your 7-day free trial has been activated! You now have full access to all 10 Visual English books with a limit of 3 downloads total.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button 
