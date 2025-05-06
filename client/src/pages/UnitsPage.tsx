@@ -74,59 +74,19 @@ export default function UnitsPage() {
             <h1 className="text-3xl font-bold">Book {bookId} Units</h1>
           </div>
           
-          {!isAuthenticated && (
-            <div className="mt-4 sm:mt-0">
-              <Button
-                className="bg-[#b23cfd] hover:bg-[#a020f0]"
-                onClick={() => {
-                  // Add full book to cart
-                  try {
-                    let cart = [];
-                    const storedCart = localStorage.getItem('visualEnglishCart');
-                    if (storedCart) {
-                      cart = JSON.parse(storedCart);
-                    }
-                    
-                    // Check if book is already in cart
-                    const bookInCart = cart.some((item: any) => 
-                      item.type === 'book' && item.bookId === bookId
-                    );
-                    
-                    if (!bookInCart) {
-                      const newItem = {
-                        id: `book${bookId}-full`,
-                        type: 'book',
-                        bookId,
-                        title: `Complete Book ${bookId}`,
-                        price: 25,
-                      };
-                      
-                      cart.push(newItem);
-                      localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
-                      
-                      toast({
-                        title: 'Book added to cart',
-                        description: `Book ${bookId} has been added to your cart.`,
-                      });
-                    } else {
-                      toast({
-                        title: 'Book already in cart',
-                        description: `Book ${bookId} is already in your cart.`,
-                      });
-                    }
-                  } catch (error) {
-                    toast({
-                      title: 'Error',
-                      description: 'Failed to add book to cart. Please try again.',
-                      variant: 'destructive'
-                    });
-                  }
-                }}
-              >
-                Get Whole Book Access (€25)
-              </Button>
-            </div>
-          )}
+          <div className="mt-4 sm:mt-0 flex space-x-3">
+            <Button
+              className="bg-[#b23cfd] hover:bg-[#a020f0]"
+              onClick={() => {
+                window.location.href = `/checkout/whole_book?book=${bookId}`;
+              }}
+            >
+              Get Full Access
+            </Button>
+            {isAuthenticated && (
+              <Button variant="outline">My Subscription</Button>
+            )}
+          </div>
         </div>
         
         {isLoading ? (
@@ -172,62 +132,6 @@ export default function UnitsPage() {
                   <Link href={`/books/${bookId}/units/${unit.unitNumber}`}>
                     <Button className="w-full px-8 py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700">View Unit</Button>
                   </Link>
-                  {!isAuthenticated && (
-                    <Button
-                      variant="outline"
-                      className="w-full text-sm"
-                      onClick={() => {
-                        // Add unit to cart
-                        try {
-                          let cart = [];
-                          const storedCart = localStorage.getItem('visualEnglishCart');
-                          if (storedCart) {
-                            cart = JSON.parse(storedCart);
-                          }
-                          
-                          // Check if unit is already in cart
-                          const unitInCart = cart.some((item: any) => 
-                            item.type === 'unit' && 
-                            item.bookId === bookId && 
-                            item.unitNumber === unit.unitNumber
-                          );
-                          
-                          if (!unitInCart) {
-                            const newItem = {
-                              id: `book${bookId}-unit${unit.unitNumber}`,
-                              type: 'unit',
-                              bookId,
-                              unitNumber: unit.unitNumber,
-                              title: unit.title || `Unit ${unit.unitNumber}`,
-                              price: 5,
-                              thumbnailUrl: unit.thumbnailUrl
-                            };
-                            
-                            cart.push(newItem);
-                            localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
-                            
-                            toast({
-                              title: 'Unit added to cart',
-                              description: `Unit ${unit.unitNumber} has been added to your cart.`,
-                            });
-                          } else {
-                            toast({
-                              title: 'Unit already in cart',
-                              description: `Unit ${unit.unitNumber} is already in your cart.`,
-                            });
-                          }
-                        } catch (error) {
-                          toast({
-                            title: 'Error',
-                            description: 'Failed to add unit to cart. Please try again.',
-                            variant: 'destructive'
-                          });
-                        }
-                      }}
-                    >
-                      Purchase Unit (€5)
-                    </Button>
-                  )}
                 </div>
               </Card>
             ))}

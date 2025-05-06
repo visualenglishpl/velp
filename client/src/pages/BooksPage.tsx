@@ -105,16 +105,9 @@ export default function BooksPage() {
                 <CardFooter className="py-3 px-4 flex flex-col gap-2">
                   <Link href={`/books/${book.bookId}`} className="w-full">
                     <Button className="w-full" variant="default">
-                      View Units
+                      View Book
                     </Button>
                   </Link>
-                  <Button 
-                    className="w-full" 
-                    variant="secondary"
-                    onClick={() => window.location.href = `/checkout/whole_book?book=${book.bookId}`}
-                  >
-                    Buy Whole Book Access
-                  </Button>
                 </CardFooter>
               </Card>
             ))}
