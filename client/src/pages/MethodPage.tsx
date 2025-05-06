@@ -12,27 +12,15 @@ export default function MethodPage() {
         {/* Method Hero Section */}
         <section className="bg-white py-12 md:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row items-start gap-12">
-              {/* Left image */}
-              <div className="md:w-2/5 rounded-lg overflow-hidden">
-                <img 
-                  src="/api/direct/content/VISUAL WEBSITE/teaching_image.png"
-                  alt="Visual English Teaching Method" 
-                  className="w-full h-auto object-cover rounded-lg shadow-md"
-                />
-              </div>
-
-              {/* Right content */}
-              <div className="md:w-3/5">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                  Discover the Visual English Method
-                </h1>
-                
-                <p className="text-gray-700 mb-6">
-                  Crafted by experienced teacher Izabela Buassa, Visual English is a breakthrough teaching method designed 
-                  specifically for young ESL learners aged 4 to 15.
-                </p>
-              </div>
+            <div className="text-center">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Discover the Visual English Method
+              </h1>
+              
+              <p className="text-gray-700 mb-6 max-w-3xl mx-auto">
+                Crafted by experienced teacher Izabela Buassa, Visual English is a breakthrough teaching method designed 
+                specifically for young ESL learners aged 4 to 15.
+              </p>
             </div>
           </div>
         </section>
