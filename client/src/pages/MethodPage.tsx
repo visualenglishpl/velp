@@ -35,26 +35,6 @@ export default function MethodPage() {
             </div>
           </div>
         </section>
-
-        {/* Hero Banner Image */}
-        <section className="bg-gray-50 py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative rounded-lg overflow-hidden shadow-sm">
-              <img 
-                src="/api/direct/content/VISUAL WEBSITE/main page.png" 
-                alt="Visual English Method Banner"
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute top-4 left-4">
-                <img 
-                  src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
-                  alt="Visual English Logo"
-                  className="h-16 md:h-20"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
         
         {/* Core Teaching Features */}
         <section className="py-12 bg-white">
