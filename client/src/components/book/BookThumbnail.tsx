@@ -124,8 +124,8 @@ const BookThumbnail = ({
           <img 
             src={bookId === '3' ? `/api/direct/content/icons/VISUAL 3 .gif` : `/api/direct/content/icons/VISUAL ${bookId}.gif`} 
             alt={`Book ${formattedBookId}`}
-            className="w-full h-full object-contain z-10 relative"
-            style={{objectFit: "contain", padding: "6px"}}
+            className="w-full h-full object-cover z-10 relative"
+            style={{objectFit: "cover", padding: "0px"}}
             loading="lazy"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
@@ -137,9 +137,9 @@ const BookThumbnail = ({
                 const pngImg = document.createElement('img');
                 pngImg.src = `/api/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
                 pngImg.alt = `Book ${formattedBookId}`;
-                pngImg.className = "w-full h-full object-contain z-10 relative";
-                pngImg.style.objectFit = "contain";
-                pngImg.style.padding = "6px";
+                pngImg.className = "w-full h-full object-cover z-10 relative";
+                pngImg.style.objectFit = "cover";
+                pngImg.style.padding = "0px";
                 pngImg.onerror = () => {
                   pngImg.style.display = 'none';
                   // Finally use the fallback if all else fails
