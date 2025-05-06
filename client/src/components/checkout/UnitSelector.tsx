@@ -177,7 +177,7 @@ export default function UnitSelector({ bookId, initialSelectedUnit, onUnitsSelec
                 {unit.thumbnailUrl && (
                   <div className="mt-2 w-full h-12 relative overflow-hidden rounded">
                     <img 
-                      src={unit.thumbnailUrl} 
+                      src={`/api/direct/content/${unit.thumbnailUrl}`} 
                       alt={`Thumbnail for unit ${unit.unitNumber}`}
                       className="object-cover w-full h-full"
                     />
