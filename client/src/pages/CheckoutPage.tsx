@@ -150,6 +150,20 @@ export default function CheckoutPage() {
     }
   };
 
+  // Calculate delivery fee for physical books (20 zł for DPD courier)
+  const calculateDeliveryFee = (items: CartItem[]): number => {
+    // If there's at least one physical book, add delivery fee
+    const hasPhysicalBook = items.some(item => item.type === 'printed_book');
+    return hasPhysicalBook ? 20 : 0;
+  };
+
+  // Calculate total with delivery
+  const calculateTotalWithDelivery = (items: CartItem[]): number => {
+    const subtotal = items.reduce((total, item) => total + item.price, 0);
+    const deliveryFee = calculateDeliveryFee(items);
+    return subtotal + deliveryFee;
+  };
+
   // Load cart items from localStorage
   useEffect(() => {
     const loadCart = () => {
@@ -297,37 +311,11 @@ export default function CheckoutPage() {
                 </div>
                 
                 <div className="mb-4">
-                  <h3 className="font-medium text-sm mb-2">Pre-School Books (Ages 4-6)</h3>
-                  <div className="grid grid-cols-3 md:grid-cols-9 gap-3 mb-3">
+                  <div className="grid grid-cols-3 md:grid-cols-10 gap-3">
                     {[
                       { id: '0a', name: 'Book 0A' },
                       { id: '0b', name: 'Book 0B' },
-                      { id: '0c', name: 'Book 0C' }
-                    ].map(book => (
-                      <div 
-                        key={book.id} 
-                        className="cursor-pointer"
-                        onClick={() => addBookToCart(book.id)}
-                      >
-                        <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
-                          <img 
-                            src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
-                            alt={book.name}
-                            className="w-full aspect-square object-cover"
-                          />
-                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
-                            <ShoppingBag size={10} className="mr-1" />
-                            Add to Basket (€20)
-                          </div>
-                        </div>
-                        <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <h3 className="font-medium text-sm mb-2 mt-4">Primary School Books (Ages 7-15)</h3>
-                  <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
-                    {[
+                      { id: '0c', name: 'Book 0C' },
                       { id: '1', name: 'Book 1' },
                       { id: '2', name: 'Book 2' },
                       { id: '3', name: 'Book 3' },
@@ -365,37 +353,11 @@ export default function CheckoutPage() {
                 </div>
                 
                 <div className="mb-4">
-                  <h3 className="font-medium text-sm mb-2">Pre-School Books (Ages 4-6)</h3>
-                  <div className="grid grid-cols-3 md:grid-cols-9 gap-3 mb-3">
+                  <div className="grid grid-cols-3 md:grid-cols-10 gap-3">
                     {[
                       { id: '0a', name: 'Book 0A' },
                       { id: '0b', name: 'Book 0B' },
-                      { id: '0c', name: 'Book 0C' }
-                    ].map(book => (
-                      <div 
-                        key={book.id} 
-                        className="cursor-pointer"
-                        onClick={() => addDigitalAccessToCart(book.id)}
-                      >
-                        <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
-                          <img 
-                            src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
-                            alt={book.name}
-                            className="w-full aspect-square object-cover"
-                          />
-                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
-                            <BookOpen size={10} className="mr-1" />
-                            Full Access (€25)
-                          </div>
-                        </div>
-                        <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <h3 className="font-medium text-sm mb-2 mt-4">Primary School Books (Ages 7-15)</h3>
-                  <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
-                    {[
+                      { id: '0c', name: 'Book 0C' },
                       { id: '1', name: 'Book 1' },
                       { id: '2', name: 'Book 2' },
                       { id: '3', name: 'Book 3' },
@@ -587,6 +549,14 @@ export default function CheckoutPage() {
                           <span className="text-gray-600">Subtotal</span>
                           <span className="font-medium">€{cartItems.reduce((total, item) => total + item.price, 0)}</span>
                         </div>
+                        
+                        {/* Show delivery fee if there are physical books */}
+                        {calculateDeliveryFee(cartItems) > 0 && (
+                          <div className="flex items-center justify-between pt-2">
+                            <span className="text-gray-600">Delivery (DPD Courier)</span>
+                            <span className="font-medium">20 zł</span>
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <p className="text-sm text-gray-600 mb-2">Your cart is empty.</p>
@@ -603,6 +573,14 @@ export default function CheckoutPage() {
                       <span className="text-gray-600">Subtotal</span>
                       <span className="font-medium">{planDetails.price}</span>
                     </div>
+                    
+                    {/* Show delivery fee if this is a printed book plan */}
+                    {planId === 'printed_book' && (
+                      <div className="flex items-center justify-between pt-2">
+                        <span className="text-gray-600">Delivery (DPD Courier)</span>
+                        <span className="font-medium">20 zł</span>
+                      </div>
+                    )}
                   </div>
                 )}
                 
@@ -618,8 +596,10 @@ export default function CheckoutPage() {
                   <span>Total</span>
                   <span>
                     {planId === 'default' 
-                      ? `€${cartItems.reduce((total, item) => total + item.price, 0)}` 
-                      : planDetails.price}
+                      ? `€${cartItems.reduce((total, item) => total + item.price, 0)}${calculateDeliveryFee(cartItems) > 0 ? ' + 20 zł delivery' : ''}` 
+                      : planId === 'printed_book' 
+                        ? `${planDetails.price} + 20 zł delivery`
+                        : planDetails.price}
                   </span>
                 </div>
                 
