@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import BookThumbnailAdmin from '@/components/admin/BookThumbnailAdmin';
-import BookSeriesAnimated from '@/components/BookSeriesAnimated';
+import BookCollectionAnimated from '@/components/BookCollectionAnimated';
 
 const AdminPage = () => {
   return (
@@ -33,7 +33,7 @@ const AdminPage = () => {
               Preview how the animated book showcase will appear on the website.
               You can use the controls to test different books and transitions.
             </p>
-            <BookSeriesAnimated />
+            <BookCollectionAnimated />
           </div>
         </TabsContent>
         

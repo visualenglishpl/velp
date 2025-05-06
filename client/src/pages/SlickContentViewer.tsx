@@ -154,7 +154,7 @@ export default function SlickContentViewer() {
   // Check if user has paid access based on authentication status
   const hasPaidAccess = Boolean(user);
   
-  // Apply free content limits based on book series:
+  // Apply free content limits based on collection:
   // - For Books 0a/0b/0c: blur from 3rd image (index 2)
   // - For standard books: first 10 slides available as preview
   const freeSlideLimit = /^0[a-c]$/i.test(bookId || '') ? 2 : 10;

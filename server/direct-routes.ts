@@ -68,7 +68,8 @@ const s3Client = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ""
   },
   // Explicitly set the endpoint to avoid redirects
-  endpoint: 'https://s3.eu-north-1.amazonaws.com'
+  endpoint: 'https://s3.eu-north-1.amazonaws.com',
+  forcePathStyle: false // Use virtual-hosted style URLs
 });
 
 // Check the bucket redirect immediately

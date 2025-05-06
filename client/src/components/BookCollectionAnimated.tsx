@@ -17,7 +17,7 @@ interface BookInfo {
   animatedUrl?: string;
 }
 
-const BookSeriesAnimated: React.FC = () => {
+const BookCollectionAnimated: React.FC = () => {
   const [activeBook, setActiveBook] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -283,7 +283,7 @@ const BookSeriesAnimated: React.FC = () => {
           
           <div className="border rounded-lg p-4 text-sm text-gray-600">
             <p>
-              Visual English's unique book series is designed with a progression of themes 
+              Visual English's unique collection is designed with a progression of themes 
               that capture children's interest while building English language skills systematically.
             </p>
             <p className="mt-2">
@@ -313,4 +313,4 @@ const BookSeriesAnimated: React.FC = () => {
   );
 };
 
-export default BookSeriesAnimated;
+export default BookCollectionAnimated;

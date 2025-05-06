@@ -366,7 +366,7 @@ export default function ShopManagement() {
       isPopular: true,
       featuredBadge: 'MOST POPULAR',
       features: [
-        'Access to all units in a book series',
+        'Access to all units in a collection',
         'Detailed teaching guidance for every unit',
         'All downloadable resources',
         'Interactive exercises for all units',
