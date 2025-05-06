@@ -17,11 +17,17 @@ export default function MethodPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row items-start gap-12">
               {/* Left image */}
-              <div className="md:w-2/5 rounded-lg overflow-hidden bg-purple-600">
+              <div className="md:w-2/5 rounded-lg overflow-hidden">
                 <img 
-                  src="/api/direct/content/VISUAL WEBSITE/main page.png"
-                  alt="Visual English Method" 
-                  className="w-full h-auto object-cover"
+                  src="/attached_assets/image_1746559756587.png"
+                  alt="Visual English Teaching Method" 
+                  className="w-full h-auto object-cover rounded-lg"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    console.log("Image failed to load, trying fallback");
+                    // Try other paths as fallback
+                    target.src = "/api/asset/attached_assets/image_1746559756587.png";
+                  }}
                 />
               </div>
 
