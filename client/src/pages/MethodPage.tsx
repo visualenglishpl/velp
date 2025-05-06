@@ -96,7 +96,7 @@ export default function MethodPage() {
         <section className="py-12 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-10 text-center">
-              🌟 Key Features at a Glance
+              <span className="inline-block transform hover:scale-110 transition-transform duration-200" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.2)", filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.15))" }}>🌟</span> Key Features at a Glance
             </h2>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">

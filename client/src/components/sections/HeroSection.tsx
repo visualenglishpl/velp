@@ -6,48 +6,35 @@ import BookThumbnail from "../book/BookThumbnail";
 const HeroSection = () => {
   return (
     <div className="bg-white">
-      {/* Hero banner section */}
-      <section className="py-16 md:py-24 bg-gray-50 rounded-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            {/* Left text content */}
-            <div className="md:w-1/2 flex flex-col items-start">
-              <div className="mb-10">
-                <img 
-                  src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
-                  alt="Visual English Logo" 
-                  className="h-48 max-w-full"
-                />
-              </div>
-              <p className="text-xl text-blue-700 mb-12">
-                A distinctive and engaging English learning method tailored for young ESL learners.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 w-full">
-                <Link href="/checkout/free_trial" className="w-full sm:w-1/2">
-                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-5 text-xl font-bold rounded-xl w-full">
-                    ✓ Try a Free Sample
-                  </Button>
-                </Link>
-                <Link href="/method" className="w-full sm:w-1/2">
-                  <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-8 py-5 text-xl font-bold rounded-xl w-full flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <path d="m21 21-4.3-4.3"></path>
-                    </svg>
-                    Explore
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            
-            {/* Right side illustration */}
-            <div className="md:w-1/2 mt-8 md:mt-0">
-              <img 
-                src="/api/direct/content/VISUAL WEBSITE/main page.png" 
-                alt="Visual English Learning Illustration"
-                className="w-full h-auto rounded-lg" 
-              />
-            </div>
+      {/* Full-width hero banner with claymation characters */}
+      <section className="relative">
+        {/* Full-width image with embedded text */}
+        <div className="w-full bg-white overflow-hidden border-b border-gray-200">
+          <img 
+            src="/api/direct/content/VISUAL WEBSITE/clay-kids-banner-with-text.png" 
+            alt="Visual English Children - Revolutionizing Language Learning for Young Minds"
+            className="w-full h-auto object-cover" 
+          />
+        </div>
+        
+        {/* Buttons below the image */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+          
+          <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
+            <Link href="/checkout/free_trial">
+              <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-5 text-xl font-bold rounded-xl">
+                ✓ Try a Free Sample
+              </Button>
+            </Link>
+            <Link href="/method">
+              <Button variant="outline" className="border-2 border-green-600 bg-white text-green-600 hover:bg-white hover:text-green-700 px-8 py-5 text-xl font-bold rounded-xl flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                Explore
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
