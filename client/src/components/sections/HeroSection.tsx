@@ -17,20 +17,20 @@ const HeroSection = () => {
                 </div>
               </div>
               <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
-                <span className="block text-blue-600">VISUAL</span>
-                <span className="block text-blue-600">ENGLISH</span>
+                <span className="block text-blue-900">VISUAL</span>
+                <span className="block text-blue-900">ENGLISH</span>
               </h1>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="text-xl text-blue-900 mb-8">
                 A distinctive and engaging English learning method tailored for young ESL learners.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/checkout/free_trial">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-bold rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-extrabold rounded-lg shadow-lg">
                     ✅ Try a Free Sample
                   </Button>
                 </Link>
                 <Link href="/books">
-                  <Button variant="outline" className="border-4 border-green-500 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-bold rounded-lg transform transition-all duration-200 hover:scale-105 shadow-md">
+                  <Button variant="outline" className="border-4 border-green-500 bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-extrabold rounded-lg shadow-md">
                     📘 Explore Books
                   </Button>
                 </Link>
