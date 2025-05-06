@@ -44,8 +44,18 @@ const s3Client = new S3Client({
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ""
-  }
+  },
+  // Explicitly set the endpoint and use path-style addressing
+  endpoint: "https://s3.eu-north-1.amazonaws.com",
+  forcePathStyle: true
 });
+
+// Debug S3 client initialization
+console.log("S3 client initialized with region eu-north-1");
+console.log("AWS credentials are available for S3 access:");
+console.log(` - AWS_ACCESS_KEY_ID: ${process.env.AWS_ACCESS_KEY_ID ? process.env.AWS_ACCESS_KEY_ID.substring(0, 5) + '...' + process.env.AWS_ACCESS_KEY_ID.slice(-4) : 'MISSING'}`); 
+console.log(` - AWS_SECRET_ACCESS_KEY: ${process.env.AWS_SECRET_ACCESS_KEY ? '********' + process.env.AWS_SECRET_ACCESS_KEY.slice(-4) : 'MISSING'}`);
+
 
 // S3 bucket name constant
 const S3_BUCKET = "visualenglishmaterial";
