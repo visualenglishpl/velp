@@ -41,8 +41,8 @@ const HeroSection = () => {
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-pink-600 to-purple-600 rounded-xl blur opacity-20"></div>
                 <img 
-                  src="/api/content/VISUAL%20WEBSITE/main%20page.png" 
-                  alt="Child using Visual English"
+                  src="/images/new_hero_image.png" 
+                  alt="Visual English Logo"
                   className="relative w-full h-auto rounded-xl shadow-xl transform transition-all duration-500 hover:scale-105" 
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
