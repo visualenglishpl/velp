@@ -77,31 +77,31 @@ const PricingPlans = () => {
   return (
     <section id="pricing" className="pt-16 pb-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900">Find Your Perfect Learning Path</h2>
-          <p className="mt-3 text-lg text-gray-600">
+        <div className="text-center mb-14">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Find Your Perfect Learning Path</h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Choose the plan that fits your learning style and budget
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
-            <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-md overflow-hidden">
+            <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
               {/* Header */}
-              <div className={`${plan.color} py-3 text-white text-center`}>
-                <h3 className="text-lg font-bold">
+              <div className={`${plan.color} py-4 text-white text-center`}>
+                <h3 className="text-xl font-bold">
                   {plan.title}
                 </h3>
               </div>
               
               {/* Content */}
-              <div className="flex-grow p-4">
-                <div className="min-h-[120px]">
-                  <ul className="space-y-2">
+              <div className="flex-grow p-5">
+                <div className="min-h-[200px]">
+                  <ul className="space-y-3">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start">
-                        <Check className={`h-4 w-4 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
-                        <span className="text-gray-600 text-xs">{feature}</span>
+                        <Check className={`h-5 w-5 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
+                        <span className="text-gray-600 text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -109,26 +109,26 @@ const PricingPlans = () => {
               </div>
               
               {/* Pricing */}
-              <div className="p-4 border-t border-gray-100">
-                <div className="flex justify-center items-center h-10">
-                  <div className="text-center">
+              <div className="p-5 border-t border-gray-200">
+                <div className="flex justify-center items-center">
+                  <div className="text-center mb-4">
                     <div className="flex flex-col items-center">
-                      <div className="text-xl font-bold">{plan.price}</div>
+                      <div className="text-3xl font-bold">{plan.price}</div>
                       {plan.priceNote && (
-                        <div className="text-xs text-gray-500">{plan.priceNote}</div>
+                        <div className="text-sm text-gray-500 mt-1">{plan.priceNote}</div>
                       )}
                     </div>
                     
                     {plan.priceSavings && (
-                      <div className="text-xs text-gray-500 mt-0.5">{plan.priceSavings}</div>
+                      <div className="text-sm text-gray-500 mt-1.5">{plan.priceSavings}</div>
                     )}
                   </div>
                 </div>
                 
-                <div className="mt-3">
+                <div className="mt-2">
                   <Link href={index === plans.length - 1 ? `/checkout/${plan.planId}` : '/books'}>
                     <button 
-                      className="w-full py-2 px-3 rounded-md font-bold text-white shadow-sm text-sm"
+                      className="w-full py-3 px-4 rounded-md font-bold text-white shadow-md text-base"
                       style={{ backgroundColor: plan.bgColor }}
                     >
                       {plan.buttonText}
