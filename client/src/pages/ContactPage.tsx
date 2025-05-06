@@ -43,7 +43,7 @@ const ContactPage = () => {
             <img 
               src="/api/direct/content/VISUAL WEBSITE/0C.png" 
               alt="Contact Visual English"
-              className="w-full max-w-md rounded-lg shadow-lg"
+              className="w-full max-w-md"
             />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mt-8">Contact Us</h1>
