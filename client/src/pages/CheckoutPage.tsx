@@ -5,9 +5,10 @@ import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ShoppingCart, CreditCard, ArrowLeft, CheckCircle, ShoppingBag } from 'lucide-react';
+import { ShoppingCart, CreditCard, ArrowLeft, CheckCircle, ShoppingBag, BookOpen, Book } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import WithdrawalConsent from '@/components/checkout/WithdrawalConsent';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface PlanDetails {
   name: string;
@@ -15,6 +16,14 @@ interface PlanDetails {
   description: string;
   recurring: boolean;
   color: string;
+}
+
+interface CartItem {
+  id: string;
+  type: string;
+  bookId: string;
+  title: string;
+  price: number;
 }
 
 export default function CheckoutPage() {
@@ -31,6 +40,7 @@ export default function CheckoutPage() {
   const [isComplete, setIsComplete] = useState(false);
   const [consent, setConsent] = useState(false);
   const [planDetails, setPlanDetails] = useState<PlanDetails | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   // Get plan ID from params or cart
   const planId = params.planId || 'default';
@@ -86,6 +96,35 @@ export default function CheckoutPage() {
       });
     }
   };
+
+  // Load cart items from localStorage
+  useEffect(() => {
+    const loadCart = () => {
+      const storedCart = localStorage.getItem('visualEnglishCart');
+      if (storedCart) {
+        try {
+          const cart = JSON.parse(storedCart);
+          setCartItems(cart);
+        } catch (error) {
+          console.error('Failed to parse cart data', error);
+          setCartItems([]);
+        }
+      }
+    };
+
+    loadCart();
+    
+    // Listen for storage changes (when items are added to cart)
+    const handleStorageChange = () => {
+      loadCart();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   useEffect(() => {
     // In a real app, this would fetch from an API
@@ -188,24 +227,66 @@ export default function CheckoutPage() {
               <span className="text-sm text-gray-500">Click on any book to add it to your cart (€20 each)</span>
             </div>
             
-            <div className="grid grid-cols-4 md:grid-cols-8 gap-3 mb-6">
-              {['0a', '0b', '0c', '1', '2', '3', '4', '5'].map(bookId => (
-                <div 
-                  key={bookId} 
-                  className="relative cursor-pointer rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all"
-                  onClick={() => addBookToCart(bookId)}
-                >
-                  <img 
-                    src={bookId === '3' ? `/api/direct/content/icons/VISUAL 3 .gif` : `/api/direct/content/icons/VISUAL ${bookId}.gif`}
-                    alt={`Book ${bookId}`}
-                    className="w-full aspect-square object-cover"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
-                    <ShoppingBag size={10} className="mr-1" />
-                    Add to Basket (€20)
+            <div className="mb-4">
+              <h3 className="font-medium text-sm mb-2">Pre-School Books (Ages 4-6)</h3>
+              <div className="grid grid-cols-3 md:grid-cols-9 gap-3 mb-3">
+                {[
+                  { id: '0a', name: 'Book 0A' },
+                  { id: '0b', name: 'Book 0B' },
+                  { id: '0c', name: 'Book 0C' }
+                ].map(book => (
+                  <div 
+                    key={book.id} 
+                    className="cursor-pointer"
+                    onClick={() => addBookToCart(book.id)}
+                  >
+                    <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
+                      <img 
+                        src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
+                        alt={book.name}
+                        className="w-full aspect-square object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                        <ShoppingBag size={10} className="mr-1" />
+                        Add to Basket (€20)
+                      </div>
+                    </div>
+                    <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              
+              <h3 className="font-medium text-sm mb-2 mt-4">Primary School Books (Ages 7-15)</h3>
+              <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
+                {[
+                  { id: '1', name: 'Book 1' },
+                  { id: '2', name: 'Book 2' },
+                  { id: '3', name: 'Book 3' },
+                  { id: '4', name: 'Book 4' },
+                  { id: '5', name: 'Book 5' },
+                  { id: '6', name: 'Book 6' },
+                  { id: '7', name: 'Book 7' }
+                ].map(book => (
+                  <div 
+                    key={book.id} 
+                    className="cursor-pointer"
+                    onClick={() => addBookToCart(book.id)}
+                  >
+                    <div className="relative rounded-md overflow-hidden border hover:border-primary hover:shadow-md transition-all">
+                      <img 
+                        src={`/api/direct/content/icons/VISUAL ${book.id}.gif`}
+                        alt={book.name}
+                        className="w-full aspect-square object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-1.5 text-white text-[10px] text-center font-medium flex items-center justify-center">
+                        <ShoppingBag size={10} className="mr-1" />
+                        Add to Basket (€20)
+                      </div>
+                    </div>
+                    <div className="mt-1 text-center text-xs font-medium">{book.name}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -341,16 +422,50 @@ export default function CheckoutPage() {
             <div>
               <Card className="p-6">
                 <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-                <div className="border-b pb-4 mb-4">
-                  <div className="flex justify-between mb-2">
-                    <span className="font-medium">{planDetails.name}</span>
+                
+                {planId === 'default' ? (
+                  // Cart checkout - show all items
+                  <div className="border-b pb-4 mb-4">
+                    {cartItems.length > 0 ? (
+                      <div className="space-y-3">
+                        {cartItems.map((item, index) => (
+                          <div key={item.id} className={`flex justify-between items-center ${index !== cartItems.length - 1 ? 'pb-2 border-b border-gray-100' : ''}`}>
+                            <div className="flex items-center">
+                              <div className="w-8 h-8 relative overflow-hidden rounded mr-2">
+                                <img 
+                                  src={`/api/direct/content/icons/VISUAL ${item.bookId}.gif`}
+                                  alt={item.title}
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+                              <span className="text-sm">{item.title}</span>
+                            </div>
+                            <span className="font-medium">€{item.price}</span>
+                          </div>
+                        ))}
+                        
+                        <div className="flex items-center justify-between pt-2">
+                          <span className="text-gray-600">Subtotal</span>
+                          <span className="font-medium">€{cartItems.reduce((total, item) => total + item.price, 0)}</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-600 mb-2">Your cart is empty.</p>
+                    )}
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{planDetails.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Subtotal</span>
-                    <span className="font-medium">{planDetails.price}</span>
+                ) : (
+                  // Single plan checkout
+                  <div className="border-b pb-4 mb-4">
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium">{planDetails.name}</span>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-2">{planDetails.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-600">Subtotal</span>
+                      <span className="font-medium">{planDetails.price}</span>
+                    </div>
                   </div>
-                </div>
+                )}
                 
                 {planDetails.recurring && (
                   <div className="mb-4 p-3 bg-gray-50 rounded-md text-sm">
@@ -362,7 +477,11 @@ export default function CheckoutPage() {
                 
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span>{planDetails.price}</span>
+                  <span>
+                    {planId === 'default' 
+                      ? `€${cartItems.reduce((total, item) => total + item.price, 0)}` 
+                      : planDetails.price}
+                  </span>
                 </div>
                 
                 <div className="mt-4 pt-4 border-t">
