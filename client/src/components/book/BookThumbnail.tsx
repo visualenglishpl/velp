@@ -163,6 +163,23 @@ const BookThumbnail = ({
     }
   };
 
+  // Get the exact button background color to match the book cover
+  const getExactButtonColor = () => {
+    switch (bookId) {
+      case '0a': return 'bg-fuchsia-500'; // Pink/Magenta for Book 0A
+      case '0b': return 'bg-orange-500';  // Orange for Book 0B
+      case '0c': return 'bg-cyan-500';    // Cyan for Book 0C
+      case '1':  return 'bg-yellow-400';  // Yellow for Book 1
+      case '2':  return 'bg-purple-500';  // Purple for Book 2
+      case '3':  return 'bg-green-500';   // Green for Book 3
+      case '4':  return 'bg-sky-400';     // Light Blue for Book 4
+      case '5':  return 'bg-emerald-500'; // Deep Green for Book 5
+      case '6':  return 'bg-red-600';     // Red for Book 6
+      case '7':  return 'bg-lime-400';    // Bright Green for Book 7
+      default:   return 'bg-blue-500';
+    }
+  };
+
   return (
     <div className="h-full">
       <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md h-full flex flex-col`}>
@@ -224,7 +241,7 @@ const BookThumbnail = ({
           <p className={`${subTextColorClass} text-xs font-medium mb-2`}>BOOK {formattedBookId}</p>
           <div className="mt-auto space-y-2">
             <Link href={`/books/${bookId}`} className="block w-full">
-              <button className={`w-full ${bookId === '5' ? 'bg-red-600 text-white' : buttonColorClass} py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1`}>
+              <button className={`w-full ${getExactButtonColor()} text-white py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1 hover:opacity-90`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-book-open">
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
