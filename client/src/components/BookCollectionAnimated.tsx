@@ -23,97 +23,97 @@ const BookCollectionAnimated: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showAnimated, setShowAnimated] = useState(false);
   
-  // Predefined book info with brand colors
+  // Predefined book info with exact colors from the book covers
   const books: BookInfo[] = [
     {
       id: '0a',
-      title: 'Book 0A - To The Moon',
+      title: 'Book 0A',
       color: '#ffedcc',
       textColor: '#663300',
       borderColor: '#ffcc66',
-      buttonColor: '#ff9900',
-      hoverColor: '#ffcc00'
+      buttonColor: '#FF40FF', // Pink
+      hoverColor: '#E038E0'
     },
     {
       id: '0b',
-      title: 'Book 0B - Barn In The Farm',
+      title: 'Book 0B',
       color: '#e6f7ff',
       textColor: '#003366',
       borderColor: '#99d6ff',
-      buttonColor: '#3399ff',
-      hoverColor: '#66b3ff'
+      buttonColor: '#FF7F27', // Orange
+      hoverColor: '#E07022'
     },
     {
       id: '0c',
-      title: 'Book 0C - At The Farm',
+      title: 'Book 0C',
       color: '#eaf7ea',
       textColor: '#1a5918',
       borderColor: '#b3e6b3',
-      buttonColor: '#4dcc4d',
-      hoverColor: '#79d279'
+      buttonColor: '#00CEDD', // Teal
+      hoverColor: '#00B8C5'
     },
     {
       id: '1',
-      title: 'Book 1 - Vegetables',
+      title: 'Book 1',
       color: '#f5e6ff',
       textColor: '#4d0099',
       borderColor: '#dfb3ff',
-      buttonColor: '#9933ff',
-      hoverColor: '#b366ff'
+      buttonColor: '#FFFF00', // Yellow
+      hoverColor: '#E0E000'
     },
     {
       id: '2',
-      title: 'Book 2 - Sports',
+      title: 'Book 2',
       color: '#ffe6e6',
       textColor: '#990000',
       borderColor: '#ffb3b3',
-      buttonColor: '#ff3333',
-      hoverColor: '#ff6666'
+      buttonColor: '#9966CC', // Purple
+      hoverColor: '#8959B3'
     },
     {
       id: '3',
-      title: 'Book 3 - Bugs',
+      title: 'Book 3',
       color: '#f0f7e6',
       textColor: '#336600', 
       borderColor: '#c6e6a3',
-      buttonColor: '#74b62e',
-      hoverColor: '#8cd444'
+      buttonColor: '#00CC00', // Green
+      hoverColor: '#00B300'
     },
     {
       id: '4',
-      title: 'Book 4 - At The Circus',
+      title: 'Book 4',
       color: '#ffe6f0',
       textColor: '#99004d',
       borderColor: '#ffb3d1',
-      buttonColor: '#ff3385',
-      hoverColor: '#ff66a3'
+      buttonColor: '#5DADEC', // Blue
+      hoverColor: '#5199D3'
     },
     {
       id: '5',
-      title: 'Book 5 - Movie Time',
+      title: 'Book 5',
       color: '#e6f0ff',
       textColor: '#002266',
       borderColor: '#b3d1ff',
-      buttonColor: '#3366ff',
-      hoverColor: '#6690ff'
+      buttonColor: '#00CC66', // Green
+      hoverColor: '#00B35A'
     },
     {
       id: '6',
-      title: 'Book 6 - Fashion Accessories',
+      title: 'Book 6',
       color: '#f9f0e6',
       textColor: '#664400',
       borderColor: '#f2d9b3',
-      buttonColor: '#cc8800',
-      hoverColor: '#e69900'
+      buttonColor: '#FF0000', // Red
+      hoverColor: '#E00000'
     },
     {
       id: '7',
-      title: 'Book 7 - Social Problems',
+      title: 'Book 7',
       color: '#e6e6ff',
       textColor: '#000066',
       borderColor: '#b3b3ff',
-      buttonColor: '#3333ff',
-      hoverColor: '#6666ff'
+      buttonColor: '#00FF00', // Bright Green
+      hoverColor: '#00E000'
     }
   ];
 

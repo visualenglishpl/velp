@@ -70,9 +70,18 @@ const Navbar = () => {
             <Link href="/books">
               <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.books')}</span>
             </Link>
-            <Link href="/#pricing">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.pricing')}</span>
-            </Link>
+            <a href="/#pricing" onClick={(e) => {
+                // For same-page navigation, prevent default and scroll manually
+                if (window.location.pathname === '/') {
+                  e.preventDefault();
+                  const pricingSection = document.getElementById('pricing');
+                  if (pricingSection) {
+                    pricingSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }
+              }}>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium cursor-pointer">{t('nav.pricing')}</span>
+            </a>
             <Link href="/contact">
               <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.contact')}</span>
             </Link>
