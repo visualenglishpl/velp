@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual English Content Check</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    h1 {
+      color: #2563eb;
+      text-align: center;
+      margin-top: 0;
+    }
+    .panel {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .panel h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      color: #4b5563;
+    }
+    .success {
+      background-color: #ecfdf5;
+      border-color: #10b981;
+    }
+    .error {
+      background-color: #fef2f2;
+      border-color: #ef4444;
+    }
+    .image-preview {
+      max-width: 300px;
+      margin: 15px 0;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+    .button {
+      display: inline-block;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #1d4ed8;
+    }
+    code {
+      background-color: #f1f5f9;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    pre {
+      background-color: #1e293b;
+      color: #e2e8f0;
+      padding: 15px;
+      overflow: auto;
+      border-radius: 6px;
+      font-family: monospace;
+    }
+    .test-log {
+      margin-bottom: 20px;
+    }
+    .loading {
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+      color: #6b7280;
+    }
+    #results {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Visual English Content System Check</h1>
+    
+    <div class="panel">
+      <h2>Test API Endpoints</h2>
+      <button id="testApi" class="button">Run API Tests</button>
+      <div id="apiStatus" class="loading">Click the button to start tests...</div>
+    </div>
+    
+    <div class="panel">
+      <h2>SlickContentViewer Access</h2>
+      <p>Try accessing these recommended units:</p>
+      <div>
+        <a href="/books/4/units/1" class="button">Book 4, Unit 1</a>
+        <a href="/books/6/units/5" class="button">Book 6, Unit 5</a>
+        <a href="/books/5/units/3" class="button">Book 5, Unit 3</a>
+      </div>
+    </div>
+    
+    <div id="results"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const testApiButton = document.getElementById('testApi');
+      const apiStatus = document.getElementById('apiStatus');
+      const resultsDiv = document.getElementById('results');
+      
+      testApiButton.addEventListener('click', async () => {
+        testApiButton.disabled = true;
+        apiStatus.innerHTML = 'Running tests...';
+        resultsDiv.innerHTML = '';
+        
+        const endpoints = [
+          { name: 'Book 4, Unit 1 Materials', url: '/api/direct/book4/unit1/materials' },
+          { name: 'Book 6, Unit 5 Materials', url: '/api/direct/book6/unit5/materials' },
+          { name: 'Book 5, Unit 3 Materials', url: '/api/direct/book5/unit3/materials' },
+          { name: 'API Health Check', url: '/api/healthcheck' }
+        ];
+        
+        let allPassed = true;
+        
+        for (const endpoint of endpoints) {
+          try {
+            const log = document.createElement('div');
+            log.className = 'test-log';
+            log.innerHTML = `<strong>Testing ${endpoint.name}:</strong> ${endpoint.url}`;
+            resultsDiv.appendChild(log);
+            
+            const response = await fetch(endpoint.url);
+            const data = await response.json();
+            
+            const resultPanel = document.createElement('div');
+            
+            if (response.ok) {
+              resultPanel.className = 'panel success';
+              
+              if (Array.isArray(data)) {
+                resultPanel.innerHTML = `
+                  <h2>✅ Success: ${endpoint.name}</h2>
+                  <p>Found ${data.length} items</p>
+                `;
+                
+                // Show first item preview if it's an image
+                if (data.length > 0 && data[0].contentType === 'image') {
+                  const imgUrl = data[0].content;
+                  resultPanel.innerHTML += `
+                    <p>First item preview:</p>
+                    <img src="${imgUrl}" class="image-preview" alt="Content preview">
+                  `;
+                }
+              } else {
+                resultPanel.innerHTML = `
+                  <h2>✅ Success: ${endpoint.name}</h2>
+                  <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+              }
+            } else {
+              allPassed = false;
+              resultPanel.className = 'panel error';
+              resultPanel.innerHTML = `
+                <h2>❌ Error: ${endpoint.name}</h2>
+                <p>Status: ${response.status}</p>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+              `;
+            }
+            
+            resultsDiv.appendChild(resultPanel);
+          } catch (error) {
+            allPassed = false;
+            const errorPanel = document.createElement('div');
+            errorPanel.className = 'panel error';
+            errorPanel.innerHTML = `
+              <h2>❌ Error: ${endpoint.name}</h2>
+              <p>${error.message}</p>
+            `;
+            resultsDiv.appendChild(errorPanel);
+          }
+        }
+        
+        testApiButton.disabled = false;
+        apiStatus.innerHTML = allPassed 
+          ? '✅ All tests passed! API is working correctly.' 
+          : '❌ Some tests failed. Check the results below.';
+        apiStatus.className = allPassed ? 'success' : 'error';
+      });
+    });
+  </script>
+</body>
+</html>

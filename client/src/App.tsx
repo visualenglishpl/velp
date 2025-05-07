@@ -18,7 +18,7 @@ import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import SlickContentViewer from "./pages/SlickContentViewer";
-import SimpleContentViewer from "./pages/SimpleContentViewer";
+// Removed SimpleContentViewer import as we're consolidating to just use SlickContentViewer
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
@@ -39,13 +39,13 @@ function App() {
                 <h1 className="text-2xl font-bold mb-6">Visual English Debug Page</h1>
                 <p className="mb-4">This page provides testing and diagnostic tools for development.</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  <a href="/simple" className="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">Simple Content Viewer</span>
-                    <span className="text-sm mt-1">Diagnostic tool for API connectivity and image loading</span>
+                  <a href="/books/4/units/1" className="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded flex flex-col">
+                    <span className="font-bold">SlickContentViewer</span>
+                    <span className="text-sm mt-1">Main content viewer for books and units</span>
                   </a>
-                  <a href="/simple/books/1/units/1" className="bg-green-500 hover:bg-green-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">Test Book Content</span>
-                    <span className="text-sm mt-1">Book 1, Unit 1 in simple viewer</span>
+                  <a href="/direct-access.html" className="bg-green-500 hover:bg-green-600 text-white p-4 rounded flex flex-col">
+                    <span className="font-bold">Direct Book Access</span>
+                    <span className="text-sm mt-1">Browse all books and units</span>
                   </a>
                   <a href="/api/healthcheck" className="bg-purple-500 hover:bg-purple-600 text-white p-4 rounded flex flex-col">
                     <span className="font-bold">API Health Check</span>
@@ -132,22 +132,7 @@ function App() {
               <SlickContentViewer />
             </Route>
             
-            {/* Simple debug content viewer for testing routes */}
-            <Route path="/simple">
-              <SimpleContentViewer />
-            </Route>
-            <Route path="/simple/debug">
-              <SimpleContentViewer />
-            </Route>
-            <Route path="/simple/book/:bookId/:unitNumber">
-              <SimpleContentViewer />
-            </Route>
-            <Route path="/simple/book:bookId/unit:unitNumber">
-              <SimpleContentViewer />
-            </Route>
-            <Route path="/simple/books/:bookId/units/:unitNumber">
-              <SimpleContentViewer />
-            </Route>
+            {/* Removed SimpleContentViewer routes as we're consolidating to just use SlickContentViewer */}
           </Switch>
         </main>
         <Footer />

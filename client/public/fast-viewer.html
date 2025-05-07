@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fast Viewer Access</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f4f8;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      color: #2d3748;
+      margin-top: 0;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin: 25px 0;
+    }
+    .btn {
+      display: block;
+      padding: 15px;
+      background-color: #4299e1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn-blue {
+      background-color: #3182ce;
+    }
+    .btn-purple {
+      background-color: #805ad5;
+    }
+    .btn-pink {
+      background-color: #d53f8c;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: #e6fffa;
+      border-left: 4px solid #38b2ac;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Visual English Quick Access</h1>
+    <p>Click a button below to view content immediately:</p>
+    
+    <div class="buttons">
+      <a href="/books/4/units/1" class="btn btn-blue">Book 4, Unit 1 - Nationalities</a>
+      <a href="/books/6/units/5" class="btn btn-purple">Book 6, Unit 5 - Theme Parks</a>
+      <a href="/books/5/units/3" class="btn btn-pink">Book 5, Unit 3 - Home Sweet Home</a>
+    </div>
+    
+    <div class="status">
+      Note: This page provides direct access to the SlickContentViewer.
+    </div>
+  </div>
+</body>
+</html>

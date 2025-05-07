@@ -14,17 +14,7 @@ const Home = () => {
     navigate(`/books/${book}/units/${unit}`);
   };
   
-  const handleViewSimpleContent = (book: string, unit: string, format: string) => {
-    console.log(`Navigating to simple viewer for book ${book}, unit ${unit} with format ${format}`);
-    
-    if (format === 'format1') {
-      navigate(`/simple/books/${book}/units/${unit}`);
-    } else if (format === 'format2') {
-      navigate(`/simple/book/${book}/${unit}`);
-    } else if (format === 'format3') {
-      navigate(`/simple/book${book}/unit${unit}`);
-    }
-  };
+  // Removed Simple Viewer navigation function as we're consolidating to just use SlickContentViewer
   
   return (
     <>
@@ -68,30 +58,7 @@ const Home = () => {
           <p className="text-center text-sm text-gray-600 italic">All slides and interactive features are available in this viewer.</p>
         </Card>
         
-        <Card className="p-6 max-w-2xl mx-auto border-2 border-amber-300 bg-amber-50">
-          <h2 className="text-xl font-bold mb-4 text-center text-amber-700">Simple Content Viewer (Debug Mode)</h2>
-          <p className="mb-4 text-center">Use these buttons to test our simplified debug viewer:</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              onClick={() => handleViewSimpleContent('4', '1', 'format1')}
-              className="bg-amber-600 hover:bg-amber-700"
-            >
-              Book 4, Unit 1 (Debug)
-            </Button>
-            <Button 
-              onClick={() => handleViewSimpleContent('6', '5', 'format2')}
-              className="bg-amber-600 hover:bg-amber-700"
-            >
-              Book 6, Unit 5 (Debug)
-            </Button>
-            <Button 
-              onClick={() => handleViewSimpleContent('5', '3', 'format3')}
-              className="bg-amber-600 hover:bg-amber-700"
-            >
-              Book 5, Unit 3 (Debug)
-            </Button>
-          </div>
-        </Card>
+        {/* Removed Simple Content Viewer (Debug Mode) section as we're only using SlickContentViewer */}
       </div>
       <PricingPlans />
       <FAQSection />
