@@ -71,10 +71,24 @@ const Navbar = () => {
                   e.preventDefault();
                   const booksSection = document.getElementById('books');
                   if (booksSection) {
-                    // Scroll to show the entire section from the top
+                    // Get the viewport height
+                    const viewportHeight = window.innerHeight;
+                    // Get the element's height
+                    const elementHeight = booksSection.offsetHeight;
+                    // Calculate the navbar height
                     const navbarHeight = 64; // Height of the navbar in pixels
+                    
+                    // Calculate position to center the element in the viewport
                     const elementPosition = booksSection.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+                    let offsetPosition = elementPosition + window.pageYOffset;
+                    
+                    // If element is smaller than viewport, center it
+                    if (elementHeight < viewportHeight) {
+                      offsetPosition = offsetPosition - ((viewportHeight - elementHeight) / 2) - navbarHeight;
+                    } else {
+                      // Otherwise just account for navbar
+                      offsetPosition = offsetPosition - navbarHeight;
+                    }
                     
                     window.scrollTo({
                       top: offsetPosition,
@@ -90,10 +104,24 @@ const Navbar = () => {
                   e.preventDefault();
                   const pricingSection = document.getElementById('pricing');
                   if (pricingSection) {
-                    // Scroll to show the entire section from the top
+                    // Get the viewport height
+                    const viewportHeight = window.innerHeight;
+                    // Get the element's height
+                    const elementHeight = pricingSection.offsetHeight;
+                    // Calculate the navbar height
                     const navbarHeight = 64; // Height of the navbar in pixels
+                    
+                    // Calculate position to center the element in the viewport
                     const elementPosition = pricingSection.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+                    let offsetPosition = elementPosition + window.pageYOffset;
+                    
+                    // If element is smaller than viewport, center it
+                    if (elementHeight < viewportHeight) {
+                      offsetPosition = offsetPosition - ((viewportHeight - elementHeight) / 2) - navbarHeight;
+                    } else {
+                      // Otherwise just account for navbar
+                      offsetPosition = offsetPosition - navbarHeight;
+                    }
                     
                     window.scrollTo({
                       top: offsetPosition,
