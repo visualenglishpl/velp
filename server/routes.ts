@@ -2108,7 +2108,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Endpoint to get book thumbnails for the bookstore
+  // Note: Book thumbnails endpoint is already defined earlier in the file
+  // Removing duplicate endpoint
+  /*
   app.get("/api/assets/book-thumbnails", async (req, res) => {
     try {
       // Sample data structure for books
@@ -2166,7 +2168,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Error fetching book thumbnails:", error);
       res.status(500).json({ error: "Failed to fetch book thumbnails" });
     }
-  });
+  }); */
 
   // Fallback route for older content paths
   app.get("/api/content/:key", isAuthenticated, async (req, res) => {
