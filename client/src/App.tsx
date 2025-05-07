@@ -55,6 +55,22 @@ function App() {
                     <span className="font-bold">Simple Test Page</span>
                     <span className="text-sm mt-1">Basic HTML test page from Express</span>
                   </a>
+                  <a href="/direct-test.html" className="bg-teal-500 hover:bg-teal-600 text-white p-4 rounded flex flex-col">
+                    <span className="font-bold">Direct Test Page</span>
+                    <span className="text-sm mt-1">Direct HTML page bypassing React for API tests</span>
+                  </a>
+                  <a href="/static-test.html" className="bg-pink-500 hover:bg-pink-600 text-white p-4 rounded flex flex-col">
+                    <span className="font-bold">Static Test Page</span>
+                    <span className="text-sm mt-1">Static mock API test with no server request</span>
+                  </a>
+                  <a href="/api-diagnostics.html" className="bg-purple-500 hover:bg-purple-600 text-white p-4 rounded flex flex-col">
+                    <span className="font-bold">API Diagnostics</span>
+                    <span className="text-sm mt-1">Comprehensive API connectivity diagnostics</span>
+                  </a>
+                  <a href="/api-debug.html" className="bg-indigo-500 hover:bg-indigo-600 text-white p-4 rounded flex flex-col">
+                    <span className="font-bold">Minimal API Debug</span>
+                    <span className="text-sm mt-1">Lightweight JS-only debug tool without frameworks</span>
+                  </a>
                 </div>
                 <div className="mt-6">
                   <a href="/" className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded inline-block">

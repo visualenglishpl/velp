@@ -11,6 +11,7 @@ import { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand } fr
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { registerDirectRoutes } from "./direct-routes";
 import { setupTestRoutes } from "./test-route";
+import { registerDirectApiRoutes } from "./direct-api-routes";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import multer from "multer";
@@ -373,6 +374,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Set up diagnostic test routes
   setupTestRoutes(app);
+  
+  // Set up direct API routes that bypass Vite's dev server
+  registerDirectApiRoutes(app);
   
   // Simple test endpoint
   app.get('/api/healthcheck', (req, res) => {
