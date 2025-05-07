@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
-import { useLanguage } from '@/contexts/LanguageContext';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -60,7 +59,6 @@ export default function SlickContentViewer() {
   const [location, navigate] = useLocation();
   const sliderRef = useRef<Slider | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { t } = useLanguage();
   
   // State for the viewer
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -1251,9 +1249,9 @@ export default function SlickContentViewer() {
                   {shouldBlur && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                       <div className="rounded-lg bg-white p-4 text-center shadow-lg">
-                        <h3 className="text-lg font-semibold text-blue-700">{t('content.premium.title')}</h3>
-                        <p className="mb-4 text-sm text-gray-700">{t('content.premium.message')}</p>
-                        <Button onClick={() => window.location.href = '/auth'}>{t('content.premium.signin')}</Button>
+                        <h3 className="text-lg font-semibold text-blue-700">Premium Content</h3>
+                        <p className="mb-4 text-sm text-gray-700">Sign in to access all slides in this unit.</p>
+                        <Button onClick={() => window.location.href = '/auth'}>Sign In</Button>
                       </div>
                     </div>
                   )}
@@ -1376,8 +1374,8 @@ export default function SlickContentViewer() {
       {/* Teacher Resources Section */}
       <div className="max-w-full w-full mx-auto px-4 pb-12">
         <TeacherResources 
-          bookId={bookId || undefined} 
-          unitId={unitNumber || undefined}
+          bookId={bookId || ""} 
+          unitId={unitNumber || ""}
           isEditMode={isEditMode}
         />
       </div>

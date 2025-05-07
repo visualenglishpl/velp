@@ -760,6 +760,7 @@ export interface TeacherResource {
 interface TeacherResourcesProps {
   bookId: string;
   unitId: string;
+  isEditMode?: boolean;
 }
 
 // Kahoot AI-generated thumbnail component
@@ -794,10 +795,10 @@ const KahootThumbnail = ({ title }: { title: string }) => {
   );
 };
 
-const TeacherResources = ({ bookId, unitId }: TeacherResourcesProps) => {
+const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: TeacherResourcesProps) => {
   const { toast } = useToast();
   const urlParams = new URLSearchParams(window.location.search);
-  const [isEditMode, setIsEditMode] = useState(urlParams.get('edit') === 'true');
+  const [isEditMode, setIsEditMode] = useState(propIsEditMode || urlParams.get('edit') === 'true');
   
   // For Book 3 Unit 16 which has two versions: House Chores and Sports
   const initialUnitType = urlParams.get('type') === 'sports' ? 'sports' : 'housechores';
