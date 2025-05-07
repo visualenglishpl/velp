@@ -7,6 +7,7 @@ import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
 const Navbar = () => {
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const { t } = useLanguage();
 
   // Update cart count when localStorage changes
   useEffect(() => {
@@ -58,22 +59,22 @@ const Navbar = () => {
           </div>
           <div className="hidden md:flex items-center space-x-6">
             <Link href="/">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Home</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.home')}</span>
             </Link>
             <Link href="/method">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Our Method</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.method')}</span>
             </Link>
             <Link href="/about">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">About Us</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.about')}</span>
             </Link>
             <Link href="/books">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Books</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.books')}</span>
             </Link>
             <a href="/#pricing">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Pricing</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.pricing')}</span>
             </a>
             <Link href="/contact">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">Contact</span>
+              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.contact')}</span>
             </Link>
             <Link href="/cart">
               <div className="flex items-center text-gray-600 hover:text-teal-600 cursor-pointer relative">
@@ -87,6 +88,7 @@ const Navbar = () => {
                 )}
               </div>
             </Link>
+            <LanguageSwitcher variant="minimal" />
             <Link href="/auth">
               <span className="bg-teal-600 text-white hover:bg-teal-700 px-6 py-2 rounded-md text-sm font-medium">Sign In</span>
             </Link>

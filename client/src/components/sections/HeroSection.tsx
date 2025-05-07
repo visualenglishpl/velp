@@ -2,8 +2,10 @@ import { Button } from "../ui/button";
 import { Link } from "wouter";
 import { CheckCircle2, MessageCircle, Brain } from "lucide-react";
 import BookThumbnail from "../book/BookThumbnail";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
+  const { t } = useLanguage();
   return (
     <div className="bg-white">
       {/* New hero section with logo, text and children image */}
@@ -18,17 +20,17 @@ const HeroSection = () => {
                 className="h-36 mb-6"
               />
               <h1 className="text-3xl md:text-4xl font-medium text-gray-800 leading-tight mb-4">
-                
+                {t('home.hero.title')}
               </h1>
               <p className="text-lg text-gray-600 mb-8">
-                A unique visual approach to language learning that makes English fun and effective for children.
+                {t('home.hero.subtitle')}
               </p>
               
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/checkout/free_trial">
                   <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-2.5 text-base font-normal rounded-md w-full sm:w-auto">
-                    Try Free Sample
+                    {t('home.hero.cta')}
                   </Button>
                 </Link>
                 <Link href="/method">
