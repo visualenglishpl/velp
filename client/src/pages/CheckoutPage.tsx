@@ -288,17 +288,62 @@ export default function CheckoutPage() {
                   
                   <Button 
                     className="w-full bg-green-600 hover:bg-green-700 mt-4"
-                    disabled={!name || !email || !cardNumber || !expiryDate || !cvc || !consent}
-                    onClick={() => {
-                      toast({
-                        title: "Free trial activated!",
-                        description: "Your 7-day free trial has been activated! You now have full access to all 10 books with a limit of 3 downloads.",
-                      });
-                      setIsComplete(true);
+                    disabled={!name || !email || !cardNumber || !expiryDate || !cvc || !consent || isProcessing}
+                    onClick={async () => {
+                      try {
+                        setIsProcessing(true);
+                        
+                        // Create a token for the card (simulating Stripe payment method for this mock implementation)
+                        // In a real implementation, you would use Stripe Elements to securely collect and tokenize the payment details
+                        const mockPaymentMethodId = `pm_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+                        
+                        // Call the API to set up the free trial with automatic conversion to paid subscription
+                        const response = await fetch('/api/setup-free-trial', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            email,
+                            name,
+                            paymentMethodId: mockPaymentMethodId,
+                          }),
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (!response.ok) {
+                          throw new Error(data.error || 'Failed to set up free trial');
+                        }
+                        
+                        toast({
+                          title: "Free trial activated!",
+                          description: "Your 7-day free trial has been activated! You now have full access to all 10 books with a limit of 3 downloads. After 7 days, your subscription will automatically convert to a €25/month plan unless canceled.",
+                        });
+                        setIsComplete(true);
+                      } catch (error: any) {
+                        console.error('Free trial setup error:', error);
+                        toast({
+                          title: "Error",
+                          description: error.message || "Failed to start free trial. Please try again.",
+                          variant: "destructive",
+                        });
+                      } finally {
+                        setIsProcessing(false);
+                      }
                     }}
                   >
-                    <CreditCard className="w-4 h-4 mr-2" />
-                    Start My Free Trial
+                    {isProcessing ? (
+                      <>
+                        <div className="animate-spin mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="w-4 h-4 mr-2" />
+                        Start My Free Trial
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>
@@ -345,8 +390,11 @@ export default function CheckoutPage() {
                 <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
               <h2 className="text-2xl font-bold text-green-700 mb-2">Free Trial Successfully Activated!</h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 mb-4">
                 Your 7-day free trial has been activated! You now have full access to all 10 Visual English books with a limit of 3 downloads total.
+              </p>
+              <p className="text-blue-600 font-medium mb-6">
+                After 7 days, your trial will automatically convert to a monthly subscription of €25/month. You can cancel anytime during the trial period to avoid any charges.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button 
