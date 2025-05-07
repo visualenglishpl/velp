@@ -27,7 +27,7 @@ export default function MethodPage() {
               
               <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
                 <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/2 p-6">
+                  <div className="md:w-1/2 p-6 flex flex-col justify-center">
                     <h2 className="text-xl font-medium text-gray-700 mb-4">
                       Built by teachers, for teachers.
                     </h2>
@@ -41,11 +41,16 @@ export default function MethodPage() {
                       The solution? Visual English — a direct teaching method built around visual cues like images, GIFs, and videos to spark real, full-sentence conversation without translation.
                     </p>
                   </div>
-                  <div className="md:w-1/2">
+                  <div className="md:w-1/2 flex items-center bg-gray-50">
                     <img 
                       src="/api/direct/content/VISUAL WEBSITE/IZA 2.png" 
                       alt="Visual English Teacher"
-                      className="w-full h-full object-cover"
+                      className="w-full h-auto object-contain"
+                      onClick={() => {
+                        setZoomImageSrc("/api/direct/content/VISUAL WEBSITE/IZA 2.png");
+                        setShowImageModal(true);
+                      }}
+                      style={{ cursor: 'pointer' }}
                     />
                   </div>
                 </div>
