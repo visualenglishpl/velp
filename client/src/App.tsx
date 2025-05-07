@@ -19,6 +19,7 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import AuthPage from "./pages/auth-page";
 
 function App() {
   console.log('Rendering full home page with layout');
