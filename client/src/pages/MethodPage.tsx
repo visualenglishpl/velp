@@ -41,7 +41,7 @@ export default function MethodPage() {
                       The solution? Visual English — a direct teaching method built around visual cues like images, GIFs, and videos to spark real, full-sentence conversation without translation.
                     </p>
                   </div>
-                  <div className="md:w-1/2 flex items-center bg-gray-50">
+                  <div className="md:w-1/2 flex items-center">
                     <img 
                       src="/api/direct/content/VISUAL WEBSITE/IZA 2.png" 
                       alt="Visual English Teacher"
