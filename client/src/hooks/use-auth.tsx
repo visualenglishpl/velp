@@ -4,10 +4,27 @@ import {
   useMutation,
   UseMutationResult,
 } from "@tanstack/react-query";
-import { insertUserSchema, User } from "../../../shared/schema";
+import { z } from "zod";
 import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "./use-toast";
-import { z } from "zod";
+
+// Define our own User type since we don't have access to the schema
+type User = {
+  id: number;
+  username: string;
+  email?: string;
+  role: "admin" | "teacher" | "school";
+  fullName?: string;
+}
+
+// Create our own insert schema
+const insertUserSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string(),
+  email: z.string().email("Invalid email address").optional(),
+  fullName: z.string().optional(),
+  role: z.enum(["admin", "teacher", "school"])
+});
 
 type AuthContextType = {
   user: User | null;
