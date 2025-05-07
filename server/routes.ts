@@ -3,7 +3,9 @@ import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { setupFixedRoutes } from "./fixed-routes";
-import { setupAuth } from "./auth";
+// Temporarily use mock auth instead of regular auth
+// import { setupAuth } from "./auth";
+import { setupMockAuth } from "./mock-auth";
 import { setupPaymentRoutes } from "./payment-routes";
 import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@shared/schema";
 import { z } from "zod";
@@ -293,10 +295,11 @@ const apiLimiter = rateLimit({
   // Store with additional client identifier tokens for better rate limiting
   keyGenerator: (req) => {
     // Use combination of IP and user ID if user is available
+    const ip = req.ip || '127.0.0.1';
     if (req.user?.id) {
-      return `${req.ip}-user:${req.user.id}`;
+      return `${ip}-user:${req.user.id}`;
     }
-    return req.ip; // Fallback to IP address only
+    return ip; // Fallback to IP address only
   },
   // Skip rate limiting for admin users
   skip: (req) => {
@@ -305,11 +308,16 @@ const apiLimiter = rateLimit({
 });
 
 // Points-based rate limiting for premium content access
-const premiumContentPoints = {};
+interface UserPointsRecord {
+  points: number;
+  lastReset: number;
+}
+
+const premiumContentPoints: Record<string, UserPointsRecord> = {};
 const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) => {
   // Safe check for authentication - default to anonymous if auth is not set up
   const userId = (req.user?.id || 'anonymous');
-  const ip = req.ip;
+  const ip = req.ip || '127.0.0.1';
   const key = `${userId}-${ip}`;
   
   // Initialize or reset points if needed
@@ -337,14 +345,27 @@ const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) 
     pointCost = 5; // PDF access costs more
   }
   
-  // For authenticated premium users, reduce the cost
+  // Add User interface with subscription property
+interface User {
+  id: number | string;
+  username: string;
+  role: string;
+  subscription?: {
+    isPremium: boolean;
+    expiresAt?: Date;
+    plan?: string;
+  };
+}
+
+// For authenticated premium users, reduce the cost
   // Check if user exists and has premium subscription
-  if (req.user?.subscription?.isPremium) {
+  const user = req.user as User | undefined;
+  if (user?.subscription?.isPremium) {
     pointCost = Math.max(1, Math.floor(pointCost / 2));
   }
   
   // For admin users, no cost
-  if (req.user?.role === 'admin') {
+  if ((req.user as User | undefined)?.role === 'admin') {
     pointCost = 0;
   }
   
@@ -367,6 +388,12 @@ const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) 
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Set up trust proxy to work with rate limiters
+  app.set('trust proxy', 1);
+  
+  // Set up mock authentication for testing the admin interface
+  setupMockAuth(app);
+  
   // Set up the fixed routes for book/units handling
   await setupFixedRoutes(app, getS3PresignedUrl);
   // Add a direct route to the static test page for diagnostics
@@ -408,7 +435,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Set up authentication routes
-  setupAuth(app);
+  // Commented out setupAuth as we're using setupMockAuth above
+  // setupAuth(app);
 
   // Set up payment routes for Stripe integration
   setupPaymentRoutes(app);
@@ -488,11 +516,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // These are the expected book IDs
       const allBookIds = ["0a", "0b", "0c", "1", "2", "3", "4", "5", "6", "7"];
       
+      // Define interface for BookThumbnail
+      interface BookThumbnail {
+        bookId: string;
+        title: string;
+        description?: string;
+      }
+      
       // If storage doesn't have books, use a standard set
       const booksToUse = books && books.length > 0 ? books : allBookIds.map(id => ({
         bookId: id,
-        title: `Visual English ${id}`
-      }));
+        title: `Visual English ${id}`,
+        description: ""
+      } as BookThumbnail));
       
       console.log("Fetching book thumbnails for:", booksToUse.map(b => b.bookId).join(", "));
       
