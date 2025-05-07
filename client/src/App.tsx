@@ -75,6 +75,16 @@ function App() {
             <Route path="/checkout/:planId">
               <CheckoutPage />
             </Route>
+            {/* Support all URL formats for the content viewer */}
+            <Route path="/book/:bookId/:unitNumber">
+              <SlickContentViewer />
+            </Route>
+            <Route path="/book:bookId/unit:unitNumber">
+              <SlickContentViewer />
+            </Route>
+            <Route path="/books/:bookId/units/:unitNumber">
+              <SlickContentViewer />
+            </Route>
           </Switch>
         </main>
         <Footer />

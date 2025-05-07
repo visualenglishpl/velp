@@ -109,31 +109,42 @@ export default function SlickContentViewer() {
   // Handle different URL patterns:
   // 1. /book/1/13 format (with slashes)
   // 2. /book1/unit13 format (legacy)
+  // 3. /books/:bookId/units/:unitNumber format (newest)
   
-  // First try the new format: /book/:bookId/:unitId
-  const newFormatRegex = /\/book\/([a-zA-Z0-9]+)\/([a-zA-Z0-9]+)/;
-  const newFormatMatch = location.match(newFormatRegex);
+  // First try the newest format: /books/:bookId/units/:unitNumber
+  const newestFormatRegex = /\/books\/([a-zA-Z0-9]+)\/units\/([a-zA-Z0-9]+)/;
+  const newestFormatMatch = location.match(newestFormatRegex);
   
-  if (newFormatMatch) {
-    bookId = newFormatMatch[1];
-    // If unitId starts with "unit", strip it
-    unitNumber = newFormatMatch[2].replace(/^unit/i, '');
-    console.log(`New format match: Book ${bookId}, Unit ${unitNumber}`);
+  if (newestFormatMatch) {
+    bookId = newestFormatMatch[1];
+    unitNumber = newestFormatMatch[2];
+    console.log(`Newest format match: Book ${bookId}, Unit ${unitNumber}`);
   } else {
-    // Try legacy format: /book1/unit13
-    const legacyRegex = /\/book([a-zA-Z0-9]+)\/unit(\d+)/;
-    const legacyMatch = location.match(legacyRegex);
+    // Try the new format: /book/:bookId/:unitId
+    const newFormatRegex = /\/book\/([a-zA-Z0-9]+)\/([a-zA-Z0-9]+)/;
+    const newFormatMatch = location.match(newFormatRegex);
     
-    if (legacyMatch) {
-      bookId = legacyMatch[1];
-      unitNumber = legacyMatch[2];
-      console.log(`Legacy format match: Book ${bookId}, Unit ${unitNumber}`);
+    if (newFormatMatch) {
+      bookId = newFormatMatch[1];
+      // If unitId starts with "unit", strip it
+      unitNumber = newFormatMatch[2].replace(/^unit/i, '');
+      console.log(`New format match: Book ${bookId}, Unit ${unitNumber}`);
     } else {
-      // Fallback to URL parameters
-      const params = new URLSearchParams(window.location.search);
-      bookId = params.get('bookId');
-      unitNumber = params.get('unitNumber');
-      console.log(`URL parameters: Book ${bookId}, Unit ${unitNumber}`);
+      // Try legacy format: /book1/unit13
+      const legacyRegex = /\/book([a-zA-Z0-9]+)\/unit(\d+)/;
+      const legacyMatch = location.match(legacyRegex);
+      
+      if (legacyMatch) {
+        bookId = legacyMatch[1];
+        unitNumber = legacyMatch[2];
+        console.log(`Legacy format match: Book ${bookId}, Unit ${unitNumber}`);
+      } else {
+        // Fallback to URL parameters
+        const params = new URLSearchParams(window.location.search);
+        bookId = params.get('bookId');
+        unitNumber = params.get('unitNumber');
+        console.log(`URL parameters: Book ${bookId}, Unit ${unitNumber}`);
+      }
     }
   }
   
