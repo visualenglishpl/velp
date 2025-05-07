@@ -37,67 +37,67 @@ const BookThumbnail = ({
       bgColorClass = 'bg-blue-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-blue-700';
-      buttonColorClass = 'bg-fuchsia-500';
+      buttonColorClass = 'bg-blue-600';
       break;
     case '0b':
       bgColorClass = 'bg-orange-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-orange-700';
-      buttonColorClass = 'bg-orange-500';
+      buttonColorClass = 'bg-orange-600';
       break;
     case '0c':
       bgColorClass = 'bg-amber-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-amber-700';
-      buttonColorClass = 'bg-cyan-500';
+      buttonColorClass = 'bg-amber-600';
       break;
     case '1':
       bgColorClass = 'bg-green-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-green-700';
-      buttonColorClass = 'bg-yellow-400';
+      buttonColorClass = 'bg-green-600';
       break;
     case '2':
       bgColorClass = 'bg-blue-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-blue-700';
-      buttonColorClass = 'bg-purple-500';
+      buttonColorClass = 'bg-blue-600';
       break;
     case '3':
       bgColorClass = 'bg-lime-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-lime-700';
-      buttonColorClass = 'bg-green-500';
+      buttonColorClass = 'bg-lime-600';
       break;
     case '4':
       bgColorClass = 'bg-purple-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-purple-700';
-      buttonColorClass = 'bg-sky-400';
+      buttonColorClass = 'bg-purple-600';
       break;
     case '5':
       bgColorClass = 'bg-pink-200';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-red-700';
-      buttonColorClass = 'bg-emerald-500';
+      buttonColorClass = 'bg-white';
       break;
     case '6':
       bgColorClass = 'bg-purple-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-purple-700';
-      buttonColorClass = 'bg-red-600';
+      buttonColorClass = 'bg-purple-600';
       break;
     case '7':
       bgColorClass = 'bg-gray-100';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-gray-700';
-      buttonColorClass = 'bg-lime-400';
+      buttonColorClass = 'bg-red-600';
       break;
     default:
       bgColorClass = 'bg-white';
       textColorClass = 'text-gray-900';
       subTextColorClass = 'text-gray-700';
-      buttonColorClass = 'bg-blue-500';
+      buttonColorClass = 'bg-blue-600';
   }
   
   // Get a deeper color variant for title backgrounds
@@ -224,7 +224,7 @@ const BookThumbnail = ({
           <p className={`${subTextColorClass} text-xs font-medium mb-2`}>BOOK {formattedBookId}</p>
           <div className="mt-auto space-y-2">
             <Link href={`/books/${bookId}`} className="block w-full">
-              <button className={`w-full ${buttonColorClass} text-white py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1 hover:opacity-90`}>
+              <button className={`w-full ${bookId === '5' ? 'bg-red-600 text-white' : buttonColorClass} py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-book-open">
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>

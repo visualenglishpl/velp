@@ -17,8 +17,6 @@ import WithdrawalPage from "./pages/WithdrawalPage";
 import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
-import SlickContentViewer from "./pages/SlickContentViewer";
-// Removed SimpleContentViewer import as we're consolidating to just use SlickContentViewer
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
@@ -33,51 +31,6 @@ function App() {
           <Switch>
             <Route path="/">
               <Home />
-            </Route>
-            <Route path="/debug">
-              <div className="p-8 max-w-4xl mx-auto">
-                <h1 className="text-2xl font-bold mb-6">Visual English Debug Page</h1>
-                <p className="mb-4">This page provides testing and diagnostic tools for development.</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  <a href="/books/4/units/1" className="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">SlickContentViewer</span>
-                    <span className="text-sm mt-1">Main content viewer for books and units</span>
-                  </a>
-                  <a href="/direct-access.html" className="bg-green-500 hover:bg-green-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">Direct Book Access</span>
-                    <span className="text-sm mt-1">Browse all books and units</span>
-                  </a>
-                  <a href="/api/healthcheck" className="bg-purple-500 hover:bg-purple-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">API Health Check</span>
-                    <span className="text-sm mt-1">Check server status JSON response</span>
-                  </a>
-                  <a href="/simple-test" className="bg-yellow-500 hover:bg-yellow-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">Simple Test Page</span>
-                    <span className="text-sm mt-1">Basic HTML test page from Express</span>
-                  </a>
-                  <a href="/direct-test.html" className="bg-teal-500 hover:bg-teal-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">Direct Test Page</span>
-                    <span className="text-sm mt-1">Direct HTML page bypassing React for API tests</span>
-                  </a>
-                  <a href="/static-test.html" className="bg-pink-500 hover:bg-pink-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">Static Test Page</span>
-                    <span className="text-sm mt-1">Static mock API test with no server request</span>
-                  </a>
-                  <a href="/api-diagnostics.html" className="bg-purple-500 hover:bg-purple-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">API Diagnostics</span>
-                    <span className="text-sm mt-1">Comprehensive API connectivity diagnostics</span>
-                  </a>
-                  <a href="/api-debug.html" className="bg-indigo-500 hover:bg-indigo-600 text-white p-4 rounded flex flex-col">
-                    <span className="font-bold">Minimal API Debug</span>
-                    <span className="text-sm mt-1">Lightweight JS-only debug tool without frameworks</span>
-                  </a>
-                </div>
-                <div className="mt-6">
-                  <a href="/" className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded inline-block">
-                    Return to Home Page
-                  </a>
-                </div>
-              </div>
             </Route>
             <Route path="/books">
               <BooksPage />
@@ -121,18 +74,6 @@ function App() {
             <Route path="/checkout/:planId">
               <CheckoutPage />
             </Route>
-            {/* Support all URL formats for the content viewer */}
-            <Route path="/book/:bookId/:unitNumber">
-              <SlickContentViewer />
-            </Route>
-            <Route path="/book:bookId/unit:unitNumber">
-              <SlickContentViewer />
-            </Route>
-            <Route path="/books/:bookId/units/:unitNumber">
-              <SlickContentViewer />
-            </Route>
-            
-            {/* Removed SimpleContentViewer routes as we're consolidating to just use SlickContentViewer */}
           </Switch>
         </main>
         <Footer />

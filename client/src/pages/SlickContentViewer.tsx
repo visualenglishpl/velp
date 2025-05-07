@@ -60,9 +60,6 @@ export default function SlickContentViewer() {
   const sliderRef = useRef<Slider | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   
-  // Simple debug mode to help troubleshoot routing issues
-  const [debugMode, setDebugMode] = useState(true);
-  
   // State for the viewer
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -109,74 +106,35 @@ export default function SlickContentViewer() {
   let bookId: string | null = null;
   let unitNumber: string | null = null;
   
-  console.log("SlickContentViewer: Current location:", location);
-  
   // Handle different URL patterns:
   // 1. /book/1/13 format (with slashes)
   // 2. /book1/unit13 format (legacy)
-  // 3. /books/:bookId/units/:unitNumber format (newest)
   
-  try {
-    // First try the newest format: /books/:bookId/units/:unitNumber
-    const newestFormatRegex = /\/books\/([a-zA-Z0-9]+)\/units\/([a-zA-Z0-9]+)/;
-    const newestFormatMatch = location.match(newestFormatRegex);
+  // First try the new format: /book/:bookId/:unitId
+  const newFormatRegex = /\/book\/([a-zA-Z0-9]+)\/([a-zA-Z0-9]+)/;
+  const newFormatMatch = location.match(newFormatRegex);
+  
+  if (newFormatMatch) {
+    bookId = newFormatMatch[1];
+    // If unitId starts with "unit", strip it
+    unitNumber = newFormatMatch[2].replace(/^unit/i, '');
+    console.log(`New format match: Book ${bookId}, Unit ${unitNumber}`);
+  } else {
+    // Try legacy format: /book1/unit13
+    const legacyRegex = /\/book([a-zA-Z0-9]+)\/unit(\d+)/;
+    const legacyMatch = location.match(legacyRegex);
     
-    if (newestFormatMatch) {
-      bookId = newestFormatMatch[1];
-      unitNumber = newestFormatMatch[2];
-      console.log(`Newest format match: Book ${bookId}, Unit ${unitNumber}`);
+    if (legacyMatch) {
+      bookId = legacyMatch[1];
+      unitNumber = legacyMatch[2];
+      console.log(`Legacy format match: Book ${bookId}, Unit ${unitNumber}`);
     } else {
-      // Try the new format: /book/:bookId/:unitId
-      const newFormatRegex = /\/book\/([a-zA-Z0-9]+)\/([a-zA-Z0-9]+)/;
-      const newFormatMatch = location.match(newFormatRegex);
-      
-      if (newFormatMatch) {
-        bookId = newFormatMatch[1];
-        // If unitId starts with "unit", strip it
-        unitNumber = newFormatMatch[2].replace(/^unit/i, '');
-        console.log(`New format match: Book ${bookId}, Unit ${unitNumber}`);
-      } else {
-        // Try legacy format: /book1/unit13
-        const legacyRegex = /\/book([a-zA-Z0-9]+)\/unit(\d+)/;
-        const legacyMatch = location.match(legacyRegex);
-        
-        if (legacyMatch) {
-          bookId = legacyMatch[1];
-          unitNumber = legacyMatch[2];
-          console.log(`Legacy format match: Book ${bookId}, Unit ${unitNumber}`);
-        } else {
-          // Fallback to URL parameters
-          const params = new URLSearchParams(window.location.search);
-          bookId = params.get('bookId');
-          unitNumber = params.get('unitNumber');
-          console.log(`URL parameters: Book ${bookId}, Unit ${unitNumber}`);
-          
-          // If we still don't have values, try to extract from the path manually
-          if (!bookId || !unitNumber) {
-            console.log("Attempting manual path extraction as last resort");
-            const pathParts = location.split('/').filter(Boolean);
-            console.log("Path parts:", pathParts);
-            
-            if (pathParts.length >= 3) {
-              // Look for 'books' or 'book' followed by an ID
-              for (let i = 0; i < pathParts.length - 1; i++) {
-                if ((pathParts[i] === 'books' || pathParts[i] === 'book') && pathParts[i+1]) {
-                  bookId = pathParts[i+1];
-                  // Look for 'units' or 'unit' followed by a number
-                  if (i+2 < pathParts.length && (pathParts[i+2] === 'units' || pathParts[i+2] === 'unit') && pathParts[i+3]) {
-                    unitNumber = pathParts[i+3];
-                  }
-                  break;
-                }
-              }
-              console.log(`Manual extraction: Book ${bookId}, Unit ${unitNumber}`);
-            }
-          }
-        }
-      }
+      // Fallback to URL parameters
+      const params = new URLSearchParams(window.location.search);
+      bookId = params.get('bookId');
+      unitNumber = params.get('unitNumber');
+      console.log(`URL parameters: Book ${bookId}, Unit ${unitNumber}`);
     }
-  } catch (error) {
-    console.error("Error parsing URL:", error);
   }
   
   // Build paths for API requests

@@ -9,9 +9,7 @@ import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@share
 import { z } from "zod";
 import { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { registerDirectViewerRoutes } from "./direct-routes";
-import { setupTestRoutes } from "./test-route";
-import { registerDirectAPIRoutes } from "./direct-api-routes";
+import { registerDirectRoutes } from "./direct-routes";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import multer from "multer";
@@ -371,23 +369,12 @@ const premiumContentLimiter = (req: Request, res: Response, next: NextFunction) 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up the fixed routes for book/units handling
   await setupFixedRoutes(app, getS3PresignedUrl);
-  
-  // Set up diagnostic test routes
-  setupTestRoutes(app);
-  
-  // Set up direct API routes that bypass Vite's dev server
-  registerDirectAPIRoutes(app);
-  
-  // Simple test endpoint
-  app.get('/api/healthcheck', (req, res) => {
-    res.json({
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-      serverInfo: {
-        environment: process.env.NODE_ENV || 'development',
-        port: process.env.PORT || '5000'
-      }
-    });
+  // Add a direct route to the static test page for diagnostics
+  app.get('/test', (req, res) => {
+    const path = require('path');
+    const testPagePath = path.resolve(process.cwd(), 'client/public/test.html');
+    console.log('Serving test page from:', testPagePath);
+    res.sendFile(testPagePath);
   });
 
   // Apply global rate limiting middleware
@@ -428,7 +415,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Register direct routes that map 1:1 with S3 structure
   // These routes don't use database IDs and directly match the S3 path structure
-  registerDirectViewerRoutes(app);
+  registerDirectRoutes(app);
   
   // Admin file upload routes for thumbnails and animated GIFs
   app.post("/api/admin/upload/book/:bookId/cover", isAdmin, upload.single('file'), async (req, res) => {
