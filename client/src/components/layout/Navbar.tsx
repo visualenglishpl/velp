@@ -51,9 +51,8 @@ const Navbar = () => {
                 <img 
                   src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
                   alt="Visual English Logo" 
-                  className="h-10 mr-2"
+                  className="h-10"
                 />
-                <div className="text-xl font-semibold text-gray-800">VISUAL ENGLISH</div>
               </div>
             </Link>
           </div>
