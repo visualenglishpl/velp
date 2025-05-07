@@ -28,11 +28,13 @@ const Footer = () => {
           {/* Left side */}
           <div>
             <div className="flex items-center mb-4">
-              <img 
-                src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
-                alt="Visual English Logo"
-                className="h-16 mr-3"
-              />
+              <div className="bg-white p-2 rounded-md">
+                <img 
+                  src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
+                  alt="Visual English Logo"
+                  className="h-16 mr-3"
+                />
+              </div>
             </div>
             <p className="text-gray-300 mb-6 text-base">
               Interactive English learning for a visual generation.
