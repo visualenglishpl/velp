@@ -175,48 +175,6 @@ const HeroSection = () => {
           </div>
         </div>
       </section>
-
-      {/* Why it works section - Moved below the Visual English Series section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-medium text-center mb-12 text-gray-800">Why Visual English Works</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-lg border border-blue-100">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-500 rounded-full mb-6 shadow-md">
-                <CheckCircle2 className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="text-xl font-medium mb-4 text-indigo-600">Visual-first learning</h3>
-              <p className="text-gray-500 font-light">
-                Images and visual cues help children remember vocabulary and language structures more effectively.
-              </p>
-            </div>
-            
-            {/* Feature 2 */}
-            <div className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-lg border border-pink-100">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-pink-500 rounded-full mb-6 shadow-md">
-                <MessageCircle className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="text-xl font-medium mb-4 text-rose-500">Real conversation practice</h3>
-              <p className="text-gray-500 font-light">
-                Non-stop engaging conversation for real-world language use from day one.
-              </p>
-            </div>
-            
-            {/* Feature 3 */}
-            <div className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-lg border border-purple-100">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-purple-500 rounded-full mb-6 shadow-md">
-                <Brain className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="text-xl font-medium mb-4 text-violet-600">Perfect for young learners</h3>
-              <p className="text-gray-500 font-light">
-                Tailored for young learners with age-appropriate content that keeps them engaged and excited.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
