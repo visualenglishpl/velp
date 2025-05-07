@@ -7,6 +7,7 @@ import {
 import { z } from "zod";
 import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "./use-toast";
+import { useLocation } from "wouter";
 
 // Define our own User type since we don't have access to the schema
 type User = {
@@ -53,6 +54,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
+  const [, navigate] = useLocation();
   
   const {
     data: user,
@@ -66,10 +68,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
       console.log("Login attempting with:", credentials);
-      const res = await apiRequest("POST", "/api/login", credentials);
-      const data = await res.json();
-      console.log("Login response:", data);
-      return data;
+      try {
+        const res = await apiRequest("POST", "/api/login", credentials);
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || "Login failed");
+        }
+        const data = await res.json();
+        console.log("Login response:", data);
+        return data;
+      } catch (error) {
+        console.error("Login error:", error);
+        throw error;
+      }
     },
     onSuccess: (user: User) => {
       console.log("Login successful:", user);
@@ -82,13 +93,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Redirect based on role
       if (user.role === 'admin') {
         console.log("Admin user, redirecting to admin dashboard");
-        window.location.href = "/admin";
+        navigate("/admin");
       } else {
         console.log("Teacher/user, redirecting to books page");
-        window.location.href = "/books";
+        navigate("/books");
       }
     },
-    onError: (error: Error) => {
+    onError: (error: any) => {
+      console.error("Login mutation error:", error);
       toast({
         title: "Login failed",
         description: error.message || "Invalid username or password",
@@ -99,8 +111,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const registerMutation = useMutation({
     mutationFn: async (userData: RegisterData) => {
-      const res = await apiRequest("POST", "/api/register", userData);
-      return await res.json();
+      try {
+        const res = await apiRequest("POST", "/api/register", userData);
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || "Registration failed");
+        }
+        return await res.json();
+      } catch (error) {
+        console.error("Registration error:", error);
+        throw error;
+      }
     },
     onSuccess: (user: User) => {
       queryClient.setQueryData(["/api/user"], user);
@@ -108,8 +129,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: "Registration successful",
         description: `Welcome to VELP, ${user.username}!`,
       });
+      
+      // Redirect based on role after registration
+      if (user.role === 'admin') {
+        navigate("/admin");
+      } else {
+        navigate("/books");
+      }
     },
-    onError: (error: Error) => {
+    onError: (error: any) => {
+      console.error("Registration error:", error);
       toast({
         title: "Registration failed",
         description: error.message || "Could not create account. Please try again.",
@@ -120,7 +149,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      await apiRequest("POST", "/api/logout");
+      try {
+        const res = await apiRequest("POST", "/api/logout");
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || "Logout failed");
+        }
+      } catch (error) {
+        console.error("Logout error:", error);
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);
@@ -128,11 +166,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: "Logged out",
         description: "You have been successfully logged out.",
       });
+      navigate("/");
     },
-    onError: (error: Error) => {
+    onError: (error: any) => {
+      console.error("Logout error:", error);
       toast({
         title: "Logout failed",
-        description: error.message,
+        description: error.message || "Could not log out. Please try again.",
         variant: "destructive",
       });
     },

@@ -5,14 +5,16 @@ import VelpLogo from "../components/ui/velp-logo";
 import { User, UserRound, Laptop, School, BookOpen, Globe, Check, Loader2 } from "lucide-react";
 import { useAuth, AuthContext } from "../hooks/use-auth";
 import { Redirect, useLocation } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 const AuthPage = () => {
   const { user, isLoading, loginMutation, registerMutation } = useAuth();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("login");
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const [selectedRole, setSelectedRole] = useState<string>("admin"); // Pre-select admin role for easier testing
   
   // Form data state
-  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [loginData, setLoginData] = useState({ username: "admin", password: "admin123" }); // Pre-fill for testing
   const [registerData, setRegisterData] = useState({
     username: "",
     password: "",
@@ -25,15 +27,25 @@ const AuthPage = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginData.username || !loginData.password) {
-      return; // TODO: Add form validation
-    }
-    
-    if (!selectedRole) {
-      console.log("No role selected, please select a role");
+      toast({
+        title: "Missing fields",
+        description: "Please enter both username and password",
+        variant: "destructive",
+      });
       return;
     }
     
-    console.log(`Logging in with role: ${selectedRole}`);
+    if (!selectedRole) {
+      toast({
+        title: "Role selection required",
+        description: "Please select a role to continue",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    console.log(`Attempting login with username: ${loginData.username}, role: ${selectedRole}`);
+    
     loginMutation.mutate({ 
       ...loginData,
       role: selectedRole
@@ -44,7 +56,12 @@ const AuthPage = () => {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     if (!registerData.username || !registerData.password || !registerData.email || !selectedRole) {
-      return; // TODO: Add form validation
+      toast({
+        title: "Missing fields",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
     }
     // Set the role from the selection
     registerMutation.mutate({
@@ -65,16 +82,15 @@ const AuthPage = () => {
       // Admin redirects to admin page
       if (user.role === 'admin') {
         console.log("Admin user detected, redirecting to admin dashboard");
-        // Use window.location for a full page reload to ensure proper routing
-        window.location.href = "/admin";
+        navigate("/admin");
       } 
       // Teacher or other users redirect to books page
       else {
         console.log("Teacher/user detected, redirecting to bookstore");
-        window.location.href = "/books";
+        navigate("/books");
       }
     }
-  }, [user, isLoading]);
+  }, [user, isLoading, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
