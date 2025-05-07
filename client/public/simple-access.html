@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Access to Visual English</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f5f7fa;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 500px;
+      padding: 30px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #2d3748;
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .btn {
+      display: block;
+      padding: 14px 20px;
+      background-color: #4299e1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #3182ce;
+    }
+    .btn-pink {
+      background-color: #ed64a6;
+    }
+    .btn-pink:hover {
+      background-color: #d53f8c;
+    }
+    .btn-purple {
+      background-color: #805ad5;
+    }
+    .btn-purple:hover {
+      background-color: #6b46c1;
+    }
+  </style>
+  <script>
+    function goTo(path) {
+      window.location.href = path;
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Visual English Content Viewer</h1>
+    <p>Select a recommended unit to view content:</p>
+    
+    <div class="btn-group">
+      <button onclick="goTo('/books/4/units/1')" class="btn">
+        Book 4, Unit 1 - Nationalities
+      </button>
+      
+      <button onclick="goTo('/books/6/units/5')" class="btn btn-purple">
+        Book 6, Unit 5 - Theme Parks
+      </button>
+      
+      <button onclick="goTo('/books/5/units/3')" class="btn btn-pink">
+        Book 5, Unit 3 - Home Sweet Home
+      </button>
+    </div>
+  </div>
+</body>
+</html>

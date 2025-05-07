@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessing SlickContentViewer</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+      background-color: #f5f7fa;
+    }
+    h1 {
+      margin-bottom: 1rem;
+      color: #2d3748;
+    }
+    p {
+      margin-bottom: 1.5rem;
+      color: #4a5568;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #3182ce;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 12px 24px;
+      border-radius: 4px;
+      margin: 10px;
+      transition: background-color 0.2s;
+    }
+    .btn:hover {
+      background-color: #2c5282;
+    }
+    .btn-purple {
+      background-color: #805ad5;
+    }
+    .btn-purple:hover {
+      background-color: #6b46c1;
+    }
+    .btn-pink {
+      background-color: #d53f8c;
+    }
+    .btn-pink:hover {
+      background-color: #b83280;
+    }
+    .message {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ebf8ff;
+      border-left: 4px solid #3182ce;
+      border-radius: 4px;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // The direct format that works based on the SlickContentViewer implementation
+      const book4Unit1Url = '/books/4/units/1';
+      const book6Unit5Url = '/books/6/units/5';  
+      const book5Unit3Url = '/books/5/units/3';
+      
+      document.getElementById('book4').href = book4Unit1Url;
+      document.getElementById('book6').href = book6Unit5Url;
+      document.getElementById('book5').href = book5Unit3Url;
+    });
+  </script>
+</head>
+<body>
+  <h1>Visual English Content Viewer</h1>
+  <p>Click one of the links below to access the original SlickContentViewer for specific book units:</p>
+  
+  <div>
+    <a id="book4" class="btn" href="#">Book 4, Unit 1 - Nationalities</a>
+  </div>
+  
+  <div>
+    <a id="book6" class="btn btn-purple" href="#">Book 6, Unit 5 - Theme Parks</a>
+  </div>
+  
+  <div>
+    <a id="book5" class="btn btn-pink" href="#">Book 5, Unit 3 - Home Sweet Home</a>
+  </div>
+  
+  <div class="message">
+    Note: These links take you directly to the SlickContentViewer with the proper URL format that matches the routing in the application.
+  </div>
+</body>
+</html>
