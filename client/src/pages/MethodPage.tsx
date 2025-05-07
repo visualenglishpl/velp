@@ -25,12 +25,30 @@ export default function MethodPage() {
                 A complete, image-based approach for teaching English to children aged 4–15 — designed for ESL teachers who want structured lessons, instant engagement, and minimal prep.
               </p>
               
-              <div className="max-w-3xl mx-auto">
-                <img 
-                  src="/api/direct/content/VISUAL WEBSITE/IZA 2.png" 
-                  alt="Built by teachers, for teachers"
-                  className="w-full h-auto rounded-lg shadow-sm"
-                />
+              <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+                <div className="flex flex-col md:flex-row">
+                  <div className="md:w-1/2 p-6">
+                    <h2 className="text-xl font-medium text-gray-700 mb-4">
+                      Built by teachers, for teachers.
+                    </h2>
+                    <p className="text-gray-600 font-light mb-4">
+                      Visual English was created by Izabela Buassa, an English teacher with over 25 years of classroom experience. Throughout her career, she constantly faced one challenge: finding consistent, conversation-based ESL materials that actually worked with young learners.
+                    </p>
+                    <p className="text-gray-600 font-light mb-4">
+                      There was always a gap in the market — a lack of ready-to-use content that helped children speak, not just memorize. Teachers were left pulling resources from dozens of places, trying to piece together lessons that felt natural and fun.
+                    </p>
+                    <p className="text-gray-600 font-light">
+                      The solution? Visual English — a direct teaching method built around visual cues like images, GIFs, and videos to spark real, full-sentence conversation without translation.
+                    </p>
+                  </div>
+                  <div className="md:w-1/2">
+                    <img 
+                      src="/api/direct/content/VISUAL WEBSITE/IZA 2.png" 
+                      alt="Visual English Teacher"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -240,7 +258,7 @@ export default function MethodPage() {
                 <p className="text-gray-600 font-light">✅ No prep. No translation. Just speaking.</p>
               </div>
               
-              <div className="text-center mt-8">
+              <div className="text-center mt-8 flex flex-col items-center">
                 <a href="/books" className="inline-flex items-center px-8 py-3 border border-transparent text-base font-normal rounded-md shadow-sm text-white bg-teal-500 hover:bg-teal-600 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-book-open mr-2">
                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
@@ -248,6 +266,15 @@ export default function MethodPage() {
                   </svg>
                   Explore Our Books
                 </a>
+                
+                <div className="flex items-center gap-3 mt-4">
+                  <span className="text-gray-500 text-sm">Follow Us:</span>
+                  <a href="https://www.facebook.com/visualenglishpl" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-teal-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
