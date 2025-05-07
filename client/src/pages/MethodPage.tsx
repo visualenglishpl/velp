@@ -26,15 +26,26 @@ export default function MethodPage() {
               </p>
               
               <div className="bg-gray-50 p-6 rounded-lg max-w-3xl mx-auto">
-                <h2 className="text-xl font-medium text-gray-700 mb-3">
-                  Built by teachers, for teachers.
-                </h2>
-                <p className="text-gray-600 font-light">
-                  Visual English was created by Izabela Buassa, an experienced English teacher, to solve a real classroom problem: young learners struggle with speaking English when lessons rely on traditional textbooks or translation.
-                </p>
-                <p className="text-gray-600 font-light mt-4">
-                  The solution? A direct method that uses visual cues — images, GIFs, videos — to spark full-sentence conversation, without needing to translate.
-                </p>
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                  <div className="md:flex-1">
+                    <h2 className="text-xl font-medium text-gray-700 mb-3">
+                      Built by teachers, for teachers.
+                    </h2>
+                    <p className="text-gray-600 font-light">
+                      Visual English was created by Izabela Buassa, an experienced English teacher, to solve a real classroom problem: young learners struggle with speaking English when lessons rely on traditional textbooks or translation.
+                    </p>
+                    <p className="text-gray-600 font-light mt-4">
+                      The solution? A direct method that uses visual cues — images, GIFs, videos — to spark full-sentence conversation, without needing to translate.
+                    </p>
+                  </div>
+                  <div className="w-full md:w-1/3 flex justify-center">
+                    <img 
+                      src="/api/direct/content/VISUAL WEBSITE/iza.png" 
+                      alt="Izabela Buassa" 
+                      className="w-32 h-auto rounded-full border-4 border-white shadow-md"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
