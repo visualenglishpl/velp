@@ -186,7 +186,7 @@ const BookThumbnail = ({
               if (parent) {
                 // Add PNG thumbnail as alternative
                 const pngImg = document.createElement('img');
-                pngImg.src = `/api/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
+                pngImg.src = `/api/direct/content/book${bookId}/icons/thumbnailsuni${bookId}-1.png`;
                 pngImg.alt = `Book ${formattedBookId}`;
                 pngImg.className = "w-full h-full object-cover z-10 relative";
                 pngImg.style.objectFit = "cover";

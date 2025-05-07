@@ -150,7 +150,7 @@ export default function UnitsPage() {
                   {unit.thumbnailUrl ? (
                     <>
                       <img 
-                        src={`/api/direct/content/${unit.thumbnailUrl}`} 
+                        src={unit.thumbnailUrl} 
                         alt={`Thumbnail for unit ${unit.unitNumber}`} 
                         className="object-cover w-full h-full"
                         onError={(e) => {
