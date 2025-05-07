@@ -41,11 +41,11 @@ export default function MethodPage() {
                       The solution? Visual English — a direct teaching method built around visual cues like images, GIFs, and videos to spark real, full-sentence conversation without translation.
                     </p>
                   </div>
-                  <div className="w-full md:w-1/3 flex justify-center">
+                  <div className="w-full md:w-1/3 flex justify-center items-center">
                     <img 
                       src="/api/direct/content/VISUAL WEBSITE/iza.png" 
                       alt="Izabela Buassa" 
-                      className="w-48 h-auto"
+                      className="w-full h-auto max-w-[160px]"
                     />
                   </div>
                 </div>
