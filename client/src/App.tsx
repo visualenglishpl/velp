@@ -42,6 +42,9 @@ function App() {
             <Route path="/admin">
               <AdminPage />
             </Route>
+            <Route path="/auth">
+              <AuthPage />
+            </Route>
             <Route path="/method">
               <MethodPage />
             </Route>
