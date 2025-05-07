@@ -485,20 +485,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const books = await storage.getBooks();
       const bookThumbnails = [];
       
+      // These are the expected book IDs
+      const allBookIds = ["0a", "0b", "0c", "1", "2", "3", "4", "5", "6", "7"];
+      
+      // If storage doesn't have books, use a standard set
+      const booksToUse = books && books.length > 0 ? books : allBookIds.map(id => ({
+        bookId: id,
+        title: `Visual English ${id}`
+      }));
+      
+      console.log("Fetching book thumbnails for:", booksToUse.map(b => b.bookId).join(", "));
+      
       // Generate presigned URLs for each book
-      for (const book of books) {
-        // Special case for book 3 which has a space before the extension in S3
-        const filePath = book.bookId === "3" 
-          ? `icons/VISUAL ${book.bookId} .gif` 
-          : `icons/VISUAL ${book.bookId}.gif`;
-          
-        const gifUrl = await getS3PresignedUrl(filePath);
-        if (gifUrl) {
-          bookThumbnails.push({
-            bookId: book.bookId,
-            title: book.title,
-            gifUrl
-          });
+      for (const book of booksToUse) {
+        try {
+          // Special case for book 3 which has a space before the extension in S3
+          const filePath = book.bookId === "3" 
+            ? `icons/VISUAL ${book.bookId} .gif` 
+            : `icons/VISUAL ${book.bookId}.gif`;
+            
+          const gifUrl = await getS3PresignedUrl(filePath);
+          if (gifUrl) {
+            bookThumbnails.push({
+              bookId: book.bookId,
+              title: book.title || `Visual English ${book.bookId}`,
+              gifUrl,
+              description: book.description || ""
+            });
+            console.log(`Successfully got thumbnail for book ${book.bookId}`);
+          }
+        } catch (error) {
+          console.error(`Failed to get thumbnail for book ${book.bookId}:`, error);
         }
       }
       
