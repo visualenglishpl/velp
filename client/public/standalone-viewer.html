@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual English Content Viewer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+  <style>
+    :root {
+      --primary: #3182ce;
+      --primary-dark: #2c5282;
+      --primary-light: #63b3ed;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1a202c;
+      --text-muted: #718096;
+      --border-color: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .slider-container {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    
+    .slick-slide {
+      text-align: center;
+    }
+    
+    .slick-slide img {
+      max-width: 100%;
+      max-height: 70vh;
+      margin: 0 auto;
+      object-fit: contain;
+    }
+    
+    .slide {
+      padding: 10px;
+      position: relative;
+    }
+    
+    .slide-number {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: var(--primary);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      z-index: 10;
+    }
+    
+    .blur-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .btn:disabled {
+      background-color: var(--text-muted);
+      cursor: not-allowed;
+    }
+    
+    .info-panel {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .qa-display {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #f1f5f9;
+      border-radius: 4px;
+    }
+    
+    .qa-question {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .qa-answer {
+      color: var(--primary);
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Visual English Content Viewer - Book 4, Unit 1 (Nationalities)</h1>
+      <a href="/index-direct.html" class="btn">Back to Directory</a>
+    </header>
+    
+    <div class="controls">
+      <button id="prevBtn" class="btn" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Previous
+      </button>
+      <span id="slideInfo">Slide 0 of 0</span>
+      <button id="nextBtn" class="btn">
+        Next
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="slider-container">
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+      </div>
+      <div id="slider" style="display: none;">
+        <!-- Slides will be added here dynamically -->
+      </div>
+    </div>
+    
+    <div class="info-panel">
+      <h3>Question and Answer</h3>
+      <div id="qaDisplay" class="qa-display">
+        <p>Select a slide to see associated questions and answers.</p>
+      </div>
+    </div>
+    
+    <footer>
+      <p>Visual English Platform - EDU-CENTRE DOLINA KARPIA</p>
+    </footer>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const bookId = 'book4';
+      const unitId = 'unit1';
+      const apiBaseUrl = '/api/direct';
+      const $slider = $('#slider');
+      const $loading = $('#loading');
+      const $slideInfo = $('#slideInfo');
+      const $prevBtn = $('#prevBtn');
+      const $nextBtn = $('#nextBtn');
+      const $qaDisplay = $('#qaDisplay');
+      
+      let currentSlide = 0;
+      let totalSlides = 0;
+      let materials = [];
+      
+      // Fetch materials from the API
+      fetch(`${apiBaseUrl}/${bookId}/${unitId}/materials`)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.json();
+        })
+        .then(data => {
+          materials = data;
+          totalSlides = materials.length;
+          
+          // Log materials to console
+          console.log(`Loaded ${materials.length} materials for ${bookId}/${unitId}`);
+          
+          if (materials.length === 0) {
+            $loading.html('<p>No materials found for this unit.</p>');
+            return;
+          }
+          
+          // Create slides
+          materials.forEach((item, index) => {
+            const slideHtml = `
+              <div class="slide">
+                <div class="slide-number">${index + 1}/${totalSlides}</div>
+                <img src="${item.url}" alt="Slide ${index + 1}" loading="lazy" onerror="this.onerror=null; this.src='/placeholder-image.png';">
+                ${index >= 10 ? '<div class="blur-overlay"><p>Premium Content - Login to view</p></div>' : ''}
+              </div>
+            `;
+            $slider.append(slideHtml);
+          });
+          
+          // Initialize slider
+          $slider.slick({
+            dots: false,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveHeight: true,
+            arrows: false
+          });
+          
+          // Update slide info
+          updateSlideInfo(0);
+          
+          // Show slider
+          $loading.hide();
+          $slider.show();
+          
+          // Handle slider events
+          $slider.on('afterChange', function(event, slick, currentSlide) {
+            updateSlideInfo(currentSlide);
+          });
+          
+          // Handle button clicks
+          $prevBtn.on('click', function() {
+            $slider.slick('slickPrev');
+          });
+          
+          $nextBtn.on('click', function() {
+            $slider.slick('slickNext');
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching materials:', error);
+          $loading.html(`<p>Error loading materials: ${error.message}</p>`);
+        });
+      
+      // Update slide information and controls
+      function updateSlideInfo(index) {
+        currentSlide = index;
+        $slideInfo.text(`Slide ${currentSlide + 1} of ${totalSlides}`);
+        
+        // Update button states
+        $prevBtn.prop('disabled', currentSlide === 0);
+        $nextBtn.prop('disabled', currentSlide === totalSlides - 1);
+        
+        // Update Q&A display
+        if (materials[currentSlide]) {
+          const material = materials[currentSlide];
+          
+          if (material.question && material.answer) {
+            $qaDisplay.html(`
+              <div class="qa-question">Q: ${material.question}</div>
+              <div class="qa-answer">A: ${material.answer}</div>
+            `);
+          } else {
+            $qaDisplay.html(`<p>No question and answer available for this slide.</p>`);
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
