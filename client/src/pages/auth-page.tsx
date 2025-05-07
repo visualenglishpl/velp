@@ -70,8 +70,7 @@ const AuthPage = () => {
     });
   };
 
-  // For navigation
-  const [, navigate] = useLocation();
+  // For navigation - not needed when using window.location
 
   // Redirect logged in users based on their role
   useEffect(() => {
@@ -82,15 +81,15 @@ const AuthPage = () => {
       // Admin redirects to admin page
       if (user.role === 'admin') {
         console.log("Admin user detected, redirecting to admin dashboard");
-        navigate("/admin");
+        window.location.href = "/admin";
       } 
       // Teacher or other users redirect to books page
       else {
         console.log("Teacher/user detected, redirecting to bookstore");
-        navigate("/books");
+        window.location.href = "/books";
       }
     }
-  }, [user, isLoading, navigate]);
+  }, [user, isLoading]);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">

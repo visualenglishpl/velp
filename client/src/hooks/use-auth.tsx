@@ -7,7 +7,6 @@ import {
 import { z } from "zod";
 import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "./use-toast";
-import { useLocation } from "wouter";
 
 // Define our own User type since we don't have access to the schema
 type User = {
@@ -54,7 +53,6 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
-  const [, navigate] = useLocation();
   
   const {
     data: user,
@@ -71,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const res = await apiRequest("POST", "/api/login", credentials);
         if (!res.ok) {
-          const errorData = await res.json();
+          const errorData = await res.json().catch(() => ({}));
           throw new Error(errorData.error || "Login failed");
         }
         const data = await res.json();
@@ -93,10 +91,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Redirect based on role
       if (user.role === 'admin') {
         console.log("Admin user, redirecting to admin dashboard");
-        navigate("/admin");
+        window.location.href = "/admin";
       } else {
         console.log("Teacher/user, redirecting to books page");
-        navigate("/books");
+        window.location.href = "/books";
       }
     },
     onError: (error: any) => {
@@ -114,7 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const res = await apiRequest("POST", "/api/register", userData);
         if (!res.ok) {
-          const errorData = await res.json();
+          const errorData = await res.json().catch(() => ({}));
           throw new Error(errorData.error || "Registration failed");
         }
         return await res.json();
@@ -132,9 +130,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       // Redirect based on role after registration
       if (user.role === 'admin') {
-        navigate("/admin");
+        window.location.href = "/admin";
       } else {
-        navigate("/books");
+        window.location.href = "/books";
       }
     },
     onError: (error: any) => {
@@ -152,7 +150,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const res = await apiRequest("POST", "/api/logout");
         if (!res.ok) {
-          const errorData = await res.json();
+          const errorData = await res.json().catch(() => ({}));
           throw new Error(errorData.error || "Logout failed");
         }
       } catch (error) {
@@ -166,7 +164,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: "Logged out",
         description: "You have been successfully logged out.",
       });
-      navigate("/");
+      window.location.href = "/";
     },
     onError: (error: any) => {
       console.error("Logout error:", error);
