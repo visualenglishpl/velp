@@ -25,7 +25,17 @@ export default function MethodPage() {
                 A complete, image-based approach for teaching English to children aged 4–15 — designed for ESL teachers who want structured lessons, instant engagement, and minimal prep.
               </p>
               
-
+              <div className="bg-gray-50 p-6 rounded-lg max-w-3xl mx-auto">
+                <h2 className="text-xl font-medium text-gray-700 mb-3">
+                  Built by teachers, for teachers.
+                </h2>
+                <p className="text-gray-600 font-light">
+                  Visual English was created by Izabela Buassa, an experienced English teacher, to solve a real classroom problem: young learners struggle with speaking English when lessons rely on traditional textbooks or translation.
+                </p>
+                <p className="text-gray-600 font-light mt-4">
+                  The solution? A direct method that uses visual cues — images, GIFs, videos — to spark full-sentence conversation, without needing to translate.
+                </p>
+              </div>
             </div>
           </div>
         </section>
