@@ -52,44 +52,7 @@ const HeroSection = () => {
         </div>
       </section>
 
-      {/* Teacher image section with content about Visual English */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            {/* Left side: Text content */}
-            <div className="w-full lg:w-1/2">
-              <h2 className="text-3xl font-medium mb-6 text-gray-800">Built by teachers, for teachers.</h2>
-              <div className="prose prose-lg text-gray-600 max-w-none">
-                <p>
-                  Visual English was created by Izabela Buassa, an English teacher with over 25 years of classroom experience. 
-                  Throughout her career, she constantly faced one challenge: finding consistent, conversation-based ESL 
-                  materials that actually worked with young learners.
-                </p>
-                <p>
-                  There was always a gap in the market — a lack of ready-to-use content that helped children speak, not just 
-                  memorize. Teachers were left pulling resources from dozens of places, trying to piece together lessons that felt 
-                  natural and fun.
-                </p>
-                <p>
-                  The solution? Visual English — a direct teaching method built around visual cues like images, GIFs, and videos to 
-                  spark real, full-sentence conversation without translation.
-                </p>
-              </div>
-            </div>
-            
-            {/* Right side: Teacher image */}
-            <div className="w-full lg:w-1/2">
-              <img 
-                src="/api/direct/content/VISUAL WEBSITE/IZA 2.png" 
-                alt="Izabela Buassa - Visual English Creator" 
-                className="w-full h-auto rounded-lg shadow-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Divider for separation between teacher section and book series */}
+      {/* Divider for separation between top section and book series */}
       <div className="w-full h-0.5 bg-gray-100"></div>
       
       {/* Book series section */}
