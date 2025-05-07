@@ -72,10 +72,10 @@ const Navbar = () => {
                   e.preventDefault();
                   const booksSection = document.getElementById('books');
                   if (booksSection) {
-                    // Scroll with offset to center the content in the viewport
-                    const offset = window.innerHeight / 4;
+                    // Scroll to show the entire section from the top
+                    const navbarHeight = 64; // Height of the navbar in pixels
                     const elementPosition = booksSection.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
                     
                     window.scrollTo({
                       top: offsetPosition,
@@ -91,10 +91,10 @@ const Navbar = () => {
                   e.preventDefault();
                   const pricingSection = document.getElementById('pricing');
                   if (pricingSection) {
-                    // Scroll with offset to center the content in the viewport
-                    const offset = window.innerHeight / 4;
+                    // Scroll to show the entire section from the top
+                    const navbarHeight = 64; // Height of the navbar in pixels
                     const elementPosition = pricingSection.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
                     
                     window.scrollTo({
                       top: offsetPosition,
