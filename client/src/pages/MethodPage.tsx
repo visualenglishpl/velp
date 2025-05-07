@@ -32,17 +32,20 @@ export default function MethodPage() {
                       Built by teachers, for teachers.
                     </h2>
                     <p className="text-gray-600 font-light">
-                      Visual English was created by Izabela Buassa, an experienced English teacher, to solve a real classroom problem: young learners struggle with speaking English when lessons rely on traditional textbooks or translation.
+                      Visual English was created by Izabela Buassa, an English teacher with over 25 years of classroom experience. Throughout her career, she constantly faced one challenge: finding consistent, conversation-based ESL materials that actually worked with young learners.
                     </p>
                     <p className="text-gray-600 font-light mt-4">
-                      The solution? A direct method that uses visual cues — images, GIFs, videos — to spark full-sentence conversation, without needing to translate.
+                      There was always a gap in the market — a lack of ready-to-use content that helped children speak, not just memorize. Teachers were left pulling resources from dozens of places, trying to piece together lessons that felt natural and fun.
+                    </p>
+                    <p className="text-gray-600 font-light mt-4">
+                      The solution? Visual English — a direct teaching method built around visual cues like images, GIFs, and videos to spark real, full-sentence conversation without translation.
                     </p>
                   </div>
                   <div className="w-full md:w-1/3 flex justify-center">
                     <img 
                       src="/api/direct/content/VISUAL WEBSITE/iza.png" 
                       alt="Izabela Buassa" 
-                      className="w-32 h-auto rounded-full border-4 border-white shadow-md"
+                      className="w-48 h-auto"
                     />
                   </div>
                 </div>
