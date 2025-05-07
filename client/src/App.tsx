@@ -19,7 +19,8 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import AuthPage from "./pages/auth-page";
+import AuthPageWrapper from "./pages/AuthPageWrapper";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
   console.log('Rendering full home page with layout');
@@ -39,11 +40,11 @@ function App() {
             <Route path="/books/:bookId">
               <UnitsPage />
             </Route>
-            <Route path="/admin">
+            <ProtectedRoute path="/admin" adminOnly={true}>
               <AdminPage />
-            </Route>
+            </ProtectedRoute>
             <Route path="/auth">
-              <AuthPage />
+              <AuthPageWrapper />
             </Route>
             <Route path="/method">
               <MethodPage />
