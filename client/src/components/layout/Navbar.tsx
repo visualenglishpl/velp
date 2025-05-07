@@ -72,7 +72,15 @@ const Navbar = () => {
                   e.preventDefault();
                   const booksSection = document.getElementById('books');
                   if (booksSection) {
-                    booksSection.scrollIntoView({ behavior: 'smooth' });
+                    // Scroll with offset to center the content in the viewport
+                    const offset = window.innerHeight / 4;
+                    const elementPosition = booksSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
                   }
                 }
               }}>
@@ -83,7 +91,15 @@ const Navbar = () => {
                   e.preventDefault();
                   const pricingSection = document.getElementById('pricing');
                   if (pricingSection) {
-                    pricingSection.scrollIntoView({ behavior: 'smooth' });
+                    // Scroll with offset to center the content in the viewport
+                    const offset = window.innerHeight / 4;
+                    const elementPosition = pricingSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
                   }
                 }
               }}>
