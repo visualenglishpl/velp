@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual English Content Directory</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+      margin-top: 20px;
+    }
+    h2 {
+      color: #444;
+      margin-top: 25px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 15px 0;
+    }
+    .link-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .link-card {
+      border: 1px solid #eee;
+      border-radius: 6px;
+      padding: 15px;
+      background-color: white;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .link-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .link-card a {
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+    }
+    .link-card p {
+      color: #666;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+    .book4 { border-left: 4px solid #0066cc; }
+    .book5 { border-left: 4px solid #e91e63; }
+    .book6 { border-left: 4px solid #8a2be2; }
+    .debug { border-left: 4px solid #ff9800; }
+    .home { border-left: 4px solid #4caf50; }
+    .note {
+      background-color: #fff8e1;
+      border-left: 4px solid #ffc107;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Visual English Content Directory</h1>
+  <p>Welcome to the Visual English Content Directory. This page provides quick access to all content viewers and debugging tools.</p>
+  
+  <div class="note">
+    <strong>Note:</strong> If you experience any issues with the SlickContentViewer, try using these direct HTML links which bypass router issues.
+  </div>
+  
+  <h2>Direct Content Viewers</h2>
+  <p>These links provide direct access to specific book units in the Visual English platform:</p>
+  
+  <div class="link-container">
+    <div class="link-card book4">
+      <a href="/view-book4-unit1.html">Book 4, Unit 1</a>
+      <p>Nationalities - standard unit with full content</p>
+    </div>
+    <div class="link-card book6">
+      <a href="/view-book6-unit5.html">Book 6, Unit 5</a>
+      <p>Theme Parks - featured unit with activities</p>
+    </div>
+    <div class="link-card book5">
+      <a href="/view-book5-unit3.html">Book 5, Unit 3</a>
+      <p>Home Sweet Home - unit with comprehensive materials</p>
+    </div>
+  </div>
+  
+  <h2>App Navigation</h2>
+  <div class="link-container">
+    <div class="link-card home">
+      <a href="/">Home Page</a>
+      <p>Main landing page with all navigation</p>
+    </div>
+    <div class="link-card home">
+      <a href="/books">/books</a>
+      <p>Books collection page</p>
+    </div>
+  </div>
+  
+  <h2>Direct API Endpoints (For Testing)</h2>
+  <div class="link-container">
+    <div class="link-card debug">
+      <a href="/api/direct/book4/unit1">/api/direct/book4/unit1</a>
+      <p>Book 4, Unit 1 metadata</p>
+    </div>
+    <div class="link-card debug">
+      <a href="/api/direct/book4/unit1/materials">/api/direct/book4/unit1/materials</a>
+      <p>Book 4, Unit 1 materials list</p>
+    </div>
+    <div class="link-card debug">
+      <a href="/api/direct/book6/unit5/materials">/api/direct/book6/unit5/materials</a>
+      <p>Book 6, Unit 5 materials list</p>
+    </div>
+  </div>
+  
+  <h2>Debugging Tools</h2>
+  <div class="link-container">
+    <div class="link-card debug">
+      <a href="/api-debug.html">API Debug Tool</a>
+      <p>Test API connectivity and responses</p>
+    </div>
+    <div class="link-card debug">
+      <a href="/api-diagnostics.html">API Diagnostics</a>
+      <p>Advanced API diagnostics and error reporting</p>
+    </div>
+  </div>
+  
+  <footer style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; color: #666; font-size: 0.8rem;">
+    <p>Visual English Platform - EDU-CENTRE DOLINA KARPIA</p>
+  </footer>
+</body>
+</html>

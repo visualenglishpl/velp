@@ -9,27 +9,20 @@ import { Card } from "@/components/ui/card";
 const Home = () => {
   const [_, navigate] = useLocation();
   
-  const handleViewContent = (format: string) => {
-    console.log(`Navigating to format: ${format}`);
-    // Test with different URL formats
-    if (format === 'format1') {
-      navigate("/books/1/units/1");
-    } else if (format === 'format2') {
-      navigate("/book/1/1");
-    } else if (format === 'format3') {
-      navigate("/book1/unit1");
-    }
+  const handleViewContent = (book: string, unit: string) => {
+    console.log(`Navigating to book ${book}, unit ${unit}`);
+    navigate(`/books/${book}/units/${unit}`);
   };
   
-  const handleViewSimpleContent = (format: string) => {
-    console.log(`Navigating to simple format: ${format}`);
-    // Test with different URL formats for SimpleContentViewer
+  const handleViewSimpleContent = (book: string, unit: string, format: string) => {
+    console.log(`Navigating to simple viewer for book ${book}, unit ${unit} with format ${format}`);
+    
     if (format === 'format1') {
-      navigate("/simple/books/1/units/1");
+      navigate(`/simple/books/${book}/units/${unit}`);
     } else if (format === 'format2') {
-      navigate("/simple/book/1/1");
+      navigate(`/simple/book/${book}/${unit}`);
     } else if (format === 'format3') {
-      navigate("/simple/book1/unit1");
+      navigate(`/simple/book${book}/unit${unit}`);
     }
   };
   
@@ -37,52 +30,65 @@ const Home = () => {
     <>
       <HeroSection />
       <div className="container mx-auto py-8">
-        <Card className="p-6 max-w-2xl mx-auto mb-6">
-          <h2 className="text-xl font-bold mb-4 text-center">Test Regular Content Viewer</h2>
-          <p className="mb-4 text-center">Click one of the buttons below to test the regular content viewer with different URL formats:</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <Card className="p-6 max-w-2xl mx-auto mb-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 shadow-lg">
+          <h2 className="text-2xl font-bold mb-4 text-center text-indigo-800">Visual English Content Viewer</h2>
+          <p className="mb-6 text-center text-gray-700">Explore our interactive content with the SlickContentViewer - our main viewer with all features!</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4">
             <Button 
-              onClick={() => handleViewContent('format1')}
-              className="bg-blue-600 hover:bg-blue-700"
+              onClick={() => handleViewContent('4', '1')}
+              className="bg-blue-600 hover:bg-blue-700 px-6 py-6 text-lg"
+              size="lg"
             >
-              Format 1: /books/1/units/1
+              <span className="flex flex-col items-center">
+                <span className="font-bold">Book 4, Unit 1</span>
+                <span className="text-xs mt-1">Nationalities</span>
+              </span>
             </Button>
             <Button 
-              onClick={() => handleViewContent('format2')}
-              className="bg-green-600 hover:bg-green-700"
+              onClick={() => handleViewContent('6', '5')}
+              className="bg-purple-600 hover:bg-purple-700 px-6 py-6 text-lg"
+              size="lg"
             >
-              Format 2: /book/1/1
+              <span className="flex flex-col items-center">
+                <span className="font-bold">Book 6, Unit 5</span>
+                <span className="text-xs mt-1">Theme Parks</span>
+              </span>
             </Button>
             <Button 
-              onClick={() => handleViewContent('format3')}
-              className="bg-purple-600 hover:bg-purple-700"
+              onClick={() => handleViewContent('5', '3')}
+              className="bg-pink-600 hover:bg-pink-700 px-6 py-6 text-lg"
+              size="lg"
             >
-              Format 3: /book1/unit1
+              <span className="flex flex-col items-center">
+                <span className="font-bold">Book 5, Unit 3</span>
+                <span className="text-xs mt-1">Home Sweet Home</span>
+              </span>
             </Button>
           </div>
+          <p className="text-center text-sm text-gray-600 italic">All slides and interactive features are available in this viewer.</p>
         </Card>
         
-        <Card className="p-6 max-w-2xl mx-auto border-2 border-amber-300">
-          <h2 className="text-xl font-bold mb-4 text-center text-amber-700">Test Simple Content Viewer (Debug Mode)</h2>
-          <p className="mb-4 text-center">Use these buttons to test our simplified content viewer with debugging information:</p>
+        <Card className="p-6 max-w-2xl mx-auto border-2 border-amber-300 bg-amber-50">
+          <h2 className="text-xl font-bold mb-4 text-center text-amber-700">Simple Content Viewer (Debug Mode)</h2>
+          <p className="mb-4 text-center">Use these buttons to test our simplified debug viewer:</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              onClick={() => handleViewSimpleContent('format1')}
+              onClick={() => handleViewSimpleContent('4', '1', 'format1')}
               className="bg-amber-600 hover:bg-amber-700"
             >
-              Debug Format 1: /simple/books/1/units/1
+              Book 4, Unit 1 (Debug)
             </Button>
             <Button 
-              onClick={() => handleViewSimpleContent('format2')}
+              onClick={() => handleViewSimpleContent('6', '5', 'format2')}
               className="bg-amber-600 hover:bg-amber-700"
             >
-              Debug Format 2: /simple/book/1/1
+              Book 6, Unit 5 (Debug)
             </Button>
             <Button 
-              onClick={() => handleViewSimpleContent('format3')}
+              onClick={() => handleViewSimpleContent('5', '3', 'format3')}
               className="bg-amber-600 hover:bg-amber-700"
             >
-              Debug Format 3: /simple/book1/unit1
+              Book 5, Unit 3 (Debug)
             </Button>
           </div>
         </Card>

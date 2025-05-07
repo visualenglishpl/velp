@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual English Direct Access</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e1e4e8;
+    }
+    h1 {
+      color: #2d3748;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .tagline {
+      color: #4a5568;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    .card-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #4299e1, #3182ce);
+      color: white;
+    }
+    .card-header.book4 {
+      background: linear-gradient(135deg, #4299e1, #3182ce);
+    }
+    .card-header.book5 {
+      background: linear-gradient(135deg, #ed64a6, #d53f8c);
+    }
+    .card-header.book6 {
+      background: linear-gradient(135deg, #9f7aea, #805ad5);
+    }
+    .card-title {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .card-subtitle {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    .card-body {
+      padding: 1.5rem;
+    }
+    .card-description {
+      margin-bottom: 1.5rem;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #3182ce;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.2s ease;
+    }
+    .btn:hover {
+      background-color: #2c5282;
+    }
+    .btn-book4 {
+      background-color: #3182ce;
+    }
+    .btn-book4:hover {
+      background-color: #2c5282;
+    }
+    .btn-book5 {
+      background-color: #d53f8c;
+    }
+    .btn-book5:hover {
+      background-color: #b83280;
+    }
+    .btn-book6 {
+      background-color: #805ad5;
+    }
+    .btn-book6:hover {
+      background-color: #6b46c1;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e1e4e8;
+      color: #718096;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Visual English</h1>
+      <p class="tagline">Interactive language learning platform</p>
+    </header>
+
+    <section>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header book4">
+            <h2 class="card-title">Book 4, Unit 1</h2>
+            <div class="card-subtitle">Nationalities</div>
+          </div>
+          <div class="card-body">
+            <p class="card-description">
+              Learn about different nationalities, countries, and languages with interactive content.
+            </p>
+            <a href="/view-book4-unit1.html" class="btn btn-book4">View Content</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header book6">
+            <h2 class="card-title">Book 6, Unit 5</h2>
+            <div class="card-subtitle">Theme Parks</div>
+          </div>
+          <div class="card-body">
+            <p class="card-description">
+              Explore theme parks and entertainment venues with full vocabulary and activities.
+            </p>
+            <a href="/view-book6-unit5.html" class="btn btn-book6">View Content</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header book5">
+            <h2 class="card-title">Book 5, Unit 3</h2>
+            <div class="card-subtitle">Home Sweet Home</div>
+          </div>
+          <div class="card-body">
+            <p class="card-description">
+              Discover vocabulary about homes, furniture, and living spaces through interactive lessons.
+            </p>
+            <a href="/view-book5-unit3.html" class="btn btn-book5">View Content</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top: 2rem;">
+      <div class="card">
+        <div class="card-body">
+          <h3>Additional Resources</h3>
+          <ul>
+            <li><a href="/content-directory.html">Content Directory</a> - Complete list of all content viewers and diagnostics</li>
+            <li><a href="/api/direct/book4/unit1/materials">API: Book 4, Unit 1 Materials</a> - Raw API response with 122 materials</li>
+            <li><a href="/">Main Application</a> - Return to the full application</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Visual English Platform - EDU-CENTRE DOLINA KARPIA</p>
+    </footer>
+  </div>
+</body>
+</html>
