@@ -210,24 +210,6 @@ export default function UnitsPage() {
                         </svg>
                         Buy Unit (€5)
                       </Button>
-                      
-                      <Button
-                        variant="outline"
-                        className="w-full border-green-500 text-green-600 hover:bg-green-50"
-                        onClick={() => {
-                          window.location.href = `/checkout/free_trial?book=${bookId}&unit=${unit.unitNumber}`;
-                        }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
-                          <path d="M12 22v-5" />
-                          <path d="M9 8V2" />
-                          <path d="M15 8V2" />
-                          <path d="M9 6h6" />
-                          <path d="M5 12H2a10 10 0 0 0 5 8.66" />
-                          <path d="M19 12h3a10 10 0 0 1-5 8.66" />
-                        </svg>
-                        Free 7-Day Trial
-                      </Button>
                     </>
                   )}
                 </div>
