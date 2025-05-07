@@ -71,27 +71,19 @@ const Navbar = () => {
                   e.preventDefault();
                   const booksSection = document.getElementById('books');
                   if (booksSection) {
-                    // Get the viewport height
-                    const viewportHeight = window.innerHeight;
-                    // Get the element's height
-                    const elementHeight = booksSection.offsetHeight;
-                    // Calculate the navbar height
-                    const navbarHeight = 64; // Height of the navbar in pixels
+                    // Calculate screen center
+                    const windowHeight = window.innerHeight;
+                    const sectionHeight = Math.min(booksSection.offsetHeight, windowHeight * 0.8); // Limit for very tall sections
+                    const navbarHeight = 64;
                     
-                    // Calculate position to center the element in the viewport
-                    const elementPosition = booksSection.getBoundingClientRect().top;
-                    let offsetPosition = elementPosition + window.pageYOffset;
+                    // Get top position of the element relative to the document
+                    const sectionTop = booksSection.getBoundingClientRect().top + window.pageYOffset;
                     
-                    // If element is smaller than viewport, center it
-                    if (elementHeight < viewportHeight) {
-                      offsetPosition = offsetPosition - ((viewportHeight - elementHeight) / 2) - navbarHeight;
-                    } else {
-                      // Otherwise just account for navbar
-                      offsetPosition = offsetPosition - navbarHeight;
-                    }
+                    // Center the section in the viewport - give more priority to showing the top of section
+                    const centeredY = sectionTop - (windowHeight - sectionHeight) / 2 - navbarHeight;
                     
                     window.scrollTo({
-                      top: offsetPosition,
+                      top: centeredY,
                       behavior: 'smooth'
                     });
                   }
@@ -104,27 +96,19 @@ const Navbar = () => {
                   e.preventDefault();
                   const pricingSection = document.getElementById('pricing');
                   if (pricingSection) {
-                    // Get the viewport height
-                    const viewportHeight = window.innerHeight;
-                    // Get the element's height
-                    const elementHeight = pricingSection.offsetHeight;
-                    // Calculate the navbar height
-                    const navbarHeight = 64; // Height of the navbar in pixels
+                    // Calculate screen center
+                    const windowHeight = window.innerHeight;
+                    const sectionHeight = Math.min(pricingSection.offsetHeight, windowHeight * 0.8); // Limit for very tall sections
+                    const navbarHeight = 64;
                     
-                    // Calculate position to center the element in the viewport
-                    const elementPosition = pricingSection.getBoundingClientRect().top;
-                    let offsetPosition = elementPosition + window.pageYOffset;
+                    // Get top position of the element relative to the document
+                    const sectionTop = pricingSection.getBoundingClientRect().top + window.pageYOffset;
                     
-                    // If element is smaller than viewport, center it
-                    if (elementHeight < viewportHeight) {
-                      offsetPosition = offsetPosition - ((viewportHeight - elementHeight) / 2) - navbarHeight;
-                    } else {
-                      // Otherwise just account for navbar
-                      offsetPosition = offsetPosition - navbarHeight;
-                    }
+                    // Center the section in the viewport - give more priority to showing the top of section
+                    const centeredY = sectionTop - (windowHeight - sectionHeight) / 2 - navbarHeight;
                     
                     window.scrollTo({
-                      top: offsetPosition,
+                      top: centeredY,
                       behavior: 'smooth'
                     });
                   }
