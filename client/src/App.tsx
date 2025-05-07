@@ -81,9 +81,6 @@ function App() {
             <Route path="/checkout/:planId">
               <CheckoutPage />
             </Route>
-            <Route path="/collection">
-              <BookCollectionPage />
-            </Route>
           </Switch>
         </main>
         <Footer />
