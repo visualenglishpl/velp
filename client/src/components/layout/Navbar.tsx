@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Globe } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
 const Navbar = () => {
   const [cartItemsCount, setCartItemsCount] = useState(0);

@@ -18,66 +18,69 @@ import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import CookieConsent from "./components/CookieConsent";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 function App() {
   console.log('Rendering full home page with layout');
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
-          <Route path="/books">
-            <BooksPage />
-          </Route>
-          <Route path="/books/:bookId">
-            <UnitsPage />
-          </Route>
-          <Route path="/admin">
-            <AdminPage />
-          </Route>
-          <Route path="/method">
-            <MethodPage />
-          </Route>
-          <Route path="/about">
-            <AboutPage />
-          </Route>
-          <Route path="/contact">
-            <ContactPage />
-          </Route>
-          <Route path="/privacy">
-            <PrivacyPage />
-          </Route>
-          <Route path="/terms">
-            <TermsPage />
-          </Route>
-          <Route path="/cookies">
-            <CookiesPage />
-          </Route>
-          <Route path="/withdrawal">
-            <WithdrawalPage />
-          </Route>
-          <Route path="/dpa">
-            <DpaPage />
-          </Route>
-          <Route path="/cart">
-            <CartPage />
-          </Route>
-          <Route path="/checkout">
-            <CheckoutPage />
-          </Route>
-          <Route path="/checkout/:planId">
-            <CheckoutPage />
-          </Route>
-        </Switch>
-      </main>
-      <Footer />
-      <CookieConsent />
-      <Toaster />
-    </div>
+    <LanguageProvider>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">
+          <Switch>
+            <Route path="/">
+              <Home />
+            </Route>
+            <Route path="/books">
+              <BooksPage />
+            </Route>
+            <Route path="/books/:bookId">
+              <UnitsPage />
+            </Route>
+            <Route path="/admin">
+              <AdminPage />
+            </Route>
+            <Route path="/method">
+              <MethodPage />
+            </Route>
+            <Route path="/about">
+              <AboutPage />
+            </Route>
+            <Route path="/contact">
+              <ContactPage />
+            </Route>
+            <Route path="/privacy">
+              <PrivacyPage />
+            </Route>
+            <Route path="/terms">
+              <TermsPage />
+            </Route>
+            <Route path="/cookies">
+              <CookiesPage />
+            </Route>
+            <Route path="/withdrawal">
+              <WithdrawalPage />
+            </Route>
+            <Route path="/dpa">
+              <DpaPage />
+            </Route>
+            <Route path="/cart">
+              <CartPage />
+            </Route>
+            <Route path="/checkout">
+              <CheckoutPage />
+            </Route>
+            <Route path="/checkout/:planId">
+              <CheckoutPage />
+            </Route>
+          </Switch>
+        </main>
+        <Footer />
+        <CookieConsent />
+        <Toaster />
+      </div>
+    </LanguageProvider>
   );
 }
 
