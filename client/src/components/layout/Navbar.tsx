@@ -69,6 +69,7 @@ const Navbar = () => {
             <a href="/#books" onClick={(e) => {
                 if (window.location.pathname === '/') {
                   e.preventDefault();
+                  // Target the book section in HeroSection component
                   const booksSection = document.getElementById('books');
                   if (booksSection) {
                     // Calculate screen center
