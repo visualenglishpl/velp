@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import BookThumbnailAdmin from '@/components/admin/BookThumbnailAdmin';
-import BookCollectionAnimated from '@/components/BookCollectionAnimated';
 import { useAuth } from '@/hooks/use-auth';
 import { 
   BookOpen, 
@@ -199,12 +198,28 @@ const AdminPage = () => {
               
               <TabsContent value="preview">
                 <div className="mb-6">
-                  <h2 className="text-2xl font-bold mb-4">Animation Preview</h2>
+                  <h2 className="text-2xl font-bold mb-4">Book Preview</h2>
                   <p className="text-gray-600 mb-6">
-                    Preview how the animated book showcase will appear on the website.
-                    You can use the controls to test different books and transitions.
+                    Preview how the book thumbnails appear on the website's homepage.
+                    You can upload new thumbnails in the Book Thumbnail Management section.
                   </p>
-                  <BookCollectionAnimated />
+                  <Card className="p-6">
+                    <CardContent>
+                      <div className="flex items-center justify-center p-8 border-2 border-dashed border-gray-200 rounded-lg">
+                        <div className="text-center">
+                          <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                          <h3 className="text-lg font-medium mb-2">Book Preview</h3>
+                          <p className="text-sm text-gray-500 mb-4">
+                            Book animation carousel has been replaced with a static grid layout 
+                            showing all books at once for better visibility.
+                          </p>
+                          <Button onClick={() => window.open('/', '_blank')}>
+                            View Homepage
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </TabsContent>
               
