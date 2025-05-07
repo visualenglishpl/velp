@@ -17,6 +17,7 @@ import WithdrawalPage from "./pages/WithdrawalPage";
 import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import SlickContentViewer from "./pages/SlickContentViewer";
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
