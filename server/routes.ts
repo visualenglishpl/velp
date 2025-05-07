@@ -9,9 +9,9 @@ import { insertBookSchema, insertUnitSchema, insertMaterialSchema } from "@share
 import { z } from "zod";
 import { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { registerDirectRoutes } from "./direct-routes";
+import { registerDirectViewerRoutes } from "./direct-routes";
 import { setupTestRoutes } from "./test-route";
-import { registerDirectApiRoutes } from "./direct-api-routes";
+import { registerDirectAPIRoutes } from "./direct-api-routes";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import multer from "multer";
@@ -376,7 +376,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   setupTestRoutes(app);
   
   // Set up direct API routes that bypass Vite's dev server
-  registerDirectApiRoutes(app);
+  registerDirectAPIRoutes(app);
   
   // Simple test endpoint
   app.get('/api/healthcheck', (req, res) => {
@@ -428,7 +428,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Register direct routes that map 1:1 with S3 structure
   // These routes don't use database IDs and directly match the S3 path structure
-  registerDirectRoutes(app);
+  registerDirectViewerRoutes(app);
   
   // Admin file upload routes for thumbnails and animated GIFs
   app.post("/api/admin/upload/book/:bookId/cover", isAdmin, upload.single('file'), async (req, res) => {
