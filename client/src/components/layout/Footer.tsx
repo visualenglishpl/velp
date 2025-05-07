@@ -31,7 +31,7 @@ const Footer = () => {
               <img 
                 src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
                 alt="Visual English Logo"
-                className="h-10 mr-3"
+                className="h-16 mr-3"
               />
             </div>
             <p className="text-gray-300 mb-6 text-base">

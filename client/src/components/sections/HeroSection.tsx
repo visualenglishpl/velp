@@ -15,10 +15,10 @@ const HeroSection = () => {
               <img 
                 src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
                 alt="Visual English Logo" 
-                className="h-24 mb-6"
+                className="h-36 mb-6"
               />
               <h1 className="text-3xl md:text-4xl font-medium text-gray-800 leading-tight mb-4">
-                Visual English Children - Revolutionizing Language Learning for Young Minds
+                
               </h1>
               <p className="text-lg text-gray-600 mb-8">
                 A unique visual approach to language learning that makes English fun and effective for children.
