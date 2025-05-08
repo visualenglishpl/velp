@@ -1,0 +1,51 @@
+1. Multi-Step Checkout Process
+Replace the current tabs with a step-by-step checkout wizard:
+
+Selection Step: Where users choose books/units
+Plan Step: Where users select subscription period
+Summary Step: Where users review their selections before payment
+Payment Step: Where users enter payment details
+This creates a clearer path to purchase and helps users focus on one decision at a time.
+
+2. Shopping Cart Integration
+Instead of immediate purchasing from each page:
+
+Add items to a central cart
+Show a cart indicator in the navbar with item count
+Let users continue shopping after adding items
+Allow reviewing all items together at checkout
+3. Visual Improvements
+Add product images that are larger and more engaging
+Include a progress indicator showing steps and completion
+Use colorful confirmation animations when adding items
+Show a mini-summary that follows as users scroll
+4. Plan Comparison
+Add a side-by-side comparison of monthly vs yearly plans
+Calculate and display the actual savings amount
+Show what's included in each plan with checkmarks
+Highlight recommended options based on selection size
+5. User-Friendly Additions
+Add "Continue Shopping" buttons after adding to cart
+Create a "Recently Viewed" section
+Include customer reviews/testimonials near purchase buttons
+Add quantity selectors for physical books
+Show estimated delivery dates for physical products
+6. Smart Recommendations
+Suggest related units when viewing a single unit
+Offer package deals ("Complete your collection")
+Show popular combinations that other users purchase
+Recommend books based on current selections
+Would you like me to focus on implementing any of these specific improvements to the checkout flow?
+
+ok
+
+3 minutes ago
+VE
+
+kayaikaya1
+The agent has reported new progress:
+✓ Added scrollToTop function to BookCheckoutPage and UnitCheckoutPage
+✓ Applied scrolling to tab switching between Digital and Physical book options
+✓ Updated subscription period selectors to scroll to top when clicked
+✓ Enhanced "Add to Cart" buttons with smooth scrolling functionality
+✓ Fixed pricing plan buttons in IndividualPlans.tsx to redirect to proper pages
