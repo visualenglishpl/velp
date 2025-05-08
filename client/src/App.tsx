@@ -20,6 +20,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import UnitCheckoutPage from "./pages/UnitCheckoutPage";
 import BookCheckoutPage from "./pages/BookCheckoutPage";
 import BookWizardPage from "./pages/BookWizardPage";
+import SlickContentViewer from "./pages/SlickContentViewer";
 
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
