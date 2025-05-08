@@ -97,6 +97,15 @@ function App() {
             <Route path="/checkout">
               <CheckoutPage />
             </Route>
+            <ProtectedRoute path="/viewer">
+              <SlickContentViewer />
+            </ProtectedRoute>
+            <ProtectedRoute path="/book/:bookId/unit/:unitNumber">
+              <SlickContentViewer />
+            </ProtectedRoute>
+            <ProtectedRoute path="/book/:bookId">
+              <SlickContentViewer />
+            </ProtectedRoute>
           </Switch>
         </main>
         <Footer />
