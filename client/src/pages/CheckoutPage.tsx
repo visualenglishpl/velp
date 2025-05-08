@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ShoppingCart, CreditCard, ArrowLeft, CheckCircle, ShoppingBag, BookOpen, Book } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/use-auth';
 import WithdrawalConsent from '@/components/checkout/WithdrawalConsent';
 import UnitSelector from '@/components/checkout/UnitSelector';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -30,6 +31,7 @@ interface CartItem {
 
 export default function CheckoutPage() {
   const { toast } = useToast();
+  const { user, isLoading } = useAuth();
   const params = useParams();
   const [location, setLocation] = useLocation();
   const [email, setEmail] = useState('');
