@@ -12,14 +12,14 @@ const PricingPage = () => {
         <meta name="description" content={t('pricing.description')} />
       </Helmet>
       
-      <div className="pt-24 bg-white min-h-screen">
+      <div className="pt-20 pb-0 bg-white min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
+          <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {t('pricing.heroTitle')}
+              {t('pricing.heroTitle') || 'Find Your Perfect Learning Path'}
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              {t('pricing.heroSubtitle')}
+              {t('pricing.heroSubtitle') || 'Choose the plan that fits your learning style and budget'}
             </p>
           </div>
         </div>

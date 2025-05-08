@@ -75,14 +75,9 @@ const PricingPlans = () => {
   ];
 
   return (
-    <div className="pt-16 pb-24 bg-white">
+    <div className="pt-0 pb-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Find Your Perfect Learning Path</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Choose the plan that fits your learning style and budget
-          </p>
-        </div>
+        
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
