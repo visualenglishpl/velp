@@ -128,7 +128,7 @@ export default function ContentViewerTester() {
               className="w-full"
             >
               <Book className="mr-2 h-4 w-4" />
-              Open Content Viewer
+              Open Simple Viewer
             </Button>
             <Button 
               onClick={handleLogout}
