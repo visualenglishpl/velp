@@ -72,6 +72,11 @@ export default function BookCheckoutPage() {
     }
   };
 
+  // Scroll to top helper function
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Toggle book selection
   const toggleBookSelection = (bookId: string) => {
     if (selectedBooks.includes(bookId)) {
@@ -79,22 +84,26 @@ export default function BookCheckoutPage() {
     } else {
       setSelectedBooks([...selectedBooks, bookId]);
     }
+    scrollToTop();
   };
 
   // Select all books
   const selectAllBooks = () => {
     setSelectedBooks(books.map(book => book.id));
+    scrollToTop();
   };
 
   // Clear all selections
   const clearSelections = () => {
     setSelectedBooks([]);
+    scrollToTop();
   };
 
   // Add to cart function
   const addToCart = () => {
     alert(`Added ${selectedBooks.length} book(s) to cart with ${subscriptionPeriod} subscription`);
     // In real implementation, would use API to add to cart
+    scrollToTop();
   };
 
   // Calculate price based on selection
@@ -130,7 +139,10 @@ export default function BookCheckoutPage() {
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-4">Choose Book Purchase Options</h2>
         
-        <Tabs defaultValue="digital" onValueChange={(value: string) => setActiveTab(value as "digital" | "physical")}>
+        <Tabs defaultValue="digital" onValueChange={(value: string) => {
+          setActiveTab(value as "digital" | "physical");
+          scrollToTop();
+        }}>
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="digital" className="flex items-center">
               <BookOpen className="mr-2 h-4 w-4" />
@@ -155,14 +167,14 @@ export default function BookCheckoutPage() {
                       ? "bg-blue-600 text-white" 
                       : "bg-white border"
                   }`}
-                  onClick={() => setSubscriptionPeriod("monthly")}
+                  onClick={() => { setSubscriptionPeriod("monthly"); scrollToTop(); }}
                 >
                   <input 
                     type="radio" 
                     id="monthly-option" 
                     className="mr-2" 
                     checked={subscriptionPeriod === "monthly"} 
-                    onChange={() => setSubscriptionPeriod("monthly")}
+                    onChange={() => { setSubscriptionPeriod("monthly"); scrollToTop(); }}
                   />
                   <label htmlFor="monthly-option" className="cursor-pointer">
                     Monthly (€25/month)
@@ -175,14 +187,14 @@ export default function BookCheckoutPage() {
                       ? "bg-blue-600 text-white" 
                       : "bg-white border"
                   }`}
-                  onClick={() => setSubscriptionPeriod("yearly")}
+                  onClick={() => { setSubscriptionPeriod("yearly"); scrollToTop(); }}
                 >
                   <input 
                     type="radio" 
                     id="yearly-option" 
                     className="mr-2" 
                     checked={subscriptionPeriod === "yearly"} 
-                    onChange={() => setSubscriptionPeriod("yearly")}
+                    onChange={() => { setSubscriptionPeriod("yearly"); scrollToTop(); }}
                   />
                   <label htmlFor="yearly-option" className="cursor-pointer">
                     Yearly (€180/year - 40% savings)
@@ -227,7 +239,10 @@ export default function BookCheckoutPage() {
                         <Button 
                           className="mt-2" 
                           variant="outline"
-                          onClick={() => alert(`Added printed book ${book.id} to cart`)}
+                          onClick={() => {
+                            alert(`Added printed book ${book.id} to cart`);
+                            scrollToTop();
+                          }}
                         >
                           Add to Cart
                         </Button>

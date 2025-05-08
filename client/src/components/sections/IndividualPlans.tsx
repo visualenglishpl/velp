@@ -127,14 +127,47 @@ const PricingPlans = () => {
                 </div>
                 
                 <div className="mt-2">
-                  <Link href={index === plans.length - 1 ? `/checkout/${plan.planId}` : '/books'}>
-                    <button 
-                      className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
-                      style={{ backgroundColor: plan.bgColor }}
-                    >
-                      <span className="text-center">{plan.buttonText}</span>
-                    </button>
-                  </Link>
+                  {plan.planId === "printed_book" ? (
+                    <Link href="/checkout/book">
+                      <button 
+                        className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
+                        style={{ backgroundColor: plan.bgColor }}
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      >
+                        <span className="text-center">{plan.buttonText}</span>
+                      </button>
+                    </Link>
+                  ) : plan.planId === "single_lesson" ? (
+                    <Link href="/checkout/unit/1">
+                      <button 
+                        className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
+                        style={{ backgroundColor: plan.bgColor }}
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      >
+                        <span className="text-center">{plan.buttonText}</span>
+                      </button>
+                    </Link>
+                  ) : plan.planId === "whole_book" ? (
+                    <Link href="/checkout/book">
+                      <button 
+                        className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
+                        style={{ backgroundColor: plan.bgColor }}
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      >
+                        <span className="text-center">{plan.buttonText}</span>
+                      </button>
+                    </Link>
+                  ) : (
+                    <Link href={`/checkout/${plan.planId}`}>
+                      <button 
+                        className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
+                        style={{ backgroundColor: plan.bgColor }}
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      >
+                        <span className="text-center">{plan.buttonText}</span>
+                      </button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
