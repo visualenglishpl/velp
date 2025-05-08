@@ -70,7 +70,7 @@ const PricingPlans = () => {
           {plans.map((plan, index) => (
             <div key={`header-${index}`} className="w-full">
               <div 
-                className="rounded-lg text-white text-center py-4"
+                className="rounded-lg text-white text-center py-4 h-[60px] flex items-center justify-center"
                 style={{ backgroundColor: plan.color }}
               >
                 <h3 className="text-xl font-bold">
@@ -117,10 +117,10 @@ const PricingPlans = () => {
                 )}
               </div>
               
-              <Link href={plan.buttonLink}>
+              <Link href={plan.buttonLink} className="block w-full">
                 <button 
-                  className="w-full py-3 rounded-md font-medium text-white text-center"
-                  style={{ backgroundColor: plan.color, height: "48px" }}
+                  className="w-full py-3 px-4 rounded-md font-medium text-white text-center"
+                  style={{ backgroundColor: plan.color, height: "48px", width: "100%" }}
                 >
                   {plan.buttonText}
                 </button>
