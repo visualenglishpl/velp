@@ -179,7 +179,13 @@ export default function UnitCheckoutPage() {
                     key={book.id} 
                     value={book.id}
                   >
-                    {book.title}
+                    <div className="flex items-center">
+                      <div 
+                        className="w-4 h-4 rounded-sm mr-2" 
+                        style={{ backgroundColor: book.color }}
+                      />
+                      {book.title}
+                    </div>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -187,10 +193,19 @@ export default function UnitCheckoutPage() {
           </div>
           {bookId && (
             <div className="flex items-center justify-center md:justify-start">
-              <div 
-                className="w-12 h-12 rounded-md mr-3" 
+              <div className="relative w-16 h-16 rounded-md mr-3 flex items-center justify-center" 
                 style={{ backgroundColor: books.find(b => b.id === bookId)?.color || '#808080' }}
-              />
+              >
+                <img 
+                  src={`/api/direct/content/icons/VISUAL ${bookId}${bookId === '3' ? ' ' : ''}.gif`}
+                  alt={`Book ${bookId} cover`}
+                  className="w-14 h-14 object-contain"
+                  onError={(e) => {
+                    console.log(`Error loading image for book ${bookId}`);
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              </div>
               <div>
                 <p className="font-medium">Selected:</p>
                 <p>{books.find(b => b.id === bookId)?.title || `Book ${bookId}`}</p>
