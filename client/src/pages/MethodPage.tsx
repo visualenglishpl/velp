@@ -95,23 +95,26 @@ export default function MethodPage() {
                 <h3 className="text-base font-medium text-gray-700 mb-2">
                   <span className="mr-2">⏱️</span>Minimal Prep Time for Teachers
                 </h3>
-                <div className="flex flex-row">
-                  <div className="w-1/2">
-                    <p className="text-gray-600 text-sm mb-1">Everything is ready:</p>
-                    <div className="space-y-0">
-                      <p className="text-gray-600 text-sm">• Printable books</p>
-                      <p className="text-gray-600 text-sm">• Flashcards</p>
-                    </div>
+                <p className="text-gray-600 text-sm mb-2">Everything is ready:</p>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 mb-2">
+                  <div className="flex items-start">
+                    <span className="text-gray-500 mr-1.5">•</span>
+                    <p className="text-gray-600 text-sm">Printable books</p>
                   </div>
-                  <div className="w-1/2">
-                    <p className="text-gray-600 text-sm mb-1">&nbsp;</p>
-                    <div className="space-y-0">
-                      <p className="text-gray-600 text-sm">• PDF slides</p>
-                      <p className="text-gray-600 text-sm">• Video and GIF folders</p>
-                    </div>
+                  <div className="flex items-start">
+                    <span className="text-gray-500 mr-1.5">•</span>
+                    <p className="text-gray-600 text-sm">PDF slides</p>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="text-gray-500 mr-1.5">•</span>
+                    <p className="text-gray-600 text-sm">Flashcards</p>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="text-gray-500 mr-1.5">•</span>
+                    <p className="text-gray-600 text-sm">Video and GIF folders</p>
                   </div>
                 </div>
-                <p className="text-gray-600 text-sm mt-2">
+                <p className="text-gray-600 text-sm mt-1">
                   Use in-person, online, or hybrid.
                 </p>
               </div>
