@@ -78,14 +78,9 @@ const PricingPlans = () => {
                 </h3>
               </div>
               
-              {/* Monthly Plan Subtitle */}
-              <div className="bg-gray-50 py-3 text-center border-b border-gray-200">
-                <span className="text-gray-600 font-medium text-sm">Monthly plan</span>
-              </div>
-              
               {/* Features */}
-              <div className="p-6">
-                <ul className="space-y-3">
+              <div className="p-6 pt-8" style={{ minHeight: '240px' }}>
+                <ul className="space-y-4">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
                       <span className="text-gray-700 mr-2">•</span>
