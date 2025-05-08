@@ -65,50 +65,66 @@ const PricingPlans = () => {
   return (
     <div className="pt-0 pb-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Plan Headers */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
-            <div key={index} className="w-full flex flex-col" style={{ minHeight: "550px" }}>
-              {/* Header with plan title */}
+            <div key={`header-${index}`} className="w-full">
               <div 
-                className="rounded-t-lg text-white text-center py-5"
+                className="rounded-lg text-white text-center py-4"
                 style={{ backgroundColor: plan.color }}
               >
-                <h3 className="text-xl font-bold">{plan.title}</h3>
+                <h3 className="text-xl font-bold">
+                  {index === 1 ? (
+                    <div>
+                      Single Lesson<br />Access
+                    </div>
+                  ) : (
+                    plan.title
+                  )}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Features lists */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto mt-4">
+          {plans.map((plan, index) => (
+            <div key={`features-${index}`} className="w-full">
+              <ul className="space-y-3">
+                {plan.features.map((feature, i) => (
+                  <li key={i} className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600 text-sm">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Pricing sections */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto mt-4">
+          {plans.map((plan, index) => (
+            <div key={`pricing-${index}`} className="w-full">
+              <div className="flex flex-col items-center mb-4">
+                <div className="text-2xl font-bold">{plan.price}</div>
+                {plan.priceDetail && (
+                  <div className="text-sm text-gray-500">{plan.priceDetail}</div>
+                )}
+                {plan.priceSavings && (
+                  <div className="text-sm text-gray-500">{plan.priceSavings}</div>
+                )}
               </div>
               
-              {/* Features list */}
-              <div className="bg-white p-6 border-x border-gray-200 flex-grow">
-                <ul className="space-y-4">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start">
-                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-600 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              {/* Pricing section */}
-              <div className="bg-white p-6 border-x border-b border-gray-200 rounded-b-lg">
-                <div className="flex flex-col items-center mb-5">
-                  <div className="text-2xl font-bold">{plan.price}</div>
-                  {plan.priceDetail && (
-                    <div className="text-sm text-gray-500 mt-1">{plan.priceDetail}</div>
-                  )}
-                  {plan.priceSavings && (
-                    <div className="text-sm text-gray-500 mt-2">{plan.priceSavings}</div>
-                  )}
-                </div>
-                
-                <Link href={plan.buttonLink}>
-                  <button 
-                    className="w-full py-3 rounded-md font-medium text-white text-center"
-                    style={{ backgroundColor: plan.color }}
-                  >
-                    {plan.buttonText}
-                  </button>
-                </Link>
-              </div>
+              <Link href={plan.buttonLink}>
+                <button 
+                  className="w-full py-3 rounded-md font-medium text-white text-center"
+                  style={{ backgroundColor: plan.color, height: "48px" }}
+                >
+                  {plan.buttonText}
+                </button>
+              </Link>
             </div>
           ))}
         </div>
