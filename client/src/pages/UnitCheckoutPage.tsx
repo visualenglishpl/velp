@@ -197,6 +197,10 @@ export default function UnitCheckoutPage() {
                   src={`/api/direct/content/icons/VISUAL ${bookId}${bookId === '3' ? ' ' : ''}.gif`}
                   alt={`Book ${bookId}`}
                   className="w-16 h-16 object-cover mr-4"
+                  onError={(e) => {
+                    console.log(`Error loading image for book ${bookId}`);
+                    e.currentTarget.src = `https://via.placeholder.com/150/808080/FFFFFF/?text=Book+${bookId}`;
+                  }}
                 />
                 <div>
                   <h3 className="font-medium">Printed Book {bookId}</h3>

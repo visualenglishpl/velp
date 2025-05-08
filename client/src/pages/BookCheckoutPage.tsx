@@ -53,6 +53,9 @@ export default function BookCheckoutPage() {
       // Fallback to sample data if API call fails
       console.log("Using sample book data");
       const sampleBooks: BookData[] = [
+        { id: "0a", title: "Book 0a", color: "#FF40FF" },
+        { id: "0b", title: "Book 0b", color: "#FF7F27" },
+        { id: "0c", title: "Book 0c", color: "#00CEDD" },
         { id: "1", title: "Book 1", color: "#FFFF00" },
         { id: "2", title: "Book 2", color: "#9966CC" },
         { id: "3", title: "Book 3", color: "#00CC00" },
@@ -213,6 +216,10 @@ export default function BookCheckoutPage() {
                         src={`/api/direct/content/icons/VISUAL ${book.id}${book.id === '3' ? ' ' : ''}.gif`}
                         alt={`Book ${book.id}`}
                         className="w-16 h-16 object-cover mr-4"
+                        onError={(e) => {
+                          console.log(`Error loading image for book ${book.id}`);
+                          e.currentTarget.src = `https://via.placeholder.com/150/${book.color.replace('#', '')}/FFFFFF/?text=Book+${book.id}`;
+                        }}
                       />
                       <div>
                         <h3 className="font-medium">Printed Book {book.id}</h3>
@@ -286,6 +293,10 @@ export default function BookCheckoutPage() {
                       src={`/api/direct/content/icons/VISUAL ${book.id}${book.id === '3' ? ' ' : ''}.gif`}
                       alt={`Book ${book.id}`}
                       className="h-full w-full object-contain p-2"
+                      onError={(e) => {
+                        console.log(`Error loading thumbnail for book ${book.id}`);
+                        e.currentTarget.src = `https://via.placeholder.com/150/${book.color.replace('#', '')}/FFFFFF/?text=Book+${book.id}`;
+                      }}
                     />
                   </div>
                 </div>
