@@ -22,6 +22,10 @@ import BookCheckoutPage from "./pages/BookCheckoutPage";
 import BookWizardPage from "./pages/BookWizardPage";
 import SlickContentViewer from "./pages/SlickContentViewer";
 import SimpleViewerTest from "./pages/SimpleViewerTest";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import DashboardBooksPage from "./pages/DashboardBooksPage";
+import DashboardUnitsPage from "./pages/DashboardUnitsPage";
 
 import CookieConsent from "./components/CookieConsent";
 import AuthPageWrapper from "./pages/AuthPageWrapper";
@@ -110,9 +114,26 @@ function App() {
           <Route path="/simple-viewer">
             <SimpleViewerTest />
           </Route>
+          
+          {/* Admin/Teacher Platform Routes */}
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/dashboard">
+            <DashboardPage />
+          </Route>
+          <Route path="/dashboard/books">
+            <DashboardBooksPage />
+          </Route>
+          <Route path="/dashboard/books/:bookId">
+            <DashboardUnitsPage />
+          </Route>
         </Switch>
       </main>
+      
+      {/* Footer */}
       <Footer />
+      
       <CookieConsent />
       <Toaster />
     </div>

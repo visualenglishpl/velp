@@ -1,11 +1,12 @@
-import React from "react";
+import { Book } from 'lucide-react';
 
-const VelpLogo = ({ className = "w-16 h-16" }: { className?: string }) => {
+interface VelpLogoProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+const VelpLogo = ({ className, ...props }: VelpLogoProps) => {
   return (
-    <div className={`relative ${className}`}>
-      <div className="absolute inset-0 bg-gray-900 rounded-full flex items-center justify-center">
-        <span className="text-white font-bold text-xl">VE</span>
-      </div>
+    <div className={`flex items-center ${className}`} {...props}>
+      <Book className="h-full w-auto text-primary" />
+      <span className="ml-2 font-bold text-primary">Visual English</span>
     </div>
   );
 };
