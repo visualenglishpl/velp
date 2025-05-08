@@ -75,14 +75,13 @@ const PricingPlans = () => {
   ];
 
   return (
-    <div className="pt-0 pb-24 bg-white">
+    <div className="pt-0 pb-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
             <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden" 
-                 style={{ minHeight: "540px" }}>
+                 style={{ minHeight: "500px" }}>
               {/* Header */}
               <div className={`${plan.color} py-4 text-white text-center`}>
                 <h3 className="text-xl font-bold leading-tight whitespace-pre-line h-14 flex items-center justify-center">
@@ -91,13 +90,13 @@ const PricingPlans = () => {
               </div>
               
               {/* Content */}
-              <div className="flex-grow p-5">
-                <div className="min-h-[180px]">
-                  <ul className="space-y-3">
+              <div className="flex-grow p-4">
+                <div className="min-h-[160px]">
+                  <ul className="space-y-2">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start">
-                        <Check className={`h-5 w-5 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
-                        <span className="text-gray-600 text-sm">{feature}</span>
+                        <Check className={`h-4 w-4 ${plan.checkColor} mr-2 flex-shrink-0 mt-0.5`} />
+                        <span className="text-gray-600 text-xs">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -105,18 +104,18 @@ const PricingPlans = () => {
               </div>
               
               {/* Pricing */}
-              <div className="p-5 border-t border-gray-200">
+              <div className="p-4 border-t border-gray-200">
                 <div className="flex justify-center items-center">
-                  <div className="text-center mb-4">
+                  <div className="text-center mb-3">
                     <div className="flex flex-col items-center">
-                      <div className="text-3xl font-bold">{plan.price}</div>
+                      <div className="text-2xl font-bold">{plan.price}</div>
                       {plan.priceNote && (
-                        <div className="text-sm text-gray-500 mt-1">{plan.priceNote}</div>
+                        <div className="text-xs text-gray-500 mt-0.5">{plan.priceNote}</div>
                       )}
                     </div>
                     
                     {plan.priceSavings && (
-                      <div className="text-sm text-gray-500 mt-1.5">{plan.priceSavings}</div>
+                      <div className="text-xs text-gray-500 mt-1">{plan.priceSavings}</div>
                     )}
                   </div>
                 </div>
@@ -125,7 +124,7 @@ const PricingPlans = () => {
                   {plan.planId === "printed_book" ? (
                     <Link href="/checkout/book">
                       <button 
-                        className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
+                        className="w-full py-2 px-3 rounded-md font-medium text-white shadow-md text-sm h-10 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
                         onClick={() => {}}
                       >

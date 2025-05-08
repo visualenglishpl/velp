@@ -64,7 +64,18 @@ const Navbar = () => {
               <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.method')}</span>
             </Link>
             <Link href="/about">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.about')}</span>
+              <span 
+                className="text-gray-600 hover:text-teal-600 text-sm font-medium"
+                onClick={() => {
+                  // Make sure to reset scroll position when navigating to About
+                  window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                  });
+                }}
+              >
+                {t('nav.about')}
+              </span>
             </Link>
             <Link href="/books">
               <span 
@@ -151,6 +162,20 @@ const Navbar = () => {
                   </Badge>
                 )}
               </div>
+            </Link>
+            <Link href="/about">
+              <span 
+                className="text-gray-600 hover:text-teal-600 text-sm font-medium cursor-pointer"
+                onClick={() => {
+                  // Reset scroll position when navigating to About
+                  window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                  });
+                }}
+              >
+                {t('nav.about')}
+              </span>
             </Link>
             <Link href="/books">
               <span 
