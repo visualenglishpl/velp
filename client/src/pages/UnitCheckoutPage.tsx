@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { ChevronLeft, BookOpen, Book, ShoppingCart, AlertCircle, ArrowRight, CheckCircle } from "lucide-react";
+import { ChevronLeft, BookOpen, Book, ShoppingCart, AlertCircle, ArrowRight, CheckCircle, Bookmark } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { OrderSummaryCard } from "@/components/checkout/OrderSummaryCard";
 import { SavedUnitsModal } from "@/components/checkout/SavedUnitsModal";

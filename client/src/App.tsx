@@ -19,7 +19,7 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import UnitCheckoutPage from "./pages/UnitCheckoutPage";
 import BookCheckoutPage from "./pages/BookCheckoutPage";
-import NewBookCheckoutPage from "./pages/NewBookCheckoutPage";
+import BookWizardPage from "./pages/BookWizardPage";
 
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -82,10 +82,13 @@ function App() {
               <UnitCheckoutPage />
             </Route>
             <Route path="/checkout/book">
-              <BookCheckoutPage />
+              {() => {
+                window.location.href = "/checkout/book-wizard";
+                return null;
+              }}
             </Route>
             <Route path="/checkout/book-wizard">
-              <NewBookCheckoutPage />
+              <BookWizardPage />
             </Route>
             <Route path="/checkout/:planId">
               <CheckoutPage />
