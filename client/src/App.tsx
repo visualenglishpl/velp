@@ -6,6 +6,7 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import BooksPage from "./pages/BooksPage";
 import UnitsPage from "./pages/UnitsPage";
+import SlickContentViewer from "./pages/SlickContentViewer";
 import AdminPage from "./pages/AdminPage";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";

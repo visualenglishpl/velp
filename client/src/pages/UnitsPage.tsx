@@ -78,7 +78,7 @@ export default function UnitsPage() {
             className="w-full sm:w-auto py-6 text-lg bg-[#b23cfd] hover:bg-[#a020f0] shadow-md"
             onClick={() => {
               // Redirect directly to the full access unit page
-              window.location.href = `/books/${bookId}/units/1`;
+              window.location.href = `/book/${bookId}/1`;
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -145,7 +145,7 @@ export default function UnitsPage() {
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col border-0 shadow-none">
                 <h3 className="text-xl font-medium text-center mt-2 mb-1">Unit {unit.unitNumber}</h3>
                 <Link 
-                  href={`/books/${bookId}/units/${unit.unitNumber}`} 
+                  href={`/book/${bookId}/${unit.unitNumber}`} 
                   className="aspect-square relative overflow-hidden border rounded-md hover:border-gray-300 transition-all block"
                 >
                   {unit.thumbnailUrl ? (
@@ -187,7 +187,7 @@ export default function UnitsPage() {
                 <div className="py-3 mt-auto flex flex-col gap-3">
                   <Button 
                     className="w-full py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700"
-                    onClick={() => window.location.href = `/books/${bookId}/units/${unit.unitNumber}`}
+                    onClick={() => window.location.href = `/book/${bookId}/${unit.unitNumber}`}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
                       <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
