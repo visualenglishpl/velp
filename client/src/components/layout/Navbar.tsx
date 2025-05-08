@@ -1,11 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ShoppingCart, Globe } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
 const Navbar = () => {
+  const [cartItemsCount, setCartItemsCount] = useState(0);
   const { t } = useLanguage();
+
+  // Update cart count when localStorage changes
+  useEffect(() => {
+    const updateCartCount = () => {
+      try {
+        const storedCart = localStorage.getItem('visualEnglishCart');
+        if (storedCart) {
+          const items = JSON.parse(storedCart);
+          setCartItemsCount(items.length);
+        } else {
+          setCartItemsCount(0);
+        }
+      } catch (error) {
+        console.error('Failed to load cart items:', error);
+        setCartItemsCount(0);
+      }
+    };
+
+    // Initial count
+    updateCartCount();
+
+    // Set up storage event listener for cross-tab synchronization
+    window.addEventListener('storage', updateCartCount);
+
+    // Check for cart updates every 2 seconds
+    const interval = setInterval(updateCartCount, 2000);
+
+    // Clean up
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+      clearInterval(interval);
+    };
+  }, []);
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,9 +132,16 @@ const Navbar = () => {
             <Link href="/contact">
               <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.contact')}</span>
             </Link>
-            <Link href="/auth">
+            <Link href="/cart">
               <div className="flex items-center text-gray-600 hover:text-teal-600 cursor-pointer relative">
                 <ShoppingCart size={18} />
+                {cartItemsCount > 0 && (
+                  <Badge 
+                    className="absolute -top-2 -right-2 px-1.5 py-0.5 min-w-[1.2rem] min-h-[1.2rem] flex items-center justify-center text-[0.65rem] bg-teal-600 text-white" 
+                  >
+                    {cartItemsCount}
+                  </Badge>
+                )}
               </div>
             </Link>
             <LanguageSwitcher variant="minimal" />
@@ -108,9 +150,16 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="md:hidden flex items-center space-x-4">
-            <Link href="/auth">
+            <Link href="/cart">
               <div className="flex items-center text-gray-600 hover:text-teal-600 cursor-pointer relative">
                 <ShoppingCart size={18} />
+                {cartItemsCount > 0 && (
+                  <Badge 
+                    className="absolute -top-2 -right-2 px-1.5 py-0.5 min-w-[1.2rem] min-h-[1.2rem] flex items-center justify-center text-[0.65rem] bg-teal-600 text-white" 
+                  >
+                    {cartItemsCount}
+                  </Badge>
+                )}
               </div>
             </Link>
             <button className="text-gray-500 hover:text-gray-700 focus:outline-none">

@@ -188,10 +188,10 @@ export default function CartPage() {
           
           <Button 
             className="w-full py-6 text-lg"
-            onClick={() => setLocation('/auth')}
+            onClick={() => setLocation('/checkout')}
           >
             <CreditCard className="mr-2" size={20} />
-            Sign In to Purchase
+            Proceed to Checkout
           </Button>
         </div>
       </div>

@@ -6,7 +6,6 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import BooksPage from "./pages/BooksPage";
 import UnitsPage from "./pages/UnitsPage";
-import SlickContentViewer from "./pages/SlickContentViewer";
 import AdminPage from "./pages/AdminPage";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
@@ -17,6 +16,7 @@ import CookiesPage from "./pages/CookiesPage";
 import WithdrawalPage from "./pages/WithdrawalPage";
 import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
 
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -40,9 +40,6 @@ function App() {
             </Route>
             <Route path="/books/:bookId">
               <UnitsPage />
-            </Route>
-            <Route path="/book/:bookId/:unitId">
-              <SlickContentViewer />
             </Route>
             <ProtectedRoute path="/admin" adminOnly={true}>
               <AdminPage />
@@ -76,7 +73,13 @@ function App() {
             </Route>
 
             <Route path="/cart">
-              <AuthPageWrapper />
+              <CartPage />
+            </Route>
+            <Route path="/checkout">
+              <CheckoutPage />
+            </Route>
+            <Route path="/checkout/:planId">
+              <CheckoutPage />
             </Route>
           </Switch>
         </main>

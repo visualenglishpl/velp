@@ -1027,9 +1027,9 @@ export default function SlickContentViewer() {
                               size="sm" 
                               variant="default"
                               className="bg-primary text-white hover:bg-primary/90"
-                              onClick={() => window.location.href = '/auth'}
+                              onClick={() => window.location.href = '/checkout/single_lesson'}
                             >
-                              Sign In
+                              Upgrade Now
                             </Button>
                           </div>
                         )}
@@ -1081,9 +1081,9 @@ export default function SlickContentViewer() {
                                   size="sm" 
                                   variant="default"
                                   className="bg-primary text-white hover:bg-primary/90"
-                                  onClick={() => window.location.href = '/auth'}
+                                  onClick={() => window.location.href = '/checkout/single_lesson'}
                                 >
-                                  Sign In
+                                  Upgrade Now
                                 </Button>
                               </div>
                             )}

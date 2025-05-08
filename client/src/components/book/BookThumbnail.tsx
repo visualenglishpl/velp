@@ -115,9 +115,52 @@ const BookThumbnail = ({
     return 'bg-blue-600';
   };
   
-  // Function to redirect to auth page for printed book ordering
-  const redirectToAuth = () => {
-    window.location.href = '/auth';
+  // Function to add the printed book to the cart
+  const addToCart = () => {
+    try {
+      let cart = [];
+      const storedCart = localStorage.getItem('visualEnglishCart');
+      if (storedCart) {
+        cart = JSON.parse(storedCart);
+      }
+      
+      // Check if book is already in cart
+      const bookInCart = cart.some((item: any) => 
+        item.type === 'printed_book' && item.bookId === bookId
+      );
+      
+      if (!bookInCart) {
+        const newItem = {
+          id: `printed-book-${bookId}`,
+          type: 'printed_book',
+          bookId,
+          title: `Printed Book ${formattedBookId}`,
+          price: 20,
+        };
+        
+        cart.push(newItem);
+        localStorage.setItem('visualEnglishCart', JSON.stringify(cart));
+        
+        // Trigger cart update event for navbar
+        window.dispatchEvent(new Event('storage'));
+        
+        toast({
+          title: 'Book added to cart',
+          description: `Printed Book ${formattedBookId} has been added to your cart.`,
+        });
+      } else {
+        toast({
+          title: 'Book already in cart',
+          description: `Printed Book ${formattedBookId} is already in your cart.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to add book to cart. Please try again.',
+        variant: 'destructive'
+      });
+    }
   };
 
   return (
@@ -199,14 +242,6 @@ const BookThumbnail = ({
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                 </svg>
                 View Book
-              </button>
-            </Link>
-            <Link href="/auth" className="block w-full">
-              <button 
-                className="w-full text-white py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1 bg-green-600 hover:bg-green-700"
-              >
-                <ShoppingBag className="h-3 w-3" />
-                Order Printed Book
               </button>
             </Link>
           </div>

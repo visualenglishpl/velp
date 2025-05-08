@@ -162,7 +162,7 @@ export default function PrintedBookCheckout() {
       `${book.bookId}:${book.quantity}`
     ).join(',');
     
-    window.location.href = '/auth';
+    window.location.href = `/checkout/printed_book?books=${booksParam}`;
   };
 
   return (
@@ -352,7 +352,7 @@ export default function PrintedBookCheckout() {
           <div className="grid grid-cols-1 gap-6">
             <div>
               <p className="text-gray-600 mb-3">
-                Standard shipping takes 7-14 business days. Express delivery options will be available after signing in.
+                Standard shipping takes 7-14 business days. Express delivery options will be available at checkout.
               </p>
               
               <p className="text-gray-600">
@@ -397,7 +397,7 @@ export default function PrintedBookCheckout() {
               
               <div className="mt-1 space-y-1">
                 <p className="text-emerald-700/80 text-sm">
-                  + delivery costs (calculated after sign in)
+                  + delivery costs (calculated at checkout)
                 </p>
                 {totalQuantity > 0 && totalQuantity <= 20 && (
                   <p className="text-blue-600 text-sm font-medium">
@@ -412,7 +412,7 @@ export default function PrintedBookCheckout() {
               disabled={selectedBooks.length === 0}
               className="bg-emerald-600 hover:bg-emerald-700 mt-4 md:mt-0"
             >
-              Sign In to Continue
+              Proceed to Checkout
             </Button>
           </div>
         </div>
