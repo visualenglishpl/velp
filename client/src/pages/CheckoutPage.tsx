@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ShoppingCart, CreditCard, ArrowLeft, CheckCircle, ShoppingBag, BookOpen, Book } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/hooks/use-auth';
 import WithdrawalConsent from '@/components/checkout/WithdrawalConsent';
 import UnitSelector from '@/components/checkout/UnitSelector';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -31,7 +30,6 @@ interface CartItem {
 
 export default function CheckoutPage() {
   const { toast } = useToast();
-  const { user, isLoading } = useAuth();
   const params = useParams();
   const [location, setLocation] = useLocation();
   const [email, setEmail] = useState('');
@@ -57,23 +55,6 @@ export default function CheckoutPage() {
   const isFreeTrialPlan = planId === 'free_trial';
   const [selectedBookPurchaseType, setSelectedBookPurchaseType] = useState('physical');
   const [subscriptionPeriod, setSubscriptionPeriod] = useState('monthly');
-  
-  // Redirect to auth page if not authenticated
-  useEffect(() => {
-    if (!isLoading && !user) {
-      // Store the current URL to redirect back after login
-      const currentPath = window.location.pathname + window.location.search;
-      localStorage.setItem('authRedirectPath', currentPath);
-      
-      // Redirect to auth page
-      setLocation('/auth');
-      
-      toast({
-        title: "Authentication Required",
-        description: "Please sign in or register to access checkout.",
-      });
-    }
-  }, [user, isLoading, setLocation, toast]);
   
   // Function to add multiple units to cart
   const addMultipleUnitsToCart = (bookId: string, unitNumbers: string[]) => {

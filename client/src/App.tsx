@@ -75,12 +75,12 @@ function App() {
             <Route path="/cart">
               <CartPage />
             </Route>
-            <ProtectedRoute path="/checkout">
+            <Route path="/checkout">
               <CheckoutPage />
-            </ProtectedRoute>
-            <ProtectedRoute path="/checkout/:planId">
+            </Route>
+            <Route path="/checkout/:planId">
               <CheckoutPage />
-            </ProtectedRoute>
+            </Route>
           </Switch>
         </main>
         <Footer />

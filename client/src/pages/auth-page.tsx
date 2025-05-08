@@ -78,17 +78,8 @@ const AuthPage = () => {
     if (user && !isLoading) {
       console.log("User already authenticated:", user);
       
-      // Check if there's a redirect path saved in localStorage
-      const redirectPath = localStorage.getItem('authRedirectPath');
-      
-      if (redirectPath) {
-        // Clear the redirect path from localStorage
-        localStorage.removeItem('authRedirectPath');
-        console.log("Redirecting to saved path:", redirectPath);
-        window.location.href = redirectPath;
-      }
-      // If no redirect path, use role-based defaults
-      else if (user.role === 'admin') {
+      // Admin redirects to admin page
+      if (user.role === 'admin') {
         console.log("Admin user detected, redirecting to admin dashboard");
         window.location.href = "/admin";
       } 

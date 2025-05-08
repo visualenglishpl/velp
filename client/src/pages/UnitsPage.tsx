@@ -77,7 +77,7 @@ export default function UnitsPage() {
           <Button
             className="w-full sm:w-auto py-6 text-lg bg-[#b23cfd] hover:bg-[#a020f0] shadow-md"
             onClick={() => {
-              window.location.href = `/auth`;
+              window.location.href = `/checkout/whole_book?book=${bookId}`;
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -91,7 +91,7 @@ export default function UnitsPage() {
               <Button
                 className="w-full sm:w-auto py-6 text-lg bg-[#2e88f6] hover:bg-blue-600 shadow-md"
                 onClick={() => {
-                  window.location.href = `/auth`;
+                  window.location.href = `/checkout/single_lesson?book=${bookId}`;
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -105,7 +105,7 @@ export default function UnitsPage() {
               <Button
                 className="w-full sm:w-auto py-6 text-lg bg-green-600 hover:bg-green-700 shadow-md"
                 onClick={() => {
-                  window.location.href = `/auth`;
+                  window.location.href = `/checkout/free_trial?book=${bookId}`;
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -144,17 +144,8 @@ export default function UnitsPage() {
               <Card key={unit.unitNumber} className="overflow-hidden flex flex-col border-0 shadow-none">
                 <h3 className="text-xl font-medium text-center mt-2 mb-1">Unit {unit.unitNumber}</h3>
                 <Link 
-                  href={`/book/${bookId}/${unit.unitNumber}`} 
+                  href={`/books/${bookId}/units/${unit.unitNumber}`} 
                   className="aspect-square relative overflow-hidden border rounded-md hover:border-gray-300 transition-all block"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    // Scroll to top first
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    // Redirect after a small delay to ensure scroll completes
-                    setTimeout(() => {
-                      window.location.href = `/book/${bookId}/${unit.unitNumber}`;
-                    }, 300);
-                  }}
                 >
                   {unit.thumbnailUrl ? (
                     <>
@@ -195,14 +186,7 @@ export default function UnitsPage() {
                 <div className="py-3 mt-auto flex flex-col gap-3">
                   <Button 
                     className="w-full py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700"
-                    onClick={() => {
-                      // Scroll to top first
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                      // Redirect after a small delay to ensure scroll completes
-                      setTimeout(() => {
-                        window.location.href = `/book/${bookId}/${unit.unitNumber}`;
-                      }, 300);
-                    }}
+                    onClick={() => window.location.href = `/books/${bookId}/units/${unit.unitNumber}`}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
                       <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
@@ -216,7 +200,7 @@ export default function UnitsPage() {
                         variant="outline"
                         className="w-full border-blue-500 text-blue-600 hover:bg-blue-50"
                         onClick={() => {
-                          window.location.href = `/auth`;
+                          window.location.href = `/checkout/single_lesson?book=${bookId}&unit=${unit.unitNumber}`;
                         }}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">

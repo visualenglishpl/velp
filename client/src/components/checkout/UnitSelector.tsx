@@ -154,48 +154,38 @@ export default function UnitSelector({ bookId, initialSelectedUnit, onUnitsSelec
         </div>
       </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
         {units.map((unit) => (
           <Card 
             key={unit.unitNumber} 
-            className={`p-4 cursor-pointer transition-all hover:shadow-md ${
+            className={`p-3 cursor-pointer transition-all ${
               unit.selected ? 'border-blue-500 bg-blue-50' : ''
             }`}
             onClick={() => toggleUnitSelection(unit.unitNumber)}
           >
-            <div className="flex flex-col">
-              <div className="flex items-center justify-between mb-2">
-                <Label htmlFor={`unit-${unit.unitNumber}`} className="font-medium text-lg">
+            <div className="flex items-start space-x-2">
+              <Checkbox 
+                id={`unit-${unit.unitNumber}`} 
+                checked={unit.selected} 
+                onCheckedChange={() => toggleUnitSelection(unit.unitNumber)}
+                className="mt-1"
+              />
+              <div>
+                <Label htmlFor={`unit-${unit.unitNumber}`} className="font-medium">
                   Unit {unit.unitNumber}
                 </Label>
-                <Checkbox 
-                  id={`unit-${unit.unitNumber}`} 
-                  checked={unit.selected} 
-                  onCheckedChange={() => toggleUnitSelection(unit.unitNumber)}
-                />
-              </div>
-              <div className="w-full aspect-square relative overflow-hidden rounded border">
-                {unit.thumbnailUrl ? (
-                  <img 
-                    src={`/api/direct/content/${unit.thumbnailUrl}`} 
-                    alt={`Thumbnail for unit ${unit.unitNumber}`}
-                    className="object-cover w-full h-full"
-                    onError={(e) => {
-                      // If thumbnail fails to load, show No Preview
-                      const img = e.currentTarget;
-                      img.style.display = "none";
-                      const container = img.parentElement;
-                      if (container) {
-                        const noPreview = document.createElement('div');
-                        noPreview.className = "h-full w-full bg-gray-100 flex items-center justify-center";
-                        noPreview.innerHTML = '<span class="text-gray-400 text-sm">No Preview</span>';
-                        container.appendChild(noPreview);
-                      }
-                    }}
-                  />
-                ) : (
-                  <div className="h-full w-full bg-gray-100 flex items-center justify-center">
-                    <span className="text-gray-400 text-sm">No Preview</span>
+                {unit.thumbnailUrl && (
+                  <div className="mt-2 w-full h-12 relative overflow-hidden rounded border">
+                    <img 
+                      src={`/api/direct/content/${unit.thumbnailUrl}`} 
+                      alt={`Thumbnail for unit ${unit.unitNumber}`}
+                      className="object-cover w-full h-full"
+                      onError={(e) => {
+                        // If thumbnail fails to load, hide it
+                        const img = e.currentTarget;
+                        img.style.display = "none";
+                      }}
+                    />
                   </div>
                 )}
               </div>
