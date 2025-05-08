@@ -4,12 +4,13 @@ import { Link } from "wouter";
 const PricingPlans = () => {
   const plans = [
     {
-      title: "Printed Book Only",
+      title: "Printed Book\nOnly",
       color: "#ff6347", // coral color like in the example
       features: [
-        "Full-color physical book",
-        "Delivered to your doorstep",
-        "No digital access included"
+        "Print Edition Only",
+        "Show book cover image",
+        "Include delivery time",
+        "No internet required"
       ],
       price: "€20",
       priceDetail: "+ delivery",
@@ -17,13 +18,13 @@ const PricingPlans = () => {
       buttonLink: "/checkout/book",
     },
     {
-      title: "Single Lesson Access",
+      title: "Single Lesson\nAccess",
       color: "#9370db", // medium purple like in the example
       features: [
         "Access to one complete lesson",
         "Downloadable PDF of the unit",
         "200+ images, games, and quizzes",
-        "Progress tracking & videos"
+        "Progress tracking & video content"
       ],
       price: "€5",
       priceDetail: "per month",
@@ -32,13 +33,13 @@ const PricingPlans = () => {
       buttonLink: "/checkout/unit",
     },
     {
-      title: "Whole Book Access",
+      title: "Whole Book\nAccess",
       color: "#00bcd4", // nice teal/cyan color like in the example
       features: [
-        "Full access to one entire book",
-        "Download PDFs for all units",
-        "200+ interactive resources",
-        "Certificates & advanced analytics"
+        "Full access to all lessons in one book",
+        "Downloadable PDFs for each unit",
+        "2000+ images, games, quizzes, and activities",
+        "Certificates, progress tracking, and analytics"
       ],
       price: "€25",
       priceDetail: "per month",
@@ -47,7 +48,7 @@ const PricingPlans = () => {
       buttonLink: "/checkout/book-wizard",
     },
     {
-      title: "Free Trial",
+      title: "Free\nTrial",
       color: "#ffa726", // orange like in the example
       features: [
         "Full free access for one week",
@@ -73,7 +74,7 @@ const PricingPlans = () => {
                 className="text-white text-center py-4"
                 style={{ backgroundColor: plan.color }}
               >
-                <h3 className="text-xl font-semibold">
+                <h3 className="text-xl font-semibold whitespace-pre-line">
                   {plan.title}
                 </h3>
               </div>
