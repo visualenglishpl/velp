@@ -79,10 +79,8 @@ export default function UnitCheckoutPage() {
     }
   };
 
-  // Scroll to top helper function
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  // Empty function to replace scrollToTop, keeping page position
+  const scrollToTop = () => {};
 
   // Toggle unit selection
   const toggleUnitSelection = (unitNumber: string) => {

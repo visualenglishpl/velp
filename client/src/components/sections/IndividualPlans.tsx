@@ -138,7 +138,7 @@ const PricingPlans = () => {
                       </button>
                     </Link>
                   ) : plan.planId === "single_lesson" ? (
-                    <Link href="/checkout/unit">
+                    <Link href="/checkout/unit?book=1">
                       <button 
                         className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
