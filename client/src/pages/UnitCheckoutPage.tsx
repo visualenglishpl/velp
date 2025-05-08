@@ -5,8 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { ChevronLeft, BookOpen, Book, ShoppingCart } from "lucide-react";
+import { ChevronLeft, BookOpen, Book, ShoppingCart, AlertCircle, ArrowRight, CheckCircle } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { OrderSummaryCard } from "@/components/checkout/OrderSummaryCard";
+import { SavedUnitsModal } from "@/components/checkout/SavedUnitsModal";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useToast } from "@/hooks/use-toast";
 
 interface UnitData {
   unitNumber: string;
@@ -20,7 +24,15 @@ interface BookData {
   color: string;
 }
 
+interface SavedUnit {
+  bookId: string;
+  bookTitle: string;
+  unitNumbers: string[];
+  timestamp: Date;
+}
+
 export default function UnitCheckoutPage() {
+  const { toast } = useToast();
   const [_, setLocation] = useLocation();
   const [subscriptionPeriod, setSubscriptionPeriod] = useState<"monthly" | "yearly">("monthly");
   const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
@@ -28,6 +40,8 @@ export default function UnitCheckoutPage() {
   const [units, setUnits] = useState<UnitData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"digital" | "physical">("digital");
+  const [savedUnits, setSavedUnits] = useState<SavedUnit[]>([]);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [books, setBooks] = useState<BookData[]>([
     { id: "0a", title: "Book 0a (Beginners)", color: "#FF40FF" },
     { id: "0b", title: "Book 0b (Beginners)", color: "#FF7F27" },
@@ -123,11 +137,90 @@ export default function UnitCheckoutPage() {
     scrollToTop();
   };
 
+  // Load saved units from localStorage
+  useEffect(() => {
+    try {
+      const savedJson = localStorage.getItem('visualEnglish_savedUnits');
+      if (savedJson) {
+        const parsed = JSON.parse(savedJson);
+        setSavedUnits(parsed);
+      }
+    } catch (error) {
+      console.error('Error loading saved units:', error);
+    }
+  }, []);
+
+  // Save units for later
+  const saveUnitsForLater = () => {
+    if (selectedUnits.length === 0) return;
+    
+    const currentBook = books.find(b => b.id === bookId);
+    const newSavedUnit: SavedUnit = {
+      bookId,
+      bookTitle: currentBook?.title || `Book ${bookId}`,
+      unitNumbers: [...selectedUnits],
+      timestamp: new Date()
+    };
+    
+    const updatedSaved = [...savedUnits, newSavedUnit];
+    setSavedUnits(updatedSaved);
+    
+    // Save to localStorage
+    try {
+      localStorage.setItem('visualEnglish_savedUnits', JSON.stringify(updatedSaved));
+    } catch (error) {
+      console.error('Error saving units:', error);
+    }
+    
+    // Show success message
+    toast({
+      title: "Units saved",
+      description: `${selectedUnits.length} units from ${currentBook?.title || `Book ${bookId}`} have been saved for later.`,
+    });
+    
+    // Clear current selection
+    setSelectedUnits([]);
+  };
+  
+  // Remove a saved unit from the list
+  const removeSaved = (index: number) => {
+    const newSaved = [...savedUnits];
+    newSaved.splice(index, 1);
+    setSavedUnits(newSaved);
+    
+    // Update localStorage
+    try {
+      localStorage.setItem('visualEnglish_savedUnits', JSON.stringify(newSaved));
+    } catch (error) {
+      console.error('Error removing saved unit:', error);
+    }
+  };
+  
+  // Clear all saved units
+  const clearSaved = () => {
+    setSavedUnits([]);
+    localStorage.removeItem('visualEnglish_savedUnits');
+  };
+  
+  // Restore a saved selection
+  const restoreSaved = (saved: SavedUnit) => {
+    if (saved.bookId !== bookId) {
+      setBookId(saved.bookId);
+      fetchUnits(saved.bookId);
+    }
+    setSelectedUnits(saved.unitNumbers);
+  };
+
   // Add to cart function
   const addToCart = () => {
-    alert(`Added ${selectedUnits.length} unit(s) to cart with ${subscriptionPeriod} subscription`);
-    // In real implementation, would use API to add to cart
-    scrollToTop();
+    // In a real implementation, this would call an API to add to cart
+    setShowSuccessAlert(true);
+    setTimeout(() => setShowSuccessAlert(false), 5000);
+    
+    toast({
+      title: "Added to cart",
+      description: `${selectedUnits.length} unit(s) from Book ${bookId} with ${subscriptionPeriod} subscription added to your cart.`,
+    });
   };
 
   // Add debug logging
@@ -147,18 +240,45 @@ export default function UnitCheckoutPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-5xl mx-auto px-4 py-8">
       <div className="mb-8">
-        <Button 
-          variant="outline" 
-          className="mb-4"
-          onClick={() => window.history.back()}
-        >
-          <ChevronLeft className="w-4 h-4 mr-1" />
-          Back
-        </Button>
-        <h1 className="text-3xl font-bold">Unit Checkout</h1>
+        <div className="flex justify-between items-center">
+          <div>
+            <Button 
+              variant="outline" 
+              className="mb-4"
+              onClick={() => window.history.back()}
+            >
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              Back
+            </Button>
+            <h1 className="text-3xl font-bold">Unit Checkout</h1>
+          </div>
+          
+          {/* Saved Units Modal */}
+          {savedUnits.length > 0 && (
+            <SavedUnitsModal
+              savedUnits={savedUnits}
+              onClearSaved={clearSaved}
+              onRestoreSaved={restoreSaved}
+              onRemoveSaved={removeSaved}
+            />
+          )}
+        </div>
+        
+        {/* Success Alert */}
+        {showSuccessAlert && (
+          <Alert className="mt-4 bg-green-50 border-green-200">
+            <CheckCircle className="h-4 w-4 text-green-600" />
+            <AlertDescription className="text-green-700">
+              {selectedUnits.length} units have been added to your cart!
+            </AlertDescription>
+          </Alert>
+        )}
       </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
 
       {/* Book Selection */}
       <Card className="p-6 mb-8">
@@ -388,19 +508,72 @@ export default function UnitCheckoutPage() {
                 <div className="text-blue-600 font-medium">
                   {selectedUnits.length} units selected
                 </div>
-                <Button 
-                  className="bg-blue-600 hover:bg-blue-700"
-                  disabled={selectedUnits.length === 0}
-                  onClick={addToCart}
-                >
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  Add {selectedUnits.length} Unit{selectedUnits.length !== 1 ? 's' : ''} to Cart
-                </Button>
+                <div className="flex space-x-2">
+                  <Button 
+                    variant="outline"
+                    disabled={selectedUnits.length === 0}
+                    onClick={saveUnitsForLater}
+                  >
+                    <ArrowRight className="w-4 h-4 mr-2" />
+                    Save for Later
+                  </Button>
+                  <Button 
+                    className="bg-blue-600 hover:bg-blue-700"
+                    disabled={selectedUnits.length === 0}
+                    onClick={addToCart}
+                  >
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
             </Card>
           )}
         </>
       )}
+        </div>
+        
+        {/* Order Summary Card (only show when book is selected and on digital tab) */}
+        {bookId && activeTab === "digital" && (
+          <div className="lg:col-span-1">
+            <OrderSummaryCard
+              selectedUnits={selectedUnits}
+              bookId={bookId}
+              bookTitle={books.find(b => b.id === bookId)?.title || `Book ${bookId}`}
+              subscriptionPeriod={subscriptionPeriod}
+              addToCart={addToCart}
+              saveForLater={saveUnitsForLater}
+              isSticky={true}
+            />
+            
+            {/* Progress Indicator */}
+            <Card className="mt-6 p-4 border">
+              <h3 className="font-medium mb-4">Checkout Progress</h3>
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-medium">1</div>
+                  <div className="ml-2 font-medium">Select Book</div>
+                  {bookId && <CheckCircle className="ml-auto text-green-500 w-4 h-4" />}
+                </div>
+                <div className="flex items-center">
+                  <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-medium">2</div>
+                  <div className="ml-2 font-medium">Choose Purchase Options</div>
+                  {bookId && <CheckCircle className="ml-auto text-green-500 w-4 h-4" />}
+                </div>
+                <div className="flex items-center">
+                  <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-medium">3</div>
+                  <div className="ml-2 font-medium">Select Units</div>
+                  {selectedUnits.length > 0 && <CheckCircle className="ml-auto text-green-500 w-4 h-4" />}
+                </div>
+                <div className="flex items-center text-gray-500">
+                  <div className="w-6 h-6 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center text-xs font-medium">4</div>
+                  <div className="ml-2 font-medium">Complete Checkout</div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
