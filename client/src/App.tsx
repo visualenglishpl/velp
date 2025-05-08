@@ -21,6 +21,7 @@ import UnitCheckoutPage from "./pages/UnitCheckoutPage";
 import BookCheckoutPage from "./pages/BookCheckoutPage";
 import BookWizardPage from "./pages/BookWizardPage";
 import SlickContentViewer from "./pages/SlickContentViewer";
+import SimpleViewerTest from "./pages/SimpleViewerTest";
 
 import CookieConsent from "./components/CookieConsent";
 import AuthPageWrapper from "./pages/AuthPageWrapper";
@@ -102,6 +103,9 @@ function App() {
           </Route>
           <Route path="/book/:bookId">
             <SlickContentViewer />
+          </Route>
+          <Route path="/test-viewer">
+            <SimpleViewerTest />
           </Route>
         </Switch>
       </main>
