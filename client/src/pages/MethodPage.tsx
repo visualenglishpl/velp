@@ -14,31 +14,31 @@ export default function MethodPage() {
       
       <main>
         {/* Method Hero Section */}
-        <section className="bg-white py-12 md:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="bg-white py-6 md:py-10">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h1 className="text-3xl md:text-4xl font-medium text-gray-800 mb-6">
+              <h1 className="text-2xl md:text-3xl font-medium text-gray-800 mb-3">
                 Discover the Visual English Method
               </h1>
               
-              <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg font-light">
+              <p className="text-gray-600 mb-5 max-w-2xl mx-auto text-sm">
                 A complete, image-based approach for teaching English to children aged 4–15 — designed for ESL teachers who want structured lessons, instant engagement, and minimal prep.
               </p>
               
               <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
                 <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/2 p-6 flex flex-col justify-center">
-                    <h2 className="text-xl font-medium text-gray-700 mb-4">
+                  <div className="md:w-1/2 p-4 flex flex-col justify-center">
+                    <h2 className="text-lg font-medium text-gray-700 mb-2">
                       Built by teachers, for teachers.
                     </h2>
-                    <p className="text-gray-600 font-light mb-4">
-                      Visual English was created by Izabela Buassa, an English teacher with over 25 years of classroom experience. Throughout her career, she constantly faced one challenge: finding consistent, conversation-based ESL materials that actually worked with young learners.
+                    <p className="text-gray-600 text-sm mb-2">
+                      Visual English was created by Izabela Buassa, an English teacher with over 25 years of classroom experience. She constantly faced one challenge: finding consistent, conversation-based ESL materials that worked with young learners.
                     </p>
-                    <p className="text-gray-600 font-light mb-4">
-                      There was always a gap in the market — a lack of ready-to-use content that helped children speak, not just memorize. Teachers were left pulling resources from dozens of places, trying to piece together lessons that felt natural and fun.
+                    <p className="text-gray-600 text-sm mb-2">
+                      There was always a gap in the market — a lack of ready-to-use content that helped children speak, not just memorize. Teachers were left pulling resources from dozens of places.
                     </p>
-                    <p className="text-gray-600 font-light">
-                      The solution? Visual English — a direct teaching method built around visual cues like images, GIFs, and videos to spark real, full-sentence conversation without translation.
+                    <p className="text-gray-600 text-sm">
+                      The solution? Visual English — built around visual cues like images, GIFs, and videos to spark real conversation without translation.
                     </p>
                   </div>
                   <div className="md:w-1/2 flex items-center">
