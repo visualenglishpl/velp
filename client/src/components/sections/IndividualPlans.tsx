@@ -34,7 +34,7 @@ const PricingPlans = () => {
       price: "€5",
       priceNote: "per month",
       priceSavings: "€40/year (33% savings)",
-      buttonText: "Start Learning Now",
+      buttonText: "Select Multiple Units",
       planId: "single_lesson"
     },
     {
@@ -52,15 +52,15 @@ const PricingPlans = () => {
       price: "€25",
       priceNote: "per month",
       priceSavings: "€180/year (40% savings)",
-      buttonText: "Get Full Access",
+      buttonText: "Subscribe to Full Book",
       planId: "whole_book"
     },
     {
       title: "Free Trial",
-      color: "bg-[#ff9d22]",
-      textColor: "text-[#ff9d22]",
-      checkColor: "text-[#ff9d22]",
-      bgColor: "#ff9d22",
+      color: "bg-[#1e9f5e]",
+      textColor: "text-[#1e9f5e]",
+      checkColor: "text-[#1e9f5e]",
+      bgColor: "#1e9f5e",
       features: [
         "Full free access for one week",
         "Browse all lessons and content",
@@ -69,7 +69,7 @@ const PricingPlans = () => {
       ],
       price: "Free",
       priceNote: "7-Day Trial",
-      buttonText: "Start Free Trial",
+      buttonText: "Start Free 7-Day Trial",
       planId: "free_trial"
     },
   ];

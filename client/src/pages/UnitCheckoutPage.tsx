@@ -513,17 +513,18 @@ export default function UnitCheckoutPage() {
                     variant="outline"
                     disabled={selectedUnits.length === 0}
                     onClick={saveUnitsForLater}
+                    style={{ borderColor: "#2e88f6", color: "#2e88f6" }}
                   >
-                    <ArrowRight className="w-4 h-4 mr-2" />
+                    <Bookmark className="w-4 h-4 mr-2" />
                     Save for Later
                   </Button>
                   <Button 
-                    className="bg-blue-600 hover:bg-blue-700"
                     disabled={selectedUnits.length === 0}
                     onClick={addToCart}
+                    style={{ backgroundColor: "#2e88f6" }}
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />
-                    Add to Cart
+                    Select Multiple Units
                   </Button>
                 </div>
               </div>

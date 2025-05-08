@@ -103,18 +103,20 @@ export function OrderSummaryCard({
       
       <div className="space-y-2">
         <Button 
-          className="w-full bg-blue-600 hover:bg-blue-700"
+          className="w-full"
+          style={{ backgroundColor: "#b23cfd" }}
           disabled={selectedUnits.length === 0}
           onClick={addToCart}
         >
           <ShoppingCart className="w-4 h-4 mr-2" />
-          Add to Cart
+          Subscribe to Full Book
         </Button>
         
         {saveForLater && (
           <Button 
             variant="outline"
             className="w-full"
+            style={{ borderColor: "#2e88f6", color: "#2e88f6" }}
             disabled={selectedUnits.length === 0}
             onClick={saveForLater}
           >
