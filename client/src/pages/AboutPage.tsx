@@ -9,87 +9,88 @@ export default function AboutPage() {
         <title>About Us | Visual English</title>
       </Helmet>
 
-      <main className="pb-8">
+      <main className="pb-6">
         {/* Hero Section */}
-        <section className="bg-white py-10 md:py-16" id="about-founders">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="mb-8">
-              <img 
-                src="/api/direct/content/VISUAL WEBSITE/yuga iza.png" 
-                alt="Izabela and Yuga Buassa" 
-                className="max-w-md w-full h-auto mx-auto rounded-md shadow-md"
-              />
+        <section className="bg-white py-6 md:py-8" id="about-founders">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row gap-6 items-center">
+              <div className="md:w-1/3">
+                <img 
+                  src="/api/direct/content/VISUAL WEBSITE/yuga iza.png" 
+                  alt="Izabela and Yuga Buassa" 
+                  className="w-full h-auto rounded-md shadow-md"
+                />
+              </div>
+              
+              <div className="md:w-2/3 text-center md:text-left">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                  Visual English
+                </h1>
+                <h2 className="text-lg md:text-xl font-medium text-gray-700 mb-4">
+                  Igniting Young Minds for English Excellence!
+                </h2>
+                <p className="text-gray-600 text-sm">
+                  Founded by Izabela and Yuga Buassa, Visual English is a revolutionary teaching approach designed 
+                  specifically for young ESL learners, focusing on interactive visual learning.
+                </p>
+              </div>
             </div>
             
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-              Visual English
-            </h1>
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mb-6">
-              Igniting Young Minds for English Excellence!
-            </h2>
-            
-            {/* Our Story Section */}
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white rounded-lg p-6 mb-8">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-left border-b pb-2 border-gray-200">
+            {/* Info Sections */}
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Our Story Section */}
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3 pb-2 border-b border-gray-100">
                   Our Story
                 </h3>
-                <div className="text-left space-y-4">
-                  <p className="text-gray-700 leading-relaxed">
-                    We are Izabela and Yuga Buassa, the visionary educators behind Visual English — a revolutionary 
-                    teaching approach for young ESL learners.
+                <div className="text-sm text-gray-600 space-y-2">
+                  <p>
+                    After years of teaching, we identified a critical need for resources that improve verbal communication 
+                    and classroom interaction.
                   </p>
-                  
-                  <p className="text-gray-700 leading-relaxed">
-                    After many years of teaching, we saw a critical need for innovative resources that help improve 
-                    verbal communication, real conversations, and student interaction in the classroom.
+                  <p>
+                    Our teaching experience showed us that students learn best when they're engaged in meaningful, 
+                    visual-based conversation activities.
                   </p>
                 </div>
               </div>
               
               {/* Our Approach Section */}
-              <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-left border-b pb-2 border-gray-200">
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3 pb-2 border-b border-gray-100">
                   Our Approach
                 </h3>
-                <div className="text-left space-y-4">
-                  <p className="text-gray-700 leading-relaxed">
-                    Driven by Izabela's passion for interactive teaching, we created a fun, visual-based method 
-                    that uses GIFs, funny images, and relatable videos to spark conversation and engagement among 
-                    young learners.
+                <div className="text-sm text-gray-600 space-y-2">
+                  <p>
+                    We created a fun, visual method using GIFs, funny images, and relatable videos to spark natural 
+                    conversation among young learners.
                   </p>
-                  
-                  <p className="text-gray-700 leading-relaxed">
-                    We recognized the challenges English teachers face — scattered resources, time-consuming 
-                    lesson prep, and a lack of engaging content. This frustration inspired the Visual English 
-                    platform: a central hub where teachers can access ready-made, interactive teaching materials.
+                  <p>
+                    Visual English addresses the challenges teachers face by providing a central hub for ready-made, 
+                    interactive teaching materials.
                   </p>
                 </div>
               </div>
               
               {/* What We Offer Section */}
-              <div className="bg-white rounded-lg p-6">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-left border-b pb-2 border-gray-200">
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3 pb-2 border-b border-gray-100">
                   What We Offer
                 </h3>
-                <div className="text-left">
-                  <p className="text-gray-700 leading-relaxed font-medium mb-4">
-                    Today, Visual English empowers educators and language schools with:
+                <div className="text-sm text-gray-600">
+                  <p className="mb-2">
+                    Today, Visual English empowers educators with:
                   </p>
                   
-                  <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-                    <li>A 10-book series of printable units</li>
-                    <li>200–300 image-based prompts per unit</li>
+                  <ul className="list-disc pl-5 space-y-1 mb-3">
+                    <li>10-book series with printable units</li>
+                    <li>200–300 image prompts per unit</li>
                     <li>Flashcards, games, and videos</li>
-                    <li>Structured, conversation-based lessons</li>
+                    <li>Conversation-based lessons</li>
                   </ul>
                   
-                  <p className="text-gray-700 leading-relaxed font-medium">
-                    Our goal is simple: Make English learning fun, visual, and effective.
-                  </p>
-                  
-                  <p className="text-gray-700 leading-relaxed mt-4">
-                    Join our mission to transform how children learn English — with materials that speak their language.
+                  <p className="font-medium">
+                    Our goal: Make English learning fun, visual, and effective.
                   </p>
                 </div>
               </div>
@@ -98,21 +99,21 @@ export default function AboutPage() {
         </section>
         
         {/* Call to Action */}
-        <section className="bg-gray-50 py-10" id="about-cta">
+        <section className="bg-gray-50 py-6" id="about-cta">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Ready to transform your English teaching?</h2>
-            <p className="text-gray-700 mb-6 max-w-3xl mx-auto">
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Ready to transform your English teaching?</h2>
+            <p className="text-gray-600 text-sm mb-4 max-w-2xl mx-auto">
               Join the Visual English community and provide your students with engaging, interactive learning materials.
             </p>
             
             <Link href="/books">
-              <a className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search mr-2">
+              <button className="inline-flex items-center px-5 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search mr-2">
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.3-4.3"></path>
                 </svg>
                 Explore Our Books
-              </a>
+              </button>
             </Link>
           </div>
         </section>

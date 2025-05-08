@@ -134,7 +134,7 @@ const PricingPlans = () => {
                   ) : plan.planId === "single_lesson" ? (
                     <Link href="/checkout/unit">
                       <button 
-                        className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
+                        className="w-full py-2 px-3 rounded-md font-medium text-white shadow-md text-sm h-10 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
                         onClick={() => {}}
                       >
@@ -144,7 +144,7 @@ const PricingPlans = () => {
                   ) : plan.planId === "whole_book" ? (
                     <Link href="/checkout/book-wizard">
                       <button 
-                        className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
+                        className="w-full py-2 px-3 rounded-md font-medium text-white shadow-md text-sm h-10 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
                         onClick={() => {}}
                       >
@@ -154,7 +154,7 @@ const PricingPlans = () => {
                   ) : (
                     <Link href={`/checkout/${plan.planId}`}>
                       <button 
-                        className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
+                        className="w-full py-2 px-3 rounded-md font-medium text-white shadow-md text-sm h-10 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
                         onClick={() => {}}
                       >
