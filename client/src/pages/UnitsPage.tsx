@@ -77,7 +77,8 @@ export default function UnitsPage() {
           <Button
             className="w-full sm:w-auto py-6 text-lg bg-[#b23cfd] hover:bg-[#a020f0] shadow-md"
             onClick={() => {
-              window.location.href = `/checkout/whole_book?book=${bookId}`;
+              // Redirect directly to the full access unit page
+              window.location.href = `/books/${bookId}/units/1`;
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
