@@ -63,19 +63,19 @@ const PricingPlans = () => {
   ];
 
   return (
-    <div className="pt-0 pb-12 bg-white">
+    <div className="py-8 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Plan Headers */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
             <div key={`header-${index}`} className="w-full">
               <div 
-                className="rounded-lg text-white text-center py-4 h-[60px] flex items-center justify-center"
+                className="rounded-lg text-white text-center py-5 h-[70px] flex items-center justify-center"
                 style={{ backgroundColor: plan.color }}
               >
-                <h3 className="text-xl font-bold">
+                <h3 className="text-xl font-bold tracking-wide">
                   {index === 1 ? (
-                    <div>
+                    <div className="leading-relaxed">
                       Single Lesson<br />Access
                     </div>
                   ) : (
@@ -88,14 +88,14 @@ const PricingPlans = () => {
         </div>
 
         {/* Features lists */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto mt-6">
           {plans.map((plan, index) => (
             <div key={`features-${index}`} className="w-full">
-              <ul className="space-y-3">
+              <ul className="space-y-4">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600 text-sm">{feature}</span>
+                    <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600 text-sm leading-relaxed">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -104,16 +104,16 @@ const PricingPlans = () => {
         </div>
 
         {/* Pricing sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto mt-8">
           {plans.map((plan, index) => (
             <div key={`pricing-${index}`} className="w-full">
-              <div className="flex flex-col items-center mb-4">
-                <div className="text-2xl font-bold">{plan.price}</div>
+              <div className="flex flex-col items-center mb-5">
+                <div className="text-2xl font-bold mb-1">{plan.price}</div>
                 {plan.priceDetail && (
-                  <div className="text-sm text-gray-500">{plan.priceDetail}</div>
+                  <div className="text-sm text-gray-500 mt-1">{plan.priceDetail}</div>
                 )}
                 {plan.priceSavings && (
-                  <div className="text-sm text-gray-500">{plan.priceSavings}</div>
+                  <div className="text-sm text-gray-500 mt-2">{plan.priceSavings}</div>
                 )}
               </div>
               
