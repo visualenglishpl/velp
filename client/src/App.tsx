@@ -42,6 +42,9 @@ function App() {
             <Route path="/books/:bookId">
               <UnitsPage />
             </Route>
+            <Route path="/book/:bookId/:unitId">
+              <SlickContentViewer />
+            </Route>
             <ProtectedRoute path="/admin" adminOnly={true}>
               <AdminPage />
             </ProtectedRoute>
