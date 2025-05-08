@@ -77,7 +77,7 @@ export default function UnitsPage() {
           <Button
             className="w-full sm:w-auto py-6 text-lg bg-[#b23cfd] hover:bg-[#a020f0] shadow-md"
             onClick={() => {
-              window.location.href = `/checkout/whole_book?book=${bookId}`;
+              window.location.href = `/checkout/book?book=${bookId}`;
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -91,7 +91,7 @@ export default function UnitsPage() {
               <Button
                 className="w-full sm:w-auto py-6 text-lg bg-[#2e88f6] hover:bg-blue-600 shadow-md"
                 onClick={() => {
-                  window.location.href = `/checkout/single_lesson?book=${bookId}`;
+                  window.location.href = `/checkout/unit?book=${bookId}`;
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
