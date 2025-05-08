@@ -5,7 +5,7 @@ const PricingPlans = () => {
   const plans = [
     {
       title: "Printed Book Only",
-      color: "#00c971",
+      color: "#ff6347", // coral color like in the example
       features: [
         "Full-color physical book",
         "Delivered to your doorstep",
@@ -17,8 +17,8 @@ const PricingPlans = () => {
       buttonLink: "/checkout/book",
     },
     {
-      title: "Single Lesson\nAccess",
-      color: "#2e88f6",
+      title: "Single Lesson Access",
+      color: "#9370db", // medium purple like in the example
       features: [
         "Access to one complete lesson",
         "Downloadable PDF of the unit",
@@ -33,7 +33,7 @@ const PricingPlans = () => {
     },
     {
       title: "Whole Book Access",
-      color: "#b23cfd",
+      color: "#00bcd4", // nice teal/cyan color like in the example
       features: [
         "Full access to one entire book",
         "Download PDFs for all units",
@@ -48,7 +48,7 @@ const PricingPlans = () => {
     },
     {
       title: "Free Trial",
-      color: "#1e9f5e",
+      color: "#ffa726", // orange like in the example
       features: [
         "Full free access for one week",
         "Browse all lessons and content",
@@ -65,52 +65,50 @@ const PricingPlans = () => {
   return (
     <div className="py-8 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-4 lg:gap-5 max-w-[1200px] mx-auto">
           {plans.map((plan, index) => (
-            <div key={index} className="flex flex-col">
-              {/* Header */}
+            <div key={index} className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+              {/* Header - colored top bar */}
               <div 
-                className="rounded-lg text-white text-center py-6"
+                className="text-white text-center py-4"
                 style={{ backgroundColor: plan.color }}
               >
-                <h3 className="text-xl font-bold tracking-wide leading-6 whitespace-pre-line">
+                <h3 className="text-xl font-semibold">
                   {plan.title}
                 </h3>
               </div>
               
+              {/* Monthly Plan Subtitle */}
+              <div className="bg-gray-50 py-3 text-center border-b border-gray-200">
+                <span className="text-gray-600 font-medium text-sm">Monthly plan</span>
+              </div>
+              
               {/* Features */}
-              <div className="mt-6">
-                <ul className="space-y-5">
+              <div className="p-6">
+                <ul className="space-y-3">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
-                      <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-600 text-sm leading-relaxed">{feature}</span>
+                      <span className="text-gray-700 mr-2">•</span>
+                      <span className="text-gray-600 text-sm leading-5">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               
-              {/* Pricing */}
-              <div className="mt-10 flex flex-col items-center">
-                <div className="text-2xl font-bold">{plan.price}</div>
-                {plan.priceDetail && (
-                  <div className="text-sm text-gray-500 mt-1">{plan.priceDetail}</div>
+              {/* Pricing - colored bottom bar */}
+              <div 
+                className="mt-auto text-white text-center py-5"
+                style={{ backgroundColor: plan.color }}
+              >
+                <div className="text-xl font-bold flex items-center justify-center">
+                  {plan.price}
+                  {plan.priceDetail && plan.priceDetail.includes("month") && (
+                    <span className="text-sm font-normal">/mo</span>
+                  )}
+                </div>
+                {plan.priceDetail === "+ delivery" && (
+                  <div className="text-sm text-white opacity-90 mt-1">{plan.priceDetail}</div>
                 )}
-                {plan.priceSavings && (
-                  <div className="text-sm text-gray-500 mt-2">{plan.priceSavings}</div>
-                )}
-              </div>
-              
-              {/* Button */}
-              <div className="mt-6">
-                <Link href={plan.buttonLink} className="block">
-                  <button 
-                    className="w-full py-3 px-4 rounded-md font-medium text-white text-center"
-                    style={{ backgroundColor: plan.color }}
-                  >
-                    {plan.buttonText}
-                  </button>
-                </Link>
               </div>
             </div>
           ))}
