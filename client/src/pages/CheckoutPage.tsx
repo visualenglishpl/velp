@@ -58,6 +58,23 @@ export default function CheckoutPage() {
   const [selectedBookPurchaseType, setSelectedBookPurchaseType] = useState('physical');
   const [subscriptionPeriod, setSubscriptionPeriod] = useState('monthly');
   
+  // Redirect to auth page if not authenticated
+  useEffect(() => {
+    if (!isLoading && !user) {
+      // Store the current URL to redirect back after login
+      const currentPath = window.location.pathname + window.location.search;
+      localStorage.setItem('authRedirectPath', currentPath);
+      
+      // Redirect to auth page
+      setLocation('/auth');
+      
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in or register to access checkout.",
+      });
+    }
+  }, [user, isLoading, setLocation, toast]);
+  
   // Function to add multiple units to cart
   const addMultipleUnitsToCart = (bookId: string, unitNumbers: string[]) => {
     if (!unitNumbers.length) {
