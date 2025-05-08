@@ -19,6 +19,7 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import UnitCheckoutPage from "./pages/UnitCheckoutPage";
 import BookCheckoutPage from "./pages/BookCheckoutPage";
+import NewBookCheckoutPage from "./pages/NewBookCheckoutPage";
 
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -82,6 +83,9 @@ function App() {
             </Route>
             <Route path="/checkout/book">
               <BookCheckoutPage />
+            </Route>
+            <Route path="/checkout/book-wizard">
+              <NewBookCheckoutPage />
             </Route>
             <Route path="/checkout/:planId">
               <CheckoutPage />

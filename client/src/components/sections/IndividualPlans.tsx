@@ -148,7 +148,7 @@ const PricingPlans = () => {
                       </button>
                     </Link>
                   ) : plan.planId === "whole_book" ? (
-                    <Link href="/checkout/book">
+                    <Link href="/checkout/book-wizard">
                       <button 
                         className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}

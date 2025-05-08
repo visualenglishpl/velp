@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -133,7 +133,14 @@ export default function BookCheckoutPage() {
           <ChevronLeft className="w-4 h-4 mr-1" />
           Back
         </Button>
-        <h1 className="text-3xl font-bold">Book Checkout</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold">Book Checkout</h1>
+          <Link href="/checkout/book-wizard">
+            <Button variant="secondary">
+              Try New Checkout Wizard
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="mb-8">
