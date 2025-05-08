@@ -17,6 +17,8 @@ import WithdrawalPage from "./pages/WithdrawalPage";
 import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import UnitCheckoutPage from "./pages/UnitCheckoutPage";
+import BookCheckoutPage from "./pages/BookCheckoutPage";
 
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -75,10 +77,16 @@ function App() {
             <Route path="/cart">
               <CartPage />
             </Route>
-            <Route path="/checkout">
-              <CheckoutPage />
+            <Route path="/checkout/unit">
+              <UnitCheckoutPage />
+            </Route>
+            <Route path="/checkout/book">
+              <BookCheckoutPage />
             </Route>
             <Route path="/checkout/:planId">
+              <CheckoutPage />
+            </Route>
+            <Route path="/checkout">
               <CheckoutPage />
             </Route>
           </Switch>
