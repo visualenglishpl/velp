@@ -61,13 +61,11 @@ export default function BooksPage() {
   // Allow all users to view the bookstore without requiring authentication
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">Visual English Library</h1>
-        <p className="mb-8 text-lg text-gray-600">Browse our collection of educational materials.</p>
+    <div className="pt-16 pb-0 bg-white min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div id="book-thumbnails" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-[1200px] mx-auto mt-10">
             {[...Array(10)].map((_, i) => (
               <Card key={i} className="overflow-hidden border-0 shadow-none">
                 <div className="aspect-square w-full">
@@ -83,9 +81,9 @@ export default function BooksPage() {
             ))}
           </div>
         ) : books && books.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div id="book-thumbnails" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-[1200px] mx-auto mt-10">
             {books.map((book) => (
-              <Card key={book.bookId} className="overflow-hidden flex flex-col border-0 shadow-none">
+              <Card key={book.bookId} className="overflow-hidden flex flex-col border-0 shadow-none hover:shadow-md transition-shadow duration-300">
                 <div className="aspect-square relative overflow-hidden">
                   {book.gifUrl ? (
                     <img 

@@ -66,38 +66,28 @@ const Navbar = () => {
             <Link href="/about">
               <span className="text-gray-600 hover:text-teal-600 text-sm font-medium">{t('nav.about')}</span>
             </Link>
-            <a href="/#books" onClick={(e) => {
-                if (window.location.pathname === '/') {
-                  e.preventDefault();
-                  // Target the book section in HeroSection component
-                  const booksSection = document.getElementById('books');
-                  if (booksSection) {
-                    // Calculate screen center
-                    const windowHeight = window.innerHeight;
-                    const sectionHeight = booksSection.offsetHeight;
-                    const navbarHeight = 64; // Height of the navbar in pixels
-                    
-                    // Get position of the section
-                    const sectionTop = booksSection.getBoundingClientRect().top + window.pageYOffset;
-                    
-                    // Center the section in the viewport if possible
-                    // If section is taller than viewport, align to top with navbar offset
-                    let targetPosition;
-                    if (sectionHeight > windowHeight) {
-                      targetPosition = sectionTop - navbarHeight;
-                    } else {
-                      targetPosition = sectionTop - (windowHeight - sectionHeight) / 2 - navbarHeight;
+            <Link href="/books">
+              <span 
+                className="text-gray-600 hover:text-teal-600 text-sm font-medium cursor-pointer"
+                onClick={() => {
+                  // Use setTimeout to let the page load first
+                  setTimeout(() => {
+                    const thumbnailsSection = document.getElementById('book-thumbnails');
+                    if (thumbnailsSection) {
+                      const navbarHeight = 64; // Height of the navbar in pixels
+                      const sectionTop = thumbnailsSection.getBoundingClientRect().top + window.pageYOffset;
+                      
+                      window.scrollTo({
+                        top: sectionTop - navbarHeight - 20, // Add some extra padding
+                        behavior: 'smooth'
+                      });
                     }
-                    
-                    window.scrollTo({
-                      top: targetPosition,
-                      behavior: 'smooth'
-                    });
-                  }
-                }
-              }}>
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-medium cursor-pointer">{t('nav.books')}</span>
-            </a>
+                  }, 100);
+                }}
+              >
+                {t('nav.books')}
+              </span>
+            </Link>
             <a href="/#pricing" onClick={(e) => {
                 if (window.location.pathname === '/') {
                   e.preventDefault();
@@ -161,6 +151,27 @@ const Navbar = () => {
                   </Badge>
                 )}
               </div>
+            </Link>
+            <Link href="/books">
+              <span 
+                className="text-gray-600 hover:text-teal-600 text-sm font-medium cursor-pointer"
+                onClick={() => {
+                  // Same behavior as desktop
+                  setTimeout(() => {
+                    const thumbnailsSection = document.getElementById('book-thumbnails');
+                    if (thumbnailsSection) {
+                      const navbarHeight = 64;
+                      const sectionTop = thumbnailsSection.getBoundingClientRect().top + window.pageYOffset;
+                      window.scrollTo({
+                        top: sectionTop - navbarHeight - 20,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }, 100);
+                }}
+              >
+                {t('nav.books')}
+              </span>
             </Link>
             <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
