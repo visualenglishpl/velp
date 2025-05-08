@@ -89,7 +89,7 @@ export default function SlickContentViewer() {
           if (response.status === 401) {
             // Not authenticated, redirect to the login page after a short delay
             setTimeout(() => {
-              navigate('/auth');
+              window.location.href = '/auth';
             }, 1000);
             setIsLoggedIn(false);
           }
@@ -268,7 +268,8 @@ export default function SlickContentViewer() {
   
   // Handle login redirect
   const handleLoginClick = () => {
-    navigate('/auth');
+    // Navigate directly to the login page
+    window.location.href = '/auth';
   };
   
   // Loading state
