@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useRoute } from 'wouter';
-import { Loader2, Book, Home, LogIn } from 'lucide-react';
+import { Loader2, Book, Home, LogIn, UserRound, GraduationCap, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
@@ -11,6 +11,7 @@ export default function SlickContentViewer() {
   // Basic states
   const [isLoading, setIsLoading] = useState(false);
   const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [selectedRole, setSelectedRole] = useState<string>("admin");
   const [loginError, setLoginError] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   
@@ -40,7 +41,8 @@ export default function SlickContentViewer() {
         },
         body: JSON.stringify({
           username: loginData.username,
-          password: loginData.password
+          password: loginData.password,
+          role: selectedRole
         })
       });
       
@@ -101,6 +103,50 @@ export default function SlickContentViewer() {
               required
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Role
+            </label>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => setSelectedRole("admin")}
+                className={`flex flex-col items-center justify-center p-3 rounded-md ${
+                  selectedRole === "admin" 
+                    ? "bg-blue-600 text-white" 
+                    : "bg-blue-100 text-blue-800"
+                }`}
+              >
+                <UserRound className="h-5 w-5 mb-1" />
+                <span className="text-xs">Admin</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRole("teacher")}
+                className={`flex flex-col items-center justify-center p-3 rounded-md ${
+                  selectedRole === "teacher" 
+                    ? "bg-green-600 text-white" 
+                    : "bg-green-100 text-green-800"
+                }`}
+              >
+                <GraduationCap className="h-5 w-5 mb-1" />
+                <span className="text-xs">Teacher</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRole("school")}
+                className={`flex flex-col items-center justify-center p-3 rounded-md ${
+                  selectedRole === "school" 
+                    ? "bg-amber-600 text-white" 
+                    : "bg-amber-100 text-amber-800"
+                }`}
+              >
+                <Building className="h-5 w-5 mb-1" />
+                <span className="text-xs">School</span>
+              </button>
+            </div>
           </div>
           
           <Button 
