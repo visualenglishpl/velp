@@ -5,17 +5,17 @@ import EUProjectSection from "../components/sections/EUProjectSection";
 
 const Home = () => {
   return (
-    <>
+    <div className="space-y-0">
       <HeroSection />
       
       {/* Pricing Section */}
-      <section id="pricing" className="pt-20 pb-16">
+      <section id="pricing" className="pt-12 pb-8">
         <PricingPlans />
       </section>
       
       <FAQSection />
       <EUProjectSection />
-    </>
+    </div>
   );
 };
 

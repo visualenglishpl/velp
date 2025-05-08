@@ -8,32 +8,32 @@ const HeroSection = () => {
   return (
     <div className="bg-white">
       {/* New hero section with logo, text and children image */}
-      <section className="relative bg-white py-8">
+      <section className="relative bg-white py-6">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             {/* Left side: Logo and text */}
-            <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
+            <div className="w-full lg:w-1/2 mb-6 lg:mb-0">
               <img 
                 src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
                 alt="Visual English Logo" 
-                className="h-36 mb-6"
+                className="h-32 mb-4"
               />
-              <h1 className="text-3xl md:text-4xl font-medium text-gray-800 leading-tight mb-4">
+              <h1 className="text-3xl md:text-4xl font-medium text-gray-800 leading-tight mb-3">
                 {t('home.hero.title')}
               </h1>
-              <p className="text-lg text-gray-600 mb-8">
+              <p className="text-lg text-gray-600 mb-5">
                 {t('home.hero.subtitle')}
               </p>
               
               {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Link href="/checkout/free_trial">
-                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-2.5 text-base font-normal rounded-md w-full sm:w-auto">
+                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-2 text-base font-normal rounded-md w-full sm:w-auto">
                     {t('home.hero.cta')}
                   </Button>
                 </Link>
                 <Link href="/method">
-                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-500 hover:bg-white hover:text-green-600 px-8 py-2.5 text-base font-normal rounded-md w-full sm:w-auto">
+                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-500 hover:bg-white hover:text-green-600 px-8 py-2 text-base font-normal rounded-md w-full sm:w-auto">
                     Learn More
                   </Button>
                 </Link>
@@ -56,14 +56,14 @@ const HeroSection = () => {
       <div className="w-full h-0.5 bg-gray-100"></div>
       
       {/* Book series section */}
-      <section id="books" className="py-16 bg-mint-50">
+      <section id="books" className="py-12 bg-mint-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-medium text-center text-gray-800 mb-10">Visual English Series</h2>
+          <h2 className="text-3xl font-medium text-center text-gray-800 mb-6">Visual English Series</h2>
           
           {/* Grid of colorful books */}
-          <div id="book-grid" className="mb-12">
+          <div id="book-thumbnails" className="mb-8">
             {/* First row - Special books (0a, 0b, 0c) and books 1-2 */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
               <BookThumbnail 
                 bookId="0a" 
                 title="To The Moon" 
@@ -111,7 +111,7 @@ const HeroSection = () => {
             </div>
             
             {/* Second row - Books 3-7 */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <BookThumbnail 
                 bookId="3" 
                 title="Bugs" 
@@ -159,9 +159,9 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <div className="text-center mt-12">
+          <div className="text-center mt-8">
             <Link href="/method">
-              <Button className="bg-green-500 hover:bg-green-600 text-white px-10 py-4 text-lg font-normal rounded-md shadow-sm flex items-center justify-center gap-2 mx-auto">
+              <Button className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 text-lg font-normal rounded-md shadow-sm flex items-center justify-center gap-2 mx-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.3-4.3"></path>
