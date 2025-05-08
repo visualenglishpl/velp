@@ -37,7 +37,7 @@ window.addEventListener('unhandledrejection', function(event) {
 // Add error boundary for improved stability
 try {
   console.log('Rendering application...');
-  // Render app with providers - with simplified structure for debugging
+  // Render app with providers - with proper context nesting
   root.render(
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>

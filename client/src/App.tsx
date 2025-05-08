@@ -23,7 +23,6 @@ import BookWizardPage from "./pages/BookWizardPage";
 import SlickContentViewer from "./pages/SlickContentViewer";
 
 import CookieConsent from "./components/CookieConsent";
-import { LanguageProvider } from "./contexts/LanguageContext";
 import AuthPageWrapper from "./pages/AuthPageWrapper";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -31,88 +30,85 @@ function App() {
   console.log('Rendering full home page with layout');
 
   return (
-    <LanguageProvider>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Switch>
-            <Route path="/">
-              <Home />
-            </Route>
-            <Route path="/books">
-              <BooksPage />
-            </Route>
-            <Route path="/books/:bookId">
-              <UnitsPage />
-            </Route>
-            <ProtectedRoute path="/admin" adminOnly={true}>
-              <AdminPage />
-            </ProtectedRoute>
-            <Route path="/auth">
-              <AuthPageWrapper />
-            </Route>
-            <Route path="/method">
-              <MethodPage />
-            </Route>
-            <Route path="/about">
-              <AboutPage />
-            </Route>
-            <Route path="/contact">
-              <ContactPage />
-            </Route>
-            <Route path="/privacy">
-              <PrivacyPage />
-            </Route>
-            <Route path="/terms">
-              <TermsPage />
-            </Route>
-            <Route path="/cookies">
-              <CookiesPage />
-            </Route>
-            <Route path="/withdrawal">
-              <WithdrawalPage />
-            </Route>
-            <Route path="/dpa">
-              <DpaPage />
-            </Route>
-
-            <Route path="/cart">
-              <CartPage />
-            </Route>
-            <Route path="/checkout/unit">
-              <UnitCheckoutPage />
-            </Route>
-            <Route path="/checkout/book">
-              {() => {
-                window.location.href = "/checkout/book-wizard";
-                return null;
-              }}
-            </Route>
-            <Route path="/checkout/book-wizard">
-              <BookWizardPage />
-            </Route>
-            <Route path="/checkout/:planId">
-              <CheckoutPage />
-            </Route>
-            <Route path="/checkout">
-              <CheckoutPage />
-            </Route>
-            <Route path="/viewer">
-              <SlickContentViewer />
-            </Route>
-            <Route path="/book/:bookId/unit/:unitNumber">
-              <SlickContentViewer />
-            </Route>
-            <Route path="/book/:bookId">
-              <SlickContentViewer />
-            </Route>
-          </Switch>
-        </main>
-        <Footer />
-        <CookieConsent />
-        <Toaster />
-      </div>
-    </LanguageProvider>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow">
+        <Switch>
+          <Route path="/">
+            <Home />
+          </Route>
+          <Route path="/books">
+            <BooksPage />
+          </Route>
+          <Route path="/books/:bookId">
+            <UnitsPage />
+          </Route>
+          <ProtectedRoute path="/admin" adminOnly={true}>
+            <AdminPage />
+          </ProtectedRoute>
+          <Route path="/auth">
+            <AuthPageWrapper />
+          </Route>
+          <Route path="/method">
+            <MethodPage />
+          </Route>
+          <Route path="/about">
+            <AboutPage />
+          </Route>
+          <Route path="/contact">
+            <ContactPage />
+          </Route>
+          <Route path="/privacy">
+            <PrivacyPage />
+          </Route>
+          <Route path="/terms">
+            <TermsPage />
+          </Route>
+          <Route path="/cookies">
+            <CookiesPage />
+          </Route>
+          <Route path="/withdrawal">
+            <WithdrawalPage />
+          </Route>
+          <Route path="/dpa">
+            <DpaPage />
+          </Route>
+          <Route path="/cart">
+            <CartPage />
+          </Route>
+          <Route path="/checkout/unit">
+            <UnitCheckoutPage />
+          </Route>
+          <Route path="/checkout/book">
+            {() => {
+              window.location.href = "/checkout/book-wizard";
+              return null;
+            }}
+          </Route>
+          <Route path="/checkout/book-wizard">
+            <BookWizardPage />
+          </Route>
+          <Route path="/checkout/:planId">
+            <CheckoutPage />
+          </Route>
+          <Route path="/checkout">
+            <CheckoutPage />
+          </Route>
+          <Route path="/viewer">
+            <SlickContentViewer />
+          </Route>
+          <Route path="/book/:bookId/unit/:unitNumber">
+            <SlickContentViewer />
+          </Route>
+          <Route path="/book/:bookId">
+            <SlickContentViewer />
+          </Route>
+        </Switch>
+      </main>
+      <Footer />
+      <CookieConsent />
+      <Toaster />
+    </div>
   );
 }
 
