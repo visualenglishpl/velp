@@ -77,14 +77,14 @@ export default function UnitsPage() {
           <Button
             className="w-full sm:w-auto py-6 text-lg bg-[#b23cfd] hover:bg-[#a020f0] shadow-md"
             onClick={() => {
-              // Redirect to the checkout page for full book access
-              window.location.href = `/checkout/whole_book?book=${bookId}`;
+              // Redirect to the first unit of the book
+              window.location.href = `/book/${bookId}/1`;
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
               <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
             </svg>
-            Subscribe to Full Book
+            View Full Book
           </Button>
           
           {!isAuthenticated && (
@@ -92,7 +92,8 @@ export default function UnitsPage() {
               <Button
                 className="w-full sm:w-auto py-6 text-lg bg-[#2e88f6] hover:bg-blue-600 shadow-md"
                 onClick={() => {
-                  window.location.href = `/checkout/single_lesson?book=${bookId}`;
+                  // Redirect to auth page
+                  window.location.href = `/auth`;
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -100,20 +101,21 @@ export default function UnitsPage() {
                   <path d="M3 6h18"/>
                   <path d="M16 10a4 4 0 0 1-8 0"/>
                 </svg>
-                Select Multiple Units
+                Sign Up
               </Button>
               
               <Button
                 className="w-full sm:w-auto py-6 text-lg bg-green-600 hover:bg-green-700 shadow-md"
                 onClick={() => {
-                  window.location.href = `/checkout/free_trial?book=${bookId}`;
+                  // Redirect to first unit instead
+                  window.location.href = `/book/${bookId}/1`;
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
                   <path d="M2 12h20" />
                   <path d="M12 2v20" />
                 </svg>
-                Start Free 7-Day Trial
+                Try Book Preview
               </Button>
             </>
           )}
@@ -201,7 +203,7 @@ export default function UnitsPage() {
                         variant="outline"
                         className="w-full border-blue-500 text-blue-600 hover:bg-blue-50"
                         onClick={() => {
-                          window.location.href = `/checkout/single_lesson?book=${bookId}&unit=${unit.unitNumber}`;
+                          window.location.href = `/auth`;
                         }}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
@@ -209,7 +211,7 @@ export default function UnitsPage() {
                           <path d="M3 6h18"/>
                           <path d="M16 10a4 4 0 0 1-8 0"/>
                         </svg>
-                        Buy Unit (€5)
+                        Sign In To Access
                       </Button>
                     </>
                   )}

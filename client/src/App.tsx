@@ -17,7 +17,6 @@ import CookiesPage from "./pages/CookiesPage";
 import WithdrawalPage from "./pages/WithdrawalPage";
 import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
-import CheckoutPage from "./pages/CheckoutPage";
 
 import CookieConsent from "./components/CookieConsent";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -77,13 +76,7 @@ function App() {
             </Route>
 
             <Route path="/cart">
-              <CartPage />
-            </Route>
-            <Route path="/checkout">
-              <CheckoutPage />
-            </Route>
-            <Route path="/checkout/:planId">
-              <CheckoutPage />
+              <AuthPageWrapper />
             </Route>
           </Switch>
         </main>

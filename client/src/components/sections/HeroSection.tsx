@@ -27,7 +27,7 @@ const HeroSection = () => {
               
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/checkout/free_trial">
+                <Link href="/books">
                   <Button className="bg-blue-600 hover:bg-blue-600 text-white px-8 py-2.5 text-base font-normal rounded-md w-full sm:w-auto">
                     {t('home.hero.cta')}
                   </Button>

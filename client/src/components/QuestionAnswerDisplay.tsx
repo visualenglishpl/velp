@@ -2167,7 +2167,7 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                     <p className="text-sm mb-4">Subscribe to access all learning materials</p>
                     <button 
                       className="px-4 py-1 bg-primary text-white rounded-md text-sm hover:bg-primary/90"
-                      onClick={() => window.location.href = '/checkout/single_lesson'}
+                      onClick={() => window.location.href = '/auth'}
                     >
                       Upgrade Now
                     </button>

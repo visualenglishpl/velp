@@ -127,7 +127,7 @@ const PricingPlans = () => {
                 </div>
                 
                 <div className="mt-2">
-                  <Link href={index === plans.length - 1 ? `/checkout/${plan.planId}` : '/books'}>
+                  <Link href={'/auth'}>
                     <button 
                       className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
                       style={{ backgroundColor: plan.bgColor }}
