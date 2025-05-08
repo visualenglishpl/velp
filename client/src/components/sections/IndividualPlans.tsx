@@ -8,9 +8,9 @@ const PricingPlans = () => {
       color: "#ff6347", // coral color like in the example
       features: [
         "Print Edition Only",
-        "Show book cover image",
-        "Include delivery time",
-        "No internet required"
+        "Ideal for classroom and home use",
+        "No digital access included",
+        "Delivered to your doorstep"
       ],
       price: "€20",
       priceDetail: "+ delivery",
