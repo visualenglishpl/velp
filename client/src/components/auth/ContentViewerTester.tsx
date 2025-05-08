@@ -23,50 +23,75 @@ export default function ContentViewerTester() {
   
   // Check for existing authentication on component mount
   useEffect(() => {
-    const userRole = localStorage.getItem("userRole");
-    
-    if (userRole) {
-      setAuthState({
-        isAuthenticated: true,
-        userRole
-      });
+    try {
+      const userRole = window.localStorage.getItem("userRole");
+      console.log("Initial auth check - userRole from localStorage:", userRole);
+      
+      if (userRole) {
+        setAuthState({
+          isAuthenticated: true,
+          userRole
+        });
+      }
+    } catch (error) {
+      console.error("Error checking authentication state:", error);
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   }, []);
   
   // Handle login
   const handleLogin = () => {
-    // Simulate successful login with localStorage
-    localStorage.setItem("userRole", selectedRole);
-    
-    // Update auth state
-    setAuthState({
-      isAuthenticated: true,
-      userRole: selectedRole
-    });
-    
-    toast({
-      title: "Login Successful",
-      description: `You are now logged in as ${selectedRole}`,
-    });
+    try {
+      // Simulate successful login with localStorage
+      window.localStorage.setItem("userRole", selectedRole);
+      console.log("Login: stored userRole in localStorage:", selectedRole);
+      
+      // Update auth state
+      setAuthState({
+        isAuthenticated: true,
+        userRole: selectedRole
+      });
+      
+      toast({
+        title: "Login Successful",
+        description: `You are now logged in as ${selectedRole}`,
+      });
+    } catch (error) {
+      console.error("Error during login:", error);
+      toast({
+        title: "Login Failed",
+        description: "There was a problem with the login process",
+        variant: "destructive",
+      });
+    }
   };
   
   // Handle logout
   const handleLogout = () => {
-    // Clear localStorage
-    localStorage.removeItem("userRole");
-    
-    // Update auth state
-    setAuthState({
-      isAuthenticated: false,
-      userRole: null
-    });
-    
-    toast({
-      title: "Logged Out",
-      description: "You have been logged out successfully",
-    });
+    try {
+      // Clear localStorage
+      window.localStorage.removeItem("userRole");
+      console.log("Logout: removed userRole from localStorage");
+      
+      // Update auth state
+      setAuthState({
+        isAuthenticated: false,
+        userRole: null
+      });
+      
+      toast({
+        title: "Logged Out",
+        description: "You have been logged out successfully",
+      });
+    } catch (error) {
+      console.error("Error during logout:", error);
+      toast({
+        title: "Logout Failed",
+        description: "There was a problem with the logout process",
+        variant: "destructive",
+      });
+    }
   };
 
   // Loading state
