@@ -30,8 +30,6 @@ export function CheckoutWizard({ steps, onComplete }: CheckoutWizardProps) {
       }
       // Go to next step
       setCurrentStepIndex(currentStepIndex + 1);
-      // Scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       onComplete();
     }
@@ -40,7 +38,6 @@ export function CheckoutWizard({ steps, onComplete }: CheckoutWizardProps) {
   const goToPreviousStep = () => {
     if (!isFirstStep) {
       setCurrentStepIndex(currentStepIndex - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -48,7 +45,6 @@ export function CheckoutWizard({ steps, onComplete }: CheckoutWizardProps) {
     // Only allow going to completed steps or the current step + 1
     if (completedSteps.includes(index) || index === currentStepIndex || index === currentStepIndex + 1) {
       setCurrentStepIndex(index);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 

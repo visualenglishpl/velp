@@ -132,17 +132,17 @@ const PricingPlans = () => {
                       <button 
                         className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        onClick={() => {}}
                       >
                         <span className="text-center">{plan.buttonText}</span>
                       </button>
                     </Link>
                   ) : plan.planId === "single_lesson" ? (
-                    <Link href="/checkout/unit/1">
+                    <Link href="/checkout/unit">
                       <button 
                         className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        onClick={() => {}}
                       >
                         <span className="text-center">{plan.buttonText}</span>
                       </button>
@@ -152,7 +152,7 @@ const PricingPlans = () => {
                       <button 
                         className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        onClick={() => {}}
                       >
                         <span className="text-center">{plan.buttonText}</span>
                       </button>
@@ -162,7 +162,7 @@ const PricingPlans = () => {
                       <button 
                         className="w-full py-3 px-4 rounded-md font-medium text-white shadow-md text-base h-16 flex items-center justify-center"
                         style={{ backgroundColor: plan.bgColor }}
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        onClick={() => {}}
                       >
                         <span className="text-center">{plan.buttonText}</span>
                       </button>
