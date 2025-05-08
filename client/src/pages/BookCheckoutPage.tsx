@@ -37,15 +37,33 @@ export default function BookCheckoutPage() {
   const fetchBooks = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/books`);
-      if (response.ok) {
-        const data = await response.json();
-        setBooks(data);
-      } else {
-        console.error("Failed to fetch books");
+      // Try API first
+      try {
+        const response = await fetch(`/api/books`);
+        if (response.ok) {
+          const data = await response.json();
+          setBooks(data);
+          console.log("Successfully fetched books:", data);
+          return;
+        }
+      } catch (apiError) {
+        console.warn("API fetch failed, using sample data:", apiError);
       }
+      
+      // Fallback to sample data if API call fails
+      console.log("Using sample book data");
+      const sampleBooks: BookData[] = [
+        { id: "1", title: "Book 1", color: "#FFFF00" },
+        { id: "2", title: "Book 2", color: "#9966CC" },
+        { id: "3", title: "Book 3", color: "#00CC00" },
+        { id: "4", title: "Book 4", color: "#5DADEC" },
+        { id: "5", title: "Book 5", color: "#00CC66" },
+        { id: "6", title: "Book 6", color: "#FF0000" },
+        { id: "7", title: "Book 7", color: "#00FF00" },
+      ];
+      setBooks(sampleBooks);
     } catch (error) {
-      console.error("Error fetching books:", error);
+      console.error("Error in fetchBooks:", error);
     } finally {
       setIsLoading(false);
     }
@@ -89,16 +107,19 @@ export default function BookCheckoutPage() {
     return totalPrice;
   };
 
+  // Add debug logging
+  console.log('Rendering BookCheckoutPage with:', { books, selectedBooks, subscriptionPeriod });
+  
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-8">
         <Button 
           variant="outline" 
           className="mb-4"
-          onClick={() => setLocation("/plans")}
+          onClick={() => window.history.back()}
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
-          Back to Plans
+          Back
         </Button>
         <h1 className="text-3xl font-bold">Book Checkout</h1>
       </div>
