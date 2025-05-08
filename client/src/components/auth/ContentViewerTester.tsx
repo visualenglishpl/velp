@@ -124,7 +124,7 @@ export default function ContentViewerTester() {
           </div>
           <div className="flex flex-col space-y-4">
             <Button 
-              onClick={() => window.location.href = "/viewer"}
+              onClick={() => window.location.href = "/simple-viewer"}
               className="w-full"
             >
               <Book className="mr-2 h-4 w-4" />
@@ -203,7 +203,7 @@ export default function ContentViewerTester() {
                 Login
               </Button>
               <Button 
-                onClick={() => window.location.href = "/viewer"}
+                onClick={() => window.location.href = "/simple-viewer"}
                 variant="outline"
                 className="flex-1"
               >

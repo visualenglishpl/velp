@@ -107,6 +107,9 @@ function App() {
           <Route path="/test-viewer">
             <SimpleViewerTest />
           </Route>
+          <Route path="/simple-viewer">
+            <SimpleViewerTest />
+          </Route>
         </Switch>
       </main>
       <Footer />
