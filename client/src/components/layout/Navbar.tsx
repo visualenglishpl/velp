@@ -45,21 +45,41 @@ const Navbar = () => {
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          {/* Logo */}
+          {/* Logo and Brand */}
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center cursor-pointer">
                 <img 
                   src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
                   alt="Visual English Logo" 
-                  className="h-8"
+                  className="h-8 mr-3"
                 />
+                <span className="text-gray-700 font-medium text-lg tracking-wide">VISUAL ENGLISH</span>
               </div>
             </Link>
           </div>
           
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center space-x-6">
+            <Link href="/">
+              <span className="text-gray-600 hover:text-teal-600 text-sm">Home</span>
+            </Link>
+            <Link href="/method">
+              <span className="text-gray-600 hover:text-teal-600 text-sm">Method</span>
+            </Link>
+            <Link href="/about">
+              <span className="text-gray-600 hover:text-teal-600 text-sm">About Us</span>
+            </Link>
+            <Link href="/books">
+              <span className="text-gray-600 hover:text-teal-600 text-sm">Books</span>
+            </Link>
+            <Link href="/#pricing">
+              <span className="text-gray-600 hover:text-teal-600 text-sm">Pricing</span>
+            </Link>
+            <Link href="/contact">
+              <span className="text-gray-600 hover:text-teal-600 text-sm">Contact</span>
+            </Link>
+            
             <Link href="/cart">
               <div className="flex items-center text-gray-700 hover:text-teal-600 cursor-pointer relative">
                 <ShoppingCart size={20} />
@@ -108,6 +128,13 @@ const Navbar = () => {
             <Link href="/login">
               <span className="bg-teal-600 text-white hover:bg-teal-700 px-3 py-1 rounded text-xs font-medium">Sign In</span>
             </Link>
+            
+            {/* Mobile Menu Button */}
+            <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
