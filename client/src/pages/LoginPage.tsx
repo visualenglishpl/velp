@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import VelpLogo from '@/components/ui/velp-logo';
+import ContentViewerTester from '@/components/auth/ContentViewerTester';
 
 export default function LoginPage() {
   const [location, navigate] = useLocation();
@@ -162,6 +163,10 @@ export default function LoginPage() {
             <p>Visual English Learning Platform Admin Portal</p>
           </CardFooter>
         </Card>
+        
+        <div className="mt-6">
+          <ContentViewerTester />
+        </div>
         
         <div className="text-center mt-4">
           <Button 

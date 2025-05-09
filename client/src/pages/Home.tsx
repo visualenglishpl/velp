@@ -2,7 +2,6 @@ import HeroSection from "../components/sections/HeroSection";
 import PricingPlans from "../components/sections/IndividualPlans";
 import FAQSection from "../components/sections/FAQSection";
 import EUProjectSection from "../components/sections/EUProjectSection";
-import ContentViewerTester from "../components/auth/ContentViewerTester";
 
 const Home = () => {
   return (
@@ -14,8 +13,6 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-6 text-center">Development Tools</h2>
           <div className="flex flex-col gap-6 max-w-lg mx-auto">
-            <ContentViewerTester />
-            
             <div className="p-6 border rounded-lg bg-white shadow-sm">
               <h3 className="text-xl font-semibold mb-4">Direct Access Links</h3>
               <div className="space-y-3">
