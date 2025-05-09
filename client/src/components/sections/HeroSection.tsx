@@ -26,14 +26,14 @@ const HeroSection = () => {
               </p>
               
               {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Link href="/checkout/free_trial">
-                  <Button className="bg-blue-600 hover:bg-blue-600 text-white px-6 py-1.5 text-sm font-normal rounded-md w-full sm:w-auto">
-                    {t('home.hero.cta')}
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 text-base font-medium rounded w-full sm:w-auto">
+                    Start Learning
                   </Button>
                 </Link>
                 <Link href="/method">
-                  <Button variant="outline" className="border-2 border-green-500 bg-white text-green-500 hover:bg-white hover:text-green-600 px-6 py-1.5 text-sm font-normal rounded-md w-full sm:w-auto">
+                  <Button variant="outline" className="border border-green-500 text-green-500 bg-transparent hover:bg-green-50 px-8 py-2 text-base font-medium rounded w-full sm:w-auto">
                     Learn More
                   </Button>
                 </Link>
