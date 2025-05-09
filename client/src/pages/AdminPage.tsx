@@ -701,9 +701,9 @@ const QAManagement = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="w-full md:w-1/3">
-          <Label>Select Book</Label>
+          <Label htmlFor="book-select">Select Book</Label>
           <Select value={selectedBook} onValueChange={setSelectedBook}>
-            <SelectTrigger>
+            <SelectTrigger aria-labelledby="book-select">
               <SelectValue placeholder="Select a book" />
             </SelectTrigger>
             <SelectContent>
@@ -715,9 +715,9 @@ const QAManagement = () => {
         </div>
         
         <div className="w-full md:w-1/3">
-          <Label>Select Unit</Label>
+          <Label htmlFor="unit-select">Select Unit</Label>
           <Select value={selectedUnit} onValueChange={setSelectedUnit}>
-            <SelectTrigger>
+            <SelectTrigger aria-labelledby="unit-select">
               <SelectValue placeholder="Select a unit" />
             </SelectTrigger>
             <SelectContent>
