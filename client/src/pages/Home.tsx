@@ -40,12 +40,11 @@ const Home = () => {
                 </div>
                 
                 <div 
-                  onClick={() => window.location.href = "/login"}
-                  className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center cursor-pointer hover:bg-green-100 transition-colors"
+                  className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center"
                 >
                   <div className="flex-1">
-                    <p className="font-medium text-green-800">Admin/Teacher Login</p>
-                    <p className="text-sm text-green-600">Access dashboard for content management</p>
+                    <p className="font-medium text-green-800">Admin/Teacher Access</p>
+                    <p className="text-sm text-green-600">Use the "Sign In" button in the top navigation bar</p>
                   </div>
                 </div>
               </div>

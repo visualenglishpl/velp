@@ -33,9 +33,12 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
   console.log('Rendering full home page with layout');
-
+  
+  // Get current location using wouter's useLocation hook
+  const [currentPath] = useLocation();
+  
   // Check if we're on an admin page
-  const isAdminPage = location.pathname.includes('/dashboard') || location.pathname === '/login';
+  const isAdminPage = currentPath.includes('/dashboard') || currentPath === '/login';
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -134,8 +137,8 @@ function App() {
         </Switch>
       </main>
       
-      {/* Footer */}
-      <Footer />
+      {/* Only show Footer on non-admin pages */}
+      {!isAdminPage && <Footer />}
       
       <CookieConsent />
       <Toaster />
