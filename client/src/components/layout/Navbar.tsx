@@ -146,7 +146,7 @@ const Navbar = () => {
               </div>
             </Link>
             <LanguageSwitcher variant="minimal" />
-            <Link href="/auth">
+            <Link href="/login">
               <span className="bg-teal-600 text-white hover:bg-teal-700 px-6 py-2 rounded-md text-sm font-medium">Sign In</span>
             </Link>
           </div>
@@ -197,6 +197,9 @@ const Navbar = () => {
               >
                 {t('nav.books')}
               </span>
+            </Link>
+            <Link href="/login">
+              <span className="bg-teal-600 text-white hover:bg-teal-700 px-3 py-1 rounded-md text-xs font-medium">Sign In</span>
             </Link>
             <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

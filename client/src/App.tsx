@@ -1,6 +1,6 @@
 import { Toaster } from "./components/ui/toaster";
 import React from "react";
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import Home from "./pages/Home";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -34,10 +34,13 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 function App() {
   console.log('Rendering full home page with layout');
 
+  // Check if we're on an admin page
+  const isAdminPage = location.pathname.includes('/dashboard') || location.pathname === '/login';
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
+      {!isAdminPage && <Navbar />}
+      <main className={`flex-grow ${isAdminPage ? 'min-h-screen' : ''}`}>
         <Switch>
           <Route path="/">
             <Home />
