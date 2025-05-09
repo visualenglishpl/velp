@@ -37,13 +37,13 @@ function App() {
   // Get current location using wouter's useLocation hook
   const [currentPath] = useLocation();
   
-  // Check if we're on an admin page
-  const isAdminPage = currentPath.includes('/dashboard') || currentPath === '/login';
+  // Check if we're on an admin dashboard page (but not login)
+  const isAdminDashboard = currentPath.includes('/dashboard');
 
   return (
     <div className="flex flex-col min-h-screen">
-      {!isAdminPage && <Navbar />}
-      <main className={`flex-grow ${isAdminPage ? 'min-h-screen' : ''}`}>
+      <Navbar />
+      <main className={`flex-grow ${isAdminDashboard ? 'min-h-screen' : ''}`}>
         <Switch>
           <Route path="/">
             <Home />
@@ -137,8 +137,8 @@ function App() {
         </Switch>
       </main>
       
-      {/* Only show Footer on non-admin pages */}
-      {!isAdminPage && <Footer />}
+      {/* Only hide Footer on admin dashboard pages */}
+      {!isAdminDashboard && <Footer />}
       
       <CookieConsent />
       <Toaster />
