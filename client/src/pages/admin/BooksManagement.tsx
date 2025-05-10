@@ -4,7 +4,7 @@ import { useLocation } from "wouter";
 // Using extended type definitions to match component usage
 interface BookType {
   id: number;
-  bookId?: number;  // Added for compatibility
+  bookId?: string | number;  // Can be string or number
   title: string;
   description: string | null;
   level: string | null;
@@ -1064,7 +1064,7 @@ const BooksManagementPage = () => {
                       <div className="relative h-40 w-40 bg-gray-50 flex items-center justify-center overflow-hidden">
                         <BookOpen className="h-16 w-16 text-gray-300" style={{ position: 'absolute', opacity: 0.5 }} />
                         <img 
-                          src={thumbnails?.find(t => t.bookId === book.bookId)?.gifUrl || ''}
+                          src={thumbnails?.find(t => t.bookId === book.bookId?.toString())?.gifUrl || ''}
                           alt={book.title}
                           className="max-h-full max-w-full object-contain relative z-10"
                           onError={(e) => {
@@ -1183,7 +1183,7 @@ const BooksManagementPage = () => {
                         onClick={() => handleUnitSelect(unit.id)}
                         className="w-full py-2 text-white hover:bg-opacity-90"
                         style={{ 
-                          backgroundColor: getBookButtonColor(unit.unitNumber.toString())
+                          backgroundColor: getBookButtonColor(unit.position.toString())
                         }} 
                       >
                         View Unit <span className="ml-1">→</span>
