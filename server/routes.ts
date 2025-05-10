@@ -15,7 +15,7 @@ import { registerDirectRoutes } from "./direct-routes";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import multer from "multer";
-import path from "path";
+import * as path from "path";
 
 // Authentication middleware to protect routes
 function isAuthenticated(req: Request, res: Response, next: Function) {
@@ -398,7 +398,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   await setupFixedRoutes(app, getS3PresignedUrl);
   // Add a direct route to the static test page for diagnostics
   app.get('/test', (req, res) => {
-    const path = require('path');
     const testPagePath = path.resolve(process.cwd(), 'client/public/test.html');
     console.log('Serving test page from:', testPagePath);
     res.sendFile(testPagePath);
