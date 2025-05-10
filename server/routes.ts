@@ -403,6 +403,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     console.log('Serving test page from:', testPagePath);
     res.sendFile(testPagePath);
   });
+  
+  // Add a simple health check endpoint that doesn't require authentication
+  app.get('/api/health', (req, res) => {
+    res.status(200).json({
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      server: 'Visual English Platform',
+      message: 'Server is operational',
+      environment: process.env.NODE_ENV || 'development'
+    });
+  });
 
   // Apply global rate limiting middleware
   app.use(standardLimiter);
