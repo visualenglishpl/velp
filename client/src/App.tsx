@@ -28,7 +28,6 @@ import DashboardBooksPage from "./pages/DashboardBooksPage";
 import DashboardUnitsPage from "./pages/DashboardUnitsPage";
 
 import CookieConsent from "./components/CookieConsent";
-import AuthPageWrapper from "./pages/AuthPageWrapper";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
@@ -57,9 +56,6 @@ function App() {
           <ProtectedRoute path="/admin" adminOnly={true}>
             <AdminPage />
           </ProtectedRoute>
-          <Route path="/auth">
-            <AuthPageWrapper />
-          </Route>
           <Route path="/method">
             <MethodPage />
           </Route>
