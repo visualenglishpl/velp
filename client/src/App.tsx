@@ -107,6 +107,9 @@ function App() {
           <Route path="/book/:bookId/unit/:unitNumber">
             <SlickContentViewer />
           </Route>
+          <Route path="/book:bookId/unit:unitNumber">
+            <SlickContentViewer />
+          </Route>
           <Route path="/book/:bookId">
             <SlickContentViewer />
           </Route>

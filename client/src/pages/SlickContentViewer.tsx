@@ -183,37 +183,66 @@ export default function SlickContentViewer() {
   let bookId: string | null = null;
   let unitNumber: string | null = null;
   
-  // Parse from /book4/unit3 format
-  const pathRegex = /\/book(\d+)\/unit(\d+)/;
-  const pathMatch = location.match(pathRegex);
+  // Parse URL parameters from wouter's router pattern /book/:bookId/unit/:unitNumber
+  // In this case, they will be in the form /book/1/unit/5 or /book/book1/unit/unit5
+  const parts = location.split('/').filter(Boolean);
   
-  // Also try to match /book/book4/unit3 format
-  const altPathRegex = /\/book\/book(\d+)\/unit(\d+)/;
-  const altPathMatch = location.match(altPathRegex);
+  // Output the parts for debugging
+  console.log(`URL parts: ${JSON.stringify(parts)}`);
   
-  if (pathMatch) {
-    bookId = pathMatch[1];
-    unitNumber = pathMatch[2];
-    console.log(`Path match: Book ${bookId}, Unit ${unitNumber}`);
-  } else if (altPathMatch) {
-    bookId = altPathMatch[1];
-    unitNumber = altPathMatch[2];
-    console.log(`Alt path match: Book ${bookId}, Unit ${unitNumber}`);
-  } else {
-    // Fallback to URL parameters
-    const params = new URLSearchParams(window.location.search);
-    bookId = params.get('bookId');
-    unitNumber = params.get('unitNumber');
+  if (parts.length >= 4 && parts[0] === 'book') {
+    // Handle /book/:bookId/unit/:unitNumber format
+    let extractedBookId = parts[1];
+    let extractedUnitNumber = parts[3];
     
-    // If still not set, check if we have a URL with a specific part we can extract
-    if (!bookId && !unitNumber && location.includes('book') && location.includes('unit')) {
-      const parts = location.split('/');
-      for (let i = 0; i < parts.length; i++) {
-        if (parts[i].includes('book') && parts[i] !== 'book') {
-          bookId = parts[i].replace('book', '');
-        }
-        if (parts[i].includes('unit') && parts[i] !== 'unit') {
-          unitNumber = parts[i].replace('unit', '');
+    // If the bookId part starts with 'book', extract the numeric portion
+    if (extractedBookId.startsWith('book')) {
+      extractedBookId = extractedBookId.replace('book', '');
+    }
+    
+    // If the unitNumber part starts with 'unit', extract the numeric portion
+    if (extractedUnitNumber.startsWith('unit')) {
+      extractedUnitNumber = extractedUnitNumber.replace('unit', '');
+    }
+    
+    bookId = extractedBookId;
+    unitNumber = extractedUnitNumber;
+    console.log(`Extracted from URL parts: Book ${bookId}, Unit ${unitNumber}`);
+  } else {
+    // Try classic regex patterns
+    
+    // Parse from /book4/unit3 format
+    const pathRegex = /\/book(\d+)\/unit(\d+)/;
+    const pathMatch = location.match(pathRegex);
+    
+    // Also try to match /book/book4/unit3 format
+    const altPathRegex = /\/book\/book(\d+)\/unit(\d+)/;
+    const altPathMatch = location.match(altPathRegex);
+    
+    if (pathMatch) {
+      bookId = pathMatch[1];
+      unitNumber = pathMatch[2];
+      console.log(`Path match: Book ${bookId}, Unit ${unitNumber}`);
+    } else if (altPathMatch) {
+      bookId = altPathMatch[1];
+      unitNumber = altPathMatch[2];
+      console.log(`Alt path match: Book ${bookId}, Unit ${unitNumber}`);
+    } else {
+      // Fallback to URL parameters
+      const params = new URLSearchParams(window.location.search);
+      bookId = params.get('bookId');
+      unitNumber = params.get('unitNumber');
+      
+      // If still not set, check if we have a URL with a specific part we can extract
+      if (!bookId && !unitNumber && location.includes('book') && location.includes('unit')) {
+        const urlParts = location.split('/');
+        for (let i = 0; i < urlParts.length; i++) {
+          if (urlParts[i].includes('book') && urlParts[i] !== 'book') {
+            bookId = urlParts[i].replace('book', '');
+          }
+          if (urlParts[i].includes('unit') && urlParts[i] !== 'unit') {
+            unitNumber = urlParts[i].replace('unit', '');
+          }
         }
       }
     }
