@@ -681,8 +681,12 @@ export default function SlickContentViewer() {
   if (unitLoading || materialsLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <Loader2 className="h-10 w-10 animate-spin mb-4" />
-        <p>Loading content from {bookPath}/{unitPath}...</p>
+        <Loader2 className="h-10 w-10 animate-spin mb-4 text-teal-600" />
+        <p className="text-xl font-medium mb-2">Loading content...</p>
+        <p className="text-gray-600">From {bookPath}/{unitPath}</p>
+        <p className="text-sm text-gray-500 mt-4 max-w-md text-center">
+          Please wait while we load your content. This may take a few moments.
+        </p>
       </div>
     );
   }
@@ -692,10 +696,10 @@ export default function SlickContentViewer() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <h1 className="text-2xl font-bold mb-4 text-red-600">Error Loading Content</h1>
-        <p className="mb-4">There was a problem loading this content.</p>
+        <p className="mb-4 text-lg">There was a problem loading this content.</p>
         
         {/* Diagnostic information */}
-        <div className="w-full max-w-2xl bg-gray-100 p-4 rounded-md mb-4 overflow-auto">
+        <div className="w-full max-w-2xl bg-gray-50 p-4 rounded-md mb-4 overflow-auto border border-gray-200">
           <h2 className="font-semibold mb-2">Diagnostic Information:</h2>
           <p><strong>Book ID:</strong> {bookId || 'Not specified'}</p>
           <p><strong>Unit Number:</strong> {unitNumber || 'Not specified'}</p>
@@ -719,15 +723,29 @@ export default function SlickContentViewer() {
           )}
         </div>
         
+        <div className="mt-2 mb-6 text-gray-600 text-sm max-w-lg text-center">
+          Please check your internet connection and try again. If the problem persists, contact support.
+        </div>
+        
         <div className="flex gap-4">
-          <Button onClick={() => window.location.reload()}>
-            <Loader2 className="mr-2 h-4 w-4" />Retry
+          <Button 
+            onClick={() => {
+              if (refetchUnit && refetchMaterials) {
+                refetchUnit();
+                refetchMaterials();
+              } else {
+                window.location.reload();
+              }
+            }}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />Retry Loading
           </Button>
-          <Button onClick={() => navigate('/books')}>
-            <Book className="mr-2 h-4 w-4" />Books
+          <Button onClick={() => navigate('/books')} className="bg-teal-600 hover:bg-teal-700">
+            <Book className="mr-2 h-4 w-4" />View Books
           </Button>
           <Button onClick={() => navigate('/')} variant="outline">
-            <Home className="mr-2 h-4 w-4" />Home
+            <Home className="mr-2 h-4 w-4" />Return Home
           </Button>
         </div>
       </div>
