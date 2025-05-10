@@ -6,8 +6,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import VelpLogo from '@/components/ui/velp-logo';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+// The logo is now implemented directly in the JSX below
 
 export default function LoginPage() {
   const [location, navigate] = useLocation();
@@ -100,7 +101,12 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 p-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <VelpLogo className="mx-auto h-12 w-auto mb-4" />
+          <div className="mx-auto flex justify-center mb-4">
+            <div className="flex items-center">
+              <Book className="h-8 w-8 text-primary" />
+              <span className="ml-2 font-bold text-xl text-primary">VELP</span>
+            </div>
+          </div>
           <h1 className="text-2xl font-bold text-gray-900">VELP Portal</h1>
           <p className="text-gray-500 mt-2">Visual English Learning Platform</p>
         </div>
