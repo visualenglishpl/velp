@@ -24,6 +24,7 @@ import SlickContentViewer from "./pages/SlickContentViewer";
 import SimpleViewerTest from "./pages/SimpleViewerTest";
 import ViewerTestPage from "./pages/ViewerTestPage";
 import StandaloneViewerTest from "./pages/StandaloneViewerTest";
+import DevToolsPage from "./pages/DevToolsPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardBooksPage from "./pages/DashboardBooksPage";
@@ -143,6 +144,11 @@ function App() {
           </Route>
           <Route path="/standalone-viewer/:bookId/:unitNumber">
             <StandaloneViewerTest />
+          </Route>
+          
+          {/* Developer Tools Page - Hidden from main navigation with a less obvious URL */}
+          <Route path="/admin/dev/tools">
+            <DevToolsPage />
           </Route>
           
           {/* Admin/Teacher Platform Routes */}

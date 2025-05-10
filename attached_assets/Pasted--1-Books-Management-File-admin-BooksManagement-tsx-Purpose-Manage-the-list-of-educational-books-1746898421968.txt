@@ -1,0 +1,138 @@
+📚 1. Books Management
+File: admin/BooksManagement.tsx
+Purpose: Manage the list of educational books in the system.
+Functions:
+
+Add/edit book ID, title, description, level
+
+Assign a thumbnail (image/GIF)
+
+Set published/draft status
+
+Rendered books as color-coded cards for easy visual grouping
+UI Details:
+
+Form modal for creating/editing books
+
+Book buttons dynamically colored (getBookButtonColor())
+
+🛍 2. Shop Management
+File: admin/ShopManagement.tsx
+Purpose: Manage subscription plans and sales configuration.
+Functions:
+
+Create/edit subscription plans
+
+Assign books to pricing tiers
+
+Set free trial access or book bundles
+UI Details:
+
+Cards for each plan
+
+Color-coded based on status (active, draft, retired)
+
+⚙️ 3. Site Settings
+File: admin/SiteSettings.tsx (placeholder or planned)
+Purpose: Platform-wide configurations.
+Functions:
+
+Change UI themes
+
+Toggle features like blur, preview limit
+
+Set branding (logo, name, support info)
+
+🏷 4. Flagged Questions
+File: admin/FlaggedQuestions.tsx
+Purpose: Moderate reported questions.
+Functions:
+
+View flagged questions with reason
+
+Click to jump to the affected slide/unit
+
+Resolve, ignore, or delete
+UI:
+
+Table with flags and action buttons
+
+👥 5. User Management
+File: admin/Users.tsx (or planned)
+Purpose: Manage teachers, admins, students.
+Functions:
+
+View user list with roles
+
+Assign/remove roles
+
+Block or deactivate accounts
+UI:
+
+Table with filters for role/status
+
+📬 6. Broadcast Messaging
+File: admin/BroadcastMessaging.tsx (new)
+Purpose: Send platform announcements.
+Functions:
+
+Compose message
+
+Choose recipients (by role, book, region)
+
+Schedule send time
+UI:
+
+Editor + history log
+
+🔐 7. Access Roles Manager
+File: admin/RolesManager.tsx (new)
+Purpose: Manage user permissions and roles.
+Functions:
+
+Create/edit roles
+
+Assign permissions (viewer, editor, admin)
+UI:
+
+Role cards with toggles for permissions
+
+📝 8. Feedback Viewer
+File: admin/FeedbackViewer.tsx (new)
+Purpose: Review user comments and ratings on content.
+Functions:
+
+Filter feedback by book/unit
+
+View aggregated scores or suggestions
+UI:
+
+Cards or table with sentiment icons and comments
+
+📊 9. Analytics Panel
+File: admin/AnalyticsPanel.tsx (new)
+Purpose: View platform usage and trends.
+Functions:
+
+See top-used books
+
+Daily/weekly engagement
+
+Conversion rates, login stats
+UI:
+
+Graphs (bar, pie, line) using chart library
+
+KPIs at the top (total users, active today, etc.)
+
+🧾 10. Payment History
+File: admin/PaymentHistory.tsx (new)
+Purpose: View transaction logs.
+Functions:
+
+See who purchased what, when, how much
+
+Filter by user/date/book
+
+Export for finance
+UI:

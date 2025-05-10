@@ -92,19 +92,7 @@ const Navbar = () => {
               PL
             </div>
             
-            {/* Sign In Button */}
-            <Link href="/viewer-test/book1/unit1">
-              <span className="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded text-sm font-medium">Viewer Test</span>
-            </Link>
-            
-            <Link href="/standalone-viewer/book1/1">
-              <span className="bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded text-sm font-medium">Standalone</span>
-            </Link>
-            
-            <a href="/book/book1/unit/1" target="_blank" className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium">
-              Book Viewer
-            </a>
-            
+            {/* Sign In Button - All other buttons removed */}
             <Link href="/login">
               <span className="bg-teal-600 text-white hover:bg-teal-700 px-5 py-2 rounded text-sm font-medium">Sign In</span>
             </Link>
