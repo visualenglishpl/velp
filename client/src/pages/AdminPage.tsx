@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import BookThumbnailAdmin from '@/components/admin/BookThumbnailAdmin';
+import BooksManagementPage from './admin/BooksManagement';
 import { useAuth } from '@/hooks/use-auth';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient } from '@/lib/queryClient';
@@ -1100,6 +1101,17 @@ const AdminPage = () => {
             >
               <BarChart className="h-5 w-5" />
               {!sidebarCollapsed && <span className="text-sm">Dashboard</span>}
+            </button>
+            
+            <button 
+              onClick={() => setActiveTab('books')}
+              className={`w-full flex ${sidebarCollapsed ? 'justify-center' : 'items-center space-x-3'} p-2 rounded-md text-left ${
+                activeTab === 'books' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'
+              }`}
+              title={sidebarCollapsed ? 'Books Management' : ''}
+            >
+              <BookText className="h-5 w-5" />
+              {!sidebarCollapsed && <span className="text-sm">Books Management</span>}
             </button>
             
             <button 
