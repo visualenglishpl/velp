@@ -29,7 +29,12 @@ export default function LoginPage() {
       const authToken = window.localStorage.getItem("authToken");
       
       if (userRole && authToken) {
-        navigate('/dashboard');
+        // Redirect based on user role
+        if (userRole === 'admin') {
+          navigate('/test-admin-dashboard');
+        } else {
+          navigate('/dashboard');
+        }
       }
     } catch (error) {
       console.error("Error checking authentication state:", error);
@@ -63,8 +68,14 @@ export default function LoginPage() {
         description: `You're now logged in as a ${selectedRole}`,
       });
       
-      // Redirect to dashboard
-      navigate('/dashboard');
+      // Redirect based on role
+      if (selectedRole === 'admin') {
+        // Redirect admin users to the admin dashboard
+        navigate('/test-admin-dashboard');
+      } else {
+        // Redirect teachers and schools to the regular dashboard
+        navigate('/dashboard');
+      }
     } catch (err) {
       setError('Invalid email or password. Please try again.');
       toast({
@@ -88,8 +99,14 @@ export default function LoginPage() {
       description: `You're now logged in as a ${selectedRole}`,
     });
     
-    // Redirect to content viewer
-    navigate('/simple-viewer');
+    // Redirect based on role
+    if (selectedRole === 'admin') {
+      // Redirect admin users to the admin dashboard
+      navigate('/test-admin-dashboard');
+    } else {
+      // Redirect to content viewer for other roles
+      navigate('/simple-viewer');
+    }
   };
   
   const handlePreviewContent = () => {
