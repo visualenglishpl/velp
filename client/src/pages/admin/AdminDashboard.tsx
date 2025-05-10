@@ -36,12 +36,11 @@ const AdminModuleCard: React.FC<AdminModuleCardProps> = ({
 }) => {
   return (
     <div className="h-full">
-      <Card className={`rounded-xl overflow-hidden shadow-md h-full flex flex-col ${color}`}>
+      <Card className={`rounded-xl overflow-hidden shadow-lg h-full flex flex-col border-2 border-gray-200 hover:shadow-xl transition-shadow duration-300`}>
         {/* Icon header section */}
-        <div className="relative flex items-center justify-center w-full aspect-square overflow-hidden">
-          <div className={`absolute inset-0 bg-opacity-20 ${buttonColor}`}></div>
+        <div className={`relative flex items-center justify-center w-full aspect-square overflow-hidden ${color}`}>
           <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center">
-            <div className="bg-white rounded-full p-5 shadow-md mb-3">
+            <div className="bg-white/90 rounded-full p-4 shadow-md mb-3 backdrop-blur-sm">
               {icon}
             </div>
             <h3 className="text-xl font-bold text-white drop-shadow-md">{title}</h3>
@@ -73,81 +72,81 @@ const AdminDashboard = () => {
     {
       title: 'Books Management',
       description: 'Manage the list of educational books, units, and content',
-      icon: <BookOpen className="h-8 w-8 text-pink-600" />,
-      color: 'bg-pink-100',
-      buttonColor: 'bg-pink-600',
+      icon: <BookOpen className="h-8 w-8 text-white" />,
+      color: 'bg-[#FF40FF]', // Pink (Book 0a)
+      buttonColor: 'bg-[#FF40FF]',
       route: '/admin/books'
     },
     {
       title: 'Shop Management',
       description: 'Configure products, pricing, and shop settings',
-      icon: <Store className="h-8 w-8 text-purple-600" />,
-      color: 'bg-purple-100',
-      buttonColor: 'bg-purple-600', 
+      icon: <Store className="h-8 w-8 text-white" />,
+      color: 'bg-[#FF7F27]', // Orange (Book 0b)
+      buttonColor: 'bg-[#FF7F27]', 
       route: '/admin/shop'
     },
     {
       title: 'Site Settings',
       description: 'Customize platform appearance and behavior',
-      icon: <Settings className="h-8 w-8 text-blue-600" />,
-      color: 'bg-blue-100',
-      buttonColor: 'bg-blue-600',
+      icon: <Settings className="h-8 w-8 text-white" />,
+      color: 'bg-[#00CEDD]', // Teal (Book 0c)
+      buttonColor: 'bg-[#00CEDD]',
       route: '/admin/settings'
     },
     {
       title: 'User Management',
       description: 'Manage teachers, students and permissions',
-      icon: <Users className="h-8 w-8 text-teal-600" />,
-      color: 'bg-teal-100',
-      buttonColor: 'bg-teal-600',
+      icon: <Users className="h-8 w-8 text-white" />,
+      color: 'bg-[#FFFF00]', // Yellow (Book 1)
+      buttonColor: 'bg-[#FFFF00]',
       route: '/admin/users'
     },
     {
       title: 'Flagged Questions',
       description: 'Review and address content issues reported by users',
-      icon: <FileQuestion className="h-8 w-8 text-amber-600" />,
-      color: 'bg-amber-100',
-      buttonColor: 'bg-amber-600',
+      icon: <FileQuestion className="h-8 w-8 text-white" />,
+      color: 'bg-[#9966CC]', // Purple (Book 2)
+      buttonColor: 'bg-[#9966CC]',
       route: '/admin/flagged'
     },
     {
       title: 'Analytics Panel',
       description: 'View platform usage statistics and reports',
-      icon: <BarChart3 className="h-8 w-8 text-green-600" />,
-      color: 'bg-green-100',
-      buttonColor: 'bg-green-600',
+      icon: <BarChart3 className="h-8 w-8 text-white" />,
+      color: 'bg-[#00CC00]', // Green (Book 3)
+      buttonColor: 'bg-[#00CC00]',
       route: '/admin/analytics'
     },
     {
       title: 'Access Roles',
       description: 'Configure role-based access controls',
-      icon: <Shield className="h-8 w-8 text-red-600" />,
-      color: 'bg-red-100',
-      buttonColor: 'bg-red-600',
+      icon: <Shield className="h-8 w-8 text-white" />,
+      color: 'bg-[#5DADEC]', // Blue (Book 4)
+      buttonColor: 'bg-[#5DADEC]',
       route: '/admin/roles'
     },
     {
       title: 'Broadcast Messages',
       description: 'Send announcements to users and manage notifications',
-      icon: <Bell className="h-8 w-8 text-indigo-600" />,
-      color: 'bg-indigo-100',
-      buttonColor: 'bg-indigo-600',
+      icon: <Bell className="h-8 w-8 text-white" />,
+      color: 'bg-[#00CC66]', // Green (Book 5)
+      buttonColor: 'bg-[#00CC66]',
       route: '/admin/broadcast'
     },
     {
       title: 'Feedback Viewer',
       description: 'View and respond to user feedback and suggestions',
-      icon: <MessageSquare className="h-8 w-8 text-cyan-600" />,
-      color: 'bg-cyan-100',
-      buttonColor: 'bg-cyan-600',
+      icon: <MessageSquare className="h-8 w-8 text-white" />,
+      color: 'bg-[#FF0000]', // Red (Book 6)
+      buttonColor: 'bg-[#FF0000]',
       route: '/admin/feedback'
     },
     {
       title: 'Payment History',
       description: 'View transaction history and manage subscriptions',
-      icon: <CreditCard className="h-8 w-8 text-orange-600" />,
-      color: 'bg-orange-100',
-      buttonColor: 'bg-orange-600',
+      icon: <CreditCard className="h-8 w-8 text-white" />,
+      color: 'bg-[#00FF00]', // Bright Green (Book 7)
+      buttonColor: 'bg-[#00FF00]',
       route: '/admin/payments'
     }
   ];
@@ -161,8 +160,8 @@ const AdminDashboard = () => {
         <p className="text-gray-600 text-lg">Manage your educational platform from one central location</p>
       </div>
 
-      {/* Responsive grid layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Responsive grid layout - 4 per row on larger screens */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {adminModules.map((module, index) => (
           <AdminModuleCard key={index} {...module} />
         ))}
