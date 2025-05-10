@@ -26,6 +26,7 @@ import ViewerTestPage from "./pages/ViewerTestPage";
 import StandaloneViewerTest from "./pages/StandaloneViewerTest";
 import DevToolsPage from "./pages/DevToolsPage";
 import LoginPage from "./pages/LoginPage";
+import LoginTestPage from "./pages/LoginTestPage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardBooksPage from "./pages/DashboardBooksPage";
 import DashboardUnitsPage from "./pages/DashboardUnitsPage";
@@ -154,6 +155,9 @@ function App() {
           {/* Admin/Teacher Platform Routes */}
           <Route path="/login">
             <LoginPage />
+          </Route>
+          <Route path="/login-test">
+            <LoginTestPage />
           </Route>
           <Route path="/dashboard">
             <DashboardPage />
