@@ -41,7 +41,9 @@ const AdminModuleCard: React.FC<AdminModuleCardProps> = ({
         <div className={`relative flex items-center justify-center w-full aspect-square overflow-hidden ${color}`}>
           <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center">
             <div className="bg-white/90 rounded-full p-4 shadow-md mb-3 backdrop-blur-sm">
-              {icon}
+              <div className="text-purple-600">
+                {icon}
+              </div>
             </div>
             <h3 className="text-xl font-bold text-white drop-shadow-md">{title}</h3>
           </div>
@@ -72,7 +74,7 @@ const AdminDashboard = () => {
     {
       title: 'Books Management',
       description: 'Manage the list of educational books, units, and content',
-      icon: <BookOpen className="h-8 w-8 text-white" />,
+      icon: <BookOpen className="h-8 w-8" />,
       color: 'bg-[#FF40FF]', // Pink (Book 0a)
       buttonColor: 'bg-[#FF40FF]',
       route: '/admin/books'
@@ -80,7 +82,7 @@ const AdminDashboard = () => {
     {
       title: 'Shop Management',
       description: 'Configure products, pricing, and shop settings',
-      icon: <Store className="h-8 w-8 text-white" />,
+      icon: <Store className="h-8 w-8" />,
       color: 'bg-[#FF7F27]', // Orange (Book 0b)
       buttonColor: 'bg-[#FF7F27]', 
       route: '/admin/shop'
@@ -88,7 +90,7 @@ const AdminDashboard = () => {
     {
       title: 'Site Settings',
       description: 'Customize platform appearance and behavior',
-      icon: <Settings className="h-8 w-8 text-white" />,
+      icon: <Settings className="h-8 w-8" />,
       color: 'bg-[#00CEDD]', // Teal (Book 0c)
       buttonColor: 'bg-[#00CEDD]',
       route: '/admin/settings'
@@ -96,7 +98,7 @@ const AdminDashboard = () => {
     {
       title: 'User Management',
       description: 'Manage teachers, students and permissions',
-      icon: <Users className="h-8 w-8 text-white" />,
+      icon: <Users className="h-8 w-8" />,
       color: 'bg-[#FFFF00]', // Yellow (Book 1)
       buttonColor: 'bg-[#FFFF00]',
       route: '/admin/users'
@@ -104,7 +106,7 @@ const AdminDashboard = () => {
     {
       title: 'Flagged Questions',
       description: 'Review and address content issues reported by users',
-      icon: <FileQuestion className="h-8 w-8 text-white" />,
+      icon: <FileQuestion className="h-8 w-8" />,
       color: 'bg-[#9966CC]', // Purple (Book 2)
       buttonColor: 'bg-[#9966CC]',
       route: '/admin/flagged'
@@ -112,7 +114,7 @@ const AdminDashboard = () => {
     {
       title: 'Analytics Panel',
       description: 'View platform usage statistics and reports',
-      icon: <BarChart3 className="h-8 w-8 text-white" />,
+      icon: <BarChart3 className="h-8 w-8" />,
       color: 'bg-[#00CC00]', // Green (Book 3)
       buttonColor: 'bg-[#00CC00]',
       route: '/admin/analytics'
@@ -120,7 +122,7 @@ const AdminDashboard = () => {
     {
       title: 'Access Roles',
       description: 'Configure role-based access controls',
-      icon: <Shield className="h-8 w-8 text-white" />,
+      icon: <Shield className="h-8 w-8" />,
       color: 'bg-[#5DADEC]', // Blue (Book 4)
       buttonColor: 'bg-[#5DADEC]',
       route: '/admin/roles'
@@ -128,7 +130,7 @@ const AdminDashboard = () => {
     {
       title: 'Broadcast Messages',
       description: 'Send announcements to users and manage notifications',
-      icon: <Bell className="h-8 w-8 text-white" />,
+      icon: <Bell className="h-8 w-8" />,
       color: 'bg-[#00CC66]', // Green (Book 5)
       buttonColor: 'bg-[#00CC66]',
       route: '/admin/broadcast'
@@ -136,7 +138,7 @@ const AdminDashboard = () => {
     {
       title: 'Feedback Viewer',
       description: 'View and respond to user feedback and suggestions',
-      icon: <MessageSquare className="h-8 w-8 text-white" />,
+      icon: <MessageSquare className="h-8 w-8" />,
       color: 'bg-[#FF0000]', // Red (Book 6)
       buttonColor: 'bg-[#FF0000]',
       route: '/admin/feedback'
@@ -144,7 +146,7 @@ const AdminDashboard = () => {
     {
       title: 'Payment History',
       description: 'View transaction history and manage subscriptions',
-      icon: <CreditCard className="h-8 w-8 text-white" />,
+      icon: <CreditCard className="h-8 w-8" />,
       color: 'bg-[#00FF00]', // Bright Green (Book 7)
       buttonColor: 'bg-[#00FF00]',
       route: '/admin/payments'
