@@ -93,6 +93,10 @@ const Navbar = () => {
             </div>
             
             {/* Sign In Button */}
+            <Link href="/viewer-test/book1/unit1">
+              <span className="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded text-sm font-medium">Viewer Test</span>
+            </Link>
+            
             <a href="/book/book1/unit/unit1" target="_blank" className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium">
               Book Viewer
             </a>

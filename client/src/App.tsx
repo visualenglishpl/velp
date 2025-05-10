@@ -22,6 +22,7 @@ import BookCheckoutPage from "./pages/BookCheckoutPage";
 import BookWizardPage from "./pages/BookWizardPage";
 import SlickContentViewer from "./pages/SlickContentViewer";
 import SimpleViewerTest from "./pages/SimpleViewerTest";
+import ViewerTestPage from "./pages/ViewerTestPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardBooksPage from "./pages/DashboardBooksPage";
@@ -118,6 +119,12 @@ function App() {
           </Route>
           <Route path="/simple-viewer">
             <SimpleViewerTest />
+          </Route>
+          <Route path="/viewer-test">
+            <ViewerTestPage />
+          </Route>
+          <Route path="/viewer-test/:bookId/:unitNumber">
+            <ViewerTestPage />
           </Route>
           
           {/* Admin/Teacher Platform Routes */}

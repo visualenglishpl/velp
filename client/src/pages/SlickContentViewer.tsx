@@ -252,31 +252,52 @@ export default function SlickContentViewer() {
   const bookPath = bookId ? `book${bookId}` : '';
   const unitPath = unitNumber ? `unit${unitNumber}` : '';
   
-  console.log(`SlickContentViewer: Book=${bookPath}, Unit=${unitPath}, URL=${location}`);
+  // Log what paths we're using with more detailed information
+  console.log(`===== SlickContentViewer DIAGNOSTICS =====`);
+  console.log(`URL: ${location}`);
+  console.log(`URL Parts: ${JSON.stringify(parts)}`);
+  console.log(`Book ID: ${bookId}`);
+  console.log(`Unit Number: ${unitNumber}`);
+  console.log(`Book Path: ${bookPath}`);
+  console.log(`Unit Path: ${unitPath}`);
+  console.log(`API Path: /api/direct/${bookPath}/${unitPath}`);
+  console.log(`==========================================`);
   
   // Authentication
   const { user } = useAuth();
   const hasPaidAccess = Boolean(user);
   const freeSlideLimit = /^0[a-c]$/i.test(bookId || '') ? 2 : 10;
   
-  // Fetch unit information
+  // Fetch unit information with retry logic and longer timeout
   const { 
     data: unitData,
     error: unitError,
-    isLoading: unitLoading
+    isLoading: unitLoading,
+    isError: isUnitError,
+    refetch: refetchUnit
   } = useQuery<UnitInfo>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}`],
-    enabled: Boolean(bookPath && unitPath)
+    enabled: Boolean(bookPath && unitPath),
+    retry: 3,
+    retryDelay: 1000,
+    staleTime: 60000, // 1 minute
+    gcTime: 300000 // 5 minutes
   });
   
-  // Fetch materials from S3
+  // Fetch materials from S3 with retry logic and longer timeout
   const {
     data: fetchedMaterials, 
     error: materialsError,
-    isLoading: materialsLoading
+    isLoading: materialsLoading,
+    isError: isMaterialsError,
+    refetch: refetchMaterials
   } = useQuery<S3Material[]>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
-    enabled: Boolean(bookPath && unitPath)
+    enabled: Boolean(bookPath && unitPath),
+    retry: 3,
+    retryDelay: 1000,
+    staleTime: 60000, // 1 minute
+    gcTime: 300000 // 5 minutes
   });
   
   // Fetch saved order
