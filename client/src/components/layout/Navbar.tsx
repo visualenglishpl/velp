@@ -97,7 +97,11 @@ const Navbar = () => {
               <span className="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded text-sm font-medium">Viewer Test</span>
             </Link>
             
-            <a href="/book/book1/unit/unit1" target="_blank" className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium">
+            <Link href="/standalone-viewer/book1/1">
+              <span className="bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded text-sm font-medium">Standalone</span>
+            </Link>
+            
+            <a href="/book/book1/unit/1" target="_blank" className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium">
               Book Viewer
             </a>
             

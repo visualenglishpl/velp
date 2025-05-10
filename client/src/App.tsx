@@ -23,6 +23,7 @@ import BookWizardPage from "./pages/BookWizardPage";
 import SlickContentViewer from "./pages/SlickContentViewer";
 import SimpleViewerTest from "./pages/SimpleViewerTest";
 import ViewerTestPage from "./pages/ViewerTestPage";
+import StandaloneViewerTest from "./pages/StandaloneViewerTest";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardBooksPage from "./pages/DashboardBooksPage";
@@ -125,6 +126,17 @@ function App() {
           </Route>
           <Route path="/viewer-test/:bookId/:unitNumber">
             <ViewerTestPage />
+          </Route>
+          
+          {/* Standalone viewer that doesn't depend on auth context */}
+          <Route path="/standalone-viewer">
+            <StandaloneViewerTest />
+          </Route>
+          <Route path="/standalone-viewer/:bookId">
+            <StandaloneViewerTest />
+          </Route>
+          <Route path="/standalone-viewer/:bookId/:unitNumber">
+            <StandaloneViewerTest />
           </Route>
           
           {/* Admin/Teacher Platform Routes */}
