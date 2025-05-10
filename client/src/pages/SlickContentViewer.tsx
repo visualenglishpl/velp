@@ -11,7 +11,10 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 // Structured question data reference for various countries and their codes
-const QUESTION_DATA = {
+const QUESTION_DATA: Record<string, {
+  country: string;
+  questions: Record<string, { question: string; answer: string }>;
+}> = {
   // POLAND - File code "01 R"
   "01 R": {
     country: "POLAND",
@@ -184,22 +187,43 @@ export default function SlickContentViewer() {
   const pathRegex = /\/book(\d+)\/unit(\d+)/;
   const pathMatch = location.match(pathRegex);
   
+  // Also try to match /book/book4/unit3 format
+  const altPathRegex = /\/book\/book(\d+)\/unit(\d+)/;
+  const altPathMatch = location.match(altPathRegex);
+  
   if (pathMatch) {
     bookId = pathMatch[1];
     unitNumber = pathMatch[2];
     console.log(`Path match: Book ${bookId}, Unit ${unitNumber}`);
+  } else if (altPathMatch) {
+    bookId = altPathMatch[1];
+    unitNumber = altPathMatch[2];
+    console.log(`Alt path match: Book ${bookId}, Unit ${unitNumber}`);
   } else {
     // Fallback to URL parameters
     const params = new URLSearchParams(window.location.search);
     bookId = params.get('bookId');
     unitNumber = params.get('unitNumber');
+    
+    // If still not set, check if we have a URL with a specific part we can extract
+    if (!bookId && !unitNumber && location.includes('book') && location.includes('unit')) {
+      const parts = location.split('/');
+      for (let i = 0; i < parts.length; i++) {
+        if (parts[i].includes('book') && parts[i] !== 'book') {
+          bookId = parts[i].replace('book', '');
+        }
+        if (parts[i].includes('unit') && parts[i] !== 'unit') {
+          unitNumber = parts[i].replace('unit', '');
+        }
+      }
+    }
   }
   
   // Build paths for API requests
-  const bookPath = `book${bookId}`;
-  const unitPath = `unit${unitNumber}`;
+  const bookPath = bookId ? `book${bookId}` : '';
+  const unitPath = unitNumber ? `unit${unitNumber}` : '';
   
-  console.log(`SlickContentViewer: Book=${bookPath}, Unit=${unitPath}`);
+  console.log(`SlickContentViewer: Book=${bookPath}, Unit=${unitPath}, URL=${location}`);
   
   // Authentication
   const { user } = useAuth();
@@ -483,11 +507,12 @@ export default function SlickContentViewer() {
       const letterCode = material.description.substring(5, 6); // Get "A"
       
       // Check if we have data for this code
-      if (QUESTION_DATA[codeBase] && QUESTION_DATA[codeBase].questions[letterCode]) {
+      const countryData = QUESTION_DATA[codeBase as keyof typeof QUESTION_DATA];
+      if (countryData && countryData.questions[letterCode]) {
         return {
-          country: QUESTION_DATA[codeBase].country,
-          question: QUESTION_DATA[codeBase].questions[letterCode].question,
-          answer: QUESTION_DATA[codeBase].questions[letterCode].answer,
+          country: countryData.country,
+          question: countryData.questions[letterCode].question,
+          answer: countryData.questions[letterCode].answer,
           hasData: true
         };
       }
@@ -497,28 +522,30 @@ export default function SlickContentViewer() {
     const content = material.content.toLowerCase();
     
     // Check each country code in our data
-    for (const codeBase in QUESTION_DATA) {
+    for (const codeBase of Object.keys(QUESTION_DATA)) {
       if (content.includes(codeBase.toLowerCase())) {
         // For each letter code
-        const country = QUESTION_DATA[codeBase].country;
-        for (const letterCode in QUESTION_DATA[codeBase].questions) {
+        const countryData = QUESTION_DATA[codeBase];
+        const country = countryData.country;
+        
+        for (const letterCode of Object.keys(countryData.questions)) {
           if (content.includes(`${codeBase.toLowerCase()} ${letterCode.toLowerCase()}`)) {
             return {
               country,
-              question: QUESTION_DATA[codeBase].questions[letterCode].question,
-              answer: QUESTION_DATA[codeBase].questions[letterCode].answer,
+              question: countryData.questions[letterCode].question,
+              answer: countryData.questions[letterCode].answer,
               hasData: true
             };
           }
         }
         
         // If we found the country but not a specific question, return the first question
-        const firstLetter = Object.keys(QUESTION_DATA[codeBase].questions)[0];
+        const firstLetter = Object.keys(countryData.questions)[0];
         if (firstLetter) {
           return {
             country,
-            question: QUESTION_DATA[codeBase].questions[firstLetter].question,
-            answer: QUESTION_DATA[codeBase].questions[firstLetter].answer,
+            question: countryData.questions[firstLetter].question,
+            answer: countryData.questions[firstLetter].answer,
             hasData: true
           };
         }
@@ -610,13 +637,42 @@ export default function SlickContentViewer() {
     );
   }
   
-  // Error state
+  // Error state with detailed diagnostics
   if (unitError || materialsError || !unitData || !fetchedMaterials) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <h1 className="text-2xl font-bold mb-4 text-red-600">Error Loading Content</h1>
         <p className="mb-4">There was a problem loading this content.</p>
+        
+        {/* Diagnostic information */}
+        <div className="w-full max-w-2xl bg-gray-100 p-4 rounded-md mb-4 overflow-auto">
+          <h2 className="font-semibold mb-2">Diagnostic Information:</h2>
+          <p><strong>Book ID:</strong> {bookId || 'Not specified'}</p>
+          <p><strong>Unit Number:</strong> {unitNumber || 'Not specified'}</p>
+          <p><strong>Book Path:</strong> {bookPath || 'Not available'}</p>
+          <p><strong>Unit Path:</strong> {unitPath || 'Not available'}</p>
+          <p><strong>URL:</strong> {location}</p>
+          <p><strong>Authentication:</strong> {hasPaidAccess ? 'Yes' : 'No'}</p>
+          
+          {unitError && (
+            <div className="mt-2">
+              <p className="font-semibold text-red-600">Unit Error:</p>
+              <p className="text-sm">{unitError.message}</p>
+            </div>
+          )}
+          
+          {materialsError && (
+            <div className="mt-2">
+              <p className="font-semibold text-red-600">Materials Error:</p>
+              <p className="text-sm">{materialsError.message}</p>
+            </div>
+          )}
+        </div>
+        
         <div className="flex gap-4">
+          <Button onClick={() => window.location.reload()}>
+            <Loader2 className="mr-2 h-4 w-4" />Retry
+          </Button>
           <Button onClick={() => navigate('/books')}>
             <Book className="mr-2 h-4 w-4" />Books
           </Button>
