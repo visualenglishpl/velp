@@ -7,6 +7,9 @@ import Footer from "./components/layout/Footer";
 import BooksPage from "./pages/BooksPage";
 import UnitsPage from "./pages/UnitsPage";
 import AdminPage from "./pages/AdminPage";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import BooksManagement from "./pages/admin/BooksManagement";
+import TestAdminDashboard from "./pages/TestAdminDashboard";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
@@ -65,6 +68,12 @@ function App() {
             <UnitsPage />
           </Route>
           <ProtectedRoute path="/admin" adminOnly={true}>
+            <AdminDashboard />
+          </ProtectedRoute>
+          <ProtectedRoute path="/admin/books" adminOnly={true}>
+            <BooksManagement />
+          </ProtectedRoute>
+          <ProtectedRoute path="/admin/legacy" adminOnly={true}>
             <AdminPage />
           </ProtectedRoute>
           <Route path="/method">
@@ -162,6 +171,9 @@ function App() {
           </Route>
           <Route path="/admin-test">
             <AdminTestPage />
+          </Route>
+          <Route path="/test-admin-dashboard">
+            <TestAdminDashboard />
           </Route>
           <Route path="/dashboard">
             <DashboardPage />
