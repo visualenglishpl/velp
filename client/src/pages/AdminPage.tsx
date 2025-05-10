@@ -1216,6 +1216,7 @@ const AdminPage = () => {
             <div className="mb-8">
               <h1 className="text-2xl font-bold mb-2">
                 {activeTab === 'dashboard' && 'Dashboard Overview'}
+                {activeTab === 'books' && 'Books Management'}
                 {activeTab === 'thumbnails' && 'Book Thumbnail Management'}
                 {activeTab === 'preview' && 'Book Preview'}
                 {activeTab === 'questions' && 'Q&A Management'}
@@ -1226,6 +1227,7 @@ const AdminPage = () => {
               </h1>
               <p className="text-gray-600">
                 {activeTab === 'dashboard' && `Welcome back, ${user?.fullName || user?.username || 'Admin'}.`}
+                {activeTab === 'books' && 'Manage educational books, units, and associated learning materials.'}
                 {activeTab === 'thumbnails' && 'Upload and manage book cover images and animations.'}
                 {activeTab === 'preview' && 'Preview how book thumbnails appear on the website.'}
                 {activeTab === 'questions' && 'Manage question-answer pairs for educational content.'}
@@ -1239,6 +1241,8 @@ const AdminPage = () => {
             {/* Main content tabs */}
             <div className="w-full">
               {activeTab === 'dashboard' && <DashboardStats />}
+              
+              {activeTab === 'books' && <BooksManagementPage />}
               
               {activeTab === 'thumbnails' && <BookThumbnailAdmin />}
               
