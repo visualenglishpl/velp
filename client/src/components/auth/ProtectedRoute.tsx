@@ -30,8 +30,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         
         // Redirect if user not authenticated
         if (!user) {
-          console.log("User not authenticated, redirecting to auth page");
-          return <Redirect to="/auth" />;
+          console.log("User not authenticated, redirecting to login page");
+          return <Redirect to="/login" />;
         }
         
         // Redirect if admin-only route is accessed by non-admin
