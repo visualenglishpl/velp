@@ -263,9 +263,21 @@ export default function SlickContentViewer() {
   console.log(`API Path: /api/direct/${bookPath}/${unitPath}`);
   console.log(`==========================================`);
   
-  // Authentication
-  const { user } = useAuth();
-  const hasPaidAccess = Boolean(user);
+  // Authentication - safe handling with fallbacks
+  let user = null;
+  let hasPaidAccess = false;
+  
+  try {
+    // Try to use auth context, but don't crash if it's not available
+    const authContext = useAuth();
+    user = authContext?.user;
+    hasPaidAccess = Boolean(user);
+  } catch (error) {
+    console.warn('Auth context not available, proceeding with public access only');
+    // Continue with public access only
+  }
+  
+  // Set free slide limit based on book type
   const freeSlideLimit = /^0[a-c]$/i.test(bookId || '') ? 2 : 10;
   
   // Fetch unit information with retry logic and longer timeout
