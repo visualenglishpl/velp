@@ -1,6 +1,53 @@
 import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { 
+  BookOpen, 
+  BookOpenCheck, 
+  ChevronRight,
+  BookIcon, 
+  LogOut, 
+  Plus, 
+  Pencil, 
+  Trash2,
+  FileText,
+  Video, 
+  AudioLines, 
+  ClipboardList,
+  FileImage
+} from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { toast } from "@/hooks/use-toast";
+
 // Using extended type definitions to match component usage
 interface BookType {
   id: number;
@@ -52,52 +99,6 @@ interface Unit extends BaseUnit {
   unitNumber?: number;
   isPublished?: boolean;
 }
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { apiRequest, queryClient } from "@/lib/queryClient";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { 
-  BookOpen, 
-  BookOpenCheck, 
-  ChevronRight,
-  BookIcon, 
-  LogOut, 
-  Plus, 
-  Pencil, 
-  Trash2,
-  FileText,
-  Video, 
-  AudioLines, 
-  ClipboardList,
-  FileImage
-} from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
-import { toast } from "@/hooks/use-toast";
 
 // Type definition for the book thumbnail
 type BookThumbnail = {
@@ -603,7 +604,11 @@ function ContentTypeIcon({ type }: { type: string }) {
 const BooksManagementPage = () => {
   const { user, logoutMutation, isLoading: authLoading } = useAuth();
   const [, navigate] = useLocation();
-  // Search removed as requested
+  
+  // Method to navigate back to admin dashboard
+  const handleBackToAdmin = () => {
+    navigate('/admin');
+  };
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<number | null>(null);
   const [isBookDialogOpen, setIsBookDialogOpen] = useState(false);
@@ -986,6 +991,20 @@ const BooksManagementPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-1"
+            onClick={handleBackToAdmin}
+          >
+            <ChevronRight className="h-4 w-4 transform rotate-180" />
+            Back to Admin
+          </Button>
+          <h1 className="text-2xl font-bold">Books Management</h1>
+          <div className="w-28"></div> {/* Empty div for spacing balance */}
+        </div>
+      </div>
 
       {/* Breadcrumb Navigation - Only show when inside a book or unit */}
       {(selectedBookId || selectedUnitId) && (
