@@ -77,7 +77,7 @@ const AdminDashboard = () => {
       icon: <BookOpen className="h-8 w-8" />,
       color: 'bg-[#FF40FF]', // Pink (Book 0a)
       buttonColor: 'bg-[#FF40FF]',
-      route: '/books' // Direct link to books page
+      route: '/admin/books' // Direct link to admin books management page
     },
     {
       title: 'Shop Management',
