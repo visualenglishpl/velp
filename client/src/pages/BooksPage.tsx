@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { apiRequest } from '@/lib/queryClient';
+import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { useQuery } from '@tanstack/react-query';
+import { ChevronLeft } from 'lucide-react';
 
 // Type for a book with thumbnail URL
 type BookWithThumbnail = {
@@ -60,9 +61,23 @@ export default function BooksPage() {
 
   // Allow all users to view the bookstore without requiring authentication
 
+  // Get current location to see if we came from admin
+  const [location] = useLocation();
+  const fromAdmin = location.includes('admin') || document.referrer.includes('admin');
+
   return (
     <div className="pt-16 pb-0 bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {fromAdmin && (
+          <div className="flex justify-start mb-6">
+            <Link href="/admin">
+              <Button variant="outline" className="flex items-center gap-1">
+                <ChevronLeft className="h-4 w-4" />
+                Back to Admin
+              </Button>
+            </Link>
+          </div>
+        )}
         
         {isLoading ? (
           <div id="book-thumbnails" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-[1200px] mx-auto mt-10">
@@ -103,7 +118,7 @@ export default function BooksPage() {
                 <CardFooter className="py-3 px-4 flex flex-col gap-2">
                   <Link href={`/books/${book.bookId}`} className="w-full">
                     <Button className="w-full" variant="default">
-                      View Book
+                      View Book Units
                     </Button>
                   </Link>
                 </CardFooter>

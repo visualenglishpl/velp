@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'wouter';
+import { Link, useParams, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -20,6 +20,7 @@ export default function UnitsPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const params = useParams();
   const bookId = params.bookId;
+  const [location] = useLocation();
 
   // Check if user is authenticated
   useEffect(() => {
@@ -65,11 +66,20 @@ export default function UnitsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center mb-4">
-          <Link href="/books">
-            <Button variant="outline" className="mr-4">
-              ← Back to Books
-            </Button>
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/books">
+              <Button variant="outline" className="mr-2">
+                ← Back to Books
+              </Button>
+            </Link>
+            {(location.toString().includes('admin') || document.referrer.includes('admin')) && (
+              <Link href="/admin">
+                <Button variant="outline" className="mr-2">
+                  ← Back to Admin
+                </Button>
+              </Link>
+            )}
+          </div>
           <h1 className="text-4xl font-bold">Book {bookId} Units</h1>
         </div>
         
@@ -186,13 +196,13 @@ export default function UnitsPage() {
                 <div className="py-3 mt-auto flex flex-col gap-3">
                   <Button 
                     className="w-full py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700"
-                    onClick={() => window.location.href = `/books/${bookId}/units/${unit.unitNumber}`}
+                    onClick={() => window.location.href = `/book/${bookId}/unit/${unit.unitNumber}`}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
                       <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
                       <circle cx="12" cy="12" r="3"/>
                     </svg>
-                    View Unit
+                    View Content
                   </Button>
                   {!isAuthenticated && (
                     <>

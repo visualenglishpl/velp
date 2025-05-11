@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/use-auth';
+import { Link } from 'wouter';
+import { queryClient } from '@/lib/queryClient';
 import BooksManagementPage from './admin/BooksManagement';
 
 /**
@@ -9,32 +10,53 @@ import BooksManagementPage from './admin/BooksManagement';
  * This is a minimal page that doesn't depend on the full AdminPage structure
  */
 const AdminTestPage = () => {
-  const { user, logoutMutation } = useAuth();
-
-  const handleLogout = () => {
-    logoutMutation.mutate();
-  };
+  // Set up mock admin user for testing purposes
+  useEffect(() => {
+    // Mock the admin user data in the query cache
+    const mockAdminUser = {
+      id: 1,
+      username: 'admin',
+      role: 'admin',
+      fullName: 'Administrator'
+    };
+    
+    queryClient.setQueryData(['/api/user'], mockAdminUser);
+    
+    // Clean up when component unmounts
+    return () => {
+      // Keep the mock user (don't reset) for consistent experience
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <Card className="mb-6">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xl font-bold">Admin Test Page</CardTitle>
-          <Button onClick={handleLogout} variant="destructive" size="sm">
-            Logout
-          </Button>
+          <CardTitle className="text-xl font-bold">Books Management</CardTitle>
+          <div className="flex gap-2">
+            <Link href="/books">
+              <Button variant="outline" size="sm">
+                View Books
+              </Button>
+            </Link>
+            <Link href="/admin">
+              <Button variant="outline" size="sm">
+                Back to Admin
+              </Button>
+            </Link>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="text-sm mb-4">
-            <p>Current user: <span className="font-medium">{user?.username}</span></p>
-            <p>Role: <span className="font-medium">{user?.role}</span></p>
+            <p>This page allows you to manage books and view their content.</p>
+            <p className="text-gray-500 mt-1">Click on "View Books" to see the full book list and access content viewer.</p>
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>Books Management Component Test</CardTitle>
+          <CardTitle>Books List</CardTitle>
         </CardHeader>
         <CardContent>
           <BooksManagementPage />

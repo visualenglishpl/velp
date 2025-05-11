@@ -89,20 +89,26 @@ export default function StandaloneViewerTest() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <div className="bg-teal-800 text-white p-4">
+      <div className="bg-purple-800 text-white p-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Standalone Content Viewer Test</h1>
+          <h1 className="text-2xl font-bold">Books & Content Management</h1>
           <div className="flex gap-2">
-            <Link href="/">
+            <Link href="/admin">
               <Button variant="outline" className="bg-transparent border-white text-white hover:bg-teal-700">
-                <Home className="mr-2 h-4 w-4" />
-                Home
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Admin
               </Button>
             </Link>
             <Link href="/books">
               <Button variant="outline" className="bg-transparent border-white text-white hover:bg-teal-700">
                 <Book className="mr-2 h-4 w-4" />
                 Books
+              </Button>
+            </Link>
+            <Link href="/">
+              <Button variant="outline" className="bg-transparent border-white text-white hover:bg-teal-700">
+                <Home className="mr-2 h-4 w-4" />
+                Home
               </Button>
             </Link>
           </div>
