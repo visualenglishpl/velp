@@ -42,16 +42,16 @@ const getUnitCount = (bookId: string): number => {
 // Function to get title for a book
 const getBookTitle = (bookId: string): string => {
   const titles: Record<string, string> = {
-    '0a': 'Book 0a - Starter A',
-    '0b': 'Book 0b - Starter B',
-    '0c': 'Book 0c - Starter C',
-    '1': 'Book 1 - Beginner',
-    '2': 'Book 2 - Elementary',
-    '3': 'Book 3 - Pre-Intermediate',
-    '4': 'Book 4 - Intermediate',
-    '5': 'Book 5 - Upper-Intermediate',
-    '6': 'Book 6 - Advanced',
-    '7': 'Book 7 - Proficiency'
+    '0a': 'Book 0a',
+    '0b': 'Book 0b',
+    '0c': 'Book 0c',
+    '1': 'Book 1',
+    '2': 'Book 2',
+    '3': 'Book 3',
+    '4': 'Book 4',
+    '5': 'Book 5',
+    '6': 'Book 6',
+    '7': 'Book 7'
   };
   
   return titles[bookId] || `Book ${bookId}`;

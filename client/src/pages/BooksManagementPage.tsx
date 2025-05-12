@@ -29,16 +29,16 @@ const BooksManagementPage = () => {
   useEffect(() => {
     // Default book data if API fails
     const defaultBooks: Book[] = [
-      { bookId: '0a', title: 'Book 0a', description: 'Starter Book A', color: '#FF40FF', units: 20 },
-      { bookId: '0b', title: 'Book 0b', description: 'Starter Book B', color: '#FF7F27', units: 20 },
-      { bookId: '0c', title: 'Book 0c', description: 'Starter Book C', color: '#00CEDD', units: 20 },
-      { bookId: '1', title: 'Book 1', description: 'Beginner Level', color: '#FFFF00', units: 18 },
-      { bookId: '2', title: 'Book 2', description: 'Elementary Level', color: '#9966CC', units: 18 },
-      { bookId: '3', title: 'Book 3', description: 'Pre-Intermediate Level', color: '#00CC00', units: 18 },
-      { bookId: '4', title: 'Book 4', description: 'Intermediate Level', color: '#5DADEC', units: 16 },
-      { bookId: '5', title: 'Book 5', description: 'Upper-Intermediate Level', color: '#00CC66', units: 16 },
-      { bookId: '6', title: 'Book 6', description: 'Advanced Level', color: '#FF0000', units: 16 },
-      { bookId: '7', title: 'Book 7', description: 'Proficiency Level', color: '#00FF00', units: 16 }
+      { bookId: '0a', title: 'Book 0a', description: 'Visual English Series', color: '#FF40FF', units: 20 },
+      { bookId: '0b', title: 'Book 0b', description: 'Visual English Series', color: '#FF7F27', units: 20 },
+      { bookId: '0c', title: 'Book 0c', description: 'Visual English Series', color: '#00CEDD', units: 20 },
+      { bookId: '1', title: 'Book 1', description: 'Visual English Series', color: '#FFFF00', units: 18 },
+      { bookId: '2', title: 'Book 2', description: 'Visual English Series', color: '#9966CC', units: 18 },
+      { bookId: '3', title: 'Book 3', description: 'Visual English Series', color: '#00CC00', units: 18 },
+      { bookId: '4', title: 'Book 4', description: 'Visual English Series', color: '#5DADEC', units: 16 },
+      { bookId: '5', title: 'Book 5', description: 'Visual English Series', color: '#00CC66', units: 16 },
+      { bookId: '6', title: 'Book 6', description: 'Visual English Series', color: '#FF0000', units: 16 },
+      { bookId: '7', title: 'Book 7', description: 'Visual English Series', color: '#00FF00', units: 16 }
     ];
     
     if (bookThumbnails && Array.isArray(bookThumbnails)) {
@@ -103,22 +103,16 @@ const BooksManagementPage = () => {
                   style={{ backgroundColor: book.color }}
                   className="pb-2 relative h-28 flex flex-col justify-center items-center"
                 >
-                  {book.thumbnailUrl ? (
-                    <img 
-                      src={book.thumbnailUrl} 
-                      alt={book.title} 
-                      className="h-16 w-16 object-contain"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.onerror = null;
-                        target.src = `/api/direct/content/icons/VISUAL ${book.bookId}.gif`;
-                      }}
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center">
-                      <BookOpen size={48} className="text-white" />
-                    </div>
-                  )}
+                  <img 
+                    src={`/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
+                    alt={book.title} 
+                    className="h-16 w-16 object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = book.thumbnailUrl || '';
+                    }}
+                  />
                   <CardTitle className="text-white text-lg mt-1">{book.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
