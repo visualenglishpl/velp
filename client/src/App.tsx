@@ -52,13 +52,9 @@ import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
 import DevToolsPage from "./pages/DevToolsPage";
 import TestAdminDashboard from "./pages/TestAdminDashboard";
 
-// Legacy/Testing pages (will be moved or removed later)
-import SimpleNavPage from "./pages/SimpleNavPage";
-import TestPage from "./pages/TestPage";
+// Legacy/Testing pages (minimal set kept for development)
 import StandaloneViewer from "./pages/StandaloneViewer";
 import StandaloneViewerTest from "./pages/StandaloneViewerTest";
-import LoginTestPage from "./pages/LoginTestPage";
-import AdminTestPage from "./pages/AdminTestPage";
 
 function App() {
   console.log('Rendering full home page with layout');
@@ -186,39 +182,15 @@ function App() {
           
           {/* Authentication is now implemented throughout the application */}
 
-          {/* LEGACY/TESTING ROUTES - Will be reorganized later */}
-          <Route path="/simple">
-            <SimpleNavPage />
-          </Route>
-          <Route path="/test">
-            <TestPage />
-          </Route>
+          {/* Only keep one standalone viewer for easy content access during development */}
           <Route path="/standalone-viewer">
             <StandaloneViewer />
-          </Route>
-          <Route path="/test-viewer">
-            <SimpleViewerTest />
-          </Route>
-          <Route path="/simple-viewer">
-            <SimpleViewerTest />
-          </Route>
-          <Route path="/viewer-test">
-            <ViewerTestPage />
-          </Route>
-          <Route path="/viewer-test/:bookId/:unitNumber">
-            <ViewerTestPage />
           </Route>
           <Route path="/standalone-viewer/:bookId">
             <StandaloneViewerTest />
           </Route>
           <Route path="/standalone-viewer/:bookId/:unitNumber">
             <StandaloneViewerTest />
-          </Route>
-          <Route path="/login-test">
-            <LoginTestPage />
-          </Route>
-          <Route path="/admin-test">
-            <AdminTestPage />
           </Route>
           
           {/* FALLBACK ROUTE - Redirect to home if route not found */}
