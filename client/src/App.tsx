@@ -30,9 +30,9 @@ import BookWizardPage from "./pages/BookWizardPage";
 // Migrated to /secure folder
 import BooksPage from "./secure/BooksPage";
 import SlickContentViewer from "./secure/SlickContentViewer";
+import UnitsPage from "./secure/UnitsPage";
 
 // Original paths - still used until migration is complete
-import UnitsPage from "./pages/UnitsPage";
 import SimpleViewerTest from "./pages/SimpleViewerTest";
 import ViewerTestPage from "./pages/ViewerTestPage";
 import DashboardPage from "./pages/DashboardPage";
