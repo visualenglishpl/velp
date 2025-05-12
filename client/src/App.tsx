@@ -8,10 +8,13 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { useAuth } from "./hooks/use-auth";
 
 // Public pages (no login required)
-import HomePage from "./public/HomePage"; // Updated path
-import Home from "./pages/Home"; // Keep original for now during migration
+// Migrated to /public folder
+import HomePage from "./public/HomePage";
+import AboutPage from "./public/AboutPage";
+import LoginPage from "./public/LoginPage";
+
+// Original paths - still used until migration is complete
 import MethodPage from "./pages/MethodPage";
-import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
@@ -22,13 +25,14 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import UnitCheckoutPage from "./pages/UnitCheckoutPage";
 import BookWizardPage from "./pages/BookWizardPage";
-import LoginPage from "./pages/LoginPage";
 
 // Secure pages (login required)
-import SecureBooksPage from "./secure/BooksPage"; // Updated path
-import BooksPage from "./pages/BooksPage"; // Keep original for now during migration
+// Migrated to /secure folder
+import BooksPage from "./secure/BooksPage";
+import SlickContentViewer from "./secure/SlickContentViewer";
+
+// Original paths - still used until migration is complete
 import UnitsPage from "./pages/UnitsPage";
-import SlickContentViewer from "./pages/SlickContentViewer";
 import SimpleViewerTest from "./pages/SimpleViewerTest";
 import ViewerTestPage from "./pages/ViewerTestPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -36,11 +40,13 @@ import DashboardBooksPage from "./pages/DashboardBooksPage";
 import DashboardUnitsPage from "./pages/DashboardUnitsPage";
 
 // Admin pages
-import AdminSimpleBooksAdmin from "./secure/admin/SimpleBooksAdmin"; // Updated path
+// Migrated to /secure/admin folder
+import SimpleBooksAdmin from "./secure/admin/SimpleBooksAdmin";
+import UnitsManagementPage from "./secure/admin/UnitsManagementPage";
+
+// Original paths - still used until migration is complete
 import AdminPage from "./pages/AdminPage";
 import BooksManagementPage from "./pages/BooksManagementPage";
-import UnitsManagementPage from "./pages/UnitsManagementPage";
-import SimpleBooksAdmin from "./pages/SimpleBooksAdmin"; // Keep original for now during migration
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
 import DevToolsPage from "./pages/DevToolsPage";
 import TestAdminDashboard from "./pages/TestAdminDashboard";
@@ -56,8 +62,9 @@ import AdminTestPage from "./pages/AdminTestPage";
 function App() {
   console.log('Rendering full home page with layout');
   
-  // Get current location using wouter's useLocation hook
+  // Get current location and auth status
   const [currentPath] = useLocation();
+  const { user, isLoading: authLoading } = useAuth();
   
   // Check if we're on an admin dashboard page, login page, or admin page
   const isAdminDashboard = currentPath.includes('/dashboard');
@@ -127,8 +134,8 @@ function App() {
             }}
           </Route>
 
-          {/* PROTECTED ROUTES - Authentication required */}
-          {/* To temporarily enable development, these routes are unprotected for now */}
+          {/* SECURE ROUTES - Authentication required */}
+          {/* Temporarily disable authentication for development */}
           <Route path="/books">
             <BooksPage />
           </Route>
@@ -155,7 +162,7 @@ function App() {
           </Route>
 
           {/* ADMIN ROUTES - Admin role required */}
-          {/* To temporarily enable development, these routes are unprotected for now */}
+          {/* Temporarily disable authentication for development */}
           <Route path="/admin">
             <AdminPage />
           </Route>
@@ -178,7 +185,9 @@ function App() {
             <TestAdminDashboard />
           </Route>
           
-          {/* When authentication is properly tested, enable these protected routes:
+          {/* AUTHENTICATION IMPLEMENTATION - To be enabled after migration is complete */}
+          {/*
+          // SECURE ROUTES
           <ProtectedRoute path="/books">
             <BooksPage />
           </ProtectedRoute>
@@ -204,6 +213,7 @@ function App() {
             <DashboardUnitsPage />
           </ProtectedRoute>
 
+          // ADMIN ROUTES
           <ProtectedRoute path="/admin" adminOnly>
             <AdminPage />
           </ProtectedRoute>
