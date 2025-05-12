@@ -84,7 +84,9 @@ const BooksManagementPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
               <Card key={n} className="animate-pulse">
-                <CardHeader className="h-28 bg-gray-200" />
+                <CardHeader className="h-36 bg-gray-200 relative">
+                  <div className="absolute bottom-0 w-full h-8 bg-gray-300"></div>
+                </CardHeader>
                 <CardContent className="py-2">
                   <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
                   <div className="h-3 bg-gray-200 rounded w-full"></div>
@@ -101,19 +103,21 @@ const BooksManagementPage = () => {
               <Card key={book.bookId} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader 
                   style={{ backgroundColor: book.color }}
-                  className="pb-2 relative h-28 flex flex-col justify-center items-center"
+                  className="p-0 relative h-36 flex flex-col justify-end"
                 >
-                  <img 
-                    src={`/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
-                    alt={book.title} 
-                    className="h-16 w-16 object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = book.thumbnailUrl || '';
-                    }}
-                  />
-                  <CardTitle className="text-white text-lg mt-1">{book.title}</CardTitle>
+                  <div className="w-full h-full absolute top-0 left-0">
+                    <img 
+                      src={`/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
+                      alt={book.title} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src = book.thumbnailUrl || '';
+                      }}
+                    />
+                  </div>
+                  <CardTitle className="text-white text-lg p-2 z-10 bg-black bg-opacity-50 w-full text-center">{book.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
                   <p className="text-gray-600 text-sm">{book.description}</p>
