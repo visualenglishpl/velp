@@ -11,56 +11,56 @@ const AdminPage = () => {
       description: 'Manage the list of educational books, units, and content',
       icon: <BookOpen className="h-10 w-10 text-white" />,
       color: '#FF40FF',
-      link: '/admin/books'
+      link: '/standalone-viewer'
     },
     {
       title: 'Shop Management',
       description: 'Configure products, pricing, and shop settings',
       icon: <Store className="h-10 w-10 text-white" />,
       color: '#FF7F27',
-      link: '/admin/shop'
+      link: '/simple'
     },
     {
       title: 'Site Settings',
       description: 'Customize platform appearance and behavior',
       icon: <Settings className="h-10 w-10 text-white" />,
       color: '#00CEDD',
-      link: '/admin/settings'
+      link: '/test'
     },
     {
       title: 'User Management',
       description: 'Manage teachers, students and permissions',
       icon: <Users className="h-10 w-10 text-white" />,
       color: '#FFFF00',
-      link: '/admin/users'
+      link: '/simple'
     },
     {
       title: 'Flagged Questions',
       description: 'Review and address flagged content',
       icon: <FileQuestion className="h-10 w-10 text-white" />,
       color: '#9966CC',
-      link: '/admin/flagged'
+      link: '/test'
     },
     {
       title: 'Analytics Panel',
       description: 'View platform usage statistics',
       icon: <BarChart2 className="h-10 w-10 text-white" />,
       color: '#00FF00',
-      link: '/admin/analytics'
+      link: '/simple'
     },
     {
       title: 'Access Roles',
       description: 'Configure role-based permissions',
       icon: <Shield className="h-10 w-10 text-white" />,
       color: '#5DADEC',
-      link: '/admin/roles'
+      link: '/test'
     },
     {
       title: 'Broadcast Messages',
       description: 'Send notices to users',
       icon: <Bell className="h-10 w-10 text-white" />,
       color: '#00CC66',
-      link: '/admin/broadcast'
+      link: '/simple'
     }
   ];
 
