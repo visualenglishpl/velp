@@ -29,16 +29,16 @@ const BooksManagementPage = () => {
   useEffect(() => {
     // Default book data if API fails
     const defaultBooks: Book[] = [
-      { bookId: '0a', title: 'Book 0a', description: 'Visual English Series', color: '#FF40FF', units: 20 },
-      { bookId: '0b', title: 'Book 0b', description: 'Visual English Series', color: '#FF7F27', units: 20 },
-      { bookId: '0c', title: 'Book 0c', description: 'Visual English Series', color: '#00CEDD', units: 20 },
-      { bookId: '1', title: 'Book 1', description: 'Visual English Series', color: '#FFFF00', units: 18 },
-      { bookId: '2', title: 'Book 2', description: 'Visual English Series', color: '#9966CC', units: 18 },
-      { bookId: '3', title: 'Book 3', description: 'Visual English Series', color: '#00CC00', units: 18 },
-      { bookId: '4', title: 'Book 4', description: 'Visual English Series', color: '#5DADEC', units: 16 },
-      { bookId: '5', title: 'Book 5', description: 'Visual English Series', color: '#00CC66', units: 16 },
-      { bookId: '6', title: 'Book 6', description: 'Visual English Series', color: '#FF0000', units: 16 },
-      { bookId: '7', title: 'Book 7', description: 'Visual English Series', color: '#00FF00', units: 16 }
+      { bookId: '0a', title: 'VISUAL ENGLISH BOOK 0A', description: 'Visual English Series', color: '#FF40FF', units: 20 },
+      { bookId: '0b', title: 'VISUAL ENGLISH BOOK 0B', description: 'Visual English Series', color: '#FF7F27', units: 20 },
+      { bookId: '0c', title: 'VISUAL ENGLISH BOOK 0C', description: 'Visual English Series', color: '#00CEDD', units: 20 },
+      { bookId: '1', title: 'VISUAL ENGLISH BOOK 1', description: 'Visual English Series', color: '#FFFF00', units: 18 },
+      { bookId: '2', title: 'VISUAL ENGLISH BOOK 2', description: 'Visual English Series', color: '#9966CC', units: 18 },
+      { bookId: '3', title: 'VISUAL ENGLISH BOOK 3', description: 'Visual English Series', color: '#00CC00', units: 18 },
+      { bookId: '4', title: 'VISUAL ENGLISH BOOK 4', description: 'Visual English Series', color: '#5DADEC', units: 16 },
+      { bookId: '5', title: 'VISUAL ENGLISH BOOK 5', description: 'Visual English Series', color: '#00CC66', units: 16 },
+      { bookId: '6', title: 'VISUAL ENGLISH BOOK 6', description: 'Visual English Series', color: '#FF0000', units: 16 },
+      { bookId: '7', title: 'VISUAL ENGLISH BOOK 7', description: 'Visual English Series', color: '#00FF00', units: 16 }
     ];
     
     if (bookThumbnails && Array.isArray(bookThumbnails)) {
@@ -46,7 +46,8 @@ const BooksManagementPage = () => {
       const transformedBooks = bookThumbnails.map((book: any) => ({
         ...book,
         color: defaultBooks.find(b => b.bookId === book.bookId)?.color || '#666666',
-        units: defaultBooks.find(b => b.bookId === book.bookId)?.units || 16
+        units: defaultBooks.find(b => b.bookId === book.bookId)?.units || 16,
+        thumbnailUrl: book.gifUrl || '' // Store the pre-signed URL from the API response
       }));
       setBooks(transformedBooks);
     } else {
@@ -85,7 +86,7 @@ const BooksManagementPage = () => {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
               <Card key={n} className="animate-pulse">
                 <CardHeader className="aspect-square bg-gray-200 relative p-0">
-                  <div className="absolute bottom-0 w-full h-8 bg-gray-300"></div>
+                  <div className="w-full h-8 bg-gray-300"></div>
                 </CardHeader>
                 <CardContent className="py-2">
                   <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
@@ -102,23 +103,23 @@ const BooksManagementPage = () => {
             {books.map((book) => (
               <Card key={book.bookId} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader 
-                  className="p-0 relative aspect-square flex flex-col justify-end overflow-hidden"
+                  className="p-0 relative aspect-square flex flex-col overflow-hidden"
                 >
+                  <CardTitle className="text-white text-lg p-2 z-10 bg-black bg-opacity-50 w-full text-center">{book.title}</CardTitle>
                   <img 
-                    src={`/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
+                    src={book.thumbnailUrl || `/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
                     alt={book.title} 
                     className="absolute inset-0 w-full h-full object-cover"
                     style={{ backgroundColor: book.color }}
                     onError={(e) => {
+                      // If the image fails to load, show a colored background
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;
-                      target.src = book.thumbnailUrl || '';
+                      target.style.display = 'none';
                     }}
                   />
-                  <CardTitle className="text-white text-lg p-2 z-10 bg-black bg-opacity-50 w-full text-center">{book.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
-                  <p className="text-gray-600 text-sm">{book.description}</p>
                   <p className="mt-1 text-xs text-gray-500">{book.units} units</p>
                 </CardContent>
                 <CardFooter className="pt-0 pb-3">

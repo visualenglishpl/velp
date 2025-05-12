@@ -53,7 +53,7 @@ const SimpleBooksAdmin = () => {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
               <Card key={n} className="animate-pulse">
                 <CardHeader className="aspect-square bg-gray-200 relative p-0">
-                  <div className="absolute bottom-0 w-full h-8 bg-gray-300"></div>
+                  <div className="w-full h-8 bg-gray-300"></div>
                 </CardHeader>
                 <CardContent className="py-2">
                   <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
@@ -70,19 +70,33 @@ const SimpleBooksAdmin = () => {
             {books.map((book) => (
               <Card key={book.bookId} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader 
-                  className="p-0 relative aspect-square flex flex-col justify-end overflow-hidden"
+                  className="p-0 relative aspect-square flex flex-col overflow-hidden"
                 >
-                  {/* Colored background as fallback */}
+                  <CardTitle className="text-white p-2 z-10 bg-black bg-opacity-50 w-full text-center">{book.title}</CardTitle>
+                  {/* Book cover image with colored background as fallback */}
                   <div 
                     className="absolute inset-0 w-full h-full flex items-center justify-center"
                     style={{ backgroundColor: book.color }}
                   >
-                    <BookOpen className="h-16 w-16 text-white" />
+                    {book.bookId === '3' ? (
+                      <img 
+                        src={`/api/direct/content/icons/VISUAL 3 .gif`}
+                        alt={book.title}
+                        className="w-full h-full object-cover"
+                        onError={() => {}} // Keep the colored background with icon on error
+                      />
+                    ) : (
+                      <img 
+                        src={`/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
+                        alt={book.title}
+                        className="w-full h-full object-cover"
+                        onError={() => {}} // Keep the colored background with icon on error
+                      />
+                    )}
+                    <BookOpen className="h-16 w-16 text-white absolute" />
                   </div>
-                  <CardTitle className="text-white p-2 z-10 bg-black bg-opacity-50 w-full text-center">{book.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
-                  <p className="text-gray-600 text-sm">{book.description}</p>
                   <p className="mt-1 text-xs text-gray-500">{book.units} units</p>
                 </CardContent>
                 <CardFooter className="pt-0 pb-3">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'wouter';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Layers } from 'lucide-react';
+import { ChevronLeft, Layers, ImageIcon } from 'lucide-react';
 
 interface Unit {
   id: number;
@@ -108,7 +108,7 @@ const UnitsManagementPage = () => {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
               <Card key={n} className="animate-pulse">
                 <CardHeader className="aspect-square bg-gray-200 relative p-0">
-                  <div className="absolute bottom-0 w-full h-8 bg-gray-300"></div>
+                  <div className="w-full h-8 bg-gray-300"></div>
                 </CardHeader>
                 <CardContent className="py-2">
                   <div className="h-5 bg-gray-200 rounded w-1/2 mb-2"></div>
@@ -125,14 +125,14 @@ const UnitsManagementPage = () => {
               <Card key={unit.id} className="overflow-hidden shadow hover:shadow-md transition-shadow">
                 <CardHeader 
                   style={{ backgroundColor: bookColor }}
-                  className="p-0 relative aspect-square flex flex-col justify-end overflow-hidden"
+                  className="p-0 relative aspect-square flex flex-col overflow-hidden"
                 >
+                  <CardTitle className="text-white p-2 z-10 bg-black bg-opacity-50 w-full text-center">{unit.title}</CardTitle>
                   <div className="flex-1 flex items-center justify-center">
                     <div className="mx-auto bg-white rounded-full w-16 h-16 flex items-center justify-center">
                       <Layers style={{ color: bookColor }} className="h-8 w-8" />
                     </div>
                   </div>
-                  <CardTitle className="text-white p-2 z-10 bg-black bg-opacity-50 w-full text-center">{unit.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="py-2 text-center">
                   <p className="text-sm text-gray-500">{unit.slideCount} slides</p>
