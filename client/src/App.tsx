@@ -12,6 +12,8 @@ import TestPage from "./pages/TestPage";
 import StandaloneViewer from "./pages/StandaloneViewer";
 import BooksManagementPage from "./pages/BooksManagementPage";
 import UnitsManagementPage from "./pages/UnitsManagementPage";
+import SimpleBooksAdmin from "./pages/SimpleBooksAdmin";
+import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
 import TestAdminDashboard from "./pages/TestAdminDashboard";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
@@ -188,6 +190,12 @@ function App() {
           </Route>
           <Route path="/test-admin-dashboard">
             <TestAdminDashboard />
+          </Route>
+          <Route path="/simple-books-admin">
+            <SimpleBooksAdmin />
+          </Route>
+          <Route path="/simple-units-admin">
+            <SimpleUnitsAdmin />
           </Route>
           <Route path="/dashboard">
             <DashboardPage />

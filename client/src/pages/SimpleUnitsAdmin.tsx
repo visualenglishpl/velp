@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'wouter';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Layers } from 'lucide-react';
@@ -10,90 +9,38 @@ interface Unit {
   slideCount: number;
 }
 
-// Function to get the color for a specific book
-const getBookColor = (bookId: string): string => {
-  const bookColors: Record<string, string> = {
-    '0a': '#FF40FF', // Pink
-    '0b': '#FF7F27', // Orange
-    '0c': '#00CEDD', // Teal
-    '1': '#FFFF00',  // Yellow
-    '2': '#9966CC',  // Purple
-    '3': '#00CC00',  // Green
-    '4': '#5DADEC',  // Blue
-    '5': '#00CC66',  // Green
-    '6': '#FF0000',  // Red
-    '7': '#00FF00'   // Bright Green
-  };
-  
-  return bookColors[bookId] || '#666666';
-};
-
-// Function to get unit count for a specific book
-const getUnitCount = (bookId: string): number => {
-  if (['0a', '0b', '0c'].includes(bookId)) {
-    return 20;
-  } else if (['1', '2', '3'].includes(bookId)) {
-    return 18;
-  } else {
-    return 16; // Books 4-7
-  }
-};
-
-// Function to get title for a book
-const getBookTitle = (bookId: string): string => {
-  const titles: Record<string, string> = {
-    '0a': 'Book 0a',
-    '0b': 'Book 0b',
-    '0c': 'Book 0c',
-    '1': 'Book 1',
-    '2': 'Book 2',
-    '3': 'Book 3',
-    '4': 'Book 4',
-    '5': 'Book 5',
-    '6': 'Book 6',
-    '7': 'Book 7'
-  };
-  
-  return titles[bookId] || `Book ${bookId}`;
-};
-
-const UnitsManagementPage = () => {
-  // Get bookId from URL parameters
-  const params = useParams<{ bookId: string }>();
-  const bookId = params.bookId || '';
-  
+const SimpleUnitsAdmin = () => {
   const [units, setUnits] = useState<Unit[]>([]);
   const [loading, setLoading] = useState(true);
-  const [bookColor, setBookColor] = useState('#666666');
-  const [bookTitle, setBookTitle] = useState('');
+  const [bookColor, setBookColor] = useState('#9966CC'); // Purple (Book 2 color)
+  const [bookTitle, setBookTitle] = useState('VISUAL ENGLISH BOOK 2');
   
   useEffect(() => {
-    // Set book color and title
-    setBookColor(getBookColor(bookId));
-    setBookTitle(getBookTitle(bookId));
-    
-    // Generate units for the book
-    const unitCount = getUnitCount(bookId);
+    // Generate units for Book 2
+    const unitCount = 18; // Book 2 has 18 units
     const generatedUnits = Array.from({ length: unitCount }, (_, index) => ({
       id: index + 1,
       title: `Unit ${index + 1}`,
       slideCount: Math.floor(Math.random() * 200) + 100 // Random number between 100-300 for demonstration
     }));
     
-    setUnits(generatedUnits);
-    setLoading(false);
-  }, [bookId]);
+    // Simulate API loading
+    setTimeout(() => {
+      setUnits(generatedUnits);
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 flex items-center">
-          <Link href="/admin/books">
+          <a href="/simple-books-admin">
             <Button variant="outline" className="mr-4">
               <ChevronLeft className="mr-2 h-4 w-4" />
               Back to Books
             </Button>
-          </Link>
+          </a>
           <h1 className="text-3xl font-bold text-gray-900">{bookTitle}</h1>
         </div>
 
@@ -138,13 +85,11 @@ const UnitsManagementPage = () => {
                   <p className="text-sm text-gray-500">{unit.slideCount} slides</p>
                 </CardContent>
                 <CardFooter>
-                  <Link href={`/standalone-viewer/${bookId}/${unit.id}`} className="w-full">
-                    <Button 
-                      className="w-full"
-                    >
-                      View Content
-                    </Button>
-                  </Link>
+                  <Button 
+                    className="w-full"
+                  >
+                    View Content
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
@@ -155,4 +100,4 @@ const UnitsManagementPage = () => {
   );
 };
 
-export default UnitsManagementPage;
+export default SimpleUnitsAdmin;

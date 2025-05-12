@@ -84,7 +84,7 @@ const BooksManagementPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
               <Card key={n} className="animate-pulse">
-                <CardHeader className="h-36 bg-gray-200 relative">
+                <CardHeader className="aspect-square bg-gray-200 relative p-0">
                   <div className="absolute bottom-0 w-full h-8 bg-gray-300"></div>
                 </CardHeader>
                 <CardContent className="py-2">
@@ -102,21 +102,19 @@ const BooksManagementPage = () => {
             {books.map((book) => (
               <Card key={book.bookId} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader 
-                  style={{ backgroundColor: book.color }}
-                  className="p-0 relative h-36 flex flex-col justify-end"
+                  className="p-0 relative aspect-square flex flex-col justify-end overflow-hidden"
                 >
-                  <div className="w-full h-full absolute top-0 left-0">
-                    <img 
-                      src={`/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
-                      alt={book.title} 
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.onerror = null;
-                        target.src = book.thumbnailUrl || '';
-                      }}
-                    />
-                  </div>
+                  <img 
+                    src={`/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
+                    alt={book.title} 
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ backgroundColor: book.color }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = book.thumbnailUrl || '';
+                    }}
+                  />
                   <CardTitle className="text-white text-lg p-2 z-10 bg-black bg-opacity-50 w-full text-center">{book.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
