@@ -9,6 +9,11 @@ import UnitsPage from "./pages/UnitsPage";
 import AdminPage from "./pages/AdminPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import BooksManagement from "./pages/admin/BooksManagement";
+import SimpleAdminDashboard from "./pages/admin/SimpleAdminDashboard";
+import SimpleBooksManagement from "./pages/admin/SimpleBooksManagement";
+import SimpleNavPage from "./pages/SimpleNavPage";
+import TestPage from "./pages/TestPage";
+import StandaloneViewer from "./pages/StandaloneViewer";
 import TestAdminDashboard from "./pages/TestAdminDashboard";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
@@ -76,6 +81,23 @@ function App() {
           <ProtectedRoute path="/admin/legacy" adminOnly={true}>
             <AdminPage />
           </ProtectedRoute>
+          {/* Simple Admin pages that don't rely on authentication */}
+          <Route path="/admin/simple">
+            <SimpleAdminDashboard />
+          </Route>
+          <Route path="/admin/simple-books">
+            <SimpleBooksManagement />
+          </Route>
+          {/* Simple navigation page without authentication requirements */}
+          <Route path="/simple">
+            <SimpleNavPage />
+          </Route>
+          <Route path="/test">
+            <TestPage />
+          </Route>
+          <Route path="/standalone-viewer">
+            <StandaloneViewer />
+          </Route>
           <Route path="/method">
             <MethodPage />
           </Route>
