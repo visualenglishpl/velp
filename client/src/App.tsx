@@ -56,7 +56,11 @@ function App() {
   const hideNavbar = 
     currentPath.includes('/login') || 
     currentPath.includes('/dashboard') || 
-    currentPath.includes('/admin');
+    currentPath.includes('/admin') ||
+    currentPath.includes('/book-units/') ||
+    currentPath.includes('/book/') ||
+    currentPath.includes('/viewer') ||
+    currentPath.includes('/standalone-viewer');
 
   return (
     <div className="flex flex-col min-h-screen">

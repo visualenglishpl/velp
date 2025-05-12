@@ -109,7 +109,7 @@ const UnitsManagementPage = () => {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
               <Card key={n} className="animate-pulse">
                 <CardHeader className="aspect-square bg-gray-200 relative p-0">
@@ -125,7 +125,7 @@ const UnitsManagementPage = () => {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4">
             {units.map((unit) => (
               <Card key={unit.id} className="overflow-hidden shadow hover:shadow-md transition-shadow">
                 <CardHeader 
