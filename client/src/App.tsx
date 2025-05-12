@@ -43,10 +43,10 @@ import DashboardUnitsPage from "./pages/DashboardUnitsPage";
 // Migrated to /secure/admin folder
 import SimpleBooksAdmin from "./secure/admin/SimpleBooksAdmin";
 import UnitsManagementPage from "./secure/admin/UnitsManagementPage";
+import AdminPage from "./secure/admin/AdminPage";
+import BooksManagementPage from "./secure/admin/BooksManagementPage";
 
 // Original paths - still used until migration is complete
-import AdminPage from "./pages/AdminPage";
-import BooksManagementPage from "./pages/BooksManagementPage";
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
 import DevToolsPage from "./pages/DevToolsPage";
 import TestAdminDashboard from "./pages/TestAdminDashboard";
