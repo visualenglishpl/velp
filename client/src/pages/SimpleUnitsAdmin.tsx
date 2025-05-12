@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Layers } from 'lucide-react';
+import { ChevronLeft, Layers, ImageIcon } from 'lucide-react';
 
 interface Unit {
   id: number;
   title: string;
   slideCount: number;
+  thumbnailUrl?: string;
 }
 
 const SimpleUnitsAdmin = () => {
@@ -18,11 +19,16 @@ const SimpleUnitsAdmin = () => {
   useEffect(() => {
     // Generate units for Book 2
     const unitCount = 18; // Book 2 has 18 units
-    const generatedUnits = Array.from({ length: unitCount }, (_, index) => ({
-      id: index + 1,
-      title: `Unit ${index + 1}`,
-      slideCount: Math.floor(Math.random() * 200) + 100 // Random number between 100-300 for demonstration
-    }));
+    const bookId = '2';
+    const generatedUnits = Array.from({ length: unitCount }, (_, index) => {
+      const unitNumber = index + 1;
+      return {
+        id: unitNumber,
+        title: `Unit ${unitNumber}`,
+        slideCount: Math.floor(Math.random() * 200) + 100, // Random number between 100-300 for demonstration
+        thumbnailUrl: `/api/direct/content/book${bookId}/icons/thumbnailsuni${bookId}-${unitNumber}.png`
+      };
+    });
     
     // Simulate API loading
     setTimeout(() => {
@@ -75,11 +81,41 @@ const SimpleUnitsAdmin = () => {
                   className="p-0 relative aspect-square flex flex-col overflow-hidden"
                 >
                   <CardTitle className="text-white p-2 z-10 bg-black bg-opacity-50 w-full text-center">{unit.title}</CardTitle>
-                  <div className="flex-1 flex items-center justify-center">
-                    <div className="mx-auto bg-white rounded-full w-16 h-16 flex items-center justify-center">
-                      <Layers style={{ color: bookColor }} className="h-8 w-8" />
+                  {unit.thumbnailUrl ? (
+                    <div className="absolute inset-0 w-full h-full">
+                      <img 
+                        src={unit.thumbnailUrl}
+                        alt={unit.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          // If the thumbnail fails to load, show the fallback
+                          const target = e.target as HTMLImageElement;
+                          target.onerror = null;
+                          target.style.display = 'none';
+                          
+                          // Find closest parent with class 'fallback-container' and show it
+                          const parent = target.parentElement;
+                          if (parent) {
+                            const fallback = parent.querySelector('.fallback-container');
+                            if (fallback) {
+                              (fallback as HTMLElement).style.display = 'flex';
+                            }
+                          }
+                        }}
+                      />
+                      <div className="fallback-container absolute inset-0 flex items-center justify-center" style={{ display: 'none' }}>
+                        <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center">
+                          <Layers style={{ color: bookColor }} className="h-8 w-8" />
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="flex-1 flex items-center justify-center">
+                      <div className="mx-auto bg-white rounded-full w-16 h-16 flex items-center justify-center">
+                        <Layers style={{ color: bookColor }} className="h-8 w-8" />
+                      </div>
+                    </div>
+                  )}
                 </CardHeader>
                 <CardContent className="py-2 text-center">
                   <p className="text-sm text-gray-500">{unit.slideCount} slides</p>
