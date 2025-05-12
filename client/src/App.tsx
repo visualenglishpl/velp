@@ -1,20 +1,14 @@
 import { Toaster } from "./components/ui/toaster";
 import React from "react";
-import { Switch, Route, useLocation } from "wouter";
-import Home from "./pages/Home";
+import { Switch, Route, useLocation, Redirect } from "wouter";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import BooksPage from "./pages/BooksPage";
-import UnitsPage from "./pages/UnitsPage";
-import AdminPage from "./pages/AdminPage";
-import SimpleNavPage from "./pages/SimpleNavPage";
-import TestPage from "./pages/TestPage";
-import StandaloneViewer from "./pages/StandaloneViewer";
-import BooksManagementPage from "./pages/BooksManagementPage";
-import UnitsManagementPage from "./pages/UnitsManagementPage";
-import SimpleBooksAdmin from "./pages/SimpleBooksAdmin";
-import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
-import TestAdminDashboard from "./pages/TestAdminDashboard";
+import CookieConsent from "./components/CookieConsent";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { useAuth } from "./hooks/use-auth";
+
+// Public pages (no login required)
+import Home from "./pages/Home";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
@@ -26,28 +20,42 @@ import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import UnitCheckoutPage from "./pages/UnitCheckoutPage";
-import BookCheckoutPage from "./pages/BookCheckoutPage";
 import BookWizardPage from "./pages/BookWizardPage";
+import LoginPage from "./pages/LoginPage";
+
+// Secure pages (login required)
+import BooksPage from "./pages/BooksPage";
+import UnitsPage from "./pages/UnitsPage";
 import SlickContentViewer from "./pages/SlickContentViewer";
 import SimpleViewerTest from "./pages/SimpleViewerTest";
 import ViewerTestPage from "./pages/ViewerTestPage";
-import StandaloneViewerTest from "./pages/StandaloneViewerTest";
-import DevToolsPage from "./pages/DevToolsPage";
-import LoginPage from "./pages/LoginPage";
-import LoginTestPage from "./pages/LoginTestPage";
-import AdminTestPage from "./pages/AdminTestPage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardBooksPage from "./pages/DashboardBooksPage";
 import DashboardUnitsPage from "./pages/DashboardUnitsPage";
 
-import CookieConsent from "./components/CookieConsent";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+// Admin pages
+import AdminPage from "./pages/AdminPage";
+import BooksManagementPage from "./pages/BooksManagementPage";
+import UnitsManagementPage from "./pages/UnitsManagementPage";
+import SimpleBooksAdmin from "./pages/SimpleBooksAdmin";
+import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
+import DevToolsPage from "./pages/DevToolsPage";
+import TestAdminDashboard from "./pages/TestAdminDashboard";
+
+// Legacy/Testing pages (will be moved or removed later)
+import SimpleNavPage from "./pages/SimpleNavPage";
+import TestPage from "./pages/TestPage";
+import StandaloneViewer from "./pages/StandaloneViewer";
+import StandaloneViewerTest from "./pages/StandaloneViewerTest";
+import LoginTestPage from "./pages/LoginTestPage";
+import AdminTestPage from "./pages/AdminTestPage";
 
 function App() {
   console.log('Rendering full home page with layout');
   
   // Get current location using wouter's useLocation hook
   const [currentPath] = useLocation();
+  const { user, isLoading } = useAuth();
   
   // Check if we're on an admin dashboard page, login page, or admin page
   const isAdminDashboard = currentPath.includes('/dashboard');
@@ -62,39 +70,19 @@ function App() {
     currentPath.includes('/viewer') ||
     currentPath.includes('/standalone-viewer');
 
+  // If we're on a protected route and going to the login page, redirect to home
+  if (user && !isLoading && currentPath === '/login') {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       {!hideNavbar && <Navbar />}
       <main className={`flex-grow ${isAdminDashboard ? 'min-h-screen' : ''}`}>
         <Switch>
+          {/* PUBLIC ROUTES - No authentication required */}
           <Route path="/">
             <Home />
-          </Route>
-          <Route path="/books">
-            <BooksPage />
-          </Route>
-          <Route path="/books/:bookId">
-            <UnitsPage />
-          </Route>
-          {/* Admin routes - No authentication required */}
-          <Route path="/admin">
-            <AdminPage />
-          </Route>
-          <Route path="/admin/books">
-            <BooksManagementPage />
-          </Route>
-          <Route path="/book-units/:bookId">
-            <UnitsManagementPage />
-          </Route>
-          {/* Simple navigation page without authentication requirements */}
-          <Route path="/simple">
-            <SimpleNavPage />
-          </Route>
-          <Route path="/test">
-            <TestPage />
-          </Route>
-          <Route path="/standalone-viewer">
-            <StandaloneViewer />
           </Route>
           <Route path="/method">
             <MethodPage />
@@ -126,12 +114,6 @@ function App() {
           <Route path="/checkout/unit">
             <UnitCheckoutPage />
           </Route>
-          <Route path="/checkout/book">
-            {() => {
-              window.location.href = "/checkout/book-wizard";
-              return null;
-            }}
-          </Route>
           <Route path="/checkout/book-wizard">
             <BookWizardPage />
           </Route>
@@ -141,17 +123,68 @@ function App() {
           <Route path="/checkout">
             <CheckoutPage />
           </Route>
-          <Route path="/viewer">
-            <SlickContentViewer />
+          <Route path="/login">
+            <LoginPage />
           </Route>
-          <Route path="/book/:bookId/unit/:unitNumber">
+
+          {/* PROTECTED ROUTES - Authentication required */}
+          <ProtectedRoute path="/books">
+            <BooksPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/books/:bookId">
+            <UnitsPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/viewer">
             <SlickContentViewer />
+          </ProtectedRoute>
+          <ProtectedRoute path="/book/:bookId/unit/:unitNumber">
+            <SlickContentViewer />
+          </ProtectedRoute>
+          <ProtectedRoute path="/book/:bookId">
+            <SlickContentViewer />
+          </ProtectedRoute>
+          <ProtectedRoute path="/dashboard">
+            <DashboardPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/dashboard/books">
+            <DashboardBooksPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/dashboard/books/:bookId">
+            <DashboardUnitsPage />
+          </ProtectedRoute>
+
+          {/* ADMIN ROUTES - Admin role required */}
+          <ProtectedRoute path="/admin" adminOnly>
+            <AdminPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/admin/books" adminOnly>
+            <BooksManagementPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/book-units/:bookId" adminOnly>
+            <UnitsManagementPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/simple-books-admin" adminOnly>
+            <SimpleBooksAdmin />
+          </ProtectedRoute>
+          <ProtectedRoute path="/simple-units-admin" adminOnly>
+            <SimpleUnitsAdmin />
+          </ProtectedRoute>
+          <ProtectedRoute path="/admin/dev/tools" adminOnly>
+            <DevToolsPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/test-admin-dashboard" adminOnly>
+            <TestAdminDashboard />
+          </ProtectedRoute>
+
+          {/* LEGACY/TESTING ROUTES - Will be reorganized later */}
+          <Route path="/simple">
+            <SimpleNavPage />
           </Route>
-          <Route path="/book:bookId/unit:unitNumber">
-            <SlickContentViewer />
+          <Route path="/test">
+            <TestPage />
           </Route>
-          <Route path="/book/:bookId">
-            <SlickContentViewer />
+          <Route path="/standalone-viewer">
+            <StandaloneViewer />
           </Route>
           <Route path="/test-viewer">
             <SimpleViewerTest />
@@ -165,26 +198,11 @@ function App() {
           <Route path="/viewer-test/:bookId/:unitNumber">
             <ViewerTestPage />
           </Route>
-          
-          {/* Standalone viewer that doesn't depend on auth context */}
-          <Route path="/standalone-viewer">
-            <StandaloneViewerTest />
-          </Route>
           <Route path="/standalone-viewer/:bookId">
             <StandaloneViewerTest />
           </Route>
           <Route path="/standalone-viewer/:bookId/:unitNumber">
             <StandaloneViewerTest />
-          </Route>
-          
-          {/* Developer Tools Page - Hidden from main navigation with a less obvious URL */}
-          <Route path="/admin/dev/tools">
-            <DevToolsPage />
-          </Route>
-          
-          {/* Admin/Teacher Platform Routes */}
-          <Route path="/login">
-            <LoginPage />
           </Route>
           <Route path="/login-test">
             <LoginTestPage />
@@ -192,23 +210,10 @@ function App() {
           <Route path="/admin-test">
             <AdminTestPage />
           </Route>
-          <Route path="/test-admin-dashboard">
-            <TestAdminDashboard />
-          </Route>
-          <Route path="/simple-books-admin">
-            <SimpleBooksAdmin />
-          </Route>
-          <Route path="/simple-units-admin">
-            <SimpleUnitsAdmin />
-          </Route>
-          <Route path="/dashboard">
-            <DashboardPage />
-          </Route>
-          <Route path="/dashboard/books">
-            <DashboardBooksPage />
-          </Route>
-          <Route path="/dashboard/books/:bookId">
-            <DashboardUnitsPage />
+          
+          {/* FALLBACK ROUTE - Redirect to home if route not found */}
+          <Route>
+            <Redirect to="/" />
           </Route>
         </Switch>
       </main>
