@@ -4,7 +4,8 @@ import { Switch, Route, useLocation, Redirect } from "wouter";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import CookieConsent from "./components/CookieConsent";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import ProtectedRoute from "./components/auth/ProtectedRouteWithHook";
+import AdminRoute from "./components/auth/AdminRoute";
 import { useAuth } from "./hooks/use-auth";
 
 // Public pages (no login required)
@@ -135,59 +136,6 @@ function App() {
           </Route>
 
           {/* SECURE ROUTES - Authentication required */}
-          {/* Temporarily disable authentication for development */}
-          <Route path="/books">
-            <BooksPage />
-          </Route>
-          <Route path="/books/:bookId">
-            <UnitsPage />
-          </Route>
-          <Route path="/viewer">
-            <SlickContentViewer />
-          </Route>
-          <Route path="/book/:bookId/unit/:unitNumber">
-            <SlickContentViewer />
-          </Route>
-          <Route path="/book/:bookId">
-            <SlickContentViewer />
-          </Route>
-          <Route path="/dashboard">
-            <DashboardPage />
-          </Route>
-          <Route path="/dashboard/books">
-            <DashboardBooksPage />
-          </Route>
-          <Route path="/dashboard/books/:bookId">
-            <DashboardUnitsPage />
-          </Route>
-
-          {/* ADMIN ROUTES - Admin role required */}
-          {/* Temporarily disable authentication for development */}
-          <Route path="/admin">
-            <AdminPage />
-          </Route>
-          <Route path="/admin/books">
-            <BooksManagementPage />
-          </Route>
-          <Route path="/book-units/:bookId">
-            <UnitsManagementPage />
-          </Route>
-          <Route path="/simple-books-admin">
-            <SimpleBooksAdmin />
-          </Route>
-          <Route path="/simple-units-admin">
-            <SimpleUnitsAdmin />
-          </Route>
-          <Route path="/admin/dev/tools">
-            <DevToolsPage />
-          </Route>
-          <Route path="/test-admin-dashboard">
-            <TestAdminDashboard />
-          </Route>
-          
-          {/* AUTHENTICATION IMPLEMENTATION - To be enabled after migration is complete */}
-          {/*
-          // SECURE ROUTES
           <ProtectedRoute path="/books">
             <BooksPage />
           </ProtectedRoute>
@@ -213,29 +161,30 @@ function App() {
             <DashboardUnitsPage />
           </ProtectedRoute>
 
-          // ADMIN ROUTES
-          <ProtectedRoute path="/admin" adminOnly>
+          {/* ADMIN ROUTES - Admin role required */}
+          <AdminRoute path="/admin">
             <AdminPage />
-          </ProtectedRoute>
-          <ProtectedRoute path="/admin/books" adminOnly>
+          </AdminRoute>
+          <AdminRoute path="/admin/books">
             <BooksManagementPage />
-          </ProtectedRoute>
-          <ProtectedRoute path="/book-units/:bookId" adminOnly>
+          </AdminRoute>
+          <AdminRoute path="/book-units/:bookId">
             <UnitsManagementPage />
-          </ProtectedRoute>
-          <ProtectedRoute path="/simple-books-admin" adminOnly>
+          </AdminRoute>
+          <AdminRoute path="/simple-books-admin">
             <SimpleBooksAdmin />
-          </ProtectedRoute>
-          <ProtectedRoute path="/simple-units-admin" adminOnly>
+          </AdminRoute>
+          <AdminRoute path="/simple-units-admin">
             <SimpleUnitsAdmin />
-          </ProtectedRoute>
-          <ProtectedRoute path="/admin/dev/tools" adminOnly>
+          </AdminRoute>
+          <AdminRoute path="/admin/dev/tools">
             <DevToolsPage />
-          </ProtectedRoute>
-          <ProtectedRoute path="/test-admin-dashboard" adminOnly>
+          </AdminRoute>
+          <AdminRoute path="/test-admin-dashboard">
             <TestAdminDashboard />
-          </ProtectedRoute>
-          */}
+          </AdminRoute>
+          
+          {/* Authentication is now implemented throughout the application */}
 
           {/* LEGACY/TESTING ROUTES - Will be reorganized later */}
           <Route path="/simple">

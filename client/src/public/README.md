@@ -1,12 +1,30 @@
-# Public Area Components
+# Public Components
 
-This directory contains components that are accessible without authentication.
+This directory contains components that are accessible to all users without authentication.
 
-## Pages in this directory:
+## Purpose
 
-- `HomePage.tsx` - Main landing page
-- `PricingPage.tsx` - Pricing information
-- `CheckoutPage.tsx` - Payment processing
-- Other public content pages (About, Terms, Privacy, etc.)
+The `/public` folder contains:
 
-These pages do not require login and are available to all visitors.
+- Pages that anyone can view without logging in (homepage, about, login, etc.)
+- Components specific to the public-facing side of the application
+- Content that should be available to unauthenticated users
+
+## Components
+
+- **HomePage.tsx**: Landing page for the application
+- **AboutPage.tsx**: Information about Visual English
+- **LoginPage.tsx**: Authentication page (login/registration)
+
+## Access Rules
+
+Components in this folder:
+
+- Do not require authentication
+- May contain preview content with limited functionality
+- Should handle redirecting authenticated users appropriately
+- Should not include secure content
+
+## Usage
+
+When creating new public pages, add them to this folder and register them in `App.tsx` using standard `<Route>` components (not `ProtectedRoute` or `AdminRoute`).

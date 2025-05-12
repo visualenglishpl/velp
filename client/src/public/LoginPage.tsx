@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, Link as RouterLink } from 'wouter';
+import { useLocation, Redirect } from 'wouter';
 import { Loader2, LogIn, User, GraduationCap, Book, School } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,241 +10,313 @@ import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
 
 export default function LoginPage() {
-  const [location, navigate] = useLocation();
-  const { user, isLoading: authLoading, loginMutation } = useAuth();
+  const [, navigate] = useLocation();
+  const { user, loginMutation, registerMutation } = useAuth();
   
   // Form state
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState('');
   const [selectedRole, setSelectedRole] = useState<'admin' | 'teacher' | 'school'>('teacher');
-  const [activeTab, setActiveTab] = useState<'login' | 'preview'>('login');
-  
-  // Check if user is already logged in
-  useEffect(() => {
-    if (user) {
-      if (user.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/books');
-      }
+  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+
+  // If user is already logged in, redirect to appropriate page
+  if (user) {
+    if (user.role === 'admin') {
+      return <Redirect to="/admin" />;
+    } else {
+      return <Redirect to="/books" />;
     }
-  }, [user, navigate]);
+  }
   
-  // Handle login form submission
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    loginMutation.mutate({
-      username,
+    loginMutation.mutate({ 
+      username, 
       password,
       role: selectedRole
     });
   };
   
-  // Handle preview content
-  const handlePreviewContent = () => {
-    navigate('/books');
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    registerMutation.mutate({
+      username,
+      password,
+      email,
+      fullName,
+      role: selectedRole
+    });
   };
-  
-  // If already authenticated and waiting for redirect
-  if (user) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 p-4">
-        <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-        <p className="text-lg text-gray-600">You are already logged in, redirecting...</p>
-      </div>
-    );
-  }
-  
+
   return (
     <>
       <Helmet>
-        <title>Sign In | Visual English</title>
+        <title>Login | Visual English</title>
       </Helmet>
       
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 p-4">
-        <div className="max-w-md w-full">
-          <div className="text-center mb-8">
-            <div className="mx-auto flex justify-center mb-4">
-              <div className="flex items-center">
-                <Book className="h-8 w-8 text-primary" />
-                <span className="ml-2 font-bold text-xl text-primary">Visual English</span>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl w-full space-y-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Hero/Info Section */}
+          <div className="flex flex-col justify-center p-6 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg shadow-xl text-white">
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl font-extrabold mb-4">Welcome to Visual English</h1>
+              <p className="text-lg mb-6">
+                A revolutionary platform for teaching and learning English through visual content
+              </p>
+              
+              <div className="space-y-4 mt-8">
+                <div className="flex items-center">
+                  <div className="rounded-full bg-white/20 p-2 mr-3">
+                    <Book className="h-5 w-5" />
+                  </div>
+                  <span>Access to a full library of visual learning materials</span>
+                </div>
+                
+                <div className="flex items-center">
+                  <div className="rounded-full bg-white/20 p-2 mr-3">
+                    <GraduationCap className="h-5 w-5" />
+                  </div>
+                  <span>Structured teaching and learning paths for all ages</span>
+                </div>
+                
+                <div className="flex items-center">
+                  <div className="rounded-full bg-white/20 p-2 mr-3">
+                    <User className="h-5 w-5" />
+                  </div>
+                  <span>Student progress tracking and personalized content</span>
+                </div>
               </div>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Learning Portal</h1>
-            <p className="text-gray-500 mt-2">Sign in to access content</p>
           </div>
           
-          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'preview')} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-4">
-              <TabsTrigger value="login">
-                <LogIn className="h-4 w-4 mr-2" /> 
-                Sign In
-              </TabsTrigger>
-              <TabsTrigger value="preview">
-                <Book className="h-4 w-4 mr-2" />
-                Quick Preview
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="login">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Sign In</CardTitle>
-                  <CardDescription>
-                    Enter your credentials to access the platform
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleLogin} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="username">Username</Label>
-                      <Input
-                        id="username"
-                        type="text"
-                        placeholder="your.username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="password">Password</Label>
-                      <Input
-                        id="password"
-                        type="password"
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label>Role</Label>
-                      <div className="grid grid-cols-3 gap-2 mt-1">
-                        <button
-                          type="button"
-                          onClick={() => setSelectedRole('admin')}
-                          className={`flex flex-col items-center justify-center p-3 rounded-md border-2 transition-colors ${
-                            selectedRole === 'admin'
-                              ? 'border-blue-600 bg-blue-50 text-blue-700'
-                              : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                          }`}
-                        >
-                          <User className="h-5 w-5 mb-1" />
-                          <span className="text-sm font-medium">Admin</span>
-                        </button>
-                        
-                        <button
-                          type="button"
-                          onClick={() => setSelectedRole('teacher')}
-                          className={`flex flex-col items-center justify-center p-3 rounded-md border-2 transition-colors ${
-                            selectedRole === 'teacher'
-                              ? 'border-green-600 bg-green-50 text-green-700'
-                              : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                          }`}
-                        >
-                          <GraduationCap className="h-5 w-5 mb-1" />
-                          <span className="text-sm font-medium">Teacher</span>
-                        </button>
-                        
-                        <button
-                          type="button"
-                          onClick={() => setSelectedRole('school')}
-                          className={`flex flex-col items-center justify-center p-3 rounded-md border-2 transition-colors ${
-                            selectedRole === 'school'
-                              ? 'border-amber-600 bg-amber-50 text-amber-700'
-                              : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                          }`}
-                        >
-                          <School className="h-5 w-5 mb-1" />
-                          <span className="text-sm font-medium">School</span>
-                        </button>
-                      </div>
-                    </div>
-                    
-                    {loginMutation.error && (
-                      <div className="p-3 text-sm bg-red-50 text-red-600 rounded-md border border-red-200">
-                        {loginMutation.error.message || 'Login failed. Please check your credentials.'}
-                      </div>
-                    )}
-                    
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      disabled={loginMutation.isPending || authLoading}
-                    >
-                      {loginMutation.isPending ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Signing in...
-                        </>
-                      ) : (
-                        <>
-                          <LogIn className="mr-2 h-4 w-4" />
-                          Sign In
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </CardContent>
-                <CardFooter className="flex justify-center text-sm text-gray-500">
-                  <p>Visual English Learning Platform</p>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="preview">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Content Preview</CardTitle>
-                  <CardDescription>
-                    Preview Visual English content without logging in
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-sm text-gray-600">
-                    You can access a limited preview of our learning content without creating an account.
-                    This will allow you to browse our collection of Visual English books and view sample materials.
-                  </p>
-                  
-                  <div className="flex flex-col space-y-2">
-                    <Button 
-                      onClick={handlePreviewContent}
-                      className="w-full"
-                    >
-                      <Book className="mr-2 h-4 w-4" />
-                      Browse as Guest
-                    </Button>
+          {/* Login/Register Form */}
+          <div>
+            <Card className="shadow-lg">
+              <CardHeader className="space-y-1 text-center">
+                <div className="flex justify-center mb-4">
+                  <div className="h-20 flex items-center">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                      <rect width="24" height="24" fill="white"/>
+                      <path d="M7 18H17V16H7V18Z" fill="#5E35B1"/>
+                      <path d="M17 14H7V12H17V14Z" fill="#5E35B1"/>
+                      <path d="M17 10H7V8H17V10Z" fill="#5E35B1"/>
+                      <path d="M7 6H17V4H7V6Z" fill="#5E35B1"/>
+                      <path d="M5 22H19C20.1 22 21 21.1 21 20V4C21 2.9 20.1 2 19 2H5C3.9 2 3 2.9 3 4V20C3 21.1 3.9 22 5 22ZM5 4H19V20H5V4Z" fill="#5E35B1"/>
+                    </svg>
+                    <h2 className="text-2xl font-bold tracking-tight">Visual English</h2>
                   </div>
+                </div>
+                <CardTitle className="text-2xl">Account Access</CardTitle>
+                <CardDescription>
+                  Sign in or create an account to access the platform
+                </CardDescription>
+              </CardHeader>
+              
+              <CardContent className="space-y-4">
+                <Tabs 
+                  defaultValue="login" 
+                  value={activeTab}
+                  onValueChange={(value) => setActiveTab(value as 'login' | 'register')}
+                  className="w-full"
+                >
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="login">Login</TabsTrigger>
+                    <TabsTrigger value="register">Register</TabsTrigger>
+                  </TabsList>
                   
-                  <div className="text-sm text-gray-500 p-3 bg-gray-50 rounded border border-gray-200">
-                    <p className="font-medium mb-1">Preview limitations:</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Only the first few slides in each unit are available</li>
-                      <li>No access to teacher resources</li>
-                      <li>Cannot save progress</li>
-                    </ul>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-center text-sm text-gray-500">
-                  <p>Sign in for full access to all features</p>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-          </Tabs>
-          
-          <div className="text-center mt-4">
-            <RouterLink href="/">
-              <Button 
-                variant="link" 
-                className="text-gray-500 hover:text-gray-700"
-              >
-                Return to main site
-              </Button>
-            </RouterLink>
+                  <TabsContent value="login">
+                    <form onSubmit={handleLogin} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="username">Username</Label>
+                        <Input
+                          id="username"
+                          placeholder="johndoe"
+                          required
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                          id="password"
+                          type="password"
+                          required
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>Login as</Label>
+                        <div className="grid grid-cols-3 gap-2">
+                          <Button
+                            type="button"
+                            variant={selectedRole === 'teacher' ? 'default' : 'outline'}
+                            className={`flex flex-col items-center justify-center h-20 ${
+                              selectedRole === 'teacher' ? 'bg-blue-600 hover:bg-blue-700' : ''
+                            }`}
+                            onClick={() => setSelectedRole('teacher')}
+                          >
+                            <GraduationCap className="h-8 w-8 mb-1" />
+                            <span className="text-xs">Teacher</span>
+                          </Button>
+                          
+                          <Button
+                            type="button"
+                            variant={selectedRole === 'school' ? 'default' : 'outline'}
+                            className={`flex flex-col items-center justify-center h-20 ${
+                              selectedRole === 'school' ? 'bg-green-600 hover:bg-green-700' : ''
+                            }`}
+                            onClick={() => setSelectedRole('school')}
+                          >
+                            <School className="h-8 w-8 mb-1" />
+                            <span className="text-xs">School</span>
+                          </Button>
+                          
+                          <Button
+                            type="button"
+                            variant={selectedRole === 'admin' ? 'default' : 'outline'}
+                            className={`flex flex-col items-center justify-center h-20 ${
+                              selectedRole === 'admin' ? 'bg-purple-600 hover:bg-purple-700' : ''
+                            }`}
+                            onClick={() => setSelectedRole('admin')}
+                          >
+                            <User className="h-8 w-8 mb-1" />
+                            <span className="text-xs">Admin</span>
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <Button
+                        className="w-full" 
+                        type="submit"
+                        disabled={loginMutation.isPending}
+                      >
+                        {loginMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <LogIn className="h-4 w-4 mr-2" />
+                        )}
+                        Sign In
+                      </Button>
+                    </form>
+                  </TabsContent>
+                  
+                  <TabsContent value="register">
+                    <form onSubmit={handleRegister} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="register-username">Username</Label>
+                        <Input
+                          id="register-username"
+                          placeholder="johndoe"
+                          required
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="register-email">Email</Label>
+                        <Input
+                          id="register-email"
+                          type="email"
+                          placeholder="john@example.com"
+                          required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="register-name">Full Name</Label>
+                        <Input
+                          id="register-name"
+                          placeholder="John Doe"
+                          required
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="register-password">Password</Label>
+                        <Input
+                          id="register-password"
+                          type="password"
+                          required
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>Register as</Label>
+                        <div className="grid grid-cols-3 gap-2">
+                          <Button
+                            type="button"
+                            variant={selectedRole === 'teacher' ? 'default' : 'outline'}
+                            className={`flex flex-col items-center justify-center h-20 ${
+                              selectedRole === 'teacher' ? 'bg-blue-600 hover:bg-blue-700' : ''
+                            }`}
+                            onClick={() => setSelectedRole('teacher')}
+                          >
+                            <GraduationCap className="h-8 w-8 mb-1" />
+                            <span className="text-xs">Teacher</span>
+                          </Button>
+                          
+                          <Button
+                            type="button"
+                            variant={selectedRole === 'school' ? 'default' : 'outline'}
+                            className={`flex flex-col items-center justify-center h-20 ${
+                              selectedRole === 'school' ? 'bg-green-600 hover:bg-green-700' : ''
+                            }`}
+                            onClick={() => setSelectedRole('school')}
+                          >
+                            <School className="h-8 w-8 mb-1" />
+                            <span className="text-xs">School</span>
+                          </Button>
+                          
+                          <Button
+                            type="button"
+                            variant={selectedRole === 'admin' ? 'default' : 'outline'}
+                            className={`flex flex-col items-center justify-center h-20 ${
+                              selectedRole === 'admin' ? 'bg-purple-600 hover:bg-purple-700' : ''
+                            }`}
+                            onClick={() => setSelectedRole('admin')}
+                          >
+                            <User className="h-8 w-8 mb-1" />
+                            <span className="text-xs">Admin</span>
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <Button 
+                        className="w-full"
+                        type="submit"
+                        disabled={registerMutation.isPending}
+                      >
+                        {registerMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <LogIn className="h-4 w-4 mr-2" />
+                        )}
+                        Create Account
+                      </Button>
+                    </form>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+              
+              <CardFooter className="flex flex-col space-y-2">
+                <div className="text-xs text-center text-gray-500 mt-2">
+                  By signing in, you agree to our Terms of Service and Privacy Policy.
+                </div>
+              </CardFooter>
+            </Card>
           </div>
         </div>
       </div>
