@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Home, Book, ArrowLeft, ArrowRight } from 'lucide-react';
-import S3ConnectivityTest from '@/components/diagnostics/S3ConnectivityTest';
 
 // This is a standalone version of the content viewer test that doesn't rely on auth context
 export default function StandaloneViewerTest() {
@@ -118,50 +117,6 @@ export default function StandaloneViewerTest() {
       {/* Content */}
       <div className="flex-1 p-4 md:p-8">
         <div className="max-w-7xl mx-auto">
-          {/* Book/Unit Selector */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Select Book and Unit</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form 
-                className="flex flex-col sm:flex-row gap-4"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const newLocation = `/standalone-viewer/${bookId}/${unitNumber}`;
-                  window.history.pushState(null, '', newLocation);
-                }}
-              >
-                <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1">Book ID</label>
-                  <Input 
-                    value={bookId} 
-                    onChange={(e) => setBookId(e.target.value)}
-                    placeholder="e.g. book1 or 1"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1">Unit Number</label>
-                  <Input 
-                    value={unitNumber} 
-                    onChange={(e) => setUnitNumber(e.target.value)}
-                    placeholder="e.g. unit1 or 1"
-                  />
-                </div>
-                <div className="flex items-end">
-                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-                    Load Content
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-          
-          {/* Connectivity Test Component */}
-          <div className="mb-8">
-            <S3ConnectivityTest />
-          </div>
-          
           {/* Content Viewer */}
           <Card>
             <CardHeader>
