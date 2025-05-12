@@ -7,10 +7,6 @@ import Footer from "./components/layout/Footer";
 import BooksPage from "./pages/BooksPage";
 import UnitsPage from "./pages/UnitsPage";
 import AdminPage from "./pages/AdminPage";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import BooksManagement from "./pages/admin/BooksManagement";
-import SimpleAdminDashboard from "./pages/admin/SimpleAdminDashboard";
-import SimpleBooksManagement from "./pages/admin/SimpleBooksManagement";
 import SimpleNavPage from "./pages/SimpleNavPage";
 import TestPage from "./pages/TestPage";
 import StandaloneViewer from "./pages/StandaloneViewer";
@@ -72,21 +68,9 @@ function App() {
           <Route path="/books/:bookId">
             <UnitsPage />
           </Route>
-          <ProtectedRoute path="/admin" adminOnly={true}>
-            <AdminDashboard />
-          </ProtectedRoute>
-          <ProtectedRoute path="/admin/books" adminOnly={true}>
-            <BooksManagement />
-          </ProtectedRoute>
-          <ProtectedRoute path="/admin/legacy" adminOnly={true}>
+          {/* Single Admin Page - No authentication required */}
+          <Route path="/admin">
             <AdminPage />
-          </ProtectedRoute>
-          {/* Simple Admin pages that don't rely on authentication */}
-          <Route path="/admin/simple">
-            <SimpleAdminDashboard />
-          </Route>
-          <Route path="/admin/simple-books">
-            <SimpleBooksManagement />
           </Route>
           {/* Simple navigation page without authentication requirements */}
           <Route path="/simple">
