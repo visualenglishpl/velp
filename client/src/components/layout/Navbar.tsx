@@ -67,15 +67,6 @@ const Navbar = () => {
             <Link href="/books">
               <span className="text-gray-600 hover:text-teal-600 text-sm">Books</span>
             </Link>
-            <Link href="/simple">
-              <span className="text-gray-600 hover:text-teal-600 text-sm">Navigation</span>
-            </Link>
-            <Link href="/standalone-viewer">
-              <span className="text-gray-600 hover:text-teal-600 text-sm">Viewer</span>
-            </Link>
-            <Link href="/admin">
-              <span className="text-gray-600 hover:text-teal-600 text-sm font-bold">Admin</span>
-            </Link>
             <Link href="/#pricing">
               <span className="text-gray-600 hover:text-teal-600 text-sm">Pricing</span>
             </Link>
