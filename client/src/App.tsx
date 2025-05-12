@@ -10,6 +10,8 @@ import AdminPage from "./pages/AdminPage";
 import SimpleNavPage from "./pages/SimpleNavPage";
 import TestPage from "./pages/TestPage";
 import StandaloneViewer from "./pages/StandaloneViewer";
+import BooksManagementPage from "./pages/BooksManagementPage";
+import UnitsManagementPage from "./pages/UnitsManagementPage";
 import TestAdminDashboard from "./pages/TestAdminDashboard";
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
@@ -68,9 +70,15 @@ function App() {
           <Route path="/books/:bookId">
             <UnitsPage />
           </Route>
-          {/* Single Admin Page - No authentication required */}
+          {/* Admin routes - No authentication required */}
           <Route path="/admin">
             <AdminPage />
+          </Route>
+          <Route path="/admin/books">
+            <BooksManagementPage />
+          </Route>
+          <Route path="/book-units/:bookId">
+            <UnitsManagementPage />
           </Route>
           {/* Simple navigation page without authentication requirements */}
           <Route path="/simple">

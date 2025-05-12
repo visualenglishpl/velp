@@ -11,7 +11,7 @@ const AdminPage = () => {
       description: 'Manage the list of educational books, units, and content',
       icon: <BookOpen className="h-10 w-10 text-white" />,
       color: '#FF40FF',
-      link: '/standalone-viewer'
+      link: '/admin/books'
     },
     {
       title: 'Shop Management',
