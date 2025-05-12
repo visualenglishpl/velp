@@ -8,7 +8,8 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { useAuth } from "./hooks/use-auth";
 
 // Public pages (no login required)
-import Home from "./pages/Home";
+import HomePage from "./public/HomePage"; // Updated path
+import Home from "./pages/Home"; // Keep original for now during migration
 import MethodPage from "./pages/MethodPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
@@ -24,7 +25,8 @@ import BookWizardPage from "./pages/BookWizardPage";
 import LoginPage from "./pages/LoginPage";
 
 // Secure pages (login required)
-import BooksPage from "./pages/BooksPage";
+import SecureBooksPage from "./secure/BooksPage"; // Updated path
+import BooksPage from "./pages/BooksPage"; // Keep original for now during migration
 import UnitsPage from "./pages/UnitsPage";
 import SlickContentViewer from "./pages/SlickContentViewer";
 import SimpleViewerTest from "./pages/SimpleViewerTest";
@@ -34,10 +36,11 @@ import DashboardBooksPage from "./pages/DashboardBooksPage";
 import DashboardUnitsPage from "./pages/DashboardUnitsPage";
 
 // Admin pages
+import AdminSimpleBooksAdmin from "./secure/admin/SimpleBooksAdmin"; // Updated path
 import AdminPage from "./pages/AdminPage";
 import BooksManagementPage from "./pages/BooksManagementPage";
 import UnitsManagementPage from "./pages/UnitsManagementPage";
-import SimpleBooksAdmin from "./pages/SimpleBooksAdmin";
+import SimpleBooksAdmin from "./pages/SimpleBooksAdmin"; // Keep original for now during migration
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
 import DevToolsPage from "./pages/DevToolsPage";
 import TestAdminDashboard from "./pages/TestAdminDashboard";
@@ -82,7 +85,7 @@ function App() {
         <Switch>
           {/* PUBLIC ROUTES - No authentication required */}
           <Route path="/">
-            <Home />
+            <HomePage />
           </Route>
           <Route path="/method">
             <MethodPage />
