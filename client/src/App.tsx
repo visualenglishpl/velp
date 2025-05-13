@@ -59,9 +59,20 @@ import StandaloneViewerTest from "./pages/StandaloneViewerTest";
 function App() {
   console.log('Rendering full home page with layout');
   
-  // Get current location and auth status
+  // Get current location
   const [currentPath] = useLocation();
-  const { user, isLoading: authLoading } = useAuth();
+  
+  // Use try/catch to safely access auth context 
+  // This will prevent the app from crashing if AuthProvider is not available
+  let user = null;
+  let authLoading = true;
+  try {
+    const auth = useAuth();
+    user = auth.user;
+    authLoading = auth.isLoading;
+  } catch (error) {
+    console.log('Auth context not available yet, proceeding with fallback values');
+  }
   
   // Check if we're on an admin dashboard page, login page, or admin page
   const isAdminDashboard = currentPath.includes('/dashboard');
@@ -164,7 +175,7 @@ function App() {
           <AdminRoute path="/admin/books">
             <BooksManagementPage />
           </AdminRoute>
-          <AdminRoute path="/book-units/:bookId">
+          <AdminRoute path="/admin/book-units/:bookId">
             <UnitsManagementPage />
           </AdminRoute>
           <AdminRoute path="/simple-books-admin">

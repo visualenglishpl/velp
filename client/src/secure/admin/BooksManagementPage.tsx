@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, PlusCircle, Pencil, Eye, BookOpen, CheckCircle, Ban } from 'lucide-react';
+import { ChevronLeft, PlusCircle, Pencil, Eye, BookOpen, CheckCircle, Ban, Filter } from 'lucide-react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
@@ -20,6 +20,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Type definition for book data
 interface Book {
@@ -42,6 +43,10 @@ const BooksManagementPage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
   const [isNewBook, setIsNewBook] = useState(false);
+  
+  // Filtering options
+  const [filterStatus, setFilterStatus] = useState<'all' | 'published' | 'draft'>('all');
+  const [filterLevel, setFilterLevel] = useState<string>('all');
 
   // Book form state
   const [bookId, setBookId] = useState('');
@@ -96,6 +101,33 @@ const BooksManagementPage = () => {
     
     setLoading(false);
   }, [bookThumbnails]);
+  
+  // Extract unique levels for the filter
+  const availableLevels = useMemo(() => {
+    const levels = new Set<string>();
+    books.forEach(book => {
+      if (book.level) {
+        levels.add(book.level);
+      }
+    });
+    return Array.from(levels).sort();
+  }, [books]);
+  
+  // Filter books based on selected criteria
+  const filteredBooks = useMemo(() => {
+    return books.filter(book => {
+      // Filter by publication status
+      if (filterStatus !== 'all') {
+        if (filterStatus === 'published' && !book.published) return false;
+        if (filterStatus === 'draft' && book.published) return false;
+      }
+      
+      // Filter by level
+      if (filterLevel !== 'all' && book.level !== filterLevel) return false;
+      
+      return true;
+    });
+  }, [books, filterStatus, filterLevel]);
 
   // Create mock API mutation for updating book details
   const updateBookMutation = useMutation({
@@ -231,7 +263,7 @@ const BooksManagementPage = () => {
             <h1 className="text-3xl font-bold text-gray-900">Books Management</h1>
           </div>
 
-          <div className="mb-8 flex flex-wrap items-center justify-between">
+          <div className="mb-6 flex flex-wrap items-center justify-between">
             <div>
               <p className="text-lg text-gray-600">
                 Manage the complete collection of Visual English books and their units. Select a book to view its units.
@@ -246,27 +278,133 @@ const BooksManagementPage = () => {
               Add New Book
             </Button>
           </div>
+          
+          {/* Filtering controls */}
+          <div className="mb-8 bg-white p-4 rounded-lg shadow">
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex items-center">
+                <Filter className="h-5 w-5 mr-2 text-gray-500" />
+                <span className="font-medium">Filters:</span>
+              </div>
+              
+              <Tabs 
+                value={filterStatus} 
+                onValueChange={(value) => setFilterStatus(value as 'all' | 'published' | 'draft')}
+                className="w-auto"
+              >
+                <TabsList className="bg-gray-100">
+                  <TabsTrigger value="all" className="px-4">
+                    All
+                  </TabsTrigger>
+                  <TabsTrigger value="published" className="px-4">
+                    <CheckCircle className="h-4 w-4 mr-1" />
+                    Published
+                  </TabsTrigger>
+                  <TabsTrigger value="draft" className="px-4">
+                    <Ban className="h-4 w-4 mr-1" />
+                    Draft
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+              
+              {availableLevels.length > 0 && (
+                <div className="flex items-center space-x-2">
+                  <Label htmlFor="levelFilter" className="whitespace-nowrap">Level:</Label>
+                  <select
+                    id="levelFilter"
+                    value={filterLevel}
+                    onChange={(e) => setFilterLevel(e.target.value)}
+                    className="px-3 py-1 border rounded-md text-sm"
+                  >
+                    <option value="all">All Levels</option>
+                    {availableLevels.map(level => (
+                      <option key={level} value={level}>{level}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              
+              {filterStatus !== 'all' || filterLevel !== 'all' ? (
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => {
+                    setFilterStatus('all');
+                    setFilterLevel('all');
+                  }}
+                  className="ml-auto"
+                >
+                  Clear Filters
+                </Button>
+              ) : null}
+            </div>
+            
+            {filteredBooks.length !== books.length && (
+              <div className="mt-2 text-sm text-gray-500">
+                Showing {filteredBooks.length} of {books.length} books
+              </div>
+            )}
+          </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
-                <Card key={n} className="animate-pulse">
-                  <CardHeader className="aspect-square bg-gray-200 relative p-0">
-                    <div className="w-full h-8 bg-gray-300"></div>
-                  </CardHeader>
-                  <CardContent className="py-2">
-                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-full"></div>
-                  </CardContent>
-                  <CardFooter className="pt-0 pb-3">
-                    <div className="h-9 bg-gray-200 rounded w-full"></div>
-                  </CardFooter>
-                </Card>
-              ))}
+            <div className="space-y-10">
+              {/* Skeleton for filter controls */}
+              <div className="bg-white p-4 rounded-lg shadow animate-pulse">
+                <div className="flex flex-wrap items-center gap-4">
+                  <div className="h-8 w-20 bg-gray-200 rounded"></div>
+                  <div className="h-10 w-64 bg-gray-200 rounded"></div>
+                  <div className="h-8 w-40 bg-gray-200 rounded"></div>
+                </div>
+              </div>
+              
+              {/* Skeleton for book grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-6">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+                  <div key={n} className="animate-pulse rounded-lg overflow-hidden shadow-md">
+                    <div className="aspect-square bg-gradient-to-b from-gray-200 to-gray-300 relative">
+                      <div className="absolute top-0 left-0 right-0 h-12 bg-black bg-opacity-40"></div>
+                      <div className="absolute top-3 left-3 h-6 w-3/4 bg-gray-100 rounded"></div>
+                      
+                      <div className="absolute top-20 right-3">
+                        <div className="h-6 w-20 bg-gray-100 bg-opacity-80 rounded-full"></div>
+                      </div>
+                      
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center">
+                          <div className="h-10 w-10 rounded-full bg-gray-300"></div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white p-4">
+                      <div className="h-5 bg-gray-200 rounded w-1/2 mb-3"></div>
+                      <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+                      <div className="h-4 bg-gray-200 rounded w-4/5"></div>
+                      
+                      <div className="h-9 mt-4 bg-gray-200 rounded"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : filteredBooks.length === 0 ? (
+            <div className="bg-white p-10 text-center rounded shadow">
+              <Ban className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+              <h3 className="text-lg font-medium mb-1">No Books Found</h3>
+              <p className="text-gray-500 mb-4">No books match your current filter criteria.</p>
+              <Button 
+                variant="outline"
+                onClick={() => {
+                  setFilterStatus('all');
+                  setFilterLevel('all');
+                }}
+              >
+                Clear Filters
+              </Button>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4">
-              {books.map((book) => (
+              {filteredBooks.map((book) => (
                 <Card key={book.bookId} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                   <CardHeader 
                     className="p-0 relative aspect-square flex flex-col overflow-hidden"

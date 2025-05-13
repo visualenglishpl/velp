@@ -14,7 +14,18 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   adminOnly = false, 
   children 
 }) => {
-  const { user, isLoading } = useAuth();
+  // Use try/catch to safely handle auth errors
+  let user = null;
+  let isLoading = true;
+  
+  try {
+    const auth = useAuth();
+    user = auth.user;
+    isLoading = auth.isLoading;
+  } catch (error) {
+    console.error("Auth context error in ProtectedRoute:", error);
+    // Fall back to loading state, will lead to login redirect
+  }
   
   return (
     <Route path={path}>

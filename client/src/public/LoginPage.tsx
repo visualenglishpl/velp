@@ -11,7 +11,21 @@ import { Helmet } from 'react-helmet';
 
 export default function LoginPage() {
   const [, navigate] = useLocation();
-  const { user, loginMutation, registerMutation } = useAuth();
+  
+  // Use try/catch to safely handle auth errors
+  let user = null;
+  let loginMutation = { mutate: (data: any) => {}, isPending: false };
+  let registerMutation = { mutate: (data: any) => {}, isPending: false };
+  
+  try {
+    const auth = useAuth();
+    user = auth.user;
+    loginMutation = auth.loginMutation;
+    registerMutation = auth.registerMutation;
+  } catch (error) {
+    console.error("Auth context error in LoginPage:", error);
+    // Continue with fallback values
+  }
   
   // Form state
   const [username, setUsername] = useState('');
@@ -20,6 +34,7 @@ export default function LoginPage() {
   const [fullName, setFullName] = useState('');
   const [selectedRole, setSelectedRole] = useState<'admin' | 'teacher' | 'school'>('teacher');
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+  const [authError, setAuthError] = useState<string | null>(null);
 
   // If user is already logged in, redirect to appropriate page
   if (user) {
@@ -32,22 +47,48 @@ export default function LoginPage() {
   
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutation.mutate({ 
-      username, 
-      password,
-      role: selectedRole
-    });
+    setAuthError(null);
+    
+    // Check if auth context is available
+    if (typeof loginMutation.mutate !== 'function') {
+      setAuthError("Authentication service is currently unavailable. Please try again later.");
+      return;
+    }
+    
+    try {
+      loginMutation.mutate({ 
+        username, 
+        password,
+        role: selectedRole
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      setAuthError("Failed to log in. Please try again.");
+    }
   };
   
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    registerMutation.mutate({
-      username,
-      password,
-      email,
-      fullName,
-      role: selectedRole
-    });
+    setAuthError(null);
+    
+    // Check if auth context is available
+    if (typeof registerMutation.mutate !== 'function') {
+      setAuthError("Registration service is currently unavailable. Please try again later.");
+      return;
+    }
+    
+    try {
+      registerMutation.mutate({
+        username,
+        password,
+        email,
+        fullName,
+        role: selectedRole
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      setAuthError("Failed to register. Please try again.");
+    }
   };
 
   return (
@@ -118,7 +159,10 @@ export default function LoginPage() {
                 <Tabs 
                   defaultValue="login" 
                   value={activeTab}
-                  onValueChange={(value) => setActiveTab(value as 'login' | 'register')}
+                  onValueChange={(value) => {
+                    setActiveTab(value as 'login' | 'register');
+                    setAuthError(null); // Clear error when switching tabs
+                  }}
                   className="w-full"
                 >
                   <TabsList className="grid w-full grid-cols-2">
@@ -127,6 +171,16 @@ export default function LoginPage() {
                   </TabsList>
                   
                   <TabsContent value="login">
+                    {authError && (
+                      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4 text-sm">
+                        <div className="flex">
+                          <div className="py-1"><svg className="h-5 w-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                          <div>
+                            <p>{authError}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     <form onSubmit={handleLogin} className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="username">Username</Label>
@@ -207,6 +261,16 @@ export default function LoginPage() {
                   </TabsContent>
                   
                   <TabsContent value="register">
+                    {authError && (
+                      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4 text-sm">
+                        <div className="flex">
+                          <div className="py-1"><svg className="h-5 w-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                          <div>
+                            <p>{authError}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     <form onSubmit={handleRegister} className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="register-username">Username</Label>
