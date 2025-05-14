@@ -880,49 +880,51 @@ export default function SimpleContentViewer() {
       {/* Teacher Resources Section */}
       {user && bookId && unitNumber && (
         <div className="mt-8 border-t pt-6">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col items-center justify-center text-center mb-6">
             <h2 className="text-xl font-bold">Teacher Resources</h2>
-            <div className="text-sm text-gray-500">Resources for Book {bookId}, Unit {unitNumber}</div>
+            <div className="text-sm text-gray-500 mt-1">Resources for Book {bookId}, Unit {unitNumber}</div>
           </div>
           
           <Tabs defaultValue="videos" className="w-full">
-            <TabsList className="inline-flex h-9 items-center justify-center rounded-lg bg-indigo-50 p-1 text-indigo-700">
-              <TabsTrigger 
-                value="videos" 
-                className="px-3 py-1 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 inline" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                </svg>
-                Videos
-              </TabsTrigger>
-              <TabsTrigger 
-                value="games" 
-                className="px-3 py-1 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 inline" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                </svg>
-                Games
-              </TabsTrigger>
-              <TabsTrigger 
-                value="lessons" 
-                className="px-3 py-1 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 inline" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-                </svg>
-                Lessons
-              </TabsTrigger>
-              <TabsTrigger 
-                value="downloads" 
-                className="px-3 py-1 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 inline" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-                Downloads
-              </TabsTrigger>
-            </TabsList>
+            <div className="flex justify-center mb-4">
+              <TabsList className="flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-50 to-purple-50 p-1 text-indigo-700 shadow-sm">
+                <TabsTrigger 
+                  value="videos" 
+                  className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                  </svg>
+                  Videos
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="games" 
+                  className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                  </svg>
+                  Games
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="lessons" 
+                  className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                  </svg>
+                  Lessons
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="downloads" 
+                  className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                  Downloads
+                </TabsTrigger>
+              </TabsList>
+            </div>
             <TabsContent value="videos" className="p-4 border rounded-md">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Educational Videos</h3>
+                <h3 className="text-lg font-medium text-center">Educational Videos</h3>
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="rounded-lg overflow-hidden border shadow-sm transition-all duration-200 hover:shadow-md hover:border-red-200">
@@ -984,7 +986,7 @@ export default function SimpleContentViewer() {
             </TabsContent>
             <TabsContent value="games" className="p-4 border rounded-md">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Interactive Games</h3>
+                <h3 className="text-lg font-medium text-center">Interactive Games</h3>
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="rounded-lg overflow-hidden border shadow-sm transition-all duration-200 hover:shadow-md hover:border-purple-200">
@@ -1020,7 +1022,7 @@ export default function SimpleContentViewer() {
             </TabsContent>
             <TabsContent value="lessons" className="p-4 border rounded-md">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Lesson Plans</h3>
+                <h3 className="text-lg font-medium text-center">Lesson Plans</h3>
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="space-y-4">
                     <div className="border rounded-lg overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-teal-200">
@@ -1131,7 +1133,7 @@ export default function SimpleContentViewer() {
             </TabsContent>
             <TabsContent value="downloads" className="p-4 border rounded-md">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Downloadable Resources</h3>
+                <h3 className="text-lg font-medium text-center">Downloadable Resources</h3>
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="grid gap-4 md:grid-cols-2">
                     <a href="#" className="block group hover:no-underline">
