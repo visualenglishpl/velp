@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/hooks/use-auth";
 
 const Navbar = () => {
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  
+  // To safely check if user is admin without crashing
+  const [isAdmin, setIsAdmin] = useState(false);
+  
+  useEffect(() => {
+    // Check if the user has admin status
+    const checkAdminStatus = async () => {
+      try {
+        const response = await fetch('/api/user', { credentials: 'include' });
+        if (response.ok) {
+          const userData = await response.json();
+          setIsAdmin(userData?.role === 'admin');
+        }
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+      }
+    };
+    
+    checkAdminStatus();
+  }, []);
 
   // Update cart count when localStorage changes
   useEffect(() => {
@@ -73,6 +94,16 @@ const Navbar = () => {
             <Link href="/contact">
               <span className="text-gray-600 hover:text-teal-600 text-sm">Contact</span>
             </Link>
+            
+            {/* Admin Dashboard Link - Only visible to admins */}
+            {isAdmin && (
+              <Link href="/admin">
+                <div className="flex items-center text-purple-600 hover:text-purple-800 cursor-pointer">
+                  <Shield size={18} className="mr-1" />
+                  <span className="text-sm font-medium">Admin</span>
+                </div>
+              </Link>
+            )}
             
             <Link href="/cart">
               <div className="flex items-center text-gray-700 hover:text-teal-600 cursor-pointer relative">
