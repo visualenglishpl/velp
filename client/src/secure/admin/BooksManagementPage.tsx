@@ -303,7 +303,7 @@ const BooksManagementPage = () => {
               </svg>
               <span className="font-medium text-purple-900 bg-purple-100 px-2 py-1 rounded">Content Viewer</span>
             </div>
-            <p className="text-purple-700 text-sm mb-2">You are now at the <b>Books Management</b> page. Click "Manage Units" for any book to proceed to the next step.</p>
+            <p className="text-purple-700 text-sm mb-2">You are now at the <b>Books Management</b> page. Click "Manage" for any book to proceed to the next step.</p>
           </div>
           
           {/* Filtering controls */}
@@ -395,214 +395,238 @@ const BooksManagementPage = () => {
                       <div className="absolute top-20 right-3">
                         <div className="h-6 w-20 bg-gray-100 bg-opacity-80 rounded-full"></div>
                       </div>
-                      
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center">
+                    </div>
+                    <div className="p-4 bg-white">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="font-medium text-gray-700">
                           <div className="h-10 w-10 rounded-full bg-gray-300"></div>
                         </div>
                       </div>
                     </div>
-                    
-                    <div className="bg-white p-4">
+                    <div className="p-4 bg-gray-50">
                       <div className="h-5 bg-gray-200 rounded w-1/2 mb-3"></div>
                       <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
                       <div className="h-4 bg-gray-200 rounded w-4/5"></div>
-                      
+                    </div>
+                    <div className="p-3 bg-gray-100 flex justify-between">
                       <div className="h-9 mt-4 bg-gray-200 rounded"></div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-          ) : filteredBooks.length === 0 ? (
-            <div className="bg-white p-10 text-center rounded shadow">
-              <Ban className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium mb-1">No Books Found</h3>
-              <p className="text-gray-500 mb-4">No books match your current filter criteria.</p>
-              <Button 
-                variant="outline"
-                onClick={() => {
-                  setFilterStatus('all');
-                  setFilterLevel('all');
-                }}
-              >
-                Clear Filters
-              </Button>
-            </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4">
               {filteredBooks.map((book) => (
-                <Card key={book.bookId} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <Card 
+                  key={book.bookId} 
+                  className="overflow-hidden border-0 shadow-lg hover:scale-105 transition-transform rounded-xl"
+                >
                   <CardHeader 
-                    className="p-0 relative aspect-square flex flex-col overflow-hidden"
+                    className="p-0 rounded-t-xl relative"
+                    style={{ backgroundColor: book.color }}
                   >
-                    <CardTitle className="text-white text-lg p-2 z-10 bg-black bg-opacity-50 w-full text-center">{book.title}</CardTitle>
-                    {book.published !== false ? (
-                      <Badge variant="default" className="absolute top-10 right-2 z-10 bg-green-600">
-                        Published
-                      </Badge>
-                    ) : (
-                      <Badge variant="outline" className="absolute top-10 right-2 z-10 bg-gray-800 text-white">
-                        Draft
-                      </Badge>
-                    )}
-                    <img 
-                      src={book.thumbnailUrl || `/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
-                      alt={book.title} 
-                      className="absolute inset-0 w-full h-full object-cover"
-                      style={{ backgroundColor: book.color }}
-                      onError={(e) => {
-                        // If the image fails to load, show a colored background
-                        const target = e.target as HTMLImageElement;
-                        target.onerror = null;
-                        target.style.display = 'none';
-                      }}
-                    />
-                  </CardHeader>
-                  <CardContent className="py-2">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-xs text-gray-500">{book.units} units</p>
-                        {book.level && (
-                          <p className="text-xs font-medium text-gray-700">Level: {book.level}</p>
-                        )}
+                    <div className="relative aspect-square flex flex-col items-center justify-center">
+                      <div className="absolute inset-0 w-full h-full">
+                        <img 
+                          src={book.thumbnailUrl || `/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
+                          alt={book.title} 
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // Fallback to solid color if the image fails to load
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                          }}
+                        />
                       </div>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="h-8 w-8 p-0"
-                        onClick={() => handleEditBook(book)}
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
+                      <div className="absolute top-0 left-0 right-0 bg-black bg-opacity-50 p-2 z-10">
+                        <div className="h-6 flex items-center justify-center">
+                          <h2 className="text-base font-bold text-white leading-none text-center w-full truncate">
+                            {book.title}
+                          </h2>
+                        </div>
+                      </div>
+                      {book.published !== false ? (
+                        <Badge variant="default" className="absolute top-10 right-2 z-10 bg-green-600">
+                          Published
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="absolute top-10 right-2 z-10 bg-gray-800 text-white">
+                          Draft
+                        </Badge>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-3 pb-1">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between text-sm text-gray-700">
+                        <span className="font-medium">Book ID:</span>
+                        <span>{book.bookId}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm text-gray-700">
+                        <span className="font-medium">Units:</span>
+                        <span>{book.units}</span>
+                      </div>
+                      {book.level && (
+                        <div className="flex items-center justify-between text-sm text-gray-700">
+                          <span className="font-medium">Level:</span>
+                          <span>{book.level}</span>
+                        </div>
+                      )}
                     </div>
                   </CardContent>
-                  <CardFooter className="pt-0 pb-3 flex flex-col space-y-2">
+                  <CardFooter className="flex justify-between pt-1 pb-3">
                     <Button 
-                      className="w-full bg-purple-600 hover:bg-purple-700" 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleEditBook(book)}
+                      className="h-8 text-xs"
+                    >
+                      <Pencil className="h-3.5 w-3.5 mr-1" />
+                      Edit
+                    </Button>
+                    <Button 
+                      size="sm"
+                      className="h-8 text-xs bg-indigo-600 hover:bg-indigo-700"
                       onClick={() => handleSelectBook(book.bookId)}
                     >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
-                        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      Manage Units
+                      <BookOpen className="h-3.5 w-3.5 mr-1" />
+                      Manage
                     </Button>
-                    
-                    <Link href={`/book/${book.bookId}/unit/1`} className="w-full">
-                      <Button 
-                        variant="outline"
-                        className="w-full border-purple-400 text-purple-700 hover:bg-purple-50"
-                      >
-                        <Eye className="mr-2 h-4 w-4" /> View Content
-                      </Button>
-                    </Link>
                   </CardFooter>
                 </Card>
               ))}
             </div>
           )}
+          
+          {/* No results message */}
+          {!loading && filteredBooks.length === 0 && (
+            <div className="text-center py-12 bg-white rounded-lg shadow">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-6">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 12C10 13.1046 9.10457 14 8 14C6.89543 14 6 13.1046 6 12C6 10.8954 6.89543 10 8 10C9.10457 10 10 10.8954 10 12Z" stroke="#6b7280" strokeWidth="2"/>
+                  <path d="M16 17.5C16 18.6046 15.1046 19.5 14 19.5C12.8954 19.5 12 18.6046 12 17.5C12 16.3954 12.8954 15.5 14 15.5C15.1046 15.5 16 16.3954 16 17.5Z" stroke="#6b7280" strokeWidth="2"/>
+                  <path d="M8 14L14 15.5" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M14 8.5C14 9.60457 13.1046 10.5 12 10.5C10.8954 10.5 10 9.60457 10 8.5C10 7.39543 10.8954 6.5 12 6.5C13.1046 6.5 14 7.39543 14 8.5Z" stroke="#6b7280" strokeWidth="2"/>
+                  <path d="M8 10L12 8.5" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <h3 className="text-xl font-medium text-gray-900 mb-2">No books found</h3>
+              <p className="text-gray-500 max-w-md mx-auto mb-6">
+                No books match your current filter settings. Try changing your filters or create a new book.
+              </p>
+              <Button 
+                variant="default" 
+                onClick={() => {
+                  setFilterStatus('all');
+                  setFilterLevel('all');
+                }}
+              >
+                Clear All Filters
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       
-      {/* Dialog for editing book details */}
+      {/* Edit/Create Book Dialog */}
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle>{isNewBook ? 'Create New Book' : 'Edit Book Details'}</DialogTitle>
           </DialogHeader>
-          
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="bookId">Book ID</Label>
-                <Input 
-                  id="bookId" 
-                  value={bookId} 
-                  onChange={(e) => setBookId(e.target.value)}
-                  disabled={!isNewBook} // Only allow editing book ID for new books
-                  required
-                  placeholder="e.g. 1, 2, 3a"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="color">Color</Label>
-                <div className="flex items-center space-x-2">
-                  <Input 
-                    id="color" 
-                    type="color"
-                    value={color} 
-                    onChange={(e) => setColor(e.target.value)}
-                    className="w-12 h-10 p-1"
+          <form onSubmit={handleSubmit}>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="bookId">Book ID</Label>
+                  <Input
+                    id="bookId"
+                    placeholder="e.g., 1, 2, 3, 0a"
+                    value={bookId}
+                    onChange={(e) => setBookId(e.target.value)}
+                    className="col-span-2"
+                    disabled={!isNewBook} // Can't edit book ID after creation
+                    required
                   />
-                  <Input 
-                    value={color} 
-                    onChange={(e) => setColor(e.target.value)}
-                    className="flex-1"
-                    placeholder="#RRGGBB"
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="units">Number of Units</Label>
+                  <Input
+                    id="units"
+                    type="number"
+                    value={units}
+                    onChange={(e) => setUnits(parseInt(e.target.value, 10))}
+                    min={1}
+                    max={100}
+                    required
                   />
                 </div>
               </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="title">Title</Label>
-              <Input 
-                id="title" 
-                value={title} 
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                placeholder="Book Title"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea 
-                id="description" 
-                value={description} 
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Short description of the book"
-                rows={2}
-              />
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="level">Level</Label>
-                <Input 
-                  id="level" 
-                  value={level} 
-                  onChange={(e) => setLevel(e.target.value)}
-                  placeholder="e.g. Beginner, Intermediate"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="units">Units</Label>
-                <Input 
-                  id="units" 
-                  type="number" 
-                  min="1"
-                  max="50"
-                  value={units.toString()} 
-                  onChange={(e) => setUnits(parseInt(e.target.value) || 1)}
+                <Label htmlFor="title">Title</Label>
+                <Input
+                  id="title"
+                  placeholder="e.g., VISUAL ENGLISH BOOK 1"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   required
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  placeholder="Enter a brief description of this book"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={2}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="level">Level</Label>
+                  <select
+                    id="level"
+                    value={level}
+                    onChange={(e) => setLevel(e.target.value)}
+                    className="w-full p-2 border rounded-md"
+                  >
+                    <option value="">Select Level</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Elementary">Elementary</option>
+                    <option value="Pre-Intermediate">Pre-Intermediate</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Upper-Intermediate">Upper-Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="color">Color</Label>
+                  <div className="flex">
+                    <Input
+                      id="color"
+                      type="color"
+                      value={color}
+                      onChange={(e) => setColor(e.target.value)}
+                      className="h-10 w-full"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="published"
+                  checked={published}
+                  onCheckedChange={setPublished}
+                />
+                <Label htmlFor="published">Published</Label>
+              </div>
             </div>
-            
-            <div className="flex items-center space-x-2 pt-2">
-              <Switch 
-                id="published" 
-                checked={published} 
-                onCheckedChange={setPublished}
-              />
-              <Label htmlFor="published">Published</Label>
-            </div>
-            
-            <DialogFooter className="pt-4">
-              <Button 
-                type="button" 
-                variant="outline" 
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
                 onClick={() => setIsEditModalOpen(false)}
               >
                 Cancel
@@ -611,12 +635,7 @@ const BooksManagementPage = () => {
                 type="submit" 
                 disabled={updateBookMutation.isPending || createBookMutation.isPending}
               >
-                {updateBookMutation.isPending || createBookMutation.isPending ? (
-                  <>
-                    <span className="animate-spin mr-2">⏳</span>
-                    Saving...
-                  </>
-                ) : isNewBook ? 'Create Book' : 'Save Changes'}
+                {updateBookMutation.isPending || createBookMutation.isPending ? 'Saving...' : 'Save'}
               </Button>
             </DialogFooter>
           </form>

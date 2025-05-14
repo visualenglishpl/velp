@@ -188,15 +188,15 @@ const AdminPage = () => {
             {adminFeatures.map((feature, index) => (
               <Card 
                 key={index} 
-                className={`overflow-hidden border-0 ${feature.featured ? 'shadow-xl ring-2 ring-purple-400' : 'shadow-md'} hover:scale-105 transition-transform min-w-[150px]`}
+                className={`overflow-hidden border-0 ${feature.featured ? 'shadow-xl ring-2 ring-purple-400' : 'shadow-lg'} hover:scale-105 transition-transform min-w-[150px] rounded-xl`}
               >
                 <CardHeader 
-                  className="p-0"
+                  className="p-0 rounded-t-xl"
                   style={{ backgroundColor: feature.color }}
                 >
                   <div className="flex flex-col items-center justify-center py-3 w-full px-4">
-                    <div className="bg-white rounded-full p-2 mb-2">
-                      <div style={{ color: feature.color }}>
+                    <div className="bg-white rounded-full p-2.5 mb-2 shadow-md flex items-center justify-center h-10 w-10">
+                      <div style={{ color: feature.color }} className="h-5 w-5">
                         {feature.icon}
                       </div>
                     </div>
