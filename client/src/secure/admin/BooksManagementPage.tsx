@@ -280,13 +280,7 @@ const BooksManagementPage = () => {
             </Button>
           </div>
           
-          {/* Collection Info Panel */}
-          <div className="mb-8 bg-indigo-600 p-6 rounded-xl text-white">
-            <h2 className="text-2xl font-bold mb-2">Visual English Books Collection</h2>
-            <p className="text-indigo-100">
-              Manage the complete collection of Visual English books and their units. Select a book to view its units.
-            </p>
-          </div>
+          {/* No header needed */}
 
           {loading ? (
             <div className="space-y-10">
