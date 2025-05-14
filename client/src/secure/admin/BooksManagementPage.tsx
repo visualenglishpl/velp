@@ -284,87 +284,8 @@ const BooksManagementPage = () => {
           <div className="mb-8 bg-indigo-600 p-6 rounded-xl text-white">
             <h2 className="text-2xl font-bold mb-2">Visual English Books Collection</h2>
             <p className="text-indigo-100">
-              Browse, manage and customize the complete collection of books. Use the filters below to sort by level or publication status.
+              Manage the complete collection of Visual English books and their units. Select a book to view its units.
             </p>
-          </div>
-          
-          {/* Filtering controls */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Filter className="h-5 w-5 text-indigo-600" />
-              <h3 className="text-lg font-medium text-gray-800">Filter Books</h3>
-            </div>
-            
-            <div className="flex flex-col md:flex-row gap-4">
-              <div>
-                <p className="mb-2 text-sm font-medium text-gray-600">Status</p>
-                <div className="flex gap-2">
-                  <Button 
-                    variant={filterStatus === 'all' ? 'default' : 'outline'} 
-                    size="sm" 
-                    onClick={() => setFilterStatus('all')}
-                    className={filterStatus === 'all' ? 'bg-gray-800' : ''}
-                  >
-                    All
-                  </Button>
-                  <Button 
-                    variant={filterStatus === 'published' ? 'default' : 'outline'} 
-                    size="sm" 
-                    onClick={() => setFilterStatus('published')}
-                    className={filterStatus === 'published' ? 'bg-green-600' : ''}
-                  >
-                    <CheckCircle className="h-4 w-4 mr-1" />
-                    Published
-                  </Button>
-                  <Button 
-                    variant={filterStatus === 'draft' ? 'default' : 'outline'} 
-                    size="sm" 
-                    onClick={() => setFilterStatus('draft')}
-                  >
-                    <Ban className="h-4 w-4 mr-1" />
-                    Draft
-                  </Button>
-                </div>
-              </div>
-              
-              {availableLevels.length > 0 && (
-                <div>
-                  <Label htmlFor="levelFilter" className="mb-2 text-sm font-medium text-gray-600">Level</Label>
-                  <select
-                    id="levelFilter"
-                    value={filterLevel}
-                    onChange={(e) => setFilterLevel(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-md text-sm"
-                  >
-                    <option value="all">All Levels</option>
-                    {availableLevels.map(level => (
-                      <option key={level} value={level}>{level}</option>
-                    ))}
-                  </select>
-                </div>
-              )}
-              
-              {(filterStatus !== 'all' || filterLevel !== 'all') && (
-                <div className="flex items-end ml-auto">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => {
-                      setFilterStatus('all');
-                      setFilterLevel('all');
-                    }}
-                  >
-                    Clear Filters
-                  </Button>
-                </div>
-              )}
-            </div>
-            
-            {filteredBooks.length !== books.length && (
-              <div className="mt-4 text-sm text-gray-500">
-                Showing {filteredBooks.length} of {books.length} books
-              </div>
-            )}
           </div>
 
           {loading ? (
@@ -386,7 +307,7 @@ const BooksManagementPage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-6">
-              {filteredBooks.map((book) => (
+              {books.map((book: Book) => (
                 <Card 
                   key={book.bookId} 
                   className="overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-xl"
@@ -483,15 +404,15 @@ const BooksManagementPage = () => {
             </div>
           )}
           
-          {/* No results message */}
-          {!loading && filteredBooks.length === 0 && (
+          {/* No books message - only shown if no books are available at all */}
+          {!loading && books.length === 0 && (
             <div className="text-center py-12 bg-white rounded-xl shadow-md border border-gray-100">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-6">
                 <BookOpen className="h-10 w-10 text-gray-500" />
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">No books found</h3>
               <p className="text-gray-600 mb-6">
-                No books match your current filter criteria. Try adjusting your filters or add a new book.
+                There are no books available in the system yet.
               </p>
               <Button onClick={handleNewBook} className="bg-indigo-600 hover:bg-indigo-700">
                 <PlusCircle className="mr-2 h-4 w-4" />
