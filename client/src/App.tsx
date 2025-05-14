@@ -14,6 +14,7 @@ import HomePage from "./public/HomePage";
 import AboutPage from "./public/AboutPage";
 import LoginPage from "./public/LoginPage";
 import StandaloneLoginPage from "./public/StandaloneLoginPage";
+import DirectAdminLogin from "./public/DirectAdminLogin";
 
 // Original paths - still used until migration is complete
 import MethodPage from "./pages/MethodPage";
@@ -156,6 +157,9 @@ function App() {
           </Route>
           <Route path="/checkout/:planId">
             <CheckoutPage />
+          </Route>
+          <Route path="/direct-admin">
+            <DirectAdminLogin />
           </Route>
           <Route path="/checkout">
             <CheckoutPage />

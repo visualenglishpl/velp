@@ -59,9 +59,14 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ path, children }) => {
             <div className="flex flex-col justify-center items-center h-[50vh]">
               <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
               <p className="text-gray-500 mb-4">Loading admin authentication...</p>
-              <Link href="/login" className="text-sm text-purple-600 hover:text-purple-800 flex items-center">
-                <LogIn className="h-4 w-4 mr-1" /> Login directly if loading takes too long
-              </Link>
+              <div className="flex flex-col items-center gap-2">
+                <Link href="/login" className="text-sm text-purple-600 hover:text-purple-800 flex items-center">
+                  <LogIn className="h-4 w-4 mr-1" /> Login directly if loading takes too long
+                </Link>
+                <Link href="/direct-admin" className="text-sm text-indigo-600 hover:text-indigo-800 flex items-center font-medium">
+                  <LogIn className="h-4 w-4 mr-1" /> Use Direct Admin Access (Bypass Auth)
+                </Link>
+              </div>
             </div>
           );
         }
