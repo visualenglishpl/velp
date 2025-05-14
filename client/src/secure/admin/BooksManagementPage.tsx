@@ -28,6 +28,7 @@ interface Book {
   color: string;
   units: number;
   thumbnailUrl?: string;
+  gifUrl?: string;
   published?: boolean;
   level?: string;
 }
@@ -288,20 +289,46 @@ const BooksManagementPage = () => {
                   key={book.bookId} 
                   className="overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-xl"
                 >
-                  {/* Status Badge - green check in circle */}
-                  <div className="absolute top-2 right-2 z-10">
-                    <div className="rounded-full bg-green-500 p-1">
-                      <Check className="h-5 w-5 text-white" />
-                    </div>
-                  </div>
 
-                  {/* Book content with colored background - simple display for all books */}
+
+                  {/* Book content with colored background and thumbnail */}
                   <div 
                     className="relative aspect-square overflow-hidden flex items-center justify-center" 
                     style={{ backgroundColor: book.color }}
                   >
-                    {/* Always show simple book icon - matching the reference image */}
-                    <BookOpen className="h-24 w-24 text-white" />
+                    {/* Show fallback book icon immediately for Book 3 which has known issues */}
+                    {book.bookId === '3' ? (
+                      <div className="flex items-center justify-center h-full w-full">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                        <div className="absolute bottom-2 left-2 bg-gray-800 bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+                          VISUAL 3
+                        </div>
+                      </div>
+                    ) : (
+                      <img 
+                        src={book.thumbnailUrl || book.gifUrl || `/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
+                        alt={`Visual English Book ${book.bookId}`} 
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          // Fallback to book icon if the image fails to load
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            const bookIcon = document.createElement('div');
+                            bookIcon.innerHTML = `<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>`;
+                            bookIcon.className = "flex items-center justify-center";
+                            parent.appendChild(bookIcon);
+                          }
+                        }}
+                      />
+                    )}
                   </div>
                   
                   {/* Book information section - clean white background */}
