@@ -94,7 +94,7 @@ const AdminPage = () => {
     {
       title: 'Books Management',
       description: 'Manage the list of educational books, units, and content',
-      icon: <BookOpen className="h-10 w-10 text-white" />,
+      icon: <BookOpen className="h-10 w-10 text-white" size={42} />,
       color: '#FF40FF', // Pink (Book 0a)
       link: '/admin/books',
       featured: true
@@ -102,63 +102,63 @@ const AdminPage = () => {
     {
       title: 'Shop Management',
       description: 'Configure products, pricing, and shop settings',
-      icon: <Store className="h-10 w-10 text-white" />,
+      icon: <Store className="h-10 w-10 text-white" size={42} />,
       color: '#FF7F27', // Orange (Book 0b)
       link: '/admin/shop'
     },
     {
       title: 'Site Settings',
       description: 'Customize platform appearance and behavior',
-      icon: <Settings className="h-10 w-10 text-white" />,
+      icon: <Settings className="h-10 w-10 text-white" size={42} />,
       color: '#00CEDD', // Teal (Book 0c)
       link: '/admin/settings'
     },
     {
       title: 'User Management',
       description: 'Manage teachers, students and permissions',
-      icon: <Users className="h-10 w-10 text-white" />,
+      icon: <Users className="h-10 w-10 text-white" size={42} />,
       color: '#FFFF00', // Yellow (Book 1)
       link: '/admin/users'
     },
     {
       title: 'Flagged Questions',
       description: 'Review and address content issues reported by users',
-      icon: <FileQuestion className="h-10 w-10 text-white" />,
+      icon: <FileQuestion className="h-10 w-10 text-white" size={42} />,
       color: '#9966CC', // Purple (Book 2)
       link: '/admin/flagged'
     },
     {
       title: 'Analytics Panel',
       description: 'View platform usage statistics and reports',
-      icon: <BarChart2 className="h-10 w-10 text-white" />,
+      icon: <BarChart2 className="h-10 w-10 text-white" size={42} />,
       color: '#00CC00', // Green (Book 3)
       link: '/admin/analytics'
     },
     {
       title: 'Access Roles',
       description: 'Configure role-based access controls',
-      icon: <Shield className="h-10 w-10 text-white" />,
+      icon: <Shield className="h-10 w-10 text-white" size={42} />,
       color: '#5DADEC', // Blue (Book 4)
       link: '/admin/roles'
     },
     {
       title: 'Broadcast Messages',
       description: 'Send announcements to users and manage notifications',
-      icon: <Bell className="h-10 w-10 text-white" />,
+      icon: <Bell className="h-10 w-10 text-white" size={42} />,
       color: '#00CC66', // Green (Book 5)
       link: '/admin/broadcast'
     },
     {
       title: 'Feedback Viewer',
       description: 'View and respond to user feedback and suggestions',
-      icon: <MessageSquare className="h-10 w-10 text-white" />,
+      icon: <MessageSquare className="h-10 w-10 text-white" size={42} />,
       color: '#FF0000', // Red (Book 6)
       link: '/admin/feedback'
     },
     {
       title: 'Payment History',
       description: 'View transaction history and manage subscriptions',
-      icon: <CreditCard className="h-10 w-10 text-white" />,
+      icon: <CreditCard className="h-10 w-10 text-white" size={42} />,
       color: '#00FF00', // Bright Green (Book 7)
       link: '/admin/payments'
     }
@@ -195,10 +195,8 @@ const AdminPage = () => {
                   style={{ backgroundColor: feature.color }}
                 >
                   <div className="flex flex-col items-center justify-center py-3 w-full px-4">
-                    <div className="bg-white rounded-full p-2.5 mb-2 shadow-md flex items-center justify-center h-10 w-10">
-                      <div style={{ color: feature.color }} className="h-5 w-5">
-                        {feature.icon}
-                      </div>
+                    <div className="mb-2 flex items-center justify-center">
+                      {feature.icon}
                     </div>
                     <div className="h-6 flex items-center justify-center">
                       <h2 className="text-base font-bold text-white leading-none text-center w-full truncate">{feature.title}</h2>
