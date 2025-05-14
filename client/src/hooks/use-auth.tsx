@@ -72,25 +72,55 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return await response.json();
         }
         
-        // If API request failed, try to get user from session storage
+        // If API request failed, try to get user from browser storage
         const sessionUser = sessionStorage.getItem('velp_user');
-        if (sessionUser) {
+        const localUser = localStorage.getItem('velp_user');
+        const storedUser = sessionUser || localUser;
+        
+        if (storedUser) {
           console.log("Session recovery: Using stored user data");
-          return JSON.parse(sessionUser);
+          const userData = JSON.parse(storedUser);
+          
+          // Ensure both storage locations have the latest data
+          const userString = JSON.stringify(userData);
+          try {
+            sessionStorage.setItem('velp_user', userString);
+            localStorage.setItem('velp_user', userString);
+          } catch (storageError) {
+            console.error("Failed to sync user data across storages", storageError);
+          }
+          
+          return userData;
         }
         
         return null;
       } catch (error) {
         console.error("Error fetching user:", error);
-        // Final fallback - try session storage
+        // Final fallback - try any available browser storage
         try {
           const sessionUser = sessionStorage.getItem('velp_user');
-          if (sessionUser) {
+          const localUser = localStorage.getItem('velp_user');
+          const storedUser = sessionUser || localUser;
+          
+          if (storedUser) {
             console.log("Error recovery: Using stored user data");
-            return JSON.parse(sessionUser);
+            const userData = JSON.parse(storedUser);
+            
+            // Keep both storage locations in sync
+            if (userData) {
+              try {
+                const userString = JSON.stringify(userData);
+                localStorage.setItem('velp_user', userString);
+                sessionStorage.setItem('velp_user', userString);
+              } catch (storageError) {
+                console.error("Storage sync error:", storageError);
+              }
+            }
+            
+            return userData;
           }
         } catch (e) {
-          console.error("Session storage access error:", e);
+          console.error("Browser storage access error:", e);
         }
         return null;
       }
@@ -120,11 +150,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log("Login successful:", user);
       queryClient.setQueryData(["/api/user"], user);
       
-      // Keep a backup of the user in sessionStorage as fallback
+      // Store user data in both sessionStorage and localStorage for redundancy
       try {
-        sessionStorage.setItem('velp_user', JSON.stringify(user));
+        const userString = JSON.stringify(user);
+        sessionStorage.setItem('velp_user', userString);
+        localStorage.setItem('velp_user', userString);
+        console.log("User data stored in browser storage for persistence");
       } catch (err) {
-        console.error("Failed to store user backup in sessionStorage", err);
+        console.error("Failed to store user backup in browser storage", err);
       }
       
       toast({
@@ -168,7 +201,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     },
     onSuccess: (user: User) => {
+      // Update the query cache with the user data
       queryClient.setQueryData(["/api/user"], user);
+      
+      // Store user data in both sessionStorage and localStorage for redundancy
+      try {
+        const userString = JSON.stringify(user);
+        sessionStorage.setItem('velp_user', userString);
+        localStorage.setItem('velp_user', userString);
+        console.log("User data stored in browser storage after registration");
+      } catch (err) {
+        console.error("Failed to store user data in browser storage after registration", err);
+      }
+      
       toast({
         title: "Registration successful",
         description: `Welcome to VELP, ${user.username}!`,
@@ -207,11 +252,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);
       
-      // Clear the backup in sessionStorage
+      // Clear all user data from browser storage
       try {
+        localStorage.removeItem('velp_user');
         sessionStorage.removeItem('velp_user');
+        console.log("User data cleared from browser storage");
       } catch (err) {
-        console.error("Failed to clear user backup from sessionStorage", err);
+        console.error("Failed to clear user data from browser storage", err);
       }
       
       toast({

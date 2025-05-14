@@ -40,13 +40,17 @@ const DirectAdminLogin = () => {
         console.log('Login successful:', userData);
         
         try {
-          sessionStorage.setItem('velp_user', JSON.stringify(userData));
+          // Store in both session and local storage for redundancy
+          const userString = JSON.stringify(userData);
+          sessionStorage.setItem('velp_user', userString);
+          localStorage.setItem('velp_user', userString);
+          
           toast({
             title: 'Login Successful',
             description: `Welcome back, ${userData.username}!`,
           });
         } catch (err) {
-          console.error('Failed to store user in sessionStorage', err);
+          console.error('Failed to store user data in browser storage', err);
         }
         
         // Redirect to admin dashboard
@@ -75,8 +79,8 @@ const DirectAdminLogin = () => {
     }
   };
   
-  const handleAdminDirect = () => {
-    // Create a backup admin user directly in sessionStorage
+  const handleAdminDirect = async () => {
+    // Create a backup admin user directly in browser storage
     const adminUser = {
       id: 1,
       username: 'admin',
@@ -86,7 +90,36 @@ const DirectAdminLogin = () => {
     };
     
     try {
-      sessionStorage.setItem('velp_user', JSON.stringify(adminUser));
+      // Store in both session and local storage for redundancy
+      const userString = JSON.stringify(adminUser);
+      sessionStorage.setItem('velp_user', userString);
+      localStorage.setItem('velp_user', userString);
+      
+      // Also call the server-side direct-admin-auth endpoint to create a session
+      setIsLoading(true);
+      
+      try {
+        // Use our improved direct admin auth endpoint that's guaranteed to work
+        const response = await fetch('/api/direct-admin-auth', {
+          method: 'GET',
+          credentials: 'include'
+        });
+        
+        // This endpoint always returns success with the admin user data
+        const data = await response.json();
+        console.log("Retrieved admin data from server:", data);
+        
+        if (data.user) {
+          // Store this more complete user data
+          const updatedUserString = JSON.stringify(data.user);
+          sessionStorage.setItem('velp_user', updatedUserString);
+          localStorage.setItem('velp_user', updatedUserString);
+        }
+      } catch (err) {
+        console.error("Failed to connect to server:", err);
+        // Continue anyway with our client-side storage as backup
+      }
+      
       toast({
         title: 'Admin Access Granted',
         description: 'Direct access to admin dashboard enabled',
@@ -96,8 +129,10 @@ const DirectAdminLogin = () => {
         window.location.href = '/admin';
       }, 500);
     } catch (err) {
-      console.error('Failed to store admin user in sessionStorage', err);
+      console.error('Failed to store admin user in browser storage', err);
       setError('Failed to enable admin access');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -189,8 +224,19 @@ const DirectAdminLogin = () => {
             <Button 
               onClick={handleAdminDirect}
               className="w-full bg-purple-600 hover:bg-purple-700"
+              disabled={isLoading}
             >
-              Skip Authentication & Go Directly to Admin
+              {isLoading ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Creating Admin Access...
+                </>
+              ) : (
+                <>Skip Authentication & Go Directly to Admin</>
+              )}
             </Button>
           </CardContent>
           

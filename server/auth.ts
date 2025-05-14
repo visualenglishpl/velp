@@ -60,16 +60,19 @@ async function comparePasswords(supplied: string, stored: string): Promise<boole
 }
 
 export function setupAuth(app: Express) {
+  // Configure session settings with enhanced persistence
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "velp-dev-secret-key-change-me-in-production",
-    resave: false,
-    saveUninitialized: false,
+    resave: true, // Forces session to be saved back to the session store
+    saveUninitialized: true, // Forces a session to be saved even if unmodified
     store: storage.sessionStore,
+    name: 'velp.sid', // Custom cookie name for better identification
+    rolling: true, // Reset cookie expiration on every response
     cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      secure: process.env.NODE_ENV === "production",
-      httpOnly: true,
-      path: "/",
+      maxAge: 60 * 24 * 60 * 60 * 1000, // 60 days for much longer persistence
+      secure: process.env.NODE_ENV === 'production', // Secure in production, not in development
+      httpOnly: true, // Inaccessible to JavaScript's Document.cookie API
+      path: "/", // Valid across the entire site
       sameSite: "lax" // Allows cookies on same-site redirects
     }
   };

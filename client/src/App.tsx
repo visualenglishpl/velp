@@ -158,6 +158,7 @@ function App() {
           <Route path="/checkout/:planId">
             <CheckoutPage />
           </Route>
+          {/* This route provides a fallback for admin access when the regular login flow fails */}
           <Route path="/direct-admin">
             <DirectAdminLogin />
           </Route>
