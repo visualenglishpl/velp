@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,24 +17,40 @@ import {
 import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
 
+// Use a type that matches the User type from use-auth.tsx
+interface UserType {
+  id: number;
+  username: string;
+  role: "admin" | "teacher" | "school";
+  email?: string;
+  fullName?: string;
+  password?: string; // Include password for the admin user
+  [key: string]: any; // For any additional properties
+}
+
 const AdminPage = () => {
   // Try to use the auth context safely, with fallback to localStorage
-  let user = null;
-  try {
-    const authContext = useAuth();
-    user = authContext.user;
-  } catch (error) {
-    console.log("AdminPage: Auth context not available, using fallback");
-    
-    // Try to get user from localStorage or sessionStorage as fallback
+  const [user, setUser] = useState<UserType | null>(null);
+  
+  useEffect(() => {
     try {
-      const localUser = localStorage.getItem('velp_user');
-      const sessionUser = sessionStorage.getItem('velp_user');
-      if (localUser || sessionUser) {
-        user = JSON.parse(localUser || sessionUser || "");
+      const authContext = useAuth();
+      if (authContext.user) {
+        setUser(authContext.user);
       }
-    } catch (storageError) {
-      console.error("AdminPage: Storage access error:", storageError);
+    } catch (error) {
+      console.log("AdminPage: Auth context not available, using fallback");
+      
+      // Try to get user from localStorage or sessionStorage as fallback
+      try {
+        const localUser = localStorage.getItem('velp_user');
+        const sessionUser = sessionStorage.getItem('velp_user');
+        if (localUser || sessionUser) {
+          setUser(JSON.parse(localUser || sessionUser || ""));
+        }
+      } catch (storageError) {
+        console.error("AdminPage: Storage access error:", storageError);
+      }
     }
     
     // Final attempt - try to get admin session directly
@@ -55,12 +71,7 @@ const AdminPage = () => {
             sessionStorage.setItem('velp_user', userString);
             
             // Force a component rerender by setting user object
-            user = data.user;
-            
-            // Force refresh after a short delay
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
+            setUser(data.user);
           } catch (err) {
             console.error("AdminPage: Storage update error:", err);
           }
@@ -68,7 +79,7 @@ const AdminPage = () => {
       })
       .catch(err => console.error("AdminPage: Direct auth error:", err));
     }, 500);
-  }
+  }, []); // Empty dependency array to run only once
   
   const [, setLocation] = useLocation();
   
@@ -172,39 +183,39 @@ const AdminPage = () => {
 
           {/* Admin feature cards start here */}
 
-          {/* Admin feature cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Admin feature cards - 5 in a row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {adminFeatures.map((feature, index) => (
               <Card 
                 key={index} 
-                className={`overflow-hidden border-0 ${feature.featured ? 'shadow-xl ring-2 ring-purple-400' : 'shadow-md'}`}
+                className={`overflow-hidden border-0 ${feature.featured ? 'shadow-xl ring-2 ring-purple-400' : 'shadow-md'} hover:scale-105 transition-transform`}
               >
                 <CardHeader 
                   className="p-0"
                   style={{ backgroundColor: feature.color }}
                 >
-                  <div className="flex flex-col items-center justify-center py-5">
-                    <div className="bg-white rounded-full p-3 mb-2">
+                  <div className="flex flex-col items-center justify-center py-3">
+                    <div className="bg-white rounded-full p-2 mb-1">
                       <div style={{ color: feature.color }}>
                         {feature.icon}
                       </div>
                     </div>
-                    <h2 className="text-xl font-bold text-white">{feature.title}</h2>
+                    <h2 className="text-lg font-bold text-white leading-tight">{feature.title}</h2>
                     {feature.featured && (
-                      <span className="bg-white text-purple-600 px-2 py-1 rounded-full text-xs font-bold mt-2">
+                      <span className="bg-white text-purple-600 px-2 py-0.5 rounded-full text-xs font-bold mt-1">
                         RECOMMENDED
                       </span>
                     )}
                   </div>
                 </CardHeader>
-                <CardContent className="pt-4 pb-2">
-                  <CardDescription className="text-center">
+                <CardContent className="pt-2 pb-1 px-3">
+                  <CardDescription className="text-center text-xs leading-tight">
                     {feature.description}
                   </CardDescription>
                 </CardContent>
-                <CardFooter className="pb-4 pt-0 flex justify-center">
+                <CardFooter className="pb-3 pt-0 flex justify-center">
                   <Link href={feature.link}>
-                    <Button className={feature.featured ? "bg-purple-600 hover:bg-purple-700" : "bg-indigo-600 hover:bg-indigo-700"}>
+                    <Button size="sm" className={feature.featured ? "bg-purple-600 hover:bg-purple-700" : "bg-indigo-600 hover:bg-indigo-700"}>
                       Manage
                     </Button>
                   </Link>
