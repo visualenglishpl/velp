@@ -259,7 +259,7 @@ const UnitsManagementPage = () => {
           <h1 className="text-3xl font-bold text-gray-900">{bookTitle}</h1>
         </div>
 
-        <div className="mb-8 flex flex-wrap items-center justify-between">
+        <div className="mb-6 flex flex-wrap items-center justify-between">
           <div>
             <p className="text-lg text-gray-600">
               Managing units for {bookTitle}. Select a unit to view or edit its content.
@@ -273,6 +273,46 @@ const UnitsManagementPage = () => {
             <PlusCircle className="mr-2 h-4 w-4" />
             Add New Unit
           </Button>
+        </div>
+        
+        {/* Navigation guidance panel */}
+        <div className="mb-8 bg-purple-50 border border-purple-200 rounded-lg p-4">
+          <div className="flex items-center mb-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+              <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" 
+                stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <h3 className="text-lg font-semibold text-purple-800">Navigation Path</h3>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 mb-3 text-sm">
+            <Link href="/admin">
+              <span className="font-medium text-purple-900 bg-purple-100 px-2 py-1 rounded cursor-pointer hover:bg-purple-200">Admin Dashboard</span>
+            </Link>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <Link href="/admin/books">
+              <span className="font-medium text-purple-900 bg-purple-100 px-2 py-1 rounded cursor-pointer hover:bg-purple-200">Books Management</span>
+            </Link>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span className="font-medium text-white bg-purple-600 px-2 py-1 rounded">Units Management</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span className="font-medium text-purple-900 bg-purple-100 px-2 py-1 rounded">Content Viewer</span>
+          </div>
+          <p className="text-purple-700 text-sm mb-2">You are now at the <b>Units Management</b> page for Book {bookId}. Click "View Content" on any unit to access the content viewer.</p>
+          <div className="text-sm text-purple-600 font-medium mt-2">
+            <span className="inline-flex items-center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-1">
+                <path d="M13 16H12V12H11M12 8H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" 
+                  stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Tip: Each purple "View Content" button opens the corresponding unit in the Visual English content viewer
+            </span>
+          </div>
         </div>
 
         {loading ? (
@@ -419,10 +459,10 @@ const UnitsManagementPage = () => {
                   </div>
                 </CardContent>
                 <CardFooter className="px-3 py-2">
-                  <Link href={`/standalone-viewer/${bookId}/${unit.id}`} className="w-full">
+                  <Link href={`/book/${bookId}/unit/${unit.id}`} className="w-full">
                     <Button 
                       variant="default"
-                      className="w-full"
+                      className="w-full bg-purple-600 hover:bg-purple-700"
                     >
                       <Eye className="mr-2 h-4 w-4" /> View Content
                     </Button>

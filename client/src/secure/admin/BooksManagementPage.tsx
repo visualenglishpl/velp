@@ -279,6 +279,33 @@ const BooksManagementPage = () => {
             </Button>
           </div>
           
+          {/* Navigation guidance panel */}
+          <div className="mb-6 bg-purple-50 border border-purple-200 rounded-lg p-4">
+            <div className="flex items-center mb-2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" 
+                  stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <h3 className="text-lg font-semibold text-purple-800">Navigation Path</h3>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 mb-3 text-sm">
+              <span className="font-medium text-purple-900 bg-purple-100 px-2 py-1 rounded">Admin Dashboard</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="font-medium text-white bg-purple-600 px-2 py-1 rounded">Books Management</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="font-medium text-purple-900 bg-purple-100 px-2 py-1 rounded">Units Management</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="font-medium text-purple-900 bg-purple-100 px-2 py-1 rounded">Content Viewer</span>
+            </div>
+            <p className="text-purple-700 text-sm mb-2">You are now at the <b>Books Management</b> page. Click "Manage Units" for any book to proceed to the next step.</p>
+          </div>
+          
           {/* Filtering controls */}
           <div className="mb-8 bg-white p-4 rounded-lg shadow">
             <div className="flex flex-wrap items-center gap-4">
@@ -450,13 +477,25 @@ const BooksManagementPage = () => {
                       </Button>
                     </div>
                   </CardContent>
-                  <CardFooter className="pt-0 pb-3">
+                  <CardFooter className="pt-0 pb-3 flex flex-col space-y-2">
                     <Button 
-                      className="w-full" 
+                      className="w-full bg-purple-600 hover:bg-purple-700" 
                       onClick={() => handleSelectBook(book.bookId)}
                     >
-                      <Eye className="mr-2 h-4 w-4" /> View Units
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      Manage Units
                     </Button>
+                    
+                    <Link href={`/book/${book.bookId}/unit/1`} className="w-full">
+                      <Button 
+                        variant="outline"
+                        className="w-full border-purple-400 text-purple-700 hover:bg-purple-50"
+                      >
+                        <Eye className="mr-2 h-4 w-4" /> View Content
+                      </Button>
+                    </Link>
                   </CardFooter>
                 </Card>
               ))}
