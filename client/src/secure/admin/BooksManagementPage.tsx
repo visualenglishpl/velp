@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, PlusCircle, Pencil, Eye, BookOpen, CheckCircle, Ban, Filter } from 'lucide-react';
+import { ChevronLeft, PlusCircle, BookOpen, CheckCircle, Ban, Filter } from 'lucide-react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
@@ -11,8 +11,7 @@ import {
   DialogContent, 
   DialogHeader, 
   DialogTitle, 
-  DialogFooter, 
-  DialogTrigger 
+  DialogFooter
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,7 +19,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Type definition for book data
 interface Book {
@@ -281,7 +280,7 @@ const BooksManagementPage = () => {
         <title>Books Management | Visual English Admin</title>
       </Helmet>
       
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-4">
+      <div className="min-h-screen bg-gray-50 py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 flex items-center">
             <Link href="/admin">
@@ -309,73 +308,61 @@ const BooksManagementPage = () => {
             </Button>
           </div>
           
-          {/* Improved header information */}
-          <div className="mb-6 flex flex-col">
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-5 shadow-lg">
-              <h2 className="text-xl font-bold text-white mb-2">Visual English Books Collection</h2>
-              <p className="text-indigo-100">
-                Browse, manage and customize the complete collection of books. Use the filters below to sort by level or publication status.
-              </p>
-            </div>
+          {/* Collection Info Panel */}
+          <div className="mb-8 bg-indigo-600 p-6 rounded-xl text-white">
+            <h2 className="text-2xl font-bold mb-2">Visual English Books Collection</h2>
+            <p className="text-indigo-100">
+              Browse, manage and customize the complete collection of books. Use the filters below to sort by level or publication status.
+            </p>
           </div>
           
-          {/* Improved filtering controls */}
-          <div className="mb-8 bg-white p-5 rounded-xl shadow-md border border-gray-100">
-            <div className="flex items-center mb-3">
-              <Filter className="h-5 w-5 mr-2 text-indigo-500" />
-              <h3 className="text-lg font-semibold text-gray-800">Filter Books</h3>
-              
-              {filterStatus !== 'all' || filterLevel !== 'all' ? (
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={() => {
-                    setFilterStatus('all');
-                    setFilterLevel('all');
-                  }}
-                  className="ml-auto text-xs text-gray-500 hover:text-gray-700"
-                >
-                  Clear All Filters
-                </Button>
-              ) : null}
+          {/* Filtering controls */}
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Filter className="h-5 w-5 text-indigo-600" />
+              <h3 className="text-lg font-medium text-gray-800">Filter Books</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
               <div>
-                <Label htmlFor="statusFilter" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                  Status
-                </Label>
-                <Tabs 
-                  value={filterStatus} 
-                  onValueChange={(value) => setFilterStatus(value as 'all' | 'published' | 'draft')}
-                  className="w-full"
-                >
-                  <TabsList className="bg-gray-100 w-full p-1">
-                    <TabsTrigger value="all" className="flex-1">
-                      All
-                    </TabsTrigger>
-                    <TabsTrigger value="published" className="flex-1">
-                      <CheckCircle className="h-3.5 w-3.5 mr-1" />
-                      Published
-                    </TabsTrigger>
-                    <TabsTrigger value="draft" className="flex-1">
-                      <Ban className="h-3.5 w-3.5 mr-1" />
-                      Draft
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
+                <p className="mb-2 text-sm font-medium text-gray-600">Status</p>
+                <div className="flex gap-2">
+                  <Button 
+                    variant={filterStatus === 'all' ? 'default' : 'outline'} 
+                    size="sm" 
+                    onClick={() => setFilterStatus('all')}
+                    className={filterStatus === 'all' ? 'bg-gray-800' : ''}
+                  >
+                    All
+                  </Button>
+                  <Button 
+                    variant={filterStatus === 'published' ? 'default' : 'outline'} 
+                    size="sm" 
+                    onClick={() => setFilterStatus('published')}
+                    className={filterStatus === 'published' ? 'bg-green-600' : ''}
+                  >
+                    <CheckCircle className="h-4 w-4 mr-1" />
+                    Published
+                  </Button>
+                  <Button 
+                    variant={filterStatus === 'draft' ? 'default' : 'outline'} 
+                    size="sm" 
+                    onClick={() => setFilterStatus('draft')}
+                  >
+                    <Ban className="h-4 w-4 mr-1" />
+                    Draft
+                  </Button>
+                </div>
               </div>
               
               {availableLevels.length > 0 && (
                 <div>
-                  <Label htmlFor="levelFilter" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    Level
-                  </Label>
+                  <Label htmlFor="levelFilter" className="mb-2 text-sm font-medium text-gray-600">Level</Label>
                   <select
                     id="levelFilter"
                     value={filterLevel}
                     onChange={(e) => setFilterLevel(e.target.value)}
-                    className="w-full h-10 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border rounded-md text-sm"
                   >
                     <option value="all">All Levels</option>
                     {availableLevels.map(level => (
@@ -384,65 +371,42 @@ const BooksManagementPage = () => {
                   </select>
                 </div>
               )}
+              
+              {(filterStatus !== 'all' || filterLevel !== 'all') && (
+                <div className="flex items-end ml-auto">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => {
+                      setFilterStatus('all');
+                      setFilterLevel('all');
+                    }}
+                  >
+                    Clear Filters
+                  </Button>
+                </div>
+              )}
             </div>
             
             {filteredBooks.length !== books.length && (
-              <div className="mt-4 flex items-center">
-                <span className="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-xs font-medium rounded-full">
-                  Showing {filteredBooks.length} of {books.length} books
-                </span>
+              <div className="mt-4 text-sm text-gray-500">
+                Showing {filteredBooks.length} of {books.length} books
               </div>
             )}
           </div>
 
           {loading ? (
             <div className="space-y-10">
-              {/* Skeleton for filter controls */}
-              <div className="bg-white p-4 rounded-lg shadow animate-pulse">
-                <div className="flex flex-wrap items-center gap-4">
-                  <div className="h-8 w-20 bg-gray-200 rounded"></div>
-                  <div className="h-10 w-64 bg-gray-200 rounded"></div>
-                  <div className="h-8 w-40 bg-gray-200 rounded"></div>
-                </div>
-              </div>
-              
-              {/* Skeleton for book grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {/* Skeleton loading for books */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-6">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                   <div key={n} className="animate-pulse rounded-xl overflow-hidden shadow-md border border-gray-100 bg-white">
-                    {/* Thumbnail area */}
-                    <div className="h-44 bg-gradient-to-br from-gray-100 to-gray-200 relative">
-                      {/* Title bar skeleton */}
-                      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-gray-400 to-transparent opacity-30 rounded-t-xl"></div>
-                      <div className="absolute top-3 left-3 h-5 w-32 bg-gray-300 rounded"></div>
-                      
-                      {/* Status badge skeleton */}
-                      <div className="absolute top-3 right-3">
-                        <div className="h-5 w-20 bg-gray-300 rounded-full"></div>
-                      </div>
-                      
-                      {/* Level badge skeleton */}
-                      <div className="absolute bottom-3 left-3">
-                        <div className="h-5 w-16 bg-gray-300 rounded-full"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Content area */}
-                    <div className="p-4 space-y-3">
-                      {/* Units badge skeleton */}
-                      <div className="h-7 w-24 bg-gray-200 rounded-md"></div>
-                      
-                      {/* Description skeleton */}
-                      <div className="space-y-1.5">
-                        <div className="h-3 bg-gray-200 rounded w-full"></div>
-                        <div className="h-3 bg-gray-200 rounded w-5/6"></div>
-                      </div>
-                      
-                      {/* Buttons skeleton */}
-                      <div className="pt-2 flex gap-2">
-                        <div className="h-8 bg-gray-200 rounded w-1/2"></div>
-                        <div className="h-8 bg-gray-300 rounded w-1/2"></div>
-                      </div>
+                    {/* Thumbnail skeleton */}
+                    <div className="h-56 bg-gray-200"></div>
+                    {/* Content area skeleton */}
+                    <div className="p-4 bg-gray-50">
+                      <div className="h-5 bg-gray-200 w-3/4 mx-auto mb-2 rounded"></div>
+                      <div className="h-4 bg-gray-200 w-1/2 mx-auto rounded"></div>
                     </div>
                   </div>
                 ))}
@@ -453,101 +417,86 @@ const BooksManagementPage = () => {
               {filteredBooks.map((book) => (
                 <Card 
                   key={book.bookId} 
-                  className="overflow-hidden border border-gray-100 shadow-md hover:shadow-xl hover:border-indigo-100 transition-all duration-300 transform hover:-translate-y-1 rounded-xl"
+                  className="overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-xl"
                 >
-                  <CardHeader 
-                    className="p-0 rounded-t-xl relative"
-                    style={{ backgroundColor: `${book.color}20` }}
-                  >
-                    <div className="relative h-44 flex flex-col items-center justify-center">
-                      <div className="absolute inset-0 w-full h-full flex items-center justify-center">
-                        <img 
-                          src={book.thumbnailUrl || `/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
-                          alt={book.title} 
-                          className="max-w-full max-h-full object-contain p-2"
-                          onError={(e) => {
-                            // Fallback to book icon if the image fails to load
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            
-                            // Add book icon to parent div
-                            const parent = target.parentElement;
-                            if (parent) {
-                              parent.classList.add('flex', 'items-center', 'justify-center');
-                              
-                              // Create book icon SVG element
-                              const bookIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                              bookIcon.setAttribute('width', '64');
-                              bookIcon.setAttribute('height', '64');
-                              bookIcon.setAttribute('viewBox', '0 0 24 24');
-                              bookIcon.setAttribute('fill', 'none');
-                              bookIcon.setAttribute('stroke', book.color);
-                              bookIcon.setAttribute('stroke-width', '2');
-                              bookIcon.setAttribute('stroke-linecap', 'round');
-                              bookIcon.setAttribute('stroke-linejoin', 'round');
-                              
-                              // Add path for book icon
-                              const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                              path1.setAttribute('d', 'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z');
-                              
-                              const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                              path2.setAttribute('d', 'M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z');
-                              
-                              bookIcon.appendChild(path1);
-                              bookIcon.appendChild(path2);
-                              parent.appendChild(bookIcon);
-                            }
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Gradient overlay for title */}
-                      <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black to-transparent h-16 z-10 rounded-t-xl"></div>
-                      
-                      <div className="absolute top-0 left-0 right-0 p-3 z-20">
-                        <h2 className="text-base font-bold text-white leading-tight">
-                          {book.title}
-                        </h2>
-                      </div>
-                      
-                      {/* Status Badge */}
-                      <div className="absolute top-3 right-3 z-30">
-                        {book.published !== false ? (
-                          <Badge variant="default" className="shadow-sm bg-green-600">
-                            <CheckCircle className="h-3 w-3 mr-1" />
-                            Published
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline" className="shadow-sm bg-white text-gray-700 border-gray-300">
-                            <Ban className="h-3 w-3 mr-1" />
-                            Draft
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      {/* Level Badge */}
-                      {book.level && (
-                        <div className="absolute bottom-3 left-3 z-20">
-                          <Badge className="bg-indigo-500 hover:bg-indigo-600 shadow-sm">
-                            Level {book.level}
-                          </Badge>
+                  {/* Full image thumbnail */}
+                  <div className="relative h-56 bg-white flex items-center justify-center">
+                    {/* Show fallback book icon immediately for Book 3 which has known issues */}
+                    {book.bookId === '3' ? (
+                      <div className="flex items-center justify-center h-full w-full" style={{ backgroundColor: `${book.color}20` }}>
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke={book.color || '#00CC00'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                        <div className="absolute bottom-2 left-2 bg-gray-800 bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+                          VISUAL 3
                         </div>
+                      </div>
+                    ) : (
+                      <img 
+                        src={book.thumbnailUrl || `/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
+                        alt={book.title} 
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          // Fallback to book icon if the image fails to load
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          
+                          // Add book icon to parent div
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.style.backgroundColor = `${book.color}20`;
+                            
+                            // Create book icon SVG element
+                            const bookIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                            bookIcon.setAttribute('width', '80');
+                            bookIcon.setAttribute('height', '80');
+                            bookIcon.setAttribute('viewBox', '0 0 24 24');
+                            bookIcon.setAttribute('fill', 'none');
+                            bookIcon.setAttribute('stroke', book.color || '#6366f1');
+                            bookIcon.setAttribute('stroke-width', '2');
+                            bookIcon.setAttribute('stroke-linecap', 'round');
+                            bookIcon.setAttribute('stroke-linejoin', 'round');
+                            
+                            const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                            path1.setAttribute('d', 'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z');
+                            
+                            const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                            path2.setAttribute('d', 'M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z');
+                            
+                            bookIcon.appendChild(path1);
+                            bookIcon.appendChild(path2);
+                            parent.appendChild(bookIcon);
+                          }
+                        }}
+                      />
+                    )}
+                    
+                    {/* Status Badge - small and minimal */}
+                    <div className="absolute top-2 right-2 z-30">
+                      {book.published !== false ? (
+                        <Badge variant="default" className="shadow-sm bg-green-600">
+                          <CheckCircle className="h-3 w-3" />
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="shadow-sm bg-white text-gray-700 border-gray-300">
+                          <Ban className="h-3 w-3" />
+                        </Badge>
                       )}
                     </div>
-                  </CardHeader>
+                  </div>
                   
-                  <CardContent className="p-4">
-                    <div className="flex items-center mb-3 bg-gray-50 px-2.5 py-1.5 rounded-md text-gray-700 text-sm w-fit">
-                      <BookOpen className="h-4 w-4 mr-1.5 text-indigo-500" /> 
-                      {book.units} {book.units === 1 ? 'unit' : 'units'}
-                    </div>
-                    
-                    <p className="text-gray-600 text-sm mb-2 line-clamp-2 h-10">
-                      {book.description || 'Visual English educational content'}
+                  {/* Simplified info section */}
+                  <div className="p-4 text-center bg-gray-50 border-t">
+                    <h3 className="font-semibold text-gray-800">
+                      VISUAL ENGLISH {book.bookId}
+                    </h3>
+                    <p className="text-gray-600 text-sm my-1">
+                      {book.units} UNITS
                     </p>
-                  </CardContent>
+                  </div>
                   
-                  <CardFooter className="flex justify-center p-4 pt-0">
+                  <div className="p-4 pt-0 text-center">
                     <Button 
                       size="default"
                       className="w-full bg-indigo-600 hover:bg-indigo-700"
@@ -556,167 +505,149 @@ const BooksManagementPage = () => {
                       <BookOpen className="h-4 w-4 mr-2" />
                       View Book
                     </Button>
-                  </CardFooter>
+                  </div>
                 </Card>
               ))}
             </div>
           )}
           
-          {/* Improved No results message */}
+          {/* No results message */}
           {!loading && filteredBooks.length === 0 && (
             <div className="text-center py-12 bg-white rounded-xl shadow-md border border-gray-100">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-indigo-50 to-purple-50 mb-6 border border-indigo-100 shadow-sm">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 12C10 13.1046 9.10457 14 8 14C6.89543 14 6 13.1046 6 12C6 10.8954 6.89543 10 8 10C9.10457 10 10 10.8954 10 12Z" stroke="#6366f1" strokeWidth="2"/>
-                  <path d="M16 17.5C16 18.6046 15.1046 19.5 14 19.5C12.8954 19.5 12 18.6046 12 17.5C12 16.3954 12.8954 15.5 14 15.5C15.1046 15.5 16 16.3954 16 17.5Z" stroke="#6366f1" strokeWidth="2"/>
-                  <path d="M8 14L14 15.5" stroke="#6366f1" strokeWidth="2" strokeLinecap="round"/>
-                  <path d="M14 8.5C14 9.60457 13.1046 10.5 12 10.5C10.8954 10.5 10 9.60457 10 8.5C10 7.39543 10.8954 6.5 12 6.5C13.1046 6.5 14 7.39543 14 8.5Z" stroke="#6366f1" strokeWidth="2"/>
-                  <path d="M8 10L12 8.5" stroke="#6366f1" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-6">
+                <BookOpen className="h-10 w-10 text-gray-500" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-800">No books found</h3>
-              <p className="text-gray-600 max-w-md mx-auto">
-                No books match your current filter settings. Try changing your filters or create a new book.
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">No books found</h3>
+              <p className="text-gray-600 mb-6">
+                No books match your current filter criteria. Try adjusting your filters or add a new book.
               </p>
-              <div className="mt-8 flex justify-center gap-4">
-                <Button
-                  onClick={() => {
-                    setFilterStatus('all');
-                    setFilterLevel('all');
-                  }}
-                  variant="outline"
-                  className="border-indigo-200 text-indigo-700 hover:bg-indigo-50"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M19 12H5M5 12L12 19M5 12L12 5"/>
-                  </svg>
-                  Clear Filters
-                </Button>
-                <Button
-                  onClick={handleNewBook}
-                  className="bg-indigo-600 hover:bg-indigo-700"
-                >
-                  <PlusCircle className="h-4 w-4 mr-2" />
-                  Add New Book
-                </Button>
-              </div>
+              <Button onClick={handleNewBook} className="bg-indigo-600 hover:bg-indigo-700">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Add New Book
+              </Button>
             </div>
           )}
-        </div>
-      </div>
-      
-      {/* Edit/Create Book Dialog */}
-      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle>{isNewBook ? 'Create New Book' : 'Edit Book Details'}</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSubmit}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="bookId">Book ID</Label>
-                  <Input
-                    id="bookId"
-                    placeholder="e.g., 1, 2, 3, 0a"
-                    value={bookId}
-                    onChange={(e) => setBookId(e.target.value)}
-                    className="col-span-2"
-                    disabled={!isNewBook} // Can't edit book ID after creation
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="units">Number of Units</Label>
-                  <Input
-                    id="units"
-                    type="number"
-                    value={units}
-                    onChange={(e) => setUnits(parseInt(e.target.value, 10))}
-                    min={1}
-                    max={100}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="title">Title</Label>
-                <Input
-                  id="title"
-                  placeholder="e.g., VISUAL ENGLISH BOOK 1"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Enter a brief description of this book"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  rows={2}
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="level">Level</Label>
-                  <select
-                    id="level"
-                    value={level}
-                    onChange={(e) => setLevel(e.target.value)}
-                    className="w-full p-2 border rounded-md"
-                  >
-                    <option value="">Select Level</option>
-                    <option value="Beginner">Beginner</option>
-                    <option value="Elementary">Elementary</option>
-                    <option value="Pre-Intermediate">Pre-Intermediate</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Upper-Intermediate">Upper-Intermediate</option>
-                    <option value="Advanced">Advanced</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="color">Color</Label>
-                  <div className="flex">
-                    <Input
-                      id="color"
-                      type="color"
-                      value={color}
-                      onChange={(e) => setColor(e.target.value)}
-                      className="h-10 w-full"
+          
+          {/* Book Edit/Create Modal */}
+          <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>{isNewBook ? 'Create New Book' : 'Edit Book Details'}</DialogTitle>
+              </DialogHeader>
+              
+              <form onSubmit={handleSubmit} className="space-y-4 py-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="bookId">Book ID</Label>
+                    <Input 
+                      id="bookId" 
+                      value={bookId} 
+                      onChange={(e) => setBookId(e.target.value.trim())} 
+                      disabled={!isNewBook}
+                      required
+                      placeholder="e.g., 1, 2, 3, 0a"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="units">Units</Label>
+                    <Input 
+                      id="units" 
+                      type="number" 
+                      min="1"
+                      value={units} 
+                      onChange={(e) => setUnits(parseInt(e.target.value))} 
+                      required
                     />
                   </div>
                 </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="published"
-                  checked={published}
-                  onCheckedChange={setPublished}
-                />
-                <Label htmlFor="published">Published</Label>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setIsEditModalOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button 
-                type="submit" 
-                disabled={updateBookMutation.isPending || createBookMutation.isPending}
-              >
-                {updateBookMutation.isPending || createBookMutation.isPending ? 'Saving...' : 'Save'}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="title">Title</Label>
+                  <Input 
+                    id="title" 
+                    value={title} 
+                    onChange={(e) => setTitle(e.target.value)} 
+                    required
+                    placeholder="e.g., VISUAL ENGLISH BOOK 1"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea 
+                    id="description" 
+                    value={description} 
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Brief description of the book"
+                    rows={3}
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="color">Color</Label>
+                    <div className="flex items-center space-x-2">
+                      <Input 
+                        id="color" 
+                        type="color"
+                        value={color} 
+                        onChange={(e) => setColor(e.target.value)} 
+                        className="w-12 h-8 p-0 cursor-pointer"
+                      />
+                      <Input 
+                        value={color}
+                        onChange={(e) => setColor(e.target.value)}
+                        className="flex-grow"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="level">Level</Label>
+                    <Input 
+                      id="level" 
+                      value={level} 
+                      onChange={(e) => setLevel(e.target.value)}
+                      placeholder="e.g., Beginner, Elementary"
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <Switch 
+                    id="published" 
+                    checked={published} 
+                    onCheckedChange={setPublished}
+                  />
+                  <Label htmlFor="published">Published</Label>
+                </div>
+                
+                <DialogFooter className="sm:justify-between">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={() => setIsEditModalOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    disabled={updateBookMutation.isPending || createBookMutation.isPending}
+                    className="bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    {updateBookMutation.isPending || createBookMutation.isPending ? (
+                      <span>Saving...</span>
+                    ) : (
+                      <span>{isNewBook ? 'Create Book' : 'Save Changes'}</span>
+                    )}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
     </>
   );
 };
