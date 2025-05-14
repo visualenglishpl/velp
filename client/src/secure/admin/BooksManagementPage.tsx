@@ -64,9 +64,6 @@ const BooksManagementPage = () => {
   const [units, setUnits] = useState(16);
   const [published, setPublished] = useState(true);
   
-  // For navigation
-  const [, setLocation] = useLocation();
-  
   // Function to navigate to units page for a book
   const handleSelectBook = (bookId: string) => {
     setLocation(`/admin/book-units/${bookId}`);
@@ -199,10 +196,6 @@ const BooksManagementPage = () => {
       });
     }
   });
-
-  const handleSelectBook = (bookId: string) => {
-    setLocation(`/admin/book-units/${bookId}`);
-  };
   
   const handleEditBook = (book: Book) => {
     setCurrentBook(book);
