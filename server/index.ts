@@ -214,6 +214,19 @@ app.get('/simple', (req, res) => {
       color: #10b981;
       font-weight: 500;
     }
+    .button {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #3b82f6;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+    .button:hover {
+      background-color: #2563eb;
+    }
   </style>
 </head>
 <body>
@@ -228,9 +241,10 @@ app.get('/simple', (req, res) => {
     
     <h2>Admin Access</h2>
     <p>You can access the emergency admin interface directly:</p>
-    <ul>
-      <li><a href="/emergency-admin">Emergency Admin Access</a></li>
+    <p><a href="/emergency-login" class="button">Emergency Admin Login</a></p>
+    <ul style="margin-top: 20px;">
       <li><a href="/test-connection">Connection Test Page</a></li>
+      <li><a href="/api/direct/admin-login">Direct Admin API Endpoint</a></li>
     </ul>
   </div>
 </body>
@@ -238,6 +252,11 @@ app.get('/simple', (req, res) => {
   `;
   
   res.send(html);
+});
+
+// Emergency login page that completely bypasses React
+app.get('/emergency-login', (req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'public/emergency-login.html'));
 });
 
 app.get('/super-admin', (req, res) => {

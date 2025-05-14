@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emergency Admin Login | Visual English</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #1f2937;
+    }
+    .container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      border-top: 4px solid #3b82f6;
+    }
+    h1 {
+      margin-top: 0;
+      color: #1e40af;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #3b82f6;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 0.625rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #2563eb;
+    }
+    .alert {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+    .alert-error {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+    .alert-success {
+      background-color: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .error-icon, .success-icon {
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-top: 1px solid #e5e7eb;
+    }
+    .divider-text {
+      padding: 0 0.5rem;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+    .direct-login {
+      background-color: #7c3aed;
+    }
+    .direct-login:hover {
+      background-color: #6d28d9;
+    }
+    .credentials-box {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      background-color: #f3f4f6;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      text-align: center;
+      color: #6b7280;
+    }
+    .credentials {
+      font-family: monospace;
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+    .loading {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 0.5rem;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <div class="logo-icon">VE</div>
+    </div>
+    <h1>Emergency Admin Access</h1>
+    
+    <div id="error-message" class="alert alert-error hidden">
+      <span class="error-icon">⚠️</span>
+      <span id="error-text"></span>
+    </div>
+    
+    <div id="success-message" class="alert alert-success hidden">
+      <span class="success-icon">✓</span>
+      <span id="success-text"></span>
+    </div>
+    
+    <form id="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="admin" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" value="admin123" required>
+      </div>
+      
+      <button type="submit" id="login-button">
+        <span id="login-text">Sign in</span>
+        <span id="login-loading" class="loading hidden"></span>
+      </button>
+    </form>
+    
+    <div class="divider">
+      <span class="divider-text">or</span>
+    </div>
+    
+    <button id="direct-access" class="direct-login">
+      <span id="direct-text">Skip Authentication & Go Directly to Admin</span>
+      <span id="direct-loading" class="loading hidden"></span>
+    </button>
+    
+    <div class="credentials-box">
+      Default credentials:
+      <div class="credentials">Username: admin | Password: admin123</div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('login-form');
+      const directAccessButton = document.getElementById('direct-access');
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+      
+      // Regular login with credentials
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Hide any existing messages
+        errorMessage.classList.add('hidden');
+        successMessage.classList.add('hidden');
+        
+        // Show loading state
+        document.getElementById('login-loading').classList.remove('hidden');
+        document.getElementById('login-text').textContent = 'Signing in...';
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        try {
+          // Call the login API
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, role: 'admin' }),
+            credentials: 'include'
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            
+            // Show success message
+            successMessage.classList.remove('hidden');
+            document.getElementById('success-text').textContent = 'Login successful! Redirecting...';
+            
+            // Store user data for backup authentication
+            try {
+              localStorage.setItem('velp_user', JSON.stringify(data));
+              sessionStorage.setItem('velp_user', JSON.stringify(data));
+            } catch (err) {
+              console.error('Failed to store user data in browser storage', err);
+            }
+            
+            // Redirect to admin dashboard after short delay
+            setTimeout(() => {
+              window.location.href = '/admin';
+            }, 1000);
+          } else {
+            const errorData = await response.json();
+            
+            // Show error message
+            errorMessage.classList.remove('hidden');
+            document.getElementById('error-text').textContent = errorData.error || 'Login failed. Please try again.';
+          }
+        } catch (err) {
+          console.error('Login error:', err);
+          
+          // Show error message
+          errorMessage.classList.remove('hidden');
+          document.getElementById('error-text').textContent = 'Connection error. Please try direct access instead.';
+        } finally {
+          // Reset button state
+          document.getElementById('login-loading').classList.add('hidden');
+          document.getElementById('login-text').textContent = 'Sign in';
+        }
+      });
+      
+      // Direct admin access (no authentication required)
+      directAccessButton.addEventListener('click', async function() {
+        // Hide any existing messages
+        errorMessage.classList.add('hidden');
+        successMessage.classList.add('hidden');
+        
+        // Show loading state
+        document.getElementById('direct-loading').classList.remove('hidden');
+        document.getElementById('direct-text').textContent = 'Creating Direct Access...';
+        
+        try {
+          // Call the emergency admin access endpoint
+          const response = await fetch('/api/direct/admin-login', {
+            method: 'GET',
+            credentials: 'include'
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            
+            // Show success message
+            successMessage.classList.remove('hidden');
+            document.getElementById('success-text').textContent = 'Direct admin access granted! Redirecting...';
+            
+            // Store user data for backup authentication
+            try {
+              localStorage.setItem('velp_user', JSON.stringify(data.user));
+              sessionStorage.setItem('velp_user', JSON.stringify(data.user));
+            } catch (err) {
+              console.error('Failed to store user data in browser storage', err);
+            }
+            
+            // Redirect to admin dashboard after short delay
+            setTimeout(() => {
+              window.location.href = '/admin';
+            }, 1000);
+          } else {
+            // Show error message
+            errorMessage.classList.remove('hidden');
+            document.getElementById('error-text').textContent = 'Failed to create direct admin access.';
+          }
+        } catch (err) {
+          console.error('Direct access error:', err);
+          
+          // Create fallback admin user directly
+          const adminUser = {
+            id: 1,
+            username: 'admin',
+            role: 'admin',
+            email: 'admin@example.com'
+          };
+          
+          try {
+            localStorage.setItem('velp_user', JSON.stringify(adminUser));
+            sessionStorage.setItem('velp_user', JSON.stringify(adminUser));
+            
+            // Show success message
+            successMessage.classList.remove('hidden');
+            document.getElementById('success-text').textContent = 'Fallback admin access created! Redirecting...';
+            
+            // Redirect to admin dashboard after short delay
+            setTimeout(() => {
+              window.location.href = '/admin';
+            }, 1000);
+          } catch (storageErr) {
+            // Show error message
+            errorMessage.classList.remove('hidden');
+            document.getElementById('error-text').textContent = 'Failed to create admin access in browser storage.';
+          }
+        } finally {
+          // Reset button state
+          document.getElementById('direct-loading').classList.add('hidden');
+          document.getElementById('direct-text').textContent = 'Skip Authentication & Go Directly to Admin';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
