@@ -47,6 +47,7 @@ import SimpleBooksAdmin from "./secure/admin/SimpleBooksAdmin";
 import UnitsManagementPage from "./secure/admin/UnitsManagementPage";
 import AdminPage from "./secure/admin/AdminPage";
 import BooksManagementPage from "./secure/admin/BooksManagementPage";
+import BooksManagement from "./secure/admin/BooksManagement";
 
 // Original paths - still used until migration is complete
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";

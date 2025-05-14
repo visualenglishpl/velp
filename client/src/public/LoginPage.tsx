@@ -19,7 +19,7 @@ const useDirectAuth = () => {
   const directLogin = async (credentials: { username: string; password: string; role: string }) => {
     setIsLoading(true);
     try {
-      console.log("Attempting direct login with credentials:", credentials);
+      console.log("Visual English Login: Attempting direct login with credentials:", credentials);
       
       // Use fetch directly instead of apiRequest for more control over error handling
       const res = await fetch("/api/login", {
@@ -32,17 +32,17 @@ const useDirectAuth = () => {
       });
       
       // Log response status
-      console.log("Login response status:", res.status);
+      console.log("Visual English Login: Response status:", res.status);
       
       if (!res.ok) {
         // Try to get detailed error message from response
         const errorData = await res.json().catch(() => ({}));
-        console.error("Login error response:", errorData);
+        console.error("Visual English Login: Error response:", errorData);
         throw new Error(errorData.error || `Login failed with status ${res.status}`);
       }
       
       const userData = await res.json();
-      console.log("Login successful, user data:", userData);
+      console.log("Visual English Login: Success! User data:", userData);
       
       toast({
         title: "Login Successful",

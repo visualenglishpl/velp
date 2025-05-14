@@ -7,6 +7,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import timeout from "express-timeout-handler";
 import { configureHMR } from "./hmr-config";
+import path from "path";
 
 // Configure enhanced HMR settings for development
 configureHMR();
@@ -144,6 +145,11 @@ app.use((req, res, next) => {
   });
 
   next();
+});
+
+// Serve static admin login page
+app.get('/admin-login', (req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'public/admin/index.html'));
 });
 
 (async () => {
