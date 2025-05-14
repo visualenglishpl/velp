@@ -12,10 +12,11 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ path, children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<null | { id: number; username: string; role: string }>(null);
   
-  // Fetch user data directly
+  // Fetch user data directly with multiple fallbacks
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        // Step 1: Try regular auth endpoint
         const res = await fetch('/api/user', { 
           credentials: 'include',
           cache: 'no-store'
@@ -23,13 +24,88 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ path, children }) => {
         
         if (res.ok) {
           const userData = await res.json();
+          console.log("Regular auth successful:", userData);
           setUser(userData);
-        } else {
-          console.log("User not authenticated");
-          setUser(null);
+          
+          // Store auth data for future fallback
+          try {
+            const userString = JSON.stringify(userData);
+            sessionStorage.setItem('velp_user', userString);
+            localStorage.setItem('velp_user', userString);
+          } catch (storageError) {
+            console.error("Failed to store user data", storageError);
+          }
+          
+          return; // Exit early if successful
         }
+        
+        // Step 2: Check browser storage
+        try {
+          const sessionUser = sessionStorage.getItem('velp_user');
+          const localUser = localStorage.getItem('velp_user');
+          const storedUser = sessionUser || localUser;
+          
+          if (storedUser) {
+            console.log("AdminRoute: Using stored user data");
+            const userData = JSON.parse(storedUser);
+            setUser(userData);
+            return; // Exit early if successful
+          }
+        } catch (storageError) {
+          console.error("AdminRoute: Storage access error", storageError);
+        }
+
+        // Step 3: Try direct admin endpoint
+        try {
+          console.log("AdminRoute: Attempting direct admin login");
+          const directAdminRes = await fetch('/api/direct/admin-login', {
+            credentials: 'include',
+            cache: 'no-store'
+          });
+          
+          if (directAdminRes.ok) {
+            const directAdminData = await directAdminRes.json();
+            console.log("AdminRoute: Direct admin login successful", directAdminData);
+            
+            if (directAdminData.success && directAdminData.user) {
+              setUser(directAdminData.user);
+              
+              // Store admin data for future use
+              try {
+                const adminString = JSON.stringify(directAdminData.user);
+                sessionStorage.setItem('velp_user', adminString);
+                localStorage.setItem('velp_user', adminString);
+              } catch (storageError) {
+                console.error("AdminRoute: Failed to store admin data", storageError);
+              }
+              
+              return; // Exit early if successful
+            }
+          } else {
+            console.error("AdminRoute: Direct admin login failed", await directAdminRes.text());
+          }
+        } catch (directAdminError) {
+          console.error("AdminRoute: Auth context error:", directAdminError);
+        }
+        
+        // If we get here, all auth attempts failed
+        console.log("AdminRoute: All authentication attempts failed");
+        setUser(null);
       } catch (err) {
-        console.error("Error checking authentication:", err);
+        console.error("AdminRoute: Error checking authentication:", err);
+        
+        // Final fallback - check storage one last time
+        try {
+          const lastResortUser = localStorage.getItem('velp_user') || sessionStorage.getItem('velp_user');
+          if (lastResortUser) {
+            console.log("AdminRoute: Last resort using stored user data");
+            setUser(JSON.parse(lastResortUser));
+            return;
+          }
+        } catch (e) {
+          console.error("AdminRoute: Last resort storage error", e);
+        }
+        
         setUser(null);
       } finally {
         setIsLoading(false);

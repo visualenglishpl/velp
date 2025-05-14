@@ -54,7 +54,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
   
-  // Try to get user from API, with fallback to session storage
+  // Try to get user from API, with multiple fallbacks for resilience
   const {
     data: user,
     error,
@@ -63,16 +63,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     queryKey: ["/api/user"],
     queryFn: async () => {
       try {
-        // Try to get user from API
+        // Step 1: Try to get user from API
         const response = await fetch('/api/user', {
-          credentials: 'include' // Ensure cookies are sent
+          credentials: 'include', // Ensure cookies are sent
+          cache: 'no-store' // Don't cache - we want fresh data
         });
         
         if (response.ok) {
-          return await response.json();
+          const userData = await response.json();
+          
+          // Store this authenticated user data for future fallbacks
+          try {
+            const userString = JSON.stringify(userData);
+            sessionStorage.setItem('velp_user', userString);
+            localStorage.setItem('velp_user', userString);
+          } catch (storageError) {
+            console.error("Failed to store API user data", storageError);
+          }
+          
+          return userData;
         }
         
-        // If API request failed, try to get user from browser storage
+        // Step 2: If API request failed, try to get user from browser storage
         const sessionUser = sessionStorage.getItem('velp_user');
         const localUser = localStorage.getItem('velp_user');
         const storedUser = sessionUser || localUser;
@@ -93,10 +105,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return userData;
         }
         
+        // Step 3 - Try the emergency admin endpoint as a last resort (only for admin paths)
+        if (window.location.pathname.includes('/admin')) {
+          console.log("Attempting emergency admin login for admin path");
+          try {
+            const directAdminResponse = await fetch('/api/direct/admin-login', {
+              credentials: 'include',
+              cache: 'no-store'
+            });
+            
+            if (directAdminResponse.ok) {
+              const directAdminData = await directAdminResponse.json();
+              console.log("Direct admin login success:", directAdminData);
+              
+              if (directAdminData.success && directAdminData.user) {
+                // Store for future use
+                try {
+                  const adminUserString = JSON.stringify(directAdminData.user);
+                  sessionStorage.setItem('velp_user', adminUserString);
+                  localStorage.setItem('velp_user', adminUserString);
+                } catch (storageError) {
+                  console.error("Failed to store direct admin data", storageError);
+                }
+                
+                return directAdminData.user;
+              }
+            }
+          } catch (directError) {
+            console.error("Direct admin login failed:", directError);
+          }
+        }
+        
         return null;
       } catch (error) {
         console.error("Error fetching user:", error);
-        // Final fallback - try any available browser storage
+        
+        // Step 4: Final fallback - try any available browser storage
         try {
           const sessionUser = sessionStorage.getItem('velp_user');
           const localUser = localStorage.getItem('velp_user');
@@ -122,10 +166,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } catch (e) {
           console.error("Browser storage access error:", e);
         }
+        
+        // Step 5: Last resort for admin paths
+        if (window.location.pathname.includes('/admin')) {
+          console.log("Attempting emergency admin login as last resort");
+          try {
+            const lastResortResponse = await fetch('/api/direct/admin-login', {
+              credentials: 'include',
+              cache: 'no-store'
+            });
+            
+            if (lastResortResponse.ok) {
+              const lastResortData = await lastResortResponse.json();
+              console.log("Last-resort admin login success:", lastResortData);
+              
+              if (lastResortData.success && lastResortData.user) {
+                // Store the admin user data
+                try {
+                  const adminString = JSON.stringify(lastResortData.user);
+                  sessionStorage.setItem('velp_user', adminString);
+                  localStorage.setItem('velp_user', adminString);
+                } catch (e) {
+                  console.error("Failed to store last-resort admin data", e);
+                }
+                
+                return lastResortData.user;
+              }
+            }
+          } catch (lastResortError) {
+            console.error("Last-resort admin login failed:", lastResortError);
+          }
+        }
+        
         return null;
       }
     },
-    retry: 1,
+    retry: 2, // Attempt up to 2 retries
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 

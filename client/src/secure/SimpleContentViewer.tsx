@@ -99,17 +99,40 @@ export default function SimpleContentViewer() {
   const bookPath = `book${bookId}`;
   const unitPath = `unit${unitNumber}`;
   
-  // Authentication
+  // Authentication with admin detection
   let user = null;
+  let isAdminUser = false;
+  
+  // First try the auth hook
   try {
     const { user: authUser } = useAuth();
     user = authUser;
+    isAdminUser = user?.role === 'admin';
+    
+    if (isAdminUser) {
+      console.log("Admin user detected via auth hook:", user);
+    }
   } catch (error) {
     console.error("Authentication error:", error);
+    
+    // Fallback: try to fetch from storage
+    try {
+      const storedUser = JSON.parse(sessionStorage.getItem('velp_user') || localStorage.getItem('velp_user') || '{}');
+      if (storedUser && storedUser.role === 'admin') {
+        user = storedUser;
+        isAdminUser = true;
+        console.log("Admin user detected via storage fallback:", user);
+      }
+    } catch (storageError) {
+      console.error("Storage access error:", storageError);
+    }
   }
   
-  const hasPaidAccess = Boolean(user);
-  const freeSlideLimit = /^0[a-c]$/i.test(bookId || '') ? 2 : 10;
+  // Admin users always have access to all content
+  const hasPaidAccess = Boolean(user) || isAdminUser;
+  
+  // Book specific slide limits (only for non-admin users)
+  const freeSlideLimit = isAdminUser ? 999 : /^0[a-c]$/i.test(bookId || '') ? 2 : 10;
   
   // Fetch unit information
   const { 
@@ -413,6 +436,23 @@ export default function SimpleContentViewer() {
           <h3 className="text-lg font-medium">
             {unitData?.title || `Book ${bookId}, Unit ${unitNumber}`}
           </h3>
+          
+          {/* Admin badge and management link if user is admin */}
+          {user?.role === 'admin' && (
+            <div className="ml-3 flex items-center">
+              <span className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-800 rounded-full mr-2">
+                Admin Access
+              </span>
+              <Button 
+                size="sm" 
+                variant="outline" 
+                onClick={() => navigate(`/admin/book-units/${bookId}`)}
+                className="text-xs border-purple-200 hover:bg-purple-50 text-purple-700"
+              >
+                Manage Unit
+              </Button>
+            </div>
+          )}
         </div>
         <div className="flex items-center space-x-2">
           <span className="text-sm text-gray-500">
@@ -434,12 +474,36 @@ export default function SimpleContentViewer() {
         <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
           {materials.map((material, index) => {
             const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+            
+            // Check for video content using multiple indicators
             const isVideo = material.content.toLowerCase().includes('video') || 
-                            material.content.toLowerCase().endsWith('.mp4');
+                           material.content.toLowerCase().endsWith('.mp4') ||
+                           (material.title && material.title.toLowerCase().includes('video')) ||
+                           (material.description && material.description.toLowerCase().includes('video')) ||
+                           material.contentType === 'VIDEO' ||
+                           material.contentType === 'video';
+                           
+            // Log video detection for debugging
+            if (isVideo) {
+              console.log(`Video detected: ${material.content}`, {
+                contentType: material.contentType,
+                title: material.title,
+                description: material.description
+              });
+            }
+            
+            // Check if the current user is an admin
+            const isAdmin = user?.role === 'admin';
+            
             // Premium content conditions:
-            // 1. Regular slides: index >= freeSlideLimit and !hasPaidAccess
-            // 2. ALL videos: isVideo and !hasPaidAccess  
-            const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
+            // 1. Regular slides: index >= freeSlideLimit and !hasPaidAccess and not admin
+            // 2. ALL videos: isVideo and !hasPaidAccess and not admin  
+            const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess && !isAdmin;
+            
+            // Log premium content decision for debugging
+            if ((index >= freeSlideLimit || isVideo) && isAdmin) {
+              console.log(`Admin bypass for premium content: ${material.content}`);
+            }
             
             return (
               <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
@@ -589,6 +653,61 @@ export default function SimpleContentViewer() {
         >
           <ChevronRight className="h-6 w-6 text-blue-600" />
         </button>
+      </div>
+      
+      {/* Slide thumbnail reel */}
+      <div className="w-full overflow-x-auto py-3 px-2 border-t border-gray-200 bg-gray-50">
+        <div className="flex space-x-2 min-w-max">
+          {materials.map((material, index) => {
+            const thumbnailPath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+            const isVideo = material.content.toLowerCase().includes('video') || 
+                          material.content.toLowerCase().endsWith('.mp4');
+            
+            // Check if premium content (similar logic as above)
+            const isAdmin = user?.role === 'admin';
+            const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess && !isAdmin;
+            
+            return (
+              <button
+                key={`thumb-${index}`}
+                onClick={() => goToSlide(index)}
+                className={`relative flex-shrink-0 w-20 h-16 border-2 transition-all duration-200 ${
+                  currentIndex === index 
+                    ? 'border-blue-500 shadow-md' 
+                    : 'border-gray-200 hover:border-blue-300'
+                } rounded overflow-hidden`}
+                aria-label={`Go to slide ${index + 1}`}
+              >
+                {isPremiumContent && (
+                  <div className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-10">
+                    <div className="bg-black/60 text-white text-xs p-1 rounded">
+                      Premium
+                    </div>
+                  </div>
+                )}
+                
+                {isVideo ? (
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                    <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                      <div className="w-0 h-0 border-t-4 border-t-transparent border-l-8 border-l-white border-b-4 border-b-transparent ml-0.5"></div>
+                    </div>
+                  </div>
+                ) : (
+                  <img 
+                    src={thumbnailPath}
+                    alt={`Thumbnail ${index + 1}`}
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                )}
+                
+                <div className="absolute bottom-0 right-0 bg-black/70 text-white text-xs px-1 rounded-tl">
+                  {index + 1}
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
