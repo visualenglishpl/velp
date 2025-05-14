@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, PlusCircle, BookOpen, CheckCircle, Ban, Filter } from 'lucide-react';
+import { ChevronLeft, PlusCircle, BookOpen, CheckCircle, Ban } from 'lucide-react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
@@ -19,7 +19,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Type definition for book data
 interface Book {
@@ -53,9 +52,7 @@ const BooksManagementPage = () => {
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
   const [isNewBook, setIsNewBook] = useState(false);
   
-  // Filtering options
-  const [filterStatus, setFilterStatus] = useState<'all' | 'published' | 'draft'>('all');
-  const [filterLevel, setFilterLevel] = useState<string>('all');
+  // No filtering options anymore
 
   // Book form state
   const [bookId, setBookId] = useState('');
@@ -131,32 +128,7 @@ const BooksManagementPage = () => {
     setLoading(false);
   }, [bookThumbnails]);
   
-  // Extract unique levels for the filter
-  const availableLevels = useMemo(() => {
-    const levels = new Set<string>();
-    books.forEach(book => {
-      if (book.level) {
-        levels.add(book.level);
-      }
-    });
-    return Array.from(levels).sort();
-  }, [books]);
-  
-  // Filter books based on selected criteria
-  const filteredBooks = useMemo(() => {
-    return books.filter(book => {
-      // Filter by publication status
-      if (filterStatus !== 'all') {
-        if (filterStatus === 'published' && !book.published) return false;
-        if (filterStatus === 'draft' && book.published) return false;
-      }
-      
-      // Filter by level
-      if (filterLevel !== 'all' && book.level !== filterLevel) return false;
-      
-      return true;
-    });
-  }, [books, filterStatus, filterLevel]);
+  // No filtering logic needed anymore
 
   // Create mock API mutation for updating book details
   const updateBookMutation = useMutation({
