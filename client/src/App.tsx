@@ -33,6 +33,7 @@ import BookWizardPage from "./pages/BookWizardPage";
 // Migrated to /secure folder
 import BooksPage from "./secure/BooksPage";
 import SlickContentViewer from "./secure/SlickContentViewer";
+import SimpleContentViewer from "./secure/SimpleContentViewer";
 import UnitsPage from "./secure/UnitsPage";
 
 // Original paths - still used until migration is complete
@@ -187,13 +188,13 @@ function App() {
             <UnitsPage />
           </ProtectedRoute>
           <Route path="/viewer">
-            <SlickContentViewer />
+            <SimpleContentViewer />
           </Route>
           <Route path="/book/:bookId/unit/:unitNumber">
-            <SlickContentViewer />
+            <SimpleContentViewer />
           </Route>
           <Route path="/book/:bookId">
-            <SlickContentViewer />
+            <SimpleContentViewer />
           </Route>
           <ProtectedRoute path="/dashboard">
             <DashboardPage />

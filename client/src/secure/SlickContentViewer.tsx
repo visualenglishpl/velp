@@ -718,19 +718,46 @@ export default function SlickContentViewer() {
                   {material.title && (
                     <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
                       <div className="flex flex-col gap-0.5">
-                        {/* Handle extracted question format with arrow → */}
-                        {material.title.includes('→') ? (
-                          <>
-                            <div className="flex gap-2">
-                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                              <span className="text-gray-800 text-base">{material.title.split('→')[0].trim()}</span>
-                            </div>
-                            <div className="flex gap-2 mt-2">
-                              <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                              <span className="font-medium text-indigo-900 text-base">{material.title.split('→')[1].trim()}</span>
-                            </div>
-                          </>
-                        ) : 
+                        {/* Try to use the getQuestionAnswer function to extract question and answer */}
+                        {(() => {
+                          const qa = getQuestionAnswer(material);
+                          if (qa.hasData) {
+                            return (
+                              <>
+                                {qa.country && (
+                                  <div className="mb-1 flex items-center justify-center">
+                                    <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
+                                      {qa.country}
+                                    </h3>
+                                  </div>
+                                )}
+                                <div className="flex gap-2">
+                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                  <span className="text-gray-800 text-base">{qa.question}</span>
+                                </div>
+                                <div className="flex gap-2 mt-2">
+                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                  <span className="font-medium text-indigo-900 text-base">{qa.answer}</span>
+                                </div>
+                              </>
+                            );
+                          }
+                          // Fallback to original method if no data from getQuestionAnswer
+                          return null;
+                        })() || (
+                          // Original handling with arrow format
+                          material.title.includes('→') ? (
+                            <>
+                              <div className="flex gap-2">
+                                <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                <span className="text-gray-800 text-base">{material.title.split('→')[0].trim()}</span>
+                              </div>
+                              <div className="flex gap-2 mt-2">
+                                <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                <span className="font-medium text-indigo-900 text-base">{material.title.split('→')[1].trim()}</span>
+                              </div>
+                            </>
+                          ) : (
                         /* Handle country title format */
                         material.title.match(/^[A-Z\s]+\s\(Files/) ? (
                           <div className="flex items-center justify-center mb-1">
@@ -1225,12 +1252,25 @@ export default function SlickContentViewer() {
                   
                   {/* Centered content container */}
                   <div className="flex items-center justify-center w-full h-full">
-                    {/* Actual image */}
-                    <img 
-                      src={imagePath}
-                      alt={material.title || `Slide ${index + 1}`}
-                      className="max-h-full max-w-full object-contain mx-auto shadow-lg"
-                    />
+                    {/* Check if content is a video */}
+                    {material.content.toLowerCase().includes('video') || 
+                     material.content.toLowerCase().endsWith('.mp4') ? (
+                      <video 
+                        src={imagePath}
+                        controls
+                        className="max-h-full max-w-full object-contain mx-auto shadow-lg"
+                        poster="/assets/video-placeholder.jpg"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      /* Regular image content */
+                      <img 
+                        src={imagePath}
+                        alt={material.title || `Slide ${index + 1}`}
+                        className="max-h-full max-w-full object-contain mx-auto shadow-lg"
+                      />
+                    )}
                   </div>
                 </div>
               );
