@@ -297,15 +297,7 @@ const BooksManagementPage = () => {
                     className="relative aspect-square overflow-hidden flex items-center justify-center" 
                     style={{ backgroundColor: book.color }}
                   >
-                    {/* Book 3 has no thumbnail, use a book icon instead */}
-                    {book.bookId === '3' ? (
-                      <div className="flex items-center justify-center h-full w-full">
-                        <BookOpen className="h-24 w-24 text-white" />
-                        <div className="absolute bottom-2 left-0 right-0 text-center bg-black bg-opacity-50 text-white px-2 py-1 text-xs">
-                          VISUAL ENGLISH 3
-                        </div>
-                      </div>
-                    ) : (
+                    {/* All books try to load their thumbnails now */}
                       <img 
                         src={book.thumbnailUrl || book.gifUrl || `/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
                         alt={`Visual English Book ${book.bookId}`} 
