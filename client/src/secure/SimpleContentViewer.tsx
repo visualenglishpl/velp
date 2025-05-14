@@ -9,6 +9,8 @@ import { apiRequest } from '@/lib/queryClient';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useExcelQA } from '@/hooks/use-excel-qa';
+import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
 
 // Define types for question data structure
 type QuestionAnswer = {
@@ -346,109 +348,122 @@ export default function SimpleContentViewer() {
   };
   
   // Helper function to get question and answer for a material
+  // Use our enhanced Excel QA hook to get better pattern matching
+  const { findMatchingQA } = useExcelQA(bookId || "1");
+  const currentUnitId = unitPath; // Use unitPath instead of unitId
+  
   const getQuestionAnswer = (material: S3Material) => {
-    // Default return value
+    // Default return value if no match is found
     const defaultResult = { country: "", question: "", answer: "", hasData: false };
     
-    // Try multiple sources for the file code
-    const extractCodeFromString = (str: string) => {
-      if (!str) return null;
-      
-      // First try to match exact format "01 R A"
-      let codeMatch = str.match(/^(\d+\s+[A-Z])\s+([A-Z])/);
-      if (codeMatch) {
-        return {
-          codeBase: codeMatch[1], // "01 R"
-          letterCode: codeMatch[2] // "A"
-        };
+    // Enable debug logging
+    const DEBUG_ENABLED = true;
+    const logDebug = (message: string) => {
+      if (DEBUG_ENABLED) {
+        console.log(`[SimpleContentViewer Q&A] ${message}`);
       }
-      
-      // Try alternative format like "01-R-A" or "01_R_A"
-      codeMatch = str.match(/^(\d+[\s\-_]+[A-Z])[\s\-_]+([A-Z])/);
-      if (codeMatch) {
-        // Normalize to space-separated format for lookup
-        const normalizedBase = codeMatch[1].replace(/[\-_]/g, ' ');
-        return {
-          codeBase: normalizedBase,
-          letterCode: codeMatch[2]
-        };
-      }
-      
-      // Try from filename itself, like "01 R A - Question text.jpg"
-      codeMatch = str.match(/(\d+[\s\-_]+[A-Z])[\s\-_]+([A-Z])[\s\-_]/);
-      if (codeMatch) {
-        // Normalize to space-separated format for lookup
-        const normalizedBase = codeMatch[1].replace(/[\-_]/g, ' ');
-        return {
-          codeBase: normalizedBase,
-          letterCode: codeMatch[2]
-        };
-      }
-      
-      return null;
     };
     
-    // Try multiple sources for code extraction
-    let codeInfo = null;
-    
-    // 1. Try from description field first
-    if (material.description) {
-      codeInfo = extractCodeFromString(material.description);
-    }
-    
-    // 2. If not found, try from content field (filename)
-    if (!codeInfo && material.content) {
-      codeInfo = extractCodeFromString(material.content);
-    }
-    
-    // 3. If not found, try from title
-    if (!codeInfo && material.title) {
-      codeInfo = extractCodeFromString(material.title);
-    }
-    
-    // If no code found in any field, return default
-    if (!codeInfo) {
-      console.log(`No code pattern found in data:`, { 
-        title: material.title,
-        description: material.description, 
-        content: material.content
-      });
+    if (!material.content) {
       return defaultResult;
     }
     
-    // Check if we have data for this code
-    if (!QUESTION_DATA[codeInfo.codeBase]) {
-      console.log(`No data found for code base: ${codeInfo.codeBase}`, { 
-        codeInfo, 
-        availableCodes: Object.keys(QUESTION_DATA).join(', ') 
-      });
-      return defaultResult;
+    // -------- APPROACH 1: Check for direct dash patterns in the content filename --------
+    const filename = material.content;
+    logDebug(`Processing Q&A for: ${filename}`);
+    
+    // Enhanced dash pattern detection with alternate dash characters
+    const dashPattern = /([^-–—]+)\s*[-–—]\s*(.+?)(\.(png|jpg|jpeg|gif|webp|mp4)|$)/i;
+    const dashMatch = filename.match(dashPattern);
+    
+    if (dashMatch && dashMatch[1] && dashMatch[2]) {
+      const question = dashMatch[1].trim();
+      const answer = dashMatch[2].trim();
+      
+      // Make sure both parts look valid (at least 2 characters each)
+      if (question.length > 2 && answer.length > 2) {
+        logDebug(`✅ DIRECT DASH PATTERN found in filename: "${question}" - "${answer}"`);
+        
+        // Format the Q&A properly
+        const formattedQuestion = question.endsWith('?') ? question : question + '?';
+        const formattedAnswer = answer.endsWith('.') ? answer : answer + '.';
+        
+        return {
+          country: "", // Leave blank as we don't know the country from dash pattern
+          question: formattedQuestion, 
+          answer: formattedAnswer,
+          hasData: true
+        };
+      }
     }
     
-    const countryData = QUESTION_DATA[codeInfo.codeBase];
+    // -------- APPROACH 2: Use the enhanced Excel pattern matching system --------
+    // Use the currentUnitId defined at the top of the component
+    const matchingQA = findMatchingQA(filename, currentUnitId);
     
-    // Make sure the letterCode exists in the questions object
-    if (!countryData.questions[codeInfo.letterCode]) {
-      console.log(`No data found for letter code: ${codeInfo.letterCode} in ${codeInfo.codeBase}`, {
-        codeBase: codeInfo.codeBase,
-        letterCode: codeInfo.letterCode,
-        availableLetters: Object.keys(countryData.questions).join(', ')
-      });
-      return defaultResult;
+    if (matchingQA) {
+      logDebug(`✅ FOUND MATCH using enhanced Excel QA hook: ${matchingQA.question}`);
+      
+      // Determine country if available
+      let country = "";
+      if (filename.toLowerCase().includes('poland') || filename.match(/\b01\s*r\b/i)) {
+        country = "POLAND";
+      } else if (filename.toLowerCase().includes('britain') || 
+                filename.toLowerCase().includes('uk') || 
+                filename.match(/\b02\s*n\b/i)) {
+        country = "BRITAIN / UK";
+      }
+      
+      return {
+        country,
+        question: matchingQA.question,
+        answer: matchingQA.answer,
+        hasData: true
+      };
     }
     
-    // Log success for debugging
-    console.log(`Found Q&A data for ${codeInfo.codeBase} ${codeInfo.letterCode}:`, {
-      question: countryData.questions[codeInfo.letterCode].question,
-      answer: countryData.questions[codeInfo.letterCode].answer
-    });
+    // -------- APPROACH 3: Fall back to the pattern engine for generated questions --------
+    const patternEngineResult = getPatternEngineQA(filename, currentUnitId);
     
-    return {
-      country: countryData.country,
-      question: countryData.questions[codeInfo.letterCode].question,
-      answer: countryData.questions[codeInfo.letterCode].answer,
-      hasData: true
-    };
+    if (patternEngineResult && patternEngineResult.question) {
+      logDebug(`✅ FOUND MATCH using pattern engine: ${patternEngineResult.question}`);
+      
+      // Determine country if available
+      let country = "";
+      if (filename.toLowerCase().includes('poland')) {
+        country = "POLAND";
+      } else if (filename.toLowerCase().includes('britain') || filename.toLowerCase().includes('uk')) {
+        country = "BRITAIN / UK";
+      }
+      
+      return {
+        country,
+        question: patternEngineResult.question,
+        answer: patternEngineResult.answer,
+        hasData: true
+      };
+    }
+    
+    // -------- APPROACH 4: Check title for question format (Q&A in title) --------
+    if (material.title && material.title.includes('?')) {
+      const titleQuestion = material.title.trim();
+      const titleAnswer = material.description || "";
+      
+      if (titleQuestion.length > 2 && titleAnswer.length > 2) {
+        logDebug(`✅ FOUND Q&A in title/description: ${titleQuestion}`);
+        
+        return {
+          country: "",
+          question: titleQuestion,
+          answer: titleAnswer,
+          hasData: true
+        };
+      }
+    }
+    
+    // No match found in any system
+    logDebug(`❌ No Q&A match found for: ${filename}`);
+    return defaultResult;
   };
   
   // Loading state
