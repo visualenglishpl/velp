@@ -54,13 +54,49 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
   
+  // Try to get user from API, with fallback to session storage
   const {
     data: user,
     error,
     isLoading,
   } = useQuery<User | null, Error>({
     queryKey: ["/api/user"],
-    queryFn: getQueryFn({ on401: "returnNull" }),
+    queryFn: async () => {
+      try {
+        // Try to get user from API
+        const response = await fetch('/api/user', {
+          credentials: 'include' // Ensure cookies are sent
+        });
+        
+        if (response.ok) {
+          return await response.json();
+        }
+        
+        // If API request failed, try to get user from session storage
+        const sessionUser = sessionStorage.getItem('velp_user');
+        if (sessionUser) {
+          console.log("Session recovery: Using stored user data");
+          return JSON.parse(sessionUser);
+        }
+        
+        return null;
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        // Final fallback - try session storage
+        try {
+          const sessionUser = sessionStorage.getItem('velp_user');
+          if (sessionUser) {
+            console.log("Error recovery: Using stored user data");
+            return JSON.parse(sessionUser);
+          }
+        } catch (e) {
+          console.error("Session storage access error:", e);
+        }
+        return null;
+      }
+    },
+    retry: 1,
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 
   const loginMutation = useMutation({
@@ -83,19 +119,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: (user: User) => {
       console.log("Login successful:", user);
       queryClient.setQueryData(["/api/user"], user);
+      
+      // Keep a backup of the user in sessionStorage as fallback
+      try {
+        sessionStorage.setItem('velp_user', JSON.stringify(user));
+      } catch (err) {
+        console.error("Failed to store user backup in sessionStorage", err);
+      }
+      
       toast({
         title: "Login Successful",
         description: `Welcome back, ${user.username}!`,
       });
       
-      // Redirect based on role
-      if (user.role === 'admin') {
-        console.log("Admin user, redirecting to admin dashboard");
-        window.location.href = "/admin";
-      } else {
-        console.log("Teacher/user, redirecting to books page");
-        window.location.href = "/books";
-      }
+      // Redirect based on role using proper navigation
+      setTimeout(() => {
+        if (user.role === 'admin') {
+          console.log("Admin user, redirecting to admin dashboard");
+          window.location.href = "/admin";
+        } else {
+          console.log("Teacher/user, redirecting to books page");
+          window.location.href = "/books";
+        }
+      }, 500); // Small delay to ensure the toast is shown and session is properly set
     },
     onError: (error: any) => {
       console.error("Login mutation error:", error);
@@ -160,11 +206,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);
+      
+      // Clear the backup in sessionStorage
+      try {
+        sessionStorage.removeItem('velp_user');
+      } catch (err) {
+        console.error("Failed to clear user backup from sessionStorage", err);
+      }
+      
       toast({
         title: "Logged out",
         description: "You have been successfully logged out.",
       });
-      window.location.href = "/";
+      
+      // Small delay to ensure session is properly cleared before redirect
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 300);
     },
     onError: (error: any) => {
       console.error("Logout error:", error);

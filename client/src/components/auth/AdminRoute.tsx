@@ -14,12 +14,40 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ path, children }) => {
   let isLoading = true;
   
   try {
+    // Try to use the auth context first
     const auth = useAuth();
     user = auth.user;
     isLoading = auth.isLoading;
+    
+    // If no user but not loading, check session storage as backup
+    if (!user && !isLoading) {
+      try {
+        const sessionUser = sessionStorage.getItem('velp_user');
+        if (sessionUser) {
+          console.log("AdminRoute: Recovering user from sessionStorage");
+          user = JSON.parse(sessionUser);
+          // This prevents immediate redirect while auth context catches up
+          isLoading = true;
+          // Force a refresh of auth state if we found a user in session storage
+          setTimeout(() => window.location.reload(), 500);
+        }
+      } catch (e) {
+        console.error("AdminRoute: Session storage access error:", e);
+      }
+    }
   } catch (error) {
     console.error("Auth context error in AdminRoute:", error);
-    // Fall back to loading state, will lead to login redirect
+    // Try sessionStorage as last resort
+    try {
+      const sessionUser = sessionStorage.getItem('velp_user');
+      if (sessionUser) {
+        console.log("AdminRoute: Error recovery - using sessionStorage");
+        user = JSON.parse(sessionUser);
+        isLoading = false;
+      }
+    } catch (e) {
+      console.error("AdminRoute: Session storage access error:", e);
+    }
   }
   
   return (

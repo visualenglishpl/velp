@@ -232,8 +232,11 @@ export class MemStorage implements IStorage {
   
   constructor() {
     const MemoryStore = createMemoryStore(session);
+    
+    // Create a more robust session store with longer TTL
     this.sessionStore = new MemoryStore({
       checkPeriod: 86400000, // prune expired entries every 24h
+      ttl: 7 * 24 * 60 * 60 * 1000, // 7 days TTL for sessions
     });
     
     // Create admin user
