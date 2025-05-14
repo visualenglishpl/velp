@@ -188,28 +188,28 @@ const AdminPage = () => {
             {adminFeatures.map((feature, index) => (
               <Card 
                 key={index} 
-                className={`overflow-hidden border-0 ${feature.featured ? 'shadow-xl ring-2 ring-purple-400' : 'shadow-md'} hover:scale-105 transition-transform`}
+                className={`overflow-hidden border-0 ${feature.featured ? 'shadow-xl ring-2 ring-purple-400' : 'shadow-md'} hover:scale-105 transition-transform min-w-[150px]`}
               >
                 <CardHeader 
                   className="p-0"
                   style={{ backgroundColor: feature.color }}
                 >
-                  <div className="flex flex-col items-center justify-center py-3">
+                  <div className="flex flex-col items-center justify-center py-3 w-full">
                     <div className="bg-white rounded-full p-2 mb-1">
                       <div style={{ color: feature.color }}>
                         {feature.icon}
                       </div>
                     </div>
-                    <h2 className="text-lg font-bold text-white leading-tight">{feature.title}</h2>
+                    <h2 className="text-lg font-bold text-white leading-tight text-center px-1 mb-1 w-full mx-auto truncate">{feature.title}</h2>
                     {feature.featured && (
-                      <span className="bg-white text-purple-600 px-2 py-0.5 rounded-full text-xs font-bold mt-1">
+                      <span className="bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-[10px] font-medium mt-0.5">
                         RECOMMENDED
                       </span>
                     )}
                   </div>
                 </CardHeader>
-                <CardContent className="pt-2 pb-1 px-3">
-                  <CardDescription className="text-center text-xs leading-tight">
+                <CardContent className="pt-2 pb-2 px-3">
+                  <CardDescription className="text-center text-xs leading-relaxed max-h-12 overflow-hidden">
                     {feature.description}
                   </CardDescription>
                 </CardContent>
