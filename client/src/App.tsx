@@ -186,15 +186,15 @@ function App() {
           <ProtectedRoute path="/books/:bookId">
             <UnitsPage />
           </ProtectedRoute>
-          <ProtectedRoute path="/viewer">
+          <Route path="/viewer">
             <SlickContentViewer />
-          </ProtectedRoute>
-          <ProtectedRoute path="/book/:bookId/unit/:unitNumber">
+          </Route>
+          <Route path="/book/:bookId/unit/:unitNumber">
             <SlickContentViewer />
-          </ProtectedRoute>
-          <ProtectedRoute path="/book/:bookId">
+          </Route>
+          <Route path="/book/:bookId">
             <SlickContentViewer />
-          </ProtectedRoute>
+          </Route>
           <ProtectedRoute path="/dashboard">
             <DashboardPage />
           </ProtectedRoute>
