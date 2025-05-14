@@ -2248,23 +2248,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // First attempt: Try to fetch the Excel file directly from S3
       try {
-        // Possible Excel file locations and names
-        const possibleExcelPaths = [
-          `${bookPath}/VISUAL ${bookId} QUESTIONS.xlsx`,
-          `${bookPath}/QUESTIONS.xlsx`,
-          `VISUAL ${bookId} QUESTIONS.xlsx`,
-          `VISUAL${bookId}QUESTIONS.xlsx`
-        ];
+        // We've identified several patterns for Excel files in the S3 bucket
+        let specificPaths = [];
         
-        // Try each possible path
-        for (const excelPath of possibleExcelPaths) {
+        // Most books (2-6) use two spaces between number and QUESTIONS
+        if (bookId >= 2 && bookId <= 6) {
+          specificPaths.push(`${bookPath}/VISUAL ${bookId}  QUESTIONS.xlsx`); // Two spaces 
+        }
+        
+        // Book 7 uses one space between number and QUESTIONS
+        if (bookId == 7) {
+          specificPaths.push(`${bookPath}/VISUAL ${bookId} QUESTIONS.xlsx`); // One space
+        }
+        
+        // Add the general patterns for all books as fallbacks
+        specificPaths.push(
+          `${bookPath}/VISUAL ${bookId} QUESTIONS.xlsx`,  // One space (general fallback)
+          `${bookPath}/VISUAL ${bookId}  QUESTIONS.xlsx` // Two spaces (general fallback)
+        );
+        
+        let foundExcelFile = false;
+        
+        // Try each specific path based on the book ID pattern
+        for (const excelPath of specificPaths) {
           try {
-            console.log(`Trying to fetch Excel file from S3: ${excelPath}`);
+            console.log(`Trying to fetch Excel file at: ${excelPath}`);
             const presignedUrl = await getS3PresignedUrl(excelPath);
             
             if (presignedUrl) {
-              // We found the Excel file, now we need to fetch it and parse it
               console.log(`Found Excel file at ${excelPath}, processing...`);
+              foundExcelFile = true;
               // This would require server-side Excel processing, which is beyond our scope
               // Instead, we'll rely on pre-processed JSON files saved in the filesystem
               break;
@@ -2273,8 +2286,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
             console.log(`Excel file not found at path: ${excelPath}`);
           }
         }
-      } catch (excelError) {
-        console.log(`Error accessing Excel file: ${excelError.message}`);
+        
+        // If we didn't find the file with any of the specific patterns, try other possible patterns
+        if (!foundExcelFile) {
+          // Possible alternate Excel file locations and names
+          const possibleExcelPaths = [
+            `${bookPath}/QUESTIONS.xlsx`,
+            `VISUAL ${bookId} QUESTIONS.xlsx`,
+            `VISUAL${bookId}QUESTIONS.xlsx`
+          ];
+          
+          // Try each possible path
+          for (const excelPath of possibleExcelPaths) {
+            try {
+              console.log(`Trying to fetch Excel file from S3: ${excelPath}`);
+              const presignedUrl = await getS3PresignedUrl(excelPath);
+              
+              if (presignedUrl) {
+                // We found the Excel file, now we need to fetch it and parse it
+                console.log(`Found Excel file at ${excelPath}, processing...`);
+                foundExcelFile = true;
+                break;
+              }
+            } catch (error) {
+              console.log(`Excel file not found at path: ${excelPath}`);
+            }
+          }
+        }
+      } catch (excelError: unknown) {
+        const errorMessage = excelError instanceof Error ? excelError.message : 'Unknown error';
+        console.log(`Error accessing Excel file: ${errorMessage}`);
       }
       
       // Second attempt: Check for a pre-processed JSON file
