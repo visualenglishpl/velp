@@ -13,6 +13,7 @@ import { useAuth } from "./hooks/use-auth";
 import HomePage from "./public/HomePage";
 import AboutPage from "./public/AboutPage";
 import LoginPage from "./public/LoginPage";
+import StandaloneLoginPage from "./public/StandaloneLoginPage";
 
 // Original paths - still used until migration is complete
 import MethodPage from "./pages/MethodPage";
@@ -66,12 +67,35 @@ function App() {
   // This will prevent the app from crashing if AuthProvider is not available
   let user = null;
   let authLoading = true;
+  
   try {
     const auth = useAuth();
     user = auth.user;
     authLoading = auth.isLoading;
   } catch (error) {
     console.log('Auth context not available yet, proceeding with fallback values');
+    
+    // Check if we have a session cookie as a fallback approach
+    const hasCookie = document.cookie.includes('connect.sid=');
+    if (hasCookie) {
+      console.log('Session cookie detected, attempting to fetch user data directly');
+      // We have a session cookie, let's try to fetch user data directly
+      // This won't block the rendering but will update the UI if successful
+      fetch('/api/user', { credentials: 'include' })
+        .then(res => {
+          if (res.ok) return res.json();
+          throw new Error('Failed to fetch user');
+        })
+        .then(userData => {
+          console.log('Successfully fetched user data via direct API call:', userData);
+          // We don't update state here since we can't, but we can use this for logging
+          user = userData;
+          authLoading = false;
+        })
+        .catch(err => {
+          console.log('Failed to fetch user data:', err);
+        });
+    }
   }
   
   // Check if we're on an admin dashboard page, login page, or admin page
@@ -137,7 +161,14 @@ function App() {
           </Route>
           <Route path="/login">
             {() => {
-              // Check if user is already logged in - move this logic to the LoginPage component
+              // Use the standalone login page that doesn't rely on React context
+              return <StandaloneLoginPage />;
+            }}
+          </Route>
+          
+          {/* Keep the old login page available during testing */}
+          <Route path="/login-old">
+            {() => {
               return <LoginPage />;
             }}
           </Route>

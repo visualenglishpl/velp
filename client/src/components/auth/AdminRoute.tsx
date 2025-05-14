@@ -1,6 +1,6 @@
 import React from "react";
-import { Route, Redirect } from "wouter";
-import { Loader2 } from "lucide-react";
+import { Route, Redirect, Link } from "wouter";
+import { Loader2, LogIn } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 interface AdminRouteProps {
@@ -28,8 +28,12 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ path, children }) => {
         // Show loading state
         if (isLoading) {
           return (
-            <div className="flex justify-center items-center h-[50vh]">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <div className="flex flex-col justify-center items-center h-[50vh]">
+              <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
+              <p className="text-gray-500 mb-4">Loading admin authentication...</p>
+              <Link href="/login" className="text-sm text-purple-600 hover:text-purple-800 flex items-center">
+                <LogIn className="h-4 w-4 mr-1" /> Login directly if loading takes too long
+              </Link>
             </div>
           );
         }

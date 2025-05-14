@@ -88,26 +88,33 @@ export function setupMockAuth(app: Express) {
   // Mock login endpoint
   app.post("/api/login", (req, res) => {
     const { username, password, role } = req.body;
-    console.log(`Login attempt: ${username}, role: ${role}`);
+    console.log(`Login attempt: username=${username}, password=${password ? '******' : 'empty'}, role=${role || 'not specified'}`);
 
-    // Find matching user
-    const matchingCred = validCredentials.find(cred => 
-      cred.username === username && 
-      cred.userRecord.role === role
-    );
-
-    if (matchingCred) {
-      // Simple password check for development
-      if (matchingCred.password === password) {
-        // Set user in session
-        req.session.user = matchingCred.userRecord;
-        console.log(`Login successful for ${username} as ${role}`);
-        return res.json(matchingCred.userRecord);
-      }
+    // Try to find matching credentials
+    const matchingCred = validCredentials.find(cred => cred.username === username);
+    
+    if (!matchingCred) {
+      console.log(`Login failed: user '${username}' not found`);
+      return res.status(401).json({ error: "Invalid username or password" });
     }
-
-    console.log(`Login failed for ${username} as ${role}`);
-    res.status(401).json({ error: "Invalid username, password, or role" });
+    
+    // Check password
+    if (matchingCred.password !== password) {
+      console.log(`Login failed: incorrect password for '${username}'`);
+      return res.status(401).json({ error: "Invalid username or password" });
+    }
+    
+    // If role is specified, check if it matches
+    if (role && matchingCred.userRecord.role !== role) {
+      console.log(`Login failed: role mismatch for '${username}', expected '${role}', found '${matchingCred.userRecord.role}'`);
+      return res.status(401).json({ error: "Invalid role for this user" });
+    }
+    
+    // Success! Set user in session and return user data
+    req.session.user = matchingCred.userRecord;
+    const userRole = matchingCred.userRecord.role;
+    console.log(`Login successful for '${username}' as '${userRole}'`);
+    return res.json(matchingCred.userRecord);
   });
 
   // Mock logout endpoint
@@ -126,7 +133,12 @@ export function setupMockAuth(app: Express) {
   });
 
   // Get current user endpoint
-  app.get("/api/user", isAuthenticated, (req, res) => {
+  app.get("/api/user", (req, res) => {
+    if (!req.session || !req.session.user) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+    
+    // Return user data from session
     res.json(req.session.user);
   });
 

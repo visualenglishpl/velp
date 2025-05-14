@@ -1,142 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useLocation, Redirect } from 'wouter';
+import { useState } from 'react';
+import { useLocation } from 'wouter';
 import { Loader2, LogIn, User, GraduationCap, Book, School } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useAuth } from '@/hooks/use-auth';
+import { useToast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
 
-// Create a safe wrapper for direct API calls when context isn't available
-const useDirectAuth = () => {
-  const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const directLogin = async (credentials: { username: string; password: string; role: string }) => {
-    setIsLoading(true);
-    try {
-      console.log("Attempting direct login with credentials:", credentials);
-      
-      // Use fetch directly instead of apiRequest for more control over error handling
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-        credentials: "include",
-      });
-      
-      // Log response status
-      console.log("Login response status:", res.status);
-      
-      if (!res.ok) {
-        // Try to get detailed error message from response
-        const errorData = await res.json().catch(() => ({}));
-        console.error("Login error response:", errorData);
-        throw new Error(errorData.error || `Login failed with status ${res.status}`);
-      }
-      
-      const userData = await res.json();
-      console.log("Login successful, user data:", userData);
-      
-      toast({
-        title: "Login Successful",
-        description: `Welcome back, ${userData.username}!`,
-      });
-      
-      // Redirect based on role
-      if (userData.role === 'admin') {
-        console.log("Redirecting to admin dashboard");
-        window.location.href = "/admin";
-      } else {
-        console.log("Redirecting to books page");
-        window.location.href = "/books";
-      }
-      
-      return userData;
-    } catch (error) {
-      console.error("Login error details:", error);
-      toast({
-        title: "Login failed",
-        description: error instanceof Error ? error.message : "Invalid username or password",
-        variant: "destructive",
-      });
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  
-  const directRegister = async (userData: { 
-    username: string; 
-    password: string; 
-    email: string;
-    fullName: string;
-    role: string;
-  }) => {
-    setIsLoading(true);
-    try {
-      const res = await apiRequest("POST", "/api/register", userData);
-      const user = await res.json();
-      
-      toast({
-        title: "Registration successful",
-        description: `Welcome to VELP, ${user.username}!`,
-      });
-      
-      // Redirect based on role
-      if (user.role === 'admin') {
-        window.location.href = "/admin";
-      } else {
-        window.location.href = "/books";
-      }
-      
-      return user;
-    } catch (error) {
-      toast({
-        title: "Registration failed",
-        description: error instanceof Error ? error.message : "Could not create account. Please try again.",
-        variant: "destructive",
-      });
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  
-  return {
-    isLoading,
-    directLogin,
-    directRegister
-  };
-};
-
-export default function LoginPage() {
+export default function StandaloneLoginPage() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
-  const directAuth = useDirectAuth();
-  
-  // Use try/catch to safely handle auth errors
-  let user = null;
-  let loginMutation = { mutate: (data: any) => {}, isPending: false };
-  let registerMutation = { mutate: (data: any) => {}, isPending: false };
-  let usingDirectAuth = false;
-  
-  try {
-    const auth = useAuth();
-    user = auth.user;
-    loginMutation = auth.loginMutation;
-    registerMutation = auth.registerMutation;
-  } catch (error) {
-    console.error("Auth context error in LoginPage:", error);
-    // We'll use direct API calls instead of context
-    usingDirectAuth = true;
-  }
+  const [isLoading, setIsLoading] = useState(false);
   
   // Form state
   const [username, setUsername] = useState('');
@@ -146,54 +22,192 @@ export default function LoginPage() {
   const [selectedRole, setSelectedRole] = useState<'admin' | 'teacher' | 'school'>('teacher');
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [authError, setAuthError] = useState<string | null>(null);
-
-  // If user is already logged in, redirect to appropriate page
-  if (user) {
-    if (user.role === 'admin') {
-      return <Redirect to="/admin" />;
-    } else {
-      return <Redirect to="/books" />;
-    }
-  }
   
+  // Testing credentials - add this as a helper for development
+  const fillTestCredentials = () => {
+    if (selectedRole === 'admin') {
+      setUsername('admin');
+      setPassword('admin123');
+    } else if (selectedRole === 'teacher') {
+      setUsername('teacher');
+      setPassword('teacher123');
+    } else {
+      setUsername('school');
+      setPassword('school123');
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError(null);
+    setIsLoading(true);
     
     try {
-      // Always use direct login for consistency
-      await directAuth.directLogin({ 
+      console.log("Attempting login with:", { username, password, role: selectedRole });
+      
+      // For development, log more detailed information
+      console.log("Login endpoint: /api/login");
+      console.log("Full credentials being sent:", JSON.stringify({ 
         username, 
         password,
         role: selectedRole
+      }, null, 2));
+      
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          username, 
+          password,
+          role: selectedRole
+        }),
+        credentials: "include",
       });
       
-      // We don't need to use the context-based login since direct login is more reliable
-      // and we're having issues with the auth context
+      console.log("Login response status:", res.status);
+      
+      if (!res.ok) {
+        // Try to get detailed error message from response
+        let errorMessage = "Login failed";
+        try {
+          const errorData = await res.json();
+          console.error("Login error response:", errorData);
+          errorMessage = errorData.error || `Login failed with status ${res.status}`;
+        } catch (jsonError) {
+          console.error("Failed to parse error response:", jsonError);
+          errorMessage = `Login failed with status ${res.status}`;
+        }
+        throw new Error(errorMessage);
+      }
+      
+      // Parse the user data
+      let userData;
+      try {
+        userData = await res.json();
+        console.log("Login successful, user data:", userData);
+      } catch (jsonError) {
+        console.error("Failed to parse user data:", jsonError);
+        throw new Error("Login was successful but failed to get user details");
+      }
+      
+      // Show success toast
+      toast({
+        title: "Login Successful",
+        description: `Welcome back, ${userData.username}!`,
+      });
+      
+      // Small delay to allow the toast to be seen
+      setTimeout(() => {
+        // Redirect based on role
+        if (userData.role === 'admin') {
+          console.log("Redirecting to admin dashboard");
+          window.location.href = "/admin";
+        } else {
+          console.log("Redirecting to books page");
+          window.location.href = "/books";
+        }
+      }, 500);
     } catch (error) {
-      console.error("Login error:", error);
-      setAuthError("Failed to log in. Please try again.");
+      console.error("Login error details:", error);
+      toast({
+        title: "Login failed",
+        description: error instanceof Error ? error.message : "Invalid username or password",
+        variant: "destructive",
+      });
+      setAuthError(error instanceof Error ? error.message : "Failed to log in. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
   
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError(null);
+    setIsLoading(true);
     
     try {
-      // Always use direct register for consistency
-      await directAuth.directRegister({
-        username,
+      console.log("Attempting registration with:", { username, password, email, fullName, role: selectedRole });
+      
+      // For development, log more detailed information
+      console.log("Registration endpoint: /api/register");
+      console.log("Full data being sent:", JSON.stringify({ 
+        username, 
         password,
         email,
         fullName,
         role: selectedRole
+      }, null, 2));
+      
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          username, 
+          password,
+          email,
+          fullName,
+          role: selectedRole
+        }),
+        credentials: "include",
       });
       
-      // We don't need to use the context-based register since direct register is more reliable
+      console.log("Registration response status:", res.status);
+      
+      if (!res.ok) {
+        // Try to get detailed error message from response
+        let errorMessage = "Registration failed";
+        try {
+          const errorData = await res.json();
+          console.error("Registration error response:", errorData);
+          errorMessage = errorData.error || `Registration failed with status ${res.status}`;
+        } catch (jsonError) {
+          console.error("Failed to parse error response:", jsonError);
+          errorMessage = `Registration failed with status ${res.status}`;
+        }
+        throw new Error(errorMessage);
+      }
+      
+      // Parse the user data
+      let userData;
+      try {
+        userData = await res.json();
+        console.log("Registration successful, user data:", userData);
+      } catch (jsonError) {
+        console.error("Failed to parse user data:", jsonError);
+        throw new Error("Registration was successful but failed to get user details");
+      }
+      
+      // Show success toast
+      toast({
+        title: "Registration Successful",
+        description: `Welcome to Visual English, ${userData.username}!`,
+      });
+      
+      // Small delay to allow the toast to be seen
+      setTimeout(() => {
+        // Redirect based on role
+        if (userData.role === 'admin') {
+          console.log("Redirecting to admin dashboard");
+          window.location.href = "/admin";
+        } else {
+          console.log("Redirecting to books page");
+          window.location.href = "/books";
+        }
+      }, 500);
     } catch (error) {
-      console.error("Registration error:", error);
-      setAuthError("Failed to register. Please try again.");
+      console.error("Registration error details:", error);
+      toast({
+        title: "Registration failed",
+        description: error instanceof Error ? error.message : "Could not create account. Please try again.",
+        variant: "destructive",
+      });
+      setAuthError(error instanceof Error ? error.message : "Failed to register. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -351,18 +365,86 @@ export default function LoginPage() {
                         </div>
                       </div>
                       
-                      <Button
-                        className="w-full" 
-                        type="submit"
-                        disabled={directAuth.isLoading}
-                      >
-                        {directAuth.isLoading ? (
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        ) : (
-                          <LogIn className="h-4 w-4 mr-2" />
+                      <div className="space-y-4">
+                        {process.env.NODE_ENV !== 'production' && (
+                          <div className="grid grid-cols-2 gap-2">
+                            <Button
+                              className="w-full text-xs bg-slate-100 text-slate-700 hover:bg-slate-200" 
+                              type="button"
+                              variant="outline"
+                              onClick={fillTestCredentials}
+                            >
+                              Fill Test Credentials
+                            </Button>
+                            
+                            <Button
+                              className="w-full text-xs bg-purple-100 text-purple-700 hover:bg-purple-200" 
+                              type="button"
+                              variant="outline"
+                              onClick={async () => {
+                                setUsername('admin');
+                                setPassword('admin123');
+                                setSelectedRole('admin');
+                                
+                                // Immediately submit login after setting credentials
+                                setIsLoading(true);
+                                try {
+                                  const loginRes = await fetch("/api/login", {
+                                    method: "POST",
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({ 
+                                      username: "admin", 
+                                      password: "admin123",
+                                      role: "admin"
+                                    }),
+                                    credentials: "include",
+                                  });
+                                  
+                                  if (!loginRes.ok) {
+                                    throw new Error("Login failed");
+                                  }
+                                  
+                                  const userData = await loginRes.json();
+                                  
+                                  toast({
+                                    title: "Admin Login Successful",
+                                    description: `Welcome back, ${userData.username}!`,
+                                  });
+                                  
+                                  // Redirect to admin dashboard
+                                  setTimeout(() => {
+                                    window.location.href = "/admin";
+                                  }, 500);
+                                } catch (error) {
+                                  toast({
+                                    title: "Admin Login Failed",
+                                    description: "Could not automatically log in as admin. Please try manually.",
+                                    variant: "destructive",
+                                  });
+                                  setIsLoading(false);
+                                }
+                              }}
+                            >
+                              Quick Admin Login
+                            </Button>
+                          </div>
                         )}
-                        Sign In
-                      </Button>
+                        
+                        <Button
+                          className="w-full" 
+                          type="submit"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          ) : (
+                            <LogIn className="h-4 w-4 mr-2" />
+                          )}
+                          Sign In
+                        </Button>
+                      </div>
                     </form>
                   </TabsContent>
                   
@@ -464,28 +546,56 @@ export default function LoginPage() {
                         </div>
                       </div>
                       
-                      <Button 
-                        className="w-full"
-                        type="submit"
-                        disabled={registerMutation.isPending}
-                      >
-                        {registerMutation.isPending ? (
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        ) : (
-                          <LogIn className="h-4 w-4 mr-2" />
+                      <div className="space-y-4">
+                        {process.env.NODE_ENV !== 'production' && (
+                          <div className="grid grid-cols-2 gap-2">
+                            <Button
+                              className="w-full text-xs bg-slate-100 text-slate-700 hover:bg-slate-200" 
+                              type="button"
+                              variant="outline"
+                              onClick={() => {
+                                fillTestCredentials();
+                                setEmail(`${selectedRole}@example.com`);
+                                setFullName(`${selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1)} User`);
+                              }}
+                            >
+                              Fill Test Credentials
+                            </Button>
+                            
+                            <Button
+                              className="w-full text-xs bg-purple-100 text-purple-700 hover:bg-purple-200" 
+                              type="button"
+                              variant="outline"
+                              onClick={() => {
+                                setUsername('admin');
+                                setPassword('admin123');
+                                setSelectedRole('admin');
+                                setEmail('admin@example.com');
+                                setFullName('Admin User');
+                              }}
+                            >
+                              Quick Admin Signup
+                            </Button>
+                          </div>
                         )}
-                        Create Account
-                      </Button>
+                        
+                        <Button 
+                          className="w-full" 
+                          type="submit"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          ) : (
+                            <User className="h-4 w-4 mr-2" />
+                          )}
+                          Create Account
+                        </Button>
+                      </div>
                     </form>
                   </TabsContent>
                 </Tabs>
               </CardContent>
-              
-              <CardFooter className="flex flex-col space-y-2">
-                <div className="text-xs text-center text-gray-500 mt-2">
-                  By signing in, you agree to our Terms of Service and Privacy Policy.
-                </div>
-              </CardFooter>
             </Card>
           </div>
         </div>
