@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, PlusCircle, BookOpen, CheckCircle, Ban } from 'lucide-react';
+import { ChevronLeft, PlusCircle, BookOpen, CheckCircle, Ban, Check } from 'lucide-react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
@@ -264,24 +264,6 @@ const BooksManagementPage = () => {
             <h1 className="text-3xl font-bold text-gray-900">Books Management</h1>
           </div>
 
-          <div className="mb-6 flex flex-wrap items-center justify-between">
-            <div>
-              <p className="text-lg text-gray-600">
-                Manage the complete collection of Visual English books and their units. Select a book to view its units.
-              </p>
-            </div>
-            <Button 
-              variant="default" 
-              className="mt-4 md:mt-0 bg-green-600 hover:bg-green-700"
-              onClick={handleNewBook}
-            >
-              <PlusCircle className="mr-2 h-4 w-4" />
-              Add New Book
-            </Button>
-          </div>
-          
-          {/* No header needed */}
-
           {loading ? (
             <div className="space-y-10">
               {/* Skeleton loading for books */}
@@ -306,92 +288,30 @@ const BooksManagementPage = () => {
                   key={book.bookId} 
                   className="overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-xl"
                 >
-                  {/* Full image thumbnail */}
-                  <div className="relative h-56 bg-white flex items-center justify-center">
-                    {/* Show fallback book icon immediately for Book 3 which has known issues */}
-                    {book.bookId === '3' ? (
-                      <div className="flex items-center justify-center h-full w-full" style={{ backgroundColor: `${book.color}20` }}>
-                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke={book.color || '#00CC00'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        </svg>
-                        <div className="absolute bottom-2 left-2 bg-gray-800 bg-opacity-70 text-white px-2 py-1 rounded text-xs">
-                          VISUAL 3
-                        </div>
-                      </div>
-                    ) : (
-                      <img 
-                        src={book.thumbnailUrl || `/api/direct/content/icons/VISUAL ${book.bookId}.gif`}
-                        alt={book.title} 
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                          // Fallback to book icon if the image fails to load
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          
-                          // Add book icon to parent div
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.style.backgroundColor = `${book.color}20`;
-                            
-                            // Create book icon SVG element
-                            const bookIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                            bookIcon.setAttribute('width', '80');
-                            bookIcon.setAttribute('height', '80');
-                            bookIcon.setAttribute('viewBox', '0 0 24 24');
-                            bookIcon.setAttribute('fill', 'none');
-                            bookIcon.setAttribute('stroke', book.color || '#6366f1');
-                            bookIcon.setAttribute('stroke-width', '2');
-                            bookIcon.setAttribute('stroke-linecap', 'round');
-                            bookIcon.setAttribute('stroke-linejoin', 'round');
-                            
-                            const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                            path1.setAttribute('d', 'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z');
-                            
-                            const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                            path2.setAttribute('d', 'M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z');
-                            
-                            bookIcon.appendChild(path1);
-                            bookIcon.appendChild(path2);
-                            parent.appendChild(bookIcon);
-                          }
-                        }}
-                      />
-                    )}
-                    
-                    {/* Status Badge - small and minimal */}
-                    <div className="absolute top-2 right-2 z-30">
-                      {book.published !== false ? (
-                        <Badge variant="default" className="shadow-sm bg-green-600">
-                          <CheckCircle className="h-3 w-3" />
-                        </Badge>
-                      ) : (
-                        <Badge variant="outline" className="shadow-sm bg-white text-gray-700 border-gray-300">
-                          <Ban className="h-3 w-3" />
-                        </Badge>
-                      )}
+                  {/* Status Badge - green check in circle */}
+                  <div className="absolute top-2 right-2 z-10">
+                    <div className="rounded-full bg-green-500 p-1">
+                      <Check className="h-5 w-5 text-white" />
                     </div>
                   </div>
-                  
-                  {/* Simplified info section */}
-                  <div className="p-4 text-center bg-gray-50 border-t">
-                    <h3 className="font-semibold text-gray-800">
-                      VISUAL ENGLISH {book.bookId}
-                    </h3>
-                    <p className="text-gray-600 text-sm my-1">
-                      {book.units} UNITS
-                    </p>
+
+                  {/* Book content with colored background - simple display for all books */}
+                  <div 
+                    className="relative aspect-square overflow-hidden flex items-center justify-center" 
+                    style={{ backgroundColor: book.color }}
+                  >
+                    {/* Always show simple book icon - matching the reference image */}
+                    <BookOpen className="h-24 w-24 text-white" />
                   </div>
                   
-                  <div className="p-4 pt-0 text-center">
-                    <Button 
-                      size="default"
-                      className="w-full bg-indigo-600 hover:bg-indigo-700"
-                      onClick={() => handleSelectBook(book.bookId)}
-                    >
-                      <BookOpen className="h-4 w-4 mr-2" />
-                      View Book
-                    </Button>
+                  {/* Book information section - clean white background */}
+                  <div className="p-5 text-center bg-white">
+                    <h3 className="font-bold text-gray-900 text-lg mb-1">
+                      VISUAL ENGLISH<br />{book.bookId}
+                    </h3>
+                    <p className="text-gray-600 text-md">
+                      {book.units} UNITS
+                    </p>
                   </div>
                 </Card>
               ))}
