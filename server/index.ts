@@ -161,6 +161,85 @@ app.get('/go-admin', (req, res) => {
   res.sendFile(path.resolve(process.cwd(), 'public/go-to-admin.html'));
 });
 
+// NEW: Emergency admin access page (ultra-reliable static page)
+app.get('/emergency-admin', (req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'public/emergency-admin-access.html'));
+});
+
+// Server connectivity test page
+app.get('/test-connection', (req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'public/test-connection.html'));
+});
+
+// Minimal test page for basic connectivity testing
+app.get('/minimal', (req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'public/minimal.html'));
+});
+
+// Special landing page that bypasses Vite for accessibility
+app.get('/simple', (req, res) => {
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visual English Platform</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9fafb;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .header {
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #2563eb;
+      margin-top: 0;
+    }
+    .success {
+      color: #10b981;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>Visual English Platform</h1>
+    </div>
+    
+    <p class="success">✓ Server is responding correctly!</p>
+    <p>This is a basic HTML page served by our Express server.</p>
+    <p>Current time: ${new Date().toLocaleTimeString()}</p>
+    
+    <h2>Admin Access</h2>
+    <p>You can access the emergency admin interface directly:</p>
+    <ul>
+      <li><a href="/emergency-admin">Emergency Admin Access</a></li>
+      <li><a href="/test-connection">Connection Test Page</a></li>
+    </ul>
+  </div>
+</body>
+</html>
+  `;
+  
+  res.send(html);
+});
+
 app.get('/super-admin', (req, res) => {
   res.sendFile(path.resolve(process.cwd(), 'public/super-admin.html'));
 });
@@ -208,6 +287,20 @@ app.get('/api/direct-admin-auth', (req, res) => {
       error: "Server error during direct admin authentication" 
     });
   }
+});
+
+// Simple API test endpoint - always returns success
+app.get('/api/test', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "API test endpoint is working correctly",
+    timestamp: new Date().toISOString(),
+    server: {
+      nodeVersion: process.version,
+      platform: process.platform,
+      uptime: process.uptime()
+    }
+  });
 });
 
 (async () => {

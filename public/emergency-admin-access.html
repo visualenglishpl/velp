@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Admin Access</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f9fafb;
+            color: #111827;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.03);
+            width: 100%;
+            max-width: 500px;
+            padding: 32px;
+            border-top: 4px solid #4f46e5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .header p {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        .steps {
+            margin-bottom: 24px;
+        }
+        .step {
+            display: flex;
+            margin-bottom: 16px;
+            align-items: flex-start;
+        }
+        .step-number {
+            background: #4f46e5;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 4px;
+        }
+        .step p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        .status {
+            background: #f3f4f6;
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            margin-bottom: 24px;
+        }
+        .status.success {
+            background: #ecfdf5;
+            color: #047857;
+        }
+        .status.error {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+        .status.loading {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .button:hover {
+            background: #4338ca;
+        }
+        .button:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+        }
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        .badge.primary {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+        .badge.warning {
+            background: #fffbeb;
+            color: #92400e;
+        }
+        .badge.success {
+            background: #ecfdf5;
+            color: #047857;
+        }
+        a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .additional-actions {
+            margin-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+            text-align: center;
+        }
+        .logs {
+            margin-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 16px;
+        }
+        .logs h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logs pre {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .clear-logs {
+            background: none;
+            border: none;
+            color: #6b7280;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+        .clear-logs:hover {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Emergency Admin Access</h1>
+            <p>This page provides direct access to the admin interface, bypassing normal authentication flows</p>
+        </div>
+        
+        <div id="status" class="status">
+            Preparing admin access...
+        </div>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Create Local Admin Access</h3>
+                    <p>Store admin credentials in browser storage</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Initialize Server Session</h3>
+                    <p>Create emergency admin session on server</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Direct Admin Access</h3>
+                    <p>Navigate directly to admin dashboard</p>
+                </div>
+            </div>
+        </div>
+        
+        <button id="accessButton" class="button">
+            <span id="spinner" class="spinner"></span>
+            <span id="buttonText">Initialize Admin Access</span>
+        </button>
+        
+        <div class="additional-actions">
+            <a href="/direct-admin" id="manualLink">Use Direct Admin Login Page</a>
+            <span class="badge warning">Alternative</span>
+        </div>
+        
+        <div class="logs">
+            <h3>
+                Access Logs
+                <button id="clearLogs" class="clear-logs">Clear</button>
+            </h3>
+            <pre id="logOutput">Initializing emergency admin access...</pre>
+        </div>
+    </div>
+    
+    <script>
+        // DOM elements
+        const statusEl = document.getElementById('status');
+        const buttonEl = document.getElementById('accessButton');
+        const spinnerEl = document.getElementById('spinner');
+        const buttonTextEl = document.getElementById('buttonText');
+        const logOutputEl = document.getElementById('logOutput');
+        const clearLogsBtn = document.getElementById('clearLogs');
+        
+        // Log function
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const formattedMessage = `[${timestamp}] [${type.toUpperCase()}] ${message}`;
+            logOutputEl.textContent += '\n' + formattedMessage;
+            logOutputEl.scrollTop = logOutputEl.scrollHeight;
+            console.log(formattedMessage);
+        }
+        
+        // Clear logs
+        clearLogsBtn.addEventListener('click', () => {
+            logOutputEl.textContent = 'Logs cleared';
+        });
+        
+        // Update status
+        function updateStatus(message, isSuccess = false, isError = false) {
+            statusEl.textContent = message;
+            statusEl.className = 'status';
+            
+            if (isSuccess) {
+                statusEl.classList.add('success');
+                log(message, 'success');
+            } else if (isError) {
+                statusEl.classList.add('error');
+                log(message, 'error');
+            } else {
+                statusEl.classList.add('loading');
+                log(message);
+            }
+        }
+        
+        // Set button state
+        function setButtonState(isLoading, text) {
+            buttonEl.disabled = isLoading;
+            buttonTextEl.textContent = text;
+            
+            if (isLoading) {
+                spinnerEl.classList.remove('hidden');
+            } else {
+                spinnerEl.classList.add('hidden');
+            }
+        }
+        
+        // Setup admin access in browser storage
+        function setupLocalAdminAccess() {
+            try {
+                log('Setting up local admin access');
+                
+                // Create admin user object
+                const adminUser = {
+                    id: 1,
+                    username: 'admin',
+                    role: 'admin',
+                    email: 'admin@example.com',
+                    fullName: 'Admin User'
+                };
+                
+                // Convert to string for storage
+                const userString = JSON.stringify(adminUser);
+                
+                // Store in both storage types for redundancy
+                localStorage.setItem('velp_user', userString);
+                sessionStorage.setItem('velp_user', userString);
+                
+                log('Admin user stored in browser storage', 'success');
+                return true;
+            } catch (error) {
+                log(`Error storing admin: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        // Call the emergency admin endpoint
+        async function setupServerAdminSession() {
+            try {
+                log('Contacting emergency admin endpoint');
+                updateStatus('Creating server-side admin session...', false, false);
+                
+                // Use the emergency endpoint that doesn't require session
+                const response = await fetch('/api/direct/admin-login');
+                
+                if (!response.ok) {
+                    throw new Error(`Server responded with status ${response.status}`);
+                }
+                
+                const data = await response.json();
+                log(`Server response: ${JSON.stringify(data)}`, 'success');
+                
+                if (data.user) {
+                    // Store the updated user data from server
+                    const updatedUserString = JSON.stringify(data.user);
+                    localStorage.setItem('velp_user', updatedUserString);
+                    sessionStorage.setItem('velp_user', updatedUserString);
+                }
+                
+                return true;
+            } catch (error) {
+                log(`Server error: ${error.message}`, 'error');
+                // Try fallback endpoint
+                try {
+                    log('Trying fallback emergency endpoint', 'warning');
+                    const fallbackResponse = await fetch('/api/direct-admin-auth');
+                    if (fallbackResponse.ok) {
+                        log('Fallback endpoint successful', 'success');
+                        return true;
+                    }
+                } catch (fallbackError) {
+                    log(`Fallback endpoint failed: ${fallbackError.message}`, 'error');
+                }
+                
+                return false;
+            }
+        }
+        
+        // Main function
+        async function initializeAdminAccess() {
+            setButtonState(true, 'Setting up admin access...');
+            
+            // Step 1: Create local admin credentials
+            updateStatus('Setting up local admin credentials...', false, false);
+            const localSuccess = setupLocalAdminAccess();
+            
+            if (!localSuccess) {
+                updateStatus('Failed to set up local admin credentials', false, true);
+                setButtonState(false, 'Retry Setup');
+                return;
+            }
+            
+            // Step 2: Initialize server session
+            const serverSuccess = await setupServerAdminSession();
+            
+            if (!serverSuccess) {
+                updateStatus('Failed to create server session, but local credentials are set', false, true);
+                log('Continuing with local credentials only', 'warning');
+            } else {
+                updateStatus('Server session created successfully', true, false);
+            }
+            
+            // Step 3: Update button for admin access
+            setButtonState(false, 'Access Admin Dashboard');
+            buttonEl.removeEventListener('click', initializeAdminAccess);
+            buttonEl.addEventListener('click', () => {
+                window.location.href = '/admin';
+            });
+            
+            // Update final status
+            updateStatus('Admin access is ready! Click the button to continue.', true, false);
+        }
+        
+        // Initialize
+        buttonEl.addEventListener('click', initializeAdminAccess);
+        
+        // Auto-start the process (with a small delay to show the UI first)
+        setTimeout(() => {
+            initializeAdminAccess();
+        }, 1000);
+    </script>
+</body>
+</html>

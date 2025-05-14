@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Connection Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .test-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .test-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .status-pending {
+            background-color: #ffc107;
+        }
+        .status-success {
+            background-color: #28a745;
+        }
+        .status-error {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Visual English Server Connection Test</h1>
+    <p>This page tests connectivity to various server endpoints and functionalities.</p>
+    
+    <div class="container">
+        <h2>Basic Server Connectivity</h2>
+        <div id="serverStatus" class="status">Testing server connection...</div>
+        <button onclick="testServerConnection()">Test Connection</button>
+        <button onclick="runAllTests()">Run All Tests</button>
+    </div>
+    
+    <div class="container">
+        <h2>API Endpoint Tests</h2>
+        <div class="test-grid">
+            <div class="test-card">
+                <h3>
+                    <span id="homeStatusIndicator" class="status-indicator status-pending"></span>
+                    Home Route
+                </h3>
+                <div id="homeStatus" class="status info">Not tested</div>
+                <button onclick="testHomeRoute()">Test</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>
+                    <span id="directAdminIndicator" class="status-indicator status-pending"></span>
+                    Direct Admin API
+                </h3>
+                <div id="directAdminStatus" class="status info">Not tested</div>
+                <button onclick="testDirectAdminAPI()">Test</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>
+                    <span id="adminPageIndicator" class="status-indicator status-pending"></span>
+                    Admin Page
+                </h3>
+                <div id="adminPageStatus" class="status info">Not tested</div>
+                <button onclick="testAdminPage()">Test</button>
+            </div>
+            
+            <div class="test-card">
+                <h3>
+                    <span id="emergencyAdminIndicator" class="status-indicator status-pending"></span>
+                    Emergency Admin
+                </h3>
+                <div id="emergencyAdminStatus" class="status info">Not tested</div>
+                <button onclick="testEmergencyAdmin()">Test</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Test Results Log</h2>
+        <pre id="testLog">No tests run yet.</pre>
+    </div>
+    
+    <script>
+        // Log function
+        function log(message) {
+            const logElement = document.getElementById('testLog');
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.textContent += `\n[${timestamp}] ${message}`;
+            logElement.scrollTop = logElement.scrollHeight; // Auto-scroll to bottom
+        }
+        
+        // Update status function
+        function updateStatus(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `status ${type}`;
+            
+            // Update indicator if exists
+            const indicatorId = elementId + 'Indicator';
+            const indicator = document.getElementById(indicatorId);
+            if (indicator) {
+                indicator.className = `status-indicator status-${type}`;
+            }
+            
+            // Log the status change
+            log(`${elementId}: ${message} (${type})`);
+        }
+        
+        // Test server connection
+        async function testServerConnection() {
+            updateStatus('serverStatus', 'Testing connection...', 'info');
+            
+            try {
+                const startTime = performance.now();
+                const response = await fetch('/');
+                const endTime = performance.now();
+                const responseTime = Math.round(endTime - startTime);
+                
+                if (response.ok) {
+                    updateStatus('serverStatus', `Server is responding (${responseTime}ms)`, 'success');
+                } else {
+                    updateStatus('serverStatus', `Server returned status ${response.status}`, 'error');
+                }
+            } catch (error) {
+                updateStatus('serverStatus', `Connection error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Test home route
+        async function testHomeRoute() {
+            updateStatus('homeStatus', 'Testing home route...', 'info');
+            
+            try {
+                const response = await fetch('/');
+                
+                if (response.ok) {
+                    updateStatus('homeStatus', 'Home route accessible', 'success');
+                } else {
+                    updateStatus('homeStatus', `Error: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                updateStatus('homeStatus', `Connection error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Test direct admin API
+        async function testDirectAdminAPI() {
+            updateStatus('directAdminStatus', 'Testing direct admin API...', 'info');
+            
+            try {
+                const response = await fetch('/api/direct/admin-login');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    updateStatus('directAdminStatus', 'API responding correctly', 'success');
+                    log(`API Response: ${JSON.stringify(data)}`);
+                } else {
+                    updateStatus('directAdminStatus', `Error: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                updateStatus('directAdminStatus', `Connection error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Test admin page
+        async function testAdminPage() {
+            updateStatus('adminPageStatus', 'Testing admin page...', 'info');
+            
+            try {
+                const response = await fetch('/admin');
+                
+                if (response.ok) {
+                    updateStatus('adminPageStatus', 'Admin page accessible', 'success');
+                } else {
+                    updateStatus('adminPageStatus', `Error: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                updateStatus('adminPageStatus', `Connection error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Test emergency admin
+        async function testEmergencyAdmin() {
+            updateStatus('emergencyAdminStatus', 'Testing emergency admin...', 'info');
+            
+            try {
+                const response = await fetch('/emergency-admin');
+                
+                if (response.ok) {
+                    updateStatus('emergencyAdminStatus', 'Emergency admin accessible', 'success');
+                } else {
+                    updateStatus('emergencyAdminStatus', `Error: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                updateStatus('emergencyAdminStatus', `Connection error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Run all tests
+        async function runAllTests() {
+            log('Starting all tests...');
+            await testServerConnection();
+            await testHomeRoute();
+            await testDirectAdminAPI();
+            await testAdminPage();
+            await testEmergencyAdmin();
+            log('All tests completed.');
+        }
+        
+        // Initialize with basic connection test
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Page loaded, testing initial connection...');
+            testServerConnection();
+        });
+    </script>
+</body>
+</html>

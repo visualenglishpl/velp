@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Minimal Test</title>
+  <style>
+    body { 
+      font-family: sans-serif; 
+      margin: 40px; 
+      background: #f9f9f9;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Visual English Test Page</h1>
+    <p>If you can see this page, basic HTML serving is working.</p>
+    <p id="timestamp"></p>
+  </div>
+
+  <script>
+    document.getElementById('timestamp').textContent = 'Page loaded at: ' + new Date().toLocaleTimeString();
+  </script>
+</body>
+</html>
