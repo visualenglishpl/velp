@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
-import { Loader2, ChevronLeft, ChevronRight, Maximize2, Minimize2, Home } from 'lucide-react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { Loader2, ChevronLeft, ChevronRight, Maximize2, Minimize2, Home, Trash2, Save, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
+import { useToast } from '@/hooks/use-toast';
+import { apiRequest } from '@/lib/queryClient';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -75,6 +77,9 @@ export default function SimpleContentViewer() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [materials, setMaterials] = useState<S3Material[]>([]);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [slidesToDelete, setSlidesToDelete] = useState<Set<number>>(new Set());
+  const { toast } = useToast();
   
   // Extract bookId and unitNumber from URL path
   let bookId: string | null = null;
@@ -154,6 +159,15 @@ export default function SimpleContentViewer() {
     enabled: Boolean(bookPath && unitPath)
   });
   
+  // Fetch content edits to see which slides have been deleted
+  const {
+    data: contentEdits,
+    isLoading: editsLoading
+  } = useQuery({
+    queryKey: [`/api/direct/content-edits/${bookPath}/${unitPath}`],
+    enabled: Boolean(bookPath && unitPath && user?.id)
+  });
+  
   // Process materials when fetched
   useEffect(() => {
     if (!fetchedMaterials) return;
@@ -216,6 +230,67 @@ export default function SimpleContentViewer() {
       goToSlide(0);
     }
   }, [materials, goToSlide]);
+  
+  // Toggle slide for deletion
+  const toggleSlideForDeletion = useCallback((index: number, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent triggering the slide navigation
+    
+    setSlidesToDelete(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  }, []);
+  
+  // Cancel editing mode and clear slides to delete
+  const cancelEditing = useCallback(() => {
+    setIsEditMode(false);
+    setSlidesToDelete(new Set());
+  }, []);
+  
+  // Mutation for saving slide deletions
+  const saveSlideDeletesMutation = useMutation({
+    mutationFn: async () => {
+      const materialIdsToDelete = Array.from(slidesToDelete).map(index => materials[index].id);
+      
+      if (materialIdsToDelete.length === 0) {
+        throw new Error('No slides selected for deletion');
+      }
+      
+      const result = await apiRequest('POST', `/api/content/${bookPath}/${unitPath}/delete-slides`, {
+        materialIds: materialIdsToDelete
+      });
+      
+      return result.json();
+    },
+    onSuccess: () => {
+      // Remove deleted slides from local state
+      setMaterials(prev => 
+        prev.filter((_, index) => !slidesToDelete.has(index))
+      );
+      
+      // Reset delete selection
+      setSlidesToDelete(new Set());
+      setIsEditMode(false);
+      
+      // Show success message
+      toast({
+        title: "Slides deleted successfully",
+        description: `${slidesToDelete.size} slide${slidesToDelete.size > 1 ? 's' : ''} removed.`,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Failed to delete slides",
+        description: error instanceof Error ? error.message : "An unknown error occurred",
+        variant: "destructive"
+      });
+    }
+  });
   
   // Keyboard navigation
   useEffect(() => {
@@ -455,17 +530,68 @@ export default function SimpleContentViewer() {
           )}
         </div>
         <div className="flex items-center space-x-2">
-          <span className="text-sm text-gray-500">
-            Slide {currentIndex + 1} of {materials.length}
-          </span>
-          <Button 
-            size="sm" 
-            variant="outline" 
-            onClick={() => setIsFullscreen(!isFullscreen)}
-            className="border-blue-200 hover:bg-blue-50"
-          >
-            {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-          </Button>
+          {/* Show regular controls when not in edit mode */}
+          {!isEditMode ? (
+            <>
+              <span className="text-sm text-gray-500">
+                Slide {currentIndex + 1} of {materials.length}
+              </span>
+              
+              {/* Only show edit button for admins */}
+              {user?.role === 'admin' && (
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={() => setIsEditMode(true)}
+                  className="border-red-200 hover:bg-red-50 text-red-600"
+                >
+                  <Trash2 className="h-4 w-4 mr-1" />
+                  Delete Slides
+                </Button>
+              )}
+              
+              <Button 
+                size="sm" 
+                variant="outline" 
+                onClick={() => setIsFullscreen(!isFullscreen)}
+                className="border-blue-200 hover:bg-blue-50"
+              >
+                {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              </Button>
+            </>
+          ) : (
+            <>
+              {/* Edit mode controls */}
+              <span className="text-sm text-red-500 font-medium">
+                {slidesToDelete.size} slide{slidesToDelete.size !== 1 ? 's' : ''} selected for deletion
+              </span>
+              
+              <Button 
+                size="sm" 
+                variant="outline" 
+                onClick={cancelEditing}
+                className="border-gray-200 hover:bg-gray-50"
+              >
+                <X className="h-4 w-4 mr-1" />
+                Cancel
+              </Button>
+              
+              <Button 
+                size="sm" 
+                variant="default"
+                onClick={() => saveSlideDeletesMutation.mutate()}
+                disabled={slidesToDelete.size === 0 || saveSlideDeletesMutation.isPending}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                {saveSlideDeletesMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4 mr-1" />
+                )}
+                Save Changes
+              </Button>
+            </>
+          )}
         </div>
       </div>
       
@@ -659,44 +785,81 @@ export default function SimpleContentViewer() {
             const isAdmin = user?.role === 'admin';
             const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess && !isAdmin;
             
+            // Check if this slide is marked for deletion
+            const isMarkedForDeletion = slidesToDelete.has(index);
+            
             return (
-              <button
+              <div
                 key={`thumb-${index}`}
-                onClick={() => goToSlide(index)}
-                className={`relative flex-shrink-0 w-20 h-16 border-2 transition-all duration-200 ${
-                  currentIndex === index 
-                    ? 'border-blue-500 shadow-md' 
-                    : 'border-gray-200 hover:border-blue-300'
-                } rounded overflow-hidden`}
-                aria-label={`Go to slide ${index + 1}`}
+                className="relative flex-shrink-0"
               >
-                {isPremiumContent && (
-                  <div className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-10">
-                    <div className="bg-black/60 text-white text-xs p-1 rounded">
-                      Premium
+                <button
+                  onClick={() => goToSlide(index)}
+                  className={`relative flex-shrink-0 w-20 h-16 border-2 transition-all duration-200 ${
+                    isMarkedForDeletion
+                      ? 'border-red-500 opacity-50' 
+                      : currentIndex === index 
+                        ? 'border-blue-500 shadow-md' 
+                        : 'border-gray-200 hover:border-blue-300'
+                  } rounded overflow-hidden`}
+                  aria-label={`Go to slide ${index + 1}`}
+                >
+                  {isPremiumContent && (
+                    <div className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-10">
+                      <div className="bg-black/60 text-white text-xs p-1 rounded">
+                        Premium
+                      </div>
                     </div>
-                  </div>
-                )}
-                
-                {isVideo ? (
-                  <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                    <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                      <div className="w-0 h-0 border-t-4 border-t-transparent border-l-8 border-l-white border-b-4 border-b-transparent ml-0.5"></div>
+                  )}
+                  
+                  {isMarkedForDeletion && (
+                    <div className="absolute inset-0 bg-red-500/20 flex items-center justify-center z-10">
+                      <div className="bg-red-500 text-white text-xs p-1 rounded">
+                        Delete
+                      </div>
                     </div>
+                  )}
+                  
+                  {isVideo ? (
+                    <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                      <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                        <div className="w-0 h-0 border-t-4 border-t-transparent border-l-8 border-l-white border-b-4 border-b-transparent ml-0.5"></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <img 
+                      src={thumbnailPath}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-contain"
+                      loading="lazy"
+                    />
+                  )}
+                  
+                  <div className="absolute bottom-0 right-0 bg-black/70 text-white text-xs px-1 rounded-tl">
+                    {index + 1}
                   </div>
-                ) : (
-                  <img 
-                    src={thumbnailPath}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                  />
-                )}
+                </button>
                 
-                <div className="absolute bottom-0 right-0 bg-black/70 text-white text-xs px-1 rounded-tl">
-                  {index + 1}
-                </div>
-              </button>
+                {/* Delete toggle button - only shown in edit mode */}
+                {isEditMode && isAdmin && (
+                  <button
+                    onClick={(e) => toggleSlideForDeletion(index, e)}
+                    className={`absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center z-20 ${
+                      isMarkedForDeletion 
+                        ? 'bg-red-600 text-white' 
+                        : 'bg-gray-200 text-gray-600 hover:bg-red-100'
+                    }`}
+                    aria-label={isMarkedForDeletion ? "Unmark for deletion" : "Mark for deletion"}
+                    title={isMarkedForDeletion ? "Unmark for deletion" : "Mark for deletion"}
+                  >
+                    {isMarkedForDeletion ? (
+                      <X className="w-4 h-4" />
+                    ) : (
+                      <Trash2 className="w-3 h-3" />
+                    )}
+                  </button>
+                )}
+              </div>
             );
           })}
         </div>

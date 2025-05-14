@@ -161,5 +161,71 @@ export function registerContentEndpoints(app: Express) {
     }
   });
   
+  // API endpoint to delete slides from a unit
+  app.post("/api/content/:bookId/:unitId/delete-slides", isAuthenticated, async (req, res) => {
+    try {
+      const { bookId, unitId } = req.params;
+      const { materialIds } = req.body;
+      
+      // Basic validation
+      if (!Array.isArray(materialIds) || materialIds.length === 0) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Invalid or empty materialIds array" 
+        });
+      }
+      
+      // Log the deletion request
+      console.log(`Slide deletion request for book ${bookId}, unit ${unitId}:`, materialIds);
+      
+      // Get the user ID from the session
+      const userId = req.user?.id || 1; // Fallback to ID 1 for testing
+      
+      // Check if the user is an admin or has appropriate permissions
+      const isAdmin = req.user?.role === 'admin';
+      
+      if (!isAdmin) {
+        return res.status(403).json({ 
+          success: false, 
+          error: "Only admin users can delete slides" 
+        });
+      }
+      
+      // For each material ID, create a content edit entry that marks it as deleted
+      const results = [];
+      
+      for (const materialId of materialIds) {
+        // Create a content edit marking the slide as deleted
+        const editResult = await saveContentEdit({
+          userId,
+          bookId,
+          unitId,
+          materialId,
+          editType: 'qa_delete',
+          isDeleted: true
+        });
+        
+        results.push({
+          materialId,
+          success: editResult.success,
+          id: editResult.id
+        });
+      }
+      
+      // Return all results
+      return res.status(200).json({ 
+        success: true, 
+        message: `${materialIds.length} slides marked as deleted`,
+        results
+      });
+    } catch (error) {
+      console.error("Error deleting slides:", error);
+      return res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : "Server error" 
+      });
+    }
+  });
+
   console.log("Content management endpoints registered successfully");
 }

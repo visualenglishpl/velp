@@ -426,40 +426,209 @@ export function getQuestionAnswer(
   unitId: string = '', 
   bookIdOrMappings: string | Record<string, QuestionAnswer> = {}
 ): QuestionAnswer {
+  // Debug level: 0=none, 1=important, 2=details
+  const debugLevel = 1;
+  
+  // Helper function to log with debug level
+  const logDebug = (message: string, level: number = 1) => {
+    if (level <= debugLevel) {
+      console.log(message);
+    }
+  };
+  
   // If bookIdOrMappings is a string (bookId), create an empty mappings object
   const mappings: Record<string, QuestionAnswer> = typeof bookIdOrMappings === 'string' ? {} : bookIdOrMappings;
-  // First, try to find a direct match in mappings
+  
+  // STRATEGY 1: First, try to find a direct match in mappings
   if (mappings[filename]) {
+    logDebug(`✅ PATTERN ENGINE: Direct match for filename`, 1);
     return {
       ...mappings[filename],
       source: 'direct-match'
     };
   }
   
-  // Extract the basic section code (e.g. "02 A a")
+  // STRATEGY 2: Try with the filename without extension
+  const filenameWithoutExt = filename.replace(/\.(png|jpg|jpeg|gif|webp|mp4)$/i, '').trim();
+  if (mappings[filenameWithoutExt]) {
+    logDebug(`✅ PATTERN ENGINE: Match for filename without extension`, 1);
+    return {
+      ...mappings[filenameWithoutExt],
+      source: 'direct-match-no-ext'
+    };
+  }
+  
+  // STRATEGY 3: Check for dash pattern in filename (what is it - it is a pencil)
+  const dashPattern = /([^-–]+)\s*[-–]\s*(.+?)(\.(png|jpg|jpeg|gif|webp|mp4)|$)/i;
+  const dashMatch = filename.match(dashPattern);
+  
+  if (dashMatch && dashMatch[1] && dashMatch[2]) {
+    const question = dashMatch[1].trim();
+    const answer = dashMatch[2].trim();
+    
+    if (question && answer) {
+      logDebug(`✅ PATTERN ENGINE: Q&A extracted from dash pattern`, 1);
+      return {
+        question: question.endsWith('?') ? question : question + '?',
+        answer: answer.endsWith('.') ? answer : answer + '.',
+        generatedBy: 'pattern-engine',
+        source: 'dash-pattern'
+      };
+    }
+  }
+  
+  // STRATEGY 4: Check for section code match
   const sectionMatch = filename.match(/^(\d{2}\s*[A-Za-z]\s*[a-zA-Z]?)/);
   const sectionCode = sectionMatch ? sectionMatch[1].trim() : '';
   
   // If we have a section code, try to match by that
   if (sectionCode && mappings[sectionCode]) {
+    logDebug(`✅ PATTERN ENGINE: Section code match: ${sectionCode}`, 1);
     return {
       ...mappings[sectionCode],
       source: 'section-match'
     };
   }
   
-  // Generate a QA pair based on the filename pattern
-  const generatedQA = generateQuestionAnswer(filename, unitId);
-  if (generatedQA) {
-    return generatedQA;
+  // STRATEGY 5: Try with just the main part of the section code (01 R A -> 01 R)
+  if (sectionCode) {
+    const mainSectionParts = sectionCode.split(' ');
+    if (mainSectionParts.length >= 2) {
+      const mainSection = mainSectionParts.slice(0, 2).join(' ');
+      
+      if (mappings[mainSection]) {
+        logDebug(`✅ PATTERN ENGINE: Main section match: ${mainSection}`, 1);
+        return {
+          ...mappings[mainSection],
+          source: 'main-section-match'
+        };
+      }
+      
+      // STRATEGY 6: Try with just the numeric part (01 R A -> 01)
+      const numericPart = mainSectionParts[0];
+      const numericMatches = Object.keys(mappings).filter(key => 
+        key.startsWith(numericPart + ' ')
+      );
+      
+      if (numericMatches.length > 0) {
+        logDebug(`✅ PATTERN ENGINE: Numeric section match: ${numericPart}`, 1);
+        return {
+          ...mappings[numericMatches[0]],
+          source: 'numeric-match'
+        };
+      }
+    }
   }
   
-  // Ultimate fallback - leave blank if no question available
+  // STRATEGY 7: Generate a QA pair based on the filename pattern
+  const generatedQA = generateQuestionAnswer(filename, unitId);
+  if (generatedQA) {
+    logDebug(`✅ PATTERN ENGINE: Generated QA based on pattern`, 1);
+    return {
+      ...generatedQA,
+      source: 'pattern-generation'
+    };
+  }
+  
+  // STRATEGY 8: Try to extract questions from common patterns in the filename
+  // Check for specific country codes or keywords
+  const lowerFilename = filename.toLowerCase();
+  
+  if (lowerFilename.includes('01 r') || lowerFilename.includes('poland')) {
+    logDebug(`✅ PATTERN ENGINE: Poland country match`, 1);
+    return {
+      question: "What country is this?",
+      answer: "It is Poland.",
+      generatedBy: 'pattern-engine',
+      source: 'country-match'
+    };
+  } else if (lowerFilename.includes('02 n') || lowerFilename.includes('britain') || lowerFilename.includes('uk')) {
+    logDebug(`✅ PATTERN ENGINE: UK/Britain country match`, 1);
+    return {
+      question: "What country is this?",
+      answer: "It is Britain/UK.",
+      generatedBy: 'pattern-engine',
+      source: 'country-match'
+    };
+  }
+  
+  // Check for common objects
+  if (lowerFilename.includes('pencil')) {
+    logDebug(`✅ PATTERN ENGINE: Pencil keyword match`, 1);
+    return {
+      question: "What is it?",
+      answer: "It is a pencil.",
+      generatedBy: 'pattern-engine',
+      source: 'keyword-match'
+    };
+  } else if (lowerFilename.includes('ruler')) {
+    logDebug(`✅ PATTERN ENGINE: Ruler keyword match`, 1);
+    return {
+      question: "What is it?",
+      answer: "It is a ruler.",
+      generatedBy: 'pattern-engine',
+      source: 'keyword-match'
+    };
+  } else if (lowerFilename.includes('scissors')) {
+    logDebug(`✅ PATTERN ENGINE: Scissors keyword match`, 1);
+    return {
+      question: "What are they?",
+      answer: "They are scissors.",
+      generatedBy: 'pattern-engine',
+      source: 'keyword-match'
+    };
+  } else if (lowerFilename.includes('sharpener')) {
+    logDebug(`✅ PATTERN ENGINE: Sharpener keyword match`, 1);
+    return {
+      question: "What is it?",
+      answer: "It is a sharpener.",
+      generatedBy: 'pattern-engine',
+      source: 'keyword-match'
+    };
+  }
+  
+  // STRATEGY 9: Use context from unitId to generate questions
+  if (unitId) {
+    const unitIdLower = unitId.toLowerCase();
+    
+    if (unitIdLower.includes('unit2') || unitIdLower.includes('school')) {
+      logDebug(`✅ PATTERN ENGINE: School objects unit match`, 1);
+      return {
+        question: "What is it?",
+        answer: "It is a school object.",
+        generatedBy: 'pattern-engine',
+        source: 'unit-context'
+      };
+    } else if (unitIdLower.includes('unit17') || unitIdLower.includes('country')) {
+      logDebug(`✅ PATTERN ENGINE: Country unit match`, 1);
+      return {
+        question: "Where is this flag from?",
+        answer: "This flag is from [country].",
+        generatedBy: 'pattern-engine',
+        source: 'unit-context'
+      };
+    }
+  }
+  
+  // FINAL FALLBACK: Generate a simple "What is it?" question
+  logDebug(`⚠️ PATTERN ENGINE: Using ultimate fallback for ${filename}`, 1);
+  
+  // For videos, return a generic video instruction
+  if (filename.toLowerCase().includes('video')) {
+    return {
+      question: "Watch the video",
+      answer: "Follow along with the video activity.",
+      generatedBy: 'pattern-engine',
+      source: 'video-fallback'
+    };
+  }
+  
+  // For slides with no question, leave blank as requested
   return {
     question: '', // Leave blank as requested when no question is found
     answer: '',
     generatedBy: 'pattern-engine',
-    source: 'fallback'
+    source: 'blank-fallback'
   };
 }
 

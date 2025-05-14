@@ -1417,32 +1417,81 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
       return;
     }
     
-    // FIRST APPROACH: Try our enhanced JSON-based mapping (most reliable)
+    // DEBUG STATUS
+    const DEBUG_LEVEL = 1; // 0=none, 1=important, 2=verbose
+    const debugLog = (message: string, level: number = 1) => {
+      if (level <= DEBUG_LEVEL) {
+        console.log(message);
+      }
+    };
+    
+    // Track which method ultimately found a match
+    let matchMethod = 'none';
+    
+    // FIRST APPROACH: Try extracting from dash pattern immediately
+    // This is a direct extraction that doesn't rely on mappings
+    const filename = material.content;
+    debugLog(`Processing Q&A for: ${filename}`, 1);
+    
+    // Look for dash patterns like "What is it - It is a pencil"
+    const dashPattern = /([^-–]+)\s*[-–]\s*(.+?)(\.(png|jpg|jpeg|gif|webp|mp4)|$)/i;
+    const dashMatch = filename.match(dashPattern);
+    
+    if (dashMatch && dashMatch[1] && dashMatch[2]) {
+      const question = dashMatch[1].trim();
+      const answer = dashMatch[2].trim();
+      
+      // Make sure both parts look valid (at least 2 characters each)
+      if (question.length > 2 && answer.length > 2) {
+        debugLog(`✅ DIRECT DASH PATTERN EXTRACTION: Q=${question}, A=${answer}`, 1);
+        matchMethod = 'dash-pattern';
+        
+        // Format the Q&A properly
+        const formattedQuestion = question.endsWith('?') ? question : question + '?';
+        const formattedAnswer = answer.endsWith('.') ? answer : answer + '.';
+        
+        setQAData({
+          country: formatText.determineCountry(filename),
+          question: formattedQuestion, 
+          answer: formattedAnswer,
+          hasData: true,
+          category: 'dash-pattern-direct'
+        });
+        return;
+      }
+    }
+    
+    // SECOND APPROACH: Try our enhanced JSON-based mapping (most reliable)
     // This uses the improved pattern matching algorithms
     if (!isLoadingJsonMappings && jsonMappings && Object.keys(jsonMappings).length > 0) {
-      logDebug("Using enhanced JSON-based Q&A mapping system", 2);
-      const filename = material.content;
+      debugLog("Trying enhanced JSON-based Q&A mapping system", 2);
       
       // Filter mappings by unitId if provided
       const currentUnitId = unitId || '';
-      logDebug(`Loaded ${Object.values(jsonMappings).filter(qa => qa.unitId === currentUnitId).length} QA entries from Excel for ${bookId}/${currentUnitId}`, 2);
+      const matchingEntriesCount = Object.values(jsonMappings)
+        .filter(qa => !qa.unitId || qa.unitId === currentUnitId)
+        .length;
+      
+      debugLog(`Found ${matchingEntriesCount} QA entries matching unit ${currentUnitId}`, 2);
       
       // Pass the currentUnitId to the findMatchingQA function to filter by unit
       const matchingQA = findMatchingQA(filename, currentUnitId);
       
       // Check if we found a matching question
       if (matchingQA) {
-        logDebug(`✅ FOUND MATCH using enhanced JSON-based mapping for: ${filename}`, 1);
+        debugLog(`✅ FOUND MATCH using enhanced JSON-based mapping for: ${filename}`, 1);
+        matchMethod = 'excel-qa-hook';
+        
         setQAData({
           country: formatText.determineCountry(filename),
           question: matchingQA.question,
           answer: matchingQA.answer,
           hasData: true,
-          category: matchingQA.codePattern
+          category: matchingQA.codePattern || 'json-mapping'
         });
         return;
       } else {
-        logDebug(`❌ No match found using enhanced JSON-based mapping for: ${filename}`, 2);
+        debugLog(`No match found using enhanced JSON-based mapping for: ${filename}`, 2);
       }
     }
     

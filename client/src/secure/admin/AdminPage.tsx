@@ -188,36 +188,25 @@ const AdminPage = () => {
             {adminFeatures.map((feature, index) => (
               <Card 
                 key={index} 
-                className={`overflow-hidden border-0 ${feature.featured ? 'shadow-xl ring-2 ring-purple-400' : 'shadow-lg'} hover:scale-105 transition-transform min-w-[150px] rounded-xl`}
+                className="overflow-hidden border-0 shadow-lg hover:scale-105 transition-transform min-w-[150px] rounded-xl"
               >
                 <CardHeader 
                   className="p-0 rounded-t-xl"
                   style={{ backgroundColor: feature.color }}
                 >
-                  <div className="flex flex-col items-center justify-center py-3 w-full px-4">
-                    <div className="mb-2 flex items-center justify-center">
+                  <div className="flex flex-col items-center justify-center py-4 w-full px-4">
+                    <div className="mb-3 flex items-center justify-center">
                       {feature.icon}
                     </div>
-                    <div className="h-6 flex items-center justify-center">
-                      <h2 className="text-base font-bold text-white leading-none text-center w-full truncate">{feature.title}</h2>
+                    <div className="flex items-center justify-center">
+                      <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
                     </div>
-                    {feature.featured && (
-                      <span className="bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-[10px] font-medium mt-0.5">
-                        RECOMMENDED
-                      </span>
-                    )}
                   </div>
                 </CardHeader>
-                <CardContent className="pt-2 pb-2 px-4">
-                  <div className="h-10 flex items-center">
-                    <CardDescription className="text-center text-xs leading-tight line-clamp-2 w-full">
-                      {feature.description}
-                    </CardDescription>
-                  </div>
-                </CardContent>
-                <CardFooter className="pb-3 pt-1 flex justify-center h-[40px]">
+
+                <CardFooter className="pb-3 pt-3 flex justify-center">
                   <Link href={feature.link}>
-                    <Button size="sm" className={`${feature.featured ? "bg-purple-600 hover:bg-purple-700" : "bg-indigo-600 hover:bg-indigo-700"} w-20 text-xs font-medium`}>
+                    <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
                       Manage
                     </Button>
                   </Link>
