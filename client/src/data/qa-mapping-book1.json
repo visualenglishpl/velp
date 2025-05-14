@@ -389,5 +389,230 @@
     "answer": "These are vegetables.",
     "unitId": "unit9",
     "bookId": "book1"
+  },
+  
+  "01 L A": {
+    "filename": "01 L A Fair Hair – Dark Hair – New.png",
+    "codePattern": "01 L A",
+    "question": "What types of hair color do you see?",
+    "answer": "I see fair hair and dark hair.",
+    "unitId": "unit10",
+    "bookId": "book1"
+  },
+  "01 L B": {
+    "filename": "01 L B the Man Has Got Fair – Dark Hair.gif",
+    "codePattern": "01 L B",
+    "question": "What kind of hair has the man got?",
+    "answer": "The man has got fair hair / dark hair.",
+    "unitId": "unit10",
+    "bookId": "book1"
+  },
+  "00 C A Video": {
+    "filename": "00 C A Video Hair Pancake Manor.mp4",
+    "codePattern": "00 C A Video",
+    "question": "What is the video about?",
+    "answer": "The video is about hair.",
+    "unitId": "unit10",
+    "bookId": "book1"
+  },
+  
+  "01 A A": {
+    "filename": "01 A A What is Your Favourite Season – New.png",
+    "codePattern": "01 A A",
+    "question": "What is your favorite season?",
+    "answer": "My favorite season is spring/summer/autumn/winter.",
+    "unitId": "unit11",
+    "bookId": "book1"
+  },
+  "01 D A": {
+    "filename": "01 D A Four Seasons.png",
+    "codePattern": "01 D A",
+    "question": "How many seasons are there?",
+    "answer": "There are four seasons.",
+    "unitId": "unit11",
+    "bookId": "book1"
+  },
+  "00 B A": {
+    "filename": "00 B A Video Season Song Pancake Manor.mp4",
+    "codePattern": "00 B A",
+    "question": "What is the song about?",
+    "answer": "The song is about the seasons.",
+    "unitId": "unit11",
+    "bookId": "book1"
+  },
+  
+  "01 A Rooms": {
+    "filename": "01 A Rooms in the House.png",
+    "codePattern": "01 A Rooms",
+    "question": "What rooms do you see?",
+    "answer": "I see the kitchen, bathroom, bedroom, and living room.",
+    "unitId": "unit12",
+    "bookId": "book1"
+  },
+  "00 D A": {
+    "filename": "00 D A Rooms of the House Song – Planet Pop.mp4",
+    "codePattern": "00 D A",
+    "question": "What is the song about?",
+    "answer": "The song is about rooms in the house.",
+    "unitId": "unit12",
+    "bookId": "book1"
+  },
+  "00 D B": {
+    "filename": "00 D B Video Story Rooms in the House Watts English.mp4",
+    "codePattern": "00 D B",
+    "question": "What is this video about?",
+    "answer": "This video is about rooms in the house.",
+    "unitId": "unit12",
+    "bookId": "book1"
+  },
+  
+  "07 A": {
+    "filename": "07 A Clothes.png",
+    "codePattern": "07 A",
+    "question": "What are these?",
+    "answer": "These are clothes.",
+    "unitId": "unit13",
+    "bookId": "book1"
+  },
+  "07 B": {
+    "filename": "07 B T-shirt.png",
+    "codePattern": "07 B",
+    "question": "What is this?",
+    "answer": "This is a T-shirt.",
+    "unitId": "unit13",
+    "bookId": "book1"
+  },
+  "08 A Video": {
+    "filename": "08 A Video Put On Your Shoes Song.mp4",
+    "codePattern": "08 A Video",
+    "question": "What clothing item is the song about?",
+    "answer": "The song is about shoes.",
+    "unitId": "unit13",
+    "bookId": "book1"
+  },
+  
+  "09 A": {
+    "filename": "09 A Toys.png",
+    "codePattern": "09 A",
+    "question": "What are these?",
+    "answer": "These are toys.",
+    "unitId": "unit14",
+    "bookId": "book1"
+  },
+  "09 B": {
+    "filename": "09 B Teddy Bear.png",
+    "codePattern": "09 B",
+    "question": "What is this?",
+    "answer": "This is a teddy bear.",
+    "unitId": "unit14",
+    "bookId": "book1"
+  },
+  "10 A Video": {
+    "filename": "10 A Video Toy Song.mp4",
+    "codePattern": "10 A Video",
+    "question": "What is the song about?",
+    "answer": "The song is about toys.",
+    "unitId": "unit14",
+    "bookId": "book1"
+  },
+  
+  "11 A Transport": {
+    "filename": "11 A Transport.png",
+    "codePattern": "11 A Transport",
+    "question": "What do you see?",
+    "answer": "I see different types of transport.",
+    "unitId": "unit15",
+    "bookId": "book1"
+  },
+  "11 B Car": {
+    "filename": "11 B Car.png",
+    "codePattern": "11 B Car",
+    "question": "What is this?",
+    "answer": "This is a car.",
+    "unitId": "unit15",
+    "bookId": "book1"
+  },
+  "12 A Video": {
+    "filename": "12 A Video Transport Song.mp4",
+    "codePattern": "12 A Video",
+    "question": "What is the song about?",
+    "answer": "The song is about different types of transport.",
+    "unitId": "unit15",
+    "bookId": "book1"
+  },
+  
+  "13 A Jobs": {
+    "filename": "13 A Jobs.png",
+    "codePattern": "13 A Jobs",
+    "question": "What are these?",
+    "answer": "These are different jobs.",
+    "unitId": "unit16",
+    "bookId": "book1"
+  },
+  "13 B Teacher": {
+    "filename": "13 B Teacher.png",
+    "codePattern": "13 B Teacher",
+    "question": "What job is this?",
+    "answer": "This is a teacher.",
+    "unitId": "unit16",
+    "bookId": "book1"
+  },
+  "14 A Video": {
+    "filename": "14 A Video Jobs Song.mp4",
+    "codePattern": "14 A Video",
+    "question": "What is the video about?",
+    "answer": "The video is about different jobs.",
+    "unitId": "unit16",
+    "bookId": "book1"
+  },
+  
+  "15 A Sports": {
+    "filename": "15 A Sports.png",
+    "codePattern": "15 A Sports",
+    "question": "What are these?",
+    "answer": "These are different sports.",
+    "unitId": "unit17",
+    "bookId": "book1"
+  },
+  "15 B Football": {
+    "filename": "15 B Football.png",
+    "codePattern": "15 B Football",
+    "question": "What sport is this?",
+    "answer": "This is football.",
+    "unitId": "unit17",
+    "bookId": "book1"
+  },
+  "16 A Video": {
+    "filename": "16 A Video Sports Song.mp4",
+    "codePattern": "16 A Video",
+    "question": "What is the song about?",
+    "answer": "The song is about different sports.",
+    "unitId": "unit17",
+    "bookId": "book1"
+  },
+  
+  "17 A Countries": {
+    "filename": "17 A Countries.png",
+    "codePattern": "17 A Countries",
+    "question": "What do you see?",
+    "answer": "I see different countries and flags.",
+    "unitId": "unit18",
+    "bookId": "book1"
+  },
+  "17 B UK": {
+    "filename": "17 B UK.png",
+    "codePattern": "17 B UK",
+    "question": "What country is this?",
+    "answer": "This is the United Kingdom.",
+    "unitId": "unit18",
+    "bookId": "book1"
+  },
+  "18 A Video": {
+    "filename": "18 A Video Countries Song.mp4",
+    "codePattern": "18 A Video",
+    "question": "What is the video about?",
+    "answer": "The video is about different countries.",
+    "unitId": "unit18",
+    "bookId": "book1"
   }
 }
