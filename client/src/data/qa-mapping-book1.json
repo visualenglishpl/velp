@@ -110,5 +110,284 @@
     "answer": "The Genki Teacher teaches English",
     "unitId": "unit3",
     "bookId": "book1"
+  },
+  
+  "03 A": {
+    "filename": "03 A Family – Mum.png",
+    "codePattern": "03 A",
+    "question": "Who is this?",
+    "answer": "This is mum.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "03 B": {
+    "filename": "03 B Family – Dad.png",
+    "codePattern": "03 B",
+    "question": "Who is this?",
+    "answer": "This is dad.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "03 C": {
+    "filename": "03 C Family – Brother.png",
+    "codePattern": "03 C",
+    "question": "Who is this?",
+    "answer": "This is brother.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "03 D": {
+    "filename": "03 D Family – Sister.png",
+    "codePattern": "03 D",
+    "question": "Who is this?",
+    "answer": "This is sister.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "03 E A": {
+    "filename": "03 E A Who is He – He is A Mother.gif",
+    "codePattern": "03 E A",
+    "question": "Who is he?",
+    "answer": "He is a father. / He is not a mother.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "03 E B": {
+    "filename": "03 E B is She A Mum or A Dad.gif",
+    "codePattern": "03 E B",
+    "question": "Is she a mum or a dad?",
+    "answer": "She is a mum.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "03 E C": {
+    "filename": "03 E C is He A Father or A Mother.gif",
+    "codePattern": "03 E C",
+    "question": "Is he a father or a mother?",
+    "answer": "He is a father.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "03 E D": {
+    "filename": "03 E D is She A Sister or A Brother.gif",
+    "codePattern": "03 E D",
+    "question": "Is she a sister or a brother?",
+    "answer": "She is a sister.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "04 E E": {
+    "filename": "04 E E is He A Brother or A Sister.gif",
+    "codePattern": "04 E E",
+    "question": "Is he a brother or a sister?",
+    "answer": "He is a brother.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "02 E A": {
+    "filename": "02 E A is Mum Happy or Sad.gif",
+    "codePattern": "02 E A",
+    "question": "Is mum happy or sad?",
+    "answer": "Mum is happy.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "02 E B": {
+    "filename": "02 E B is Dad Sad or Happy.gif",
+    "codePattern": "02 E B",
+    "question": "Is dad sad or happy?",
+    "answer": "Dad is sad.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "02 E C": {
+    "filename": "02 E C is Brother Hungry or Thirsty.gif",
+    "codePattern": "02 E C",
+    "question": "Is brother hungry or thirsty?",
+    "answer": "Brother is hungry.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "02 E D": {
+    "filename": "02 E D is Dad Tired or Scared.gif",
+    "codePattern": "02 E D",
+    "question": "Is dad tired or scared?",
+    "answer": "Dad is tired.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "02 E E": {
+    "filename": "02 E E is Sister Scared or Sleepy.gif",
+    "codePattern": "02 E E",
+    "question": "Is sister scared or sleepy?",
+    "answer": "Sister is scared.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "16 A": {
+    "filename": "16 A Video My Family Watts English.mp4",
+    "codePattern": "16 A",
+    "question": "What is the video about?",
+    "answer": "The video is about family members.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "16 E B": {
+    "filename": "16 E B Video Baby Shark Dance Pinkfong.mp4",
+    "codePattern": "16 E B",
+    "question": "What family members are in the Baby Shark song?",
+    "answer": "Baby Shark, Mommy Shark, Daddy Shark, Grandma Shark, and Grandpa Shark.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "16 E C": {
+    "filename": "16 E C Video Baby Shark Super Simple Songs.mp4",
+    "codePattern": "16 E C",
+    "question": "What song is this?",
+    "answer": "This is the Baby Shark song.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "16 E D": {
+    "filename": "16 E D Video Family English Tree.mp4",
+    "codePattern": "16 E D",
+    "question": "What family members do you learn about in this video?",
+    "answer": "Mother, father, sister, brother, grandmother, grandfather, aunt, uncle, and cousins.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  "17 A": {
+    "filename": "17 A Online Game Wordwall – Family.png",
+    "codePattern": "17 A",
+    "question": "What is this game about?",
+    "answer": "This game is about family vocabulary.",
+    "unitId": "unit5",
+    "bookId": "book1"
+  },
+  
+  "13 A": {
+    "filename": "13 A Colors.png", 
+    "codePattern": "13 A",
+    "question": "What colors do you see?",
+    "answer": "I see red, blue, green, yellow, orange, purple, pink, brown, black, and white.",
+    "unitId": "unit6",
+    "bookId": "book1"
+  },
+  "13 B": {
+    "filename": "13 B What Color is It – It is Blue.png",
+    "codePattern": "13 B",
+    "question": "What color is it?",
+    "answer": "It is blue.",
+    "unitId": "unit6",
+    "bookId": "book1"
+  },
+  "14 A": {
+    "filename": "14 A Video I See Something Blue.mp4",
+    "codePattern": "14 A",
+    "question": "What is the song about?",
+    "answer": "The song is about different colors.",
+    "unitId": "unit6",
+    "bookId": "book1"
+  },
+  
+  "12 A": {
+    "filename": "12 A Animals.png",
+    "codePattern": "12 A",
+    "question": "What do you see?",
+    "answer": "I see different animals.",
+    "unitId": "unit7",
+    "bookId": "book1"
+  },
+  "12 B": {
+    "filename": "12 B Is It a Dog.png",
+    "codePattern": "12 B",
+    "question": "Is it a dog?",
+    "answer": "Yes, it is a dog. / No, it is not a dog.",
+    "unitId": "unit7",
+    "bookId": "book1"
+  },
+  "13 A": {
+    "filename": "13 A Video Animal Song.mp4",
+    "codePattern": "13 A",
+    "question": "What animals are in the song?",
+    "answer": "There are dogs, cats, birds, and other animals in the song.",
+    "unitId": "unit7",
+    "bookId": "book1"
+  },
+  
+  "05 A": {
+    "filename": "05 A School Items.png",
+    "codePattern": "05 A",
+    "question": "What are these?",
+    "answer": "These are school items.",
+    "unitId": "unit2",
+    "bookId": "book1"
+  },
+  "05 B": {
+    "filename": "05 B Pencil Case.png",
+    "codePattern": "05 B",
+    "question": "What is this?",
+    "answer": "This is a pencil case.",
+    "unitId": "unit2",
+    "bookId": "book1"
+  },
+  "06 A": {
+    "filename": "06 A Pencil.png",
+    "codePattern": "06 A",
+    "question": "What is this?",
+    "answer": "It is a pencil.",
+    "unitId": "unit2",
+    "bookId": "book1"
+  },
+  
+  "04 A": {
+    "filename": "04 A Body Parts.png",
+    "codePattern": "04 A",
+    "question": "What are these called?",
+    "answer": "These are body parts.",
+    "unitId": "unit4",
+    "bookId": "book1"
+  },
+  "04 B": {
+    "filename": "04 B Head Shoulders Knees Toes.mp4",
+    "codePattern": "04 B",
+    "question": "What body parts are in the song?",
+    "answer": "Head, shoulders, knees, and toes.",
+    "unitId": "unit4",
+    "bookId": "book1"
+  },
+  
+  "05A": {
+    "filename": "05 A Weather – Sunny.png",
+    "codePattern": "05A",
+    "question": "How is the weather?",
+    "answer": "It is sunny.",
+    "unitId": "unit8",
+    "bookId": "book1"
+  },
+  "05B": {
+    "filename": "05 B Weather – Rainy.png",
+    "codePattern": "05B",
+    "question": "How is the weather?",
+    "answer": "It is rainy.",
+    "unitId": "unit8",
+    "bookId": "book1"
+  },
+  
+  "06A": {
+    "filename": "06 A Food – Fruit.png",
+    "codePattern": "06A",
+    "question": "What are these?",
+    "answer": "These are fruits.",
+    "unitId": "unit9",
+    "bookId": "book1"
+  },
+  "06B": {
+    "filename": "06 B Food – Vegetables.png",
+    "codePattern": "06B",
+    "question": "What are these?",
+    "answer": "These are vegetables.",
+    "unitId": "unit9",
+    "bookId": "book1"
   }
 }

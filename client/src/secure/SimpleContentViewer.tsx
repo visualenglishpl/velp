@@ -11,6 +11,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useExcelQA } from '@/hooks/use-excel-qa';
 import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
+import TeacherResources from '@/components/TeacherResources';
 
 // Define types for question data structure
 type QuestionAnswer = {
@@ -665,10 +666,12 @@ export default function SimpleContentViewer() {
                               </div>
                             )}
                             <div className="text-gray-800 text-base font-medium">
-                              {qa.question}
+                              {/* Remove any numbering from questions */}
+                              {qa.question.replace(/^\d+\.\s*/, '')}
                             </div>
                             <div className="mt-2 font-medium text-gray-900 text-base">
-                              {qa.answer}
+                              {/* Remove any numbering from answers */}
+                              {qa.answer.replace(/^\d+\.\s*/, '')}
                             </div>
                           </>
                         )}
@@ -873,6 +876,17 @@ export default function SimpleContentViewer() {
           })}
         </div>
       </div>
+      
+      {/* Teacher Resources Section */}
+      {user && bookId && unitNumber && (
+        <div className="mt-8 border-t pt-6">
+          <h2 className="text-2xl font-bold mb-4">Teacher Resources</h2>
+          <TeacherResources 
+            bookId={bookId} 
+            unitId={String(unitNumber)}
+          />
+        </div>
+      )}
     </div>
   );
 }
