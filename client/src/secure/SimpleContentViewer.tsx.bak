@@ -486,14 +486,24 @@ export default function SimpleContentViewer() {
             // Log video detection for debugging
             if (isVideo) {
               console.log(`Video detected: ${material.content}`, {
-                content: material.content,
+                contentType: material.contentType,
                 title: material.title,
-                contentType: material.contentType
+                description: material.description
               });
             }
             
-            // Premium content check (based on index and content type)
-            const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
+            // Check if the current user is an admin
+            const isAdmin = user?.role === 'admin';
+            
+            // Premium content conditions:
+            // 1. Regular slides: index >= freeSlideLimit and !hasPaidAccess and not admin
+            // 2. ALL videos: isVideo and !hasPaidAccess and not admin  
+            const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess && !isAdmin;
+            
+            // Log premium content decision for debugging
+            if ((index >= freeSlideLimit || isVideo) && isAdmin) {
+              console.log(`Admin bypass for premium content: ${material.content}`);
+            }
             
             return (
               <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
@@ -514,77 +524,84 @@ export default function SimpleContentViewer() {
                     <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
                       <div className="flex flex-col gap-0.5">
                         {/* Try to extract Q&A data */}
-                        {qa.hasData && (
-                          <>
-                            {qa.country && (
-                              <div className="mb-1 flex items-center justify-center">
-                                <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                                  {qa.country}
-                                </h3>
-                              </div>
-                            )}
-                            <div className="flex gap-2">
-                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                              <span className="text-gray-800 text-base">{qa.question}</span>
-                            </div>
-                            <div className="flex gap-2 mt-2">
-                              <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                              <span className="font-medium text-indigo-900 text-base">{qa.answer}</span>
-                            </div>
-                          </>
-                        )}
-                        
-                        {/* Check for arrow format (question → answer) */}
-                        {material.title && material.title.includes('→') && !qa.hasData && (
-                          (() => {
-                            const [question, answer] = material.title.split('→').map(part => part.trim());
+                        {(() => {
+                          // Display data from our Q&A mapping if available
+                          if (qa.hasData) {
                             return (
                               <>
+                                {qa.country && (
+                                  <div className="mb-1 flex items-center justify-center">
+                                    <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
+                                      {qa.country}
+                                    </h3>
+                                  </div>
+                                )}
                                 <div className="flex gap-2">
                                   <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">{question}</span>
+                                  <span className="text-gray-800 text-base">{qa.question}</span>
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                   <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">{answer}</span>
+                                  <span className="font-medium text-indigo-900 text-base">{qa.answer}</span>
                                 </div>
                               </>
                             );
-                          })()
-                        )}
+                          }
                         
-                        {/* Check for question mark format */}
-                        {material.title && material.title.includes('?') && !qa.hasData && !material.title.includes('→') && (
-                          <>
-                            <div className="flex gap-2">
-                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                              <span className="text-gray-800 text-base">{material.title}</span>
-                            </div>
-                            {material.description && (
+                        // Check for arrow format (question → answer)
+                        if (material.title.includes('→')) {
+                          const [question, answer] = material.title.split('→').map(part => part.trim());
+                          return (
+                            <>
+                              <div className="flex gap-2">
+                                <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                <span className="text-gray-800 text-base">{question}</span>
+                              </div>
                               <div className="flex gap-2 mt-2">
                                 <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                <span className="font-medium text-indigo-900 text-base">{material.description}</span>
+                                <span className="font-medium text-indigo-900 text-base">{answer}</span>
                               </div>
-                            )}
-                          </>
-                        )}
+                            </>
+                          );
+                        }
                         
-                        {/* Default case - just show title if not starting with "Content from" */}
-                        {material.title && !material.title.includes('?') && !material.title.includes('→') && !qa.hasData && 
-                         !material.title.startsWith('Content from') && (
-                          <div className="flex gap-2">
-                            <span className="font-medium text-gray-800 text-base">{material.title}</span>
-                          </div>
-                        )}
+                        // Check for question mark format
+                        if (material.title.includes('?')) {
+                          return (
+                            <>
+                              <div className="flex gap-2">
+                                <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                <span className="text-gray-800 text-base">{material.title}</span>
+                              </div>
+                              {material.description && (
+                                <div className="flex gap-2 mt-2">
+                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                  <span className="font-medium text-indigo-900 text-base">{material.description}</span>
+                                </div>
+                              )}
+                            </>
+                          );
+                        }
                         
-                        {/* Show description if not shown as answer */}
-                        {material.description && !material.title.includes('?') && !material.title.includes('→') && !qa.hasData && (
-                          <div className="mt-2 text-sm text-gray-600">{material.description}</div>
-                        )}
-                      </div>
+                        // Default case
+                        if (!material.title.startsWith('Content from')) {
+                          return (
+                            <div className="flex gap-2">
+                              <span className="font-medium text-gray-800 text-base">{material.title}</span>
+                            </div>
+                          );
+                        }
+                        
+                        return null;
+                      })()}
+                      
+                      {/* Show description if not shown as answer */}
+                      {material.description && !material.title.includes('?') && !material.title.includes('→') && (
+                        <div className="mt-2 text-sm text-gray-600">{material.description}</div>
+                      )}
                     </div>
-                  );
-                })()}
+                  </div>
+                )}
                 
                 {/* Premium content overlay */}
                 {isPremiumContent && (
@@ -605,7 +622,8 @@ export default function SimpleContentViewer() {
                 {/* Centered content container */}
                 <div className="flex items-center justify-center w-full h-full">
                   {/* Check if content is a video */}
-                  {isVideo ? (
+                  {material.content.toLowerCase().includes('video') || 
+                   material.content.toLowerCase().endsWith('.mp4') ? (
                     <video 
                       src={imagePath}
                       controls
