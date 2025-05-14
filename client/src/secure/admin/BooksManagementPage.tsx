@@ -415,6 +415,19 @@ const BooksManagementPage = () => {
             </div>
           )}
           
+          {/* Floating add button at bottom of page */}
+          {!loading && books.length > 0 && (
+            <div className="flex justify-center mt-12 mb-6">
+              <Button
+                onClick={handleNewBook}
+                className="rounded-full w-14 h-14 shadow-lg bg-indigo-600 hover:bg-indigo-700 flex items-center justify-center"
+                size="icon"
+              >
+                <PlusCircle className="h-7 w-7" />
+              </Button>
+            </div>
+          )}
+          
           {/* Book Edit/Create Modal */}
           <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
             <DialogContent className="sm:max-w-md">
