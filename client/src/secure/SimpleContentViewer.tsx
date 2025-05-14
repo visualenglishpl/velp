@@ -644,33 +644,31 @@ export default function SimpleContentViewer() {
                   const qa = getQuestionAnswer(material);
                   
                   // Check if question data exists (either from mapping or title format)
-                  const hasQuestion = qa.hasData || 
-                                     (material.title && (material.title.includes('?') || material.title.includes('→')));
+                  const hasQuestion = (qa.hasData && qa.question.trim() !== '') || 
+                                      (material.title && (material.title.includes('?') || material.title.includes('→')));
                   
-                  // If no question data exists for this image, don't render the Q&A section at all
-                  if (!hasQuestion) return null;
+                  // If no question data exists for this image, or if question is empty, don't render the Q&A section at all
+                  if (!hasQuestion || !qa.question.trim()) return null;
                   
                   // Otherwise, render the Q&A section
                   return (
-                    <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
-                      <div className="flex flex-col gap-0.5">
+                    <div className="mb-1 p-2 mx-auto z-10 max-w-2xl">
+                      <div className="flex flex-col items-center text-center">
                         {/* Try to extract Q&A data */}
                         {qa.hasData && (
                           <>
                             {qa.country && (
-                              <div className="mb-1 flex items-center justify-center">
-                                <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
+                              <div className="mb-1 text-center">
+                                <h3 className="text-base font-bold text-gray-900">
                                   {qa.country}
                                 </h3>
                               </div>
                             )}
-                            <div className="flex gap-2">
-                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                              <span className="text-gray-800 text-base">{qa.question}</span>
+                            <div className="text-gray-800 text-base font-medium">
+                              {qa.question}
                             </div>
-                            <div className="flex gap-2 mt-2">
-                              <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                              <span className="font-medium text-indigo-900 text-base">{qa.answer}</span>
+                            <div className="mt-2 font-medium text-gray-900 text-base">
+                              {qa.answer}
                             </div>
                           </>
                         )}
@@ -681,13 +679,11 @@ export default function SimpleContentViewer() {
                             const [question, answer] = material.title.split('→').map(part => part.trim());
                             return (
                               <>
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">{question}</span>
+                                <div className="text-gray-800 text-base font-medium">
+                                  {question}
                                 </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">{answer}</span>
+                                <div className="mt-2 font-medium text-gray-900 text-base">
+                                  {answer}
                                 </div>
                               </>
                             );
@@ -697,14 +693,12 @@ export default function SimpleContentViewer() {
                         {/* Check for question mark format */}
                         {material.title && material.title.includes('?') && !qa.hasData && !material.title.includes('→') && (
                           <>
-                            <div className="flex gap-2">
-                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                              <span className="text-gray-800 text-base">{material.title}</span>
+                            <div className="text-gray-800 text-base font-medium">
+                              {material.title}
                             </div>
                             {material.description && (
-                              <div className="flex gap-2 mt-2">
-                                <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                <span className="font-medium text-indigo-900 text-base">{material.description}</span>
+                              <div className="mt-2 font-medium text-gray-900 text-base">
+                                {material.description}
                               </div>
                             )}
                           </>
@@ -713,14 +707,14 @@ export default function SimpleContentViewer() {
                         {/* Default case - just show title if not starting with "Content from" */}
                         {material.title && !material.title.includes('?') && !material.title.includes('→') && !qa.hasData && 
                          !material.title.startsWith('Content from') && (
-                          <div className="flex gap-2">
-                            <span className="font-medium text-gray-800 text-base">{material.title}</span>
+                          <div className="text-gray-800 text-base font-medium">
+                            {material.title}
                           </div>
                         )}
                         
                         {/* Show description if not shown as answer */}
                         {material.description && !material.title.includes('?') && !material.title.includes('→') && !qa.hasData && (
-                          <div className="mt-2 text-sm text-gray-600">{material.description}</div>
+                          <div className="mt-2 font-medium text-gray-900 text-base">{material.description}</div>
                         )}
                       </div>
                     </div>

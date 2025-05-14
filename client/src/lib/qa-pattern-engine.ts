@@ -610,7 +610,7 @@ export function getQuestionAnswer(
     }
   }
   
-  // FINAL FALLBACK: Generate a simple "What is it?" question
+  // FINAL FALLBACK: Check if it's a video, otherwise leave blank
   logDebug(`⚠️ PATTERN ENGINE: Using ultimate fallback for ${filename}`, 1);
   
   // For videos, return a generic video instruction
@@ -623,7 +623,8 @@ export function getQuestionAnswer(
     };
   }
   
-  // For slides with no question, leave blank as requested
+  // For all other slides with no question, leave blank as requested
+  logDebug(`📝 No question found for ${filename}, leaving blank as requested`, 1);
   return {
     question: '', // Leave blank as requested when no question is found
     answer: '',
