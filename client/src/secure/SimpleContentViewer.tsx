@@ -11,7 +11,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useExcelQA } from '@/hooks/use-excel-qa';
 import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
-import TeacherResources from '@/components/TeacherResources';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Define types for question data structure
 type QuestionAnswer = {
@@ -881,10 +881,146 @@ export default function SimpleContentViewer() {
       {user && bookId && unitNumber && (
         <div className="mt-8 border-t pt-6">
           <h2 className="text-2xl font-bold mb-4">Teacher Resources</h2>
-          <TeacherResources 
-            bookId={bookId} 
-            unitId={String(unitNumber)}
-          />
+          <Tabs defaultValue="videos" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="videos">Videos</TabsTrigger>
+              <TabsTrigger value="games">Games</TabsTrigger>
+              <TabsTrigger value="lessons">Lesson Plans</TabsTrigger>
+              <TabsTrigger value="downloads">Downloads</TabsTrigger>
+            </TabsList>
+            <TabsContent value="videos" className="p-4 border rounded-md">
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Educational Videos</h3>
+                {bookId === '1' && unitNumber === '5' && (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="rounded-lg overflow-hidden border shadow-sm">
+                      <iframe 
+                        width="100%" 
+                        height="215" 
+                        src="https://www.youtube.com/embed/YkFXHZNMviE" 
+                        title="Family Members Song for Kids" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen
+                        className="aspect-video"
+                      ></iframe>
+                      <div className="p-3">
+                        <h4 className="font-medium">Family Members Song</h4>
+                        <p className="text-sm text-gray-500">A fun song to learn family vocabulary</p>
+                      </div>
+                    </div>
+                    <div className="rounded-lg overflow-hidden border shadow-sm">
+                      <iframe 
+                        width="100%" 
+                        height="215" 
+                        src="https://www.youtube.com/embed/FHaObkHEkHQ" 
+                        title="The Finger Family Song" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen
+                        className="aspect-video"
+                      ></iframe>
+                      <div className="p-3">
+                        <h4 className="font-medium">Finger Family Song</h4>
+                        <p className="text-sm text-gray-500">Interactive finger family activity</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {!(bookId === '1' && unitNumber === '5') && (
+                  <p className="text-center py-8 text-gray-500">Videos for Book {bookId}, Unit {unitNumber} will appear here.</p>
+                )}
+              </div>
+            </TabsContent>
+            <TabsContent value="games" className="p-4 border rounded-md">
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Interactive Games</h3>
+                {bookId === '1' && unitNumber === '5' && (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="rounded-lg overflow-hidden border shadow-sm">
+                      <iframe 
+                        width="100%" 
+                        height="300" 
+                        src="https://wordwall.net/embed/09e4b2aae10a4db5b89a6be8be0d5ad1" 
+                        title="Family Members Match-up" 
+                        allow="fullscreen" 
+                        className="aspect-video"
+                      ></iframe>
+                      <div className="p-3">
+                        <h4 className="font-medium">Family Members Matching</h4>
+                        <p className="text-sm text-gray-500">Match family member words to images</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {!(bookId === '1' && unitNumber === '5') && (
+                  <p className="text-center py-8 text-gray-500">Games for Book {bookId}, Unit {unitNumber} will appear here.</p>
+                )}
+              </div>
+            </TabsContent>
+            <TabsContent value="lessons" className="p-4 border rounded-md">
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Lesson Plans</h3>
+                {bookId === '1' && unitNumber === '5' && (
+                  <div className="space-y-4">
+                    <div className="border rounded-lg p-4">
+                      <h4 className="font-medium mb-2">Lesson 1: Family Introduction (45 min)</h4>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Warm-up: Show family photos and introduce vocabulary (10 min)</li>
+                        <li>Present new words with flashcards (10 min)</li>
+                        <li>Practice: "Who's this?" - "This is my mother/father/etc." (15 min)</li>
+                        <li>Activity: Draw your family tree (10 min)</li>
+                      </ul>
+                    </div>
+                    <div className="border rounded-lg p-4">
+                      <h4 className="font-medium mb-2">Lesson 2: Family Members (45 min)</h4>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Review family vocabulary with song (10 min)</li>
+                        <li>Activity: Family tree craft (15 min)</li>
+                        <li>Game: Family members memory match (10 min)</li>
+                        <li>Worksheet: Label family pictures (10 min)</li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+                {!(bookId === '1' && unitNumber === '5') && (
+                  <p className="text-center py-8 text-gray-500">Lesson plans for Book {bookId}, Unit {unitNumber} will appear here.</p>
+                )}
+              </div>
+            </TabsContent>
+            <TabsContent value="downloads" className="p-4 border rounded-md">
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Downloadable Resources</h3>
+                {bookId === '1' && unitNumber === '5' && (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="flex items-center p-3 border rounded-lg">
+                      <div className="bg-blue-100 p-2 rounded mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-medium">Family Vocabulary PDF</h4>
+                        <p className="text-sm text-gray-500">Printable flashcards and worksheets</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center p-3 border rounded-lg">
+                      <div className="bg-green-100 p-2 rounded mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-medium">Family Tree Template</h4>
+                        <p className="text-sm text-gray-500">Interactive family tree worksheet</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {!(bookId === '1' && unitNumber === '5') && (
+                  <p className="text-center py-8 text-gray-500">Resources for Book {bookId}, Unit {unitNumber} will appear here.</p>
+                )}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       )}
     </div>
