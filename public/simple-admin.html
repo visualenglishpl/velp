@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Admin Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            width: 400px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4338ca;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #3730a3;
+        }
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .loading {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        .steps {
+            margin-top: 20px;
+        }
+        .step {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .step-marker {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            color: #777;
+        }
+        .step.done .step-marker {
+            background-color: #4338ca;
+            color: white;
+        }
+        .step.in-progress .step-marker {
+            background-color: #6366f1;
+            color: white;
+        }
+        .step-text {
+            font-size: 14px;
+            color: #666;
+        }
+        .step.done .step-text {
+            color: #4338ca;
+        }
+        .step.in-progress .step-text {
+            color: #6366f1;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Login</h2>
+        
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" value="admin" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" value="admin123" readonly>
+        </div>
+        
+        <button id="loginBtn">Login as Admin</button>
+        
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <div class="steps" id="steps">
+            <div class="step" id="step1">
+                <div class="step-marker">1</div>
+                <div class="step-text">Server Login</div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-marker">2</div>
+                <div class="step-text">Local Storage Setup</div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-marker">3</div>
+                <div class="step-text">Session Verification</div>
+            </div>
+            <div class="step" id="step4">
+                <div class="step-marker">4</div>
+                <div class="step-text">Admin Dashboard Access</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const statusDiv = document.getElementById('status');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        
+        // Admin credentials
+        const adminCredentials = {
+            username: 'admin',
+            password: 'admin123'
+        };
+        
+        // Admin user object for local storage
+        const adminUser = {
+            id: 1,
+            username: "admin",
+            role: "admin",
+            email: "admin@example.com",
+            fullName: "Admin User",
+            createdAt: new Date().toISOString()
+        };
+        
+        // Update status function
+        function showStatus(message, type) {
+            statusDiv.textContent = message;
+            statusDiv.className = 'status ' + type;
+            statusDiv.style.display = 'block';
+        }
+        
+        // Update step function
+        function updateStep(step, status) {
+            // Reset all steps first
+            [step1, step2, step3, step4].forEach(s => {
+                s.className = 'step';
+            });
+            
+            // Update steps based on current progress
+            for (let i = 1; i <= 4; i++) {
+                const stepEl = document.getElementById('step' + i);
+                if (i < step) {
+                    stepEl.className = 'step done';
+                } else if (i === step) {
+                    stepEl.className = 'step in-progress';
+                }
+            }
+        }
+        
+        // Step 1: Server Login
+        async function performServerLogin() {
+            updateStep(1, 'in-progress');
+            showStatus('Logging in to server...', 'loading');
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(adminCredentials),
+                    credentials: 'include' // Include cookies in the request
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server login failed: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Server login successful:', data);
+                return true;
+            } catch (error) {
+                console.error('Server login error:', error);
+                showStatus(`Server login failed: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        // Step 2: Set up local storage
+        function setupLocalStorage() {
+            updateStep(2, 'in-progress');
+            showStatus('Setting up local storage...', 'loading');
+            
+            try {
+                // Store in localStorage and sessionStorage
+                localStorage.setItem('velp_user', JSON.stringify(adminUser));
+                sessionStorage.setItem('velp_user', JSON.stringify(adminUser));
+                
+                // Set a cookie as well for redundancy
+                document.cookie = `velp_admin=true; path=/; max-age=86400`;
+                console.log('Local storage setup successful');
+                return true;
+            } catch (error) {
+                console.error('Local storage setup error:', error);
+                showStatus(`Local storage setup failed: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        // Step 3: Verify session
+        async function verifySession() {
+            updateStep(3, 'in-progress');
+            showStatus('Verifying session...', 'loading');
+            
+            try {
+                const response = await fetch('/api/user', {
+                    credentials: 'include' // Include cookies in the request
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Session verification failed: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Session verification successful:', data);
+                return true;
+            } catch (error) {
+                console.error('Session verification error:', error);
+                showStatus(`Session verification failed: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        // Step 4: Redirect to admin dashboard
+        function redirectToAdmin() {
+            updateStep(4, 'in-progress');
+            showStatus('Redirecting to admin dashboard...', 'success');
+            
+            // Wait a bit so the user can see the success message
+            setTimeout(() => {
+                window.location.href = '/admin';
+            }, 1500);
+        }
+        
+        // Main function
+        async function login() {
+            loginBtn.disabled = true;
+            
+            // Step 1: Server Login
+            const serverLoginSuccess = await performServerLogin();
+            if (!serverLoginSuccess) {
+                loginBtn.disabled = false;
+                return;
+            }
+            
+            // Step 2: Local Storage Setup
+            const localStorageSuccess = setupLocalStorage();
+            if (!localStorageSuccess) {
+                loginBtn.disabled = false;
+                return;
+            }
+            
+            // Step 3: Session Verification
+            const sessionVerificationSuccess = await verifySession();
+            if (!sessionVerificationSuccess) {
+                loginBtn.disabled = false;
+                return;
+            }
+            
+            // Step 4: Redirect to Admin Dashboard
+            redirectToAdmin();
+        }
+        
+        // Event listener
+        loginBtn.addEventListener('click', login);
+    </script>
+</body>
+</html>

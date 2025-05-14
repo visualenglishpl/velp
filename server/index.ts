@@ -165,6 +165,16 @@ app.get('/super-admin', (req, res) => {
   res.sendFile(path.resolve(process.cwd(), 'public/super-admin.html'));
 });
 
+// New admin login page - with step-by-step process
+app.get('/admin-login', (req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'public/admin-login.html'));
+});
+
+// Simple admin login - ONE-CLICK access to admin panel
+app.get('/simple-admin', (req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'public/simple-admin.html'));
+});
+
 // Direct admin auth endpoint - for emergency access
 app.get('/api/direct-admin-auth', (req, res) => {
   try {
