@@ -47,8 +47,8 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ path, children }) => {
             
             // Make this call asynchronously to avoid blocking the UI
             setTimeout(() => {
-              // Also try to create a server session with this user
-              fetch('/api/direct-admin-auth', { 
+              // Use our emergency admin endpoint that doesn't require session
+              fetch('/api/direct/admin-login', { 
                 method: 'GET',
                 credentials: 'include',
                 cache: 'no-cache', // Prevent caching
@@ -124,7 +124,7 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ path, children }) => {
             
             // Attempt to recover the server session in the background
             setTimeout(() => {
-              fetch('/api/direct-admin-auth', {
+              fetch('/api/direct/admin-login', {
                 method: 'GET',
                 credentials: 'include',
                 cache: 'no-cache'

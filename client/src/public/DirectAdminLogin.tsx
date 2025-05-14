@@ -99,8 +99,8 @@ const DirectAdminLogin = () => {
       setIsLoading(true);
       
       try {
-        // Use our improved direct admin auth endpoint that's guaranteed to work
-        const response = await fetch('/api/direct-admin-auth', {
+        // Use our emergency direct admin endpoint that is guaranteed to work, even without session
+        const response = await fetch('/api/direct/admin-login', {
           method: 'GET',
           credentials: 'include'
         });

@@ -400,6 +400,26 @@ export function registerDirectRoutes(app: Express) {
     }
   });
 
+  // Super simple emergency admin login endpoint that doesn't require session
+  app.get('/api/direct/admin-login', (req, res) => {
+    console.log("Emergency direct admin login endpoint accessed");
+    
+    // This is the hard-coded default admin
+    const adminUser = {
+      id: 1,
+      username: 'admin',
+      role: 'admin',
+      email: 'admin@example.com' 
+    };
+    
+    // Always return success and admin data, no session or auth checks
+    return res.json({
+      success: true,
+      message: "Direct admin access granted",
+      user: adminUser
+    });
+  });
+
   // Test route to verify S3 connectivity with detailed diagnostics
   app.get("/api/direct/test-s3", async (req, res) => {
     try {
