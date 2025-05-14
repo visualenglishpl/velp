@@ -252,27 +252,103 @@ export default function SimpleContentViewer() {
     // Default return value
     const defaultResult = { country: "", question: "", answer: "", hasData: false };
     
-    // Try to use the file code from the description field
-    if (!material.description) return defaultResult;
+    // Try multiple sources for the file code
+    const extractCodeFromString = (str: string) => {
+      if (!str) return null;
+      
+      // First try to match exact format "01 R A"
+      let codeMatch = str.match(/^(\d+\s+[A-Z])\s+([A-Z])/);
+      if (codeMatch) {
+        return {
+          codeBase: codeMatch[1], // "01 R"
+          letterCode: codeMatch[2] // "A"
+        };
+      }
+      
+      // Try alternative format like "01-R-A" or "01_R_A"
+      codeMatch = str.match(/^(\d+[\s\-_]+[A-Z])[\s\-_]+([A-Z])/);
+      if (codeMatch) {
+        // Normalize to space-separated format for lookup
+        const normalizedBase = codeMatch[1].replace(/[\-_]/g, ' ');
+        return {
+          codeBase: normalizedBase,
+          letterCode: codeMatch[2]
+        };
+      }
+      
+      // Try from filename itself, like "01 R A - Question text.jpg"
+      codeMatch = str.match(/(\d+[\s\-_]+[A-Z])[\s\-_]+([A-Z])[\s\-_]/);
+      if (codeMatch) {
+        // Normalize to space-separated format for lookup
+        const normalizedBase = codeMatch[1].replace(/[\-_]/g, ' ');
+        return {
+          codeBase: normalizedBase,
+          letterCode: codeMatch[2]
+        };
+      }
+      
+      return null;
+    };
     
-    // The description contains the file code like "01 R A"
-    const codeMatch = material.description.match(/^(\d+\s+[A-Z])\s+([A-Z])/);
-    if (!codeMatch) return defaultResult;
+    // Try multiple sources for code extraction
+    let codeInfo = null;
     
-    const codeBase = codeMatch[1]; // "01 R"
-    const letterCode = codeMatch[2]; // "A"
+    // 1. Try from description field first
+    if (material.description) {
+      codeInfo = extractCodeFromString(material.description);
+    }
+    
+    // 2. If not found, try from content field (filename)
+    if (!codeInfo && material.content) {
+      codeInfo = extractCodeFromString(material.content);
+    }
+    
+    // 3. If not found, try from title
+    if (!codeInfo && material.title) {
+      codeInfo = extractCodeFromString(material.title);
+    }
+    
+    // If no code found in any field, return default
+    if (!codeInfo) {
+      console.log(`No code pattern found in data:`, { 
+        title: material.title,
+        description: material.description, 
+        content: material.content
+      });
+      return defaultResult;
+    }
     
     // Check if we have data for this code
-    if (!QUESTION_DATA[codeBase]) return defaultResult;
+    if (!QUESTION_DATA[codeInfo.codeBase]) {
+      console.log(`No data found for code base: ${codeInfo.codeBase}`, { 
+        codeInfo, 
+        availableCodes: Object.keys(QUESTION_DATA).join(', ') 
+      });
+      return defaultResult;
+    }
     
-    const countryData = QUESTION_DATA[codeBase];
+    const countryData = QUESTION_DATA[codeInfo.codeBase];
+    
     // Make sure the letterCode exists in the questions object
-    if (!countryData.questions[letterCode]) return defaultResult;
+    if (!countryData.questions[codeInfo.letterCode]) {
+      console.log(`No data found for letter code: ${codeInfo.letterCode} in ${codeInfo.codeBase}`, {
+        codeBase: codeInfo.codeBase,
+        letterCode: codeInfo.letterCode,
+        availableLetters: Object.keys(countryData.questions).join(', ')
+      });
+      return defaultResult;
+    }
+    
+    // Log success for debugging
+    console.log(`Found Q&A data for ${codeInfo.codeBase} ${codeInfo.letterCode}:`, {
+      question: countryData.questions[codeInfo.letterCode].question,
+      answer: countryData.questions[codeInfo.letterCode].answer
+    });
     
     return {
       country: countryData.country,
-      question: countryData.questions[letterCode].question,
-      answer: countryData.questions[letterCode].answer,
+      question: countryData.questions[codeInfo.letterCode].question,
+      answer: countryData.questions[codeInfo.letterCode].answer,
       hasData: true
     };
   };
@@ -358,7 +434,12 @@ export default function SimpleContentViewer() {
         <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
           {materials.map((material, index) => {
             const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
-            const isPremiumContent = index >= freeSlideLimit && !hasPaidAccess;
+            const isVideo = material.content.toLowerCase().includes('video') || 
+                            material.content.toLowerCase().endsWith('.mp4');
+            // Premium content conditions:
+            // 1. Regular slides: index >= freeSlideLimit and !hasPaidAccess
+            // 2. ALL videos: isVideo and !hasPaidAccess  
+            const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
             
             return (
               <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
