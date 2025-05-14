@@ -194,13 +194,15 @@ const AdminPage = () => {
                   className="p-0"
                   style={{ backgroundColor: feature.color }}
                 >
-                  <div className="flex flex-col items-center justify-center py-3 w-full">
-                    <div className="bg-white rounded-full p-2 mb-1">
+                  <div className="flex flex-col items-center justify-center py-3 w-full px-4">
+                    <div className="bg-white rounded-full p-2 mb-2">
                       <div style={{ color: feature.color }}>
                         {feature.icon}
                       </div>
                     </div>
-                    <h2 className="text-lg font-bold text-white leading-tight text-center px-1 mb-1 w-full mx-auto truncate">{feature.title}</h2>
+                    <div className="h-6 flex items-center justify-center">
+                      <h2 className="text-base font-bold text-white leading-none text-center w-full truncate">{feature.title}</h2>
+                    </div>
                     {feature.featured && (
                       <span className="bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-[10px] font-medium mt-0.5">
                         RECOMMENDED
@@ -208,14 +210,16 @@ const AdminPage = () => {
                     )}
                   </div>
                 </CardHeader>
-                <CardContent className="pt-2 pb-2 px-3">
-                  <CardDescription className="text-center text-xs leading-relaxed max-h-12 overflow-hidden">
-                    {feature.description}
-                  </CardDescription>
+                <CardContent className="pt-2 pb-2 px-4">
+                  <div className="h-10 flex items-center">
+                    <CardDescription className="text-center text-xs leading-tight line-clamp-2 w-full">
+                      {feature.description}
+                    </CardDescription>
+                  </div>
                 </CardContent>
-                <CardFooter className="pb-3 pt-0 flex justify-center">
+                <CardFooter className="pb-3 pt-1 flex justify-center h-[40px]">
                   <Link href={feature.link}>
-                    <Button size="sm" className={feature.featured ? "bg-purple-600 hover:bg-purple-700" : "bg-indigo-600 hover:bg-indigo-700"}>
+                    <Button size="sm" className={`${feature.featured ? "bg-purple-600 hover:bg-purple-700" : "bg-indigo-600 hover:bg-indigo-700"} w-20 text-xs font-medium`}>
                       Manage
                     </Button>
                   </Link>
