@@ -215,6 +215,33 @@ function App() {
           <AdminRoute path="/admin/book-units/:bookId">
             <UnitsManagementPage />
           </AdminRoute>
+          <AdminRoute path="/admin/shop">
+            <DevToolsPage shopPlaceholder />
+          </AdminRoute>
+          <AdminRoute path="/admin/settings">
+            <DevToolsPage settingsPlaceholder />
+          </AdminRoute>
+          <AdminRoute path="/admin/users">
+            <DevToolsPage usersPlaceholder />
+          </AdminRoute>
+          <AdminRoute path="/admin/flagged">
+            <DevToolsPage flaggedPlaceholder />
+          </AdminRoute>
+          <AdminRoute path="/admin/analytics">
+            <DevToolsPage analyticsPlaceholder />
+          </AdminRoute>
+          <AdminRoute path="/admin/roles">
+            <DevToolsPage rolesPlaceholder />
+          </AdminRoute>
+          <AdminRoute path="/admin/broadcast">
+            <DevToolsPage broadcastPlaceholder />
+          </AdminRoute>
+          <AdminRoute path="/admin/feedback">
+            <DevToolsPage feedbackPlaceholder />
+          </AdminRoute>
+          <AdminRoute path="/admin/payments">
+            <DevToolsPage paymentsPlaceholder />
+          </AdminRoute>
           <AdminRoute path="/simple-books-admin">
             <SimpleBooksAdmin />
           </AdminRoute>

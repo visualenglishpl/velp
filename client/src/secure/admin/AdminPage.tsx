@@ -2,12 +2,74 @@ import React, { useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Store, Settings, Users, FileQuestion, BarChart2, Shield, Bell } from 'lucide-react';
+import { 
+  BookOpen, 
+  Store, 
+  Settings, 
+  Users, 
+  FileQuestion, 
+  BarChart2, 
+  Shield, 
+  Bell,
+  MessageSquare,
+  CreditCard
+} from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
 
 const AdminPage = () => {
-  const { user } = useAuth();
+  // Try to use the auth context safely, with fallback to localStorage
+  let user = null;
+  try {
+    const authContext = useAuth();
+    user = authContext.user;
+  } catch (error) {
+    console.log("AdminPage: Auth context not available, using fallback");
+    
+    // Try to get user from localStorage or sessionStorage as fallback
+    try {
+      const localUser = localStorage.getItem('velp_user');
+      const sessionUser = sessionStorage.getItem('velp_user');
+      if (localUser || sessionUser) {
+        user = JSON.parse(localUser || sessionUser || "");
+      }
+    } catch (storageError) {
+      console.error("AdminPage: Storage access error:", storageError);
+    }
+    
+    // Final attempt - try to get admin session directly
+    setTimeout(() => {
+      fetch('/api/direct/admin-login', {
+        method: 'GET',
+        credentials: 'include',
+        cache: 'no-cache'
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("AdminPage: Last resort session recovery:", data);
+        if (data.success && data.user) {
+          // Update local storage
+          try {
+            const userString = JSON.stringify(data.user);
+            localStorage.setItem('velp_user', userString);
+            sessionStorage.setItem('velp_user', userString);
+            
+            // Force a component rerender by setting user object
+            user = data.user;
+            
+            // Force refresh after a short delay
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          } catch (err) {
+            console.error("AdminPage: Storage update error:", err);
+          }
+        }
+      })
+      .catch(err => console.error("AdminPage: Direct auth error:", err));
+    }, 500);
+  }
+  
   const [, setLocation] = useLocation();
   
   // Redirect non-admin users
@@ -20,9 +82,9 @@ const AdminPage = () => {
   const adminFeatures = [
     {
       title: 'Books Management',
-      description: 'Manage books, units, and view content',
+      description: 'Manage the list of educational books, units, and content',
       icon: <BookOpen className="h-10 w-10 text-white" />,
-      color: '#FF40FF',
+      color: '#FF40FF', // Pink (Book 0a)
       link: '/admin/books',
       featured: true
     },
@@ -30,50 +92,64 @@ const AdminPage = () => {
       title: 'Shop Management',
       description: 'Configure products, pricing, and shop settings',
       icon: <Store className="h-10 w-10 text-white" />,
-      color: '#FF7F27',
-      link: '/simple'
+      color: '#FF7F27', // Orange (Book 0b)
+      link: '/admin/shop'
     },
     {
       title: 'Site Settings',
       description: 'Customize platform appearance and behavior',
       icon: <Settings className="h-10 w-10 text-white" />,
-      color: '#00CEDD',
-      link: '/test'
+      color: '#00CEDD', // Teal (Book 0c)
+      link: '/admin/settings'
     },
     {
       title: 'User Management',
       description: 'Manage teachers, students and permissions',
       icon: <Users className="h-10 w-10 text-white" />,
-      color: '#FFFF00',
-      link: '/simple'
+      color: '#FFFF00', // Yellow (Book 1)
+      link: '/admin/users'
     },
     {
       title: 'Flagged Questions',
-      description: 'Review and address flagged content',
+      description: 'Review and address content issues reported by users',
       icon: <FileQuestion className="h-10 w-10 text-white" />,
-      color: '#9966CC',
-      link: '/test'
+      color: '#9966CC', // Purple (Book 2)
+      link: '/admin/flagged'
     },
     {
       title: 'Analytics Panel',
-      description: 'View platform usage statistics',
+      description: 'View platform usage statistics and reports',
       icon: <BarChart2 className="h-10 w-10 text-white" />,
-      color: '#00FF00',
-      link: '/simple'
+      color: '#00CC00', // Green (Book 3)
+      link: '/admin/analytics'
     },
     {
       title: 'Access Roles',
-      description: 'Configure role-based permissions',
+      description: 'Configure role-based access controls',
       icon: <Shield className="h-10 w-10 text-white" />,
-      color: '#5DADEC',
-      link: '/test'
+      color: '#5DADEC', // Blue (Book 4)
+      link: '/admin/roles'
     },
     {
       title: 'Broadcast Messages',
-      description: 'Send notices to users',
+      description: 'Send announcements to users and manage notifications',
       icon: <Bell className="h-10 w-10 text-white" />,
-      color: '#00CC66',
-      link: '/simple'
+      color: '#00CC66', // Green (Book 5)
+      link: '/admin/broadcast'
+    },
+    {
+      title: 'Feedback Viewer',
+      description: 'View and respond to user feedback and suggestions',
+      icon: <MessageSquare className="h-10 w-10 text-white" />,
+      color: '#FF0000', // Red (Book 6)
+      link: '/admin/feedback'
+    },
+    {
+      title: 'Payment History',
+      description: 'View transaction history and manage subscriptions',
+      icon: <CreditCard className="h-10 w-10 text-white" />,
+      color: '#00FF00', // Bright Green (Book 7)
+      link: '/admin/payments'
     }
   ];
 

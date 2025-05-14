@@ -4,9 +4,146 @@ import { Button } from '@/components/ui/button';
 import S3ConnectivityTest from '@/components/diagnostics/S3ConnectivityTest';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Book, FileSearch, ArrowLeft, ExternalLink, Home, Settings, Server } from 'lucide-react';
+import { 
+  Book, 
+  FileSearch, 
+  ArrowLeft, 
+  ExternalLink, 
+  Home, 
+  Settings, 
+  Server, 
+  Store, 
+  Users, 
+  FileQuestion, 
+  BarChart3, 
+  Shield, 
+  Bell,
+  MessageSquare,
+  CreditCard
+} from 'lucide-react';
 
-export default function DevToolsPage() {
+interface DevToolsPageProps {
+  shopPlaceholder?: boolean;
+  settingsPlaceholder?: boolean;
+  usersPlaceholder?: boolean;
+  flaggedPlaceholder?: boolean;
+  analyticsPlaceholder?: boolean;
+  rolesPlaceholder?: boolean;
+  broadcastPlaceholder?: boolean;
+  feedbackPlaceholder?: boolean;
+  paymentsPlaceholder?: boolean;
+}
+
+// Function to render placeholder pages for admin sections
+function renderPlaceholder(title: string, description: string, icon: React.ReactNode, color: string) {
+  return (
+    <div className="min-h-screen p-8 bg-gray-50">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
+            <p className="text-gray-600 mt-2">{description}</p>
+          </div>
+          <Link href="/admin">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft size={16} />
+              Back to Admin
+            </Button>
+          </Link>
+        </div>
+        
+        <Separator className="my-6" />
+        
+        <Card className="shadow-md">
+          <CardHeader style={{ backgroundColor: color, color: 'white' }} className="rounded-t-lg">
+            <div className="flex items-center justify-center py-6">
+              <div className="bg-white rounded-full p-4 mb-4 shadow-md">
+                <div style={{ color: color }}>
+                  {icon}
+                </div>
+              </div>
+            </div>
+            <CardTitle className="text-2xl text-center text-white">{title}</CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <p className="text-center mb-6 text-gray-600">
+              This is a placeholder for the <strong>{title}</strong> feature.
+              This section is currently under development.
+            </p>
+            
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+              <div className="flex">
+                <div className="ml-3">
+                  <p className="text-sm text-yellow-700">
+                    The {title} feature is coming soon. It will allow administrators to {description.toLowerCase()}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-center">
+              <Link href="/admin">
+                <Button className="bg-blue-600 hover:bg-blue-700">
+                  Return to Admin Dashboard
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+export default function DevToolsPage({
+  shopPlaceholder,
+  settingsPlaceholder,
+  usersPlaceholder,
+  flaggedPlaceholder,
+  analyticsPlaceholder,
+  rolesPlaceholder,
+  broadcastPlaceholder,
+  feedbackPlaceholder,
+  paymentsPlaceholder
+}: DevToolsPageProps = {}) {
+  // Determine what to render based on props
+  if (shopPlaceholder) {
+    return renderPlaceholder('Shop Management', 'Configure products, pricing, and shop settings', <Store className="h-10 w-10" />, '#FF7F27');
+  }
+  
+  if (settingsPlaceholder) {
+    return renderPlaceholder('Site Settings', 'Customize platform appearance and behavior', <Settings className="h-10 w-10" />, '#00CEDD');
+  }
+  
+  if (usersPlaceholder) {
+    return renderPlaceholder('User Management', 'Manage teachers, students and permissions', <Users className="h-10 w-10" />, '#FFFF00');
+  }
+  
+  if (flaggedPlaceholder) {
+    return renderPlaceholder('Flagged Questions', 'Review and address content issues reported by users', <FileQuestion className="h-10 w-10" />, '#9966CC');
+  }
+  
+  if (analyticsPlaceholder) {
+    return renderPlaceholder('Analytics Panel', 'View platform usage statistics and reports', <BarChart3 className="h-10 w-10" />, '#00CC00');
+  }
+  
+  if (rolesPlaceholder) {
+    return renderPlaceholder('Access Roles', 'Configure role-based access controls', <Shield className="h-10 w-10" />, '#5DADEC');
+  }
+  
+  if (broadcastPlaceholder) {
+    return renderPlaceholder('Broadcast Messages', 'Send announcements to users and manage notifications', <Bell className="h-10 w-10" />, '#00CC66');
+  }
+  
+  if (feedbackPlaceholder) {
+    return renderPlaceholder('Feedback Viewer', 'View and respond to user feedback and suggestions', <MessageSquare className="h-10 w-10" />, '#FF0000');
+  }
+  
+  if (paymentsPlaceholder) {
+    return renderPlaceholder('Payment History', 'View transaction history and manage subscriptions', <CreditCard className="h-10 w-10" />, '#00FF00');
+  }
+  
+  // Default developer tools view
   return (
     <div className="min-h-screen p-8 bg-gray-50">
       <div className="max-w-6xl mx-auto">
