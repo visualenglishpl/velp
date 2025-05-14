@@ -518,11 +518,11 @@ export default function SimpleContentViewer() {
           <Button 
             size="sm" 
             variant="outline" 
-            onClick={() => navigate('/books')}
+            onClick={() => navigate(`/books/${bookId}`)}
             className="mr-2 border-blue-200 hover:bg-blue-50"
           >
-            <Home className="h-4 w-4 mr-1" />
-            Books
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Back to Units
           </Button>
           <h3 className="text-lg font-medium">
             {unitData?.title || `Book ${bookId}, Unit ${unitNumber}`}
@@ -880,47 +880,99 @@ export default function SimpleContentViewer() {
       {/* Teacher Resources Section */}
       {user && bookId && unitNumber && (
         <div className="mt-8 border-t pt-6">
-          <h2 className="text-2xl font-bold mb-4">Teacher Resources</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold">Teacher Resources</h2>
+            <div className="text-sm text-gray-500">Resources for Book {bookId}, Unit {unitNumber}</div>
+          </div>
+          
           <Tabs defaultValue="videos" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="videos">Videos</TabsTrigger>
-              <TabsTrigger value="games">Games</TabsTrigger>
-              <TabsTrigger value="lessons">Lesson Plans</TabsTrigger>
-              <TabsTrigger value="downloads">Downloads</TabsTrigger>
+            <TabsList className="inline-flex h-9 items-center justify-center rounded-lg bg-indigo-50 p-1 text-indigo-700">
+              <TabsTrigger 
+                value="videos" 
+                className="px-3 py-1 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 inline" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                </svg>
+                Videos
+              </TabsTrigger>
+              <TabsTrigger 
+                value="games" 
+                className="px-3 py-1 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 inline" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                </svg>
+                Games
+              </TabsTrigger>
+              <TabsTrigger 
+                value="lessons" 
+                className="px-3 py-1 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 inline" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                </svg>
+                Lessons
+              </TabsTrigger>
+              <TabsTrigger 
+                value="downloads" 
+                className="px-3 py-1 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 inline" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                Downloads
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="videos" className="p-4 border rounded-md">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium">Educational Videos</h3>
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="grid gap-4 md:grid-cols-2">
-                    <div className="rounded-lg overflow-hidden border shadow-sm">
-                      <iframe 
-                        width="100%" 
-                        height="215" 
-                        src="https://www.youtube.com/embed/YkFXHZNMviE" 
-                        title="Family Members Song for Kids" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowFullScreen
-                        className="aspect-video"
-                      ></iframe>
-                      <div className="p-3">
-                        <h4 className="font-medium">Family Members Song</h4>
-                        <p className="text-sm text-gray-500">A fun song to learn family vocabulary</p>
+                    <div className="rounded-lg overflow-hidden border shadow-sm transition-all duration-200 hover:shadow-md hover:border-red-200">
+                      <div className="relative">
+                        <div className="absolute top-0 right-0 bg-gradient-to-l from-red-500 to-orange-500 text-white text-xs px-3 py-1 rounded-bl-lg font-medium z-10">
+                          Video
+                        </div>
+                        <iframe 
+                          width="100%" 
+                          height="215" 
+                          src="https://www.youtube.com/embed/YkFXHZNMviE" 
+                          title="Family Members Song for Kids" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allowFullScreen
+                          className="aspect-video"
+                        ></iframe>
+                      </div>
+                      <div className="p-3 border-t">
+                        <h4 className="font-medium text-red-700">Family Members Song</h4>
+                        <p className="text-xs text-gray-500 flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                          </svg>
+                          A fun song to learn family vocabulary
+                        </p>
                       </div>
                     </div>
-                    <div className="rounded-lg overflow-hidden border shadow-sm">
-                      <iframe 
-                        width="100%" 
-                        height="215" 
-                        src="https://www.youtube.com/embed/FHaObkHEkHQ" 
-                        title="The Finger Family Song" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowFullScreen
-                        className="aspect-video"
-                      ></iframe>
-                      <div className="p-3">
-                        <h4 className="font-medium">Finger Family Song</h4>
-                        <p className="text-sm text-gray-500">Interactive finger family activity</p>
+                    <div className="rounded-lg overflow-hidden border shadow-sm transition-all duration-200 hover:shadow-md hover:border-red-200">
+                      <div className="relative">
+                        <div className="absolute top-0 right-0 bg-gradient-to-l from-red-500 to-orange-500 text-white text-xs px-3 py-1 rounded-bl-lg font-medium z-10">
+                          Video
+                        </div>
+                        <iframe 
+                          width="100%" 
+                          height="215" 
+                          src="https://www.youtube.com/embed/FHaObkHEkHQ" 
+                          title="The Finger Family Song" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allowFullScreen
+                          className="aspect-video"
+                        ></iframe>
+                      </div>
+                      <div className="p-3 border-t">
+                        <h4 className="font-medium text-red-700">Finger Family Song</h4>
+                        <p className="text-xs text-gray-500 flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                          </svg>
+                          Interactive finger family activity
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -935,18 +987,28 @@ export default function SimpleContentViewer() {
                 <h3 className="text-lg font-medium">Interactive Games</h3>
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="grid gap-4 md:grid-cols-2">
-                    <div className="rounded-lg overflow-hidden border shadow-sm">
-                      <iframe 
-                        width="100%" 
-                        height="300" 
-                        src="https://wordwall.net/embed/09e4b2aae10a4db5b89a6be8be0d5ad1" 
-                        title="Family Members Match-up" 
-                        allow="fullscreen" 
-                        className="aspect-video"
-                      ></iframe>
-                      <div className="p-3">
-                        <h4 className="font-medium">Family Members Matching</h4>
-                        <p className="text-sm text-gray-500">Match family member words to images</p>
+                    <div className="rounded-lg overflow-hidden border shadow-sm transition-all duration-200 hover:shadow-md hover:border-purple-200">
+                      <div className="relative">
+                        <div className="absolute top-0 right-0 bg-gradient-to-l from-purple-600 to-indigo-600 text-white text-xs px-3 py-1 rounded-bl-lg font-medium z-10">
+                          Interactive
+                        </div>
+                        <iframe 
+                          width="100%" 
+                          height="300" 
+                          src="https://wordwall.net/embed/09e4b2aae10a4db5b89a6be8be0d5ad1" 
+                          title="Family Members Match-up" 
+                          allow="fullscreen" 
+                          className="aspect-video"
+                        ></iframe>
+                      </div>
+                      <div className="p-3 border-t">
+                        <h4 className="font-medium text-purple-800">Family Members Matching</h4>
+                        <p className="text-xs text-gray-500 flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 text-purple-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                          </svg>
+                          Match family member words to images
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -961,23 +1023,104 @@ export default function SimpleContentViewer() {
                 <h3 className="text-lg font-medium">Lesson Plans</h3>
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="space-y-4">
-                    <div className="border rounded-lg p-4">
-                      <h4 className="font-medium mb-2">Lesson 1: Family Introduction (45 min)</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        <li>Warm-up: Show family photos and introduce vocabulary (10 min)</li>
-                        <li>Present new words with flashcards (10 min)</li>
-                        <li>Practice: "Who's this?" - "This is my mother/father/etc." (15 min)</li>
-                        <li>Activity: Draw your family tree (10 min)</li>
-                      </ul>
+                    <div className="border rounded-lg overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-teal-200">
+                      <div className="bg-gradient-to-r from-teal-500 to-emerald-500 p-3 text-white">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-medium text-sm flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                              <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                            </svg>
+                            Lesson 1: Family Introduction
+                          </h4>
+                          <span className="bg-white text-teal-700 text-xs px-2 py-0.5 rounded-full font-medium">45 min</span>
+                        </div>
+                      </div>
+                      <div className="p-3">
+                        <ul className="space-y-2 text-sm">
+                          <li className="flex items-start">
+                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <span><span className="font-medium text-teal-800">Warm-up:</span> Show family photos and introduce vocabulary <span className="text-xs text-gray-500">(10 min)</span></span>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <span><span className="font-medium text-teal-800">Present:</span> New words with flashcards <span className="text-xs text-gray-500">(10 min)</span></span>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <span><span className="font-medium text-teal-800">Practice:</span> "Who's this?" - "This is my mother/father/etc." <span className="text-xs text-gray-500">(15 min)</span></span>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <span><span className="font-medium text-teal-800">Activity:</span> Draw your family tree <span className="text-xs text-gray-500">(10 min)</span></span>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                    <div className="border rounded-lg p-4">
-                      <h4 className="font-medium mb-2">Lesson 2: Family Members (45 min)</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        <li>Review family vocabulary with song (10 min)</li>
-                        <li>Activity: Family tree craft (15 min)</li>
-                        <li>Game: Family members memory match (10 min)</li>
-                        <li>Worksheet: Label family pictures (10 min)</li>
-                      </ul>
+                    
+                    <div className="border rounded-lg overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-teal-200">
+                      <div className="bg-gradient-to-r from-teal-500 to-emerald-500 p-3 text-white">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-medium text-sm flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                              <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                            </svg>
+                            Lesson 2: Family Members
+                          </h4>
+                          <span className="bg-white text-teal-700 text-xs px-2 py-0.5 rounded-full font-medium">45 min</span>
+                        </div>
+                      </div>
+                      <div className="p-3">
+                        <ul className="space-y-2 text-sm">
+                          <li className="flex items-start">
+                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <span><span className="font-medium text-teal-800">Review:</span> Family vocabulary with song <span className="text-xs text-gray-500">(10 min)</span></span>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <span><span className="font-medium text-teal-800">Activity:</span> Family tree craft <span className="text-xs text-gray-500">(15 min)</span></span>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <span><span className="font-medium text-teal-800">Game:</span> Family members memory match <span className="text-xs text-gray-500">(10 min)</span></span>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <span><span className="font-medium text-teal-800">Worksheet:</span> Label family pictures <span className="text-xs text-gray-500">(10 min)</span></span>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -991,28 +1134,32 @@ export default function SimpleContentViewer() {
                 <h3 className="text-lg font-medium">Downloadable Resources</h3>
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="grid gap-4 md:grid-cols-2">
-                    <div className="flex items-center p-3 border rounded-lg">
-                      <div className="bg-blue-100 p-2 rounded mr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
+                    <a href="#" className="block group hover:no-underline">
+                      <div className="flex items-center p-3 border rounded-lg transition-all duration-200 hover:border-blue-300 hover:shadow-sm group-hover:bg-blue-50">
+                        <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-lg mr-3 text-white">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-blue-800 group-hover:text-blue-700">Family Vocabulary PDF</h4>
+                          <p className="text-xs text-gray-500">Printable flashcards and worksheets</p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-medium">Family Vocabulary PDF</h4>
-                        <p className="text-sm text-gray-500">Printable flashcards and worksheets</p>
+                    </a>
+                    <a href="#" className="block group hover:no-underline">
+                      <div className="flex items-center p-3 border rounded-lg transition-all duration-200 hover:border-green-300 hover:shadow-sm group-hover:bg-green-50">
+                        <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-2 rounded-lg mr-3 text-white">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-green-800 group-hover:text-green-700">Family Tree Template</h4>
+                          <p className="text-xs text-gray-500">Interactive family tree worksheet</p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center p-3 border rounded-lg">
-                      <div className="bg-green-100 p-2 rounded mr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Family Tree Template</h4>
-                        <p className="text-sm text-gray-500">Interactive family tree worksheet</p>
-                      </div>
-                    </div>
+                    </a>
                   </div>
                 )}
                 {!(bookId === '1' && unitNumber === '5') && (
