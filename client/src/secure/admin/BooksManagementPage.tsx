@@ -118,7 +118,8 @@ const BooksManagementPage = () => {
         ...book,
         color: defaultBooks.find(b => b.bookId === book.bookId)?.color || '#666666',
         units: defaultBooks.find(b => b.bookId === book.bookId)?.units || 16,
-        thumbnailUrl: book.gifUrl || '' // Store the pre-signed URL from the API response
+        gifUrl: book.gifUrl || '', // Store the pre-signed URL from the API response
+        thumbnailUrl: book.gifUrl || ''
       }));
       setBooks(transformedBooks);
     } else {
@@ -296,15 +297,12 @@ const BooksManagementPage = () => {
                     className="relative aspect-square overflow-hidden flex items-center justify-center" 
                     style={{ backgroundColor: book.color }}
                   >
-                    {/* Show fallback book icon immediately for Book 3 which has known issues */}
+                    {/* Book 3 has no thumbnail, use a book icon instead */}
                     {book.bookId === '3' ? (
                       <div className="flex items-center justify-center h-full w-full">
-                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        </svg>
-                        <div className="absolute bottom-2 left-2 bg-gray-800 bg-opacity-70 text-white px-2 py-1 rounded text-xs">
-                          VISUAL 3
+                        <BookOpen className="h-24 w-24 text-white" />
+                        <div className="absolute bottom-2 left-0 right-0 text-center bg-black bg-opacity-50 text-white px-2 py-1 text-xs">
+                          VISUAL ENGLISH 3
                         </div>
                       </div>
                     ) : (
@@ -319,10 +317,25 @@ const BooksManagementPage = () => {
                           const parent = target.parentElement;
                           if (parent) {
                             const bookIcon = document.createElement('div');
-                            bookIcon.innerHTML = `<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>`;
+                            const bookSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                            bookSvg.setAttribute('width', '80');
+                            bookSvg.setAttribute('height', '80');
+                            bookSvg.setAttribute('viewBox', '0 0 24 24');
+                            bookSvg.setAttribute('fill', 'none');
+                            bookSvg.setAttribute('stroke', 'white');
+                            bookSvg.setAttribute('stroke-width', '2');
+                            bookSvg.setAttribute('stroke-linecap', 'round');
+                            bookSvg.setAttribute('stroke-linejoin', 'round');
+                            
+                            const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                            path1.setAttribute('d', 'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z');
+                            
+                            const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                            path2.setAttribute('d', 'M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z');
+                            
+                            bookSvg.appendChild(path1);
+                            bookSvg.appendChild(path2);
+                            bookIcon.appendChild(bookSvg);
                             bookIcon.className = "flex items-center justify-center";
                             parent.appendChild(bookIcon);
                           }
