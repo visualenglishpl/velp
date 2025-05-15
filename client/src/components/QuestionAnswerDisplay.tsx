@@ -309,6 +309,9 @@ function getQuestionAnswerFromData(material: any, unitId?: string): QAData {
     }
   }
   
+  // EXCEL DATA CHECK REMOVED - Now this check happens in the React component
+  }
+  
   // FIRST APPROACH: Try our advanced pattern engine
   // This uses sophisticated pattern detection to generate Q&A for any file
   if (material && material.content && typeof unitId === 'string') {
@@ -1852,10 +1855,33 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
     return null;
   }
   
-  // If there's no question and no answer, don't render anything
-  // If there's no question and no answer, don't render anything
-  // This ensures images without linked Q&A appear blank as per requirement
-  if (!qaData.hasData || (qaData.question === '' && qaData.answer === '')) {
+  // Critical condition: DO NOT display questions if:
+  // 1. No data was found (hasData is false)
+  // 2. Both question and answer are empty strings
+  // 3. For Book 1 Unit 1, if the question is empty or just a code prefix
+  
+  // Special conditions to hide questions
+  const hasNoData = !qaData.hasData;
+  const hasEmptyQA = qaData.question === '' && qaData.answer === '';
+  
+  // Special handling for Book 1 Unit 1
+  // We need to be very strict about what shows up here
+  let isBook1Unit1EmptyQuestion = false;
+  const currentBookId = bookId || "";
+  const currentUnitId = unitId || "";
+  
+  if (currentBookId === "1" && currentUnitId === "1") {
+    isBook1Unit1EmptyQuestion = !qaData.question || 
+                               qaData.question.trim() === '' || 
+                               !!qaData.question.match(/^\d+\s+[A-Z]\s+[A-Z]/i);
+    
+    // Add debugging for Book 1 Unit 1 issues
+    console.log(`Book 1 Unit 1 content: ${material.content}`);
+    console.log(`Question data: "${qaData.question}", empty? ${isBook1Unit1EmptyQuestion}`);
+  }
+  
+  if (hasNoData || hasEmptyQA || isBook1Unit1EmptyQuestion) {
+    console.log(`No question shown for: ${material.content}`);
     return null;
   }
 
