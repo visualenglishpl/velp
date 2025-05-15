@@ -96,7 +96,6 @@ export default function SimpleContentViewer() {
   if (pathMatch) {
     bookId = pathMatch[1];
     unitNumber = pathMatch[2];
-    console.log(`Path match: Book ${bookId}, Unit ${unitNumber}`);
   } else {
     // Fallback to URL parameters
     const params = new URLSearchParams(window.location.search);
@@ -117,10 +116,6 @@ export default function SimpleContentViewer() {
     const { user: authUser } = useAuth();
     user = authUser;
     isAdminUser = user?.role === 'admin';
-    
-    if (isAdminUser) {
-      console.log("Admin user detected via auth hook:", user);
-    }
   } catch (error) {
     console.error("Authentication error:", error);
     
@@ -130,7 +125,6 @@ export default function SimpleContentViewer() {
       if (storedUser && storedUser.role === 'admin') {
         user = storedUser;
         isAdminUser = true;
-        console.log("Admin user detected via storage fallback:", user);
       }
     } catch (storageError) {
       console.error("Storage access error:", storageError);
@@ -354,12 +348,20 @@ export default function SimpleContentViewer() {
   const { findMatchingQA } = useExcelQA(bookId || "1");
   const currentUnitId = unitPath; // Use unitPath instead of unitId
   
+  // Function to clean titles by removing leading alphanumeric patterns like "01 I A", "02 B", etc.
+  const cleanLeadingPatterns = (text: string): string => {
+    if (!text) return '';
+    
+    // Match patterns like "01 I A", "02 B", "13 A a", etc. at the beginning of text
+    return text.replace(/^(\d{1,2}\s+[A-Za-z](\s+[A-Za-z])?)\s+/i, '');
+  };
+  
   const getQuestionAnswer = (material: S3Material) => {
     // Default return value if no match is found
     const defaultResult = { country: "", question: "", answer: "", hasData: false };
     
     // Enable debug logging
-    const DEBUG_ENABLED = true;
+    const DEBUG_ENABLED = false;
     const logDebug = (message: string) => {
       if (DEBUG_ENABLED) {
         console.log(`[SimpleContentViewer Q&A] ${message}`);
@@ -625,15 +627,6 @@ export default function SimpleContentViewer() {
                            (material.description && material.description.toLowerCase().includes('video')) ||
                            material.contentType === 'VIDEO' ||
                            material.contentType === 'video';
-                           
-            // Log video detection for debugging
-            if (isVideo) {
-              console.log(`Video detected: ${material.content}`, {
-                content: material.content,
-                title: material.title,
-                contentType: material.contentType
-              });
-            }
             
             // Premium content check (based on index and content type)
             const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
@@ -667,12 +660,12 @@ export default function SimpleContentViewer() {
                               </div>
                             )}
                             <div className="text-gray-800 text-base font-medium">
-                              {/* Remove any numbering from questions (including complex patterns like "Unit 18. Question") */}
-                              {qa.question.replace(/^(\w+\s+)?\d+\.\s*/, '')}
+                              {/* Remove any numbering from questions (including complex patterns like "Unit 18. Question" and "01 I A") */}
+                              {cleanLeadingPatterns(qa.question.replace(/^(\w+\s+)?\d+\.\s*/, ''))}
                             </div>
                             <div className="mt-2 font-medium text-gray-900 text-base">
                               {/* Remove any numbering from answers (including complex patterns) */}
-                              {qa.answer.replace(/^(\w+\s+)?\d+\.\s*/, '')}
+                              {cleanLeadingPatterns(qa.answer.replace(/^(\w+\s+)?\d+\.\s*/, ''))}
                             </div>
                           </>
                         )}
@@ -684,10 +677,10 @@ export default function SimpleContentViewer() {
                             return (
                               <>
                                 <div className="text-gray-800 text-base font-medium">
-                                  {question}
+                                  {cleanLeadingPatterns(question)}
                                 </div>
                                 <div className="mt-2 font-medium text-gray-900 text-base">
-                                  {answer}
+                                  {cleanLeadingPatterns(answer)}
                                 </div>
                               </>
                             );
@@ -698,11 +691,11 @@ export default function SimpleContentViewer() {
                         {material.title && material.title.includes('?') && !qa.hasData && !material.title.includes('→') && (
                           <>
                             <div className="text-gray-800 text-base font-medium">
-                              {material.title}
+                              {cleanLeadingPatterns(material.title)}
                             </div>
                             {material.description && (
                               <div className="mt-2 font-medium text-gray-900 text-base">
-                                {material.description}
+                                {cleanLeadingPatterns(material.description)}
                               </div>
                             )}
                           </>
@@ -712,13 +705,15 @@ export default function SimpleContentViewer() {
                         {material.title && !material.title.includes('?') && !material.title.includes('→') && !qa.hasData && 
                          !material.title.startsWith('Content from') && (
                           <div className="text-gray-800 text-base font-medium">
-                            {material.title}
+                            {cleanLeadingPatterns(material.title)}
                           </div>
                         )}
                         
                         {/* Show description if not shown as answer */}
                         {material.description && !material.title.includes('?') && !material.title.includes('→') && !qa.hasData && (
-                          <div className="mt-2 font-medium text-gray-900 text-base">{material.description}</div>
+                          <div className="mt-2 font-medium text-gray-900 text-base">
+                            {cleanLeadingPatterns(material.description)}
+                          </div>
                         )}
                       </div>
                     </div>
@@ -929,16 +924,6 @@ export default function SimpleContentViewer() {
                 {/* Videos Tab - These should be videos from TeacherResources */}
                 {bookId && unitNumber ? (
                   <>
-                    <div className="mb-4 p-3 bg-blue-50 rounded text-sm">
-                      <p className="font-medium">Debug Info:</p>
-                      <p>Loading video resources for Book {bookId}, Unit {unitNumber}...</p>
-                      <p>URL: {window.location.href}</p>
-                      <p>Path match: {pathMatch ? 'Yes' : 'No'}</p>
-                      <pre className="mt-2 text-xs bg-blue-100 p-2 rounded overflow-x-auto">
-                        bookId type: {typeof bookId} | value: "{bookId}"
-                        unitNumber type: {typeof unitNumber} | value: "{unitNumber}"
-                      </pre>
-                    </div>
                     <div id="video-resources-container">
                       <TeacherResources 
                         bookId={bookId} 
@@ -1019,16 +1004,6 @@ export default function SimpleContentViewer() {
                 {/* Games Tab - These should be games from TeacherResources */}
                 {bookId && unitNumber ? (
                   <>
-                    <div className="mb-4 p-3 bg-green-50 rounded text-sm">
-                      <p className="font-medium">Debug Info:</p>
-                      <p>Loading game resources for Book {bookId}, Unit {unitNumber}...</p>
-                      <p>URL: {window.location.href}</p>
-                      <p>Path match: {pathMatch ? 'Yes' : 'No'}</p>
-                      <pre className="mt-2 text-xs bg-green-100 p-2 rounded overflow-x-auto">
-                        bookId type: {typeof bookId} | value: "{bookId}"
-                        unitNumber type: {typeof unitNumber} | value: "{unitNumber}"
-                      </pre>
-                    </div>
                     <div id="game-resources-container">
                       <TeacherResources 
                         bookId={bookId} 

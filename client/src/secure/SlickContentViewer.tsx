@@ -168,6 +168,14 @@ export default function SlickContentViewer() {
   const sliderRef = useRef<Slider | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   
+  // Function to clean titles by removing leading alphanumeric patterns like "01 I A", "02 B", etc.
+  const cleanLeadingPatterns = (text: string): string => {
+    if (!text) return '';
+    
+    // Match patterns like "01 I A", "02 B", "13 A a", etc. at the beginning of text
+    return text.replace(/^(\d{1,2}\s+[A-Za-z](\s+[A-Za-z])?)\s+/i, '');
+  };
+  
   // State for the viewer
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -1221,14 +1229,14 @@ export default function SlickContentViewer() {
                           /* Default case - but don't show "Content from..." text */
                           !material.title.startsWith('Content from') && (
                             <div className="flex gap-2">
-                              <span className="font-medium text-gray-800 text-base">{material.title}</span>
+                              <span className="font-medium text-gray-800 text-base">{cleanLeadingPatterns(material.title)}</span>
                             </div>
                           )
                         )}
                         
                         {/* Show description only if not already shown as answer */}
                         {material.description && !material.title.includes('?') && !material.title.includes('→') && (
-                          <div className="mt-2 text-sm text-gray-600">{material.description}</div>
+                          <div className="mt-2 text-sm text-gray-600">{cleanLeadingPatterns(material.description)}</div>
                         )}
                       </div>
                     </div>
