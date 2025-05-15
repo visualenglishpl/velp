@@ -97,7 +97,7 @@ import { BOOK3_TITLE, BOOK3_UNIT_TITLES, generateDefaultBook3UnitLessonPlans } f
 
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
-import { generateUnit2LessonPlans as generateBook1Unit2LessonPlans } from '@/data/book1-unit2-implementation';
+import { generateBook1Unit2LessonPlans } from '@/data/book1-unit2-implementation';
 import { generateUnit3LessonPlans as generateBook1Unit3LessonPlans } from '@/data/book1-unit3-implementation';
 import { generateUnit4LessonPlans as generateBook1Unit4LessonPlans } from '@/data/book1-unit4-implementation';
 import { generateUnit5LessonPlans as generateBook1Unit5LessonPlans } from '@/data/book1-unit5-implementation';
@@ -926,7 +926,7 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: Teache
             if ((resourcesModule as any)[videoResourceVarName]) {
               console.log(`Using ${videoResourceVarName} directly`);
               const videoResources = (resourcesModule as any)[videoResourceVarName];
-              resources.push(...videoResources.map(r => ({
+              resources.push(...videoResources.map((r: TeacherResource) => ({
                 ...r,
                 resourceType: 'video',
                 bookId,
@@ -937,7 +937,7 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: Teache
             if ((resourcesModule as any)[gameResourceVarName]) {
               console.log(`Using ${gameResourceVarName} directly`);
               const gameResources = (resourcesModule as any)[gameResourceVarName];
-              resources.push(...gameResources.map(r => ({
+              resources.push(...gameResources.map((r: TeacherResource) => ({
                 ...r,
                 resourceType: 'game',
                 bookId,

@@ -5,7 +5,7 @@
 
 import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-export const generateUnit2LessonPlans = (): LessonPlan[] => {
+export const generateBook1Unit2LessonPlans = (): LessonPlan[] => {
   return [
     // Lesson Plan 1 - Introduction to School Objects (45 minutes)
     {
@@ -115,4 +115,4 @@ export const generateUnit2LessonPlans = (): LessonPlan[] => {
   ];
 };
 
-export default generateUnit2LessonPlans;
+export default generateBook1Unit2LessonPlans;
