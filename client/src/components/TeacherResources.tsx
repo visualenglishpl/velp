@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { getQueryFn, apiRequest, queryClient } from '@/lib/queryClient';
@@ -761,6 +761,7 @@ interface TeacherResourcesProps {
   bookId: string;
   unitId: string;
   isEditMode?: boolean;
+  resourceType?: 'video' | 'game' | 'pdf' | 'lesson';
 }
 
 // Kahoot AI-generated thumbnail component
@@ -795,7 +796,7 @@ const KahootThumbnail = ({ title }: { title: string }) => {
   );
 };
 
-const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: TeacherResourcesProps) => {
+const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resourceType }: TeacherResourcesProps) => {
   const { toast } = useToast();
   const urlParams = new URLSearchParams(window.location.search);
   const [isEditMode, setIsEditMode] = useState(propIsEditMode || urlParams.get('edit') === 'true');
@@ -840,20 +841,31 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: Teache
   
   // Function to load resources and lesson plans dynamically based on current book and unit
   const loadResourcesAndLessonPlans = useCallback(async () => {
-    if (!bookId || !unitId) return;
+    if (!bookId || !unitId) {
+      console.warn('TeacherResources: Missing bookId or unitId, cannot load resources');
+      return;
+    }
     
+    console.log(`🔄 TeacherResources.loadResourcesAndLessonPlans - Loading for Book ${bookId}, Unit ${unitId}`);
+    console.log(`   - Input types: bookId (${typeof bookId}), unitId (${typeof unitId})`);
+    console.log(`   - Input values: bookId (${bookId}), unitId (${unitId})`);
+    
+    
+    console.log(`📚 TeacherResources: Starting load for Book ${bookId} Unit ${unitId}`);
     setIsLoadingDynamic(true);
     try {
       // Convert unitId to number for dynamic imports
       const unitNum = parseInt(unitId);
       
-      console.log(`Loading Book ${bookId} Unit ${unitNum} resources`);
+      console.log(`🔄 TeacherResources: Loading Book ${bookId} Unit ${unitNum} resources`);
       
       // Load implementation module
       const implModule = await dynamicImplImport(bookId, unitNum);
+      console.log('✅ Implementation module loaded:', implModule ? 'Success' : 'Not found');
       
       // Load resources module
       const resourcesModule = await dynamicResourceImport(bookId, unitNum);
+      console.log('✅ Resources module loaded:', resourcesModule ? 'Success' : 'Not found');
       
       // Set dynamic resources if available
       if (resourcesModule) {
@@ -865,18 +877,21 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: Teache
           // Use type assertion to avoid TypeScript errors
           const resourcesArray = (resourcesModule as any)[key];
           if (Array.isArray(resourcesArray)) {
+            console.log(`✅ Found ${resourcesArray.length} resources in key "${key}"`);
             resources.push(...resourcesArray.map(r => ({
               ...r,
               resourceType: r.resourceType || type,
               bookId,
               unitId
             })));
+          } else {
+            console.warn(`⚠️ Key "${key}" is not an array or doesn't exist`);
           }
         };
         
         // Try to extract resources by different naming patterns
         // Use type assertion to avoid TypeScript errors
-        console.log(`Resource keys for Book ${bookId} Unit ${unitNum}:`, Object.keys(resourcesModule));
+        console.log(`📋 Resource keys for Book ${bookId} Unit ${unitNum}:`, Object.keys(resourcesModule));
         
         if ((resourcesModule as any).resources) {
           console.log(`Found 'resources' array with ${(resourcesModule as any).resources.length} items`);
@@ -1537,9 +1552,8 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: Teache
   }, [bookId, unitId]);
   
   // Effect to load resources when book or unit changes
-  useEffect(() => {
-    loadResourcesAndLessonPlans();
-  }, [loadResourcesAndLessonPlans]);
+  // This ensures resources get loaded when the component mounts or when dependencies change
+  // The primary hook is below with more debugging
   
   // Handle initial data loading - bookUnitResources, local storage resources
   const { data: bookUnitResources = [], isLoading, error } = useQuery<TeacherResource[]>({
@@ -1647,8 +1661,27 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: Teache
   
   // Ensure we load resources when component mounts or bookId/unitId changes
   useEffect(() => {
+    console.log(`🚀 TeacherResources mounted for Book ${bookId}, Unit ${unitId}`);
     loadResourcesAndLessonPlans();
-  }, [loadResourcesAndLessonPlans]);
+    
+    // For Book 1 Unit 2 specifically, we'll do extra logging to debug
+    if (bookId === '1' && unitId === '2') {
+      console.log('🔍 DEBUGGING BOOK 1 UNIT 2 RESOURCES:');
+      console.log('- generateBook1Unit2LessonPlans imported correctly?', typeof generateBook1Unit2LessonPlans === 'function');
+      console.log('- book1Unit2Resources available?', Array.isArray(book1Unit2Resources));
+      if (Array.isArray(book1Unit2Resources)) {
+        console.log(`- book1Unit2Resources length: ${book1Unit2Resources.length}`);
+      }
+      console.log('- book1Unit2VideoResources available?', Array.isArray(book1Unit2VideoResources));
+      if (Array.isArray(book1Unit2VideoResources)) {
+        console.log(`- book1Unit2VideoResources length: ${book1Unit2VideoResources.length}`);
+      }
+      console.log('- book1Unit2GameResources available?', Array.isArray(book1Unit2GameResources));
+      if (Array.isArray(book1Unit2GameResources)) {
+        console.log(`- book1Unit2GameResources length: ${book1Unit2GameResources.length}`);
+      }
+    }
+  }, [loadResourcesAndLessonPlans, bookId, unitId]);
 
   // Function to get additional resources for specific book/unit combinations
   const getMoreUnitResources = useCallback((): TeacherResource[] => {
@@ -4409,6 +4442,19 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: Teache
     return <div className="py-8 text-center">Loading resources...</div>;
   }
 
+  // For targeted rendering based on resourceType
+  if (resourceType) {
+    console.log(`🎯 TeacherResources rendering only ${resourceType} resources for Book ${bookId}, Unit ${unitId}`);
+    
+    // Just render the specific resource type
+    return (
+      <div>
+        {renderResources(resourceType)}
+      </div>
+    );
+  }
+  
+  // Default full rendering with all components
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col space-y-4">

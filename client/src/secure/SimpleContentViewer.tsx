@@ -12,6 +12,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useExcelQA } from '@/hooks/use-excel-qa';
 import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import TeacherResources from '@/components/TeacherResources';
 
 // Define types for question data structure
 type QuestionAnswer = {
@@ -925,6 +926,34 @@ export default function SimpleContentViewer() {
             <TabsContent value="videos" className="p-4 border rounded-md">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-center">Educational Videos</h3>
+                {/* Videos Tab - These should be videos from TeacherResources */}
+                {bookId && unitNumber ? (
+                  <>
+                    <div className="mb-4 p-3 bg-blue-50 rounded text-sm">
+                      <p className="font-medium">Debug Info:</p>
+                      <p>Loading video resources for Book {bookId}, Unit {unitNumber}...</p>
+                      <p>URL: {window.location.href}</p>
+                      <p>Path match: {pathMatch ? 'Yes' : 'No'}</p>
+                      <pre className="mt-2 text-xs bg-blue-100 p-2 rounded overflow-x-auto">
+                        bookId type: {typeof bookId} | value: "{bookId}"
+                        unitNumber type: {typeof unitNumber} | value: "{unitNumber}"
+                      </pre>
+                    </div>
+                    <div id="video-resources-container">
+                      <TeacherResources 
+                        bookId={bookId} 
+                        unitId={unitNumber?.toString() || "1"} 
+                        key={`${bookId}-${unitNumber}-videos`}
+                        resourceType="video"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-3 bg-red-50 text-red-700 rounded">
+                    Error: Missing bookId or unitNumber. Cannot load video resources.
+                  </div>
+                )}
+                {/* Legacy example of hard-coded video */}
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="rounded-lg overflow-hidden border shadow-sm transition-all duration-200 hover:shadow-md hover:border-red-200">
@@ -987,6 +1016,33 @@ export default function SimpleContentViewer() {
             <TabsContent value="games" className="p-4 border rounded-md">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-center">Interactive Games</h3>
+                {/* Games Tab - These should be games from TeacherResources */}
+                {bookId && unitNumber ? (
+                  <>
+                    <div className="mb-4 p-3 bg-green-50 rounded text-sm">
+                      <p className="font-medium">Debug Info:</p>
+                      <p>Loading game resources for Book {bookId}, Unit {unitNumber}...</p>
+                      <p>URL: {window.location.href}</p>
+                      <p>Path match: {pathMatch ? 'Yes' : 'No'}</p>
+                      <pre className="mt-2 text-xs bg-green-100 p-2 rounded overflow-x-auto">
+                        bookId type: {typeof bookId} | value: "{bookId}"
+                        unitNumber type: {typeof unitNumber} | value: "{unitNumber}"
+                      </pre>
+                    </div>
+                    <div id="game-resources-container">
+                      <TeacherResources 
+                        bookId={bookId} 
+                        unitId={unitNumber?.toString() || "1"} 
+                        key={`${bookId}-${unitNumber}-games`}
+                        resourceType="game"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-3 bg-red-50 text-red-700 rounded">
+                    Error: Missing bookId or unitNumber. Cannot load game resources.
+                  </div>
+                )}
                 {bookId === '1' && unitNumber === '5' && (
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="rounded-lg overflow-hidden border shadow-sm transition-all duration-200 hover:shadow-md hover:border-purple-200">

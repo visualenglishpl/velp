@@ -1,0 +1,92 @@
+The Component Is Not Mounted (e.g. TeacherResources not rendered)
+PROBLEM: Even though resources are loaded, the <TeacherResources /> component is not actually included in SimpleContentViewer.tsx.
+
+✅ WHAT TO CHECK:
+
+tsx
+Copy
+Edit
+// client/src/secure/SimpleContentViewer.tsx
+<Tabs>
+  <TabsContent value="resources">
+    <TeacherResources ... /> ← must exist here!
+  </TabsContent>
+</Tabs>
+➡️ FIX: If not mounted, we must import and render <TeacherResources /> with correct props:
+
+tsx
+Copy
+Edit
+<TeacherResources
+  bookId="1"
+  unitId="2"
+/>
+🟠 2. Missing or Incorrect Props to <TeacherResources />
+PROBLEM: If bookId or unitId is undefined or not passed correctly, it silently fails to load resources.
+
+✅ WHAT TO CHECK:
+
+tsx
+Copy
+Edit
+<TeacherResources bookId="1" unitId="2" />
+➡️ FIX: Make sure props are explicitly passed using route params like:
+
+tsx
+Copy
+Edit
+const { bookId, unitId } = useParams();
+<TeacherResources bookId={bookId} unitId={unitId} />
+🟡 3. Tabs Not Showing Because All Data Arrays Are Empty
+PROBLEM: Tabs only render if arrays like videoResources, gameResources, or lessonPlans have .length > 0
+
+✅ WHAT TO CHECK IN TeacherResources.tsx:
+
+tsx
+Copy
+Edit
+if (videoResources.length > 0) { ... } // ← must be true to show the tab
+➡️ FIX: Add a console.log to confirm that those arrays actually contain data after loading.
+
+🔵 4. Resource File Exports Are Empty
+PROBLEM: The files book1-unit2-resources.tsx and book1-unit2-implementation.tsx may be importing fine, but exporting empty arrays.
+
+✅ WHAT TO CHECK:
+
+tsx
+Copy
+Edit
+export const book1Unit2VideoResources = [ /* YouTube iframe/embed URLs */ ];
+export const book1Unit2GameResources = [ /* Wordwall URLs */ ];
+export const generateBook1Unit2LessonPlans = () => [ ... ];
+➡️ FIX: Confirm there is actual content (not [] or placeholder data).
+
+🔵 5. QA Mapping Doesn’t Match Image Filenames
+PROBLEM: If question/answer mappings use "02 A" but the image is "02A.png" (or vice versa), they will never be found.
+
+✅ WHAT TO DO:
+
+Open client/src/data/qa-mapping-book1.json
+
+Search:
+
+bash
+Copy
+Edit
+grep "02 A" qa-mapping-book1.json
+Compare it to the real filenames used in the viewer
+
+➡️ FIX: Ensure the imageFilename keys match exactly with what's rendered.
+
+✅ MY RECOMMENDATION
+Let me now:
+
+🔍 Confirm that <TeacherResources /> is rendered in SimpleContentViewer
+
+🪵 Add logging (console.log) to verify:
+
+bookId and unitId are passed correctly
+
+Arrays like videoResources or lessonPlans actually contain data
+
+📷 Check qa-mapping-book1.json for matching filenames
