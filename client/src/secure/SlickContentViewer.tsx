@@ -6,12 +6,26 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
+import { cleanQuestionText, cleanAnswerText, cleanLeadingPatterns } from '@/lib/textCleaners';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 // Structured question data reference for various countries and their codes
-const QUESTION_DATA = {
+// Type definition to allow string indexing
+type QuestionDataType = {
+  [key: string]: {
+    country: string;
+    questions: {
+      [key: string]: {
+        question: string;
+        answer: string;
+      }
+    }
+  }
+};
+
+const QUESTION_DATA: QuestionDataType = {
   // POLAND - File code "01 R"
   "01 R": {
     country: "POLAND",
@@ -168,13 +182,7 @@ export default function SlickContentViewer() {
   const sliderRef = useRef<Slider | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   
-  // Function to clean titles by removing leading alphanumeric patterns like "01 I A", "02 B", etc.
-  const cleanLeadingPatterns = (text: string): string => {
-    if (!text) return '';
-    
-    // Match patterns like "01 I A", "02 B", "13 A a", etc. at the beginning of text
-    return text.replace(/^(\d{1,2}\s+[A-Za-z](\s+[A-Za-z])?)\s+/i, '');
-  };
+  // We'll use the improved cleanLeadingPatterns function implemented later in the file
   
   // State for the viewer
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -490,6 +498,8 @@ export default function SlickContentViewer() {
     setActiveId(null);
   };
   
+  // Helper functions for cleaning text are now imported from @/lib/textCleaners
+  
   // Helper function to get question and answer for a material
   const getQuestionAnswer = (material: S3Material) => {
     // First try to use the file code from the description field
@@ -739,13 +749,14 @@ export default function SlickContentViewer() {
                                     </h3>
                                   </div>
                                 )}
-                                <div className="flex gap-2">
-                                  <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                  <span className="text-gray-800 text-base">{qa.question}</span>
+                                {/* Question - centered, without Q: prefix */}
+                                <div className="mb-3 font-medium text-xl bg-primary/5 py-2 px-4 rounded-md border border-primary/20 text-center">
+                                  {cleanQuestionText(qa.question)}
                                 </div>
-                                <div className="flex gap-2 mt-2">
-                                  <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                  <span className="font-medium text-indigo-900 text-base">{qa.answer}</span>
+                                
+                                {/* Answer - centered, without A: prefix */}
+                                <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200 text-center">
+                                  {cleanAnswerText(qa.answer)}
                                 </div>
                               </>
                             );
@@ -756,13 +767,14 @@ export default function SlickContentViewer() {
                           // Original handling with arrow format
                           material.title.includes('→') ? (
                             <>
-                              <div className="flex gap-2">
-                                <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                <span className="text-gray-800 text-base">{material.title.split('→')[0].trim()}</span>
+                              {/* Question - centered, without Q: prefix */}
+                              <div className="mb-3 font-medium text-xl bg-primary/5 py-2 px-4 rounded-md border border-primary/20 text-center">
+                                {cleanQuestionText(material.title.split('→')[0].trim())}
                               </div>
-                              <div className="flex gap-2 mt-2">
-                                <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                <span className="font-medium text-indigo-900 text-base">{material.title.split('→')[1].trim()}</span>
+                              
+                              {/* Answer - centered, without A: prefix */}
+                              <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200 text-center">
+                                {cleanAnswerText(material.title.split('→')[1].trim())}
                               </div>
                             </>
                           ) : (
@@ -777,14 +789,15 @@ export default function SlickContentViewer() {
                         /* Handle normal question format with question mark */
                         material.title.includes('?') ? (
                           <>
-                            <div className="flex gap-2">
-                              <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                              <span className="text-gray-800 text-base">{material.title.split('?')[0].trim()}?</span>
+                            {/* Question - centered, without Q: prefix */}
+                            <div className="mb-3 font-medium text-xl bg-primary/5 py-2 px-4 rounded-md border border-primary/20 text-center">
+                              {cleanQuestionText(material.title.split('?')[0].trim() + '?')}
                             </div>
+                            
+                            {/* Answer - only render if there is a description */}
                             {material.description && (
-                              <div className="flex gap-2 mt-2">
-                                <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                <span className="font-medium text-indigo-900 text-base">{material.description}</span>
+                              <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200 text-center">
+                                {cleanAnswerText(material.description)}
                               </div>
                             )}
                           </>

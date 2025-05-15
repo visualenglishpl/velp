@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import EmbeddedContentModal from './EmbeddedContentModal';
 
 // Import sample resources for Book 7, Unit 6
 import { unit6Resources, britishCurrencyLessonPlan, internationalMoneyLessonPlan, spendingSavingLessonPlan } from '@/data/unit6-resources';
@@ -813,6 +814,7 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
   const [confirmDelete, setConfirmDelete] = useState<TeacherResource | null>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [viewingPdf, setViewingPdf] = useState<TeacherResource | null>(null);
+  const [viewingEmbed, setViewingEmbed] = useState<TeacherResource | null>(null);
   const [newResource, setNewResource] = useState<TeacherResource>({
     bookId,
     unitId,
@@ -4683,6 +4685,12 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
             </div>
           </DialogContent>
         </Dialog>
+        
+        {/* Embedded Content Viewer */}
+        <EmbeddedContentModal 
+          resource={viewingEmbed} 
+          onClose={() => setViewingEmbed(null)} 
+        />
       </div>
     </div>
   );

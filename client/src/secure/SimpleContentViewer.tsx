@@ -353,7 +353,16 @@ export default function SimpleContentViewer() {
     if (!text) return '';
     
     // Match patterns like "01 I A", "02 B", "13 A a", etc. at the beginning of text
-    return text.replace(/^(\d{1,2}\s+[A-Za-z](\s+[A-Za-z])?)\s+/i, '');
+    // More comprehensive pattern to match all variations of the alphanumeric codes
+    const cleanedText = text
+      // First pattern: digits + space + letter + optional (space + letter)
+      .replace(/^(\d{1,2}\s+[A-Za-z](\s+[A-Za-z])?)\s+/i, '')
+      // Second pattern: digits + letter (no space) + optional letter at the beginning
+      .replace(/^(\d{1,2}[A-Za-z][A-Za-z]?)\s+/i, '')
+      // Third pattern: just digits at the beginning followed by dot or space
+      .replace(/^(\d{1,2}[\.\s])\s*/i, '');
+      
+    return cleanedText;
   };
   
   const getQuestionAnswer = (material: S3Material) => {

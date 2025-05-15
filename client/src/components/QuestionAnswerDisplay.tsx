@@ -4,6 +4,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { Flag, Check, X, RefreshCw, EyeOff, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useExcelQA } from "@/hooks/use-excel-qa";
+import * as textCleaners from '@/lib/textCleaners';
 
 // Debug level configuration (0: none, 1: critical only, 2: verbose)
 const DEBUG_LEVEL = 0;
@@ -14,6 +15,8 @@ function logDebug(message: string, level: number = 1): void {
     console.log(message);
   }
 }
+
+// We now use the imported cleanQuestionText and cleanAnswerText functions from textCleaners.ts
 
 interface QAData {
   country: string;
@@ -2251,24 +2254,28 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
               ) : (
                 <>
                   {/* Callan-style centered question with larger font */}
-                  <div className="mb-4 font-medium text-2xl bg-primary/5 py-3 px-4 rounded-md border border-primary/20">
+                  <div className="mb-4 font-medium text-2xl bg-primary/5 py-3 px-4 rounded-md border border-primary/20 text-center">
                     {/* Remove any numbering patterns, including index-based numbering from the question */}
                     {qaData.question
                       .replace(/^(\w+\s+)?\d+\.\s*/, '')  // Remove "Unit 18. Question" pattern 
                       .replace(/^\d+[\.\)]\s*/, '')        // Remove "1. " or "1) " numbering at start
                       .replace(/^Q\d+[\.\:]\s*/, '')       // Remove "Q1." or "Q1:" pattern
                       .replace(/^Q[\.\:]\s*/, '')          // Remove "Q." or "Q:" prefix
+                      .replace(/^(\d{1,2}\s*[A-Za-z](\s+[A-Za-z])?)\s+/i, '') // Remove codes like "01 A B"
+                      .replace(/^(\d{1,2}[A-Za-z][A-Za-z]?)\s+/i, '')         // Remove codes like "01AB"
                     }
                   </div>
                   
-                  {/* Answer - shown directly */}
-                  <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200 transition-all">
+                  {/* Answer - shown directly, centered */}
+                  <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200 transition-all text-center">
                     {/* Remove any numbering patterns from answers */}
                     {qaData.answer
                       .replace(/^(\w+\s+)?\d+\.\s*/, '')  // Remove "Unit 18. Answer" pattern
                       .replace(/^\d+[\.\)]\s*/, '')        // Remove "1. " or "1) " numbering at start
                       .replace(/^A\d+[\.\:]\s*/, '')       // Remove "A1." or "A1:" pattern
                       .replace(/^A[\.\:]\s*/, '')          // Remove "A." or "A:" prefix
+                      .replace(/^(\d{1,2}\s*[A-Za-z](\s+[A-Za-z])?)\s+/i, '') // Remove codes like "01 A B"
+                      .replace(/^(\d{1,2}[A-Za-z][A-Za-z]?)\s+/i, '')         // Remove codes like "01AB"
                     }
                   </div>
                 </>
