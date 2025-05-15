@@ -29,6 +29,17 @@ export const book1Unit1VideoResources: TeacherResource[] = [
     sourceUrl: "https://www.youtube.com/watch?v=eUXkj6j6Ezw",
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/eUXkj6j6Ezw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "An adorable animated video teaching children greetings for different times of the day."
+  },
+  {
+    id: "book1-unit1-video3",
+    bookId: "1",
+    unitId: "1",
+    title: "The Greetings Song - MAPLE LEAF",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=gVIFEVLzP4o",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gVIFEVLzP4o?si=7yhM78fH9pFHwlgD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A catchy song that teaches different greetings and expressions to use when meeting people."
   }
 ];
 
@@ -66,6 +77,28 @@ export const book1Unit1GameResources: TeacherResource[] = [
     sourceUrl: "https://wordwall.net/resource/47045902/greetings-and-farewells",
     embedCode: `<iframe style="max-width: 100%" src="https://wordwall.net/embed/1b5d9b49e2a14c95a63c9f65cbde51c7?themeId=44&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
     description: "Interactive activity to practice different ways to say hello and goodbye."
+  },
+  {
+    id: "book1-unit1-game4",
+    bookId: "1",
+    unitId: "1",
+    title: "Greetings Game",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/7a5f9c9d02764745b1b471a56483ddf2",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7a5f9c9d02764745b1b471a56483ddf2?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Interactive game to practice different greetings."
+  },
+  {
+    id: "book1-unit1-game5",
+    bookId: "1",
+    unitId: "1",
+    title: "Times of the Day",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/aa9083a0802940d7abd8dfbb0ea2113d",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/aa9083a0802940d7abd8dfbb0ea2113d?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Learn and practice different times of the day and appropriate greetings."
   }
 ];
 
