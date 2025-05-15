@@ -1,131 +1,117 @@
 /**
- * Implementation file for Book 1 Unit 13: Do You Have a Pet?
- *
- * This unit focuses on teaching pet vocabulary and related expressions
+ * Book 1, Unit 13: Clothes - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 13.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit13Resources } from './book1-unit13-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit13Resources = (): TeacherResource[] => {
-  return book1Unit13Resources;
-};
+// Get all resources for Book 1, Unit 13
+export const getBook1Unit13Resources = () => book1Unit13Resources;
 
-// Export a function to get lesson plans for this unit
+// Generate lesson plans for Book 1, Unit 13
 export const generateUnit13LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Pets (45 minutes)
     {
-      id: 'book1-unit13-lesson1',
-      title: 'Introduction to Pets - Lesson 1',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit13-lesson1",
+      title: "Clothing Items Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn pet vocabulary (dog, cat, bird, fish, etc.)',
-        'Ask and answer "Do you have a pet?"',
-        'Describe pets using simple adjectives'
+        "Learn vocabulary for basic clothing items (shirt, pants, shoes, hat, etc.)",
+        "Use 'I'm wearing...' to describe clothes",
+        "Identify colors of clothing items"
       ],
       materials: [
-        'Visual English Book 1 - Unit 13 slides',
-        'Pet flashcards or pictures',
-        'Pet videos from resources section',
-        'Drawing paper and colored pencils'
+        "Clothes Song - Super Simple Songs video from Video Resources",
+        "Clothing item flashcards",
+        "Real clothing items (if possible)",
+        "Paper dolls with clothing cutouts",
+        "Color flashcards",
+        "Drawing paper and coloring supplies"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Greet students and show pet pictures. Ask: "What is this?" Teach pet vocabulary using visual aids. Have students repeat after you.'
+          title: "Warm-up: Clothes Song",
+          duration: "5 minutes",
+          description: "Play the 'Clothes Song' video. Have students watch first, then join in with gestures for each clothing item mentioned during the second viewing."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Play the "I Have A Pet Animal Song" video. Pause at different animals to practice vocabulary. Teach the question "Do you have a pet?" and responses "Yes, I do" / "No, I don\'t".'
+          title: "Clothing Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce key clothing vocabulary: shirt, pants/trousers, shoes, socks, hat, jacket, dress. Show flashcards or real items. For each item, say 'This is a/are (clothing item)' and have students repeat."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Students ask and answer "Do you have a pet?" in pairs or small groups. If they answer yes, they should describe their pet (color, size, name).'
+          title: "What Are You Wearing?",
+          duration: "8 minutes",
+          description: "Teach the phrase 'I'm wearing a/an (clothing item)' using yourself as an example. Point to items of clothing you're wearing. Have students take turns saying what they're wearing."
         },
         {
-          title: 'Activity',
-          duration: '10 minutes',
-          description: 'Students draw their pet or a pet they would like to have. Then they present it to the class using "This is my pet [animal]. Its name is [name]."'
+          title: "Colors and Clothes",
+          duration: "7 minutes",
+          description: "Review colors and combine with clothing items: 'I'm wearing a blue shirt.' 'She's wearing red shoes.' Show flashcards with colored clothing items and have students describe them."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review pet vocabulary learned today. Play a quick game: teacher says an animal and students must make that animal sound or movement.'
-        }
-      ],
-      assessmentTips: 'Monitor students during pair work for proper use of "Do you have a pet?" question and appropriate responses. Check drawings for understanding of vocabulary.',
-      homeworkIdeas: [
-        'Complete a worksheet identifying different pets',
-        'Draw their favorite pet and write 3 sentences about it'
-      ],
-      additionalResources: [
+          title: "Paper Doll Activity",
+          duration: "10 minutes",
+          description: "Students dress paper dolls with different clothing cutouts and describe what their doll is wearing using complete sentences: 'He/She is wearing a (color) (clothing item).'"
+        },
         {
-          title: 'Pet Vocabulary Resources',
-          url: 'https://supersimple.com/super-simple-songs/i-have-a-pet/'
+          title: "Draw and Describe",
+          duration: "5 minutes",
+          description: "Students draw a picture of themselves wearing their favorite clothes. Then they write or say a simple sentence: 'I'm wearing a (color) (clothing item).'"
         }
       ]
     },
-    
-    // Lesson Plan 2 - Pet Care and Descriptions (45 minutes)
     {
-      id: 'book1-unit13-lesson2',
-      title: 'Pet Care and Descriptions - Lesson 2',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit13-lesson2",
+      title: "Getting Dressed",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Expand pet vocabulary with care-related words',
-        'Describe pets in more detail (size, color, behavior)',
-        'Learn about pet habitats and needs'
+        "Learn vocabulary for additional clothing items",
+        "Practice 'Put on' and 'Take off' actions",
+        "Connect clothing with appropriate weather"
       ],
       materials: [
-        'Visual English Book 1 - Unit 13 slides',
-        'Interactive pet games from resources section',
-        'Pet care items or pictures (food bowl, leash, pet bed, etc.)',
-        'Art supplies for craft activity'
+        "Put On Your Shoes video from Video Resources",
+        "What Are You Wearing? video from Video Resources",
+        "Weather and clothing flashcards",
+        "Clothing picture cards",
+        "Seasonal clothing sorting cards",
+        "Wordwall game from Game Resources"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Review pet vocabulary from previous lesson. Show images of pets and ask: "What pet is this?" and "Do you have this pet?"'
+          title: "Warm-up: Put On Your Shoes",
+          duration: "5 minutes",
+          description: "Play the 'Put On Your Shoes' video. Have students mimic putting on each clothing item mentioned in the song."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Play the "Pet Store" video from resources. Discuss what pets need: food, water, shelter, love. Introduce vocabulary for pet care items.'
+          title: "Action Verbs - Put On/Take Off",
+          duration: "8 minutes",
+          description: "Teach the action verbs 'put on' and 'take off' using TPR (Total Physical Response). Model sentences: 'Put on your hat.' 'Take off your jacket.' Students follow the instructions with real or pretend actions."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Group activity: Students discuss what different pets need. Give each group a pet to focus on (dog, cat, fish, bird) and have them create a list of items needed for that pet.'
+          title: "What Are You Wearing? Video",
+          duration: "7 minutes",
+          description: "Watch the 'What Are You Wearing?' video. After watching, practice the question and answer format with students. 'What are you wearing?' 'I'm wearing a (clothing item).'"
         },
         {
-          title: 'Interactive Game',
-          duration: '10 minutes',
-          description: 'Use one of the Wordwall pet games from resources. After playing, have students design a pet house using the PBS Kids game, explaining what their pet needs.'
+          title: "Weather and Clothing",
+          duration: "10 minutes",
+          description: "Show different weather flashcards (rainy, sunny, snowy, windy) and discuss appropriate clothing for each. Model sentences: 'It's raining. I'm wearing a raincoat.' Students practice with weather cards."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review all vocabulary related to pets and pet care. Each student shares one important thing their pet (real or imaginary) needs.'
-        }
-      ],
-      assessmentTips: 'Check student understanding of pet care concepts through the group activity. Listen for correct use of descriptive vocabulary during presentations.',
-      homeworkIdeas: [
-        'Create a pet care poster for their favorite pet',
-        'Write 5 sentences about what their pet needs'
-      ],
-      additionalResources: [
+          title: "Dressing for the Seasons Game",
+          duration: "10 minutes",
+          description: "Divide class into teams. Call out a season or weather condition, and teams race to collect appropriate clothing picture cards. Teams describe their choices: 'It's winter. We're wearing jackets, hats, and gloves.'"
+        },
         {
-          title: 'Pet Care Teaching Resources',
-          url: 'https://www.education.com/resources/pets/'
+          title: "Clothes Vocabulary Game",
+          duration: "5 minutes",
+          description: "Play the Wordwall 'Clothes Vocabulary' game as a class. Students take turns matching clothing items with their names or sorting clothes by types or colors."
         }
       ]
     }

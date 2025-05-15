@@ -17,18 +17,18 @@ export const book1Unit3VideoResources: TeacherResource[] = [
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=WsiRSWthV1k",
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/WsiRSWthV1k?si=5qhIghLOyTJLoACs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A fun and interactive classroom command song that teaches children basic classroom instructions."
+    description: "An energetic song teaching standing up and sitting down actions perfect for classroom management."
   },
   {
     id: "book1-unit3-video2",
     bookId: "1",
     unitId: "3",
-    title: "Stand Up - Sit Down - tddongtv",
+    title: "Stand Up - Sit Down - TDDONGTV",
     resourceType: "video",
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=DiXMZJi_2NU",
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/DiXMZJi_2NU?si=UQ4Gw6Tmux2TgAIG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "An engaging song that helps children practice classroom commands and actions."
+    description: "Another fun song for teaching stand up and sit down commands in the classroom."
   },
   {
     id: "book1-unit3-video3",
@@ -39,7 +39,7 @@ export const book1Unit3VideoResources: TeacherResource[] = [
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=E_VcSQn73do",
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/E_VcSQn73do?si=rqxV1ItW15Gp0biP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A playful song that teaches children to follow directions in the classroom with hand movements."
+    description: "A catchy song teaching children about opening and closing actions."
   },
   {
     id: "book1-unit3-video4",
@@ -50,18 +50,18 @@ export const book1Unit3VideoResources: TeacherResource[] = [
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=RNUZBHlRH4Y",
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/RNUZBHlRH4Y?si=Q5ovKH7UTWy0eTXk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A Super Simple Songs version of the classic 'Open Shut Them' song that helps children follow classroom instructions."
+    description: "An animated version of the classic 'Open, Shut Them' song for young learners."
   },
   {
     id: "book1-unit3-video5",
     bookId: "1",
     unitId: "3",
-    title: "Clean Up Song - Super Simple Songs",
+    title: "Clean Up Song - Kids Song for Tidying Up - SUPER SIMPLE SONGS",
     resourceType: "video",
     provider: "YouTube",
     sourceUrl: "https://www.youtube.com/watch?v=SFE0mMWbA-Y",
     embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/SFE0mMWbA-Y?si=DMWEOIFgkgokf4Bf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A catchy song that encourages children to tidy up the classroom and follow clean-up routines."
+    description: "A helpful song to encourage cleaning up in the classroom."
   }
 ];
 
@@ -71,23 +71,23 @@ export const book1Unit3GameResources: TeacherResource[] = [
     id: "book1-unit3-game1",
     bookId: "1",
     unitId: "3",
-    title: "WORDWALL - CLASSROOM RULES (1)",
+    title: "WORDWALL - CLASSROOM RULES - Game 1",
     resourceType: "game",
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/94341df31881431a8e6bb5e707557a42",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/94341df31881431a8e6bb5e707557a42?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "Interactive quiz that helps students learn and practice classroom rules and behaviors."
+    description: "An interactive game to practice classroom rules."
   },
   {
     id: "book1-unit3-game2",
     bookId: "1",
     unitId: "3",
-    title: "WORDWALL - CLASSROOM RULES (2)",
+    title: "WORDWALL - CLASSROOM RULES - Game 2",
     resourceType: "game",
     provider: "Wordwall",
     sourceUrl: "https://wordwall.net/resource/c95d7edfe0e64b77be765f3289a7c3e3",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c95d7edfe0e64b77be765f3289a7c3e3?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "Another engaging game to reinforce understanding of classroom rules and expected behaviors."
+    description: "Another interactive game to reinforce classroom rules vocabulary."
   }
 ];
 

@@ -1,137 +1,119 @@
 /**
- * Visual English Book 1, Unit 12: Home Sweet Home
- * Lesson Plans Implementation
+ * Book 1, Unit 12: Rooms in the House - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 12.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit12Resources } from './book1-unit12-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit12Resources = (): TeacherResource[] => {
-  return book1Unit12Resources;
-};
+// Get all resources for Book 1, Unit 12
+export const getBook1Unit12Resources = () => book1Unit12Resources;
 
-// Export a function to get lesson plans for this unit
+// Generate lesson plans for Book 1, Unit 12
 export const generateUnit12LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Rooms in the House (45 minutes)
     {
-      id: 'book1-unit12-lesson1',
-      title: 'Introduction to Rooms in the House',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit12-lesson1",
+      title: "Rooms in the House Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn names of the main rooms in a house (bathroom, bedroom, kitchen, living room)',
-        'Identify objects found in different rooms',
-        'Use simple sentences to name rooms and their functions'
+        "Learn vocabulary for different rooms in a house (living room, bedroom, bathroom, kitchen)",
+        "Use 'This is the...' to identify rooms",
+        "Match furniture with the appropriate rooms"
       ],
       materials: [
-        'Visual English Book 1 - Unit 12 slides',
-        'House room flashcards',
-        'Rooms Of The House Song - Planet Pop video',
-        'Drawing paper and colored pencils',
-        'Pictures of rooms in a house'
+        "Rooms of the House Song - Planet Pop video from Video Resources",
+        "House Vocabulary video from Video Resources",
+        "Flashcards with rooms and furniture",
+        "House poster or diagram",
+        "Room labels",
+        "Room matching worksheet"
       ],
       steps: [
         {
-          title: 'House Song Introduction',
-          duration: '5 minutes',
-          description: 'Play the "Rooms Of The House Song - Planet Pop" video. Have students watch and listen first time, then encourage them to join in with actions during the second viewing.'
+          title: "Warm-up: House Song",
+          duration: "5 minutes",
+          description: "Play the 'Rooms of the House Song' video. Have students listen first, then join in with gestures for each room mentioned."
         },
         {
-          title: 'Room Vocabulary Introduction',
-          duration: '10 minutes',
-          description: 'Use flashcards to introduce the main rooms: bathroom, bedroom, kitchen, living room. For each room, discuss what we do there (sleep in bedroom, cook in kitchen, etc.).'
+          title: "Room Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce key vocabulary: living room, bedroom, bathroom, kitchen, dining room, garden. Use flashcards, pictures, or a house poster. For each room, say 'This is the (room name)' and have students repeat."
         },
         {
-          title: 'Room Objects Matching',
-          duration: '8 minutes',
-          description: 'Show pictures of various household objects and have students identify which room they belong in. Ask: "Where is the [bed/stove/sofa]?" Students respond: "It\'s in the [room]."'
+          title: "House Vocabulary Video",
+          duration: "7 minutes",
+          description: "Watch part of the 'House Vocabulary' video, focusing on room names. After watching, show flashcards and have students name the rooms shown in the video."
         },
         {
-          title: 'Dream House Drawing Activity',
-          duration: '15 minutes',
-          description: 'Have students draw a simple floor plan of a house with different rooms. They should label each room and draw at least one object that belongs in each room.'
+          title: "Room Label Activity",
+          duration: "8 minutes",
+          description: "Using a large house diagram or poster, students take turns placing room name labels in the correct locations. When placing a label, they say 'This is the (room name).'"
         },
         {
-          title: 'Room Location Game',
-          duration: '7 minutes',
-          description: 'Teacher calls out an action ("sleeping", "cooking", "washing") and students respond with the room name. Then reverse: teacher says a room and students mime an activity done there.'
-        }
-      ],
-      assessmentTips: 'Check if students can correctly name rooms and place objects in appropriate rooms. Listen for proper pronunciation of room names.',
-      homeworkIdeas: [
-        'Draw and label their own bedroom or favorite room in their house',
-        'Complete a worksheet matching objects to different rooms'
-      ],
-      additionalResources: [
+          title: "Furniture-Room Matching",
+          duration: "10 minutes",
+          description: "Show pictures of furniture items (bed, sofa, toilet, stove) and have students identify which room each belongs in. Practice sentences like 'The bed is in the bedroom.' or 'The sofa is in the living room.'"
+        },
         {
-          title: 'House and Home Resources',
-          url: 'https://www.eslkidstuff.com/'
+          title: "My Favorite Room",
+          duration: "5 minutes",
+          description: "Students draw their favorite room in a house and write or say 'My favorite room is the (room name).' They can add simple details about what's in the room."
         }
       ]
     },
-    
-    // Lesson Plan 2 - Objects in the House (45 minutes)
     {
-      id: 'book1-unit12-lesson2',
-      title: 'Objects in the House',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit12-lesson2",
+      title: "Where Is It? - Locations in the House",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn vocabulary for common household objects',
-        'Practice asking and answering "Where is...?" questions',
-        'Use prepositions of place with house objects',
-        'Develop descriptive language about houses'
+        "Review room vocabulary",
+        "Learn prepositions of place (in, on, under, next to)",
+        "Practice asking and answering 'Where is it?' questions"
       ],
       materials: [
-        'Visual English Book 1 - Unit 12 slides',
-        'VIDEO STORY Rooms in the House WATTS ENGLISH video',
-        'Pictures of household objects',
-        'Wordwall games from resources section',
-        'Simple house floor plan template'
+        "Where is it? - Maple Leaf Learning video from Video Resources",
+        "House diagram or doll house",
+        "Small toy objects or pictures",
+        "Preposition flashcards",
+        "Hide and seek picture cards",
+        "Wordwall game from Game Resources"
       ],
       steps: [
         {
-          title: 'Review and Video',
-          duration: '7 minutes',
-          description: 'Review room names from previous lesson. Play the "VIDEO STORY Rooms in the House WATTS ENGLISH" video, asking students to notice the different rooms and objects shown.'
+          title: "Warm-up: Room Review",
+          duration: "5 minutes",
+          description: "Quick review of room vocabulary with flashcards. Students name each room. Add a simple TPR element by having students move to different corners of the classroom representing different rooms."
         },
         {
-          title: 'Household Objects Vocabulary',
-          duration: '8 minutes',
-          description: 'Introduce common household objects: bed, table, chair, sofa, TV, bathtub, toilet, sink, stove, fridge, etc. Students repeat the words and practice the question "What\'s this?" with the answer "It\'s a [object]."'
+          title: "Where is it? Video",
+          duration: "8 minutes",
+          description: "Watch the 'Where is it?' video. Focus on the question 'Where is it?' and answers using prepositions. After watching, practice the question and answers from the video."
         },
         {
-          title: 'Where Is It? Practice',
-          duration: '10 minutes',
-          description: 'Using the house floor plan, place pictures of objects in different rooms. Practice asking "Where is the [object]?" with answers "It\'s in the [room]." Add prepositions for advanced students: "It\'s on the table in the kitchen."'
+          title: "Prepositions Introduction",
+          duration: "8 minutes",
+          description: "Teach prepositions: in, on, under, next to. Use a real object (like a pencil) and a box to demonstrate each preposition. Have students repeat the phrases: 'It's in the box.' 'It's on the box.' etc."
         },
         {
-          title: 'Room Quiz Game',
-          duration: '10 minutes',
-          description: 'Play the "VIDEO QUIZ - Rooms of the House Game" from resources. Students take turns identifying rooms and objects, earning points for correct answers.'
+          title: "House Location Practice",
+          duration: "10 minutes",
+          description: "Using a house diagram or doll house, place objects in different locations. Ask 'Where is the (object)?' Students respond with complete sentences using prepositions: 'It's in the kitchen.' 'It's under the table.'"
         },
         {
-          title: 'Interactive Wordwall Game',
-          duration: '10 minutes',
-          description: 'Use the "WORDWALL - ROOMS IN THE HOUSE" games from resources. Students practice matching rooms, objects, and activities.'
-        }
-      ],
-      assessmentTips: 'Observe students\' ability to correctly place objects in appropriate rooms. Check comprehension of "Where is...?" questions through the interactive games.',
-      homeworkIdeas: [
-        'Create a picture dictionary of household objects',
-        'Write 3-5 sentences about their favorite room at home'
-      ],
-      additionalResources: [
+          title: "Hide and Seek Game",
+          duration: "9 minutes",
+          description: "Hide small objects around the classroom in relation to room pictures (next to the bedroom, under the kitchen, etc.). Students take turns asking 'Where is the (object)?' and others answer with the location."
+        },
         {
-          title: 'House and Home Activities',
-          url: 'https://en.islcollective.com/'
+          title: "Rooms in a House Game",
+          duration: "5 minutes",
+          description: "Play the Wordwall 'Rooms in a House' game as a class. Students take turns matching rooms with their names or identifying objects in different rooms."
         }
       ]
     }
   ];
 };
-
-export default generateUnit12LessonPlans;

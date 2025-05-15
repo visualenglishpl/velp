@@ -1,131 +1,117 @@
 /**
- * Implementation file for Book 1 Unit 14: WHERE IS THE SPIDER?
- *
- * This unit focuses on teaching prepositions of place and spatial relationships
+ * Book 1, Unit 14: Toys - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 14.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit14Resources } from './book1-unit14-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit14Resources = (): TeacherResource[] => {
-  return book1Unit14Resources;
-};
+// Get all resources for Book 1, Unit 14
+export const getBook1Unit14Resources = () => book1Unit14Resources;
 
-// Export a function to get lesson plans for this unit
+// Generate lesson plans for Book 1, Unit 14
 export const generateUnit14LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Prepositions of Place (45 minutes)
     {
-      id: 'book1-unit14-lesson1',
-      title: 'Introduction to Prepositions of Place - Lesson 1',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit14-lesson1",
+      title: "Toys Vocabulary Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn basic prepositions of place (on, in, under, by)',
-        'Ask and answer "Where is the spider?"',
-        'Understand spatial relationships using simple prepositions'
+        "Learn vocabulary for common toys (doll, ball, car, teddy bear, etc.)",
+        "Use 'This is a/an...' to identify toys",
+        "Practice using possessive pronouns with toys (my, your)"
       ],
       materials: [
-        'Visual English Book 1 - Unit 14 slides',
-        'Small toy spider or spider pictures',
-        'Preposition videos from resources section',
-        'Objects for demonstration (box, table, chair, etc.)'
+        "Toys Song - Super Simple Songs video from Video Resources",
+        "My Toys video from Video Resources",
+        "Real toys or toy flashcards",
+        "Toy vocabulary picture cards",
+        "Paper bags or box for 'mystery toy' activity",
+        "Drawing paper and coloring supplies"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Greet students and introduce the toy spider (or picture). Place it in different positions and ask "Where is the spider?" Teach vocabulary: on, in, under, by.'
+          title: "Warm-up: Toys Song",
+          duration: "5 minutes",
+          description: "Play the 'Toys Song' video. Have students watch first, then join in with actions during the second viewing, pretending to play with each toy mentioned."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Play the "On In Under By Song" video. Pause at different points to practice the prepositions. Model asking and answering: "Where is the spider? It\'s on/in/under/by the [object]."'
+          title: "Toy Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce key vocabulary: doll, ball, car, teddy bear, train, blocks, puzzle. Show real toys or flashcards. For each item, say 'This is a/an (toy)' and have students repeat."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Pair activity: Give each pair a toy spider or picture. Student A places the spider somewhere and Student B must ask "Where is the spider?" Student A responds with the correct preposition.'
+          title: "My Toys Video",
+          duration: "7 minutes",
+          description: "Watch the 'My Toys' video, focusing on the toy vocabulary. After watching, review the toys from the video and have students identify them in pictures or among real toys."
         },
         {
-          title: 'Activity',
-          duration: '10 minutes',
-          description: 'Play "Spider Hide and Seek": Teacher hides the spider somewhere in the classroom. Students take turns asking "Where is the spider?" and guessing the location using prepositions until someone finds it.'
+          title: "My Toy/Your Toy Activity",
+          duration: "8 minutes",
+          description: "Teach possessive pronouns with toys: 'This is my ball.' 'That is your doll.' Practice exchanges where students pass toys to each other and use the appropriate possessive pronouns."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review the prepositions learned today. Students draw a picture showing the spider in different positions (on, in, under, by) relative to various objects.'
-        }
-      ],
-      assessmentTips: 'Monitor students during pair work for proper use of prepositions. Check if students can correctly identify and describe spatial relationships.',
-      homeworkIdeas: [
-        'Complete a worksheet matching pictures to prepositions',
-        'Draw a room with a spider in 4 different positions and label each with the correct preposition'
-      ],
-      additionalResources: [
+          title: "Mystery Toy Game",
+          duration: "10 minutes",
+          description: "Place toys in a bag or box. Students take turns feeling a toy without looking, describing it ('It's soft/hard/big/small'), and guessing what it is: 'I think it's a teddy bear.' Then they pull it out to confirm."
+        },
         {
-          title: 'Prepositions of Place Resources',
-          url: 'https://supersimple.com/article/8-great-activities-for-teaching-prepositions/'
+          title: "My Favorite Toy",
+          duration: "5 minutes",
+          description: "Students draw their favorite toy and write or say a simple sentence: 'This is my favorite toy. It is a (toy name).' They can share with a partner or the class."
         }
       ]
     },
-    
-    // Lesson Plan 2 - More Prepositions of Place (45 minutes)
     {
-      id: 'book1-unit14-lesson2',
-      title: 'More Prepositions of Place - Lesson 2',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit14-lesson2",
+      title: "Playing with Toys",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn additional prepositions (in front of, behind, between)',
-        'Create sentences with multiple prepositions',
-        'Apply prepositions in practical activities'
+        "Learn expressions for playing with toys ('I like to play with...')",
+        "Practice asking and answering questions about toys",
+        "Use action verbs associated with different toys"
       ],
       materials: [
-        'Visual English Book 1 - Unit 14 slides',
-        'Spider toy or picture and various classroom objects',
-        'Wordwall games from resources section',
-        'Art supplies for craft activity'
+        "I Like to Play video from Video Resources",
+        "Toys vocabulary flashcards",
+        "Action cards (verbs like throw, push, build, hug)",
+        "Toy-action matching cards",
+        "Wordwall game from Game Resources",
+        "Toy survey worksheet"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Review prepositions from previous lesson. Then introduce new prepositions: in front of, behind, between. Demonstrate with the spider and classroom objects.'
+          title: "Warm-up: I Like to Play",
+          duration: "5 minutes",
+          description: "Play the 'I Like to Play' video. Have students mimic playing with each toy shown in the video."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Play the "In Front Of, Behind, Between" video. Have students repeat the new prepositions and practice using them in sentences. Show "Where is the Ball" video as an additional example.'
+          title: "Play Expressions",
+          duration: "8 minutes",
+          description: "Teach the expression 'I like to play with...' using toy flashcards. Model sentences: 'I like to play with dolls.' 'I like to play with cars.' Students practice with their own preferences."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Group activity: Give each group objects and a spider. Call out positions ("Put the spider between the book and the pencil") and have students arrange their objects accordingly.'
+          title: "Toy Actions",
+          duration: "10 minutes",
+          description: "Introduce action verbs associated with toys: throw a ball, push a car, build with blocks, hug a teddy bear. Demonstrate each action with the corresponding toy and have students mime the actions."
         },
         {
-          title: 'Interactive Game',
-          duration: '10 minutes',
-          description: 'Use the Wordwall "WHERE IS THE SPIDER" games for interactive practice. Students take turns identifying where the spider is using the correct preposition.'
+          title: "Do You Like...? Questions",
+          duration: "7 minutes",
+          description: "Teach the question 'Do you like to play with (toy)?' and responses 'Yes, I do.' or 'No, I don't.' Students practice asking and answering in pairs using toy flashcards."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Play "Simon Says" with prepositions: "Simon says put your pencil on the desk" / "Simon says put your hands under the chair" etc. Review all prepositions learned.'
-        }
-      ],
-      assessmentTips: 'Observe students during the group activity to ensure they understand and can use all prepositions correctly. Check for proper sentence structure when describing positions.',
-      homeworkIdeas: [
-        'Create a "spider map" showing various positions with labeled prepositions',
-        'Take pictures of a toy at home in 5 different positions and write sentences describing each'
-      ],
-      additionalResources: [
+          title: "Toy Survey Activity",
+          duration: "10 minutes",
+          description: "Students conduct a simple survey, asking classmates 'Do you like to play with (toy)?' and recording yes/no answers on a worksheet. After collecting responses, they can report: 'Four friends like to play with cars.'"
+        },
         {
-          title: 'Prepositions Games and Activities',
-          url: 'https://www.fluentu.com/blog/educator-english/prepositions-of-place-esl/'
+          title: "Toys Vocabulary Game",
+          duration: "5 minutes",
+          description: "Play the Wordwall 'Toys Vocabulary' game as a class. Students take turns matching toys with their names or identifying toys based on descriptions."
         }
       ]
     }

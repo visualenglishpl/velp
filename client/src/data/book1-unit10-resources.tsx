@@ -1,78 +1,81 @@
 /**
- * Visual English Book 1, Unit 10: My Crazy Hair
+ * Visual English Book 1, Unit 10: Hair/Appearance
  * Resources including videos and games
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
+// Video resources for Unit 10
 export const book1Unit10VideoResources: TeacherResource[] = [
   {
-    id: 'book1-unit10-video1',
-    bookId: '1',
-    unitId: '10',
-    title: 'Hair - PANCAKE MANOR',
-    description: 'A fun and catchy song about hair for young learners.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=z2ucP1_EmO0',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/z2ucP1_EmO0?si=9ILvDAnO-4yMbGvw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit10-video1",
+    bookId: "1",
+    unitId: "10",
+    title: "Hair - Pancake Manor",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=PxKuyP1xgOk",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/PxKuyP1xgOk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A catchy song teaching children about different hair types and styles."
   },
   {
-    id: 'book1-unit10-video2',
-    bookId: '1',
-    unitId: '10',
-    title: 'Funny Haircut - WATTS ENGLISH',
-    description: 'A humorous video about getting a haircut, ideal for teaching hair-related vocabulary.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=gEQOtbi7SbI',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gEQOtbi7SbI?si=XsIxiKcJJefH0j34" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit10-video2",
+    bookId: "1",
+    unitId: "10",
+    title: "Funny Haircut - Watts English",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=VLvITQJ_f_M",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/VLvITQJ_f_M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A fun video showing different haircuts with vocabulary for describing appearance."
+  },
+  {
+    id: "book1-unit10-video3",
+    bookId: "1",
+    unitId: "10",
+    title: "Body Parts Song - English Singsing",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=SUt8q0EKbms",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/SUt8q0EKbms" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A song that includes facial features and appearance vocabulary with colorful animations."
   }
 ];
 
+// Game resources for Unit 10
 export const book1Unit10GameResources: TeacherResource[] = [
   {
-    id: 'book1-unit10-game1',
-    bookId: '1',
-    unitId: '10',
-    title: 'WORDWALL - MY CRAZY HAIR (1)',
-    description: 'Interactive game to practice hair-related vocabulary.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/0cafad4a8bd34df08bc5c773341708c3',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0cafad4a8bd34df08bc5c773341708c3?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    id: "book1-unit10-game1",
+    bookId: "1",
+    unitId: "10",
+    title: "Wordwall - Hair and Appearance",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/hair-appearance",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/b42defd41cf24fd49f65be88dec8b842?themeId=1&templateId=11" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Interactive game for learning vocabulary related to hair and appearance."
   },
   {
-    id: 'book1-unit10-game2',
-    bookId: '1',
-    unitId: '10',
-    title: 'WORDWALL - MY CRAZY HAIR (2)',
-    description: 'Fun game to reinforce vocabulary related to hair and hairstyles.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/86601794244d4f05896b54f10ea16442',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/86601794244d4f05896b54f10ea16442?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book1-unit10-game3',
-    bookId: '1',
-    unitId: '10',
-    title: 'WORDWALL - MY CRAZY HAIR (3)',
-    description: 'Another interactive game focusing on hair descriptions and vocabulary.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/16380f32f8d4405baf763ba85cd19368',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/16380f32f8d4405baf763ba85cd19368?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    id: "book1-unit10-game2",
+    bookId: "1",
+    unitId: "10",
+    title: "Wordwall - Describe People",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/describe-people",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/76fc0a53cad442689c9b87dbfb3c1c82?themeId=1&templateId=5" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A matching game where students connect appearance descriptions with corresponding images."
   }
 ];
 
-// Combined resources
+// Combined resources for Unit 10
 export const book1Unit10Resources: TeacherResource[] = [
   ...book1Unit10VideoResources,
   ...book1Unit10GameResources
 ];
 
-// Export a function to get all resources for this unit
+// Export a getter function to match the pattern used elsewhere
 export const getBook1Unit10Resources = () => book1Unit10Resources;
 
 export default book1Unit10Resources;

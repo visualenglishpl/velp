@@ -1,78 +1,81 @@
 /**
- * Visual English Book 1, Unit 14: WHERE IS THE SPIDER?
+ * Visual English Book 1, Unit 14: Toys
  * Resources including videos and games
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
+// Video resources for Unit 14
 export const book1Unit14VideoResources: TeacherResource[] = [
   {
-    id: 'book1-unit14-video1',
-    bookId: '1',
-    unitId: '14',
-    title: 'On In Under By Song',
-    description: 'A fun, engaging song teaching prepositions of place with clear visuals.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=DHb4-CCif7U',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/DHb4-CCif7U?si=AE38i0me0bPmftZA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit14-video1",
+    bookId: "1",
+    unitId: "14",
+    title: "Toys Song - Super Simple Songs",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=aMTIm-D1l54",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/aMTIm-D1l54" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A fun and catchy song teaching children vocabulary about different toys."
   },
   {
-    id: 'book1-unit14-video2',
-    bookId: '1',
-    unitId: '14',
-    title: 'In Front Of, Behind, Between',
-    description: 'Learn more prepositions of place with clear examples and animations.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=xERTESWbqhU',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/xERTESWbqhU?si=BLasKYQEggRu8nb7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit14-video2",
+    bookId: "1",
+    unitId: "14",
+    title: "I Like to Play - English Singsing",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=8b_vZm7mNd8",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8b_vZm7mNd8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A song about different toys and the phrase 'I like to play with...'"
   },
   {
-    id: 'book1-unit14-video3',
-    bookId: '1',
-    unitId: '14',
-    title: 'Where is the Ball - WATTS ENGLISH',
-    description: 'A story-based video using prepositions of place in context with a ball.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=ftLIV92ovgk',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ftLIV92ovgk?si=JRdU59bWMrgeXudt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit14-video3",
+    bookId: "1",
+    unitId: "14",
+    title: "My Toys - Learning Toys Vocabulary",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=RjRbX4UTOG8",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/RjRbX4UTOG8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A clear video teaching toy vocabulary with visual aids and simple sentences."
   }
 ];
 
+// Game resources for Unit 14
 export const book1Unit14GameResources: TeacherResource[] = [
   {
-    id: 'book1-unit14-game1',
-    bookId: '1',
-    unitId: '14',
-    title: 'WORDWALL - WHERE IS THE SPIDER (1)',
-    description: 'Interactive game to practice identifying where the spider is using prepositions of place.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/e297e5091ade4d4fab9a92c15491343e',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e297e5091ade4d4fab9a92c15491343e?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    id: "book1-unit14-game1",
+    bookId: "1",
+    unitId: "14",
+    title: "Wordwall - Toys Vocabulary",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/toys-vocabulary",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/dcf42b1f7aed42c09c72bcd2e6c984e1?themeId=1&templateId=3" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Interactive game for learning and matching toys with their names."
   },
   {
-    id: 'book1-unit14-game2',
-    bookId: '1',
-    unitId: '14',
-    title: 'WORDWALL - WHERE IS THE SPIDER (2)',
-    description: 'Another interactive game focusing on prepositions and spatial relationships.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/886c609003c149f1b21d1a89d83700c4',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/886c609003c149f1b21d1a89d83700c4?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    id: "book1-unit14-game2",
+    bookId: "1",
+    unitId: "14",
+    title: "Wordwall - My Favorite Toys",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/favorite-toys",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a83b6e1c7b8245c2a98b6d1d7fa92a30?themeId=1&templateId=5" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A matching game connecting toys with descriptive words and phrases."
   }
 ];
 
-// Combined resources
+// Combined resources for Unit 14
 export const book1Unit14Resources: TeacherResource[] = [
   ...book1Unit14VideoResources,
   ...book1Unit14GameResources
 ];
 
-// Export a function to get all resources for this unit
+// Export a getter function to match the pattern used elsewhere
 export const getBook1Unit14Resources = () => book1Unit14Resources;
 
 export default book1Unit14Resources;

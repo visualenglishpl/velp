@@ -1,141 +1,116 @@
 /**
- * Implementation file for Book 1 Unit 9: Family
- *
- * This unit focuses on teaching family vocabulary and talking about family members
+ * Book 1, Unit 9: My Face - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 9.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit9Resources } from './book1-unit9-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit9Resources = (): TeacherResource[] => {
-  return book1Unit9Resources;
-};
+// Get all resources for Book 1, Unit 9
+export const getBook1Unit9Resources = () => book1Unit9Resources;
 
-// Export a function to get lesson plans for this unit
+// Generate lesson plans for Book 1, Unit 9
 export const generateUnit9LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introducing Family Vocabulary (45 minutes)
     {
-      id: 'book1-unit9-lesson1',
-      title: 'Introducing Family Vocabulary - Lesson 1',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit9-lesson1",
+      title: "Parts of the Face Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn basic family vocabulary (mother, father, sister, brother, etc.)',
-        'Understand possessive structures like "my mother", "your father"',
-        'Present family members using simple sentences'
+        "Learn and identify basic parts of the face (eyes, nose, mouth, ears)",
+        "Use simple sentences to describe facial features",
+        "Match vocabulary with visual representations"
       ],
       materials: [
-        'Visual English Book 1 - Unit 9 slides',
-        'Family member flashcards',
-        'Family videos from resources section',
-        'Paper for drawing family trees',
-        'Markers/colored pencils'
+        "Face Parts Song video from Video Resources",
+        "Face flashcards",
+        "Mirror for each student or pair",
+        "Face parts worksheet",
+        "Crayons or markers"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Greet students and introduce the topic of family. Show a simple picture of a family and ask students what they see. Introduce key vocabulary: mother, father, sister, brother.'
+          title: "Warm-up: Face Parts Song",
+          duration: "5 minutes",
+          description: "Play the 'Face Parts Song' video from Maple Leaf Learning. Have students point to their own facial features as they are mentioned in the song."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Play the Family Song video. Pause to reinforce vocabulary. Show flashcards of different family members and model sentences like "This is my mother" and "This is my father".'
+          title: "Face Parts Introduction",
+          duration: "10 minutes",
+          description: "Using flashcards, introduce each face part (eyes, nose, mouth, ears, etc.). Show the picture, say the word clearly, and have students repeat. Practice singular and plural forms (eye/eyes)."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Students practice in pairs using the flashcards. Student A holds up a card and asks "Who is this?". Student B responds with "This is my [family member]". Then they switch roles.'
+          title: "Mirror Activity",
+          duration: "8 minutes",
+          description: "Give students mirrors. Point to parts of your face and have students find the same part on their own face. Practice 'These are my eyes,' 'This is my nose,' etc."
         },
         {
-          title: 'Activity',
-          duration: '10 minutes',
-          description: 'Students begin to draw a simple family tree with 4-5 members of their family (real or imaginary). They label each person with the appropriate vocabulary word.'
+          title: "Face Parts Sentences",
+          duration: "8 minutes",
+          description: "Teach simple sentences about face parts: 'I have [color] eyes,' 'I have a small nose,' etc. Students practice describing their own facial features to a partner."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Several students share their family trees with the class, practicing "This is my [family member]" for each person they\'ve drawn. Assign homework: complete family tree if not finished.'
-        }
-      ],
-      assessmentTips: 'Monitor students during paired practice to check pronunciation and usage of possessive adjectives. Observe family tree drawings for correct labeling.',
-      homeworkIdeas: [
-        'Complete family tree with labels',
-        'Draw pictures of 5 family members and write a sentence about each one'
-      ],
-      additionalResources: [
-        {
-          title: 'Family Vocabulary Flashcards',
-          url: 'https://supersimple.com/free-printable/family-flashcards/'
+          title: "Face Parts Matching",
+          duration: "9 minutes",
+          description: "Students complete a worksheet matching face part words to pictures. Differentiate by including written words for stronger students and only pictures for beginners."
         },
         {
-          title: 'The Family Song - Super Simple Songs',
-          url: 'https://www.youtube.com/watch?v=GiRUF7hvWuM'
+          title: "Review and Assessment",
+          duration: "5 minutes",
+          description: "Play a quick game where you point to a face part and students call out the word. Then reverse it - say a word and have students point to that part on their own face."
         }
       ]
     },
-    
-    // Lesson Plan 2 - Describing My Family (45 minutes)
     {
-      id: 'book1-unit9-lesson2',
-      title: 'Describing My Family - Lesson 2',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit9-lesson2",
+      title: "Face Description and Creativity",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Review and expand family vocabulary',
-        'Learn adjectives to describe family members',
-        'Create and present a simple family description'
+        "Review and reinforce face vocabulary",
+        "Describe facial features using simple adjectives",
+        "Create a robot face using face part vocabulary",
+        "Follow simple instructions about face creation"
       ],
       materials: [
-        'Visual English Book 1 - Unit 9 slides',
-        'Family member flashcards',
-        'Wordwall family games',
-        'Student family trees from previous lesson',
-        'Template for "My Family" mini-book'
+        "Make A Robot Face video from Video Resources",
+        "Construction paper in various colors",
+        "Scissors, glue, markers",
+        "Face templates",
+        "Face description cards with adjectives"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Review family vocabulary with a quick matching game. Students match family word cards to pictures.'
+          title: "Warm-up: Face Parts Review",
+          duration: "5 minutes",
+          description: "Quick review of face parts vocabulary. Play a touch-your-face game: 'Touch your eyes,' 'Touch your nose,' etc. Increase speed to make it more fun."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Introduce simple adjectives to describe family members: tall, short, funny, kind, smart. Model sentences like "My sister is funny" and "My father is tall". Show pictures to illustrate the adjectives.'
+          title: "Robot Face Video",
+          duration: "8 minutes",
+          description: "Watch the 'Make A Robot Face - Watts English' video. Discuss the different face parts shown in the robot. Ask questions about the robot's face features."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Students work on their "My Family" mini-books. They draw each family member on a separate page and write a simple sentence using the new adjectives. Teacher circulates to help with spelling and grammar.'
+          title: "Face Adjectives Introduction",
+          duration: "8 minutes",
+          description: "Introduce simple adjectives to describe face parts: big/small eyes, long/short nose, wide/thin mouth. Model sentences: 'The robot has big eyes.' Students practice using these adjectives."
         },
         {
-          title: 'Interactive Game',
-          duration: '10 minutes',
-          description: 'Use one of the Wordwall family vocabulary games for interactive practice. Students take turns identifying family members and adding a descriptive adjective.'
+          title: "Robot Face Craft Preparation",
+          duration: "5 minutes",
+          description: "Distribute materials for the craft activity. Demonstrate how to create face parts using paper shapes. Review vocabulary as you point to each part you'll create."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Students share their mini-books in small groups. Each student presents 2-3 family members with descriptions. Close the lesson by reviewing all family vocabulary learned in both lessons.'
-        }
-      ],
-      assessmentTips: 'Evaluate students\' use of adjectives to describe family members. Check for correct sentence structure in their mini-books.',
-      homeworkIdeas: [
-        'Complete the "My Family" mini-book if not finished in class',
-        'Bring a family photo (or draw one) for the next class'
-      ],
-      additionalResources: [
-        {
-          title: 'Family Activities and Worksheets',
-          url: 'https://en.islcollective.com/english-esl-worksheets/vocabulary/family'
+          title: "Robot Face Creation",
+          duration: "14 minutes",
+          description: "Students create their own robot faces using the materials provided. Encourage them to make creative choices. Walk around and ask questions: 'What color are your robot's eyes?' 'Is your robot's mouth big or small?'"
         },
         {
-          title: 'Family Members Song - English Tree TV',
-          url: 'https://www.youtube.com/watch?v=FHaObkHEkHQ'
+          title: "Robot Face Presentations",
+          duration: "5 minutes",
+          description: "Students present their robot face creations to a partner or small group using complete sentences: 'My robot has [description] [face part].' More confident students can present to the whole class."
         }
       ]
     }

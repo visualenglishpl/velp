@@ -1,0 +1,101 @@
+Based on everything we've reviewed, here are the **main problems** affecting your Visual English platform’s content viewer, especially regarding the **admin panel**, **question sync**, and **teacher resources**:
+
+---
+
+### 🧩 **1. Question Mapping Issues**
+
+**Problem:**
+
+* Units 1–9 in Book 1 were mapped correctly, but Units 10–18 had gaps until recently.
+* Some units (e.g., Unit 4, Unit 18) still show:
+
+  * ❌ Numbering like "Q1", "A1" even though it was meant to be removed
+  * ❌ Incorrect or blank questions shown where there *should* be questions
+  * ❌ Questions showing when the image **should not** have a mapped question
+
+**Likely Causes:**
+
+* Mixed `"unitId": "unit4"` instead of `"unitId": "4"` format in `qa-mapping-book1.json`
+* Slide filenames do not match the `filename` or `codePattern` in the mapping file
+* Fallback matching strategies overriding or misfiring inappropriately
+
+---
+
+### 📦 **2. Missing or Broken Admin Dashboard**
+
+**Problem:**
+
+* The admin panel components were split into `public`, `secure`, `admin` folders, but:
+
+  * Some routes like `/admin/books`, `/admin/book-units/:bookId`, or `/admin/settings` don’t load
+  * Authentication context fails or gets stuck loading
+  * Some admin components may not be re-registered after reorganization
+
+**Likely Causes:**
+
+* Session not persisting due to usage of MemoryStore (temporary sessions)
+* `AdminRoute` logic relies on a context (`useAuth`) that doesn’t hydrate quickly enough
+* Server restarts wipe auth state due to lack of persistent storage (cookies or DB)
+
+---
+
+### 🎓 **3. Teacher Resources Incomplete or Misaligned**
+
+**Problem:**
+
+* Inconsistent loading or display of teacher resources under the content viewer
+* Apple-style design was requested but not fully implemented
+* Some units lack associated resource files (e.g., book1-unit4-resources.tsx)
+
+**Likely Causes:**
+
+* Missing or misnamed resource files in `/client/src/data/`
+* `TeacherResources.tsx` sometimes can’t resolve the correct file
+* Layout CSS may be outdated or overwritten during recent edits
+
+---
+
+### 🔗 **4. Embedded Media and Resource Links Unreliable**
+
+**Problem:**
+
+* Wordwall and YouTube links are missing or not showing
+* Some units show only video or only games
+* Raw .txt backup files (with iframes) are not parsed/rendered
+
+**Likely Causes:**
+
+* Resource data exists in backups (`/attached_assets/`) but not yet integrated
+* Resource loader expects .tsx format, not .txt
+* Embeds not passed into the `TeacherResources` component properly
+
+---
+
+### 🔒 **5. Auth Flow and Session Logic Weak**
+
+**Problem:**
+
+* Login sometimes succeeds, but redirects fail
+* Protected routes (`/admin`, `/admin/books`) block access even when logged in
+
+**Likely Causes:**
+
+* `AuthProvider` is not initialized before `useAuth` runs
+* Admin role is not saved properly in the sessionStorage or cookie
+* React routing (`<Navigate />`) not synced with session state
+
+---
+
+## ✅ What You Can Do Next
+
+| Area                 | Fix                                                                                                                    |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| 🧩 QA Mapping        | Re-audit `qa-mapping-book1.json` – ensure all `"unitId"` values are numbers (`"4"`, not `"unit4"`) and filenames match |
+| 🔐 Auth              | Migrate from `MemoryStore` to a persistent cookie/session store (or localStorage bridge)                               |
+| 📚 Admin Panel       | Re-check route setup in `App.tsx`, verify `AdminRoute` works with delayed auth hydration                               |
+| 🎓 Teacher Resources | Confirm all `bookX-unitY-resources.tsx` files exist; re-style `TeacherResources.tsx` using Tailwind for clean design   |
+| 🔗 Embedded Media    | Write a parser to convert `.txt` iframe backup into usable `.tsx` object arrays per unit                               |
+
+---
+
+Would you like me to help **rebuild the admin dashboard from your last known working layout**, or **validate the Book 1 mappings unit by unit**?

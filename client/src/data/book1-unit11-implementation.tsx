@@ -1,137 +1,118 @@
 /**
- * Visual English Book 1, Unit 11: Seasons of the Year
- * Lesson Plans Implementation
+ * Book 1, Unit 11: Seasons - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 11.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit11Resources } from './book1-unit11-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit11Resources = (): TeacherResource[] => {
-  return book1Unit11Resources;
-};
+// Get all resources for Book 1, Unit 11
+export const getBook1Unit11Resources = () => book1Unit11Resources;
 
-// Export a function to get lesson plans for this unit
+// Generate lesson plans for Book 1, Unit 11
 export const generateUnit11LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to the Four Seasons (45 minutes)
     {
-      id: 'book1-unit11-lesson1',
-      title: 'Introduction to the Four Seasons',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit11-lesson1",
+      title: "Four Seasons Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn names of the four seasons (spring, summer, autumn/fall, winter)',
-        'Identify key characteristics of each season',
-        'Use simple sentences to talk about seasons'
+        "Learn the names of the four seasons (spring, summer, autumn/fall, winter)",
+        "Match seasons with their key characteristics",
+        "Use simple sentences to describe seasons"
       ],
       materials: [
-        'Visual English Book 1 - Unit 11 slides',
-        'Season flashcards',
-        'Season Song - PANCAKE MANOR video',
-        'Colored pencils and drawing paper',
-        'Pictures showing different seasons'
+        "Season Song - Pancake Manor video from Video Resources",
+        "Flashcards with seasons and seasonal images",
+        "Season wheel craft materials",
+        "Coloring supplies",
+        "Season picture sorting cards"
       ],
       steps: [
         {
-          title: 'Seasons Song Introduction',
-          duration: '5 minutes',
-          description: 'Play the "Season Song - PANCAKE MANOR" video. Have students watch and listen first time, then encourage them to join in with actions during the second viewing.'
+          title: "Warm-up: Season Song",
+          duration: "5 minutes",
+          description: "Play the 'Season Song - Pancake Manor' video. Have students watch first, then join in with gestures during the second viewing."
         },
         {
-          title: 'Seasons Vocabulary Introduction',
-          duration: '10 minutes',
-          description: 'Use flashcards to introduce the four seasons: spring, summer, autumn/fall, winter. For each season, discuss key features (e.g., flowers in spring, snow in winter) and appropriate clothing.'
+          title: "Seasons Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce the four seasons using flashcards: spring, summer, autumn/fall, winter. For each season, show pictures of characteristic weather, clothing, and activities. Practice pronunciation."
         },
         {
-          title: 'Seasonal Picture Sorting',
-          duration: '8 minutes',
-          description: 'Show various pictures and have students identify which season they represent. Ask: "What season is this?" Students respond: "It is summer/winter/etc."'
+          title: "Season Characteristics",
+          duration: "8 minutes",
+          description: "Teach simple sentences for each season: 'In spring, it rains.' 'In summer, it's hot.' 'In autumn, leaves fall.' 'In winter, it snows.' Have students repeat and practice."
         },
         {
-          title: 'Four Seasons Drawing Activity',
-          duration: '15 minutes',
-          description: 'Divide a paper into four sections and have students draw something representing each season. Teacher circulates to help with vocabulary and encourage use of season names.'
+          title: "Season Sorting Activity",
+          duration: "7 minutes",
+          description: "Give students cards with various seasonal images (snow, flowers, beach, colored leaves). They sort the cards into the correct season category and say a sentence about each."
         },
         {
-          title: 'Season Movement Game',
-          duration: '7 minutes',
-          description: 'Call out a season and an action associated with that season. Students perform the action. For example: "Summer - swimming", "Winter - making a snowman", etc.'
-        }
-      ],
-      assessmentTips: 'Check if students can correctly identify seasons in pictures. Listen for proper pronunciation of season names during activities.',
-      homeworkIdeas: [
-        'Cut out pictures from magazines that represent different seasons',
-        'Complete a worksheet matching seasons to appropriate clothing/activities'
-      ],
-      additionalResources: [
+          title: "Season Wheel Craft",
+          duration: "10 minutes",
+          description: "Students create a simple four-part wheel with illustrations for each season. As they work, walk around and ask 'What season is this?' and have them respond with the name and a characteristic."
+        },
         {
-          title: 'Seasons Teaching Resources',
-          url: 'https://www.eslkidstuff.com/'
+          title: "My Favorite Season",
+          duration: "5 minutes",
+          description: "Students share their favorite season using the sentence stem 'My favorite season is ___ because ___.' Encourage them to use seasonal vocabulary in their explanations."
         }
       ]
     },
-    
-    // Lesson Plan 2 - Seasonal Activities and Weather (45 minutes)
     {
-      id: 'book1-unit11-lesson2',
-      title: 'Seasonal Activities and Weather',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit11-lesson2",
+      title: "Seasons and Weather",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn vocabulary for seasonal activities',
-        'Connect weather patterns to different seasons',
-        'Practice asking and answering questions about seasons',
-        'Create a seasons craft project'
+        "Connect seasons with appropriate weather vocabulary",
+        "Learn to ask and answer 'What's the weather like in (season)?'",
+        "Identify appropriate clothing for different seasons/weather"
       ],
       materials: [
-        'Visual English Book 1 - Unit 11 slides',
-        'Four Seasons - DREAM ENGLISH video',
-        'Art supplies (colored paper, scissors, glue)',
-        'Wordwall games from resources section',
-        'Seasonal activity flashcards'
+        "Weather Song - The Singing Walrus video from Video Resources",
+        "Four Seasons Song video from Video Resources",
+        "Weather flashcards",
+        "Seasonal clothing cards or pictures",
+        "Season/weather matching worksheet",
+        "Weather wheel or chart"
       ],
       steps: [
         {
-          title: 'Review and Video',
-          duration: '7 minutes',
-          description: 'Review season names from previous lesson. Play the "SONG - Four Seasons - DREAM ENGLISH" video, asking students to listen for activities mentioned for each season.'
+          title: "Warm-up: Weather Song",
+          duration: "5 minutes",
+          description: "Play the 'Weather Song - The Singing Walrus' video. Have students make appropriate gestures for each weather type (rain, snow, wind, sun)."
         },
         {
-          title: 'Seasonal Activities Vocabulary',
-          duration: '8 minutes',
-          description: 'Introduce activities for each season: planting flowers (spring), swimming (summer), collecting leaves (autumn), building snowman (winter). Practice phrases like "In summer, I go swimming."'
+          title: "Weather Vocabulary Review",
+          duration: "8 minutes",
+          description: "Review or introduce weather vocabulary: sunny, rainy, windy, snowy, cloudy, hot, cold. Use flashcards and encourage students to mimic the weather with sounds and movements."
         },
         {
-          title: 'Weather and Seasons Connection',
-          duration: '10 minutes',
-          description: 'Discuss weather patterns for each season. Teach simple sentences: "In winter, it is cold/snowy." "In summer, it is hot/sunny." Have students practice these patterns in pairs.'
+          title: "Seasons and Weather Connections",
+          duration: "10 minutes",
+          description: "Show pictures of each season and ask 'What's the weather like in (season)?' Model answers: 'In spring, it's often rainy.' 'In winter, it's cold and snowy.' Students practice in pairs."
         },
         {
-          title: 'Four Seasons Tree Craft',
-          duration: '12 minutes',
-          description: 'Based on the craft video from resources, have students create a four seasons tree showing all seasons on one tree (different colored leaves/decorations for each quarter of the tree).'
+          title: "Four Seasons Song",
+          duration: "7 minutes",
+          description: "Watch the 'Four Seasons Song' video focusing on the weather aspects of each season. After watching, have students recall what weather was shown for each season."
         },
         {
-          title: 'Interactive Wordwall Game',
-          duration: '8 minutes',
-          description: 'Use the "WORDWALL - SEASONS" games from resources. Students take turns matching season names, activities, and weather.'
-        }
-      ],
-      assessmentTips: 'Observe students\'s ability to connect appropriate activities with seasons. Check comprehension through the interactive games.',
-      homeworkIdeas: [
-        'Create a "My Favorite Season" poster with drawings and descriptions',
-        'Complete a seasons calendar showing major activities for each month'
-      ],
-      additionalResources: [
+          title: "Seasonal Clothing Activity",
+          duration: "10 minutes",
+          description: "Display various clothing items (or pictures) and have students sort them by season. Practice sentences: 'In winter, we wear coats.' 'In summer, we wear shorts and t-shirts.'"
+        },
         {
-          title: 'Seasons and Weather Resources',
-          url: 'https://en.islcollective.com/'
+          title: "Weather Forecast Game",
+          duration: "5 minutes",
+          description: "Students take turns being 'weather reporters' who give simple forecasts for different seasons: 'It's spring. Today it's rainy and warm.' Others can act out the appropriate weather and clothing."
         }
       ]
     }
   ];
 };
-
-export default generateUnit11LessonPlans;

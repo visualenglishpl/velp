@@ -1,136 +1,118 @@
 /**
- * Visual English Book 1, Unit 10: My Crazy Hair
- * Lesson Plans Implementation
+ * Book 1, Unit 10: Hair/Appearance - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 10.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit10Resources } from './book1-unit10-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit10Resources = (): TeacherResource[] => {
-  return book1Unit10Resources;
-};
+// Get all resources for Book 1, Unit 10
+export const getBook1Unit10Resources = () => book1Unit10Resources;
 
-// Export a function to get lesson plans for this unit
+// Generate lesson plans for Book 1, Unit 10
 export const generateUnit10LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Hair Vocabulary (45 minutes)
     {
-      id: 'book1-unit10-lesson1',
-      title: 'Introduction to Hair Vocabulary',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit10-lesson1",
+      title: "Hair and Appearance Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn basic hair-related vocabulary (hair, long, short, curly, straight, etc.)',
-        'Identify different hair styles and colors',
-        'Use simple sentences to describe hair'
+        "Learn vocabulary for describing hair (long, short, curly, straight)",
+        "Use simple sentences to describe people's appearance",
+        "Practice asking and answering 'What does he/she look like?'"
       ],
       materials: [
-        'Visual English Book 1 - Unit 10 slides',
-        'Hair vocabulary flashcards',
-        'Hair - PANCAKE MANOR video from resources section',
-        'Drawing paper and colored pencils',
-        'Mirror for self-observation'
+        "Hair - Pancake Manor video from Video Resources",
+        "Flashcards with different hair types and styles",
+        "Pictures of people with different appearances",
+        "Hand mirrors (optional)",
+        "Drawing paper and colored pencils"
       ],
       steps: [
         {
-          title: 'Hair Song Introduction',
-          duration: '5 minutes',
-          description: 'Play the "Hair - PANCAKE MANOR" video. Have students watch and listen first time, then encourage them to sing along during the second viewing.'
+          title: "Warm-up: Hair Song",
+          duration: "5 minutes",
+          description: "Play the 'Hair - Pancake Manor' video. Have students watch first, then join in with gestures during the second viewing, touching their hair when mentioned."
         },
         {
-          title: 'Hair Vocabulary Introduction',
-          duration: '10 minutes',
-          description: 'Use flashcards to introduce hair vocabulary: long, short, curly, straight, blonde, brown, black, red, etc. Have students repeat each word and touch their own hair when applicable.'
+          title: "Hair Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce key vocabulary: long hair, short hair, curly hair, straight hair, blonde hair, black hair, brown hair, red hair. Use flashcards and real examples in the classroom if possible."
         },
         {
-          title: 'Descriptive Hair Phrases',
-          duration: '8 minutes',
-          description: 'Teach simple phrases: "I have long hair", "She has curly hair", "He has short hair". Have students practice these phrases in pairs, describing each other\'s hair.'
+          title: "Describing Hair Practice",
+          duration: "8 minutes",
+          description: "Model simple sentences: 'She has long hair.' 'He has short hair.' Have students repeat. Show pictures and have students describe the person's hair using complete sentences."
         },
         {
-          title: 'Crazy Hair Drawing Activity',
-          duration: '15 minutes',
-          description: 'Give students drawing paper and have them create a "crazy hair" character with unique hair (different colors, styles, etc.). Then have them describe their character using vocabulary learned.'
+          title: "Mirror Activity",
+          duration: "7 minutes",
+          description: "If mirrors are available, have students look at their own hair and describe it: 'I have [length] [color] hair.' Then have them work in pairs to describe each other's hair."
         },
         {
-          title: 'Review and Game',
-          duration: '7 minutes',
-          description: 'Review the vocabulary using student drawings as examples. Play a quick "I spy" game: "I spy someone with short black hair" and students point to the appropriate drawing.'
-        }
-      ],
-      assessmentTips: 'Monitor students during pair work for proper use of hair vocabulary. Check drawings and descriptions for understanding.',
-      homeworkIdeas: [
-        'Find and cut out pictures of different hairstyles from magazines',
-        'Draw family members and describe their hair'
-      ],
-      additionalResources: [
+          title: "What Does He/She Look Like?",
+          duration: "10 minutes",
+          description: "Teach the question 'What does he/she look like?' and practice responses using hair descriptions. Use pictures or point to classmates (respectfully) for examples."
+        },
         {
-          title: 'Hair Vocabulary Resources',
-          url: 'https://www.eslkidstuff.com/'
+          title: "Draw and Describe",
+          duration: "5 minutes",
+          description: "Students draw a simple picture of a person with distinctive hair. They then write or say a sentence describing the hair of the person they drew."
         }
       ]
     },
-    
-    // Lesson Plan 2 - Hair Styles and Descriptions (45 minutes)
     {
-      id: 'book1-unit10-lesson2',
-      title: 'Hair Styles and Descriptions',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit10-lesson2",
+      title: "Expanded Appearance Descriptions",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Expand hair vocabulary (ponytail, braid, bun, etc.)',
-        'Practice describing hair in more detail',
-        'Learn to ask and answer questions about hair'
+        "Expand appearance vocabulary beyond hair (tall, short, big, small)",
+        "Learn to combine multiple descriptors in a sentence",
+        "Create and describe character appearances"
       ],
       materials: [
-        'Visual English Book 1 - Unit 10 slides',
-        'Funny Haircut - WATTS ENGLISH video',
-        'Pictures of different hairstyles',
-        'Wordwall games from resources section',
-        'Toy hairdressing props (optional)'
+        "Body Parts Song video from Video Resources",
+        "Funny Haircut video from Video Resources",
+        "Picture cards with people of various appearances",
+        "Appearance word cards",
+        "Character creation templates",
+        "Magazines with people pictures (optional)"
       ],
       steps: [
         {
-          title: 'Review and Video',
-          duration: '7 minutes',
-          description: 'Review hair vocabulary from previous lesson. Then play the "Funny Haircut - WATTS ENGLISH" video, asking students to notice different hairstyles.'
+          title: "Warm-up: Body Parts Review",
+          duration: "5 minutes",
+          description: "Play the 'Body Parts Song' video. Have students point to each body part as it's mentioned in the song."
         },
         {
-          title: 'New Vocabulary Introduction',
-          duration: '8 minutes',
-          description: 'Introduce new hairstyle vocabulary: ponytail, braid, bun, bangs, etc. Show pictures or demonstrate on willing students or dolls if available.'
+          title: "New Appearance Vocabulary",
+          duration: "8 minutes",
+          description: "Introduce additional appearance vocabulary: tall/short (height), big/small (size), young/old (age). Use pictures and gestures to demonstrate each word."
         },
         {
-          title: 'Question Practice',
-          duration: '10 minutes',
-          description: 'Teach question forms: "What color is your hair?" "Is your hair long or short?" "Do you have curly hair?" Have students practice in pairs, asking and answering questions about their hair.'
+          title: "Funny Haircut Video",
+          duration: "7 minutes",
+          description: "Watch 'Funny Haircut' video and discuss the different appearances shown. Ask students to describe what they see using the new vocabulary."
         },
         {
-          title: 'Interactive Wordwall Game',
-          duration: '10 minutes',
-          description: 'Use the "WORDWALL - MY CRAZY HAIR" games from the resources. Students take turns coming to the board to match hair vocabulary or complete hair-related activities.'
+          title: "Combining Descriptions Practice",
+          duration: "10 minutes",
+          description: "Model combining descriptions: 'She has long blonde hair and she is tall.' Students practice with picture cards, trying to use at least two descriptors in each sentence."
         },
         {
-          title: 'Role Play Activity',
-          duration: '10 minutes',
-          description: 'Students role-play a hairdresser and customer scenario. The customer describes what kind of hairstyle they want, and the hairdresser responds appropriately. Use toy props if available.'
-        }
-      ],
-      assessmentTips: 'Listen for correct use of descriptive vocabulary during role plays. Check comprehension through game participation.',
-      homeworkIdeas: [
-        'Create a "hair styles around the world" mini-poster',
-        'Practice describing family members\' or friends\' hair'
-      ],
-      additionalResources: [
+          title: "Character Creation Activity",
+          duration: "10 minutes",
+          description: "Students create a character by selecting various appearance traits from word cards or by drawing. They then write 2-3 sentences describing their character's appearance."
+        },
         {
-          title: 'Hair Styles and Descriptions',
-          url: 'https://en.islcollective.com/'
+          title: "Guess Who Game",
+          duration: "5 minutes",
+          description: "Play a simplified 'Guess Who' game where one student describes a classmate or a picture, and others try to guess who is being described based on appearance."
         }
       ]
     }
   ];
 };
-
-export default generateUnit10LessonPlans;
