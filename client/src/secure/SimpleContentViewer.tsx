@@ -12,6 +12,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useExcelQA } from '@/hooks/use-excel-qa';
 import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cleanQuestionText, cleanAnswerText, cleanLeadingPatterns } from '@/lib/textCleaners';
 import TeacherResources from '@/components/TeacherResources';
 
 // Define types for question data structure
@@ -348,22 +349,7 @@ export default function SimpleContentViewer() {
   const { findMatchingQA } = useExcelQA(bookId || "1");
   const currentUnitId = unitPath; // Use unitPath instead of unitId
   
-  // Function to clean titles by removing leading alphanumeric patterns like "01 I A", "02 B", etc.
-  const cleanLeadingPatterns = (text: string): string => {
-    if (!text) return '';
-    
-    // Match patterns like "01 I A", "02 B", "13 A a", etc. at the beginning of text
-    // More comprehensive pattern to match all variations of the alphanumeric codes
-    const cleanedText = text
-      // First pattern: digits + space + letter + optional (space + letter)
-      .replace(/^(\d{1,2}\s+[A-Za-z](\s+[A-Za-z])?)\s+/i, '')
-      // Second pattern: digits + letter (no space) + optional letter at the beginning
-      .replace(/^(\d{1,2}[A-Za-z][A-Za-z]?)\s+/i, '')
-      // Third pattern: just digits at the beginning followed by dot or space
-      .replace(/^(\d{1,2}[\.\s])\s*/i, '');
-      
-    return cleanedText;
-  };
+  // Using the imported cleanLeadingPatterns function from textCleaners.ts
   
   const getQuestionAnswer = (material: S3Material) => {
     // Default return value if no match is found
@@ -686,10 +672,10 @@ export default function SimpleContentViewer() {
                             return (
                               <>
                                 <div className="text-gray-800 text-base font-medium">
-                                  {cleanLeadingPatterns(question)}
+                                  {cleanQuestionText(question)}
                                 </div>
                                 <div className="mt-2 font-medium text-gray-900 text-base">
-                                  {cleanLeadingPatterns(answer)}
+                                  {cleanAnswerText(answer)}
                                 </div>
                               </>
                             );
@@ -700,11 +686,11 @@ export default function SimpleContentViewer() {
                         {material.title && material.title.includes('?') && !qa.hasData && !material.title.includes('→') && (
                           <>
                             <div className="text-gray-800 text-base font-medium">
-                              {cleanLeadingPatterns(material.title)}
+                              {cleanQuestionText(material.title)}
                             </div>
                             {material.description && (
                               <div className="mt-2 font-medium text-gray-900 text-base">
-                                {cleanLeadingPatterns(material.description)}
+                                {cleanAnswerText(material.description)}
                               </div>
                             )}
                           </>
