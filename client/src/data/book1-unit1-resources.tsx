@@ -26,8 +26,8 @@ export const book1Unit1VideoResources: TeacherResource[] = [
     title: "Good Morning, Good Night - LITTLE FOX",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=eUXkj6j6Ezw",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/eUXkj6j6Ezw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    sourceUrl: "https://www.youtube.com/watch?v=mebfKDQ4dLo",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/mebfKDQ4dLo?si=Nt__Oy3NIgzIuUfY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "An adorable animated video teaching children greetings for different times of the day."
   },
   {
