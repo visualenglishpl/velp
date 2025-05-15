@@ -37,9 +37,15 @@ UnitDict = Dict[str, Any]
 BookDict = Dict[str, List[UnitDict]]
 
 # Constants
-YOUTUBE_EMBED_PATTERN = r'src="https://www.youtube.com/embed/([^"?]+)'
-WORDWALL_EMBED_PATTERN = r'src="https://wordwall.net/embed/([^"?\s]+)'
+YOUTUBE_EMBED_PATTERN = r'src="https?://(?:www\.)?youtube\.com/embed/([^"?&\s]+)'
+WORDWALL_EMBED_PATTERN = r'src="https?://(?:www\.)?wordwall\.net/(?:embed|resource)/([^"?&\s]+)'
+ISL_COLLECTIVE_PATTERN = r'src="https?://(?:www\.)?(?:en\.)?islcollective\.com/\w+/\w+/\w+/([0-9]+)'
 UNIT_HEADER_PATTERN = r'VISUAL\s+(\d+[A-Za-z]*)\s*-\s*UNIT\s+(\d+)\s*-\s*(.+?)(?:\n|$)'
+
+# Additional patterns for direct URLs (not in iframe)
+YOUTUBE_URL_PATTERN = r'(?:youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})'
+WORDWALL_URL_PATTERN = r'wordwall\.net/(?:\w+/)?(?:\w+/)?(?:\w+/)?([0-9]+)'
+ISL_COLLECTIVE_URL_PATTERN = r'islcollective\.com/(?:\w+/)?(?:\w+/)?(?:\w+/)?([0-9]+)'
 
 # S3 paths for all resource documents
 RESOURCE_PATHS = [
@@ -79,14 +85,20 @@ def download_docx_from_s3(s3_client: boto3.client, bucket: str, key: str) -> Byt
         print(f"Error downloading {key}: {e}")
         raise
 
-def extract_youtube_id(embed_url: str) -> Optional[str]:
-    """Extract the YouTube video ID from an embed URL."""
-    match = re.search(YOUTUBE_EMBED_PATTERN, embed_url)
+def extract_youtube_id(text: str) -> Optional[str]:
+    """Extract the YouTube video ID from an embed URL or direct URL."""
+    # Try to match embed pattern first
+    match = re.search(YOUTUBE_EMBED_PATTERN, text)
+    if match:
+        return match.group(1)
+    
+    # Try direct URL pattern
+    match = re.search(YOUTUBE_URL_PATTERN, text)
     if match:
         return match.group(1)
     
     # Try parse from query string if it's a different format
-    parsed_url = urlparse(embed_url)
+    parsed_url = urlparse(text)
     if 'youtube.com' in parsed_url.netloc:
         query_params = parse_qs(parsed_url.query)
         if 'v' in query_params:
@@ -94,11 +106,32 @@ def extract_youtube_id(embed_url: str) -> Optional[str]:
     
     return None
 
-def extract_wordwall_id(embed_url: str) -> Optional[str]:
-    """Extract the Wordwall game ID from an embed URL."""
-    match = re.search(WORDWALL_EMBED_PATTERN, embed_url)
+def extract_wordwall_id(text: str) -> Optional[str]:
+    """Extract the Wordwall game ID from an embed URL or direct URL."""
+    # Try to match embed pattern first
+    match = re.search(WORDWALL_EMBED_PATTERN, text)
     if match:
         return match.group(1)
+    
+    # Try direct URL pattern
+    match = re.search(WORDWALL_URL_PATTERN, text)
+    if match:
+        return match.group(1)
+        
+    return None
+
+def extract_isl_collective_id(text: str) -> Optional[str]:
+    """Extract the ISL Collective resource ID from an embed URL or direct URL."""
+    # Try to match embed pattern first
+    match = re.search(ISL_COLLECTIVE_PATTERN, text)
+    if match:
+        return match.group(1)
+    
+    # Try direct URL pattern
+    match = re.search(ISL_COLLECTIVE_URL_PATTERN, text)
+    if match:
+        return match.group(1)
+        
     return None
 
 def extract_title_from_text(text: str) -> str:
