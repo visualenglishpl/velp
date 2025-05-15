@@ -895,31 +895,55 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode }: Teache
           extractResources('pdfs', 'pdf');
         }
         
-        // Book1 specific units implementation 16, 17, 18
-        if (bookId === '1' && (unitNum === 16 || unitNum === 17 || unitNum === 18)) {
+        // Book1 specific units implementation for all units
+        if (bookId === '1') {
           console.log(`Checking for Book 1 Unit ${unitNum} specific resources in module`);
           
-          // Add specific handler for Book 1 Units 16-18
           try {
             let unitResources: TeacherResource[] = [];
             
-            if (unitNum === 16 && (resourcesModule as any).book1Unit16Resources) {
-              console.log('Using book1Unit16Resources directly');
-              unitResources = (resourcesModule as any).book1Unit16Resources;
-            } else if (unitNum === 17 && (resourcesModule as any).book1Unit17Resources) {
-              console.log('Using book1Unit17Resources directly');
-              unitResources = (resourcesModule as any).book1Unit17Resources;
-            } else if (unitNum === 18 && (resourcesModule as any).book1Unit18Resources) {
-              console.log('Using book1Unit18Resources directly');
-              unitResources = (resourcesModule as any).book1Unit18Resources;
+            // Handle all unit types with a consistent approach
+            const resourceVarName = `book1Unit${unitNum}Resources`;
+            console.log(`Looking for ${resourceVarName}`);
+            
+            if ((resourcesModule as any)[resourceVarName]) {
+              console.log(`Using ${resourceVarName} directly`);
+              unitResources = (resourcesModule as any)[resourceVarName];
+              
+              // Push the unit resources into the combined resources
+              resources.push(...unitResources.map(r => ({
+                ...r,
+                resourceType: r.resourceType || 'video',
+                bookId,
+                unitId
+              })));
             }
             
-            resources.push(...unitResources.map(r => ({
-              ...r,
-              resourceType: r.resourceType || 'video',
-              bookId,
-              unitId
-            })));
+            // Also check for video and game resources with specific naming patterns
+            const videoResourceVarName = `book1Unit${unitNum}VideoResources`;
+            const gameResourceVarName = `book1Unit${unitNum}GameResources`;
+            
+            if ((resourcesModule as any)[videoResourceVarName]) {
+              console.log(`Using ${videoResourceVarName} directly`);
+              const videoResources = (resourcesModule as any)[videoResourceVarName];
+              resources.push(...videoResources.map(r => ({
+                ...r,
+                resourceType: 'video',
+                bookId,
+                unitId
+              })));
+            }
+            
+            if ((resourcesModule as any)[gameResourceVarName]) {
+              console.log(`Using ${gameResourceVarName} directly`);
+              const gameResources = (resourcesModule as any)[gameResourceVarName];
+              resources.push(...gameResources.map(r => ({
+                ...r,
+                resourceType: 'game',
+                bookId,
+                unitId
+              })));
+            }
           } catch (error) {
             console.error(`Error handling Book 1 Unit ${unitNum} resources:`, error);
           }
