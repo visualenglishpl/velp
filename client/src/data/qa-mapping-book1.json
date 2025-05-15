@@ -341,18 +341,42 @@
   },
   
   "04 A": {
-    "filename": "04 A Body Parts.png",
+    "filename": "04 A How Are You.png",
     "codePattern": "04 A",
-    "question": "What are these called?",
-    "answer": "These are body parts.",
+    "question": "How are you?",
+    "answer": "I'm fine, thank you.",
     "unitId": "unit4",
     "bookId": "book1"
   },
   "04 B": {
-    "filename": "04 B Head Shoulders Knees Toes.mp4",
+    "filename": "04 B Happy Sad Hungry Thirsty.png",
     "codePattern": "04 B",
-    "question": "What body parts are in the song?",
-    "answer": "Head, shoulders, knees, and toes.",
+    "question": "How are you feeling?",
+    "answer": "I'm happy/sad/hungry/thirsty.",
+    "unitId": "unit4",
+    "bookId": "book1"
+  },
+  "04 C": {
+    "filename": "04 C Are You Happy.png",
+    "codePattern": "04 C",
+    "question": "Are you happy?",
+    "answer": "Yes, I'm happy. / No, I'm not happy.",
+    "unitId": "unit4",
+    "bookId": "book1"
+  },
+  "04 D": {
+    "filename": "04 D Are You Hungry.png",
+    "codePattern": "04 D",
+    "question": "Are you hungry?",
+    "answer": "Yes, I'm hungry. / No, I'm not hungry.",
+    "unitId": "unit4",
+    "bookId": "book1"
+  },
+  "04 E": {
+    "filename": "04 E Are You Thirsty.png",
+    "codePattern": "04 E",
+    "question": "Are you thirsty?",
+    "answer": "Yes, I'm thirsty. / No, I'm not thirsty.",
     "unitId": "unit4",
     "bookId": "book1"
   },

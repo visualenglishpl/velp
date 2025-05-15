@@ -666,12 +666,12 @@ export default function SimpleContentViewer() {
                               </div>
                             )}
                             <div className="text-gray-800 text-base font-medium">
-                              {/* Remove any numbering from questions */}
-                              {qa.question.replace(/^\d+\.\s*/, '')}
+                              {/* Remove any numbering from questions (including complex patterns like "Unit 18. Question") */}
+                              {qa.question.replace(/^(\w+\s+)?\d+\.\s*/, '')}
                             </div>
                             <div className="mt-2 font-medium text-gray-900 text-base">
-                              {/* Remove any numbering from answers */}
-                              {qa.answer.replace(/^\d+\.\s*/, '')}
+                              {/* Remove any numbering from answers (including complex patterns) */}
+                              {qa.answer.replace(/^(\w+\s+)?\d+\.\s*/, '')}
                             </div>
                           </>
                         )}

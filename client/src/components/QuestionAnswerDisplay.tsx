@@ -2226,12 +2226,14 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                 <>
                   {/* Callan-style centered question with larger font */}
                   <div className="mb-4 font-medium text-2xl bg-primary/5 py-3 px-4 rounded-md border border-primary/20">
-                    {qaData.question}
+                    {/* Remove any complex numbering patterns like "Unit 18. Question" */}
+                    {qaData.question.replace(/^(\w+\s+)?\d+\.\s*/, '')}
                   </div>
                   
                   {/* Answer - shown directly */}
                   <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200 transition-all">
-                    {qaData.answer}
+                    {/* Remove any complex numbering patterns from answers */}
+                    {qaData.answer.replace(/^(\w+\s+)?\d+\.\s*/, '')}
                   </div>
                 </>
               )}
