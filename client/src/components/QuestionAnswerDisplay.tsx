@@ -2226,14 +2226,24 @@ const QuestionAnswerDisplay: React.FC<QuestionAnswerDisplayProps> = ({
                 <>
                   {/* Callan-style centered question with larger font */}
                   <div className="mb-4 font-medium text-2xl bg-primary/5 py-3 px-4 rounded-md border border-primary/20">
-                    {/* Remove any complex numbering patterns like "Unit 18. Question" */}
-                    {qaData.question.replace(/^(\w+\s+)?\d+\.\s*/, '')}
+                    {/* Remove any numbering patterns, including index-based numbering from the question */}
+                    {qaData.question
+                      .replace(/^(\w+\s+)?\d+\.\s*/, '')  // Remove "Unit 18. Question" pattern 
+                      .replace(/^\d+[\.\)]\s*/, '')        // Remove "1. " or "1) " numbering at start
+                      .replace(/^Q\d+[\.\:]\s*/, '')       // Remove "Q1." or "Q1:" pattern
+                      .replace(/^Q[\.\:]\s*/, '')          // Remove "Q." or "Q:" prefix
+                    }
                   </div>
                   
                   {/* Answer - shown directly */}
                   <div className="text-lg bg-gray-50 py-2 px-4 rounded-md border border-gray-200 transition-all">
-                    {/* Remove any complex numbering patterns from answers */}
-                    {qaData.answer.replace(/^(\w+\s+)?\d+\.\s*/, '')}
+                    {/* Remove any numbering patterns from answers */}
+                    {qaData.answer
+                      .replace(/^(\w+\s+)?\d+\.\s*/, '')  // Remove "Unit 18. Answer" pattern
+                      .replace(/^\d+[\.\)]\s*/, '')        // Remove "1. " or "1) " numbering at start
+                      .replace(/^A\d+[\.\:]\s*/, '')       // Remove "A1." or "A1:" pattern
+                      .replace(/^A[\.\:]\s*/, '')          // Remove "A." or "A:" prefix
+                    }
                   </div>
                 </>
               )}
