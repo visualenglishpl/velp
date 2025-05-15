@@ -1555,6 +1555,14 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
   // This ensures resources get loaded when the component mounts or when dependencies change
   // The primary hook is below with more debugging
   
+  // Debug monitoring for dynamicLessonPlans changes
+  useEffect(() => {
+    console.log(`📋 TeacherResources: Dynamic lesson plans updated. Count: ${dynamicLessonPlans.length}`);
+    if (dynamicLessonPlans.length > 0) {
+      console.log(`📋 First lesson plan title: "${dynamicLessonPlans[0].title}"`);
+    }
+  }, [dynamicLessonPlans]);
+  
   // Handle initial data loading - bookUnitResources, local storage resources
   const { data: bookUnitResources = [], isLoading, error } = useQuery<TeacherResource[]>({
     queryKey: [`/api/teacher-resources/${bookId}/${unitId}`],
@@ -4354,18 +4362,19 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
     // Render dynamically loaded lesson plans
     const dynamicLessonPlansSection = dynamicLessonPlans.length > 0 ? (
       <div className="mt-6 space-y-8">
-        <h3 className="text-lg font-semibold mb-4">Dynamically Loaded Lesson Plans</h3>
+        <h3 className="text-xl font-semibold mb-4 text-primary">Lesson Plans</h3>
         <div className="lesson-plan-grid">
           {dynamicLessonPlans.map((plan, index) => (
             <div key={index}>
-              <Card className="h-full">
-                <CardHeader className="pb-2">
+              <Card className="h-full border-2 hover:border-primary/50 transition-all duration-200 shadow-sm hover:shadow-md">
+                <CardHeader className="pb-2 bg-muted/10">
                   <div className="flex justify-between items-start">
                     <div>
-                      <CardTitle className="text-lg truncate">
+                      <CardTitle className="text-xl truncate text-primary">
                         <span>{plan.title}</span>
                       </CardTitle>
-                      <CardDescription className="text-xs mt-1">
+                      <CardDescription className="text-sm mt-1 flex items-center">
+                        <FileText className="h-4 w-4 mr-1 text-primary" />
                         45-minute lesson plan by Visual English
                       </CardDescription>
                     </div>
@@ -4382,11 +4391,11 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
                     )}
                   </div>
                 </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto">
+                <CardContent className="max-h-[500px] overflow-y-auto p-4">
                   <LessonPlanTemplate plan={plan} />
                 </CardContent>
                 <CardFooter className="bg-muted/20 pt-3 pb-3">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => window.print()}>
+                  <Button variant="default" size="sm" className="w-full" onClick={() => window.print()}>
                     <Printer className="h-4 w-4 mr-2" /> Print Lesson Plan
                   </Button>
                 </CardFooter>
@@ -4488,7 +4497,7 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
         </div>
 
         {/* Tabs Navigation */}
-        <Tabs defaultValue="videos">
+        <Tabs defaultValue={dynamicLessonPlans.length > 0 ? "lessonplans" : "videos"}>
           <TabsList className="mb-4">
             <TabsTrigger value="videos" className="flex items-center">
               <Video className="h-4 w-4 mr-2" />
@@ -4502,9 +4511,14 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
               <FileText className="h-4 w-4 mr-2" />
               PDF Lesson
             </TabsTrigger>
-            <TabsTrigger value="lessonplans" className="flex items-center">
+            <TabsTrigger value="lessonplans" className="flex items-center relative">
               <FileText className="h-4 w-4 mr-2" />
               45-min Lesson Plans
+              {dynamicLessonPlans.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {dynamicLessonPlans.length}
+                </span>
+              )}
             </TabsTrigger>
           </TabsList>
 
@@ -4523,6 +4537,12 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
           </TabsContent>
 
           <TabsContent value="lessonplans">
+            <div className="mb-4">
+              <h2 className="text-2xl font-bold text-primary mb-2">45-minute Lesson Plans</h2>
+              <p className="text-muted-foreground">
+                Step-by-step lesson plans designed for 45-minute teaching sessions. Each lesson includes warm-up activities, main teaching points, practice activities, and closing activities.
+              </p>
+            </div>
             {renderLessonPlans()}
           </TabsContent>
         </Tabs>
