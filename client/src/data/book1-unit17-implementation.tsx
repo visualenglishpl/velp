@@ -1,131 +1,122 @@
 /**
- * Implementation file for Book 1 Unit 17: Transportation
- *
- * This unit focuses on teaching transportation vocabulary and related expressions
+ * Book 1, Unit 17: Sports - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 17.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit17Resources } from './book1-unit17-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit17Resources = (): TeacherResource[] => {
-  return book1Unit17Resources;
-};
+// Get all resources for Book 1, Unit 17
+export const getBook1Unit17Resources = () => book1Unit17Resources;
 
-// Export a function to get lesson plans for this unit
+// Also export the resources directly to match different import patterns
+export const resources = book1Unit17Resources;
+export const videos = book1Unit17Resources.filter(r => r.resourceType === 'video');
+export const games = book1Unit17Resources.filter(r => r.resourceType === 'game');
+
+// Generate lesson plans for Book 1, Unit 17
 export const generateUnit17LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Transportation (45 minutes)
     {
-      id: 'book1-unit17-lesson1',
-      title: 'Introduction to Transportation - Lesson 1',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit17-lesson1",
+      title: "Sports Vocabulary Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn basic transportation vocabulary',
-        'Identify different transportation items',
-        'Use simple sentences with transportation vocabulary'
+        "Learn vocabulary for common sports (soccer, basketball, swimming, etc.)",
+        "Use 'I play/do...' to talk about sports",
+        "Identify different sports equipment"
       ],
       materials: [
-        'Visual English Book 1 - Unit 17 slides',
-        'Transportation flashcards',
-        'Transportation videos from resources section',
-        'Drawing paper and colored pencils'
+        "Sports Song - Maple Leaf Learning video from Video Resources",
+        "Sports Vocabulary video from Video Resources",
+        "Sports flashcards",
+        "Sports equipment pictures",
+        "Ball or soft sports equipment (if available)",
+        "Drawing paper and coloring supplies"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Greet students and introduce the topic of transportation. Show flashcards one by one and ask students to repeat the vocabulary.'
+          title: "Warm-up: Sports Song",
+          duration: "5 minutes",
+          description: "Play the 'Sports Song' video. Have students watch first, then join in with actions mimicking each sport during the second viewing."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Play the Transportation vocabulary video. Pause at different points to reinforce vocabulary. Introduce key expressions related to transportation.'
+          title: "Sports Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce key vocabulary: soccer/football, basketball, swimming, running, tennis, baseball, cycling. Show flashcards. For each sport, say 'I play/do (sport)' and have students repeat with appropriate actions."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Pair activity: Students practice using the vocabulary in simple conversations. Teacher monitors and provides feedback.'
+          title: "Sports Vocabulary Video",
+          duration: "7 minutes",
+          description: "Watch sections of the 'Sports Vocabulary' video. After watching, review the sports from the video and have students mime playing each sport as you say its name."
         },
         {
-          title: 'Activity',
-          duration: '10 minutes',
-          description: 'Students complete a worksheet or game related to transportation vocabulary.'
+          title: "Sports and Equipment Matching",
+          duration: "8 minutes",
+          description: "Display sports equipment pictures (ball, racket, bicycle, swimming goggles). Students match equipment to sports, saying 'You need a (equipment) to play/do (sport).'"
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review the vocabulary learned today. Play a quick game to reinforce learning. Assign simple homework related to the topic.'
-        }
-      ],
-      assessmentTips: 'Monitor students during pair work for proper use of vocabulary. Check worksheet completion for understanding.',
-      homeworkIdeas: [
-        'Complete a related worksheet',
-        'Draw and label transportation items learned in class'
-      ],
-      additionalResources: [
+          title: "Action Verbs for Sports",
+          duration: "10 minutes",
+          description: "Teach action verbs associated with sports: kick a ball, shoot a basket, hit a ball, swim, run. Students practice the actions and related sentences: 'In soccer, you kick the ball.'"
+        },
         {
-          title: 'Transportation Resources',
-          url: 'https://esl-kids.com/transportation'
+          title: "My Favorite Sport",
+          duration: "5 minutes",
+          description: "Students draw themselves playing their favorite sport and write or say a simple sentence: 'I like to play/do (sport).' They can add what equipment they need for that sport."
         }
       ]
     },
-    
-    // Lesson Plan 2 - Transportation In Practice (45 minutes)
     {
-      id: 'book1-unit17-lesson2',
-      title: 'Transportation In Practice - Lesson 2',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit17-lesson2",
+      title: "Sports Skills and Abilities",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Review and expand transportation vocabulary',
-        'Practice using transportation in dialogues',
-        'Develop communication skills through themed activities'
+        "Learn to use 'I can...' to express sports abilities",
+        "Practice asking and answering 'Can you...?' questions",
+        "Connect sports with specific movements and skills"
       ],
       materials: [
-        'Visual English Book 1 - Unit 17 slides',
-        'Interactive transportation games',
-        'Role-play cards',
-        'Art supplies for craft activity'
+        "I Can Run video from Video Resources",
+        "Sports ability cards",
+        "Action verb flashcards",
+        "Space for movement activities",
+        "Sports survey worksheet",
+        "Wordwall game from Game Resources"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Review transportation vocabulary from previous lesson with a quick game.'
+          title: "Warm-up: I Can Run",
+          duration: "5 minutes",
+          description: "Play the 'I Can Run' video. Have students follow along with the actions, focusing on the 'I can...' language pattern."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Introduce new concepts related to transportation. Show examples and model language patterns.'
+          title: "Sports Abilities",
+          duration: "8 minutes",
+          description: "Teach the structure 'I can (verb)' with sports actions: 'I can run fast.' 'I can swim well.' 'I can kick a ball.' Demonstrate each action and have students repeat the sentences."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Group activity: Students work together on a task related to transportation. Each group presents their work to the class.'
+          title: "Can You...? Questions",
+          duration: "10 minutes",
+          description: "Introduce question and answer pattern: 'Can you play basketball?' 'Yes, I can.' / 'No, I can't.' Students practice asking and answering in pairs using sports flashcards."
         },
         {
-          title: 'Interactive Game',
-          duration: '10 minutes',
-          description: 'Use one of the Wordwall transportation games for interactive practice. Students take turns playing while others help.'
+          title: "Sports Movements Game",
+          duration: "7 minutes",
+          description: "Students take turns picking a sports action card (e.g., 'shoot a basket,' 'kick a ball'). They demonstrate the action while others guess the sport and ask 'Can you play (sport)?' The student responds appropriately."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review all vocabulary and concepts learned. Students share one new thing they learned about transportation today.'
-        }
-      ],
-      assessmentTips: 'Check student understanding through game participation. Monitor use of language during the group activity.',
-      homeworkIdeas: [
-        'Create a project related to transportation',
-        'Practice vocabulary with family members'
-      ],
-      additionalResources: [
+          title: "Class Sports Survey",
+          duration: "10 minutes",
+          description: "Students conduct a simple survey, asking 5 classmates 'Can you play/do (sport)?' and recording yes/no answers. After collecting responses, they can report: 'Three friends can play soccer.'"
+        },
         {
-          title: 'Transportation Activity Ideas',
-          url: 'https://www.eslkidstuff.com/'
+          title: "Sports Vocabulary Game",
+          duration: "5 minutes",
+          description: "Play the Wordwall 'Sports Vocabulary' game as a class. Students match sports with pictures or identify sports based on equipment shown."
         }
       ]
     }

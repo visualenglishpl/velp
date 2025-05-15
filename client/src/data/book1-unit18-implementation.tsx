@@ -1,131 +1,122 @@
 /**
- * Implementation file for Book 1 Unit 18: Leisure Activities
- *
- * This unit focuses on teaching leisure activities vocabulary and related expressions
+ * Book 1, Unit 18: Countries - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 18.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit18Resources } from './book1-unit18-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit18Resources = (): TeacherResource[] => {
-  return book1Unit18Resources;
-};
+// Get all resources for Book 1, Unit 18
+export const getBook1Unit18Resources = () => book1Unit18Resources;
 
-// Export a function to get lesson plans for this unit
+// Also export the resources directly to match different import patterns
+export const resources = book1Unit18Resources;
+export const videos = book1Unit18Resources.filter(r => r.resourceType === 'video');
+export const games = book1Unit18Resources.filter(r => r.resourceType === 'game');
+
+// Generate lesson plans for Book 1, Unit 18
 export const generateUnit18LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Leisure Activities (45 minutes)
     {
-      id: 'book1-unit18-lesson1',
-      title: 'Introduction to Leisure Activities - Lesson 1',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit18-lesson1",
+      title: "Countries and Flags Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn basic leisure activities vocabulary',
-        'Identify different leisure activities items',
-        'Use simple sentences with leisure activities vocabulary'
+        "Learn vocabulary for common countries and their flags",
+        "Use 'This is...' to identify countries on a map",
+        "Begin to understand the concept of different countries and cultures"
       ],
       materials: [
-        'Visual English Book 1 - Unit 18 slides',
-        'Leisure Activities flashcards',
-        'Leisure Activities videos from resources section',
-        'Drawing paper and colored pencils'
+        "Countries of the World Song video from Video Resources",
+        "World map or globe",
+        "Country and flag flashcards",
+        "Flag coloring templates",
+        "Coloring supplies",
+        "Blue tack or pins for map activities"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Greet students and introduce the topic of leisure activities. Show flashcards one by one and ask students to repeat the vocabulary.'
+          title: "Warm-up: Countries Song",
+          duration: "5 minutes",
+          description: "Play the 'Countries of the World Song' video. Have students watch first, then play again and encourage them to join in with simple movements like pointing to the countries mentioned."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Play the Leisure Activities vocabulary video. Pause at different points to reinforce vocabulary. Introduce key expressions related to leisure activities.'
+          title: "Country Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce vocabulary for 5-6 key countries relevant to your students (e.g., USA, UK, Poland, China, Japan, Brazil). Show each country on a map and its flag, saying 'This is (country)' and 'This is the flag of (country).' Have students repeat."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Pair activity: Students practice using the vocabulary in simple conversations. Teacher monitors and provides feedback.'
+          title: "Map Exploration",
+          duration: "8 minutes",
+          description: "Using a world map or globe, point out the countries introduced. Discuss simple facts like big/small countries, those with oceans or mountains. Have students take turns placing name cards on the correct countries."
         },
         {
-          title: 'Activity',
-          duration: '10 minutes',
-          description: 'Students complete a worksheet or game related to leisure activities vocabulary.'
+          title: "Flag Identification",
+          duration: "7 minutes",
+          description: "Show flag flashcards and have students identify the country. Practice the pattern: 'What country is this flag from?' 'It is from (country).' Students can take turns asking and answering."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review the vocabulary learned today. Play a quick game to reinforce learning. Assign simple homework related to the topic.'
-        }
-      ],
-      assessmentTips: 'Monitor students during pair work for proper use of vocabulary. Check worksheet completion for understanding.',
-      homeworkIdeas: [
-        'Complete a related worksheet',
-        'Draw and label leisure activities items learned in class'
-      ],
-      additionalResources: [
+          title: "Flag Coloring Activity",
+          duration: "10 minutes",
+          description: "Give students templates of 2-3 simple flags (e.g., Japan, Poland, USA) to color. While coloring, review the country names and simple facts about each. When finished, students hold up their flags and say 'This is the flag of (country).'"
+        },
         {
-          title: 'Leisure Activities Resources',
-          url: 'https://esl-kids.com/leisureactivities'
+          title: "Country Memory Game",
+          duration: "5 minutes",
+          description: "Play a simple memory game with pairs of country names and their flags. Students turn over cards to find matches, saying the country name when they find a match."
         }
       ]
     },
-    
-    // Lesson Plan 2 - Leisure Activities In Practice (45 minutes)
     {
-      id: 'book1-unit18-lesson2',
-      title: 'Leisure Activities In Practice - Lesson 2',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit18-lesson2",
+      title: "Where Are You From?",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Review and expand leisure activities vocabulary',
-        'Practice using leisure activities in dialogues',
-        'Develop communication skills through themed activities'
+        "Learn to ask and answer 'Where are you from?'",
+        "Connect countries with simple cultural elements",
+        "Practice basic greetings in different languages"
       ],
       materials: [
-        'Visual English Book 1 - Unit 18 slides',
-        'Interactive leisure activities games',
-        'Role-play cards',
-        'Art supplies for craft activity'
+        "Where Are You From? video from Video Resources",
+        "Hello in Different Languages video from Video Resources",
+        "Country and nationality flashcards",
+        "Cultural item pictures (foods, landmarks, costumes)",
+        "World map with stickers",
+        "Wordwall game from Game Resources"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Review leisure activities vocabulary from previous lesson with a quick game.'
+          title: "Warm-up: Where Are You From?",
+          duration: "5 minutes",
+          description: "Play the 'Where Are You From?' video. Focus on the question and answer pattern. Practice asking and answering 'Where are you from?' 'I am from (country).'"
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Introduce new concepts related to leisure activities. Show examples and model language patterns.'
+          title: "Country and Nationality",
+          duration: "8 minutes",
+          description: "Introduce simple nationality words for the countries learned: American, British, Polish, Chinese, Japanese, Brazilian. Show flashcards with people and flags, saying 'He/She is (nationality). He/She is from (country).'"
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Group activity: Students work together on a task related to leisure activities. Each group presents their work to the class.'
+          title: "Role-play: Meeting New Friends",
+          duration: "7 minutes",
+          description: "Students practice simple dialogues in pairs: 'Hello! What's your name?' 'My name is ___.' 'Where are you from?' 'I am from ___.' They can use country cards to pretend they are from different places."
         },
         {
-          title: 'Interactive Game',
-          duration: '10 minutes',
-          description: 'Use one of the Wordwall leisure activities games for interactive practice. Students take turns playing while others help.'
+          title: "Hello in Different Languages",
+          duration: "10 minutes",
+          description: "Watch the 'Hello in Different Languages' video. Practice saying hello in 3-4 different languages. Connect each greeting with its country on the map. Students can greet each other using different languages."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review all vocabulary and concepts learned. Students share one new thing they learned about leisure activities today.'
-        }
-      ],
-      assessmentTips: 'Check student understanding through game participation. Monitor use of language during the group activity.',
-      homeworkIdeas: [
-        'Create a project related to leisure activities',
-        'Practice vocabulary with family members'
-      ],
-      additionalResources: [
+          title: "Cultural Connections",
+          duration: "10 minutes",
+          description: "Show pictures of simple cultural elements from the countries studied (foods, landmarks, traditional clothes). For each item, say 'This is from (country).' Students then match cultural items to their countries."
+        },
         {
-          title: 'Leisure Activities Activity Ideas',
-          url: 'https://www.eslkidstuff.com/'
+          title: "Countries and Flags Game",
+          duration: "5 minutes",
+          description: "Play the Wordwall 'Countries and Flags' game as a class. Students take turns matching countries with their flags or identifying countries from clues."
         }
       ]
     }

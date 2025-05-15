@@ -1,100 +1,81 @@
 /**
- * Visual English Book 1, Unit 16: VEGETABLES
+ * Visual English Book 1, Unit 16: Jobs
  * Resources including videos and games
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
+// Video resources for Unit 16
 export const book1Unit16VideoResources: TeacherResource[] = [
   {
-    id: 'book1-unit16-video1',
-    bookId: '1',
-    unitId: '16',
-    title: 'Vegetable Song - The Singing Walrus',
-    description: 'A fun, animated song teaching vegetable vocabulary with colorful visuals.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=RE5tvaveVak',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/RE5tvaveVak?si=wY7QM0TuJxXvjKTm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit16-video1",
+    bookId: "1",
+    unitId: "16",
+    title: "Jobs Song - Maple Leaf Learning",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=ckKQclquAXU",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ckKQclquAXU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A fun and engaging song introducing common jobs and occupations for young learners."
   },
   {
-    id: 'book1-unit16-video2',
-    bookId: '1',
-    unitId: '16',
-    title: 'Cooking Vegetables - WATTS ENGLISH',
-    description: 'Video showing how to prepare vegetables with relevant vocabulary.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=cd8HE9HCl-c',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/cd8HE9HCl-c?si=Nlv4Oqfzv5_eEhfi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit16-video2",
+    bookId: "1",
+    unitId: "16",
+    title: "People Work - English Singsing",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=R6vXphKya8A",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/R6vXphKya8A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A video showcasing different professions and what each job involves."
   },
   {
-    id: 'book1-unit16-video3',
-    bookId: '1',
-    unitId: '16',
-    title: 'Vegetable Names Song - ENGLISH TREE',
-    description: 'Educational song teaching different vegetable names with clear pictures.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=g2GjP8Heqjw',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/g2GjP8Heqjw?si=2nHJJaTESd0wOPKG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book1-unit16-video4',
-    bookId: '1',
-    unitId: '16',
-    title: 'Guess the Vegetable - Interactive Game',
-    description: 'Interactive video showing vegetables gradually and asking children to guess them.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=pdIZH2Zk_G0',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/pdIZH2Zk_G0?si=pa6mntZr1xX0G3rg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book1-unit16-video5',
-    bookId: '1',
-    unitId: '16',
-    title: 'Vegetable Guessing Game for Kids',
-    description: 'Another fun game where children try to identify vegetables from clues.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=98dEG7WjF1M',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/98dEG7WjF1M?si=ega62rKVe-7R4qVZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit16-video3",
+    bookId: "1",
+    unitId: "16",
+    title: "What Do You Do? - Super Simple Songs",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=ckFuk2U-2Sw",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/ckFuk2U-2Sw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A song teaching how to ask and answer questions about jobs and occupations."
   }
 ];
 
+// Game resources for Unit 16
 export const book1Unit16GameResources: TeacherResource[] = [
   {
-    id: 'book1-unit16-game1',
-    bookId: '1',
-    unitId: '16',
-    title: 'WORDWALL - VEGETABLES (1)',
-    description: 'Interactive game to practice identifying and naming vegetables.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/4dd9de248dbb4b1e930c461ee3f5a6a5',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/4dd9de248dbb4b1e930c461ee3f5a6a5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    id: "book1-unit16-game1",
+    bookId: "1",
+    unitId: "16",
+    title: "Wordwall - Jobs and Occupations",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/jobs-occupations",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/dfa73c3ca62d4c9a824fe5c5cc92c2bd?themeId=1&templateId=3" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Interactive game for learning and matching different jobs and occupations."
   },
   {
-    id: 'book1-unit16-game2',
-    bookId: '1',
-    unitId: '16',
-    title: 'WORDWALL - VEGETABLES (2)',
-    description: 'Another vegetable vocabulary game with different formats and interactions.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/295589dd42e442228956c9fa7365aa96',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/295589dd42e442228956c9fa7365aa96?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    id: "book1-unit16-game2",
+    bookId: "1",
+    unitId: "16",
+    title: "Wordwall - What Do They Do?",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/what-do-they-do",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/26a66bbea04f495abef34d6a7f8c5e88?themeId=1&templateId=5" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A matching game connecting job titles with their activities and responsibilities."
   }
 ];
 
-// Combined resources
+// Combined resources for Unit 16
 export const book1Unit16Resources: TeacherResource[] = [
   ...book1Unit16VideoResources,
   ...book1Unit16GameResources
 ];
 
-// Export a function to get all resources for this unit
+// Export a getter function to match the pattern used elsewhere
 export const getBook1Unit16Resources = () => book1Unit16Resources;
 
 export default book1Unit16Resources;

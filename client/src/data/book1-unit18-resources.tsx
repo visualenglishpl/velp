@@ -1,111 +1,81 @@
 /**
- * Visual English Book 1, Unit 18: WHAT CAN YOU DO?
+ * Visual English Book 1, Unit 18: Countries
  * Resources including videos and games
  */
 
 import { TeacherResource } from '@/components/TeacherResources';
+import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
+// Video resources for Unit 18
 export const book1Unit18VideoResources: TeacherResource[] = [
   {
-    id: 'book1-unit18-video1',
-    bookId: '1',
-    unitId: '18',
-    title: 'Yes, I Can! - Super Simple Songs',
-    description: 'Fun song teaching ability expressions with actions children can do.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=_Ir0Mc6Qilo',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/_Ir0Mc6Qilo?si=yZbOkz3BttYRJpW3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit18-video1",
+    bookId: "1",
+    unitId: "18",
+    title: "Countries of the World Song - Kids Learning Tube",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=2nKNhNifp6M",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/2nKNhNifp6M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A catchy song introducing countries around the world with colorful animations of their flags."
   },
   {
-    id: 'book1-unit18-video2',
-    bookId: '1',
-    unitId: '18',
-    title: 'I Can Dream, Fly, Swim, Jump - WATTS ENGLISH',
-    description: 'Video showing different abilities with animations and real-life examples.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=opyc2bvtBpo',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/opyc2bvtBpo?si=xamI9uQjs__zjY9r" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit18-video2",
+    bookId: "1",
+    unitId: "18",
+    title: "Where Are You From? - English Singsing",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=v9LBKgnABgw",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/v9LBKgnABgw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A video teaching how to ask and answer questions about where people are from."
   },
   {
-    id: 'book1-unit18-video3',
-    bookId: '1',
-    unitId: '18',
-    title: 'What Can You Do? - MAPLE LEAF',
-    description: 'Educational video teaching ability expressions with clear examples.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=qI7nYvVXudo',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/qI7nYvVXudo?si=gwb6myCqDcEnnVxp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book1-unit18-video4',
-    bookId: '1',
-    unitId: '18',
-    title: 'Can/Can\'t Skit - Simple Skits MAPLE LEAF',
-    description: 'Role-play demonstration teaching how to use can/can\'t to express ability.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=hA3ClzoslBo',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/hA3ClzoslBo?si=sZCd8KQjwMdLOsiH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book1-unit18-video5',
-    bookId: '1',
-    unitId: '18',
-    title: 'What Can You Do? - Song',
-    description: 'Catchy song about abilities with visuals and simple choreography.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=radrRGGe-J0',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/radrRGGe-J0?si=CO0bXstO0-wqYbfA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
-  },
-  {
-    id: 'book1-unit18-video6',
-    bookId: '1',
-    unitId: '18',
-    title: 'I Can - The Singing Walrus',
-    description: 'Educational song about different abilities with clear visuals and actions.',
-    resourceType: 'video',
-    provider: 'YouTube',
-    sourceUrl: 'https://www.youtube.com/watch?v=hft6uJQIF4g',
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/hft6uJQIF4g?si=YNeeUx4o98FdScCM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+    id: "book1-unit18-video3",
+    bookId: "1",
+    unitId: "18",
+    title: "Hello in Different Languages - Rock 'n Learn",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=472AnCrHYVs",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/472AnCrHYVs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A fun video showing how to say hello in different languages from around the world."
   }
 ];
 
+// Game resources for Unit 18
 export const book1Unit18GameResources: TeacherResource[] = [
   {
-    id: 'book1-unit18-game1',
-    bookId: '1',
-    unitId: '18',
-    title: 'WORDWALL - WHAT CAN YOU DO (1)',
-    description: 'Interactive game to practice expressing abilities using can/can\'t.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/e4a93912a9784dc6b9171a1c54272864',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e4a93912a9784dc6b9171a1c54272864?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    id: "book1-unit18-game1",
+    bookId: "1",
+    unitId: "18",
+    title: "Wordwall - Countries and Flags",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/countries-flags",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/17fc67d2be3d44fba8b52ef527f5b2c2?themeId=1&templateId=3" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Interactive game for matching countries with their flags."
   },
   {
-    id: 'book1-unit18-game2',
-    bookId: '1',
-    unitId: '18',
-    title: 'WORDWALL - WHAT CAN YOU DO (2)',
-    description: 'Another game format to practice ability vocabulary and expressions.',
-    resourceType: 'game',
-    provider: 'Wordwall',
-    sourceUrl: 'https://wordwall.net/resource/b712584d5def413aa86cbdcfa8c222dd',
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/b712584d5def413aa86cbdcfa8c222dd?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    id: "book1-unit18-game2",
+    bookId: "1",
+    unitId: "18",
+    title: "Wordwall - Where Are You From?",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/where-are-you-from",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c83b5c2546eb450dbb4d47fa7a17f0b1?themeId=1&templateId=5" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A matching game practicing country names, flags, and nationalities."
   }
 ];
 
-// Combined resources
+// Combined resources for Unit 18
 export const book1Unit18Resources: TeacherResource[] = [
   ...book1Unit18VideoResources,
   ...book1Unit18GameResources
 ];
 
-// Export a function to get all resources for this unit
+// Export a getter function to match the pattern used elsewhere
 export const getBook1Unit18Resources = () => book1Unit18Resources;
 
 export default book1Unit18Resources;

@@ -1,131 +1,122 @@
 /**
- * Implementation file for Book 1 Unit 16: Community Helpers
- *
- * This unit focuses on teaching community helpers vocabulary and related expressions
+ * Book 1, Unit 16: Jobs - Implementation
+ * 
+ * This file contains the implementation for the teacher resources for Book 1, Unit 16.
  */
 
-import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
-import { TeacherResource } from '@/components/TeacherResources';
 import { book1Unit16Resources } from './book1-unit16-resources';
+import { LessonPlan, LessonStep } from '@/components/LessonPlanTemplate';
 
-// Export a function to get resources for this unit
-export const getBook1Unit16Resources = (): TeacherResource[] => {
-  return book1Unit16Resources;
-};
+// Get all resources for Book 1, Unit 16
+export const getBook1Unit16Resources = () => book1Unit16Resources;
 
-// Export a function to get lesson plans for this unit
+// Also export the resources directly to match different import patterns
+export const resources = book1Unit16Resources;
+export const videos = book1Unit16Resources.filter(r => r.resourceType === 'video');
+export const games = book1Unit16Resources.filter(r => r.resourceType === 'game');
+
+// Generate lesson plans for Book 1, Unit 16
 export const generateUnit16LessonPlans = (): LessonPlan[] => {
   return [
-    // Lesson Plan 1 - Introduction to Community Helpers (45 minutes)
     {
-      id: 'book1-unit16-lesson1',
-      title: 'Introduction to Community Helpers - Lesson 1',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit16-lesson1",
+      title: "Jobs Vocabulary Introduction",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Learn basic community helpers vocabulary',
-        'Identify different community helpers items',
-        'Use simple sentences with community helpers vocabulary'
+        "Learn vocabulary for common jobs and occupations (teacher, doctor, police officer, etc.)",
+        "Use 'He/She is a...' to describe jobs",
+        "Connect jobs with their workplaces"
       ],
       materials: [
-        'Visual English Book 1 - Unit 16 slides',
-        'Community Helpers flashcards',
-        'Community Helpers videos from resources section',
-        'Drawing paper and colored pencils'
+        "Jobs Song - Maple Leaf Learning video from Video Resources",
+        "People Work video from Video Resources",
+        "Job flashcards",
+        "Workplace images (school, hospital, police station, etc.)",
+        "Job tools and equipment pictures",
+        "Drawing paper and coloring supplies"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Greet students and introduce the topic of community helpers. Show flashcards one by one and ask students to repeat the vocabulary.'
+          title: "Warm-up: Jobs Song",
+          duration: "5 minutes",
+          description: "Play the 'Jobs Song' video. Have students watch first, then join in with actions mimicking each occupation during the second viewing."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Play the Community Helpers vocabulary video. Pause at different points to reinforce vocabulary. Introduce key expressions related to community helpers.'
+          title: "Job Vocabulary Introduction",
+          duration: "10 minutes",
+          description: "Introduce key vocabulary: teacher, doctor, police officer, firefighter, chef, driver, pilot, farmer. Show flashcards. For each job, say 'He/She is a (job)' and have students repeat."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Pair activity: Students practice using the vocabulary in simple conversations. Teacher monitors and provides feedback.'
+          title: "People Work Video",
+          duration: "7 minutes",
+          description: "Watch sections of the 'People Work' video, focusing on different professions and what they do. After watching, review the jobs from the video and have students recall what each profession does."
         },
         {
-          title: 'Activity',
-          duration: '10 minutes',
-          description: 'Students complete a worksheet or game related to community helpers vocabulary.'
+          title: "Jobs and Workplaces Matching",
+          duration: "8 minutes",
+          description: "Display workplace images (school, hospital, fire station, etc.) and job flashcards. Students match the jobs to their workplaces, saying 'A (job) works at/in a (workplace).'"
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review the vocabulary learned today. Play a quick game to reinforce learning. Assign simple homework related to the topic.'
-        }
-      ],
-      assessmentTips: 'Monitor students during pair work for proper use of vocabulary. Check worksheet completion for understanding.',
-      homeworkIdeas: [
-        'Complete a related worksheet',
-        'Draw and label community helpers items learned in class'
-      ],
-      additionalResources: [
+          title: "What Do They Do?",
+          duration: "10 minutes",
+          description: "Show pictures of job tools or actions (stethoscope, teaching at a board, putting out fire). Students guess the job and say 'He/She is a (job). He/She (action verb related to job).'"
+        },
         {
-          title: 'Community Helpers Resources',
-          url: 'https://esl-kids.com/communityhelpers'
+          title: "What I Want to Be",
+          duration: "5 minutes",
+          description: "Students draw what they want to be when they grow up and write or say a simple sentence: 'I want to be a (job).' They can add what they would do in that job."
         }
       ]
     },
-    
-    // Lesson Plan 2 - Community Helpers In Practice (45 minutes)
     {
-      id: 'book1-unit16-lesson2',
-      title: 'Community Helpers In Practice - Lesson 2',
-      duration: '45 minutes',
-      level: 'Beginner',
+      id: "book1-unit16-lesson2",
+      title: "Asking About Jobs",
+      duration: "45 minutes",
+      level: "Beginner",
       objectives: [
-        'Review and expand community helpers vocabulary',
-        'Practice using community helpers in dialogues',
-        'Develop communication skills through themed activities'
+        "Learn to ask and answer 'What do you do?' questions",
+        "Practice describing jobs using simple present tense verbs",
+        "Connect jobs with specific activities and tools"
       ],
       materials: [
-        'Visual English Book 1 - Unit 16 slides',
-        'Interactive community helpers games',
-        'Role-play cards',
-        'Art supplies for craft activity'
+        "What Do You Do? video from Video Resources",
+        "Job action cards",
+        "Community helper props or costumes (optional)",
+        "Job interview role-play cards",
+        "Family job survey worksheet",
+        "Wordwall game from Game Resources"
       ],
       steps: [
         {
-          title: 'Warm-up',
-          duration: '5 minutes',
-          description: 'Review community helpers vocabulary from previous lesson with a quick game.'
+          title: "Warm-up: What Do You Do?",
+          duration: "5 minutes",
+          description: "Play the 'What Do You Do?' video. Focus on the question and answer pattern. Practice asking and answering 'What do you do?' with simple responses."
         },
         {
-          title: 'Presentation',
-          duration: '10 minutes',
-          description: 'Introduce new concepts related to community helpers. Show examples and model language patterns.'
+          title: "Job Actions Review",
+          duration: "8 minutes",
+          description: "Review job vocabulary with actions: 'A teacher teaches.' 'A doctor helps sick people.' 'A chef cooks food.' Have students mime the actions while saying the sentences."
         },
         {
-          title: 'Practice',
-          duration: '15 minutes',
-          description: 'Group activity: Students work together on a task related to community helpers. Each group presents their work to the class.'
+          title: "Job Interview Role-play",
+          duration: "10 minutes",
+          description: "Students practice simple job interviews in pairs. One asks 'What do you do?' and the other responds 'I am a (job). I (job action).' Using props or costume items adds fun to the activity."
         },
         {
-          title: 'Interactive Game',
-          duration: '10 minutes',
-          description: 'Use one of the Wordwall community helpers games for interactive practice. Students take turns playing while others help.'
+          title: "Family Jobs",
+          duration: "7 minutes",
+          description: "Introduce vocabulary for discussing family members' jobs: 'My mother is a (job).' 'My father is a (job).' Students share information about their family members' occupations."
         },
         {
-          title: 'Wrap-up',
-          duration: '5 minutes',
-          description: 'Review all vocabulary and concepts learned. Students share one new thing they learned about community helpers today.'
-        }
-      ],
-      assessmentTips: 'Check student understanding through game participation. Monitor use of language during the group activity.',
-      homeworkIdeas: [
-        'Create a project related to community helpers',
-        'Practice vocabulary with family members'
-      ],
-      additionalResources: [
+          title: "Community Jobs Walk",
+          duration: "10 minutes",
+          description: "Take an imaginary walk through a community (using pictures or a wall display). When stopping at different locations, discuss what jobs people do there: 'Who works at a hospital? A doctor and a nurse work at a hospital.'"
+        },
         {
-          title: 'Community Helpers Activity Ideas',
-          url: 'https://www.eslkidstuff.com/'
+          title: "Jobs and Occupations Game",
+          duration: "5 minutes",
+          description: "Play the Wordwall 'Jobs and Occupations' game as a class. Students match job titles with pictures or descriptions of what they do."
         }
       ]
     }
