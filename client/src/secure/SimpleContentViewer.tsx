@@ -933,6 +933,7 @@ export default function SimpleContentViewer() {
                         key={`${bookId}-${unitNumber}-videos`}
                         readOnly={true}
                         initialFilter={{ resourceType: 'video', searchQuery: '' }}
+                        hideTabsInContentViewer={true}
                       />
                     </div>
                   </>
@@ -1014,6 +1015,7 @@ export default function SimpleContentViewer() {
                         key={`${bookId}-${unitNumber}-games`}
                         readOnly={true}
                         initialFilter={{ resourceType: 'game', searchQuery: '' }}
+                        hideTabsInContentViewer={true}
                       />
                     </div>
                   </>

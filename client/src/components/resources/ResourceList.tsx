@@ -47,6 +47,7 @@ interface ResourceListProps {
   searchQuery?: string;
   isLoading?: boolean;
   readOnly?: boolean;
+  hideTabsInContentViewer?: boolean; // Used to hide tabs when component is in SimpleContentViewer
 }
 
 export function ResourceList({
@@ -59,7 +60,8 @@ export function ResourceList({
   selectedType = 'all',
   searchQuery = '',
   isLoading = false,
-  readOnly = false
+  readOnly = false,
+  hideTabsInContentViewer = false
 }: ResourceListProps) {
   const [previewResource, setPreviewResource] = useState<TeacherResource | null>(null);
   
@@ -114,7 +116,13 @@ export function ResourceList({
     setPreviewResource(null);
   };
   
-  // Resource type filters
+  // Count resources by type
+  const getResourceCount = (type: ResourceFilterType): number => {
+    if (type === 'all') return resources.length;
+    return resources.filter(r => r.resourceType === type).length;
+  };
+
+  // Resource type filters with icon and count
   const resourceTypes: Array<{ type: ResourceFilterType, label: string }> = [
     { type: 'all', label: 'All Resources' },
     { type: 'video', label: 'Videos' },
@@ -125,45 +133,57 @@ export function ResourceList({
 
   return (
     <div className="space-y-4">
-      {/* Filters and search */}
-      <div className="flex flex-col sm:flex-row justify-between gap-4 mb-4">
-        <div className="flex flex-wrap gap-2">
-          {resourceTypes.map(({ type, label }) => (
-            <Button
-              key={type}
-              variant={selectedType === type ? "default" : "outline"}
-              size="sm"
-              onClick={() => onFilterByType(type)}
-            >
-              {type !== 'all' && getResourceTypeIcon(type as ResourceType)}
-              <span className="ml-1">{label}</span>
-              {type !== 'all' && (
-                <Badge variant="secondary" className="ml-2">
-                  {resources.filter(r => r.resourceType === (type as ResourceType)).length}
-                </Badge>
-              )}
-            </Button>
-          ))}
+      {/* Simplified tabs navigation - only show if not in content viewer tabs */}
+      {!hideTabsInContentViewer && (
+        <div className="border-b">
+          <div className="flex overflow-x-auto">
+            {resourceTypes.map(({ type, label }) => {
+              const count = getResourceCount(type);
+              const isActive = selectedType === type;
+              
+              return (
+                <button
+                  key={type}
+                  onClick={() => onFilterByType(type)}
+                  className={`flex items-center px-4 py-3 border-b-2 whitespace-nowrap transition-colors ${
+                    isActive 
+                      ? 'border-primary text-primary font-medium' 
+                      : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted'
+                  }`}
+                  title={`View ${label}`}
+                >
+                  {getResourceTypeIcon(type as ResourceType)}
+                  <span className="ml-2">{label}</span>
+                  <span className={`ml-2 px-1.5 py-0.5 rounded-full text-xs ${
+                    isActive ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      
+      {/* Search bar */}
+      <div className="flex justify-between items-center">
+        <div className="relative w-full max-w-sm">
+          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search resources..."
+            className="pl-10 pr-4"
+            value={searchQuery}
+            onChange={(e) => onSearch(e.target.value)}
+          />
         </div>
         
-        <div className="flex gap-2 items-center">
-          <div className="relative">
-            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search resources..."
-              className="pl-8 w-[200px]"
-              value={searchQuery}
-              onChange={(e) => onSearch(e.target.value)}
-            />
-          </div>
-          
-          {!readOnly && onAddResource && (
-            <Button onClick={onAddResource} size="sm">
-              <PlusIcon className="h-4 w-4 mr-1" />
-              Add Resource
-            </Button>
-          )}
-        </div>
+        {!readOnly && onAddResource && (
+          <Button onClick={onAddResource} size="sm" className="ml-4">
+            <PlusIcon className="h-4 w-4 mr-1" />
+            Add Resource
+          </Button>
+        )}
       </div>
       
       {/* Resources grid with thumbnails */}

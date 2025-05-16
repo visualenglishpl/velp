@@ -50,6 +50,7 @@ interface TeacherResourcesContainerProps {
   enableEditing?: boolean;
   readOnly?: boolean;
   showEmptyState?: boolean;
+  hideTabsInContentViewer?: boolean; // Hide tabs when component is in SimpleContentViewer
 }
 
 // Available book IDs for selection
@@ -74,8 +75,14 @@ export function TeacherResourcesContainer({
   showSelection = true,
   enableEditing = false,
   readOnly = false,
-  showEmptyState = false
+  showEmptyState = false,
+  hideTabsInContentViewer = false
 }: TeacherResourcesContainerProps) {
+  // Check if component is being rendered within SimpleContentViewer tabs
+  // by looking for initialFilter with specific resource types or prop
+  const isInTabsView = hideTabsInContentViewer || (initialFilter && 
+    ['video', 'game', 'pdf', 'lessonPlan'].includes(initialFilter.resourceType || ''));
+    
   // Use the hook to manage resources
   const {
     resources,
@@ -204,38 +211,41 @@ export function TeacherResourcesContainer({
       ) : (
         /* Resource List */
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <div>
-              <h2 className="text-2xl font-bold">
-                {bookId && unitId ? (
-                  <>
-                    {getBookTitle(bookId)} {getUnitTitle(unitId)} 
-                    {bookId === '3' && unitId === '16' && (
-                      <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                        Sports
-                      </span>
-                    )}
-                    {bookId === '3' && unitId === '17' && (
-                      <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                        Household Chores
-                      </span>
-                    )}
-                  </>
-                ) : (
-                  'Educational Resources'
-                )}
-              </h2>
-              <p className="text-muted-foreground">
-                {resources.length} resources available
-              </p>
+          {/* Only show header if not in tabs view */}
+          {!isInTabsView && (
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h2 className="text-2xl font-bold">
+                  {bookId && unitId ? (
+                    <>
+                      {getBookTitle(bookId)} {getUnitTitle(unitId)} 
+                      {bookId === '3' && unitId === '16' && (
+                        <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                          Sports
+                        </span>
+                      )}
+                      {bookId === '3' && unitId === '17' && (
+                        <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                          Household Chores
+                        </span>
+                      )}
+                    </>
+                  ) : (
+                    'Educational Resources'
+                  )}
+                </h2>
+                <p className="text-muted-foreground">
+                  {resources.length} resources available
+                </p>
+              </div>
+              
+              {!readOnly && enableEditing && (
+                <Button onClick={handleAddResource} variant="outline">
+                  Add New Resource
+                </Button>
+              )}
             </div>
-            
-            {!readOnly && enableEditing && (
-              <Button onClick={handleAddResource} variant="outline">
-                Add New Resource
-              </Button>
-            )}
-          </div>
+          )}
           
           <ResourceList
             resources={filteredResources}
@@ -248,6 +258,7 @@ export function TeacherResourcesContainer({
             onAddResource={enableEditing ? handleAddResource : undefined}
             onEditResource={enableEditing ? handleEditResource : undefined}
             onDeleteResource={enableEditing ? handleDeleteResource : undefined}
+            hideTabsInContentViewer={isInTabsView}
           />
         </div>
       )}
