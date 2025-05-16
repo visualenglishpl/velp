@@ -1,184 +1,109 @@
 /**
  * Embed Utilities
  * 
- * This library provides functions for handling embedded content from various providers.
+ * This module provides utility functions for handling embedded content
+ * from various providers like YouTube, Wordwall, and ISL Collective.
  */
 
 /**
- * Extracts YouTube video ID from various YouTube URL formats
+ * Extracts a YouTube video ID from a URL
  * 
- * Supports:
- * - https://www.youtube.com/watch?v=VIDEO_ID
- * - https://youtu.be/VIDEO_ID
- * - https://www.youtube.com/embed/VIDEO_ID
- * - https://www.youtube-nocookie.com/embed/VIDEO_ID
- * 
- * @param url Any YouTube URL or embed code containing a video ID
- * @returns The extracted video ID or null if not found
+ * @param url YouTube URL (can be watch, embed, or shortened format)
+ * @returns YouTube video ID or null if not found
  */
 export function extractYoutubeVideoId(url: string): string | null {
   if (!url) return null;
   
-  // Handle iframe embed code
-  if (url.includes('<iframe')) {
-    const srcMatch = url.match(/src=["'](?:https?:)?\/\/(?:www\.)?(?:youtube\.com|youtube-nocookie\.com)\/embed\/([^"'&?\/\s]+)/i);
-    if (srcMatch && srcMatch[1]) return srcMatch[1];
-  }
+  // Handle youtube.com/watch URLs
+  const watchRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const watchMatch = url.match(watchRegex);
+  if (watchMatch) return watchMatch[1];
   
-  // Handle regular YouTube URLs
-  const patterns = [
-    /(?:https?:)?\/\/(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,    // Standard watch URL
-    /(?:https?:)?\/\/(?:www\.)?youtu\.be\/([^?&]+)/i,               // Shortened URL
-    /(?:https?:)?\/\/(?:www\.)?youtube\.com\/embed\/([^?&]+)/i,      // Embed URL
-    /(?:https?:)?\/\/(?:www\.)?youtube-nocookie\.com\/embed\/([^?&]+)/i // No-cookie embed URL
-  ];
+  // Handle youtube.com/embed URLs
+  const embedRegex = /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/;
+  const embedMatch = url.match(embedRegex);
+  if (embedMatch) return embedMatch[1];
   
-  for (const pattern of patterns) {
-    const match = url.match(pattern);
-    if (match && match[1]) return match[1];
-  }
-  
+  // If no match is found
   return null;
 }
 
 /**
- * Generates YouTube embed URL with privacy-enhanced mode
+ * Extracts a Wordwall game ID from a URL
  * 
- * @param videoId YouTube video ID
- * @param autoplay Whether to autoplay the video (default: false)
- * @returns Embed URL for the video
- */
-export function getYoutubeEmbedUrl(videoId: string, autoplay: boolean = false): string {
-  return `https://www.youtube-nocookie.com/embed/${videoId}${autoplay ? '?autoplay=1' : ''}`;
-}
-
-/**
- * Extracts Wordwall game ID from various Wordwall URL formats
- * 
- * Supports:
- * - https://wordwall.net/resource/GAME_ID/...
- * - https://wordwall.net/embed/GAME_ID
- * - iframe embed code with src="https://wordwall.net/embed/GAME_ID"
- * 
- * @param url Any Wordwall URL or embed code containing a game ID
- * @returns The extracted game ID or null if not found
+ * @param url Wordwall URL
+ * @returns Wordwall game ID or null if not found
  */
 export function extractWordwallGameId(url: string): string | null {
   if (!url) return null;
   
-  // Handle iframe embed code
-  if (url.includes('<iframe')) {
-    const srcMatch = url.match(/src=["'](?:https?:)?\/\/(?:www\.)?wordwall\.net\/(?:embed|resource)\/([0-9]+)/i);
-    if (srcMatch && srcMatch[1]) return srcMatch[1];
-  }
+  // Handle wordwall.net/resource URLs
+  const resourceRegex = /wordwall\.net\/(?:resource|play)\/([0-9]+)/;
+  const resourceMatch = url.match(resourceRegex);
+  if (resourceMatch) return resourceMatch[1];
   
-  // Handle regular Wordwall URLs
-  const patterns = [
-    /(?:https?:)?\/\/(?:www\.)?wordwall\.net\/resource\/([0-9]+)/i,    // Resource URL
-    /(?:https?:)?\/\/(?:www\.)?wordwall\.net\/embed\/([0-9]+)/i        // Embed URL
-  ];
+  // Handle wordwall.net/embed URLs
+  const embedRegex = /wordwall\.net\/embed\/([0-9]+)/;
+  const embedMatch = url.match(embedRegex);
+  if (embedMatch) return embedMatch[1];
   
-  for (const pattern of patterns) {
-    const match = url.match(pattern);
-    if (match && match[1]) return match[1];
-  }
-  
+  // If no match is found
   return null;
 }
 
 /**
- * Generates Wordwall embed URL
+ * Extracts an ISL Collective resource ID from a URL
  * 
- * @param gameId Wordwall game ID
- * @returns Embed URL for the game
- */
-export function getWordwallEmbedUrl(gameId: string): string {
-  return `https://wordwall.net/embed/${gameId}`;
-}
-
-/**
- * Extracts ISL Collective resource ID from various ISL Collective URL formats
- * 
- * Supports:
- * - https://en.islcollective.com/english-esl-worksheets/ID
- * - iframe embed code with ISL Collective resources
- * 
- * @param url Any ISL Collective URL or embed code containing a resource ID
- * @returns The extracted resource ID or null if not found
+ * @param url ISL Collective URL
+ * @returns ISL Collective resource ID or null if not found
  */
 export function extractIslCollectiveId(url: string): string | null {
   if (!url) return null;
   
-  // Handle iframe embed code
-  if (url.includes('<iframe')) {
-    const srcMatch = url.match(/src=["'](?:https?:)?\/\/(?:www\.)?en\.islcollective\.com\/[^"']+\/([a-z0-9-]+)(?:[^"']*)/i);
-    if (srcMatch && srcMatch[1]) return srcMatch[1];
-  }
+  // Handle islcollective.com/preview URLs
+  const previewRegex = /islcollective\.com\/preview\/([a-zA-Z0-9_-]+)/;
+  const previewMatch = url.match(previewRegex);
+  if (previewMatch) return previewMatch[1];
   
-  // Handle regular ISL Collective URLs
-  const pattern = /(?:https?:)?\/\/(?:www\.)?en\.islcollective\.com\/[^\/]+\/([a-z0-9-]+)(?:[^"']*)/i;
-  const match = url.match(pattern);
-  if (match && match[1]) return match[1];
-  
+  // If no match is found
   return null;
 }
 
 /**
- * Determines if a URL is a PDF link
+ * Detects the type of embedded content from a URL
  * 
- * @param url The URL to check
- * @returns True if the URL is a PDF link
+ * @param url URL to detect
+ * @returns The detected embed type or null if not recognized
  */
-export function isPdfUrl(url: string): boolean {
-  if (!url) return false;
-  return url.toLowerCase().endsWith('.pdf');
-}
-
-/**
- * Encodes content to be safely embedded in an iframe src attribute
- * 
- * @param content HTML content to encode
- * @returns Data URI with encoded content
- */
-export function createHtmlDataUri(content: string): string {
-  const encodedContent = encodeURIComponent(content);
-  return `data:text/html;charset=utf-8,${encodedContent}`;
-}
-
-/**
- * Creates a sanitized iframe from raw HTML
- * 
- * @param html Raw HTML to embed
- * @param title Accessibility title for the iframe
- * @returns Safe iframe element as a string
- */
-export function createSafeIframe(html: string, title: string): string {
-  const safeHtml = html
-    .replace(/onerror/gi, 'data-blocked-onerror')
-    .replace(/javascript:/gi, 'data-blocked-javascript:');
-    
-  return `<iframe 
-    title="${title || 'Embedded content'}" 
-    src="${createHtmlDataUri(safeHtml)}" 
-    style="width:100%;height:500px;border:none;" 
-    sandbox="allow-scripts allow-same-origin"
-  ></iframe>`;
-}
-
-/**
- * Determines the type of embedded content from a URL or HTML
- * 
- * @param content URL or HTML to analyze
- * @returns The detected content type or 'unknown'
- */
-export function detectEmbedType(content: string): 'youtube' | 'wordwall' | 'islcollective' | 'pdf' | 'html' | 'unknown' {
-  if (!content) return 'unknown';
+export function detectEmbedType(url: string): 'youtube' | 'wordwall' | 'islcollective' | null {
+  if (!url) return null;
   
-  if (extractYoutubeVideoId(content)) return 'youtube';
-  if (extractWordwallGameId(content)) return 'wordwall';
-  if (extractIslCollectiveId(content)) return 'islcollective';
-  if (isPdfUrl(content)) return 'pdf';
-  if (content.includes('<iframe') || content.includes('<html')) return 'html';
+  // Check for YouTube URLs
+  if (
+    url.includes('youtube.com/watch') || 
+    url.includes('youtube.com/embed') || 
+    url.includes('youtu.be/')
+  ) {
+    return 'youtube';
+  }
   
-  return 'unknown';
+  // Check for Wordwall URLs
+  if (
+    url.includes('wordwall.net/resource') || 
+    url.includes('wordwall.net/play') || 
+    url.includes('wordwall.net/embed')
+  ) {
+    return 'wordwall';
+  }
+  
+  // Check for ISL Collective URLs
+  if (
+    url.includes('islcollective.com/preview') || 
+    url.includes('en.islcollective.com')
+  ) {
+    return 'islcollective';
+  }
+  
+  // No recognized embed type
+  return null;
 }

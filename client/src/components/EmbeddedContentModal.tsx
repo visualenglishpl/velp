@@ -1,29 +1,15 @@
 /**
  * EmbeddedContentModal Component
  * 
- * A modal component to display embedded content from various sources including:
- * - YouTube videos (with privacy-enhanced mode)
- * - Wordwall games
- * - ISL Collective resources
- * - PDF documents
- * - Raw HTML content (sanitized)
+ * This component displays embedded content from various sources in a modal.
+ * It handles different types of embedded content including YouTube videos,
+ * Wordwall games, ISL Collective resources, PDFs, and general HTML content.
  */
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, X, ExternalLink, Loader2 } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import {
-  extractYoutubeVideoId,
-  getYoutubeEmbedUrl,
-  extractWordwallGameId,
-  getWordwallEmbedUrl,
-  extractIslCollectiveId,
-  isPdfUrl,
-  createSafeIframe,
-  detectEmbedType
-} from '@/lib/embedUtils';
+import { ExternalLink } from 'lucide-react';
 
 interface EmbeddedContentModalProps {
   isOpen: boolean;
@@ -40,140 +26,82 @@ export function EmbeddedContentModal({
   title,
   sourceUrl
 }: EmbeddedContentModalProps) {
-  const [embedContent, setEmbedContent] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [embedType, setEmbedType] = useState<string>('unknown');
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const type = detectEmbedType(content);
-      setEmbedType(type);
-      
-      switch (type) {
-        case 'youtube':
-          const videoId = extractYoutubeVideoId(content);
-          if (videoId) {
-            setEmbedContent(`<iframe 
-              title="${title}" 
-              width="100%" 
-              height="400" 
-              src="${getYoutubeEmbedUrl(videoId)}" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen></iframe>`);
-          } else {
-            setError('Could not extract YouTube video ID.');
-          }
-          break;
-          
-        case 'wordwall':
-          const gameId = extractWordwallGameId(content);
-          if (gameId) {
-            setEmbedContent(`<iframe 
-              title="${title}" 
-              style="width: 100%; height: 500px; border: none" 
-              src="${getWordwallEmbedUrl(gameId)}" 
-              allowfullscreen></iframe>`);
-          } else {
-            setError('Could not extract Wordwall game ID.');
-          }
-          break;
-          
-        case 'islcollective':
-          const resourceId = extractIslCollectiveId(content);
-          if (resourceId) {
-            setEmbedContent(`<iframe 
-              title="${title}" 
-              style="width: 100%; height: 600px; border: none" 
-              src="https://en.islcollective.com/preview/${resourceId}" 
-              allowfullscreen></iframe>`);
-          } else {
-            setError('Could not extract ISL Collective resource ID.');
-          }
-          break;
-          
-        case 'pdf':
-          if (isPdfUrl(content)) {
-            setEmbedContent(`<iframe 
-              title="${title}" 
-              style="width: 100%; height: 600px; border: none" 
-              src="https://docs.google.com/viewer?url=${encodeURIComponent(content)}&embedded=true" 
-              allowfullscreen></iframe>`);
-          } else {
-            setError('Invalid PDF URL.');
-          }
-          break;
-          
-        case 'html':
-          // Use our createSafeIframe to handle raw HTML with sanitization
-          setEmbedContent(createSafeIframe(content, title));
-          break;
-          
-        default:
-          setError('Unsupported content type.');
-          break;
-      }
-    } catch (err) {
-      setError('Failed to process embedded content.');
-      console.error('Error in EmbeddedContentModal:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [isOpen, content, title]);
+  // Check if content is a YouTube URL
+  const isYoutubeEmbed = content.includes('youtube.com/embed/');
+  
+  // Check if content is a Wordwall URL
+  const isWordwallEmbed = content.includes('wordwall.net/embed/');
+  
+  // Check if content is an ISL Collective URL
+  const isIslCollectiveEmbed = content.includes('islcollective.com/preview/');
+  
+  // Check if content is a PDF URL
+  const isPdfUrl = content.endsWith('.pdf');
+
+  const handleIframeLoad = () => {
+    setLoading(false);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-4xl h-[80vh] flex flex-col overflow-hidden">
-        <DialogHeader className="flex flex-row items-center justify-between">
-          <DialogTitle>{title}</DialogTitle>
-          <div className="flex items-center gap-2">
+      <DialogContent className="max-w-4xl w-[90vw] max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogHeader>
+          <div className="flex justify-between items-center">
+            <DialogTitle>{title}</DialogTitle>
             {sourceUrl && (
-              <Button
-                variant="outline"
+              <Button 
+                variant="outline" 
                 size="sm"
                 onClick={() => window.open(sourceUrl, '_blank')}
+                className="ml-2"
               >
                 <ExternalLink className="h-4 w-4 mr-2" />
-                Open in New Tab
+                Open Original
               </Button>
             )}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClose}
-              className="h-8 w-8 p-0"
-            >
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
-            </Button>
           </div>
         </DialogHeader>
         
-        <div className="flex-1 overflow-auto p-1">
+        <div className="flex-1 relative overflow-hidden min-h-[50vh]">
           {loading && (
-            <div className="h-full flex items-center justify-center">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <div className="absolute inset-0 flex items-center justify-center bg-muted/20">
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
           
-          {error && (
-            <Alert variant="destructive" className="mb-4">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
+          {(isYoutubeEmbed || isWordwallEmbed || isIslCollectiveEmbed) && (
+            <iframe
+              src={content}
+              className="w-full h-full border-0"
+              allowFullScreen
+              onLoad={handleIframeLoad}
+              title={title}
+              style={{ minHeight: '50vh' }}
+            />
           )}
           
-          {!loading && !error && (
-            <div 
-              className="h-full w-full"
-              dangerouslySetInnerHTML={{ __html: embedContent }} 
+          {isPdfUrl && (
+            <iframe
+              src={`https://docs.google.com/viewer?url=${encodeURIComponent(content)}&embedded=true`}
+              className="w-full h-full border-0"
+              onLoad={handleIframeLoad}
+              title={title}
+              style={{ minHeight: '50vh' }}
             />
+          )}
+          
+          {!isYoutubeEmbed && !isWordwallEmbed && !isIslCollectiveEmbed && !isPdfUrl && (
+            <div className="p-4 overflow-auto max-h-[60vh]">
+              {/* If content appears to be HTML, render it as HTML */}
+              {content.includes('<') && content.includes('>') ? (
+                <div dangerouslySetInnerHTML={{ __html: content }} />
+              ) : (
+                // Otherwise render as plain text or markdown
+                <pre className="whitespace-pre-wrap">{content}</pre>
+              )}
+            </div>
           )}
         </div>
       </DialogContent>

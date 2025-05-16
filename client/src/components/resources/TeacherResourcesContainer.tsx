@@ -1,259 +1,266 @@
 /**
  * TeacherResourcesContainer Component
  * 
- * This is the main container component for teacher resources.
- * It handles resource selection, editing, and viewing,
- * replacing the original 4400+ lines component with a modular architecture.
+ * This component is the main container for the TeacherResources feature.
+ * It integrates the ResourceList, resource editing, and resource selection.
  */
 
 import { useState } from 'react';
-import { TeacherResource } from '@/types/resources';
+import { ResourceList } from './ResourceList';
+import { v4 as uuidv4 } from 'uuid';
 import { BookId, UnitId } from '@/types/content';
-import { useTeacherResources, isMultiVersionUnit, getMultiVersionOptions, UnitVersion } from '@/hooks/useTeacherResources';
-import { ResourceList } from '@/components/resources/ResourceList';
-import { ResourceEditor } from '@/components/resources/ResourceEditor';
+import { TeacherResource, ResourceType } from '@/types/resources';
+import { useTeacherResources } from '@/hooks/useTeacherResources';
+import { SPORTS_VERSION, CHORES_VERSION } from '@/lib/resourceRegistry';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@/components/ui/tabs';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, RefreshCw, BookOpen, Youtube, Gamepad2, FileText, Library, Settings2 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { 
+  BookIcon, 
+  LayoutGridIcon, 
+  FilmIcon, 
+  FileIcon, 
+  GamepadIcon,
+  LibraryIcon,
+  ArrowPathIcon
+} from 'lucide-react';
 
+// Define props for the container component
 interface TeacherResourcesContainerProps {
   initialBookId?: BookId;
   initialUnitId?: UnitId;
+  showSelection?: boolean;
+  enableEditing?: boolean;
   readOnly?: boolean;
   showEmptyState?: boolean;
-  enableEditing?: boolean;
-  showSelection?: boolean;
-  className?: string;
+}
+
+// Available book IDs for selection
+const availableBookIds: BookId[] = [
+  '1', '2', '3', '4', '5', '6', '7'
+];
+
+// Function to get book title
+function getBookTitle(bookId: BookId): string {
+  return `Book ${bookId}`;
+}
+
+// Function to get unit title
+function getUnitTitle(unitId: UnitId): string {
+  return `Unit ${unitId}`;
+}
+
+// Function to get resource type display name
+function getResourceTypeName(type: ResourceType): string {
+  switch (type) {
+    case 'video': return 'Video';
+    case 'game': return 'Game';
+    case 'pdf': return 'PDF';
+    case 'lesson': return 'Lesson Plan';
+    case 'worksheet': return 'Worksheet';
+    case 'flashcard': return 'Flashcard';
+    default: return 'Other';
+  }
 }
 
 export function TeacherResourcesContainer({
   initialBookId,
   initialUnitId,
-  readOnly = false,
-  showEmptyState = true,
-  enableEditing = true,
   showSelection = true,
-  className = ''
+  enableEditing = false,
+  readOnly = false,
+  showEmptyState = false
 }: TeacherResourcesContainerProps) {
-  const { toast } = useToast();
-  
-  // State for book, unit, and version selection
-  const [selectedBookId, setSelectedBookId] = useState<BookId | undefined>(initialBookId);
-  const [selectedUnitId, setSelectedUnitId] = useState<UnitId | undefined>(initialUnitId);
-  const [selectedVersion, setSelectedVersion] = useState<UnitVersion>();
-  
-  // State for resource editing
-  const [editingResource, setEditingResource] = useState<TeacherResource | null>(null);
-  const [isAdding, setIsAdding] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<string>('videos');
-  
-  // Calculate if this is a unit with multiple versions
-  const hasMultipleVersions = selectedBookId && selectedUnitId 
-    ? isMultiVersionUnit(selectedBookId, selectedUnitId) 
-    : false;
-  
-  // Get version options if applicable
-  const versionOptions = selectedBookId && selectedUnitId && hasMultipleVersions
-    ? getMultiVersionOptions(selectedBookId, selectedUnitId)
-    : [];
-  
-  // Get resources using the custom hook
-  const { 
-    resources, 
-    loading, 
-    error, 
-    filteredResources, 
-    hasResourceType,
-    reload,
-    availableBooks,
-    availableUnits
-  } = useTeacherResources(selectedBookId, selectedUnitId, selectedVersion);
+  // Use the hook to manage resources
+  const {
+    resources,
+    filteredResources,
+    bookId,
+    unitId,
+    setBookId,
+    setUnitId,
+    isLoading,
+    error,
+    filter,
+    setFilter,
+    setResourceTypeFilter,
+    setSearchQuery,
+    updateResource,
+    removeResource,
+    addResource,
+    version,
+    setVersion,
+    hasMultipleVersions
+  } = useTeacherResources({
+    initialBookId,
+    initialUnitId
+  });
 
-  // Handle saving a resource
-  const handleSaveResource = async (resource: TeacherResource) => {
-    try {
-      // In a real implementation, this would save to backend
-      // For now, just update local state and show confirmation
-      toast({
-        title: 'Resource Saved',
-        description: `${editingResource ? 'Updated' : 'Added'} "${resource.title}" successfully.`,
-      });
-      
-      // Close editor and refresh resources
-      setEditingResource(null);
-      setIsAdding(false);
-      await reload();
-    } catch (error) {
-      console.error('Error saving resource:', error);
-      toast({
-        title: 'Error Saving Resource',
-        description: 'There was a problem saving the resource. Please try again.',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  // Handle deleting a resource
-  const handleDeleteResource = async (resource: TeacherResource) => {
-    try {
-      // In a real implementation, this would delete from backend
-      // For now, just show confirmation
-      toast({
-        title: 'Resource Deleted',
-        description: `"${resource.title}" has been removed.`,
-      });
-      
-      // Refresh resources
-      await reload();
-    } catch (error) {
-      console.error('Error deleting resource:', error);
-      toast({
-        title: 'Error Deleting Resource',
-        description: 'There was a problem deleting the resource. Please try again.',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  // Handle book selection change
-  const handleBookChange = (bookId: BookId) => {
-    setSelectedBookId(bookId);
-    setSelectedUnitId(undefined);
-    setSelectedVersion(undefined);
-  };
-
-  // Handle unit selection change
-  const handleUnitChange = (unitId: UnitId) => {
-    setSelectedUnitId(unitId);
-    setSelectedVersion(undefined);
+  // Resource editing state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [resourceToDelete, setResourceToDelete] = useState<TeacherResource | null>(null);
+  
+  // Get available units for the selected book
+  const getAvailableUnits = (bookId: BookId): UnitId[] => {
+    if (!bookId) return [];
     
-    // If multi-version unit, set default version
-    if (selectedBookId && isMultiVersionUnit(selectedBookId, unitId)) {
-      const options = getMultiVersionOptions(selectedBookId, unitId);
-      if (options.length > 0) {
-        setSelectedVersion(options[0] as UnitVersion);
-      }
+    let unitCount = 18; // Default for Books 1-3
+    
+    if (bookId === '0a' || bookId === '0b' || bookId === '0c') {
+      unitCount = 20;
+    } else if (['4', '5', '6', '7'].includes(bookId)) {
+      unitCount = 16;
+    }
+    
+    return Array.from({ length: unitCount }, (_, i) => (i + 1).toString() as UnitId);
+  };
+
+  // Handle book selection
+  const handleBookSelect = (bookId: BookId) => {
+    setBookId(bookId);
+    setUnitId(null); // Reset unit when book changes
+  };
+  
+  // Handle unit selection
+  const handleUnitSelect = (unitId: UnitId) => {
+    setUnitId(unitId);
+  };
+  
+  // Handle version selection for Book 3 Unit 16
+  const handleVersionSelect = (version: string) => {
+    setVersion(version);
+  };
+  
+  // Handle adding a new resource
+  const handleAddResource = () => {
+    if (!bookId || !unitId) return;
+    
+    const newResource: TeacherResource = {
+      id: uuidv4(),
+      title: 'New Resource',
+      description: 'Resource description',
+      resourceType: 'video',
+      bookId,
+      unitId,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    
+    addResource(newResource);
+  };
+  
+  // Handle editing a resource
+  const handleEditResource = (resource: TeacherResource) => {
+    // In a real application, this would open a form modal
+    console.log('Edit resource:', resource);
+  };
+  
+  // Handle deletion confirmation
+  const handleDeleteConfirm = () => {
+    if (resourceToDelete) {
+      removeResource(resourceToDelete.id);
+      setResourceToDelete(null);
+      setIsDeleteDialogOpen(false);
     }
   };
-
-  // Handle version selection change
-  const handleVersionChange = (version: string) => {
-    setSelectedVersion(version as UnitVersion);
+  
+  // Handle delete dialog cancel
+  const handleDeleteCancel = () => {
+    setResourceToDelete(null);
+    setIsDeleteDialogOpen(false);
   };
-
-  // Render empty state when no book/unit selected
-  if (!selectedBookId || !selectedUnitId) {
-    if (!showEmptyState) return null;
-    
-    return (
-      <Card className={className}>
-        <CardHeader>
-          <CardTitle>Teacher Resources</CardTitle>
-          <CardDescription>
-            Select a book and unit to view available resources.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Book</label>
-              <Select value={selectedBookId} onValueChange={handleBookChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a book" />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableBooks.map((bookId) => (
-                    <SelectItem key={bookId} value={bookId}>
-                      Book {bookId}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            {selectedBookId && (
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Unit</label>
-                <Select value={selectedUnitId} onValueChange={handleUnitChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a unit" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {availableUnits.map((unitId) => (
-                      <SelectItem key={unitId} value={unitId}>
-                        Unit {unitId}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  // If editing/adding, show editor
-  if (editingResource || isAdding) {
-    return (
-      <ResourceEditor
-        resource={editingResource}
-        onSave={handleSaveResource}
-        onCancel={() => {
-          setEditingResource(null);
-          setIsAdding(false);
-        }}
-        bookId={selectedBookId}
-        unitId={selectedUnitId}
-      />
-    );
-  }
+  
+  // Open delete confirmation dialog
+  const handleDeleteResource = (resource: TeacherResource) => {
+    setResourceToDelete(resource);
+    setIsDeleteDialogOpen(true);
+  };
+  
+  // Determine if we should show the no-selection empty state
+  const showNoSelectionState = showEmptyState || (!bookId && !unitId);
 
   return (
-    <div className={`space-y-6 ${className}`}>
-      {/* Book/Unit Selector */}
+    <div className="flex flex-col space-y-4">
+      {/* Error message */}
+      {error && (
+        <div className="bg-destructive/10 border border-destructive text-destructive p-4 rounded-md mb-4">
+          <h3 className="font-semibold">Error loading resources</h3>
+          <p>{error.message}</p>
+        </div>
+      )}
+      
+      {/* Book and unit selection */}
       {showSelection && (
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-xl">Teacher Resources</CardTitle>
+            <CardTitle>Resource Selection</CardTitle>
             <CardDescription>
-              {hasMultipleVersions 
-                ? 'This unit has multiple versions. Select the version to view resources.' 
-                : 'View and manage resources for the selected book and unit.'}
+              Select a book and unit to view its resources
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="text-sm font-medium">Book</label>
-                <Select value={selectedBookId} onValueChange={handleBookChange}>
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1">
+                <label className="text-sm font-medium mb-1 block">Book</label>
+                <Select 
+                  value={bookId || ''} 
+                  onValueChange={(value) => handleBookSelect(value as BookId)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a book" />
                   </SelectTrigger>
                   <SelectContent>
-                    {availableBooks.map((bookId) => (
-                      <SelectItem key={bookId} value={bookId}>
-                        Book {bookId}
+                    {availableBookIds.map((id) => (
+                      <SelectItem key={id} value={id}>
+                        {getBookTitle(id)}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               
-              <div>
-                <label className="text-sm font-medium">Unit</label>
-                <Select value={selectedUnitId} onValueChange={handleUnitChange}>
+              <div className="flex-1">
+                <label className="text-sm font-medium mb-1 block">Unit</label>
+                <Select
+                  value={unitId || ''}
+                  onValueChange={(value) => handleUnitSelect(value as UnitId)}
+                  disabled={!bookId}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a unit" />
                   </SelectTrigger>
                   <SelectContent>
-                    {availableUnits.map((unitId) => (
-                      <SelectItem key={unitId} value={unitId}>
-                        Unit {unitId}
+                    {bookId && getAvailableUnits(bookId).map((id) => (
+                      <SelectItem key={id} value={id}>
+                        {getUnitTitle(id)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -261,185 +268,121 @@ export function TeacherResourcesContainer({
               </div>
               
               {hasMultipleVersions && (
-                <div>
-                  <label className="text-sm font-medium">Version</label>
-                  <Select value={selectedVersion} onValueChange={handleVersionChange}>
+                <div className="flex-1">
+                  <label className="text-sm font-medium mb-1 block">Version</label>
+                  <Select
+                    value={version || SPORTS_VERSION}
+                    onValueChange={handleVersionSelect}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select version" />
                     </SelectTrigger>
                     <SelectContent>
-                      {versionOptions.map((version) => (
-                        <SelectItem key={version} value={version}>
-                          {version.charAt(0).toUpperCase() + version.slice(1)} Version
-                        </SelectItem>
-                      ))}
+                      <SelectItem value={SPORTS_VERSION}>Sports Version</SelectItem>
+                      <SelectItem value={CHORES_VERSION}>House Chores Version</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               )}
             </div>
           </CardContent>
-          
-          {!readOnly && enableEditing && (
-            <CardFooter className="flex justify-between pt-0">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={reload} 
-                disabled={loading}
-              >
-                <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-                Refresh
-              </Button>
-              
-              <Button 
-                size="sm" 
-                onClick={() => setIsAdding(true)}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Resource
-              </Button>
-            </CardFooter>
-          )}
         </Card>
       )}
       
-      {/* Resource Categories */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-5 mb-4">
-          <TabsTrigger value="videos" className="flex items-center gap-1">
-            <Youtube className="h-4 w-4" />
-            <span className="hidden sm:inline">Videos</span>
-          </TabsTrigger>
-          <TabsTrigger value="games" className="flex items-center gap-1">
-            <Gamepad2 className="h-4 w-4" />
-            <span className="hidden sm:inline">Games</span>
-          </TabsTrigger>
-          <TabsTrigger value="documents" className="flex items-center gap-1">
-            <FileText className="h-4 w-4" />
-            <span className="hidden sm:inline">Documents</span>
-          </TabsTrigger>
-          <TabsTrigger value="lessons" className="flex items-center gap-1">
-            <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline">Lessons</span>
-          </TabsTrigger>
-          <TabsTrigger value="all" className="flex items-center gap-1">
-            <Library className="h-4 w-4" />
-            <span className="hidden sm:inline">All</span>
-          </TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="videos" className="space-y-4">
-          <ResourceList
-            resources={filteredResources('video')}
-            title="Videos"
-            icon={<Youtube className="h-5 w-5 text-red-500" />}
-            emptyMessage="No videos available for this unit."
-            onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-            onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-            isReadOnly={readOnly}
-          />
-        </TabsContent>
-        
-        <TabsContent value="games" className="space-y-4">
-          <ResourceList
-            resources={filteredResources('game')}
-            title="Interactive Games"
-            icon={<Gamepad2 className="h-5 w-5 text-green-500" />}
-            emptyMessage="No games available for this unit."
-            onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-            onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-            isReadOnly={readOnly}
-          />
-        </TabsContent>
-        
-        <TabsContent value="documents" className="space-y-4">
-          <ResourceList
-            resources={filteredResources('pdf')}
-            title="Documents & Worksheets"
-            icon={<FileText className="h-5 w-5 text-blue-500" />}
-            emptyMessage="No documents available for this unit."
-            onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-            onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-            isReadOnly={readOnly}
-          />
-        </TabsContent>
-        
-        <TabsContent value="lessons" className="space-y-4">
-          <ResourceList
-            resources={filteredResources('lesson')}
-            title="Lesson Plans"
-            icon={<BookOpen className="h-5 w-5 text-amber-500" />}
-            emptyMessage="No lesson plans available for this unit."
-            onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-            onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-            isReadOnly={readOnly}
-          />
-        </TabsContent>
-        
-        <TabsContent value="all" className="space-y-8">
-          {hasResourceType('video') && (
-            <ResourceList
-              resources={filteredResources('video')}
-              title="Videos"
-              icon={<Youtube className="h-5 w-5 text-red-500" />}
-              onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-              onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-              isReadOnly={readOnly}
-            />
-          )}
-          
-          {hasResourceType('game') && (
-            <ResourceList
-              resources={filteredResources('game')}
-              title="Interactive Games"
-              icon={<Gamepad2 className="h-5 w-5 text-green-500" />}
-              onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-              onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-              isReadOnly={readOnly}
-            />
-          )}
-          
-          {hasResourceType('pdf') && (
-            <ResourceList
-              resources={filteredResources('pdf')}
-              title="Documents & Worksheets"
-              icon={<FileText className="h-5 w-5 text-blue-500" />}
-              onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-              onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-              isReadOnly={readOnly}
-            />
-          )}
-          
-          {hasResourceType('lesson') && (
-            <ResourceList
-              resources={filteredResources('lesson')}
-              title="Lesson Plans"
-              icon={<BookOpen className="h-5 w-5 text-amber-500" />}
-              onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-              onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-              isReadOnly={readOnly}
-            />
-          )}
-          
-          {hasResourceType('other') && (
-            <ResourceList
-              resources={filteredResources('other')}
-              title="Other Resources"
-              icon={<Settings2 className="h-5 w-5 text-gray-500" />}
-              onEdit={!readOnly && enableEditing ? setEditingResource : undefined}
-              onDelete={!readOnly && enableEditing ? handleDeleteResource : undefined}
-              isReadOnly={readOnly}
-            />
-          )}
-          
-          {resources.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
-              No resources available for this unit.
+      {/* No Selection State */}
+      {showNoSelectionState ? (
+        <Card className="border-dashed">
+          <CardContent className="pt-8 pb-8 flex flex-col items-center justify-center text-center">
+            <LibraryIcon className="h-12 w-12 mb-4 text-muted-foreground" />
+            <h3 className="text-lg font-medium mb-2">No Resources Selected</h3>
+            <p className="text-muted-foreground mb-6 max-w-md">
+              Select a book and unit to view its teacher resources, or use the 
+              filters to find specific types of resources.
+            </p>
+            {showSelection ? (
+              <p className="text-sm text-muted-foreground">
+                Use the selection controls above to choose a book and unit.
+              </p>
+            ) : (
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setBookId('1' as BookId);
+                  setUnitId('1' as UnitId);
+                }}
+              >
+                <BookIcon className="mr-2 h-4 w-4" />
+                View Example Resources
+              </Button>
+            )}
+          </CardContent>
+        </Card>
+      ) : (
+        /* Resource List */
+        <Card>
+          <CardHeader className="pb-3">
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle>
+                  {bookId && unitId ? (
+                    <>
+                      {getBookTitle(bookId)} {getUnitTitle(unitId)} Resources
+                      {hasMultipleVersions && version && (
+                        <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                          {version === SPORTS_VERSION ? 'Sports Version' : 'House Chores Version'}
+                        </span>
+                      )}
+                    </>
+                  ) : (
+                    'Teacher Resources'
+                  )}
+                </CardTitle>
+                <CardDescription>
+                  {resources.length} resources available
+                </CardDescription>
+              </div>
+              
+              {/* Optional refresh button for reloading */}
+              {/* <Button variant="ghost" size="icon" title="Refresh resources">
+                <ArrowPathIcon className="h-4 w-4" />
+              </Button> */}
             </div>
-          )}
-        </TabsContent>
-      </Tabs>
+          </CardHeader>
+          <CardContent>
+            <ResourceList
+              resources={filteredResources}
+              onSearch={setSearchQuery}
+              onFilterByType={setResourceTypeFilter}
+              selectedType={filter.resourceType}
+              searchQuery={filter.searchQuery}
+              isLoading={isLoading}
+              readOnly={readOnly}
+              onAddResource={enableEditing ? handleAddResource : undefined}
+              onEditResource={enableEditing ? handleEditResource : undefined}
+              onDeleteResource={enableEditing ? handleDeleteResource : undefined}
+            />
+          </CardContent>
+        </Card>
+      )}
+      
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete the resource 
+              "{resourceToDelete?.title}". This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleDeleteCancel}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteConfirm} className="bg-destructive text-destructive-foreground">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

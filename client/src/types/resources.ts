@@ -1,7 +1,7 @@
 /**
- * Teacher Resource Types
+ * Resource Types
  * 
- * This file defines types related to teacher resources.
+ * This module contains type definitions for teacher resources
  */
 
 import { BookId, UnitId } from './content';
@@ -9,45 +9,83 @@ import { BookId, UnitId } from './content';
 /**
  * Resource types available in the system
  */
-export type ResourceType = 'video' | 'game' | 'pdf' | 'lesson' | 'other';
+export type ResourceType = 'video' | 'game' | 'pdf' | 'lesson' | 'worksheet' | 'flashcard' | 'other';
 
 /**
- * Teacher Resource object definition
+ * Base interface for all teacher resources
  */
 export interface TeacherResource {
   id: string;
   title: string;
-  description?: string;
+  description: string;
   resourceType: ResourceType;
-  sourceUrl?: string;
-  content?: string;
+  bookId: BookId;
+  unitId: UnitId;
   provider?: string;
-  bookId: string;
-  unitId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
   
   // Video-specific properties
-  isYoutubeVideo?: boolean;
   youtubeVideoId?: string;
+  isYoutubeVideo?: boolean;
   
   // Game-specific properties
-  isWordwallGame?: boolean;
   wordwallGameId?: string;
+  isWordwallGame?: boolean;
+  islCollectiveId?: string;
+  isIslCollective?: boolean;
   
   // PDF-specific properties
   pdfUrl?: string;
   
-  // ISL Collective specific properties
-  isIslCollectiveResource?: boolean;
-  islCollectiveId?: string;
+  // Content for lesson plans, etc.
+  content?: string;
   
-  // Raw embed code if needed
-  embedCode?: string;
+  // General source URL
+  sourceUrl?: string;
 }
 
 /**
- * Structure for defining a common resource across multiple units
+ * Filter options for resources
  */
-export interface CommonResource extends Omit<TeacherResource, 'unitId'> {
-  // Unit ID is not required for common resources
-  unitId?: string;
+export interface ResourceFilter {
+  resourceType?: ResourceType | 'all';
+  searchQuery?: string;
+  provider?: string;
+}
+
+/**
+ * Resource listing with filtering and sorting
+ */
+export interface ResourceListing {
+  resources: TeacherResource[];
+  totalCount: number;
+  filter: ResourceFilter;
+}
+
+/**
+ * Resource type display information
+ */
+export interface ResourceTypeInfo {
+  type: ResourceType;
+  label: string;
+  description: string;
+  icon: string;
+  color: string;
+}
+
+/**
+ * Resource creation/update form data
+ */
+export interface ResourceFormData {
+  title: string;
+  description: string;
+  resourceType: ResourceType;
+  youtubeVideoId?: string;
+  wordwallGameId?: string;
+  islCollectiveId?: string;
+  pdfUrl?: string;
+  content?: string;
+  sourceUrl?: string;
+  provider?: string;
 }

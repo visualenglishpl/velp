@@ -1,159 +1,183 @@
 /**
  * useTeacherResources Hook
  * 
- * This hook abstracts the loading and management of teacher resources for a specific book and unit.
- * It supports special cases like Book 3 Unit 16 with multiple versions (sports/chores).
+ * This hook provides access to teacher resources for a specific book and unit,
+ * with filtering and state management capabilities.
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { TeacherResource } from '@/types/resources';
 import { BookId, UnitId } from '@/types/content';
-import { 
-  loadResources, 
-  hasResources,
-  getRegisteredBookIds, 
-  getRegisteredUnitIds,
-  SPORTS_VERSION,
-  CHORES_VERSION
-} from '@/lib/resourceRegistry';
+import { TeacherResource, ResourceType, ResourceFilter } from '@/types/resources';
+import { loadResources, SPORTS_VERSION, CHORES_VERSION } from '@/lib/resourceRegistry';
 
-// Type for unit version selection
-export type UnitVersion = typeof SPORTS_VERSION | typeof CHORES_VERSION | undefined;
+interface UseTeacherResourcesOptions {
+  initialBookId?: BookId;
+  initialUnitId?: UnitId;
+  initialFilter?: ResourceFilter;
+}
 
-// Type for hook return value
-interface UseTeacherResourcesReturn {
+interface UseTeacherResourcesResult {
   resources: TeacherResource[];
-  loading: boolean;
+  filteredResources: TeacherResource[];
+  bookId: BookId | null;
+  unitId: UnitId | null;
+  setBookId: (bookId: BookId | null) => void;
+  setUnitId: (unitId: UnitId | null) => void;
+  isLoading: boolean;
   error: Error | null;
-  filteredResources: (type: string) => TeacherResource[];
-  hasResourceType: (type: string) => boolean;
-  reload: () => Promise<void>;
-  availableBooks: BookId[];
-  availableUnits: UnitId[];
+  filter: ResourceFilter;
+  setFilter: (filter: ResourceFilter) => void;
+  setResourceTypeFilter: (type: ResourceType | 'all') => void;
+  setSearchQuery: (query: string) => void;
+  getResourceById: (id: string) => TeacherResource | undefined;
+  updateResource: (resource: TeacherResource) => void;
+  removeResource: (id: string) => void;
+  addResource: (resource: TeacherResource) => void;
+  version: string | null;
+  setVersion: (version: string) => void;
+  hasMultipleVersions: boolean;
 }
 
 /**
- * Hook to load and manage teacher resources
- * 
- * @param bookId The selected book ID
- * @param unitId The selected unit ID
- * @param version Optional version for multi-version units
- * @returns Object with resources and helper functions
+ * Hook for working with teacher resources
  */
-export function useTeacherResources(
-  bookId: BookId | undefined,
-  unitId: UnitId | undefined,
-  version: UnitVersion = undefined
-): UseTeacherResourcesReturn {
+export function useTeacherResources({
+  initialBookId = null,
+  initialUnitId = null,
+  initialFilter = { resourceType: 'all', searchQuery: '' }
+}: UseTeacherResourcesOptions = {}): UseTeacherResourcesResult {
+  // State for book and unit selection
+  const [bookId, setBookId] = useState<BookId | null>(initialBookId);
+  const [unitId, setUnitId] = useState<UnitId | null>(initialUnitId);
+  
+  // State for resource data
   const [resources, setResources] = useState<TeacherResource[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
+  const [filter, setFilter] = useState<ResourceFilter>(initialFilter);
   
-  // Get all available books with resources
-  const availableBooks = getRegisteredBookIds();
+  // Special case for Book 3 Unit 16 with multiple versions
+  const [version, setVersion] = useState<string | null>(null);
+  const hasMultipleVersions = bookId === '3' && unitId === '16';
   
-  // Get all available units for the selected book
-  const availableUnits = bookId ? getRegisteredUnitIds(bookId) : [];
-
-  /**
-   * Filter resources by type
-   * 
-   * @param type Resource type to filter by
-   * @returns Filtered resources
-   */
-  const filteredResources = useCallback((type: string): TeacherResource[] => {
-    return resources.filter(resource => resource.resourceType === type);
-  }, [resources]);
-
-  /**
-   * Check if resources of a specific type exist
-   * 
-   * @param type Resource type to check
-   * @returns True if resources of that type exist
-   */
-  const hasResourceType = useCallback((type: string): boolean => {
-    return resources.some(resource => resource.resourceType === type);
-  }, [resources]);
-
-  /**
-   * Load resources for the selected book and unit
-   */
-  const loadResourcesForBookUnit = useCallback(async () => {
-    // Clear resources if no book or unit selected
-    if (!bookId || !unitId) {
-      setResources([]);
-      return;
-    }
-    
-    // Check if resources are available
-    if (!hasResources(bookId, unitId)) {
-      setResources([]);
-      return;
-    }
-    
-    setLoading(true);
-    setError(null);
-    
-    try {
-      // Book 3 Unit 16 is special case with multiple versions
-      const loadedResources = await loadResources(bookId, unitId) || [];
-      setResources(loadedResources);
-    } catch (err) {
-      console.error('Error loading teacher resources:', err);
-      setError(err as Error);
-      setResources([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [bookId, unitId, version]);
-
-  /**
-   * Reload resources
-   */
-  const reload = useCallback(async () => {
-    await loadResourcesForBookUnit();
-  }, [loadResourcesForBookUnit]);
-
-  // Load resources when book, unit, or version changes
+  // Fetch resources when book or unit changes
   useEffect(() => {
-    loadResourcesForBookUnit();
-  }, [loadResourcesForBookUnit]);
-
+    async function fetchResources() {
+      if (!bookId || !unitId) {
+        setResources([]);
+        return;
+      }
+      
+      setIsLoading(true);
+      setError(null);
+      
+      try {
+        // Special case for Book 3 Unit 16 with multiple versions
+        if (bookId === '3' && unitId === '16') {
+          if (!version) {
+            setVersion(SPORTS_VERSION);
+            return; // Wait for version to be set
+          }
+        }
+        
+        const loadedResources = await loadResources(bookId, unitId);
+        setResources(loadedResources || []);
+      } catch (err) {
+        console.error('Error loading resources:', err);
+        setError(err instanceof Error ? err : new Error('Failed to load resources'));
+        setResources([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchResources();
+  }, [bookId, unitId, version]);
+  
+  // Filter resources based on filter criteria
+  const filteredResources = resources.filter(resource => {
+    // Filter by resource type
+    if (filter.resourceType && filter.resourceType !== 'all') {
+      if (resource.resourceType !== filter.resourceType) {
+        return false;
+      }
+    }
+    
+    // Filter by search query
+    if (filter.searchQuery) {
+      const searchLower = filter.searchQuery.toLowerCase();
+      const titleMatch = resource.title.toLowerCase().includes(searchLower);
+      const descMatch = resource.description.toLowerCase().includes(searchLower);
+      const providerMatch = resource.provider?.toLowerCase().includes(searchLower) || false;
+      
+      if (!titleMatch && !descMatch && !providerMatch) {
+        return false;
+      }
+    }
+    
+    // Filter by provider
+    if (filter.provider) {
+      if (resource.provider !== filter.provider) {
+        return false;
+      }
+    }
+    
+    return true;
+  });
+  
+  // Set resource type filter
+  const setResourceTypeFilter = useCallback((type: ResourceType | 'all') => {
+    setFilter(prev => ({ ...prev, resourceType: type }));
+  }, []);
+  
+  // Set search query filter
+  const setSearchQuery = useCallback((query: string) => {
+    setFilter(prev => ({ ...prev, searchQuery: query }));
+  }, []);
+  
+  // Get resource by ID
+  const getResourceById = useCallback((id: string) => {
+    return resources.find(resource => resource.id === id);
+  }, [resources]);
+  
+  // Update resource
+  const updateResource = useCallback((updatedResource: TeacherResource) => {
+    setResources(prev => 
+      prev.map(resource => 
+        resource.id === updatedResource.id ? updatedResource : resource
+      )
+    );
+  }, []);
+  
+  // Remove resource
+  const removeResource = useCallback((id: string) => {
+    setResources(prev => prev.filter(resource => resource.id !== id));
+  }, []);
+  
+  // Add resource
+  const addResource = useCallback((newResource: TeacherResource) => {
+    setResources(prev => [...prev, newResource]);
+  }, []);
+  
   return {
     resources,
-    loading,
-    error,
     filteredResources,
-    hasResourceType,
-    reload,
-    availableBooks,
-    availableUnits
+    bookId,
+    unitId,
+    setBookId,
+    setUnitId,
+    isLoading,
+    error,
+    filter,
+    setFilter,
+    setResourceTypeFilter,
+    setSearchQuery,
+    getResourceById,
+    updateResource,
+    removeResource,
+    addResource,
+    version,
+    setVersion,
+    hasMultipleVersions
   };
-}
-
-/**
- * Check if a book/unit combination has multiple versions
- * 
- * @param bookId The book ID
- * @param unitId The unit ID
- * @returns True if the unit has multiple versions
- */
-export function isMultiVersionUnit(bookId: BookId, unitId: UnitId): boolean {
-  // Currently only Book 3 Unit 16 has multiple versions
-  return bookId === '3' && unitId === '16';
-}
-
-/**
- * Get available versions for a multi-version unit
- * 
- * @param bookId The book ID
- * @param unitId The unit ID
- * @returns Array of available versions or empty array
- */
-export function getMultiVersionOptions(bookId: BookId, unitId: UnitId): string[] {
-  if (bookId === '3' && unitId === '16') {
-    return [SPORTS_VERSION, CHORES_VERSION];
-  }
-  
-  return [];
 }
