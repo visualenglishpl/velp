@@ -9,7 +9,7 @@ import { BookId, UnitId } from './content';
 /**
  * Resource types available in the system
  */
-export type ResourceType = 'video' | 'game' | 'pdf' | 'lesson' | 'worksheet' | 'flashcard' | 'other';
+export type ResourceType = 'video' | 'game' | 'pdf' | 'lessonPlan' | 'worksheet' | 'flashcard' | 'other' | 'lesson';
 
 /**
  * Base interface for all teacher resources
@@ -46,10 +46,15 @@ export interface TeacherResource {
 }
 
 /**
+ * Resource filter type that includes 'all' option
+ */
+export type ResourceFilterType = ResourceType | 'all';
+
+/**
  * Filter options for resources
  */
 export interface ResourceFilter {
-  resourceType?: ResourceType | 'all';
+  resourceType?: ResourceFilterType;
   searchQuery?: string;
   provider?: string;
 }

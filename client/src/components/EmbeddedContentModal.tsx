@@ -108,3 +108,6 @@ export function EmbeddedContentModal({
     </Dialog>
   );
 }
+
+// Add a default export for compatibility
+export default EmbeddedContentModal;

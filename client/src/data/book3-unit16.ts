@@ -1,111 +1,89 @@
 /**
- * Book 3 Unit 16 Resources (Sports)
- * 
- * This file provides resources for Book 3 Unit 16 focused on Sports
+ * Book 3 - Unit 16 (Sports) Resources
  */
 
 import { TeacherResource } from '@/types/resources';
-import { v4 as uuidv4 } from 'uuid';
 
-// Resources for Book 3 Unit 16 (Sports)
 export const sportsResources: TeacherResource[] = [
   {
-    id: uuidv4(),
-    title: 'Sports Unit Overview',
-    description: 'Introduction to sports activities and related vocabulary',
-    resourceType: 'lesson',
+    id: '1',
+    title: 'Sports Vocabulary Song',
+    description: 'Fun song teaching different sports vocabulary',
+    resourceType: 'video',
     bookId: '3',
     unitId: '16',
-    content: `# Book 3 Unit 16 - Sports Activities
-
-This unit focuses on teaching students about sports and physical activities. It covers:
-- Different types of sports and games
-- Discussing preferences in sports
-- Expressing abilities with sports
-- Using action verbs correctly
-
-## Teaching Tips
-- Use visual aids to reinforce sports vocabulary
-- Practice question formation with role-plays
-- Incorporate physical movements when possible 
-- Connect the lesson to students' personal sports experiences`
+    provider: 'Dream English Kids',
+    youtubeVideoId: 'tgUSHk6JaTY',
+    isYoutubeVideo: true,
+    sourceUrl: 'https://www.youtube.com/watch?v=tgUSHk6JaTY'
   },
   {
-    id: uuidv4(),
-    title: 'Sports Vocabulary Flashcards',
+    id: '2',
+    title: 'Sports Flashcards - Printable',
     description: 'Printable flashcards with sports vocabulary',
     resourceType: 'pdf',
-    pdfUrl: 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/teacher%20resources/book3/unit16/sports_flashcards.pdf',
     bookId: '3',
     unitId: '16',
-    provider: 'Visual English Materials'
+    provider: 'Visual English Materials',
+    pdfUrl: 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/teacher%20resources/book3/unit16/sports_flashcards.pdf'
   },
   {
-    id: uuidv4(),
+    id: '3',
     title: 'Sports Activities - Interactive Game',
     description: 'Match sports with actions',
     resourceType: 'game',
-    sourceUrl: 'https://wordwall.net/resource/16354982/sports-activities',
+    bookId: '3',
+    unitId: '16',
+    provider: 'Wordwall',
     wordwallGameId: '16354982',
     isWordwallGame: true,
-    bookId: '3',
-    unitId: '16',
-    provider: 'Wordwall'
+    sourceUrl: 'https://wordwall.net/resource/16354982/sports-activities'
   },
   {
-    id: uuidv4(),
-    title: 'Sports Song for Kids',
-    description: 'Fun song about different sports',
-    resourceType: 'video',
-    sourceUrl: 'https://www.youtube.com/watch?v=EfD2k9beP-4',
-    youtubeVideoId: 'EfD2k9beP-4',
-    isYoutubeVideo: true,
+    id: '4',
+    title: 'Sports Equipment - Interactive Game',
+    description: 'Match sports with their equipment',
+    resourceType: 'game',
     bookId: '3',
     unitId: '16',
-    provider: 'Dream English Kids'
+    provider: 'Wordwall',
+    wordwallGameId: '23546781',
+    isWordwallGame: true,
+    sourceUrl: 'https://wordwall.net/resource/23546781/sports-equipment'
   },
   {
-    id: uuidv4(),
+    id: '5',
     title: 'Sports Lesson Plan',
-    description: 'Complete lesson plan for teaching sports vocabulary and activities',
-    resourceType: 'lesson',
+    description: 'Complete lesson plan for teaching sports vocabulary',
+    resourceType: 'lessonPlan',
     bookId: '3',
     unitId: '16',
-    content: `# Sports Activities Lesson Plan
-
-## Objectives
-- Students will learn at least 10 different sports
-- Students will be able to express which sports they like/don't like
-- Students will be able to describe sports using basic adjectives
-- Students will practice using frequency adverbs with sports activities
-
-## Vocabulary Focus
-- Football, basketball, swimming, running, tennis, volleyball, skiing, cycling, skating, gymnastics
-- Verbs: play, do, go
-- Frequency: always, usually, sometimes, never
-
-## Activities
-1. **Warm-up (5 min)**: Sports mime game - students act out sports
-2. **Vocabulary Introduction (10 min)**: Present sports with visual aids
-3. **Practice (15 min)**: "Do you like...?" pair work activity
-4. **Game (10 min)**: Sports matching game
-5. **Wrap-up (5 min)**: Quick review of new vocabulary
-
-## Materials Needed
-- Sports flashcards
-- Worksheets
-- Ball for class activities`
-  },
-  {
-    id: uuidv4(),
-    title: 'Play Sports (Super Simple Songs)',
-    description: 'Catchy song teaching various sports activities',
-    resourceType: 'video',
-    sourceUrl: 'https://www.youtube.com/watch?v=X1bQUrNXUAo',
-    youtubeVideoId: 'X1bQUrNXUAo',
-    isYoutubeVideo: true,
-    bookId: '3',
-    unitId: '16',
-    provider: 'Super Simple Songs'
+    provider: 'Visual English Materials',
+    content: `
+      <h2>Sports Vocabulary Lesson Plan</h2>
+      <h3>Objectives:</h3>
+      <ul>
+        <li>Students will learn names of different sports</li>
+        <li>Students will practice saying "I play..." and "I don't play..."</li>
+        <li>Students will discuss their favorite sports</li>
+      </ul>
+      <h3>Materials:</h3>
+      <ul>
+        <li>Sports flashcards</li>
+        <li>Sports equipment pictures</li>
+        <li>Ball for class activity</li>
+      </ul>
+      <h3>Warm-up (5 minutes):</h3>
+      <p>Show students pictures of famous sports players and ask if they recognize them and what sport they play.</p>
+      <h3>Main Activities:</h3>
+      <ol>
+        <li>Introduce sports vocabulary using flashcards (10 minutes)</li>
+        <li>Practice "I play..." sentences with each student (10 minutes)</li>
+        <li>Sports mime game - students act out a sport for others to guess (15 minutes)</li>
+        <li>Wordwall interactive game - match sports with equipment (10 minutes)</li>
+      </ol>
+      <h3>Wrap-up:</h3>
+      <p>Class survey - ask students what their favorite sports are and create a class chart.</p>
+    `
   }
 ];

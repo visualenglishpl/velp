@@ -29,8 +29,8 @@ import {
   PencilIcon,
   TrashIcon
 } from 'lucide-react';
-import { TeacherResource, ResourceType } from '@/types/resources';
-import { EmbeddedContentModal } from '@/components/EmbeddedContentModal';
+import { TeacherResource, ResourceType, ResourceFilterType } from '@/types/resources';
+import EmbeddedContentModal from '@/components/EmbeddedContentModal';
 import { 
   extractYoutubeVideoId,
   extractWordwallGameId
@@ -39,11 +39,11 @@ import {
 interface ResourceListProps {
   resources: TeacherResource[];
   onSearch: (query: string) => void;
-  onFilterByType: (type: ResourceType | 'all') => void;
+  onFilterByType: (type: ResourceFilterType) => void;
   onAddResource?: () => void;
   onEditResource?: (resource: TeacherResource) => void;
   onDeleteResource?: (resource: TeacherResource) => void;
-  selectedType?: ResourceType | 'all';
+  selectedType?: ResourceFilterType;
   searchQuery?: string;
   isLoading?: boolean;
   readOnly?: boolean;
@@ -72,6 +72,8 @@ export function ResourceList({
         return <GamepadIcon className="h-4 w-4" />;
       case 'pdf':
         return <FileIcon className="h-4 w-4" />;
+      case 'lessonPlan':
+        return <FileTextIcon className="h-4 w-4" />;
       default:
         return <FileTextIcon className="h-4 w-4" />;
     }
@@ -113,12 +115,12 @@ export function ResourceList({
   };
   
   // Resource type filters
-  const resourceTypes: Array<{ type: ResourceType | 'all', label: string }> = [
+  const resourceTypes: Array<{ type: ResourceFilterType, label: string }> = [
     { type: 'all', label: 'All Resources' },
     { type: 'video', label: 'Videos' },
     { type: 'game', label: 'Games' },
     { type: 'pdf', label: 'PDFs' },
-    { type: 'lesson', label: 'Lesson Plans' }
+    { type: 'lessonPlan', label: 'Lesson Plans' }
   ];
 
   return (
@@ -133,11 +135,11 @@ export function ResourceList({
               size="sm"
               onClick={() => onFilterByType(type)}
             >
-              {type !== 'all' && getResourceTypeIcon(type)}
+              {type !== 'all' && getResourceTypeIcon(type as ResourceType)}
               <span className="ml-1">{label}</span>
               {type !== 'all' && (
                 <Badge variant="secondary" className="ml-2">
-                  {resources.filter(r => type === 'all' || r.resourceType === type).length}
+                  {resources.filter(r => r.resourceType === (type as ResourceType)).length}
                 </Badge>
               )}
             </Button>

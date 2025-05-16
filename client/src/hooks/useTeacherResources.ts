@@ -7,7 +7,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { BookId, UnitId } from '@/types/content';
-import { TeacherResource, ResourceType, ResourceFilter } from '@/types/resources';
+import { TeacherResource, ResourceType, ResourceFilter, ResourceFilterType } from '@/types/resources';
 import { loadResources } from '@/lib/resourceRegistry';
 
 interface UseTeacherResourcesOptions {
@@ -111,7 +111,7 @@ export function useTeacherResources({
   });
   
   // Set resource type filter
-  const setResourceTypeFilter = useCallback((type: ResourceType | 'all') => {
+  const setResourceTypeFilter = useCallback((type: ResourceFilterType) => {
     setFilter(prev => ({ ...prev, resourceType: type }));
   }, []);
   
