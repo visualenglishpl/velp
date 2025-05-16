@@ -1,213 +1,356 @@
 /**
  * ResourceEditor Component
  * 
- * Component for adding or editing teacher resources.
+ * This component provides a form for editing teacher resources.
+ * It supports various resource types and provides specialized inputs
+ * for different content types.
  */
 
 import { useState } from 'react';
-import { TeacherResource } from '@/components/TeacherResources';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { TeacherResource, ResourceType } from '@/types/resources';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useToast } from '@/hooks/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Loader2, Save, X, FileText, Youtube, Gamepad2, BookOpen } from 'lucide-react';
+import { 
+  extractYoutubeVideoId, 
+  extractWordwallGameId, 
+  extractIslCollectiveId,
+  detectEmbedType 
+} from '@/lib/embedUtils';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ResourceEditorProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (resource: TeacherResource) => Promise<void>;
-  resource: TeacherResource;
+  resource: TeacherResource | null;
+  onSave: (resource: TeacherResource) => void;
+  onCancel: () => void;
   bookId: string;
   unitId: string;
 }
 
-const ResourceEditor = ({
-  isOpen,
-  onClose,
-  onSave,
+export function ResourceEditor({
   resource,
+  onSave,
+  onCancel,
   bookId,
   unitId
-}: ResourceEditorProps) => {
-  const { toast } = useToast();
-  const [editedResource, setEditedResource] = useState<TeacherResource>(resource);
-  const [isSaving, setIsSaving] = useState(false);
-  const isNewResource = !resource.id;
+}: ResourceEditorProps) {
+  // Initialize form with provided resource or default values
+  const [formData, setFormData] = useState<TeacherResource>(
+    resource || {
+      id: uuidv4(),
+      title: '',
+      description: '',
+      resourceType: 'video',
+      bookId,
+      unitId
+    }
+  );
   
-  // Handle form input changes
-  const handleChange = (field: keyof TeacherResource, value: string) => {
-    setEditedResource(prev => ({
-      ...prev,
-      [field]: value
-    }));
+  const [saving, setSaving] = useState<boolean>(false);
+  const [urlInput, setUrlInput] = useState<string>(
+    (resource?.isYoutubeVideo && resource.youtubeVideoId) 
+      ? `https://www.youtube.com/watch?v=${resource.youtubeVideoId}`
+      : (resource?.isWordwallGame && resource.wordwallGameId)
+      ? `https://wordwall.net/resource/${resource.wordwallGameId}`
+      : resource?.sourceUrl || ''
+  );
+  
+  const [activeTab, setActiveTab] = useState<string>(
+    resource?.resourceType || 'video'
+  );
+
+  // Handle input changes
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
-  
+
+  // Handle resource type change
+  const handleTypeChange = (value: string) => {
+    setFormData(prev => ({ 
+      ...prev, 
+      resourceType: value as ResourceType 
+    }));
+    setActiveTab(value);
+  };
+
+  // Handle URL input changes with automatic detection
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const url = e.target.value;
+    setUrlInput(url);
+    
+    // Detect resource type from URL
+    const embedType = detectEmbedType(url);
+    
+    // Extract IDs from URL
+    const youtubeId = extractYoutubeVideoId(url);
+    const wordwallId = extractWordwallGameId(url);
+    const islCollectiveId = extractIslCollectiveId(url);
+    
+    // Update form data based on detected type
+    const updates: Partial<TeacherResource> = {
+      sourceUrl: url,
+      isYoutubeVideo: embedType === 'youtube',
+      youtubeVideoId: youtubeId || undefined,
+      isWordwallGame: embedType === 'wordwall',
+      wordwallGameId: wordwallId || undefined,
+      isIslCollectiveResource: embedType === 'islcollective',
+      islCollectiveId: islCollectiveId || undefined,
+    };
+    
+    // Update resource type if detected
+    if (embedType === 'youtube' || embedType === 'wordwall' || embedType === 'islcollective') {
+      updates.resourceType = embedType === 'youtube' ? 'video' : 
+                             embedType === 'wordwall' ? 'game' : 'other';
+      setActiveTab(updates.resourceType);
+    }
+    
+    setFormData(prev => ({ ...prev, ...updates }));
+  };
+
   // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate required fields
-    if (!editedResource.title.trim()) {
-      toast({
-        title: "Missing required field",
-        description: "Title is required",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    // For video and game types, sourceUrl is required
-    if (
-      (editedResource.resourceType === 'video' || editedResource.resourceType === 'game') && 
-      !editedResource.sourceUrl?.trim()
-    ) {
-      toast({
-        title: "Missing required field",
-        description: "Source URL is required for videos and games",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    setIsSaving(true);
+    setSaving(true);
     
     try {
-      await onSave(editedResource);
-      toast({
-        title: "Success",
-        description: `Resource ${isNewResource ? 'created' : 'updated'} successfully`,
-      });
-      onClose();
+      // Ensure IDs are set
+      const finalResource: TeacherResource = {
+        ...formData,
+        id: formData.id || uuidv4(),
+      };
+      
+      onSave(finalResource);
     } catch (error) {
-      console.error('Failed to save resource:', error);
-      toast({
-        title: "Failed to save resource",
-        description: error instanceof Error ? error.message : "Unknown error occurred",
-        variant: "destructive"
-      });
+      console.error('Error saving resource:', error);
     } finally {
-      setIsSaving(false);
+      setSaving(false);
     }
   };
-  
+
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-lg">
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>{isNewResource ? 'Add New Resource' : 'Edit Resource'}</DialogTitle>
-            <DialogDescription>
-              {isNewResource 
-                ? `Add a new resource for Book ${bookId}, Unit ${unitId}`
-                : `Edit "${resource.title}" resource`
-              }
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="resourceType" className="text-right">
-                Type
-              </Label>
-              <Select 
-                value={editedResource.resourceType} 
-                onValueChange={(value) => handleChange('resourceType', value)}
-              >
-                <SelectTrigger id="resourceType" className="col-span-3">
-                  <SelectValue placeholder="Select resource type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="video">Video</SelectItem>
-                  <SelectItem value="game">Game</SelectItem>
-                  <SelectItem value="lesson">Lesson Plan</SelectItem>
-                  <SelectItem value="pdf">PDF</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+    <Card className="w-full max-w-4xl mx-auto">
+      <form onSubmit={handleSubmit}>
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <CardTitle>{resource ? 'Edit Resource' : 'Add New Resource'}</CardTitle>
+            <Button variant="ghost" size="sm" onClick={onCancel}>
+              <X className="h-4 w-4" />
+              <span className="sr-only">Cancel</span>
+            </Button>
+          </div>
+        </CardHeader>
+        
+        <CardContent className="space-y-4">
+          {/* Basic Information */}
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="title">Title</Label>
+                <Input
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="resourceType">Resource Type</Label>
+                <Select 
+                  value={formData.resourceType} 
+                  onValueChange={handleTypeChange}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select resource type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="video">
+                      <div className="flex items-center">
+                        <Youtube className="h-4 w-4 mr-2 text-red-500" />
+                        Video
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="game">
+                      <div className="flex items-center">
+                        <Gamepad2 className="h-4 w-4 mr-2 text-green-500" />
+                        Game
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="pdf">
+                      <div className="flex items-center">
+                        <FileText className="h-4 w-4 mr-2 text-blue-500" />
+                        PDF Document
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="lesson">
+                      <div className="flex items-center">
+                        <BookOpen className="h-4 w-4 mr-2 text-amber-500" />
+                        Lesson Plan
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="title" className="text-right">
-                Title
-              </Label>
-              <Input
-                id="title"
-                value={editedResource.title}
-                onChange={(e) => handleChange('title', e.target.value)}
-                className="col-span-3"
-                placeholder="Resource title"
-              />
-            </div>
-            
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="provider" className="text-right">
-                Provider
-              </Label>
-              <Input
-                id="provider"
-                value={editedResource.provider || ''}
-                onChange={(e) => handleChange('provider', e.target.value)}
-                className="col-span-3"
-                placeholder="e.g. YouTube, Wordwall"
-              />
-            </div>
-            
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="sourceUrl" className="text-right">
-                Source URL
-              </Label>
-              <Input
-                id="sourceUrl"
-                value={editedResource.sourceUrl || ''}
-                onChange={(e) => handleChange('sourceUrl', e.target.value)}
-                className="col-span-3"
-                placeholder="https://"
-              />
-            </div>
-            
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="embedCode" className="text-right">
-                Embed Code
-              </Label>
-              <Textarea
-                id="embedCode"
-                value={editedResource.embedCode || ''}
-                onChange={(e) => handleChange('embedCode', e.target.value)}
-                className="col-span-3"
-                placeholder="Paste iframe embed code here"
-                rows={4}
-              />
-            </div>
-            
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
-                Description
-              </Label>
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
-                value={editedResource.description || ''}
-                onChange={(e) => handleChange('description', e.target.value)}
-                className="col-span-3"
-                placeholder="Short description of this resource"
-                rows={3}
+                name="description"
+                value={formData.description || ''}
+                onChange={handleChange}
+                rows={2}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="provider">Provider</Label>
+              <Input
+                id="provider"
+                name="provider"
+                value={formData.provider || ''}
+                onChange={handleChange}
+                placeholder="e.g., YouTube, Wordwall, ISL Collective"
               />
             </div>
           </div>
           
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isSaving}>
-              {isSaving ? 'Saving...' : isNewResource ? 'Add Resource' : 'Save Changes'}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+          {/* Resource-specific inputs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid grid-cols-4">
+              <TabsTrigger value="video">Video</TabsTrigger>
+              <TabsTrigger value="game">Game</TabsTrigger>
+              <TabsTrigger value="pdf">PDF</TabsTrigger>
+              <TabsTrigger value="lesson">Lesson</TabsTrigger>
+            </TabsList>
+            
+            {/* Video Tab */}
+            <TabsContent value="video" className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="videoUrl">Video URL</Label>
+                <Input
+                  id="videoUrl"
+                  value={urlInput}
+                  onChange={handleUrlChange}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                />
+                
+                {formData.isYoutubeVideo && formData.youtubeVideoId && (
+                  <Alert className="mt-2">
+                    <AlertDescription>
+                      YouTube video ID detected: <strong>{formData.youtubeVideoId}</strong>
+                    </AlertDescription>
+                  </Alert>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="embedCode">Embed Code (optional)</Label>
+                <Textarea
+                  id="embedCode"
+                  name="embedCode"
+                  value={formData.embedCode || ''}
+                  onChange={handleChange}
+                  rows={3}
+                  placeholder="<iframe src=... />"
+                />
+              </div>
+            </TabsContent>
+            
+            {/* Game Tab */}
+            <TabsContent value="game" className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="gameUrl">Game URL</Label>
+                <Input
+                  id="gameUrl"
+                  value={urlInput}
+                  onChange={handleUrlChange}
+                  placeholder="https://wordwall.net/resource/..."
+                />
+                
+                {formData.isWordwallGame && formData.wordwallGameId && (
+                  <Alert className="mt-2">
+                    <AlertDescription>
+                      Wordwall game ID detected: <strong>{formData.wordwallGameId}</strong>
+                    </AlertDescription>
+                  </Alert>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="embedCode">Embed Code (optional)</Label>
+                <Textarea
+                  id="embedCode"
+                  name="embedCode"
+                  value={formData.embedCode || ''}
+                  onChange={handleChange}
+                  rows={3}
+                  placeholder="<iframe src=... />"
+                />
+              </div>
+            </TabsContent>
+            
+            {/* PDF Tab */}
+            <TabsContent value="pdf" className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="pdfUrl">PDF URL</Label>
+                <Input
+                  id="pdfUrl"
+                  name="pdfUrl"
+                  value={formData.pdfUrl || ''}
+                  onChange={handleChange}
+                  placeholder="https://example.com/document.pdf"
+                />
+              </div>
+            </TabsContent>
+            
+            {/* Lesson Tab */}
+            <TabsContent value="lesson" className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="content">Lesson Content</Label>
+                <Textarea
+                  id="content"
+                  name="content"
+                  value={formData.content || ''}
+                  onChange={handleChange}
+                  rows={10}
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+        
+        <CardFooter className="flex justify-end space-x-2">
+          <Button variant="outline" type="button" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button type="submit" disabled={saving}>
+            {saving ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="h-4 w-4 mr-2" />
+                Save Resource
+              </>
+            )}
+          </Button>
+        </CardFooter>
+      </form>
+    </Card>
   );
-};
-
-export default ResourceEditor;
+}

@@ -59,6 +59,7 @@ import TestAdminDashboard from "./pages/TestAdminDashboard";
 // Legacy/Testing pages (minimal set kept for development)
 import StandaloneViewer from "./pages/StandaloneViewer";
 import StandaloneViewerTest from "./pages/StandaloneViewerTest";
+import TeacherResourcesTest from "./pages/TeacherResourcesTest";
 
 function App() {
   console.log('Rendering full home page with layout');
@@ -267,6 +268,11 @@ function App() {
           </Route>
           <Route path="/standalone-viewer/:bookId/:unitNumber">
             <StandaloneViewerTest />
+          </Route>
+          
+          {/* Test routes for development */}
+          <Route path="/test/teacher-resources">
+            <TeacherResourcesTest />
           </Route>
           
           {/* FALLBACK ROUTE - Redirect to home if route not found */}

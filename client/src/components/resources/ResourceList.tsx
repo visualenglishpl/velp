@@ -1,156 +1,180 @@
 /**
  * ResourceList Component
  * 
- * A component that displays a grid of teacher resources, 
- * filtered by resource type.
+ * This component displays a list of teacher resources filtered by type.
+ * It handles rendering different resource types appropriately and
+ * provides UI for opening/previewing resources.
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
-import { Badge } from '@/components/ui/badge';
+import { useState } from 'react';
+import { TeacherResource } from '@/types/resources';
+import { EmbeddedContentModal } from '@/components/EmbeddedContentModal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, ExternalLink, Edit, Trash, FileText, Youtube, Gamepad2 } from 'lucide-react';
-import { useState } from 'react';
+import { ExternalLink, Youtube, FileText, Gamepad2, BookOpen, FileCode, Eye } from 'lucide-react';
+import { truncateText } from '@/lib/textCleaners';
 
 interface ResourceListProps {
   resources: TeacherResource[];
-  resourceType?: 'video' | 'game' | 'lesson' | 'pdf' | 'other';
-  isLoading: boolean;
-  isEditMode?: boolean;
-  onEditResource?: (resource: TeacherResource) => void;
-  onDeleteResource?: (resource: TeacherResource) => void;
-  onViewResource?: (resource: TeacherResource) => void;
+  title: string;
+  icon?: React.ReactNode;
+  emptyMessage?: string;
+  onEdit?: (resource: TeacherResource) => void;
+  onDelete?: (resource: TeacherResource) => void;
+  isReadOnly?: boolean;
 }
 
-const ResourceList = ({
+export function ResourceList({
   resources,
-  resourceType,
-  isLoading,
-  isEditMode = false,
-  onEditResource,
-  onDeleteResource,
-  onViewResource
-}: ResourceListProps) => {
-  // Filter resources by type if needed
-  const filteredResources = resourceType
-    ? resources.filter(resource => resource.resourceType === resourceType)
-    : resources;
-  
-  // Loading state
-  if (isLoading) {
-    return (
-      <div className="py-8 text-center">
-        <Loader2 className="h-8 w-8 animate-spin mx-auto" />
-        <p className="mt-4 text-muted-foreground">Loading resources...</p>
-      </div>
-    );
-  }
-  
-  // Empty state
-  if (!filteredResources.length) {
-    return (
-      <div className="py-8 text-center text-muted-foreground">
-        No {resourceType === 'pdf' ? 'PDF' : resourceType} resources available for this unit.
-        {isEditMode && <div className="mt-2">Click "Add Resource" to add one.</div>}
-      </div>
-    );
-  }
-  
+  title,
+  icon,
+  emptyMessage = 'No resources available.',
+  onEdit,
+  onDelete,
+  isReadOnly = false
+}: ResourceListProps) {
+  const [selectedResource, setSelectedResource] = useState<TeacherResource | null>(null);
+  const [previewOpen, setPreviewOpen] = useState<boolean>(false);
+
   // Get icon based on resource type
-  const getResourceIcon = (type: string) => {
-    switch (type) {
+  const getResourceIcon = (resource: TeacherResource) => {
+    switch (resource.resourceType) {
       case 'video':
-        return <Youtube className="h-4 w-4 mr-1" />;
+        return <Youtube className="h-5 w-5 text-red-500" />;
+      case 'pdf':
+        return <FileText className="h-5 w-5 text-blue-500" />;
       case 'game':
-        return <Gamepad2 className="h-4 w-4 mr-1" />;
+        return <Gamepad2 className="h-5 w-5 text-green-500" />;
       case 'lesson':
-        return <FileText className="h-4 w-4 mr-1" />;
+        return <BookOpen className="h-5 w-5 text-amber-500" />;
       default:
-        return <FileText className="h-4 w-4 mr-1" />;
+        return <FileCode className="h-5 w-5 text-gray-500" />;
     }
   };
-  
+
+  // Handle opening preview for a resource
+  const handlePreview = (resource: TeacherResource) => {
+    setSelectedResource(resource);
+    setPreviewOpen(true);
+  };
+
+  // Get content for preview based on resource type
+  const getPreviewContent = (resource: TeacherResource): string => {
+    if (resource.isYoutubeVideo && resource.youtubeVideoId) {
+      return `https://www.youtube.com/embed/${resource.youtubeVideoId}`;
+    }
+    
+    if (resource.isWordwallGame && resource.wordwallGameId) {
+      return `https://wordwall.net/embed/${resource.wordwallGameId}`;
+    }
+    
+    if (resource.isIslCollectiveResource && resource.islCollectiveId) {
+      return `https://en.islcollective.com/preview/${resource.islCollectiveId}`;
+    }
+    
+    if (resource.embedCode) {
+      return resource.embedCode;
+    }
+    
+    if (resource.pdfUrl) {
+      return resource.pdfUrl;
+    }
+    
+    if (resource.content) {
+      return resource.content;
+    }
+    
+    if (resource.sourceUrl) {
+      return resource.sourceUrl;
+    }
+    
+    return '';
+  };
+
+  // Handle closing the preview modal
+  const handleClosePreview = () => {
+    setPreviewOpen(false);
+    setSelectedResource(null);
+  };
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-      {filteredResources.map((resource, index) => (
-        <Card 
-          key={resource.id || `resource-${index}`} 
-          className="overflow-hidden hover:shadow-md transition-shadow"
-        >
-          <CardHeader className="pb-2">
-            <div className="flex justify-between items-start">
-              <CardTitle className="text-lg line-clamp-2">{resource.title}</CardTitle>
-              <Badge variant="outline" className="ml-2 whitespace-nowrap">
-                {getResourceIcon(resource.resourceType)}
-                {resource.resourceType === 'pdf' ? 'PDF' : resource.resourceType}
-              </Badge>
-            </div>
-            {resource.provider && (
-              <CardDescription className="text-xs">
-                Provider: {resource.provider}
-              </CardDescription>
-            )}
-          </CardHeader>
-          
-          <CardContent className="pb-2">
-            {resource.description && (
-              <p className="text-sm text-muted-foreground line-clamp-3">
-                {resource.description}
-              </p>
-            )}
-          </CardContent>
-          
-          <CardFooter className="pt-0 flex justify-between">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => onViewResource?.(resource)}
-            >
-              View
-            </Button>
-            
-            {isEditMode && (
-              <div className="flex gap-2">
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        {icon}
+        <h3 className="text-lg font-semibold">{title}</h3>
+      </div>
+      
+      {resources.length === 0 ? (
+        <p className="text-muted-foreground text-sm italic">{emptyMessage}</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {resources.map((resource) => (
+            <Card key={resource.id} className="overflow-hidden">
+              <CardHeader className="pb-2">
+                <div className="flex items-center gap-2">
+                  {getResourceIcon(resource)}
+                  <CardTitle className="text-base">{truncateText(resource.title, 50)}</CardTitle>
+                </div>
+                {resource.description && (
+                  <CardDescription className="text-xs">
+                    {truncateText(resource.description, 120)}
+                  </CardDescription>
+                )}
+              </CardHeader>
+              
+              <CardContent className="pb-2 pt-0">
+                {resource.provider && (
+                  <div className="text-xs text-muted-foreground">
+                    Provider: {resource.provider}
+                  </div>
+                )}
+              </CardContent>
+              
+              <CardFooter className="flex justify-between pt-0">
                 <Button 
-                  variant="ghost" 
+                  variant="outline" 
                   size="sm" 
-                  onClick={() => onEditResource?.(resource)}
+                  onClick={() => handlePreview(resource)}
                 >
-                  <Edit className="h-4 w-4" />
+                  <Eye className="h-4 w-4 mr-1" />
+                  Preview
                 </Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-destructive" 
-                  onClick={() => onDeleteResource?.(resource)}
-                >
-                  <Trash className="h-4 w-4" />
-                </Button>
-              </div>
-            )}
-            
-            {!isEditMode && resource.sourceUrl && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                asChild
-              >
-                <a 
-                  href={resource.sourceUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center"
-                >
-                  <ExternalLink className="h-4 w-4 mr-1" />
-                  Source
-                </a>
-              </Button>
-            )}
-          </CardFooter>
-        </Card>
-      ))}
+                
+                {resource.sourceUrl && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => window.open(resource.sourceUrl, '_blank')}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-1" />
+                    Open
+                  </Button>
+                )}
+                
+                {!isReadOnly && onEdit && (
+                  <Button 
+                    variant="secondary" 
+                    size="sm"
+                    onClick={() => onEdit(resource)}
+                  >
+                    Edit
+                  </Button>
+                )}
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      )}
+      
+      {selectedResource && (
+        <EmbeddedContentModal
+          isOpen={previewOpen}
+          onClose={handleClosePreview}
+          content={getPreviewContent(selectedResource)}
+          title={selectedResource.title}
+          sourceUrl={selectedResource.sourceUrl}
+        />
+      )}
     </div>
   );
-};
-
-export default ResourceList;
+}
