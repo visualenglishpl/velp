@@ -12,10 +12,6 @@ import { TeacherResource } from '@/types/resources';
 type ResourceLoader = () => Promise<TeacherResource[]>;
 type ResourceMap = Record<string, Record<string, ResourceLoader>>;
 
-// Version constants for multi-version units
-export const SPORTS_VERSION = 'sports';
-export const CHORES_VERSION = 'chores';
-
 // Registry for resource loaders
 const resourceRegistry: ResourceMap = {};
 
@@ -111,38 +107,23 @@ export function getRegisteredUnitIds(bookId: BookId): UnitId[] {
   return Object.keys(resourceRegistry[bookId]) as UnitId[];
 }
 
-/**
- * Special handler for Book 3 Unit 16 which has different versions
- * 
- * @param version The version to load (sports or chores)
- * @returns Promise resolving to the resources
- */
-export async function getBook3Unit16Resources(version: string = SPORTS_VERSION): Promise<TeacherResource[]> {
-  try {
-    if (version === SPORTS_VERSION) {
-      const { sportsVersionResources, commonResources } = await import('@/data/book3-unit16');
-      return [...commonResources, ...sportsVersionResources];
-    } else if (version === CHORES_VERSION) {
-      const { choresVersionResources, commonResources } = await import('@/data/book3-unit16');
-      return [...commonResources, ...choresVersionResources];
-    }
-    
-    return [];
-  } catch (error) {
-    console.error('Error loading Book 3 Unit 16 resources:', error);
-    return [];
-  }
-}
-
 // Register commonly used book/unit combinations
 // These will be expanded based on actual application data
-// Example registrations:
+
+// Book 1, Unit 1 (Greetings)
 registerResourceLoader('1', '1', async () => {
   const { default: resources } = await import('@/data/book1-unit1-resources');
   return resources;
 });
 
+// Book 3, Unit 16 (Sports)
 registerResourceLoader('3', '16', async () => {
-  // Special case for Book 3 Unit 16 with multiple versions
-  return getBook3Unit16Resources();
+  const { sportsResources } = await import('@/data/book3-unit16');
+  return sportsResources;
+});
+
+// Book 3, Unit 17 (Household Chores)
+registerResourceLoader('3', '17', async () => {
+  const { choresResources } = await import('@/data/book3-unit17');
+  return choresResources;
 });

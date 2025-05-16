@@ -24,7 +24,7 @@ export default function TeacherResourcesTest() {
       
       <div className="mb-12">
         <h2 className="text-xl font-semibold mb-4">
-          Demo: Book 3 Unit 16 (Multiple Versions Support)
+          Demo: Book 3 Unit 16 (Sports)
         </h2>
         <TeacherResourcesContainer 
           initialBookId="3" 
@@ -36,7 +36,19 @@ export default function TeacherResourcesTest() {
       
       <div className="mb-12">
         <h2 className="text-xl font-semibold mb-4">
-          Demo: Book 1 Unit 1
+          Demo: Book 3 Unit 17 (Household Chores)
+        </h2>
+        <TeacherResourcesContainer 
+          initialBookId="3" 
+          initialUnitId="17"
+          showSelection={true}
+          enableEditing={true}
+        />
+      </div>
+      
+      <div className="mb-12">
+        <h2 className="text-xl font-semibold mb-4">
+          Demo: Book 1 Unit 1 (Greetings)
         </h2>
         <TeacherResourcesContainer 
           initialBookId="1" 

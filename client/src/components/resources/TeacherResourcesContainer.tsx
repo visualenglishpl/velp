@@ -11,7 +11,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { BookId, UnitId } from '@/types/content';
 import { TeacherResource, ResourceType } from '@/types/resources';
 import { useTeacherResources } from '@/hooks/useTeacherResources';
-import { SPORTS_VERSION, CHORES_VERSION } from '@/lib/resourceRegistry';
 import {
   Select,
   SelectContent,
@@ -91,10 +90,7 @@ export function TeacherResourcesContainer({
     setSearchQuery,
     updateResource,
     removeResource,
-    addResource,
-    version,
-    setVersion,
-    hasMultipleVersions
+    addResource
   } = useTeacherResources({
     initialBookId,
     initialUnitId
@@ -125,11 +121,6 @@ export function TeacherResourcesContainer({
   // Handle unit selection
   const handleUnitSelect = (value: string) => {
     setUnitId(value as UnitId);
-  };
-  
-  // Handle version selection for Book 3 Unit 16
-  const handleVersionSelect = (value: string) => {
-    setVersion(value);
   };
   
   // Handle adding a new resource
@@ -237,24 +228,6 @@ export function TeacherResourcesContainer({
                   </SelectContent>
                 </Select>
               </div>
-              
-              {hasMultipleVersions && (
-                <div className="flex-1">
-                  <label className="text-sm font-medium mb-1 block">Version</label>
-                  <Select
-                    value={version || SPORTS_VERSION}
-                    onValueChange={handleVersionSelect}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select version" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value={SPORTS_VERSION}>Sports Version</SelectItem>
-                      <SelectItem value={CHORES_VERSION}>House Chores Version</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
             </div>
           </CardContent>
         </Card>
@@ -298,9 +271,14 @@ export function TeacherResourcesContainer({
                   {bookId && unitId ? (
                     <>
                       {getBookTitle(bookId)} {getUnitTitle(unitId)} Resources
-                      {hasMultipleVersions && version && (
+                      {bookId === '3' && unitId === '16' && (
                         <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                          {version === SPORTS_VERSION ? 'Sports Version' : 'House Chores Version'}
+                          Sports
+                        </span>
+                      )}
+                      {bookId === '3' && unitId === '17' && (
+                        <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                          Household Chores
                         </span>
                       )}
                     </>
