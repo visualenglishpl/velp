@@ -128,6 +128,12 @@ registerResourceLoader('1', '3', async () => {
   return resources;
 });
 
+// Book 1, Unit 4 (How Are You?)
+registerResourceLoader('1', '4', async () => {
+  const { default: resources } = await import('@/data/book1-unit4-resources');
+  return resources;
+});
+
 // Book 1, Unit 7 (How Old Are You?)
 registerResourceLoader('1', '7', async () => {
   const { default: resources } = await import('@/data/book1-unit7-resources');

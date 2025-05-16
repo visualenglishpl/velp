@@ -14,19 +14,42 @@ export interface LessonStep {
 }
 
 export interface LessonPlan {
-  id: string;
+  id?: string;
   title: string;
-  duration: string;
-  level: string;
+  duration?: string;
+  level?: string;
   objectives: string[];
   materials: string[];
-  steps: LessonStep[];
+  steps?: LessonStep[];
   assessmentTips?: string;
   homeworkIdeas?: string[];
   additionalResources?: {
     title: string;
     url?: string;
   }[];
+  
+  // Alternative format used in newer implementations
+  mainActivities?: {
+    title: string;
+    description: string;
+    duration: string;
+    resources?: string[];
+  }[];
+  warmUp?: {
+    title: string;
+    description: string;
+    duration: string;
+    resources?: string[];
+  };
+  extension?: {
+    title: string;
+    description: string;
+    resources?: string[];
+  };
+  assessment?: string;
+  homework?: string;
+  procedure?: string[];
+  extensions?: string[];
 }
 
 interface LessonPlanTemplateProps {

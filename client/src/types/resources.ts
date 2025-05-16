@@ -15,7 +15,7 @@ export type ResourceType = 'video' | 'game' | 'pdf' | 'lessonPlan' | 'worksheet'
  * Base interface for all teacher resources
  */
 export interface TeacherResource {
-  id: string;
+  id?: string; // Made optional to work with legacy code
   title: string;
   description: string;
   resourceType: ResourceType;
@@ -39,13 +39,21 @@ export interface TeacherResource {
   pdfUrl?: string;
   
   // Content for lesson plans, etc.
-  content?: string;
+  content?: string | {
+    type: string;
+    embedId?: string;
+    embedUrl?: string;
+  };
   
   // General source URL
   sourceUrl?: string;
   
   // Embed code for videos, games, etc.
   embedCode?: string;
+  
+  // Legacy support
+  fileUrl?: string;
+  lessonPlan?: any;
 }
 
 /**

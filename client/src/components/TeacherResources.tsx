@@ -739,24 +739,11 @@ const dynamicResourceImport = async (book: string, unit: number) => {
   }
 };
 
-export interface TeacherResource {
-  id?: string;
-  bookId?: string;
-  unitId?: string;
-  title: string;
-  description?: string;
-  resourceType: 'video' | 'game' | 'lesson' | 'pdf' | 'other';
-  provider?: string;
-  sourceUrl?: string;
-  embedCode?: string;
-  content?: {
-    type: string;
-    embedId?: string;
-    embedUrl?: string;
-  };
-  fileUrl?: string;
-  lessonPlan?: LessonPlan;
-}
+// Importing the canonical TeacherResource interface from types
+import { TeacherResource as StandardTeacherResource, ResourceType } from '@/types/resources';
+
+// Use the standard interface directly - we've updated it to support all the properties
+export type TeacherResource = StandardTeacherResource;
 
 interface TeacherResourcesProps {
   bookId: string;

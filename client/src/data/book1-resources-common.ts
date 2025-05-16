@@ -22,7 +22,7 @@ export function createBook1VideoResource(
   title: string,
   description: string,
   youtubeUrl: string,
-  embedCode: string
+  embedCode?: string
 ): TeacherResource {
   return {
     id: `b1u${unitId}-${id}`,
