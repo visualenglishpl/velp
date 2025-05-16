@@ -1,5 +1,5 @@
 /**
- * Visual English Book 1, Unit 15: Transport
+ * Visual English Book 1, Unit 15: Fruit
  * Resources including videos and games
  */
 
@@ -12,34 +12,67 @@ export const book1Unit15VideoResources: TeacherResource[] = [
     id: "book1-unit15-video1",
     bookId: "1",
     unitId: "15",
-    title: "The Wheels on the Bus - Super Simple Songs",
+    title: "Fruit Song for Kids - The Singing Walrus",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=yWirdnSDsV4",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/yWirdnSDsV4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A classic children's song about a bus, perfect for introducing transport vocabulary."
+    sourceUrl: "https://www.youtube.com/watch?v=mfReSbQ7jzE",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/mfReSbQ7jzE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A catchy song by The Singing Walrus introducing various fruits with colorful animations."
   },
   {
     id: "book1-unit15-video2",
     bookId: "1",
     unitId: "15",
-    title: "Transportation Song - The Singing Walrus",
+    title: "Fruit Salad - Watts English",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=Ut-HbauKzDw",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Ut-HbauKzDw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A fun song teaching various means of transportation with clear visuals."
+    sourceUrl: "https://www.youtube.com/watch?v=q780dw-1QE8",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/q780dw-1QE8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A fun video showing how to make a fruit salad while learning fruit vocabulary."
   },
   {
     id: "book1-unit15-video3",
     bookId: "1",
     unitId: "15",
-    title: "Transport Vocabulary - English Singsing",
+    title: "Apples Are Yummy - Super Simple Songs",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=biX7NNxw_w8",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/biX7NNxw_w8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A detailed video introducing various transportation methods with clear pronunciation."
+    sourceUrl: "https://www.youtube.com/watch?v=oBF-_ZMkuH8",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/oBF-_ZMkuH8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A simple song about apples, perfect for very young learners."
+  },
+  {
+    id: "book1-unit15-video4",
+    bookId: "1",
+    unitId: "15",
+    title: "Fruit Song - Dream English",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=QQZ03_v3K6Y",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/QQZ03_v3K6Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A lively song from Dream English that helps children learn fruit vocabulary."
+  },
+  {
+    id: "book1-unit15-video5",
+    bookId: "1",
+    unitId: "15",
+    title: "Fruit Guessing Game for Kids",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=mVE9pYdwX-I",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/mVE9pYdwX-I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "An interactive guessing game video where children identify different fruits."
+  },
+  {
+    id: "book1-unit15-video6",
+    bookId: "1",
+    unitId: "15",
+    title: "I Like Apples - Super Simple Songs",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=wTTz2dL0jb8",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/wTTz2dL0jb8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A song about expressing likes with fruits, focusing on simple sentence patterns."
   }
 ];
 
@@ -49,23 +82,23 @@ export const book1Unit15GameResources: TeacherResource[] = [
     id: "book1-unit15-game1",
     bookId: "1",
     unitId: "15",
-    title: "Wordwall - Transport Vocabulary",
+    title: "Wordwall - Fruit Vocabulary",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/transport-vocabulary",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7a47d8a73d0f4e199ca18266fc8c29ac?themeId=1&templateId=3" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "Interactive game for learning and matching different modes of transportation."
+    sourceUrl: "https://wordwall.net/resource/bcf4964f6d694547a72d3909fd32d86c",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/bcf4964f6d694547a72d3909fd32d86c?themeId=1&templateId=46" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Interactive game for learning and matching different fruits with their English names."
   },
   {
     id: "book1-unit15-game2",
     bookId: "1",
     unitId: "15",
-    title: "Wordwall - Transport Sorting",
+    title: "Wordwall - Fruit Quiz",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/transport-sorting",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ed33b566d5a74ac58df9ddef6c4c7cd5?themeId=1&templateId=8" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "A sorting game where students categorize different types of transport (land, air, water)."
+    sourceUrl: "https://wordwall.net/resource/96231f6b6a204fb887b683064b6ac962",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/96231f6b6a204fb887b683064b6ac962?themeId=1&templateId=46" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A quiz to test knowledge of fruit vocabulary with colorful images."
   }
 ];
 

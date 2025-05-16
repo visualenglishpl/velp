@@ -6,7 +6,7 @@
  */
 
 import { BookId, UnitId } from '@/types/content';
-import { TeacherResource } from '@/types/resources';
+import { TeacherResource } from '@/components/TeacherResources';
 
 // Helper types
 type ResourceLoader = () => Promise<TeacherResource[]>;
@@ -134,9 +134,21 @@ registerResourceLoader('1', '11', async () => {
   return resources;
 });
 
+// Book 1, Unit 15 (Fruit)
+registerResourceLoader('1', '15', async () => {
+  const { default: resources } = await import('@/data/book1-unit15-resources');
+  return resources;
+});
+
 // Book 1, Unit 17 (How Is The Weather?)
 registerResourceLoader('1', '17', async () => {
   const { default: resources } = await import('@/data/book1-unit17-resources');
+  return resources;
+});
+
+// Book 1, Unit 18 (What Can You Do?)
+registerResourceLoader('1', '18', async () => {
+  const { default: resources } = await import('@/data/book1-unit18-resources');
   return resources;
 });
 
