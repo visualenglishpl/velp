@@ -55,6 +55,28 @@ export const book1Unit7GameResources: TeacherResource[] = [
     sourceUrl: "https://wordwall.net/resource/43666156c96d455686dc6620f025c979",
     embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/43666156c96d455686dc6620f025c979?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
     description: "Interactive game to learn numbers from 1 to 10."
+  },
+  {
+    id: "book1-unit7-game2",
+    bookId: "1",
+    unitId: "7",
+    title: "Wordwall - Numbers 1-10 (2)",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/6b732e25ee5641e38bdb2785e4fe390b",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/6b732e25ee5641e38bdb2785e4fe390b?themeId=1&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A matching game for numbers 1-10 with visual representations."
+  },
+  {
+    id: "book1-unit7-game3",
+    bookId: "1",
+    unitId: "7",
+    title: "Wordwall - Numbers 1-10 (3)",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/a0ac3f124ba146bda184a6fe30e24d5b",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/a0ac3f124ba146bda184a6fe30e24d5b?themeId=26&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A third interactive game for reinforcing number vocabulary from 1 to 10."
   }
 ];
 

@@ -118,6 +118,58 @@ def print_resource_table(resource_data):
               f"{unit['youtube_count']:<9}{unit['wordwall_count']:<10}")
     
     print("=" * 78)
+    
+    # Print detailed resources for generation
+    print("\nDETAILED RESOURCES FOR CODE GENERATION:")
+    print("=" * 100)
+    
+    for unit_num in sorted(resource_data.keys(), key=lambda x: int(x) if x.isdigit() else 999):
+        unit = resource_data[unit_num]
+        print(f"\nUNIT {unit_num}:")
+        
+        # Get full text for this unit from docx file
+        with open('downloaded_document.docx', 'rb') as docx_file:
+            doc = docx.Document(docx_file)
+            full_text = "\n".join([para.text for para in doc.paragraphs])
+            unit_pattern = f'VISUAL 1 - UNIT {unit_num} - (.+?)(?=VISUAL 1 - UNIT \d+|\Z)'
+            unit_match = re.search(unit_pattern, full_text, re.DOTALL)
+            unit_content = unit_match.group(0) if unit_match else ""
+        
+        # Extract and print all iframe codes
+        iframe_pattern = r'<iframe.+?</iframe>'
+        iframes = re.findall(iframe_pattern, unit_content)
+        
+        print("  Videos:")
+        for i, iframe in enumerate([iframe for iframe in iframes if 'youtube.com/embed' in iframe]):
+            # Extract video ID
+            video_id_match = re.search(r'youtube.com/embed/([^?]+)', iframe)
+            video_id = video_id_match.group(1) if video_id_match else "unknown"
+            
+            # Attempt to match with a video title
+            title = f"Video {i+1}"
+            if i < len(unit['videos']):
+                title = unit['videos'][i]
+            
+            print(f"    {i+1}. {title}")
+            print(f"       URL: https://www.youtube.com/watch?v={video_id}")
+            print(f"       Embed: {iframe}")
+        
+        print("\n  Games:")
+        for i, iframe in enumerate([iframe for iframe in iframes if 'wordwall.net/embed' in iframe]):
+            # Extract game ID
+            game_id_match = re.search(r'wordwall.net/embed/([^?]+)', iframe)
+            game_id = game_id_match.group(1) if game_id_match else "unknown"
+            
+            # Attempt to match with a game title
+            title = f"Game {i+1}"
+            if i < len(unit['games']):
+                title = unit['games'][i]
+            
+            print(f"    {i+1}. {title}")
+            print(f"       URL: https://wordwall.net/resource/{game_id}")
+            print(f"       Embed: {iframe}")
+            
+    print("\n" + "=" * 100)
 
 def compare_with_implementation(resource_data):
     """Compare source document counts with implementation counts."""

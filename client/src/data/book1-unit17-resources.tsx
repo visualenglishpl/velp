@@ -1,5 +1,5 @@
 /**
- * Visual English Book 1, Unit 17: Sports
+ * Visual English Book 1, Unit 17: How Is The Weather?
  * Resources including videos and games
  */
 
@@ -12,34 +12,89 @@ export const book1Unit17VideoResources: TeacherResource[] = [
     id: "book1-unit17-video1",
     bookId: "1",
     unitId: "17",
-    title: "Sports Song - Maple Leaf Learning",
+    title: "How's the Weather Simple Skits - Maple Leaf",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=tgUSHk6JaTY",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/tgUSHk6JaTY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A fun and engaging song introducing common sports activities for young learners."
+    sourceUrl: "https://www.youtube.com/watch?v=O2NwvUB41rA",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/O2NwvUB41rA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A fun skit teaching weather vocabulary and phrases for young learners."
   },
   {
     id: "book1-unit17-video2",
     bookId: "1",
     unitId: "17",
-    title: "I Can Run - Super Simple Songs",
+    title: "How's the Weather Song - Maple Leaf",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=hft6uJQIF4g",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/hft6uJQIF4g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A song about different sports-related actions and movements with the phrase 'I can...'"
+    sourceUrl: "https://www.youtube.com/watch?v=I8GeA3anPdo",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/I8GeA3anPdo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A catchy song teaching weather vocabulary with animated visuals."
   },
   {
     id: "book1-unit17-video3",
     bookId: "1",
     unitId: "17",
-    title: "Sports Vocabulary - English Singsing",
+    title: "How's the weather - Skit",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=4ZQQKGaXafs",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/4ZQQKGaXafs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A detailed video showcasing different sports with clear pronunciation and visuals."
+    sourceUrl: "https://www.youtube.com/watch?v=gpBuaU5OPi8",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gpBuaU5OPi8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A conversational skit about weather with practical phrases for everyday use."
+  },
+  {
+    id: "book1-unit17-video4",
+    bookId: "1",
+    unitId: "17",
+    title: "Magic Weather for Kids - WATTS ENGLISH",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=pd5kLz3jc4o",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/pd5kLz3jc4o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A magical weather story with colorful animations to engage young learners."
+  },
+  {
+    id: "book1-unit17-video5",
+    bookId: "1",
+    unitId: "17",
+    title: "Rain Rain Go Away - Super Simple Songs",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=c3v0rJqyCTM",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/c3v0rJqyCTM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A classic nursery rhyme about rain with animated visuals by Super Simple Songs."
+  },
+  {
+    id: "book1-unit17-video6",
+    bookId: "1",
+    unitId: "17",
+    title: "Rain, Rain, Go Away",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=KAYZo8a8AHg",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/KAYZo8a8AHg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A fun animation of the popular children's song about rain."
+  },
+  {
+    id: "book1-unit17-video7",
+    bookId: "1",
+    unitId: "17",
+    title: "Rain Rain Go Away - Super Simple Songs 2",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=LFrKYjrIDs8",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/LFrKYjrIDs8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "Another version of the popular rain song with different animations."
+  },
+  {
+    id: "book1-unit17-video8",
+    bookId: "1",
+    unitId: "17",
+    title: "Partly Cloudy - Short Film",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=PfyJQEIsMt0",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/PfyJQEIsMt0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A heartwarming short film about clouds and weather."
   }
 ];
 
@@ -49,23 +104,44 @@ export const book1Unit17GameResources: TeacherResource[] = [
     id: "book1-unit17-game1",
     bookId: "1",
     unitId: "17",
-    title: "Wordwall - Sports Vocabulary",
+    title: "Wordwall - Weather",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/sports-vocabulary",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/f5d97ea32b0a40738ce02a4c69d09a47?themeId=1&templateId=3" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "Interactive game for learning and matching different sports activities."
+    sourceUrl: "https://wordwall.net/resource/0d86e97d1d264023b65d07f200681c1b",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/0d86e97d1d264023b65d07f200681c1b?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Interactive game for learning and matching weather vocabulary."
   },
   {
     id: "book1-unit17-game2",
     bookId: "1",
     unitId: "17",
-    title: "Wordwall - Sports Equipment Match",
+    title: "Wordwall - Weather 2",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/sports-equipment",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d14f21e2d7844e97a21243b6e9cac45c?themeId=1&templateId=5" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "A matching game connecting sports with the equipment needed to play them."
+    sourceUrl: "https://wordwall.net/resource/17f93ebd3a064bdbb6091669ff5f7318",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/17f93ebd3a064bdbb6091669ff5f7318?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Another weather vocabulary game with different activities."
+  },
+  {
+    id: "book1-unit17-game3",
+    bookId: "1",
+    unitId: "17",
+    title: "Wordwall - Weather 3",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/89a170a27647484d8c98c94a5f04f9e7",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/89a170a27647484d8c98c94a5f04f9e7?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A third interactive game for reinforcing weather vocabulary."
+  },
+  {
+    id: "book1-unit17-game4",
+    bookId: "1",
+    unitId: "17",
+    title: "ABCYA - Seasonal Shuffle",
+    resourceType: "game",
+    provider: "ABCYA",
+    sourceUrl: "https://www.abcya.com/games/seasonal_shuffle",
+    description: "A game about weather and seasons to help reinforce vocabulary."
   }
 ];
 

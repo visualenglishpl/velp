@@ -1,5 +1,5 @@
 /**
- * Visual English Book 1, Unit 11: Seasons
+ * Visual English Book 1, Unit 11: Seasons of the Year
  * Resources including videos and games
  */
 
@@ -15,31 +15,97 @@ export const book1Unit11VideoResources: TeacherResource[] = [
     title: "Season Song - Pancake Manor",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=8ZjpI6fgYSY",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/8ZjpI6fgYSY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    sourceUrl: "https://www.youtube.com/watch?v=EHnO_LpfsIg",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/EHnO_LpfsIg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     description: "A catchy song teaching children about the four seasons and their characteristics."
   },
   {
     id: "book1-unit11-video2",
     bookId: "1",
     unitId: "11",
-    title: "Weather Song - The Singing Walrus",
+    title: "Seasons - Pete the Cat",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=XcW9Ct000yY",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XcW9Ct000yY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A fun song teaching weather vocabulary related to different seasons."
+    sourceUrl: "https://www.youtube.com/watch?v=7OUYAQttqdg",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/7OUYAQttqdg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "Pete the Cat explores the four seasons with fun animations and catchy music."
   },
   {
     id: "book1-unit11-video3",
     bookId: "1",
     unitId: "11",
-    title: "Four Seasons Song - Have Fun Teaching",
+    title: "Four Seasons Tree Craft",
     resourceType: "video",
     provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=Iisj2kTZIFs",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Iisj2kTZIFs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "An educational song about the four seasons with clear visuals of seasonal activities and weather."
+    sourceUrl: "https://www.youtube.com/watch?v=hexM3GaE2J4",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/hexM3GaE2J4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A craft activity video showing how to create a four seasons tree display."
+  },
+  {
+    id: "book1-unit11-video4",
+    bookId: "1",
+    unitId: "11",
+    title: "Short Stories - The Lazy Bear",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=sXcs_4ez8-M",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/sXcs_4ez8-M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "A short story about a lazy bear throughout the different seasons."
+  },
+  {
+    id: "book1-unit11-video5",
+    bookId: "1",
+    unitId: "11",
+    title: "The Seasons Song - Maple Leaf",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=VS9qBeInJ0U",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/VS9qBeInJ0U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "An educational song about the four seasons with simple lyrics and visuals."
+  },
+  {
+    id: "book1-unit11-video6",
+    bookId: "1",
+    unitId: "11",
+    title: "Four Seasons - StoryBots",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=NavWWM2iTEw",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/NavWWM2iTEw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "StoryBots explain the four seasons with fun animations and catchy music."
+  },
+  {
+    id: "book1-unit11-video7",
+    bookId: "1",
+    unitId: "11",
+    title: "Seasons Word Songs - Word Power Pinkfong",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=Wrjqz2GTzzI",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/Wrjqz2GTzzI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "Pinkfong's word song about the seasons with colorful animations and catchy rhythms."
+  },
+  {
+    id: "book1-unit11-video8",
+    bookId: "1",
+    unitId: "11",
+    title: "Four Seasons - Dream English",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=TBLFMXU8FLI",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/TBLFMXU8FLI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "Dream English presents a song about the four seasons with simple vocabulary."
+  },
+  {
+    id: "book1-unit11-video9",
+    bookId: "1",
+    unitId: "11",
+    title: "Seasonal Activities Quiz",
+    resourceType: "video",
+    provider: "YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=MtA9Ni-wxUI",
+    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/MtA9Ni-wxUI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    description: "An interactive quiz video about activities associated with different seasons."
   }
 ];
 
@@ -49,23 +115,23 @@ export const book1Unit11GameResources: TeacherResource[] = [
     id: "book1-unit11-game1",
     bookId: "1",
     unitId: "11",
-    title: "Wordwall - Seasons Match",
+    title: "Wordwall - Seasons",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/seasons-match",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/ca65b95ea4b442c2a94ca9e15e81db42?themeId=1&templateId=22" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    sourceUrl: "https://wordwall.net/resource/7b81d9ee5f4f450fa1f807d3c0caf204",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7b81d9ee5f4f450fa1f807d3c0caf204?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
     description: "An interactive matching game for learning seasons vocabulary and characteristics."
   },
   {
     id: "book1-unit11-game2",
     bookId: "1",
     unitId: "11",
-    title: "Wordwall - Weather and Seasons",
+    title: "Wordwall - Seasons 2",
     resourceType: "game",
     provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/weather-seasons",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e75b7a2dd6a04f2e8761b8ebd8e7c82d?themeId=1&templateId=5" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "A game connecting weather conditions with appropriate seasons."
+    sourceUrl: "https://wordwall.net/resource/c9bf24cc7b5a4ec888974e540da1a160",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/c9bf24cc7b5a4ec888974e540da1a160?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "A game connecting seasonal vocabulary with images and activities."
   }
 ];
 
