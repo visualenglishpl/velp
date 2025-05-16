@@ -3,7 +3,7 @@
  * Resources including videos and games
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/resources';
 import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
 
 // Video resources for Unit 7

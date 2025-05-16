@@ -116,6 +116,30 @@ registerResourceLoader('1', '1', async () => {
   return resources;
 });
 
+// Book 1, Unit 7 (How Old Are You?)
+registerResourceLoader('1', '7', async () => {
+  const { default: resources } = await import('@/data/book1-unit7-resources');
+  return resources;
+});
+
+// Book 1, Unit 8 (Shapes)
+registerResourceLoader('1', '8', async () => {
+  const { default: resources } = await import('@/data/book1-unit8-resources');
+  return resources;
+});
+
+// Book 1, Unit 11 (Seasons of the Year)
+registerResourceLoader('1', '11', async () => {
+  const { default: resources } = await import('@/data/book1-unit11-resources');
+  return resources;
+});
+
+// Book 1, Unit 17 (How Is The Weather?)
+registerResourceLoader('1', '17', async () => {
+  const { default: resources } = await import('@/data/book1-unit17-resources');
+  return resources;
+});
+
 // Book 3, Unit 16 (Sports)
 registerResourceLoader('3', '16', async () => {
   const { sportsResources } = await import('@/data/book3-unit16');

@@ -43,6 +43,9 @@ export interface TeacherResource {
   
   // General source URL
   sourceUrl?: string;
+  
+  // Embed code for videos, games, etc.
+  embedCode?: string;
 }
 
 /**
