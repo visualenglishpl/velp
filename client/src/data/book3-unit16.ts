@@ -55,7 +55,7 @@ export const sportsResources: TeacherResource[] = [
     id: '5',
     title: 'Sports Lesson Plan',
     description: 'Complete lesson plan for teaching sports vocabulary',
-    resourceType: 'lessonPlan',
+    resourceType: 'lesson',
     bookId: '3',
     unitId: '16',
     provider: 'Visual English Materials',

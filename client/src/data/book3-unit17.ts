@@ -55,7 +55,7 @@ export const choresResources: TeacherResource[] = [
     id: '5',
     title: 'Household Chores Lesson Plan',
     description: 'Complete lesson plan for teaching household chores vocabulary',
-    resourceType: 'lessonPlan',
+    resourceType: 'lesson',
     bookId: '3',
     unitId: '17',
     provider: 'Visual English Materials',

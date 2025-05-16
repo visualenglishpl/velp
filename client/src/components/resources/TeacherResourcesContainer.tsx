@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ResourceList } from './ResourceList';
 import { v4 as uuidv4 } from 'uuid';
 import { BookId, UnitId } from '@/types/content';
-import { TeacherResource, ResourceType } from '@/types/resources';
+import { TeacherResource, ResourceType, ResourceFilter } from '@/types/resources';
 import { useTeacherResources } from '@/hooks/useTeacherResources';
 import {
   Select,
@@ -45,6 +45,7 @@ import {
 interface TeacherResourcesContainerProps {
   initialBookId?: BookId;
   initialUnitId?: UnitId;
+  initialFilter?: ResourceFilter;
   showSelection?: boolean;
   enableEditing?: boolean;
   readOnly?: boolean;
@@ -69,6 +70,7 @@ function getUnitTitle(unitId: UnitId): string {
 export function TeacherResourcesContainer({
   initialBookId,
   initialUnitId,
+  initialFilter,
   showSelection = true,
   enableEditing = false,
   readOnly = false,
@@ -93,7 +95,8 @@ export function TeacherResourcesContainer({
     addResource
   } = useTeacherResources({
     initialBookId,
-    initialUnitId
+    initialUnitId,
+    initialFilter
   });
 
   // Resource editing state
@@ -179,134 +182,74 @@ export function TeacherResourcesContainer({
         </div>
       )}
       
-      {/* Book and unit selection */}
-      {showSelection && (
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle>Resource Selection</CardTitle>
-            <CardDescription>
-              Select a book and unit to view its resources
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <label className="text-sm font-medium mb-1 block">Book</label>
-                <Select 
-                  value={bookId || ''} 
-                  onValueChange={handleBookSelect}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a book" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {availableBookIds.map((id) => (
-                      <SelectItem key={id} value={id}>
-                        {getBookTitle(id)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="flex-1">
-                <label className="text-sm font-medium mb-1 block">Unit</label>
-                <Select
-                  value={unitId || ''}
-                  onValueChange={handleUnitSelect}
-                  disabled={!bookId}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a unit" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {bookId && getAvailableUnits(bookId).map((id) => (
-                      <SelectItem key={id} value={id}>
-                        {getUnitTitle(id)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-      
       {/* No Selection State */}
       {showNoSelectionState ? (
-        <Card className="border-dashed">
-          <CardContent className="pt-8 pb-8 flex flex-col items-center justify-center text-center">
-            <LibraryIcon className="h-12 w-12 mb-4 text-muted-foreground" />
-            <h3 className="text-lg font-medium mb-2">No Resources Selected</h3>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              Select a book and unit to view its teacher resources, or use the 
-              filters to find specific types of resources.
-            </p>
-            {showSelection ? (
-              <p className="text-sm text-muted-foreground">
-                Use the selection controls above to choose a book and unit.
-              </p>
-            ) : (
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setBookId('1' as BookId);
-                  setUnitId('1' as UnitId);
-                }}
-              >
-                <BookIcon className="mr-2 h-4 w-4" />
-                View Example Resources
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+        <div className="flex flex-col items-center justify-center text-center p-8 bg-muted/10 rounded-lg border border-dashed">
+          <LibraryIcon className="h-12 w-12 mb-4 text-muted-foreground" />
+          <h3 className="text-lg font-medium mb-2">No Resources Selected</h3>
+          <p className="text-muted-foreground mb-6 max-w-md">
+            Please select a book and unit to view its teacher resources.
+          </p>
+          <Button 
+            variant="outline" 
+            onClick={() => {
+              setBookId('1' as BookId);
+              setUnitId('1' as UnitId);
+            }}
+          >
+            <BookIcon className="mr-2 h-4 w-4" />
+            View Example Resources
+          </Button>
+        </div>
       ) : (
         /* Resource List */
-        <Card>
-          <CardHeader className="pb-3">
-            <div className="flex justify-between items-start">
-              <div>
-                <CardTitle>
-                  {bookId && unitId ? (
-                    <>
-                      {getBookTitle(bookId)} {getUnitTitle(unitId)} Resources
-                      {bookId === '3' && unitId === '16' && (
-                        <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                          Sports
-                        </span>
-                      )}
-                      {bookId === '3' && unitId === '17' && (
-                        <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                          Household Chores
-                        </span>
-                      )}
-                    </>
-                  ) : (
-                    'Teacher Resources'
-                  )}
-                </CardTitle>
-                <CardDescription>
-                  {resources.length} resources available
-                </CardDescription>
-              </div>
+        <div>
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h2 className="text-2xl font-bold">
+                {bookId && unitId ? (
+                  <>
+                    {getBookTitle(bookId)} {getUnitTitle(unitId)} 
+                    {bookId === '3' && unitId === '16' && (
+                      <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                        Sports
+                      </span>
+                    )}
+                    {bookId === '3' && unitId === '17' && (
+                      <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                        Household Chores
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  'Educational Resources'
+                )}
+              </h2>
+              <p className="text-muted-foreground">
+                {resources.length} resources available
+              </p>
             </div>
-          </CardHeader>
-          <CardContent>
-            <ResourceList
-              resources={filteredResources}
-              onSearch={setSearchQuery}
-              onFilterByType={setResourceTypeFilter}
-              selectedType={filter.resourceType}
-              searchQuery={filter.searchQuery}
-              isLoading={isLoading}
-              readOnly={readOnly}
-              onAddResource={enableEditing ? handleAddResource : undefined}
-              onEditResource={enableEditing ? handleEditResource : undefined}
-              onDeleteResource={enableEditing ? handleDeleteResource : undefined}
-            />
-          </CardContent>
-        </Card>
+            
+            {!readOnly && enableEditing && (
+              <Button onClick={handleAddResource} variant="outline">
+                Add New Resource
+              </Button>
+            )}
+          </div>
+          
+          <ResourceList
+            resources={filteredResources}
+            onSearch={setSearchQuery}
+            onFilterByType={setResourceTypeFilter}
+            selectedType={filter.resourceType}
+            searchQuery={filter.searchQuery}
+            isLoading={isLoading}
+            readOnly={readOnly}
+            onAddResource={enableEditing ? handleAddResource : undefined}
+            onEditResource={enableEditing ? handleEditResource : undefined}
+            onDeleteResource={enableEditing ? handleDeleteResource : undefined}
+          />
+        </div>
       )}
       
       {/* Delete Confirmation Dialog */}

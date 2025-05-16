@@ -12,8 +12,15 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useExcelQA } from '@/hooks/use-excel-qa';
 import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { cleanQuestionText, cleanAnswerText, cleanLeadingPatterns } from '@/lib/textCleaners';
-import TeacherResources from '@/components/TeacherResources';
+import { cleanQuestionText, cleanAnswerText, formatDisplayText } from '@/lib/textCleaners';
+
+import { TeacherResourcesContainer } from '@/components/resources/TeacherResourcesContainer';
+
+// Local helper function to replace the missing cleanLeadingPatterns function
+const cleanLeadingPatterns = (text: string): string => {
+  if (!text) return '';
+  return formatDisplayText(text);
+};
 
 // Define types for question data structure
 type QuestionAnswer = {
@@ -920,11 +927,12 @@ export default function SimpleContentViewer() {
                 {bookId && unitNumber ? (
                   <>
                     <div id="video-resources-container">
-                      <TeacherResources 
-                        bookId={bookId} 
-                        unitId={unitNumber?.toString() || "1"} 
+                      <TeacherResourcesContainer 
+                        initialBookId={bookId as any} 
+                        initialUnitId={unitNumber?.toString() as any} 
                         key={`${bookId}-${unitNumber}-videos`}
-                        resourceType="video"
+                        readOnly={true}
+                        initialFilter={{ resourceType: 'video', searchQuery: '' }}
                       />
                     </div>
                   </>
@@ -1000,11 +1008,12 @@ export default function SimpleContentViewer() {
                 {bookId && unitNumber ? (
                   <>
                     <div id="game-resources-container">
-                      <TeacherResources 
-                        bookId={bookId} 
-                        unitId={unitNumber?.toString() || "1"} 
+                      <TeacherResourcesContainer 
+                        initialBookId={bookId as any} 
+                        initialUnitId={unitNumber?.toString() as any} 
                         key={`${bookId}-${unitNumber}-games`}
-                        resourceType="game"
+                        readOnly={true}
+                        initialFilter={{ resourceType: 'game', searchQuery: '' }}
                       />
                     </div>
                   </>

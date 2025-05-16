@@ -166,7 +166,7 @@ export function ResourceList({
         </div>
       </div>
       
-      {/* Resources table */}
+      {/* Resources grid with thumbnails */}
       {isLoading ? (
         <div className="flex justify-center py-8">
           <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" />
@@ -182,89 +182,100 @@ export function ResourceList({
           </p>
         </div>
       ) : (
-        <div className="border rounded-md overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[50px]">Type</TableHead>
-                <TableHead>Resource</TableHead>
-                <TableHead className="w-[150px]">Provider</TableHead>
-                <TableHead className="text-right w-[150px]">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {resources.map((resource) => (
-                <TableRow key={resource.id}>
-                  <TableCell>
-                    <div className="bg-muted p-1.5 rounded-md inline-flex">
-                      {getResourceTypeIcon(resource.resourceType)}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {resources.map((resource) => {
+            // Generate thumbnail URL based on resource type
+            const thumbnailUrl = resource.resourceType === 'video' && resource.youtubeVideoId
+              ? `https://img.youtube.com/vi/${resource.youtubeVideoId}/mqdefault.jpg`
+              : resource.resourceType === 'game' && resource.wordwallGameId
+              ? `https://az779572.vo.msecnd.net/screens-200/4c26c3b6d7784cc4a1b09c09b6e0ab5a`
+              : resource.resourceType === 'video'
+              ? 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/video_thumb.png'
+              : resource.resourceType === 'game'
+              ? 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/game_thumb.png'
+              : resource.resourceType === 'pdf'
+              ? 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/pdf_thumb.png'
+              : resource.resourceType === 'lessonPlan'
+              ? 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/lesson_thumb.png'
+              : 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/resource_thumb.png';
+            
+            return (
+              <div key={resource.id} className="bg-card border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all">
+                {/* Thumbnail area with preview overlay */}
+                <div 
+                  className="relative h-40 bg-cover bg-center cursor-pointer" 
+                  style={{ backgroundImage: `url(${thumbnailUrl})` }}
+                  onClick={() => handlePreview(resource)}
+                >
+                  {/* Resource type badge */}
+                  <div className="absolute top-2 left-2 bg-primary/80 text-primary-foreground px-2 py-1 rounded text-xs font-medium flex items-center gap-1">
+                    {getResourceTypeIcon(resource.resourceType)}
+                    <span>{resource.resourceType}</span>
+                  </div>
+                  
+                  {/* Provider badge if available */}
+                  {resource.provider && (
+                    <div className="absolute bottom-2 right-2 bg-background/80 px-2 py-1 rounded text-xs">
+                      {resource.provider}
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <div>
-                      <div className="font-medium">{resource.title}</div>
-                      <div className="text-sm text-muted-foreground">{resource.description}</div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {resource.provider ? (
-                      <Badge variant="outline" className="font-normal">
-                        {resource.provider}
-                      </Badge>
-                    ) : (
-                      <span className="text-muted-foreground text-sm">Not specified</span>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
+                  )}
+                  
+                  {/* Preview overlay */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity">
+                    <Button size="sm" variant="secondary" className="gap-2">
+                      <EyeIcon className="h-4 w-4" />
+                      Preview
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Resource info */}
+                <div className="p-3">
+                  <h3 className="font-medium line-clamp-1">{resource.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1 line-clamp-2 h-10">
+                    {resource.description}
+                  </p>
+                  
+                  {/* Action buttons (minimal) */}
+                  <div className="flex justify-end gap-1 mt-2">
+                    {resource.sourceUrl && (
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => handlePreview(resource)}
-                        title="Preview"
+                        onClick={() => window.open(resource.sourceUrl, '_blank')}
+                        title="Open original"
                       >
-                        <EyeIcon className="h-4 w-4" />
+                        <ExternalLinkIcon className="h-4 w-4" />
                       </Button>
-                      
-                      {resource.sourceUrl && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => window.open(resource.sourceUrl, '_blank')}
-                          title="Open original"
-                        >
-                          <ExternalLinkIcon className="h-4 w-4" />
-                        </Button>
-                      )}
-                      
-                      {!readOnly && onEditResource && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => onEditResource(resource)}
-                          title="Edit"
-                        >
-                          <PencilIcon className="h-4 w-4" />
-                        </Button>
-                      )}
-                      
-                      {!readOnly && onDeleteResource && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => onDeleteResource(resource)}
-                          title="Delete"
-                          className="text-destructive hover:text-destructive/90"
-                        >
-                          <TrashIcon className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                    )}
+                    
+                    {!readOnly && onEditResource && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onEditResource(resource)}
+                        title="Edit"
+                      >
+                        <PencilIcon className="h-4 w-4" />
+                      </Button>
+                    )}
+                    
+                    {!readOnly && onDeleteResource && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onDeleteResource(resource)}
+                        title="Delete"
+                        className="text-destructive hover:text-destructive/90"
+                      >
+                        <TrashIcon className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
       
