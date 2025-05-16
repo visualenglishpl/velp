@@ -27,12 +27,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from '@/components/ui/tabs';
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -45,12 +39,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { 
   BookIcon, 
-  LayoutGridIcon, 
-  FilmIcon, 
-  FileIcon, 
-  GamepadIcon,
   LibraryIcon,
-  ArrowPathIcon
 } from 'lucide-react';
 
 // Define props for the container component
@@ -76,19 +65,6 @@ function getBookTitle(bookId: BookId): string {
 // Function to get unit title
 function getUnitTitle(unitId: UnitId): string {
   return `Unit ${unitId}`;
-}
-
-// Function to get resource type display name
-function getResourceTypeName(type: ResourceType): string {
-  switch (type) {
-    case 'video': return 'Video';
-    case 'game': return 'Game';
-    case 'pdf': return 'PDF';
-    case 'lesson': return 'Lesson Plan';
-    case 'worksheet': return 'Worksheet';
-    case 'flashcard': return 'Flashcard';
-    default: return 'Other';
-  }
 }
 
 export function TeacherResourcesContainer({
@@ -130,8 +106,6 @@ export function TeacherResourcesContainer({
   
   // Get available units for the selected book
   const getAvailableUnits = (bookId: BookId): UnitId[] => {
-    if (!bookId) return [];
-    
     let unitCount = 18; // Default for Books 1-3
     
     if (bookId === '0a' || bookId === '0b' || bookId === '0c') {
@@ -144,19 +118,18 @@ export function TeacherResourcesContainer({
   };
 
   // Handle book selection
-  const handleBookSelect = (bookId: BookId) => {
-    setBookId(bookId);
-    setUnitId(null); // Reset unit when book changes
+  const handleBookSelect = (value: string) => {
+    setBookId(value as BookId);
   };
   
   // Handle unit selection
-  const handleUnitSelect = (unitId: UnitId) => {
-    setUnitId(unitId);
+  const handleUnitSelect = (value: string) => {
+    setUnitId(value as UnitId);
   };
   
   // Handle version selection for Book 3 Unit 16
-  const handleVersionSelect = (version: string) => {
-    setVersion(version);
+  const handleVersionSelect = (value: string) => {
+    setVersion(value);
   };
   
   // Handle adding a new resource
@@ -169,9 +142,7 @@ export function TeacherResourcesContainer({
       description: 'Resource description',
       resourceType: 'video',
       bookId,
-      unitId,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      unitId
     };
     
     addResource(newResource);
@@ -181,6 +152,12 @@ export function TeacherResourcesContainer({
   const handleEditResource = (resource: TeacherResource) => {
     // In a real application, this would open a form modal
     console.log('Edit resource:', resource);
+  };
+  
+  // Handle delete resource
+  const handleDeleteResource = (resource: TeacherResource) => {
+    setResourceToDelete(resource);
+    setIsDeleteDialogOpen(true);
   };
   
   // Handle deletion confirmation
@@ -196,12 +173,6 @@ export function TeacherResourcesContainer({
   const handleDeleteCancel = () => {
     setResourceToDelete(null);
     setIsDeleteDialogOpen(false);
-  };
-  
-  // Open delete confirmation dialog
-  const handleDeleteResource = (resource: TeacherResource) => {
-    setResourceToDelete(resource);
-    setIsDeleteDialogOpen(true);
   };
   
   // Determine if we should show the no-selection empty state
@@ -232,7 +203,7 @@ export function TeacherResourcesContainer({
                 <label className="text-sm font-medium mb-1 block">Book</label>
                 <Select 
                   value={bookId || ''} 
-                  onValueChange={(value) => handleBookSelect(value as BookId)}
+                  onValueChange={handleBookSelect}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a book" />
@@ -251,7 +222,7 @@ export function TeacherResourcesContainer({
                 <label className="text-sm font-medium mb-1 block">Unit</label>
                 <Select
                   value={unitId || ''}
-                  onValueChange={(value) => handleUnitSelect(value as UnitId)}
+                  onValueChange={handleUnitSelect}
                   disabled={!bookId}
                 >
                   <SelectTrigger>
@@ -341,11 +312,6 @@ export function TeacherResourcesContainer({
                   {resources.length} resources available
                 </CardDescription>
               </div>
-              
-              {/* Optional refresh button for reloading */}
-              {/* <Button variant="ghost" size="icon" title="Refresh resources">
-                <ArrowPathIcon className="h-4 w-4" />
-              </Button> */}
             </div>
           </CardHeader>
           <CardContent>
