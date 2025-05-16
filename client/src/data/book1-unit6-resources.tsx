@@ -54,8 +54,31 @@ export const book1Unit6VideoResources: TeacherResource[] = [
   }
 ];
 
-// No games listed for Unit 6 in the provided document
-export const book1Unit6GameResources: TeacherResource[] = [];
+// Game resources for Unit 6
+export const book1Unit6GameResources: TeacherResource[] = [
+  {
+    id: "book1-unit6-game1",
+    bookId: "1",
+    unitId: "6",
+    title: "WORDWALL - COLOURS - Game 1",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/54d466d5a13948c6acbafc5729e6d887",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/54d466d5a13948c6acbafc5729e6d887?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "An interactive game to practice identifying different colors."
+  },
+  {
+    id: "book1-unit6-game2",
+    bookId: "1",
+    unitId: "6",
+    title: "WORDWALL - COLOURS - Game 2",
+    resourceType: "game",
+    provider: "Wordwall",
+    sourceUrl: "https://wordwall.net/resource/360776cf889d4170872d084aa81d3995",
+    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/360776cf889d4170872d084aa81d3995?themeId=1&templateId=22&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
+    description: "Another fun game to practice color vocabulary and recognition."
+  }
+];
 
 // Combined resources for Unit 6
 export const book1Unit6Resources: TeacherResource[] = [
