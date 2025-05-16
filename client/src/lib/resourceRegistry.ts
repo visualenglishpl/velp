@@ -6,7 +6,7 @@
  */
 
 import { BookId, UnitId } from '@/types/content';
-import { TeacherResource } from '@/components/TeacherResources';
+import { TeacherResource } from '@/types/resources';
 
 // Helper types
 type ResourceLoader = () => Promise<TeacherResource[]>;
