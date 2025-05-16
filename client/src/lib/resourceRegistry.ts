@@ -116,6 +116,18 @@ registerResourceLoader('1', '1', async () => {
   return resources;
 });
 
+// Book 1, Unit 2 (School Objects)
+registerResourceLoader('1', '2', async () => {
+  const { default: resources } = await import('@/data/book1-unit2-resources');
+  return resources;
+});
+
+// Book 1, Unit 3 (Classroom Rules)
+registerResourceLoader('1', '3', async () => {
+  const { default: resources } = await import('@/data/book1-unit3-resources');
+  return resources;
+});
+
 // Book 1, Unit 7 (How Old Are You?)
 registerResourceLoader('1', '7', async () => {
   const { default: resources } = await import('@/data/book1-unit7-resources');
