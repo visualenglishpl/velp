@@ -919,14 +919,7 @@ export default function SimpleContentViewer() {
                   </svg>
                   Lessons
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="downloads" 
-                  className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                  Downloads
-                </TabsTrigger>
+
               </TabsList>
             </div>
             <TabsContent value="videos" className="p-4 border rounded-md">
@@ -1222,44 +1215,7 @@ export default function SimpleContentViewer() {
               </div>
             </TabsContent>
             
-            <TabsContent value="downloads" className="p-4 border rounded-md">
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium text-center">Downloadable Resources</h3>
-                {bookId === '1' && unitNumber === '5' && (
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <a href="#" className="block group hover:no-underline">
-                      <div className="flex items-center p-3 border rounded-lg transition-all duration-200 hover:border-blue-300 hover:shadow-sm group-hover:bg-blue-50">
-                        <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-lg mr-3 text-white">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-blue-800 group-hover:text-blue-700">Family Vocabulary PDF</h4>
-                          <p className="text-xs text-gray-500">Printable flashcards and worksheets</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="block group hover:no-underline">
-                      <div className="flex items-center p-3 border rounded-lg transition-all duration-200 hover:border-green-300 hover:shadow-sm group-hover:bg-green-50">
-                        <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-2 rounded-lg mr-3 text-white">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-green-800 group-hover:text-green-700">Family Tree Template</h4>
-                          <p className="text-xs text-gray-500">Interactive family tree worksheet</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                )}
-                {!(bookId === '1' && unitNumber === '5') && (
-                  <p className="text-center py-8 text-gray-500">Resources for Book {bookId}, Unit {unitNumber} will appear here.</p>
-                )}
-              </div>
-            </TabsContent>
+            {/* Downloads section has been removed */}
           </Tabs>
         </div>
       )}
