@@ -131,7 +131,11 @@ export function createBook1LessonPlanResource(
     provider: 'Visual English',
     content: {
       type: 'lessonPlan',
-      lessonType: lessonType
+      embedId: lessonType  // Store the lesson type in the embedId field
+    },
+    // Store additional lesson information as a custom property
+    lessonPlan: {
+      type: lessonType
     }
   };
 }
