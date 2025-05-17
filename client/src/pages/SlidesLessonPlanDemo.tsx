@@ -1,32 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useTeacherResources } from '@/hooks/useTeacherResources';
-import { SideBySideLessonPlanView } from '@/components/resources/SideBySideLessonPlanView';
+import { useState } from 'react';
+import { SlidesBasedLessonPlan } from '@/components/resources/SlidesBasedLessonPlan';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BookId, UnitId } from '@/types/content';
-import { BookOpen, ArrowLeft, Layers } from 'lucide-react';
+import { Layers, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
 
-export default function LessonPlanPreview() {
+export default function SlidesLessonPlanDemo() {
   const [bookId, setBookId] = useState<BookId>('1');
   const [unitId, setUnitId] = useState<UnitId>('1');
-  
-  // Use the hook to fetch resources
-  const {
-    resources,
-    isLoading,
-    error,
-    setBookId: setResourceBookId,
-    setUnitId: setResourceUnitId
-  } = useTeacherResources({
-    initialBookId: bookId,
-    initialUnitId: unitId
-  });
-  
-  // Update resources when book/unit selection changes
-  useEffect(() => {
-    setResourceBookId(bookId);
-    setResourceUnitId(unitId);
-  }, [bookId, unitId, setResourceBookId, setResourceUnitId]);
   
   // Available books and units
   const books: BookId[] = ['1', '2', '3', '4', '5', '6', '7'];
@@ -51,13 +33,13 @@ export default function LessonPlanPreview() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <h1 className="text-2xl font-bold flex items-center">
           <Layers className="h-6 w-6 mr-2 text-primary" />
-          Slides-Based Lesson Plan
+          Slides-Based Lesson Plan Demo
         </h1>
         
-        <Link to="/test-resources">
+        <Link to="/">
           <Button variant="outline" size="sm">
             <ArrowLeft className="h-4 w-4 mr-1" />
-            Back to Resources
+            Back to Home
           </Button>
         </Link>
       </div>
@@ -97,21 +79,22 @@ export default function LessonPlanPreview() {
         </div>
       </div>
       
-      {/* Error display */}
-      {error && (
-        <div className="bg-destructive/10 border border-destructive text-destructive p-4 rounded-md mb-6">
-          <h3 className="font-semibold">Error loading resources</h3>
-          <p>{error.message}</p>
-        </div>
-      )}
-      
-      {/* Main lesson plan view */}
-      <SideBySideLessonPlanView
-        bookId={bookId}
-        unitId={unitId}
-        resources={resources}
-        isLoading={isLoading}
-      />
+      {/* Main lesson plan display */}
+      <Card className="border-primary/20">
+        <CardHeader className="bg-primary/5 pb-3">
+          <CardTitle className="flex items-center">
+            <Layers className="h-5 w-5 mr-2 text-primary" />
+            Slides-Based Lesson Plan (Book {bookId}, Unit {unitId})
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-4">
+          <SlidesBasedLessonPlan 
+            bookId={bookId} 
+            unitId={unitId} 
+            title={`Book ${bookId} Unit ${unitId} Slides-Based Lesson Plan`}
+          />
+        </CardContent>
+      </Card>
     </div>
   );
 }

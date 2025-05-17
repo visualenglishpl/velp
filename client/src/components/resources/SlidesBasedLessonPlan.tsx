@@ -1,440 +1,139 @@
 import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  AlarmClock,
-  BookOpen,
-  FileText,
-  ListChecks,
-  Layers,
-  Timer,
-  Users,
-  Video,
-  Gamepad2,
-  ExternalLink,
-  HomeIcon,
-  ImageIcon
-} from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-
-export interface LessonStep {
-  title: string;
-  duration: string;
-  description: string;
-  instructions: string[];
-  materials?: string[];
-  teacherNotes?: string;
-}
-
-export interface LessonPlan {
-  id: string;
-  title: string;
-  duration: string;
-  objectives: string[];
-  materials: string[];
-  steps: LessonStep[];
-  assessmentTips: string;
-  homeworkIdeas: string[];
-  additionalResources?: { title: string; url: string }[];
-}
+import { BookId, UnitId } from '@/types/content';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Card } from '@/components/ui/card';
+import { Layers, Play, Presentation, BookOpen, Clock, Users, CheckCircle2 } from 'lucide-react';
 
 interface SlidesBasedLessonPlanProps {
-  bookId: string;
-  unitId: string;
+  bookId: BookId;
+  unitId: UnitId;
   title?: string;
-  className?: string;
 }
 
-export function SlidesBasedLessonPlan({
-  bookId,
-  unitId,
-  title = "Slides-Based 45-Minute Lesson Plan",
-  className = "",
-}: SlidesBasedLessonPlanProps) {
-  const [activeTab, setActiveTab] = useState('overview');
+interface LessonSection {
+  id: string;
+  title: string;
+  icon: React.ReactNode;
+  content: string;
+  slideRanges: string[];
+  timeEstimate: string;
+}
 
-  // Sample lesson plan that emphasizes slides as the core teaching method
-  const sampleLessonPlan: LessonPlan = {
-    id: `book${bookId}-unit${unitId}-lesson`,
-    title: `Book ${bookId} Unit ${unitId}: Topic Title`,
-    duration: "45 minutes",
-    objectives: [
-      "Learn key vocabulary through visual slides",
-      "Practice pronunciation guided by slide visuals",
-      "Complete interactive activities based on slide prompts",
-      "Develop speaking skills using slide-based conversation models"
-    ],
-    materials: [
-      "⚠️ Visual English Slides – this is the core of the lesson",
-      "Flashcards (as supplementary material)",
-      "Handouts aligned with slide content",
-      "YouTube or Wordwall resources (support material)"
-    ],
-    steps: [
+export function SlidesBasedLessonPlan({ bookId, unitId, title }: SlidesBasedLessonPlanProps) {
+  const [lessonSections] = useState<LessonSection[]>(() => {
+    // This would normally come from an API or data source
+    // For now, we'll use hardcoded data for demonstration
+    return [
       {
-        title: "Warm-up (Slide-based Introduction)",
-        duration: "5 mins",
-        description: "Activate prior knowledge and introduce the theme using the first slides.",
-        instructions: [
-          "Display introductory slides from the Visual English set",
-          "Ask students discussion questions shown on slides",
-          "Introduce key vocabulary directly from the slide prompts"
-        ],
-        teacherNotes: "Ensure every student visually engages with the opening slides."
+        id: 'warm-up',
+        title: 'Warm-up Phase',
+        icon: <Play className="h-5 w-5 text-orange-500" />,
+        content: 'Begin with a brief warm-up activity using Slides 1-5 to engage the students. Ask questions about the images, and encourage students to share their experiences related to the topic.',
+        slideRanges: ['Slides 1-5'],
+        timeEstimate: '5-8 minutes'
       },
       {
-        title: "Presentation (Slides = Main Teaching Tool)",
-        duration: "10 mins",
-        description: "Teach the topic using slides to present content clearly and visually.",
-        materials: [
-          "⚠️ Visual English Slides – full screen mode recommended"
-        ],
-        instructions: [
-          "Go through each slide explaining the content",
-          "Use embedded visuals or audio to support explanations",
-          "Pause for comprehension checks or pronunciation drills as guided on the slides"
-        ]
+        id: 'presentation',
+        title: 'Presentation Phase',
+        icon: <Presentation className="h-5 w-5 text-blue-500" />,
+        content: 'Introduce new vocabulary and concepts using Slides 6-15. Make sure to point at each item as you name it. Ask students to repeat the key vocabulary 2-3 times. Have students match words to the corresponding images.',
+        slideRanges: ['Slides 6-15'],
+        timeEstimate: '10-12 minutes'
       },
       {
-        title: "Practice Activity (Slide-guided Interaction)",
-        duration: "15 mins",
-        description: "Students interact based on prompts and visuals from the slides.",
-        materials: [
-          "Slides with task prompts",
-          "Pairwork/handouts if listed on the slides"
-        ],
-        instructions: [
-          "Let students complete the task as shown on the slide (e.g. match, speak, write)",
-          "Monitor and assist as they complete the task from the slide",
-          "Have pairs present or answer based on what was practiced"
-        ]
+        id: 'practice',
+        title: 'Practice Phase',
+        icon: <BookOpen className="h-5 w-5 text-green-500" />,
+        content: 'Guide students through controlled practice activities using Slides 16-25. Start with choral repetition, then move to pair practice with the speech bubbles from the slides. Walk around and monitor student performance.',
+        slideRanges: ['Slides 16-25'],
+        timeEstimate: '12-15 minutes'
       },
       {
-        title: "Wrap-up (Slide Summary & Game)",
-        duration: "10 mins",
-        description: "Use closing slides to review key content and end with a game or review.",
-        instructions: [
-          "Display recap or summary slide",
-          "Ask exit questions shown on slide",
-          "Run a quick review game directly from the slide if available"
-        ]
+        id: 'production',
+        title: 'Production Phase',
+        icon: <Users className="h-5 w-5 text-purple-500" />,
+        content: 'Facilitate student-centered activities using Slides 26-35. Have students work in pairs or small groups to create their own dialogues based on the patterns from the slides. Encourage them to personalize their responses.',
+        slideRanges: ['Slides 26-35'],
+        timeEstimate: '10-12 minutes'
+      },
+      {
+        id: 'wrap-up',
+        title: 'Wrap-up and Assessment',
+        icon: <CheckCircle2 className="h-5 w-5 text-red-500" />,
+        content: 'Review key learning points using Slides 36-40. Conduct a quick assessment through a game or activity using the vocabulary and structures from the lesson. Provide feedback and praise student efforts.',
+        slideRanges: ['Slides 36-40'],
+        timeEstimate: '5-8 minutes'
       }
-    ],
-    assessmentTips: "Focus on student responses during slide-based activities and accuracy of language use shown or modeled on slides.",
-    homeworkIdeas: [
-      "Review the lesson slides at home and summarize 3 key points",
-      "Complete a worksheet or online quiz linked in the final slide"
-    ],
-    additionalResources: [
-      {
-        title: "Support Worksheet",
-        url: "https://visualenglish.com/worksheets"
-      },
-      {
-        title: "Wordwall Game",
-        url: "https://wordwall.net/resource/12345"
-      }
-    ]
-  };
+    ];
+  });
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border ${className}`}>
-      <div className="px-4 py-3 border-b bg-primary/5">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+    <div className="space-y-4">
+      <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-none p-4 rounded-lg">
+        <div className="flex items-center space-x-2 mb-3">
+          <Layers className="h-5 w-5 text-primary" />
+          <h2 className="text-lg font-semibold">
+            {title || `Book ${bookId} Unit ${unitId} Lesson Plan`}
+          </h2>
+        </div>
+        <p className="text-muted-foreground mb-2">
+          This slides-based lesson plan emphasizes using the Visual English slides as the backbone of your teaching. 
+          Each phase indicates which slides to use and how to implement them effectively.
+        </p>
+        <div className="bg-blue-100 p-3 rounded-md flex items-start space-x-2 mt-2">
+          <Clock className="h-5 w-5 text-blue-600 mt-0.5" />
           <div>
-            <h2 className="text-xl font-bold flex items-center">
-              <Layers className="h-5 w-5 mr-2 text-primary" />
-              {title}
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Book {bookId} • Unit {unitId} • Visual English
+            <span className="font-medium">Total Lesson Time:</span> 
+            <span className="ml-1">45-55 minutes</span>
+          </div>
+        </div>
+      </Card>
+
+      <Accordion type="single" collapsible className="w-full">
+        {lessonSections.map((section) => (
+          <AccordionItem key={section.id} value={section.id} className="border border-muted rounded-md mb-2 overflow-hidden">
+            <AccordionTrigger className="px-4 py-3 hover:bg-muted/20 group">
+              <div className="flex items-center space-x-2">
+                {section.icon}
+                <span className="font-medium">{section.title}</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4 pb-4 pt-1">
+              <div className="space-y-3">
+                <div className="flex gap-2 flex-wrap">
+                  {section.slideRanges.map((range, idx) => (
+                    <div key={idx} className="bg-primary/10 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                      <Layers className="h-4 w-4 mr-1" />
+                      {range}
+                    </div>
+                  ))}
+                  <div className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                    <Clock className="h-4 w-4 mr-1" />
+                    {section.timeEstimate}
+                  </div>
+                </div>
+                <p className="text-muted-foreground">{section.content}</p>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+
+      <Card className="bg-blue-50 p-4 border-blue-200">
+        <div className="flex items-start space-x-3">
+          <div className="bg-blue-100 p-2 rounded-full">
+            <Layers className="h-5 w-5 text-blue-600" />
+          </div>
+          <div>
+            <h3 className="font-medium text-blue-800 mb-1">Why Slide-Based Teaching?</h3>
+            <p className="text-blue-700 text-sm">
+              Visual English is designed around high-quality slides that provide the perfect structure for your lessons.
+              By following this approach, you ensure that students receive consistent, visually-rich instruction that
+              builds comprehension naturally through carefully sequenced images.
             </p>
           </div>
-          
-          <Badge variant="outline" className="px-3 py-1 bg-primary/10 border-primary/20 text-primary">
-            <Timer className="h-4 w-4 mr-1.5" />
-            {sampleLessonPlan.duration}
-          </Badge>
         </div>
-      </div>
-
-      <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab}>
-        <div className="px-4 pt-2">
-          <TabsList className="w-full">
-            <TabsTrigger value="overview" className="flex items-center">
-              <FileText className="h-4 w-4 mr-1.5" />
-              <span>Overview</span>
-            </TabsTrigger>
-            <TabsTrigger value="warmup" className="flex items-center">
-              <AlarmClock className="h-4 w-4 mr-1.5" />
-              <span>Warm-up</span>
-            </TabsTrigger>
-            <TabsTrigger value="mainActivities" className="flex items-center">
-              <ImageIcon className="h-4 w-4 mr-1.5" />
-              <span>Slide Activities</span>
-            </TabsTrigger>
-            <TabsTrigger value="assessment" className="flex items-center">
-              <ListChecks className="h-4 w-4 mr-1.5" />
-              <span>Assessment</span>
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
-        <div className="p-4">
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-4">
-            <Card>
-              <CardHeader className="bg-primary/5 pb-3">
-                <CardTitle className="flex items-center">
-                  <ListChecks className="h-5 w-5 mr-2" />
-                  Learning Objectives
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <ul className="space-y-2">
-                  {sampleLessonPlan.objectives.map((objective, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="bg-primary/10 text-primary font-medium rounded-full w-5 h-5 flex items-center justify-center text-xs mr-2 mt-0.5">
-                        {index + 1}
-                      </span>
-                      <span>{objective}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader className="bg-primary/5 pb-3">
-                <CardTitle className="flex items-center">
-                  <BookOpen className="h-5 w-5 mr-2" />
-                  Materials (Visual Slides First)
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <ul className="space-y-2">
-                  {sampleLessonPlan.materials.map((material, index) => (
-                    <li key={index} className={`flex items-start ${material.includes('⚠️') ? 'text-primary font-medium' : ''}`}>
-                      <span className="mr-2 mt-0.5">•</span>
-                      <span>{material}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Warm-up Tab */}
-          <TabsContent value="warmup" className="space-y-4">
-            <Card>
-              <CardHeader className="bg-primary/5 pb-3">
-                <CardTitle className="flex items-center">
-                  <AlarmClock className="h-5 w-5 mr-2" />
-                  {sampleLessonPlan.steps[0].title} ({sampleLessonPlan.steps[0].duration})
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm">{sampleLessonPlan.steps[0].description}</p>
-                  </div>
-                  
-                  <div className="border-l-4 border-primary/30 pl-4 py-2">
-                    <h3 className="font-medium">Instructions:</h3>
-                    <ul className="mt-2 space-y-2">
-                      {sampleLessonPlan.steps[0].instructions.map((instruction, i) => (
-                        <li key={i} className="text-sm flex items-start">
-                          <span className="text-primary mr-2">→</span>
-                          {instruction}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  {sampleLessonPlan.steps[0].teacherNotes && (
-                    <div className="bg-yellow-50 border border-yellow-100 p-3 rounded-md">
-                      <h3 className="font-medium text-amber-800 text-sm">Teacher Note:</h3>
-                      <p className="text-sm text-amber-700 mt-1">{sampleLessonPlan.steps[0].teacherNotes}</p>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Main Activities Tab */}
-          <TabsContent value="mainActivities" className="space-y-4">
-            {/* Presentation */}
-            <Card>
-              <CardHeader className="bg-primary/5 pb-3">
-                <CardTitle className="flex items-center">
-                  <ImageIcon className="h-5 w-5 mr-2" />
-                  {sampleLessonPlan.steps[1].title} ({sampleLessonPlan.steps[1].duration})
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="space-y-3">
-                  <p className="text-sm">{sampleLessonPlan.steps[1].description}</p>
-                  
-                  {sampleLessonPlan.steps[1].materials && (
-                    <div className="bg-primary/5 p-3 rounded-md">
-                      <h3 className="font-medium text-sm">Required Materials:</h3>
-                      <ul className="mt-1 space-y-1">
-                        {sampleLessonPlan.steps[1].materials.map((material, i) => (
-                          <li key={i} className="text-sm flex items-start">
-                            <span className="text-primary mr-2">•</span>
-                            <span className="font-medium">{material}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  <div>
-                    <h3 className="font-medium text-sm">Instructions:</h3>
-                    <ul className="mt-1 space-y-1">
-                      {sampleLessonPlan.steps[1].instructions.map((instruction, i) => (
-                        <li key={i} className="text-sm flex items-start">
-                          <span className="text-primary mr-2">{i+1}.</span>
-                          {instruction}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            {/* Practice Activity */}
-            <Card>
-              <CardHeader className="bg-primary/5 pb-3">
-                <CardTitle className="flex items-center">
-                  <Users className="h-5 w-5 mr-2" />
-                  {sampleLessonPlan.steps[2].title} ({sampleLessonPlan.steps[2].duration})
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="space-y-3">
-                  <p className="text-sm">{sampleLessonPlan.steps[2].description}</p>
-                  
-                  {sampleLessonPlan.steps[2].materials && (
-                    <div className="bg-primary/5 p-3 rounded-md">
-                      <h3 className="font-medium text-sm">Materials:</h3>
-                      <ul className="mt-1 space-y-1">
-                        {sampleLessonPlan.steps[2].materials.map((material, i) => (
-                          <li key={i} className="text-sm flex items-start">
-                            <span className="text-primary mr-2">•</span>
-                            {material}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  <div>
-                    <h3 className="font-medium text-sm">Student Activity Instructions:</h3>
-                    <ul className="mt-1 space-y-1">
-                      {sampleLessonPlan.steps[2].instructions.map((instruction, i) => (
-                        <li key={i} className="text-sm flex items-start">
-                          <span className="text-primary mr-2">{i+1}.</span>
-                          {instruction}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            {/* Wrap-up */}
-            <Card>
-              <CardHeader className="bg-primary/5 pb-3">
-                <CardTitle className="flex items-center">
-                  <Gamepad2 className="h-5 w-5 mr-2" />
-                  {sampleLessonPlan.steps[3].title} ({sampleLessonPlan.steps[3].duration})
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="space-y-3">
-                  <p className="text-sm">{sampleLessonPlan.steps[3].description}</p>
-                  
-                  <div>
-                    <h3 className="font-medium text-sm">Closing Activity:</h3>
-                    <ul className="mt-1 space-y-1">
-                      {sampleLessonPlan.steps[3].instructions.map((instruction, i) => (
-                        <li key={i} className="text-sm flex items-start">
-                          <span className="text-primary mr-2">{i+1}.</span>
-                          {instruction}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Assessment Tab */}
-          <TabsContent value="assessment" className="space-y-4">
-            <Card>
-              <CardHeader className="bg-primary/5 pb-3">
-                <CardTitle className="flex items-center">
-                  <ListChecks className="h-5 w-5 mr-2" />
-                  Assessment Strategy
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <p className="text-sm">{sampleLessonPlan.assessmentTips}</p>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader className="bg-primary/5 pb-3">
-                <CardTitle className="flex items-center">
-                  <HomeIcon className="h-5 w-5 mr-2" />
-                  Homework Ideas
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <ul className="space-y-2">
-                  {sampleLessonPlan.homeworkIdeas.map((idea, index) => (
-                    <li key={index} className="text-sm flex items-start">
-                      <span className="font-medium text-primary mr-2">{index + 1}.</span>
-                      {idea}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-            
-            {sampleLessonPlan.additionalResources && (
-              <Card>
-                <CardHeader className="bg-primary/5 pb-3">
-                  <CardTitle className="flex items-center">
-                    <ExternalLink className="h-5 w-5 mr-2" />
-                    Additional Resources
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <ul className="space-y-2">
-                    {sampleLessonPlan.additionalResources.map((resource, index) => (
-                      <li key={index} className="text-sm flex items-start">
-                        <span className="text-primary mr-2">•</span>
-                        <span className="font-medium">{resource.title}</span>
-                        <span className="mx-2 text-muted-foreground">-</span>
-                        <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                          View
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
-        </div>
-      </Tabs>
+      </Card>
     </div>
   );
 }

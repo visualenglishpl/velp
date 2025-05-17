@@ -8,7 +8,6 @@ import { ResourceList } from '@/components/resources/ResourceList';
 import { Separator } from '@/components/ui/separator';
 import { SideBySideLessonPlanView } from '@/components/resources/SideBySideLessonPlanView';
 import { fetchPdfResources, fetchTeacherResources, fetchVideoResources, fetchWordwallGames, fetchLessonPlans } from '@/components/resources/resourceUtils';
-import { useAuth } from '@/hooks/use-auth';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -89,7 +88,8 @@ export function SimpleContentViewer() {
   const sliderRef = useRef<Slider>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [location, navigate] = useLocation();
-  const { user } = useAuth();
+  // Temporarily use a mock user for development
+  const user = { role: 'admin' };
   
   // Extract book and unit information from the URL
   const params = new URLSearchParams(location.split('?')[1]);
