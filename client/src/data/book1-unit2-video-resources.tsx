@@ -3,13 +3,13 @@
  * 
  * Videos for My School
  */
-import { TeacherResource } from '@/types/TeacherResource';
+// No need to import TeacherResource type
 import { createBook1VideoResource } from './book1-resources-common';
 
 /**
  * Video resources for Book 1 Unit 2 (My School)
  */
-export const book1Unit2VideoResources: TeacherResource[] = [
+export const book1Unit2VideoResources = [
   createBook1VideoResource(
     '2',
     'video-1',

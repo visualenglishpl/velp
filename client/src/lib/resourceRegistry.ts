@@ -173,12 +173,18 @@ book1CsvGeneratedUnits.forEach(unit => {
           // Then try to get the resources, checking for named export with unit-specific name
           const unitResources = `book1Unit${unit}Resources`;
           
-          if (module.default) {
+          if (Array.isArray(module.default)) {
+            console.log(`Found default export in book1-unit${unit}-resources with ${module.default.length} resources`);
             return module.default;
-          } else if (module[unitResources]) {
+          } else if (module[unitResources] && Array.isArray(module[unitResources])) {
+            console.log(`Found named export "${unitResources}" in book1-unit${unit}-resources with ${module[unitResources].length} resources`);
             return module[unitResources];
+          } else if (module.resources && Array.isArray(module.resources)) {
+            console.log(`Found named export "resources" in book1-unit${unit}-resources with ${module.resources.length} resources`);
+            return module.resources;
           } else {
             console.warn(`No valid exports found in book1-unit${unit}-resources, attempting fallback...`);
+            console.log('Module content:', Object.keys(module));
             
             // Fall back to trying PDF resources
             const pdfResources = book1PdfResourcesByUnit[unit as UnitId] || [];
@@ -306,8 +312,35 @@ for (let unitNum = 1; unitNum <= 18; unitNum++) {
   const unitId = unitNum.toString() as UnitId;
   const bookId = '1' as BookId;
   
+  // Create a direct import loader for specific problematic units
+  if (unitId === '2') {
+    // Special handler for Book 1 Unit 2 that had import issues
+    registerResourceLoader(bookId, unitId, async () => {
+      try {
+        console.log(`Loading Book 1 Unit 2 resources directly...`);
+        // Direct import for Book 1 Unit 2 resources
+        const module = await import('@/data/book1-unit2-resources');
+        
+        if (Array.isArray(module.default)) {
+          console.log(`Successfully loaded ${module.default.length} resources for Book 1 Unit 2`);
+          return module.default;
+        } else if (module.book1Unit2Resources && Array.isArray(module.book1Unit2Resources)) {
+          console.log(`Successfully loaded ${module.book1Unit2Resources.length} resources via named export for Book 1 Unit 2`);
+          return module.book1Unit2Resources;
+        } else {
+          console.warn(`Failed to load Book 1 Unit 2 resources, falling back to PDFs and lesson plans`);
+          // Fall back to PDFs and lesson plans
+          return [...(book1PdfResourcesByUnit[unitId] || []), ...(book1LessonPlansByUnit[unitId] || [])];
+        }
+      } catch (error) {
+        console.error(`Error loading Book 1 Unit 2 resources:`, error);
+        // Fall back to PDFs and lesson plans
+        return [...(book1PdfResourcesByUnit[unitId] || []), ...(book1LessonPlansByUnit[unitId] || [])];
+      }
+    });
+  }
   // First check if there's already a resource loader for this unit
-  if (resourceRegistry[bookId]?.[unitId]) {
+  else if (resourceRegistry[bookId]?.[unitId]) {
     // If there is, we'll enhance it to include PDF resources and lesson plans
     const originalLoader = resourceRegistry[bookId][unitId];
     

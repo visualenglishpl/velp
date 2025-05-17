@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { loadResources } from '@/lib/resourceRegistry';
-import { TeacherResource } from '@/types/TeacherResource';
+import { TeacherResource } from '@/types/resources';
 import { BookId, UnitId } from '@/types/content';
 
 export default function TeacherResourceTest() {
