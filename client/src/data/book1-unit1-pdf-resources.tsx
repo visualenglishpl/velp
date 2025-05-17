@@ -4,7 +4,7 @@
  * PDF materials for Hello
  */
 import { TeacherResource } from '@/types/TeacherResource';
-import { createBook1PdfResource } from './book1-resources-common';
+import { createBook1PdfResource } from './book1-resources-common.ts';
 
 /**
  * PDF resources for Book 1 Unit 1 (Hello)

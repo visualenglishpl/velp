@@ -4,7 +4,7 @@
  * Lesson plans for Hello
  */
 import { TeacherResource } from '@/types/TeacherResource';
-import { createBook1LessonPlanResource } from './book1-resources-common';
+import { createBook1LessonPlanResource } from './book1-resources-common.ts';
 
 /**
  * Lesson plan resources for Book 1 Unit 1 (Hello)

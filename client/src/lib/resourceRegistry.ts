@@ -330,16 +330,16 @@ for (let unitNum = 1; unitNum <= 18; unitNum++) {
         
         try {
           // Load each resource type individually
-          const videoModule = await import(`@/data/book1-unit${unitNumber}-video-resources`);
+          const videoModule = await import(/* @vite-ignore */ `@/data/book1-unit${unitNumber}-video-resources`);
           console.log(`Video module loaded successfully:`, Object.keys(videoModule));
           
-          const gameModule = await import(`@/data/book1-unit${unitNumber}-game-resources`);
+          const gameModule = await import(/* @vite-ignore */ `@/data/book1-unit${unitNumber}-game-resources`);
           console.log(`Game module loaded successfully:`, Object.keys(gameModule));
           
-          const pdfModule = await import(`@/data/book1-unit${unitNumber}-pdf-resources`);
+          const pdfModule = await import(/* @vite-ignore */ `@/data/book1-unit${unitNumber}-pdf-resources`);
           console.log(`PDF module loaded successfully:`, Object.keys(pdfModule));
           
-          const lessonModule = await import(`@/data/book1-unit${unitNumber}-lesson-plans`);
+          const lessonModule = await import(/* @vite-ignore */ `@/data/book1-unit${unitNumber}-lesson-plans`);
           console.log(`Lesson module loaded successfully:`, Object.keys(lessonModule));
           
           // Combine all resources
@@ -357,15 +357,16 @@ for (let unitNum = 1; unitNum <= 18; unitNum++) {
           
           console.log(`SUCCESS: Loaded resources individually - Videos: ${videoResources.length}, Games: ${gameResources.length}, PDFs: ${pdfResources.length}, Lessons: ${lessonResources.length}`);
           return combinedResources;
-        } catch (componentError) {
-          console.warn(`Failed loading component resources for Book 1 Unit ${unitNumber}:`, componentError.message);
+        } catch (componentError: unknown) {
+          const errorMessage = componentError instanceof Error ? componentError.message : String(componentError);
+          console.warn(`Failed loading component resources for Book 1 Unit ${unitNumber}:`, errorMessage);
         }
         
         // PHASE 2: Try loading the combined resources file
         console.log(`PHASE 2: Trying combined resource file for Book 1 Unit ${unitNumber}`);
         try {
           // Direct import for Book 1 Unit resources
-          const module = await import(`@/data/book1-unit${unitNumber}-resources`);
+          const module = await import(/* @vite-ignore */ `@/data/book1-unit${unitNumber}-resources`);
           
           if (Array.isArray(module.default)) {
             console.log(`SUCCESS: Resources loaded via default export: ${module.default.length}`);
@@ -376,8 +377,9 @@ for (let unitNum = 1; unitNum <= 18; unitNum++) {
           } else {
             console.warn(`Failed to find resources in module, structure:`, Object.keys(module));
           }
-        } catch (moduleError) {
-          console.warn(`Failed loading combined resource file:`, moduleError.message);
+        } catch (moduleError: unknown) {
+          const errorMessage = moduleError instanceof Error ? moduleError.message : String(moduleError);
+          console.warn(`Failed loading combined resource file:`, errorMessage);
         }
         
         // PHASE 3: Fall back to PDF resources and lesson plans from global collections
