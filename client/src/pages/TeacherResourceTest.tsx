@@ -10,7 +10,7 @@ export default function TeacherResourceTest() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [bookId, setBookId] = useState<BookId>('1');
-  const [unitId, setUnitId] = useState<UnitId>('2');
+  const [unitId, setUnitId] = useState<UnitId>('1');
 
   const fetchResources = async () => {
     setLoading(true);
