@@ -57,24 +57,62 @@ export function getResourceLoader(
  * 
  * @param bookId The book ID
  * @param unitId The unit ID
- * @returns Promise resolving to the resources or undefined if not found
+ * @returns Promise resolving to the resources or an empty array if not found
  */
 export async function loadResources(
   bookId: BookId,
   unitId: UnitId
-): Promise<TeacherResource[] | undefined> {
+): Promise<TeacherResource[]> {
   const loader = getResourceLoader(bookId, unitId);
   
   if (loader) {
     try {
-      return await loader();
+      const resources = await loader();
+      
+      // Additional validation to ensure we have a valid array
+      if (!Array.isArray(resources)) {
+        console.warn(`Invalid resource format for Book ${bookId} Unit ${unitId}, attempting fallback...`);
+        
+        // For Book 1, provide fallback to PDF resources and lesson plans
+        if (bookId === '1') {
+          const pdfResources = book1PdfResourcesByUnit[unitId] || [];
+          const lessonPlans = book1LessonPlansByUnit[unitId] || [];
+          return [...pdfResources, ...lessonPlans];
+        }
+        
+        return [];
+      }
+      
+      return resources;
     } catch (error) {
       console.error(`Error loading resources for Book ${bookId} Unit ${unitId}:`, error);
+      
+      // For Book 1, provide fallback to PDF resources and lesson plans
+      if (bookId === '1') {
+        console.log(`Attempting fallback for Book ${bookId} Unit ${unitId}...`);
+        const pdfResources = book1PdfResourcesByUnit[unitId] || [];
+        const lessonPlans = book1LessonPlansByUnit[unitId] || [];
+        return [...pdfResources, ...lessonPlans];
+      }
+      
       return [];
     }
   }
   
-  return undefined;
+  // No loader found
+  console.warn(`No resource loader registered for Book ${bookId} Unit ${unitId}`);
+  
+  // For Book 1, provide fallback to PDF resources and lesson plans
+  if (bookId === '1') {
+    console.log(`No loader found for Book ${bookId} Unit ${unitId}, using fallback resources...`);
+    const pdfResources = book1PdfResourcesByUnit[unitId] || [];
+    const lessonPlans = book1LessonPlansByUnit[unitId] || [];
+    if (pdfResources.length > 0 || lessonPlans.length > 0) {
+      return [...pdfResources, ...lessonPlans];
+    }
+  }
+  
+  return [];
 }
 
 /**
@@ -132,18 +170,30 @@ book1CsvGeneratedUnits.forEach(unit => {
           // First try to get the module
           const module = await import(/* @vite-ignore */ `@/data/book1-unit${unit}-resources`);
           
-          // Then try to get the resources, either as default export or named export
+          // Then try to get the resources, checking for named export with unit-specific name
+          const unitResources = `book1Unit${unit}Resources`;
+          
           if (module.default) {
             return module.default;
-          } else if (module.book1Unit1Resources) {
-            return module.book1Unit1Resources;  // For unit 1 specifically
+          } else if (module[unitResources]) {
+            return module[unitResources];
           } else {
-            console.warn(`No valid exports found in book1-unit${unit}-resources`);
-            return [];
+            console.warn(`No valid exports found in book1-unit${unit}-resources, attempting fallback...`);
+            
+            // Fall back to trying PDF resources
+            const pdfResources = book1PdfResourcesByUnit[unit as UnitId] || [];
+            const lessonPlans = book1LessonPlansByUnit[unit as UnitId] || [];
+            
+            return [...pdfResources, ...lessonPlans];
           }
         } catch (importError) {
           console.warn(`Error importing book1-unit${unit}-resources:`, importError);
-          return [];
+          
+          // Fall back to trying PDF resources
+          const pdfResources = book1PdfResourcesByUnit[unit as UnitId] || [];
+          const lessonPlans = book1LessonPlansByUnit[unit as UnitId] || [];
+          
+          return [...pdfResources, ...lessonPlans];
         }
       }
     );
