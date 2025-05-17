@@ -34,7 +34,7 @@ import LessonPlanPreview from "./pages/LessonPlanPreview";
 // Migrated to /secure folder
 import BooksPage from "./secure/BooksPage";
 import SlickContentViewer from "./secure/SlickContentViewer";
-import SimpleContentViewer from "./secure/SimpleContentViewer";
+import { SimpleContentViewer } from "./secure/SimpleContentViewer";
 import UnitsPage from "./secure/UnitsPage";
 
 // Original paths - still used until migration is complete
