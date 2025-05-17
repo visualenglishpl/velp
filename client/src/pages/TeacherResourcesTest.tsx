@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TeacherResourcesContainer } from '@/components/resources/TeacherResourcesContainer';
 import { BookId, UnitId } from '@/types/content';
@@ -7,6 +6,17 @@ import { BookId, UnitId } from '@/types/content';
 export default function TeacherResourcesTest() {
   const [bookId, setBookId] = useState<BookId>('1');
   const [unitId, setUnitId] = useState<UnitId>('1');
+
+  // Initialize with the lessons tab
+  useEffect(() => {
+    // Force the tab to be "lessons" by finding the tab element and clicking it programmatically
+    setTimeout(() => {
+      const lessonsTab = document.querySelector('[value="lessons"]');
+      if (lessonsTab) {
+        (lessonsTab as HTMLElement).click();
+      }
+    }, 500);
+  }, []);
 
   const handleBookChange = (newBookId: string) => {
     setBookId(newBookId as BookId);
@@ -20,7 +30,7 @@ export default function TeacherResourcesTest() {
     <div className="container py-8">
       <h1 className="text-3xl font-bold mb-6">Teacher Resources Viewer</h1>
       
-      <div className="flex gap-4 mb-6">
+      <div className="flex flex-wrap gap-4 mb-6">
         <div>
           <label className="block mb-2">Book ID:</label>
           <select 

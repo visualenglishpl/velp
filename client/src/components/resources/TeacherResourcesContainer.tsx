@@ -69,8 +69,8 @@ export function TeacherResourcesContainer({
   showEmptyState = false,
   hideTabsInContentViewer = false
 }: TeacherResourcesContainerProps) {
-  // Tab state
-  const [activeTab, setActiveTab] = useState<string>('videos');
+  // Tab state - initialize to lessons tab as requested
+  const [activeTab, setActiveTab] = useState<string>('lessons');
 
   // Use the hook to manage resources
   const {
@@ -214,26 +214,7 @@ export function TeacherResourcesContainer({
       ) : (
         /* Resource Tabs */
         <Tabs defaultValue="videos" value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="w-full bg-muted/30">
-            <TabsTrigger value="videos" className="flex items-center gap-1">
-              <Video className="h-4 w-4" />
-              <span>Videos</span>
-            </TabsTrigger>
-            <TabsTrigger value="games" className="flex items-center gap-1">
-              <Gamepad2 className="h-4 w-4" />
-              <span>Games</span>
-            </TabsTrigger>
-            {bookId === '1' && unitId === '1' && (
-              <TabsTrigger value="pdfs" className="flex items-center gap-1">
-                <FileIcon className="h-4 w-4" />
-                <span>PDFs</span>
-              </TabsTrigger>
-            )}
-            <TabsTrigger value="lessons" className="flex items-center gap-1">
-              <FileText className="h-4 w-4" />
-              <span>Lessons</span>
-            </TabsTrigger>
-          </TabsList>
+          {/* Tab navigation buttons removed as requested */}
           
           {/* Videos Tab */}
           <TabsContent value="videos">

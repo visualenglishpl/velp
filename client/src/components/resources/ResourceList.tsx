@@ -188,14 +188,9 @@ export function ResourceList({
           <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" />
         </div>
       ) : resources.length === 0 ? (
-        <div className="text-center py-8 border rounded-md bg-muted/20">
-          <FileText className="h-8 w-8 mx-auto text-muted-foreground" />
-          <h3 className="mt-2 text-lg font-medium">No resources found</h3>
-          <p className="text-muted-foreground mt-1">
-            {searchQuery 
-              ? "Try adjusting your search or filters"
-              : "There are no resources available for this selection"}
-          </p>
+        <div className="text-center py-4 border rounded-md bg-muted/20">
+          {/* Empty state with minimal text as requested */}
+          <h3 className="text-base font-medium text-gray-500">No resources found</h3>
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

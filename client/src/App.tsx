@@ -153,6 +153,9 @@ function App() {
           <Route path="/test-resources">
             <TeacherResourceTest />
           </Route>
+          <Route path="/lesson-test">
+            <TeacherResourcesTest />
+          </Route>
           <Route path="/lesson-plan">
             <LessonPlanPreview />
           </Route>
