@@ -134,11 +134,12 @@ export function ResourceList({
     return resources.filter(r => r.resourceType === type).length;
   };
 
-  // Resource type filters with icon and count - video and game resources only
+  // Resource type filters with icon and count - video, game, and lesson resources only
   const resourceTypes: Array<{ type: ResourceFilterType, label: string }> = [
     { type: 'all', label: 'All Resources' },
     { type: 'video', label: 'Videos' },
-    { type: 'game', label: 'Games' }
+    { type: 'game', label: 'Games' },
+    { type: 'lessonPlan', label: 'Lessons' }
   ];
 
   return (
@@ -164,19 +165,18 @@ export function ResourceList({
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {/* Filter resources to show only one PDF per unit */}
+          {/* Filter resources to show only one PDF for Unit 1 */}
           {resources
-            .filter((resource, index, self) => {
-              // If this is a PDF resource, check if it's the first one for this unit
+            .filter((resource) => {
+              // For PDF resources, only show the one for Unit 1
               if (resource.resourceType === 'pdf') {
-                // Find the index of the first PDF for this unit
-                const firstPdfIndex = self.findIndex(r => 
-                  r.resourceType === 'pdf' && 
-                  r.bookId === resource.bookId && 
-                  r.unitId === resource.unitId
-                );
-                // Only keep if this is the first PDF for the unit
-                return index === firstPdfIndex;
+                // If this is Book 1 Unit 1, only keep one PDF
+                if (resource.bookId === '1' && resource.unitId === '1') {
+                  // Only show the first PDF (Unit 1 PDF)
+                  return resource.id === 'b1u1-main-pdf';
+                }
+                // For other units, don't show PDFs
+                return false;
               }
               // Keep all non-PDF resources
               return true;
@@ -252,7 +252,7 @@ export function ResourceList({
               );
             }
             
-            // PDF resource cards
+            // PDF resource cards - simplified design
             else if (resource.resourceType === 'pdf') {
               const unitMatch = resource.title.match(/Unit (\d+)/i);
               const unitNumber = unitMatch ? unitMatch[1] : '';
@@ -267,14 +267,14 @@ export function ResourceList({
                     <div className="w-full bg-indigo-600 text-white py-2 px-3 rounded-md flex items-center justify-between">
                       <span className="font-medium text-sm flex items-center">
                         <FileIcon className="h-4 w-4 mr-1" />
-                        {unitNumber ? `Unit ${unitNumber}` : 'PDF'}
+                        {unitNumber ? `Unit ${unitNumber}` : 'PDF Lesson'}
                       </span>
                       <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">PDF</span>
                     </div>
                     
                     <div className="flex items-center mt-3 text-indigo-600 text-sm font-medium">
-                      <DownloadIcon className="h-4 w-4 mr-1" />
-                      <span>Download</span>
+                      <EyeIcon className="h-4 w-4 mr-1" />
+                      <span>View Lesson</span>
                     </div>
                   </div>
                 </div>
