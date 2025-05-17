@@ -11,6 +11,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { BookId, UnitId } from '@/types/content';
 import { TeacherResource, ResourceType, ResourceFilter } from '@/types/TeacherResource';
 import { useTeacherResources } from '@/hooks/useTeacherResources';
+import { Button } from '@/components/ui/button';
+import { Link } from 'wouter';
 import {
   Select,
   SelectContent,
@@ -35,14 +37,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { 
-  BookIcon, 
-  LibraryIcon,
-  FileText as FileTextIcon, 
-  ArrowRight as ArrowRightIcon
-} from 'lucide-react';
-import { Link } from 'wouter';
+// Fixed imports for Lucide icons to prevent duplicates
+import { FileText, Book, Library, ArrowRight, Layout, Plus } from 'lucide-react';
 
 // Define props for the container component
 interface TeacherResourcesContainerProps {
@@ -196,7 +192,7 @@ export function TeacherResourcesContainer({
       {/* No Selection State */}
       {showNoSelectionState ? (
         <div className="flex flex-col items-center justify-center text-center p-8 bg-muted/10 rounded-lg border border-dashed">
-          <LibraryIcon className="h-12 w-12 mb-4 text-muted-foreground" />
+          <Library className="h-12 w-12 mb-4 text-muted-foreground" />
           <h3 className="text-lg font-medium mb-2">No Resources Selected</h3>
           <p className="text-muted-foreground mb-6 max-w-md">
             Please select a book and unit to view its teacher resources.
@@ -208,23 +204,31 @@ export function TeacherResourcesContainer({
               setUnitId('1' as UnitId);
             }}
           >
-            <BookIcon className="mr-2 h-4 w-4" />
+            <Book className="mr-2 h-4 w-4" />
             View Example Resources
           </Button>
         </div>
       ) : (
         /* Resource List */
         <div>
-          <div className="flex justify-end mb-4">
-            <Link href="/lesson-plan">
+          <div className="flex justify-between items-center mb-4">
+            <Link href={`/lesson-plan/${bookId}/${unitId}`}>
               <Button variant="outline" size="sm" className="flex items-center gap-1">
-                <FileTextIcon className="h-4 w-4" />
+                <FileText className="h-4 w-4" />
                 <span>View 45-min Detailed Lesson Plan</span>
-                <ArrowRightIcon className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+            
+            <Link href={`/lesson-plan-side-by-side/${bookId}/${unitId}`}>
+              <Button variant="default" size="sm" className="flex items-center gap-1">
+                <Layout className="h-4 w-4" />
+                <span>Side-by-Side Lesson Plan</span>
               </Button>
             </Link>
           </div>
-          {/* Completely removed header text */}
+          
+          {/* Resource List with no tabs */}
           <ResourceList
             resources={filteredResources}
             onSearch={setSearchQuery}
@@ -236,7 +240,7 @@ export function TeacherResourcesContainer({
             onAddResource={enableEditing ? handleAddResource : undefined}
             onEditResource={enableEditing ? handleEditResource : undefined}
             onDeleteResource={enableEditing ? handleDeleteResource : undefined}
-            hideTabsInContentViewer={isInTabsView}
+            hideTabsInContentViewer={true} // Always hide tabs in content viewer
           />
         </div>
       )}

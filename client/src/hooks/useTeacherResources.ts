@@ -228,6 +228,26 @@ export function useTeacherResources({
       if (resource.resourceType !== filter.resourceType) {
         return false;
       }
+      
+      // Special case for PDF resources - show only the PDF for the current unit
+      if (filter.resourceType === 'pdf') {
+        // Look for PDFs that specifically mention the current unit in the title or description
+        const pdfTitle = resource.title?.toLowerCase() || '';
+        const pdfDesc = resource.description?.toLowerCase() || '';
+        
+        // Check if this PDF is for the current unit
+        const isForCurrentUnit = 
+          pdfTitle.includes(`unit ${unitId}`) || 
+          pdfTitle.includes(`unit${unitId}`) || 
+          pdfDesc.includes(`unit ${unitId}`) ||
+          // Also check for book specific PDFs
+          (pdfTitle.includes(`book ${bookId}`) && pdfTitle.includes(`unit ${unitId}`));
+          
+        // Filter out PDFs not for this unit
+        if (!isForCurrentUnit) {
+          return false;
+        }
+      }
     }
     
     // Filter by search query

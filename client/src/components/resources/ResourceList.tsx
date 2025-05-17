@@ -18,17 +18,17 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import {
-  FileIcon,
-  FilmIcon,
-  GamepadIcon,
-  FileTextIcon,
-  SearchIcon,
-  ExternalLinkIcon,
-  PlusIcon,
-  EyeIcon,
-  PencilIcon,
-  TrashIcon,
-  DownloadIcon
+  File,
+  Film,
+  Gamepad,
+  FileText,
+  Search,
+  ExternalLink,
+  Plus,
+  Eye,
+  Pencil,
+  Trash,
+  Download
 } from 'lucide-react';
 import { TeacherResource, ResourceType, ResourceFilterType } from '@/types/TeacherResource';
 import EmbeddedContentModal from '@/components/EmbeddedContentModal';
@@ -70,15 +70,15 @@ export function ResourceList({
   const getResourceTypeIcon = (type: ResourceType) => {
     switch (type) {
       case 'video':
-        return <FilmIcon className="h-4 w-4" />;
+        return <Film className="h-4 w-4" />;
       case 'game':
-        return <GamepadIcon className="h-4 w-4" />;
+        return <Gamepad className="h-4 w-4" />;
       case 'pdf':
-        return <FileIcon className="h-4 w-4" />;
+        return <File className="h-4 w-4" />;
       case 'lessonPlan':
-        return <FileTextIcon className="h-4 w-4" />;
+        return <FileText className="h-4 w-4" />;
       default:
-        return <FileTextIcon className="h-4 w-4" />;
+        return <FileText className="h-4 w-4" />;
     }
   };
   
@@ -155,7 +155,7 @@ export function ResourceList({
         </div>
       ) : resources.length === 0 ? (
         <div className="text-center py-8 border rounded-md bg-muted/20">
-          <FileTextIcon className="h-8 w-8 mx-auto text-muted-foreground" />
+          <FileText className="h-8 w-8 mx-auto text-muted-foreground" />
           <h3 className="mt-2 text-lg font-medium">No resources found</h3>
           <p className="text-muted-foreground mt-1">
             {searchQuery 
@@ -168,15 +168,10 @@ export function ResourceList({
           {/* Filter resources to show only one PDF for Unit 1 */}
           {resources
             .filter((resource) => {
-              // For PDF resources, only show the one for Unit 1
+              // For PDF resources, only show unit-specific content
               if (resource.resourceType === 'pdf') {
-                // If this is Book 1 Unit 1, only keep one PDF
-                if (resource.bookId === '1' && resource.unitId === '1') {
-                  // Only show the first PDF (Unit 1 PDF)
-                  return resource.id === 'b1u1-main-pdf';
-                }
-                // For other units, don't show PDFs
-                return false;
+                // Only show PDFs that match the current unit
+                return resource.unitId === resource.currentUnitId;
               }
               // Keep all non-PDF resources
               return true;
@@ -205,7 +200,7 @@ export function ResourceList({
                       />
                     ) : (
                       <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-red-500 to-orange-500">
-                        <FilmIcon className="h-10 w-10 text-white/80" />
+                        <Film className="h-10 w-10 text-white/80" />
                       </div>
                     )}
                     {/* Play button overlay */}
@@ -228,13 +223,17 @@ export function ResourceList({
               );
             }
             
-            // Game resource cards - no thumbnails
+            // Game resource cards - add preview buttons
             else if (resource.resourceType === 'game') {
               // Clean up game title
               const cleanTitle = resource.title
                 .replace(/^(game|game -|game:|online game|wordwall|wordwall game)\s*/i, '')
                 .replace(/^(online\s*-?\s*game:?\s*)/i, '')
                 .trim();
+              
+              // Extract Wordwall ID if available
+              const wordwallId = resource.wordwallGameId || 
+                (resource.sourceUrl ? extractWordwallGameId(resource.sourceUrl) : '');
                 
               return (
                 <div 
@@ -242,11 +241,21 @@ export function ResourceList({
                   className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105 shadow-md"
                   onClick={() => handlePreview(resource)}
                 >
-                  <div className="bg-indigo-50 p-4 flex items-center justify-between">
-                    <h3 className="text-gray-800 text-xs font-medium line-clamp-2">{cleanTitle}</h3>
-                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-indigo-600 text-white">
-                      <GamepadIcon className="h-4 w-4" />
+                  <div className="relative aspect-video bg-indigo-50 flex flex-col items-center justify-center">
+                    {/* Game preview placeholder */}
+                    <Gamepad className="h-12 w-12 text-indigo-400 mb-2" />
+                    
+                    {/* Play button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors">
+                      <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                        <Eye className="w-5 h-5 text-indigo-600" />
+                      </div>
                     </div>
+                  </div>
+                  
+                  {/* Title below */}
+                  <div className="p-2 bg-white">
+                    <h3 className="text-gray-800 text-xs font-medium truncate">{cleanTitle}</h3>
                   </div>
                 </div>
               );
@@ -266,14 +275,14 @@ export function ResourceList({
                   <div className="bg-indigo-100 aspect-[3/2] flex flex-col items-center justify-center p-3">
                     <div className="w-full bg-indigo-600 text-white py-2 px-3 rounded-md flex items-center justify-between">
                       <span className="font-medium text-sm flex items-center">
-                        <FileIcon className="h-4 w-4 mr-1" />
+                        <File className="h-4 w-4 mr-1" />
                         {unitNumber ? `Unit ${unitNumber}` : 'PDF Lesson'}
                       </span>
                       <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">PDF</span>
                     </div>
                     
                     <div className="flex items-center mt-3 text-indigo-600 text-sm font-medium">
-                      <EyeIcon className="h-4 w-4 mr-1" />
+                      <Eye className="h-4 w-4 mr-1" />
                       <span>View Lesson</span>
                     </div>
                   </div>
@@ -291,7 +300,7 @@ export function ResourceList({
                 >
                   <div className="bg-gradient-to-br from-teal-600 to-green-600 aspect-[3/2] flex items-center justify-center">
                     <div className="text-center px-3">
-                      <FileTextIcon className="h-10 w-10 mx-auto text-white/90 mb-2" />
+                      <FileText className="h-10 w-10 mx-auto text-white/90 mb-2" />
                       <p className="text-white text-sm font-medium">{resource.title}</p>
                     </div>
                   </div>
