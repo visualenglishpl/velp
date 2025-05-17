@@ -12,16 +12,17 @@ import { TeacherResource } from "@/types/resources";
  */
 export function getHardcodedBook1Unit1Resources(): TeacherResource[] {
   return [
+    // VIDEO RESOURCES
     {
       id: "b1u1v1",
       bookId: "1",
       unitId: "1",
       resourceType: "video",
-      title: "Hello Song",
-      description: "A fun song teaching children how to greet each other in English.",
+      title: "Good Morning - PINKFONG",
+      description: "Engaging morning greeting song for young learners.",
       provider: "YouTube",
-      sourceUrl: "https://www.youtube.com/embed/tVlcKp3bWH8",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/tVlcKp3bWH8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+      sourceUrl: "https://www.youtube.com/embed/7CuZr1Dz3sk",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/7CuZr1Dz3sk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
       isYoutubeVideo: true
     },
     {
@@ -29,24 +30,51 @@ export function getHardcodedBook1Unit1Resources(): TeacherResource[] {
       bookId: "1",
       unitId: "1",
       resourceType: "video",
-      title: "Good Morning Song",
-      description: "Morning greeting song to practice saying good morning.",
+      title: "Good Morning, Good Night - LITTLE FOX",
+      description: "Song teaching morning and night greetings vocabulary.",
       provider: "YouTube",
-      sourceUrl: "https://www.youtube.com/embed/CuI_p7a9VGs",
-      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/CuI_p7a9VGs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+      sourceUrl: "https://www.youtube.com/embed/mebfKDQ4dLo",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/mebfKDQ4dLo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
       isYoutubeVideo: true
     },
+    {
+      id: "b1u1v3",
+      bookId: "1",
+      unitId: "1",
+      resourceType: "video",
+      title: "The Greetings Song - MAPLE LEAF",
+      description: "Interactive song to practice different greetings.",
+      provider: "YouTube",
+      sourceUrl: "https://www.youtube.com/embed/gVIFEVLzP4o",
+      embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/gVIFEVLzP4o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+      isYoutubeVideo: true
+    },
+    
+    // GAME RESOURCES
     {
       id: "b1u1g1",
       bookId: "1",
       unitId: "1",
       resourceType: "game",
-      title: "Greetings Matching",
-      description: "Match different greetings with appropriate responses.",
+      title: "Wordwall - GREETINGS",
+      description: "Interactive game to practice greetings vocabulary.",
       provider: "Wordwall",
-      sourceUrl: "https://wordwall.net/resource/11837368/greetings",
-      embedCode: `<iframe style="width: 100%; height: 500px;" src="https://wordwall.net/embed/11837368" frameborder="0" allowfullscreen></iframe>`
+      sourceUrl: "https://wordwall.net/resource/7a5f9c9d02764745b1b471a56483ddf2",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/7a5f9c9d02764745b1b471a56483ddf2?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
     },
+    {
+      id: "b1u1g2",
+      bookId: "1",
+      unitId: "1",
+      resourceType: "game",
+      title: "Wordwall - TIMES OF THE DAY",
+      description: "Interactive game to practice time-of-day vocabulary.",
+      provider: "Wordwall",
+      sourceUrl: "https://wordwall.net/resource/aa9083a0802940d7abd8dfbb0ea2113d",
+      embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/aa9083a0802940d7abd8dfbb0ea2113d?themeId=1&templateId=2&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`
+    },
+    
+    // PDF RESOURCE
     {
       id: "b1u1p1",
       bookId: "1",
@@ -55,8 +83,10 @@ export function getHardcodedBook1Unit1Resources(): TeacherResource[] {
       title: "Unit 1: Hello - PDF",
       description: "Visual English Book 1, Unit 1 PDF materials",
       provider: "Visual English",
-      pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf"
+      sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf"
     },
+    
+    // LESSON RESOURCE
     {
       id: "b1u1l1",
       bookId: "1",
@@ -70,7 +100,7 @@ export function getHardcodedBook1Unit1Resources(): TeacherResource[] {
         title: 'Greetings Lesson Plan',
         duration: "45 minutes",
         level: "Beginner",
-        objectives: ["Learn basic greetings in English"],
+        objectives: ["Learn basic greetings in English", "Practice morning and evening vocabulary", "Engage in interactive greeting activities"],
         materials: ["Visual English Book 1 digital or printed materials", "Interactive whiteboard or projector", "Optional: flashcards, props"],
         warmUp: "Use greetings with each student. Practice saying hello and goodbye.",
         mainActivities: ["Introduce greetings vocabulary", "Practice dialogues with partners", "Role-play different greeting scenarios"],

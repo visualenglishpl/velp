@@ -50,7 +50,8 @@ export function EmbeddedContentModal({
         <DialogHeader>
           <div className="flex justify-between items-center">
             <DialogTitle>{title}</DialogTitle>
-            {sourceUrl && (
+            {/* Only show Open Original button if it's not a PDF, since PDFs have their own download button */}
+            {sourceUrl && !isPdfUrl && (
               <Button 
                 variant="outline" 
                 size="sm"

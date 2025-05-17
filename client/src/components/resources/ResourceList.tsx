@@ -84,22 +84,47 @@ export function ResourceList({
   
   // Get embed content for preview
   const getEmbedContent = (resource: TeacherResource): string => {
+    // Check for YouTube videos - handle both direct youtubeVideoId and from sourceUrl
     if (resource.youtubeVideoId) {
       return `https://www.youtube.com/embed/${resource.youtubeVideoId}`;
     }
     
+    if (resource.isYoutubeVideo && resource.sourceUrl) {
+      // Extract YouTube ID from the sourceUrl
+      const youtubeMatch = resource.sourceUrl.match(/(?:embed\/|v=|\/v\/|youtu\.be\/|\/v=|^https?:\/\/(?:www\.)?youtube\.com\/(?:(?:watch)?\?.*v=|(?:embed|v)\/))([^&?]+)/);
+      if (youtubeMatch && youtubeMatch[1]) {
+        return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+      }
+    }
+    
+    // Check for Wordwall games
     if (resource.wordwallGameId) {
       return `https://wordwall.net/embed/${resource.wordwallGameId}`;
     }
     
+    if (resource.sourceUrl && resource.sourceUrl.includes('wordwall.net')) {
+      // Extract Wordwall ID from the sourceUrl
+      const wordwallMatch = resource.sourceUrl.match(/wordwall\.net\/(?:resource|embed)\/([a-zA-Z0-9]+)/);
+      if (wordwallMatch && wordwallMatch[1]) {
+        return `https://wordwall.net/embed/${wordwallMatch[1]}`;
+      }
+    }
+    
+    // Check for ISL Collective resources
     if (resource.islCollectiveId) {
       return `https://www.islcollective.com/preview/${resource.islCollectiveId}`;
     }
     
+    // Check for PDFs
     if (resource.pdfUrl) {
       return resource.pdfUrl;
     }
     
+    if (resource.sourceUrl && resource.resourceType === 'pdf') {
+      return resource.sourceUrl;
+    }
+    
+    // Check for content objects
     if (resource.content) {
       if (typeof resource.content === 'string') {
         return resource.content;
@@ -108,15 +133,23 @@ export function ResourceList({
       }
     }
     
+    // Use sourceUrl as a fallback
+    if (resource.sourceUrl) {
+      return resource.sourceUrl;
+    }
+    
     return '';
   };
   
   // Handle resource preview or direct open for PDFs
   const handlePreview = (resource: TeacherResource) => {
-    // For PDF resources, open directly in a new tab
-    if (resource.resourceType === 'pdf' && resource.sourceUrl) {
-      window.open(resource.sourceUrl, '_blank');
-      return;
+    // For PDF resources, open directly in a new tab without showing modal
+    if (resource.resourceType === 'pdf') {
+      const pdfUrl = resource.sourceUrl || resource.pdfUrl;
+      if (pdfUrl) {
+        window.open(pdfUrl, '_blank');
+        return;
+      }
     }
     
     // For other resource types, show the preview modal
