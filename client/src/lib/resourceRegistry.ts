@@ -313,27 +313,28 @@ for (let unitNum = 1; unitNum <= 18; unitNum++) {
   const bookId = '1' as BookId;
   
   // Create a direct import loader for specific problematic units
-  if (unitId === '2') {
-    // Special handler for Book 1 Unit 2 that had import issues
+  if (unitId === '1' || unitId === '2') {
+    // Special handler for Book 1 Unit 1 and Unit 2 that had import issues
+    const unitNumber = unitId; // '1' or '2'
     registerResourceLoader(bookId, unitId, async () => {
       try {
-        console.log(`Loading Book 1 Unit 2 resources directly...`);
-        // Direct import for Book 1 Unit 2 resources
-        const module = await import('@/data/book1-unit2-resources');
+        console.log(`Loading Book 1 Unit ${unitNumber} resources directly...`);
+        // Direct import for Book 1 Unit resources
+        const module = await import(/* @vite-ignore */ `@/data/book1-unit${unitNumber}-resources`);
         
         if (Array.isArray(module.default)) {
-          console.log(`Successfully loaded ${module.default.length} resources for Book 1 Unit 2`);
+          console.log(`Successfully loaded ${module.default.length} resources for Book 1 Unit ${unitNumber}`);
           return module.default;
-        } else if (module.book1Unit2Resources && Array.isArray(module.book1Unit2Resources)) {
-          console.log(`Successfully loaded ${module.book1Unit2Resources.length} resources via named export for Book 1 Unit 2`);
-          return module.book1Unit2Resources;
+        } else if (module[`book1Unit${unitNumber}Resources`] && Array.isArray(module[`book1Unit${unitNumber}Resources`])) {
+          console.log(`Successfully loaded ${module[`book1Unit${unitNumber}Resources`].length} resources via named export for Book 1 Unit ${unitNumber}`);
+          return module[`book1Unit${unitNumber}Resources`];
         } else {
-          console.warn(`Failed to load Book 1 Unit 2 resources, falling back to PDFs and lesson plans`);
+          console.warn(`Failed to load Book 1 Unit ${unitNumber} resources, falling back to PDFs and lesson plans`);
           // Fall back to PDFs and lesson plans
           return [...(book1PdfResourcesByUnit[unitId] || []), ...(book1LessonPlansByUnit[unitId] || [])];
         }
       } catch (error) {
-        console.error(`Error loading Book 1 Unit 2 resources:`, error);
+        console.error(`Error loading Book 1 Unit ${unitNumber} resources:`, error);
         // Fall back to PDFs and lesson plans
         return [...(book1PdfResourcesByUnit[unitId] || []), ...(book1LessonPlansByUnit[unitId] || [])];
       }
