@@ -1,0 +1,27 @@
+unit,type,title,provider,embedUrl,fileUrl,lessonType,lessonObjective,pdfUrl
+1,video,Hello Song,YouTube,https://www.youtube.com/embed/tVlcKp3bWH8,,,,
+1,video,Good Morning Song,YouTube,https://www.youtube.com/embed/CuI_p7a9VGs,,,,
+1,game,Greetings Matching,Wordwall,https://wordwall.net/resource/11837368/greetings,,,,
+1,pdf,Unit 1: Hello - PDF,Visual English,,,,,https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf
+1,lesson,Greetings Lesson Plan,Visual English,,,main,Learn basic greetings in English,
+2,video,School Objects Song,YouTube,https://www.youtube.com/embed/g7kK989HiRQ,,,,
+2,game,School Objects Matching,Wordwall,https://wordwall.net/resource/37342291/classroom-objects,,,,
+2,pdf,Unit 2: My School - PDF,Visual English,,,,,https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit2/00 A Visual English 1 – Unit 2 – New Version.pdf
+2,lesson,Classroom Objects Lesson,Visual English,,,main,Learn classroom vocabulary,
+3,video,Food Song for Kids,YouTube,https://www.youtube.com/embed/RE5tvaveVak,,,,
+3,video,Fruit Song,YouTube,https://www.youtube.com/embed/mfReSbQ7jzE,,,,
+3,game,Food Vocabulary Game,Wordwall,https://wordwall.net/resource/29897132/food,,,,
+3,pdf,Unit 3: Food - PDF,Visual English,,,,,https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit3/00 A Visual English 1 – Unit 3 – New Version.pdf
+3,lesson,Food Vocabulary Lesson,Visual English,,,main,Learn food vocabulary,
+4,video,House Tour Song,YouTube,https://www.youtube.com/embed/qZyJPZxsmZk,,,,
+4,game,Rooms in the House Game,Wordwall,https://wordwall.net/resource/14083613/rooms-house,,,,
+4,pdf,Unit 4: My House - PDF,Visual English,,,,,https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit4/00 A Visual English 1 – Unit 4 – New Version.pdf
+4,lesson,House Vocabulary Lesson,Visual English,,,main,Learn parts of the house,
+5,video,Animal Song,YouTube,https://www.youtube.com/embed/OwRmivbNgQk,,,,
+5,game,Pet Animals Game,Wordwall,https://wordwall.net/resource/10965215/pets,,,,
+5,pdf,Unit 5: Pets and Animals - PDF,Visual English,,,,,https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit5/00 A Visual English 1 – Unit 5 – New Version.pdf
+5,lesson,Pets Vocabulary Lesson,Visual English,,,main,Learn pet vocabulary,
+6,video,Colors Song,YouTube,https://www.youtube.com/embed/ybt2jhCQ3lA,,,,
+6,game,Colors Matching Game,Wordwall,https://wordwall.net/resource/9551478/colors,,,,
+6,pdf,Unit 6: My Favourite Colour - PDF,Visual English,,,,,https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit6/00 A Visual English 1 – Unit 6 – New Version.pdf
+6,lesson,Colors Vocabulary Lesson,Visual English,,,main,Learn color vocabulary,

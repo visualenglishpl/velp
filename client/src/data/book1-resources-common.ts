@@ -1,5 +1,8 @@
 /**
  * Common helper functions for Book 1 resources
+ * 
+ * This file provides standardized functions for creating different types of
+ * resources for Book 1, ensuring consistency across resource files.
  */
 
 import { TeacherResource, ResourceType } from '@/types/TeacherResource';
@@ -98,5 +101,37 @@ export function createBook1PdfResource(
     provider: 'Visual English',
     sourceUrl: pdfUrl,
     pdfUrl
+  };
+}
+
+/**
+ * Creates a lesson plan resource for Book 1
+ * 
+ * @param unitId The unit ID
+ * @param id The resource ID (suffix)
+ * @param title The resource title
+ * @param objective The lesson objective
+ * @param lessonType The lesson type (main, phonics, conversation)
+ * @returns A TeacherResource object
+ */
+export function createBook1LessonPlanResource(
+  unitId: UnitId,
+  id: string,
+  title: string,
+  objective: string,
+  lessonType: string = 'main'
+): TeacherResource {
+  return {
+    id: `b1u${unitId}-${id}`,
+    title,
+    description: objective,
+    resourceType: 'lessonPlan' as ResourceType,
+    bookId: '1' as BookId,
+    unitId,
+    provider: 'Visual English',
+    content: {
+      type: 'lessonPlan',
+      lessonType: lessonType
+    }
   };
 }

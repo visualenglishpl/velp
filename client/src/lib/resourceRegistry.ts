@@ -114,13 +114,14 @@ export function getRegisteredUnitIds(bookId: BookId): UnitId[] {
 // Register commonly used book/unit combinations using a more automated approach
 
 // Define book units mapping for better organization
+// Updated to include all units for which we have generated resources
 const bookUnitMap: Record<string, string[]> = {
   '1': ['1', '2', '3', '4', '5', '6', '7', '8', '11', '15', '17', '18'],
   '3': ['16', '17']
 };
 
-// Specialized import patterns for certain units
-const specialImports: Record<string, Record<string, (unit: string) => Promise<TeacherResource[]>>> = {
+// Define specialized loader functions
+const specialImports: Record<string, Record<string, ResourceLoader>> = {
   '3': {
     '16': async () => {
       const { sportsResources } = await import('@/data/book3-unit16');
@@ -137,8 +138,29 @@ const specialImports: Record<string, Record<string, (unit: string) => Promise<Te
 for (const unit of bookUnitMap['1']) {
   registerResourceLoader('1', unit as UnitId, async () => {
     try {
-      // Using /* @vite-ignore */ to suppress the dynamic import warning
-      const { default: resources } = await import(/* @vite-ignore */ `@/data/book1-unit${unit}-resources`);
+      // Try to load the unit-specific resources if they exist
+      const modulePathUnit = `@/data/book1-unit${unit}-resources`;
+      
+      // Fallback to legacy resources if needed
+      let resources: TeacherResource[] = [];
+      try {
+        // Using /* @vite-ignore */ to suppress the dynamic import warning
+        const { default: unitResources } = await import(/* @vite-ignore */ modulePathUnit);
+        resources = unitResources;
+      } catch (err) {
+        console.warn(`No specific resources found for Book 1 Unit ${unit}, using fallbacks.`);
+        
+        // Add PDF resources for this unit from the global collection
+        if (book1PdfResourcesByUnit[unit]) {
+          resources = [...resources, ...book1PdfResourcesByUnit[unit]];
+        }
+        
+        // Add lesson plans for this unit from the global collection
+        if (book1LessonPlansByUnit[unit]) {
+          resources = [...resources, ...book1LessonPlansByUnit[unit]];
+        }
+      }
+      
       return resources;
     } catch (error) {
       console.error(`Error loading Book 1 Unit ${unit} resources:`, error);
@@ -150,11 +172,8 @@ for (const unit of bookUnitMap['1']) {
 // Register other book units with special import patterns
 Object.keys(specialImports).forEach(bookId => {
   Object.keys(specialImports[bookId]).forEach(unitId => {
-    registerResourceLoader(
-      bookId as BookId, 
-      unitId as UnitId, 
-      specialImports[bookId][unitId]
-    );
+    const loader = specialImports[bookId][unitId];
+    registerResourceLoader(bookId as BookId, unitId as UnitId, loader);
   });
 });
 

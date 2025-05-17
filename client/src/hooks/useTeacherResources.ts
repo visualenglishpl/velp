@@ -68,9 +68,32 @@ export function useTeacherResources({
         const loadedResources = await loadResources(bookId, unitId);
         let filteredResources = loadedResources || [];
         
-        // PDF resources for Book 1 are now handled by the resource registry
-        // We don't need to dynamically import them here anymore as they
-        // should already be included in loadedResources
+        // Ensure we have resources even if loadResources returns undefined
+        if (!filteredResources || filteredResources.length === 0) {
+          console.warn(`No resources found for Book ${bookId} Unit ${unitId}, using fallbacks.`);
+          
+          // For Book 1, try to get PDF resources from the global collection
+          if (bookId === '1') {
+            import('@/data/book1-pdf-resources')
+              .then(module => {
+                if (module.book1PdfResourcesByUnit && module.book1PdfResourcesByUnit[unitId]) {
+                  const pdfResources = module.book1PdfResourcesByUnit[unitId];
+                  setResources(prevResources => [...prevResources, ...pdfResources]);
+                }
+              })
+              .catch(err => console.error('Error loading PDF resources:', err));
+            
+            // Also try to get lesson plans
+            import('@/data/book1-lesson-plans')
+              .then(module => {
+                if (module.book1LessonPlansByUnit && module.book1LessonPlansByUnit[unitId]) {
+                  const lessonPlans = module.book1LessonPlansByUnit[unitId];
+                  setResources(prevResources => [...prevResources, ...lessonPlans]);
+                }
+              })
+              .catch(err => console.error('Error loading lesson plans:', err));
+          }
+        }
         
         setResources(filteredResources);
       } catch (err) {
@@ -98,7 +121,7 @@ export function useTeacherResources({
     if (filter.searchQuery) {
       const searchLower = filter.searchQuery.toLowerCase();
       const titleMatch = resource.title.toLowerCase().includes(searchLower);
-      const descMatch = resource.description.toLowerCase().includes(searchLower);
+      const descMatch = resource.description ? resource.description.toLowerCase().includes(searchLower) : false;
       const providerMatch = resource.provider?.toLowerCase().includes(searchLower) || false;
       
       if (!titleMatch && !descMatch && !providerMatch) {
