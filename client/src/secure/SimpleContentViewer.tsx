@@ -904,15 +904,17 @@ export default function SimpleContentViewer() {
                   </svg>
                   Games
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="pdfs" 
-                  className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
-                    <path d="M8 11a1 1 0 100-2H7a1 1 0 000 2h1zm2 0a1 1 0 100-2 1 1 0 000 2zm-2 2a1 1 0 110 2H7a1 1 0 110-2h1zm2 0a1 1 0 110 2h-1a1 1 0 110-2h1z" />
-                  </svg>
-                  PDFs
-                </TabsTrigger>
+                {bookId === '1' && unitNumber === '1' && (
+                  <TabsTrigger 
+                    value="pdfs" 
+                    className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                      <path d="M8 11a1 1 0 100-2H7a1 1 0 000 2h1zm2 0a1 1 0 100-2 1 1 0 000 2zm-2 2a1 1 0 110 2H7a1 1 0 110-2h1zm2 0a1 1 0 110 2h-1a1 1 0 110-2h1z" />
+                    </svg>
+                    PDFs
+                  </TabsTrigger>
+                )}
                 <TabsTrigger 
                   value="lessons" 
                   className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
@@ -1144,12 +1146,12 @@ export default function SimpleContentViewer() {
             <TabsContent value="pdfs" className="p-4 border rounded-md">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-center">PDF Lesson Materials</h3>
-                {bookId === '1' && (
+                {bookId === '1' && unitNumber === '1' && (
                   <div id="pdf-resources-container">
                     <div className="mb-6">
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">All Book 1 PDF Resources:</h4>
+                      <h4 className="text-sm font-medium text-gray-700 mb-2">Book 1 Unit 1 PDF Resources:</h4>
                       <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {book1PdfResources.map((resource) => (
+                        {book1PdfResources.filter(resource => resource.unitId === '1').map((resource) => (
                           <div 
                             key={resource.id} 
                             className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-200 cursor-pointer"
@@ -1179,7 +1181,7 @@ export default function SimpleContentViewer() {
                       </div>
                     </div>
                     
-                    {unitNumber && book1PdfResourcesByUnit[unitNumber] && book1PdfResourcesByUnit[unitNumber].length > 0 && (
+                    {unitNumber === '1' && book1PdfResourcesByUnit[unitNumber] && book1PdfResourcesByUnit[unitNumber].length > 0 && (
                       <div className="mt-6">
                         <h4 className="text-sm font-medium text-gray-700 mb-2">Current Unit PDFs:</h4>
                         <div className="grid gap-4 md:grid-cols-2">

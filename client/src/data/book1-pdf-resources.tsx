@@ -36,23 +36,16 @@ const unitTitles: Record<string, string> = {
  * in the appropriate unit's resource list.
  */
 export function getBook1PdfResources(): TeacherResource[] {
-  return Array.from({ length: 18 }, (_, i) => {
-    const unit = (i + 1).toString();
-    const unitNum = i + 1;
-    const unitPrefix = unitNum === 16 ? '00 C' : '00 A';
-    const unitTitle = unitTitles[unit] || `Unit ${unit}`;
-    
-    const pdfUrl = `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit${unit}/${unitPrefix} Visual English 1 – Unit ${unit} – New Version.pdf`;
-    
-    // Cast unit to UnitId to satisfy type constraint
-    return createBook1PdfResource(
-      unit as any, 
+  // IMPORTANT: Now only returning PDF for Unit 1 as requested
+  return [
+    createBook1PdfResource(
+      '1' as any,
       'main-pdf',
-      `Unit ${unit}: ${unitTitle} - PDF`,
-      `Visual English Book 1 - Unit ${unit} PDF`,
-      pdfUrl
-    );
-  });
+      'Unit 1: Hello - PDF',
+      'Visual English Book 1 - Unit 1 PDF',
+      'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf'
+    )
+  ];
 }
 
 /**
