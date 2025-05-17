@@ -15,6 +15,7 @@ import { useTeacherResources } from '@/hooks/useTeacherResources';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { LessonPlanTemplate } from './LessonPlanTemplate';
+import { SideBySideLessonPlanView } from './SideBySideLessonPlanView';
 import {
   Select,
   SelectContent,
@@ -214,12 +215,12 @@ export function TeacherResourcesContainer({
       ) : (
         /* Resource Tabs */
         <Tabs defaultValue="videos" value={activeTab} onValueChange={setActiveTab}>
-          {/* Tab List - These are the bottom navigation buttons with the correct links */}
+          {/* Tab List - Bottom navigation buttons */}
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="videos">Videos</TabsTrigger>
-            <TabsTrigger value="games">Games</TabsTrigger>
-            <TabsTrigger value="pdfs">PDFs</TabsTrigger>
-            <TabsTrigger value="lessons">Lessons</TabsTrigger>
+            <TabsTrigger value="videos" onClick={() => setActiveTab("videos")}>Videos</TabsTrigger>
+            <TabsTrigger value="games" onClick={() => setActiveTab("games")}>Games</TabsTrigger>
+            <TabsTrigger value="pdfs" onClick={() => setActiveTab("pdfs")}>PDFs</TabsTrigger>
+            <TabsTrigger value="lessons" onClick={() => setActiveTab("lessons")}>Lessons</TabsTrigger>
           </TabsList>
           
           {/* Videos Tab */}
@@ -269,10 +270,67 @@ export function TeacherResourcesContainer({
             />
           </TabsContent>
           
-          {/* Lessons Tab - Side by Side Layout */}
+          {/* Lessons Tab - Using our new SideBySideLessonPlanView component */}
           <TabsContent value="lessons">
             <div className="space-y-4 mt-4">
-              {/* Side by Side Lesson Plans */}
+              {isLoading ? (
+                <div className="flex justify-center py-8">
+                  <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" />
+                </div>
+              ) : (
+                <SideBySideLessonPlanView 
+                  lessonPlans={[
+                    {
+                      id: '1',
+                      title: 'Hello Lesson Plan',
+                      resourceType: 'lessonPlan',
+                      description: 'A lesson plan focusing on teaching hello vocabulary',
+                      bookId: bookId || '1',
+                      unitId: unitId || '1',
+                      lessonPlan: {
+                        duration: '45 minutes',
+                        objectives: [
+                          'Learn vocabulary related to hello',
+                          'Practice speaking and listening skills',
+                          'Engage in interactive activities'
+                        ],
+                        steps: [
+                          {
+                            title: 'Warm-up',
+                            description: 'Introduction to hello vocabulary',
+                            duration: '5-7 minutes',
+                            resources: ['images', 'songs']
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      id: '2',
+                      title: 'Greetings Lesson Plan',
+                      resourceType: 'lessonPlan',
+                      description: 'A lesson plan focusing on teaching various greetings',
+                      bookId: bookId || '1',
+                      unitId: unitId || '1',
+                      lessonPlan: {
+                        duration: '45 minutes',
+                        objectives: [
+                          'Learn different greetings for various times of day',
+                          'Practice conversations with peers',
+                          'Use gestures and actions while greeting'
+                        ],
+                        steps: [
+                          {
+                            title: 'Warm-up',
+                            description: 'Morning and evening greetings',
+                            duration: '5-7 minutes',
+                            resources: ['images', 'songs']
+                          }
+                        ]
+                      }
+                    }
+                  ]} 
+                />
+              )}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Green Lesson Plan on Left */}
                 <div className="border rounded-lg overflow-hidden">

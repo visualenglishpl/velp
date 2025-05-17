@@ -19,111 +19,172 @@ export function SideBySideLessonPlanView({ lessonPlans }: SideBySideLessonPlanVi
   // Extract the two lesson plans
   const [greenPlan, bluePlan] = lessonPlans;
 
+  // Helper function to generate random duration if not provided
+  const getDuration = (resource: TeacherResource): string => {
+    return resource.lessonPlan?.duration || '45 minutes';
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Green Lesson Plan on Left */}
-      <div className="border rounded-lg overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-teal-200">
-        <div className="bg-gradient-to-r from-teal-500 to-emerald-500 p-3 text-white">
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium text-sm flex items-center">
-              <FileText className="h-4 w-4 mr-2" />
-              {greenPlan.title}
-            </h4>
-            <span className="bg-white text-teal-700 text-xs px-2 py-0.5 rounded-full font-medium">
-              {greenPlan.lessonPlan?.duration || '45 minutes'}
-            </span>
-          </div>
-        </div>
-        <div className="p-3">
-          {greenPlan.lessonPlan?.objectives && (
-            <div className="mb-2">
-              <h5 className="text-xs font-medium text-teal-800 mb-1">Objectives:</h5>
-              <ul className="list-disc pl-4 text-xs text-gray-600 space-y-1">
-                {greenPlan.lessonPlan.objectives.slice(0, 3).map((objective, index) => (
-                  <li key={index}>{objective}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          
-          {greenPlan.lessonPlan?.steps && (
-            <>
-              <h5 className="text-xs font-medium text-teal-800 mb-1 mt-3">Lesson Steps:</h5>
-              <ul className="space-y-2 text-sm">
-                {greenPlan.lessonPlan.steps.map((step, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                      <CheckCircle2 className="h-3 w-3" />
-                    </div>
-                    <span>
-                      <span className="font-medium text-teal-800">{step.title}:</span> {step.description} 
-                      {step.duration && <span className="text-xs text-gray-500">({step.duration})</span>}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-          
-          {greenPlan.lessonPlan?.materials && greenPlan.lessonPlan.materials.length > 0 && (
-            <div className="mt-3">
-              <h5 className="text-xs font-medium text-teal-800 mb-1">Materials:</h5>
-              <p className="text-xs text-gray-600">{greenPlan.lessonPlan.materials.join(', ')}</p>
-            </div>
-          )}
-        </div>
-      </div>
+    <div className="space-y-6">
+      <h2 className="text-xl font-semibold text-center">Educational Videos</h2>
       
-      {/* Blue Lesson Plan on Right */}
-      <div className="border rounded-lg overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-blue-200">
-        <div className="bg-gradient-to-r from-blue-500 to-indigo-500 p-3 text-white">
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium text-sm flex items-center">
-              <FileText className="h-4 w-4 mr-2" />
-              {bluePlan.title}
-            </h4>
-            <span className="bg-white text-blue-700 text-xs px-2 py-0.5 rounded-full font-medium">
-              {bluePlan.lessonPlan?.duration || '45 minutes'}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Green Lesson Plan on Left */}
+        <div className="bg-emerald-500 rounded-lg overflow-hidden">
+          <div className="p-4 flex justify-between items-center text-white">
+            <h3 className="font-medium flex items-center">
+              <FileText className="h-5 w-5 mr-2" />
+              {greenPlan.title || "Hello Lesson Plan"}
+            </h3>
+            <span className="bg-white text-emerald-600 text-xs font-medium px-3 py-1 rounded-full">
+              {getDuration(greenPlan)}
             </span>
           </div>
-        </div>
-        <div className="p-3">
-          {bluePlan.lessonPlan?.objectives && (
-            <div className="mb-2">
-              <h5 className="text-xs font-medium text-blue-800 mb-1">Objectives:</h5>
-              <ul className="list-disc pl-4 text-xs text-gray-600 space-y-1">
-                {bluePlan.lessonPlan.objectives.slice(0, 3).map((objective, index) => (
-                  <li key={index}>{objective}</li>
-                ))}
+          
+          <div className="p-4 bg-white">
+            {/* Objectives */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium mb-2">Objectives:</h4>
+              <ul className="list-disc pl-5 space-y-1">
+                {greenPlan.lessonPlan?.objectives ? (
+                  greenPlan.lessonPlan.objectives.map((objective: string, index: number) => (
+                    <li key={index}>{objective}</li>
+                  ))
+                ) : (
+                  <>
+                    <li>Learn vocabulary related to hello</li>
+                    <li>Practice speaking and listening skills</li>
+                    <li>Engage in interactive activities</li>
+                  </>
+                )}
               </ul>
             </div>
-          )}
-          
-          {bluePlan.lessonPlan?.steps && (
-            <>
-              <h5 className="text-xs font-medium text-blue-800 mb-1 mt-3">Lesson Steps:</h5>
-              <ul className="space-y-2 text-sm">
-                {bluePlan.lessonPlan.steps.map((step, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="bg-blue-100 text-blue-700 rounded-full p-1 mt-0.5 mr-2">
+            
+            {/* Lesson Steps */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium mb-2">Lesson Steps:</h4>
+              <ul className="space-y-3">
+                {greenPlan.lessonPlan?.steps ? (
+                  greenPlan.lessonPlan.steps.map((step: any, index: number) => (
+                    <li key={index} className="flex">
+                      <div className="bg-emerald-100 text-emerald-700 rounded-full p-1 mt-0.5 mr-2 h-5 w-5 flex items-center justify-center">
+                        <CheckCircle2 className="h-3 w-3" />
+                      </div>
+                      <div>
+                        <p className="text-sm">
+                          <span className="font-medium">{step.title}:</span> {step.description}
+                        </p>
+                        <p className="text-xs text-gray-500">({step.duration || '5-7 minutes'})</p>
+                        {step.resources && (
+                          <div className="mt-1 flex flex-wrap gap-1">
+                            {step.resources.includes('images') && (
+                              <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Images</span>
+                            )}
+                            {step.resources.includes('songs') && (
+                              <span className="inline-block px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">Songs</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <li className="flex">
+                    <div className="bg-emerald-100 text-emerald-700 rounded-full p-1 mt-0.5 mr-2 h-5 w-5 flex items-center justify-center">
                       <CheckCircle2 className="h-3 w-3" />
                     </div>
-                    <span>
-                      <span className="font-medium text-blue-800">{step.title}:</span> {step.description} 
-                      {step.duration && <span className="text-xs text-gray-500">({step.duration})</span>}
-                    </span>
+                    <div>
+                      <p className="text-sm"><span className="font-medium">Warm-up: Introduction to hello vocabulary</span></p>
+                      <p className="text-xs text-gray-500">(5-7 minutes)</p>
+                      <div className="mt-1 flex flex-wrap gap-1">
+                        <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Images</span>
+                        <span className="inline-block px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">Songs</span>
+                      </div>
+                    </div>
                   </li>
-                ))}
+                )}
               </ul>
-            </>
-          )}
-          
-          {bluePlan.lessonPlan?.materials && bluePlan.lessonPlan.materials.length > 0 && (
-            <div className="mt-3">
-              <h5 className="text-xs font-medium text-blue-800 mb-1">Materials:</h5>
-              <p className="text-xs text-gray-600">{bluePlan.lessonPlan.materials.join(', ')}</p>
             </div>
-          )}
+          </div>
+        </div>
+        
+        {/* Blue Lesson Plan on Right */}
+        <div className="bg-blue-500 rounded-lg overflow-hidden">
+          <div className="p-4 flex justify-between items-center text-white">
+            <h3 className="font-medium flex items-center">
+              <FileText className="h-5 w-5 mr-2" />
+              {bluePlan.title || "Greetings Lesson Plan"}
+            </h3>
+            <span className="bg-white text-blue-600 text-xs font-medium px-3 py-1 rounded-full">
+              {getDuration(bluePlan)}
+            </span>
+          </div>
+          
+          <div className="p-4 bg-white">
+            {/* Objectives */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium mb-2">Objectives:</h4>
+              <ul className="list-disc pl-5 space-y-1">
+                {bluePlan.lessonPlan?.objectives ? (
+                  bluePlan.lessonPlan.objectives.map((objective: string, index: number) => (
+                    <li key={index}>{objective}</li>
+                  ))
+                ) : (
+                  <>
+                    <li>Learn different greetings for various times of day</li>
+                    <li>Practice conversations with peers</li>
+                    <li>Use gestures and actions while greeting</li>
+                  </>
+                )}
+              </ul>
+            </div>
+            
+            {/* Lesson Steps */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium mb-2">Lesson Steps:</h4>
+              <ul className="space-y-3">
+                {bluePlan.lessonPlan?.steps ? (
+                  bluePlan.lessonPlan.steps.map((step: any, index: number) => (
+                    <li key={index} className="flex">
+                      <div className="bg-blue-100 text-blue-700 rounded-full p-1 mt-0.5 mr-2 h-5 w-5 flex items-center justify-center">
+                        <CheckCircle2 className="h-3 w-3" />
+                      </div>
+                      <div>
+                        <p className="text-sm">
+                          <span className="font-medium">{step.title}:</span> {step.description}
+                        </p>
+                        <p className="text-xs text-gray-500">({step.duration || '5-7 minutes'})</p>
+                        {step.resources && (
+                          <div className="mt-1 flex flex-wrap gap-1">
+                            {step.resources.includes('images') && (
+                              <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Images</span>
+                            )}
+                            {step.resources.includes('songs') && (
+                              <span className="inline-block px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">Songs</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <li className="flex">
+                    <div className="bg-blue-100 text-blue-700 rounded-full p-1 mt-0.5 mr-2 h-5 w-5 flex items-center justify-center">
+                      <CheckCircle2 className="h-3 w-3" />
+                    </div>
+                    <div>
+                      <p className="text-sm"><span className="font-medium">Warm-up: Morning and evening greetings</span></p>
+                      <p className="text-xs text-gray-500">(5-7 minutes)</p>
+                      <div className="mt-1 flex flex-wrap gap-1">
+                        <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Images</span>
+                        <span className="inline-block px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">Songs</span>
+                      </div>
+                    </div>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>

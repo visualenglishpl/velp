@@ -1,70 +1,92 @@
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TeacherResourcesContainer } from '@/components/resources/TeacherResourcesContainer';
-import { BookId, UnitId } from '@/types/content';
+import React from 'react';
+import { SideBySideLessonPlanView } from '@/components/resources/SideBySideLessonPlanView';
+import { TeacherResource } from '@/types/TeacherResource';
 
 export default function TeacherResourcesTest() {
-  const [bookId, setBookId] = useState<BookId>('1');
-  const [unitId, setUnitId] = useState<UnitId>('1');
-
-  // Initialize with the lessons tab
-  useEffect(() => {
-    // Force the tab to be "lessons" by finding the tab element and clicking it programmatically
-    setTimeout(() => {
-      const lessonsTab = document.querySelector('[value="lessons"]');
-      if (lessonsTab) {
-        (lessonsTab as HTMLElement).click();
+  // Sample lesson plans for testing
+  const sampleLessonPlans: TeacherResource[] = [
+    {
+      id: '1',
+      title: 'Hello Lesson Plan',
+      resourceType: 'lessonPlan',
+      description: 'A lesson plan focusing on teaching hello vocabulary',
+      bookId: '1',
+      unitId: '1',
+      lessonPlan: {
+        duration: '45 minutes',
+        objectives: [
+          'Learn vocabulary related to hello',
+          'Practice speaking and listening skills',
+          'Engage in interactive activities'
+        ],
+        steps: [
+          {
+            title: 'Warm-up',
+            description: 'Introduction to hello vocabulary',
+            duration: '5-7 minutes',
+            resources: ['images', 'songs']
+          },
+          {
+            title: 'Presentation', 
+            description: 'Introduce key phrases with flashcards',
+            duration: '10 minutes',
+            resources: ['images']
+          },
+          {
+            title: 'Practice',
+            description: 'Students repeat phrases and practice in pairs',
+            duration: '15 minutes',
+            resources: ['worksheets']
+          }
+        ],
+        materials: ['Flashcards', 'Audio recordings', 'Worksheets']
       }
-    }, 500);
-  }, []);
-
-  const handleBookChange = (newBookId: string) => {
-    setBookId(newBookId as BookId);
-  };
-
-  const handleUnitChange = (newUnitId: string) => {
-    setUnitId(newUnitId as UnitId);
-  };
+    },
+    {
+      id: '2',
+      title: 'Greetings Lesson Plan',
+      resourceType: 'lessonPlan',
+      description: 'A lesson plan focusing on teaching various greetings',
+      bookId: '1',
+      unitId: '1',
+      lessonPlan: {
+        duration: '45 minutes',
+        objectives: [
+          'Learn different greetings for various times of day',
+          'Practice conversations with peers',
+          'Use gestures and actions while greeting'
+        ],
+        steps: [
+          {
+            title: 'Warm-up',
+            description: 'Morning and evening greetings',
+            duration: '5-7 minutes',
+            resources: ['images', 'songs']
+          },
+          {
+            title: 'Dialogue',
+            description: 'Practice greetings in pairs using dialogue cards',
+            duration: '15 minutes',
+            resources: ['cards']
+          },
+          {
+            title: 'Game',
+            description: 'Play "Greeting Chain" where students pass greetings around',
+            duration: '10 minutes',
+            resources: []
+          }
+        ],
+        materials: ['Greeting cards', 'Audio recordings', 'Puppets']
+      }
+    }
+  ];
 
   return (
-    <div className="container py-8">
-      <h1 className="text-3xl font-bold mb-6">Teacher Resources Viewer</h1>
+    <div className="container mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Teacher Resources Test</h1>
       
-      <div className="flex flex-wrap gap-4 mb-6">
-        <div>
-          <label className="block mb-2">Book ID:</label>
-          <select 
-            value={bookId} 
-            onChange={(e) => handleBookChange(e.target.value)}
-            className="p-2 border rounded"
-          >
-            {['1', '2', '3', '4', '5', '6', '7'].map(id => (
-              <option key={id} value={id}>Book {id}</option>
-            ))}
-          </select>
-        </div>
-        
-        <div>
-          <label className="block mb-2">Unit ID:</label>
-          <select 
-            value={unitId} 
-            onChange={(e) => handleUnitChange(e.target.value)}
-            className="p-2 border rounded"
-          >
-            {Array.from({ length: 18 }, (_, i) => (i + 1).toString()).map(id => (
-              <option key={id} value={id}>Unit {id}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-      
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <TeacherResourcesContainer 
-          initialBookId={bookId}
-          initialUnitId={unitId}
-          showSelection={false}
-          readOnly={true}
-        />
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <SideBySideLessonPlanView lessonPlans={sampleLessonPlans} />
       </div>
     </div>
   );
