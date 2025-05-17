@@ -1,191 +1,265 @@
-import React from 'react';
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { ResourceList } from './ResourceList';
 import { TeacherResource } from '@/types/TeacherResource';
-import { FileText, CheckCircle2 } from 'lucide-react';
+import { LessonPlanTemplate } from './LessonPlanTemplate';
+import {
+  ArrowLeftRight,
+  BookOpen,
+  Clock,
+  Download,
+  ExternalLink,
+  FileText,
+  Printer,
+  Video,
+  Gamepad2,
+  FileCog
+} from 'lucide-react';
 
 interface SideBySideLessonPlanViewProps {
-  lessonPlans: TeacherResource[];
+  bookId: string;
+  unitId: string;
+  resources: TeacherResource[];
+  isLoading?: boolean;
 }
 
-export function SideBySideLessonPlanView({ lessonPlans }: SideBySideLessonPlanViewProps) {
-  // If we don't have exactly 2 lesson plans, display a message
-  if (lessonPlans.length !== 2) {
-    return (
-      <div className="text-center py-8 text-gray-500">
-        A side-by-side view requires exactly 2 lesson plans. {lessonPlans.length} lesson plans available.
-      </div>
-    );
-  }
-
-  // Extract the two lesson plans
-  const [greenPlan, bluePlan] = lessonPlans;
-
-  // Helper function to generate random duration if not provided
-  const getDuration = (resource: TeacherResource): string => {
-    return resource.lessonPlan?.duration || '45 minutes';
+export function SideBySideLessonPlanView({
+  bookId,
+  unitId,
+  resources,
+  isLoading = false
+}: SideBySideLessonPlanViewProps) {
+  const [layout, setLayout] = useState<'split' | 'resources' | 'plan'>('split');
+  const [resourceType, setResourceType] = useState<'all' | 'video' | 'game' | 'pdf'>('all');
+  
+  // Filter resources by type
+  const filteredResources = resourceType === 'all'
+    ? resources
+    : resources.filter(r => r.resourceType === resourceType);
+  
+  // Get resource count by type
+  const resourceCounts = {
+    all: resources.length,
+    video: resources.filter(r => r.resourceType === 'video').length,
+    game: resources.filter(r => r.resourceType === 'game').length,
+    pdf: resources.filter(r => r.resourceType === 'pdf').length
   };
-
+  
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-center">Educational Videos</h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Green Lesson Plan on Left */}
-        <div className="bg-emerald-500 rounded-lg overflow-hidden">
-          <div className="p-4 flex justify-between items-center text-white">
-            <h3 className="font-medium flex items-center">
-              <FileText className="h-5 w-5 mr-2" />
-              {greenPlan.title || "Hello Lesson Plan"}
-            </h3>
-            <span className="bg-white text-emerald-600 text-xs font-medium px-3 py-1 rounded-full">
-              {getDuration(greenPlan)}
-            </span>
-          </div>
-          
-          <div className="p-4 bg-white">
-            {/* Objectives */}
-            <div className="mb-4">
-              <h4 className="text-sm font-medium mb-2">Objectives:</h4>
-              <ul className="list-disc pl-5 space-y-1">
-                {greenPlan.lessonPlan?.objectives ? (
-                  greenPlan.lessonPlan.objectives.map((objective: string, index: number) => (
-                    <li key={index}>{objective}</li>
-                  ))
-                ) : (
-                  <>
-                    <li>Learn vocabulary related to hello</li>
-                    <li>Practice speaking and listening skills</li>
-                    <li>Engage in interactive activities</li>
-                  </>
-                )}
-              </ul>
-            </div>
-            
-            {/* Lesson Steps */}
-            <div className="mb-4">
-              <h4 className="text-sm font-medium mb-2">Lesson Steps:</h4>
-              <ul className="space-y-3">
-                {greenPlan.lessonPlan?.steps ? (
-                  greenPlan.lessonPlan.steps.map((step: any, index: number) => (
-                    <li key={index} className="flex">
-                      <div className="bg-emerald-100 text-emerald-700 rounded-full p-1 mt-0.5 mr-2 h-5 w-5 flex items-center justify-center">
-                        <CheckCircle2 className="h-3 w-3" />
-                      </div>
-                      <div>
-                        <p className="text-sm">
-                          <span className="font-medium">{step.title}:</span> {step.description}
-                        </p>
-                        <p className="text-xs text-gray-500">({step.duration || '5-7 minutes'})</p>
-                        {step.resources && (
-                          <div className="mt-1 flex flex-wrap gap-1">
-                            {step.resources.includes('images') && (
-                              <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Images</span>
-                            )}
-                            {step.resources.includes('songs') && (
-                              <span className="inline-block px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">Songs</span>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </li>
-                  ))
-                ) : (
-                  <li className="flex">
-                    <div className="bg-emerald-100 text-emerald-700 rounded-full p-1 mt-0.5 mr-2 h-5 w-5 flex items-center justify-center">
-                      <CheckCircle2 className="h-3 w-3" />
-                    </div>
-                    <div>
-                      <p className="text-sm"><span className="font-medium">Warm-up: Introduction to hello vocabulary</span></p>
-                      <p className="text-xs text-gray-500">(5-7 minutes)</p>
-                      <div className="mt-1 flex flex-wrap gap-1">
-                        <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Images</span>
-                        <span className="inline-block px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">Songs</span>
-                      </div>
-                    </div>
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
+    <div className="space-y-4">
+      {/* Controls header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-primary/5 rounded-lg p-3">
+        <div className="flex items-center gap-2">
+          <BookOpen className="h-5 w-5 text-primary" />
+          <h2 className="font-medium">Book {bookId}, Unit {unitId} Lesson Plan</h2>
         </div>
         
-        {/* Blue Lesson Plan on Right */}
-        <div className="bg-blue-500 rounded-lg overflow-hidden">
-          <div className="p-4 flex justify-between items-center text-white">
-            <h3 className="font-medium flex items-center">
-              <FileText className="h-5 w-5 mr-2" />
-              {bluePlan.title || "Greetings Lesson Plan"}
-            </h3>
-            <span className="bg-white text-blue-600 text-xs font-medium px-3 py-1 rounded-full">
-              {getDuration(bluePlan)}
-            </span>
+        <div className="flex flex-wrap gap-2">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => setLayout('split')}
+            className={layout === 'split' ? 'bg-primary/10' : ''}
+          >
+            <ArrowLeftRight className="h-4 w-4 mr-1" />
+            <span>Side-by-Side</span>
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => setLayout('resources')}
+            className={layout === 'resources' ? 'bg-primary/10' : ''}
+          >
+            <FileCog className="h-4 w-4 mr-1" />
+            <span>Resources</span>
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => setLayout('plan')}
+            className={layout === 'plan' ? 'bg-primary/10' : ''}
+          >
+            <FileText className="h-4 w-4 mr-1" />
+            <span>Lesson Plan</span>
+          </Button>
+          <Button variant="outline" size="sm">
+            <Printer className="h-4 w-4 mr-1" />
+            <span>Print</span>
+          </Button>
+        </div>
+      </div>
+      
+      {/* Main content area */}
+      <div className={`grid ${layout === 'split' ? 'grid-cols-1 md:grid-cols-2 gap-6' : 'grid-cols-1'}`}>
+        {/* Resources panel - always visible in split or resources mode */}
+        {(layout === 'split' || layout === 'resources') && (
+          <div className={layout === 'resources' ? 'col-span-full' : ''}>
+            <Card>
+              <CardHeader className="bg-primary/5 pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg">Unit Resources</CardTitle>
+                  <div className="flex gap-1">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className={resourceType === 'all' ? 'bg-primary/10' : ''}
+                      onClick={() => setResourceType('all')}
+                    >
+                      All ({resourceCounts.all})
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className={resourceType === 'video' ? 'bg-primary/10' : ''}
+                      onClick={() => setResourceType('video')}
+                    >
+                      <Video className="h-4 w-4 mr-1" />
+                      Videos ({resourceCounts.video})
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className={resourceType === 'game' ? 'bg-primary/10' : ''}
+                      onClick={() => setResourceType('game')}
+                    >
+                      <Gamepad2 className="h-4 w-4 mr-1" />
+                      Games ({resourceCounts.game})
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className={resourceType === 'pdf' ? 'bg-primary/10' : ''}
+                      onClick={() => setResourceType('pdf')}
+                    >
+                      <FileText className="h-4 w-4 mr-1" />
+                      PDFs ({resourceCounts.pdf})
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="p-4">
+                {isLoading ? (
+                  <div className="flex justify-center py-12">
+                    <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" />
+                  </div>
+                ) : filteredResources.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-8 text-center">
+                    <FileText className="h-10 w-10 text-muted-foreground mb-2" />
+                    <p className="text-muted-foreground">No resources found for the selected filter.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {filteredResources.map((resource) => (
+                      <ResourceCard key={resource.id} resource={resource} />
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
-          
-          <div className="p-4 bg-white">
-            {/* Objectives */}
-            <div className="mb-4">
-              <h4 className="text-sm font-medium mb-2">Objectives:</h4>
-              <ul className="list-disc pl-5 space-y-1">
-                {bluePlan.lessonPlan?.objectives ? (
-                  bluePlan.lessonPlan.objectives.map((objective: string, index: number) => (
-                    <li key={index}>{objective}</li>
-                  ))
-                ) : (
-                  <>
-                    <li>Learn different greetings for various times of day</li>
-                    <li>Practice conversations with peers</li>
-                    <li>Use gestures and actions while greeting</li>
-                  </>
-                )}
-              </ul>
-            </div>
-            
-            {/* Lesson Steps */}
-            <div className="mb-4">
-              <h4 className="text-sm font-medium mb-2">Lesson Steps:</h4>
-              <ul className="space-y-3">
-                {bluePlan.lessonPlan?.steps ? (
-                  bluePlan.lessonPlan.steps.map((step: any, index: number) => (
-                    <li key={index} className="flex">
-                      <div className="bg-blue-100 text-blue-700 rounded-full p-1 mt-0.5 mr-2 h-5 w-5 flex items-center justify-center">
-                        <CheckCircle2 className="h-3 w-3" />
-                      </div>
-                      <div>
-                        <p className="text-sm">
-                          <span className="font-medium">{step.title}:</span> {step.description}
-                        </p>
-                        <p className="text-xs text-gray-500">({step.duration || '5-7 minutes'})</p>
-                        {step.resources && (
-                          <div className="mt-1 flex flex-wrap gap-1">
-                            {step.resources.includes('images') && (
-                              <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Images</span>
-                            )}
-                            {step.resources.includes('songs') && (
-                              <span className="inline-block px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">Songs</span>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </li>
-                  ))
-                ) : (
-                  <li className="flex">
-                    <div className="bg-blue-100 text-blue-700 rounded-full p-1 mt-0.5 mr-2 h-5 w-5 flex items-center justify-center">
-                      <CheckCircle2 className="h-3 w-3" />
-                    </div>
-                    <div>
-                      <p className="text-sm"><span className="font-medium">Warm-up: Morning and evening greetings</span></p>
-                      <p className="text-xs text-gray-500">(5-7 minutes)</p>
-                      <div className="mt-1 flex flex-wrap gap-1">
-                        <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Images</span>
-                        <span className="inline-block px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">Songs</span>
-                      </div>
-                    </div>
-                  </li>
-                )}
-              </ul>
+        )}
+        
+        {/* Lesson plan panel - always visible in split or plan mode */}
+        {(layout === 'split' || layout === 'plan') && (
+          <div className={layout === 'plan' ? 'col-span-full' : ''}>
+            <Card>
+              <CardHeader className="bg-primary/5 pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg flex items-center">
+                    <Clock className="h-4 w-4 mr-2" />
+                    <span>45-Minute Detailed Lesson Plan</span>
+                  </CardTitle>
+                  
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-1" />
+                    <span>Save</span>
+                  </Button>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="p-4">
+                <LessonPlanTemplate 
+                  bookId={bookId} 
+                  unitId={unitId} 
+                />
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Component for individual resource cards
+function ResourceCard({ resource }: { resource: TeacherResource }) {
+  const getResourceIcon = () => {
+    switch (resource.resourceType) {
+      case 'video':
+        return <Video className="h-4 w-4 text-red-500" />;
+      case 'game':
+        return <Gamepad2 className="h-4 w-4 text-indigo-500" />;
+      case 'pdf':
+        return <FileText className="h-4 w-4 text-blue-500" />;
+      default:
+        return <FileText className="h-4 w-4 text-gray-500" />;
+    }
+  };
+  
+  // Get YouTube thumbnail for videos
+  const getThumbnail = () => {
+    if (resource.resourceType === 'video' && resource.youtubeVideoId) {
+      return `https://img.youtube.com/vi/${resource.youtubeVideoId}/mqdefault.jpg`;
+    }
+    return null;
+  };
+  
+  // Clean up title for display
+  const getCleanTitle = () => {
+    let title = resource.title;
+    if (resource.resourceType === 'video') {
+      title = title.replace(/^(video|video -|video:|00 c . video)\s*/i, '').trim();
+    }
+    if (resource.resourceType === 'game') {
+      title = title.replace(/^(game|game -|game:|online game|wordwall)\s*/i, '').trim();
+    }
+    return title;
+  };
+  
+  const thumbnail = getThumbnail();
+  
+  return (
+    <div className="rounded-lg overflow-hidden border shadow-sm hover:shadow-md transition-shadow">
+      {thumbnail ? (
+        <div className="relative aspect-video bg-gray-100">
+          <img src={thumbnail} alt={resource.title} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
+            <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
+              <Video className="h-4 w-4 text-primary ml-0.5" />
             </div>
           </div>
         </div>
+      ) : (
+        <div className={`
+          aspect-video flex items-center justify-center
+          ${resource.resourceType === 'game' ? 'bg-indigo-50' : ''}
+          ${resource.resourceType === 'pdf' ? 'bg-blue-50' : ''}
+          ${!resource.resourceType || resource.resourceType === 'other' ? 'bg-gray-50' : ''}
+        `}>
+          {getResourceIcon()}
+        </div>
+      )}
+      
+      <div className="p-2">
+        <div className="flex items-center gap-1 mb-1">
+          {getResourceIcon()}
+          <span className="text-xs text-muted-foreground capitalize">{resource.resourceType}</span>
+        </div>
+        <h3 className="text-xs font-medium line-clamp-2">{getCleanTitle()}</h3>
       </div>
     </div>
   );

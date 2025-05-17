@@ -15,7 +15,6 @@ import { useTeacherResources } from '@/hooks/useTeacherResources';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { LessonPlanTemplate } from './LessonPlanTemplate';
-import { SideBySideLessonPlanView } from './SideBySideLessonPlanView';
 import {
   Select,
   SelectContent,
@@ -70,8 +69,8 @@ export function TeacherResourcesContainer({
   showEmptyState = false,
   hideTabsInContentViewer = false
 }: TeacherResourcesContainerProps) {
-  // Tab state - initialize to lessons tab as requested
-  const [activeTab, setActiveTab] = useState<string>('lessons');
+  // Tab state
+  const [activeTab, setActiveTab] = useState<string>('videos');
 
   // Use the hook to manage resources
   const {
@@ -215,12 +214,25 @@ export function TeacherResourcesContainer({
       ) : (
         /* Resource Tabs */
         <Tabs defaultValue="videos" value={activeTab} onValueChange={setActiveTab}>
-          {/* Tab List - Bottom navigation buttons */}
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="videos" onClick={() => setActiveTab("videos")}>Videos</TabsTrigger>
-            <TabsTrigger value="games" onClick={() => setActiveTab("games")}>Games</TabsTrigger>
-            <TabsTrigger value="pdfs" onClick={() => setActiveTab("pdfs")}>PDFs</TabsTrigger>
-            <TabsTrigger value="lessons" onClick={() => setActiveTab("lessons")}>Lessons</TabsTrigger>
+          <TabsList className="w-full bg-muted/30">
+            <TabsTrigger value="videos" className="flex items-center gap-1">
+              <Video className="h-4 w-4" />
+              <span>Videos</span>
+            </TabsTrigger>
+            <TabsTrigger value="games" className="flex items-center gap-1">
+              <Gamepad2 className="h-4 w-4" />
+              <span>Games</span>
+            </TabsTrigger>
+            {bookId === '1' && unitId === '1' && (
+              <TabsTrigger value="pdfs" className="flex items-center gap-1">
+                <FileIcon className="h-4 w-4" />
+                <span>PDFs</span>
+              </TabsTrigger>
+            )}
+            <TabsTrigger value="lessons" className="flex items-center gap-1">
+              <FileText className="h-4 w-4" />
+              <span>Lessons</span>
+            </TabsTrigger>
           </TabsList>
           
           {/* Videos Tab */}
@@ -270,67 +282,10 @@ export function TeacherResourcesContainer({
             />
           </TabsContent>
           
-          {/* Lessons Tab - Using our new SideBySideLessonPlanView component */}
+          {/* Lessons Tab - Side by Side Layout */}
           <TabsContent value="lessons">
             <div className="space-y-4 mt-4">
-              {isLoading ? (
-                <div className="flex justify-center py-8">
-                  <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" />
-                </div>
-              ) : (
-                <SideBySideLessonPlanView 
-                  lessonPlans={[
-                    {
-                      id: '1',
-                      title: 'Hello Lesson Plan',
-                      resourceType: 'lessonPlan',
-                      description: 'A lesson plan focusing on teaching hello vocabulary',
-                      bookId: bookId || '1',
-                      unitId: unitId || '1',
-                      lessonPlan: {
-                        duration: '45 minutes',
-                        objectives: [
-                          'Learn vocabulary related to hello',
-                          'Practice speaking and listening skills',
-                          'Engage in interactive activities'
-                        ],
-                        steps: [
-                          {
-                            title: 'Warm-up',
-                            description: 'Introduction to hello vocabulary',
-                            duration: '5-7 minutes',
-                            resources: ['images', 'songs']
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      id: '2',
-                      title: 'Greetings Lesson Plan',
-                      resourceType: 'lessonPlan',
-                      description: 'A lesson plan focusing on teaching various greetings',
-                      bookId: bookId || '1',
-                      unitId: unitId || '1',
-                      lessonPlan: {
-                        duration: '45 minutes',
-                        objectives: [
-                          'Learn different greetings for various times of day',
-                          'Practice conversations with peers',
-                          'Use gestures and actions while greeting'
-                        ],
-                        steps: [
-                          {
-                            title: 'Warm-up',
-                            description: 'Morning and evening greetings',
-                            duration: '5-7 minutes',
-                            resources: ['images', 'songs']
-                          }
-                        ]
-                      }
-                    }
-                  ]} 
-                />
-              )}
+              {/* Side by Side Lesson Plans */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Green Lesson Plan on Left */}
                 <div className="border rounded-lg overflow-hidden">
