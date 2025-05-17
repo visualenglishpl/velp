@@ -120,14 +120,66 @@ const bookUnitMap: Record<string, string[]> = {
   '3': ['16', '17']
 };
 
-// Units with CSV-generated resources (more structured approach)
-const csvGeneratedUnits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'];
+// Units with CSV-generated resources for Book 1 (more structured approach)
+const book1CsvGeneratedUnits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'];
 
-// Register all CSV-generated resources
-csvGeneratedUnits.forEach(unit => {
-  registerResourceLoader('1', unit as UnitId, 
-    () => import(/* @vite-ignore */ `@/data/book1-unit${unit}-resources`).then(m => m.default)
-  );
+// Register all Book 1 CSV-generated resources
+book1CsvGeneratedUnits.forEach(unit => {
+  try {
+    registerResourceLoader('1', unit as UnitId, 
+      async () => {
+        try {
+          // First try to get the module
+          const module = await import(/* @vite-ignore */ `@/data/book1-unit${unit}-resources`);
+          
+          // Then try to get the resources, either as default export or named export
+          if (module.default) {
+            return module.default;
+          } else if (module.book1Unit1Resources) {
+            return module.book1Unit1Resources;  // For unit 1 specifically
+          } else {
+            console.warn(`No valid exports found in book1-unit${unit}-resources`);
+            return [];
+          }
+        } catch (importError) {
+          console.warn(`Error importing book1-unit${unit}-resources:`, importError);
+          return [];
+        }
+      }
+    );
+  } catch (error) {
+    console.warn(`Failed to register Book 1 Unit ${unit} resources:`, error);
+  }
+});
+
+// Units with CSV-generated resources for Book 2
+const book2CsvGeneratedUnits = ['1', '2', '3', '4', '5'];
+
+// Register all Book 2 CSV-generated resources
+book2CsvGeneratedUnits.forEach(unit => {
+  try {
+    registerResourceLoader('2', unit as UnitId, 
+      async () => {
+        try {
+          // First try to get the module
+          const module = await import(/* @vite-ignore */ `@/data/book2-unit${unit}-resources`);
+          
+          // Then try to get the resources, should have default export
+          if (module.default) {
+            return module.default;
+          } else {
+            console.warn(`No default export found in book2-unit${unit}-resources`);
+            return [];
+          }
+        } catch (importError) {
+          console.warn(`Error importing book2-unit${unit}-resources:`, importError);
+          return [];
+        }
+      }
+    );
+  } catch (error) {
+    console.warn(`Failed to register Book 2 Unit ${unit} resources:`, error);
+  }
 });
 
 // Define specialized loader functions

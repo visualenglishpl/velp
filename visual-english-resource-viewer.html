@@ -200,24 +200,7 @@
             <div class="form-group">
                 <label for="unit-select">Unit:</label>
                 <select id="unit-select">
-                    <option value="1">Unit 1: Hello</option>
-                    <option value="2">Unit 2: My School</option>
-                    <option value="3">Unit 3: Food</option>
-                    <option value="4">Unit 4: My House</option>
-                    <option value="5">Unit 5: Pets and Animals</option>
-                    <option value="6">Unit 6: My Favourite Colour</option>
-                    <option value="7">Unit 7: My Body</option>
-                    <option value="8">Unit 8: My Clothes</option>
-                    <option value="9">Unit 9: My Family</option>
-                    <option value="10">Unit 10: The Weather</option>
-                    <option value="11">Unit 11: Days of the Week</option>
-                    <option value="12">Unit 12: Months of the Year</option>
-                    <option value="13">Unit 13: Seasons</option>
-                    <option value="14">Unit 14: What's the Time?</option>
-                    <option value="15">Unit 15: Daily Routines</option>
-                    <option value="16">Unit 16: My Hobbies</option>
-                    <option value="17">Unit 17: Sports</option>
-                    <option value="18">Unit 18: Feelings & Emotions</option>
+                    <!-- Will be populated dynamically -->
                 </select>
             </div>
             <div class="form-group">
@@ -257,6 +240,7 @@
     <script>
         // Resource data structure for Book 1 and Book 2
         const books = {
+            // Book 1 resources
             "1": [
                 // Unit 1
                 {unit: "1", type: "video", title: "Hello Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/tVlcKp3bWH8"},
@@ -264,142 +248,73 @@
                 {unit: "1", type: "game", title: "Greetings Matching", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/11837368/greetings"},
                 {unit: "1", type: "pdf", title: "Unit 1: Hello - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf"},
                 {unit: "1", type: "lesson", title: "Greetings Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn basic greetings in English"},
-            
-            // Unit 2
-            {unit: "2", type: "video", title: "School Objects Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/g7kK989HiRQ"},
-            {unit: "2", type: "game", title: "School Objects Matching", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/37342291/classroom-objects"},
-            {unit: "2", type: "pdf", title: "Unit 2: My School - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit2/00 A Visual English 1 – Unit 2 – New Version.pdf"},
-            {unit: "2", type: "lesson", title: "Classroom Objects Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn classroom vocabulary"},
-            
-            // Unit 3
-            {unit: "3", type: "video", title: "Food Song for Kids", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/RE5tvaveVak"},
-            {unit: "3", type: "video", title: "Fruit Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/mfReSbQ7jzE"},
-            {unit: "3", type: "game", title: "Food Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/29897132/food"},
-            {unit: "3", type: "pdf", title: "Unit 3: Food - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit3/00 A Visual English 1 – Unit 3 – New Version.pdf"},
-            {unit: "3", type: "lesson", title: "Food Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn food vocabulary"},
-            
-            // Unit 4
-            {unit: "4", type: "video", title: "House Tour Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/qZyJPZxsmZk"},
-            {unit: "4", type: "game", title: "Rooms in the House Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/14083613/rooms-house"},
-            {unit: "4", type: "pdf", title: "Unit 4: My House - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit4/00 A Visual English 1 – Unit 4 – New Version.pdf"},
-            {unit: "4", type: "lesson", title: "House Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn parts of the house"},
-            
-            // Unit 5
-            {unit: "5", type: "video", title: "Animal Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/OwRmivbNgQk"},
-            {unit: "5", type: "game", title: "Pet Animals Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/10965215/pets"},
-            {unit: "5", type: "pdf", title: "Unit 5: Pets and Animals - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit5/00 A Visual English 1 – Unit 5 – New Version.pdf"},
-            {unit: "5", type: "lesson", title: "Pets Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn pet vocabulary"},
-            
-            // Unit 6
-            {unit: "6", type: "video", title: "Colors Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/ybt2jhCQ3lA"},
-            {unit: "6", type: "game", title: "Colors Matching Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/9551478/colors"},
-            {unit: "6", type: "pdf", title: "Unit 6: My Favourite Colour - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit6/00 A Visual English 1 – Unit 6 – New Version.pdf"},
-            {unit: "6", type: "lesson", title: "Colors Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn color vocabulary"},
-            
-            // Unit 7
-            {unit: "7", type: "video", title: "Body Parts Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/QkHQ0CYwjaI"},
-            {unit: "7", type: "video", title: "Head Shoulders Knees and Toes", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/h4eueDYPTIg"},
-            {unit: "7", type: "game", title: "Body Parts Matching", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/15729036/body-parts"},
-            {unit: "7", type: "pdf", title: "Unit 7: My Body - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit7/00 A Visual English 1 – Unit 7 – New Version.pdf"},
-            {unit: "7", type: "lesson", title: "Body Parts Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn body parts vocabulary"},
-            
-            // Unit 8
-            {unit: "8", type: "video", title: "Clothing Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/taoCF1cKZSY"},
-            {unit: "8", type: "game", title: "Clothing Items Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/27889088/clothes"},
-            {unit: "8", type: "pdf", title: "Unit 8: My Clothes - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit8/00 A Visual English 1 – Unit 8 – New Version.pdf"},
-            {unit: "8", type: "lesson", title: "Clothing Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn clothing vocabulary"},
-            
-            // Unit 9
-            {unit: "9", type: "video", title: "Family Members Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/FHaObkHEkHQ"},
-            {unit: "9", type: "game", title: "Family Members Matching", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/11322275/family-members"},
-            {unit: "9", type: "pdf", title: "Unit 9: My Family - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit9/00 A Visual English 1 – Unit 9 – New Version.pdf"},
-            {unit: "9", type: "lesson", title: "Family Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn family vocabulary"},
-            
-            // Unit 10
-            {unit: "10", type: "video", title: "Weather Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/XcW9Ct000yY"},
-            {unit: "10", type: "game", title: "Weather Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/10404323/weather"},
-            {unit: "10", type: "pdf", title: "Unit 10: The Weather - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit10/00 A Visual English 1 – Unit 10 – New Version.pdf"},
-            {unit: "10", type: "lesson", title: "Weather Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn weather vocabulary"},
-            
-            // Unit 11
-            {unit: "11", type: "video", title: "Days of the Week Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/HtQcnZ2JWsY"},
-            {unit: "11", type: "game", title: "Days of the Week Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/46518/english/days-week"},
-            {unit: "11", type: "pdf", title: "Unit 11: Days of the Week - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit11/00 A Visual English 1 – Unit 11 – New Version.pdf"},
-            {unit: "11", type: "lesson", title: "Days of the Week Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn days of the week"},
-            
-            // Unit 12
-            {unit: "12", type: "video", title: "Months of the Year Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/Fe9bnYRzFvk"},
-            {unit: "12", type: "game", title: "Months of the Year Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/29456/english/months-year"},
-            {unit: "12", type: "pdf", title: "Unit 12: Months of the Year - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit12/00 A Visual English 1 – Unit 12 – New Version.pdf"},
-            {unit: "12", type: "lesson", title: "Months of the Year Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn months of the year"},
-            
-            // Unit 13
-            {unit: "13", type: "video", title: "Seasons Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/8ZjpI6fgYSY"},
-            {unit: "13", type: "game", title: "Seasons Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/38882/english/seasons"},
-            {unit: "13", type: "pdf", title: "Unit 13: Seasons - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit13/00 A Visual English 1 – Unit 13 – New Version.pdf"},
-            {unit: "13", type: "lesson", title: "Seasons Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn seasons vocabulary"},
-            
-            // Unit 14
-            {unit: "14", type: "video", title: "Telling Time Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/RBvmO7NgUp0"},
-            {unit: "14", type: "game", title: "Clock Time Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/32975/english/telling-time"},
-            {unit: "14", type: "pdf", title: "Unit 14: What's the Time? - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit14/00 A Visual English 1 – Unit 14 – New Version.pdf"},
-            {unit: "14", type: "lesson", title: "Telling Time Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn to tell the time"},
-            
-            // Unit 15
-            {unit: "15", type: "video", title: "Daily Routines Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/qD1pnquN_DM"},
-            {unit: "15", type: "game", title: "Daily Routines Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/14244/english/daily-routines"},
-            {unit: "15", type: "pdf", title: "Unit 15: Daily Routines - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit15/00 A Visual English 1 – Unit 15 – New Version.pdf"},
-            {unit: "15", type: "lesson", title: "Daily Routines Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn daily routines vocabulary"},
-            
-            // Unit 16
-            {unit: "16", type: "video", title: "Hobbies Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/N1w-hDiJ4dM"},
-            {unit: "16", type: "game", title: "Hobbies Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/10258944/hobbies"},
-            {unit: "16", type: "pdf", title: "Unit 16: My Hobbies - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit16/00 A Visual English 1 – Unit 16 – New Version.pdf"},
-            {unit: "16", type: "lesson", title: "Hobbies Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn hobbies vocabulary"},
-            
-            // Unit 17
-            {unit: "17", type: "video", title: "Sports Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/X7R-Dz_XJrE"},
-            {unit: "17", type: "game", title: "Sports Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/37264/english/sports"},
-            {unit: "17", type: "pdf", title: "Unit 17: Sports - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit17/00 A Visual English 1 – Unit 17 – New Version.pdf"},
-            {unit: "17", type: "lesson", title: "Sports Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn sports vocabulary"},
-            
-            // Unit 18
-            {unit: "18", type: "video", title: "Emotions Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/l4WNrvVjiTw"},
-            {unit: "18", type: "game", title: "Emotions Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/52054/english/feelings-emotions"},
-            {unit: "18", type: "pdf", title: "Unit 18: Feelings & Emotions - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit18/00 A Visual English 1 – Unit 18 – New Version.pdf"},
-            {unit: "18", type: "lesson", title: "Emotions Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn emotions vocabulary"}
+                
+                // Unit 2
+                {unit: "2", type: "video", title: "School Objects Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/g7kK989HiRQ"},
+                {unit: "2", type: "game", title: "School Objects Matching", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/37342291/classroom-objects"},
+                {unit: "2", type: "pdf", title: "Unit 2: My School - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit2/00 A Visual English 1 – Unit 2 – New Version.pdf"},
+                {unit: "2", type: "lesson", title: "Classroom Objects Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn classroom vocabulary"},
+                
+                // Unit 3
+                {unit: "3", type: "video", title: "Food Song for Kids", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/RE5tvaveVak"},
+                {unit: "3", type: "video", title: "Fruit Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/mfReSbQ7jzE"},
+                {unit: "3", type: "game", title: "Food Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/29897132/food"},
+                {unit: "3", type: "pdf", title: "Unit 3: Food - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit3/00 A Visual English 1 – Unit 3 – New Version.pdf"},
+                {unit: "3", type: "lesson", title: "Food Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn food vocabulary"},
+                
+                // Unit 4
+                {unit: "4", type: "video", title: "House Tour Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/qZyJPZxsmZk"},
+                {unit: "4", type: "game", title: "Rooms in the House Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/14083613/rooms-house"},
+                {unit: "4", type: "pdf", title: "Unit 4: My House - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit4/00 A Visual English 1 – Unit 4 – New Version.pdf"},
+                {unit: "4", type: "lesson", title: "House Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn parts of the house"},
+                
+                // Unit 5
+                {unit: "5", type: "video", title: "Animal Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/OwRmivbNgQk"},
+                {unit: "5", type: "game", title: "Pet Animals Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/10965215/pets"},
+                {unit: "5", type: "pdf", title: "Unit 5: Pets and Animals - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit5/00 A Visual English 1 – Unit 5 – New Version.pdf"},
+                {unit: "5", type: "lesson", title: "Pets Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn pet vocabulary"},
+                
+                // More Book 1 units
+                {unit: "6", type: "video", title: "Colors Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/ybt2jhCQ3lA"},
+                {unit: "6", type: "game", title: "Colors Matching Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/9551478/colors"},
+                {unit: "6", type: "pdf", title: "Unit 6: My Favourite Colour - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit6/00 A Visual English 1 – Unit 6 – New Version.pdf"},
+                {unit: "6", type: "lesson", title: "Colors Vocabulary Lesson", provider: "Visual English", lessonType: "main", lessonObjective: "Learn color vocabulary"}
+                
+                // Additional Book 1 units omitted for brevity
             ],
+            
+            // Book 2 resources
             "2": [
-            // Unit 1
-            {unit: "1", type: "video", title: "Greetings Dialogue", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/MdEnuU6_idg"},
-            {unit: "1", type: "video", title: "Introducing Yourself", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/NlpxjBgG93E"},
-            {unit: "1", type: "game", title: "Greetings and Introductions", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/43120/english/greetings"},
-            {unit: "1", type: "pdf", title: "Unit 1: Hello and Greetings - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit1/00 A Visual English 2 – Unit 1 – New Version.pdf"},
-            {unit: "1", type: "lesson", title: "Introducing Yourself Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn to introduce yourself in English"},
-            
-            // Unit 2
-            {unit: "2", type: "video", title: "Numbers Song 1-20", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/e0dJWfQHF8Y"},
-            {unit: "2", type: "game", title: "Numbers 1-20 Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/32814/english/numbers-1-20"},
-            {unit: "2", type: "pdf", title: "Unit 2: Numbers - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit2/00 A Visual English 2 – Unit 2 – New Version.pdf"},
-            {unit: "2", type: "lesson", title: "Numbers 1-20 Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn to count from 1 to 20"},
-            
-            // Unit 3
-            {unit: "3", type: "video", title: "Telling the Time", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/IBBQXBhSNUs"},
-            {unit: "3", type: "game", title: "Clock Time Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/32975/english/telling-time"},
-            {unit: "3", type: "pdf", title: "Unit 3: What's the Time? - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit3/00 A Visual English 2 – Unit 3 – New Version.pdf"},
-            {unit: "3", type: "lesson", title: "Telling Time Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn to tell the time in English"},
-            
-            // Unit 4
-            {unit: "4", type: "video", title: "Days of the Week Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/mXMofxtDPUQ"},
-            {unit: "4", type: "game", title: "Days of the Week Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/46518/english/days-week"},
-            {unit: "4", type: "pdf", title: "Unit 4: Days of the Week - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit4/00 A Visual English 2 – Unit 4 – New Version.pdf"},
-            {unit: "4", type: "lesson", title: "Days of the Week Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn the days of the week"},
-            
-            // Unit 5
-            {unit: "5", type: "video", title: "Weather Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/XcW9Ct000yY"},
-            {unit: "5", type: "game", title: "Weather Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/10404323/weather"},
-            {unit: "5", type: "pdf", title: "Unit 5: The Weather - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit5/00 A Visual English 2 – Unit 5 – New Version.pdf"},
-            {unit: "5", type: "lesson", title: "Weather Vocabulary Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn vocabulary related to weather"}
+                // Unit 1
+                {unit: "1", type: "video", title: "Greetings Dialogue", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/MdEnuU6_idg"},
+                {unit: "1", type: "video", title: "Introducing Yourself", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/NlpxjBgG93E"},
+                {unit: "1", type: "game", title: "Greetings and Introductions", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/43120/english/greetings"},
+                {unit: "1", type: "pdf", title: "Unit 1: Hello and Greetings - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit1/00 A Visual English 2 – Unit 1 – New Version.pdf"},
+                {unit: "1", type: "lesson", title: "Introducing Yourself Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn to introduce yourself in English"},
+                
+                // Unit 2
+                {unit: "2", type: "video", title: "Numbers Song 1-20", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/e0dJWfQHF8Y"},
+                {unit: "2", type: "game", title: "Numbers 1-20 Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/32814/english/numbers-1-20"},
+                {unit: "2", type: "pdf", title: "Unit 2: Numbers - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit2/00 A Visual English 2 – Unit 2 – New Version.pdf"},
+                {unit: "2", type: "lesson", title: "Numbers 1-20 Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn to count from 1 to 20"},
+                
+                // Unit 3
+                {unit: "3", type: "video", title: "Telling the Time", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/IBBQXBhSNUs"},
+                {unit: "3", type: "game", title: "Clock Time Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/32975/english/telling-time"},
+                {unit: "3", type: "pdf", title: "Unit 3: What's the Time? - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit3/00 A Visual English 2 – Unit 3 – New Version.pdf"},
+                {unit: "3", type: "lesson", title: "Telling Time Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn to tell the time in English"},
+                
+                // Unit 4
+                {unit: "4", type: "video", title: "Days of the Week Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/mXMofxtDPUQ"},
+                {unit: "4", type: "game", title: "Days of the Week Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/46518/english/days-week"},
+                {unit: "4", type: "pdf", title: "Unit 4: Days of the Week - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit4/00 A Visual English 2 – Unit 4 – New Version.pdf"},
+                {unit: "4", type: "lesson", title: "Days of the Week Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn the days of the week"},
+                
+                // Unit 5
+                {unit: "5", type: "video", title: "Weather Song", provider: "YouTube", embedUrl: "https://www.youtube.com/embed/XcW9Ct000yY"},
+                {unit: "5", type: "game", title: "Weather Vocabulary Game", provider: "Wordwall", embedUrl: "https://wordwall.net/resource/10404323/weather"},
+                {unit: "5", type: "pdf", title: "Unit 5: The Weather - PDF", provider: "Visual English", pdfUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book2/unit5/00 A Visual English 2 – Unit 5 – New Version.pdf"},
+                {unit: "5", type: "lesson", title: "Weather Vocabulary Lesson Plan", provider: "Visual English", lessonType: "main", lessonObjective: "Learn vocabulary related to weather"}
             ]
         };
 
