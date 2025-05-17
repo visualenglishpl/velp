@@ -880,10 +880,6 @@ export default function SimpleContentViewer() {
       {/* Teacher Resources Section */}
       {user && bookId && unitNumber && (
         <div className="mt-8 border-t pt-6">
-          <div className="flex flex-col items-center justify-center text-center mb-6">
-            <h2 className="text-xl font-bold">Teacher Resources</h2>
-            <div className="text-sm text-gray-500 mt-1">Resources for Book {bookId}, Unit {unitNumber}</div>
-          </div>
           
           <Tabs defaultValue="videos" className="w-full">
             <div className="flex justify-center mb-4">
