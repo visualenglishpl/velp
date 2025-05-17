@@ -537,7 +537,7 @@ export function SimpleContentViewer() {
               <TabsTrigger value="lessons">Lesson Plans</TabsTrigger>
             </TabsList>
             
-            {/* Videos Content */}
+            {/* Single resource list with all resources */}
             <TabsContent value="videos">
               <ResourceList 
                 resources={videoResources} 
