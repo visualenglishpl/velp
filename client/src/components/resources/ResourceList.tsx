@@ -167,11 +167,12 @@ export function ResourceList({
     return resources.filter(r => r.resourceType === type).length;
   };
 
-  // Resource type filters with icon and count - video, game, and lesson resources only
+  // Resource type filters with icon and count
   const resourceTypes: Array<{ type: ResourceFilterType, label: string }> = [
     { type: 'all', label: 'All Resources' },
     { type: 'video', label: 'Videos' },
     { type: 'game', label: 'Games' },
+    { type: 'pdf', label: 'PDFs' },
     { type: 'lessonPlan', label: 'Lessons' }
   ];
 

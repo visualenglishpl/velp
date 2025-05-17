@@ -38,11 +38,20 @@ export function EmbeddedContentModal({
   const isIslCollectiveEmbed = content.includes('islcollective.com/preview/');
   
   // Check if content is a PDF URL
-  const isPdfUrl = content.endsWith('.pdf');
+  const isPdfUrl = content.toLowerCase().endsWith('.pdf');
 
   const handleIframeLoad = () => {
     setLoading(false);
   };
+
+  // For PDFs, we'll open them directly in a new tab rather than embedding
+  // This is more reliable than using Google Docs viewer
+  if (isPdfUrl && isOpen) {
+    // Automatically open the PDF in a new tab and close the modal
+    window.open(content, '_blank');
+    onClose();
+    return null; // Return null to prevent rendering the dialog
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -50,8 +59,7 @@ export function EmbeddedContentModal({
         <DialogHeader>
           <div className="flex justify-between items-center">
             <DialogTitle>{title}</DialogTitle>
-            {/* Only show Open Original button if it's not a PDF, since PDFs have their own download button */}
-            {sourceUrl && !isPdfUrl && (
+            {sourceUrl && (
               <Button 
                 variant="outline" 
                 size="sm"
@@ -77,16 +85,6 @@ export function EmbeddedContentModal({
               src={content}
               className="w-full h-full border-0"
               allowFullScreen
-              onLoad={handleIframeLoad}
-              title={title}
-              style={{ minHeight: '50vh' }}
-            />
-          )}
-          
-          {isPdfUrl && (
-            <iframe
-              src={`https://docs.google.com/viewer?url=${encodeURIComponent(content)}&embedded=true`}
-              className="w-full h-full border-0"
               onLoad={handleIframeLoad}
               title={title}
               style={{ minHeight: '50vh' }}
