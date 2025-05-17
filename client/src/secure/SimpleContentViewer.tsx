@@ -7,36 +7,39 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ResourceList } from '@/components/resources/ResourceList';
 import { Separator } from '@/components/ui/separator';
 import { SideBySideLessonPlanView } from '@/components/resources/SideBySideLessonPlanView';
-import { fetchPdfResources, fetchTeacherResources, fetchVideoResources, fetchWordwallGames, fetchLessonPlans } from '@/components/resources/resourceUtils';
+// Import synchronous resource utilities
+import { 
+  getVideoResources, 
+  getWordwallGames, 
+  getPdfResources, 
+  getLessonPlans 
+} from '@/components/resources/resourceUtilsSync';
+import { TeacherResource } from '@/types/TeacherResource';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-// Import book-specific resource data
-import { book1Unit1Resources } from '@/data/book1-unit1-resources';
-import { book1Unit2Resources } from '@/data/book1-unit2-resources';
-import { book1Unit3Resources } from '@/data/book1-unit3-resources';
-
-type QuestionAnswer = {
+// Types for question-answer data
+interface IQuestionAnswer {
   question: string;
   answer: string;
-};
+}
 
-type CountryQuestions = {
-  [key: string]: QuestionAnswer;
-};
+interface ICountryQuestions {
+  [key: string]: IQuestionAnswer;
+}
 
-type CountryData = {
+interface ICountryData {
   country: string;
-  questions: CountryQuestions;
-};
+  questions: ICountryQuestions;
+}
 
-type QuestionDataType = {
-  [key: string]: CountryData;
-};
+interface IQuestionDataType {
+  [key: string]: ICountryData;
+}
 
 // Sample structured Q&A data for content mapped by filename
-const QUESTION_DATA: QuestionDataType = {
+const QUESTION_DATA: IQuestionDataType = {
   // Book 2 - Unit 3 - Countries
   'book2-unit3': {
     country: 'Countries',
@@ -131,13 +134,11 @@ export function SimpleContentViewer() {
     enabled: !!bookPath && !!unitPath,
   });
   
-  // Fetch teacher resources based on book and unit
-  const {
-    videoResources,
-    wordwallGames,
-    pdfResources,
-    lessonPlans,
-  } = fetchTeacherResources(bookId, unitId);
+  // Get resources for current book & unit using our sync utility functions
+  const videoResources = getVideoResources(bookId, unitId);
+  const wordwallGames = getWordwallGames(bookId, unitId);
+  const pdfResources = getPdfResources(bookId, unitId);
+  const lessonPlans = getLessonPlans(bookId, unitId);
   
   // Handle fullscreen toggle
   const toggleFullscreen = useCallback(() => {
@@ -197,8 +198,8 @@ export function SimpleContentViewer() {
           (material.path && material.path.includes(filename))) {
         return {
           hasData: true,
-          question: qa.question,
-          answer: qa.answer,
+          question: qa.question as string,
+          answer: qa.answer as string,
           country: qaData.country
         };
       }

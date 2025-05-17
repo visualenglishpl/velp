@@ -172,8 +172,8 @@ export function SideBySideLessonPlanView({
               <CardHeader className="bg-primary/5 pb-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg flex items-center">
-                    <Layers className="h-4 w-4 mr-2" />
-                    <span>Slides-Based Lesson Plan</span>
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    <span>Detailed Lesson Plan</span>
                   </CardTitle>
                   
                   <Button variant="outline" size="sm">
@@ -184,7 +184,7 @@ export function SideBySideLessonPlanView({
               </CardHeader>
               
               <CardContent className="p-4">
-                <SlidesBasedLessonPlan 
+                <LessonPlanTemplate 
                   bookId={bookId} 
                   unitId={unitId} 
                 />
