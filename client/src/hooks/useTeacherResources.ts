@@ -66,7 +66,11 @@ export function useTeacherResources({
       
       try {
         const loadedResources = await loadResources(bookId, unitId);
-        setResources(loadedResources || []);
+        // Filter out PDF and lesson plan resources, only keep video and game resources
+        const filteredResources = (loadedResources || []).filter(
+          resource => resource.resourceType === 'video' || resource.resourceType === 'game'
+        );
+        setResources(filteredResources);
       } catch (err) {
         console.error('Error loading resources:', err);
         setError(err instanceof Error ? err : new Error('Failed to load resources'));

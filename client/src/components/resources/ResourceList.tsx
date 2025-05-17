@@ -122,13 +122,11 @@ export function ResourceList({
     return resources.filter(r => r.resourceType === type).length;
   };
 
-  // Resource type filters with icon and count
+  // Resource type filters with icon and count - only video and game resources
   const resourceTypes: Array<{ type: ResourceFilterType, label: string }> = [
     { type: 'all', label: 'All Resources' },
     { type: 'video', label: 'Videos' },
-    { type: 'game', label: 'Games' },
-    { type: 'pdf', label: 'PDFs' },
-    { type: 'lessonPlan', label: 'Lesson Plans' }
+    { type: 'game', label: 'Games' }
   ];
 
   return (
@@ -202,67 +200,48 @@ export function ResourceList({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {resources.map((resource) => {
-            // Generate thumbnail URL based on resource type
-            const thumbnailUrl = resource.resourceType === 'video' && resource.youtubeVideoId
-              ? `https://img.youtube.com/vi/${resource.youtubeVideoId}/mqdefault.jpg`
-              : resource.resourceType === 'game' && resource.wordwallGameId
-              ? `https://az779572.vo.msecnd.net/screens-200/4c26c3b6d7784cc4a1b09c09b6e0ab5a`
-              : resource.resourceType === 'video'
-              ? 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/video_thumb.png'
-              : resource.resourceType === 'game'
-              ? 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/game_thumb.png'
-              : resource.resourceType === 'pdf'
-              ? 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/pdf_thumb.png'
-              : resource.resourceType === 'lessonPlan'
-              ? 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/lesson_thumb.png'
-              : 'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/icons/resource_thumb.png';
-            
             return (
-              <div key={resource.id} className="bg-card border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all">
-                {/* Thumbnail area with preview overlay */}
-                <div 
-                  className="relative h-40 bg-cover bg-center cursor-pointer" 
-                  style={{ backgroundImage: `url(${thumbnailUrl})` }}
-                  onClick={() => handlePreview(resource)}
-                >
+              <div 
+                key={resource.id} 
+                className="bg-card border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer"
+                onClick={() => handlePreview(resource)}
+              >
+                {/* Resource icon card - no thumbnails */}
+                <div className="p-4 flex flex-col items-center text-center">
                   {/* Resource type badge */}
-                  <div className="absolute top-2 left-2 bg-primary/80 text-primary-foreground px-2 py-1 rounded text-xs font-medium flex items-center gap-1">
+                  <div className="bg-primary/80 text-primary-foreground px-2 py-1 rounded text-xs font-medium flex items-center gap-1 mb-2">
                     {getResourceTypeIcon(resource.resourceType)}
                     <span>{resource.resourceType}</span>
                   </div>
                   
+                  {/* Resource title */}
+                  <h3 className="font-medium line-clamp-2 text-sm mt-2">{resource.title}</h3>
+                  
                   {/* Provider badge if available */}
                   {resource.provider && (
-                    <div className="absolute bottom-2 right-2 bg-background/80 px-2 py-1 rounded text-xs">
+                    <div className="mt-2 bg-background px-2 py-1 rounded text-xs">
                       {resource.provider}
                     </div>
                   )}
                   
-                  {/* Preview overlay */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity">
-                    <Button size="sm" variant="secondary" className="gap-2">
-                      <EyeIcon className="h-4 w-4" />
-                      Preview
-                    </Button>
-                  </div>
-                </div>
-                
-                {/* Resource info */}
-                <div className="p-3">
-                  <h3 className="font-medium line-clamp-1">{resource.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1 line-clamp-2 h-10">
-                    {resource.description}
-                  </p>
+                  {/* Preview button */}
+                  <Button size="sm" variant="outline" className="gap-1 mt-3 w-full">
+                    <EyeIcon className="h-3 w-3" />
+                    Preview
+                  </Button>
                   
                   {/* Action buttons (minimal) */}
-                  <div className="flex justify-end gap-1 mt-2">
+                  <div className="flex justify-center gap-1 mt-2">
                     {resource.sourceUrl && (
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => window.open(resource.sourceUrl, '_blank')}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(resource.sourceUrl, '_blank');
+                        }}
                         title="Open original"
                       >
                         <ExternalLinkIcon className="h-4 w-4" />
@@ -273,7 +252,10 @@ export function ResourceList({
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => onEditResource(resource)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEditResource(resource);
+                        }}
                         title="Edit"
                       >
                         <PencilIcon className="h-4 w-4" />
@@ -284,7 +266,10 @@ export function ResourceList({
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => onDeleteResource(resource)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeleteResource(resource);
+                        }}
                         title="Delete"
                         className="text-destructive hover:text-destructive/90"
                       >
