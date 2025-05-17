@@ -40,7 +40,7 @@ import {
 interface ResourceListProps {
   resources: TeacherResource[];
   onSearch: (query: string) => void;
-  onFilterByType: (type: ResourceFilterType) => void;
+  onFilterByType?: (type: ResourceFilterType) => void; // Made optional
   onAddResource?: () => void;
   onEditResource?: (resource: TeacherResource) => void;
   onDeleteResource?: (resource: TeacherResource) => void;
@@ -165,17 +165,7 @@ export function ResourceList({
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {/* Filter resources to show only one PDF for Unit 1 */}
           {resources
-            .filter((resource) => {
-              // For PDF resources, only show unit-specific content
-              if (resource.resourceType === 'pdf') {
-                // Only show PDFs that match the current unit
-                return resource.unitId === resource.currentUnitId;
-              }
-              // Keep all non-PDF resources
-              return true;
-            })
             .map((resource) => {
             // Create video thumbnail cards with play button
             if (resource.resourceType === 'video') {

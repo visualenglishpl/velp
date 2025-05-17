@@ -3,12 +3,15 @@
  * 
  * This hook provides access to teacher resources for a specific book and unit,
  * with filtering and state management capabilities.
+ * 
+ * Updated to use hardcoded resources for improved stability.
  */
 
 import { useState, useEffect, useCallback } from 'react';
 import { BookId, UnitId } from '@/types/content';
-import { TeacherResource, ResourceType, ResourceFilter, ResourceFilterType } from '@/types/TeacherResource';
+import { TeacherResource, ResourceType, ResourceFilter, ResourceFilterType } from '@/types/resources';
 import { loadResources } from '@/lib/resourceRegistry';
+import { getHardcodedBook1Resources } from '@/lib/hardcodedResources';
 
 interface UseTeacherResourcesOptions {
   initialBookId?: BookId | undefined;
@@ -65,9 +68,20 @@ export function useTeacherResources({
       setError(null);
       
       try {
-        // Special case for Book 1 Unit 1
+        // For Book 1, use hardcoded resources for all units (stable approach)
+        if (bookId === '1') {
+          const hardcodedResources = getHardcodedBook1Resources(unitId);
+          if (hardcodedResources && hardcodedResources.length > 0) {
+            console.log(`Successfully loaded ${hardcodedResources.length} hardcoded resources for Book 1 Unit ${unitId}`);
+            setResources(hardcodedResources);
+            setIsLoading(false);
+            return;
+          }
+        }
+        
+        // Legacy fallback for other books or if hardcoded resources aren't available
         if (bookId === '1' && unitId === '1') {
-          console.log('Special case: Using hardcoded resources for Book 1 Unit 1');
+          console.log('Using legacy resource approach as fallback');
           
           const book1Unit1Resources: TeacherResource[] = [
             // Video Resources
@@ -185,8 +199,8 @@ export function useTeacherResources({
         if (!filteredResources || filteredResources.length === 0) {
           console.warn(`No resources found for Book ${bookId} Unit ${unitId}, using fallbacks.`);
           
-          // For Book 1, try to get PDF resources from the global collection
-          if (bookId === '1') {
+          // For Book 1 Unit 1 ONLY, try to get PDF resources from the global collection
+          if (bookId === '1' && unitId === '1') {
             import('@/data/book1-pdf-resources')
               .then(module => {
                 if (module.book1PdfResourcesByUnit && module.book1PdfResourcesByUnit[unitId]) {
@@ -229,22 +243,25 @@ export function useTeacherResources({
         return false;
       }
       
-      // Special case for PDF resources - show only the PDF for the current unit
+      // Special case for PDF resources - only show PDFs for Unit 1 as requested
       if (filter.resourceType === 'pdf') {
-        // Look for PDFs that specifically mention the current unit in the title or description
+        // Only show PDFs for Unit 1
+        if (unitId !== '1') {
+          return false;
+        }
+        
+        // For Unit 1, look for PDFs that specifically mention the unit in the title or description
         const pdfTitle = resource.title?.toLowerCase() || '';
         const pdfDesc = resource.description?.toLowerCase() || '';
         
-        // Check if this PDF is for the current unit
-        const isForCurrentUnit = 
-          pdfTitle.includes(`unit ${unitId}`) || 
-          pdfTitle.includes(`unit${unitId}`) || 
-          pdfDesc.includes(`unit ${unitId}`) ||
-          // Also check for book specific PDFs
-          (pdfTitle.includes(`book ${bookId}`) && pdfTitle.includes(`unit ${unitId}`));
+        // Check if this PDF is for Unit 1
+        const isForUnit1 = 
+          pdfTitle.includes('unit 1') || 
+          pdfTitle.includes('unit1') || 
+          pdfDesc.includes('unit 1');
           
-        // Filter out PDFs not for this unit
-        if (!isForCurrentUnit) {
+        // Filter out PDFs not for Unit 1
+        if (!isForUnit1) {
           return false;
         }
       }

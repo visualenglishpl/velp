@@ -184,7 +184,7 @@ export default function StandaloneLoginPage() {
       // Show success toast
       toast({
         title: "Registration Successful",
-        description: `Welcome to Visual English, ${userData.username}!`,
+        description: `Welcome to VELP, ${userData.username}!`,
       });
       
       // Small delay to allow the toast to be seen
@@ -214,7 +214,7 @@ export default function StandaloneLoginPage() {
   return (
     <>
       <Helmet>
-        <title>Login | Visual English</title>
+        <title>Login | VELP</title>
       </Helmet>
       
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -222,7 +222,7 @@ export default function StandaloneLoginPage() {
           {/* Hero/Info Section */}
           <div className="flex flex-col justify-center p-6 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg shadow-xl text-white">
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl font-extrabold mb-4">Welcome to Visual English</h1>
+              <h1 className="text-4xl font-extrabold mb-4">Welcome to VELP</h1>
               <p className="text-lg mb-6">
                 A revolutionary platform for teaching and learning English through visual content
               </p>
@@ -266,7 +266,10 @@ export default function StandaloneLoginPage() {
                       <path d="M7 6H17V4H7V6Z" fill="#5E35B1"/>
                       <path d="M5 22H19C20.1 22 21 21.1 21 20V4C21 2.9 20.1 2 19 2H5C3.9 2 3 2.9 3 4V20C3 21.1 3.9 22 5 22ZM5 4H19V20H5V4Z" fill="#5E35B1"/>
                     </svg>
-                    <h2 className="text-2xl font-bold tracking-tight">Visual English</h2>
+                    <div className="text-center">
+                      <h2 className="text-2xl font-bold tracking-tight">VELP</h2>
+                      <p className="text-sm text-muted-foreground">Visual English Learning Platform</p>
+                    </div>
                   </div>
                 </div>
                 <CardTitle className="text-2xl">Account Access</CardTitle>
