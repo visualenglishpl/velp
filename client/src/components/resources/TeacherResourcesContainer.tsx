@@ -39,7 +39,10 @@ import { Button } from '@/components/ui/button';
 import { 
   BookIcon, 
   LibraryIcon,
+  FileText as FileTextIcon, 
+  ArrowRight as ArrowRightIcon
 } from 'lucide-react';
+import { Link } from 'wouter';
 
 // Define props for the container component
 interface TeacherResourcesContainerProps {
@@ -212,8 +215,16 @@ export function TeacherResourcesContainer({
       ) : (
         /* Resource List */
         <div>
-          {/* Remove header text as requested */}
-          
+          <div className="flex justify-end mb-4">
+            <Link href="/lesson-plan">
+              <Button variant="outline" size="sm" className="flex items-center gap-1">
+                <FileTextIcon className="h-4 w-4" />
+                <span>View 45-min Detailed Lesson Plan</span>
+                <ArrowRightIcon className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          {/* Completely removed header text */}
           <ResourceList
             resources={filteredResources}
             onSearch={setSearchQuery}

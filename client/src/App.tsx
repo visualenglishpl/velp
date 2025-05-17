@@ -28,6 +28,7 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import UnitCheckoutPage from "./pages/UnitCheckoutPage";
 import BookWizardPage from "./pages/BookWizardPage";
+import LessonPlanPreview from "./pages/LessonPlanPreview";
 
 // Secure pages (login required)
 // Migrated to /secure folder
@@ -151,6 +152,9 @@ function App() {
           </Route>
           <Route path="/test-resources">
             <TeacherResourceTest />
+          </Route>
+          <Route path="/lesson-plan">
+            <LessonPlanPreview />
           </Route>
           <Route path="/cart">
             <CartPage />

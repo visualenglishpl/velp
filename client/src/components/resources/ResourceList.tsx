@@ -134,12 +134,11 @@ export function ResourceList({
     return resources.filter(r => r.resourceType === type).length;
   };
 
-  // Resource type filters with icon and count - video, game, and PDF resources
+  // Resource type filters with icon and count - video and game resources only
   const resourceTypes: Array<{ type: ResourceFilterType, label: string }> = [
     { type: 'all', label: 'All Resources' },
     { type: 'video', label: 'Videos' },
-    { type: 'game', label: 'Games' },
-    { type: 'pdf', label: 'PDF Downloads' }
+    { type: 'game', label: 'Games' }
   ];
 
   return (
@@ -165,7 +164,24 @@ export function ResourceList({
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {resources.map((resource) => {
+          {/* Filter resources to show only one PDF per unit */}
+          {resources
+            .filter((resource, index, self) => {
+              // If this is a PDF resource, check if it's the first one for this unit
+              if (resource.resourceType === 'pdf') {
+                // Find the index of the first PDF for this unit
+                const firstPdfIndex = self.findIndex(r => 
+                  r.resourceType === 'pdf' && 
+                  r.bookId === resource.bookId && 
+                  r.unitId === resource.unitId
+                );
+                // Only keep if this is the first PDF for the unit
+                return index === firstPdfIndex;
+              }
+              // Keep all non-PDF resources
+              return true;
+            })
+            .map((resource) => {
             // Create video thumbnail cards with play button
             if (resource.resourceType === 'video') {
               const youtubeId = resource.youtubeVideoId || 
@@ -189,34 +205,47 @@ export function ResourceList({
                       />
                     ) : (
                       <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-red-500 to-orange-500">
-                        <FilmIcon className="h-12 w-12 text-white/80" />
+                        <FilmIcon className="h-10 w-10 text-white/80" />
                       </div>
                     )}
                     {/* Play button overlay */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
-                      <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-primary ml-1">
+                      <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-primary ml-0.5">
                           <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" />
                         </svg>
                       </div>
                     </div>
                   </div>
+                  
+                  {/* Simple minimal title below the thumbnail */}
+                  <div className="p-2 bg-white">
+                    <h3 className="text-gray-800 text-xs font-medium truncate">
+                      {resource.title.replace(/^(video|video -|video:|00 c . video)\s*/i, '').trim()}
+                    </h3>
+                  </div>
                 </div>
               );
             }
             
-            // Game resource cards
+            // Game resource cards - no thumbnails
             else if (resource.resourceType === 'game') {
+              // Clean up game title
+              const cleanTitle = resource.title
+                .replace(/^(game|game -|game:|online game|wordwall|wordwall game)\s*/i, '')
+                .replace(/^(online\s*-?\s*game:?\s*)/i, '')
+                .trim();
+                
               return (
                 <div 
                   key={resource.id} 
                   className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105 shadow-md"
                   onClick={() => handlePreview(resource)}
                 >
-                  <div className="bg-gradient-to-br from-purple-600 to-indigo-600 aspect-video flex items-center justify-center">
-                    <div className="text-center px-3">
-                      <GamepadIcon className="h-10 w-10 mx-auto text-white/90 mb-2" />
-                      <p className="text-white text-sm font-medium">{resource.title}</p>
+                  <div className="bg-indigo-50 p-4 flex items-center justify-between">
+                    <h3 className="text-gray-800 text-xs font-medium line-clamp-2">{cleanTitle}</h3>
+                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-indigo-600 text-white">
+                      <GamepadIcon className="h-4 w-4" />
                     </div>
                   </div>
                 </div>
