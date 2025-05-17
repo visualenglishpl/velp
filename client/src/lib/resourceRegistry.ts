@@ -3,10 +3,14 @@
  * 
  * This module provides a centralized mapping of book/unit combinations to resource files.
  * It allows for lazy-loading resources based on book and unit selection.
+ * 
+ * It also preloads Book 1 PDF resources and lesson plans from their respective files.
  */
 
 import { BookId, UnitId } from '@/types/content';
 import { TeacherResource } from '@/types/resources';
+import { book1PdfResources, book1PdfResourcesByUnit } from '@/data/book1-pdf-resources';
+import { book1LessonPlans, book1LessonPlansByUnit } from '@/data/book1-lesson-plans';
 
 // Helper types
 type ResourceLoader = () => Promise<TeacherResource[]>;
@@ -107,89 +111,89 @@ export function getRegisteredUnitIds(bookId: BookId): UnitId[] {
   return Object.keys(resourceRegistry[bookId]) as UnitId[];
 }
 
-// Register commonly used book/unit combinations
-// These will be expanded based on actual application data
+// Register commonly used book/unit combinations using a more automated approach
 
-// Book 1, Unit 1 (Greetings)
-registerResourceLoader('1', '1', async () => {
-  const { default: resources } = await import('@/data/book1-unit1-resources');
-  return resources;
+// Define book units mapping for better organization
+const bookUnitMap: Record<string, string[]> = {
+  '1': ['1', '2', '3', '4', '5', '6', '7', '8', '11', '15', '17', '18'],
+  '3': ['16', '17']
+};
+
+// Specialized import patterns for certain units
+const specialImports: Record<string, Record<string, (unit: string) => Promise<TeacherResource[]>>> = {
+  '3': {
+    '16': async () => {
+      const { sportsResources } = await import('@/data/book3-unit16');
+      return sportsResources;
+    },
+    '17': async () => {
+      const { choresResources } = await import('@/data/book3-unit17');
+      return choresResources;
+    }
+  }
+};
+
+// Register Book 1 units automatically
+for (const unit of bookUnitMap['1']) {
+  registerResourceLoader('1', unit as UnitId, async () => {
+    try {
+      // Using /* @vite-ignore */ to suppress the dynamic import warning
+      const { default: resources } = await import(/* @vite-ignore */ `@/data/book1-unit${unit}-resources`);
+      return resources;
+    } catch (error) {
+      console.error(`Error loading Book 1 Unit ${unit} resources:`, error);
+      return [];
+    }
+  });
+}
+
+// Register other book units with special import patterns
+Object.keys(specialImports).forEach(bookId => {
+  Object.keys(specialImports[bookId]).forEach(unitId => {
+    registerResourceLoader(
+      bookId as BookId, 
+      unitId as UnitId, 
+      specialImports[bookId][unitId]
+    );
+  });
 });
 
-// Book 1, Unit 2 (School Objects)
-registerResourceLoader('1', '2', async () => {
-  const { default: resources } = await import('@/data/book1-unit2-resources');
-  return resources;
-});
-
-// Book 1, Unit 3 (Classroom Rules)
-registerResourceLoader('1', '3', async () => {
-  const { default: resources } = await import('@/data/book1-unit3-resources');
-  return resources;
-});
-
-// Book 1, Unit 4 (How Are You?)
-registerResourceLoader('1', '4', async () => {
-  const { default: resources } = await import('@/data/book1-unit4-resources');
-  return resources;
-});
-
-// Book 1, Unit 5 (My Family)
-registerResourceLoader('1', '5', async () => {
-  const { default: resources } = await import('@/data/book1-unit5-resources');
-  return resources;
-});
-
-// Book 1, Unit 6 (My Favourite Colour)
-registerResourceLoader('1', '6', async () => {
-  const { default: resources } = await import('@/data/book1-unit6-resources');
-  return resources;
-});
-
-// Book 1, Unit 7 (How Old Are You?)
-registerResourceLoader('1', '7', async () => {
-  const { default: resources } = await import('@/data/book1-unit7-resources');
-  return resources;
-});
-
-// Book 1, Unit 8 (Shapes)
-registerResourceLoader('1', '8', async () => {
-  const { default: resources } = await import('@/data/book1-unit8-resources');
-  return resources;
-});
-
-// Book 1, Unit 11 (Seasons of the Year)
-registerResourceLoader('1', '11', async () => {
-  const { default: resources } = await import('@/data/book1-unit11-resources');
-  return resources;
-});
-
-// Book 1, Unit 15 (Fruit)
-registerResourceLoader('1', '15', async () => {
-  const { default: resources } = await import('@/data/book1-unit15-resources');
-  return resources;
-});
-
-// Book 1, Unit 17 (How Is The Weather?)
-registerResourceLoader('1', '17', async () => {
-  const { default: resources } = await import('@/data/book1-unit17-resources');
-  return resources;
-});
-
-// Book 1, Unit 18 (What Can You Do?)
-registerResourceLoader('1', '18', async () => {
-  const { default: resources } = await import('@/data/book1-unit18-resources');
-  return resources;
-});
-
-// Book 3, Unit 16 (Sports)
-registerResourceLoader('3', '16', async () => {
-  const { sportsResources } = await import('@/data/book3-unit16');
-  return sportsResources;
-});
-
-// Book 3, Unit 17 (Household Chores)
-registerResourceLoader('3', '17', async () => {
-  const { choresResources } = await import('@/data/book3-unit17');
-  return choresResources;
-});
+// Register PDF resources and lesson plans for Book 1
+// This ensures they are available for all Book 1 units (1-18)
+for (let unitNum = 1; unitNum <= 18; unitNum++) {
+  const unitId = unitNum.toString() as UnitId;
+  const bookId = '1' as BookId;
+  
+  // First check if there's already a resource loader for this unit
+  if (resourceRegistry[bookId]?.[unitId]) {
+    // If there is, we'll enhance it to include PDF resources and lesson plans
+    const originalLoader = resourceRegistry[bookId][unitId];
+    
+    // Create a new loader that combines the original resources with PDFs and lesson plans
+    registerResourceLoader(bookId, unitId, async () => {
+      // Load the original resources
+      const originalResources = await originalLoader();
+      
+      // Get PDF resources for this unit
+      const pdfResources = book1PdfResourcesByUnit[unitId] || [];
+      
+      // Get lesson plans for this unit
+      const lessonPlans = book1LessonPlansByUnit[unitId] || [];
+      
+      // Combine and return all resources
+      return [...originalResources, ...pdfResources, ...lessonPlans];
+    });
+  } else {
+    // If there's no loader yet, create one just for PDFs and lesson plans
+    registerResourceLoader(bookId, unitId, async () => {
+      // Get PDF resources for this unit
+      const pdfResources = book1PdfResourcesByUnit[unitId] || [];
+      
+      // Get lesson plans for this unit
+      const lessonPlans = book1LessonPlansByUnit[unitId] || [];
+      
+      // Combine and return all resources
+      return [...pdfResources, ...lessonPlans];
+    });
+  }
+}

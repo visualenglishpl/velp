@@ -104,6 +104,7 @@ import { generateUnit3LessonPlans as generateBook1Unit3LessonPlans } from '@/dat
 import { generateUnit4LessonPlans as generateBook1Unit4LessonPlans } from '@/data/book1-unit4-implementation';
 import { generateUnit6LessonPlans as generateBook1Unit6LessonPlans } from '@/data/book1-unit6-implementation';
 import { getBook1Unit6Resources } from '@/data/book1-unit6-resources';
+import { book1PdfResources } from '@/data/book1-pdf-resources';
 import { getBook1Unit7Resources, generateUnit7LessonPlans as generateBook1Unit7LessonPlans } from '@/data/book1-unit7-implementation';
 import { getBook1Unit8Resources, generateUnit8LessonPlans as generateBook1Unit8LessonPlans } from '@/data/book1-unit8-implementation';
 import { getBook1Unit9Resources, generateUnit9LessonPlans as generateBook1Unit9LessonPlans } from '@/data/book1-unit9-implementation';

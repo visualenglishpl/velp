@@ -79,9 +79,9 @@ export function TeacherResourcesContainer({
   hideTabsInContentViewer = false
 }: TeacherResourcesContainerProps) {
   // Check if component is being rendered within SimpleContentViewer tabs
-  // Only video and game resources are supported now
+  // Video, game, and PDF resources are now supported
   const isInTabsView = hideTabsInContentViewer || (initialFilter && 
-    ['video', 'game'].includes(initialFilter.resourceType || ''));
+    ['video', 'game', 'pdf'].includes(initialFilter.resourceType || ''));
     
   // Use the hook to manage resources
   const {

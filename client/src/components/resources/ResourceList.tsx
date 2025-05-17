@@ -27,7 +27,8 @@ import {
   PlusIcon,
   EyeIcon,
   PencilIcon,
-  TrashIcon
+  TrashIcon,
+  DownloadIcon
 } from 'lucide-react';
 import { TeacherResource, ResourceType, ResourceFilterType } from '@/types/resources';
 import EmbeddedContentModal from '@/components/EmbeddedContentModal';
@@ -106,8 +107,15 @@ export function ResourceList({
     return '';
   };
   
-  // Handle resource preview
+  // Handle resource preview or direct open for PDFs
   const handlePreview = (resource: TeacherResource) => {
+    // For PDF resources, open directly in a new tab
+    if (resource.resourceType === 'pdf' && resource.sourceUrl) {
+      window.open(resource.sourceUrl, '_blank');
+      return;
+    }
+    
+    // For other resource types, show the preview modal
     setPreviewResource(resource);
   };
   
@@ -122,11 +130,12 @@ export function ResourceList({
     return resources.filter(r => r.resourceType === type).length;
   };
 
-  // Resource type filters with icon and count - only video and game resources
+  // Resource type filters with icon and count - video, game, and PDF resources
   const resourceTypes: Array<{ type: ResourceFilterType, label: string }> = [
     { type: 'all', label: 'All Resources' },
     { type: 'video', label: 'Videos' },
-    { type: 'game', label: 'Games' }
+    { type: 'game', label: 'Games' },
+    { type: 'pdf', label: 'PDF Downloads' }
   ];
 
   return (
@@ -226,10 +235,19 @@ export function ResourceList({
                     </div>
                   )}
                   
-                  {/* Preview button */}
+                  {/* Preview/Download button */}
                   <Button size="sm" variant="outline" className="gap-1 mt-3 w-full">
-                    <EyeIcon className="h-3 w-3" />
-                    Preview
+                    {resource.resourceType === 'pdf' ? (
+                      <>
+                        <DownloadIcon className="h-3 w-3" />
+                        Download PDF
+                      </>
+                    ) : (
+                      <>
+                        <EyeIcon className="h-3 w-3" />
+                        Preview
+                      </>
+                    )}
                   </Button>
                   
                   {/* Action buttons (minimal) */}

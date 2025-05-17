@@ -15,6 +15,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cleanQuestionText, cleanAnswerText, formatDisplayText } from '@/lib/textCleaners';
 
 import { TeacherResourcesContainer } from '@/components/resources/TeacherResourcesContainer';
+import { book1PdfResources, book1PdfResourcesByUnit } from '@/data/book1-pdf-resources';
+import { book1LessonPlans, book1LessonPlansByUnit } from '@/data/book1-lesson-plans';
 
 // Local helper function to replace the missing cleanLeadingPatterns function
 const cleanLeadingPatterns = (text: string): string => {
@@ -903,6 +905,15 @@ export default function SimpleContentViewer() {
                   Games
                 </TabsTrigger>
                 <TabsTrigger 
+                  value="pdfs" 
+                  className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                    <path d="M8 11a1 1 0 100-2H7a1 1 0 000 2h1zm2 0a1 1 0 100-2 1 1 0 000 2zm-2 2a1 1 0 110 2H7a1 1 0 110-2h1zm2 0a1 1 0 110 2h-1a1 1 0 110-2h1z" />
+                  </svg>
+                  PDFs
+                </TabsTrigger>
+                <TabsTrigger 
                   value="lessons" 
                   className="px-4 py-1.5 text-sm font-medium transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm hover:bg-white/80">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -1060,114 +1071,159 @@ export default function SimpleContentViewer() {
             <TabsContent value="lessons" className="p-4 border rounded-md">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-center">Lesson Plans</h3>
-                {bookId === '1' && unitNumber === '5' && (
-                  <div className="space-y-4">
-                    <div className="border rounded-lg overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-teal-200">
-                      <div className="bg-gradient-to-r from-teal-500 to-emerald-500 p-3 text-white">
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-medium text-sm flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-                            </svg>
-                            Lesson 1: Family Introduction
-                          </h4>
-                          <span className="bg-white text-teal-700 text-xs px-2 py-0.5 rounded-full font-medium">45 min</span>
-                        </div>
+                {bookId === '1' && (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {unitNumber && book1LessonPlansByUnit[unitNumber] ? (
+                      book1LessonPlansByUnit[unitNumber].map((resource) => {
+                        const lessonPlan = resource.lessonPlan;
+                        if (!lessonPlan) return null;
+                        
+                        return (
+                          <div 
+                            key={resource.id} 
+                            className="border rounded-lg overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-teal-200">
+                            <div className="bg-gradient-to-r from-teal-500 to-emerald-500 p-3 text-white">
+                              <div className="flex items-center justify-between">
+                                <h4 className="font-medium text-sm flex items-center">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                                  </svg>
+                                  {lessonPlan.title}
+                                </h4>
+                                <span className="bg-white text-teal-700 text-xs px-2 py-0.5 rounded-full font-medium">{lessonPlan.duration}</span>
+                              </div>
+                            </div>
+                            <div className="p-3">
+                              <div className="mb-2">
+                                <h5 className="text-xs font-medium text-teal-800 mb-1">Objectives:</h5>
+                                <ul className="list-disc pl-4 text-xs text-gray-600 space-y-1">
+                                  {lessonPlan.objectives.slice(0, 3).map((objective, index) => (
+                                    <li key={index}>{objective}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                              
+                              <h5 className="text-xs font-medium text-teal-800 mb-1 mt-3">Lesson Steps:</h5>
+                              <ul className="space-y-2 text-sm">
+                                {lessonPlan.steps.map((step, index) => (
+                                  <li key={index} className="flex items-start">
+                                    <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                      </svg>
+                                    </div>
+                                    <span>
+                                      <span className="font-medium text-teal-800">{step.title}:</span> {step.description} <span className="text-xs text-gray-500">({step.duration})</span>
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                              
+                              {lessonPlan.materials && lessonPlan.materials.length > 0 && (
+                                <div className="mt-3">
+                                  <h5 className="text-xs font-medium text-teal-800 mb-1">Materials:</h5>
+                                  <p className="text-xs text-gray-600">{lessonPlan.materials.join(', ')}</p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="md:col-span-2 text-center py-8 text-gray-500">
+                        No lesson plans available for Unit {unitNumber}
                       </div>
-                      <div className="p-3">
-                        <ul className="space-y-2 text-sm">
-                          <li className="flex items-start">
-                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                            </div>
-                            <span><span className="font-medium text-teal-800">Warm-up:</span> Show family photos and introduce vocabulary <span className="text-xs text-gray-500">(10 min)</span></span>
-                          </li>
-                          <li className="flex items-start">
-                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                            </div>
-                            <span><span className="font-medium text-teal-800">Present:</span> New words with flashcards <span className="text-xs text-gray-500">(10 min)</span></span>
-                          </li>
-                          <li className="flex items-start">
-                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                            </div>
-                            <span><span className="font-medium text-teal-800">Practice:</span> "Who's this?" - "This is my mother/father/etc." <span className="text-xs text-gray-500">(15 min)</span></span>
-                          </li>
-                          <li className="flex items-start">
-                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                            </div>
-                            <span><span className="font-medium text-teal-800">Activity:</span> Draw your family tree <span className="text-xs text-gray-500">(10 min)</span></span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    
-                    <div className="border rounded-lg overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-teal-200">
-                      <div className="bg-gradient-to-r from-teal-500 to-emerald-500 p-3 text-white">
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-medium text-sm flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-                            </svg>
-                            Lesson 2: Family Members
-                          </h4>
-                          <span className="bg-white text-teal-700 text-xs px-2 py-0.5 rounded-full font-medium">45 min</span>
-                        </div>
-                      </div>
-                      <div className="p-3">
-                        <ul className="space-y-2 text-sm">
-                          <li className="flex items-start">
-                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                            </div>
-                            <span><span className="font-medium text-teal-800">Review:</span> Family vocabulary with song <span className="text-xs text-gray-500">(10 min)</span></span>
-                          </li>
-                          <li className="flex items-start">
-                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                            </div>
-                            <span><span className="font-medium text-teal-800">Activity:</span> Family tree craft <span className="text-xs text-gray-500">(15 min)</span></span>
-                          </li>
-                          <li className="flex items-start">
-                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                            </div>
-                            <span><span className="font-medium text-teal-800">Game:</span> Family members memory match <span className="text-xs text-gray-500">(10 min)</span></span>
-                          </li>
-                          <li className="flex items-start">
-                            <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                            </div>
-                            <span><span className="font-medium text-teal-800">Worksheet:</span> Label family pictures <span className="text-xs text-gray-500">(10 min)</span></span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 )}
-                {!(bookId === '1' && unitNumber === '5') && (
+                {bookId !== '1' && (
                   <p className="text-center py-8 text-gray-500">Lesson plans for Book {bookId}, Unit {unitNumber} will appear here.</p>
                 )}
               </div>
             </TabsContent>
+            <TabsContent value="pdfs" className="p-4 border rounded-md">
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium text-center">PDF Lesson Materials</h3>
+                {bookId === '1' && (
+                  <div id="pdf-resources-container">
+                    <div className="mb-6">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2">All Book 1 PDF Resources:</h4>
+                      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                        {book1PdfResources.map((resource) => (
+                          <div 
+                            key={resource.id} 
+                            className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-200 cursor-pointer"
+                            onClick={() => window.open(resource.sourceUrl, '_blank')}
+                          >
+                            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 text-white">
+                              <div className="flex items-center justify-between">
+                                <h4 className="font-medium text-xs flex items-center">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                                  </svg>
+                                  Unit {resource.unitId}
+                                </h4>
+                                <span className="bg-white text-blue-700 text-xs px-1.5 py-0.5 rounded-full font-medium">PDF</span>
+                              </div>
+                            </div>
+                            <div className="p-2">
+                              <div className="flex items-center text-blue-600 text-xs font-medium">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                                Download
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {unitNumber && book1PdfResourcesByUnit[unitNumber] && book1PdfResourcesByUnit[unitNumber].length > 0 && (
+                      <div className="mt-6">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">Current Unit PDFs:</h4>
+                        <div className="grid gap-4 md:grid-cols-2">
+                          {book1PdfResourcesByUnit[unitNumber].map((resource) => (
+                            <div 
+                              key={resource.id} 
+                              className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-200 cursor-pointer"
+                              onClick={() => window.open(resource.sourceUrl, '_blank')}
+                            >
+                              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-3 text-white">
+                                <div className="flex items-center justify-between">
+                                  <h4 className="font-medium text-sm flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                                    </svg>
+                                    {resource.title}
+                                  </h4>
+                                  <span className="bg-white text-blue-700 text-xs px-2 py-0.5 rounded-full font-medium">PDF</span>
+                                </div>
+                              </div>
+                              <div className="p-3 text-sm">
+                                <p className="text-gray-600">{resource.description}</p>
+                                <div className="mt-3 flex justify-end">
+                                  <button className="inline-flex items-center text-xs font-medium text-blue-600 hover:text-blue-800">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                    Download PDF
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {bookId !== '1' && (
+                  <p className="text-center py-8 text-gray-500">PDF resources for Book {bookId}, Unit {unitNumber} will appear here.</p>
+                )}
+              </div>
+            </TabsContent>
+            
             <TabsContent value="downloads" className="p-4 border rounded-md">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-center">Downloadable Resources</h3>

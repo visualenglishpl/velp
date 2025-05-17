@@ -1,0 +1,101 @@
+. Automate PDF Resource Generation with a Loop
+Instead of manually pasting each PDF for each unit:
+
+ts
+Copy
+Edit
+// book1-pdf-resources.tsx
+import { TeacherResource } from '@/types/resources';
+
+export const book1PdfResources: TeacherResource[] = Array.from({ length: 18 }, (_, i) => {
+  const unit = i + 1;
+  const unitPrefix = unit === 16 ? '00 C' : '00 A';
+  const paddedUnit = unit.toString().padStart(2, '0');
+  const filename = `${unitPrefix} Visual English 1 – Unit ${unit} – New Version.pdf`;
+  return {
+    title: `Unit ${unit} – PDF`,
+    resourceType: 'pdf',
+    fileUrl: `https://s3.amazonaws.com/visualenglishmaterial/book1/unit${unit}/${filename}`,
+  };
+});
+✅ You only maintain 5 lines of code for all 18 PDFs.
+
+✅ 2. Automate Lesson Plan Generation via Directory Scan or Flat Map
+If you have lesson plan data stored per unit (in JSON or TS files), you can:
+
+ts
+Copy
+Edit
+// book1-lesson-plans.tsx
+import { TeacherResource } from '@/types/resources';
+import unit1Plans from './lesson-plans/unit1';
+import unit2Plans from './lesson-plans/unit2';
+// ... automate this with require.context in webpack or dynamic import in Vite
+
+export const book1LessonPlans: TeacherResource[] = [
+  ...unit1Plans,
+  ...unit2Plans,
+  // ...
+];
+Or use a bulk generator:
+
+ts
+Copy
+Edit
+// Automatically pull lesson plan data from an object
+const allPlansByUnit = {
+  '1': generateLessonPlans1(),
+  '2': generateLessonPlans2(),
+  // etc.
+};
+
+export const book1LessonPlans: TeacherResource[] = Object.entries(allPlansByUnit)
+  .flatMap(([unit, plans]) =>
+    plans.map(plan => ({
+      ...plan,
+      unitId: unit,
+      bookId: '1',
+      resourceType: 'lesson',
+    }))
+  );
+✅ 3. Register Units in Resource Registry Automatically
+Instead of doing this manually:
+
+ts
+Copy
+Edit
+'1': () => import('../data/book1-unit1-resources.tsx'),
+'2': () => import('../data/book1-unit2-resources.tsx'),
+Do this instead:
+
+ts
+Copy
+Edit
+export const resourceMap: Record<string, Record<string, () => Promise<any>>> = {
+  '1': Object.fromEntries(
+    Array.from({ length: 18 }, (_, i) => {
+      const unit = (i + 1).toString();
+      return [unit, () => import(`../data/book1-unit${unit}-resources.tsx`)];
+    })
+  ),
+  // repeat for other books
+};
+✅ This eliminates manual registry updates for each unit.
+
+✅ 4. Use a Template Generator for Units (Optional)
+If you're starting from documents, consider writing a script that reads unit metadata from .txt or .csv and auto-generates:
+
+book1-unitX-resources.tsx
+
+book1-unitX-implementation.ts
+
+Using Node.js or any scripting tool.
+
+🟩 Summary: Fast Implementation Approach
+Task	Old Method	Fast Method
+Add PDFs per unit	Manually pasted	Auto-loop (Array.from + template)
+Register resources	Line by line	Programmatic object/array creation
+Add lesson plans	One-by-one	Import map + flatMap loader
+ResourceRegistry updates	Manual edit	Auto-generation using a loop
+Tabs in UI	Static definition	Tab auto-generation via resource types
+

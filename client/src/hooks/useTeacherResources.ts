@@ -66,10 +66,12 @@ export function useTeacherResources({
       
       try {
         const loadedResources = await loadResources(bookId, unitId);
-        // Filter out PDF and lesson plan resources, only keep video and game resources
-        const filteredResources = (loadedResources || []).filter(
-          resource => resource.resourceType === 'video' || resource.resourceType === 'game'
-        );
+        let filteredResources = loadedResources || [];
+        
+        // PDF resources for Book 1 are now handled by the resource registry
+        // We don't need to dynamically import them here anymore as they
+        // should already be included in loadedResources
+        
         setResources(filteredResources);
       } catch (err) {
         console.error('Error loading resources:', err);
