@@ -116,18 +116,17 @@ export function getRegisteredUnitIds(bookId: BookId): UnitId[] {
 // Define book units mapping for better organization
 // Updated to include all units for which we have generated resources
 const bookUnitMap: Record<string, string[]> = {
-  // Units that still use the legacy approach
-  '1': ['11', '15', '17', '18'],
+  // All Book 1 units are now generated from CSV
   '3': ['16', '17']
 };
 
 // Units with CSV-generated resources (more structured approach)
-const csvGeneratedUnits = ['1', '2', '3', '4', '5', '6', '7', '8'];
+const csvGeneratedUnits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'];
 
 // Register all CSV-generated resources
 csvGeneratedUnits.forEach(unit => {
   registerResourceLoader('1', unit as UnitId, 
-    () => import(`@/data/book1-unit${unit}-resources`).then(m => m.default)
+    () => import(/* @vite-ignore */ `@/data/book1-unit${unit}-resources`).then(m => m.default)
   );
 });
 

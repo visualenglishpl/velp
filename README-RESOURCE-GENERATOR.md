@@ -1,6 +1,6 @@
 # Visual English Resource Generator
 
-This document describes how to use the resource generator script to automate the creation of resource files for Book 1 units.
+This document describes how to use the CSV-based resource generator script to automate the creation of resource files for Book 1 units. The system has been enhanced to provide a simpler and more maintainable approach for managing educational resources.
 
 ## Overview
 
@@ -14,27 +14,9 @@ The resource generator:
 
 ### 1. Prepare Your Resource Data
 
-Two options:
+The recommended approach is to use the CSV file:
 
-#### Option A: Edit the Sample Data in the Script
-
-Modify the `resourcesData` array in `scripts/generate-book1-resources.ts` with your actual resources.
-
-```typescript
-const resourcesData: ResourceData[] = [
-  // Unit 1 resources
-  { 
-    unit: '1', 
-    type: 'video',
-    title: 'Hello Song',
-    provider: 'YouTube',
-    embedUrl: 'https://www.youtube.com/embed/abc123'
-  } as VideoResourceData,
-  // Add more resources...
-];
-```
-
-#### Option B: Create a CSV/JSON File
+#### Using the CSV File (Recommended)
 
 Create a CSV file with columns:
 - unit: The unit number (1-18)
@@ -53,20 +35,27 @@ Then modify the script to import from this file.
 Execute the script with:
 
 ```bash
-npx tsx scripts/generate-book1-resources.ts
+node generate-book1-resources-from-csv.js
 ```
 
-This will generate unit-specific resource files in the `client/src/data` directory:
-- `book1-unit{N}-video-resources.tsx`
-- `book1-unit{N}-game-resources.tsx`
-- `book1-unit{N}-pdf-resources.tsx`
-- `book1-unit{N}-resources.tsx` (combined)
+This will:
+1. Read the CSV file (`book1-resources.csv`)
+2. Group resources by unit
+3. Generate the following unit-specific resource files in the `client/src/data` directory:
+   - `book1-unit{N}-video-resources.tsx`: Contains video resources
+   - `book1-unit{N}-game-resources.tsx`: Contains game resources
+   - `book1-unit{N}-pdf-resources.tsx`: Contains PDF resources
+   - `book1-unit{N}-lesson-plans.tsx`: Contains lesson plans
+   - `book1-unit{N}-resources.tsx`: Combined resources file that imports all of the above
 
 ### 3. Update Resource Registry
 
-The script will output code to update `client/src/lib/resourceRegistry.ts`. Copy and paste this code into the appropriate section of the registry file.
+The script will output code to update `client/src/lib/resourceRegistry.ts`. You have two options for registering resources:
 
-Example:
+#### Option A: Manual Registration (Traditional)
+
+Copy and paste the output code into the appropriate section of the registry file:
+
 ```typescript
 // Register Book 1 Unit 1 resources
 registerResourceLoader('1', '1', () => import('@/data/book1-unit1-resources').then(m => m.default));
@@ -74,6 +63,24 @@ registerResourceLoader('1', '1', () => import('@/data/book1-unit1-resources').th
 // Register Book 1 Unit 2 resources
 registerResourceLoader('1', '2', () => import('@/data/book1-unit2-resources').then(m => m.default));
 ```
+
+#### Option B: Automatic Registration (Advanced)
+
+For a more maintainable approach, you can use the dynamic registration pattern that's already implemented in the resource registry:
+
+```typescript
+// Define units with CSV-generated resources
+const csvGeneratedUnits = ['1', '2', '3', '4', '5', '6', '7', '8'];
+
+// Register all CSV-generated resources
+csvGeneratedUnits.forEach(unit => {
+  registerResourceLoader('1', unit as UnitId, 
+    () => import(`@/data/book1-unit${unit}-resources`).then(m => m.default)
+  );
+});
+```
+
+This approach automatically registers all units listed in the `csvGeneratedUnits` array, making it easier to add more units in the future.
 
 ### 4. Unit-Specific PDFs
 
@@ -83,30 +90,74 @@ The existing `book1-pdf-resources.tsx` file has been updated to use the same uni
 
 ## CSV Format Example
 
-If using a CSV file, format it like this:
+The CSV file format has been standardized to make resource management more straightforward. Here's the current format:
 
 ```csv
-unit,type,title,provider,embedUrl,pdfUrl,lessonType,lessonObjective
-1,video,Hello Song,YouTube,https://www.youtube.com/embed/abc123,,,
-1,game,Greetings Match Game,Wordwall,https://wordwall.net/embed/xyz456,,,
-1,pdf,Unit 1: Hello - PDF,Visual English,,https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf,,
-1,lesson,Greetings Lesson Plan,Visual English,,,main,Learn basic greetings in English
+unit,type,title,provider,embedUrl,fileUrl,lessonType,lessonObjective,pdfUrl
+1,video,Hello Song,YouTube,https://www.youtube.com/embed/tVlcKp3bWH8,,,,
+1,video,Good Morning Song,YouTube,https://www.youtube.com/embed/CuI_p7a9VGs,,,,
+1,game,Greetings Matching,Wordwall,https://wordwall.net/resource/11837368/greetings,,,,
+1,pdf,Unit 1: Hello - PDF,Visual English,,,,,https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit1/00 A Visual English 1 – Unit 1 – New Version.pdf
+1,lesson,Greetings Lesson Plan,Visual English,,,main,Learn basic greetings in English,
 ```
+
+Note the specific formatting requirements:
+- All columns must be present in the header row
+- The `unit` column should contain only the unit number (1-18)
+- The `type` column must be one of: video, game, pdf, lesson
+- For video resources, provide the YouTube embed URL in the `embedUrl` column
+- For game resources, provide the game embed URL in the `embedUrl` column
+- For PDF resources, provide the PDF URL in the `pdfUrl` column
+- For lesson plans, provide the lesson type in `lessonType` and the objective in `lessonObjective`
+
+## Implementation Details
+
+### Resource Creation Functions
+
+The generator uses helper functions from `client/src/data/book1-resources-common.ts` to create properly structured resources:
+
+- `createBook1VideoResource`: Creates YouTube video resources
+- `createBook1GameResource`: Creates interactive game resources
+- `createBook1PdfResource`: Creates PDF document resources
+- `createBook1LessonPlanResource`: Creates lesson plan resources
+
+These functions ensure that all resources have consistent structure and adhere to the type definitions in `client/src/types/TeacherResource.ts`.
+
+### Resource Registry Integration
+
+The resource registry in `client/src/lib/resourceRegistry.ts` is designed to automatically find and load the appropriate resources for each book and unit. The system first attempts to load unit-specific resources, and only falls back to older approaches if those aren't found.
+
+The current implementation includes:
+1. **Dynamic import pattern**: Uses `() => import(...)` for lazy loading
+2. **Unit-specific loading**: Each unit's resources are stored in separate files
+3. **Automatic registration**: Using `csvGeneratedUnits` to register multiple units at once
+
+### Resource Display
+
+The TeacherResourcesContainer component automatically loads and displays the resources based on the selected book and unit. It uses the `useTeacherResources` hook which:
+
+1. Fetches the resources for the current book and unit
+2. Filters them by type (video, game, pdf, lesson)
+3. Displays them in the appropriate tabs
 
 ## Customization
 
 You can customize the generator by:
 
-1. Modifying the resource creation functions
-2. Adding additional resource types
-3. Changing the file naming conventions
+1. Modifying the resource creation functions in `book1-resources-common.ts`
+2. Adding additional resource types to the CSV format
+3. Changing the file naming conventions in the generator script
 4. Adapting the output format for different components
 
 ## Benefits
 
-This automated approach:
-1. Creates consistent resource files for all units
-2. Properly organizes resources by unit
-3. Ensures compatibility with the UI components
-4. Saves time when adding new resources
-5. Makes large-scale updates easier
+This CSV-based approach offers significant advantages:
+
+1. **Non-technical Content Management**: Content creators can add or modify resources without coding knowledge
+2. **Consistent Organization**: Resources are properly organized by unit and type
+3. **Separation of Concerns**: Each unit's resources are isolated in their own files
+4. **Maintainable Structure**: Changes to one unit don't affect others
+5. **Automated Workflow**: Generate resources with a single command
+6. **Proper PDF Organization**: PDF resources are now organized by unit, not all in Unit 1
+7. **Future-Proof Design**: Easy to extend to other books and resource types
+8. **Reduced Duplication**: Reuses common helper functions for resource creation
