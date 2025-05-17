@@ -38,6 +38,7 @@ import UnitsPage from "./secure/UnitsPage";
 
 // Original paths - still used until migration is complete
 import SimpleViewerTest from "./pages/SimpleViewerTest";
+import TeacherResourceTest from "./pages/TeacherResourceTest";
 import ViewerTestPage from "./pages/ViewerTestPage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardBooksPage from "./pages/DashboardBooksPage";
@@ -147,6 +148,9 @@ function App() {
           </Route>
           <Route path="/dpa">
             <DpaPage />
+          </Route>
+          <Route path="/test-resources">
+            <TeacherResourceTest />
           </Route>
           <Route path="/cart">
             <CartPage />
