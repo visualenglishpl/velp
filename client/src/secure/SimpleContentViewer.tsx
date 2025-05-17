@@ -881,7 +881,7 @@ export default function SimpleContentViewer() {
       {user && bookId && unitNumber && (
         <div className="mt-8 border-t pt-6">
           
-          <Tabs defaultValue="videos" className="w-full">
+          <Tabs defaultValue="lessons" className="w-full">
             <div className="flex justify-center mb-4">
               <TabsList className="flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-50 to-purple-50 p-1 text-indigo-700 shadow-sm">
                 <TabsTrigger 
