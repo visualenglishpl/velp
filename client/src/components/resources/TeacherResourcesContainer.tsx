@@ -214,7 +214,13 @@ export function TeacherResourcesContainer({
       ) : (
         /* Resource Tabs */
         <Tabs defaultValue="videos" value={activeTab} onValueChange={setActiveTab}>
-          {/* Tab navigation buttons removed as requested */}
+          {/* Tab List - These are the bottom navigation buttons with the correct links */}
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="videos">Videos</TabsTrigger>
+            <TabsTrigger value="games">Games</TabsTrigger>
+            <TabsTrigger value="pdfs">PDFs</TabsTrigger>
+            <TabsTrigger value="lessons">Lessons</TabsTrigger>
+          </TabsList>
           
           {/* Videos Tab */}
           <TabsContent value="videos">
