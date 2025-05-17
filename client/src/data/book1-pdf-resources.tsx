@@ -1,7 +1,11 @@
 /**
  * Book 1 PDF resources - provides direct links to PDF files for all units
+ * 
+ * This file creates PDF resources for each unit in Book 1, with proper organization
+ * and unit-specific resource files.
  */
-import { TeacherResource, ResourceType } from '@/types/teacher-resources';
+import { TeacherResource, ResourceType } from '@/types/TeacherResource';
+import { createBook1PdfResource } from './book1-resources-common';
 
 // Unit titles for Book 1 - used for resource titles
 const unitTitles: Record<string, string> = {
@@ -26,7 +30,10 @@ const unitTitles: Record<string, string> = {
 };
 
 /**
- * Generate PDF resources for all Book 1 units (1-18) using a more compact approach
+ * Generate PDF resources for all Book 1 units (1-18) using the helper function
+ * 
+ * These resources are properly organized by unit to ensure they're only shown
+ * in the appropriate unit's resource list.
  */
 export function getBook1PdfResources(): TeacherResource[] {
   return Array.from({ length: 18 }, (_, i) => {
@@ -37,22 +44,14 @@ export function getBook1PdfResources(): TeacherResource[] {
     
     const pdfUrl = `https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit${unit}/${unitPrefix} Visual English 1 – Unit ${unit} – New Version.pdf`;
     
-    return {
-      id: `book1-unit${unit}-pdf`,
-      bookId: '1',
-      unitId: unit,
-      resourceType: 'pdf' as ResourceType,
-      title: `Unit ${unit}: ${unitTitle} - PDF`,
-      description: `Visual English Book 1 - Unit ${unit} PDF`,
-      provider: 'Visual English',
-      sourceUrl: pdfUrl,
-      thumbnailUrl: '',
-      content: {
-        type: 'pdf',
-        embedUrl: pdfUrl
-      },
-      fileUrl: pdfUrl
-    };
+    // Cast unit to UnitId to satisfy type constraint
+    return createBook1PdfResource(
+      unit as any, 
+      'main-pdf',
+      `Unit ${unit}: ${unitTitle} - PDF`,
+      `Visual English Book 1 - Unit ${unit} PDF`,
+      pdfUrl
+    );
   });
 }
 

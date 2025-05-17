@@ -7,7 +7,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { BookId, UnitId } from '@/types/content';
-import { TeacherResource, ResourceType, ResourceFilter, ResourceFilterType } from '@/types/resources';
+import { TeacherResource, ResourceType, ResourceFilter, ResourceFilterType } from '@/types/TeacherResource';
 import { loadResources } from '@/lib/resourceRegistry';
 
 interface UseTeacherResourcesOptions {

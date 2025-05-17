@@ -1,7 +1,7 @@
 /**
  * Book 1 Lesson Plans - Organized by unit
  */
-import { TeacherResource, ResourceType, LessonPlan, LessonStep } from '@/types/teacher-resources';
+import { TeacherResource, ResourceType, LessonPlan, LessonStep } from '@/types/TeacherResource';
 
 /**
  * Create a lesson plan resource for Book 1

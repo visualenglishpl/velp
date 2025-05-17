@@ -8,7 +8,7 @@
  */
 
 import { BookId, UnitId } from '@/types/content';
-import { TeacherResource } from '@/types/resources';
+import { TeacherResource } from '@/types/TeacherResource';
 import { book1PdfResources, book1PdfResourcesByUnit } from '@/data/book1-pdf-resources';
 import { book1LessonPlans, book1LessonPlansByUnit } from '@/data/book1-lesson-plans';
 

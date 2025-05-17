@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ResourceList } from './ResourceList';
 import { v4 as uuidv4 } from 'uuid';
 import { BookId, UnitId } from '@/types/content';
-import { TeacherResource, ResourceType, ResourceFilter } from '@/types/resources';
+import { TeacherResource, ResourceType, ResourceFilter } from '@/types/TeacherResource';
 import { useTeacherResources } from '@/hooks/useTeacherResources';
 import {
   Select,

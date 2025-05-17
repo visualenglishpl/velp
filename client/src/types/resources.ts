@@ -15,12 +15,12 @@ export type ResourceType = 'video' | 'game' | 'pdf' | 'lessonPlan' | 'worksheet'
  * Base interface for all teacher resources
  */
 export interface TeacherResource {
-  id?: string; // Made optional to work with legacy code
+  id?: string;
+  bookId: BookId | string;  // Allow string type for compatibility
+  unitId: UnitId | string;  // Allow string type for compatibility
   title: string;
-  description: string;
+  description?: string;     // Make description optional for compatibility
   resourceType: ResourceType;
-  bookId: BookId;
-  unitId: UnitId;
   provider?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -39,11 +39,11 @@ export interface TeacherResource {
   pdfUrl?: string;
   
   // Content for lesson plans, etc.
-  content?: string | {
+  content?: {
     type: string;
     embedId?: string;
     embedUrl?: string;
-  };
+  } | string;
   
   // General source URL
   sourceUrl?: string;
@@ -51,9 +51,14 @@ export interface TeacherResource {
   // Embed code for videos, games, etc.
   embedCode?: string;
   
+  // Category and tags for additional metadata
+  categories?: string[];
+  tags?: string[];
+  
   // Legacy support
   fileUrl?: string;
   lessonPlan?: any;
+  thumbnailUrl?: string;
 }
 
 /**

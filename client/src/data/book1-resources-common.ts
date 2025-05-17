@@ -2,7 +2,7 @@
  * Common helper functions for Book 1 resources
  */
 
-import { TeacherResource, ResourceType } from '@/types/resources';
+import { TeacherResource, ResourceType } from '@/types/TeacherResource';
 import { BookId, UnitId } from '@/types/content';
 
 /**

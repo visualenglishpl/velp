@@ -30,7 +30,7 @@ import {
   TrashIcon,
   DownloadIcon
 } from 'lucide-react';
-import { TeacherResource, ResourceType, ResourceFilterType } from '@/types/resources';
+import { TeacherResource, ResourceType, ResourceFilterType } from '@/types/TeacherResource';
 import EmbeddedContentModal from '@/components/EmbeddedContentModal';
 import { 
   extractYoutubeVideoId,
@@ -101,7 +101,11 @@ export function ResourceList({
     }
     
     if (resource.content) {
-      return resource.content;
+      if (typeof resource.content === 'string') {
+        return resource.content;
+      } else if (resource.content.embedUrl) {
+        return resource.content.embedUrl;
+      }
     }
     
     return '';
@@ -209,60 +213,58 @@ export function ResourceList({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {resources.map((resource) => {
+            // Determine icon color based on resource type
+            const typeColors = {
+              'video': 'from-red-500 to-orange-500',
+              'game': 'from-purple-600 to-indigo-600',
+              'pdf': 'from-blue-600 to-indigo-600',
+              'lessonPlan': 'from-teal-600 to-green-600',
+              'document': 'from-gray-600 to-slate-700'
+            };
+            
+            const colorClass = typeColors[resource.resourceType as keyof typeof typeColors] || 'from-gray-500 to-gray-700';
+            
             return (
               <div 
                 key={resource.id} 
-                className="bg-card border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer"
+                className="border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer"
                 onClick={() => handlePreview(resource)}
               >
-                {/* Resource icon card - no thumbnails */}
-                <div className="p-4 flex flex-col items-center text-center">
-                  {/* Resource type badge */}
-                  <div className="bg-primary/80 text-primary-foreground px-2 py-1 rounded text-xs font-medium flex items-center gap-1 mb-2">
-                    {getResourceTypeIcon(resource.resourceType)}
-                    <span>{resource.resourceType}</span>
-                  </div>
-                  
-                  {/* Resource title */}
-                  <h3 className="font-medium line-clamp-2 text-sm mt-2">{resource.title}</h3>
-                  
-                  {/* Provider badge if available */}
-                  {resource.provider && (
-                    <div className="mt-2 bg-background px-2 py-1 rounded text-xs">
-                      {resource.provider}
-                    </div>
-                  )}
-                  
-                  {/* Preview/Download button */}
-                  <Button size="sm" variant="outline" className="gap-1 mt-3 w-full">
-                    {resource.resourceType === 'pdf' ? (
-                      <>
-                        <DownloadIcon className="h-3 w-3" />
-                        Download PDF
-                      </>
-                    ) : (
-                      <>
-                        <EyeIcon className="h-3 w-3" />
-                        Preview
-                      </>
+                {/* Compact resource card with icon */}
+                <div className={`bg-gradient-to-r ${colorClass} p-2 text-white`}>
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-medium text-xs flex items-center">
+                      {getResourceTypeIcon(resource.resourceType)}
+                      <span className="ml-1">{resource.resourceType === 'pdf' ? 'PDF' : resource.resourceType}</span>
+                    </h4>
+                    {resource.resourceType === 'pdf' && (
+                      <span className="bg-white/20 text-white text-xs px-1.5 py-0.5 rounded-full font-medium">
+                        Download
+                      </span>
                     )}
-                  </Button>
+                  </div>
+                </div>
+                
+                <div className="p-2 bg-white">
+                  {/* Resource title */}
+                  <h3 className="font-medium line-clamp-2 text-xs">{resource.title}</h3>
                   
-                  {/* Action buttons (minimal) */}
-                  <div className="flex justify-center gap-1 mt-2">
-                    {resource.sourceUrl && (
+                  {/* Action buttons (compact row) */}
+                  <div className="flex justify-end gap-1 mt-1.5">
+                    {resource.sourceUrl && resource.resourceType !== 'pdf' && (
                       <Button
                         variant="ghost"
                         size="icon"
+                        className="h-6 w-6"
                         onClick={(e) => {
                           e.stopPropagation();
                           window.open(resource.sourceUrl, '_blank');
                         }}
                         title="Open original"
                       >
-                        <ExternalLinkIcon className="h-4 w-4" />
+                        <ExternalLinkIcon className="h-3 w-3" />
                       </Button>
                     )}
                     
@@ -270,13 +272,14 @@ export function ResourceList({
                       <Button
                         variant="ghost"
                         size="icon"
+                        className="h-6 w-6"
                         onClick={(e) => {
                           e.stopPropagation();
                           onEditResource(resource);
                         }}
                         title="Edit"
                       >
-                        <PencilIcon className="h-4 w-4" />
+                        <PencilIcon className="h-3 w-3" />
                       </Button>
                     )}
                     
@@ -284,14 +287,14 @@ export function ResourceList({
                       <Button
                         variant="ghost"
                         size="icon"
+                        className="h-6 w-6 text-destructive hover:text-destructive/90"
                         onClick={(e) => {
                           e.stopPropagation();
                           onDeleteResource(resource);
                         }}
                         title="Delete"
-                        className="text-destructive hover:text-destructive/90"
                       >
-                        <TrashIcon className="h-4 w-4" />
+                        <TrashIcon className="h-3 w-3" />
                       </Button>
                     )}
                   </div>
