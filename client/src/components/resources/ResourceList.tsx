@@ -144,58 +144,9 @@ export function ResourceList({
 
   return (
     <div className="space-y-4">
-      {/* Simplified tabs navigation - only show if not in content viewer tabs */}
-      {!hideTabsInContentViewer && (
-        <div className="border-b">
-          <div className="flex overflow-x-auto">
-            {resourceTypes.map(({ type, label }) => {
-              const count = getResourceCount(type);
-              const isActive = selectedType === type;
-              
-              return (
-                <button
-                  key={type}
-                  onClick={() => onFilterByType(type)}
-                  className={`flex items-center px-4 py-3 border-b-2 whitespace-nowrap transition-colors ${
-                    isActive 
-                      ? 'border-primary text-primary font-medium' 
-                      : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted'
-                  }`}
-                  title={`View ${label}`}
-                >
-                  {getResourceTypeIcon(type as ResourceType)}
-                  <span className="ml-2">{label}</span>
-                  <span className={`ml-2 px-1.5 py-0.5 rounded-full text-xs ${
-                    isActive ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'
-                  }`}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      {/* Hide tabs navigation as requested */}
       
-      {/* Search bar */}
-      <div className="flex justify-between items-center">
-        <div className="relative w-full max-w-sm">
-          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search resources..."
-            className="pl-10 pr-4"
-            value={searchQuery}
-            onChange={(e) => onSearch(e.target.value)}
-          />
-        </div>
-        
-        {!readOnly && onAddResource && (
-          <Button onClick={onAddResource} size="sm" className="ml-4">
-            <PlusIcon className="h-4 w-4 mr-1" />
-            Add Resource
-          </Button>
-        )}
-      </div>
+      {/* Hide search bar as requested */}
       
       {/* Resources grid with thumbnails */}
       {isLoading ? (
@@ -213,94 +164,111 @@ export function ResourceList({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {resources.map((resource) => {
-            // Determine icon color based on resource type
-            const typeColors = {
-              'video': 'from-red-500 to-orange-500',
-              'game': 'from-purple-600 to-indigo-600',
-              'pdf': 'from-blue-600 to-indigo-600',
-              'lessonPlan': 'from-teal-600 to-green-600',
-              'document': 'from-gray-600 to-slate-700'
-            };
+            // Create video thumbnail cards with play button
+            if (resource.resourceType === 'video') {
+              const youtubeId = resource.youtubeVideoId || 
+                (resource.sourceUrl ? extractYoutubeVideoId(resource.sourceUrl) : '');
+              const thumbnailUrl = youtubeId ? 
+                `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : '';
+              
+              return (
+                <div 
+                  key={resource.id} 
+                  className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105 shadow-md"
+                  onClick={() => handlePreview(resource)}
+                >
+                  {/* Video thumbnail with play button overlay */}
+                  <div className="relative aspect-video bg-gray-100">
+                    {thumbnailUrl ? (
+                      <img 
+                        src={thumbnailUrl} 
+                        alt={resource.title} 
+                        className="w-full h-full object-cover" 
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-red-500 to-orange-500">
+                        <FilmIcon className="h-12 w-12 text-white/80" />
+                      </div>
+                    )}
+                    {/* Play button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
+                      <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-primary ml-1">
+                          <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
             
-            const colorClass = typeColors[resource.resourceType as keyof typeof typeColors] || 'from-gray-500 to-gray-700';
+            // Game resource cards
+            else if (resource.resourceType === 'game') {
+              return (
+                <div 
+                  key={resource.id} 
+                  className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105 shadow-md"
+                  onClick={() => handlePreview(resource)}
+                >
+                  <div className="bg-gradient-to-br from-purple-600 to-indigo-600 aspect-video flex items-center justify-center">
+                    <div className="text-center px-3">
+                      <GamepadIcon className="h-10 w-10 mx-auto text-white/90 mb-2" />
+                      <p className="text-white text-sm font-medium">{resource.title}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
             
-            return (
-              <div 
-                key={resource.id} 
-                className="border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer"
-                onClick={() => handlePreview(resource)}
-              >
-                {/* Compact resource card with icon */}
-                <div className={`bg-gradient-to-r ${colorClass} p-2 text-white`}>
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-medium text-xs flex items-center">
-                      {getResourceTypeIcon(resource.resourceType)}
-                      <span className="ml-1">{resource.resourceType === 'pdf' ? 'PDF' : resource.resourceType}</span>
-                    </h4>
-                    {resource.resourceType === 'pdf' && (
-                      <span className="bg-white/20 text-white text-xs px-1.5 py-0.5 rounded-full font-medium">
-                        Download
+            // PDF resource cards
+            else if (resource.resourceType === 'pdf') {
+              const unitMatch = resource.title.match(/Unit (\d+)/i);
+              const unitNumber = unitMatch ? unitMatch[1] : '';
+              
+              return (
+                <div 
+                  key={resource.id} 
+                  className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105 shadow-md"
+                  onClick={() => handlePreview(resource)}
+                >
+                  <div className="bg-indigo-100 aspect-[3/2] flex flex-col items-center justify-center p-3">
+                    <div className="w-full bg-indigo-600 text-white py-2 px-3 rounded-md flex items-center justify-between">
+                      <span className="font-medium text-sm flex items-center">
+                        <FileIcon className="h-4 w-4 mr-1" />
+                        {unitNumber ? `Unit ${unitNumber}` : 'PDF'}
                       </span>
-                    )}
+                      <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">PDF</span>
+                    </div>
+                    
+                    <div className="flex items-center mt-3 text-indigo-600 text-sm font-medium">
+                      <DownloadIcon className="h-4 w-4 mr-1" />
+                      <span>Download</span>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="p-2 bg-white">
-                  {/* Resource title */}
-                  <h3 className="font-medium line-clamp-2 text-xs">{resource.title}</h3>
-                  
-                  {/* Action buttons (compact row) */}
-                  <div className="flex justify-end gap-1 mt-1.5">
-                    {resource.sourceUrl && resource.resourceType !== 'pdf' && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.open(resource.sourceUrl, '_blank');
-                        }}
-                        title="Open original"
-                      >
-                        <ExternalLinkIcon className="h-3 w-3" />
-                      </Button>
-                    )}
-                    
-                    {!readOnly && onEditResource && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onEditResource(resource);
-                        }}
-                        title="Edit"
-                      >
-                        <PencilIcon className="h-3 w-3" />
-                      </Button>
-                    )}
-                    
-                    {!readOnly && onDeleteResource && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6 text-destructive hover:text-destructive/90"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onDeleteResource(resource);
-                        }}
-                        title="Delete"
-                      >
-                        <TrashIcon className="h-3 w-3" />
-                      </Button>
-                    )}
+              );
+            }
+            
+            // Other resource cards (lesson plans, etc.)
+            else {
+              return (
+                <div 
+                  key={resource.id} 
+                  className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105 shadow-md"
+                  onClick={() => handlePreview(resource)}
+                >
+                  <div className="bg-gradient-to-br from-teal-600 to-green-600 aspect-[3/2] flex items-center justify-center">
+                    <div className="text-center px-3">
+                      <FileTextIcon className="h-10 w-10 mx-auto text-white/90 mb-2" />
+                      <p className="text-white text-sm font-medium">{resource.title}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
+              );
+            }
           })}
         </div>
       )}

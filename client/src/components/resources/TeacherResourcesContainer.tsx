@@ -163,8 +163,9 @@ export function TeacherResourcesContainer({
   
   // Handle deletion confirmation
   const handleDeleteConfirm = () => {
-    if (resourceToDelete) {
-      removeResource(resourceToDelete.id);
+    if (resourceToDelete && resourceToDelete.id) {
+      // Cast to string to satisfy the TypeScript requirement
+      removeResource(resourceToDelete.id as string);
       setResourceToDelete(null);
       setIsDeleteDialogOpen(false);
     }
@@ -211,41 +212,7 @@ export function TeacherResourcesContainer({
       ) : (
         /* Resource List */
         <div>
-          {/* Only show header if not in tabs view */}
-          {!isInTabsView && (
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <h2 className="text-2xl font-bold">
-                  {bookId && unitId ? (
-                    <>
-                      {getBookTitle(bookId)} {getUnitTitle(unitId)} 
-                      {bookId === '3' && unitId === '16' && (
-                        <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                          Sports
-                        </span>
-                      )}
-                      {bookId === '3' && unitId === '17' && (
-                        <span className="ml-2 text-sm bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                          Household Chores
-                        </span>
-                      )}
-                    </>
-                  ) : (
-                    'Educational Resources'
-                  )}
-                </h2>
-                <p className="text-muted-foreground">
-                  {resources.length} resources available
-                </p>
-              </div>
-              
-              {!readOnly && enableEditing && (
-                <Button onClick={handleAddResource} variant="outline">
-                  Add New Resource
-                </Button>
-              )}
-            </div>
-          )}
+          {/* Remove header text as requested */}
           
           <ResourceList
             resources={filteredResources}
