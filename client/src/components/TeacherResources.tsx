@@ -98,10 +98,10 @@ import { BOOK3_TITLE, BOOK3_UNIT_TITLES, generateDefaultBook3UnitLessonPlans } f
 
 // Book 1 implementations
 import { generateUnit1LessonPlans as generateBook1Unit1LessonPlans } from '@/data/book1-unit1-implementation';
+import { book1Unit5Implementations } from '@/data/book1-unit5-implementation';
 import { generateBook1Unit2LessonPlans } from '@/data/book1-unit2-implementation';
 import { generateUnit3LessonPlans as generateBook1Unit3LessonPlans } from '@/data/book1-unit3-implementation';
 import { generateUnit4LessonPlans as generateBook1Unit4LessonPlans } from '@/data/book1-unit4-implementation';
-import { generateUnit5LessonPlans as generateBook1Unit5LessonPlans } from '@/data/book1-unit5-implementation';
 import { generateUnit6LessonPlans as generateBook1Unit6LessonPlans } from '@/data/book1-unit6-implementation';
 import { getBook1Unit6Resources } from '@/data/book1-unit6-implementation';
 import { getBook1Unit7Resources, generateUnit7LessonPlans as generateBook1Unit7LessonPlans } from '@/data/book1-unit7-implementation';
@@ -1244,8 +1244,8 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
               console.log('Using generateUnit4LessonPlans for Book 1');
               lessonPlans = generateBook1Unit4LessonPlans();
             } else if (unitNum === 5) {
-              console.log('Using generateUnit5LessonPlans for Book 1');
-              lessonPlans = generateBook1Unit5LessonPlans();
+              console.log('Using book1Unit5Implementations directly');
+              lessonPlans = book1Unit5Implementations;
             } else if (unitNum === 6) {
               console.log('Using generateUnit6LessonPlans for Book 1');
               lessonPlans = generateBook1Unit6LessonPlans();
@@ -1698,6 +1698,8 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
         return book1Unit4Resources;
       } else if (unitId === '5') {
         console.log('Loading Book 1 Unit 5 resources');
+        // Use setDynamicLessonPlans to load the lesson plans too
+        setDynamicLessonPlans(book1Unit5Implementations);
         return book1Unit5Resources;
       } else if (unitId === '6') {
         console.log('Loading Book 1 Unit 6 resources');

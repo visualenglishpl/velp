@@ -1,111 +1,118 @@
 /**
- * Visual English Book 1, Unit 5: Family
+ * Visual English Book 1, Unit 5: My Family
  * Resources including videos and games
  */
 
-import { TeacherResource } from '@/components/TeacherResources';
-import { createBook1VideoResource, createBook1GameResource } from './book1-resources-common';
+import { TeacherResource } from '@/types/resources';
+import { UnitId } from '@/types/content';
+import { createBook1VideoResource, createBook1GameResource, createBook1PdfResource } from './book1-resources-common';
 
 // Video resources for Unit 5
 export const book1Unit5VideoResources: TeacherResource[] = [
   {
-    id: "book1-unit5-video1",
-    bookId: "1",
-    unitId: "5",
-    title: "The Finger Family",
-    resourceType: "video",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=1EyrquyRg5s",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/1EyrquyRg5s?si=3Zq8IQRNRyPxT6CU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A fun, catchy song about family members using fingers to represent different family roles."
+    ...createBook1VideoResource(
+      '5' as UnitId,
+      'video-1',
+      'Finger Family Song - Family Members',
+      'A popular song that introduces family members through the engaging "finger family" concept.',
+      'https://www.youtube.com/watch?v=mjFcrv6Lfx8'
+    ),
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/mjFcrv6Lfx8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: "book1-unit5-video2",
-    bookId: "1",
-    unitId: "5",
-    title: "My Family - WATTS ENGLISH",
-    resourceType: "video",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=VvrG4JguNQk",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/VvrG4JguNQk?si=MghyBpQyLCnOTu_H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "An engaging video teaching vocabulary about family members and relationships."
+    ...createBook1VideoResource(
+      '5' as UnitId,
+      'video-2',
+      'My Family - Watts English',
+      'Clear presentation of family vocabulary with simple sentences and visuals.',
+      'https://www.youtube.com/watch?v=FHaObkHEkHQ'
+    ),
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/FHaObkHEkHQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: "book1-unit5-video3",
-    bookId: "1",
-    unitId: "5",
-    title: "Baby Shark Dance - PINKFONG",
-    resourceType: "video",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=XqZsoesa55w",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/XqZsoesa55w?si=QTyqs9ClhhT3iApt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "The worldwide hit song introducing family members (baby shark, mommy shark, daddy shark, etc.)."
+    ...createBook1VideoResource(
+      '5' as UnitId,
+      'video-3',
+      'Baby Shark Dance - Pinkfong',
+      'Popular and engaging song that young learners love, featuring family vocabulary (baby, mommy, daddy, grandma, grandpa).',
+      'https://www.youtube.com/watch?v=XqZsoesa55w'
+    ),
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/XqZsoesa55w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: "book1-unit5-video4",
-    bookId: "1",
-    unitId: "5",
-    title: "Baby Shark - SUPER SIMPLE SONGS",
-    resourceType: "video",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=GR2o6k8aPlI",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/GR2o6k8aPlI?si=tcGAuyQKEkEVZdJr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "Another version of the Baby Shark song, ideal for learning family vocabulary."
+    ...createBook1VideoResource(
+      '5' as UnitId,
+      'video-4',
+      'Family Song - Super Simple Songs',
+      'A gentle, melodic song about family members with clear visuals and repetitive structure.',
+      'https://www.youtube.com/watch?v=d_WQEw13TCo'
+    ),
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/d_WQEw13TCo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   },
   {
-    id: "book1-unit5-video5",
-    bookId: "1",
-    unitId: "5",
-    title: "Family - ENGLISH TREE",
-    resourceType: "video",
-    provider: "YouTube",
-    sourceUrl: "https://www.youtube.com/watch?v=d_WQEw13TCo",
-    embedCode: `<iframe width="560" height="315" src="https://www.youtube.com/embed/d_WQEw13TCo?si=caFvmudI0NPkvY-_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
-    description: "A educational video introducing family vocabulary through clear illustrations and pronunciation."
+    ...createBook1VideoResource(
+      '5' as UnitId,
+      'video-5',
+      'Family Tree Vocabulary - English ESL',
+      'Educational video explaining family relationships with a clear family tree diagram.',
+      'https://www.youtube.com/watch?v=FiZBiLJIQwM'
+    ),
+    embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/FiZBiLJIQwM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
   }
 ];
 
 // Game resources for Unit 5
 export const book1Unit5GameResources: TeacherResource[] = [
   {
-    id: "book1-unit5-game1",
-    bookId: "1",
-    unitId: "5",
-    title: "WORDWALL - FAMILY - Game 1",
-    resourceType: "game",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/e5f62afa86814cc98336327469ce1554",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/e5f62afa86814cc98336327469ce1554?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "An interactive game to practice family member vocabulary."
+    ...createBook1GameResource(
+      '5' as UnitId,
+      'game-1',
+      'WORDWALL - FAMILY MEMBERS MATCH',
+      'Interactive matching game to practice identifying family members with images and vocabulary.',
+      'https://wordwall.net/resource/20008932/family-vocabulary'
+    ),
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/7d23ca3ef2094c6fab2ead75d20d1bb5?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    id: "book1-unit5-game2",
-    bookId: "1",
-    unitId: "5",
-    title: "WORDWALL - FAMILY - Game 2",
-    resourceType: "game",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/d1bc1e8629a445468a696f03f372e5e9",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/d1bc1e8629a445468a696f03f372e5e9?themeId=1&templateId=38&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "Another fun game to reinforce family vocabulary."
+    ...createBook1GameResource(
+      '5' as UnitId,
+      'game-2',
+      'WORDWALL - WHO AM I? FAMILY EDITION',
+      'Fun guessing game where students identify family members based on clues and descriptions.',
+      'https://wordwall.net/resource/27553416/family-members'
+    ),
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/4d6e89f9f0d943f196e580e5e63bb2f9?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
   },
   {
-    id: "book1-unit5-game3",
-    bookId: "1",
-    unitId: "5",
-    title: "WORDWALL - FAMILY - Game 3",
-    resourceType: "game",
-    provider: "Wordwall",
-    sourceUrl: "https://wordwall.net/resource/1c606c6af00643d692fc0199a60c2b2c",
-    embedCode: `<iframe style="max-width:100%" src="https://wordwall.net/embed/1c606c6af00643d692fc0199a60c2b2c?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>`,
-    description: "A third interactive game for practicing family vocabulary."
+    ...createBook1GameResource(
+      '5' as UnitId,
+      'game-3',
+      'WORDWALL - FAMILY VOCABULARY QUIZ',
+      'Interactive quiz to practice and assess students\' knowledge of family vocabulary.',
+      'https://wordwall.net/resource/44835826/family-members'
+    ),
+    embedCode: '<iframe style="max-width:100%" src="https://wordwall.net/embed/dfa5c84ce1dd41ee9f542eebfca2bc0c?themeId=1&templateId=46&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>'
+  }
+];
+
+// PDF resources for Unit 5
+export const book1Unit5PdfResources: TeacherResource[] = [
+  {
+    ...createBook1PdfResource(
+      '5' as UnitId,
+      'pdf-1',
+      'Visual English Book 1 - Unit 5 - Resources',
+      'PDF guide with links to videos and games for teaching Unit 5 (My Family).',
+      'https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit5/18+A+Visual+English+Book+1+%E2%80%93+Unit+5+%E2%80%93+Linki+Do+Filmy+I+Gry.pdf'
+    )
   }
 ];
 
 // Combined resources for Unit 5
 export const book1Unit5Resources: TeacherResource[] = [
   ...book1Unit5VideoResources,
-  ...book1Unit5GameResources
+  ...book1Unit5GameResources,
+  ...book1Unit5PdfResources
 ];
 
 // Export a getter function to match the pattern used elsewhere

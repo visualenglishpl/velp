@@ -55,7 +55,7 @@ export function createBook1GameResource(
   title: string,
   description: string,
   wordwallUrl: string,
-  embedCode: string
+  embedCode?: string
 ): TeacherResource {
   return {
     id: `b1u${unitId}-${id}`,
