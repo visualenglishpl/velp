@@ -144,40 +144,51 @@ const specialImports: Record<string, Record<string, ResourceLoader>> = {
   }
 };
 
-// Register Book 1 units automatically
-for (const unit of bookUnitMap['1']) {
-  registerResourceLoader('1', unit as UnitId, async () => {
-    try {
-      // Try to load the unit-specific resources if they exist
-      const modulePathUnit = `@/data/book1-unit${unit}-resources`;
-      
-      // Fallback to legacy resources if needed
-      let resources: TeacherResource[] = [];
+// Register legacy book units automatically if needed
+// Book 1 is now fully managed through CSV-generated resources
+Object.keys(bookUnitMap).forEach(bookId => {
+  if (bookId === '1') {
+    // Skip Book 1 since it's now fully managed via CSV
+    return;
+  }
+  
+  for (const unit of bookUnitMap[bookId]) {
+    registerResourceLoader(bookId as BookId, unit as UnitId, async () => {
       try {
-        // Using /* @vite-ignore */ to suppress the dynamic import warning
-        const { default: unitResources } = await import(/* @vite-ignore */ modulePathUnit);
-        resources = unitResources;
-      } catch (err) {
-        console.warn(`No specific resources found for Book 1 Unit ${unit}, using fallbacks.`);
+        // Try to load the unit-specific resources if they exist
+        const modulePathUnit = `@/data/book${bookId}-unit${unit}-resources`;
         
-        // Add PDF resources for this unit from the global collection
-        if (book1PdfResourcesByUnit[unit]) {
-          resources = [...resources, ...book1PdfResourcesByUnit[unit]];
+        // Fallback to legacy resources if needed
+        let resources: TeacherResource[] = [];
+        try {
+          // Using /* @vite-ignore */ to suppress the dynamic import warning
+          const { default: unitResources } = await import(/* @vite-ignore */ modulePathUnit);
+          resources = unitResources;
+        } catch (err) {
+          console.warn(`No specific resources found for Book ${bookId} Unit ${unit}, using fallbacks.`);
+          
+          // For Book 1, we can add PDF resources and lesson plans from global collections
+          if (bookId === '1') {
+            // Add PDF resources for this unit from the global collection
+            if (book1PdfResourcesByUnit[unit]) {
+              resources = [...resources, ...book1PdfResourcesByUnit[unit]];
+            }
+            
+            // Add lesson plans for this unit from the global collection
+            if (book1LessonPlansByUnit[unit]) {
+              resources = [...resources, ...book1LessonPlansByUnit[unit]];
+            }
+          }
         }
         
-        // Add lesson plans for this unit from the global collection
-        if (book1LessonPlansByUnit[unit]) {
-          resources = [...resources, ...book1LessonPlansByUnit[unit]];
-        }
+        return resources;
+      } catch (error) {
+        console.error(`Error loading Book ${bookId} Unit ${unit} resources:`, error);
+        return [];
       }
-      
-      return resources;
-    } catch (error) {
-      console.error(`Error loading Book 1 Unit ${unit} resources:`, error);
-      return [];
-    }
-  });
-}
+    });
+  }
+});
 
 // Register other book units with special import patterns
 Object.keys(specialImports).forEach(bookId => {

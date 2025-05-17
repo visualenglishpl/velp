@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual English Resource Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .resource-card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            background-color: white;
+        }
+        .resource-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .resource-type {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .video-type { background-color: #ffebee; }
+        .game-type { background-color: #e3f2fd; }
+        .pdf-type { background-color: #e8f5e9; }
+        .lesson-type { background-color: #fff8e1; }
+        .resource-provider {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .resource-link {
+            display: block;
+            margin-top: 10px;
+            color: #1976d2;
+            text-decoration: none;
+        }
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+        .error {
+            color: red;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Visual English Resource Test</h1>
+        
+        <div class="controls">
+            <div class="form-group">
+                <label for="book-select">Book:</label>
+                <select id="book-select">
+                    <option value="1">Book 1</option>
+                    <option value="2">Book 2</option>
+                    <option value="3">Book 3</option>
+                    <option value="4">Book 4</option>
+                    <option value="5">Book 5</option>
+                    <option value="6">Book 6</option>
+                    <option value="7">Book 7</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="unit-select">Unit:</label>
+                <select id="unit-select">
+                    <!-- Will be populated dynamically -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="type-select">Resource Type:</label>
+                <select id="type-select">
+                    <option value="all">All Types</option>
+                    <option value="video">Videos</option>
+                    <option value="game">Games</option>
+                    <option value="pdf">PDFs</option>
+                    <option value="lesson">Lessons</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>&nbsp;</label>
+                <button id="load-btn">Load Resources</button>
+            </div>
+        </div>
+        
+        <div id="error-container" class="error" style="display: none;"></div>
+        <div id="loading-container" class="loading" style="display: none;">Loading resources...</div>
+        
+        <div id="resources-container" class="resources"></div>
+    </div>
+
+    <script>
+        // Configuration
+        const unitCountByBook = {
+            '1': 18, // Book 1 has 18 units
+            '2': 18, // Book 2 has 18 units  
+            '3': 18, // Book 3 has 18 units
+            '4': 16, // Book 4 has 16 units
+            '5': 16, // Book 5 has 16 units
+            '6': 16, // Book 6 has 16 units
+            '7': 16  // Book 7 has 16 units
+        };
+
+        // DOM elements
+        const bookSelect = document.getElementById('book-select');
+        const unitSelect = document.getElementById('unit-select');
+        const typeSelect = document.getElementById('type-select');
+        const loadBtn = document.getElementById('load-btn');
+        const errorContainer = document.getElementById('error-container');
+        const loadingContainer = document.getElementById('loading-container');
+        const resourcesContainer = document.getElementById('resources-container');
+
+        // Initialize the unit select dropdown based on the selected book
+        function updateUnitOptions() {
+            const bookId = bookSelect.value;
+            const unitCount = unitCountByBook[bookId] || 18;
+            
+            // Clear existing options
+            unitSelect.innerHTML = '';
+            
+            // Add unit options
+            for (let i = 1; i <= unitCount; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Unit ${i}`;
+                unitSelect.appendChild(option);
+            }
+        }
+
+        // Fetch resources from CSV data
+        async function fetchResources() {
+            const bookId = bookSelect.value;
+            const unitId = unitSelect.value;
+            const resourceType = typeSelect.value;
+            
+            // Show loading state
+            errorContainer.style.display = 'none';
+            loadingContainer.style.display = 'block';
+            resourcesContainer.innerHTML = '';
+            
+            try {
+                // Fetch the CSV file from our API
+                const response = await fetch('/api/resources');
+                if (!response.ok) {
+                    throw new Error('Failed to load resource data');
+                }
+                
+                const csvText = await response.text();
+                const resources = parseCSV(csvText, bookId, unitId, resourceType);
+                
+                // Display the resources
+                displayResources(resources);
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                loadingContainer.style.display = 'none';
+            }
+        }
+
+        // Parse CSV data and filter by book, unit, and type
+        function parseCSV(csvText, bookId, unitId, resourceType) {
+            // Split CSV text into lines
+            const lines = csvText.split('\n');
+            if (lines.length < 2) {
+                throw new Error('CSV file is empty or invalid');
+            }
+            
+            // Parse header row
+            const headers = lines[0].split(',');
+            
+            // Find column indices
+            const unitIndex = headers.indexOf('unit');
+            const typeIndex = headers.indexOf('type');
+            const titleIndex = headers.indexOf('title');
+            const providerIndex = headers.indexOf('provider');
+            const embedUrlIndex = headers.indexOf('embedUrl');
+            const fileUrlIndex = headers.indexOf('fileUrl');
+            const lessonTypeIndex = headers.indexOf('lessonType');
+            const lessonObjectiveIndex = headers.indexOf('lessonObjective');
+            const pdfUrlIndex = headers.indexOf('pdfUrl');
+            
+            if (unitIndex === -1 || typeIndex === -1 || titleIndex === -1) {
+                throw new Error('CSV file is missing required columns');
+            }
+            
+            // Parse and filter resources
+            const resources = [];
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const columns = line.split(',');
+                
+                // Check if this resource matches the selected book/unit/type
+                const unit = columns[unitIndex];
+                const type = columns[typeIndex];
+                
+                // For now, we're only supporting Book 1
+                if (bookId !== '1' || unit !== unitId) continue;
+                if (resourceType !== 'all' && type !== resourceType) continue;
+                
+                // Create resource object
+                const resource = {
+                    unit,
+                    type,
+                    title: columns[titleIndex],
+                    provider: providerIndex !== -1 ? columns[providerIndex] : '',
+                    embedUrl: embedUrlIndex !== -1 ? columns[embedUrlIndex] : '',
+                    fileUrl: fileUrlIndex !== -1 ? columns[fileUrlIndex] : '',
+                    lessonType: lessonTypeIndex !== -1 ? columns[lessonTypeIndex] : '',
+                    lessonObjective: lessonObjectiveIndex !== -1 ? columns[lessonObjectiveIndex] : '',
+                    pdfUrl: pdfUrlIndex !== -1 ? columns[pdfUrlIndex] : ''
+                };
+                
+                resources.push(resource);
+            }
+            
+            return resources;
+        }
+
+        // Display resources in the UI
+        function displayResources(resources) {
+            if (resources.length === 0) {
+                resourcesContainer.innerHTML = '<p>No resources found for the selected criteria.</p>';
+                return;
+            }
+            
+            resourcesContainer.innerHTML = '';
+            
+            resources.forEach(resource => {
+                const card = document.createElement('div');
+                card.className = 'resource-card';
+                
+                let typeClass = '';
+                switch (resource.type) {
+                    case 'video': typeClass = 'video-type'; break;
+                    case 'game': typeClass = 'game-type'; break;
+                    case 'pdf': typeClass = 'pdf-type'; break;
+                    case 'lesson': typeClass = 'lesson-type'; break;
+                }
+                
+                // Determine the URL to use
+                let url = '';
+                if (resource.type === 'pdf' && resource.pdfUrl) {
+                    url = resource.pdfUrl;
+                } else if (resource.embedUrl) {
+                    url = resource.embedUrl;
+                } else if (resource.fileUrl) {
+                    url = resource.fileUrl;
+                }
+                
+                // Create the card content
+                card.innerHTML = `
+                    <div class="resource-title">${resource.title}</div>
+                    <div class="resource-type ${typeClass}">${resource.type.charAt(0).toUpperCase() + resource.type.slice(1)}</div>
+                    <div class="resource-provider">Provider: ${resource.provider || 'N/A'}</div>
+                    ${resource.lessonType ? `<div>Lesson Type: ${resource.lessonType}</div>` : ''}
+                    ${resource.lessonObjective ? `<div>Objective: ${resource.lessonObjective}</div>` : ''}
+                    ${url ? `<a href="${url}" target="_blank" class="resource-link">View Resource</a>` : ''}
+                `;
+                
+                resourcesContainer.appendChild(card);
+            });
+        }
+
+        // Show error message
+        function showError(message) {
+            errorContainer.textContent = message;
+            errorContainer.style.display = 'block';
+        }
+
+        // Event listeners
+        bookSelect.addEventListener('change', updateUnitOptions);
+        loadBtn.addEventListener('click', fetchResources);
+
+        // Initialize the page
+        updateUnitOptions();
+    </script>
+</body>
+</html>

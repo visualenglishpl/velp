@@ -1,0 +1,84 @@
+Use a Centralized Generator Function per Unit
+Create one generator function per unit in the file:
+client/src/data/book1-unitX-implementation.ts (where X is unit number)
+
+Example:
+
+ts
+Copy
+Edit
+export const generateUnit1LessonPlans = (): LessonPlan[] => [
+  {
+    title: "Introduction to Classroom Rules",
+    objective: "Students will learn basic commands like 'Stand up', 'Sit down'.",
+    materials: ["Stand Up Sit Down song", "Flashcards", "Video player"],
+    activities: [
+      "Warm-up song",
+      "Command practice",
+      "Game: Simon Says"
+    ],
+    duration: "45 minutes",
+    relatedResources: ["video1", "game1"]
+  },
+  // ... more plans
+];
+✅ 2. Use Consistent Naming & Export Patterns
+Each unit file should export:
+
+generateUnitXLessonPlans() function
+
+Optionally, a book1UnitXImplementations array
+
+Make sure it's referenced in TeacherResources.tsx
+
+✅ 3. Automate With a Template / Generator Script
+If you're repeating similar structure, use a template like this:
+
+ts
+Copy
+Edit
+export const generateUnitLessonPlans = (unitTitle: string, resources: string[]): LessonPlan[] => [
+  {
+    title: `${unitTitle} – Main Lesson`,
+    objective: `Students will understand the theme of ${unitTitle}`,
+    materials: ["Video", "Flashcards", "Worksheets"],
+    activities: [
+      "Introduction",
+      "Video viewing",
+      "Group discussion",
+      "Game activity"
+    ],
+    duration: "45 minutes",
+    relatedResources: resources
+  },
+  // Add phonics/convo versions if needed
+];
+Then call:
+
+ts
+Copy
+Edit
+export const generateUnit6LessonPlans = () =>
+  generateUnitLessonPlans("My Favourite Colour", ["video1", "game1"]);
+✅ 4. Batch Create with Copilot / GPT + Copy-Paste Friendly JSON
+You can paste all your lesson content into a prompt like:
+
+“Turn this lesson plan into a JSON-compliant TypeScript object that matches this LessonPlan interface.”
+
+Or:
+
+“Make 3 lesson plans for Book 1 Unit 7 (At School) using this format: title, objective, materials, activities, duration, relatedResources[].”
+
+✅ 5. Register Them in TeacherResources.tsx
+Make sure in TeacherResources.tsx (or resourceRegistry.ts) you're importing and using them:
+
+ts
+Copy
+Edit
+import { generateUnit6LessonPlans } from '@/data/book1-unit6-implementation';
+
+// In resource loader:
+if (bookId === "1" && unitId === "6") {
+  lessonPlans = generateUnit6LessonPlans();
+}
+Would you like me to generate

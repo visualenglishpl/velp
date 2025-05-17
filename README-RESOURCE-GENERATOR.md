@@ -70,12 +70,12 @@ For a more maintainable approach, you can use the dynamic registration pattern t
 
 ```typescript
 // Define units with CSV-generated resources
-const csvGeneratedUnits = ['1', '2', '3', '4', '5', '6', '7', '8'];
+const csvGeneratedUnits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'];
 
 // Register all CSV-generated resources
 csvGeneratedUnits.forEach(unit => {
   registerResourceLoader('1', unit as UnitId, 
-    () => import(`@/data/book1-unit${unit}-resources`).then(m => m.default)
+    () => import(/* @vite-ignore */ `@/data/book1-unit${unit}-resources`).then(m => m.default)
   );
 });
 ```
@@ -149,6 +149,20 @@ You can customize the generator by:
 3. Changing the file naming conventions in the generator script
 4. Adapting the output format for different components
 
+## Implementation Status
+
+This approach has been successfully implemented for all 18 units of Book 1. Each unit now has its own set of resource files that organize videos, games, PDFs, and lesson plans in a consistent way.
+
+### Resources by Unit Type
+
+All Book 1 units (1-18) now have the following resources generated:
+- Video resources (YouTube instructional videos)
+- Game resources (Wordwall interactive games)
+- PDF resources (Visual English instructional PDFs)
+- Lesson plans (teaching guides)
+
+These resources are all accessible through the TeacherResourcesContainer component and are correctly registered in the resource registry.
+
 ## Benefits
 
 This CSV-based approach offers significant advantages:
@@ -161,3 +175,4 @@ This CSV-based approach offers significant advantages:
 6. **Proper PDF Organization**: PDF resources are now organized by unit, not all in Unit 1
 7. **Future-Proof Design**: Easy to extend to other books and resource types
 8. **Reduced Duplication**: Reuses common helper functions for resource creation
+9. **Quick Deployment**: New resources can be added in minutes rather than hours of manual coding

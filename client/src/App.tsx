@@ -197,6 +197,11 @@ function App() {
           <Route path="/book/:bookId">
             <SimpleContentViewer />
           </Route>
+          {/* TEST ROUTES */}
+          <Route path="/teacher-resources-test">
+            <TeacherResourcesTest />
+          </Route>
+          
           <ProtectedRoute path="/dashboard">
             <DashboardPage />
           </ProtectedRoute>
