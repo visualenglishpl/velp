@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Tester</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .note {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Visual English Resource Tester</h1>
+        
+        <div class="note">
+            <p><strong>Note:</strong> This page provides easy access to test the resource loading functionality.</p>
+        </div>
+        
+        <h2>Test Teacher Resources</h2>
+        <p>Use the link below to test the teacher resources for different books and units:</p>
+        <a href="/test-resources" class="button">Open Teacher Resources Test Page</a>
+        
+        <h2>Direct Book 1 Unit Tests</h2>
+        <p>Quick links to test specific units in Book 1:</p>
+        <ul>
+            <li><a href="/test-resources?book=1&unit=1">Book 1 Unit 1 Resources</a></li>
+            <li><a href="/test-resources?book=1&unit=2">Book 1 Unit 2 Resources</a></li>
+            <li><a href="/test-resources?book=1&unit=3">Book 1 Unit 3 Resources</a></li>
+        </ul>
+        
+        <h2>Debugging</h2>
+        <p>If resources are not displaying correctly:</p>
+        <ol>
+            <li>Check the browser console for error messages</li>
+            <li>Verify that all resource files exist in the correct location</li>
+            <li>Ensure the resource registry is properly configured</li>
+        </ol>
+    </div>
+</body>
+</html>

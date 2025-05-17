@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book 1 Unit 1 Resources Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .resource-list {
+            margin-top: 20px;
+        }
+        .resource-item {
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .resource-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .resource-description {
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .resource-type {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .type-video {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .type-game {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .type-pdf {
+            background-color: #f39c12;
+            color: white;
+        }
+        .type-lessonPlan {
+            background-color: #9b59b6;
+            color: white;
+        }
+        .debug-info {
+            background-color: #eee;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Book 1 Unit 1 Resources Test</h1>
+        
+        <div id="loading">Loading resources... Please wait.</div>
+        
+        <div id="resources-container" style="display: none;">
+            <div id="video-resources">
+                <h2>Video Resources</h2>
+                <div id="video-list" class="resource-list"></div>
+            </div>
+            
+            <div id="game-resources">
+                <h2>Game Resources</h2>
+                <div id="game-list" class="resource-list"></div>
+            </div>
+            
+            <div id="pdf-resources">
+                <h2>PDF Resources</h2>
+                <div id="pdf-list" class="resource-list"></div>
+            </div>
+            
+            <div id="lesson-resources">
+                <h2>Lesson Plan Resources</h2>
+                <div id="lesson-list" class="resource-list"></div>
+            </div>
+        </div>
+        
+        <div id="error-container" style="display: none;">
+            <h2 style="color: #e74c3c;">Error Loading Resources</h2>
+            <div id="error-message" style="color: #e74c3c;"></div>
+        </div>
+        
+        <h2>Debug Information</h2>
+        <div id="debug-info" class="debug-info">Initializing...</div>
+        
+        <div class="nav-buttons">
+            <a href="/test-resources" class="button">Go to Test Resources Page</a>
+            <a href="/test-resources?book=1&unit=2" class="button">View Book 1 Unit 2</a>
+        </div>
+    </div>
+
+    <script>
+        const debugLog = [];
+        function log(message) {
+            console.log(message);
+            debugLog.push(message);
+            document.getElementById('debug-info').textContent = debugLog.join('\n');
+        }
+        
+        async function loadResourceFile(path) {
+            try {
+                log(`Attempting to load ${path}`);
+                const response = await fetch(path);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${path}: ${response.status} ${response.statusText}`);
+                }
+                const module = await response.json();
+                log(`Successfully loaded ${path}`);
+                return module;
+            } catch (error) {
+                log(`Error loading ${path}: ${error.message}`);
+                return null;
+            }
+        }
+        
+        function displayResources(resources, containerId) {
+            const container = document.getElementById(containerId);
+            
+            if (!resources || resources.length === 0) {
+                container.innerHTML = '<div class="resource-item">No resources found.</div>';
+                return;
+            }
+            
+            let html = '';
+            resources.forEach(resource => {
+                html += `
+                    <div class="resource-item">
+                        <div class="resource-title">${resource.title}</div>
+                        <div class="resource-description">${resource.description || 'No description'}</div>
+                        <div>
+                            <span class="resource-type type-${resource.resourceType}">${resource.resourceType}</span>
+                            <span>Provider: ${resource.provider || 'Unknown'}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        async function loadAllResources() {
+            log('Starting to load Book 1 Unit 1 resources...');
+            
+            try {
+                // Phase 1: Try loading component resources directly
+                log('Phase 1: Loading individual component resources');
+                const videoResources = await loadResourceFile('/src/data/book1-unit1-video-resources.tsx');
+                const gameResources = await loadResourceFile('/src/data/book1-unit1-game-resources.tsx');
+                const pdfResources = await loadResourceFile('/src/data/book1-unit1-pdf-resources.tsx');
+                const lessonResources = await loadResourceFile('/src/data/book1-unit1-lesson-plans.tsx');
+                
+                let resourcesFound = false;
+                
+                if (videoResources) {
+                    displayResources(videoResources.default || [], 'video-list');
+                    resourcesFound = true;
+                }
+                
+                if (gameResources) {
+                    displayResources(gameResources.default || [], 'game-list');
+                    resourcesFound = true;
+                }
+                
+                if (pdfResources) {
+                    displayResources(pdfResources.default || [], 'pdf-list');
+                    resourcesFound = true;
+                }
+                
+                if (lessonResources) {
+                    displayResources(lessonResources.default || [], 'lesson-list');
+                    resourcesFound = true;
+                }
+                
+                // Phase 2: Try loading combined resources
+                if (!resourcesFound) {
+                    log('Phase 2: Loading combined resources file');
+                    const combinedResources = await loadResourceFile('/src/data/book1-unit1-resources.tsx');
+                    
+                    if (combinedResources && (combinedResources.default || combinedResources.book1Unit1Resources)) {
+                        const resources = combinedResources.default || combinedResources.book1Unit1Resources || [];
+                        log(`Found ${resources.length} resources in combined file`);
+                        
+                        const videos = resources.filter(r => r.resourceType === 'video');
+                        const games = resources.filter(r => r.resourceType === 'game');
+                        const pdfs = resources.filter(r => r.resourceType === 'pdf');
+                        const lessons = resources.filter(r => r.resourceType === 'lessonPlan');
+                        
+                        displayResources(videos, 'video-list');
+                        displayResources(games, 'game-list');
+                        displayResources(pdfs, 'pdf-list');
+                        displayResources(lessons, 'lesson-list');
+                        
+                        resourcesFound = true;
+                    }
+                }
+                
+                // Phase 3: Try fallback approach with direct API call
+                if (!resourcesFound) {
+                    log('Phase 3: Using direct API call to get resources');
+                    const apiResponse = await fetch('/api/teacher-resources?bookId=1&unitId=1');
+                    
+                    if (apiResponse.ok) {
+                        const resources = await apiResponse.json();
+                        log(`Found ${resources.length} resources from API`);
+                        
+                        const videos = resources.filter(r => r.resourceType === 'video');
+                        const games = resources.filter(r => r.resourceType === 'game');
+                        const pdfs = resources.filter(r => r.resourceType === 'pdf');
+                        const lessons = resources.filter(r => r.resourceType === 'lessonPlan');
+                        
+                        displayResources(videos, 'video-list');
+                        displayResources(games, 'game-list');
+                        displayResources(pdfs, 'pdf-list');
+                        displayResources(lessons, 'lesson-list');
+                        
+                        resourcesFound = true;
+                    } else {
+                        log(`API call failed: ${apiResponse.status} ${apiResponse.statusText}`);
+                    }
+                }
+                
+                if (resourcesFound) {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('resources-container').style.display = 'block';
+                } else {
+                    throw new Error('Failed to load resources through any method');
+                }
+                
+            } catch (error) {
+                log(`Error: ${error.message}`);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error-container').style.display = 'block';
+                document.getElementById('error-message').textContent = error.message;
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', loadAllResources);
+    </script>
+</body>
+</html>

@@ -319,24 +319,78 @@ for (let unitNum = 1; unitNum <= 18; unitNum++) {
     registerResourceLoader(bookId, unitId, async () => {
       try {
         console.log(`Loading Book 1 Unit ${unitNumber} resources directly...`);
-        // Direct import for Book 1 Unit resources
-        const module = await import(/* @vite-ignore */ `@/data/book1-unit${unitNumber}-resources`);
         
-        if (Array.isArray(module.default)) {
-          console.log(`Successfully loaded ${module.default.length} resources for Book 1 Unit ${unitNumber}`);
-          return module.default;
-        } else if (module[`book1Unit${unitNumber}Resources`] && Array.isArray(module[`book1Unit${unitNumber}Resources`])) {
-          console.log(`Successfully loaded ${module[`book1Unit${unitNumber}Resources`].length} resources via named export for Book 1 Unit ${unitNumber}`);
-          return module[`book1Unit${unitNumber}Resources`];
-        } else {
-          console.warn(`Failed to load Book 1 Unit ${unitNumber} resources, falling back to PDFs and lesson plans`);
-          // Fall back to PDFs and lesson plans
-          return [...(book1PdfResourcesByUnit[unitId] || []), ...(book1LessonPlansByUnit[unitId] || [])];
+        // PHASE 1: Try loading individual resource components
+        console.log(`PHASE 1: Loading individual component resources for Book 1 Unit ${unitNumber}`);
+        console.log(`Debugging Book 1 Unit ${unitNumber} - Here are the resource files being loaded:`);
+        console.log(`- Video resources: @/data/book1-unit${unitNumber}-video-resources`);
+        console.log(`- Game resources: @/data/book1-unit${unitNumber}-game-resources`);
+        console.log(`- PDF resources: @/data/book1-unit${unitNumber}-pdf-resources`);
+        console.log(`- Lesson plans: @/data/book1-unit${unitNumber}-lesson-plans`);
+        
+        try {
+          // Load each resource type individually
+          const videoModule = await import(`@/data/book1-unit${unitNumber}-video-resources`);
+          console.log(`Video module loaded successfully:`, Object.keys(videoModule));
+          
+          const gameModule = await import(`@/data/book1-unit${unitNumber}-game-resources`);
+          console.log(`Game module loaded successfully:`, Object.keys(gameModule));
+          
+          const pdfModule = await import(`@/data/book1-unit${unitNumber}-pdf-resources`);
+          console.log(`PDF module loaded successfully:`, Object.keys(pdfModule));
+          
+          const lessonModule = await import(`@/data/book1-unit${unitNumber}-lesson-plans`);
+          console.log(`Lesson module loaded successfully:`, Object.keys(lessonModule));
+          
+          // Combine all resources
+          const videoResources = videoModule.default || [];
+          const gameResources = gameModule.default || [];
+          const pdfResources = pdfModule.default || [];
+          const lessonResources = lessonModule.default || [];
+          
+          const combinedResources = [
+            ...videoResources,
+            ...gameResources,
+            ...pdfResources,
+            ...lessonResources
+          ];
+          
+          console.log(`SUCCESS: Loaded resources individually - Videos: ${videoResources.length}, Games: ${gameResources.length}, PDFs: ${pdfResources.length}, Lessons: ${lessonResources.length}`);
+          return combinedResources;
+        } catch (componentError) {
+          console.warn(`Failed loading component resources for Book 1 Unit ${unitNumber}:`, componentError.message);
         }
+        
+        // PHASE 2: Try loading the combined resources file
+        console.log(`PHASE 2: Trying combined resource file for Book 1 Unit ${unitNumber}`);
+        try {
+          // Direct import for Book 1 Unit resources
+          const module = await import(`@/data/book1-unit${unitNumber}-resources`);
+          
+          if (Array.isArray(module.default)) {
+            console.log(`SUCCESS: Resources loaded via default export: ${module.default.length}`);
+            return module.default;
+          } else if (module[`book1Unit${unitNumber}Resources`] && Array.isArray(module[`book1Unit${unitNumber}Resources`])) {
+            console.log(`SUCCESS: Resources loaded via named export: ${module[`book1Unit${unitNumber}Resources`].length}`);
+            return module[`book1Unit${unitNumber}Resources`];
+          } else {
+            console.warn(`Failed to find resources in module, structure:`, Object.keys(module));
+          }
+        } catch (moduleError) {
+          console.warn(`Failed loading combined resource file:`, moduleError.message);
+        }
+        
+        // PHASE 3: Fall back to PDF resources and lesson plans from global collections
+        console.log(`PHASE 3: Using fallback global PDF and lesson plan collections`);
+        const pdfResources = book1PdfResourcesByUnit[unitId] || [];
+        const lessonPlans = book1LessonPlansByUnit[unitId] || [];
+        const fallbackResources = [...pdfResources, ...lessonPlans];
+        
+        console.log(`Using ${fallbackResources.length} fallback resources (${pdfResources.length} PDFs, ${lessonPlans.length} lesson plans)`);
+        return fallbackResources;
       } catch (error) {
-        console.error(`Error loading Book 1 Unit ${unitNumber} resources:`, error);
-        // Fall back to PDFs and lesson plans
-        return [...(book1PdfResourcesByUnit[unitId] || []), ...(book1LessonPlansByUnit[unitId] || [])];
+        console.error(`All resource loading methods failed for Book 1 Unit ${unitNumber}:`, error);
+        return [];
       }
     });
   }
