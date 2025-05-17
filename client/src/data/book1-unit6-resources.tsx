@@ -80,10 +80,25 @@ export const book1Unit6GameResources: TeacherResource[] = [
   }
 ];
 
+// PDF resources for Unit 6
+export const book1Unit6PdfResources: TeacherResource[] = [
+  {
+    id: "book1-unit6-pdf1",
+    bookId: "1",
+    unitId: "6",
+    title: "Visual English Book 1 - Unit 6 - Resources",
+    resourceType: "pdf",
+    provider: "S3",
+    sourceUrl: "https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/book1/unit6/12+A+Visual+English+Book+1+%E2%80%93+Unit+6+%E2%80%93+Linki+Do+Filmy+I+Gry.pdf",
+    description: "PDF guide with links to videos and games for teaching Unit 6 (My Favourite Colour)."
+  }
+];
+
 // Combined resources for Unit 6
 export const book1Unit6Resources: TeacherResource[] = [
   ...book1Unit6VideoResources,
-  ...book1Unit6GameResources
+  ...book1Unit6GameResources,
+  ...book1Unit6PdfResources
 ];
 
 // Export a getter function to match the pattern used elsewhere

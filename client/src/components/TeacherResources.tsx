@@ -103,7 +103,7 @@ import { generateBook1Unit2LessonPlans } from '@/data/book1-unit2-implementation
 import { generateUnit3LessonPlans as generateBook1Unit3LessonPlans } from '@/data/book1-unit3-implementation';
 import { generateUnit4LessonPlans as generateBook1Unit4LessonPlans } from '@/data/book1-unit4-implementation';
 import { generateUnit6LessonPlans as generateBook1Unit6LessonPlans } from '@/data/book1-unit6-implementation';
-import { getBook1Unit6Resources } from '@/data/book1-unit6-implementation';
+import { getBook1Unit6Resources } from '@/data/book1-unit6-resources';
 import { getBook1Unit7Resources, generateUnit7LessonPlans as generateBook1Unit7LessonPlans } from '@/data/book1-unit7-implementation';
 import { getBook1Unit8Resources, generateUnit8LessonPlans as generateBook1Unit8LessonPlans } from '@/data/book1-unit8-implementation';
 import { getBook1Unit9Resources, generateUnit9LessonPlans as generateBook1Unit9LessonPlans } from '@/data/book1-unit9-implementation';
@@ -1703,6 +1703,8 @@ const TeacherResources = ({ bookId, unitId, isEditMode: propIsEditMode, resource
         return book1Unit5Resources;
       } else if (unitId === '6') {
         console.log('Loading Book 1 Unit 6 resources');
+        // Use setDynamicLessonPlans to load the lesson plans too
+        setDynamicLessonPlans(generateBook1Unit6LessonPlans());
         return book1Unit6Resources;
       } else if (unitId === '7') {
         console.log('Loading Book 1 Unit 7 resources');
