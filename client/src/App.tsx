@@ -16,6 +16,7 @@ import AboutPage from "./public/AboutPage";
 import LoginPage from "./public/LoginPage";
 import StandaloneLoginPage from "./public/StandaloneLoginPage";
 import DirectAdminLogin from "./public/DirectAdminLogin";
+import BookPreviewPage from "./public/BookPreviewPage";
 
 // Original paths - still used until migration is complete
 import MethodPage from "./pages/MethodPage";
@@ -126,6 +127,9 @@ function App() {
           {/* PUBLIC ROUTES - No authentication required */}
           <Route path="/">
             <HomePage />
+          </Route>
+          <Route path="/preview">
+            <BookPreviewPage />
           </Route>
           <Route path="/method">
             <MethodPage />
