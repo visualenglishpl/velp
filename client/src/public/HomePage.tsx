@@ -15,11 +15,10 @@ const HomePage = () => {
         <PricingPlans />
       </section>
       
-      {/* Book Previews Section */}
-      <section id="book-previews" className="py-16 bg-gray-50">
+      {/* "Try Before You Subscribe" Banner - links to existing book thumbnails */}
+      <section className="py-12 bg-gradient-to-r from-blue-50 to-purple-50">
         <div className="container mx-auto px-4">
-          {/* Preview CTA Banner - based on the image provided */}
-          <div className="mb-12 bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="flex flex-col md:flex-row items-center p-8">
               <div className="flex-1 pr-0 md:pr-8 mb-6 md:mb-0">
                 <h2 className="text-3xl font-bold mb-3">Try Before You Subscribe</h2>
@@ -30,7 +29,7 @@ const HomePage = () => {
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a 
-                    href="#book-previews" 
+                    href="#books" 
                     className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
                   >
                     <span className="mr-2">▶</span> View Book Previews
@@ -57,202 +56,6 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold mb-2">Visual English Books</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Browse our comprehensive collection of Visual English books designed for all learning levels.
-              Each book offers a preview of its content with the first 15 slides available to explore.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {/* Book 0a */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#FF40FF' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-white" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 0A</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">Starters</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 0b */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#FF7F27' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-white" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 0B</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">Juniors</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 0c */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#00CEDD' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-white" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 0C</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">Elementary</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 1 */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#FFFF00' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-black" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 1</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">18 Units</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 2 */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#9966CC' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-white" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 2</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">18 Units</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 3 */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#00CC00' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-white" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 3</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">18 Units</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 4 */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#5DADEC' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-white" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 4</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">16 Units</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 5 */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#00CC66' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-white" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 5</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">16 Units</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 6 */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#FF0000' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-white" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 6</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">16 Units</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            
-            {/* Book 7 */}
-            <a href="/preview" className="block group">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all group-hover:shadow-lg">
-                <div className="p-4" style={{ backgroundColor: '#00FF00' }}>
-                  <div className="flex justify-center items-center h-20">
-                    <BookIcon className="h-10 w-10 text-black" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-center mb-1">Visual English 7</h3>
-                  <p className="text-sm text-gray-600 text-center mb-2">16 Units</p>
-                  <div className="flex justify-center">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">Preview Available</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          
-          <div className="text-center mt-8">
-            <a href="/preview" className="inline-flex items-center justify-center px-5 py-3 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors">
-              View Detailed Previews
-            </a>
           </div>
         </div>
       </section>
