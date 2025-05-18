@@ -29,6 +29,7 @@ import DpaPage from "./pages/DpaPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import UnitCheckoutPage from "./pages/UnitCheckoutPage";
+import BookSubscription from "./pages/BookSubscription";
 import BookWizardPage from "./pages/BookWizardPage";
 import LessonPlanPreview from "./pages/LessonPlanPreview";
 
@@ -167,6 +168,9 @@ function App() {
           </Route>
           <Route path="/checkout/unit">
             <UnitCheckoutPage />
+          </Route>
+          <Route path="/checkout/book">
+            <BookSubscription />
           </Route>
           <Route path="/checkout/book-wizard">
             <BookWizardPage />

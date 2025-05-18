@@ -107,12 +107,12 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Visual English Series Books - Added based on screenshot */}
+      {/* Visual English Series Books */}
       <section id="books" className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold">Visual English Series</h2>
-            <p className="text-gray-600 mt-2">Choose a book to preview content or start your free trial</p>
+            <p className="text-gray-600 mt-2">Choose a book to start your free trial</p>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
@@ -120,7 +120,7 @@ const HomePage = () => {
               <Card 
                 key={book.id}
                 className="flex flex-col items-center p-4 hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => window.location.href = `/checkout/free_trial?book=${book.id}`}
+                onClick={() => window.location.href = `/checkout/book?book=${book.id}`}
               >
                 <div 
                   className="w-24 h-24 rounded-md mb-3 flex items-center justify-center"
