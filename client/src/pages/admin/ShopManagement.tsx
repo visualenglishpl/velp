@@ -346,7 +346,7 @@ export default function ShopManagement() {
 
       {/* Main content tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
+        <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger value="subscriptions" className="flex items-center">
             <CreditCard className="h-4 w-4 mr-2" />
             Subscriptions
@@ -354,10 +354,6 @@ export default function ShopManagement() {
           <TabsTrigger value="printed_books" className="flex items-center">
             <BookOpen className="h-4 w-4 mr-2" />
             Printed Books
-          </TabsTrigger>
-          <TabsTrigger value="teaching_resources" className="flex items-center">
-            <FileText className="h-4 w-4 mr-2" />
-            Teaching Resources
           </TabsTrigger>
         </TabsList>
 
@@ -377,7 +373,7 @@ export default function ShopManagement() {
               return (
                 <Card 
                   key={subscription.id} 
-                  className={`${subscription.isActive ? "" : "border-dashed opacity-70"} overflow-hidden ${subscription.type === 'free_trial' ? "ring-2 ring-green-500" : ""}`}
+                  className={`${subscription.isActive ? "" : "border-dashed opacity-70"} overflow-hidden h-full flex flex-col ${subscription.type === 'free_trial' ? "ring-2 ring-green-500" : ""}`}
                 >
                   <div className="p-3 relative" style={{ backgroundColor: subscriptionColor }}>
                     {subscription.type === 'free_trial' && (
@@ -398,39 +394,41 @@ export default function ShopManagement() {
                   </div>
                   <CardHeader className="pb-2 pt-3">
                     <div className="text-center">
-                      <CardTitle className="text-base">{subscription.name}</CardTitle>
-                      <CardDescription className="text-xs">
+                      <CardTitle className="text-base h-6">{subscription.name}</CardTitle>
+                      <CardDescription className="text-xs h-4">
                         {subscription.type === 'free_trial' 
                           ? `Limited Access` 
                           : subscription.duration === 'monthly' ? 'Monthly' : 'Annual'}
                       </CardDescription>
                     </div>
                   </CardHeader>
-                  <CardContent className="pb-2 px-3 text-center">
+                  <CardContent className="pb-2 px-3 text-center flex-grow">
                     {subscription.type === 'free_trial' ? (
-                      <div>
-                        <div className="mb-1">
-                          <span className="text-xl font-bold text-green-600">€0</span>
+                      <div className="flex flex-col h-full">
+                        <div className="mb-2">
+                          <span className="text-2xl font-bold text-green-600">€0</span>
                         </div>
-                        <div className="text-xs text-gray-500 space-y-1">
+                        <div className="text-xs text-gray-500 space-y-1 mt-2">
                           <div>• {subscription.trialDetails?.downloadLimit} downloads max</div>
                           <div>• {subscription.trialDetails?.unitsLimit} unit access</div>
                           <div>• {subscription.trialDetails?.requiresCreditCard ? "Requires credit card" : "No credit card needed"}</div>
                         </div>
                       </div>
                     ) : (
-                      <div>
-                        <div className="mb-2">
-                          <span className="text-xl font-bold">€{subscription.price}</span>
+                      <div className="flex flex-col h-full">
+                        <div>
+                          <span className="text-2xl font-bold">€{subscription.price}</span>
                           <span className="text-sm text-gray-500 ml-1">/{subscription.duration === 'monthly' ? 'mo' : 'yr'}</span>
                         </div>
                         {subscription.discountedPrice && subscription.discountedPrice > 0 && (
-                          <div className="mb-2 text-sm">
+                          <div className="mt-2">
                             <Badge variant="outline" className="bg-green-50 text-green-700">
                               Save €{subscription.discountedPrice - subscription.price}
                             </Badge>
                           </div>
                         )}
+                        {/* Spacer div to push content to top */}
+                        <div className="flex-grow"></div>
                       </div>
                     )}
                     {!subscription.isActive && (
@@ -439,7 +437,7 @@ export default function ShopManagement() {
                       </Badge>
                     )}
                   </CardContent>
-                  <CardFooter className="pt-2 border-t flex justify-center space-x-2 px-3 pb-3">
+                  <CardFooter className="pt-2 border-t flex justify-center space-x-2 px-3 pb-3 mt-auto">
                     <Button 
                       variant="outline" 
                       size="sm" 
@@ -489,6 +487,17 @@ export default function ShopManagement() {
 
         {/* Printed Books Tab */}
         <TabsContent value="printed_books">
+          {/* Volume discount info banner */}
+          <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-green-50 border border-green-200 rounded-lg shadow-sm">
+            <div className="flex items-center">
+              <ShoppingBag className="h-8 w-8 text-green-600 mr-3" />
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800">Volume Discount Available</h3>
+                <p className="text-sm text-gray-600">Order 10-20 books and get 15% off the total price. Great for schools and language centers!</p>
+              </div>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {printedBooks.map((book) => {
               // Define book-specific colors
@@ -508,7 +517,7 @@ export default function ShopManagement() {
               }
               
               return (
-                <Card key={book.id} className={`${book.isActive ? "" : "border-dashed opacity-70"} overflow-hidden`}>
+                <Card key={book.id} className={`${book.isActive ? "" : "border-dashed opacity-70"} overflow-hidden h-full flex flex-col`}>
                   <div className="p-3" style={{ backgroundColor: bookColor }}>
                     <div className="flex justify-center items-center h-24">
                       <BookOpen className="h-12 w-12 text-white" />
@@ -516,24 +525,28 @@ export default function ShopManagement() {
                   </div>
                   <CardHeader className="pb-2 pt-3">
                     <div className="text-center">
-                      <CardTitle className="text-base">{book.name}</CardTitle>
-                      <CardDescription className="text-xs">ID: {book.bookId}</CardDescription>
+                      <CardTitle className="text-base h-6">{book.name}</CardTitle>
+                      <CardDescription className="text-xs h-4">ID: {book.bookId}</CardDescription>
                     </div>
                   </CardHeader>
-                  <CardContent className="pb-2 px-3 text-center">
-                    <div className="mb-2">
-                      <span className="text-xl font-bold">€{book.price}</span>
-                    </div>
-                    <div className="flex justify-center space-x-2">
-                      <Badge variant="outline">Stock: {book.inventory}</Badge>
-                      {!book.isActive && (
-                        <Badge variant="outline" className="bg-amber-50 text-amber-700">
-                          Inactive
-                        </Badge>
-                      )}
+                  <CardContent className="pb-2 px-3 text-center flex-grow">
+                    <div className="flex flex-col h-full">
+                      <div>
+                        <span className="text-2xl font-bold">€{book.price}</span>
+                      </div>
+                      <div className="flex justify-center mt-2 space-x-2">
+                        <Badge variant="outline">Stock: {book.inventory}</Badge>
+                        {!book.isActive && (
+                          <Badge variant="outline" className="bg-amber-50 text-amber-700">
+                            Inactive
+                          </Badge>
+                        )}
+                      </div>
+                      {/* Spacer div to push content to top */}
+                      <div className="flex-grow"></div>
                     </div>
                   </CardContent>
-                  <CardFooter className="pt-2 border-t flex justify-center space-x-2 px-3 pb-3">
+                  <CardFooter className="pt-2 border-t flex justify-center space-x-2 px-3 pb-3 mt-auto">
                     <Button 
                       variant="outline" 
                       size="sm" 
