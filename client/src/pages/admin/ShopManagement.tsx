@@ -27,16 +27,23 @@ import { Link } from 'wouter';
 // Define types for shop items
 interface ShopItem {
   id: number;
-  type: 'subscription' | 'printed_book' | 'resource';
+  type: 'subscription' | 'printed_book' | 'resource' | 'free_trial';
   name: string;
   description: string;
   price: number;
   discountedPrice?: number;
   isActive: boolean;
-  duration?: string; // For subscriptions: "monthly", "yearly"
+  duration?: string; // For subscriptions: "monthly", "yearly" or "trial"
   bookId?: string; // For printed books
   inventory?: number; // For printed books
   imageUrl?: string;
+  trialDetails?: {
+    days: number;
+    downloadLimit?: number;
+    booksLimit?: number;
+    unitsLimit?: number;
+    requiresCreditCard?: boolean;
+  };
 }
 
 // Mock data for subscriptions
@@ -80,6 +87,21 @@ const subscriptions: ShopItem[] = [
     discountedPrice: 300,
     isActive: true,
     duration: 'yearly'
+  },
+  {
+    id: 15,
+    type: 'free_trial',
+    name: 'Free 7-Day Trial',
+    description: 'Limited access to teaching materials with download restrictions',
+    price: 0,
+    isActive: true,
+    duration: 'trial',
+    trialDetails: {
+      days: 7,
+      downloadLimit: 3,
+      unitsLimit: 1,
+      requiresCreditCard: true
+    }
   }
 ];
 
@@ -88,32 +110,102 @@ const printedBooks: ShopItem[] = [
   {
     id: 5,
     type: 'printed_book',
+    name: 'Visual English Book 0a',
+    description: 'Physical printed copy of Visual English Book 0a',
+    price: 20,
+    isActive: true,
+    bookId: '0a',
+    inventory: 50
+  },
+  {
+    id: 6,
+    type: 'printed_book',
+    name: 'Visual English Book 0b',
+    description: 'Physical printed copy of Visual English Book 0b',
+    price: 20,
+    isActive: true,
+    bookId: '0b',
+    inventory: 75
+  },
+  {
+    id: 7,
+    type: 'printed_book',
+    name: 'Visual English Book 0c',
+    description: 'Physical printed copy of Visual English Book 0c',
+    price: 20,
+    isActive: true,
+    bookId: '0c',
+    inventory: 30
+  },
+  {
+    id: 8,
+    type: 'printed_book',
     name: 'Visual English Book 1',
     description: 'Physical printed copy of Visual English Book 1',
     price: 20,
     isActive: true,
     bookId: '1',
-    inventory: 50
+    inventory: 55
   },
   {
-    id: 6,
+    id: 9,
     type: 'printed_book',
     name: 'Visual English Book 2',
     description: 'Physical printed copy of Visual English Book 2',
     price: 20,
     isActive: true,
     bookId: '2',
-    inventory: 75
+    inventory: 60
   },
   {
-    id: 7,
+    id: 10,
     type: 'printed_book',
     name: 'Visual English Book 3',
     description: 'Physical printed copy of Visual English Book 3',
     price: 20,
     isActive: true,
     bookId: '3',
-    inventory: 30
+    inventory: 45
+  },
+  {
+    id: 11,
+    type: 'printed_book',
+    name: 'Visual English Book 4',
+    description: 'Physical printed copy of Visual English Book 4',
+    price: 20,
+    isActive: true,
+    bookId: '4',
+    inventory: 40
+  },
+  {
+    id: 12,
+    type: 'printed_book',
+    name: 'Visual English Book 5',
+    description: 'Physical printed copy of Visual English Book 5',
+    price: 20,
+    isActive: true,
+    bookId: '5',
+    inventory: 35
+  },
+  {
+    id: 13,
+    type: 'printed_book',
+    name: 'Visual English Book 6',
+    description: 'Physical printed copy of Visual English Book 6',
+    price: 20,
+    isActive: true,
+    bookId: '6',
+    inventory: 25
+  },
+  {
+    id: 14,
+    type: 'printed_book',
+    name: 'Visual English Book 7',
+    description: 'Physical printed copy of Visual English Book 7',
+    price: 20,
+    isActive: true,
+    bookId: '7',
+    inventory: 20
   }
 ];
 
@@ -156,17 +248,26 @@ export default function ShopManagement() {
   const [editedItem, setEditedItem] = useState<ShopItem | null>(null);
 
   // Handle creating a new shop item
-  const handleCreate = (type: 'subscription' | 'printed_book' | 'resource') => {
+  const handleCreate = (type: 'subscription' | 'printed_book' | 'resource' | 'free_trial') => {
     const newItem: ShopItem = {
       id: Math.max(...subscriptions.map(s => s.id), ...printedBooks.map(b => b.id), ...teachingResources.map(r => r.id)) + 1,
       type,
       name: '',
       description: '',
-      price: 0,
+      price: type === 'free_trial' ? 0 : 0,
       isActive: true,
       ...(type === 'subscription' ? { duration: 'monthly' } : {}),
       ...(type === 'printed_book' ? { bookId: '', inventory: 0 } : {}),
-      ...(type === 'resource' ? { bookId: '' } : {})
+      ...(type === 'resource' ? { bookId: '' } : {}),
+      ...(type === 'free_trial' ? { 
+        duration: 'trial',
+        trialDetails: {
+          days: 7,
+          downloadLimit: 3,
+          unitsLimit: 1,
+          requiresCreditCard: true
+        }
+      } : {})
     };
     
     setCurrentItem(newItem);
@@ -245,7 +346,7 @@ export default function ShopManagement() {
 
       {/* Main content tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 mb-8">
+        <TabsList className="grid w-full grid-cols-3 mb-8">
           <TabsTrigger value="subscriptions" className="flex items-center">
             <CreditCard className="h-4 w-4 mr-2" />
             Subscriptions
@@ -253,10 +354,6 @@ export default function ShopManagement() {
           <TabsTrigger value="printed_books" className="flex items-center">
             <BookOpen className="h-4 w-4 mr-2" />
             Printed Books
-          </TabsTrigger>
-          <TabsTrigger value="pricing_display" className="flex items-center">
-            <PackageOpen className="h-4 w-4 mr-2" />
-            Pricing Display
           </TabsTrigger>
           <TabsTrigger value="teaching_resources" className="flex items-center">
             <FileText className="h-4 w-4 mr-2" />
@@ -266,134 +363,213 @@ export default function ShopManagement() {
 
         {/* Subscriptions Tab */}
         <TabsContent value="subscriptions">
-          <div className="grid md:grid-cols-2 gap-6">
-            {subscriptions.map((subscription) => (
-              <Card key={subscription.id} className={subscription.isActive ? "" : "border-dashed opacity-70"}>
-                <CardHeader className="pb-3">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle>{subscription.name}</CardTitle>
-                      <CardDescription>{subscription.duration === 'monthly' ? 'Monthly Subscription' : 'Annual Subscription'}</CardDescription>
-                    </div>
-                    <div className="flex space-x-1">
-                      {!subscription.isActive && (
-                        <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
-                          Inactive
-                        </Badge>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {subscriptions.map((subscription) => {
+              // Define subscription-specific colors
+              let subscriptionColor = "#6366f1"; // Default indigo
+              
+              if (subscription.type === 'free_trial') {
+                subscriptionColor = "#10b981"; // Green for free trial
+              } else if (subscription.duration === 'yearly') {
+                subscriptionColor = "#8b5cf6"; // Purple for yearly
+              }
+              
+              return (
+                <Card 
+                  key={subscription.id} 
+                  className={`${subscription.isActive ? "" : "border-dashed opacity-70"} overflow-hidden ${subscription.type === 'free_trial' ? "ring-2 ring-green-500" : ""}`}
+                >
+                  <div className="p-3 relative" style={{ backgroundColor: subscriptionColor }}>
+                    {subscription.type === 'free_trial' && (
+                      <div className="absolute top-0 right-0 bg-white text-green-600 font-bold text-xs px-2 py-1 rounded-bl-md">
+                        FREE TRIAL
+                      </div>
+                    )}
+                    <div className="flex justify-center items-center h-24">
+                      {subscription.type === 'free_trial' ? (
+                        <div className="flex flex-col items-center">
+                          <CreditCard className="h-10 w-10 text-white mb-1" />
+                          <span className="text-white font-bold text-sm">{subscription.trialDetails?.days} Days</span>
+                        </div>
+                      ) : (
+                        <CreditCard className="h-12 w-12 text-white" />
                       )}
                     </div>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-sm text-gray-500 mb-4">{subscription.description}</div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <span className="text-2xl font-bold">€{subscription.price}</span>
-                      {subscription.discountedPrice > 0 && (
-                        <span className="ml-2 text-sm text-gray-500 line-through">€{subscription.discountedPrice}</span>
-                      )}
-                      <span className="text-sm text-gray-500 ml-1">/{subscription.duration === 'monthly' ? 'month' : 'year'}</span>
+                  <CardHeader className="pb-2 pt-3">
+                    <div className="text-center">
+                      <CardTitle className="text-base">{subscription.name}</CardTitle>
+                      <CardDescription className="text-xs">
+                        {subscription.type === 'free_trial' 
+                          ? `Limited Access` 
+                          : subscription.duration === 'monthly' ? 'Monthly' : 'Annual'}
+                      </CardDescription>
                     </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="pt-3 border-t flex justify-end space-x-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => handleEdit(subscription)}
-                  >
-                    <Pencil className="h-4 w-4 mr-2" />
-                    Edit
-                  </Button>
-                  <Button 
-                    variant="destructive" 
-                    size="sm" 
-                    onClick={() => handleDelete(subscription.id)}
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
+                  </CardHeader>
+                  <CardContent className="pb-2 px-3 text-center">
+                    {subscription.type === 'free_trial' ? (
+                      <div>
+                        <div className="mb-1">
+                          <span className="text-xl font-bold text-green-600">€0</span>
+                        </div>
+                        <div className="text-xs text-gray-500 space-y-1">
+                          <div>• {subscription.trialDetails?.downloadLimit} downloads max</div>
+                          <div>• {subscription.trialDetails?.unitsLimit} unit access</div>
+                          <div>• {subscription.trialDetails?.requiresCreditCard ? "Requires credit card" : "No credit card needed"}</div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div className="mb-2">
+                          <span className="text-xl font-bold">€{subscription.price}</span>
+                          <span className="text-sm text-gray-500 ml-1">/{subscription.duration === 'monthly' ? 'mo' : 'yr'}</span>
+                        </div>
+                        {subscription.discountedPrice && subscription.discountedPrice > 0 && (
+                          <div className="mb-2 text-sm">
+                            <Badge variant="outline" className="bg-green-50 text-green-700">
+                              Save €{subscription.discountedPrice - subscription.price}
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {!subscription.isActive && (
+                      <Badge variant="outline" className="bg-amber-50 text-amber-700">
+                        Inactive
+                      </Badge>
+                    )}
+                  </CardContent>
+                  <CardFooter className="pt-2 border-t flex justify-center space-x-2 px-3 pb-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => handleEdit(subscription)}
+                      className="px-2"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                      variant="default" 
+                      size="sm" 
+                      style={{ backgroundColor: subscriptionColor }}
+                      onClick={() => handleEdit(subscription)}
+                      className="flex-1"
+                    >
+                      Manage
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => handleDelete(subscription.id)}
+                      className="px-2"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+              );
+            })}
             {/* Add subscription card */}
-            <Card className="border-dashed border-2 flex flex-col items-center justify-center p-6 h-full">
-              <ShoppingBag className="h-12 w-12 text-gray-300 mb-4" />
-              <h3 className="text-lg font-medium text-gray-700 mb-2">Add New Subscription</h3>
-              <p className="text-sm text-gray-500 text-center mb-4">Create a new subscription plan for your users</p>
-              <Button onClick={() => handleCreate('subscription')}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Subscription
-              </Button>
+            <Card className="border-dashed border-2 flex flex-col items-center justify-center p-6">
+              <CreditCard className="h-12 w-12 text-gray-300 mb-4" />
+              <h3 className="text-lg font-medium text-gray-700 mb-2 text-center">Add Plan</h3>
+              <div className="flex flex-col space-y-2">
+                <Button onClick={() => handleCreate('subscription')} size="sm">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Subscription
+                </Button>
+                <Button onClick={() => handleCreate('free_trial')} size="sm" variant="outline" className="border-green-500 text-green-600 hover:bg-green-50">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Free Trial
+                </Button>
+              </div>
             </Card>
           </div>
         </TabsContent>
 
         {/* Printed Books Tab */}
         <TabsContent value="printed_books">
-          <div className="grid md:grid-cols-2 gap-6">
-            {printedBooks.map((book) => (
-              <Card key={book.id} className={book.isActive ? "" : "border-dashed opacity-70"}>
-                <CardHeader className="pb-3">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle>{book.name}</CardTitle>
-                      <CardDescription>Book ID: {book.bookId}</CardDescription>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {printedBooks.map((book) => {
+              // Define book-specific colors
+              let bookColor = "";
+              switch(book.bookId) {
+                case '0a': bookColor = "#FF40FF"; break; // Pink
+                case '0b': bookColor = "#FF7F27"; break; // Orange
+                case '0c': bookColor = "#00CEDD"; break; // Teal
+                case '1': bookColor = "#FFFF00"; break;  // Yellow
+                case '2': bookColor = "#9966CC"; break;  // Purple
+                case '3': bookColor = "#00CC00"; break;  // Green
+                case '4': bookColor = "#5DADEC"; break;  // Blue
+                case '5': bookColor = "#00CC66"; break;  // Green
+                case '6': bookColor = "#FF0000"; break;  // Red
+                case '7': bookColor = "#00FF00"; break;  // Bright Green
+                default: bookColor = "#6b7280"; break;   // Gray
+              }
+              
+              return (
+                <Card key={book.id} className={`${book.isActive ? "" : "border-dashed opacity-70"} overflow-hidden`}>
+                  <div className="p-3" style={{ backgroundColor: bookColor }}>
+                    <div className="flex justify-center items-center h-24">
+                      <BookOpen className="h-12 w-12 text-white" />
                     </div>
-                    <div className="flex space-x-1">
+                  </div>
+                  <CardHeader className="pb-2 pt-3">
+                    <div className="text-center">
+                      <CardTitle className="text-base">{book.name}</CardTitle>
+                      <CardDescription className="text-xs">ID: {book.bookId}</CardDescription>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pb-2 px-3 text-center">
+                    <div className="mb-2">
+                      <span className="text-xl font-bold">€{book.price}</span>
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <Badge variant="outline">Stock: {book.inventory}</Badge>
                       {!book.isActive && (
-                        <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                        <Badge variant="outline" className="bg-amber-50 text-amber-700">
                           Inactive
                         </Badge>
                       )}
-                      {(book.inventory && book.inventory < 10) && (
-                        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
-                          Low Stock: {book.inventory}
-                        </Badge>
-                      )}
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-sm text-gray-500 mb-4">{book.description}</div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <span className="text-2xl font-bold">€{book.price}</span>
-                      {book.discountedPrice && (
-                        <span className="ml-2 text-sm text-gray-500 line-through">€{book.discountedPrice}</span>
-                      )}
-                    </div>
-                    <Badge variant="outline">Stock: {book.inventory}</Badge>
-                  </div>
-                </CardContent>
-                <CardFooter className="pt-3 border-t flex justify-end space-x-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => handleEdit(book)}
-                  >
-                    <Pencil className="h-4 w-4 mr-2" />
-                    Edit
-                  </Button>
-                  <Button 
-                    variant="destructive" 
-                    size="sm" 
-                    onClick={() => handleDelete(book.id)}
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
+                  </CardContent>
+                  <CardFooter className="pt-2 border-t flex justify-center space-x-2 px-3 pb-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => handleEdit(book)}
+                      className="px-2"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                      variant="default" 
+                      size="sm" 
+                      style={{ backgroundColor: bookColor }}
+                      onClick={() => handleEdit(book)}
+                      className="flex-1"
+                    >
+                      Manage
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => handleDelete(book.id)}
+                      className="px-2"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+              );
+            })}
             {/* Add book card */}
-            <Card className="border-dashed border-2 flex flex-col items-center justify-center p-6 h-full">
+            <Card className="border-dashed border-2 flex flex-col items-center justify-center p-6">
               <BookOpen className="h-12 w-12 text-gray-300 mb-4" />
-              <h3 className="text-lg font-medium text-gray-700 mb-2">Add New Printed Book</h3>
-              <p className="text-sm text-gray-500 text-center mb-4">Add a new printed book product to your shop</p>
-              <Button onClick={() => handleCreate('printed_book')}>
+              <h3 className="text-lg font-medium text-gray-700 mb-2 text-center">Add Book</h3>
+              <Button onClick={() => handleCreate('printed_book')} size="sm" className="mt-2">
                 <Plus className="h-4 w-4 mr-2" />
-                Add Printed Book
+                Add
               </Button>
             </Card>
           </div>
