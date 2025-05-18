@@ -274,311 +274,297 @@ export function SimpleContentViewer() {
             {materials.length} slides • Slide {currentSlide + 1} of {materials.length}
           </p>
         </div>
-        
-        <Tabs 
-          value={activeTab} 
-          onValueChange={setActiveTab}
-          className="w-full md:w-auto"
-        >
+      </div>
+      
+      <Separator className="mb-4" />
+      
+      {/* Main tabs component with proper nesting */}
+      <Tabs 
+        value={activeTab} 
+        onValueChange={setActiveTab}
+        className="flex-1 flex flex-col"
+      >
+        <div className="mb-4">
           <TabsList>
             <TabsTrigger value="content">Content</TabsTrigger>
             {showTeacherResources() && (
               <TabsTrigger value="resources">Teacher Resources</TabsTrigger>
             )}
           </TabsList>
-        </Tabs>
-      </div>
-      
-      <Separator className="mb-4" />
-      
-      {/* Content tab */}
-      <TabsContent value="content" className="flex-1 flex flex-col">
-        {/* Navigation controls */}
-        <div className="flex justify-between mb-4">
-          <Button
-            onClick={() => navigate('/')}
-            variant="outline"
-            size="sm"
-            className="flex items-center gap-1"
-          >
-            <Home className="h-4 w-4" />
-            <span className="hidden md:inline">Back to Books</span>
-          </Button>
-          
-          <div className="flex gap-2">
+        </div>
+        
+        {/* Content tab */}
+        <TabsContent value="content" className="flex-1 flex flex-col">
+          {/* Navigation controls */}
+          <div className="flex justify-between mb-4">
             <Button
-              onClick={toggleFullscreen}
+              onClick={() => navigate('/')}
               variant="outline"
               size="sm"
               className="flex items-center gap-1"
             >
-              {isFullscreen ? (
-                <>
-                  <Minimize2 className="h-4 w-4" />
-                  <span className="hidden md:inline">Exit Fullscreen</span>
-                </>
-              ) : (
-                <>
-                  <Maximize2 className="h-4 w-4" />
-                  <span className="hidden md:inline">Fullscreen</span>
-                </>
-              )}
+              <Home className="h-4 w-4" />
+              <span className="hidden md:inline">Back to Books</span>
             </Button>
+            
+            <div className="flex gap-2">
+              <Button
+                onClick={toggleFullscreen}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-1"
+              >
+                {isFullscreen ? (
+                  <>
+                    <Minimize2 className="h-4 w-4" />
+                    <span className="hidden md:inline">Exit Fullscreen</span>
+                  </>
+                ) : (
+                  <>
+                    <Maximize2 className="h-4 w-4" />
+                    <span className="hidden md:inline">Fullscreen</span>
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
-        </div>
-      
-        {/* Slider with images */}
-        <div className="relative h-full">
-          <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
-            {materials.map((material, index) => {
-              const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
-              
-              // Check for video content using multiple indicators
-              const isVideo = material.content.toLowerCase().includes('video') || 
-                             material.content.toLowerCase().endsWith('.mp4') ||
-                             (material.title && material.title.toLowerCase().includes('video')) ||
-                             (material.description && material.description.toLowerCase().includes('video')) ||
-                             material.contentType === 'VIDEO' ||
-                             material.contentType === 'video';
-                             
-              // Log video detection for debugging
-              if (isVideo) {
-                console.log(`Video detected: ${material.content}`, {
-                  contentType: material.contentType,
-                  title: material.title,
-                  description: material.description
-                });
-              }
-              
-              // Check if the current user is an admin
-              const isAdmin = user?.role === 'admin';
-              
-              // Premium content conditions:
-              // 1. Regular slides: index >= freeSlideLimit and !hasPaidAccess and not admin
-              // 2. ALL videos: isVideo and !hasPaidAccess and not admin  
-              const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess && !isAdmin;
-              
-              // Log premium content decision for debugging
-              if ((index >= freeSlideLimit || isVideo) && isAdmin) {
-                console.log(`Admin bypass for premium content: ${material.content}`);
-              }
-              
-              return (
-                <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
-                  {/* Question-Answer section above image - Only show if a question exists */}
-                  {(() => {
-                    // First check if we have a question from our Q&A mapping system
-                    const qa = getQuestionAnswer(material);
-                    
-                    // Check if question data exists (either from mapping or title format)
-                    const hasQuestion = qa.hasData || 
-                                       (material.title && (material.title.includes('?') || material.title.includes('→')));
-                    
-                    // If no question data exists for this image, don't render the Q&A section at all
-                    if (!hasQuestion) return null;
-                    
-                    // Otherwise, render the Q&A section
-                    return (
-                      <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
-                        <div className="flex flex-col gap-0.5">
-                          {(() => {
-                            // Display data from our Q&A mapping if available
-                            if (qa.hasData) {
-                              return (
-                                <>
-                                  {qa.country && (
-                                    <div className="mb-1 flex items-center justify-center">
-                                      <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
-                                        {qa.country}
-                                      </h3>
+        
+          {/* Slider with images */}
+          <div className="relative h-full">
+            <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
+              {materials.map((material, index) => {
+                const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+                
+                // Check for video content using multiple indicators
+                const isVideo = material.content.toLowerCase().includes('video') || 
+                               material.content.toLowerCase().endsWith('.mp4') ||
+                               (material.title && material.title.toLowerCase().includes('video')) ||
+                               (material.description && material.description.toLowerCase().includes('video')) ||
+                               material.contentType === 'VIDEO' ||
+                               material.contentType === 'video';
+                               
+                // Log video detection for debugging
+                if (isVideo) {
+                  console.log(`Video detected: ${material.content}`, {
+                    contentType: material.contentType,
+                    title: material.title,
+                    description: material.description
+                  });
+                }
+                
+                // Check if the current user is an admin
+                const isAdmin = user?.role === 'admin';
+                
+                // Premium content conditions:
+                // 1. Regular slides: index >= freeSlideLimit and !hasPaidAccess and not admin
+                // 2. ALL videos: isVideo and !hasPaidAccess and not admin  
+                const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess && !isAdmin;
+                
+                // Log premium content decision for debugging
+                if ((index >= freeSlideLimit || isVideo) && isAdmin) {
+                  console.log(`Admin bypass for premium content: ${material.content}`);
+                }
+                
+                return (
+                  <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
+                    {/* Question-Answer section above image - Only show if a question exists */}
+                    {(() => {
+                      // First check if we have a question from our Q&A mapping system
+                      const qa = getQuestionAnswer(material);
+                      
+                      // Check if question data exists (either from mapping or title format)
+                      const hasQuestion = qa.hasData || 
+                                         (material.title && (material.title.includes('?') || material.title.includes('→')));
+                      
+                      // If no question data exists for this image, don't render the Q&A section at all
+                      if (!hasQuestion) return null;
+                      
+                      // Otherwise, render the Q&A section
+                      return (
+                        <div className="mb-1 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg shadow-sm mx-auto z-10 max-w-2xl border border-blue-100">
+                          <div className="flex flex-col gap-0.5">
+                            {(() => {
+                              // Display data from our Q&A mapping if available
+                              if (qa.hasData) {
+                                return (
+                                  <>
+                                    {qa.country && (
+                                      <div className="mb-1 flex items-center justify-center">
+                                        <h3 className="text-base font-bold text-blue-800 bg-white py-0.5 px-3 rounded-full shadow-sm border border-blue-200">
+                                          {qa.country}
+                                        </h3>
+                                      </div>
+                                    )}
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">{qa.question}</span>
                                     </div>
-                                  )}
-                                  <div className="flex gap-2">
-                                    <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                    <span className="text-gray-800 text-base">{qa.question}</span>
-                                  </div>
-                                  <div className="flex gap-2 mt-2">
-                                    <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                    <span className="font-medium text-indigo-900 text-base">{qa.answer}</span>
-                                  </div>
-                                </>
-                              );
-                            }
-                          
-                            // Check for arrow format (question → answer)
-                            if (material.title.includes('→')) {
-                              const [question, answer] = material.title.split('→').map(part => part.trim());
-                              return (
-                                <>
-                                  <div className="flex gap-2">
-                                    <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                    <span className="text-gray-800 text-base">{question}</span>
-                                  </div>
-                                  <div className="flex gap-2 mt-2">
-                                    <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                    <span className="font-medium text-indigo-900 text-base">{answer}</span>
-                                  </div>
-                                </>
-                              );
-                            }
-                            
-                            // Check for question mark format
-                            if (material.title.includes('?')) {
-                              return (
-                                <>
-                                  <div className="flex gap-2">
-                                    <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
-                                    <span className="text-gray-800 text-base">{material.title}</span>
-                                  </div>
-                                  {material.description && (
                                     <div className="flex gap-2 mt-2">
                                       <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
-                                      <span className="font-medium text-indigo-900 text-base">{material.description}</span>
+                                      <span className="font-medium text-indigo-900 text-base">{qa.answer}</span>
                                     </div>
-                                  )}
-                                </>
-                              );
-                            }
+                                  </>
+                                );
+                              }
                             
-                            // Default case
-                            if (!material.title.startsWith('Content from')) {
-                              return (
-                                <div className="flex gap-2">
-                                  <span className="font-medium text-gray-800 text-base">{material.title}</span>
-                                </div>
-                              );
-                            }
+                              // Check for arrow format (question → answer)
+                              if (material.title.includes('→')) {
+                                const [question, answer] = material.title.split('→').map(part => part.trim());
+                                return (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">{question}</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">{answer}</span>
+                                    </div>
+                                  </>
+                                );
+                              }
+                              
+                              // Check for question format
+                              if (material.title.includes('?')) {
+                                return (
+                                  <>
+                                    <div className="flex gap-2">
+                                      <span className="font-bold text-blue-700 min-w-[24px]">Q:</span>
+                                      <span className="text-gray-800 text-base">{material.title}</span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                      <span className="font-bold text-indigo-700 min-w-[24px]">A:</span>
+                                      <span className="font-medium text-indigo-900 text-base">{material.description || ''}</span>
+                                    </div>
+                                  </>
+                                );
+                              }
+                              
+                              // Default case
+                              if (!material.title.startsWith('Content from')) {
+                                return (
+                                  <div className="flex gap-2">
+                                    <span className="font-medium text-gray-800 text-base">{material.title}</span>
+                                  </div>
+                                );
+                              }
+                              
+                              return null;
+                            })()}
                             
-                            return null;
-                          })()}
-                          
-                          {/* Show description if not shown as answer */}
-                          {material.description && !material.title.includes('?') && !material.title.includes('→') && (
-                            <div className="mt-2 text-sm text-gray-600">{material.description}</div>
-                          )}
+                            {/* Show description if not shown as answer */}
+                            {material.description && !material.title.includes('?') && !material.title.includes('→') && (
+                              <div className="mt-2 text-sm text-gray-600">{material.description}</div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })()}
+                    
+                    {/* Premium content overlay */}
+                    {isPremiumContent && (
+                      <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center">
+                        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md text-center">
+                          <h3 className="text-xl font-bold mb-2">Premium Content</h3>
+                          <p className="mb-4">This slide requires a subscription to view.</p>
+                          <Button 
+                            onClick={() => navigate('/checkout')}
+                            className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                          >
+                            Get Premium Access
+                          </Button>
                         </div>
                       </div>
-                    );
-                  })()}
-                  
-                  {/* Premium content overlay */}
-                  {isPremiumContent && (
-                    <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center">
-                      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md text-center">
-                        <h3 className="text-xl font-bold mb-2">Premium Content</h3>
-                        <p className="mb-4">This slide requires a subscription to view.</p>
-                        <Button 
-                          onClick={() => navigate('/checkout')}
-                          className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-                        >
-                          Get Premium Access
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Centered content container */}
-                  <div className="flex items-center justify-center w-full h-full">
-                    {/* Check if content is a video */}
-                    {material.content.toLowerCase().includes('video') || 
-                     material.content.toLowerCase().endsWith('.mp4') ? (
-                      <video 
-                        src={imagePath}
-                        controls
-                        className="max-h-full max-w-full object-contain mx-auto shadow-lg"
-                        poster="/assets/video-placeholder.jpg"
-                      >
-                        Your browser does not support the video tag.
-                      </video>
-                    ) : (
-                      /* Regular image content */
-                      <img 
-                        src={imagePath}
-                        alt={material.title || `Slide ${index + 1}`}
-                        className="max-h-full max-w-full object-contain mx-auto shadow-lg"
-                      />
                     )}
+                    
+                    {/* Centered content container */}
+                    <div className="flex items-center justify-center w-full h-full">
+                      {/* Check if content is a video */}
+                      {material.content.toLowerCase().includes('video') || 
+                       material.content.toLowerCase().endsWith('.mp4') ? (
+                        <video 
+                          src={imagePath}
+                          controls
+                          className="max-h-full max-w-full object-contain mx-auto shadow-lg"
+                          poster="/assets/video-placeholder.jpg"
+                        />
+                      ) : (
+                        // Regular image
+                        <img
+                          src={imagePath}
+                          alt={material.title || `Slide ${index + 1}`}
+                          className="max-h-full max-w-full object-contain mx-auto shadow-lg"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                    
+                    {/* Slide number indicator */}
+                    <div className="absolute bottom-2 right-2 bg-white bg-opacity-70 px-2 py-1 rounded text-xs font-semibold text-gray-600">
+                      {index + 1} / {materials.length}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </Slider>
-          
-          {/* Navigation buttons */}
-          <button
-            onClick={() => sliderRef.current?.slickPrev()}
-            className={`absolute top-1/2 left-0 z-20 transform -translate-y-1/2 bg-white/80 hover:bg-white/90 p-2 rounded-r-lg shadow-md ${
-              currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : 'opacity-100'
-            }`}
-            disabled={currentSlide === 0}
-          >
-            <ChevronLeft className="h-6 w-6 text-gray-700" />
-          </button>
-          
-          <button
-            onClick={() => sliderRef.current?.slickNext()}
-            className={`absolute top-1/2 right-0 z-20 transform -translate-y-1/2 bg-white/80 hover:bg-white/90 p-2 rounded-l-lg shadow-md ${
-              currentSlide === materials.length - 1 ? 'opacity-50 cursor-not-allowed' : 'opacity-100'
-            }`}
-            disabled={currentSlide === materials.length - 1}
-          >
-            <ChevronRight className="h-6 w-6 text-gray-700" />
-          </button>
-        </div>
-      </TabsContent>
-      
-      {/* Teacher Resources Tab */}
-      {showTeacherResources() && (
-        <TabsContent value="resources" className="flex-1">
-          <Tabs defaultValue="videos">
-            <TabsList className="mb-4">
-              <TabsTrigger value="videos">Videos</TabsTrigger>
-              <TabsTrigger value="games">Games</TabsTrigger>
-              <TabsTrigger value="pdfs">PDFs</TabsTrigger>
-              <TabsTrigger value="lessons">Lesson Plans</TabsTrigger>
-            </TabsList>
-            
-            {/* Single resource list with all resources */}
-            <TabsContent value="videos">
-              <ResourceList 
-                resources={videoResources} 
-                onSearch={() => {}} 
-                readOnly={true}
-                hideTabsInContentViewer={true}
-              />
-            </TabsContent>
-            
-            {/* Games Content */}
-            <TabsContent value="games">
-              <ResourceList 
-                resources={wordwallGames} 
-                onSearch={() => {}} 
-                readOnly={true}
-                hideTabsInContentViewer={true}
-              />
-            </TabsContent>
-            
-            {/* PDFs Content */}
-            <TabsContent value="pdfs">
-              <ResourceList 
-                resources={pdfResources} 
-                onSearch={() => {}} 
-                readOnly={true}
-                hideTabsInContentViewer={true}
-              />
-            </TabsContent>
-            
-            {/* Lesson Plans Content */}
-            <TabsContent value="lessons">
-              <SideBySideLessonPlanView 
-                resources={lessonPlans} 
-                bookId={bookId} 
-                unitId={unitId}
-              />
-            </TabsContent>
-          </Tabs>
+                );
+              })}
+            </Slider>
+          </div>
         </TabsContent>
-      )}
+        
+        {/* Resources tab */}
+        {showTeacherResources() && (
+          <TabsContent value="resources" className="flex-1">
+            <div className="mb-4">
+              <Tabs defaultValue="videos">
+                <TabsList>
+                  <TabsTrigger value="videos">Videos</TabsTrigger>
+                  <TabsTrigger value="games">Games</TabsTrigger>
+                  <TabsTrigger value="pdfs">PDFs</TabsTrigger>
+                  <TabsTrigger value="lessons">Lessons</TabsTrigger>
+                </TabsList>
+                
+                {/* Videos Content */}
+                <TabsContent value="videos">
+                  <ResourceList 
+                    resources={videoResources} 
+                    onSearch={() => {}} 
+                    readOnly={true}
+                    hideTabsInContentViewer={true}
+                  />
+                </TabsContent>
+                
+                {/* Games Content */}
+                <TabsContent value="games">
+                  <ResourceList 
+                    resources={wordwallGames} 
+                    onSearch={() => {}} 
+                    readOnly={true}
+                    hideTabsInContentViewer={true}
+                  />
+                </TabsContent>
+                
+                {/* PDFs Content */}
+                <TabsContent value="pdfs">
+                  <ResourceList 
+                    resources={pdfResources} 
+                    onSearch={() => {}} 
+                    readOnly={true}
+                    hideTabsInContentViewer={true}
+                  />
+                </TabsContent>
+                
+                {/* Lesson Plans Content */}
+                <TabsContent value="lessons">
+                  <SideBySideLessonPlanView 
+                    resources={lessonPlans} 
+                    bookId={bookId} 
+                    unitId={unitId}
+                  />
+                </TabsContent>
+              </Tabs>
+            </div>
+          </TabsContent>
+        )}
+      </Tabs>
     </div>
   );
 }
