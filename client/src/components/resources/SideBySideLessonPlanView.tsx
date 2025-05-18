@@ -50,46 +50,10 @@ export function SideBySideLessonPlanView({
   
   return (
     <div className="space-y-4">
-      {/* Controls header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-primary/5 rounded-lg p-3">
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-5 w-5 text-primary" />
-          <h2 className="font-medium">Book {bookId}, Unit {unitId} Lesson Plan</h2>
-        </div>
-        
-        <div className="flex flex-wrap gap-2">
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={() => setLayout('split')}
-            className={layout === 'split' ? 'bg-primary/10' : ''}
-          >
-            <ArrowLeftRight className="h-4 w-4 mr-1" />
-            <span>Side-by-Side</span>
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={() => setLayout('resources')}
-            className={layout === 'resources' ? 'bg-primary/10' : ''}
-          >
-            <FileCog className="h-4 w-4 mr-1" />
-            <span>Resources</span>
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={() => setLayout('plan')}
-            className={layout === 'plan' ? 'bg-primary/10' : ''}
-          >
-            <FileText className="h-4 w-4 mr-1" />
-            <span>Lesson Plan</span>
-          </Button>
-          <Button variant="outline" size="sm">
-            <Printer className="h-4 w-4 mr-1" />
-            <span>Print</span>
-          </Button>
-        </div>
+      {/* Simple header - no buttons */}
+      <div className="flex items-center gap-3 bg-primary/5 rounded-lg p-3">
+        <BookOpen className="h-5 w-5 text-primary" />
+        <h2 className="font-medium">Book {bookId}, Unit {unitId} Lesson Plan</h2>
       </div>
       
       {/* Main content area */}
@@ -99,45 +63,8 @@ export function SideBySideLessonPlanView({
           <div className={layout === 'resources' ? 'col-span-full' : ''}>
             <Card>
               <CardHeader className="bg-primary/5 pb-3">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center">
                   <CardTitle className="text-lg">Unit Resources</CardTitle>
-                  <div className="flex gap-1">
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className={resourceType === 'all' ? 'bg-primary/10' : ''}
-                      onClick={() => setResourceType('all')}
-                    >
-                      All ({resourceCounts.all})
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      className={resourceType === 'video' ? 'bg-primary/10' : ''}
-                      onClick={() => setResourceType('video')}
-                    >
-                      <Video className="h-4 w-4 mr-1" />
-                      Videos ({resourceCounts.video})
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      className={resourceType === 'game' ? 'bg-primary/10' : ''}
-                      onClick={() => setResourceType('game')}
-                    >
-                      <Gamepad2 className="h-4 w-4 mr-1" />
-                      Games ({resourceCounts.game})
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      className={resourceType === 'pdf' ? 'bg-primary/10' : ''}
-                      onClick={() => setResourceType('pdf')}
-                    >
-                      <FileText className="h-4 w-4 mr-1" />
-                      PDFs ({resourceCounts.pdf})
-                    </Button>
-                  </div>
                 </div>
               </CardHeader>
               
@@ -168,16 +95,11 @@ export function SideBySideLessonPlanView({
           <div className={layout === 'plan' ? 'col-span-full' : ''}>
             <Card>
               <CardHeader className="bg-primary/5 pb-3">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center">
                   <CardTitle className="text-lg flex items-center">
                     <Clock className="h-4 w-4 mr-2" />
                     <span>45-Minute Detailed Lesson Plan</span>
                   </CardTitle>
-                  
-                  <Button variant="outline" size="sm">
-                    <Download className="h-4 w-4 mr-1" />
-                    <span>Save</span>
-                  </Button>
                 </div>
               </CardHeader>
               
