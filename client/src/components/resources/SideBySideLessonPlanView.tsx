@@ -6,7 +6,6 @@ import { Separator } from '@/components/ui/separator';
 import { ResourceList } from './ResourceList';
 import { TeacherResource } from '@/types/TeacherResource';
 import { LessonPlanTemplate } from './LessonPlanTemplate';
-import { SlidesBasedLessonPlan } from './SlidesBasedLessonPlan';
 import {
   ArrowLeftRight,
   BookOpen,
@@ -17,8 +16,7 @@ import {
   Printer,
   Video,
   Gamepad2,
-  FileCog,
-  Layers
+  FileCog
 } from 'lucide-react';
 
 interface SideBySideLessonPlanViewProps {
@@ -84,8 +82,8 @@ export function SideBySideLessonPlanView({
             onClick={() => setLayout('plan')}
             className={layout === 'plan' ? 'bg-primary/10' : ''}
           >
-            <Layers className="h-4 w-4 mr-1" />
-            <span>Slides-Based Plan</span>
+            <FileText className="h-4 w-4 mr-1" />
+            <span>Lesson Plan</span>
           </Button>
           <Button variant="outline" size="sm">
             <Printer className="h-4 w-4 mr-1" />
@@ -172,8 +170,8 @@ export function SideBySideLessonPlanView({
               <CardHeader className="bg-primary/5 pb-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg flex items-center">
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    <span>Detailed Lesson Plan</span>
+                    <Clock className="h-4 w-4 mr-2" />
+                    <span>45-Minute Detailed Lesson Plan</span>
                   </CardTitle>
                   
                   <Button variant="outline" size="sm">

@@ -15,7 +15,6 @@ import { useTeacherResources } from '@/hooks/useTeacherResources';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { LessonPlanTemplate } from './LessonPlanTemplate';
-import { SlidesBasedLessonPlan } from './SlidesBasedLessonPlan';
 import {
   Select,
   SelectContent,

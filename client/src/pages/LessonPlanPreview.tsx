@@ -3,7 +3,7 @@ import { useTeacherResources } from '@/hooks/useTeacherResources';
 import { SideBySideLessonPlanView } from '@/components/resources/SideBySideLessonPlanView';
 import { Button } from '@/components/ui/button';
 import { BookId, UnitId } from '@/types/content';
-import { BookOpen, ArrowLeft, Layers } from 'lucide-react';
+import { BookOpen, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
 
 export default function LessonPlanPreview() {
@@ -50,8 +50,8 @@ export default function LessonPlanPreview() {
     <div className="container py-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <h1 className="text-2xl font-bold flex items-center">
-          <Layers className="h-6 w-6 mr-2 text-primary" />
-          Slides-Based Lesson Plan
+          <BookOpen className="h-6 w-6 mr-2 text-primary" />
+          Detailed Lesson Plan
         </h1>
         
         <Link to="/test-resources">

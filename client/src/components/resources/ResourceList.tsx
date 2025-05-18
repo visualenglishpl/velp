@@ -227,13 +227,6 @@ export function ResourceList({
                         <Film className="h-10 w-10 text-white/80" />
                       </div>
                     )}
-                    
-                    {/* Source Label - YouTube */}
-                    {youtubeId && (
-                      <div className="absolute top-0 right-0 bg-red-600 text-white text-xs px-2 py-1 rounded-bl-lg font-medium">
-                        YouTube
-                      </div>
-                    )}
                     {/* Play button overlay */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
                       <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
@@ -265,10 +258,6 @@ export function ResourceList({
               // Extract Wordwall ID if available
               const wordwallId = resource.wordwallGameId || 
                 (resource.sourceUrl ? extractWordwallGameId(resource.sourceUrl) : '');
-              
-              // Generate Wordwall thumbnail if ID is available
-              const wordwallThumbnailUrl = wordwallId ? 
-                `https://wordwall.net/resource/thumbnail/${wordwallId}` : '';
                 
               return (
                 <div 
@@ -277,40 +266,8 @@ export function ResourceList({
                   onClick={() => handlePreview(resource)}
                 >
                   <div className="relative aspect-video bg-indigo-50 flex flex-col items-center justify-center">
-                    {/* Game preview thumbnail */}
-                    {wordwallThumbnailUrl ? (
-                      <>
-                        <img 
-                          src={wordwallThumbnailUrl} 
-                          alt={cleanTitle}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            // Safer error handling
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.style.display = 'none';
-                            const parent = e.currentTarget.parentElement;
-                            if (parent) {
-                              const fallbackIcon = parent.querySelector('.fallback-icon');
-                              if (fallbackIcon && fallbackIcon instanceof HTMLElement) {
-                                fallbackIcon.style.display = 'block';
-                              }
-                            }
-                          }}
-                        />
-                        <div className="fallback-icon hidden">
-                          <Gamepad className="h-12 w-12 text-indigo-400 mb-2" />
-                        </div>
-                      </>
-                    ) : (
-                      <Gamepad className="h-12 w-12 text-indigo-400 mb-2" />
-                    )}
-                    
-                    {/* Source label */}
-                    {wordwallId && (
-                      <div className="absolute top-0 right-0 bg-purple-600 text-white text-xs px-2 py-1 rounded-bl-lg">
-                        Wordwall
-                      </div>
-                    )}
+                    {/* Game preview placeholder */}
+                    <Gamepad className="h-12 w-12 text-indigo-400 mb-2" />
                     
                     {/* Play button overlay */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors">
