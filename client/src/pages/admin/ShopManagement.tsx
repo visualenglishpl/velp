@@ -20,7 +20,14 @@ import {
   Pencil, 
   Trash2, 
   ChevronLeft,
-  ArrowLeft
+  ArrowLeft,
+  Package,
+  ShoppingCart,
+  Percent,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  Search
 } from 'lucide-react';
 import { Link } from 'wouter';
 
@@ -346,7 +353,7 @@ export default function ShopManagement() {
 
       {/* Main content tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-8">
+        <TabsList className="grid w-full grid-cols-4 mb-8">
           <TabsTrigger value="subscriptions" className="flex items-center">
             <CreditCard className="h-4 w-4 mr-2" />
             Subscriptions
@@ -354,6 +361,14 @@ export default function ShopManagement() {
           <TabsTrigger value="printed_books" className="flex items-center">
             <BookOpen className="h-4 w-4 mr-2" />
             Printed Books
+          </TabsTrigger>
+          <TabsTrigger value="orders" className="flex items-center">
+            <ShoppingCart className="h-4 w-4 mr-2" />
+            Orders
+          </TabsTrigger>
+          <TabsTrigger value="discount_codes" className="flex items-center">
+            <Percent className="h-4 w-4 mr-2" />
+            Discount Codes
           </TabsTrigger>
         </TabsList>
 
@@ -484,16 +499,207 @@ export default function ShopManagement() {
             </Card>
           </div>
         </TabsContent>
+        
+        {/* Orders Tab */}
+        <TabsContent value="orders">
+          <Card>
+            <CardHeader>
+              <div className="flex flex-wrap justify-between items-center">
+                <div>
+                  <CardTitle>Customer Orders</CardTitle>
+                  <CardDescription>Manage and process customer orders</CardDescription>
+                </div>
+                <div className="flex space-x-2 mt-2 sm:mt-0">
+                  <div className="relative">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+                    <Input placeholder="Search orders..." className="pl-8 w-[200px]" />
+                  </div>
+                  <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                    <option value="all">All Orders</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Order ID</TableHead>
+                    <TableHead>Customer</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Items</TableHead>
+                    <TableHead>Total</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">#ORD-5592</TableCell>
+                    <TableCell>Jan Kowalski</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        <Calendar className="mr-2 h-4 w-4 text-gray-500" />
+                        <span>May 12, 2025</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>Visual English Book 1, 2, 3</TableCell>
+                    <TableCell>€80.00</TableCell>
+                    <TableCell>
+                      <Badge className="bg-yellow-100 text-yellow-800 border-yellow-300">
+                        <Clock className="mr-1 h-3 w-3" /> Processing
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="outline" size="sm">
+                        Details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">#ORD-5591</TableCell>
+                    <TableCell>Maria Nowak</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        <Calendar className="mr-2 h-4 w-4 text-gray-500" />
+                        <span>May 10, 2025</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>Annual Subscription (Whole Book)</TableCell>
+                    <TableCell>€180.00</TableCell>
+                    <TableCell>
+                      <Badge className="bg-green-100 text-green-800 border-green-300">
+                        <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="outline" size="sm">
+                        Details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              <div className="flex justify-center mt-6">
+                <div className="flex space-x-2">
+                  <Button variant="outline" size="sm">Previous</Button>
+                  <Button variant="outline" size="sm" className="bg-primary text-primary-foreground">1</Button>
+                  <Button variant="outline" size="sm">2</Button>
+                  <Button variant="outline" size="sm">3</Button>
+                  <Button variant="outline" size="sm">Next</Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        {/* Discount Codes Tab */}
+        <TabsContent value="discount_codes">
+          <Card>
+            <CardHeader>
+              <div className="flex flex-wrap justify-between items-center">
+                <div>
+                  <CardTitle>Discount Codes</CardTitle>
+                  <CardDescription>Create and manage promotional discount codes</CardDescription>
+                </div>
+                <Button>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create New Code
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Code</TableHead>
+                    <TableHead>Discount</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Expiration</TableHead>
+                    <TableHead>Used</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium uppercase">SUMMER25</TableCell>
+                    <TableCell>25%</TableCell>
+                    <TableCell>Subscription</TableCell>
+                    <TableCell>June 30, 2025</TableCell>
+                    <TableCell>15 / 50</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="bg-green-50 text-green-700">
+                        Active
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end space-x-2">
+                        <Button variant="outline" size="sm">
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button variant="outline" size="sm" className="text-red-500">
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium uppercase">SCHOOL15</TableCell>
+                    <TableCell>15%</TableCell>
+                    <TableCell>Books</TableCell>
+                    <TableCell>December 31, 2025</TableCell>
+                    <TableCell>8 / 100</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="bg-green-50 text-green-700">
+                        Active
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end space-x-2">
+                        <Button variant="outline" size="sm">
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button variant="outline" size="sm" className="text-red-500">
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         {/* Printed Books Tab */}
         <TabsContent value="printed_books">
-          {/* Volume discount info banner */}
-          <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-green-50 border border-green-200 rounded-lg shadow-sm">
-            <div className="flex items-center">
-              <ShoppingBag className="h-8 w-8 text-green-600 mr-3" />
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800">Volume Discount Available</h3>
-                <p className="text-sm text-gray-600">Order 10-20 books and get 15% off the total price. Great for schools and language centers!</p>
+          {/* Info banners */}
+          <div className="mb-6 space-y-4">
+            {/* Volume discount info banner */}
+            <div className="p-4 bg-gradient-to-r from-blue-50 to-green-50 border border-green-200 rounded-lg shadow-sm">
+              <div className="flex items-center">
+                <ShoppingBag className="h-8 w-8 text-green-600 mr-3" />
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800">Volume Discount Available</h3>
+                  <p className="text-sm text-gray-600">Order 10-20 books and get 15% off the total price. Great for schools and language centers!</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Delivery cost info banner */}
+            <div className="p-4 bg-gradient-to-r from-blue-50 to-amber-50 border border-amber-200 rounded-lg shadow-sm">
+              <div className="flex items-center">
+                <Package className="h-8 w-8 text-amber-600 mr-3" />
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800">Delivery Information</h3>
+                  <p className="text-sm text-gray-600">All printed books have a standard delivery fee of 20zł with DPD. Books are typically delivered within 2-5 business days.</p>
+                </div>
               </div>
             </div>
           </div>
