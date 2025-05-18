@@ -54,6 +54,7 @@ import UnitsManagementPage from "./secure/admin/UnitsManagementPage";
 import AdminPage from "./secure/admin/AdminPage";
 import BooksManagementPage from "./secure/admin/BooksManagementPage";
 import BooksManagement from "./secure/admin/BooksManagement";
+import SiteSettingsPage from "./secure/admin/SiteSettingsPage";
 
 // Original paths - still used until migration is complete
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
@@ -239,7 +240,7 @@ function App() {
             <ShopManagement />
           </AdminRoute>
           <AdminRoute path="/admin/settings">
-            <DevToolsPage settingsPlaceholder />
+            <SiteSettingsPage />
           </AdminRoute>
           <AdminRoute path="/admin/users">
             <DevToolsPage usersPlaceholder />
