@@ -7,6 +7,7 @@ import CookieConsent from "./components/CookieConsent";
 import ProtectedRoute from "./components/auth/ProtectedRouteWithHook";
 import AdminRoute from "./components/auth/AdminRoute";
 import { useAuth } from "./hooks/use-auth";
+import ShopManagement from "./pages/admin/ShopManagement";
 
 // Public pages (no login required)
 // Migrated to /public folder
@@ -231,7 +232,7 @@ function App() {
             <UnitsManagementPage />
           </AdminRoute>
           <AdminRoute path="/admin/shop">
-            <DevToolsPage shopPlaceholder />
+            <ShopManagement />
           </AdminRoute>
           <AdminRoute path="/admin/settings">
             <DevToolsPage settingsPlaceholder />
