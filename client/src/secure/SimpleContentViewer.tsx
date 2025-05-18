@@ -95,9 +95,31 @@ export function SimpleContentViewer() {
   const user = { role: 'admin' };
   
   // Extract book and unit information from the URL
-  const params = new URLSearchParams(location.split('?')[1]);
-  const bookPath = params.get('book') || '1';
-  const unitPath = params.get('unit') || '1';
+  // Check if we're using the /book/:bookId/unit/:unitId format or query params
+  const urlParts = location.split('/');
+  let bookPath = '1';
+  let unitPath = '1';
+  
+  if (location.includes('/book/') && location.includes('/unit/')) {
+    // Extract from path format: /book/1/unit/2
+    const bookIndex = urlParts.indexOf('book');
+    const unitIndex = urlParts.indexOf('unit');
+    
+    if (bookIndex !== -1 && bookIndex + 1 < urlParts.length) {
+      bookPath = urlParts[bookIndex + 1];
+    }
+    
+    if (unitIndex !== -1 && unitIndex + 1 < urlParts.length) {
+      unitPath = urlParts[unitIndex + 1];
+    }
+  } else {
+    // Extract from query string: /viewer?book=1&unit=1
+    const params = new URLSearchParams(location.split('?')[1] || '');
+    bookPath = params.get('book') || '1';
+    unitPath = params.get('unit') || '1';
+  }
+  
+  console.log('Detected book/unit paths:', { bookPath, unitPath });
   
   // Format book/unit IDs for display
   const bookId = bookPath.replace(/^0/, ''); // Remove leading zero if present
@@ -257,6 +279,41 @@ export function SimpleContentViewer() {
             <Home className="mr-2 h-4 w-4" />
             Return to Home
           </Button>
+        </div>
+      </div>
+    );
+  }
+  
+  // Empty materials state (no materials found)
+  if (materials && materials.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="max-w-md p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <h2 className="text-lg font-bold text-blue-700 mb-2">No Content Available</h2>
+          <p className="text-blue-600">
+            No materials were found for Book {bookId}, Unit {unitId}.
+          </p>
+          <p className="text-blue-600 mt-2">
+            This could be because the content hasn't been uploaded yet or the book/unit path is incorrect.
+          </p>
+          <div className="mt-4 flex flex-col gap-2">
+            <Button 
+              onClick={() => navigate('/')} 
+              variant="outline" 
+              className="inline-flex items-center"
+            >
+              <Home className="mr-2 h-4 w-4" />
+              Return to Home
+            </Button>
+            
+            <Button 
+              onClick={() => navigate(`/viewer?book=1&unit=3`)} 
+              variant="outline" 
+              className="inline-flex items-center"
+            >
+              Try Book 1, Unit 3
+            </Button>
+          </div>
         </div>
       </div>
     );
