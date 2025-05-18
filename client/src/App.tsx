@@ -199,12 +199,12 @@ function App() {
           </Route>
 
           {/* SECURE ROUTES - Authentication required */}
-          <ProtectedRoute path="/books">
+          <Route path="/books">
             <BooksPage />
-          </ProtectedRoute>
-          <ProtectedRoute path="/books/:bookId">
+          </Route>
+          <Route path="/books/:bookId">
             <UnitsPage />
-          </ProtectedRoute>
+          </Route>
           <Route path="/viewer">
             <SimpleContentViewer />
           </Route>

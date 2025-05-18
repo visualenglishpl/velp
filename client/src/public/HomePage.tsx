@@ -120,7 +120,7 @@ const HomePage = () => {
               <Card 
                 key={book.id}
                 className="flex flex-col items-center p-4 hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => window.location.href = `/checkout/free_trial?book=${book.id}`}
+                onClick={() => window.location.href = `/books/${book.id}`}
               >
                 <div 
                   className="w-24 h-24 rounded-md mb-3 flex items-center justify-center"
