@@ -391,26 +391,24 @@ export function TeacherResourcesContainer({
                   </div>
                   
                   {/* Match tabs exactly like the gray panel */}
-                  <div className="bg-blue-50 p-2">
-                    <div className="w-full bg-muted/30 flex rounded-md p-1">
-                      <div className="flex items-center gap-1 flex-1 justify-center px-3 py-1.5 bg-white rounded-md">
-                        <Video className="h-4 w-4" />
-                        <span>Videos</span>
-                      </div>
-                      <div className="flex items-center gap-1 flex-1 justify-center px-3 py-1.5">
-                        <Gamepad2 className="h-4 w-4" />
-                        <span>Games</span>
-                      </div>
-                      <div className="flex items-center gap-1 flex-1 justify-center px-3 py-1.5">
-                        <FileIcon className="h-4 w-4" />
-                        <span>PDFs</span>
-                      </div>
-                      <div className="flex items-center gap-1 flex-1 justify-center px-3 py-1.5">
-                        <FileText className="h-4 w-4" />
-                        <span>Lessons</span>
-                      </div>
-                    </div>
-                  </div>
+                  <TabsList className="w-full bg-muted/30">
+                    <TabsTrigger value="videos" className="flex items-center gap-1">
+                      <Video className="h-4 w-4" />
+                      <span>Videos</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="games" className="flex items-center gap-1">
+                      <Gamepad2 className="h-4 w-4" />
+                      <span>Games</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="pdfs" className="flex items-center gap-1">
+                      <FileIcon className="h-4 w-4" />
+                      <span>PDFs</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="lessons" className="flex items-center gap-1">
+                      <FileText className="h-4 w-4" />
+                      <span>Lessons</span>
+                    </TabsTrigger>
+                  </TabsList>
                   
                   <div className="p-4">
                     <div className="mb-4">
