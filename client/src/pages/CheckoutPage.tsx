@@ -51,7 +51,7 @@ export default function CheckoutPage() {
   const unitIdParam = queryParams.get('unit');
   
   // Get plan ID from params, URL or cart
-  const planId = params.planId || 'default';
+  const planId = params.planId || (window.location.pathname.includes('free_trial') ? 'free_trial' : 'default');
   const isFreeTrialPlan = planId === 'free_trial';
   const [selectedBookPurchaseType, setSelectedBookPurchaseType] = useState('physical');
   const [subscriptionPeriod, setSubscriptionPeriod] = useState('monthly');

@@ -20,6 +20,15 @@ import {
   CardHeader, 
   CardTitle 
 } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import {
   Globe,
   Settings,
@@ -30,7 +39,13 @@ import {
   PaletteIcon,
   Clock,
   DollarSign,
-  CalendarIcon
+  CalendarIcon,
+  Eye,
+  Download,
+  Save,
+  CreditCard,
+  Edit,
+  Trash2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -43,8 +58,8 @@ const SiteSettingsPage: React.FC = () => {
     name: 'Visual English Learning Platform',
     description: 'Interactive ESL learning platform for young minds ages 4-15',
     logoUrl: '/api/direct/content/icons/LOGO VISUAL ENGLISH.png',
-    faviconUrl: '/favicon.ico',
-    primaryColor: '#6366f1'
+    faviconUrl: '/assets/eye-favicon.png',
+    primaryColor: '#5DADEC'  // Book 4 Blue color
   });
   
   // Language Settings State
@@ -58,11 +73,14 @@ const SiteSettingsPage: React.FC = () => {
   // Notification Settings State
   const [notificationSettings, setNotificationSettings] = useState({
     enableEmails: true,
-    replyToEmail: 'support@visualenglish.com',
-    senderName: 'Visual English Team',
+    replyToEmail: 'platform@visualenglish.com',
+    senderName: 'Visual English Platform',
     senderEmail: 'no-reply@visualenglish.com',
     enableSms: false
   });
+  
+  // Pricing Plans State (Simple placeholder, actual management in ShopManagement)
+  const [pricingPlans, setPricingPlans] = useState([]);
   
   // Security Settings State
   const [securitySettings, setSecuritySettings] = useState({
@@ -130,28 +148,233 @@ const SiteSettingsPage: React.FC = () => {
   
   // Save settings (mock implementation)
   const saveSettings = () => {
-    toast({
-      title: "Settings saved",
-      description: "Your changes have been applied successfully",
-    });
+    // Save to localStorage for demo purposes
+    try {
+      localStorage.setItem('velp_site_settings', JSON.stringify(siteSettings));
+      localStorage.setItem('velp_language_settings', JSON.stringify(languageSettings));
+      localStorage.setItem('velp_notification_settings', JSON.stringify(notificationSettings));
+      localStorage.setItem('velp_security_settings', JSON.stringify(securitySettings));
+      
+      toast({
+        title: "Settings saved",
+        description: "Your changes have been applied successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Save failed",
+        description: "Could not save settings. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
   
-  return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="flex items-center mb-6">
-        <Button 
-          variant="ghost" 
-          className="mr-4" 
-          onClick={() => setLocation('/admin')}
-        >
-          <ChevronLeft className="h-5 w-5 mr-1" />
-          Back to Admin
-        </Button>
-        <div>
-          <h1 className="text-2xl font-bold">Site Settings</h1>
-          <p className="text-gray-500">Configure platform settings and preferences</p>
+  // Export settings as JSON file
+  const exportSettings = () => {
+    try {
+      const allSettings = {
+        siteSettings,
+        languageSettings,
+        notificationSettings,
+        securitySettings,
+        pricingPlans
+      };
+      
+      const dataStr = JSON.stringify(allSettings, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+      
+      const exportFileDefaultName = 'visual-english-settings.json';
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
+      
+      toast({
+        title: "Settings exported",
+        description: "Your settings have been exported successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Export failed",
+        description: "Could not export settings. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+  
+  // Import settings from JSON file
+  const importSettings = (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const fileReader = new FileReader();
+      const file = event.target.files?.[0];
+      
+      if (!file) return;
+      
+      fileReader.readAsText(file, "UTF-8");
+      fileReader.onload = e => {
+        try {
+          const content = e.target?.result as string;
+          const parsedSettings = JSON.parse(content);
+          
+          if (parsedSettings.siteSettings) {
+            setSiteSettings(parsedSettings.siteSettings);
+          }
+          
+          if (parsedSettings.languageSettings) {
+            setLanguageSettings(parsedSettings.languageSettings);
+          }
+          
+          if (parsedSettings.notificationSettings) {
+            setNotificationSettings(parsedSettings.notificationSettings);
+          }
+          
+          if (parsedSettings.securitySettings) {
+            setSecuritySettings(parsedSettings.securitySettings);
+          }
+          
+          toast({
+            title: "Settings imported",
+            description: "Your settings have been imported successfully",
+          });
+        } catch (parseError) {
+          toast({
+            title: "Import failed",
+            description: "Invalid settings file format",
+            variant: "destructive"
+          });
+        }
+      };
+      
+      fileReader.onerror = () => {
+        toast({
+          title: "Import failed",
+          description: "Could not read the settings file",
+          variant: "destructive"
+        });
+      };
+    } catch (error) {
+      toast({
+        title: "Import failed",
+        description: "Could not import settings. Please try again.",
+        variant: "destructive"
+      });
+    }
+    
+    // Clear the file input
+    event.target.value = '';
+  };
+  
+  const [showPreview, setShowPreview] = useState(false);
+  
+  // Site preview component
+  const SitePreview = () => (
+    <div className="border rounded-lg p-4 bg-white shadow-sm">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center">
+          <img 
+            src={siteSettings.faviconUrl} 
+            alt="Site favicon" 
+            className="h-8 w-8 mr-2" 
+          />
+          <h2 className="text-xl font-semibold" style={{ color: siteSettings.primaryColor }}>
+            {siteSettings.name}
+          </h2>
+        </div>
+        <div className="flex gap-2">
+          <Button size="sm" variant="ghost">Home</Button>
+          <Button size="sm" variant="ghost">Books</Button>
+          <Button size="sm" variant="ghost">Method</Button>
+          <Button size="sm" variant="ghost">About</Button>
         </div>
       </div>
+      <Separator className="my-2" />
+      <p className="text-sm text-gray-600 mb-3">{siteSettings.description}</p>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        {/* Sample book thumbnails with primary color */}
+        {[0, 1, 2, 3].map(i => (
+          <div 
+            key={i} 
+            className="border rounded-md p-3 flex items-center justify-center h-24"
+            style={{ backgroundColor: `${siteSettings.primaryColor}22` }}
+          >
+            <div 
+              className="h-12 w-12 rounded-full flex items-center justify-center text-white"
+              style={{ backgroundColor: siteSettings.primaryColor }}
+            >
+              {i + 1}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="container mx-auto py-8 px-4">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center">
+          <Button 
+            variant="ghost" 
+            className="mr-4" 
+            onClick={() => setLocation('/admin')}
+          >
+            <ChevronLeft className="h-5 w-5 mr-1" />
+            Back to Admin
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold">Site Settings</h1>
+            <p className="text-gray-500">Configure platform settings and preferences</p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          {/* Hidden file input for importing settings */}
+          <input 
+            type="file" 
+            id="import-settings" 
+            className="hidden" 
+            accept=".json" 
+            onChange={importSettings}
+          />
+          <Button 
+            variant="outline" 
+            className="flex items-center"
+            onClick={() => document.getElementById('import-settings')?.click()}
+          >
+            <Upload className="h-4 w-4 mr-2" />
+            Import
+          </Button>
+          <Button 
+            variant="outline" 
+            className="flex items-center"
+            onClick={exportSettings}
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Export
+          </Button>
+          <Button 
+            variant="outline" 
+            className="flex items-center"
+            onClick={() => setShowPreview(!showPreview)}
+          >
+            <Eye className="h-4 w-4 mr-2" />
+            {showPreview ? "Hide Preview" : "Show Preview"}
+          </Button>
+        </div>
+      </div>
+      
+      {showPreview && (
+        <div className="mb-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Live Preview</CardTitle>
+              <CardDescription>Preview of your site with current settings</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SitePreview />
+            </CardContent>
+          </Card>
+        </div>
+      )}
       
       <Tabs defaultValue="general" className="w-full">
         <TabsList className="mb-6 w-full justify-start">
@@ -162,6 +385,10 @@ const SiteSettingsPage: React.FC = () => {
           <TabsTrigger value="language" className="flex items-center">
             <Globe className="mr-2 h-4 w-4" />
             Language & Region
+          </TabsTrigger>
+          <TabsTrigger value="pricing" className="flex items-center">
+            <CreditCard className="mr-2 h-4 w-4" />
+            Pricing Plans
           </TabsTrigger>
           <TabsTrigger value="notifications" className="flex items-center">
             <BellRing className="mr-2 h-4 w-4" />
@@ -371,6 +598,40 @@ const SiteSettingsPage: React.FC = () => {
             <CardFooter className="flex justify-end">
               <Button onClick={saveSettings}>Save Changes</Button>
             </CardFooter>
+          </Card>
+        </TabsContent>
+        
+        {/* Pricing Settings - Simple placeholder for now */}
+        <TabsContent value="pricing">
+          <Card>
+            <CardHeader>
+              <CardTitle>Pricing Plans</CardTitle>
+              <CardDescription>
+                Manage subscription plans and pricing options
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="text-sm text-gray-500">
+                  <p>All pricing plans are configured on the Shop Management page.</p>
+                  <p className="mt-2">You can manage subscriptions, printed books, and special offers from the admin shop interface.</p>
+                </div>
+                
+                <div className="flex justify-between items-center mt-6 bg-gray-50 p-4 rounded-md">
+                  <div>
+                    <h3 className="font-medium">Manage Shop Settings</h3>
+                    <p className="text-sm text-gray-500">Configure pricing plans, discounts, and inventory</p>
+                  </div>
+                  <Button 
+                    variant="outline"
+                    onClick={() => window.location.href = '/admin/shop'}
+                  >
+                    <ShoppingBag className="h-4 w-4 mr-2" />
+                    Go to Shop Management
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
           </Card>
         </TabsContent>
         

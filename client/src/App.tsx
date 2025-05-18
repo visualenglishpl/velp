@@ -171,6 +171,9 @@ function App() {
           <Route path="/checkout/book-wizard">
             <BookWizardPage />
           </Route>
+          <Route path="/checkout/free_trial">
+            <CheckoutPage />
+          </Route>
           <Route path="/checkout/:planId">
             <CheckoutPage />
           </Route>
