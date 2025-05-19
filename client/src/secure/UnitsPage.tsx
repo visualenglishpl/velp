@@ -36,7 +36,7 @@ const getBookColor = (bookId: string): string => {
 export default function UnitsPage() {
   const { toast } = useToast();
   const params = useParams();
-  const bookId = params.bookId;
+  const bookId = params.bookId || "";
   const [location] = useLocation();
   const [user, setUser] = useState<any>(null);
 
@@ -193,14 +193,14 @@ export default function UnitsPage() {
                           if (container) {
                             const genericPreview = document.createElement('div');
                             genericPreview.className = "h-full w-full flex items-center justify-center";
-                            genericPreview.style.backgroundColor = getBookColor(bookId);
+                            genericPreview.style.backgroundColor = getBookColor(bookId || "");
                             genericPreview.innerHTML = `<div class="text-white font-bold text-xl">VISUAL ${bookId}<br/>ENGLISH</div>`;
                             container.appendChild(genericPreview);
                           }
                         }} 
                       />
                     ) : (
-                      <div className="h-full w-full flex items-center justify-center" style={{backgroundColor: getBookColor(bookId)}}>
+                      <div className="h-full w-full flex items-center justify-center" style={{backgroundColor: getBookColor(bookId || "")}}>
                         <div className="text-white font-bold text-xl text-center">
                           VISUAL {bookId}<br/>ENGLISH
                         </div>
@@ -223,7 +223,7 @@ export default function UnitsPage() {
                         variant="outline"
                         className="w-full border-blue-500 text-blue-600 hover:bg-blue-50"
                         onClick={() => {
-                          window.location.href = `/checkout/unit?book=${bookId}&unit=${unit.unitNumber}`;
+                          window.location.href = `/checkout/unit?book=${bookId}&units=${unit.unitNumber}`;
                         }}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
