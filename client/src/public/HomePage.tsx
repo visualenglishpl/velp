@@ -95,10 +95,34 @@ const HomePage = () => {
               books.map(book => (
                 <div key={book.id} className="flex flex-col items-center">
                   <div 
-                    className="w-full aspect-square rounded-md mb-2 flex items-center justify-center"
+                    className="w-full aspect-square rounded-md mb-2 flex items-center justify-center overflow-hidden"
                     style={{ backgroundColor: book.color }}
                   >
-                    <div className="text-white text-center p-4">
+                    {book.thumbnailUrl ? (
+                      <img 
+                        src={book.thumbnailUrl} 
+                        alt={`Visual English Book ${book.id}`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.parentElement?.classList.add('fallback-active');
+                        }}
+                      />
+                    ) : (
+                      <div className="text-white text-center p-4">
+                        <div className="flex justify-center mb-3">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z" fill="white"/>
+                            <circle cx="12" cy="12" r="3.5" fill="white"/>
+                          </svg>
+                        </div>
+                        <div className="font-bold text-sm mb-1">VISUAL</div>
+                        <div className="font-bold text-sm mb-1">ENGLISH</div>
+                        <div className="font-bold text-sm">BOOK {book.id}</div>
+                      </div>
+                    )}
+                    <div className="fallback text-white text-center p-4 absolute inset-0 flex flex-col items-center justify-center opacity-0 fallback-active:opacity-100">
                       <div className="flex justify-center mb-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z" fill="white"/>
