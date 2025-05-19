@@ -118,39 +118,39 @@ const PaymentHistoryViewer = () => {
         </CardHeader>
         <CardContent>
           {/* Revenue Statistics */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
             <Card className="bg-indigo-50 border-indigo-200 shadow-sm">
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="flex flex-col">
-                  <div className="flex items-center mb-2">
-                    <Calendar className="h-5 w-5 text-indigo-700 mr-2" />
-                    <p className="text-sm font-medium text-indigo-700">Monthly Subscriptions</p>
+                  <div className="flex items-center mb-1">
+                    <Calendar className="h-4 w-4 text-indigo-700 mr-1" />
+                    <p className="text-xs font-medium text-indigo-700 leading-tight break-words">Monthly<br/>Subs</p>
                   </div>
-                  <h3 className="text-2xl font-bold text-indigo-900">€{monthlyTotal}.00</h3>
+                  <h3 className="text-lg font-bold text-indigo-900">€{monthlyTotal}.00</h3>
                 </div>
               </CardContent>
             </Card>
             
             <Card className="bg-green-50 border-green-200 shadow-sm">
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="flex flex-col">
-                  <div className="flex items-center mb-2">
-                    <DollarSign className="h-5 w-5 text-green-700 mr-2" />
-                    <p className="text-sm font-medium text-green-700">Total Revenue</p>
+                  <div className="flex items-center mb-1">
+                    <DollarSign className="h-4 w-4 text-green-700 mr-1" />
+                    <p className="text-xs font-medium text-green-700 leading-tight break-words">Total<br/>Revenue</p>
                   </div>
-                  <h3 className="text-2xl font-bold text-green-900">€{totalRevenue}.00</h3>
+                  <h3 className="text-lg font-bold text-green-900">€{totalRevenue}.00</h3>
                 </div>
               </CardContent>
             </Card>
             
             <Card className="bg-purple-50 border-purple-200 shadow-sm">
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="flex flex-col">
-                  <div className="flex items-center mb-2">
-                    <CreditCard className="h-5 w-5 text-purple-700 mr-2" />
-                    <p className="text-sm font-medium text-purple-700">Transactions</p>
+                  <div className="flex items-center mb-1">
+                    <CreditCard className="h-4 w-4 text-purple-700 mr-1" />
+                    <p className="text-xs font-medium text-purple-700 leading-tight break-words">Trans-<br/>actions</p>
                   </div>
-                  <h3 className="text-2xl font-bold text-purple-900">{totalTransactions}</h3>
+                  <h3 className="text-lg font-bold text-purple-900">{totalTransactions}</h3>
                 </div>
               </CardContent>
             </Card>

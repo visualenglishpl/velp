@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Loader2, ChevronLeft, ChevronRight, Maximize2, Minimize2, Home, Trash2, Save, X } from 'lucide-react';
+import { Loader2, ChevronLeft, ChevronRight, Maximize2, Minimize2, Home, Trash2, Save, X, Edit, PenTool } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
@@ -13,6 +13,7 @@ import { useExcelQA } from '@/hooks/use-excel-qa';
 import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cleanQuestionText, cleanAnswerText, formatDisplayText } from '@/lib/textCleaners';
+import QuestionEditor from '@/components/questions/QuestionEditor';
 
 import { TeacherResourcesContainer } from '@/components/resources/TeacherResourcesContainer';
 import { book1PdfResources, book1PdfResourcesByUnit } from '@/data/book1-pdf-resources';
@@ -93,6 +94,16 @@ export default function SimpleContentViewer() {
   const [materials, setMaterials] = useState<S3Material[]>([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [slidesToDelete, setSlidesToDelete] = useState<Set<number>>(new Set());
+  const [isQuestionEditorOpen, setIsQuestionEditorOpen] = useState(false);
+  const [currentQuestionData, setCurrentQuestionData] = useState<{
+    id?: string;
+    bookId: string;
+    unitId: string;
+    slideId: string;
+    originalQuestion: string;
+    originalAnswer: string;
+    flagReason?: string;
+  } | null>(null);
   const { toast } = useToast();
   
   // Extract bookId and unitNumber from URL path
@@ -259,6 +270,34 @@ export default function SimpleContentViewer() {
     setIsEditMode(false);
     setSlidesToDelete(new Set());
   }, []);
+  
+  // Open question editor for the current material
+  const openQuestionEditor = useCallback((material: S3Material, qa: { question: string, answer: string, hasData: boolean }) => {
+    if (!material || !qa.hasData) return;
+    
+    setCurrentQuestionData({
+      bookId: bookId || "",
+      unitId: unitPath,
+      slideId: material.id.toString(),
+      originalQuestion: qa.question,
+      originalAnswer: qa.answer
+    });
+    
+    setIsQuestionEditorOpen(true);
+  }, [bookId, unitPath]);
+  
+  // Handle saving edited questions
+  const handleSaveQuestion = useCallback((updatedQuestion: any) => {
+    toast({
+      title: "Question Updated",
+      description: "The question has been successfully updated.",
+    });
+    
+    // You would normally refetch the data or update the local state
+    // For now, we'll close the editor and let the page refresh to show changes
+    setIsQuestionEditorOpen(false);
+    setCurrentQuestionData(null);
+  }, [toast]);
   
   // Mutation for saving slide deletions
   const saveSlideDeletesMutation = useMutation({
@@ -663,9 +702,26 @@ export default function SimpleContentViewer() {
                                 </h3>
                               </div>
                             )}
-                            <div className="text-gray-800 text-base font-medium">
-                              {/* Remove any numbering from questions (including complex patterns like "Unit 18. Question" and "01 I A") */}
-                              {cleanLeadingPatterns(qa.question.replace(/^(\w+\s+)?\d+\.\s*/, ''))}
+                            <div className="flex items-center justify-between">
+                              <div className="text-gray-800 text-base font-medium flex-grow">
+                                {/* Remove any numbering from questions (including complex patterns like "Unit 18. Question" and "01 I A") */}
+                                {cleanLeadingPatterns(qa.question.replace(/^(\w+\s+)?\d+\.\s*/, ''))}
+                              </div>
+                              {/* Only show edit button if user is admin or teacher */}
+                              {(isAdminUser || user?.role === 'teacher') && (
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  className="ml-2 h-7 w-7 p-0 opacity-70 hover:opacity-100"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openQuestionEditor(material, qa);
+                                  }}
+                                  title="Edit question/answer"
+                                >
+                                  <PenTool className="h-3.5 w-3.5" />
+                                </Button>
+                              )}
                             </div>
                             <div className="mt-2 font-medium text-gray-900 text-base">
                               {/* Remove any numbering from answers (including complex patterns) */}
@@ -1220,5 +1276,13 @@ export default function SimpleContentViewer() {
         </div>
       )}
     </div>
+    
+    {/* Question Editor Dialog */}
+    <QuestionEditor 
+      isOpen={isQuestionEditorOpen}
+      onClose={() => setIsQuestionEditorOpen(false)} 
+      questionData={currentQuestionData}
+      onSave={handleSaveQuestion}
+    />
   );
 }
