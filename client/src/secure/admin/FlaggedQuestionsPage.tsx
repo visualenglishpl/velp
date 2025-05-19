@@ -6,262 +6,322 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle
-} from "@/components/ui/alert-dialog";
-import { Flag, Check, X, Edit, MessageSquare, Filter, Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import {
+  AlertTriangle,
+  Check,
+  X,
+  Eye,
+  Filter,
+  Search,
+  Flag,
+  Clock,
+  Calendar,
+  Trash2,
+  MessageSquare,
+  AlertCircle
+} from "lucide-react";
 
-type FlaggedQuestion = {
-  id: number;
+// Types for flagged content
+type FlaggedItem = {
+  id: string;
   bookId: string;
-  unitId: number;
+  unitId: string;
   slideId: string;
-  question: string;
-  suggestedAnswer?: string;
-  reportedBy: string;
-  reportReason: string;
-  status: "pending" | "approved" | "rejected";
-  reviewedBy?: string;
+  originalContent: string;
+  suggestedContent: string | null;
+  reason: string;
+  status: 'pending' | 'approved' | 'rejected';
+  reportedBy: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+  };
+  reportedAt: string;
+  reviewedBy?: {
+    id: string;
+    name: string;
+  };
+  reviewedAt?: string;
   reviewNotes?: string;
-  createdAt: string;
-  updatedAt?: string;
 };
 
 const FlaggedQuestionsPage = () => {
   const { user } = useAuth();
   const { toast } = useToast();
-
-  // State for questions and filters
-  const [flaggedQuestions, setFlaggedQuestions] = useState<FlaggedQuestion[]>([]);
-  const [filteredQuestions, setFilteredQuestions] = useState<FlaggedQuestion[]>([]);
+  
+  // States for data
+  const [flaggedItems, setFlaggedItems] = useState<FlaggedItem[]>([]);
+  const [selectedItem, setSelectedItem] = useState<FlaggedItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  // Filter states
-  const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [bookFilter, setBookFilter] = useState<string>("all");
+  // States for UI
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [bookFilter, setBookFilter] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
   
-  // Dialog states
-  const [selectedQuestion, setSelectedQuestion] = useState<FlaggedQuestion | null>(null);
-  const [reviewDialogOpen, setReviewDialogOpen] = useState(false);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  
-  // Review form state
-  const [reviewStatus, setReviewStatus] = useState<"approved" | "rejected">("approved");
+  // Form states
   const [reviewNotes, setReviewNotes] = useState("");
-  const [correctedQuestion, setCorrectedQuestion] = useState("");
-  const [correctedAnswer, setCorrectedAnswer] = useState("");
-
-  // Get unique book IDs for filtering
-  const uniqueBookIds = [...new Set(flaggedQuestions.map(q => q.bookId))];
-
-  // Load flagged questions
+  const [isApproved, setIsApproved] = useState(false);
+  const [implementImmediately, setImplementImmediately] = useState(true);
+  
+  // Load flagged items
   useEffect(() => {
-    const fetchFlaggedQuestions = async () => {
+    const fetchFlaggedItems = async () => {
       setLoading(true);
       setError(null);
       
       try {
-        const response = await fetch("/api/admin/flagged-questions", {
-          credentials: "include",
-        });
+        // In a real app, this would be an API call
+        // const response = await fetch('/api/admin/flagged-content');
+        // const data = await response.json();
         
-        if (!response.ok) {
-          throw new Error("Failed to fetch flagged questions");
-        }
-        
-        const data = await response.json();
-        setFlaggedQuestions(data);
-        setFilteredQuestions(data);
-      } catch (err) {
-        console.error("Error fetching flagged questions:", err);
-        setError("Failed to load flagged questions. Please try again later.");
-        
-        // For development testing - mock data
-        const mockData: FlaggedQuestion[] = [
+        // Mock data for development
+        const mockFlaggedItems: FlaggedItem[] = [
           {
-            id: 1,
-            bookId: "1",
-            unitId: 3,
-            slideId: "08-M-A",
-            question: "What is it? It is a sharpener.",
-            suggestedAnswer: "What is it? It is a pencil sharpener.",
-            reportedBy: "teacher1",
-            reportReason: "The answer is incomplete. It should specify 'pencil sharpener' for clarity.",
-            status: "pending",
-            createdAt: "2025-05-18T10:30:00Z"
+            id: 'flag_1',
+            bookId: '1',
+            unitId: '3',
+            slideId: '08-M-A',
+            originalContent: 'What is it? It is a sharpener',
+            suggestedContent: 'What is this? It is a sharpener',
+            reason: 'Grammar improvement - "What is it" should be "What is this" when referring to an object being shown',
+            status: 'pending',
+            reportedBy: {
+              id: 'user_123',
+              name: 'Emma Johnson',
+              email: 'emma.j@school.edu',
+              role: 'teacher'
+            },
+            reportedAt: '2025-05-15T10:30:00Z'
           },
           {
-            id: 2,
-            bookId: "2",
-            unitId: 5,
-            slideId: "12-C-B",
-            question: "Do you collect stamps? Yes, I do.",
-            suggestedAnswer: "Do you collect stamps? Yes, I collect stamps.",
-            reportedBy: "teacher2",
-            reportReason: "The answer should use the full sentence structure for better learning.",
-            status: "approved",
-            reviewedBy: "admin",
-            reviewNotes: "Changed to use complete sentence structure as suggested.",
-            createdAt: "2025-05-17T14:22:00Z",
-            updatedAt: "2025-05-17T16:45:00Z"
+            id: 'flag_2',
+            bookId: '2',
+            unitId: '5',
+            slideId: '12-C-B',
+            originalContent: 'Do you collect stamps? Yes, I collect stamps.',
+            suggestedContent: 'Do you collect stamps? Yes, I do. / No, I don\'t.',
+            reason: 'The answer should be shorter for elementary level students',
+            status: 'approved',
+            reportedBy: {
+              id: 'user_456',
+              name: 'Michael Smith',
+              email: 'm.smith@academy.edu',
+              role: 'teacher'
+            },
+            reportedAt: '2025-05-10T14:45:00Z',
+            reviewedBy: {
+              id: 'admin_1',
+              name: 'Admin User'
+            },
+            reviewedAt: '2025-05-12T09:20:00Z',
+            reviewNotes: 'Approved. The suggestion makes the answer more natural and easier for students.'
           },
           {
-            id: 3,
-            bookId: "3",
-            unitId: 8,
-            slideId: "15-F-D",
-            question: "Where is Venus? Venus is between Mercury and Earth.",
-            reportedBy: "school1",
-            reportReason: "The question is scientifically incorrect. Venus is the second planet from the Sun.",
-            status: "rejected",
-            reviewedBy: "admin",
-            reviewNotes: "The answer is correct. Venus is indeed between Mercury and Earth in our solar system.",
-            createdAt: "2025-05-16T09:15:00Z",
-            updatedAt: "2025-05-16T11:20:00Z"
+            id: 'flag_3',
+            bookId: '1',
+            unitId: '7',
+            slideId: '15-F-D',
+            originalContent: 'Is that an orange? Yes, it is a orange.',
+            suggestedContent: 'Is that an orange? Yes, it is an orange.',
+            reason: 'Article error - should be "an orange" not "a orange"',
+            status: 'approved',
+            reportedBy: {
+              id: 'user_789',
+              name: 'Sarah Williams',
+              email: 's.williams@school.edu',
+              role: 'teacher'
+            },
+            reportedAt: '2025-05-14T16:30:00Z',
+            reviewedBy: {
+              id: 'admin_2',
+              name: 'Content Reviewer'
+            },
+            reviewedAt: '2025-05-16T11:10:00Z',
+            reviewNotes: 'Fixed the article error.'
           },
           {
-            id: 4,
-            bookId: "1",
-            unitId: 10,
-            slideId: "22-B-C",
-            question: "Is the apple red? Yes, it is red.",
-            suggestedAnswer: "Is the apple red? Yes, it is.",
-            reportedBy: "teacher3",
-            reportReason: "The answer repeats 'red' unnecessarily. More natural to say 'Yes, it is.'",
-            status: "pending",
-            createdAt: "2025-05-18T08:45:00Z"
+            id: 'flag_4',
+            bookId: '3',
+            unitId: '4',
+            slideId: '10-A-C',
+            originalContent: 'What planet is closest to the sun? Mercury is closest to the sun.',
+            suggestedContent: null,
+            reason: 'The planet image shown is Venus, not Mercury. Please correct the image or question.',
+            status: 'pending',
+            reportedBy: {
+              id: 'user_101',
+              name: 'Robert Chen',
+              email: 'r.chen@academy.edu',
+              role: 'teacher'
+            },
+            reportedAt: '2025-05-17T09:15:00Z'
           },
           {
-            id: 5,
-            bookId: "4",
-            unitId: 12,
-            slideId: "30-A-F",
-            question: "What is your favourite subject? My favourite subject is mathmatics.",
-            suggestedAnswer: "What is your favourite subject? My favourite subject is mathematics.",
-            reportedBy: "teacher1",
-            reportReason: "Spelling error in 'mathematics'",
-            status: "pending",
-            createdAt: "2025-05-19T07:30:00Z"
+            id: 'flag_5',
+            bookId: '2',
+            unitId: '1',
+            slideId: '05-D-E',
+            originalContent: 'What season is it? It is Spring.',
+            suggestedContent: 'What season is it? It is spring.',
+            reason: 'Capitalization issue - "spring" should not be capitalized',
+            status: 'rejected',
+            reportedBy: {
+              id: 'user_202',
+              name: 'Lisa Parker',
+              email: 'l.parker@school.edu',
+              role: 'teacher'
+            },
+            reportedAt: '2025-05-11T13:20:00Z',
+            reviewedBy: {
+              id: 'admin_1',
+              name: 'Admin User'
+            },
+            reviewedAt: '2025-05-13T10:40:00Z',
+            reviewNotes: 'In this context, we\'re treating the seasons as proper nouns in our curriculum materials to maintain consistency across books.'
+          },
+          {
+            id: 'flag_6',
+            bookId: '4',
+            unitId: '6',
+            slideId: '30-A-F',
+            originalContent: 'What is your favourite subject? My favourite subject is math.',
+            suggestedContent: 'What is your favorite subject? My favorite subject is math.',
+            reason: 'American English spelling should be used for consistency with other slides',
+            status: 'pending',
+            reportedBy: {
+              id: 'user_303',
+              name: 'James Wilson',
+              email: 'j.wilson@academy.edu',
+              role: 'teacher'
+            },
+            reportedAt: '2025-05-16T15:45:00Z'
+          },
+          {
+            id: 'flag_7',
+            bookId: '3',
+            unitId: '8',
+            slideId: '25-B-F',
+            originalContent: 'Where is Venus? Venus is between Mercury and Earth.',
+            suggestedContent: 'Where is Venus? Venus is the second planet from the Sun, between Mercury and Earth.',
+            reason: 'Additional information would be helpful for clarity',
+            status: 'pending',
+            reportedBy: {
+              id: 'user_404',
+              name: 'David Thompson',
+              email: 'd.thompson@school.edu',
+              role: 'teacher'
+            },
+            reportedAt: '2025-05-18T08:30:00Z'
           }
         ];
-        setFlaggedQuestions(mockData);
-        setFilteredQuestions(mockData);
+        
+        setFlaggedItems(mockFlaggedItems);
+      } catch (err) {
+        console.error("Error fetching flagged items:", err);
+        setError("Failed to load flagged content. Please try again.");
       } finally {
         setLoading(false);
       }
     };
     
-    fetchFlaggedQuestions();
+    fetchFlaggedItems();
   }, []);
 
-  // Apply filters when filter states change
-  useEffect(() => {
-    let filtered = [...flaggedQuestions];
-    
-    // Filter by status
-    if (statusFilter !== "all") {
-      filtered = filtered.filter(q => q.status === statusFilter);
-    }
-    
-    // Filter by book
-    if (bookFilter !== "all") {
-      filtered = filtered.filter(q => q.bookId === bookFilter);
-    }
-    
-    // Apply search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(q => 
-        q.question?.toLowerCase().includes(query) || 
-        q.suggestedAnswer?.toLowerCase().includes(query) || 
-        q.reportReason?.toLowerCase().includes(query) ||
-        q.reviewNotes?.toLowerCase().includes(query)
-      );
-    }
-    
-    setFilteredQuestions(filtered);
-  }, [flaggedQuestions, statusFilter, bookFilter, searchQuery]);
+  // Get unique books for filtering
+  const uniqueBooks = Array.from(new Set(flaggedItems.map(item => item.bookId))).sort((a, b) => 
+    parseInt(a) - parseInt(b)
+  );
 
-  // Handle opening review dialog
-  const handleReviewClick = (question: FlaggedQuestion) => {
-    setSelectedQuestion(question);
-    setCorrectedQuestion(question.question);
-    setCorrectedAnswer(question.suggestedAnswer || "");
-    setReviewStatus(question.status === "approved" ? "approved" : "rejected");
-    setReviewNotes(question.reviewNotes || "");
-    setReviewDialogOpen(true);
+  // Apply filters to flagged items
+  const getFilteredItems = () => {
+    return flaggedItems.filter(item => {
+      // Filter by tab (status)
+      if (activeTab !== 'all' && item.status !== activeTab) {
+        return false;
+      }
+      
+      // Filter by book
+      if (bookFilter && item.bookId !== bookFilter) {
+        return false;
+      }
+      
+      // Filter by search query
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        return (
+          item.originalContent.toLowerCase().includes(query) ||
+          (item.suggestedContent && item.suggestedContent.toLowerCase().includes(query)) ||
+          item.reason.toLowerCase().includes(query) ||
+          `${item.bookId}-${item.unitId}-${item.slideId}`.toLowerCase().includes(query) ||
+          item.reportedBy.name.toLowerCase().includes(query)
+        );
+      }
+      
+      return true;
+    });
   };
 
-  // Handle opening delete dialog
-  const handleDeleteClick = (question: FlaggedQuestion) => {
-    setSelectedQuestion(question);
-    setDeleteDialogOpen(true);
+  const filteredItems = getFilteredItems();
+
+  // Open review dialog
+  const handleReviewItem = (item: FlaggedItem) => {
+    setSelectedItem(item);
+    setReviewNotes(item.reviewNotes || '');
+    setIsApproved(item.status === 'approved');
+    setIsReviewDialogOpen(true);
   };
 
-  // Handle saving review
+  // Handle reviewing a flagged item
   const handleSaveReview = async () => {
-    if (!selectedQuestion) return;
+    if (!selectedItem) return;
     
     try {
       const reviewData = {
-        id: selectedQuestion.id,
-        status: reviewStatus,
+        id: selectedItem.id,
+        status: isApproved ? 'approved' : 'rejected',
         reviewNotes,
-        correctedQuestion,
-        correctedAnswer: correctedAnswer || undefined,
-        reviewedBy: user?.username
+        implementImmediately,
       };
       
-      // Make API call to update the question
-      const response = await fetch(`/api/admin/flagged-questions/${selectedQuestion.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      // Mock API call for development
+      // const response = await fetch(`/api/admin/flagged-content/${selectedItem.id}/review`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(reviewData)
+      // });
+      
+      // Update the item in the local state
+      const updatedItem: FlaggedItem = {
+        ...selectedItem,
+        status: isApproved ? 'approved' : 'rejected',
+        reviewNotes,
+        reviewedBy: {
+          id: user?.id || 'admin_1',
+          name: user?.username || 'Admin User'
         },
-        credentials: "include",
-        body: JSON.stringify(reviewData),
-      });
+        reviewedAt: new Date().toISOString()
+      };
       
-      if (!response.ok) {
-        throw new Error("Failed to update question review");
-      }
-      
-      // Update the questions state
-      setFlaggedQuestions(prevQuestions => 
-        prevQuestions.map(q => 
-          q.id === selectedQuestion.id 
-            ? { 
-                ...q, 
-                status: reviewStatus, 
-                reviewNotes, 
-                question: reviewStatus === "approved" ? correctedQuestion : q.question,
-                suggestedAnswer: reviewStatus === "approved" ? correctedAnswer : q.suggestedAnswer,
-                reviewedBy: user?.username,
-                updatedAt: new Date().toISOString()
-              } 
-            : q
-        )
+      setFlaggedItems(prevItems => 
+        prevItems.map(item => item.id === selectedItem.id ? updatedItem : item)
       );
       
       toast({
-        title: "Review Saved",
-        description: `Question #${selectedQuestion.id} has been ${reviewStatus}.`,
+        title: `Review ${isApproved ? 'Approved' : 'Rejected'}`,
+        description: `The flagged content has been ${isApproved ? 'approved' : 'rejected'} successfully.`,
       });
       
-      setReviewDialogOpen(false);
+      setIsReviewDialogOpen(false);
     } catch (err) {
       console.error("Error saving review:", err);
       toast({
@@ -269,96 +329,70 @@ const FlaggedQuestionsPage = () => {
         description: "Failed to save review. Please try again.",
         variant: "destructive",
       });
-      
-      // For development - update state anyway (simulation)
-      setFlaggedQuestions(prevQuestions => 
-        prevQuestions.map(q => 
-          q.id === selectedQuestion.id 
-            ? { 
-                ...q, 
-                status: reviewStatus, 
-                reviewNotes, 
-                question: reviewStatus === "approved" ? correctedQuestion : q.question,
-                suggestedAnswer: reviewStatus === "approved" ? correctedAnswer : q.suggestedAnswer,
-                reviewedBy: user?.username,
-                updatedAt: new Date().toISOString()
-              } 
-            : q
-        )
-      );
-      
-      setReviewDialogOpen(false);
     }
   };
 
-  // Handle deleting a question
-  const handleDelete = async () => {
-    if (!selectedQuestion) return;
-    
-    try {
-      // Make API call to delete the question
-      const response = await fetch(`/api/admin/flagged-questions/${selectedQuestion.id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-      
-      if (!response.ok) {
-        throw new Error("Failed to delete question");
-      }
-      
-      // Update the questions state
-      setFlaggedQuestions(prevQuestions => 
-        prevQuestions.filter(q => q.id !== selectedQuestion.id)
-      );
-      
-      toast({
-        title: "Question Deleted",
-        description: `Question #${selectedQuestion.id} has been removed from the system.`,
-      });
-      
-      setDeleteDialogOpen(false);
-    } catch (err) {
-      console.error("Error deleting question:", err);
-      toast({
-        title: "Error",
-        description: "Failed to delete question. Please try again.",
-        variant: "destructive",
-      });
-      
-      // For development - update state anyway (simulation)
-      setFlaggedQuestions(prevQuestions => 
-        prevQuestions.filter(q => q.id !== selectedQuestion.id)
-      );
-      
-      setDeleteDialogOpen(false);
+  // Get status badge component
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200"><Clock className="h-3 w-3 mr-1" /> Pending</Badge>;
+      case 'approved':
+        return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200"><Check className="h-3 w-3 mr-1" /> Approved</Badge>;
+      case 'rejected':
+        return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200"><X className="h-3 w-3 mr-1" /> Rejected</Badge>;
+      default:
+        return <Badge>{status}</Badge>;
     }
   };
 
-  // Format display date
+  // Format date for display
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
     });
   };
 
-  // Get status badge variant
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "pending":
-        return <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">Pending</Badge>;
-      case "approved":
-        return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Approved</Badge>;
-      case "rejected":
-        return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Rejected</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
+  // Helper to get content ID
+  const getContentId = (item: FlaggedItem) => {
+    return `Book ${item.bookId}, Unit ${item.unitId}, Slide ${item.slideId}`;
   };
+
+  // Render loading state
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex justify-center items-center h-96">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Render error state
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center justify-center h-96">
+              <div className="text-red-500 text-lg mb-4">{error}</div>
+              <Button onClick={() => window.location.reload()}>Retry</Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -367,318 +401,220 @@ const FlaggedQuestionsPage = () => {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <CardTitle className="text-2xl font-bold flex items-center">
-                <Flag className="mr-2 h-5 w-5" /> Flagged Questions
+                <Flag className="mr-2 h-5 w-5" /> Flagged Content
               </CardTitle>
               <CardDescription>
-                Review and manage reported content issues
+                Review and resolve content issues reported by users
               </CardDescription>
-            </div>
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-500">
-                {filteredQuestions.length} question{filteredQuestions.length !== 1 ? 's' : ''} • 
-                {flaggedQuestions.filter(q => q.status === 'pending').length} pending
-              </span>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          {/* Filters */}
-          <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="status-filter" className="mb-2 block">Status</Label>
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger id="status-filter" className="w-full">
-                  <SelectValue placeholder="Filter by status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="approved">Approved</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="book-filter" className="mb-2 block">Book</Label>
-              <Select value={bookFilter} onValueChange={setBookFilter}>
-                <SelectTrigger id="book-filter" className="w-full">
-                  <SelectValue placeholder="Filter by book" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Books</SelectItem>
-                  {uniqueBookIds.map(bookId => (
-                    <SelectItem key={bookId} value={bookId}>
-                      Book {bookId}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="search" className="mb-2 block">Search</Label>
-              <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
-                <Input
-                  id="search"
-                  placeholder="Search questions, answers, or notes..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-8"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Question list */}
-          {loading ? (
-            <div className="flex justify-center items-center h-60">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-            </div>
-          ) : error ? (
-            <div className="bg-red-50 p-4 rounded-md text-red-700 mb-4">
-              {error}
-            </div>
-          ) : filteredQuestions.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <Flag className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-              <p className="text-lg font-medium">No flagged questions found</p>
-              <p className="text-sm mt-1">Try adjusting your filters or check back later</p>
-            </div>
-          ) : (
-            <Tabs defaultValue="table" className="w-full">
-              <TabsList className="mb-4">
-                <TabsTrigger value="table">Table View</TabsTrigger>
-                <TabsTrigger value="cards">Card View</TabsTrigger>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+            <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+              <TabsList>
+                <TabsTrigger value="all">All Reports</TabsTrigger>
+                <TabsTrigger value="pending">
+                  Pending <span className="ml-1 text-xs bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded-full">
+                    {flaggedItems.filter(item => item.status === 'pending').length}
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger value="approved">Approved</TabsTrigger>
+                <TabsTrigger value="rejected">Rejected</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="table">
-                <div className="rounded-md border overflow-hidden">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>ID</TableHead>
-                        <TableHead>Book/Unit</TableHead>
-                        <TableHead>Question/Answer</TableHead>
-                        <TableHead>Reported By</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 items-end sm:items-center">
+                <div className="w-full sm:w-auto">
+                  <Input
+                    placeholder="Search reports..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-9"
+                  />
+                </div>
+                
+                <div className="w-full sm:w-auto">
+                  <select
+                    value={bookFilter || ''}
+                    onChange={(e) => setBookFilter(e.target.value || null)}
+                    className="h-9 w-full rounded-md border border-input px-3 py-1 text-sm"
+                  >
+                    <option value="">All Books</option>
+                    {uniqueBooks.map((bookId) => (
+                      <option key={bookId} value={bookId}>
+                        Book {bookId}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div className="rounded-md border overflow-hidden">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Content ID</TableHead>
+                    <TableHead>Issue</TableHead>
+                    <TableHead>Reported By</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredItems.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={6} className="h-24 text-center">
+                        No flagged content found.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    filteredItems.map((item) => (
+                      <TableRow key={item.id}>
+                        <TableCell>
+                          {getStatusBadge(item.status)}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {getContentId(item)}
+                        </TableCell>
+                        <TableCell>
+                          <div className="max-w-xs truncate" title={item.reason}>
+                            {item.reason}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <span>{item.reportedBy.name}</span>
+                            <span className="text-xs text-muted-foreground">{item.reportedBy.role}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div title={formatDate(item.reportedAt)}>
+                            {new Date(item.reportedAt).toLocaleDateString()}
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleReviewItem(item)}
+                            className="h-8 w-8 p-0"
+                          >
+                            <Eye className="h-4 w-4" />
+                            <span className="sr-only">Review</span>
+                          </Button>
+                        </TableCell>
                       </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredQuestions.map((question) => (
-                        <TableRow key={question.id}>
-                          <TableCell className="font-medium">{question.id}</TableCell>
-                          <TableCell>
-                            Book {question.bookId} / Unit {question.unitId}
-                            <div className="text-xs text-gray-500">{question.slideId}</div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="max-w-sm">
-                              <div className="font-medium">{question.question}</div>
-                              {question.suggestedAnswer && (
-                                <div className="text-sm text-gray-600 mt-1">
-                                  Suggested: {question.suggestedAnswer}
-                                </div>
-                              )}
-                              <div className="text-xs text-gray-500 mt-1 italic">
-                                "{question.reportReason}"
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>{question.reportedBy}</TableCell>
-                          <TableCell>{getStatusBadge(question.status)}</TableCell>
-                          <TableCell>
-                            <div>{formatDate(question.createdAt)}</div>
-                            {question.updatedAt && (
-                              <div className="text-xs text-gray-500">
-                                Updated: {formatDate(question.updatedAt)}
-                              </div>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleReviewClick(question)}
-                              className="h-8 w-8 p-0 mr-1"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleDeleteClick(question)}
-                              className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="cards">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {filteredQuestions.map((question) => (
-                    <Card key={question.id} className="overflow-hidden">
-                      <CardHeader className="pb-3">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <CardTitle className="text-lg">Question #{question.id}</CardTitle>
-                            <CardDescription>
-                              Book {question.bookId} / Unit {question.unitId} / Slide {question.slideId}
-                            </CardDescription>
-                          </div>
-                          {getStatusBadge(question.status)}
-                        </div>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <div className="mb-3">
-                          <p className="text-sm font-medium text-gray-500">Current Question:</p>
-                          <p className="mt-1">{question.question}</p>
-                        </div>
-                        
-                        {question.suggestedAnswer && (
-                          <div className="mb-3">
-                            <p className="text-sm font-medium text-gray-500">Suggested Answer:</p>
-                            <p className="mt-1">{question.suggestedAnswer}</p>
-                          </div>
-                        )}
-                        
-                        <div className="mb-3">
-                          <p className="text-sm font-medium text-gray-500">Report Reason:</p>
-                          <p className="mt-1 text-sm italic">{question.reportReason}</p>
-                        </div>
-                        
-                        <div className="text-xs text-gray-500 flex justify-between items-center mt-4">
-                          <span>Reported by: {question.reportedBy}</span>
-                          <span>{formatDate(question.createdAt)}</span>
-                        </div>
-                        
-                        {question.reviewNotes && (
-                          <div className="mt-4 p-3 bg-gray-50 rounded-md">
-                            <p className="text-xs font-medium text-gray-500">Review Notes:</p>
-                            <p className="mt-1 text-sm">{question.reviewNotes}</p>
-                            <div className="text-xs text-gray-500 mt-2">
-                              By {question.reviewedBy} on {question.updatedAt && formatDate(question.updatedAt)}
-                            </div>
-                          </div>
-                        )}
-                        
-                        <div className="flex justify-end mt-4 gap-2">
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            onClick={() => handleReviewClick(question)}
-                          >
-                            <Edit className="h-4 w-4 mr-1" /> Review
-                          </Button>
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600"
-                            onClick={() => handleDeleteClick(question)}
-                          >
-                            <X className="h-4 w-4 mr-1" /> Delete
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
-          )}
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </Tabs>
         </CardContent>
       </Card>
 
       {/* Review Dialog */}
-      {selectedQuestion && (
-        <Dialog open={reviewDialogOpen} onOpenChange={setReviewDialogOpen}>
-          <DialogContent className="sm:max-w-lg">
+      {selectedItem && (
+        <Dialog open={isReviewDialogOpen} onOpenChange={setIsReviewDialogOpen}>
+          <DialogContent className="max-w-4xl">
             <DialogHeader>
-              <DialogTitle>Review Flagged Question</DialogTitle>
+              <DialogTitle className="flex items-center">
+                <AlertTriangle className="h-5 w-5 mr-2 text-yellow-500" />
+                Review Flagged Content
+              </DialogTitle>
               <DialogDescription>
-                Review and update the content as needed.
+                {getContentId(selectedItem)}
               </DialogDescription>
             </DialogHeader>
             
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="original-question">Original Question</Label>
-                <div id="original-question" className="p-3 bg-gray-50 rounded-md">
-                  {selectedQuestion.question}
+            <div className="grid gap-6 py-4">
+              <div className="grid gap-2">
+                <Label className="text-muted-foreground">Reported By</Label>
+                <div className="flex items-center">
+                  <div className="bg-blue-100 text-blue-700 rounded-full h-8 w-8 flex items-center justify-center font-medium">
+                    {selectedItem.reportedBy.name.charAt(0)}
+                  </div>
+                  <div className="ml-2">
+                    <div className="font-medium">{selectedItem.reportedBy.name}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {selectedItem.reportedBy.email} • {selectedItem.reportedBy.role}
+                    </div>
+                  </div>
+                </div>
+                <div className="text-sm text-muted-foreground flex items-center mt-1">
+                  <Calendar className="h-3 w-3 mr-1" /> Reported {formatDate(selectedItem.reportedAt)}
                 </div>
               </div>
               
-              <div className="space-y-2">
-                <Label htmlFor="corrected-question">Corrected Question</Label>
-                <Input
-                  id="corrected-question"
-                  value={correctedQuestion}
-                  onChange={(e) => setCorrectedQuestion(e.target.value)}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="corrected-answer">Corrected Answer</Label>
-                <Input
-                  id="corrected-answer"
-                  value={correctedAnswer}
-                  onChange={(e) => setCorrectedAnswer(e.target.value)}
-                  placeholder="Enter the corrected answer (if needed)"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="report-reason">Report Reason</Label>
-                <div id="report-reason" className="p-3 bg-gray-50 rounded-md text-sm">
-                  {selectedQuestion.reportReason}
+              <div className="grid gap-2">
+                <Label className="text-muted-foreground">Issue Description</Label>
+                <div className="rounded-md bg-yellow-50 border border-yellow-200 p-3 text-sm">
+                  {selectedItem.reason}
                 </div>
               </div>
               
-              <div className="space-y-2">
-                <Label htmlFor="review-status">Review Action</Label>
-                <Select value={reviewStatus} onValueChange={(value: any) => setReviewStatus(value)}>
-                  <SelectTrigger id="review-status">
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="approved">
-                      <div className="flex items-center">
-                        <Check className="h-4 w-4 mr-2 text-green-500" />
-                        Approve Changes
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="rejected">
-                      <div className="flex items-center">
-                        <X className="h-4 w-4 mr-2 text-red-500" />
-                        Reject Changes
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="rounded-md border p-4">
+                  <h3 className="text-sm font-medium mb-2">Current Content</h3>
+                  <div className="bg-gray-50 p-3 rounded-md">
+                    {selectedItem.originalContent}
+                  </div>
+                </div>
+                
+                <div className="rounded-md border p-4">
+                  <h3 className="text-sm font-medium mb-2">Suggested Content</h3>
+                  <div className="bg-gray-50 p-3 rounded-md">
+                    {selectedItem.suggestedContent || 
+                      <span className="text-muted-foreground italic">No specific content change suggested</span>
+                    }
+                  </div>
+                </div>
               </div>
               
-              <div className="space-y-2">
+              <div className="grid gap-2">
                 <Label htmlFor="review-notes">Review Notes</Label>
-                <Input
+                <Textarea
                   id="review-notes"
+                  placeholder="Enter your review notes here..."
                   value={reviewNotes}
                   onChange={(e) => setReviewNotes(e.target.value)}
-                  placeholder="Add notes about your decision (optional)"
+                  className="min-h-[100px]"
                 />
+              </div>
+              
+              <div className="flex flex-col space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="approve-switch"
+                    checked={isApproved}
+                    onCheckedChange={setIsApproved}
+                  />
+                  <Label htmlFor="approve-switch">
+                    {isApproved ? "Approve this change" : "Reject this change"}
+                  </Label>
+                </div>
+                
+                {isApproved && selectedItem.suggestedContent && (
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="implement-switch"
+                      checked={implementImmediately}
+                      onCheckedChange={setImplementImmediately}
+                    />
+                    <Label htmlFor="implement-switch">
+                      Implement change immediately
+                    </Label>
+                  </div>
+                )}
               </div>
             </div>
             
             <DialogFooter>
               <Button
                 variant="outline"
-                onClick={() => setReviewDialogOpen(false)}
+                onClick={() => setIsReviewDialogOpen(false)}
               >
                 Cancel
               </Button>
@@ -689,27 +625,6 @@ const FlaggedQuestionsPage = () => {
           </DialogContent>
         </Dialog>
       )}
-
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete this flagged question? This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-red-600 hover:bg-red-700 text-white"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 };

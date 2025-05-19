@@ -59,6 +59,8 @@ import SiteSettingsPage from "./secure/admin/SiteSettingsPage";
 import UserManagementPage from "./secure/admin/UserManagementPage";
 import FlaggedQuestionsPage from "./secure/admin/FlaggedQuestionsPage";
 import AnalyticsPanel from "./secure/admin/AnalyticsPanel";
+import AccessRolesPage from "./secure/admin/AccessRolesPage";
+import BroadcastMessagesPage from "./secure/admin/BroadcastMessagesPage";
 
 // Original paths - still used until migration is complete
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
@@ -262,10 +264,10 @@ function App() {
             <AnalyticsPanel />
           </AdminRoute>
           <AdminRoute path="/admin/roles">
-            <DevToolsPage rolesPlaceholder />
+            <AccessRolesPage />
           </AdminRoute>
           <AdminRoute path="/admin/broadcast">
-            <DevToolsPage broadcastPlaceholder />
+            <BroadcastMessagesPage />
           </AdminRoute>
           <AdminRoute path="/admin/feedback">
             <DevToolsPage feedbackPlaceholder />
