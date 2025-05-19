@@ -13,6 +13,7 @@ type UnitWithThumbnail = {
   unitNumber: string;
   title: string;
   thumbnailUrl?: string;
+  fallbackColor?: string;
   description?: string;
 };
 
@@ -207,7 +208,7 @@ export default function UnitsPage() {
                         />
                       </>
                     ) : (
-                      <div className="h-full w-full flex items-center justify-center" style={{backgroundColor: getBookColor(bookId || "")}}>
+                      <div className="h-full w-full flex items-center justify-center" style={{backgroundColor: unit.fallbackColor || getBookColor(bookId || "")}}>
                         <div className="text-white font-bold text-xl text-center">
                           VISUAL {bookId}<br/>ENGLISH
                         </div>

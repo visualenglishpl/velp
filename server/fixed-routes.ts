@@ -132,34 +132,63 @@ export async function setupFixedRoutes(app: any, getS3PresignedUrl: any) {
         return basePaths;
       }
 
-      // Try to get thumbnail URLs for each unit
-      const unitsWithThumbnails = await Promise.all(units.map(async (unit) => {
-        // Get the correct paths for this specific book and unit
-        const possiblePaths = getBookSpecificPaths(pathBookId, unit.unitNumber);
+      // Improved approach: process units in batches to avoid overwhelming S3
+      // and use a more efficient thumbnail lookup strategy
+      const unitsWithThumbnails = [];
+      const batchSize = 4; // Process 4 units at a time
+      
+      // Most likely path pattern for this book (based on observed data)
+      const primaryPathPattern = 
+        pathBookId.startsWith('0') ? `book${pathBookId}/icons/thumbnailsuni${pathBookId}-{unitNumber}.png` :
+        pathBookId === '7' ? `book7/icons/thumbnailsuni7-{unitNumber}.png` :
+        `book${pathBookId}/icons/thumbnailsuni${pathBookId}-{unitNumber}.png`;
+      
+      // Process units in batches to avoid overwhelming S3
+      for (let i = 0; i < units.length; i += batchSize) {
+        const batch = units.slice(i, i + batchSize);
         
-        // Log the book ID and unit number for debugging
-        console.log(`Looking for thumbnails for book ID: ${pathBookId}, unit ${unit.unitNumber}`);
-        console.log(`Trying these paths: ${possiblePaths.join(', ')}`);
-        
-        // Try each path to find a valid thumbnail URL
-        let thumbnailUrl = null;
-        for (const path of possiblePaths) {
+        // Process batch in parallel
+        const batchResults = await Promise.all(batch.map(async (unit) => {
+          // Try the most likely path pattern first based on book ID
+          const primaryPath = primaryPathPattern.replace('{unitNumber}', unit.unitNumber);
+          
           try {
-            const url = await getS3PresignedUrl(path);
+            const url = await getS3PresignedUrl(primaryPath);
             if (url) {
-              console.log(`Success: Generated thumbnail URL for unit ${unit.unitNumber}: ${path}`);
-              thumbnailUrl = url;
-              break;
+              console.log(`Success: Generated thumbnail URL for unit ${unit.unitNumber}: ${primaryPath}`);
+              return { ...unit, thumbnailUrl: url };
             }
           } catch (error) {
-            // Just log and continue to next path
-            console.log(`No thumbnail found at: ${path}`);
+            // Silent fail for primary path
           }
-        }
+          
+          // Fallback: Use colored background instead of trying multiple paths
+          // Set color based on book ID for better visual appeal
+          const bookColors = {
+            '0a': '#FF40FF', // Pink
+            '0b': '#FF7F27', // Orange
+            '0c': '#00CEDD', // Teal
+            '1': '#FFFF00',  // Yellow
+            '2': '#9966CC',  // Purple
+            '3': '#00CC00',  // Green
+            '4': '#5DADEC',  // Blue
+            '5': '#00CC66',  // Green
+            '6': '#FF0000',  // Red
+            '7': '#00FF00'   // Bright Green
+          };
+          
+          // Use the book color or default to gray
+          const fallbackColor = bookColors[pathBookId] || '#CCCCCC';
+          
+          return { 
+            ...unit, 
+            thumbnailUrl: null,
+            fallbackColor: fallbackColor
+          };
+        }));
         
-        // Return the unit with thumbnail URL if found, otherwise without
-        return { ...unit, thumbnailUrl: thumbnailUrl };
-      }));
+        unitsWithThumbnails.push(...batchResults);
+      }
       
       return res.json(unitsWithThumbnails);
     } catch (error) {

@@ -12,7 +12,25 @@ type UnitWithThumbnail = {
   unitNumber: string;
   title: string;
   thumbnailUrl?: string;
+  fallbackColor?: string;
   description?: string;
+};
+
+// Function to get book color based on ID
+const getBookColor = (bookId: string): string => {
+  switch (bookId) {
+    case '0a': return '#FF40FF'; // Pink
+    case '0b': return '#FF7F27'; // Orange
+    case '0c': return '#00CEDD'; // Teal
+    case '1': return '#FFFF00'; // Yellow
+    case '2': return '#9966CC'; // Purple
+    case '3': return '#00CC00'; // Green
+    case '4': return '#5DADEC'; // Blue
+    case '5': return '#00CC66'; // Green
+    case '6': return '#FF0000'; // Red
+    case '7': return '#00FF00'; // Bright Green
+    default: return '#6b7280'; // Gray
+  }
 };
 
 export default function UnitsPage() {
@@ -159,22 +177,24 @@ export default function UnitsPage() {
                 >
                   {unit.thumbnailUrl ? (
                     <>
+                      <div 
+                        className="h-full w-full absolute top-0 left-0 flex items-center justify-center"
+                        style={{backgroundColor: unit.fallbackColor || getBookColor(bookId || "")}}
+                      >
+                        <div className="text-white font-bold text-xl text-center">
+                          VISUAL {bookId}<br/>ENGLISH
+                        </div>
+                      </div>
                       <img 
                         src={unit.thumbnailUrl} 
                         alt={`Thumbnail for unit ${unit.unitNumber}`} 
-                        className="object-cover w-full h-full"
+                        className="object-cover w-full h-full relative z-10"
+                        loading="lazy"
                         onError={(e) => {
-                          // If the thumbnail fails to load, show No Preview instead
+                          // If the thumbnail fails to load, just hide the image and show the fallback
                           const img = e.currentTarget;
                           img.style.display = "none";
-                          const container = img.parentElement;
-                          if (container) {
-                            const noPreview = document.createElement('div');
-                            noPreview.className = "h-full w-full bg-gray-100 flex items-center justify-center";
-                            noPreview.innerHTML = '<span class="text-gray-400 text-lg">No Preview</span>';
-                            container.appendChild(noPreview);
-                          }
-                        }} 
+                        }}
                       />
                       <div className="absolute top-0 left-0 bg-gray-800 bg-opacity-70 text-white p-2 rounded-br-md">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -183,8 +203,13 @@ export default function UnitsPage() {
                       </div>
                     </>
                   ) : (
-                    <div className="h-full w-full bg-gray-100 flex items-center justify-center">
-                      <span className="text-gray-400 text-lg">No Preview</span>
+                    <div 
+                      className="h-full w-full flex items-center justify-center"
+                      style={{backgroundColor: unit.fallbackColor || getBookColor(bookId || "")}}
+                    >
+                      <div className="text-white font-bold text-xl text-center">
+                        VISUAL {bookId}<br/>ENGLISH
+                      </div>
                       <div className="absolute top-0 left-0 bg-gray-800 bg-opacity-70 text-white p-2 rounded-br-md">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
