@@ -12,7 +12,8 @@ import {
   Shield, 
   Bell,
   MessageSquare,
-  CreditCard
+  CreditCard,
+  Globe
 } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
@@ -114,11 +115,11 @@ const AdminPage = () => {
       link: '/admin/settings'
     },
     {
-      title: 'User Management',
-      description: 'Manage teachers, students and permissions',
-      icon: <Users className="h-10 w-10 text-white" size={42} />,
+      title: 'Language Manager',
+      description: 'Manage translations, edit text labels, and UI language per user',
+      icon: <Globe className="h-10 w-10 text-white" size={42} />,
       color: '#FFFF00', // Yellow (Book 1)
-      link: '/admin/users'
+      link: '/admin/languages'
     },
     {
       title: 'Flagged Questions',

@@ -67,6 +67,7 @@ import BroadcastMessagesDashboard from "./secure/admin/BroadcastMessagesDashboar
 import FeedbackViewerPage from "./secure/admin/FeedbackViewerPage";
 import EnhancedFeedbackViewer from "./secure/admin/EnhancedFeedbackViewer";
 import PaymentHistoryViewer from "./secure/admin/PaymentHistoryViewer";
+import LanguageManagerPage from "./secure/admin/LanguageManagerPage";
 
 // Original paths - still used until migration is complete
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
@@ -280,6 +281,9 @@ function App() {
           </SimpleAdminRoute>
           <SimpleAdminRoute path="/admin/payments">
             <PaymentHistoryViewer />
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/languages">
+            <LanguageManagerPage />
           </SimpleAdminRoute>
           <SimpleAdminRoute path="/simple-books-admin">
             <SimpleBooksAdmin />
