@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,7 +18,6 @@ import {
   AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 import { Pencil, Trash2, UserPlus, Users } from "lucide-react";
-// Import correct location-related hooks
 import { useLocation } from "wouter";
 
 // Define user type for our component
@@ -34,9 +32,9 @@ type User = {
 };
 
 const UserManagementPage = () => {
-  const { user: currentUser } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const [adminUser, setAdminUser] = useState<any>(null);
 
   // State for the user list and form
   const [users, setUsers] = useState<User[]>([]);
@@ -61,16 +59,30 @@ const UserManagementPage = () => {
 
   // Check if user is admin
   useEffect(() => {
-    if (currentUser && currentUser.role !== "admin") {
-      toast({
-        title: "Access Denied",
-        description: "You don't have permission to view this page.",
-        variant: "destructive",
-      });
-      // Use window.location for navigation to avoid hooks dependency issues
-      window.location.href = "/";
-    }
-  }, [currentUser, toast]);
+    const checkAdminAccess = async () => {
+      try {
+        const res = await fetch('/api/direct/admin-login', { 
+          credentials: 'include',
+          cache: 'no-store'
+        });
+        
+        if (!res.ok) {
+          console.error("Admin access check failed");
+          window.location.href = "/admin";
+        } else {
+          const data = await res.json();
+          if (data.user) {
+            setAdminUser(data.user);
+          }
+        }
+      } catch (error) {
+        console.error("Error checking admin access:", error);
+        window.location.href = "/admin";
+      }
+    };
+    
+    checkAdminAccess();
+  }, []);
 
   // Fetch users
   useEffect(() => {
@@ -412,31 +424,31 @@ const UserManagementPage = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Username</TableHead>
-                      <TableHead>Full Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Role</TableHead>
-                      <TableHead>Created</TableHead>
-                      <TableHead>Last Login</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead className="text-xs">Username</TableHead>
+                      <TableHead className="text-xs">Full Name</TableHead>
+                      <TableHead className="text-xs">Email</TableHead>
+                      <TableHead className="text-xs">Role</TableHead>
+                      <TableHead className="text-xs">Created</TableHead>
+                      <TableHead className="text-xs">Last Login</TableHead>
+                      <TableHead className="text-xs text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {currentUsers.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={7} className="text-center py-6">
-                          No users found
+                        <TableCell colSpan={7} className="text-center py-4 text-xs">
+                          No users found. Try adjusting your search criteria.
                         </TableCell>
                       </TableRow>
                     ) : (
                       currentUsers.map((user) => (
                         <TableRow key={user.id}>
-                          <TableCell className="font-medium">{user.username}</TableCell>
-                          <TableCell>{user.fullName || "-"}</TableCell>
-                          <TableCell>{user.email || "-"}</TableCell>
-                          <TableCell>
+                          <TableCell className="font-medium text-xs py-2">{user.username}</TableCell>
+                          <TableCell className="text-xs py-2 max-w-[150px] truncate">{user.fullName || "-"}</TableCell>
+                          <TableCell className="text-xs py-2 max-w-[180px] truncate">{user.email || "-"}</TableCell>
+                          <TableCell className="py-2">
                             <span
-                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
                                 user.role === "admin"
                                   ? "bg-red-100 text-red-700"
                                   : user.role === "teacher"
@@ -447,24 +459,24 @@ const UserManagementPage = () => {
                               {user.role}
                             </span>
                           </TableCell>
-                          <TableCell>{user.createdAt || "-"}</TableCell>
-                          <TableCell>{user.lastLogin || "-"}</TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="text-xs py-2">{user.createdAt || "-"}</TableCell>
+                          <TableCell className="text-xs py-2">{user.lastLogin || "-"}</TableCell>
+                          <TableCell className="text-right py-2">
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleEdit(user)}
-                              className="h-8 w-8 p-0 mr-1"
+                              className="h-6 w-6 p-0 mr-1"
                             >
-                              <Pencil className="h-4 w-4" />
+                              <Pencil className="h-3.5 w-3.5" />
                             </Button>
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDeleteClick(user)}
-                              className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                              className="h-6 w-6 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
                             >
-                              <Trash2 className="h-4 w-4" />
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -514,68 +526,73 @@ const UserManagementPage = () => {
       {/* Add/Edit User Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>
+          <DialogHeader className="pb-2">
+            <DialogTitle className="text-base">
               {selectedUser ? "Edit User" : "Add New User"}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-xs">
               {selectedUser
                 ? "Update the user's information below"
                 : "Enter the details for the new user"}
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="username">Username</Label>
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="grid gap-3">
+              <div className="grid gap-1.5">
+                <Label htmlFor="username" className="text-xs">Username</Label>
                 <Input
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Username"
+                  className="h-8 text-xs"
                 />
                 {formErrors.username && (
-                  <p className="text-sm text-red-500">{formErrors.username}</p>
+                  <p className="text-[10px] text-red-500">{formErrors.username}</p>
                 )}
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+              <div className="grid gap-1.5">
+                <Label htmlFor="email" className="text-xs">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email address"
+                  className="h-8 text-xs"
                 />
                 {formErrors.email && (
-                  <p className="text-sm text-red-500">{formErrors.email}</p>
+                  <p className="text-[10px] text-red-500">{formErrors.email}</p>
                 )}
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="fullName">Full Name</Label>
+              <div className="grid gap-1.5">
+                <Label htmlFor="fullName" className="text-xs">Full Name</Label>
                 <Input
                   id="fullName"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Full Name"
+                  className="h-8 text-xs"
                 />
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="role">Role</Label>
+              <div className="grid gap-1.5">
+                <Label htmlFor="role" className="text-xs">Role</Label>
                 <Select value={role} onValueChange={(value: any) => setRole(value)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-8 text-xs">
                     <SelectValue placeholder="Select a role" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="teacher">Teacher</SelectItem>
-                    <SelectItem value="school">School</SelectItem>
+                    <SelectItem value="admin" className="text-xs">Admin</SelectItem>
+                    <SelectItem value="teacher" className="text-xs">Teacher</SelectItem>
+                    <SelectItem value="school" className="text-xs">School</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password">
-                  {selectedUser ? "New Password (leave blank to keep current)" : "Password"}
+              <div className="grid gap-1.5">
+                <Label htmlFor="password" className="text-xs">
+                  {selectedUser ? 
+                    <span>New Password <span className="text-[10px] text-muted-foreground">(leave blank to keep current)</span></span> 
+                    : "Password"}
                 </Label>
                 <Input
                   id="password"
@@ -583,9 +600,10 @@ const UserManagementPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
+                  className="h-8 text-xs"
                 />
                 {formErrors.password && (
-                  <p className="text-sm text-red-500">{formErrors.password}</p>
+                  <p className="text-[10px] text-red-500">{formErrors.password}</p>
                 )}
               </div>
               <div className="grid gap-2">
