@@ -492,24 +492,25 @@ const LanguageManagerPage = () => {
         <title>Language Manager | Visual English Admin</title>
       </Helmet>
       
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center mb-6">
-          <Link href="/admin">
-            <Button variant="outline" className="mr-4">
-              <ChevronLeft className="mr-2 h-4 w-4" />
-              Back to Admin
-            </Button>
-          </Link>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center">
-              <Globe className="mr-2 h-6 w-6 text-blue-500" />
-              Language Manager
-            </h1>
-            <p className="text-gray-600 text-sm mt-1">
-              Manage translations and language settings for the Visual English platform
-            </p>
+      <div className="min-h-screen bg-gray-50 py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center">
+              <Link href="/admin">
+                <Button variant="outline" className="mr-4">
+                  <ChevronLeft className="mr-2 h-4 w-4" />
+                  Back to Admin
+                </Button>
+              </Link>
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Language Manager</h1>
+                <p className="text-lg text-gray-600 mt-1">
+                  Manage translations and language settings for the Visual English platform
+                </p>
+              </div>
+            </div>
+            <Globe className="h-8 w-8 text-blue-500" />
           </div>
-        </div>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="mb-6">
