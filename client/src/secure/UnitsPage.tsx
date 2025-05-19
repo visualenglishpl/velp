@@ -57,7 +57,7 @@ export default function UnitsPage() {
     checkUser();
   }, []);
 
-  // Query to get units for a specific book
+  // Query to get units for a specific book - with optimization options
   const { data: units, isLoading, error } = useQuery<UnitWithThumbnail[]>({
     queryKey: [`/api/books/${bookId}/units`],
     queryFn: async () => {
@@ -66,7 +66,8 @@ export default function UnitsPage() {
         if (!res.ok) {
           throw new Error(`Failed to fetch units for book ${bookId}`);
         }
-        return await res.json();
+        const data = await res.json();
+        return data;
       } catch (error) {
         // Fallback to sample data if API fails
         console.log("Using sample unit data for book", bookId);
@@ -86,6 +87,9 @@ export default function UnitsPage() {
       }
     },
     enabled: !!bookId, // Only run the query if bookId is available
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes to improve performance
+    refetchOnWindowFocus: false, // Don't refetch on window focus
+    retry: 2, // Retry failed requests up to 2 times
   });
 
   // Handle error
