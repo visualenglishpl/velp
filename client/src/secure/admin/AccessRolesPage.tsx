@@ -221,9 +221,20 @@ const AccessRolesPage = () => {
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-xl font-bold flex items-center">
-                <ShieldCheck className="mr-2 h-5 w-5" /> Access Roles Management
-              </CardTitle>
+              <div className="flex items-center mb-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => navigate('/admin')}
+                  className="mr-3 flex items-center gap-1"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  Back
+                </Button>
+                <CardTitle className="text-xl font-bold flex items-center">
+                  <ShieldCheck className="mr-2 h-5 w-5" /> Access Roles Management
+                </CardTitle>
+              </div>
               <CardDescription className="text-sm text-gray-500">
                 Manage user roles, permissions and access control
               </CardDescription>
