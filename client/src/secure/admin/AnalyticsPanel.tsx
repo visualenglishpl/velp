@@ -381,7 +381,8 @@ const AnalyticsPanel = () => {
                   <SelectItem value="last12months">Last 12 Months</SelectItem>
                   <SelectItem value="yearToDate">Year to Date</SelectItem>
                 </SelectContent>
-              </Select>
+              </SelectTrigger>
+            </Select>
 
               <Button variant="outline" onClick={handleExportData}>
                 <Download className="h-4 w-4 mr-2" /> Export Data

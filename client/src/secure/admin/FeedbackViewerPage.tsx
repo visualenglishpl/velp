@@ -673,8 +673,7 @@ const FeedbackViewerPage = () => {
                 </div>
                 
                 <Select value={categoryFilter || ''} onValueChange={(value) => setCategoryFilter(value || null)}>
-                  <SelectTrigger>
-                      <SelectTrigger className="w-36">
+                  <SelectTrigger className="w-36">
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -688,8 +687,7 @@ const FeedbackViewerPage = () => {
                 </Select>
                 
                 <Select value={priorityFilter || ''} onValueChange={(value) => setPriorityFilter(value || null)}>
-                  <SelectTrigger>
-                      <SelectTrigger className="w-36">
+                  <SelectTrigger className="w-36">
                     <SelectValue placeholder="Priority" />
                   </SelectTrigger>
                   <SelectContent>

@@ -828,8 +828,7 @@ const AuthenticationManagementPage = () => {
               {activeTab === 'logins' && (
                 <>
                   <Select value={eventTypeFilter || ''} onValueChange={(value) => setEventTypeFilter(value || null)}>
-                    <SelectTrigger>
-                      <SelectTrigger className="w-[140px]">
+                    <SelectTrigger className="w-[140px]">
                       <SelectValue placeholder="Event Type" />
                     </SelectTrigger>
                     <SelectContent>

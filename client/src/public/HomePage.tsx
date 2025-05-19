@@ -74,7 +74,64 @@ const HomePage = () => {
         <PricingPlans />
       </section>
       
-      {/* "Try Before You Subscribe" Banner - links to existing book thumbnails */}
+      {/* Book Grid Section */}
+      <section id="books" className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Our Books</h2>
+          
+          {thumbnailLoadError && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
+              {thumbnailLoadError}
+            </div>
+          )}
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {isLoadingThumbnails ? (
+              // Skeleton loaders while thumbnails are loading
+              Array(10).fill(0).map((_, index) => (
+                <div key={`skeleton-${index}`} className="flex flex-col items-center">
+                  <Skeleton className="w-40 h-48 rounded-md mb-2" />
+                  <Skeleton className="w-32 h-4 rounded-md mb-1" />
+                  <Skeleton className="w-20 h-4 rounded-md" />
+                </div>
+              ))
+            ) : (
+              // Render actual book cards
+              books.map(book => (
+                <Card 
+                  key={book.id}
+                  className="flex flex-col items-center p-3 hover:shadow-md transition-shadow"
+                >
+                  <a 
+                    href={`/books/${book.id}`} 
+                    className="block w-full h-full"
+                    aria-label={`View ${book.title}`}
+                  >
+                    {book.thumbnailUrl ? (
+                      <img 
+                        src={book.thumbnailUrl} 
+                        alt={`${book.title} thumbnail`}
+                        className="w-full h-48 object-contain mb-3 rounded"
+                      />
+                    ) : (
+                      <div 
+                        className="w-full h-48 flex items-center justify-center mb-3 rounded"
+                        style={{ backgroundColor: book.color }}
+                      >
+                        <BookIcon size={48} className="text-white" />
+                      </div>
+                    )}
+                    <h3 className="font-medium text-center">{book.title}</h3>
+                    <p className="text-sm text-gray-500 text-center">View Book</p>
+                  </a>
+                </Card>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+      
+      {/* "Try Before You Subscribe" Banner */}
       <section className="py-12 bg-gradient-to-r from-blue-50 to-purple-50">
         <div className="container mx-auto px-4">
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -119,63 +176,7 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Books Section with Loading State */}
-      <section id="books" className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold">Visual English Series</h2>
-            <p className="text-gray-600 mt-2">Choose a book to start your free trial</p>
-            {thumbnailLoadError && (
-              <div className="mt-4 p-3 bg-red-50 text-red-600 rounded-md max-w-md mx-auto">
-                {thumbnailLoadError} <button onClick={() => window.location.reload()} className="underline ml-2">Retry</button>
-              </div>
-            )}
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {isLoadingThumbnails ? (
-              // Show loading skeletons while thumbnails are loading
-              Array(10).fill(0).map((_, index) => (
-                <Card key={`skeleton-${index}`} className="flex flex-col items-center p-4">
-                  <Skeleton className="w-24 h-24 rounded-md mb-3" />
-                  <Skeleton className="h-5 w-32 mb-1" />
-                </Card>
-              ))
-            ) : (
-              // Show actual book thumbnails once loaded
-              books.map((book) => (
-                <Card 
-                  key={book.id}
-                  className="flex flex-col items-center p-4 hover:shadow-md transition-shadow cursor-pointer"
-                  onClick={() => window.location.href = `/checkout/book?book=${book.id}`}
-                >
-                  <div 
-                    className="w-24 h-24 rounded-md mb-3 flex items-center justify-center"
-                    style={{ backgroundColor: book.color }}
-                  >
-                    {book.thumbnailUrl ? (
-                      <img 
-                        src={book.thumbnailUrl}
-                        alt={`Book ${book.id}`}
-                        className="w-20 h-20 object-contain"
-                        onError={(e) => {
-                          console.log(`Error loading image for book ${book.id}`);
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      <BookIcon className="w-12 h-12 text-white" />
-                    )}
-                  </div>
-                  <h3 className="font-semibold text-center">
-                    {book.id.startsWith('0') ? `Beginner Book ${book.id}` : `Book ${book.id}`}
-                  </h3>
-                </Card>
-              ))
-            )}
-          </div>
-        </div>
-      </section>
+
 
       {/* FAQ and Project Sections */}
       <FAQSection />
