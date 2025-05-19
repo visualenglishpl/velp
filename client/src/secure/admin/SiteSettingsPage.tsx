@@ -45,7 +45,8 @@ import {
   Save,
   CreditCard,
   Edit,
-  Trash2
+  Trash2,
+  ShoppingBag
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
