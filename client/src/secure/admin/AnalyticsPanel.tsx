@@ -369,7 +369,8 @@ const AnalyticsPanel = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-2">
               <Select value={dateRange} onValueChange={setDateRange}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger>
+                      <SelectTrigger className="w-[180px]">
                   <Calendar className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Select range" />
                 </SelectTrigger>

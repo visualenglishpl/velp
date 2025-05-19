@@ -973,7 +973,8 @@ const DigitalInventoryPage = () => {
               
               {activeTab === "products" && (
                 <Select value={productTypeFilter || ''} onValueChange={(value) => setProductTypeFilter(value || null)}>
-                  <SelectTrigger className="w-[140px]">
+                  <SelectTrigger>
+                      <SelectTrigger className="w-[140px]">
                     <SelectValue placeholder="All Types" />
                   </SelectTrigger>
                   <SelectContent>
@@ -989,7 +990,8 @@ const DigitalInventoryPage = () => {
               
               {activeTab === "licenses" && (
                 <Select value={expiryFilter || ''} onValueChange={(value) => setExpiryFilter(value || null)}>
-                  <SelectTrigger className="w-[140px]">
+                  <SelectTrigger>
+                      <SelectTrigger className="w-[140px]">
                     <SelectValue placeholder="All Statuses" />
                   </SelectTrigger>
                   <SelectContent>
