@@ -107,44 +107,7 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Visual English Series Books */}
-      <section id="books" className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold">Visual English Series</h2>
-            <p className="text-gray-600 mt-2">Choose a book to start your free trial</p>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {books.map((book) => (
-              <Card 
-                key={book.id}
-                className="flex flex-col items-center p-4 hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => window.location.href = `/checkout/book?book=${book.id}`}
-              >
-                <div 
-                  className="w-24 h-24 rounded-md mb-3 flex items-center justify-center"
-                  style={{ backgroundColor: book.color }}
-                >
-                  <img 
-                    src={book.thumbnailUrl || `/api/direct/content/icons/VISUAL ${book.id}${book.id === '3' ? ' ' : ''}.gif`}
-                    alt={`Book ${book.id}`}
-                    className="w-20 h-20 object-contain"
-                    onError={(e) => {
-                      console.log(`Error loading image for book ${book.id}`);
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                </div>
-                <h3 className="font-semibold text-center">
-                  {book.id.startsWith('0') ? `Beginner Book ${book.id}` : `Book ${book.id}`}
-                </h3>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      {/* FAQ and Project Sections */}
       <FAQSection />
       <EUProjectSection />
       
