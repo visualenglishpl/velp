@@ -722,7 +722,6 @@ const CombinedUserRolesPage = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-xs w-12">Avatar</TableHead>
                       <TableHead className="text-xs">User Info</TableHead>
                       <TableHead className="text-xs">Email</TableHead>
                       <TableHead className="text-xs">Permissions</TableHead>
@@ -742,24 +741,16 @@ const CombinedUserRolesPage = () => {
                       currentUsers.map((user) => (
                         <TableRow key={user.id} className="group hover:bg-slate-50">
                           <TableCell className="py-2">
-                            <div className="h-9 w-9 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center border border-slate-200">
-                              {user.profileImageUrl ? (
-                                <img 
-                                  src={user.profileImageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.fullName || user.username)}&background=random`} 
-                                  alt={user.username}
-                                  className="h-full w-full object-cover"
-                                />
-                              ) : (
+                            <div className="flex items-center gap-3">
+                              <div className="h-9 w-9 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center border border-slate-200">
                                 <div className="h-full w-full flex items-center justify-center bg-primary text-white text-sm font-semibold">
                                   {(user.fullName || user.username).substring(0, 2).toUpperCase()}
                                 </div>
-                              )}
-                            </div>
-                          </TableCell>
-                          <TableCell className="py-2">
-                            <div className="flex flex-col">
-                              <span className="font-medium text-xs">{user.username}</span>
-                              <span className="text-xs text-muted-foreground max-w-[150px] truncate">{user.fullName || "-"}</span>
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="font-medium text-xs">{user.username}</span>
+                                <span className="text-xs text-muted-foreground max-w-[150px] truncate">{user.fullName || "-"}</span>
+                              </div>
                             </div>
                           </TableCell>
                           <TableCell className="text-xs py-2 max-w-[180px] truncate">{user.email || "-"}</TableCell>
