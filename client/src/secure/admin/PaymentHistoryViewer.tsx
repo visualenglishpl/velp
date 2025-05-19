@@ -629,7 +629,7 @@ const PaymentHistoryViewer = () => {
     return formatter.format(amount);
   };
 
-  // Get status badge
+  // Get status badge for details view
   const getStatusBadge = (status: PaymentStatus) => {
     switch (status) {
       case "completed":
@@ -647,7 +647,7 @@ const PaymentHistoryViewer = () => {
     }
   };
 
-  // Get method badge
+  // Get method badge for details view
   const getMethodBadge = (method: PaymentMethod) => {
     switch (method) {
       case "credit_card":
@@ -663,7 +663,7 @@ const PaymentHistoryViewer = () => {
     }
   };
 
-  // Get subscription type badge
+  // Get subscription type badge for details view
   const getSubscriptionBadge = (type: SubscriptionType) => {
     switch (type) {
       case "monthly":
@@ -866,9 +866,9 @@ const PaymentHistoryViewer = () => {
           
           <div className="space-y-4">
             {/* Filters and Tabs */}
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-4">
-                <TabsList className="bg-gray-100 p-1">
+            <div className="border border-gray-200 rounded-md overflow-hidden">
+              <div className="bg-gray-50 p-2">
+                <TabsList className="w-full grid grid-cols-6 bg-transparent gap-1">
                   <TabsTrigger value="all" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
                     All Payments
                   </TabsTrigger>
@@ -888,106 +888,112 @@ const PaymentHistoryViewer = () => {
                     Failed
                   </TabsTrigger>
                 </TabsList>
-                
-                <div className="flex items-center gap-2">
-                  <div className="relative">
+              </div>
+              
+              <div className="p-3 border-t border-gray-200 bg-white">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="relative w-full max-w-xs">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                     <Input
                       type="search"
                       placeholder="Search payments..."
-                      className="pl-8 w-full md:w-[250px]"
+                      className="pl-8 pr-4 py-2"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
-                  <Button variant="outline" size="sm" className="h-9">
+                  <Button variant="outline" size="sm" className="h-9 ml-2">
                     <Filter className="h-4 w-4 mr-1" /> Filter
                   </Button>
                 </div>
+                
+                {/* Advanced Filters */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-medium text-gray-600">Date:</span>
+                    <Select value={dateFilter} onValueChange={setDateFilter}>
+                      <SelectTrigger className="h-9 flex-1">
+                        <SelectValue placeholder="All Time" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Time</SelectItem>
+                        <SelectItem value="today">Today</SelectItem>
+                        <SelectItem value="this_week">This Week</SelectItem>
+                        <SelectItem value="this_month">This Month</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-medium text-gray-600">Status:</span>
+                    <Select value={statusFilter} onValueChange={setStatusFilter}>
+                      <SelectTrigger className="h-9 flex-1">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="completed">Completed</SelectItem>
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="failed">Failed</SelectItem>
+                        <SelectItem value="refunded">Refunded</SelectItem>
+                        <SelectItem value="disputed">Disputed</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-medium text-gray-600">Method:</span>
+                    <Select value={methodFilter} onValueChange={setMethodFilter}>
+                      <SelectTrigger className="h-9 flex-1">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="credit_card">Credit Card</SelectItem>
+                        <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
+                        <SelectItem value="paypal">PayPal</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-medium text-gray-600">Type:</span>
+                    <Select value={subscriptionFilter} onValueChange={setSubscriptionFilter}>
+                      <SelectTrigger className="h-9 flex-1">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="annual">Annual</SelectItem>
+                        <SelectItem value="one_time">One-time</SelectItem>
+                        <SelectItem value="free_trial">Free Trial</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                
+                <div className="mt-3">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="text-xs"
+                    onClick={() => {
+                      setDateFilter("all");
+                      setStatusFilter("all");
+                      setMethodFilter("all");
+                      setSubscriptionFilter("all");
+                      setSearchQuery("");
+                    }}
+                  >
+                    Clear Filters
+                  </Button>
+                </div>
               </div>
+            </div>
               
-              {/* Advanced Filters */}
-              <div className="flex flex-wrap gap-3 mb-4">
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Date:</span>
-                  <Select value={dateFilter} onValueChange={setDateFilter}>
-                    <SelectTrigger className="h-8 w-[130px]">
-                      <SelectValue placeholder="All" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Time</SelectItem>
-                      <SelectItem value="today">Today</SelectItem>
-                      <SelectItem value="this_week">This Week</SelectItem>
-                      <SelectItem value="this_month">This Month</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Status:</span>
-                  <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="h-8 w-[130px]">
-                      <SelectValue placeholder="All" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="failed">Failed</SelectItem>
-                      <SelectItem value="refunded">Refunded</SelectItem>
-                      <SelectItem value="disputed">Disputed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Method:</span>
-                  <Select value={methodFilter} onValueChange={setMethodFilter}>
-                    <SelectTrigger className="h-8 w-[150px]">
-                      <SelectValue placeholder="All" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="credit_card">Credit Card</SelectItem>
-                      <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
-                      <SelectItem value="paypal">PayPal</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Type:</span>
-                  <Select value={subscriptionFilter} onValueChange={setSubscriptionFilter}>
-                    <SelectTrigger className="h-8 w-[130px]">
-                      <SelectValue placeholder="All" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="annual">Annual</SelectItem>
-                      <SelectItem value="one_time">One-time</SelectItem>
-                      <SelectItem value="free_trial">Free Trial</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="h-8 text-xs"
-                  onClick={() => {
-                    setDateFilter("all");
-                    setStatusFilter("all");
-                    setMethodFilter("all");
-                    setSubscriptionFilter("all");
-                    setSearchQuery("");
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              </div>
-              
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsContent value={activeTab} className="space-y-4">
                 {filteredPayments.length === 0 ? (
                   <div className="bg-white rounded-md border p-8 text-center">
@@ -1018,84 +1024,142 @@ const PaymentHistoryViewer = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="rounded-md border overflow-hidden">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>ID</TableHead>
-                          <TableHead className="hidden md:table-cell">Date</TableHead>
-                          <TableHead>Amount</TableHead>
-                          <TableHead className="hidden md:table-cell">Status</TableHead>
-                          <TableHead className="hidden md:table-cell">Customer</TableHead>
-                          <TableHead className="hidden md:table-cell">Description</TableHead>
-                          <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {filteredPayments.map(payment => (
-                          <TableRow key={payment.id} className="group hover:bg-gray-50">
-                            <TableCell className="font-medium text-blue-600">{payment.id}</TableCell>
-                            <TableCell className="hidden md:table-cell">{formatDate(payment.date)}</TableCell>
-                            <TableCell>
-                              <div className="flex flex-col">
-                                <span className="font-medium">{formatCurrency(payment.amount, payment.currency)}</span>
-                                <div className="flex gap-1 mt-1">
-                                  {getStatusBadge(payment.status)}
-                                  <span className="sr-only md:not-sr-only">
-                                    {getSubscriptionBadge(payment.subscriptionType)}
+                  <div className="border rounded-md overflow-hidden bg-white">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead className="bg-gray-50 border-b border-gray-200">
+                          <tr>
+                            <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              ID
+                            </th>
+                            <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Date
+                            </th>
+                            <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Amount
+                            </th>
+                            <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Status
+                            </th>
+                            <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Customer
+                            </th>
+                            <th className="text-left hidden lg:table-cell py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Description
+                            </th>
+                            <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Actions
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                          {filteredPayments.map(payment => (
+                            <tr key={payment.id} className="hover:bg-gray-50">
+                              <td className="py-4 px-4 text-sm">
+                                <a 
+                                  href="#" 
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handleViewPayment(payment);
+                                  }}
+                                  className="text-blue-600 hover:underline font-medium"
+                                >
+                                  {payment.id}
+                                </a>
+                              </td>
+                              <td className="py-4 px-4 text-sm">
+                                <div className="flex flex-col">
+                                  <span className="text-gray-900">
+                                    {new Date(payment.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                  </span>
+                                  <span className="text-gray-500 text-xs">
+                                    {new Date(payment.date).getFullYear()},&nbsp;
+                                    {new Date(payment.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                                   </span>
                                 </div>
-                              </div>
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              {getStatusBadge(payment.status)}
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              <div className="flex flex-col">
-                                <span className="font-medium">{payment.user.name}</span>
-                                <span className="text-xs text-gray-500">{payment.user.email}</span>
-                              </div>
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell max-w-xs">
-                              <span className="truncate block">{payment.description}</span>
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <div className="flex items-center justify-end space-x-1 opacity-70 group-hover:opacity-100">
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleViewPayment(payment)}
-                                  title="View Details"
-                                  className="h-8 w-8 p-0"
-                                >
-                                  <Eye className="h-4 w-4" />
-                                </Button>
-                                {payment.invoice && (
+                              </td>
+                              <td className="py-4 px-4 font-medium text-sm">
+                                {payment.amount === 0 ? 
+                                  <span className="text-gray-900">€0.00</span> : 
+                                  payment.currency === 'PLN' ?
+                                    <span className="text-gray-900">PLN {payment.amount.toFixed(2)}</span> :
+                                    <span className="text-gray-900">{formatCurrency(payment.amount, payment.currency)}</span>
+                                }
+                              </td>
+                              <td className="py-4 px-4 text-sm">
+                                <div className="flex flex-col gap-1">
+                                  {payment.status === 'completed' ? (
+                                    <Badge className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                      Completed
+                                    </Badge>
+                                  ) : payment.status === 'pending' ? (
+                                    <Badge className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                      Pending
+                                    </Badge>
+                                  ) : payment.status === 'failed' ? (
+                                    <Badge className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                      Failed
+                                    </Badge>
+                                  ) : payment.status === 'refunded' ? (
+                                    <Badge className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                      Refunded
+                                    </Badge>
+                                  ) : null}
+                                  
+                                  {payment.subscriptionType === 'free_trial' && (
+                                    <Badge className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
+                                      Free Trial
+                                    </Badge>
+                                  )}
+                                </div>
+                              </td>
+                              <td className="py-4 px-4 text-sm">
+                                <div className="flex flex-col">
+                                  <span className="text-gray-900 font-medium">{payment.user.name}</span>
+                                  <span className="text-gray-500 text-xs">{payment.user.email}</span>
+                                </div>
+                              </td>
+                              <td className="py-4 px-4 text-sm hidden lg:table-cell max-w-xs truncate">
+                                {payment.description}
+                              </td>
+                              <td className="py-4 px-4 text-sm text-right">
+                                <div className="flex items-center justify-end space-x-2">
                                   <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleDownloadInvoice(payment)}
-                                    title="Download Invoice"
-                                    className="h-8 w-8 p-0"
+                                    onClick={() => handleViewPayment(payment)}
+                                    title="View Details"
+                                    className="h-8 w-8 p-0 text-gray-500 hover:text-gray-700"
                                   >
-                                    <Download className="h-4 w-4" />
+                                    <Eye className="h-4 w-4" />
                                   </Button>
-                                )}
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleSendReceipt(payment)}
-                                  title="Send Receipt"
-                                  className="h-8 w-8 p-0"
-                                >
-                                  <Mail className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                                  {payment.invoice && (
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => handleDownloadInvoice(payment)}
+                                      title="Download Invoice"
+                                      className="h-8 w-8 p-0 text-gray-500 hover:text-gray-700"
+                                    >
+                                      <Download className="h-4 w-4" />
+                                    </Button>
+                                  )}
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleSendReceipt(payment)}
+                                    title="Send Receipt"
+                                    className="h-8 w-8 p-0 text-gray-500 hover:text-gray-700"
+                                  >
+                                    <Mail className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 )}
               </TabsContent>
