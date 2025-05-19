@@ -636,6 +636,17 @@ const BroadcastMessagesDashboard = () => {
         <title>Broadcast Messages | Visual English Admin</title>
       </Helmet>
       
+      <div className="flex justify-start mb-4">
+        <Link href="/admin">
+          <Button variant="outline" className="flex items-center">
+            <svg className="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Admin
+          </Button>
+        </Link>
+      </div>
+      
       <Card>
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
