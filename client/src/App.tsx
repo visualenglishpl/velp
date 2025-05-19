@@ -260,9 +260,6 @@ function App() {
           <SimpleAdminRoute path="/admin/settings">
             <SiteSettingsPage />
           </SimpleAdminRoute>
-          <SimpleAdminRoute path="/admin/users">
-            <UserManagementPage />
-          </SimpleAdminRoute>
           <SimpleAdminRoute path="/admin/user-roles">
             <CombinedUserRolesPage />
           </SimpleAdminRoute>

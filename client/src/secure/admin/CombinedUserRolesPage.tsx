@@ -638,7 +638,7 @@ const CombinedUserRolesPage = () => {
                   Back
                 </Button>
                 <CardTitle className="text-xl font-bold flex items-center">
-                  <Users className="mr-2 h-5 w-5" /> User & Role Management
+                  <Shield className="mr-2 h-5 w-5" /> Access Roles Management
                 </CardTitle>
               </div>
               <CardDescription>
