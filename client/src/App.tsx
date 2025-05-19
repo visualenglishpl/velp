@@ -57,6 +57,8 @@ import BooksManagementPage from "./secure/admin/BooksManagementPage";
 import BooksManagement from "./secure/admin/BooksManagement";
 import SiteSettingsPage from "./secure/admin/SiteSettingsPage";
 import UserManagementPage from "./secure/admin/UserManagementPage";
+import FlaggedQuestionsPage from "./secure/admin/FlaggedQuestionsPage";
+import AnalyticsPanel from "./secure/admin/AnalyticsPanel";
 
 // Original paths - still used until migration is complete
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
@@ -254,10 +256,10 @@ function App() {
             <UserManagementPage />
           </AdminRoute>
           <AdminRoute path="/admin/flagged">
-            <DevToolsPage flaggedPlaceholder />
+            <FlaggedQuestionsPage />
           </AdminRoute>
           <AdminRoute path="/admin/analytics">
-            <DevToolsPage analyticsPlaceholder />
+            <AnalyticsPanel />
           </AdminRoute>
           <AdminRoute path="/admin/roles">
             <DevToolsPage rolesPlaceholder />
