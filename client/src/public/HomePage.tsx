@@ -27,9 +27,15 @@ const HomePage = () => {
     { id: "7", title: "Book 7", color: "#00FF00" },
   ]);
   
+  const [isLoadingThumbnails, setIsLoadingThumbnails] = useState(true);
+  const [thumbnailLoadError, setThumbnailLoadError] = useState<string | null>(null);
+  
   // Fetch book thumbnails when component mounts
   useEffect(() => {
     const fetchBookThumbnails = async () => {
+      setIsLoadingThumbnails(true);
+      setThumbnailLoadError(null);
+      
       try {
         const response = await fetch('/api/assets/book-thumbnails');
         if (response.ok) {
@@ -44,9 +50,14 @@ const HomePage = () => {
               };
             });
           });
+        } else {
+          setThumbnailLoadError(`Error loading thumbnails: ${response.status} ${response.statusText}`);
         }
       } catch (error) {
         console.error("Error fetching book thumbnails:", error);
+        setThumbnailLoadError("Failed to load book thumbnails. Please try again later.");
+      } finally {
+        setIsLoadingThumbnails(false);
       }
     };
     
