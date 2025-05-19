@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -41,11 +40,10 @@ import {
   GraduationCap,
   Send,
   Search,
-  BarChart,
   Filter,
-  MoreHorizontal,
   ChevronDown
 } from "lucide-react";
+import { Helmet } from "react-helmet";
 
 // Define types
 type MessageStatus = 'draft' | 'scheduled' | 'sent' | 'cancelled';
@@ -77,11 +75,11 @@ type UserGroup = {
   count: number;
 };
 
-const BroadcastMessagesPage = () => {
-  // Get admin user data without depending on auth context
+const BroadcastMessagesDashboard = () => {
+  // Get admin user data directly from storage
   const [adminUser, setAdminUser] = useState<any>(null);
   
-  // Effect to fetch user data directly
+  // Effect to fetch user data
   useEffect(() => {
     const fetchAdminUser = async () => {
       try {
@@ -507,168 +505,98 @@ const BroadcastMessagesPage = () => {
             ? "Message has been scheduled successfully." 
             : "Message has been saved as a draft.",
         });
-      } else {
+      } else if (selectedMessage) {
         // Update existing message
-        const updatedMessage: BroadcastMessage = {
-          ...selectedMessage!,
+        const updatedMessage = {
+          ...selectedMessage,
           title: messageTitle,
           content: messageContent,
-          status,
           targetAudience: messageAudience as any,
           targetGroups: messageAudience === 'custom' ? selectedGroups : undefined,
+          status,
           scheduledFor,
           isPinned,
           expireAt
         };
         
         setMessages(prev => 
-          prev.map(msg => msg.id === selectedMessage!.id ? updatedMessage : msg)
+          prev.map(m => m.id === selectedMessage.id ? updatedMessage : m)
         );
         
         toast({
           title: "Message Updated",
-          description: "The broadcast message has been updated successfully.",
+          description: "Changes have been saved successfully."
         });
       }
       
       setIsMessageDialogOpen(false);
-    } catch (err) {
-      console.error("Error saving message:", err);
+    } catch (error) {
+      console.error("Error saving message:", error);
       toast({
         title: "Error",
         description: "Failed to save message. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Handle send draft message
-  const handleSendDraft = async (message: BroadcastMessage) => {
-    try {
-      // In a real app, this would be an API call
-      // const response = await fetch(`/api/admin/broadcast-messages/${message.id}/send`, {
-      //   method: 'POST'
-      // });
-      
-      const updatedMessage: BroadcastMessage = {
-        ...message,
-        status: 'sent',
-        sentAt: new Date().toISOString(),
-        deliveryCount: message.targetAudience === 'all' 
-          ? 358 
-          : message.targetAudience === 'teachers' 
-          ? 215 
-          : message.targetAudience === 'schools' 
-          ? 43 
-          : 3, // Default for admins or custom
-        readCount: 0
-      };
-      
-      setMessages(prev => 
-        prev.map(msg => msg.id === message.id ? updatedMessage : msg)
-      );
-      
-      toast({
-        title: "Message Sent",
-        description: "The broadcast message has been sent successfully.",
-      });
-    } catch (err) {
-      console.error("Error sending message:", err);
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   };
 
   // Handle cancel scheduled message
-  const handleCancelScheduled = async (message: BroadcastMessage) => {
-    try {
-      // In a real app, this would be an API call
-      // const response = await fetch(`/api/admin/broadcast-messages/${message.id}/cancel`, {
-      //   method: 'POST'
-      // });
-      
-      const updatedMessage: BroadcastMessage = {
-        ...message,
-        status: 'cancelled'
-      };
-      
-      setMessages(prev => 
-        prev.map(msg => msg.id === message.id ? updatedMessage : msg)
-      );
-      
-      toast({
-        title: "Message Cancelled",
-        description: "The scheduled broadcast has been cancelled.",
-      });
-    } catch (err) {
-      console.error("Error cancelling message:", err);
-      toast({
-        title: "Error",
-        description: "Failed to cancel message. Please try again.",
-        variant: "destructive",
-      });
-    }
+  const handleCancelScheduled = (message: BroadcastMessage) => {
+    // In a real app, this would be an API call
+    // await fetch(`/api/admin/broadcast-messages/${message.id}/cancel`, { method: 'POST' });
+    
+    const updatedMessage = {
+      ...message,
+      status: 'cancelled' as MessageStatus
+    };
+    
+    setMessages(prev => 
+      prev.map(m => m.id === message.id ? updatedMessage : m)
+    );
+    
+    toast({
+      title: "Message Cancelled",
+      description: "The scheduled message has been cancelled."
+    });
+  };
+
+  // Handle send draft message
+  const handleSendDraft = (message: BroadcastMessage) => {
+    // In a real app, this would be an API call
+    // await fetch(`/api/admin/broadcast-messages/${message.id}/send`, { method: 'POST' });
+    
+    const updatedMessage = {
+      ...message,
+      status: 'sent' as MessageStatus,
+      sentAt: new Date().toISOString(),
+      deliveryCount: 0,
+      readCount: 0
+    };
+    
+    setMessages(prev => 
+      prev.map(m => m.id === message.id ? updatedMessage : m)
+    );
+    
+    toast({
+      title: "Message Sent",
+      description: "The message has been sent to recipients."
+    });
   };
 
   // Handle delete message
-  const handleDeleteMessage = async () => {
+  const handleDeleteMessage = () => {
     if (!selectedMessage) return;
     
-    try {
-      // In a real app, this would be an API call
-      // const response = await fetch(`/api/admin/broadcast-messages/${selectedMessage.id}`, {
-      //   method: 'DELETE'
-      // });
-      
-      setMessages(prev => 
-        prev.filter(msg => msg.id !== selectedMessage.id)
-      );
-      
-      toast({
-        title: "Message Deleted",
-        description: "The broadcast message has been deleted successfully.",
-      });
-      
-      setIsDeleteDialogOpen(false);
-    } catch (err) {
-      console.error("Error deleting message:", err);
-      toast({
-        title: "Error",
-        description: "Failed to delete message. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Helper to get audience label
-  const getAudienceLabel = (audience: string): string => {
-    switch (audience) {
-      case 'all': return 'All Users';
-      case 'teachers': return 'Teachers Only';
-      case 'schools': return 'School Administrators';
-      case 'admins': return 'Platform Administrators';
-      case 'custom': return 'Custom Groups';
-      default: return audience;
-    }
-  };
-
-  // Helper to get status badge
-  const getStatusBadge = (status: MessageStatus) => {
-    switch (status) {
-      case 'draft':
-        return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200"><Clock className="h-3 w-3 mr-1" /> Draft</Badge>;
-      case 'scheduled':
-        return <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200"><Calendar className="h-3 w-3 mr-1" /> Scheduled</Badge>;
-      case 'sent':
-        return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200"><CheckCircle className="h-3 w-3 mr-1" /> Sent</Badge>;
-      case 'cancelled':
-        return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200"><X className="h-3 w-3 mr-1" /> Cancelled</Badge>;
-      default:
-        return <Badge>{status}</Badge>;
-    }
+    // In a real app, this would be an API call
+    // await fetch(`/api/admin/broadcast-messages/${selectedMessage.id}`, { method: 'DELETE' });
+    
+    setMessages(prev => prev.filter(m => m.id !== selectedMessage.id));
+    setIsDeleteDialogOpen(false);
+    
+    toast({
+      title: "Message Deleted",
+      description: "The message has been deleted successfully."
+    });
   };
 
   // Render loading state
@@ -704,6 +632,10 @@ const BroadcastMessagesPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Helmet>
+        <title>Broadcast Messages | Visual English Admin</title>
+      </Helmet>
+      
       <Card>
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -775,160 +707,180 @@ const BroadcastMessagesPage = () => {
               </CardContent>
             </Card>
           </div>
+          
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
             <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
-              <TabsList>
-                <TabsTrigger value="all">
+              <TabsList className="bg-gray-100 p-1">
+                <TabsTrigger value="all" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
                   All <span className="ml-1 text-xs bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded-full">{messageCounts.all}</span>
                 </TabsTrigger>
-                <TabsTrigger value="draft">
+                <TabsTrigger value="draft" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
                   Drafts <span className="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-full">{messageCounts.draft}</span>
                 </TabsTrigger>
-                <TabsTrigger value="scheduled">
-                  Scheduled <span className="ml-1 text-xs bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded-full">{messageCounts.scheduled}</span>
+                <TabsTrigger value="scheduled" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                  Scheduled <span className="ml-1 text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-full">{messageCounts.scheduled}</span>
                 </TabsTrigger>
-                <TabsTrigger value="sent">
+                <TabsTrigger value="sent" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
                   Sent <span className="ml-1 text-xs bg-green-100 text-green-800 px-1.5 py-0.5 rounded-full">{messageCounts.sent}</span>
                 </TabsTrigger>
+                <TabsTrigger value="cancelled" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                  Cancelled <span className="ml-1 text-xs bg-red-100 text-red-800 px-1.5 py-0.5 rounded-full">{messageCounts.cancelled}</span>
+                </TabsTrigger>
               </TabsList>
-              
-              <div className="relative w-full md:w-64">
-                <Input
-                  placeholder="Search messages..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-8"
-                />
-                <div className="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
-                  <Search className="h-4 w-4 text-gray-500" />
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+                  <Input
+                    type="search"
+                    placeholder="Search messages..."
+                    className="pl-8 w-full md:w-[250px]"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
                 </div>
+                <Button variant="outline" size="sm" className="h-9">
+                  <Filter className="h-4 w-4 mr-1" /> Filter
+                </Button>
               </div>
             </div>
             
             <TabsContent value={activeTab} className="space-y-4">
-              <div className="rounded-md border">
+              {/* Messages List */}
+              <div className="rounded-md border overflow-hidden">
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead className="w-[300px]">Message</TableHead>
                       <TableHead>Status</TableHead>
-                      <TableHead>Title</TableHead>
                       <TableHead>Audience</TableHead>
-                      <TableHead>Created</TableHead>
-                      <TableHead>Scheduled/Sent</TableHead>
+                      <TableHead className="hidden md:table-cell">Created</TableHead>
+                      <TableHead className="hidden md:table-cell">Schedule/Sent</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredMessages.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={6} className="h-24 text-center">
-                          No messages found.
+                        <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                          {searchQuery ? (
+                            <>No messages match your search criteria.</>
+                          ) : (
+                            <>No messages found. Click "New Message" to create one.</>
+                          )}
                         </TableCell>
                       </TableRow>
                     ) : (
                       filteredMessages.map((message) => (
-                        <TableRow key={message.id} className={message.isPinned ? "bg-amber-50" : ""}>
-                          <TableCell>
-                            <div className="flex items-center">
-                              {getStatusBadge(message.status)}
-                              {message.isPinned && (
-                                <Badge variant="outline" className="ml-2 bg-amber-50 text-amber-700 border-amber-200">
-                                  Pinned
-                                </Badge>
+                        <TableRow key={message.id} className="group hover:bg-gray-50">
+                          <TableCell className="font-medium">
+                            <div className="flex flex-col">
+                              <div className="flex items-center">
+                                <span className="font-medium">{message.title}</span>
+                                {message.isPinned && (
+                                  <Badge variant="outline" className="ml-2 text-amber-500 border-amber-200 bg-amber-50">
+                                    <Bell className="h-3 w-3 mr-1" /> Pinned
+                                  </Badge>
+                                )}
+                              </div>
+                              <div className="text-xs text-muted-foreground line-clamp-1 mt-1">
+                                {message.content}
+                              </div>
+                              {message.status === 'sent' && message.deliveryCount !== undefined && (
+                                <div className="flex items-center mt-1 text-xs text-gray-500">
+                                  <span className="mr-3">Delivered: {message.deliveryCount}</span>
+                                  <span>Read: {message.readCount || 0}</span>
+                                </div>
                               )}
                             </div>
                           </TableCell>
-                          <TableCell className="font-medium">
-                            <div className="max-w-xs truncate" title={message.title}>
-                              {message.title}
-                            </div>
+                          <TableCell>
+                            <Badge
+                              className={`
+                                ${message.status === 'sent' ? 'bg-green-100 text-green-800 hover:bg-green-100' : ''}
+                                ${message.status === 'draft' ? 'bg-gray-100 text-gray-800 hover:bg-gray-100' : ''}
+                                ${message.status === 'scheduled' ? 'bg-blue-100 text-blue-800 hover:bg-blue-100' : ''}
+                                ${message.status === 'cancelled' ? 'bg-red-100 text-red-800 hover:bg-red-100' : ''}
+                              `}
+                            >
+                              {message.status === 'sent' && <CheckCircle className="h-3 w-3 mr-1" />}
+                              {message.status === 'draft' && <Edit className="h-3 w-3 mr-1" />}
+                              {message.status === 'scheduled' && <Clock className="h-3 w-3 mr-1" />}
+                              {message.status === 'cancelled' && <X className="h-3 w-3 mr-1" />}
+                              {message.status.charAt(0).toUpperCase() + message.status.slice(1)}
+                            </Badge>
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center">
-                              {message.targetAudience === 'all' && <Globe className="h-4 w-4 mr-1.5" />}
-                              {message.targetAudience === 'teachers' && <GraduationCap className="h-4 w-4 mr-1.5" />}
-                              {message.targetAudience === 'schools' && <School className="h-4 w-4 mr-1.5" />}
-                              {message.targetAudience === 'admins' && <Users className="h-4 w-4 mr-1.5" />}
-                              {message.targetAudience === 'custom' && <Users className="h-4 w-4 mr-1.5" />}
-                              {getAudienceLabel(message.targetAudience)}
+                              {message.targetAudience === 'all' && <Globe className="h-3 w-3 mr-1" />}
+                              {message.targetAudience === 'teachers' && <GraduationCap className="h-3 w-3 mr-1" />}
+                              {message.targetAudience === 'schools' && <School className="h-3 w-3 mr-1" />}
+                              {message.targetAudience === 'admins' && <Users className="h-3 w-3 mr-1" />}
+                              {message.targetAudience === 'custom' && <Users className="h-3 w-3 mr-1" />}
+                              {message.targetAudience.charAt(0).toUpperCase() + message.targetAudience.slice(1)}
                             </div>
                           </TableCell>
-                          <TableCell>
-                            <div className="text-sm">{formatDate(message.createdAt)}</div>
-                            <div className="text-xs text-muted-foreground">
-                              by {message.createdBy.name}
-                            </div>
+                          <TableCell className="hidden md:table-cell text-sm">
+                            {formatDate(message.createdAt)}
                           </TableCell>
-                          <TableCell>
-                            {message.status === 'scheduled' ? (
-                              <div className="text-sm">{formatDate(message.scheduledFor!)}</div>
-                            ) : message.status === 'sent' ? (
-                              <div>
-                                <div className="text-sm">{formatDate(message.sentAt!)}</div>
-                                <div className="text-xs text-muted-foreground">
-                                  {message.readCount}/{message.deliveryCount} read ({Math.round((message.readCount! / message.deliveryCount!) * 100)}%)
-                                </div>
+                          <TableCell className="hidden md:table-cell text-sm">
+                            {message.status === 'sent' && formatDate(message.sentAt || '')}
+                            {message.status === 'scheduled' && (
+                              <div className="flex flex-col">
+                                <span>{formatDate(message.scheduledFor || '')}</span>
+                                {new Date(message.scheduledFor || '') > new Date() && (
+                                  <span className="text-xs text-gray-500">
+                                    {Math.ceil((new Date(message.scheduledFor || '').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} days left
+                                  </span>
+                                )}
                               </div>
-                            ) : (
-                              <div className="text-xs text-muted-foreground">—</div>
                             )}
                           </TableCell>
                           <TableCell className="text-right">
-                            <div className="flex justify-end space-x-1">
+                            <div className="flex justify-end space-x-2 opacity-70 group-hover:opacity-100">
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => handlePreviewMessage(message)}
-                                className="h-8 w-8 p-0"
                                 title="Preview"
+                                className="h-8 w-8 p-0"
                               >
                                 <Eye className="h-4 w-4" />
                               </Button>
                               
                               {message.status === 'draft' && (
-                                <>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => handleEditMessage(message)}
-                                    className="h-8 w-8 p-0"
-                                    title="Edit"
-                                  >
-                                    <Edit className="h-4 w-4" />
-                                  </Button>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => handleSendDraft(message)}
-                                    className="h-8 w-8 p-0 text-green-600"
-                                    title="Send Now"
-                                  >
-                                    <Send className="h-4 w-4" />
-                                  </Button>
-                                </>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleEditMessage(message)}
+                                  title="Edit"
+                                  className="h-8 w-8 p-0 text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                                >
+                                  <Edit className="h-4 w-4" />
+                                </Button>
                               )}
                               
                               {message.status === 'scheduled' && (
-                                <>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => handleEditMessage(message)}
-                                    className="h-8 w-8 p-0"
-                                    title="Edit"
-                                  >
-                                    <Edit className="h-4 w-4" />
-                                  </Button>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => handleCancelScheduled(message)}
-                                    className="h-8 w-8 p-0 text-red-600"
-                                    title="Cancel"
-                                  >
-                                    <X className="h-4 w-4" />
-                                  </Button>
-                                </>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleCancelScheduled(message)}
+                                  title="Cancel Scheduled Message"
+                                  className="h-8 w-8 p-0 text-amber-600 hover:text-amber-800 hover:bg-amber-50"
+                                >
+                                  <X className="h-4 w-4" />
+                                </Button>
+                              )}
+                              
+                              {message.status === 'draft' && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleSendDraft(message)}
+                                  title="Send Now"
+                                  className="h-8 w-8 p-0 text-green-600 hover:text-green-800 hover:bg-green-50"
+                                >
+                                  <Send className="h-4 w-4" />
+                                </Button>
                               )}
                               
                               {(message.status === 'draft' || message.status === 'cancelled') && (
@@ -936,8 +888,8 @@ const BroadcastMessagesPage = () => {
                                   variant="ghost"
                                   size="sm"
                                   onClick={() => handleDeleteClick(message)}
-                                  className="h-8 w-8 p-0 text-red-600"
                                   title="Delete"
+                                  className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
                                 >
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
@@ -955,29 +907,30 @@ const BroadcastMessagesPage = () => {
         </CardContent>
       </Card>
 
-      {/* Create/Edit Message Dialog */}
+      {/* Message Form Dialog */}
       <Dialog open={isMessageDialogOpen} onOpenChange={setIsMessageDialogOpen}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {selectedMessage ? 'Edit Broadcast Message' : 'Create New Broadcast Message'}
+              {selectedMessage ? "Edit Message" : "Create Message"}
             </DialogTitle>
             <DialogDescription>
-              {selectedMessage 
-                ? 'Update the message details below.'
-                : 'Compose a message to broadcast to your users.'
+              {selectedMessage
+                ? "Update an existing broadcast message"
+                : "Compose a message to broadcast to users"
               }
             </DialogDescription>
           </DialogHeader>
           
-          <div className="grid gap-6 py-4">
+          <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="message-title">Message Title</Label>
+              <Label htmlFor="title" className="required">Title</Label>
               <Input
-                id="message-title"
-                placeholder="e.g., System Update Announcement"
+                id="title"
                 value={messageTitle}
                 onChange={(e) => setMessageTitle(e.target.value)}
+                placeholder="Enter a concise title"
+                className={formErrors.title ? "border-red-500" : ""}
               />
               {formErrors.title && (
                 <p className="text-sm text-red-500">{formErrors.title}</p>
@@ -985,13 +938,13 @@ const BroadcastMessagesPage = () => {
             </div>
             
             <div className="grid gap-2">
-              <Label htmlFor="message-content">Message Content</Label>
+              <Label htmlFor="content" className="required">Message Content</Label>
               <Textarea
-                id="message-content"
-                placeholder="Enter the content of your broadcast message here..."
+                id="content"
                 value={messageContent}
                 onChange={(e) => setMessageContent(e.target.value)}
-                className="min-h-[150px]"
+                placeholder="Enter the message content"
+                className={`min-h-[120px] ${formErrors.content ? "border-red-500" : ""}`}
               />
               {formErrors.content && (
                 <p className="text-sm text-red-500">{formErrors.content}</p>
@@ -999,137 +952,143 @@ const BroadcastMessagesPage = () => {
             </div>
             
             <div className="grid gap-2">
-              <Label htmlFor="target-audience">Target Audience</Label>
-              <div className="flex flex-col space-y-4">
-                <Select value={messageAudience} onValueChange={setMessageAudience}>
-                  <SelectTrigger id="target-audience">
-                    <SelectValue placeholder="Select audience" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Users (Everyone)</SelectItem>
-                    <SelectItem value="teachers">Teachers Only ({userGroups.find(g => g.id === 'role_teachers')?.count ?? 0})</SelectItem>
-                    <SelectItem value="schools">School Administrators ({userGroups.find(g => g.id === 'role_schools')?.count ?? 0})</SelectItem>
-                    <SelectItem value="admins">Platform Administrators ({userGroups.find(g => g.id === 'role_admins')?.count ?? 0})</SelectItem>
-                    <SelectItem value="custom">Custom User Groups</SelectItem>
-                  </SelectContent>
-                </Select>
-                
-                {messageAudience === 'custom' && (
-                  <div className="border rounded-md p-4 space-y-2">
-                    <p className="text-sm text-muted-foreground mb-2">Select user groups to receive this message:</p>
-                    
-                    {userGroups.map((group) => (
-                      <div key={group.id} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          id={group.id}
-                          checked={selectedGroups.includes(group.id)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedGroups(prev => [...prev, group.id]);
-                            } else {
-                              setSelectedGroups(prev => prev.filter(id => id !== group.id));
-                            }
-                          }}
-                          className="h-4 w-4 rounded border-gray-300"
-                        />
-                        <Label htmlFor={group.id} className="text-sm font-normal cursor-pointer">
-                          {group.name} ({group.count})
-                        </Label>
-                      </div>
-                    ))}
-                    
-                    {formErrors.audience && (
-                      <p className="text-sm text-red-500">{formErrors.audience}</p>
-                    )}
-                  </div>
-                )}
-              </div>
+              <Label htmlFor="audience" className="required">Target Audience</Label>
+              <Select
+                value={messageAudience}
+                onValueChange={setMessageAudience}
+              >
+                <SelectTrigger id="audience" className={formErrors.audience ? "border-red-500" : ""}>
+                  <SelectValue placeholder="Select audience" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Users</SelectItem>
+                  <SelectItem value="teachers">Teachers Only ({userGroups.find(g => g.id === 'role_teachers')?.count ?? 0})</SelectItem>
+                  <SelectItem value="schools">School Administrators ({userGroups.find(g => g.id === 'role_schools')?.count ?? 0})</SelectItem>
+                  <SelectItem value="admins">Platform Administrators ({userGroups.find(g => g.id === 'role_admins')?.count ?? 0})</SelectItem>
+                  <SelectItem value="custom">Custom Groups</SelectItem>
+                </SelectContent>
+              </Select>
+              {formErrors.audience && (
+                <p className="text-sm text-red-500">{formErrors.audience}</p>
+              )}
             </div>
             
-            <div className="grid gap-4">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="schedule-toggle" className="font-medium">Schedule for later</Label>
+            {messageAudience === 'custom' && (
+              <div className="grid gap-2">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-muted-foreground mb-2">Select user groups to receive this message:</p>
+                </div>
+                {userGroups.map((group) => (
+                  <div key={group.id} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id={`group-${group.id}`}
+                      checked={selectedGroups.includes(group.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedGroups([...selectedGroups, group.id]);
+                        } else {
+                          setSelectedGroups(selectedGroups.filter(id => id !== group.id));
+                        }
+                      }}
+                      className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    />
+                    <Label htmlFor={`group-${group.id}`} className="text-sm font-normal cursor-pointer">
+                      {group.name} ({group.count})
+                    </Label>
+                  </div>
+                ))}
+                {formErrors.audience && (
+                  <p className="text-sm text-red-500">{formErrors.audience}</p>
+                )}
+              </div>
+            )}
+            
+            <div className="grid gap-2">
+              <div className="flex items-center space-x-2">
                 <Switch
-                  id="schedule-toggle"
+                  id="schedule"
                   checked={schedulingEnabled}
                   onCheckedChange={setSchedulingEnabled}
                 />
+                <Label htmlFor="schedule">Schedule Message</Label>
               </div>
               
               {schedulingEnabled && (
-                <div className="grid grid-cols-2 gap-4 pl-4 border-l-2 border-gray-100">
-                  <div className="grid gap-2">
-                    <Label htmlFor="schedule-date">Date</Label>
+                <div className="grid grid-cols-2 gap-4 mt-2">
+                  <div>
+                    <Label htmlFor="scheduleDate" className="text-sm required">Date</Label>
                     <Input
-                      id="schedule-date"
+                      id="scheduleDate"
                       type="date"
                       value={scheduleDate}
                       onChange={(e) => setScheduleDate(e.target.value)}
                       min={new Date().toISOString().split('T')[0]}
+                      className={formErrors.scheduleDate ? "border-red-500" : ""}
                     />
                     {formErrors.scheduleDate && (
-                      <p className="text-sm text-red-500">{formErrors.scheduleDate}</p>
+                      <p className="text-xs text-red-500">{formErrors.scheduleDate}</p>
                     )}
                   </div>
-                  
-                  <div className="grid gap-2">
-                    <Label htmlFor="schedule-time">Time</Label>
+                  <div>
+                    <Label htmlFor="scheduleTime" className="text-sm required">Time</Label>
                     <Input
-                      id="schedule-time"
+                      id="scheduleTime"
                       type="time"
                       value={scheduleTime}
                       onChange={(e) => setScheduleTime(e.target.value)}
+                      className={formErrors.scheduleTime ? "border-red-500" : ""}
                     />
                     {formErrors.scheduleTime && (
-                      <p className="text-sm text-red-500">{formErrors.scheduleTime}</p>
+                      <p className="text-xs text-red-500">{formErrors.scheduleTime}</p>
                     )}
                   </div>
-                  
                   {formErrors.schedule && (
-                    <p className="text-sm text-red-500 col-span-2">{formErrors.schedule}</p>
+                    <p className="text-xs text-red-500 col-span-2">{formErrors.schedule}</p>
                   )}
                 </div>
               )}
             </div>
             
-            <div className="grid gap-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label htmlFor="pin-toggle" className="font-medium">Pin message</Label>
-                  <p className="text-sm text-muted-foreground">Pinned messages will appear at the top of the notifications</p>
-                </div>
+            <div className="grid gap-2">
+              <div className="flex items-center space-x-2">
                 <Switch
-                  id="pin-toggle"
+                  id="pin"
                   checked={isPinned}
                   onCheckedChange={setIsPinned}
                 />
+                <Label htmlFor="pin">Pin Message</Label>
               </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label htmlFor="expiry-toggle" className="font-medium">Set expiry date</Label>
-                  <p className="text-sm text-muted-foreground">Message will be automatically archived after this date</p>
-                </div>
+              {isPinned && (
+                <p className="text-xs text-muted-foreground">
+                  Pinned messages appear at the top of the notification list and may be highlighted in the interface.
+                </p>
+              )}
+            </div>
+            
+            <div className="grid gap-2">
+              <div className="flex items-center space-x-2">
                 <Switch
-                  id="expiry-toggle"
+                  id="expiry"
                   checked={expiryEnabled}
                   onCheckedChange={setExpiryEnabled}
                 />
+                <Label htmlFor="expiry">Set Expiry Date</Label>
               </div>
               
               {expiryEnabled && (
-                <div className="grid gap-2 pl-4 border-l-2 border-gray-100">
-                  <Label htmlFor="expiry-date">Expiry Date</Label>
+                <div className="mt-2">
+                  <Label htmlFor="expiryDate" className="text-sm required">Expiry Date</Label>
                   <Input
-                    id="expiry-date"
+                    id="expiryDate"
                     type="date"
                     value={expiryDate}
                     onChange={(e) => setExpiryDate(e.target.value)}
                     min={new Date().toISOString().split('T')[0]}
+                    className={formErrors.expiryDate ? "border-red-500" : ""}
                   />
                   {formErrors.expiryDate && (
-                    <p className="text-sm text-red-500">{formErrors.expiryDate}</p>
+                    <p className="text-xs text-red-500">{formErrors.expiryDate}</p>
                   )}
                 </div>
               )}
@@ -1137,74 +1096,98 @@ const BroadcastMessagesPage = () => {
           </div>
           
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsMessageDialogOpen(false)}
-            >
+            <Button variant="outline" onClick={() => setIsMessageDialogOpen(false)}>
               Cancel
             </Button>
             <Button onClick={handleSaveMessage}>
-              {schedulingEnabled 
-                ? selectedMessage 
-                  ? 'Update Scheduled Message' 
-                  : 'Schedule Message'
-                : selectedMessage 
-                  ? 'Update Message' 
-                  : 'Save as Draft'
-              }
+              {selectedMessage ? "Save Changes" : "Create Message"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      {/* Preview Message Dialog */}
+      
+      {/* Message Preview Dialog */}
       {selectedMessage && (
         <Dialog open={isPreviewDialogOpen} onOpenChange={setIsPreviewDialogOpen}>
-          <DialogContent className="max-w-xl">
+          <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle className="flex items-center">
-                <Megaphone className="mr-2 h-5 w-5" />
-                Message Preview
-              </DialogTitle>
-            </DialogHeader>
-            
-            <div className="border rounded-lg p-6 space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold">{selectedMessage.title}</h3>
+                {selectedMessage.title}
                 {selectedMessage.isPinned && (
-                  <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
-                    Pinned
+                  <Badge variant="outline" className="ml-2 text-amber-500 border-amber-200 bg-amber-50">
+                    <Bell className="h-3 w-3 mr-1" /> Pinned
                   </Badge>
                 )}
+              </DialogTitle>
+              <div className="mt-1 flex items-center text-sm text-gray-500">
+                <span className="mr-3">
+                  Target: {selectedMessage.targetAudience.charAt(0).toUpperCase() + selectedMessage.targetAudience.slice(1)}
+                </span>
+                <span>
+                  Status: 
+                  <Badge
+                    variant="outline"
+                    className={`
+                      ml-1
+                      ${selectedMessage.status === 'sent' ? 'bg-green-100 text-green-800' : ''}
+                      ${selectedMessage.status === 'draft' ? 'bg-gray-100 text-gray-800' : ''}
+                      ${selectedMessage.status === 'scheduled' ? 'bg-blue-100 text-blue-800' : ''}
+                      ${selectedMessage.status === 'cancelled' ? 'bg-red-100 text-red-800' : ''}
+                    `}
+                  >
+                    {selectedMessage.status.charAt(0).toUpperCase() + selectedMessage.status.slice(1)}
+                  </Badge>
+                </span>
+              </div>
+            </DialogHeader>
+            
+            <div className="mt-4 mb-6">
+              <p className="whitespace-pre-wrap">{selectedMessage.content}</p>
+            </div>
+            
+            <div className="mb-4 pt-4 border-t border-gray-200 text-sm text-gray-500">
+              <div className="flex justify-between mb-1">
+                <span>Created by: {selectedMessage.createdBy.name}</span>
+                <span>Created: {formatDate(selectedMessage.createdAt)}</span>
               </div>
               
-              <div className="prose prose-sm max-w-none">
-                <p>{selectedMessage.content}</p>
-              </div>
+              {selectedMessage.status === 'scheduled' && selectedMessage.scheduledFor && (
+                <div className="flex justify-between mb-1">
+                  <span>Scheduled for:</span>
+                  <span>{formatDate(selectedMessage.scheduledFor)}</span>
+                </div>
+              )}
               
-              <div className="pt-4 border-t text-xs text-gray-500 flex justify-between items-center">
-                <div>
-                  Target: {getAudienceLabel(selectedMessage.targetAudience)}
+              {selectedMessage.status === 'sent' && selectedMessage.sentAt && (
+                <>
+                  <div className="flex justify-between mb-1">
+                    <span>Sent at:</span>
+                    <span>{formatDate(selectedMessage.sentAt)}</span>
+                  </div>
+                  {selectedMessage.deliveryCount !== undefined && (
+                    <div className="flex justify-between mb-1">
+                      <span>Delivery statistics:</span>
+                      <span>
+                        Delivered: {selectedMessage.deliveryCount} / 
+                        Read: {selectedMessage.readCount || 0}
+                        {selectedMessage.deliveryCount > 0 && selectedMessage.readCount !== undefined && (
+                          ` (${Math.round((selectedMessage.readCount / selectedMessage.deliveryCount) * 100)}%)`
+                        )}
+                      </span>
+                    </div>
+                  )}
+                </>
+              )}
+              
+              {selectedMessage.expireAt && (
+                <div className="flex justify-between">
+                  <span>Expires at:</span>
+                  <span>{formatDate(selectedMessage.expireAt)}</span>
                 </div>
-                <div>
-                  {selectedMessage.status === 'sent'
-                    ? `Sent ${formatDate(selectedMessage.sentAt!)}`
-                    : selectedMessage.status === 'scheduled'
-                    ? `Scheduled for ${formatDate(selectedMessage.scheduledFor!)}`
-                    : `Created ${formatDate(selectedMessage.createdAt)}`
-                  }
-                </div>
-              </div>
+              )}
             </div>
             
             <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsPreviewDialogOpen(false)}
-              >
-                Close
-              </Button>
-              
               {selectedMessage.status === 'draft' && (
                 <Button onClick={() => {
                   setIsPreviewDialogOpen(false);
@@ -1254,4 +1237,4 @@ const BroadcastMessagesPage = () => {
   );
 };
 
-export default BroadcastMessagesPage;
+export default BroadcastMessagesDashboard;

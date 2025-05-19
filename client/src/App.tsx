@@ -61,6 +61,7 @@ import FlaggedQuestionsPage from "./secure/admin/FlaggedQuestionsPage";
 import AnalyticsPanel from "./secure/admin/AnalyticsPanel";
 import AccessRolesPage from "./secure/admin/AccessRolesPage";
 import BroadcastMessagesPage from "./secure/admin/BroadcastMessagesPage";
+import BroadcastMessagesDashboard from "./secure/admin/BroadcastMessagesDashboard";
 import FeedbackViewerPage from "./secure/admin/FeedbackViewerPage";
 
 // Original paths - still used until migration is complete
@@ -268,7 +269,7 @@ function App() {
             <AccessRolesPage />
           </AdminRoute>
           <AdminRoute path="/admin/broadcast">
-            <BroadcastMessagesPage />
+            <BroadcastMessagesDashboard />
           </AdminRoute>
           <AdminRoute path="/admin/feedback">
             <FeedbackViewerPage />
