@@ -181,24 +181,27 @@ export default function UnitsPage() {
                   <h3 className="text-xl font-medium text-center mt-2 mb-1">Unit {unit.unitNumber}</h3>
                   <div className="aspect-square relative overflow-hidden border rounded-md hover:border-gray-300 transition-all mx-2">
                     {unit.thumbnailUrl ? (
-                      <img 
-                        src={unit.thumbnailUrl} 
-                        alt={`Thumbnail for unit ${unit.unitNumber}`} 
-                        className="object-cover w-full h-full"
-                        onError={(e) => {
-                          // If the thumbnail fails to load, show generic preview
-                          const img = e.currentTarget;
-                          img.style.display = "none";
-                          const container = img.parentElement;
-                          if (container) {
-                            const genericPreview = document.createElement('div');
-                            genericPreview.className = "h-full w-full flex items-center justify-center";
-                            genericPreview.style.backgroundColor = getBookColor(bookId || "");
-                            genericPreview.innerHTML = `<div class="text-white font-bold text-xl">VISUAL ${bookId}<br/>ENGLISH</div>`;
-                            container.appendChild(genericPreview);
-                          }
-                        }} 
-                      />
+                      <>
+                        <div 
+                          className="h-full w-full absolute top-0 left-0 flex items-center justify-center"
+                          style={{backgroundColor: getBookColor(bookId || "")}}
+                        >
+                          <div className="text-white font-bold text-xl text-center">
+                            VISUAL {bookId}<br/>ENGLISH
+                          </div>
+                        </div>
+                        <img 
+                          src={unit.thumbnailUrl} 
+                          alt={`Thumbnail for unit ${unit.unitNumber}`} 
+                          className="object-cover w-full h-full relative z-10"
+                          loading="lazy"
+                          onError={(e) => {
+                            // If the thumbnail fails to load, hide the image and show the fallback
+                            const img = e.currentTarget;
+                            img.style.display = "none";
+                          }} 
+                        />
+                      </>
                     ) : (
                       <div className="h-full w-full flex items-center justify-center" style={{backgroundColor: getBookColor(bookId || "")}}>
                         <div className="text-white font-bold text-xl text-center">
