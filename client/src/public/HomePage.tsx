@@ -164,18 +164,18 @@ const HomePage = () => {
             <div className="max-w-3xl mx-auto">
               <h3 className="text-lg font-semibold text-center mb-4">Access Options</h3>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="/checkout/book"
+                <button
+                  onClick={() => window.location.href = "/checkout/book"}
                   className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-[#b23cfd] hover:bg-[#a020f0] text-white font-medium rounded-md shadow-md"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
                     <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
                   </svg>
                   Subscribe to Full Book
-                </a>
+                </button>
                 
-                <a
-                  href="/checkout/unit"
+                <button
+                  onClick={() => window.location.href = "/checkout/unit"}
                   className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-[#2e88f6] hover:bg-blue-600 text-white font-medium rounded-md shadow-md"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -184,10 +184,10 @@ const HomePage = () => {
                     <path d="M16 10a4 4 0 0 1-8 0"/>
                   </svg>
                   Select Multiple Units
-                </a>
+                </button>
                 
-                <a
-                  href="/checkout/free_trial"
+                <button
+                  onClick={() => window.location.href = "/checkout/free_trial"}
                   className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md shadow-md"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -195,17 +195,14 @@ const HomePage = () => {
                     <path d="M12 2v20" />
                   </svg>
                   Start Free 7-Day Trial
-                </a>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Pricing Section */}
-      <section id="pricing" className="pt-12 pb-8">
-        <PricingPlans />
-      </section>
+      {/* Removed Pricing Plans Section */}
       
       {/* "Try Before You Subscribe" Banner */}
       <section className="py-12 bg-gradient-to-r from-blue-50 to-purple-50">
@@ -220,18 +217,20 @@ const HomePage = () => {
                   from each unit.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <a 
-                    href="#books" 
+                  <button 
+                    onClick={() => {
+                      document.getElementById('books')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
                   >
                     <span className="mr-2">▶</span> View Book Previews
-                  </a>
-                  <a 
-                    href="/checkout/free_trial" 
+                  </button>
+                  <button 
+                    onClick={() => window.location.href = "/checkout/free_trial"}
                     className="inline-flex items-center px-6 py-3 border border-purple-600 text-purple-600 rounded-md hover:bg-purple-50 transition-colors"
                   >
                     Try 7-Day Free Trial
-                  </a>
+                  </button>
                 </div>
               </div>
               <div className="flex-shrink-0">
