@@ -40,7 +40,8 @@ import {
   Flag,
   Bookmark,
   Eye,
-  Mail
+  Mail,
+  Info
 } from "lucide-react";
 
 // Define types
@@ -1259,7 +1260,7 @@ const EnhancedFeedbackViewer = () => {
               
               <div className="bg-blue-50 p-3 rounded-md border border-blue-200 text-sm">
                 <div className="flex items-center text-blue-700 mb-1">
-                  <Info className="h-4 w-4 mr-1.5" />
+                  <MessageSquare className="h-4 w-4 mr-1.5" />
                   <span className="font-medium">Response will be sent to:</span>
                 </div>
                 <p>

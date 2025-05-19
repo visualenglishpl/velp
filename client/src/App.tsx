@@ -63,6 +63,7 @@ import AccessRolesPage from "./secure/admin/AccessRolesPage";
 import BroadcastMessagesPage from "./secure/admin/BroadcastMessagesPage";
 import BroadcastMessagesDashboard from "./secure/admin/BroadcastMessagesDashboard";
 import FeedbackViewerPage from "./secure/admin/FeedbackViewerPage";
+import EnhancedFeedbackViewer from "./secure/admin/EnhancedFeedbackViewer";
 
 // Original paths - still used until migration is complete
 import SimpleUnitsAdmin from "./pages/SimpleUnitsAdmin";
@@ -272,7 +273,7 @@ function App() {
             <BroadcastMessagesDashboard />
           </AdminRoute>
           <AdminRoute path="/admin/feedback">
-            <FeedbackViewerPage />
+            <EnhancedFeedbackViewer />
           </AdminRoute>
           <AdminRoute path="/admin/payments">
             <DevToolsPage paymentsPlaceholder />
