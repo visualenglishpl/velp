@@ -27,8 +27,10 @@ const PricingPlans = () => {
         "Progress tracking & video content"
       ],
       price: "€5",
-      priceDetail: "per month",
-      priceSavings: "€40/year (33% savings)",
+      priceDetail: "/mo",
+      yearlyPrice: "€40",
+      originalYearlyPrice: "€60",
+      savings: "Save €20",
       buttonText: "Select Multiple Units",
       buttonLink: "/checkout/unit",
     },
@@ -42,8 +44,10 @@ const PricingPlans = () => {
         "Certificates, progress tracking, and analytics"
       ],
       price: "€25",
-      priceDetail: "per month",
-      priceSavings: "€180/year (40% savings)",
+      priceDetail: "/mo",
+      yearlyPrice: "€180",
+      originalYearlyPrice: "€300",
+      savings: "Save €120",
       buttonText: "Subscribe to Full Book",
       buttonLink: "/checkout/book-wizard",
     },
@@ -96,15 +100,28 @@ const PricingPlans = () => {
                 className="mt-auto text-white text-center py-5"
                 style={{ backgroundColor: plan.color }}
               >
-                <div className="text-xl font-bold flex items-center justify-center">
-                  {plan.price}
-                  {plan.priceDetail && plan.priceDetail.includes("month") && (
-                    <span className="text-sm font-normal">/mo</span>
+                <div className="flex flex-col items-center">
+                  <div className="flex items-baseline justify-center">
+                    <span className="text-2xl font-bold">{plan.price}</span>
+                    {plan.priceDetail && (
+                      <span className="text-sm font-normal ml-1">{plan.priceDetail}</span>
+                    )}
+                  </div>
+                  
+                  {plan.yearlyPrice && (
+                    <div className="mt-2 text-xs">
+                      <div className="flex items-center justify-center gap-2">
+                        {plan.originalYearlyPrice && (
+                          <span className="line-through opacity-75">{plan.originalYearlyPrice}/yr</span>
+                        )}
+                        <span className="font-semibold">{plan.yearlyPrice}/yr</span>
+                      </div>
+                      <div className="bg-white text-sm text-green-600 rounded-full px-2 py-0.5 mt-1 inline-block font-medium">
+                        {plan.savings}
+                      </div>
+                    </div>
                   )}
                 </div>
-                {plan.priceDetail === "+ delivery" && (
-                  <div className="text-sm text-white opacity-90 mt-1">{plan.priceDetail}</div>
-                )}
               </div>
             </div>
           ))}

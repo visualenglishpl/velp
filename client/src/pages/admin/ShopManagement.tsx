@@ -388,7 +388,7 @@ export default function ShopManagement() {
               return (
                 <Card 
                   key={subscription.id} 
-                  className={`${subscription.isActive ? "" : "border-dashed opacity-70"} overflow-hidden h-full flex flex-col ${subscription.type === 'free_trial' ? "ring-2 ring-green-500" : ""}`}
+                  className={`${subscription.isActive ? "" : "border-dashed opacity-70"} overflow-hidden h-full flex flex-col ${subscription.type === 'free_trial' ? "ring-2 ring-green-500" : ""} shadow-sm hover:shadow-md transition-shadow`}
                 >
                   <div className="p-3 relative" style={{ backgroundColor: subscriptionColor }}>
                     {subscription.type === 'free_trial' && (
@@ -409,21 +409,21 @@ export default function ShopManagement() {
                   </div>
                   <CardHeader className="pb-2 pt-3">
                     <div className="text-center">
-                      <CardTitle className="text-base h-6">{subscription.name}</CardTitle>
-                      <CardDescription className="text-xs h-4">
+                      <CardTitle className="text-lg font-bold h-auto">{subscription.name}</CardTitle>
+                      <CardDescription className="text-xs h-auto mt-1">
                         {subscription.type === 'free_trial' 
                           ? `Limited Access` 
                           : subscription.duration === 'monthly' ? 'Monthly' : 'Annual'}
                       </CardDescription>
                     </div>
                   </CardHeader>
-                  <CardContent className="pb-2 px-3 text-center flex-grow">
+                  <CardContent className="py-4 px-3 text-center flex-grow">
                     {subscription.type === 'free_trial' ? (
                       <div className="flex flex-col h-full">
-                        <div className="mb-2">
-                          <span className="text-2xl font-bold text-green-600">€0</span>
+                        <div className="mb-3">
+                          <span className="text-3xl font-bold text-green-600">€0</span>
                         </div>
-                        <div className="text-xs text-gray-500 space-y-1 mt-2">
+                        <div className="text-sm text-gray-500 space-y-2 mt-3">
                           <div>• {subscription.trialDetails?.downloadLimit} downloads max</div>
                           <div>• {subscription.trialDetails?.unitsLimit} unit access</div>
                           <div>• {subscription.trialDetails?.requiresCreditCard ? "Requires credit card" : "No credit card needed"}</div>
@@ -431,19 +431,23 @@ export default function ShopManagement() {
                       </div>
                     ) : (
                       <div className="flex flex-col h-full">
-                        <div>
-                          <span className="text-2xl font-bold">€{subscription.price}</span>
-                          <span className="text-sm text-gray-500 ml-1">/{subscription.duration === 'monthly' ? 'mo' : 'yr'}</span>
-                        </div>
-                        {subscription.discountedPrice && subscription.discountedPrice > 0 && (
-                          <div className="mt-2">
-                            <Badge variant="outline" className="bg-green-50 text-green-700">
-                              Save €{subscription.discountedPrice - subscription.price}
-                            </Badge>
+                        <div className="flex flex-col items-center mb-2">
+                          <div className="flex items-baseline mb-1">
+                            <span className="text-3xl font-bold leading-none">€{subscription.price}</span>
+                            <span className="text-sm text-gray-600 ml-1 font-medium">/{subscription.duration === 'monthly' ? 'mo' : 'yr'}</span>
                           </div>
-                        )}
-                        {/* Spacer div to push content to top */}
-                        <div className="flex-grow"></div>
+                          
+                          {subscription.discountedPrice && subscription.discountedPrice > 0 && (
+                            <div className="mt-2">
+                              <div className="text-sm text-gray-400 line-through font-normal opacity-75">
+                                €{subscription.discountedPrice}
+                              </div>
+                              <Badge variant="outline" className="bg-green-50 text-green-700 mt-1 font-medium">
+                                Save €{subscription.discountedPrice - subscription.price}
+                              </Badge>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     )}
                     {!subscription.isActive && (
