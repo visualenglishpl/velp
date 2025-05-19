@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "wouter";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import { Helmet } from "react-helmet";
 import { 
@@ -114,6 +114,7 @@ const permissionsByCategory = permissions.reduce((acc, permission) => {
 
 const AccessRolesPage = () => {
   const { toast } = useToast();
+  const [, navigate] = useLocation();
   const [users, setUsers] = useState(mockUsers);
   const [searchQuery, setSearchQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
@@ -122,6 +123,28 @@ const AccessRolesPage = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState("");
+  
+  // Check for direct admin access - if it fails, redirect to the admin login page
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      try {
+        const res = await fetch('/api/direct/admin-login', { 
+          credentials: 'include',
+          cache: 'no-store'
+        });
+        
+        if (!res.ok) {
+          console.error("Admin access check failed");
+          navigate('/admin');
+        }
+      } catch (error) {
+        console.error("Error checking admin access:", error);
+        navigate('/admin');
+      }
+    };
+    
+    checkAdminAccess();
+  }, [navigate]);
 
   // Filter users based on search and filters
   const filteredUsers = users.filter(user => {

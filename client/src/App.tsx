@@ -6,6 +6,7 @@ import Footer from "./components/layout/Footer";
 import CookieConsent from "./components/CookieConsent";
 import ProtectedRoute from "./components/auth/ProtectedRouteWithHook";
 import AdminRoute from "./components/auth/AdminRoute";
+import { SimpleAdminRoute } from "./components/auth/SimpleAdminRoute";
 import { useAuth } from "./hooks/use-auth";
 import ShopManagement from "./pages/admin/ShopManagement";
 
@@ -243,54 +244,54 @@ function App() {
           </ProtectedRoute>
 
           {/* ADMIN ROUTES - Admin role required */}
-          <AdminRoute path="/admin">
+          <SimpleAdminRoute path="/admin">
             <AdminPage />
-          </AdminRoute>
-          <AdminRoute path="/admin/books">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/books">
             <BooksManagementPage />
-          </AdminRoute>
-          <AdminRoute path="/admin/book-units/:bookId">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/book-units/:bookId">
             <UnitsManagementPage />
-          </AdminRoute>
-          <AdminRoute path="/admin/shop">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/shop">
             <ShopManagement />
-          </AdminRoute>
-          <AdminRoute path="/admin/settings">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/settings">
             <SiteSettingsPage />
-          </AdminRoute>
-          <AdminRoute path="/admin/users">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/users">
             <UserManagementPage />
-          </AdminRoute>
-          <AdminRoute path="/admin/flagged">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/flagged">
             <FlaggedQuestionsPage />
-          </AdminRoute>
-          <AdminRoute path="/admin/analytics">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/analytics">
             <AnalyticsPanel />
-          </AdminRoute>
-          <AdminRoute path="/admin/roles">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/roles">
             <AccessRolesPage />
-          </AdminRoute>
-          <AdminRoute path="/admin/broadcast">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/broadcast">
             <BroadcastMessagesDashboard />
-          </AdminRoute>
-          <AdminRoute path="/admin/feedback">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/feedback">
             <EnhancedFeedbackViewer />
-          </AdminRoute>
-          <AdminRoute path="/admin/payments">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/payments">
             <PaymentHistoryViewer />
-          </AdminRoute>
-          <AdminRoute path="/simple-books-admin">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/simple-books-admin">
             <SimpleBooksAdmin />
-          </AdminRoute>
-          <AdminRoute path="/simple-units-admin">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/simple-units-admin">
             <SimpleUnitsAdmin />
-          </AdminRoute>
-          <AdminRoute path="/admin/dev/tools">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/dev/tools">
             <DevToolsPage />
-          </AdminRoute>
-          <AdminRoute path="/test-admin-dashboard">
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/test-admin-dashboard">
             <TestAdminDashboard />
-          </AdminRoute>
+          </SimpleAdminRoute>
           
           {/* Authentication is now implemented throughout the application */}
 

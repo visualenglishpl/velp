@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -84,8 +84,9 @@ type PerformanceData = {
 };
 
 const AnalyticsPanel = () => {
-  const { user } = useAuth();
+  const [, navigate] = useLocation();
   const { toast } = useToast();
+  const [adminUser, setAdminUser] = useState<any>(null);
   
   // Tab state
   const [activeTab, setActiveTab] = useState("overview");
@@ -104,6 +105,33 @@ const AnalyticsPanel = () => {
 
   // Colors for charts
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#a855f7', '#ec4899'];
+  
+  // Verify admin access
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      try {
+        const res = await fetch('/api/direct/admin-login', { 
+          credentials: 'include',
+          cache: 'no-store'
+        });
+        
+        if (!res.ok) {
+          console.error("Admin access check failed");
+          navigate('/admin');
+        } else {
+          const data = await res.json();
+          if (data.user) {
+            setAdminUser(data.user);
+          }
+        }
+      } catch (error) {
+        console.error("Error checking admin access:", error);
+        navigate('/admin');
+      }
+    };
+    
+    checkAdminAccess();
+  }, [navigate]);
   
   // Load analytics data
   useEffect(() => {
