@@ -56,7 +56,8 @@ import {
   Laptop,
   Smartphone,
   Tablet,
-  Database
+  Database,
+  Eye
 } from "lucide-react";
 
 // Define types

@@ -53,7 +53,8 @@ import {
   ShoppingCart,
   BookOpen,
   PlusCircle,
-  CalendarPlus
+  CalendarPlus,
+  Eye
 } from "lucide-react";
 
 // Define types

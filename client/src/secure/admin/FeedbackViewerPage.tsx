@@ -38,7 +38,9 @@ import {
   Bookmark,
   AlertTriangle,
   Info,
-  HelpCircle
+  HelpCircle,
+  Eye,
+  Trash2
 } from "lucide-react";
 
 // Define types for user feedback
@@ -465,7 +467,7 @@ const FeedbackViewerPage = () => {
         updatedFeedback.responseMessage = responseMessage;
         updatedFeedback.responseAt = new Date().toISOString();
         updatedFeedback.responseBy = {
-          id: user?.id || 'admin_1',
+          id: user?.id?.toString() || 'admin_1',
           name: user?.username || 'Admin User'
         };
       }

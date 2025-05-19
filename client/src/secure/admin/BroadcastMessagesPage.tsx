@@ -458,7 +458,7 @@ const BroadcastMessagesPage = () => {
           targetAudience: messageAudience as any,
           targetGroups: messageAudience === 'custom' ? selectedGroups : undefined,
           createdBy: {
-            id: user?.id || 'admin_1',
+            id: user?.id?.toString() || 'admin_1',
             name: user?.username || 'Admin User'
           },
           createdAt: new Date().toISOString(),

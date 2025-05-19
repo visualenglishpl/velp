@@ -734,24 +734,26 @@ const AnalyticsPanel = () => {
                 <div className="flex gap-2 items-center">
                   <Filter className="h-4 w-4" />
                   <Label>Book Filter:</Label>
-                  <Select value={bookFilter} onValueChange={setBookFilter} className="w-[150px]">
-                    <SelectTrigger>
-                      <SelectValue placeholder="All Books" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Books</SelectItem>
-                      <SelectItem value="0a">Book 0a</SelectItem>
-                      <SelectItem value="0b">Book 0b</SelectItem>
-                      <SelectItem value="0c">Book 0c</SelectItem>
-                      <SelectItem value="1">Book 1</SelectItem>
-                      <SelectItem value="2">Book 2</SelectItem>
-                      <SelectItem value="3">Book 3</SelectItem>
-                      <SelectItem value="4">Book 4</SelectItem>
-                      <SelectItem value="5">Book 5</SelectItem>
-                      <SelectItem value="6">Book 6</SelectItem>
-                      <SelectItem value="7">Book 7</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="w-[150px]">
+                    <Select value={bookFilter} onValueChange={setBookFilter}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="All Books" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Books</SelectItem>
+                        <SelectItem value="0a">Book 0a</SelectItem>
+                        <SelectItem value="0b">Book 0b</SelectItem>
+                        <SelectItem value="0c">Book 0c</SelectItem>
+                        <SelectItem value="1">Book 1</SelectItem>
+                        <SelectItem value="2">Book 2</SelectItem>
+                        <SelectItem value="3">Book 3</SelectItem>
+                        <SelectItem value="4">Book 4</SelectItem>
+                        <SelectItem value="5">Book 5</SelectItem>
+                        <SelectItem value="6">Book 6</SelectItem>
+                        <SelectItem value="7">Book 7</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
 

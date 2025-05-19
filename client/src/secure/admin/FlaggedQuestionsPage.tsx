@@ -238,9 +238,16 @@ const FlaggedQuestionsPage = () => {
   }, []);
 
   // Get unique books for filtering
-  const uniqueBooks = Array.from(new Set(flaggedItems.map(item => item.bookId))).sort((a, b) => 
-    parseInt(a) - parseInt(b)
-  );
+  const uniqueBooks = Array.from(new Set(flaggedItems.map(item => item.bookId))).sort((a, b) => {
+    // Ensure we're working with strings for comparison
+    const numA = parseInt(a);
+    const numB = parseInt(b);
+    // Handle potential NaN values
+    if (isNaN(numA) && isNaN(numB)) return 0;
+    if (isNaN(numA)) return -1;
+    if (isNaN(numB)) return 1;
+    return numA - numB;
+  });
 
   // Apply filters to flagged items
   const getFilteredItems = () => {
@@ -306,7 +313,7 @@ const FlaggedQuestionsPage = () => {
         status: isApproved ? 'approved' : 'rejected',
         reviewNotes,
         reviewedBy: {
-          id: user?.id || 'admin_1',
+          id: user?.id?.toString() || 'admin_1',
           name: user?.username || 'Admin User'
         },
         reviewedAt: new Date().toISOString()
