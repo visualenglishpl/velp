@@ -91,9 +91,9 @@ const LanguageManagerPage = () => {
         
         <div className="max-w-7xl mx-auto px-4 py-6">
           {/* Page Header */}
-          <div className="flex items-center justify-between pb-6 mb-6 border-b">
-            <div className="flex items-center">
-              <Globe className="h-6 w-6 text-primary mr-3" />
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Globe className="h-6 w-6 text-primary" />
               <div>
                 <h1 className="text-2xl font-semibold">Language Manager</h1>
                 <p className="text-gray-500 mt-1">
@@ -114,7 +114,7 @@ const LanguageManagerPage = () => {
             </div>
           </div>
           
-          {/* Tab Navigation */}
+          {/* Tab Navigation - consistent with other admin pages */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-6">
             <TabsList className="w-full max-w-md h-10 p-0 bg-transparent">
               <TabsTrigger 
@@ -211,24 +211,14 @@ const LanguageManagerPage = () => {
                       Manage text translations for the Visual English platform
                     </p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button 
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center gap-1.5"
-                    >
-                      <RefreshCw className="h-4 w-4" />
-                      Refresh
-                    </Button>
-                    <Button 
-                      onClick={() => {}}
-                      className="bg-primary hover:bg-primary/90"
-                      size="sm"
-                    >
-                      <Plus className="mr-2 h-4 w-4" />
-                      Add Key
-                    </Button>
-                  </div>
+                  <Button 
+                    onClick={() => {}}
+                    className="bg-primary hover:bg-primary/90"
+                    size="sm"
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Key
+                  </Button>
                 </div>
                 <div className="p-6">
                   <div className="flex items-center space-x-4 mb-6">

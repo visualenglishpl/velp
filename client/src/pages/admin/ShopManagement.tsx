@@ -327,7 +327,7 @@ export default function ShopManagement() {
           <Link href="/admin">
             <Button variant="ghost" className="mr-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              Back to Admin
             </Button>
           </Link>
           <h1 className="text-3xl font-bold">Shop Management</h1>
