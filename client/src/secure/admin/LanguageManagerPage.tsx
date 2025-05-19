@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Helmet } from "react-helmet";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
@@ -17,7 +16,9 @@ import {
   Settings, 
   CheckCircle,
   Download,
-  Upload
+  Upload,
+  Save,
+  RefreshCw
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -77,50 +78,65 @@ const LanguageManagerPage = () => {
         <title>Language Manager | Visual English Admin</title>
       </Helmet>
       
-      <div className="min-h-screen bg-white py-6">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center mb-5">
-            <Link href="/admin" className="flex items-center gap-1 text-gray-700 hover:text-gray-900 px-2 py-1">
+      <div className="min-h-screen bg-white">
+        {/* Back to Admin navigation */}
+        <div className="border-b">
+          <div className="max-w-7xl mx-auto px-4 py-3">
+            <Link href="/admin" className="inline-flex items-center gap-1 text-gray-700 hover:text-gray-900 py-1">
               <ChevronLeft className="h-4 w-4" />
               <span>Back to Admin</span>
             </Link>
           </div>
-          
-          <div className="flex items-center justify-between mb-6 border-b pb-4">
-            <div>
-              <h1 className="text-2xl font-semibold text-gray-900">Language Manager</h1>
-              <p className="text-gray-500 mt-1">
-                Configure translation settings and language preferences
-              </p>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          {/* Page Header */}
+          <div className="flex items-center justify-between pb-6 mb-6 border-b">
+            <div className="flex items-center">
+              <Globe className="h-6 w-6 text-primary mr-3" />
+              <div>
+                <h1 className="text-2xl font-semibold">Language Manager</h1>
+                <p className="text-gray-500 mt-1">
+                  Configure translation settings and language preferences
+                </p>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" className="flex items-center gap-2">
-                <Download className="h-4 w-4" />
-                Export
-              </Button>
-              <Button variant="outline" className="flex items-center gap-2">
+            
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="flex items-center gap-1.5">
                 <Upload className="h-4 w-4" />
                 Import
               </Button>
-              <Globe className="h-5 w-5 text-blue-500 ml-2" />
+              <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+                <Download className="h-4 w-4" />
+                Export
+              </Button>
             </div>
           </div>
-        
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="mb-6 bg-gray-50 p-1 rounded-md">
-              <TabsTrigger value="languages" className="flex items-center gap-1.5 rounded-md data-[state=active]:bg-white">
+          
+          {/* Tab Navigation */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-6">
+            <TabsList className="w-full max-w-md h-10 p-0 bg-transparent">
+              <TabsTrigger 
+                value="languages" 
+                className="flex items-center gap-1.5 h-10 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
+              >
                 <Languages className="h-4 w-4" />
                 Available Languages
               </TabsTrigger>
-              <TabsTrigger value="translations" className="flex items-center gap-1.5 rounded-md data-[state=active]:bg-white">
+              <TabsTrigger 
+                value="translations" 
+                className="flex items-center gap-1.5 h-10 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary"
+              >
                 <Settings className="h-4 w-4" />
                 Translation Manager
               </TabsTrigger>
             </TabsList>
-            
-            <TabsContent value="languages">
+          
+            {/* Languages Tab Content */}
+            <TabsContent value="languages" className="pt-6">
               <div className="bg-white rounded-lg border shadow-sm">
-                <div className="px-6 py-5 border-b flex justify-between items-center">
+                <div className="px-6 py-4 border-b flex justify-between items-center">
                   <div>
                     <h3 className="text-lg font-medium">Platform Languages</h3>
                     <p className="text-sm text-gray-500 mt-1">
@@ -129,7 +145,8 @@ const LanguageManagerPage = () => {
                   </div>
                   <Button 
                     onClick={() => setIsAddLanguageDialogOpen(true)}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-primary hover:bg-primary/90"
+                    size="sm"
                   >
                     <Plus className="mr-2 h-4 w-4" />
                     Add Language
@@ -184,22 +201,34 @@ const LanguageManagerPage = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="translations">
+            {/* Translations Tab Content */}
+            <TabsContent value="translations" className="pt-6">
               <div className="bg-white rounded-lg border shadow-sm">
-                <div className="px-6 py-5 border-b flex justify-between items-center">
+                <div className="px-6 py-4 border-b flex justify-between items-center">
                   <div>
                     <h3 className="text-lg font-medium">Translation Manager</h3>
                     <p className="text-sm text-gray-500 mt-1">
                       Manage text translations for the Visual English platform
                     </p>
                   </div>
-                  <Button 
-                    onClick={() => {}}
-                    className="bg-blue-600 hover:bg-blue-700"
-                  >
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Translation Key
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button 
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-1.5"
+                    >
+                      <RefreshCw className="h-4 w-4" />
+                      Refresh
+                    </Button>
+                    <Button 
+                      onClick={() => {}}
+                      className="bg-primary hover:bg-primary/90"
+                      size="sm"
+                    >
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add Key
+                    </Button>
+                  </div>
                 </div>
                 <div className="p-6">
                   <div className="flex items-center space-x-4 mb-6">
@@ -277,6 +306,15 @@ const LanguageManagerPage = () => {
                         </TableRow>
                       </TableBody>
                     </Table>
+                  </div>
+                  
+                  <div className="mt-6 flex justify-end">
+                    <Button 
+                      className="bg-primary hover:bg-primary/90 flex items-center gap-1.5"
+                    >
+                      <Save className="h-4 w-4" />
+                      Save All Changes
+                    </Button>
                   </div>
                 </div>
               </div>
