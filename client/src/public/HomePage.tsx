@@ -4,7 +4,8 @@ import PricingPlans from "../components/sections/IndividualPlans";
 import FAQSection from "../components/sections/FAQSection";
 import EUProjectSection from "../components/sections/EUProjectSection";
 import { Card } from "@/components/ui/card";
-import { BookOpen as BookIcon } from "lucide-react";
+import { BookOpen as BookIcon, Loader2 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const HomePage = () => {
   interface Book {
@@ -118,6 +119,64 @@ const HomePage = () => {
         </div>
       </section>
       
+      {/* Books Section with Loading State */}
+      <section id="books" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold">Visual English Series</h2>
+            <p className="text-gray-600 mt-2">Choose a book to start your free trial</p>
+            {thumbnailLoadError && (
+              <div className="mt-4 p-3 bg-red-50 text-red-600 rounded-md max-w-md mx-auto">
+                {thumbnailLoadError} <button onClick={() => window.location.reload()} className="underline ml-2">Retry</button>
+              </div>
+            )}
+          </div>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {isLoadingThumbnails ? (
+              // Show loading skeletons while thumbnails are loading
+              Array(10).fill(0).map((_, index) => (
+                <Card key={`skeleton-${index}`} className="flex flex-col items-center p-4">
+                  <Skeleton className="w-24 h-24 rounded-md mb-3" />
+                  <Skeleton className="h-5 w-32 mb-1" />
+                </Card>
+              ))
+            ) : (
+              // Show actual book thumbnails once loaded
+              books.map((book) => (
+                <Card 
+                  key={book.id}
+                  className="flex flex-col items-center p-4 hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => window.location.href = `/checkout/book?book=${book.id}`}
+                >
+                  <div 
+                    className="w-24 h-24 rounded-md mb-3 flex items-center justify-center"
+                    style={{ backgroundColor: book.color }}
+                  >
+                    {book.thumbnailUrl ? (
+                      <img 
+                        src={book.thumbnailUrl}
+                        alt={`Book ${book.id}`}
+                        className="w-20 h-20 object-contain"
+                        onError={(e) => {
+                          console.log(`Error loading image for book ${book.id}`);
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <BookIcon className="w-12 h-12 text-white" />
+                    )}
+                  </div>
+                  <h3 className="font-semibold text-center">
+                    {book.id.startsWith('0') ? `Beginner Book ${book.id}` : `Book ${book.id}`}
+                  </h3>
+                </Card>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ and Project Sections */}
       <FAQSection />
       <EUProjectSection />
