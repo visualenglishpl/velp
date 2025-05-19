@@ -61,6 +61,7 @@ import UserManagementPage from "./secure/admin/UserManagementPage";
 import FlaggedQuestionsPage from "./secure/admin/FlaggedQuestionsPage";
 import AnalyticsPanel from "./secure/admin/AnalyticsPanel";
 import AccessRolesPage from "./secure/admin/AccessRolesPage";
+import CombinedUserRolesPage from "./secure/admin/CombinedUserRolesPage";
 import BroadcastMessagesPage from "./secure/admin/BroadcastMessagesPage";
 import BroadcastMessagesDashboard from "./secure/admin/BroadcastMessagesDashboard";
 import FeedbackViewerPage from "./secure/admin/FeedbackViewerPage";
@@ -261,6 +262,9 @@ function App() {
           </SimpleAdminRoute>
           <SimpleAdminRoute path="/admin/users">
             <UserManagementPage />
+          </SimpleAdminRoute>
+          <SimpleAdminRoute path="/admin/user-roles">
+            <CombinedUserRolesPage />
           </SimpleAdminRoute>
           <SimpleAdminRoute path="/admin/flagged">
             <FlaggedQuestionsPage />
