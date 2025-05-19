@@ -497,35 +497,35 @@ const FlaggedQuestionsPage = () => {
             </div>
             
             <div className="rounded-md border overflow-hidden">
-              <Table>
+              <Table className="text-xs">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Content ID</TableHead>
-                    <TableHead>Issue</TableHead>
-                    <TableHead>Reported By</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead className="py-1">Status</TableHead>
+                    <TableHead className="py-1">Content ID</TableHead>
+                    <TableHead className="py-1">Issue</TableHead>
+                    <TableHead className="py-1">Reported By</TableHead>
+                    <TableHead className="py-1">Date</TableHead>
+                    <TableHead className="py-1 text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredItems.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={6} className="h-24 text-center">
+                      <TableCell colSpan={6} className="h-24 text-center text-sm">
                         No flagged content found.
                       </TableCell>
                     </TableRow>
                   ) : (
                     filteredItems.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell>
+                      <TableRow key={item.id} className="text-xs">
+                        <TableCell className="py-1">
                           {getStatusBadge(item.status)}
                         </TableCell>
-                        <TableCell className="font-medium">
+                        <TableCell className="font-medium py-1">
                           {getContentId(item)}
                         </TableCell>
-                        <TableCell>
-                          <div className="max-w-xs truncate" title={item.reason}>
+                        <TableCell className="py-1 max-w-[200px]">
+                          <div className="whitespace-normal break-words text-xs leading-tight" title={item.reason}>
                             {item.reason}
                           </div>
                         </TableCell>

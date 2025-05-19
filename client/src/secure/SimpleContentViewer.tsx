@@ -1276,13 +1276,5 @@ export default function SimpleContentViewer() {
         </div>
       )}
     </div>
-    
-    {/* Question Editor Dialog */}
-    <QuestionEditor 
-      isOpen={isQuestionEditorOpen}
-      onClose={() => setIsQuestionEditorOpen(false)} 
-      questionData={currentQuestionData}
-      onSave={handleSaveQuestion}
-    />
   );
 }
