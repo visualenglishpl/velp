@@ -67,6 +67,7 @@ type User = {
   status?: string;
   createdAt?: string;
   lastLogin?: string;
+  profileImageUrl?: string;
 };
 
 // Role definitions
@@ -136,6 +137,7 @@ const CombinedUserRolesPage = () => {
   const [role, setRole] = useState("teacher");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [profileImageUrl, setProfileImageUrl] = useState("");
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   
   // Search and filtering
@@ -195,7 +197,8 @@ const CombinedUserRolesPage = () => {
               permissions: ["manage_users", "manage_content", "view_analytics", "edit_settings"],
               status: "active",
               createdAt: "2023-01-01",
-              lastLogin: "2025-05-15"
+              lastLogin: "2025-05-15",
+              profileImageUrl: "https://ui-avatars.com/api/?name=Admin+User&background=6d28d9&color=fff"
             },
             {
               id: 2,
@@ -206,7 +209,8 @@ const CombinedUserRolesPage = () => {
               permissions: ["view_content", "edit_own_content"],
               status: "active",
               createdAt: "2023-01-15",
-              lastLogin: "2025-05-18"
+              lastLogin: "2025-05-18",
+              profileImageUrl: "https://ui-avatars.com/api/?name=John+Smith&background=3b82f6&color=fff"
             },
             {
               id: 3,
@@ -217,7 +221,8 @@ const CombinedUserRolesPage = () => {
               permissions: ["view_content"],
               status: "active",
               createdAt: "2023-02-01",
-              lastLogin: "2025-05-17"
+              lastLogin: "2025-05-17",
+              profileImageUrl: "https://ui-avatars.com/api/?name=Springfield+Elementary&background=10b981&color=fff"
             },
             {
               id: 4,
@@ -228,7 +233,56 @@ const CombinedUserRolesPage = () => {
               permissions: ["view_content", "edit_content", "publish_content"],
               status: "inactive",
               createdAt: "2023-03-10",
-              lastLogin: "2025-04-30"
+              lastLogin: "2025-04-30",
+              profileImageUrl: "https://ui-avatars.com/api/?name=Maria+Garcia&background=f59e0b&color=fff"
+            },
+            {
+              id: 5,
+              username: "teacher2",
+              email: "teacher2@school.com",
+              role: "teacher",
+              fullName: "Anna Kowalski",
+              permissions: ["view_content", "edit_own_content"],
+              status: "active",
+              createdAt: "2023-04-05",
+              lastLogin: "2025-05-19",
+              profileImageUrl: "https://ui-avatars.com/api/?name=Anna+Kowalski&background=3b82f6&color=fff"
+            },
+            {
+              id: 6,
+              username: "school2",
+              email: "school2@edu.pl",
+              role: "school",
+              fullName: "Warsaw International",
+              permissions: ["view_content"],
+              status: "active",
+              createdAt: "2023-03-15",
+              lastLogin: "2025-05-16",
+              profileImageUrl: "https://ui-avatars.com/api/?name=Warsaw+International&background=10b981&color=fff"
+            },
+            {
+              id: 7,
+              username: "subscriber1",
+              email: "subscriber1@example.com",
+              role: "subscriber",
+              fullName: "Thomas Williams",
+              permissions: ["view_content"],
+              status: "active",
+              createdAt: "2023-05-10",
+              lastLogin: "2025-05-14",
+              profileImageUrl: "https://ui-avatars.com/api/?name=Thomas+Williams&background=64748b&color=fff"
+            },
+            {
+              id: 8,
+              username: "subscriber2",
+              email: "subscriber2@example.com",
+              role: "subscriber",
+              fullName: "Emma Brown",
+              permissions: ["view_content"],
+              status: "active",
+              createdAt: "2023-05-11",
+              lastLogin: "2025-05-13",
+              profileImageUrl: "https://ui-avatars.com/api/?name=Emma+Brown&background=64748b&color=fff"
             }
           ]);
           setLoading(false);
@@ -294,6 +348,7 @@ const CombinedUserRolesPage = () => {
     setRole("teacher");
     setPassword("");
     setConfirmPassword("");
+    setProfileImageUrl("");
     setFormErrors({});
   };
   
@@ -304,6 +359,7 @@ const CombinedUserRolesPage = () => {
     setEmail(user.email || "");
     setFullName(user.fullName || "");
     setRole(user.role);
+    setProfileImageUrl(user.profileImageUrl || "");
     setPassword("");
     setConfirmPassword("");
     setIsUserDialogOpen(true);
@@ -365,6 +421,7 @@ const CombinedUserRolesPage = () => {
         email: email || undefined,
         fullName: fullName || undefined,
         role,
+        profileImageUrl: profileImageUrl || undefined,
         // Only include password if it's provided (for edits) or for new users
         ...(password ? { password } : {}),
       };
@@ -405,6 +462,7 @@ const CombinedUserRolesPage = () => {
                 username, 
                 email: email || u.email, 
                 fullName: fullName || u.fullName, 
+                profileImageUrl: profileImageUrl || u.profileImageUrl,
                 role,
                 permissions: roleDefaultPermissions[role] || []
               } 
@@ -423,6 +481,7 @@ const CombinedUserRolesPage = () => {
           email: email || undefined,
           fullName: fullName || undefined,
           role,
+          profileImageUrl: profileImageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName || username)}&background=random`,
           permissions: roleDefaultPermissions[role] || [],
           status: "active",
           createdAt: new Date().toISOString().split('T')[0],
@@ -663,10 +722,10 @@ const CombinedUserRolesPage = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-xs">Username</TableHead>
-                      <TableHead className="text-xs">Name</TableHead>
+                      <TableHead className="text-xs w-12">Avatar</TableHead>
+                      <TableHead className="text-xs">User Info</TableHead>
                       <TableHead className="text-xs">Email</TableHead>
-                      <TableHead className="text-xs">Role</TableHead>
+                      <TableHead className="text-xs">Permissions</TableHead>
                       <TableHead className="text-xs">Status</TableHead>
                       <TableHead className="text-xs">Last Login</TableHead>
                       <TableHead className="text-xs text-right">Actions</TableHead>
@@ -681,12 +740,45 @@ const CombinedUserRolesPage = () => {
                       </TableRow>
                     ) : (
                       currentUsers.map((user) => (
-                        <TableRow key={user.id}>
-                          <TableCell className="font-medium text-xs py-2">{user.username}</TableCell>
-                          <TableCell className="text-xs py-2 max-w-[150px] truncate">{user.fullName || "-"}</TableCell>
+                        <TableRow key={user.id} className="group hover:bg-slate-50">
+                          <TableCell className="py-2">
+                            <div className="h-9 w-9 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center border border-slate-200">
+                              {user.profileImageUrl ? (
+                                <img 
+                                  src={user.profileImageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.fullName || user.username)}&background=random`} 
+                                  alt={user.username}
+                                  className="h-full w-full object-cover"
+                                />
+                              ) : (
+                                <div className="h-full w-full flex items-center justify-center bg-primary text-white text-sm font-semibold">
+                                  {(user.fullName || user.username).substring(0, 2).toUpperCase()}
+                                </div>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell className="py-2">
+                            <div className="flex flex-col">
+                              <span className="font-medium text-xs">{user.username}</span>
+                              <span className="text-xs text-muted-foreground max-w-[150px] truncate">{user.fullName || "-"}</span>
+                            </div>
+                          </TableCell>
                           <TableCell className="text-xs py-2 max-w-[180px] truncate">{user.email || "-"}</TableCell>
                           <TableCell className="py-2">
-                            {getUserRoleBadge(user.role)}
+                            <div className="flex flex-col space-y-1">
+                              {getUserRoleBadge(user.role)}
+                              <div className="flex flex-wrap gap-1 mt-1 max-w-[180px]">
+                                {(user.permissions || []).slice(0, 2).map((perm) => (
+                                  <Badge key={perm} variant="outline" className="text-[9px] px-1 py-0 bg-slate-50">
+                                    {perm.replace(/_/g, ' ')}
+                                  </Badge>
+                                ))}
+                                {(user.permissions || []).length > 2 && (
+                                  <Badge variant="outline" className="text-[9px] px-1 py-0 bg-slate-50">
+                                    +{(user.permissions || []).length - 2} more
+                                  </Badge>
+                                )}
+                              </div>
+                            </div>
                           </TableCell>
                           <TableCell className="py-2">
                             {getUserStatusBadge(user.status)}
@@ -697,7 +789,7 @@ const CombinedUserRolesPage = () => {
                               variant="ghost"
                               size="sm"
                               onClick={() => handleEditUser(user)}
-                              className="h-6 w-6 p-0 mr-1"
+                              className="h-6 w-6 p-0 mr-1 opacity-70 group-hover:opacity-100"
                               title="Edit User"
                             >
                               <Pencil className="h-3.5 w-3.5" />
@@ -706,7 +798,7 @@ const CombinedUserRolesPage = () => {
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDeleteClick(user)}
-                              className="h-6 w-6 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                              className="h-6 w-6 p-0 text-red-500 hover:text-red-700 hover:bg-red-50 opacity-70 group-hover:opacity-100"
                               title="Delete User"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
@@ -876,6 +968,33 @@ const CombinedUserRolesPage = () => {
                   placeholder="Full Name"
                   className="h-8 text-xs"
                 />
+              </div>
+              <div className="grid gap-1.5">
+                <Label htmlFor="profileImageUrl" className="text-xs">
+                  Profile Image URL <span className="text-[10px] text-muted-foreground">(optional)</span>
+                </Label>
+                <Input
+                  id="profileImageUrl"
+                  value={profileImageUrl}
+                  onChange={(e) => setProfileImageUrl(e.target.value)}
+                  placeholder="https://example.com/avatar.jpg"
+                  className="h-8 text-xs"
+                />
+                {profileImageUrl && (
+                  <div className="mt-1 flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-full overflow-hidden border border-slate-200">
+                      <img 
+                        src={profileImageUrl} 
+                        alt="Profile preview" 
+                        className="h-full w-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName || username)}&background=random`;
+                        }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-muted-foreground">Preview</span>
+                  </div>
+                )}
               </div>
               <div className="grid gap-1.5">
                 <Label htmlFor="role" className="text-xs">Role</Label>
