@@ -91,7 +91,7 @@ type UserAuthStatus = {
   lastLoginIp?: string;
   lastLoginLocation?: string;
   failedLoginAttempts: number;
-  passwordLastChanged?: string;
+  passwordLastChanged?: string | null;
   requiresPasswordReset: boolean;
   twoFactorEnabled: boolean;
   totalLogins: number;
@@ -322,7 +322,7 @@ const AuthenticationManagementPage = () => {
             lastLoginIp: "172.16.254.1",
             lastLoginLocation: "Krakow, Poland",
             failedLoginAttempts: 0,
-            passwordLastChanged: null,
+            passwordLastChanged: "",
             requiresPasswordReset: false,
             twoFactorEnabled: false,
             totalLogins: 87
@@ -358,7 +358,7 @@ const AuthenticationManagementPage = () => {
             lastLoginIp: "77.111.246.78",
             lastLoginLocation: "Wroclaw, Poland",
             failedLoginAttempts: 0,
-            passwordLastChanged: null,
+            passwordLastChanged: "",
             requiresPasswordReset: false,
             twoFactorEnabled: true,
             totalLogins: 43
@@ -394,7 +394,7 @@ const AuthenticationManagementPage = () => {
             lastLoginIp: "91.227.43.84",
             lastLoginLocation: "Poznan, Poland",
             failedLoginAttempts: 0,
-            passwordLastChanged: null,
+            passwordLastChanged: "",
             requiresPasswordReset: false,
             twoFactorEnabled: true,
             totalLogins: 32
