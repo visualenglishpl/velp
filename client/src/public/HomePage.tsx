@@ -139,7 +139,7 @@ const HomePage = () => {
                     BOOK {book.id}
                   </div>
                   <a 
-                    href={`/books/${book.id}`} 
+                    href={`/books/${book.id}/units`} 
                     className="text-center py-1.5 px-4 w-full rounded-full text-sm font-medium"
                     style={{ backgroundColor: book.color, color: 'white' }}
                   >
