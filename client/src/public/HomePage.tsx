@@ -69,15 +69,10 @@ const HomePage = () => {
     <div className="space-y-0">
       <HeroSection />
       
-      {/* Pricing Section */}
-      <section id="pricing" className="pt-12 pb-8">
-        <PricingPlans />
-      </section>
-      
-      {/* Book Grid Section */}
-      <section id="books" className="py-12 bg-gray-50">
+      {/* Visual English Series Section */}
+      <section id="books" className="py-12 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Our Books</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">Visual English Series</h2>
           
           {thumbnailLoadError && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
@@ -85,50 +80,66 @@ const HomePage = () => {
             </div>
           )}
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
             {isLoadingThumbnails ? (
               // Skeleton loaders while thumbnails are loading
               Array(10).fill(0).map((_, index) => (
                 <div key={`skeleton-${index}`} className="flex flex-col items-center">
-                  <Skeleton className="w-40 h-48 rounded-md mb-2" />
-                  <Skeleton className="w-32 h-4 rounded-md mb-1" />
-                  <Skeleton className="w-20 h-4 rounded-md" />
+                  <Skeleton className="w-full aspect-square rounded-md mb-2" />
+                  <Skeleton className="w-full h-6 rounded-md mb-1" />
+                  <Skeleton className="w-full h-10 rounded-md" />
                 </div>
               ))
             ) : (
-              // Render actual book cards
+              // Render actual book cards based on the provided image
               books.map(book => (
-                <Card 
-                  key={book.id}
-                  className="flex flex-col items-center p-3 hover:shadow-md transition-shadow"
-                >
+                <div key={book.id} className="flex flex-col items-center">
+                  <div 
+                    className="w-full aspect-square rounded-md mb-2 flex items-center justify-center"
+                    style={{ backgroundColor: book.color }}
+                  >
+                    <div className="text-white text-center p-4">
+                      <div className="flex justify-center mb-3">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z" fill="white"/>
+                          <circle cx="12" cy="12" r="3.5" fill="white"/>
+                        </svg>
+                      </div>
+                      <div className="font-bold text-sm mb-1">VISUAL</div>
+                      <div className="font-bold text-sm mb-1">ENGLISH</div>
+                      <div className="font-bold text-sm">BOOK {book.id}</div>
+                    </div>
+                  </div>
+                  <div className="text-center font-medium uppercase text-sm mb-2">
+                    VISUAL ENGLISH<br />
+                    BOOK {book.id}
+                  </div>
                   <a 
                     href={`/books/${book.id}`} 
-                    className="block w-full h-full"
-                    aria-label={`View ${book.title}`}
+                    className="text-center py-1.5 px-4 w-full rounded-full text-sm font-medium"
+                    style={{ backgroundColor: book.color, color: 'white' }}
                   >
-                    {book.thumbnailUrl ? (
-                      <img 
-                        src={book.thumbnailUrl} 
-                        alt={`${book.title} thumbnail`}
-                        className="w-full h-48 object-contain mb-3 rounded"
-                      />
-                    ) : (
-                      <div 
-                        className="w-full h-48 flex items-center justify-center mb-3 rounded"
-                        style={{ backgroundColor: book.color }}
-                      >
-                        <BookIcon size={48} className="text-white" />
-                      </div>
-                    )}
-                    <h3 className="font-medium text-center">{book.title}</h3>
-                    <p className="text-sm text-gray-500 text-center">View Book</p>
+                    <span className="mr-1">➜</span> View Book
                   </a>
-                </Card>
+                </div>
               ))
             )}
           </div>
+          
+          <div className="flex justify-center mt-8">
+            <a 
+              href="/books" 
+              className="inline-flex items-center justify-center bg-green-500 text-white px-6 py-2 rounded-full font-medium"
+            >
+              <span className="mr-2">⊕</span> Explore
+            </a>
+          </div>
         </div>
+      </section>
+      
+      {/* Pricing Section */}
+      <section id="pricing" className="pt-12 pb-8">
+        <PricingPlans />
       </section>
       
       {/* "Try Before You Subscribe" Banner */}
@@ -176,8 +187,6 @@ const HomePage = () => {
         </div>
       </section>
       
-
-
       {/* FAQ and Project Sections */}
       <FAQSection />
       <EUProjectSection />
