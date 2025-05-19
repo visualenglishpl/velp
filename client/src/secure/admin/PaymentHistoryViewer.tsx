@@ -102,9 +102,17 @@ const PaymentHistoryViewer = () => {
         <CardHeader className="pb-4">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div>
-              <CardTitle className="text-lg font-medium flex items-center">
-                <CreditCard className="mr-2 h-4 w-4" /> Payment History
-              </CardTitle>
+              <div className="flex items-center space-x-2 mb-2">
+                <Link href="/admin">
+                  <Button variant="outline" size="sm" className="text-xs h-8 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Admin
+                  </Button>
+                </Link>
+                <CardTitle className="text-lg font-medium flex items-center">
+                  <CreditCard className="mr-2 h-4 w-4" /> Payment History
+                </CardTitle>
+              </div>
               <CardDescription className="text-xs text-gray-500">
                 Track and manage payments, subscriptions, and transactions
               </CardDescription>

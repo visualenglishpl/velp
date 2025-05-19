@@ -388,9 +388,20 @@ const AnalyticsPanel = () => {
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-2xl font-bold flex items-center">
-                <BarChart3 className="mr-2 h-5 w-5" /> Analytics Dashboard
-              </CardTitle>
+              <div className="flex items-center space-x-2 mb-2">
+                <Button
+                  onClick={() => navigate("/admin")}
+                  variant="outline"
+                  size="sm"
+                  className="text-xs h-8 px-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  Back to Admin
+                </Button>
+                <CardTitle className="text-2xl font-bold flex items-center">
+                  <BarChart3 className="mr-2 h-5 w-5" /> Analytics Dashboard
+                </CardTitle>
+              </div>
               <CardDescription>
                 Monitor platform usage, content engagement, and subscription metrics
               </CardDescription>

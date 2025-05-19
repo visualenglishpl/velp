@@ -443,7 +443,7 @@ const FlaggedQuestionsPage = () => {
                   className="mr-3 flex items-center gap-1"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                  Back
+                  Back to Admin
                 </Button>
                 <CardTitle className="text-2xl font-bold flex items-center">
                   <Flag className="mr-2 h-5 w-5" /> Flagged Content
