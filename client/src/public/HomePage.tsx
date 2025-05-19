@@ -165,188 +165,181 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Pricing Options Section */}
-      <section className="py-16 bg-white">
+      {/* Pricing Section */}
+      <section id="pricing" className="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3">Find Your Perfect Learning Path</h2>
-            <p className="text-gray-600">Choose the plan that fits your learning style and budget</p>
+            <h2 className="text-3xl font-bold mb-3">Choose Your Pricing Plan</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Select the option that works best for you, whether you need a physical book or digital access.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {/* Printed Book Only */}
-            <div className="border rounded-lg overflow-hidden shadow-md flex flex-col h-full">
-              <div className="bg-green-500 text-white font-medium p-4 text-center">
-                <h3 className="text-xl">Printed Book Only</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {/* Printed Book Card */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform transition duration-300 hover:shadow-lg hover:-translate-y-1">
+              <div className="bg-green-500 p-6 text-white">
+                <h3 className="text-xl font-bold text-center">Printed Book</h3>
               </div>
-              <div className="p-6 flex-grow flex flex-col">
-                <ul className="space-y-3 mb-8 flex-grow">
+              <div className="p-6 flex-grow">
+                <div className="text-center mb-6">
+                  <span className="text-3xl font-bold">€20</span>
+                  <span className="text-gray-500 ml-2">+ delivery</span>
+                </div>
+                <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span>Full-color physical book</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span>Delivered to your doorstep</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span>No digital access included</span>
                   </li>
                 </ul>
-                <div className="text-center mt-auto">
-                  <div className="text-3xl font-bold mb-1">€20</div>
-                  <div className="text-sm text-gray-500 mb-4">+ delivery</div>
-                  <button 
-                    onClick={() => window.location.href = "/checkout?type=printed"}
-                    className="w-full py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium"
-                  >
-                    Order Printed Book
-                  </button>
-                </div>
+              </div>
+              <div className="px-6 pb-6">
+                <button 
+                  onClick={() => window.location.href = "/checkout?type=printed"}
+                  className="w-full py-2 bg-green-500 text-white rounded-md font-medium hover:bg-green-600 transition"
+                >
+                  Order Printed Book
+                </button>
               </div>
             </div>
-            
-            {/* Single Lesson Access */}
-            <div className="border rounded-lg overflow-hidden shadow-md flex flex-col h-full">
-              <div className="bg-blue-500 text-white font-medium p-4 text-center">
-                <h3 className="text-xl">Single Lesson Access</h3>
+
+            {/* Single Lesson Card */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform transition duration-300 hover:shadow-lg hover:-translate-y-1">
+              <div className="bg-blue-500 p-6 text-white">
+                <h3 className="text-xl font-bold text-center">Single Lesson</h3>
               </div>
-              <div className="p-6 flex-grow flex flex-col">
-                <ul className="space-y-3 mb-8 flex-grow">
+              <div className="p-6 flex-grow">
+                <div className="text-center mb-6">
+                  <span className="text-3xl font-bold">€5</span>
+                  <span className="text-gray-500 ml-2">per month</span>
+                  <div className="text-sm text-gray-500">€40/year (33% savings)</div>
+                </div>
+                <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span>Access to one complete lesson</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>Downloadable PDF of the unit</span>
+                    <span>200+ images, games, quizzes</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>200+ images, games, and quizzes</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Progress tracking & videos</span>
+                    <span>Downloadable PDF of unit</span>
                   </li>
                 </ul>
-                <div className="text-center mt-auto">
-                  <div className="text-3xl font-bold mb-1">€5</div>
-                  <div className="text-sm text-gray-500 mb-1">per month</div>
-                  <div className="text-sm text-gray-500 mb-4">€40/year (33% savings)</div>
-                  <button 
-                    onClick={() => window.location.href = "/checkout?type=unit"}
-                    className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md font-medium"
-                  >
-                    Start Learning Now
-                  </button>
-                </div>
+              </div>
+              <div className="px-6 pb-6">
+                <button 
+                  onClick={() => window.location.href = "/checkout?type=unit"}
+                  className="w-full py-2 bg-blue-500 text-white rounded-md font-medium hover:bg-blue-600 transition"
+                >
+                  Select Units
+                </button>
               </div>
             </div>
-            
-            {/* Whole Book Access */}
-            <div className="border rounded-lg overflow-hidden shadow-md flex flex-col h-full">
-              <div className="bg-purple-500 text-white font-medium p-4 text-center">
-                <h3 className="text-xl">Whole Book Access</h3>
+
+            {/* Whole Book Card */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform transition duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-purple-500">
+              <div className="bg-purple-500 p-6 text-white relative">
+                <div className="absolute -top-4 -right-12 bg-yellow-400 text-xs font-bold px-8 py-1 shadow-sm transform rotate-45">
+                  BEST VALUE
+                </div>
+                <h3 className="text-xl font-bold text-center">Whole Book</h3>
               </div>
-              <div className="p-6 flex-grow flex flex-col">
-                <ul className="space-y-3 mb-8 flex-grow">
+              <div className="p-6 flex-grow">
+                <div className="text-center mb-6">
+                  <span className="text-3xl font-bold">€25</span>
+                  <span className="text-gray-500 ml-2">per month</span>
+                  <div className="text-sm text-gray-500">€180/year (40% savings)</div>
+                </div>
+                <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-purple-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-purple-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>Full access to one entire book</span>
+                    <span>Full access to entire book</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-purple-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-purple-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>2000+ interactive resources</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-purple-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span>Download PDFs for all units</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-purple-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>200+ interactive resources</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-purple-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Certificates & advanced analytics</span>
-                  </li>
                 </ul>
-                <div className="text-center mt-auto">
-                  <div className="text-3xl font-bold mb-1">€25</div>
-                  <div className="text-sm text-gray-500 mb-1">per month</div>
-                  <div className="text-sm text-gray-500 mb-4">€180/year (40% savings)</div>
-                  <button 
-                    onClick={() => window.location.href = "/checkout?type=book"}
-                    className="w-full py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-md font-medium"
-                  >
-                    Get Full Access
-                  </button>
-                </div>
+              </div>
+              <div className="px-6 pb-6">
+                <button 
+                  onClick={() => window.location.href = "/checkout?type=book"}
+                  className="w-full py-2 bg-purple-500 text-white rounded-md font-medium hover:bg-purple-600 transition"
+                >
+                  Get Full Access
+                </button>
               </div>
             </div>
-            
-            {/* Free Trial */}
-            <div className="border rounded-lg overflow-hidden shadow-md flex flex-col h-full">
-              <div className="bg-orange-400 text-white font-medium p-4 text-center">
-                <h3 className="text-xl">Free Trial</h3>
+
+            {/* Free Trial Card */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform transition duration-300 hover:shadow-lg hover:-translate-y-1">
+              <div className="bg-orange-400 p-6 text-white">
+                <h3 className="text-xl font-bold text-center">Free Trial</h3>
               </div>
-              <div className="p-6 flex-grow flex flex-col">
-                <ul className="space-y-3 mb-8 flex-grow">
+              <div className="p-6 flex-grow">
+                <div className="text-center mb-6">
+                  <span className="text-3xl font-bold">Free</span>
+                  <div className="text-sm text-gray-500">7-Day Trial</div>
+                </div>
+                <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-orange-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-orange-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>Full free access for one week</span>
+                    <span>7 days of unlimited access</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-orange-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-orange-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>Browse all lessons and content</span>
+                    <span>3 free PDF downloads</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-orange-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Access to games and quizzes</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-orange-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-orange-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span>Credit card required</span>
                   </li>
                 </ul>
-                <div className="text-center mt-auto">
-                  <div className="text-3xl font-bold mb-1">Free</div>
-                  <div className="text-sm text-gray-500 mb-4">7-Day Trial</div>
-                  <button 
-                    onClick={() => window.location.href = "/checkout?type=trial"}
-                    className="w-full py-2 bg-orange-400 hover:bg-orange-500 text-white rounded-md font-medium"
-                  >
-                    Start Free Trial
-                  </button>
-                </div>
+              </div>
+              <div className="px-6 pb-6">
+                <button 
+                  onClick={() => window.location.href = "/checkout?type=trial"}
+                  className="w-full py-2 bg-orange-400 text-white rounded-md font-medium hover:bg-orange-500 transition"
+                >
+                  Start Free Trial
+                </button>
               </div>
             </div>
           </div>
