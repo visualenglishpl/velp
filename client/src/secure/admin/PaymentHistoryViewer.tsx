@@ -99,13 +99,13 @@ const PaymentHistoryViewer = () => {
       </div>
       
       <Card>
-        <CardHeader>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div>
-              <CardTitle className="text-xl font-bold flex items-center">
-                <CreditCard className="mr-2 h-5 w-5" /> Payment History
+              <CardTitle className="text-lg font-medium flex items-center">
+                <CreditCard className="mr-2 h-4 w-4" /> Payment History
               </CardTitle>
-              <CardDescription className="text-sm text-gray-500">
+              <CardDescription className="text-xs text-gray-500">
                 Track and manage payments, subscriptions, and transactions
               </CardDescription>
             </div>

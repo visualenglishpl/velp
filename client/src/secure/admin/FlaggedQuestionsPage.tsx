@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -52,8 +52,36 @@ type FlaggedItem = {
 };
 
 const FlaggedQuestionsPage = () => {
-  const { user } = useAuth();
+  const [, navigate] = useLocation();
   const { toast } = useToast();
+  const [adminUser, setAdminUser] = useState<any>(null);
+  
+  // Verify admin access
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      try {
+        const res = await fetch('/api/direct/admin-login', { 
+          credentials: 'include',
+          cache: 'no-store'
+        });
+        
+        if (!res.ok) {
+          console.error("Admin access check failed");
+          navigate('/admin');
+        } else {
+          const data = await res.json();
+          if (data.user) {
+            setAdminUser(data.user);
+          }
+        }
+      } catch (error) {
+        console.error("Error checking admin access:", error);
+        navigate('/admin');
+      }
+    };
+    
+    checkAdminAccess();
+  }, [navigate]);
   
   // States for data
   const [flaggedItems, setFlaggedItems] = useState<FlaggedItem[]>([]);
@@ -313,8 +341,8 @@ const FlaggedQuestionsPage = () => {
         status: isApproved ? 'approved' : 'rejected',
         reviewNotes,
         reviewedBy: {
-          id: user?.id?.toString() || 'admin_1',
-          name: user?.username || 'Admin User'
+          id: adminUser?.id?.toString() || 'admin_1',
+          name: adminUser?.username || 'Admin User'
         },
         reviewedAt: new Date().toISOString()
       };
@@ -407,9 +435,20 @@ const FlaggedQuestionsPage = () => {
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-2xl font-bold flex items-center">
-                <Flag className="mr-2 h-5 w-5" /> Flagged Content
-              </CardTitle>
+              <div className="flex items-center mb-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => navigate('/admin')}
+                  className="mr-3 flex items-center gap-1"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  Back
+                </Button>
+                <CardTitle className="text-2xl font-bold flex items-center">
+                  <Flag className="mr-2 h-5 w-5" /> Flagged Content
+                </CardTitle>
+              </div>
               <CardDescription>
                 Review and resolve content issues reported by users
               </CardDescription>
