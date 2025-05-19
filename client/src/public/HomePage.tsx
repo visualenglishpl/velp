@@ -47,7 +47,7 @@ const HomePage = () => {
               const bookWithThumb = data.find((b: any) => b.bookId === book.id);
               return {
                 ...book,
-                thumbnailUrl: bookWithThumb?.thumbnailUrl
+                thumbnailUrl: bookWithThumb?.gifUrl || bookWithThumb?.thumbnailUrl
               };
             });
           });
