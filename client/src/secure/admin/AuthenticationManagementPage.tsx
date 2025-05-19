@@ -842,8 +842,7 @@ const AuthenticationManagementPage = () => {
                   </Select>
                   
                   <Select value={statusFilter || ''} onValueChange={(value) => setStatusFilter(value || null)}>
-                    <SelectTrigger>
-                      <SelectTrigger className="w-[140px]">
+                    <SelectTrigger className="w-[140px]">
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -855,8 +854,7 @@ const AuthenticationManagementPage = () => {
                   </Select>
                   
                   <Select value={dateRangeFilter} onValueChange={setDateRangeFilter}>
-                    <SelectTrigger>
-                      <SelectTrigger className="w-[140px]">
+                    <SelectTrigger className="w-[140px]">
                       <SelectValue placeholder="Date Range" />
                     </SelectTrigger>
                     <SelectContent>
