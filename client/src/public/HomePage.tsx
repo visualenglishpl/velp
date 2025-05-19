@@ -150,13 +150,54 @@ const HomePage = () => {
             )}
           </div>
           
-          <div className="flex justify-center mt-8">
-            <a 
-              href="/books" 
-              className="inline-flex items-center justify-center bg-green-500 text-white px-6 py-2 rounded-full font-medium"
-            >
-              <span className="mr-2">⊕</span> Explore
-            </a>
+          <div className="mt-8">
+            <div className="flex flex-wrap gap-4 justify-center mb-8">
+              <a 
+                href="/books" 
+                className="inline-flex items-center justify-center bg-green-500 text-white px-6 py-2 rounded-full font-medium"
+              >
+                <span className="mr-2">⊕</span> Explore All Books
+              </a>
+            </div>
+            
+            {/* Book Subscription Buttons */}
+            <div className="max-w-3xl mx-auto">
+              <h3 className="text-lg font-semibold text-center mb-4">Access Options</h3>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/checkout/book"
+                  className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-[#b23cfd] hover:bg-[#a020f0] text-white font-medium rounded-md shadow-md"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                  </svg>
+                  Subscribe to Full Book
+                </a>
+                
+                <a
+                  href="/checkout/unit"
+                  className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-[#2e88f6] hover:bg-blue-600 text-white font-medium rounded-md shadow-md"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                    <path d="M3 6h18"/>
+                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                  </svg>
+                  Select Multiple Units
+                </a>
+                
+                <a
+                  href="/checkout/free_trial"
+                  className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md shadow-md"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                    <path d="M2 12h20" />
+                    <path d="M12 2v20" />
+                  </svg>
+                  Start Free 7-Day Trial
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
