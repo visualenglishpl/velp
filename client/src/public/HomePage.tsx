@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import HeroSection from "../components/sections/HeroSection";
 import FAQSection from "../components/sections/FAQSection";
 import EUProjectSection from "../components/sections/EUProjectSection";
-import { Card } from "@/components/ui/card";
-import { BookOpen as BookIcon, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const HomePage = () => {
@@ -165,7 +164,7 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Pricing Section Removed */}
+      {/* Additional sections can be added here if needed */}
       {/* "Try Before You Subscribe" Banner */}
       <section className="py-12 bg-gradient-to-r from-blue-50 to-purple-50">
         <div className="container mx-auto px-4">
