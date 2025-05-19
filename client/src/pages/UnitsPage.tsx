@@ -72,6 +72,7 @@ export default function UnitsPage() {
   // Handle error
   useEffect(() => {
     if (error) {
+      console.error("Error loading units:", error);
       toast({
         title: 'Error',
         description: `Failed to load units for book ${bookId}. Please try again later.`,
@@ -79,6 +80,13 @@ export default function UnitsPage() {
       });
     }
   }, [error, toast, bookId]);
+  
+  // Add debugging log when units change
+  useEffect(() => {
+    if (units) {
+      console.log(`Successfully loaded ${units.length} units for book ${bookId}`);
+    }
+  }, [units, bookId]);
 
   return (
     <div className="container mx-auto px-4 py-8">
