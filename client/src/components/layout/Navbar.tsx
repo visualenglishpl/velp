@@ -62,6 +62,9 @@ const Navbar = () => {
               <Link href="/method">
                 <span className="text-gray-600 hover:text-teal-600 text-sm">Method</span>
               </Link>
+              <Link href="/about">
+                <span className="text-gray-600 hover:text-teal-600 text-sm">About</span>
+              </Link>
               <a href="/#books" className="text-gray-600 hover:text-teal-600 text-sm">Books</a>
               <a href="/#pricing" className="text-gray-600 hover:text-teal-600 text-sm">Pricing</a>
             </div>
