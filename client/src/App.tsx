@@ -16,6 +16,7 @@ import HomePage from "./public/HomePage";
 import AboutPage from "./public/AboutPage";
 import LoginPage from "./public/LoginPage";
 import StandaloneLoginPage from "./public/StandaloneLoginPage";
+import AdminLoginPage from "./public/AdminLoginPage";
 import DirectAdminLogin from "./public/DirectAdminLogin";
 import BookPreviewPage from "./public/BookPreviewPage";
 
@@ -193,6 +194,11 @@ function App() {
           <Route path="/checkout/:planId">
             <CheckoutPage />
           </Route>
+          {/* Dedicated Admin Login page with cleaner interface */}
+          <Route path="/admin-login">
+            <AdminLoginPage />
+          </Route>
+          
           {/* This route provides a fallback for admin access when the regular login flow fails */}
           <Route path="/direct-admin">
             <DirectAdminLogin />

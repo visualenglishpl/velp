@@ -153,6 +153,9 @@ const Footer = () => {
             </p>
             <p className="mt-4">
               Platform was designed and built by EDU-CENTRE DOLINA KARPIA. To build a similar platform, contact us.
+              <Link href="/admin-login" className="ml-2 text-gray-600 hover:text-gray-400 text-xs transition-colors">
+                [Admin]
+              </Link>
               <Link href="/admin/dev/tools" className="ml-2 text-gray-600 hover:text-gray-400 text-xs transition-colors">
                 [Dev]
               </Link>
