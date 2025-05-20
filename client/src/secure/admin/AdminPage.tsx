@@ -35,27 +35,22 @@ const AdminPage = () => {
   
   useEffect(() => {
     try {
+      // Try auth context first
       const authContext = useAuth();
       if (authContext.user) {
         setUser(authContext.user);
+        return;
       }
-    } catch (error) {
-      console.log("AdminPage: Auth context not available, using fallback");
       
-      // Try to get user from localStorage or sessionStorage as fallback
-      try {
-        const localUser = localStorage.getItem('velp_user');
-        const sessionUser = sessionStorage.getItem('velp_user');
-        if (localUser || sessionUser) {
-          setUser(JSON.parse(localUser || sessionUser || ""));
-        }
-      } catch (storageError) {
-        console.error("AdminPage: Storage access error:", storageError);
+      // Try browser storage as fallback
+      const localUser = localStorage.getItem('velp_user');
+      const sessionUser = sessionStorage.getItem('velp_user');
+      if (localUser || sessionUser) {
+        setUser(JSON.parse(localUser || sessionUser || ""));
+        return;
       }
-    }
-    
-    // Final attempt - try to get admin session directly
-    setTimeout(() => {
+      
+      // Last resort - direct API call
       fetch('/api/direct/admin-login', {
         method: 'GET',
         credentials: 'include',
@@ -63,23 +58,19 @@ const AdminPage = () => {
       })
       .then(res => res.json())
       .then(data => {
-        console.log("AdminPage: Last resort session recovery:", data);
         if (data.success && data.user) {
-          // Update local storage
-          try {
-            const userString = JSON.stringify(data.user);
-            localStorage.setItem('velp_user', userString);
-            sessionStorage.setItem('velp_user', userString);
-            
-            // Force a component rerender by setting user object
-            setUser(data.user);
-          } catch (err) {
-            console.error("AdminPage: Storage update error:", err);
-          }
+          const userString = JSON.stringify(data.user);
+          localStorage.setItem('velp_user', userString);
+          sessionStorage.setItem('velp_user', userString);
+          setUser(data.user);
         }
       })
-      .catch(err => console.error("AdminPage: Direct auth error:", err));
-    }, 500);
+      .catch(() => {
+        // Silent fail - all auth methods exhausted
+      });
+    } catch (error) {
+      // Silent error handling
+    }
   }, []); // Empty dependency array to run only once
   
   const [, setLocation] = useLocation();
@@ -91,7 +82,8 @@ const AdminPage = () => {
     }
   }, [user, setLocation]);
   
-  const adminFeatures = [
+  // Organize admin features into logical categories
+  const contentManagement = [
     {
       title: 'Books Management',
       description: 'Manage the list of educational books, units, and content',
@@ -101,27 +93,6 @@ const AdminPage = () => {
       featured: true
     },
     {
-      title: 'Shop Management',
-      description: 'Configure products, pricing, and shop settings',
-      icon: <Store className="h-10 w-10 text-white" size={42} />,
-      color: '#FF7F27', // Orange (Book 0b)
-      link: '/admin/shop'
-    },
-    {
-      title: 'Site Settings',
-      description: 'Customize platform appearance and behavior',
-      icon: <Settings className="h-10 w-10 text-white" size={42} />,
-      color: '#00CEDD', // Teal (Book 0c)
-      link: '/admin/settings'
-    },
-    {
-      title: 'Language Manager',
-      description: 'Manage translations, edit text labels, and UI language per user',
-      icon: <Globe className="h-10 w-10 text-white" size={42} />,
-      color: '#FFFF00', // Yellow (Book 1)
-      link: '/admin/languages'
-    },
-    {
       title: 'Flagged Questions',
       description: 'Review and address content issues reported by users',
       icon: <FileQuestion className="h-10 w-10 text-white" size={42} />,
@@ -129,12 +100,15 @@ const AdminPage = () => {
       link: '/admin/flagged'
     },
     {
-      title: 'Analytics Panel',
-      description: 'View platform usage statistics and reports',
-      icon: <BarChart2 className="h-10 w-10 text-white" size={42} />,
-      color: '#00CC00', // Green (Book 3)
-      link: '/admin/analytics'
-    },
+      title: 'Language Manager',
+      description: 'Manage translations, edit text labels, and UI language per user',
+      icon: <Globe className="h-10 w-10 text-white" size={42} />,
+      color: '#FFFF00', // Yellow (Book 1)
+      link: '/admin/languages'
+    }
+  ];
+  
+  const userManagement = [
     {
       title: 'Access Roles',
       description: 'Configure role-based access controls',
@@ -155,6 +129,16 @@ const AdminPage = () => {
       icon: <MessageSquare className="h-10 w-10 text-white" size={42} />,
       color: '#FF0000', // Red (Book 6)
       link: '/admin/feedback'
+    }
+  ];
+  
+  const businessManagement = [
+    {
+      title: 'Shop Management',
+      description: 'Configure products, pricing, and shop settings',
+      icon: <Store className="h-10 w-10 text-white" size={42} />,
+      color: '#FF7F27', // Orange (Book 0b)
+      link: '/admin/shop'
     },
     {
       title: 'Payment History',
@@ -162,6 +146,23 @@ const AdminPage = () => {
       icon: <CreditCard className="h-10 w-10 text-white" size={42} />,
       color: '#00FF00', // Bright Green (Book 7)
       link: '/admin/payments'
+    },
+    {
+      title: 'Analytics Panel',
+      description: 'View platform usage statistics and reports',
+      icon: <BarChart2 className="h-10 w-10 text-white" size={42} />,
+      color: '#00CC00', // Green (Book 3)
+      link: '/admin/analytics'
+    }
+  ];
+  
+  const systemSettings = [
+    {
+      title: 'Site Settings',
+      description: 'Customize platform appearance and behavior',
+      icon: <Settings className="h-10 w-10 text-white" size={42} />,
+      color: '#00CEDD', // Teal (Book 0c)
+      link: '/admin/settings'
     }
   ];
 
@@ -182,74 +183,179 @@ const AdminPage = () => {
             </p>
           </div>
 
-          {/* Admin feature cards start here */}
-
-          {/* Admin feature cards - 5 in a row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {adminFeatures.map((feature, index) => (
-              <Card 
-                key={index} 
-                className="overflow-hidden border-0 shadow-lg hover:scale-105 transition-transform min-w-[150px] rounded-xl"
-              >
-                <CardHeader 
-                  className="p-0 rounded-t-xl"
-                  style={{ backgroundColor: feature.color }}
-                >
-                  <div className="flex flex-col items-center justify-center py-4 w-full px-4">
-                    <div className="mb-3 flex items-center justify-center">
-                      {feature.icon}
-                    </div>
-                    <div className="flex items-center justify-center">
-                      <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
-                    </div>
-                  </div>
-                </CardHeader>
-
-                <CardFooter className="pb-3 pt-3 flex justify-center">
-                  <Link href={feature.link}>
-                    <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
-                      Manage
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-12 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 max-w-4xl mx-auto shadow-sm border border-purple-100">
-            <div className="text-center mb-4">
-              <h3 className="text-xl font-semibold text-purple-800">Quick Access Links</h3>
-              <p className="text-sm text-gray-600">Access key features of the Visual English platform</p>
+          {/* Content Management Section */}
+          <div className="mb-8">
+            <div className="flex items-center mb-4 bg-pink-50 p-2 rounded-md">
+              <BookOpen className="h-6 w-6 text-pink-600 mr-2" />
+              <h2 className="text-xl font-semibold text-pink-800">Content Management</h2>
             </div>
             
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/book/1/unit/1">
-                <Button className="px-6 bg-purple-600 hover:bg-purple-700">
-                  <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                  Content Viewer
-                </Button>
-              </Link>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              {contentManagement.map((feature: any, index: number) => (
+                <Card 
+                  key={index} 
+                  className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl"
+                >
+                  <CardHeader 
+                    className="p-0 rounded-t-xl"
+                    style={{ backgroundColor: feature.color }}
+                  >
+                    <div className="flex flex-col items-center justify-center py-3 w-full px-4">
+                      <div className="mb-2 flex items-center justify-center">
+                        {feature.icon}
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardFooter className="pb-3 pt-3 flex justify-center">
+                    <Link href={feature.link}>
+                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
+                        Manage
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+            
+            {/* User Management Section */}
+            <div className="flex items-center mb-4 bg-blue-50 p-2 rounded-md">
+              <Users className="h-6 w-6 text-blue-600 mr-2" />
+              <h2 className="text-xl font-semibold text-blue-800">User Management</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              {userManagement.map((feature: any, index: number) => (
+                <Card 
+                  key={index} 
+                  className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl"
+                >
+                  <CardHeader 
+                    className="p-0 rounded-t-xl"
+                    style={{ backgroundColor: feature.color }}
+                  >
+                    <div className="flex flex-col items-center justify-center py-3 w-full px-4">
+                      <div className="mb-2 flex items-center justify-center">
+                        {feature.icon}
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardFooter className="pb-3 pt-3 flex justify-center">
+                    <Link href={feature.link}>
+                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
+                        Manage
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+            
+            {/* Business Management Section */}
+            <div className="flex items-center mb-4 bg-green-50 p-2 rounded-md">
+              <Store className="h-6 w-6 text-green-600 mr-2" />
+              <h2 className="text-xl font-semibold text-green-800">Business Management</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              {businessManagement.map((feature: any, index: number) => (
+                <Card 
+                  key={index} 
+                  className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl"
+                >
+                  <CardHeader 
+                    className="p-0 rounded-t-xl"
+                    style={{ backgroundColor: feature.color }}
+                  >
+                    <div className="flex flex-col items-center justify-center py-3 w-full px-4">
+                      <div className="mb-2 flex items-center justify-center">
+                        {feature.icon}
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardFooter className="pb-3 pt-3 flex justify-center">
+                    <Link href={feature.link}>
+                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
+                        Manage
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+            
+            {/* System Settings Section */}
+            <div className="flex items-center mb-4 bg-teal-50 p-2 rounded-md">
+              <Settings className="h-6 w-6 text-teal-600 mr-2" />
+              <h2 className="text-xl font-semibold text-teal-800">System Settings</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {systemSettings.map((feature: any, index: number) => (
+                <Card 
+                  key={index} 
+                  className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl"
+                >
+                  <CardHeader 
+                    className="p-0 rounded-t-xl"
+                    style={{ backgroundColor: feature.color }}
+                  >
+                    <div className="flex flex-col items-center justify-center py-3 w-full px-4">
+                      <div className="mb-2 flex items-center justify-center">
+                        {feature.icon}
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardFooter className="pb-3 pt-3 flex justify-center">
+                    <Link href={feature.link}>
+                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
+                        Manage
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          </div>
+          
+          {/* Quick Access Links - simplified */}
+          <div className="mt-8 bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <svg className="h-5 w-5 text-indigo-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <h3 className="text-lg font-medium text-gray-800">Quick Access</h3>
+              </div>
               
-              <Link href="/admin/books">
-                <Button variant="outline" className="px-6 border-purple-400 text-purple-700 hover:bg-purple-50">
-                  <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                  Books Management
-                </Button>
-              </Link>
-              
-              <Link href="/">
-                <Button variant="outline" className="px-6 border-blue-300 text-blue-600 hover:bg-blue-50">
-                  <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                  Back to Home
-                </Button>
-              </Link>
+              <div className="flex space-x-3">
+                <Link href="/book/1/unit/1">
+                  <Button size="sm" variant="outline" className="border-indigo-200 text-indigo-700">
+                    Content Viewer
+                  </Button>
+                </Link>
+                
+                <Link href="/">
+                  <Button size="sm" variant="ghost" className="text-gray-600">
+                    Home
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

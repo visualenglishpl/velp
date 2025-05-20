@@ -74,12 +74,10 @@ const BooksManagementPage = () => {
     const tryDirectLogin = async () => {
       try {
         const response = await fetch('/api/direct/admin-login');
-        const data = await response.json();
-        if (data.success) {
-          console.log('Last-resort session recovery:', data);
-        }
+        await response.json();
+        // Silent success handling
       } catch (error) {
-        console.error('Failed to retrieve emergency admin session:', error);
+        // Silent error handling
       }
     };
     
@@ -267,48 +265,13 @@ const BooksManagementPage = () => {
               </Link>
               <h1 className="text-3xl font-bold text-gray-900">Books Management</h1>
             </div>
-            <div className="flex items-center gap-2">
+            <div>
               <Button 
-                variant="outline"
-                size="sm" 
-                className="flex items-center gap-1.5 px-6 py-5"
-                onClick={() => {
-                  toast({
-                    title: "Import Books",
-                    description: "Book import functionality will be available soon.",
-                  });
-                }}
+                onClick={handleNewBook}
+                className="bg-indigo-600 hover:bg-indigo-700 flex items-center gap-1.5"
               >
-                <Upload className="h-5 w-5" />
-                Import
-              </Button>
-              <Button 
-                variant="outline"
-                size="sm" 
-                className="flex items-center gap-1.5 px-6 py-5"
-                onClick={() => {
-                  toast({
-                    title: "Export Books",
-                    description: "Book export functionality will be available soon.",
-                  });
-                }}
-              >
-                <Download className="h-5 w-5" />
-                Export
-              </Button>
-              <Button 
-                variant="outline"
-                size="sm" 
-                className="flex items-center gap-1.5 px-6 py-5"
-                onClick={() => {
-                  toast({
-                    title: "Book Preview",
-                    description: "Book preview functionality will be available soon.",
-                  });
-                }}
-              >
-                <Eye className="h-5 w-5" />
-                Show Preview
+                <PlusCircle className="h-4 w-4" />
+                Add New Book
               </Button>
             </div>
           </div>

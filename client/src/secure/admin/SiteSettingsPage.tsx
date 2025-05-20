@@ -417,42 +417,28 @@ const SiteSettingsPage: React.FC = () => {
           <Button 
             variant="outline"
             size="sm" 
-            className="flex items-center gap-1.5 px-6 py-5"
+            className="flex items-center gap-1.5"
             onClick={() => document.getElementById('import-settings')?.click()}
           >
-            <Upload className="h-5 w-5" />
+            <Upload className="h-4 w-4 mr-1" />
             Import
           </Button>
           <Button 
             variant="outline"
             size="sm" 
-            className="flex items-center gap-1.5 px-6 py-5"
+            className="flex items-center gap-1.5"
             onClick={exportSettings}
           >
-            <Download className="h-5 w-5" />
+            <Download className="h-4 w-4 mr-1" />
             Export
           </Button>
           <Button 
             variant="outline"
             size="sm" 
-            className="flex items-center gap-1.5 px-6 py-5"
-            onClick={() => {
-              toast({
-                title: "Preview Feature",
-                description: "Site preview is being implemented. Check back soon!",
-              });
-            }}
-          >
-            <Eye className="h-5 w-5" />
-            Show Preview
-          </Button>
-          {/* Original import/export buttons removed to avoid duplication */}
-          <Button 
-            variant="outline" 
-            className="flex items-center"
+            className="flex items-center gap-1.5"
             onClick={() => setShowPreview(!showPreview)}
           >
-            <Eye className="h-4 w-4 mr-2" />
+            <Eye className="h-4 w-4 mr-1" />
             {showPreview ? "Hide Preview" : "Show Preview"}
           </Button>
         </div>
