@@ -569,28 +569,14 @@ export default function SimpleContentViewer() {
             className="mr-2 border-blue-200 hover:bg-blue-50"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
-            Back to Units
+            Back to Books Management
           </Button>
           <h3 className="text-lg font-medium">
             {unitData?.title || `Book ${bookId}, Unit ${unitNumber}`}
           </h3>
           
-          {/* Admin badge and management link if user is admin */}
-          {user?.role === 'admin' && (
-            <div className="ml-3 flex items-center">
-              <span className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-800 rounded-full mr-2">
-                Admin Access
-              </span>
-              <Button 
-                size="sm" 
-                variant="outline" 
-                onClick={() => navigate(`/admin/book-units/${bookId}`)}
-                className="text-xs border-purple-200 hover:bg-purple-50 text-purple-700"
-              >
-                Manage Unit
-              </Button>
-            </div>
-          )}
+          {/* Empty space to maintain layout balance */}
+          <div className="w-[120px]"></div>
         </div>
         <div className="flex items-center space-x-2">
           {/* Show regular controls when not in edit mode */}
