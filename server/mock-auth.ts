@@ -47,7 +47,7 @@ const schoolUser = {
 // For quick testing during development
 const validCredentials = [
   { username: "admin", password: "admin123", userRecord: adminUser },
-  { username: "teacher", password: "teacher123", userRecord: teacherUser },
+  { username: "teacher", password: "admin123", userRecord: teacherUser },
   { username: "school", password: "school123", userRecord: schoolUser }
 ];
 
