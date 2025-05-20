@@ -20,6 +20,7 @@ import StandaloneLoginPage from "./public/StandaloneLoginPage";
 import AdminLoginPage from "./public/AdminLoginPage";
 import TeacherLoginPage from "./public/TeacherLoginPage";
 import DirectAdminLogin from "./public/DirectAdminLogin";
+import DirectTeacherLogin from "./public/DirectTeacherLogin";
 import LoginQuickAccess from "./public/LoginQuickAccess";
 import BookPreviewPage from "./public/BookPreviewPage";
 
@@ -53,6 +54,7 @@ import DashboardPage from "./pages/DashboardPage";
 import DashboardBooksPage from "./pages/DashboardBooksPage";
 import DashboardUnitsPage from "./pages/DashboardUnitsPage";
 import TeacherDashboardPage from "./pages/TeacherDashboardPage";
+import QuickTeacherAccess from "./pages/QuickTeacherAccess";
 
 // Admin pages
 // Migrated to /secure/admin folder
@@ -214,6 +216,14 @@ function App() {
           {/* This route provides a fallback for admin access when the regular login flow fails */}
           <Route path="/direct-admin">
             <DirectAdminLogin />
+          </Route>
+          
+          <Route path="/direct-teacher">
+            <DirectTeacherLogin />
+          </Route>
+          
+          <Route path="/teacher-quick-access">
+            <QuickTeacherAccess />
           </Route>
           <Route path="/checkout">
             <CheckoutPage />
