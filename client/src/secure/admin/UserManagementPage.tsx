@@ -416,6 +416,12 @@ const UserManagementPage = () => {
                 variant="outline"
                 size="sm" 
                 className="flex items-center gap-1.5 px-6 py-5"
+                onClick={() => {
+                  toast({
+                    title: "Preview Feature",
+                    description: "User data preview is being implemented.",
+                  });
+                }}
               >
                 <Eye className="h-5 w-5" />
                 Show Preview

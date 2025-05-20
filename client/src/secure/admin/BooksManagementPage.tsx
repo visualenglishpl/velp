@@ -272,6 +272,12 @@ const BooksManagementPage = () => {
                 variant="outline"
                 size="sm" 
                 className="flex items-center gap-1.5 px-6 py-5"
+                onClick={() => {
+                  toast({
+                    title: "Import Books",
+                    description: "Book import functionality will be available soon.",
+                  });
+                }}
               >
                 <Upload className="h-5 w-5" />
                 Import
@@ -280,6 +286,12 @@ const BooksManagementPage = () => {
                 variant="outline"
                 size="sm" 
                 className="flex items-center gap-1.5 px-6 py-5"
+                onClick={() => {
+                  toast({
+                    title: "Export Books",
+                    description: "Book export functionality will be available soon.",
+                  });
+                }}
               >
                 <Download className="h-5 w-5" />
                 Export
@@ -288,6 +300,12 @@ const BooksManagementPage = () => {
                 variant="outline"
                 size="sm" 
                 className="flex items-center gap-1.5 px-6 py-5"
+                onClick={() => {
+                  toast({
+                    title: "Book Preview",
+                    description: "Book preview functionality will be available soon.",
+                  });
+                }}
               >
                 <Eye className="h-5 w-5" />
                 Show Preview

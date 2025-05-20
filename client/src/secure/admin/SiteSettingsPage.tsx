@@ -388,20 +388,7 @@ const SiteSettingsPage: React.FC = () => {
 
   return (
     <div className="container mx-auto py-8 px-4">
-      {/* Preview Dialog */}
-      <Dialog open={showPreview} onOpenChange={setShowPreview}>
-        <DialogContent className="sm:max-w-[800px]">
-          <DialogHeader>
-            <DialogTitle>Site Preview</DialogTitle>
-          </DialogHeader>
-          <div className="mt-4">
-            <SitePreview />
-          </div>
-          <DialogFooter>
-            <Button variant="secondary" onClick={() => setShowPreview(false)}>Close Preview</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Preview Dialog - temporarily disabled to fix loading issues */}
 
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
@@ -449,7 +436,12 @@ const SiteSettingsPage: React.FC = () => {
             variant="outline"
             size="sm" 
             className="flex items-center gap-1.5 px-6 py-5"
-            onClick={() => setShowPreview(true)}
+            onClick={() => {
+              toast({
+                title: "Preview Feature",
+                description: "Site preview is being implemented. Check back soon!",
+              });
+            }}
           >
             <Eye className="h-5 w-5" />
             Show Preview
