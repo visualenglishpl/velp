@@ -559,24 +559,23 @@ export default function SimpleContentViewer() {
       ref={containerRef}
       className={`relative ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'rounded-lg shadow-md border border-gray-200'}`}
     >
-      {/* Header with unit info */}
-      <div className={`bg-white border-b border-gray-200 p-2 flex justify-between items-center ${isFullscreen ? 'sticky top-0 z-10' : 'rounded-t-lg'}`}>
+      {/* Header with unit info - Enhanced */}
+      <div className={`bg-white border-b border-gray-200 py-3 px-4 flex justify-between items-center ${isFullscreen ? 'sticky top-0 z-10' : 'rounded-t-lg'}`}>
         <div className="flex items-center">
           <Button 
             size="sm" 
-            variant="outline" 
+            variant="ghost" 
             onClick={() => navigate(`/books/${bookId}`)}
-            className="mr-2 border-blue-200 hover:bg-blue-50"
+            className="text-gray-600 hover:text-blue-600 mr-3"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
-            Back to Books Management
+            Books
           </Button>
-          <h3 className="text-lg font-medium">
-            {unitData?.title || `Book ${bookId}, Unit ${unitNumber}`}
+          <h3 className="text-lg font-medium flex items-center">
+            <span className="text-blue-600 font-bold">Book {bookId}</span>
+            <span className="mx-2 text-gray-400">•</span>
+            <span>{unitData?.title || `Unit ${unitNumber}`}</span>
           </h3>
-          
-          {/* Empty space to maintain layout balance */}
-          <div className="w-[120px]"></div>
         </div>
         <div className="flex items-center space-x-2">
           {/* Show regular controls when not in edit mode */}
@@ -590,54 +589,57 @@ export default function SimpleContentViewer() {
               {user?.role === 'admin' && (
                 <Button 
                   size="sm" 
-                  variant="outline" 
+                  variant="ghost" 
                   onClick={() => setIsEditMode(true)}
-                  className="border-red-200 hover:bg-red-50 text-red-600"
+                  className="text-gray-600 hover:text-red-600 hover:bg-red-50"
+                  title="Delete Slides"
                 >
-                  <Trash2 className="h-4 w-4 mr-1" />
-                  Delete Slides
+                  <Trash2 className="h-4 w-4" />
                 </Button>
               )}
               
               <Button 
                 size="sm" 
-                variant="outline" 
+                variant="ghost" 
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                className="border-blue-200 hover:bg-blue-50"
+                className="text-gray-600 hover:text-blue-600"
+                title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
               >
                 {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
               </Button>
             </>
           ) : (
             <>
-              {/* Edit mode controls */}
-              <span className="text-sm text-red-500 font-medium">
-                {slidesToDelete.size} slide{slidesToDelete.size !== 1 ? 's' : ''} selected for deletion
-              </span>
+              {/* Edit mode controls - Simplified */}
+              {slidesToDelete.size > 0 && (
+                <span className="text-xs px-2 py-1 bg-red-50 text-red-600 rounded-full font-medium">
+                  {slidesToDelete.size} selected
+                </span>
+              )}
               
               <Button 
                 size="sm" 
-                variant="outline" 
+                variant="ghost" 
                 onClick={cancelEditing}
-                className="border-gray-200 hover:bg-gray-50"
+                className="text-gray-600"
+                title="Cancel"
               >
-                <X className="h-4 w-4 mr-1" />
-                Cancel
+                <X className="h-4 w-4" />
               </Button>
               
               <Button 
                 size="sm" 
-                variant="default"
+                variant="ghost" 
                 onClick={() => saveSlideDeletesMutation.mutate()}
+                className={`${slidesToDelete.size > 0 ? 'text-red-600' : 'text-gray-400'}`}
                 disabled={slidesToDelete.size === 0 || saveSlideDeletesMutation.isPending}
-                className="bg-red-600 hover:bg-red-700 text-white"
+                title="Save Changes"
               >
                 {saveSlideDeletesMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  <Save className="h-4 w-4 mr-1" />
+                  <Save className="h-4 w-4" />
                 )}
-                Save Changes
               </Button>
             </>
           )}

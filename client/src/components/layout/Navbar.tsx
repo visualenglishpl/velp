@@ -36,58 +36,63 @@ const Navbar = () => {
   }, []);
   
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between h-16">
+    <nav className="bg-white shadow sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
-          <div className="flex items-center">
+          <div className="flex-shrink-0">
             <Link href="/">
               <div className="flex items-center cursor-pointer">
                 <img 
                   src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
                   alt="Visual English Logo" 
-                  className="h-8 mr-2"
+                  className="h-9 mr-2"
                 />
-                <span className="text-gray-700 font-medium text-lg">VISUAL ENGLISH</span>
+                <span className="text-gray-800 font-bold text-lg">VISUAL ENGLISH</span>
               </div>
             </Link>
           </div>
           
-          {/* Main Navigation Links - Simplified */}
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:flex items-center space-x-4 mr-2">
+          {/* Main Navigation Links - Enhanced spacing and consistency */}
+          <div className="flex items-center">
+            <div className="hidden md:flex items-center space-x-6 mr-6">
               <Link href="/">
-                <span className="text-gray-600 hover:text-teal-600 text-sm">Home</span>
+                <span className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Home</span>
               </Link>
               <Link href="/method">
-                <span className="text-gray-600 hover:text-teal-600 text-sm">Method</span>
+                <span className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Method</span>
               </Link>
               <Link href="/about">
-                <span className="text-gray-600 hover:text-teal-600 text-sm">About</span>
+                <span className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">About</span>
               </Link>
-              <a href="/#books" className="text-gray-600 hover:text-teal-600 text-sm">Books</a>
-              <a href="/#pricing" className="text-gray-600 hover:text-teal-600 text-sm">Pricing</a>
+              <a href="/#books" className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Books</a>
+              <a href="/#pricing" className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Pricing</a>
+              <Link href="/contact">
+                <span className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Contact</span>
+              </Link>
             </div>
             
             {/* Action Items */}
-            <Link href="/cart" className="mr-1">
-              <div className="flex items-center text-gray-700 hover:text-teal-600 cursor-pointer relative">
-                <ShoppingCart size={20} />
-                {cartItemsCount > 0 && (
-                  <Badge 
-                    className="absolute -top-2 -right-2 px-1.5 py-0.5 min-w-[1.2rem] min-h-[1.2rem] flex items-center justify-center text-[0.65rem] bg-teal-600 text-white" 
-                  >
-                    {cartItemsCount}
-                  </Badge>
-                )}
-              </div>
-            </Link>
-            
-            <Link href="/login">
-              <span className="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded text-sm font-medium">
-                Sign In
-              </span>
-            </Link>
+            <div className="flex items-center space-x-4">
+              <Link href="/cart">
+                <div className="flex items-center text-gray-700 hover:text-blue-600 cursor-pointer relative p-1">
+                  <ShoppingCart size={20} />
+                  {cartItemsCount > 0 && (
+                    <Badge 
+                      className="absolute -top-1 -right-1 px-1.5 py-0.5 min-w-[1.2rem] min-h-[1.2rem] flex items-center justify-center text-[0.65rem] bg-blue-600 text-white" 
+                    >
+                      {cartItemsCount}
+                    </Badge>
+                  )}
+                </div>
+              </Link>
+              
+              <Link href="/login">
+                <button className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm hover:shadow">
+                  Sign In
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
