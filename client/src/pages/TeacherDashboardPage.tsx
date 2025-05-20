@@ -195,46 +195,7 @@ export default function TeacherDashboardPage() {
             <p className="text-gray-600 mt-1">Manage your classes, resources, and students</p>
           </div>
           
-          {/* Quick Stats overview */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Classes</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center">
-                  <Users className="h-8 w-8 text-blue-600 mr-3" />
-                  <span className="text-3xl font-bold">{classes.length}</span>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Students</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center">
-                  <GraduationCap className="h-8 w-8 text-blue-600 mr-3" />
-                  <span className="text-3xl font-bold">
-                    {classes.reduce((total, cls) => total + cls.studentsCount, 0)}
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Upcoming Classes</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center">
-                  <Calendar className="h-8 w-8 text-blue-600 mr-3" />
-                  <span className="text-3xl font-bold">{upcomingClasses.length}</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+
           
           {/* Main Dashboard Tabs */}
           <Tabs defaultValue="overview" className="w-full">
