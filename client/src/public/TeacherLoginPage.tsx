@@ -9,13 +9,10 @@ import { Helmet } from 'react-helmet';
 
 // Visual English logo SVG component
 const VELogo = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600">
-    <rect width="24" height="24" fill="white"/>
-    <path d="M7 18H17V16H7V18Z" fill="currentColor"/>
-    <path d="M17 14H7V12H17V14Z" fill="currentColor"/>
-    <path d="M17 10H7V8H17V10Z" fill="currentColor"/>
-    <path d="M7 6H17V4H7V6Z" fill="currentColor"/>
-    <path d="M5 22H19C20.1 22 21 21.1 21 20V4C21 2.9 20.1 2 19 2H5C3.9 2 3 2.9 3 4V20C3 21.1 3.9 22 5 22ZM5 4H19V20H5V4Z" fill="currentColor"/>
+  <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600">
+    <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="4" fill="white"/>
+    <ellipse cx="50" cy="50" rx="25" ry="30" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="3"/>
+    <circle cx="50" cy="50" r="10" fill="currentColor"/>
   </svg>
 );
 

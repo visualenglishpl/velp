@@ -4,12 +4,14 @@ import { Link } from 'wouter';
 // Visual English full logo component with text
 const VEFullLogo = () => (
   <div className="flex items-center justify-center mb-8">
-    <img 
-      src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
-      alt="Visual English Logo" 
-      className="h-16 mr-3"
-    />
-    <span className="text-2xl font-bold text-gray-800">VISUAL ENGLISH</span>
+    <div className="flex items-center">
+      <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mr-3">
+        <circle cx="50" cy="50" r="45" stroke="#1E3A8A" strokeWidth="4" fill="white"/>
+        <ellipse cx="50" cy="50" rx="25" ry="30" fill="#1E3A8A" fillOpacity="0.1" stroke="#1E3A8A" strokeWidth="3"/>
+        <circle cx="50" cy="50" r="10" fill="#1E3A8A"/>
+      </svg>
+      <span className="text-3xl font-bold text-gray-800">VISUAL ENGLISH</span>
+    </div>
   </div>
 );
 
