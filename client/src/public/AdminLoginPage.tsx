@@ -43,6 +43,8 @@ export default function AdminLoginPage() {
     try {
       console.log("Visual English Admin Login: Attempting login");
       
+      // Special handling for admin login - force role to 'admin' 
+      // regardless of what's selected in the UI to ensure this page is only for admin access
       const res = await fetch("/api/login", {
         method: "POST",
         headers: {
@@ -51,7 +53,7 @@ export default function AdminLoginPage() {
         body: JSON.stringify({
           username,
           password,
-          role: 'admin'
+          role: 'admin' // Hardcoded role - this page is exclusively for admin login
         }),
         credentials: "include",
       });
@@ -63,6 +65,7 @@ export default function AdminLoginPage() {
       
       const userData = await res.json();
       
+      // Additional verification to ensure only admins can use this page
       if (userData.role !== 'admin') {
         throw new Error("You don't have admin access. Please log in with an admin account.");
       }
@@ -100,8 +103,37 @@ export default function AdminLoginPage() {
               <h1 className="text-4xl font-bold mb-6">VELP</h1>
               <div className="text-lg text-white/70 mb-2">Visual English Learning Platform</div>
               <div className="border-t border-white/20 my-6"></div>
-              <h2 className="text-2xl font-medium mb-4">Admin Access</h2>
-              <p className="mb-4 text-white/80">Secure administrative interface for platform management</p>
+              <h2 className="text-2xl font-medium mb-4">Admin Portal</h2>
+              <p className="mb-4 text-white/80">Secure access to the administrative dashboard</p>
+              
+              <div className="mt-8 space-y-4">
+                <div className="flex items-center">
+                  <div className="rounded-full bg-white/20 p-2 mr-3">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="white"/>
+                    </svg>
+                  </div>
+                  <span>Content management & oversight</span>
+                </div>
+                
+                <div className="flex items-center">
+                  <div className="rounded-full bg-white/20 p-2 mr-3">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="white"/>
+                    </svg>
+                  </div>
+                  <span>User & subscription management</span>
+                </div>
+                
+                <div className="flex items-center">
+                  <div className="rounded-full bg-white/20 p-2 mr-3">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM9 17H7V10H9V17ZM13 17H11V7H13V17ZM17 17H15V13H17V17Z" fill="white"/>
+                    </svg>
+                  </div>
+                  <span>Analytics & reporting tools</span>
+                </div>
+              </div>
             </div>
           </div>
           
