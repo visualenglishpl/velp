@@ -17,7 +17,9 @@ import AboutPage from "./public/AboutPage";
 import LoginPage from "./public/LoginPage";
 import StandaloneLoginPage from "./public/StandaloneLoginPage";
 import AdminLoginPage from "./public/AdminLoginPage";
+import TeacherLoginPage from "./public/TeacherLoginPage";
 import DirectAdminLogin from "./public/DirectAdminLogin";
+import LoginQuickAccess from "./public/LoginQuickAccess";
 import BookPreviewPage from "./public/BookPreviewPage";
 
 // Original paths - still used until migration is complete
@@ -194,9 +196,17 @@ function App() {
           <Route path="/checkout/:planId">
             <CheckoutPage />
           </Route>
-          {/* Dedicated Admin Login page with cleaner interface */}
+          {/* Dedicated role-specific login pages with cleaner interfaces */}
           <Route path="/admin-login">
             <AdminLoginPage />
+          </Route>
+          
+          <Route path="/teacher-login">
+            <TeacherLoginPage />
+          </Route>
+          
+          <Route path="/login-select">
+            <LoginQuickAccess />
           </Route>
           
           {/* This route provides a fallback for admin access when the regular login flow fails */}
