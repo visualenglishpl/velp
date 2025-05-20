@@ -687,8 +687,11 @@ export default function SimpleContentViewer() {
                   const hasQuestion = (qa.hasData && qa.question.trim() !== '') || 
                                       (material.title && (material.title.includes('?') || material.title.includes('→')));
                   
-                  // If no question data exists for this image, or if question is empty, don't render the Q&A section at all
-                  if (!hasQuestion || !qa.question.trim()) return null;
+                  // Enhanced check for blank questions - if the question is blank after removing prefixes, don't show anything
+                  const cleanedQuestion = removePrefixes(qa.question).trim();
+                  
+                  // If no question data exists for this image, or if question is empty after cleaning, don't render the Q&A section at all
+                  if (!hasQuestion || !cleanedQuestion) return null;
                   
                   // Otherwise, render the Q&A section
                   return (

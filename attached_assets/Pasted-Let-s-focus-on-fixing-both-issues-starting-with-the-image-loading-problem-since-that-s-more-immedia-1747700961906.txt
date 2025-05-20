@@ -1,0 +1,112 @@
+Let's focus on fixing both issues, starting with the image loading problem since that's more immediately visible to users.
+
+For Issue 1: Images Not Loading
+I'll create a utility function to properly handle image filenames and URL encoding. This will ensure that all S3 images load correctly regardless of spaces or special characters in filenames.
+
+
+Searched for "Find files that handle S3 image loading or URL processing"
+Let me focus on fixing both issues. I'll start by creating a utility to properly handle image filenames with spaces and special characters, then address the question formatting.
+
+
+Opened client/src/lib/textCleaners.ts
+Now I'll implement fixes for both the image loading and question text formatting issues. Let's start by enhancing the textCleaners.ts file to address the question code prefixes:
+
+
+Edited client/src/lib/textCleaners.ts
+I'm analyzing the progress on fixing image loading and question text formatting issues:
+
+✓ Updated textCleaners.ts to remove question codes (like "02 I E") from displayed text
+→ Need to address image loading with proper URL encoding and path handling
+
+I'll continue working on the image loading issue by implementing proper URL encoding for S3 image paths. This will ensure images with spaces and special characters in filenames load correctly.
+
+
+Restarted Start application
+Let me create a new utility file for properly handling S3 image paths and URL encoding. This will fix the image loading issues with files that have spaces or special characters in their names.
+
+
+Created client/src/lib/imageUtils.ts
+Now that I've created the imageUtils.ts file to handle S3 image paths properly, let's update the image rendering component to use these utilities. This will fix both the image loading issues and the question text formatting.
+
+
+Searched for "Find the component that renders images from S3 bucket or displays question-answer content"
+Now I'll update the SimpleContentViewer component to use our new image utilities. This change will:
+
+Fix the image loading issues with proper URL encoding
+Clean up question text by removing code prefixes
+
+Opened client/src/secure/SimpleContentViewer.tsx
+Looking at the SimpleContentViewer component, I need to update it to use our new imageUtils functions for proper image path handling and question text cleanup.
+
+
+Opened client/src/secure/SimpleContentViewer.tsx
+Let's look at the image loading and question code in SimpleContentViewer component to implement our improvements:
+
+
+Opened client/src/secure/SimpleContentViewer.tsx
+Looking at the SimpleContentViewer component, I can see where we need to apply our fixes. Let's implement the improvements for both image loading and question display:
+
+
+Opened client/src/secure/SimpleContentViewer.tsx
+I'll now apply our fixes to improve both the image loading and question formatting in the SimpleContentViewer component.
+
+
+Opened client/src/secure/SimpleContentViewer.tsx
+Now I'm going to update the SimpleContentViewer component to fix both image loading and question formatting issues. First, I'll import our new imageUtils functions:
+
+
+Edited client/src/secure/SimpleContentViewer.tsx
+Now I'll update the main image loading code in SimpleContentViewer to use our new image utilities:
+
+
+Opened client/src/secure/SimpleContentViewer.tsx
+I'll continue fixing both the image loading issue and question display formatting. Let's implement the key improvements to SimpleContentViewer:
+
+
+Edited client/src/secure/SimpleContentViewer.tsx
+I'm analyzing our progress on the two issues you identified:
+
+Current Status
+✓ Created text cleaning functions to remove question codes from display
+✓ Updated textCleaners.ts to strip "02 I E" prefixes from questions
+→ Working on fixing image URL encoding for files with spaces
+
+I can see the core issue is how file paths with spaces are being handled. I'll continue fixing the image loading problem by properly encoding URLs for S3 resources.
+
+
+Restarted Start application
+I'm continuing to fix both of our identified issues:
+
+Images with spaces in filenames not loading
+Question codes (like "02 I E") showing up in the display
+Let me update the thumbnail display code to properly handle image paths with spaces:
+
+
+Edited client/src/secure/SimpleContentViewer.tsx
+I'm going to fix both issues now - let's address the question code cleaning in SimpleContentViewer.tsx:
+
+
+Edited client/src/secure/SimpleContentViewer.tsx
+Let's fix the answer text display as well to ensure both question and answer formats are cleaned of prefixes:
+
+
+Edited client/src/secure/SimpleContentViewer.tsx
+I've implemented two important fixes for the Visual English platform:
+
+1. Fixed Image Loading for Filenames with Spaces
+Created a new imageUtils.ts utility file with specialized functions for properly encoding S3 image paths
+Implemented createS3ImageUrl function that correctly handles spaces and special characters in filenames
+Updated both main content and thumbnail displays to use the new URL encoding utility
+2. Cleaned Up Question Display Text
+Enhanced the text cleaning functionality to remove question codes like "02 I E" from the beginning of questions
+Updated both question and answer display to properly format text without showing internal coding system
+Ensured consistent formatting with proper capitalization and punctuation
+These changes will make a significant difference in how content appears to users:
+
+Images with spaces in filenames will now load correctly
+Questions will be displayed in a clean format without the distracting code prefixes
+Would you like me to make any additional improvements to these fixes? For example, I could:
+
+Add similar fixes to other viewers or components that display questions
+Further improve the image loading with better error handling
+Focus on something else you'd like to address
