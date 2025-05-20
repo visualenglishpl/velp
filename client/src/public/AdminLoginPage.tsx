@@ -139,9 +139,12 @@ export default function AdminLoginPage() {
           
           {/* Right side - Login form */}
           <div className="flex flex-col justify-center p-8 bg-white">
-            <div className="flex items-center justify-center mb-6">
-              <VELogo />
-              <span className="ml-2 text-xl font-semibold text-gray-900">Admin Portal</span>
+            <div className="flex flex-col items-center justify-center mb-8">
+              <div className="flex items-center mb-2">
+                <VELogo />
+                <span className="ml-2 text-2xl font-bold text-gray-900">Admin Portal</span>
+              </div>
+              <p className="text-sm text-gray-500">Secure administrative dashboard access</p>
             </div>
             
             {authError && (
@@ -182,23 +185,25 @@ export default function AdminLoginPage() {
                 />
               </div>
               
-              <Button
-                className="w-full bg-purple-600 hover:bg-purple-700 mt-6 py-6 text-base font-medium"
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                ) : (
-                  <LogIn className="h-5 w-5 mr-2" />
-                )}
-                Sign In
-              </Button>
+              <div className="pt-4">
+                <Button
+                  className="w-full bg-purple-600 hover:bg-purple-700 py-6 text-base font-semibold shadow-md"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                  ) : (
+                    <LogIn className="h-5 w-5 mr-2" />
+                  )}
+                  Sign In as Administrator
+                </Button>
+              </div>
               
-              <div className="text-center mt-4">
+              <div className="text-center mt-6 pt-4 border-t border-gray-100">
                 <a 
                   href="/" 
-                  className="text-sm text-purple-600 hover:text-purple-800"
+                  className="text-sm text-purple-600 hover:text-purple-800 transition-colors"
                 >
                   Return to home page
                 </a>
