@@ -17,7 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from "@/components/ui/alert-dialog";
-import { Pencil, Trash2, UserPlus, Users } from "lucide-react";
+import { Pencil, Trash2, UserPlus, Users, Upload, Download, Eye } from "lucide-react";
 import { useLocation } from "wouter";
 
 // Define user type for our component
@@ -395,9 +395,35 @@ const UserManagementPage = () => {
                 Manage users, roles, and permissions
               </CardDescription>
             </div>
-            <Button onClick={handleAddUser} className="bg-blue-600 hover:bg-blue-700">
-              <UserPlus className="mr-2 h-4 w-4" /> Add User
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline"
+                size="sm" 
+                className="flex items-center gap-1.5 px-6 py-5"
+              >
+                <Upload className="h-5 w-5" />
+                Import
+              </Button>
+              <Button 
+                variant="outline"
+                size="sm" 
+                className="flex items-center gap-1.5 px-6 py-5"
+              >
+                <Download className="h-5 w-5" />
+                Export
+              </Button>
+              <Button 
+                variant="outline"
+                size="sm" 
+                className="flex items-center gap-1.5 px-6 py-5"
+              >
+                <Eye className="h-5 w-5" />
+                Show Preview
+              </Button>
+              <Button onClick={handleAddUser} className="bg-blue-600 hover:bg-blue-700 ml-2">
+                <UserPlus className="mr-2 h-4 w-4" /> Add User
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>

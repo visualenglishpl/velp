@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, PlusCircle, BookOpen, CheckCircle, Ban, Check } from 'lucide-react';
+import { ChevronLeft, PlusCircle, BookOpen, CheckCircle, Ban, Check, Upload, Download, Eye } from 'lucide-react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/use-auth';
 import { Helmet } from 'react-helmet';
@@ -257,14 +257,42 @@ const BooksManagementPage = () => {
       
       <div className="min-h-screen bg-gray-50 py-12 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8 flex items-center">
-            <Link href="/admin">
-              <Button variant="outline" className="mr-4">
-                <ChevronLeft className="mr-2 h-4 w-4" />
-                Back to Admin
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center">
+              <Link href="/admin">
+                <Button variant="outline" className="mr-4">
+                  <ChevronLeft className="mr-2 h-4 w-4" />
+                  Back to Admin
+                </Button>
+              </Link>
+              <h1 className="text-3xl font-bold text-gray-900">Books Management</h1>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline"
+                size="sm" 
+                className="flex items-center gap-1.5 px-6 py-5"
+              >
+                <Upload className="h-5 w-5" />
+                Import
               </Button>
-            </Link>
-            <h1 className="text-3xl font-bold text-gray-900">Books Management</h1>
+              <Button 
+                variant="outline"
+                size="sm" 
+                className="flex items-center gap-1.5 px-6 py-5"
+              >
+                <Download className="h-5 w-5" />
+                Export
+              </Button>
+              <Button 
+                variant="outline"
+                size="sm" 
+                className="flex items-center gap-1.5 px-6 py-5"
+              >
+                <Eye className="h-5 w-5" />
+                Show Preview
+              </Button>
+            </div>
           </div>
 
           {loading ? (

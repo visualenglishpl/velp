@@ -22,6 +22,13 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter
+} from '@/components/ui/dialog';
+import {
   Table,
   TableBody,
   TableCell,
@@ -40,19 +47,20 @@ import {
   Clock,
   DollarSign,
   CalendarIcon,
-  Eye,
-  Download,
   Save,
   CreditCard,
   Edit,
   Trash2,
-  ShoppingBag
+  ShoppingBag,
+  Download,
+  Eye
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const SiteSettingsPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const [showPreview, setShowPreview] = useState(false);
   
   // General Settings State
   const [siteSettings, setSiteSettings] = useState({
@@ -265,53 +273,136 @@ const SiteSettingsPage: React.FC = () => {
     event.target.value = '';
   };
   
-  const [showPreview, setShowPreview] = useState(false);
-  
   // Site preview component
   const SitePreview = () => (
-    <div className="border rounded-lg p-4 bg-white shadow-sm">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center">
+    <div className="border rounded-lg p-6 bg-white shadow-sm">
+      {/* Site Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 pb-4 border-b">
+        <div className="flex items-center mb-3 sm:mb-0">
           <img 
             src={siteSettings.faviconUrl} 
-            alt="Site favicon" 
-            className="h-8 w-8 mr-2" 
+            alt="Site logo" 
+            className="h-10 w-10 mr-3" 
           />
-          <h2 className="text-xl font-semibold" style={{ color: siteSettings.primaryColor }}>
+          <h2 className="text-2xl font-bold" style={{ color: siteSettings.primaryColor }}>
             {siteSettings.name}
           </h2>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Button size="sm" variant="ghost">Home</Button>
           <Button size="sm" variant="ghost">Books</Button>
-          <Button size="sm" variant="ghost">Method</Button>
+          <Button size="sm" style={{ backgroundColor: siteSettings.primaryColor, color: 'white' }}>Method</Button>
           <Button size="sm" variant="ghost">About</Button>
         </div>
       </div>
-      <Separator className="my-2" />
-      <p className="text-sm text-gray-600 mb-3">{siteSettings.description}</p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-        {/* Sample book thumbnails with primary color */}
-        {[0, 1, 2, 3].map(i => (
-          <div 
-            key={i} 
-            className="border rounded-md p-3 flex items-center justify-center h-24"
-            style={{ backgroundColor: `${siteSettings.primaryColor}22` }}
-          >
-            <div 
-              className="h-12 w-12 rounded-full flex items-center justify-center text-white"
-              style={{ backgroundColor: siteSettings.primaryColor }}
-            >
-              {i + 1}
-            </div>
+      
+      {/* Site Description */}
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-2">About the Platform</h3>
+        <p className="text-gray-700">{siteSettings.description}</p>
+        
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-gray-50 p-4 rounded-md border">
+            <h4 className="font-medium mb-1 text-sm">Region Settings</h4>
+            <p className="text-sm text-gray-600">
+              <span className="block"><strong>Timezone:</strong> {languageSettings.timeZone}</span>
+              <span className="block"><strong>Language:</strong> {languageSettings.defaultLanguage.toUpperCase()}</span>
+              <span className="block"><strong>Currency:</strong> {languageSettings.currency}</span>
+            </p>
           </div>
-        ))}
+          
+          <div className="bg-gray-50 p-4 rounded-md border">
+            <h4 className="font-medium mb-1 text-sm">Security</h4>
+            <p className="text-sm text-gray-600">
+              <span className="block"><strong>2FA:</strong> {securitySettings.enable2FA ? 'Enabled' : 'Disabled'}</span>
+              <span className="block"><strong>Password Policy:</strong> {securitySettings.passwordStrength}</span>
+              <span className="block"><strong>Login Attempts:</strong> {securitySettings.loginAttemptLimit}</span>
+            </p>
+          </div>
+          
+          <div className="bg-gray-50 p-4 rounded-md border">
+            <h4 className="font-medium mb-1 text-sm">Notifications</h4>
+            <p className="text-sm text-gray-600">
+              <span className="block"><strong>Email:</strong> {notificationSettings.enableEmails ? 'Enabled' : 'Disabled'}</span>
+              <span className="block"><strong>SMS:</strong> {notificationSettings.enableSms ? 'Enabled' : 'Disabled'}</span>
+              <span className="block"><strong>From:</strong> {notificationSettings.senderName}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      {/* Color Scheme Preview */}
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-3">Brand Colors</h3>
+        <div className="flex gap-3 mb-2">
+          <div 
+            className="w-14 h-14 rounded-md flex items-center justify-center text-white text-sm shadow-sm"
+            style={{ backgroundColor: siteSettings.primaryColor }}
+          >
+            Primary
+          </div>
+          <div 
+            className="w-14 h-14 rounded-md flex items-center justify-center text-sm shadow-sm"
+            style={{ backgroundColor: `${siteSettings.primaryColor}22`, color: siteSettings.primaryColor }}
+          >
+            Light
+          </div>
+          <div 
+            className="w-14 h-14 rounded-md flex items-center justify-center text-white text-sm shadow-sm"
+            style={{ backgroundColor: '#333333' }}
+          >
+            Dark
+          </div>
+          <div 
+            className="w-14 h-14 rounded-md flex items-center justify-center text-sm shadow-sm border"
+            style={{ backgroundColor: '#ffffff', color: '#333333' }}
+          >
+            White
+          </div>
+        </div>
+      </div>
+      
+      {/* Sample Content */}
+      <div>
+        <h3 className="text-lg font-semibold mb-3">Sample Books</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[1, 2, 3, 4].map(i => (
+            <div 
+              key={i} 
+              className="border rounded-md p-3 flex flex-col items-center justify-center h-32 hover:shadow-md transition-shadow"
+              style={{ backgroundColor: i === 1 ? `${siteSettings.primaryColor}22` : '#f8f8f8' }}
+            >
+              <div 
+                className="h-12 w-12 rounded-full flex items-center justify-center text-white mb-2"
+                style={{ backgroundColor: siteSettings.primaryColor }}
+              >
+                {i}
+              </div>
+              <span className="text-sm font-medium">Book {i}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 
   return (
     <div className="container mx-auto py-8 px-4">
+      {/* Preview Dialog */}
+      <Dialog open={showPreview} onOpenChange={setShowPreview}>
+        <DialogContent className="sm:max-w-[800px]">
+          <DialogHeader>
+            <DialogTitle>Site Preview</DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">
+            <SitePreview />
+          </div>
+          <DialogFooter>
+            <Button variant="secondary" onClick={() => setShowPreview(false)}>Close Preview</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <Button 
@@ -327,7 +418,7 @@ const SiteSettingsPage: React.FC = () => {
             <p className="text-gray-500">Configure platform settings and preferences</p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           {/* Hidden file input for importing settings */}
           <input 
             type="file" 
@@ -337,21 +428,33 @@ const SiteSettingsPage: React.FC = () => {
             onChange={importSettings}
           />
           <Button 
-            variant="outline" 
-            className="flex items-center"
+            variant="outline"
+            size="sm" 
+            className="flex items-center gap-1.5 px-6 py-5"
             onClick={() => document.getElementById('import-settings')?.click()}
           >
-            <Upload className="h-4 w-4 mr-2" />
+            <Upload className="h-5 w-5" />
             Import
           </Button>
           <Button 
-            variant="outline" 
-            className="flex items-center"
+            variant="outline"
+            size="sm" 
+            className="flex items-center gap-1.5 px-6 py-5"
             onClick={exportSettings}
           >
-            <Download className="h-4 w-4 mr-2" />
+            <Download className="h-5 w-5" />
             Export
           </Button>
+          <Button 
+            variant="outline"
+            size="sm" 
+            className="flex items-center gap-1.5 px-6 py-5"
+            onClick={() => setShowPreview(true)}
+          >
+            <Eye className="h-5 w-5" />
+            Show Preview
+          </Button>
+          {/* Original import/export buttons removed to avoid duplication */}
           <Button 
             variant="outline" 
             className="flex items-center"
