@@ -10,13 +10,13 @@ import { Helmet } from 'react-helmet';
 
 // Visual English logo SVG component
 const VELogo = () => (
-  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-purple-700">
     <rect width="24" height="24" fill="white"/>
-    <path d="M7 18H17V16H7V18Z" fill="#5E35B1"/>
-    <path d="M17 14H7V12H17V14Z" fill="#5E35B1"/>
-    <path d="M17 10H7V8H17V10Z" fill="#5E35B1"/>
-    <path d="M7 6H17V4H7V6Z" fill="#5E35B1"/>
-    <path d="M5 22H19C20.1 22 21 21.1 21 20V4C21 2.9 20.1 2 19 2H5C3.9 2 3 2.9 3 4V20C3 21.1 3.9 22 5 22ZM5 4H19V20H5V4Z" fill="#5E35B1"/>
+    <path d="M7 18H17V16H7V18Z" fill="currentColor"/>
+    <path d="M17 14H7V12H17V14Z" fill="currentColor"/>
+    <path d="M17 10H7V8H17V10Z" fill="currentColor"/>
+    <path d="M7 6H17V4H7V6Z" fill="currentColor"/>
+    <path d="M5 22H19C20.1 22 21 21.1 21 20V4C21 2.9 20.1 2 19 2H5C3.9 2 3 2.9 3 4V20C3 21.1 3.9 22 5 22ZM5 4H19V20H5V4Z" fill="currentColor"/>
   </svg>
 );
 
@@ -92,16 +92,26 @@ export default function AdminLoginPage() {
         <title>Admin Login | Visual English</title>
       </Helmet>
       
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <Card className="w-full max-w-md shadow-lg">
-          <CardHeader className="space-y-1 text-center pb-6">
-            <div className="flex justify-center mb-2">
-              <VELogo />
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-4xl">
+          {/* Left side - Purple panel */}
+          <div className="hidden md:flex flex-col justify-center bg-gradient-to-b from-purple-600 to-purple-800 p-12 text-white">
+            <div className="max-w-md mx-auto">
+              <h1 className="text-4xl font-bold mb-6">VELP</h1>
+              <div className="text-lg text-white/70 mb-2">Visual English Learning Platform</div>
+              <div className="border-t border-white/20 my-6"></div>
+              <h2 className="text-2xl font-medium mb-4">Admin Access</h2>
+              <p className="mb-4 text-white/80">Secure administrative interface for platform management</p>
             </div>
-            <CardTitle className="text-2xl font-bold">Visual English Admin</CardTitle>
-          </CardHeader>
+          </div>
           
-          <CardContent>
+          {/* Right side - Login form */}
+          <div className="flex flex-col justify-center p-8 bg-white">
+            <div className="flex items-center justify-center mb-6">
+              <VELogo />
+              <span className="ml-2 text-xl font-semibold text-gray-900">Admin Portal</span>
+            </div>
+            
             {authError && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4 text-sm">
                 <div className="flex">
@@ -141,7 +151,7 @@ export default function AdminLoginPage() {
               </div>
               
               <Button
-                className="w-full bg-purple-600 hover:bg-purple-700"
+                className="w-full bg-purple-600 hover:bg-purple-700 mt-2"
                 type="submit"
                 disabled={isLoading}
               >
@@ -150,7 +160,7 @@ export default function AdminLoginPage() {
                 ) : (
                   <LogIn className="h-4 w-4 mr-2" />
                 )}
-                Admin Login
+                Sign In
               </Button>
               
               <div className="text-center mt-4">
@@ -162,8 +172,8 @@ export default function AdminLoginPage() {
                 </a>
               </div>
             </form>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </>
   );
