@@ -151,14 +151,14 @@ export default function AdminLoginPage() {
               </div>
               
               <Button
-                className="w-full bg-purple-600 hover:bg-purple-700 mt-2"
+                className="w-full bg-purple-600 hover:bg-purple-700 mt-6 py-6 text-base font-medium"
                 type="submit"
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                 ) : (
-                  <LogIn className="h-4 w-4 mr-2" />
+                  <LogIn className="h-5 w-5 mr-2" />
                 )}
                 Sign In
               </Button>
