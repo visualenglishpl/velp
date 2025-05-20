@@ -61,7 +61,7 @@ const subscriptions: ShopItem[] = [
     name: 'Single Lesson Access',
     description: 'Access to all materials for a specific lesson/unit',
     price: 5,
-    discountedPrice: 0,
+    discountedPrice: undefined,
     isActive: true,
     duration: 'monthly'
   },
@@ -81,7 +81,7 @@ const subscriptions: ShopItem[] = [
     name: 'Whole Book Access',
     description: 'Access to all lessons and materials for an entire book',
     price: 25,
-    discountedPrice: 0,
+    discountedPrice: undefined,
     isActive: true,
     duration: 'monthly'
   },
@@ -388,7 +388,7 @@ export default function ShopManagement() {
               return (
                 <Card 
                   key={subscription.id} 
-                  className={`${subscription.isActive ? "" : "border-dashed opacity-70"} overflow-hidden h-full flex flex-col ${subscription.type === 'free_trial' ? "ring-2 ring-green-500" : ""} shadow-sm hover:shadow-md transition-shadow`}
+                  className={`${subscription.isActive ? "" : "border-dashed opacity-70"} overflow-hidden h-[360px] flex flex-col ${subscription.type === 'free_trial' ? "ring-2 ring-green-500" : ""} shadow-sm hover:shadow-md transition-shadow`}
                 >
                   <div className="p-3 relative" style={{ backgroundColor: subscriptionColor }}>
                     {subscription.type === 'free_trial' && (
@@ -407,10 +407,10 @@ export default function ShopManagement() {
                       )}
                     </div>
                   </div>
-                  <CardHeader className="pb-2 pt-3">
+                  <CardHeader className="pb-2 pt-4">
                     <div className="text-center">
-                      <CardTitle className="text-lg font-bold h-auto">{subscription.name}</CardTitle>
-                      <CardDescription className="text-xs h-auto mt-1">
+                      <CardTitle className="text-lg font-bold">{subscription.name}</CardTitle>
+                      <CardDescription className="text-xs mt-1">
                         {subscription.type === 'free_trial' 
                           ? `Limited Access` 
                           : subscription.duration === 'monthly' ? 'Monthly' : 'Annual'}

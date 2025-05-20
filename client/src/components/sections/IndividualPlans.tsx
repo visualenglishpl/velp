@@ -37,6 +37,7 @@ const PricingPlans = () => {
     {
       title: "Whole Book\nAccess",
       color: "#00bcd4", // nice teal/cyan color like in the example
+      popular: true, // Mark this as the popular option
       features: [
         "Full access to all lessons in one book",
         "Downloadable PDFs for each unit",
@@ -75,21 +76,26 @@ const PricingPlans = () => {
             <div key={index} className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
               {/* Header - colored top bar */}
               <div 
-                className="text-white text-center py-4"
+                className="text-white text-center py-4 relative"
                 style={{ backgroundColor: plan.color }}
               >
+                {plan.popular && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-gray-900 text-xs font-bold py-1 px-3 rounded-full shadow-sm">
+                    MOST POPULAR
+                  </div>
+                )}
                 <h3 className="text-xl font-semibold whitespace-pre-line">
                   {plan.title}
                 </h3>
               </div>
               
               {/* Features */}
-              <div className="p-6 pt-8" style={{ minHeight: '240px' }}>
+              <div className="p-6 pt-8" style={{ minHeight: '220px' }}>
                 <ul className="space-y-4">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span className="text-gray-600 text-sm leading-5">{feature}</span>
+                      <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-600 text-sm leading-5 ml-2">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -101,22 +107,22 @@ const PricingPlans = () => {
                 style={{ backgroundColor: plan.color }}
               >
                 <div className="flex flex-col items-center">
-                  <div className="flex items-baseline justify-center">
-                    <span className="text-2xl font-bold">{plan.price}</span>
+                  <div className="flex items-baseline justify-center mb-1">
+                    <span className="text-3xl font-bold">{plan.price}</span>
                     {plan.priceDetail && (
-                      <span className="text-sm font-normal ml-1">{plan.priceDetail}</span>
+                      <span className="text-sm font-medium ml-1">{plan.priceDetail}</span>
                     )}
                   </div>
                   
                   {plan.yearlyPrice && (
-                    <div className="mt-2 text-xs">
+                    <div className="mt-1">
                       <div className="flex items-center justify-center gap-2">
                         {plan.originalYearlyPrice && (
-                          <span className="line-through opacity-75">{plan.originalYearlyPrice}/yr</span>
+                          <span className="text-sm line-through opacity-75">{plan.originalYearlyPrice}/yr</span>
                         )}
-                        <span className="font-semibold">{plan.yearlyPrice}/yr</span>
+                        <span className="text-sm font-semibold">{plan.yearlyPrice}/yr</span>
                       </div>
-                      <div className="bg-white text-sm text-green-600 rounded-full px-2 py-0.5 mt-1 inline-block font-medium">
+                      <div className="bg-white text-sm text-green-600 rounded-full px-3 py-0.5 mt-2 inline-block font-medium">
                         {plan.savings}
                       </div>
                     </div>

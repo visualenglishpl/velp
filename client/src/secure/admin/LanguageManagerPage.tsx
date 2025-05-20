@@ -18,7 +18,8 @@ import {
   Download,
   Upload,
   Save,
-  RefreshCw
+  RefreshCw,
+  Eye
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -103,13 +104,17 @@ const LanguageManagerPage = () => {
             </div>
             
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-                <Upload className="h-4 w-4" />
+              <Button variant="outline" size="sm" className="flex items-center gap-1.5 px-6 py-5">
+                <Upload className="h-5 w-5" />
                 Import
               </Button>
-              <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-                <Download className="h-4 w-4" />
+              <Button variant="outline" size="sm" className="flex items-center gap-1.5 px-6 py-5">
+                <Download className="h-5 w-5" />
                 Export
+              </Button>
+              <Button variant="outline" size="sm" className="flex items-center gap-1.5 px-6 py-5">
+                <Eye className="h-5 w-5" />
+                Show Preview
               </Button>
             </div>
           </div>
