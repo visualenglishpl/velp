@@ -406,32 +406,7 @@ export default function TeacherDashboardPage() {
                 </div>
               </div>
               
-              {/* Upcoming Classes - Keep this but make it single column */}
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle>Upcoming Classes</CardTitle>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <ul className="divide-y divide-gray-200">
-                    {upcomingClasses.map(cls => (
-                      <li key={cls.id} className="p-4 hover:bg-gray-50">
-                        <div className="flex justify-between">
-                          <div>
-                            <p className="font-medium text-gray-800">{cls.className}</p>
-                            <p className="text-sm text-gray-500">
-                              Book {cls.bookId}, Unit {cls.unitId}
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-sm font-medium text-blue-600">{cls.date}</p>
-                            <p className="text-sm text-gray-500">{cls.time}</p>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+
             </TabsContent>
             
             {/* Classes Tab */}
