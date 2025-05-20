@@ -28,7 +28,7 @@ export default function TeacherLoginPage() {
   const user = storedUser ? JSON.parse(storedUser) : null;
   
   if (user && user.role === 'teacher') {
-    return <Redirect to="/books" />;
+    return <Redirect to="/teacher-dashboard" />;
   }
   
   const handleTeacherLogin = async (e: React.FormEvent) => {
@@ -73,7 +73,7 @@ export default function TeacherLoginPage() {
         description: `Welcome back, ${userData.username}!`,
       });
       
-      window.location.href = "/books";
+      window.location.href = "/teacher-dashboard";
     } catch (error) {
       console.error("Teacher login error:", error);
       setAuthError(error instanceof Error 

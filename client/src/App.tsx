@@ -7,6 +7,7 @@ import CookieConsent from "./components/CookieConsent";
 import ProtectedRoute from "./components/auth/ProtectedRouteWithHook";
 import AdminRoute from "./components/auth/AdminRoute";
 import { SimpleAdminRoute } from "./components/auth/SimpleAdminRoute";
+import TeacherRoute from "./components/auth/TeacherRoute";
 import { useAuth } from "./hooks/use-auth";
 import ShopManagement from "./pages/admin/ShopManagement";
 
@@ -51,6 +52,7 @@ import ViewerTestPage from "./pages/ViewerTestPage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardBooksPage from "./pages/DashboardBooksPage";
 import DashboardUnitsPage from "./pages/DashboardUnitsPage";
+import TeacherDashboardPage from "./pages/TeacherDashboardPage";
 
 // Admin pages
 // Migrated to /secure/admin folder
@@ -260,6 +262,36 @@ function App() {
           <ProtectedRoute path="/dashboard/books/:bookId">
             <DashboardUnitsPage />
           </ProtectedRoute>
+          
+          {/* TEACHER ROUTES - Teacher role required */}
+          <TeacherRoute path="/teacher-dashboard">
+            <TeacherDashboardPage />
+          </TeacherRoute>
+          <TeacherRoute path="/teacher/resources">
+            <div className="min-h-screen flex items-center justify-center">
+              <p className="text-lg text-gray-600">Resources page coming soon...</p>
+            </div>
+          </TeacherRoute>
+          <TeacherRoute path="/teacher/students">
+            <div className="min-h-screen flex items-center justify-center">
+              <p className="text-lg text-gray-600">Student management page coming soon...</p>
+            </div>
+          </TeacherRoute>
+          <TeacherRoute path="/teacher/assessments">
+            <div className="min-h-screen flex items-center justify-center">
+              <p className="text-lg text-gray-600">Assessment tools page coming soon...</p>
+            </div>
+          </TeacherRoute>
+          <TeacherRoute path="/teacher/messages">
+            <div className="min-h-screen flex items-center justify-center">
+              <p className="text-lg text-gray-600">Messages page coming soon...</p>
+            </div>
+          </TeacherRoute>
+          <TeacherRoute path="/teacher/settings">
+            <div className="min-h-screen flex items-center justify-center">
+              <p className="text-lg text-gray-600">Settings page coming soon...</p>
+            </div>
+          </TeacherRoute>
 
           {/* ADMIN ROUTES - Admin role required */}
           <SimpleAdminRoute path="/admin">

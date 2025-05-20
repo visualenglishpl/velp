@@ -249,6 +249,16 @@ export class MemStorage implements IStorage {
       createdAt: new Date()
     });
     
+    // Create teacher user
+    this.createUser({
+      username: "teacher",
+      password: "$2b$10$PX5aQ5N5YCgBZq7TwwQw7.QRH65VNqnWJwWDc8QFG0EY0g/3erRZa", // password: "admin123"
+      email: "teacher@example.com",
+      fullName: "Teacher User",
+      role: "teacher",
+      createdAt: new Date()
+    });
+    
     // Initialize with books from memory-data.ts
     console.log('Initializing storage with predefined books and units');
     
