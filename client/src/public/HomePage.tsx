@@ -137,20 +137,11 @@ const HomePage = () => {
           </div>
           
           <div className="mt-8">
-            <div className="flex flex-wrap gap-4 justify-center mb-8">
-              <a 
-                href="/books" 
-                className="inline-flex items-center justify-center bg-green-500 text-white px-6 py-2 rounded-full font-medium"
-              >
-                <span className="mr-2">⊕</span> Explore All Books
-              </a>
-            </div>
-            
-            {/* Simple Action Button */}
-            <div className="mt-2 text-center">
+            {/* Navigation button focused on subscription options only */}
+            <div className="text-center">
               <a 
                 href="#pricing" 
-                className="inline-flex items-center justify-center bg-[#5DADEC] text-white px-6 py-2.5 rounded-full font-medium shadow-sm hover:bg-[#4A9AD9] transition-colors"
+                className="inline-flex items-center justify-center bg-[#5DADEC] text-white px-8 py-3 rounded-full font-medium shadow-sm hover:bg-[#4A9AD9] transition-colors"
               >
                 View Subscription Options
               </a>
@@ -159,8 +150,8 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Pricing Section */}
-      <section id="pricing" className="pt-12 pb-8">
+      {/* Pricing Section - Adjusted spacing */}
+      <section id="pricing" className="mt-12 pb-8">
         <PricingPlans />
       </section>
       
