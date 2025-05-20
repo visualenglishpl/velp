@@ -18,6 +18,10 @@ export function removePrefixes(text: string): string {
     .replace(/^Question:/i, '')
     .replace(/^\d+\.\s*/, '')
     .replace(/^-\s*/, '')
+    // Remove Visual English question codes like "02 I E" at the beginning
+    .replace(/^\d+\s+[A-Z]+\s+[A-Z]+\s+/i, '')
+    // Also handle formats with just one letter like "02 I"
+    .replace(/^\d+\s+[A-Z]+\s+/i, '')
     .trim();
 }
 

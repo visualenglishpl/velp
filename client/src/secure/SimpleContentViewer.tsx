@@ -12,7 +12,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useExcelQA } from '@/hooks/use-excel-qa';
 import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { cleanQuestionText, cleanAnswerText, formatDisplayText } from '@/lib/textCleaners';
+import { cleanQuestionText, cleanAnswerText, formatDisplayText, removePrefixes } from '@/lib/textCleaners';
+import { encodeS3Path, createS3ImageUrl, extractQuestionCode, filenameToTitle } from '@/lib/imageUtils';
 import QuestionEditor from '@/components/questions/QuestionEditor';
 
 import { TeacherResourcesContainer } from '@/components/resources/TeacherResourcesContainer';
@@ -661,7 +662,8 @@ export default function SimpleContentViewer() {
       <div className="relative h-full">
         <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
           {materials.map((material, index) => {
-            const imagePath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+            // Use our improved image path handling utility
+            const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
             
             // Check for video content using multiple indicators
             const isVideo = material.content.toLowerCase().includes('video') || 
@@ -704,8 +706,8 @@ export default function SimpleContentViewer() {
                             )}
                             <div className="flex items-center justify-between">
                               <div className="text-gray-800 text-base font-medium flex-grow">
-                                {/* Remove any numbering from questions (including complex patterns like "Unit 18. Question" and "01 I A") */}
-                                {cleanLeadingPatterns(qa.question.replace(/^(\w+\s+)?\d+\.\s*/, ''))}
+                                {/* Apply our improved question text cleaning to remove codes and format properly */}
+                                {cleanQuestionText(removePrefixes(qa.question))}
                               </div>
                               {/* Only show edit button if user is admin or teacher */}
                               {(isAdminUser || user?.role === 'teacher') && (
@@ -724,8 +726,8 @@ export default function SimpleContentViewer() {
                               )}
                             </div>
                             <div className="mt-2 font-medium text-gray-900 text-base">
-                              {/* Remove any numbering from answers (including complex patterns) */}
-                              {cleanLeadingPatterns(qa.answer.replace(/^(\w+\s+)?\d+\.\s*/, ''))}
+                              {/* Apply our improved answer text cleaning to remove codes and format properly */}
+                              {cleanAnswerText(removePrefixes(qa.answer))}
                             </div>
                           </>
                         )}
@@ -845,7 +847,8 @@ export default function SimpleContentViewer() {
       <div className="w-full overflow-x-auto py-3 px-2 border-t border-gray-200 bg-gray-50">
         <div className="flex space-x-2 min-w-max">
           {materials.map((material, index) => {
-            const thumbnailPath = `/api/direct/${bookPath}/${unitPath}/assets/${encodeURIComponent(material.content)}`;
+            // Use our improved image path handling utility
+            const thumbnailPath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
             const isVideo = material.content.toLowerCase().includes('video') || 
                           material.content.toLowerCase().endsWith('.mp4');
             
