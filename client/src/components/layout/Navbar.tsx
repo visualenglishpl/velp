@@ -37,7 +37,7 @@ const Navbar = () => {
   
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between h-16">
           {/* Logo and Brand */}
           <div className="flex items-center">
@@ -46,31 +46,28 @@ const Navbar = () => {
                 <img 
                   src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
                   alt="Visual English Logo" 
-                  className="h-8 mr-3"
+                  className="h-8 mr-2"
                 />
-                <span className="text-gray-700 font-medium text-lg tracking-wide">VISUAL ENGLISH</span>
+                <span className="text-gray-700 font-medium text-lg">VISUAL ENGLISH</span>
               </div>
             </Link>
           </div>
           
-          {/* Desktop Navigation Links */}
-          <div className="flex items-center space-x-6">
-            <Link href="/">
-              <span className="text-gray-600 hover:text-teal-600 text-sm">Home</span>
-            </Link>
-            <Link href="/method">
-              <span className="text-gray-600 hover:text-teal-600 text-sm">Method</span>
-            </Link>
-            <Link href="/about">
-              <span className="text-gray-600 hover:text-teal-600 text-sm">About Us</span>
-            </Link>
-            <a href="/#books" className="text-gray-600 hover:text-teal-600 text-sm">Books</a>
-            <a href="/#pricing" className="text-gray-600 hover:text-teal-600 text-sm">Pricing</a>
-            <Link href="/contact">
-              <span className="text-gray-600 hover:text-teal-600 text-sm">Contact</span>
-            </Link>
+          {/* Main Navigation Links - Simplified */}
+          <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4 mr-2">
+              <Link href="/">
+                <span className="text-gray-600 hover:text-teal-600 text-sm">Home</span>
+              </Link>
+              <Link href="/method">
+                <span className="text-gray-600 hover:text-teal-600 text-sm">Method</span>
+              </Link>
+              <a href="/#books" className="text-gray-600 hover:text-teal-600 text-sm">Books</a>
+              <a href="/#pricing" className="text-gray-600 hover:text-teal-600 text-sm">Pricing</a>
+            </div>
             
-            <Link href="/cart">
+            {/* Action Items */}
+            <Link href="/cart" className="mr-1">
               <div className="flex items-center text-gray-700 hover:text-teal-600 cursor-pointer relative">
                 <ShoppingCart size={20} />
                 {cartItemsCount > 0 && (
@@ -83,30 +80,8 @@ const Navbar = () => {
               </div>
             </Link>
             
-            {/* Language Selector - PL */}
-            <div className="text-gray-700 font-medium">
-              PL
-            </div>
-            
-            {/* Sign In Button */}
             <Link href="/login">
-              <span className="bg-purple-600 text-white hover:bg-purple-700 px-5 py-2 rounded text-sm font-medium flex items-center">
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  className="mr-1"
-                >
-                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                  <polyline points="10 17 15 12 10 7"></polyline>
-                  <line x1="15" y1="12" x2="3" y2="12"></line>
-                </svg>
+              <span className="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded text-sm font-medium">
                 Sign In
               </span>
             </Link>

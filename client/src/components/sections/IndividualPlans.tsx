@@ -70,13 +70,21 @@ const PricingPlans = () => {
 
   return (
     <div className="py-8 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-4 lg:gap-5 max-w-[1200px] mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold">Simple, Transparent Pricing</h2>
+          <p className="text-gray-600 mt-2">Choose the plan that works best for your teaching needs</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
           {plans.map((plan, index) => (
-            <div key={index} className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            <div 
+              key={index} 
+              className={`flex flex-col rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow ${plan.popular ? 'border-2 border-yellow-400 ring-2 ring-yellow-200 transform lg:scale-105' : 'border border-gray-200'}`}
+            >
               {/* Header - colored top bar */}
               <div 
-                className="text-white text-center py-4 relative"
+                className="text-white text-center py-3 relative"
                 style={{ backgroundColor: plan.color }}
               >
                 {plan.popular && (
@@ -84,50 +92,50 @@ const PricingPlans = () => {
                     MOST POPULAR
                   </div>
                 )}
-                <h3 className="text-xl font-semibold whitespace-pre-line">
-                  {plan.title}
+                <h3 className="text-lg font-semibold">
+                  {plan.title.replace('\n', ' ')}
                 </h3>
               </div>
               
+              {/* Pricing */}
+              <div className="py-4 bg-gray-50 text-center">
+                <div className="flex items-baseline justify-center">
+                  <span className="text-2xl font-bold">{plan.price}</span>
+                  {plan.priceDetail && (
+                    <span className="text-sm text-gray-600 ml-1">{plan.priceDetail}</span>
+                  )}
+                </div>
+                
+                {plan.yearlyPrice && (
+                  <div className="mt-1 text-sm text-gray-600">
+                    <div>
+                      Annual: <span className="font-medium">{plan.yearlyPrice}/yr</span>
+                      {plan.savings && <span className="ml-1 text-green-600 font-medium">({plan.savings})</span>}
+                    </div>
+                  </div>
+                )}
+              </div>
+              
               {/* Features */}
-              <div className="p-6 pt-8" style={{ minHeight: '220px' }}>
-                <ul className="space-y-4">
+              <div className="p-4 flex-grow bg-white">
+                <ul className="space-y-2">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start">
-                      <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-600 text-sm leading-5 ml-2">{feature}</span>
+                    <li key={i} className="flex items-start text-sm">
+                      <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700 ml-2">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               
-              {/* Pricing - colored bottom bar */}
-              <div 
-                className="mt-auto text-white text-center py-5"
-                style={{ backgroundColor: plan.color }}
-              >
-                <div className="flex flex-col items-center">
-                  <div className="flex items-baseline justify-center mb-1">
-                    <span className="text-3xl font-bold">{plan.price}</span>
-                    {plan.priceDetail && (
-                      <span className="text-sm font-medium ml-1">{plan.priceDetail}</span>
-                    )}
-                  </div>
-                  
-                  {plan.yearlyPrice && (
-                    <div className="mt-1">
-                      <div className="flex items-center justify-center gap-2">
-                        {plan.originalYearlyPrice && (
-                          <span className="text-sm line-through opacity-75">{plan.originalYearlyPrice}/yr</span>
-                        )}
-                        <span className="text-sm font-semibold">{plan.yearlyPrice}/yr</span>
-                      </div>
-                      <div className="bg-white text-sm text-green-600 rounded-full px-3 py-0.5 mt-2 inline-block font-medium">
-                        {plan.savings}
-                      </div>
-                    </div>
-                  )}
-                </div>
+              {/* CTA Button */}
+              <div className="p-4 text-center">
+                <a 
+                  href={plan.buttonLink}
+                  className="inline-flex justify-center w-full py-2 px-4 rounded bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium text-sm transition-colors"
+                >
+                  {plan.buttonText}
+                </a>
               </div>
             </div>
           ))}

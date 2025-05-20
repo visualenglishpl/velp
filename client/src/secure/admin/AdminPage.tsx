@@ -172,190 +172,153 @@ const AdminPage = () => {
         <title>Admin Dashboard | Visual English</title>
       </Helmet>
       
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
-            <div className="bg-blue-600 text-white py-4 px-8 rounded-full inline-block mb-4">
-              <h1 className="text-3xl font-bold">Visual English Admin</h1>
-            </div>
-            <p className="text-xl text-gray-600">
-              Manage your educational platform from one central location
-            </p>
+      <div className="min-h-screen bg-gray-50 py-8 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg inline-block">
+              Visual English Admin Dashboard
+            </h1>
           </div>
 
-          {/* Content Management Section */}
-          <div className="mb-8">
-            <div className="flex items-center mb-4 bg-pink-50 p-2 rounded-md">
-              <BookOpen className="h-6 w-6 text-pink-600 mr-2" />
-              <h2 className="text-xl font-semibold text-pink-800">Content Management</h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              {contentManagement.map((feature: any, index: number) => (
-                <Card 
-                  key={index} 
-                  className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl"
-                >
-                  <CardHeader 
-                    className="p-0 rounded-t-xl"
-                    style={{ backgroundColor: feature.color }}
-                  >
-                    <div className="flex flex-col items-center justify-center py-3 w-full px-4">
-                      <div className="mb-2 flex items-center justify-center">
-                        {feature.icon}
+          {/* Main Layout - Simple 2-column grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Content Management Section */}
+            <div className="bg-white p-5 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <BookOpen className="h-5 w-5 text-pink-600 mr-2" />
+                <h2 className="text-lg font-semibold text-gray-800">Content Management</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-3">
+                {contentManagement.map((feature, index) => (
+                  <Link key={index} href={feature.link}>
+                    <div 
+                      className="p-3 rounded-lg flex items-center hover:bg-gray-50 transition-colors border border-gray-100"
+                      style={{ borderLeft: `4px solid ${feature.color}` }}
+                    >
+                      <div 
+                        className="w-10 h-10 rounded-full flex items-center justify-center mr-3 flex-shrink-0"
+                        style={{ backgroundColor: feature.color }}
+                      >
+                        {React.cloneElement(feature.icon as React.ReactElement, { size: 20 })}
                       </div>
-                      <div className="flex items-center justify-center">
-                        <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
+                      <div>
+                        <h3 className="font-medium text-gray-800">{feature.title}</h3>
+                        <p className="text-xs text-gray-500">{feature.description}</p>
                       </div>
                     </div>
-                  </CardHeader>
-
-                  <CardFooter className="pb-3 pt-3 flex justify-center">
-                    <Link href={feature.link}>
-                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
-                        Manage
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
             
             {/* User Management Section */}
-            <div className="flex items-center mb-4 bg-blue-50 p-2 rounded-md">
-              <Users className="h-6 w-6 text-blue-600 mr-2" />
-              <h2 className="text-xl font-semibold text-blue-800">User Management</h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              {userManagement.map((feature: any, index: number) => (
-                <Card 
-                  key={index} 
-                  className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl"
-                >
-                  <CardHeader 
-                    className="p-0 rounded-t-xl"
-                    style={{ backgroundColor: feature.color }}
-                  >
-                    <div className="flex flex-col items-center justify-center py-3 w-full px-4">
-                      <div className="mb-2 flex items-center justify-center">
-                        {feature.icon}
+            <div className="bg-white p-5 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <Users className="h-5 w-5 text-blue-600 mr-2" />
+                <h2 className="text-lg font-semibold text-gray-800">User Management</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-3">
+                {userManagement.map((feature, index) => (
+                  <Link key={index} href={feature.link}>
+                    <div 
+                      className="p-3 rounded-lg flex items-center hover:bg-gray-50 transition-colors border border-gray-100"
+                      style={{ borderLeft: `4px solid ${feature.color}` }}
+                    >
+                      <div 
+                        className="w-10 h-10 rounded-full flex items-center justify-center mr-3 flex-shrink-0"
+                        style={{ backgroundColor: feature.color }}
+                      >
+                        {React.cloneElement(feature.icon as React.ReactElement, { size: 20 })}
                       </div>
-                      <div className="flex items-center justify-center">
-                        <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
+                      <div>
+                        <h3 className="font-medium text-gray-800">{feature.title}</h3>
+                        <p className="text-xs text-gray-500">{feature.description}</p>
                       </div>
                     </div>
-                  </CardHeader>
-
-                  <CardFooter className="pb-3 pt-3 flex justify-center">
-                    <Link href={feature.link}>
-                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
-                        Manage
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
             
             {/* Business Management Section */}
-            <div className="flex items-center mb-4 bg-green-50 p-2 rounded-md">
-              <Store className="h-6 w-6 text-green-600 mr-2" />
-              <h2 className="text-xl font-semibold text-green-800">Business Management</h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              {businessManagement.map((feature: any, index: number) => (
-                <Card 
-                  key={index} 
-                  className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl"
-                >
-                  <CardHeader 
-                    className="p-0 rounded-t-xl"
-                    style={{ backgroundColor: feature.color }}
-                  >
-                    <div className="flex flex-col items-center justify-center py-3 w-full px-4">
-                      <div className="mb-2 flex items-center justify-center">
-                        {feature.icon}
+            <div className="bg-white p-5 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <Store className="h-5 w-5 text-green-600 mr-2" />
+                <h2 className="text-lg font-semibold text-gray-800">Business Management</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-3">
+                {businessManagement.map((feature, index) => (
+                  <Link key={index} href={feature.link}>
+                    <div 
+                      className="p-3 rounded-lg flex items-center hover:bg-gray-50 transition-colors border border-gray-100"
+                      style={{ borderLeft: `4px solid ${feature.color}` }}
+                    >
+                      <div 
+                        className="w-10 h-10 rounded-full flex items-center justify-center mr-3 flex-shrink-0"
+                        style={{ backgroundColor: feature.color }}
+                      >
+                        {React.cloneElement(feature.icon as React.ReactElement, { size: 20 })}
                       </div>
-                      <div className="flex items-center justify-center">
-                        <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
+                      <div>
+                        <h3 className="font-medium text-gray-800">{feature.title}</h3>
+                        <p className="text-xs text-gray-500">{feature.description}</p>
                       </div>
                     </div>
-                  </CardHeader>
-
-                  <CardFooter className="pb-3 pt-3 flex justify-center">
-                    <Link href={feature.link}>
-                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
-                        Manage
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
             
             {/* System Settings Section */}
-            <div className="flex items-center mb-4 bg-teal-50 p-2 rounded-md">
-              <Settings className="h-6 w-6 text-teal-600 mr-2" />
-              <h2 className="text-xl font-semibold text-teal-800">System Settings</h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {systemSettings.map((feature: any, index: number) => (
-                <Card 
-                  key={index} 
-                  className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow rounded-xl"
-                >
-                  <CardHeader 
-                    className="p-0 rounded-t-xl"
-                    style={{ backgroundColor: feature.color }}
-                  >
-                    <div className="flex flex-col items-center justify-center py-3 w-full px-4">
-                      <div className="mb-2 flex items-center justify-center">
-                        {feature.icon}
+            <div className="bg-white p-5 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <Settings className="h-5 w-5 text-teal-600 mr-2" />
+                <h2 className="text-lg font-semibold text-gray-800">System Settings</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-3">
+                {systemSettings.map((feature, index) => (
+                  <Link key={index} href={feature.link}>
+                    <div 
+                      className="p-3 rounded-lg flex items-center hover:bg-gray-50 transition-colors border border-gray-100"
+                      style={{ borderLeft: `4px solid ${feature.color}` }}
+                    >
+                      <div 
+                        className="w-10 h-10 rounded-full flex items-center justify-center mr-3 flex-shrink-0"
+                        style={{ backgroundColor: feature.color }}
+                      >
+                        {React.cloneElement(feature.icon as React.ReactElement, { size: 20 })}
                       </div>
-                      <div className="flex items-center justify-center">
-                        <h2 className="text-base font-bold text-white text-center w-full truncate">{feature.title}</h2>
+                      <div>
+                        <h3 className="font-medium text-gray-800">{feature.title}</h3>
+                        <p className="text-xs text-gray-500">{feature.description}</p>
                       </div>
                     </div>
-                  </CardHeader>
-
-                  <CardFooter className="pb-3 pt-3 flex justify-center">
-                    <Link href={feature.link}>
-                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 w-20 text-xs font-medium">
-                        Manage
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
           
-          {/* Quick Access Links - simplified */}
-          <div className="mt-8 bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <svg className="h-5 w-5 text-indigo-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                <h3 className="text-lg font-medium text-gray-800">Quick Access</h3>
-              </div>
-              
-              <div className="flex space-x-3">
-                <Link href="/book/1/unit/1">
-                  <Button size="sm" variant="outline" className="border-indigo-200 text-indigo-700">
-                    Content Viewer
-                  </Button>
-                </Link>
-                
-                <Link href="/">
-                  <Button size="sm" variant="ghost" className="text-gray-600">
-                    Home
-                  </Button>
-                </Link>
-              </div>
+          {/* Quick Access Footer */}
+          <div className="mt-6 bg-white rounded-lg p-3 shadow-sm border border-gray-100 flex items-center justify-between">
+            <div className="text-sm text-gray-500">
+              Welcome, Admin
+            </div>
+            <div className="flex space-x-2">
+              <Link href="/book/1/unit/1">
+                <Button size="sm" variant="outline" className="text-xs">
+                  Content Viewer
+                </Button>
+              </Link>
+              <Link href="/">
+                <Button size="sm" variant="ghost" className="text-xs">
+                  Home
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -433,7 +433,7 @@ const SiteSettingsPage: React.FC = () => {
             Export
           </Button>
           <Button 
-            variant="outline"
+            variant={showPreview ? "secondary" : "outline"}
             size="sm" 
             className="flex items-center gap-1.5"
             onClick={() => setShowPreview(!showPreview)}
@@ -447,9 +447,9 @@ const SiteSettingsPage: React.FC = () => {
       {showPreview && (
         <div className="mb-6">
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Live Preview</CardTitle>
-              <CardDescription>Preview of your site with current settings</CardDescription>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">Site Preview</CardTitle>
+              <CardDescription>See how your settings affect the site appearance</CardDescription>
             </CardHeader>
             <CardContent>
               <SitePreview />
@@ -459,24 +459,24 @@ const SiteSettingsPage: React.FC = () => {
       )}
       
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="mb-6 w-full justify-start">
-          <TabsTrigger value="general" className="flex items-center">
+        <TabsList className="mb-4 justify-start bg-white border-b p-0">
+          <TabsTrigger value="general" className="flex items-center rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-white">
             <Settings className="mr-2 h-4 w-4" />
             General
           </TabsTrigger>
-          <TabsTrigger value="language" className="flex items-center">
+          <TabsTrigger value="language" className="flex items-center rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-white">
             <Globe className="mr-2 h-4 w-4" />
-            Language & Region
+            Region
           </TabsTrigger>
-          <TabsTrigger value="pricing" className="flex items-center">
+          <TabsTrigger value="pricing" className="flex items-center rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-white">
             <CreditCard className="mr-2 h-4 w-4" />
-            Pricing Plans
+            Plans
           </TabsTrigger>
-          <TabsTrigger value="notifications" className="flex items-center">
+          <TabsTrigger value="notifications" className="flex items-center rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-white">
             <BellRing className="mr-2 h-4 w-4" />
-            Notifications
+            Alerts
           </TabsTrigger>
-          <TabsTrigger value="security" className="flex items-center">
+          <TabsTrigger value="security" className="flex items-center rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-white">
             <Shield className="mr-2 h-4 w-4" />
             Security
           </TabsTrigger>
@@ -492,16 +492,36 @@ const SiteSettingsPage: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="name">Site Name</Label>
-                <Input 
-                  id="name" 
-                  name="name"
-                  value={siteSettings.name} 
-                  onChange={handleGeneralChange}
-                  placeholder="Visual English Learning Platform" 
-                />
-                <p className="text-sm text-gray-500">Displayed in headers, browser tab, emails</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Site Name</Label>
+                  <Input 
+                    id="name" 
+                    name="name"
+                    value={siteSettings.name} 
+                    onChange={handleGeneralChange}
+                    placeholder="Visual English Learning Platform" 
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="primary-color" className="flex items-center">
+                    <PaletteIcon className="h-4 w-4 mr-1" />
+                    Primary Color
+                  </Label>
+                  <div className="flex space-x-2 items-center">
+                    <div 
+                      className="h-6 w-6 rounded-full border"
+                      style={{ backgroundColor: siteSettings.primaryColor }}
+                    />
+                    <Input 
+                      id="primary-color" 
+                      name="primaryColor"
+                      value={siteSettings.primaryColor} 
+                      onChange={handleGeneralChange}
+                    />
+                  </div>
+                </div>
               </div>
               
               <div className="space-y-2">
@@ -512,9 +532,9 @@ const SiteSettingsPage: React.FC = () => {
                   value={siteSettings.description} 
                   onChange={handleGeneralChange}
                   placeholder="Interactive ESL learning platform for young minds" 
-                  rows={3}
+                  rows={2}
+                  className="resize-none"
                 />
-                <p className="text-sm text-gray-500">Meta description / used in dashboard subtitles</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
