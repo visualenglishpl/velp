@@ -138,7 +138,9 @@ function App() {
     currentPath.includes('/book-units/') ||
     currentPath.includes('/book/') ||
     currentPath.includes('/viewer') ||
-    currentPath.includes('/standalone-viewer');
+    currentPath.includes('/standalone-viewer') ||
+    currentPath.includes('/teacher-dashboard') ||
+    currentPath.includes('/teacher-quick-access');
 
   return (
     <div className="flex flex-col min-h-screen">
