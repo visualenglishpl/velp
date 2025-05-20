@@ -293,62 +293,143 @@ export default function TeacherDashboardPage() {
                 </div>
               </div>
               
-              {/* Recent activity & Upcoming Classes */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upcoming Classes</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <ul className="divide-y divide-gray-200">
-                      {upcomingClasses.map(cls => (
-                        <li key={cls.id} className="p-4 hover:bg-gray-50">
-                          <div className="flex justify-between">
-                            <div>
-                              <p className="font-medium text-gray-800">{cls.className}</p>
-                              <p className="text-sm text-gray-500">
-                                Book {cls.bookId}, Unit {cls.unitId}
-                              </p>
-                            </div>
-                            <div className="text-right">
-                              <p className="text-sm font-medium text-blue-600">{cls.date}</p>
-                              <p className="text-sm text-gray-500">{cls.time}</p>
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Recent Resources</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <ul className="divide-y divide-gray-200">
-                      {recentResources.map(resource => (
-                        <li key={resource.id} className="p-4 hover:bg-gray-50">
-                          <div className="flex justify-between">
-                            <div>
-                              <p className="font-medium text-gray-800">{resource.title}</p>
-                              <p className="text-sm text-gray-500">
-                                Book {resource.bookId}, Unit {resource.unitId}
-                              </p>
-                            </div>
-                            <Badge variant={
-                              resource.type === 'video' ? 'default' : 
-                              resource.type === 'game' ? 'secondary' : 'outline'
-                            }>
-                              {resource.type}
-                            </Badge>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
+              {/* Purchased Books & Progress */}
+              <div>
+                <h2 className="text-xl font-semibold mb-4">Purchased Books & Progress</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
+                  {/* Book 1 - Full Access */}
+                  <Card className="overflow-hidden">
+                    <div className="h-4 bg-yellow-400"></div>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="flex justify-between items-center">
+                        <span>Book 1</span>
+                        <Badge className="bg-green-600">Full Access</Badge>
+                      </CardTitle>
+                      <CardDescription>Elementary Level</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-2">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium">Progress: 72%</span>
+                          <span className="text-sm text-gray-500">13/18 units</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div className="bg-yellow-400 h-2 rounded-full" style={{ width: '72%' }}></div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between mt-4">
+                        <Link href="/teacher/book/1">
+                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                            Manage Content
+                          </button>
+                        </Link>
+                        <Link href="/teacher/book/1/progress">
+                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                            View Progress
+                          </button>
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  {/* Book 2 - Full Access */}
+                  <Card className="overflow-hidden">
+                    <div className="h-4 bg-purple-600"></div>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="flex justify-between items-center">
+                        <span>Book 2</span>
+                        <Badge className="bg-green-600">Full Access</Badge>
+                      </CardTitle>
+                      <CardDescription>Pre-Intermediate Level</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-2">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium">Progress: 44%</span>
+                          <span className="text-sm text-gray-500">8/18 units</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div className="bg-purple-600 h-2 rounded-full" style={{ width: '44%' }}></div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between mt-4">
+                        <Link href="/teacher/book/2">
+                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                            Manage Content
+                          </button>
+                        </Link>
+                        <Link href="/teacher/book/2/progress">
+                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                            View Progress
+                          </button>
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  {/* Book 4 - Limited Access */}
+                  <Card className="overflow-hidden border-dashed">
+                    <div className="h-4 bg-blue-500"></div>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="flex justify-between items-center">
+                        <span>Book 4</span>
+                        <Badge variant="outline" className="border-amber-500 text-amber-600">Units 1-5 only</Badge>
+                      </CardTitle>
+                      <CardDescription>Intermediate Level</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-2">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium">Progress: 80%</span>
+                          <span className="text-sm text-gray-500">4/5 units</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div className="bg-blue-500 h-2 rounded-full" style={{ width: '80%' }}></div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between mt-4">
+                        <Link href="/teacher/book/4">
+                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                            Manage Content
+                          </button>
+                        </Link>
+                        <Link href="/checkout">
+                          <button className="text-sm text-amber-600 hover:text-amber-800 font-medium">
+                            Upgrade Access
+                          </button>
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
+              
+              {/* Upcoming Classes - Keep this but make it single column */}
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle>Upcoming Classes</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <ul className="divide-y divide-gray-200">
+                    {upcomingClasses.map(cls => (
+                      <li key={cls.id} className="p-4 hover:bg-gray-50">
+                        <div className="flex justify-between">
+                          <div>
+                            <p className="font-medium text-gray-800">{cls.className}</p>
+                            <p className="text-sm text-gray-500">
+                              Book {cls.bookId}, Unit {cls.unitId}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-medium text-blue-600">{cls.date}</p>
+                            <p className="text-sm text-gray-500">{cls.time}</p>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
             </TabsContent>
             
             {/* Classes Tab */}
