@@ -150,8 +150,8 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Pricing Section - Adjusted spacing */}
-      <section id="pricing" className="mt-12 pb-8">
+      {/* Pricing Section - Reduced spacing */}
+      <section id="pricing" className="mt-2 pb-8">
         <PricingPlans />
       </section>
       
