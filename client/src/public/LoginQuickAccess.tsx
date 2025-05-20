@@ -44,15 +44,6 @@ const LoginQuickAccess = () => {
               Admin Login
             </div>
           </Link>
-          
-          <Link href="/login">
-            <div className="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 shadow-sm transition-colors cursor-pointer">
-              <svg className="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-              </svg>
-              Standard Login
-            </div>
-          </Link>
         </div>
         
         <div className="text-center mt-8">
