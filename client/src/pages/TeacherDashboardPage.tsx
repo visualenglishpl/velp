@@ -13,7 +13,8 @@ import {
   BarChart3,
   Settings,
   Calendar,
-  X
+  X,
+  Trash2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -56,6 +57,10 @@ export default function TeacherDashboardPage() {
   const [newClassLocation, setNewClassLocation] = useState('');
   const [newClassTime, setNewClassTime] = useState('');
   const [selectedBook, setSelectedBook] = useState('');
+  
+  // Confirmation dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [classToDelete, setClassToDelete] = useState<number | null>(null);
   
   // Sample data for teacher dashboard
   const [classes, setClasses] = useState<StudentClass[]>([
@@ -153,7 +158,7 @@ export default function TeacherDashboardPage() {
     }
     
     // Create a new class with the form data
-    const newClass = {
+    const newClass: StudentClass = {
       id: classes.length + 1,
       name: newClassName,
       studentsCount: 0,
@@ -172,6 +177,26 @@ export default function TeacherDashboardPage() {
     toast({
       title: "Class created",
       description: `Successfully created class "${newClassName}"`,
+    });
+  };
+  
+  // Handle deleting a class
+  const handleDeleteClass = (id: number) => {
+    setClassToDelete(id);
+    setIsDeleteDialogOpen(true);
+  };
+  
+  // Confirm class deletion
+  const confirmDeleteClass = () => {
+    if (classToDelete === null) return;
+    
+    setClasses(classes.filter(cls => cls.id !== classToDelete));
+    setIsDeleteDialogOpen(false);
+    setClassToDelete(null);
+    
+    toast({
+      title: "Class deleted",
+      description: "The class has been removed from your dashboard",
     });
   };
   
@@ -385,56 +410,70 @@ export default function TeacherDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {/* Class 1 */}
-                    <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
-                      <div className="flex justify-between">
-                        <div>
-                          <h4 className="font-medium">English Beginners A</h4>
-                          <div className="text-sm text-gray-500 mt-1 space-y-1">
-                            <div><span className="font-medium">Location:</span> Room 101, Main Building</div>
-                            <div><span className="font-medium">Time:</span> Mondays, 14:30-15:30</div>
-                            <div><span className="font-medium">Students:</span> 12</div>
-                            <div><span className="font-medium">Current:</span> Book 1, Unit 13 (Colors)</div>
-                            <div><span className="font-medium">Last lesson:</span> Stopped at slide 15 - Color identification</div>
+                    {/* Display the list of classes */}
+                    {classes.map(cls => (
+                      <div key={cls.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                        <div className="flex justify-between">
+                          <div>
+                            <div className="flex items-center">
+                              <h4 className="font-medium">{cls.name}</h4>
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="h-8 w-8 ml-2 text-gray-400 hover:text-red-500 hover:bg-red-50"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteClass(cls.id);
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                            <div className="text-sm text-gray-500 mt-1 space-y-1">
+                              {cls.id === 1 && (
+                                <>
+                                  <div><span className="font-medium">Location:</span> Room 101, Main Building</div>
+                                  <div><span className="font-medium">Time:</span> Mondays, 14:30-15:30</div>
+                                  <div><span className="font-medium">Students:</span> {cls.studentsCount}</div>
+                                  <div><span className="font-medium">Current:</span> Book 1, Unit 13 (Colors)</div>
+                                  <div><span className="font-medium">Last lesson:</span> Stopped at slide 15 - Color identification</div>
+                                </>
+                              )}
+                              {cls.id === 2 && (
+                                <>
+                                  <div><span className="font-medium">Location:</span> Room 203, Language Center</div>
+                                  <div><span className="font-medium">Time:</span> Wednesdays, 10:15-11:30</div>
+                                  <div><span className="font-medium">Students:</span> {cls.studentsCount}</div>
+                                  <div><span className="font-medium">Current:</span> Book 2, Unit 8 (Shopping)</div>
+                                  <div><span className="font-medium">Last lesson:</span> Stopped at slide 23 - Price expressions</div>
+                                </>
+                              )}
+                              {cls.id === 3 && (
+                                <>
+                                  <div><span className="font-medium">Location:</span> Room 315, Online (Zoom)</div>
+                                  <div><span className="font-medium">Time:</span> Fridays, 15:45-17:00</div>
+                                  <div><span className="font-medium">Students:</span> {cls.studentsCount}</div>
+                                  <div><span className="font-medium">Current:</span> Book 4, Unit 3 (Home Sweet Home)</div>
+                                  <div><span className="font-medium">Last lesson:</span> Stopped at slide 18 - Types of houses</div>
+                                </>
+                              )}
+                              {cls.id > 3 && (
+                                <>
+                                  <div><span className="font-medium">Location:</span> {newClassLocation || "Not assigned"}</div>
+                                  <div><span className="font-medium">Time:</span> {newClassTime || "Not scheduled"}</div>
+                                  <div><span className="font-medium">Students:</span> {cls.studentsCount}</div>
+                                  <div><span className="font-medium">Current:</span> Book {selectedBook || "Not assigned"}, Unit 1</div>
+                                  <div><span className="font-medium">Last lesson:</span> Starting new class</div>
+                                </>
+                              )}
+                            </div>
                           </div>
+                          <Badge className={`h-fit ${cls.id === 1 ? 'bg-yellow-400 text-black' : cls.id === 2 ? 'bg-purple-600' : 'bg-blue-500'}`}>
+                            {cls.id === 1 ? 'Book 1' : cls.id === 2 ? 'Book 2' : cls.id === 3 ? 'Book 4' : `Book ${selectedBook || '?'}`}
+                          </Badge>
                         </div>
-                        <Badge className="bg-yellow-400 text-black h-fit">Book 1</Badge>
                       </div>
-                    </div>
-                    
-                    {/* Class 2 */}
-                    <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
-                      <div className="flex justify-between">
-                        <div>
-                          <h4 className="font-medium">English Intermediate B</h4>
-                          <div className="text-sm text-gray-500 mt-1 space-y-1">
-                            <div><span className="font-medium">Location:</span> Room 203, Language Center</div>
-                            <div><span className="font-medium">Time:</span> Wednesdays, 10:15-11:30</div>
-                            <div><span className="font-medium">Students:</span> 8</div>
-                            <div><span className="font-medium">Current:</span> Book 2, Unit 8 (Shopping)</div>
-                            <div><span className="font-medium">Last lesson:</span> Stopped at slide 23 - Price expressions</div>
-                          </div>
-                        </div>
-                        <Badge className="bg-purple-600 h-fit">Book 2</Badge>
-                      </div>
-                    </div>
-                    
-                    {/* Class 3 */}
-                    <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
-                      <div className="flex justify-between">
-                        <div>
-                          <h4 className="font-medium">English Advanced C</h4>
-                          <div className="text-sm text-gray-500 mt-1 space-y-1">
-                            <div><span className="font-medium">Location:</span> Room 315, Online (Zoom)</div>
-                            <div><span className="font-medium">Time:</span> Fridays, 15:45-17:00</div>
-                            <div><span className="font-medium">Students:</span> 6</div>
-                            <div><span className="font-medium">Current:</span> Book 4, Unit 3 (Home Sweet Home)</div>
-                            <div><span className="font-medium">Last lesson:</span> Stopped at slide 18 - Types of houses</div>
-                          </div>
-                        </div>
-                        <Badge className="bg-blue-500 h-fit">Book 4</Badge>
-                      </div>
-                    </div>
+                    ))}
                     
                     {/* Add new class button */}
                     <div className="mt-4">
@@ -501,6 +540,26 @@ export default function TeacherDashboardPage() {
             
 
           </Tabs>
+          
+          {/* Delete Class Confirmation Dialog */}
+          <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Delete Class</DialogTitle>
+                <DialogDescription>
+                  Are you sure you want to delete this class? This action cannot be undone.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="mt-4">
+                <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button variant="destructive" onClick={confirmDeleteClass}>
+                  Delete
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
           
           {/* Create Class Dialog */}
           <Dialog open={isCreateClassDialogOpen} onOpenChange={setIsCreateClassDialogOpen}>
