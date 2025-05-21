@@ -12,13 +12,18 @@ import {
   FileText,
   BarChart3,
   Settings,
-  Calendar
+  Calendar,
+  X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // Types
 interface StudentClass {
@@ -44,6 +49,13 @@ export default function TeacherDashboardPage() {
   // Authentication state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // New class dialog state
+  const [isCreateClassDialogOpen, setIsCreateClassDialogOpen] = useState(false);
+  const [newClassName, setNewClassName] = useState('');
+  const [newClassLocation, setNewClassLocation] = useState('');
+  const [newClassTime, setNewClassTime] = useState('');
+  const [selectedBook, setSelectedBook] = useState('');
   
   // Sample data for teacher dashboard
   const [classes, setClasses] = useState<StudentClass[]>([
@@ -127,6 +139,40 @@ export default function TeacherDashboardPage() {
   // Navigate to profile settings
   const navigateToSettings = () => {
     navigate('/teacher/settings');
+  };
+  
+  // Handle creating a new class
+  const handleCreateClass = () => {
+    if (!newClassName || !newClassLocation || !newClassTime || !selectedBook) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in all the required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Create a new class with the form data
+    const newClass = {
+      id: classes.length + 1,
+      name: newClassName,
+      studentsCount: 0,
+      recentActivity: 'Just created'
+    };
+    
+    setClasses([...classes, newClass]);
+    
+    // Reset form and close dialog
+    setNewClassName('');
+    setNewClassLocation('');
+    setNewClassTime('');
+    setSelectedBook('');
+    setIsCreateClassDialogOpen(false);
+    
+    toast({
+      title: "Class created",
+      description: `Successfully created class "${newClassName}"`,
+    });
   };
   
   // If not authenticated, show loading state (will redirect via useEffect)
@@ -392,12 +438,7 @@ export default function TeacherDashboardPage() {
                     
                     {/* Add new class button */}
                     <div className="mt-4">
-                      <Button onClick={() => {
-                        toast({
-                          title: "Create New Class",
-                          description: "The class creation feature will be available soon.",
-                        });
-                      }}>
+                      <Button onClick={() => setIsCreateClassDialogOpen(true)}>
                         <Users className="mr-2 h-4 w-4" />
                         Create New Class
                       </Button>
@@ -460,6 +501,81 @@ export default function TeacherDashboardPage() {
             
 
           </Tabs>
+          
+          {/* Create Class Dialog */}
+          <Dialog open={isCreateClassDialogOpen} onOpenChange={setIsCreateClassDialogOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Create New Class</DialogTitle>
+                <DialogDescription>
+                  Enter the details for your new class
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="className" className="text-right">
+                    Class Name
+                  </Label>
+                  <Input
+                    id="className"
+                    value={newClassName}
+                    onChange={(e) => setNewClassName(e.target.value)}
+                    className="col-span-3"
+                    placeholder="e.g., English Beginners A"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="location" className="text-right">
+                    Location
+                  </Label>
+                  <Input
+                    id="location"
+                    value={newClassLocation}
+                    onChange={(e) => setNewClassLocation(e.target.value)}
+                    className="col-span-3"
+                    placeholder="e.g., Room 101, Main Building"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="time" className="text-right">
+                    Time
+                  </Label>
+                  <Input
+                    id="time"
+                    value={newClassTime}
+                    onChange={(e) => setNewClassTime(e.target.value)}
+                    className="col-span-3"
+                    placeholder="e.g., Mondays, 14:30-15:30"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="book" className="text-right">
+                    Book
+                  </Label>
+                  <Select value={selectedBook} onValueChange={setSelectedBook}>
+                    <SelectTrigger className="col-span-3">
+                      <SelectValue placeholder="Select a book" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Book 1</SelectItem>
+                      <SelectItem value="2">Book 2</SelectItem>
+                      <SelectItem value="3">Book 3</SelectItem>
+                      <SelectItem value="4">Book 4</SelectItem>
+                      <SelectItem value="5">Book 5</SelectItem>
+                      <SelectItem value="6">Book 6</SelectItem>
+                      <SelectItem value="7">Book 7</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsCreateClassDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleCreateClass}>Create Class</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
