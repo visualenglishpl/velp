@@ -58,19 +58,43 @@ export function findPatternMatch(filename: string, unitId: string = ''): Pattern
     // Handle unitId which might include "unit" prefix
     const normalizedUnitId = unitId.replace(/^unit/i, '');
     
-    // Book 1, Unit 2 - special handling for school objects
-    if (normalizedUnitId === '2' && pattern.category === 'school-objects') {
+    // Category-specific mappings for units
+    const unitCategoryMap: Record<string, string[]> = {
+      '1': ['greetings', 'daily-routine'],                // Unit 1 - Time of day greetings
+      '2': ['school-objects'],                           // Unit 2 - School objects
+      '3': ['fruits', 'vegetables'],                     // Unit 3 - Fruits and vegetables
+      '4': ['colors'],                                   // Unit 4 - Colors
+      '5': ['family'],                                   // Unit 5 - Family
+      '6': ['favorite-color'],                           // Unit 6 - My favorite color
+      '7': ['animals'],                                  // Unit 7 - Animals
+      '8': ['toys', 'plurals'],                          // Unit 8 - Toys
+      '9': ['clothes'],                                  // Unit 9 - Clothes
+      '10': ['food'],                                    // Unit 10 - Food
+      '11': ['home', 'rooms', 'furniture'],              // Unit 11 - My home
+      '12': ['daily-activities', 'routine'],             // Unit 12 - Daily activities
+      '13': ['weather'],                                 // Unit 13 - Weather
+      '14': ['sports', 'hobbies'],                       // Unit 14 - Sports and hobbies
+      '15': ['places', 'prepositions'],                  // Unit 15 - Places
+      '16': ['vehicles', 'transportation'],              // Unit 16 - Vehicles
+      '17': ['world', 'countries'],                      // Unit 17 - Around the world
+      '18': ['review']                                   // Unit 18 - Review
+    };
+    
+    // Check if the pattern's category belongs to the current unit
+    if (unitCategoryMap[normalizedUnitId] && 
+        unitCategoryMap[normalizedUnitId].includes(pattern.category)) {
       return true;
     }
     
-    // Book 1, Unit 3 - special handling for fruits and vegetables
-    if (normalizedUnitId === '3' && (pattern.category === 'fruits' || pattern.category === 'vegetables')) {
-      return true;
-    }
-    
-    // Unit prefix matching (e.g., unit2-pens)
+    // Unit prefix matching in pattern category or collection id
     if (pattern.category.includes(`unit${normalizedUnitId}`) || 
         pattern.category.includes(`book1-unit${normalizedUnitId}`)) {
+      return true;
+    }
+    
+    // Collection ID matching for book1-unitX patterns
+    if ('id' in pattern && 
+        pattern.id.includes(`book1-unit${normalizedUnitId}`)) {
       return true;
     }
     
@@ -79,22 +103,50 @@ export function findPatternMatch(filename: string, unitId: string = ''): Pattern
       return true;
     }
     
+    // Patterns with unitId tags matching the current unit
+    const unitTagsMatch = (collection: PatternCollection) => {
+      return collection.id.includes(`book1-unit${normalizedUnitId}`) || 
+             collection.id.includes(`unit${normalizedUnitId}`);
+    };
+    
     // By default, don't apply unit-specific patterns to other units
     return false;
   };
   
+  // Enable debug mode (set to true for verbose logging)
+  const debug = false;
+  
+  // Debug logging helper
+  const logDebug = (message: string) => {
+    if (debug) {
+      console.log(`[PATTERN SYSTEM] ${message}`);
+    }
+  };
+  
+  logDebug(`Finding pattern match for: "${filename}" with unitId: "${unitId}"`);
+  
   // Search through all collections and patterns for a match
   for (const collection of registeredCollections) {
+    logDebug(`Checking collection: ${collection.id}`);
+    
     for (const pattern of collection.patterns) {
-      if (!shouldApplyPattern(pattern)) continue;
+      if (!shouldApplyPattern(pattern)) {
+        logDebug(`  Skipping pattern: ${pattern.id} - not applicable to unit ${unitId}`);
+        continue;
+      }
+      
+      logDebug(`  Testing pattern: ${pattern.id} with regex: ${pattern.regex}`);
       
       if (pattern.regex.test(cleanedFilename)) {
+        logDebug(`  ✅ MATCH FOUND! Pattern ${pattern.id} matched filename`);
+        
         // Handle direct patterns
         if ('question' in pattern && 'answer' in pattern) {
           return {
             question: pattern.question,
             answer: pattern.answer,
-            category: pattern.category
+            category: pattern.category,
+            source: `pattern-${collection.id}`
           };
         }
         
@@ -104,9 +156,14 @@ export function findPatternMatch(filename: string, unitId: string = ''): Pattern
           // This would extract values from regex groups and substitute them in templates
           console.warn('Template pattern matching not yet implemented');
         }
+      } else {
+        logDebug(`  ❌ No match for pattern: ${pattern.id}`);
       }
     }
   }
+  
+  logDebug(`No matching pattern found for: "${filename}"`);
+  
   
   return null;
 }
