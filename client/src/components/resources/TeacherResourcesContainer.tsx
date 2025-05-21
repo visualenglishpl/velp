@@ -223,12 +223,10 @@ export function TeacherResourcesContainer({
               <Gamepad2 className="h-4 w-4" />
               <span>Games</span>
             </TabsTrigger>
-            {bookId === '1' && unitId === '1' && (
-              <TabsTrigger value="pdfs" className="flex items-center gap-1">
-                <FileIcon className="h-4 w-4" />
-                <span>PDFs</span>
-              </TabsTrigger>
-            )}
+            <TabsTrigger value="pdfs" className="flex items-center gap-1">
+              <FileIcon className="h-4 w-4" />
+              <span>PDFs</span>
+            </TabsTrigger>
             <TabsTrigger value="lessons" className="flex items-center gap-1">
               <FileText className="h-4 w-4" />
               <span>Lessons</span>
@@ -239,10 +237,6 @@ export function TeacherResourcesContainer({
           <TabsContent value="videos">
             <ResourceList
               resources={videoResources}
-              onSearch={setSearchQuery}
-              onFilterByType={setResourceTypeFilter}
-              selectedType="video"
-              searchQuery={filter.searchQuery}
               isLoading={isLoading}
               readOnly={readOnly}
               onAddResource={enableEditing ? () => handleAddResource('video') : undefined}
@@ -256,10 +250,6 @@ export function TeacherResourcesContainer({
           <TabsContent value="games">
             <ResourceList
               resources={gameResources}
-              onSearch={setSearchQuery}
-              onFilterByType={setResourceTypeFilter}
-              selectedType="game"
-              searchQuery={filter.searchQuery}
               isLoading={isLoading}
               readOnly={readOnly}
               onAddResource={enableEditing ? () => handleAddResource('game') : undefined}
@@ -273,10 +263,6 @@ export function TeacherResourcesContainer({
           <TabsContent value="pdfs">
             <ResourceList
               resources={pdfResources}
-              onSearch={setSearchQuery}
-              onFilterByType={setResourceTypeFilter}
-              selectedType="pdf"
-              searchQuery={filter.searchQuery}
               isLoading={isLoading}
               readOnly={readOnly}
               onEditResource={enableEditing ? handleEditResource : undefined}
@@ -287,7 +273,7 @@ export function TeacherResourcesContainer({
           
           {/* Lessons Tab - Side by Side Layout */}
           <TabsContent value="lessons">
-            <div className="space-y-4 mt-4">
+            <div className="space-y-4">
               {/* Side by Side Lesson Plans */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Green Lesson Plan on Left */}
