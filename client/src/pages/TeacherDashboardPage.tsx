@@ -64,6 +64,7 @@ export default function TeacherDashboardPage() {
   
   // Book filtering state
   const [bookFilterType, setBookFilterType] = useState('all'); // all, full-access, limited-access
+  const [searchQuery, setSearchQuery] = useState('');
   
   // Favorites state
   const [favorites, setFavorites] = useState([
@@ -245,6 +246,16 @@ export default function TeacherDashboardPage() {
     });
   };
   
+  // Remove a favorite
+  const handleRemoveFavorite = (id: number) => {
+    setFavorites(favorites.filter(fav => fav.id !== id));
+    
+    toast({
+      title: "Favorite removed",
+      description: "The unit has been removed from your favorites",
+    });
+  };
+  
   // If not authenticated, show loading state (will redirect via useEffect)
   if (!isAuthenticated || isLoading) {
     return (
@@ -344,29 +355,53 @@ export default function TeacherDashboardPage() {
               
               {/* Quick Access Section */}
               <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-100">
-                <h3 className="font-medium text-blue-700 mb-3">Quick Access</h3>
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-medium text-blue-700">Quick Access</h3>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-xs text-blue-700 hover:bg-blue-100 h-7"
+                    onClick={() => {
+                      toast({
+                        title: "Managing favorites",
+                        description: "Here you can view and organize your favorite units",
+                      });
+                    }}
+                  >
+                    Manage Favorites
+                  </Button>
+                </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <Link href="/teacher/book/1/unit/13/viewer">
-                    <div className="bg-white rounded-md p-3 border border-blue-100 hover:border-blue-300 transition-colors cursor-pointer flex flex-col">
-                      <div className="text-sm font-medium">Book 1</div>
-                      <div className="text-xs text-gray-500">Unit 13: Colors</div>
-                      <Badge className="mt-2 bg-yellow-400 text-black h-fit w-fit">Recent</Badge>
+                  {/* Display favorites dynamically from the favorites state */}
+                  {favorites.map((favorite) => (
+                    <div key={favorite.id} className="relative group">
+                      <Link href={`/teacher/book/${favorite.bookId}/unit/${favorite.unitId}/viewer`}>
+                        <div className="bg-white rounded-md p-3 border border-blue-100 hover:border-blue-300 transition-colors cursor-pointer flex flex-col">
+                          <div className="text-sm font-medium">Book {favorite.bookId}</div>
+                          <div className="text-xs text-gray-500">Unit {favorite.unitId}: {favorite.title}</div>
+                          <Badge className="mt-2 h-fit w-fit" style={{
+                            backgroundColor: favorite.bookId === '1' ? '#FFFF00' : 
+                                            favorite.bookId === '2' ? '#9966CC' : 
+                                            favorite.bookId === '3' ? '#00CC00' : 
+                                            favorite.bookId === '4' ? '#5DADEC' : 
+                                            favorite.bookId === '5' ? '#00CC66' : 
+                                            favorite.bookId === '6' ? '#FF0000' : 
+                                            favorite.bookId === '7' ? '#00FF00' : '#5DADEC',
+                            color: favorite.bookId === '1' ? 'black' : 'white'
+                          }}>
+                            Book {favorite.bookId}
+                          </Badge>
+                        </div>
+                      </Link>
+                      <button 
+                        className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity bg-red-50 text-red-500 rounded-full p-1 hover:bg-red-100"
+                        onClick={() => handleRemoveFavorite(favorite.id)}
+                        aria-label="Remove favorite"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
                     </div>
-                  </Link>
-                  <Link href="/teacher/book/2/unit/8/viewer">
-                    <div className="bg-white rounded-md p-3 border border-blue-100 hover:border-blue-300 transition-colors cursor-pointer flex flex-col">
-                      <div className="text-sm font-medium">Book 2</div>
-                      <div className="text-xs text-gray-500">Unit 8: Shopping</div>
-                      <Badge className="mt-2 bg-purple-600 h-fit w-fit">Recent</Badge>
-                    </div>
-                  </Link>
-                  <Link href="/teacher/book/4/unit/3/viewer">
-                    <div className="bg-white rounded-md p-3 border border-blue-100 hover:border-blue-300 transition-colors cursor-pointer flex flex-col">
-                      <div className="text-sm font-medium">Book 4</div>
-                      <div className="text-xs text-gray-500">Unit 3: Home Sweet Home</div>
-                      <Badge className="mt-2 bg-blue-500 h-fit w-fit">Recent</Badge>
-                    </div>
-                  </Link>
+                  ))}
                   <div 
                     className="bg-white rounded-md p-3 border border-dashed border-blue-200 hover:border-blue-300 transition-colors cursor-pointer flex flex-col items-center justify-center"
                     onClick={() => setIsAddFavoriteDialogOpen(true)}
@@ -379,30 +414,56 @@ export default function TeacherDashboardPage() {
 
               {/* Purchased Books & Progress */}
               <div className="mb-8">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-semibold">Purchased Books & Progress</h2>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-500">Filter:</span>
-                    <div className="flex border rounded-md overflow-hidden">
-                      <button 
-                        className={`px-3 py-1 text-xs font-medium ${bookFilterType === 'all' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
-                        onClick={() => setBookFilterType('all')}
-                      >
-                        All
-                      </button>
-                      <button 
-                        className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'full-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
-                        onClick={() => setBookFilterType('full-access')}
-                      >
-                        Full Access
-                      </button>
-                      <button 
-                        className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'limited-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
-                        onClick={() => setBookFilterType('limited-access')}
-                      >
-                        Limited Access
-                      </button>
+                <div className="mb-4">
+                  <div className="flex justify-between items-center mb-3">
+                    <h2 className="text-xl font-semibold">Purchased Books & Progress</h2>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm text-gray-500">Filter:</span>
+                      <div className="flex border rounded-md overflow-hidden">
+                        <button 
+                          className={`px-3 py-1 text-xs font-medium ${bookFilterType === 'all' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                          onClick={() => setBookFilterType('all')}
+                        >
+                          All
+                        </button>
+                        <button 
+                          className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'full-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                          onClick={() => setBookFilterType('full-access')}
+                        >
+                          Full Access
+                        </button>
+                        <button 
+                          className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'limited-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                          onClick={() => setBookFilterType('limited-access')}
+                        >
+                          Limited Access
+                        </button>
+                      </div>
                     </div>
+                  </div>
+                  
+                  {/* Search box */}
+                  <div className="relative mb-3">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400">
+                        <path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      className="h-10 w-full rounded-md border border-input bg-background pl-10 py-2 text-sm ring-offset-background"
+                      placeholder="Search by unit name, topic, or content..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    {searchQuery && (
+                      <button 
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                        onClick={() => setSearchQuery('')}
+                      >
+                        <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                      </button>
+                    )}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -577,6 +638,86 @@ export default function TeacherDashboardPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
+                  {/* Action Buttons */}
+                  <div className="flex justify-between mb-4">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="text-xs"
+                      onClick={() => {
+                        toast({
+                          title: "Refreshing classes",
+                          description: "Getting the latest information about your classes",
+                        });
+                      }}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1">
+                        <path d="M1.90321 7.29677C1.90321 10.341 4.11041 12.4147 6.58893 12.8439C6.87255 12.893 7.06266 13.1627 7.01355 13.4464C6.96444 13.73 6.69471 13.9201 6.41109 13.871C3.49942 13.3668 0.86084 10.9127 0.86084 7.29677C0.86084 5.76009 1.55115 4.26282 2.37729 3.13038C2.89582 2.63016 3.43916 2.20622 3.97833 1.88396L3.99286 1.87598L2.58701 1.87604C2.28849 1.87604 2.04714 1.63469 2.04714 1.33617C2.04714 1.03765 2.28849 0.796295 2.58701 0.796295L5.60374 0.796295C5.90226 0.796295 6.14361 1.03765 6.14361 1.33617L6.14361 4.35291C6.14361 4.65143 5.90226 4.89278 5.60374 4.89278C5.30522 4.89278 5.06387 4.65143 5.06387 4.35291L5.06387 2.28286L5.05652 2.28687C4.46607 2.62862 3.87821 3.08174 3.31611 3.62752C2.61376 4.14761 2.02633 4.79596 1.5856 5.50901C1.14683 6.2184 0.86084 6.86911 0.86084 7.29677Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+                      </svg>
+                      Refresh
+                    </Button>
+                    <Button 
+                      size="sm"
+                      className="text-xs"
+                      onClick={() => setIsCreateClassDialogOpen(true)}
+                    >
+                      + New Class
+                    </Button>
+                  </div>
+                  
+                  {/* Recent Activity */}
+                  <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-100">
+                    <h3 className="font-medium text-blue-700 mb-3">Recent Activity</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3 bg-white p-3 rounded-md border border-blue-100">
+                        <div className="h-8 w-8 rounded-full bg-yellow-400 flex items-center justify-center text-xs font-medium text-black">B1</div>
+                        <div className="flex-1">
+                          <div className="text-sm font-medium">English Beginners A</div>
+                          <div className="text-xs text-gray-500">Completed Book 1 - Unit 12 (Animals)</div>
+                          <div className="text-xs text-gray-400 mt-1">2 days ago</div>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-7 text-xs text-blue-600"
+                          onClick={() => {
+                            toast({
+                              title: "Loading next lesson",
+                              description: "Taking you to Book 1 - Unit 13",
+                            });
+                            setTimeout(() => navigate('/book/1/unit/13/view'), 500);
+                          }}
+                        >
+                          Continue →
+                        </Button>
+                      </div>
+                      
+                      <div className="flex items-start gap-3 bg-white p-3 rounded-md border border-blue-100">
+                        <div className="h-8 w-8 rounded-full bg-purple-600 flex items-center justify-center text-xs font-medium text-white">B2</div>
+                        <div className="flex-1">
+                          <div className="text-sm font-medium">English Intermediate B</div>
+                          <div className="text-xs text-gray-500">Started Book 2 - Unit 8 (Shopping)</div>
+                          <div className="text-xs text-gray-400 mt-1">Yesterday at 10:15</div>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-7 text-xs text-blue-600"
+                          onClick={() => {
+                            toast({
+                              title: "Resuming lesson",
+                              description: "Taking you to Book 2 - Unit 8",
+                            });
+                            setTimeout(() => navigate('/book/2/unit/8/view?slide=5'), 500);
+                          }}
+                        >
+                          Resume →
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <h3 className="font-medium text-gray-800 mb-4">All Classes</h3>
                   <div className="space-y-4">
                     {/* Display the list of classes */}
                     {classes.map(cls => (
