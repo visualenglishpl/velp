@@ -722,6 +722,72 @@ export function getQuestionAnswer(
           source: 'unit-context'
         };
       } else if (lowerFilename.includes('pen')) {
+        // Check for comparison questions (is it A or B pen)
+        if ((lowerFilename.includes('is it a') || lowerFilename.includes('is it')) && lowerFilename.includes('or')) {
+          // Try several different pattern matching approaches
+          
+          // Pattern 1: is it a X or a Y pen
+          let optionsMatch = lowerFilename.match(/is it a ([a-z]+) or (?:a )?([a-z]+) pen/i);
+          
+          // Pattern 2: is it a X or Y pen (no second article)
+          if (!optionsMatch) {
+            optionsMatch = lowerFilename.match(/is it (?:a|an) ([a-z]+) or ([a-z]+) pen/i);
+          }
+          
+          // Pattern 3: is it X or Y pen (no articles)
+          if (!optionsMatch) {
+            optionsMatch = lowerFilename.match(/is it ([a-z]+) or ([a-z]+) pen/i);
+          }
+          
+          // Handle the case for "girl or boy pen" specifically
+          if (lowerFilename.includes('girl') && lowerFilename.includes('boy')) {
+            logDebug(`✅ PATTERN ENGINE: School objects - girl/boy pen match`, 1);
+            return {
+              question: "Is it a girl or boy pen?",
+              answer: "It is a girl pen. / It is a boy pen.",
+              generatedBy: 'pattern-engine',
+              source: 'unit-context'
+            };
+          }
+          
+          // Handle the case for "hotdog or hamburger pen" specifically
+          if (lowerFilename.includes('hotdog') && lowerFilename.includes('hamburger')) {
+            logDebug(`✅ PATTERN ENGINE: School objects - hotdog/hamburger pen match`, 1);
+            return {
+              question: "Is it a hotdog or hamburger pen?",
+              answer: "It is a hotdog pen. / It is a hamburger pen.",
+              generatedBy: 'pattern-engine',
+              source: 'unit-context'
+            };
+          }
+          
+          // Handle the case for "lion or tiger pen" specifically
+          if (lowerFilename.includes('lion') && lowerFilename.includes('tiger')) {
+            logDebug(`✅ PATTERN ENGINE: School objects - lion/tiger pen match`, 1);
+            return {
+              question: "Is it a lion or tiger pen?",
+              answer: "It is a lion pen. / It is a tiger pen.",
+              generatedBy: 'pattern-engine',
+              source: 'unit-context'
+            };
+          }
+          
+          // If we found a match through any of the patterns
+          if (optionsMatch && optionsMatch[1] && optionsMatch[2]) {
+            const option1 = optionsMatch[1].trim();
+            const option2 = optionsMatch[2].trim();
+            
+            logDebug(`✅ PATTERN ENGINE: School objects - comparison pen match (${option1} or ${option2})`, 1);
+            return {
+              question: `Is it a ${option1} or ${option2} pen?`,
+              answer: `It is a ${option1} pen. / It is a ${option2} pen.`,
+              generatedBy: 'pattern-engine',
+              source: 'unit-context'
+            };
+          }
+        }
+        
+        // Default pen match
         logDebug(`✅ PATTERN ENGINE: School objects - pen match`, 1);
         return {
           question: "What is it?",
