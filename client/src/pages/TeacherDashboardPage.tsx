@@ -270,9 +270,8 @@ export default function TeacherDashboardPage() {
           
           {/* Main Dashboard Tabs */}
           <Tabs defaultValue="books" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="books">My Books</TabsTrigger>
-              <TabsTrigger value="resources">Resources</TabsTrigger>
               <TabsTrigger value="classes">My Classes</TabsTrigger>
             </TabsList>
             
@@ -283,6 +282,36 @@ export default function TeacherDashboardPage() {
                 <h2 className="text-xl font-semibold mb-4">My Teaching Materials</h2>
               </div>
               
+              {/* Quick Access Section */}
+              <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-100">
+                <h3 className="font-medium text-blue-700 mb-3">Quick Access</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <Link href="/teacher/book/1/unit/13/viewer">
+                    <div className="bg-white rounded-md p-3 border border-blue-100 hover:border-blue-300 transition-colors cursor-pointer flex flex-col">
+                      <div className="text-sm font-medium">Book 1</div>
+                      <div className="text-xs text-gray-500">Unit 13: Colors</div>
+                      <Badge className="mt-2 bg-yellow-400 text-black h-fit w-fit">Recent</Badge>
+                    </div>
+                  </Link>
+                  <Link href="/teacher/book/2/unit/8/viewer">
+                    <div className="bg-white rounded-md p-3 border border-blue-100 hover:border-blue-300 transition-colors cursor-pointer flex flex-col">
+                      <div className="text-sm font-medium">Book 2</div>
+                      <div className="text-xs text-gray-500">Unit 8: Shopping</div>
+                      <Badge className="mt-2 bg-purple-600 h-fit w-fit">Recent</Badge>
+                    </div>
+                  </Link>
+                  <Link href="/teacher/book/4/unit/3/viewer">
+                    <div className="bg-white rounded-md p-3 border border-blue-100 hover:border-blue-300 transition-colors cursor-pointer flex flex-col">
+                      <div className="text-sm font-medium">Book 4</div>
+                      <div className="text-xs text-gray-500">Unit 3: Home Sweet Home</div>
+                      <Badge className="mt-2 bg-blue-500 h-fit w-fit">Recent</Badge>
+                    </div>
+                  </Link>
+                  <div className="bg-white rounded-md p-3 border border-dashed border-blue-200 hover:border-blue-300 transition-colors cursor-pointer flex flex-col items-center justify-center">
+                    <span className="text-sm text-blue-600">+ Add Favorite</span>
+                  </div>
+                </div>
+              </div>
 
 
               {/* Purchased Books & Progress */}
@@ -315,9 +344,9 @@ export default function TeacherDashboardPage() {
                             View Book
                           </button>
                         </Link>
-                        <Link href="/teacher/book/1/resources">
+                        <Link href="/teacher/book/1/viewer">
                           <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                            Resources
+                            View Content
                           </button>
                         </Link>
                       </div>
@@ -350,9 +379,9 @@ export default function TeacherDashboardPage() {
                             View Book
                           </button>
                         </Link>
-                        <Link href="/teacher/book/2/resources">
+                        <Link href="/teacher/book/2/viewer">
                           <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                            Resources
+                            View Content
                           </button>
                         </Link>
                       </div>
