@@ -739,6 +739,9 @@ export function getQuestionAnswer(
             optionsMatch = lowerFilename.match(/is it ([a-z]+) or ([a-z]+) pen/i);
           }
           
+          // Log the filename for debugging
+          logDebug(`Processing pen comparison filename: ${lowerFilename}`, 1);
+          
           // Handle the case for "girl or boy pen" specifically
           if (lowerFilename.includes('girl') && lowerFilename.includes('boy')) {
             logDebug(`✅ PATTERN ENGINE: School objects - girl/boy pen match`, 1);
@@ -767,6 +770,17 @@ export function getQuestionAnswer(
             return {
               question: "Is it a lion or tiger pen?",
               answer: "It is a lion pen. / It is a tiger pen.",
+              generatedBy: 'pattern-engine',
+              source: 'unit-context'
+            };
+          }
+          
+          // Handle the case for "dog or cat pen" specifically  
+          if (lowerFilename.includes('dog') && lowerFilename.includes('cat')) {
+            logDebug(`✅ PATTERN ENGINE: School objects - dog/cat pen match`, 1);
+            return {
+              question: "Is it a dog or cat pen?",
+              answer: "It is a dog pen. / It is a cat pen.",
               generatedBy: 'pattern-engine',
               source: 'unit-context'
             };
