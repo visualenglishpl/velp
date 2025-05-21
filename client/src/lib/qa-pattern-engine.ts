@@ -6,10 +6,12 @@
  * 
  * It can handle a wide variety of filename patterns and extract the relevant information
  * to create appropriate questions and answers.
+ * 
+ * This engine now integrates with the modular pattern system for better organization and maintainability.
  */
 
 import { QuestionAnswer } from '@/hooks/use-excel-qa';
-import { findMatchingPattern } from './patternRegistry';
+import { findPatternMatch } from './patternSystem';
 
 // Define pattern types that we commonly see in the ESL content
 type PatternType = 
@@ -624,7 +626,24 @@ export function getQuestionAnswer(
     };
   }
   
-  // STRATEGY 8: Try to extract questions from common patterns in the filename
+  // STRATEGY 8: Try our new modular pattern system
+  try {
+    const patternSystemMatch = findPatternMatch(filename, unitId);
+    if (patternSystemMatch) {
+      logDebug(`✅ PATTERN SYSTEM: Found match in modular pattern system for ${filename}`, 0);
+      return {
+        question: patternSystemMatch.question,
+        answer: patternSystemMatch.answer,
+        generatedBy: 'pattern-system',
+        source: patternSystemMatch.source || patternSystemMatch.category
+      };
+    }
+  } catch (error) {
+    console.error("Pattern system error:", error);
+    // Continue to other strategies if pattern system fails
+  }
+  
+  // STRATEGY 9: Try to extract questions from common patterns in the filename
   // Check for specific country codes or keywords
   const lowerFilename = filename.toLowerCase();
   
@@ -723,17 +742,8 @@ export function getQuestionAnswer(
           source: 'unit-context'
         };
       } else if (lowerFilename.includes('pen')) {
-        // First try the new modular pattern registry
-        const patternResult = findMatchingPattern(filename, unitId || 'unit2');
-        if (patternResult) {
-          logDebug(`✅ PATTERN REGISTRY: Used modular pattern system for ${filename}`, 0);
-          return {
-            question: patternResult.question,
-            answer: patternResult.answer,
-            generatedBy: 'pattern-registry',
-            source: patternResult.category || 'pattern-registry'
-          };
-        }
+        // We should be using our main pattern system now
+        // This is here as a fallback for specific pen patterns
         // Check for comparison questions (is it A or B pen)
         if ((lowerFilename.includes('is it a') || lowerFilename.includes('is it')) && lowerFilename.includes('or')) {
           // Try several different pattern matching approaches

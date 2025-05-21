@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getQuestionAnswer } from '@/lib/qa-pattern-engine';
+import { findPatternMatch } from '@/lib/patternSystem';
 
 export interface QuestionAnswer {
   question: string;
@@ -258,7 +259,24 @@ export function useExcelQA(bookId: string) {
       }
     }
 
-    // FALLBACK: Use the pattern engine to generate a question based on the content
+    // Try our new modular pattern system first
+    try {
+      const patternMatch = findPatternMatch(filename, currentUnitId);
+      if (patternMatch) {
+        logDebug(`✅ PATTERN SYSTEM: Found match in modular pattern system for ${filename}`, 1);
+        return {
+          question: patternMatch.question,
+          answer: patternMatch.answer,
+          generatedBy: 'pattern-system',
+          source: patternMatch.source || patternMatch.category
+        };
+      }
+    } catch (error) {
+      console.error("Pattern system error:", error);
+      // Continue to legacy pattern engine if pattern system fails
+    }
+    
+    // FALLBACK: Use the legacy pattern engine to generate a question based on the content
     logDebug(`⚠️ Using fallback pattern engine for: ${filename}`, 1);
     return getQuestionAnswer(filename, currentUnitId, normalizedBookId);
   }, [mappings, normalizedBookId]);
