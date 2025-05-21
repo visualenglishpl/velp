@@ -97,7 +97,12 @@ export default function TeacherResourcesTest() {
           Resources for Book {book} Unit {unit}
         </h2>
         
-        <TeacherResourcesContainer initialBookId={book} initialUnitId={unit} showSelection={false} />
+        <TeacherResourcesContainer 
+          initialBookId={book} 
+          initialUnitId={unit} 
+          showSelection={false}
+          hideTabsInContentViewer={false} 
+        />
       </div>
     </div>
   );

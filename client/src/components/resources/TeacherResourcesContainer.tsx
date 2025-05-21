@@ -240,6 +240,7 @@ export function TeacherResourcesContainer({
             <ResourceList
               resources={videoResources}
               onSearch={setSearchQuery}
+              onFilterByType={setResourceTypeFilter}
               selectedType="video"
               searchQuery={filter.searchQuery}
               isLoading={isLoading}
@@ -247,7 +248,7 @@ export function TeacherResourcesContainer({
               onAddResource={enableEditing ? () => handleAddResource('video') : undefined}
               onEditResource={enableEditing ? handleEditResource : undefined}
               onDeleteResource={enableEditing ? handleDeleteResource : undefined}
-              hideTabsInContentViewer={true}
+              hideTabsInContentViewer={hideTabsInContentViewer}
             />
           </TabsContent>
           
@@ -256,6 +257,7 @@ export function TeacherResourcesContainer({
             <ResourceList
               resources={gameResources}
               onSearch={setSearchQuery}
+              onFilterByType={setResourceTypeFilter}
               selectedType="game"
               searchQuery={filter.searchQuery}
               isLoading={isLoading}
@@ -263,7 +265,7 @@ export function TeacherResourcesContainer({
               onAddResource={enableEditing ? () => handleAddResource('game') : undefined}
               onEditResource={enableEditing ? handleEditResource : undefined}
               onDeleteResource={enableEditing ? handleDeleteResource : undefined}
-              hideTabsInContentViewer={true}
+              hideTabsInContentViewer={hideTabsInContentViewer}
             />
           </TabsContent>
           
@@ -272,13 +274,14 @@ export function TeacherResourcesContainer({
             <ResourceList
               resources={pdfResources}
               onSearch={setSearchQuery}
+              onFilterByType={setResourceTypeFilter}
               selectedType="pdf"
               searchQuery={filter.searchQuery}
               isLoading={isLoading}
               readOnly={readOnly}
               onEditResource={enableEditing ? handleEditResource : undefined}
               onDeleteResource={enableEditing ? handleDeleteResource : undefined}
-              hideTabsInContentViewer={true}
+              hideTabsInContentViewer={hideTabsInContentViewer}
             />
           </TabsContent>
           

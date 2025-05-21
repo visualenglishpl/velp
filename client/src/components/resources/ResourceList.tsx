@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   File,
   Film,
@@ -178,9 +179,46 @@ export function ResourceList({
 
   return (
     <div className="space-y-4">
-      {/* Hide tabs navigation as requested */}
+      {/* Resource type tabs navigation */}
+      {!hideTabsInContentViewer && onFilterByType && (
+        <div className="mb-4">
+          <TabsList className="w-full">
+            {resourceTypes.map((resourceType) => (
+              <TabsTrigger
+                key={resourceType.type}
+                value={resourceType.type}
+                className="flex items-center gap-1"
+                onClick={() => onFilterByType(resourceType.type)}
+                data-state={selectedType === resourceType.type ? "active" : "inactive"}
+              >
+                {resourceType.type === 'video' && <Film className="h-4 w-4" />}
+                {resourceType.type === 'game' && <Gamepad className="h-4 w-4" />}
+                {resourceType.type === 'pdf' && <File className="h-4 w-4" />}
+                {resourceType.type === 'lessonPlan' && <FileText className="h-4 w-4" />}
+                {resourceType.type === 'all' && <File className="h-4 w-4" />}
+                <span>{resourceType.label}</span>
+                <span className="ml-1 text-xs bg-primary/20 text-primary rounded-full px-1.5">
+                  {getResourceCount(resourceType.type)}
+                </span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+      )}
       
-      {/* Hide search bar as requested */}
+      {/* Search bar */}
+      {!hideTabsInContentViewer && onSearch && (
+        <div className="mb-4 relative">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search resources..."
+            className="pl-8"
+            value={searchQuery}
+            onChange={(e) => onSearch(e.target.value)}
+          />
+        </div>
+      )}
       
       {/* Resources grid with thumbnails */}
       {isLoading ? (
