@@ -65,6 +65,16 @@ export default function TeacherDashboardPage() {
   // Book filtering state
   const [bookFilterType, setBookFilterType] = useState('all'); // all, full-access, limited-access
   
+  // Favorites state
+  const [favorites, setFavorites] = useState([
+    { id: 1, bookId: '1', unitId: '13', title: 'Colors' },
+    { id: 2, bookId: '2', unitId: '8', title: 'Shopping' }
+  ]);
+  const [isAddFavoriteDialogOpen, setIsAddFavoriteDialogOpen] = useState(false);
+  const [newFavoriteBookId, setNewFavoriteBookId] = useState('');
+  const [newFavoriteUnitId, setNewFavoriteUnitId] = useState('');
+  const [newFavoriteTitle, setNewFavoriteTitle] = useState('');
+  
   // Sample data for teacher dashboard
   const [classes, setClasses] = useState<StudentClass[]>([
     { id: 1, name: 'English Beginners A', studentsCount: 12, recentActivity: '2 days ago' },
@@ -203,6 +213,38 @@ export default function TeacherDashboardPage() {
     });
   };
   
+  // Add a favorite unit/book
+  const handleAddFavorite = () => {
+    if (!newFavoriteBookId || !newFavoriteUnitId || !newFavoriteTitle) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in all the required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    const newFavorite = {
+      id: favorites.length > 0 ? Math.max(...favorites.map(f => f.id)) + 1 : 1,
+      bookId: newFavoriteBookId,
+      unitId: newFavoriteUnitId,
+      title: newFavoriteTitle
+    };
+    
+    setFavorites([...favorites, newFavorite]);
+    
+    // Reset form and close dialog
+    setNewFavoriteBookId('');
+    setNewFavoriteUnitId('');
+    setNewFavoriteTitle('');
+    setIsAddFavoriteDialogOpen(false);
+    
+    toast({
+      title: "Favorite added",
+      description: `Added Book ${newFavoriteBookId}, Unit ${newFavoriteUnitId} to your favorites`,
+    });
+  };
+  
   // If not authenticated, show loading state (will redirect via useEffect)
   if (!isAuthenticated || isLoading) {
     return (
@@ -232,7 +274,10 @@ export default function TeacherDashboardPage() {
                   onError={(e) => {
                     // Fallback to text if image fails to load
                     e.currentTarget.style.display = 'none';
-                    document.getElementById('fallback-logo')?.style.display = 'flex';
+                    const fallbackLogo = document.getElementById('fallback-logo');
+                    if (fallbackLogo) {
+                      fallbackLogo.style.display = 'flex';
+                    }
                   }}
                 />
                 <div id="fallback-logo" style={{display: 'none'}} className="flex items-center">
@@ -322,7 +367,10 @@ export default function TeacherDashboardPage() {
                       <Badge className="mt-2 bg-blue-500 h-fit w-fit">Recent</Badge>
                     </div>
                   </Link>
-                  <div className="bg-white rounded-md p-3 border border-dashed border-blue-200 hover:border-blue-300 transition-colors cursor-pointer flex flex-col items-center justify-center">
+                  <div 
+                    className="bg-white rounded-md p-3 border border-dashed border-blue-200 hover:border-blue-300 transition-colors cursor-pointer flex flex-col items-center justify-center"
+                    onClick={() => setIsAddFavoriteDialogOpen(true)}
+                  >
                     <span className="text-sm text-blue-600">+ Add Favorite</span>
                   </div>
                 </div>
@@ -697,6 +745,74 @@ export default function TeacherDashboardPage() {
                 </Button>
                 <Button variant="destructive" onClick={confirmDeleteClass}>
                   Delete
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          
+          {/* Add Favorite Dialog */}
+          <Dialog open={isAddFavoriteDialogOpen} onOpenChange={setIsAddFavoriteDialogOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Add Favorite</DialogTitle>
+                <DialogDescription>
+                  Add a unit to your favorites for quick access.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="favoriteBook" className="text-right">Book</Label>
+                  <div className="col-span-3">
+                    <select 
+                      id="favoriteBook" 
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                      value={newFavoriteBookId}
+                      onChange={(e) => setNewFavoriteBookId(e.target.value)}
+                    >
+                      <option value="">Select a book</option>
+                      <option value="1">Book 1</option>
+                      <option value="2">Book 2</option>
+                      <option value="3">Book 3</option>
+                      <option value="4">Book 4</option>
+                      <option value="5">Book 5</option>
+                      <option value="6">Book 6</option>
+                      <option value="7">Book 7</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="favoriteUnit" className="text-right">Unit</Label>
+                  <div className="col-span-3">
+                    <select 
+                      id="favoriteUnit" 
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                      value={newFavoriteUnitId}
+                      onChange={(e) => setNewFavoriteUnitId(e.target.value)}
+                    >
+                      <option value="">Select a unit</option>
+                      {[...Array(18)].map((_, i) => (
+                        <option key={i+1} value={(i+1).toString()}>{`Unit ${i+1}`}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="favoriteTitle" className="text-right">Title</Label>
+                  <Input
+                    id="favoriteTitle"
+                    placeholder="Unit title (e.g. Colors)"
+                    className="col-span-3"
+                    value={newFavoriteTitle}
+                    onChange={(e) => setNewFavoriteTitle(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsAddFavoriteDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleAddFavorite}>
+                  Add Favorite
                 </Button>
               </DialogFooter>
             </DialogContent>
