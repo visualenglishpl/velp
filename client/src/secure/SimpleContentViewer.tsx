@@ -405,7 +405,7 @@ export default function SimpleContentViewer() {
     const defaultResult = { country: "", question: "", answer: "", hasData: false };
     
     // Enable debug logging
-    const DEBUG_ENABLED = false;
+    const DEBUG_ENABLED = true;
     const logDebug = (message: string) => {
       if (DEBUG_ENABLED) {
         console.log(`[SimpleContentViewer Q&A] ${message}`);
@@ -447,6 +447,18 @@ export default function SimpleContentViewer() {
     
     // -------- APPROACH 2: Use the enhanced Excel pattern matching system --------
     // Use the currentUnitId defined at the top of the component
+    
+    // Special handling for Book 1 Unit 2 school objects
+    const isSchoolObject = currentUnitId === 'unit2' && 
+                          filename.toLowerCase().includes('01 e') && 
+                          (filename.toLowerCase().includes('pen') || 
+                           filename.toLowerCase().includes('do you have') ||
+                           filename.toLowerCase().includes('is it a') ||
+                           filename.toLowerCase().includes('what colour'));
+                           
+    logDebug(`Processing school object: ${isSchoolObject ? 'Yes' : 'No'} - ${filename}`);
+    
+    // Find matching QA from Excel or patterns
     const matchingQA = findMatchingQA(filename, currentUnitId);
     
     if (matchingQA) {
@@ -679,11 +691,18 @@ export default function SimpleContentViewer() {
                   const cleanedQuestion = removePrefixes(qa.question).trim();
                   
                   // Check if this is a slide that should be blank (no question)
-                  const isBlankByDesign = qa.generatedBy === 'blank-by-design' || 
-                                         material.content.toLowerCase().includes('00 a') ||
-                                         material.content.toLowerCase().includes('.pdf') ||
-                                         material.content.toLowerCase().includes('video') ||
-                                         material.content.toLowerCase().includes('game');
+                  const contentLower = material.content.toLowerCase();
+                  const isBlankByDesign = 
+                                         contentLower.includes('00 a') ||
+                                         contentLower.endsWith('.pdf') ||
+                                         contentLower.includes('video') ||
+                                         contentLower.includes('game') ||
+                                         // Fix: Specifically check for questions about school objects
+                                         (contentLower.includes('01 e') && 
+                                          !(contentLower.includes('do you have') || 
+                                            contentLower.includes('what is it') || 
+                                            contentLower.includes('what colour') ||
+                                            contentLower.includes('is it a')));
                   
                   // If no question data exists for this image, or if question is empty after cleaning, 
                   // or if slide is designated as blank by design, don't render the Q&A section at all
