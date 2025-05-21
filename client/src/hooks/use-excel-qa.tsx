@@ -96,7 +96,7 @@ export function useExcelQA(bookId: string) {
 
   const findMatchingQA = useCallback((filename: string, currentUnitId?: string): QuestionAnswer | undefined => {
     // Debug level: 0=none, 1=important, 2=details
-    const debugLevel = 1;
+    const debugLevel = 2;
     
     // Helper function to log with debug level
     const logDebug = (message: string, level: number = 1) => {
@@ -104,6 +104,18 @@ export function useExcelQA(bookId: string) {
         console.log(message);
       }
     };
+    
+    // Clean up filename for better matching
+    const cleanFilename = (name: string): string => {
+      // Extract just the filename without path
+      const filenameOnly = name.split('/').pop() || name;
+      // Remove extension
+      return filenameOnly.replace(/\.(png|jpg|jpeg|gif|webp|mp4|pdf|swf)$/i, '').trim();
+    };
+    
+    // Extract the cleaned filename for better matching
+    const cleanedFilename = cleanFilename(filename);
+    logDebug(`Processing: "${cleanedFilename}" (original: "${filename}")`, 2);
     
     if (Object.keys(mappings).length === 0) {
       logDebug(`No mappings available for ${normalizedBookId}, using pattern engine for ${filename} in ${currentUnitId}`);
@@ -132,17 +144,23 @@ export function useExcelQA(bookId: string) {
       });
     }
     
-    // STRATEGY 1: Direct exact match with the filename
+    // STRATEGY 1: Direct exact match with the cleaned filename
+    if (filteredMappings[cleanedFilename]) {
+      logDebug(`✅ FOUND MATCH (direct filename) for: ${cleanedFilename}`, 1);
+      return filteredMappings[cleanedFilename];
+    }
+    
+    // STRATEGY 2: Try with the original filename (legacy support)
     if (filteredMappings[filename]) {
-      logDebug(`✅ FOUND MATCH (direct filename) for: ${filename}`, 1);
+      logDebug(`✅ FOUND MATCH (original filename) for: ${filename}`, 1);
       return filteredMappings[filename];
     }
-
-    // STRATEGY 2: Try with the filename without extension
-    const filenameWithoutExt = filename.replace(/\.(png|jpg|jpeg|gif|webp|mp4)$/i, '').trim();
-    if (filteredMappings[filenameWithoutExt]) {
-      logDebug(`✅ FOUND MATCH (without extension) for: ${filename}`, 1);
-      return filteredMappings[filenameWithoutExt];
+    
+    // STRATEGY 3: Try with just the filename without path or extension
+    const filenameOnly = filename.split('/').pop() || filename;
+    if (filteredMappings[filenameOnly]) {
+      logDebug(`✅ FOUND MATCH (filename only) for: ${filenameOnly}`, 1);
+      return filteredMappings[filenameOnly];
     }
 
     // STRATEGY 3: Try exact match with dash pattern in filename
@@ -223,10 +241,19 @@ export function useExcelQA(bookId: string) {
     // STRATEGY 8: Try any keyword match based on the content
     // Important patterns to look for
     const contentKeywords = [
+      // Book 1 Unit 2 (School Objects)
       { keyword: 'scissors', question: "What are they?", answer: "They are scissors." },
       { keyword: 'pencil', question: "What is it?", answer: "It is a pencil." },
       { keyword: 'ruler', question: "What is it?", answer: "It is a ruler." },
-      { keyword: 'sharpener', question: "What is it?", answer: "It is a sharpener." }
+      { keyword: 'sharpener', question: "What is it?", answer: "It is a sharpener." },
+      { keyword: 'pen', question: "What is it?", answer: "It is a pen." },
+      { keyword: 'book', question: "What is it?", answer: "It is a book." },
+      { keyword: 'notebook', question: "What is it?", answer: "It is a notebook." },
+      { keyword: 'eraser', question: "What is it?", answer: "It is an eraser." },
+      { keyword: 'pencil case', question: "What is it?", answer: "It is a pencil case." },
+      { keyword: 'school bag', question: "What is it?", answer: "It is a school bag." },
+      { keyword: 'lego pen', question: "Do you have a Lego pen?", answer: "Yes, I have a Lego pen." },
+      { keyword: 'black pen', question: "Do you have a black pen?", answer: "Yes, I have a black pen." }
     ];
     
     for (const {keyword, question, answer} of contentKeywords) {

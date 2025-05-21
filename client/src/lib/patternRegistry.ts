@@ -11,6 +11,22 @@ const book1Unit2SchoolObjects: PatternCollection = {
   id: 'book1-unit2-school-objects',
   description: 'Patterns for Book 1 Unit 2 school objects',
   patterns: [
+    // Pen questions (Do you have...)
+    {
+      id: 'do-you-have-pen',
+      regex: /do\s*you\s*have\s*a.+pen/i,
+      question: 'Do you have a pen?',
+      answer: 'Yes, I have a pen.',
+      category: 'school-objects'
+    },
+    // Black pen specifically
+    {
+      id: 'do-you-have-black-pen',
+      regex: /do\s*you\s*have\s*a\s*black\s*pen/i,
+      question: 'Do you have a black pen?',
+      answer: 'Yes, I have a black pen.',
+      category: 'school-objects'
+    },
     // Lego pen pattern
     {
       id: 'lego-pen',
@@ -25,6 +41,14 @@ const book1Unit2SchoolObjects: PatternCollection = {
       regex: /what\s*is\s*it.+it\s*is\s*a\s*sharpener|what\s*is\s*it.+sharpener/i,
       question: 'What is it?',
       answer: 'It is a sharpener.',
+      category: 'school-objects'
+    },
+    // "What color are the pens?" pattern
+    {
+      id: 'what-color-are-pens',
+      regex: /what\s*colou?r\s*are\s*the\s*pens/i,
+      question: 'What color are the pens?',
+      answer: 'They are blue, red, and green.',
       category: 'school-objects'
     },
     // Pen comparisons - improved patterns with more specific matching

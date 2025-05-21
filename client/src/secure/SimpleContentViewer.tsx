@@ -678,8 +678,16 @@ export default function SimpleContentViewer() {
                   // Enhanced check for blank questions - if the question is blank after removing prefixes, don't show anything
                   const cleanedQuestion = removePrefixes(qa.question).trim();
                   
-                  // If no question data exists for this image, or if question is empty after cleaning, don't render the Q&A section at all
-                  if (!hasQuestion || !cleanedQuestion) return null;
+                  // Check if this is a slide that should be blank (no question)
+                  const isBlankByDesign = qa.generatedBy === 'blank-by-design' || 
+                                         material.content.toLowerCase().includes('00 a') ||
+                                         material.content.toLowerCase().includes('.pdf') ||
+                                         material.content.toLowerCase().includes('video') ||
+                                         material.content.toLowerCase().includes('game');
+                  
+                  // If no question data exists for this image, or if question is empty after cleaning, 
+                  // or if slide is designated as blank by design, don't render the Q&A section at all
+                  if (!hasQuestion || !cleanedQuestion || isBlankByDesign) return null;
                   
                   // Otherwise, render the Q&A section
                   return (

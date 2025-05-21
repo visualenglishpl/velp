@@ -48,7 +48,13 @@ let registeredCollections: PatternCollection[] = [...patternCollections];
  * @returns The matched pattern result or null if no match
  */
 export function findPatternMatch(filename: string, unitId: string = '', debug: boolean = false): PatternMatch | null {
-  const cleanedFilename = filename.toLowerCase();
+  // Extract just the filename without the path or extension
+  const filenameOnly = filename.split('/').pop() || filename;
+  const cleanedFilename = filenameOnly.toLowerCase().replace(/\.(png|jpg|jpeg|gif|webp|mp4|pdf|swf)$/i, '').trim();
+  
+  if (debug) {
+    console.log(`[PATTERN SYSTEM] Processing filename: "${cleanedFilename}" (original: "${filename}")`);
+  }
   
   // Extract any book ID from the unitId if provided in format "book4-unit1"
   const unitBookMatch = unitId.match(/^book(\d+)[a-c]?-unit(\d+)$/i);
@@ -167,11 +173,13 @@ export function findPatternMatch(filename: string, unitId: string = '', debug: b
     return false;
   };
   
+  // Force debug to true for testing
+  debug = true;
+  console.log(`[PATTERN SYSTEM] Searching for match for: ${filename} in unit: ${unitId}`);
+  
   // Search through all collections and patterns for a match
   for (const collection of registeredCollections) {
-    if (debug) {
-      console.log(`[PATTERN SYSTEM] Checking collection: ${collection.id}`);
-    }
+    console.log(`[PATTERN SYSTEM] Checking collection: ${collection.id}`);
     
     for (const pattern of collection.patterns) {
       if (!shouldApplyPattern(pattern)) {
@@ -184,6 +192,9 @@ export function findPatternMatch(filename: string, unitId: string = '', debug: b
       if (debug) {
         console.log(`[PATTERN SYSTEM] Testing pattern: ${pattern.id} with regex: ${pattern.regex}`);
       }
+      
+      // For debugging - show what we're testing against
+      console.log(`Testing "${cleanedFilename}" against pattern: ${pattern.id}, regex: ${pattern.regex}`);
       
       if (pattern.regex.test(cleanedFilename)) {
         if (debug) {

@@ -13,6 +13,18 @@
 import { QuestionAnswer } from '@/hooks/use-excel-qa';
 import { findPatternMatch } from './patternSystem';
 
+// Helper function to clean filenames for better pattern matching
+export function cleanFilenameForPattern(filename: string): string {
+  // Extract just the filename without path
+  const filenameOnly = filename.split('/').pop() || filename;
+  
+  // Remove extension
+  const withoutExtension = filenameOnly.replace(/\.(png|jpg|jpeg|gif|webp|mp4|pdf|swf)$/i, '');
+  
+  // Clean up any extra spaces and lowercase for consistent matching
+  return withoutExtension.trim().toLowerCase();
+}
+
 // Define pattern types that we commonly see in the ESL content
 type PatternType = 
   | 'color-question' 
@@ -511,6 +523,23 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
 }
 
 /**
+ * Checks if a file should have a blank Q&A (no question shown)
+ * @param filename The filename to check
+ * @returns True if this slide should be blank, false otherwise
+ */
+export function shouldHaveBlankQA(filename: string): boolean {
+  const lowerFilename = filename.toLowerCase();
+  
+  // Title slides, PDF files, and resource slides should be blank
+  return lowerFilename.includes('00 a') || // Title slides
+         lowerFilename.includes('.pdf') ||  // PDF files
+         lowerFilename.includes('video') || // Video resources
+         lowerFilename.includes('game') ||  // Game resources
+         lowerFilename.includes('wordwall') || // Wordwall games
+         lowerFilename.startsWith('00'); // Other intro resources
+}
+
+/**
  * Main function to get a question-answer pair for a file
  * First tries to match with known patterns, then falls back to generation
  * @param filename The filename to get Q&A for
@@ -522,6 +551,16 @@ export function getQuestionAnswer(
   unitId: string = '', 
   bookIdOrMappings: string | Record<string, QuestionAnswer> = {}
 ): QuestionAnswer {
+  // Check if this slide should be blank (no question shown)
+  if (shouldHaveBlankQA(filename)) {
+    console.log(`✅ Leaving slide blank (by design): ${filename}`);
+    return {
+      question: "",
+      answer: "",
+      generatedBy: 'blank-by-design',
+      source: 'system-rule'
+    };
+  }
   // Debug level: 0=none, 1=important, 2=details
   const debugLevel = 1;
   
