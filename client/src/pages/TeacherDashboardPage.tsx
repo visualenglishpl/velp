@@ -392,7 +392,12 @@ export default function TeacherDashboardPage() {
                     
                     {/* Add new class button */}
                     <div className="mt-4">
-                      <Button>
+                      <Button onClick={() => {
+                        toast({
+                          title: "Create New Class",
+                          description: "The class creation feature will be available soon.",
+                        });
+                      }}>
                         <Users className="mr-2 h-4 w-4" />
                         Create New Class
                       </Button>
