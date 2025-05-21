@@ -11,77 +11,195 @@ const book1Unit2SchoolObjects: PatternCollection = {
   id: 'book1-unit2-school-objects',
   description: 'Patterns for Book 1 Unit 2 school objects',
   patterns: [
+    // Lego pen pattern
+    {
+      id: 'lego-pen',
+      regex: /lego.+pen|pen.*lego|do\s*you\s*have\s*a\s*lego\s*pen/i,
+      question: 'Do you have a Lego pen?',
+      answer: 'Yes, I have a Lego pen.',
+      category: 'school-objects'
+    },
+    // "What is it?" pattern for sharpener
+    {
+      id: 'what-is-it-sharpener',
+      regex: /what\s*is\s*it.+it\s*is\s*a\s*sharpener|what\s*is\s*it.+sharpener/i,
+      question: 'What is it?',
+      answer: 'It is a sharpener.',
+      category: 'school-objects'
+    },
     // Pen comparisons - improved patterns with more specific matching
     {
       id: 'girl-boy-pen',
-      regex: /girl.+pen|girl.*pen|pen.*girl/i,
+      regex: /girl.+pen|girl.*pen|pen.*girl|is\s*it\s*a\s*girl\s*or\s*a?\s*boy\s*pen/i,
       question: 'Is it a girl or boy pen?',
       answer: 'It is a girl pen.',
       category: 'school-objects'
     },
     {
       id: 'boy-pen',
-      regex: /boy.+pen|boy.*pen|pen.*boy/i,
+      regex: /boy.+pen|boy.*pen|pen.*boy|is\s*it\s*a\s*boy\s*or\s*a?\s*girl\s*pen/i,
       question: 'Is it a girl or boy pen?',
       answer: 'It is a boy pen.',
       category: 'school-objects'
     },
     {
       id: 'hotdog-pen',
-      regex: /hotdog.+pen|hotdog.*pen|pen.*hotdog/i,
+      regex: /hotdog.+pen|hotdog.*pen|pen.*hotdog|is\s*it\s*a\s*hotdog\s*or\s*a?\s*hamburger\s*pen/i,
       question: 'Is it a hotdog or hamburger pen?',
       answer: 'It is a hotdog pen.',
       category: 'school-objects'
     },
     {
       id: 'hamburger-pen',
-      regex: /hamburger.+pen|hamburger.*pen|pen.*hamburger/i,
+      regex: /hamburger.+pen|hamburger.*pen|pen.*hamburger|is\s*it\s*a\s*hamburger\s*or\s*a?\s*hotdog\s*pen/i,
       question: 'Is it a hamburger or hotdog pen?',
       answer: 'It is a hamburger pen.',
       category: 'school-objects'
     },
     {
       id: 'lion-pen',
-      regex: /lion.+pen|lion.*pen|pen.*lion/i,
+      regex: /lion.+pen|lion.*pen|pen.*lion|is\s*it\s*a\s*lion\s*or\s*a?\s*tiger\s*pen/i,
       question: 'Is it a lion or tiger pen?',
       answer: 'It is a lion pen.',
       category: 'school-objects'
     },
     {
       id: 'tiger-pen',
-      regex: /tiger.+pen|tiger.*pen|pen.*tiger/i,
+      regex: /tiger.+pen|tiger.*pen|pen.*tiger|is\s*it\s*a\s*tiger\s*or\s*a?\s*lion\s*pen/i,
       question: 'Is it a tiger or lion pen?',
       answer: 'It is a tiger pen.',
       category: 'school-objects'
     },
     {
       id: 'dog-pen',
-      regex: /dog.+pen|dog.*pen|pen.*dog/i,
+      regex: /dog.+pen|dog.*pen|pen.*dog|is\s*it\s*a\s*dog\s*or\s*a?\s*cat\s*pen/i,
       question: 'Is it a dog or cat pen?',
       answer: 'It is a dog pen.',
       category: 'school-objects'
     },
     {
       id: 'cat-pen',
-      regex: /cat.+pen|cat.*pen|pen.*cat/i,
+      regex: /cat.+pen|cat.*pen|pen.*cat|is\s*it\s*a\s*cat\s*or\s*a?\s*dog\s*pen/i,
       question: 'Is it a cat or dog pen?',
       answer: 'It is a cat pen.',
+      category: 'school-objects'
+    },
+    
+    // Notebook comparisons
+    {
+      id: 'banana-apple-book',
+      regex: /banana.+apple.+book|book.*banana|is\s*it\s*a\s*banana\s*or\s*a?\s*apple\s*book/i,
+      question: 'Is it a banana or apple book?',
+      answer: 'It is a banana book.',
+      category: 'school-objects'
+    },
+    {
+      id: 'apple-banana-book',
+      regex: /apple.+banana.+book|book.*apple|is\s*it\s*a?\s*apple\s*or\s*a?\s*banana\s*book/i,
+      question: 'Is it a banana or apple book?',
+      answer: 'It is an apple book.',
+      category: 'school-objects'
+    },
+    {
+      id: 'girl-boy-notebook',
+      regex: /girl.+boy.+notebook|notebook.*girl|girl['']?s\s*notebook|is\s*it\s*a\s*girl['']?s\s*or\s*boy['']?s\s*notebook/i,
+      question: 'Is it a girl\'s or boy\'s notebook?',
+      answer: 'It is a girl\'s notebook.',
+      category: 'school-objects'
+    },
+    {
+      id: 'boy-girl-notebook',
+      regex: /boy.+girl.+notebook|notebook.*boy|boy['']?s\s*notebook|is\s*it\s*a\s*boy['']?s\s*or\s*girl['']?s\s*notebook/i,
+      question: 'Is it a girl\'s or boy\'s notebook?',
+      answer: 'It is a boy\'s notebook.',
       category: 'school-objects'
     },
     
     // Pencil case comparisons
     {
       id: 'fish-snake-pencil-case',
-      regex: /fish.+snake.+pencil.?case|snake.+fish.+pencil.?case/i,
+      regex: /fish.+snake.+pencil.?case|snake.+fish.+pencil.?case|is\s*it\s*a\s*fish\s*or\s*a?\s*snake\s*pencil\s*case/i,
       question: 'Is it a fish or snake pencil case?',
       answer: 'It is a fish pencil case.',
       category: 'school-objects'
     },
     {
       id: 'snake-fish-pencil-case',
-      regex: /snake.+fish.+pencil.?case/i,
+      regex: /snake.+fish.+pencil.?case|is\s*it\s*a\s*snake\s*or\s*a?\s*fish\s*pencil\s*case/i,
       question: 'Is it a snake or fish pencil case?',
       answer: 'It is a snake pencil case.',
+      category: 'school-objects'
+    },
+    
+    // Eraser comparisons
+    {
+      id: 'cat-dog-eraser',
+      regex: /cat.+dog.+eraser|eraser.*cat|is\s*it\s*a\s*cat\s*or\s*a?\s*dog\s*eraser/i,
+      question: 'Is it a cat or dog eraser?',
+      answer: 'It is a cat eraser.',
+      category: 'school-objects'
+    },
+    {
+      id: 'dog-cat-eraser',
+      regex: /dog.+cat.+eraser|eraser.*dog|is\s*it\s*a\s*dog\s*or\s*a?\s*cat\s*eraser/i,
+      question: 'Is it a cat or dog eraser?',
+      answer: 'It is a dog eraser.',
+      category: 'school-objects'
+    },
+    {
+      id: 'big-small-eraser',
+      regex: /big.+small.+eraser|eraser.*big|is\s*it\s*a\s*big\s*or\s*a?\s*small\s*eraser/i,
+      question: 'Is it a big or small eraser?',
+      answer: 'It is a big eraser.',
+      category: 'school-objects'
+    },
+    {
+      id: 'small-big-eraser',
+      regex: /small.+big.+eraser|eraser.*small|is\s*it\s*a\s*small\s*or\s*a?\s*big\s*eraser/i,
+      question: 'Is it a big or small eraser?',
+      answer: 'It is a small eraser.',
+      category: 'school-objects'
+    },
+    {
+      id: 'happy-sad-eraser',
+      regex: /happy.+sad.+eraser|eraser.*happy|is\s*it\s*a\s*happy\s*or\s*a?\s*sad\s*eraser/i,
+      question: 'Is it a happy or sad eraser?',
+      answer: 'It is a happy eraser.',
+      category: 'school-objects'
+    },
+    {
+      id: 'sad-happy-eraser',
+      regex: /sad.+happy.+eraser|eraser.*sad|is\s*it\s*a\s*sad\s*or\s*a?\s*happy\s*eraser/i,
+      question: 'Is it a happy or sad eraser?',
+      answer: 'It is a sad eraser.',
+      category: 'school-objects'
+    },
+    {
+      id: 'ice-cream-cake-eraser',
+      regex: /ice.?cream.+cake.+eraser|eraser.*ice.?cream|is\s*it\s*an?\s*ice.?cream\s*or\s*a?\s*cake\s*eraser/i,
+      question: 'Is it an ice cream or cake eraser?',
+      answer: 'It is an ice cream eraser.',
+      category: 'school-objects'
+    },
+    {
+      id: 'cake-ice-cream-eraser',
+      regex: /cake.+ice.?cream.+eraser|eraser.*cake|is\s*it\s*a\s*cake\s*or\s*a?\s*ice.?cream\s*eraser/i,
+      question: 'Is it an ice cream or cake eraser?',
+      answer: 'It is a cake eraser.',
+      category: 'school-objects'
+    },
+    {
+      id: 'metal-plastic-sharpener',
+      regex: /metal.+plastic.+sharpener|sharpener.*metal|is\s*it\s*a\s*metal\s*or\s*a?\s*plastic\s*sharpener/i,
+      question: 'Is it a metal or plastic sharpener?',
+      answer: 'It is a metal sharpener.',
+      category: 'school-objects'
+    },
+    {
+      id: 'plastic-metal-sharpener',
+      regex: /plastic.+metal.+sharpener|sharpener.*plastic|is\s*it\s*a\s*plastic\s*or\s*a?\s*metal\s*sharpener/i,
+      question: 'Is it a metal or plastic sharpener?',
+      answer: 'It is a plastic sharpener.',
       category: 'school-objects'
     },
     {
@@ -1046,6 +1164,253 @@ const book4Unit4Body: PatternCollection = {
   ]
 };
 
+// Book 7 Unit 1 - Films and Movie Genres
+const book7Unit1Films: PatternCollection = {
+  id: 'book7-unit1-films',
+  description: 'Patterns for Book 7 Unit 1 films and movie genres',
+  patterns: [
+    {
+      id: 'action-films-opinion',
+      regex: /action.*film|film.*action/i,
+      question: 'Are action films boring or interesting?',
+      answer: 'Action films are interesting.',
+      category: 'films'
+    },
+    {
+      id: 'action-films-watched',
+      regex: /watch.*action|seen.*action/i,
+      question: 'Have you watched this action film?',
+      answer: 'Yes, I have watched this action film.',
+      category: 'films'
+    },
+    {
+      id: 'adventure-films-opinion',
+      regex: /adventure.*film|film.*adventure/i,
+      question: 'Are adventure films boring or interesting?',
+      answer: 'Adventure films are interesting.',
+      category: 'films'
+    },
+    {
+      id: 'animation-films-opinion',
+      regex: /animation.*film|film.*animation/i,
+      question: 'What do you think of animation films?',
+      answer: 'I think animation films are creative and fun to watch.',
+      category: 'films'
+    },
+    {
+      id: 'comedy-films-opinion',
+      regex: /comedy.*film|film.*comedy/i,
+      question: 'Are comedy films boring or interesting?',
+      answer: 'Comedy films are entertaining.',
+      category: 'films'
+    },
+    {
+      id: 'favorite-film-genre',
+      regex: /favourite.*genre|favorite.*genre|genre.*like/i,
+      question: 'What is your favourite film genre?',
+      answer: 'My favourite film genre is action.',
+      category: 'films'
+    },
+    {
+      id: 'favorite-movie',
+      regex: /favourite.*movie|favorite.*movie|movie.*like/i,
+      question: 'What is your favourite movie?',
+      answer: 'My favourite movie is Avengers.',
+      category: 'films'
+    },
+    {
+      id: 'cinema-frequency',
+      regex: /cinema|movie theater|how often/i,
+      question: 'How often do you go to the cinema?',
+      answer: 'I go to the cinema once a month.',
+      category: 'films'
+    },
+    {
+      id: 'cinema-preference',
+      regex: /prefer.*home|prefer.*cinema|watch.*home|watch.*cinema/i,
+      question: 'Do you prefer to watch films at home or at the cinema?',
+      answer: 'I prefer to watch films at the cinema.',
+      category: 'films'
+    },
+    {
+      id: 'dubbing-subtitles',
+      regex: /dubbing|subtitles/i,
+      question: 'Do you prefer dubbing or subtitles?',
+      answer: 'I prefer subtitles because I can hear the original voices.',
+      category: 'films'
+    },
+    {
+      id: 'special-effects',
+      regex: /special effects|effects/i,
+      question: 'Do you like special effects?',
+      answer: 'Yes, I like good special effects in movies.',
+      category: 'films'
+    },
+    {
+      id: 'favorite-actor',
+      regex: /actor|actress|favourite actor|favorite actress/i,
+      question: 'Who is your favourite actor or actress?',
+      answer: 'My favourite actor is Tom Hanks.',
+      category: 'films'
+    },
+    {
+      id: 'movie-snacks',
+      regex: /eat.*cinema|eat.*movie|popcorn|snacks/i,
+      question: 'What do you eat when you watch films at the cinema?',
+      answer: 'I eat popcorn and drink soda when I watch films at the cinema.',
+      category: 'films'
+    },
+    {
+      id: 'film-crew-director',
+      regex: /director|direct.*movie|direct.*film/i,
+      question: 'What does a film director do?',
+      answer: 'A film director directs the making of a film and guides the actors and crew.',
+      category: 'film-crew'
+    },
+    {
+      id: 'film-crew-camera',
+      regex: /camera|camera.*operator|cameraman/i,
+      question: 'What does a camera operator do?',
+      answer: 'A camera operator films the scenes for movies.',
+      category: 'film-crew'
+    },
+    {
+      id: 'film-crew-sound',
+      regex: /sound|soundman|sound.*engineer/i,
+      question: 'What do soundmen do?',
+      answer: 'Soundmen record and control the audio during filming.',
+      category: 'film-crew'
+    },
+    {
+      id: 'film-crew-makeup',
+      regex: /makeup|make-up|makeup.*artist/i,
+      question: 'What do makeup artists do?',
+      answer: 'Makeup artists apply makeup to actors for their roles.',
+      category: 'film-crew'
+    },
+    {
+      id: 'film-crew-stunt',
+      regex: /stunt|stuntman|stunts/i,
+      question: 'What do stuntmen do?',
+      answer: 'Stuntmen perform dangerous scenes that actors cannot do.',
+      category: 'film-crew'
+    }
+  ]
+};
+
+// Book 7 Unit 2 - Appearance and Piercings
+const book7Unit2Appearance: PatternCollection = {
+  id: 'book7-unit2-appearance',
+  description: 'Patterns for Book 7 Unit 2 appearance and style',
+  patterns: [
+    {
+      id: 'piercings-face',
+      regex: /piercing.*face|face.*piercing/i,
+      question: 'What does the man have on his face?',
+      answer: 'The man has piercings on his face.',
+      category: 'piercings'
+    },
+    {
+      id: 'piercings-have',
+      regex: /have.*piercing|piercing.*have|got.*piercing/i,
+      question: 'Do you have piercings on your body?',
+      answer: 'No, I don\'t have piercings on my body.',
+      category: 'piercings'
+    },
+    {
+      id: 'piercings-want',
+      regex: /want.*piercing|like.*piercing|get.*piercing/i,
+      question: 'Do you want to have piercings on your body?',
+      answer: 'No, I don\'t want to have piercings on my body.',
+      category: 'piercings'
+    },
+    {
+      id: 'piercings-trendy',
+      regex: /trendy|fashion|cool|style/i,
+      question: 'Are piercings trendy?',
+      answer: 'Yes, some piercings are trendy among young people.',
+      category: 'piercings'
+    },
+    {
+      id: 'piercings-opinion',
+      regex: /opinion|think.*piercing|like.*piercing/i,
+      question: 'What is your opinion on extreme piercing?',
+      answer: 'I think extreme piercing is too much for me.',
+      category: 'piercings'
+    },
+    {
+      id: 'piercings-location',
+      regex: /where.*piercing|piercing.*where|location/i,
+      question: 'Where is his piercing?',
+      answer: 'His piercing is on his eyebrow.',
+      category: 'piercings'
+    },
+    {
+      id: 'ear-piercings',
+      regex: /ear.*piercing|piercing.*ear|earring/i,
+      question: 'Do you want to have ear piercings?',
+      answer: 'Yes, I would like to have ear piercings.',
+      category: 'piercings'
+    },
+    {
+      id: 'eyebrow-piercings',
+      regex: /eyebrow.*piercing|piercing.*eyebrow/i,
+      question: 'What is your opinion on eyebrow piercings?',
+      answer: 'I think eyebrow piercings look too extreme.',
+      category: 'piercings'
+    },
+    {
+      id: 'lip-piercings',
+      regex: /lip.*piercing|piercing.*lip/i,
+      question: 'Do you want a lip piercing?',
+      answer: 'No, I don\'t want a lip piercing.',
+      category: 'piercings'
+    },
+    {
+      id: 'nose-piercings',
+      regex: /nose.*piercing|piercing.*nose/i,
+      question: 'Do you want a nose piercing?',
+      answer: 'No, I don\'t want a nose piercing.',
+      category: 'piercings'
+    },
+    {
+      id: 'hairstyle-mohawk',
+      regex: /mohawk|hair.*style|style.*hair/i,
+      question: 'What hairstyle does he have?',
+      answer: 'He has a mohawk.',
+      category: 'hairstyles'
+    },
+    {
+      id: 'hairstyle-bald',
+      regex: /bald|shaved.*head|no.*hair/i,
+      question: 'What hairstyle does he have?',
+      answer: 'He is bald.',
+      category: 'hairstyles'
+    },
+    {
+      id: 'hairstyle-fringe',
+      regex: /fringe|bangs/i,
+      question: 'What hairstyle does she have?',
+      answer: 'She has a fringe.',
+      category: 'hairstyles'
+    },
+    {
+      id: 'hairstyle-braids',
+      regex: /braid|plait/i,
+      question: 'What hairstyle does she have?',
+      answer: 'She has braids.',
+      category: 'hairstyles'
+    },
+    {
+      id: 'hair-dye',
+      regex: /dye|color.*hair|colour.*hair/i,
+      question: 'Do you want to dye your hair?',
+      answer: 'No, I don\'t want to dye my hair.',
+      category: 'hairstyles'
+    }
+  ]
+};
+
 // Export all pattern collections
 export const patternCollections = [
   book1Unit1TimeOfDay,
@@ -1059,7 +1424,9 @@ export const patternCollections = [
   book4Unit1Nationalities,
   book4Unit2Technology,
   book4Unit3Home,
-  book4Unit4Body
+  book4Unit4Body,
+  book7Unit1Films,
+  book7Unit2Appearance
 ];
 
 // Export individual pattern collections for direct access
@@ -1075,5 +1442,7 @@ export {
   book4Unit1Nationalities,
   book4Unit2Technology,
   book4Unit3Home,
-  book4Unit4Body
+  book4Unit4Body,
+  book7Unit1Films,
+  book7Unit2Appearance
 };

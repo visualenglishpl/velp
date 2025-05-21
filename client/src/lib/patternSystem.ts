@@ -47,8 +47,16 @@ let registeredCollections: PatternCollection[] = [...patternCollections];
  * @param unitId Optional unit ID to restrict search to specific unit patterns
  * @returns The matched pattern result or null if no match
  */
-export function findPatternMatch(filename: string, unitId: string = ''): PatternMatch | null {
+export function findPatternMatch(filename: string, unitId: string = '', debug: boolean = false): PatternMatch | null {
   const cleanedFilename = filename.toLowerCase();
+  
+  // Extract any book ID from the unitId if provided in format "book4-unit1"
+  const unitBookMatch = unitId.match(/^book(\d+)[a-c]?-unit(\d+)$/i);
+  const bookId = unitBookMatch ? unitBookMatch[1] : '1'; // Default to book 1 if not specified
+  
+  if (debug) {
+    console.log(`DEBUG (Pattern System): Attempting to match "${filename}" for book ${bookId}, unit ${unitId}`);
+  }
   
   // Helper function to check if a pattern should be applied based on unitId
   const shouldApplyPattern = (pattern: Pattern) => {
@@ -103,6 +111,28 @@ export function findPatternMatch(filename: string, unitId: string = ''): Pattern
       return true;
     }
     
+    // Home patterns for Book 4 Unit 3
+    if (bookId === '4' && normalizedUnitId === '3' && pattern.category === 'home') {
+      return true;
+    }
+    
+    // Body parts patterns for Book 4 Unit 4
+    if (bookId === '4' && normalizedUnitId === '4' && pattern.category === 'body') {
+      return true;
+    }
+    
+    // Films/Movies patterns for Book 7 Unit 1
+    if (bookId === '7' && normalizedUnitId === '1' && 
+        (pattern.category === 'films' || pattern.category === 'film-crew')) {
+      return true;
+    }
+    
+    // Appearance/Piercings patterns for Book 7 Unit 2
+    if (bookId === '7' && normalizedUnitId === '2' && 
+        (pattern.category === 'piercings' || pattern.category === 'hairstyles')) {
+      return true;
+    }
+    
     // Check if the pattern's category belongs to the current unit
     if (unitCategoryMap[normalizedUnitId] && 
         unitCategoryMap[normalizedUnitId].includes(pattern.category)) {
@@ -137,32 +167,28 @@ export function findPatternMatch(filename: string, unitId: string = ''): Pattern
     return false;
   };
   
-  // Enable debug mode (set to true for verbose logging)
-  const debug = false;
-  
-  // Debug logging helper
-  const logDebug = (message: string) => {
-    if (debug) {
-      console.log(`[PATTERN SYSTEM] ${message}`);
-    }
-  };
-  
-  logDebug(`Finding pattern match for: "${filename}" with unitId: "${unitId}"`);
-  
   // Search through all collections and patterns for a match
   for (const collection of registeredCollections) {
-    logDebug(`Checking collection: ${collection.id}`);
+    if (debug) {
+      console.log(`[PATTERN SYSTEM] Checking collection: ${collection.id}`);
+    }
     
     for (const pattern of collection.patterns) {
       if (!shouldApplyPattern(pattern)) {
-        logDebug(`  Skipping pattern: ${pattern.id} - not applicable to unit ${unitId}`);
+        if (debug) {
+          console.log(`[PATTERN SYSTEM] Skipping pattern: ${pattern.id} - not applicable to unit ${unitId}`);
+        }
         continue;
       }
       
-      logDebug(`  Testing pattern: ${pattern.id} with regex: ${pattern.regex}`);
+      if (debug) {
+        console.log(`[PATTERN SYSTEM] Testing pattern: ${pattern.id} with regex: ${pattern.regex}`);
+      }
       
       if (pattern.regex.test(cleanedFilename)) {
-        logDebug(`  ✅ MATCH FOUND! Pattern ${pattern.id} matched filename`);
+        if (debug) {
+          console.log(`[PATTERN SYSTEM] ✅ MATCH FOUND! Pattern ${pattern.id} matched filename`);
+        }
         
         // Handle direct patterns
         if ('question' in pattern && 'answer' in pattern) {
@@ -181,12 +207,12 @@ export function findPatternMatch(filename: string, unitId: string = ''): Pattern
           console.warn('Template pattern matching not yet implemented');
         }
       } else {
-        logDebug(`  ❌ No match for pattern: ${pattern.id}`);
+        console.log(`  ❌ No match for pattern: ${pattern.id}`);
       }
     }
   }
   
-  logDebug(`No matching pattern found for: "${filename}"`);
+  console.log(`No matching pattern found for: "${filename}"`);
   
   
   return null;

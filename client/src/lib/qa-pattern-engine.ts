@@ -648,7 +648,7 @@ export function getQuestionAnswer(
   const lowerFilename = filename.toLowerCase();
   
   if (lowerFilename.includes('01 r') || lowerFilename.includes('poland')) {
-    logDebug(`✅ PATTERN ENGINE: Poland country match`, 1);
+    console.log(`✅ PATTERN ENGINE: Poland country match`);
     return {
       question: "What country is this?",
       answer: "It is Poland.",
@@ -656,7 +656,7 @@ export function getQuestionAnswer(
       source: 'country-match'
     };
   } else if (lowerFilename.includes('02 n') || lowerFilename.includes('britain') || lowerFilename.includes('uk')) {
-    logDebug(`✅ PATTERN ENGINE: UK/Britain country match`, 1);
+    console.log(`✅ PATTERN ENGINE: UK/Britain country match`);
     return {
       question: "What country is this?",
       answer: "It is Britain/UK.",
@@ -667,7 +667,7 @@ export function getQuestionAnswer(
   
   // Check for common objects
   if (lowerFilename.includes('pencil')) {
-    logDebug(`✅ PATTERN ENGINE: Pencil keyword match`, 1);
+    console.log(`✅ PATTERN ENGINE: Pencil keyword match`);
     return {
       question: "What is it?",
       answer: "It is a pencil.",
@@ -675,7 +675,7 @@ export function getQuestionAnswer(
       source: 'keyword-match'
     };
   } else if (lowerFilename.includes('ruler')) {
-    logDebug(`✅ PATTERN ENGINE: Ruler keyword match`, 1);
+    console.log(`✅ PATTERN ENGINE: Ruler keyword match`);
     return {
       question: "What is it?",
       answer: "It is a ruler.",
@@ -683,7 +683,7 @@ export function getQuestionAnswer(
       source: 'keyword-match'
     };
   } else if (lowerFilename.includes('scissors')) {
-    logDebug(`✅ PATTERN ENGINE: Scissors keyword match`, 1);
+    console.log(`✅ PATTERN ENGINE: Scissors keyword match`);
     return {
       question: "What are they?",
       answer: "They are scissors.",
@@ -710,7 +710,7 @@ export function getQuestionAnswer(
       
       // Check for specific school supplies
       if (lowerFilename.includes('pencil')) {
-        logDebug(`✅ PATTERN ENGINE: School objects - pencil match`, 1);
+        console.log(`✅ PATTERN ENGINE: School objects - pencil match`);
         return {
           question: "What is it?",
           answer: "It is a pencil.",
@@ -718,7 +718,7 @@ export function getQuestionAnswer(
           source: 'unit-context'
         };
       } else if (lowerFilename.includes('ruler')) {
-        logDebug(`✅ PATTERN ENGINE: School objects - ruler match`, 1);
+        console.log(`✅ PATTERN ENGINE: School objects - ruler match`);
         return {
           question: "What is it?",
           answer: "It is a ruler.",
