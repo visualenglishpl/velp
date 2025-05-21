@@ -226,7 +226,7 @@ export default function TeacherDashboardPage() {
                         <span>Book 1</span>
                         <Badge className="bg-green-600">Full Access</Badge>
                       </CardTitle>
-                      <CardDescription>Elementary Level</CardDescription>
+                      <CardDescription>Book 1</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="mb-2">
@@ -261,7 +261,7 @@ export default function TeacherDashboardPage() {
                         <span>Book 2</span>
                         <Badge className="bg-green-600">Full Access</Badge>
                       </CardTitle>
-                      <CardDescription>Pre-Intermediate Level</CardDescription>
+                      <CardDescription>Book 2</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="mb-2">
@@ -296,7 +296,7 @@ export default function TeacherDashboardPage() {
                         <span>Book 4</span>
                         <Badge variant="outline" className="border-amber-500 text-amber-600">Units 1-5 only</Badge>
                       </CardTitle>
-                      <CardDescription>Intermediate Level</CardDescription>
+                      <CardDescription>Book 4</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="mb-2">
