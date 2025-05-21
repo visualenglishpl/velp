@@ -50,6 +50,7 @@ interface ResourceListProps {
   isLoading?: boolean;
   readOnly?: boolean;
   hideTabsInContentViewer?: boolean; // Used to hide tabs when component is in SimpleContentViewer
+  emptyMessage?: string; // Message to display when no resources are found
 }
 
 export function ResourceList({
@@ -63,7 +64,8 @@ export function ResourceList({
   searchQuery = '',
   isLoading = false,
   readOnly = false,
-  hideTabsInContentViewer = false
+  hideTabsInContentViewer = false,
+  emptyMessage = "There are no resources available for this selection"
 }: ResourceListProps) {
   const [previewResource, setPreviewResource] = useState<TeacherResource | null>(null);
   
@@ -192,7 +194,7 @@ export function ResourceList({
           <p className="text-muted-foreground mt-1">
             {searchQuery 
               ? "Try adjusting your search or filters"
-              : "There are no resources available for this selection"}
+              : emptyMessage}
           </p>
         </div>
       ) : (

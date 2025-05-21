@@ -94,6 +94,9 @@ export function TeacherResourcesContainer({
     initialUnitId,
     initialFilter
   });
+  
+  // Ensure that we always show all four main tabs regardless of resource availability
+  // This is to maintain consistency across all books/units
 
   // Resource editing state
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -172,12 +175,11 @@ export function TeacherResourcesContainer({
   // Filter resources by type for each tab
   const videoResources = resources.filter(r => r.resourceType === 'video');
   const gameResources = resources.filter(r => r.resourceType === 'game');
+  const pdfResources = resources.filter(r => r.resourceType === 'pdf');
+  const lessonResources = resources.filter(r => r.resourceType === 'lessonPlan' || r.resourceType === 'lesson');
   
-  // For PDF resources, only show the ones that match the current unit
-  const pdfResources = resources.filter(r => 
-    r.resourceType === 'pdf' && 
-    r.unitId === unitId
-  ).map(r => ({
+  // For PDF resources, only show the ones that match the current unit (but keep the tab visible)
+  const filteredPdfResources = pdfResources.filter(r => r.unitId === unitId).map(r => ({
     ...r,
     currentUnitId: unitId  // Add current unit ID to each resource for comparison
   }));
@@ -262,7 +264,7 @@ export function TeacherResourcesContainer({
           {/* PDFs Tab */}
           <TabsContent value="pdfs">
             <ResourceList
-              resources={pdfResources}
+              resources={filteredPdfResources}
               isLoading={isLoading}
               readOnly={readOnly}
               onEditResource={enableEditing ? handleEditResource : undefined}
@@ -271,192 +273,142 @@ export function TeacherResourcesContainer({
             />
           </TabsContent>
           
-          {/* Lessons Tab - Side by Side Layout */}
+          {/* Lessons Tab */}
           <TabsContent value="lessons">
-            <div className="space-y-4">
-              {/* Side by Side Lesson Plans */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Green Lesson Plan on Left */}
-                <div className="border rounded-lg overflow-hidden">
-                  <div className="bg-emerald-500 text-white p-4 flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-5 w-5" />
-                      <h3 className="text-lg font-medium">Hello Lesson Plan</h3>
+            <ResourceList
+              resources={lessonResources}
+              isLoading={isLoading}
+              readOnly={readOnly}
+              onEditResource={enableEditing ? handleEditResource : undefined}
+              onDeleteResource={enableEditing ? handleDeleteResource : undefined}
+              hideTabsInContentViewer={hideTabsInContentViewer}
+            />
+            
+            {/* Fallback content when no lesson resources are available */}
+            {lessonResources.length === 0 && !isLoading && (
+              <div className="space-y-4 mt-4">
+                {/* Side by Side Lesson Plans */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Green Lesson Plan on Left */}
+                  <div className="border rounded-lg overflow-hidden">
+                    <div className="bg-emerald-500 text-white p-4 flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-5 w-5" />
+                        <h3 className="text-lg font-medium">Hello Lesson Plan</h3>
+                      </div>
+                      <div className="bg-white text-emerald-500 px-3 py-1 rounded-full text-sm font-medium">
+                        45 minutes
+                      </div>
                     </div>
-                    <div className="bg-white text-emerald-500 px-3 py-1 rounded-full text-sm font-medium">
-                      45 minutes
-                    </div>
-                  </div>
                   
-                  <div className="p-4">
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">Objectives:</h4>
-                      <ul className="list-disc pl-5 space-y-1 text-sm">
-                        <li>Learn vocabulary related to hello</li>
-                        <li>Practice speaking and listening skills</li>
-                        <li>Engage in interactive activities</li>
-                      </ul>
-                    </div>
+                    <div className="p-4">
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">Objectives:</h4>
+                        <ul className="list-disc pl-5 space-y-1 text-sm">
+                          <li>Learn vocabulary related to hello</li>
+                          <li>Practice speaking and listening skills</li>
+                          <li>Engage in interactive activities</li>
+                        </ul>
+                      </div>
                     
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">Lesson Steps:</h4>
-                      <div className="space-y-3">
-                        <div className="flex items-start gap-2">
-                          <div className="bg-emerald-100 rounded-full p-1 mt-0.5">
-                            <CheckCircle className="h-4 w-4 text-emerald-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-sm">Warm-up: Introduction to hello vocabulary</p>
-                            <p className="text-xs text-gray-500">(5-7 minutes)</p>
-                            <div className="mt-1 text-xs text-gray-600">
-                              <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded mr-1 mb-1">Images</span>
-                              <span className="inline-block px-2 py-1 bg-pink-100 text-pink-700 rounded mr-1 mb-1">Songs</span>
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">Lesson Steps:</h4>
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-2">
+                            <div className="bg-emerald-100 rounded-full p-1 mt-0.5">
+                              <CheckCircle className="h-4 w-4 text-emerald-500" />
+                            </div>
+                            <div>
+                              <p className="font-medium text-sm">Warm-up: Introduction to hello vocabulary</p>
+                              <p className="text-xs text-gray-500">(5-7 minutes)</p>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-2">
-                          <div className="bg-emerald-100 rounded-full p-1 mt-0.5">
-                            <CheckCircle className="h-4 w-4 text-emerald-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-sm">Main Activity: Interactive practice with new vocabulary</p>
-                            <p className="text-xs text-gray-500">(20-25 minutes)</p>
-                            <div className="mt-1 text-xs text-gray-600">
-                              <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded mr-1 mb-1">Images</span>
-                              <span className="inline-block px-2 py-1 bg-purple-100 text-purple-700 rounded mr-1 mb-1">TRP/TRC</span>
-                              <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 rounded mr-1 mb-1">Role Play</span>
+                          
+                          <div className="flex items-start gap-2">
+                            <div className="bg-emerald-100 rounded-full p-1 mt-0.5">
+                              <CheckCircle className="h-4 w-4 text-emerald-500" />
+                            </div>
+                            <div>
+                              <p className="font-medium text-sm">Main Activity: Interactive practice</p>
+                              <p className="text-xs text-gray-500">(20-25 minutes)</p>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-2">
-                          <div className="bg-emerald-100 rounded-full p-1 mt-0.5">
-                            <CheckCircle className="h-4 w-4 text-emerald-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-sm">Game/Activity: Reinforcement through games</p>
-                            <p className="text-xs text-gray-500">(10 minutes)</p>
-                            <div className="mt-1 text-xs text-gray-600">
-                              <span className="inline-block px-2 py-1 bg-green-100 text-green-700 rounded mr-1 mb-1">Games</span>
-                              <span className="inline-block px-2 py-1 bg-orange-100 text-orange-700 rounded mr-1 mb-1">Classroom Game</span>
+                          
+                          <div className="flex items-start gap-2">
+                            <div className="bg-emerald-100 rounded-full p-1 mt-0.5">
+                              <CheckCircle className="h-4 w-4 text-emerald-500" />
                             </div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-2">
-                          <div className="bg-emerald-100 rounded-full p-1 mt-0.5">
-                            <CheckCircle className="h-4 w-4 text-emerald-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-sm">Wrap-up: Review and assessment</p>
-                            <p className="text-xs text-gray-500">(5 minutes)</p>
-                            <div className="mt-1 text-xs text-gray-600">
-                              <span className="inline-block px-2 py-1 bg-red-100 text-red-700 rounded mr-1 mb-1">Crafts</span>
-                              <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded mr-1 mb-1">Songs</span>
+                            <div>
+                              <p className="font-medium text-sm">Game/Activity: Reinforcement</p>
+                              <p className="text-xs text-gray-500">(10 minutes)</p>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">Materials:</h4>
-                      <p className="text-sm">Visual English Book 1 digital materials, Flashcards, Worksheets, Song recordings, Craft supplies</p>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Blue Lesson Plan on Right */}
-                <div className="border rounded-lg overflow-hidden">
-                  <div className="bg-blue-500 text-white p-4 flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-5 w-5" />
-                      <h3 className="text-lg font-medium">Greetings Lesson Plan</h3>
-                    </div>
-                    <div className="bg-white text-blue-500 px-3 py-1 rounded-full text-sm font-medium">
-                      45 minutes
-                    </div>
                   </div>
                   
-                  <div className="p-4">
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">Objectives:</h4>
-                      <ul className="list-disc pl-5 space-y-1 text-sm">
-                        <li>Learn different greetings for various times of day</li>
-                        <li>Practice conversations with peers</li>
-                        <li>Use gestures and actions while greeting</li>
-                      </ul>
+                  {/* Blue Lesson Plan on Right */}
+                  <div className="border rounded-lg overflow-hidden">
+                    <div className="bg-blue-500 text-white p-4 flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-5 w-5" />
+                        <h3 className="text-lg font-medium">Greetings Lesson Plan</h3>
+                      </div>
+                      <div className="bg-white text-blue-500 px-3 py-1 rounded-full text-sm font-medium">
+                        45 minutes
+                      </div>
                     </div>
                     
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">Lesson Steps:</h4>
-                      <div className="space-y-3">
-                        <div className="flex items-start gap-2">
-                          <div className="bg-blue-100 rounded-full p-1 mt-0.5">
-                            <CheckCircle className="h-4 w-4 text-blue-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-sm">Warm-up: Morning and evening greetings</p>
-                            <p className="text-xs text-gray-500">(5-7 minutes)</p>
-                            <div className="mt-1 text-xs text-gray-600">
-                              <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded mr-1 mb-1">Images</span>
-                              <span className="inline-block px-2 py-1 bg-pink-100 text-pink-700 rounded mr-1 mb-1">Songs</span>
+                    <div className="p-4">
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">Objectives:</h4>
+                        <ul className="list-disc pl-5 space-y-1 text-sm">
+                          <li>Learn different greetings for various times of day</li>
+                          <li>Practice conversation skills with partners</li>
+                          <li>Create greeting cards for practice</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">Lesson Steps:</h4>
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-2">
+                            <div className="bg-blue-100 rounded-full p-1 mt-0.5">
+                              <CheckCircle className="h-4 w-4 text-blue-500" />
+                            </div>
+                            <div>
+                              <p className="font-medium text-sm">Warm-up: Good morning song</p>
+                              <p className="text-xs text-gray-500">(5 minutes)</p>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-2">
-                          <div className="bg-blue-100 rounded-full p-1 mt-0.5">
-                            <CheckCircle className="h-4 w-4 text-blue-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-sm">Main Activity: Practicing greetings with actions</p>
-                            <p className="text-xs text-gray-500">(20-25 minutes)</p>
-                            <div className="mt-1 text-xs text-gray-600">
-                              <span className="inline-block px-2 py-1 bg-purple-100 text-purple-700 rounded mr-1 mb-1">TRP/TRC</span>
-                              <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 rounded mr-1 mb-1">Role Play</span>
+                          
+                          <div className="flex items-start gap-2">
+                            <div className="bg-blue-100 rounded-full p-1 mt-0.5">
+                              <CheckCircle className="h-4 w-4 text-blue-500" />
+                            </div>
+                            <div>
+                              <p className="font-medium text-sm">Main Activity: Greeting practice</p>
+                              <p className="text-xs text-gray-500">(20 minutes)</p>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-2">
-                          <div className="bg-blue-100 rounded-full p-1 mt-0.5">
-                            <CheckCircle className="h-4 w-4 text-blue-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-sm">Game: Greeting Circle Game</p>
-                            <p className="text-xs text-gray-500">(10 minutes)</p>
-                            <div className="mt-1 text-xs text-gray-600">
-                              <span className="inline-block px-2 py-1 bg-green-100 text-green-700 rounded mr-1 mb-1">Games</span>
-                              <span className="inline-block px-2 py-1 bg-orange-100 text-orange-700 rounded mr-1 mb-1">Classroom Game</span>
+                          
+                          <div className="flex items-start gap-2">
+                            <div className="bg-blue-100 rounded-full p-1 mt-0.5">
+                              <CheckCircle className="h-4 w-4 text-blue-500" />
                             </div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-2">
-                          <div className="bg-blue-100 rounded-full p-1 mt-0.5">
-                            <CheckCircle className="h-4 w-4 text-blue-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-sm">Wrap-up: Greeting cards craft</p>
-                            <p className="text-xs text-gray-500">(5 minutes)</p>
-                            <div className="mt-1 text-xs text-gray-600">
-                              <span className="inline-block px-2 py-1 bg-red-100 text-red-700 rounded mr-1 mb-1">Crafts</span>
+                            <div>
+                              <p className="font-medium text-sm">Wrap-up: Greeting cards craft</p>
+                              <p className="text-xs text-gray-500">(15 minutes)</p>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">Materials:</h4>
-                      <p className="text-sm">Visual English Book 1 digital materials, Greeting flashcards, Paper for crafts, Colored pencils</p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </TabsContent>
         </Tabs>
       )}
@@ -465,14 +417,14 @@ export function TeacherResourcesContainer({
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure you want to delete this resource?</AlertDialogTitle>
+            <AlertDialogTitle>Delete Resource</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. The resource will be permanently removed from the system.
+              Are you sure you want to delete this resource? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteCancel}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteConfirm} className="bg-red-600 hover:bg-red-700">
+            <AlertDialogAction onClick={handleDeleteConfirm} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
