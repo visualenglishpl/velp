@@ -80,21 +80,45 @@ export function findPatternMatch(filename: string, unitId: string = ''): Pattern
       '18': ['review']                                   // Unit 18 - Review
     };
     
+    // Extract any book ID from the unitId if provided in format "book4-unit1"
+    const bookMatch = unitId.match(/^book(\d+)[a-c]?-unit(\d+)$/i);
+    const bookId = bookMatch ? bookMatch[1] : '1'; // Default to book 1 if not specified
+    
+    // Determine if pattern is meant for a particular book
+    const patternBookMatch = 'id' in pattern && pattern.id.match(/^book(\d+)[a-c]?-unit/i);
+    const patternBookId = patternBookMatch ? patternBookMatch[1] : '1';
+    
+    // If pattern is for a specific book different from current book context, don't apply
+    if (patternBookMatch && patternBookId !== bookId) {
+      return false;
+    }
+    
+    // Technology patterns for Book 4 Unit 2
+    if (bookId === '4' && normalizedUnitId === '2' && pattern.category === 'technology') {
+      return true;
+    }
+    
+    // Nationality patterns for Book 4 Unit 1
+    if (bookId === '4' && normalizedUnitId === '1' && pattern.category === 'nationalities') {
+      return true;
+    }
+    
     // Check if the pattern's category belongs to the current unit
     if (unitCategoryMap[normalizedUnitId] && 
         unitCategoryMap[normalizedUnitId].includes(pattern.category)) {
       return true;
     }
     
-    // Unit prefix matching in pattern category or collection id
+    // Unit prefix matching in pattern category
     if (pattern.category.includes(`unit${normalizedUnitId}`) || 
-        pattern.category.includes(`book1-unit${normalizedUnitId}`)) {
+        pattern.category.includes(`book${bookId}-unit${normalizedUnitId}`)) {
       return true;
     }
     
-    // Collection ID matching for book1-unitX patterns
+    // Collection ID matching for book-specific unit patterns
     if ('id' in pattern && 
-        pattern.id.includes(`book1-unit${normalizedUnitId}`)) {
+        (pattern.id.includes(`book${bookId}-unit${normalizedUnitId}`) ||
+         pattern.id.includes(`unit${normalizedUnitId}`))) {
       return true;
     }
     

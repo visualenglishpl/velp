@@ -183,6 +183,14 @@ export function TeacherResourcesContainer({
     ...r,
     currentUnitId: unitId  // Add current unit ID to each resource for comparison
   }));
+  
+  // Custom empty state messages for each tab
+  const emptyMessages = {
+    videos: `No video resources available for Book ${bookId}, Unit ${unitId}`,
+    games: `No game resources available for Book ${bookId}, Unit ${unitId}`,
+    pdfs: `No PDF resources available for Book ${bookId}, Unit ${unitId}`,
+    lessons: `No lesson plans available for Book ${bookId}, Unit ${unitId}`
+  };
 
   return (
     <div className="flex flex-col space-y-4">
@@ -245,6 +253,7 @@ export function TeacherResourcesContainer({
               onEditResource={enableEditing ? handleEditResource : undefined}
               onDeleteResource={enableEditing ? handleDeleteResource : undefined}
               hideTabsInContentViewer={hideTabsInContentViewer}
+              emptyMessage={emptyMessages.videos}
             />
           </TabsContent>
           
@@ -258,6 +267,7 @@ export function TeacherResourcesContainer({
               onEditResource={enableEditing ? handleEditResource : undefined}
               onDeleteResource={enableEditing ? handleDeleteResource : undefined}
               hideTabsInContentViewer={hideTabsInContentViewer}
+              emptyMessage={emptyMessages.games}
             />
           </TabsContent>
           
@@ -270,6 +280,7 @@ export function TeacherResourcesContainer({
               onEditResource={enableEditing ? handleEditResource : undefined}
               onDeleteResource={enableEditing ? handleDeleteResource : undefined}
               hideTabsInContentViewer={hideTabsInContentViewer}
+              emptyMessage={emptyMessages.pdfs}
             />
           </TabsContent>
           
@@ -282,6 +293,7 @@ export function TeacherResourcesContainer({
               onEditResource={enableEditing ? handleEditResource : undefined}
               onDeleteResource={enableEditing ? handleDeleteResource : undefined}
               hideTabsInContentViewer={hideTabsInContentViewer}
+              emptyMessage={emptyMessages.lessons}
             />
             
             {/* Fallback content when no lesson resources are available */}

@@ -762,6 +762,290 @@ const book1Unit7Animals: PatternCollection = {
   ]
 };
 
+// Book 4 Unit 1 - Nationalities
+const book4Unit1Nationalities: PatternCollection = {
+  id: 'book4-unit1-nationalities',
+  description: 'Patterns for Book 4 Unit 1 nationalities and countries',
+  patterns: [
+    {
+      id: 'what-is-the-name-of-this-country',
+      regex: /country|poland|britain|australia|usa|scotland|england|wales|northern ireland/i,
+      question: 'What is the name of this country?',
+      answer: 'This country is Poland.',
+      category: 'nationalities'
+    },
+    {
+      id: 'where-is-this-flag-from',
+      regex: /flag|poland|britain|australia|usa|scotland|england|wales|northern ireland/i,
+      question: 'Where is this flag from?',
+      answer: 'This flag is from Poland.',
+      category: 'nationalities'
+    },
+    {
+      id: 'what-is-his-nationality',
+      regex: /nationality|polish|british|american|scottish|english|welsh|northern irish|australian/i,
+      question: 'What is his nationality?',
+      answer: 'His nationality is Polish.',
+      category: 'nationalities'
+    },
+    {
+      id: 'where-are-they-from',
+      regex: /they.*from|people.*from/i,
+      question: 'Where are they from?',
+      answer: 'They are from Poland.',
+      category: 'nationalities'
+    },
+    {
+      id: 'where-is-he-from',
+      regex: /he.*from|man.*from/i,
+      question: 'Where is he from?',
+      answer: 'He is from Britain.',
+      category: 'nationalities'
+    },
+    {
+      id: 'what-language-does-she-speak',
+      regex: /language|speak|polish|english|welsh/i,
+      question: 'What language does she speak?',
+      answer: 'She speaks Polish.',
+      category: 'nationalities'
+    },
+    {
+      id: 'where-is-this-passport-from',
+      regex: /passport/i,
+      question: 'Where is this passport from?',
+      answer: 'This passport is from Poland.',
+      category: 'nationalities'
+    },
+    {
+      id: 'where-is-this-food-from',
+      regex: /food.*from|meal.*from/i,
+      question: 'Where is this food from?',
+      answer: 'This food is from Britain.',
+      category: 'nationalities'
+    },
+    {
+      id: 'what-is-the-capital',
+      regex: /capital|warsaw|london|canberra|washington|belfast|cardiff/i,
+      question: 'What is the capital of England?',
+      answer: 'The capital of England is London.',
+      category: 'nationalities'
+    },
+    {
+      id: 'where-is-this-building-from',
+      regex: /building.*from|structure.*from/i,
+      question: 'Where is this building from?',
+      answer: 'This building is from England.',
+      category: 'nationalities'
+    },
+    {
+      id: 'where-is-this-money-from',
+      regex: /money|currency|pound|dollar|zloty/i,
+      question: 'Where is this money from?',
+      answer: 'This money is from the UK.',
+      category: 'nationalities'
+    }
+  ]
+};
+
+// Book 4 Unit 2 - Technology
+const book4Unit2Technology: PatternCollection = {
+  id: 'book4-unit2-technology',
+  description: 'Patterns for Book 4 Unit 2 gadgets and technology',
+  patterns: [
+    {
+      id: 'what-is-this-phone',
+      regex: /phone|mobile|smartphone/i,
+      question: 'What is this?',
+      answer: 'This is a phone.',
+      category: 'technology'
+    },
+    {
+      id: 'do-you-have-a-phone',
+      regex: /do.*have.*phone|have.*phone/i,
+      question: 'Do you have a phone?',
+      answer: 'Yes, I do.',
+      category: 'technology'
+    },
+    {
+      id: 'what-is-this-gadget',
+      regex: /gadget|device/i,
+      question: 'What is this gadget?',
+      answer: 'This is a mobile phone.',
+      category: 'technology'
+    },
+    {
+      id: 'are-phones-cheap-or-expensive',
+      regex: /cheap.*expensive|cost|price/i,
+      question: 'Are mobile phones cheap or expensive?',
+      answer: 'Mobile phones are expensive.',
+      category: 'technology'
+    },
+    {
+      id: 'what-is-this-charger',
+      regex: /charger|charging/i,
+      question: 'What is this?',
+      answer: 'This is a charger.',
+      category: 'technology'
+    },
+    {
+      id: 'what-are-these-headphones',
+      regex: /headphones|earphones|earbuds/i,
+      question: 'What are these?',
+      answer: 'These are headphones.',
+      category: 'technology'
+    },
+    {
+      id: 'do-you-have-speakers',
+      regex: /speakers|sound|jbl/i,
+      question: 'Do you have speakers?',
+      answer: 'Yes, I do.',
+      category: 'technology'
+    },
+    {
+      id: 'what-is-the-person-doing',
+      regex: /messaging|texting|typing/i,
+      question: 'What is the person doing?',
+      answer: 'The person is messaging or texting.',
+      category: 'technology'
+    }
+  ]
+};
+
+// Book 4 Unit 3 - Home Sweet Home
+const book4Unit3Home: PatternCollection = {
+  id: 'book4-unit3-home',
+  description: 'Patterns for Book 4 Unit 3 home types and rooms',
+  patterns: [
+    {
+      id: 'what-type-of-house-is-this',
+      regex: /house|flat|apartment|bungalow|cottage|mansion/i,
+      question: 'What type of house is this?',
+      answer: 'This is a detached house.',
+      category: 'home'
+    },
+    {
+      id: 'is-this-a-house-or-flat',
+      regex: /house.*flat|flat.*house|apartment.*house|house.*apartment/i,
+      question: 'Is this a house or a flat?',
+      answer: 'This is a house.',
+      category: 'home'
+    },
+    {
+      id: 'do-you-live-in-a-house-or-flat',
+      regex: /do.*live|where.*live|live.*house|live.*flat/i,
+      question: 'Do you live in a house or a flat?',
+      answer: 'I live in a house.',
+      category: 'home'
+    },
+    {
+      id: 'what-room-is-this',
+      regex: /room|bedroom|bathroom|kitchen|living room|dining room/i,
+      question: 'What room is this?',
+      answer: 'This is a bedroom.',
+      category: 'home'
+    },
+    {
+      id: 'how-many-bedrooms-are-there',
+      regex: /how many|bedrooms|rooms/i,
+      question: 'How many bedrooms are there?',
+      answer: 'There are three bedrooms.',
+      category: 'home'
+    },
+    {
+      id: 'is-this-room-big-or-small',
+      regex: /big.*small|small.*big|size.*room/i,
+      question: 'Is this room big or small?',
+      answer: 'This room is big.',
+      category: 'home'
+    },
+    {
+      id: 'what-can-you-see-in-the-room',
+      regex: /what.*see|can.*see|objects.*room/i,
+      question: 'What can you see in the room?',
+      answer: 'I can see a bed, a wardrobe, and a desk.',
+      category: 'home'
+    },
+    {
+      id: 'what-furniture-is-in-the-room',
+      regex: /furniture|sofa|table|chair|bed|wardrobe/i,
+      question: 'What furniture is in the room?',
+      answer: 'There is a sofa, a coffee table, and a TV in the room.',
+      category: 'home'
+    },
+    {
+      id: 'where-is-the-object',
+      regex: /where.*is|location|position|preposition/i,
+      question: 'Where is the lamp?',
+      answer: 'The lamp is on the table.',
+      category: 'home'
+    }
+  ]
+};
+
+// Book 4 Unit 4 - Parts of the Body
+const book4Unit4Body: PatternCollection = {
+  id: 'book4-unit4-body',
+  description: 'Patterns for Book 4 Unit 4 parts of the body',
+  patterns: [
+    {
+      id: 'what-part-of-the-body-is-this',
+      regex: /head|arm|leg|foot|hand|finger|toe|nose|eye|ear|mouth|shoulder|knee|elbow/i,
+      question: 'What part of the body is this?',
+      answer: 'This is the head.',
+      category: 'body'
+    },
+    {
+      id: 'how-many-body-parts',
+      regex: /how many|count|number/i,
+      question: 'How many fingers do we have?',
+      answer: 'We have ten fingers.',
+      category: 'body'
+    },
+    {
+      id: 'where-is-body-part',
+      regex: /where.*is|location|position/i,
+      question: 'Where is the nose?',
+      answer: 'The nose is in the middle of the face.',
+      category: 'body'
+    },
+    {
+      id: 'what-do-we-do-with-body-part',
+      regex: /what.*do|function|use/i,
+      question: 'What do we do with our eyes?',
+      answer: 'We use our eyes to see.',
+      category: 'body'
+    },
+    {
+      id: 'which-sense-is-associated',
+      regex: /sense|smell|taste|touch|hear|see/i,
+      question: 'Which sense is associated with the nose?',
+      answer: 'The sense of smell is associated with the nose.',
+      category: 'body'
+    },
+    {
+      id: 'is-this-part-big-or-small',
+      regex: /big.*small|size|large|tiny/i,
+      question: 'Is this part of the body big or small?',
+      answer: 'This part of the body is small.',
+      category: 'body'
+    },
+    {
+      id: 'how-many-parts-on-face',
+      regex: /face|facial features/i,
+      question: 'How many eyes do we have on our face?',
+      answer: 'We have two eyes on our face.',
+      category: 'body'
+    },
+    {
+      id: 'what-color-are-the-eyes',
+      regex: /color.*eyes|eyes.*color/i,
+      question: 'What color are your eyes?',
+      answer: 'My eyes are brown.',
+      category: 'body'
+    }
+  ]
+};
+
 // Export all pattern collections
 export const patternCollections = [
   book1Unit1TimeOfDay,
@@ -771,7 +1055,11 @@ export const patternCollections = [
   book1Unit4Colors,
   book1Unit5Family,
   book1Unit6FavoriteColor,
-  book1Unit7Animals
+  book1Unit7Animals,
+  book4Unit1Nationalities,
+  book4Unit2Technology,
+  book4Unit3Home,
+  book4Unit4Body
 ];
 
 // Export individual pattern collections for direct access
@@ -783,5 +1071,9 @@ export {
   book1Unit4Colors,
   book1Unit5Family,
   book1Unit6FavoriteColor,
-  book1Unit7Animals
+  book1Unit7Animals,
+  book4Unit1Nationalities,
+  book4Unit2Technology,
+  book4Unit3Home,
+  book4Unit4Body
 };
