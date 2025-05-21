@@ -62,6 +62,9 @@ export default function TeacherDashboardPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [classToDelete, setClassToDelete] = useState<number | null>(null);
   
+  // Book filtering state
+  const [bookFilterType, setBookFilterType] = useState('all'); // all, full-access, limited-access
+  
   // Sample data for teacher dashboard
   const [classes, setClasses] = useState<StudentClass[]>([
     { id: 1, name: 'English Beginners A', studentsCount: 12, recentActivity: '2 days ago' },
@@ -316,7 +319,32 @@ export default function TeacherDashboardPage() {
 
               {/* Purchased Books & Progress */}
               <div className="mb-8">
-                <h2 className="text-xl font-semibold mb-4">Purchased Books & Progress</h2>
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-semibold">Purchased Books & Progress</h2>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-500">Filter:</span>
+                    <div className="flex border rounded-md overflow-hidden">
+                      <button 
+                        className={`px-3 py-1 text-xs font-medium ${bookFilterType === 'all' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                        onClick={() => setBookFilterType('all')}
+                      >
+                        All
+                      </button>
+                      <button 
+                        className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'full-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                        onClick={() => setBookFilterType('full-access')}
+                      >
+                        Full Access
+                      </button>
+                      <button 
+                        className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'limited-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                        onClick={() => setBookFilterType('limited-access')}
+                      >
+                        Limited Access
+                      </button>
+                    </div>
+                  </div>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {/* Book 1 - Full Access */}
                   <Card className="overflow-hidden border border-gray-200">
@@ -338,17 +366,34 @@ export default function TeacherDashboardPage() {
                           <div className="bg-yellow-400 h-2 rounded-full" style={{ width: '72%' }}></div>
                         </div>
                       </div>
-                      <div className="flex justify-between mt-4">
-                        <Link href="/teacher/book/1">
-                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                            View Book
-                          </button>
-                        </Link>
-                        <Link href="/teacher/book/1/viewer">
-                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                            View Content
-                          </button>
-                        </Link>
+                      <div className="mt-4">
+                        <div className="flex justify-between mb-3">
+                          <Link href="/teacher/book/1">
+                            <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                              View Book
+                            </button>
+                          </Link>
+                          <Link href="/teacher/book/1/viewer">
+                            <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                              View Content
+                            </button>
+                          </Link>
+                        </div>
+                        
+                        {/* Unit Explorer */}
+                        <div className="mt-2 border-t pt-2">
+                          <div className="text-xs font-medium text-gray-500 mb-2">Jump to Unit:</div>
+                          <div className="grid grid-cols-3 gap-1">
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map((unitNumber) => (
+                              <Link key={unitNumber} href={`/teacher/book/1/unit/${unitNumber}/viewer`}>
+                                <div className={`text-center text-xs p-1 rounded cursor-pointer
+                                  ${unitNumber <= 13 ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                                  {unitNumber}
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -373,17 +418,34 @@ export default function TeacherDashboardPage() {
                           <div className="bg-purple-600 h-2 rounded-full" style={{ width: '44%' }}></div>
                         </div>
                       </div>
-                      <div className="flex justify-between mt-4">
-                        <Link href="/teacher/book/2">
-                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                            View Book
-                          </button>
-                        </Link>
-                        <Link href="/teacher/book/2/viewer">
-                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                            View Content
-                          </button>
-                        </Link>
+                      <div className="mt-4">
+                        <div className="flex justify-between mb-3">
+                          <Link href="/teacher/book/2">
+                            <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                              View Book
+                            </button>
+                          </Link>
+                          <Link href="/teacher/book/2/viewer">
+                            <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                              View Content
+                            </button>
+                          </Link>
+                        </div>
+                        
+                        {/* Unit Explorer */}
+                        <div className="mt-2 border-t pt-2">
+                          <div className="text-xs font-medium text-gray-500 mb-2">Jump to Unit:</div>
+                          <div className="grid grid-cols-3 gap-1">
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map((unitNumber) => (
+                              <Link key={unitNumber} href={`/teacher/book/2/unit/${unitNumber}/viewer`}>
+                                <div className={`text-center text-xs p-1 rounded cursor-pointer
+                                  ${unitNumber <= 8 ? 'bg-purple-100 text-purple-800 hover:bg-purple-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                                  {unitNumber}
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -408,17 +470,34 @@ export default function TeacherDashboardPage() {
                           <div className="bg-blue-500 h-2 rounded-full" style={{ width: '80%' }}></div>
                         </div>
                       </div>
-                      <div className="flex justify-between mt-4">
-                        <Link href="/teacher/book/4">
-                          <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                            View Book
-                          </button>
-                        </Link>
-                        <Link href="/checkout">
-                          <button className="text-sm text-amber-600 hover:text-amber-800 font-medium">
-                            Upgrade
-                          </button>
-                        </Link>
+                      <div className="mt-4">
+                        <div className="flex justify-between mb-3">
+                          <Link href="/teacher/book/4">
+                            <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                              View Book
+                            </button>
+                          </Link>
+                          <Link href="/checkout">
+                            <button className="text-sm text-amber-600 hover:text-amber-800 font-medium">
+                              Upgrade
+                            </button>
+                          </Link>
+                        </div>
+                        
+                        {/* Unit Explorer - Limited Access */}
+                        <div className="mt-2 border-t pt-2">
+                          <div className="text-xs font-medium text-gray-500 mb-2">Jump to Unit:</div>
+                          <div className="grid grid-cols-3 gap-1">
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((unitNumber) => (
+                              <Link key={unitNumber} href={unitNumber <= 5 ? `/teacher/book/4/unit/${unitNumber}/viewer` : '/checkout'}>
+                                <div className={`text-center text-xs p-1 rounded cursor-pointer
+                                  ${unitNumber <= 5 ? 'bg-blue-100 text-blue-800 hover:bg-blue-200' : 'bg-gray-100 text-gray-400 border border-dashed border-gray-300'}`}>
+                                  {unitNumber <= 5 ? unitNumber : <span>🔒</span>}
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -466,6 +545,13 @@ export default function TeacherDashboardPage() {
                                   <div><span className="font-medium">Students:</span> {cls.studentsCount}</div>
                                   <div><span className="font-medium">Current:</span> Book 1, Unit 13 (Colors)</div>
                                   <div><span className="font-medium">Last lesson:</span> Stopped at slide 15 - Color identification</div>
+                                  <div className="mt-2">
+                                    <Link href="/teacher/book/1/unit/13/viewer?slide=15">
+                                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 w-full">
+                                        Resume Class
+                                      </Button>
+                                    </Link>
+                                  </div>
                                 </>
                               )}
                               {cls.id === 2 && (
@@ -475,6 +561,13 @@ export default function TeacherDashboardPage() {
                                   <div><span className="font-medium">Students:</span> {cls.studentsCount}</div>
                                   <div><span className="font-medium">Current:</span> Book 2, Unit 8 (Shopping)</div>
                                   <div><span className="font-medium">Last lesson:</span> Stopped at slide 23 - Price expressions</div>
+                                  <div className="mt-2">
+                                    <Link href="/teacher/book/2/unit/8/viewer?slide=23">
+                                      <Button size="sm" className="bg-purple-600 hover:bg-purple-700 w-full">
+                                        Resume Class
+                                      </Button>
+                                    </Link>
+                                  </div>
                                 </>
                               )}
                               {cls.id === 3 && (
@@ -484,6 +577,13 @@ export default function TeacherDashboardPage() {
                                   <div><span className="font-medium">Students:</span> {cls.studentsCount}</div>
                                   <div><span className="font-medium">Current:</span> Book 4, Unit 3 (Home Sweet Home)</div>
                                   <div><span className="font-medium">Last lesson:</span> Stopped at slide 18 - Types of houses</div>
+                                  <div className="mt-2">
+                                    <Link href="/teacher/book/4/unit/3/viewer?slide=18">
+                                      <Button size="sm" className="bg-blue-500 hover:bg-blue-600 w-full">
+                                        Resume Class
+                                      </Button>
+                                    </Link>
+                                  </div>
                                 </>
                               )}
                               {cls.id > 3 && (
