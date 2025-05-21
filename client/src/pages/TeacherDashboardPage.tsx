@@ -198,60 +198,18 @@ export default function TeacherDashboardPage() {
 
           
           {/* Main Dashboard Tabs */}
-          <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-8">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="classes">My Classes</TabsTrigger>
+          <Tabs defaultValue="books" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 mb-8">
+              <TabsTrigger value="books">My Books</TabsTrigger>
               <TabsTrigger value="resources">Resources</TabsTrigger>
-              <TabsTrigger value="calendar">Schedule</TabsTrigger>
+              <TabsTrigger value="classes">My Classes</TabsTrigger>
             </TabsList>
             
-            {/* Overview Tab */}
-            <TabsContent value="overview" className="space-y-8">
-              {/* Quick actions */}
+            {/* Books Tab */}
+            <TabsContent value="books" className="space-y-8">
+              {/* My Books Section */}
               <div>
-                <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  <Card className="hover:bg-gray-50 cursor-pointer transition-colors" onClick={navigateToResources}>
-                    <CardContent className="p-6 flex flex-col items-center text-center">
-                      <BookOpen className="h-10 w-10 text-blue-600 mb-3" />
-                      <CardTitle className="text-base mb-1">Resources</CardTitle>
-                      <CardDescription>Teaching materials</CardDescription>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="hover:bg-gray-50 cursor-pointer transition-colors" onClick={navigateToStudents}>
-                    <CardContent className="p-6 flex flex-col items-center text-center">
-                      <Users className="h-10 w-10 text-blue-600 mb-3" />
-                      <CardTitle className="text-base mb-1">Students</CardTitle>
-                      <CardDescription>Manage students</CardDescription>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="hover:bg-gray-50 cursor-pointer transition-colors" onClick={navigateToAssessments}>
-                    <CardContent className="p-6 flex flex-col items-center text-center">
-                      <CheckSquare className="h-10 w-10 text-blue-600 mb-3" />
-                      <CardTitle className="text-base mb-1">Assessment</CardTitle>
-                      <CardDescription>Create quizzes</CardDescription>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="hover:bg-gray-50 cursor-pointer transition-colors" onClick={navigateToMessages}>
-                    <CardContent className="p-6 flex flex-col items-center text-center">
-                      <MessageSquare className="h-10 w-10 text-blue-600 mb-3" />
-                      <CardTitle className="text-base mb-1">Messages</CardTitle>
-                      <CardDescription>Communication</CardDescription>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="hover:bg-gray-50 cursor-pointer transition-colors" onClick={navigateToSettings}>
-                    <CardContent className="p-6 flex flex-col items-center text-center">
-                      <Settings className="h-10 w-10 text-blue-600 mb-3" />
-                      <CardTitle className="text-base mb-1">Settings</CardTitle>
-                      <CardDescription>Your profile</CardDescription>
-                    </CardContent>
-                  </Card>
-                </div>
+                <h2 className="text-xl font-semibold mb-4">My Teaching Materials</h2>
               </div>
               
 
@@ -376,38 +334,60 @@ export default function TeacherDashboardPage() {
                 <CardHeader>
                   <CardTitle>My Classes</CardTitle>
                   <CardDescription>
-                    Manage your student classes and track progress
+                    Manage your teaching classes and track progress
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {classes.map(cls => (
-                      <Card key={cls.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                        <CardHeader className="pb-2">
-                          <CardTitle className="text-lg">{cls.name}</CardTitle>
-                          <CardDescription>
-                            {cls.studentsCount} students
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="flex justify-between items-center">
-                            <Badge variant="secondary">{cls.studentsCount} students</Badge>
-                            <span className="text-xs text-gray-500">
-                              Last activity: {cls.recentActivity}
-                            </span>
+                  <div className="space-y-4">
+                    {/* Class 1 */}
+                    <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h4 className="font-medium">English Beginners A</h4>
+                          <div className="text-sm text-gray-500 mt-1">
+                            <span>12 students</span>
+                            <span className="ml-3">Book 1, Unit 13 (Colors)</span>
                           </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                    
-                    <Card className="border-dashed border-2 border-gray-300 hover:border-blue-500 bg-transparent hover:bg-gray-50 transition-colors cursor-pointer">
-                      <CardContent className="p-6 flex flex-col items-center justify-center h-full">
-                        <div className="rounded-full bg-gray-100 p-2 mb-3">
-                          <Users className="h-6 w-6 text-gray-500" />
                         </div>
-                        <p className="text-gray-600 font-medium">Add New Class</p>
-                      </CardContent>
-                    </Card>
+                        <Badge className="bg-yellow-400 text-black">Book 1</Badge>
+                      </div>
+                    </div>
+                    
+                    {/* Class 2 */}
+                    <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h4 className="font-medium">English Intermediate B</h4>
+                          <div className="text-sm text-gray-500 mt-1">
+                            <span>8 students</span>
+                            <span className="ml-3">Book 2, Unit 8 (Shopping)</span>
+                          </div>
+                        </div>
+                        <Badge className="bg-purple-600">Book 2</Badge>
+                      </div>
+                    </div>
+                    
+                    {/* Class 3 */}
+                    <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h4 className="font-medium">English Advanced C</h4>
+                          <div className="text-sm text-gray-500 mt-1">
+                            <span>6 students</span>
+                            <span className="ml-3">Book 4, Unit 3 (Home Sweet Home)</span>
+                          </div>
+                        </div>
+                        <Badge className="bg-blue-500">Book 4</Badge>
+                      </div>
+                    </div>
+                    
+                    {/* Add new class button */}
+                    <div className="mt-4">
+                      <Button>
+                        <Users className="mr-2 h-4 w-4" />
+                        Create New Class
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -423,22 +403,10 @@ export default function TeacherDashboardPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <Card className="hover:shadow-md transition-shadow cursor-pointer">
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-lg">Lesson Plans</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex items-center">
-                          <FileText className="h-8 w-8 text-blue-600 mr-3" />
-                          <span>Ready-to-use lesson plans for each unit</span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-lg">Video Resources</CardTitle>
+                        <CardTitle className="text-lg">Videos</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="flex items-center">
@@ -450,7 +418,7 @@ export default function TeacherDashboardPage() {
                     
                     <Card className="hover:shadow-md transition-shadow cursor-pointer">
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-lg">Games & Activities</CardTitle>
+                        <CardTitle className="text-lg">Games</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="flex items-center">
@@ -462,31 +430,13 @@ export default function TeacherDashboardPage() {
                     
                     <Card className="hover:shadow-md transition-shadow cursor-pointer">
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-lg">Printable Worksheets</CardTitle>
+                        <CardTitle className="text-lg">PDFs</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="flex items-center">
                           <FileText className="h-8 w-8 text-blue-600 mr-3" />
-                          <span>Downloadable materials for students</span>
+                          <span>Lesson plans and printable materials</span>
                         </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-lg">Assessment Tools</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex items-center">
-                          <BarChart3 className="h-8 w-8 text-blue-600 mr-3" />
-                          <span>Quizzes and progress tracking tools</span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="border-dashed border-2 border-gray-300 hover:border-blue-500 bg-transparent hover:bg-gray-50 transition-colors cursor-pointer">
-                      <CardContent className="p-6 flex flex-col items-center justify-center h-full">
-                        <p className="text-gray-600 font-medium">Browse All Resources</p>
                       </CardContent>
                     </Card>
                   </div>
@@ -494,22 +444,7 @@ export default function TeacherDashboardPage() {
               </Card>
             </TabsContent>
             
-            {/* Calendar Tab */}
-            <TabsContent value="calendar">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Class Schedule</CardTitle>
-                  <CardDescription>
-                    View and manage your teaching schedule
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="border rounded-md p-4 text-center">
-                    <p className="text-gray-500">Calendar view will be implemented soon</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+
           </Tabs>
         </div>
       </div>
