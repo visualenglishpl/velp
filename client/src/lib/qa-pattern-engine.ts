@@ -31,6 +31,7 @@ type PatternType =
   | 'video'
   | 'can-do'
   | 'hotels'
+  | 'daily-routine'
   | 'unknown';
 
 // Define units that we know about
@@ -75,6 +76,22 @@ const TYPICAL_COLORS: Record<string, string> = {
  */
 export function determinePatternType(filename: string, unitId: string = ''): PatternType {
   const lowercaseFilename = filename.toLowerCase();
+  
+  // Check for daily routine patterns (meals, activities by time of day)
+  if (
+    lowercaseFilename.includes('what do you eat') || 
+    lowercaseFilename.includes('what do you have for') ||
+    lowercaseFilename.includes('what time do you') ||
+    lowercaseFilename.includes('in the morning') ||
+    lowercaseFilename.includes('in the afternoon') ||
+    lowercaseFilename.includes('in the evening') ||
+    lowercaseFilename.includes('at night') ||
+    lowercaseFilename.includes('for breakfast') ||
+    lowercaseFilename.includes('for lunch') ||
+    lowercaseFilename.includes('for dinner')
+  ) {
+    return 'daily-routine';
+  }
   
   // Check for color-related patterns
   if (
@@ -211,6 +228,82 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
   
   // Different handling based on pattern type
   switch (patternType) {
+    case 'daily-routine': {
+      const lowercaseFilename = filename.toLowerCase();
+      
+      // Normalize the filename to handle special characters
+      const normalizedFilename = lowercaseFilename
+        .replace(/[–—]/g, '-')           // Normalize different types of dashes
+        .replace(/["''""]/g, '')         // Remove various quotes
+        .replace(/\s+/g, ' ')            // Normalize multiple spaces
+        .trim();
+        
+      console.log("DEBUG: Processing daily routine filename:", normalizedFilename);
+      
+      // Handle "What do you eat in the afternoon" pattern - multiple variations
+      if (normalizedFilename.includes('what do you eat in the afternoon') || 
+          normalizedFilename.includes('eat in the afternoon') ||
+          (normalizedFilename.includes('eat') && normalizedFilename.includes('afternoon'))) {
+        return {
+          question: 'What do you eat in the afternoon?',
+          answer: 'I eat lunch in the afternoon.',
+          generatedBy: 'pattern-engine'
+        };
+      }
+      
+      // Handle "What do you have for dinner in the evening" pattern - multiple variations
+      if (normalizedFilename.includes('what do you have for dinner in the evening') || 
+          normalizedFilename.includes('dinner in the evening') ||
+          (normalizedFilename.includes('dinner') && normalizedFilename.includes('evening'))) {
+        return {
+          question: 'What do you have for dinner in the evening?',
+          answer: 'I have pasta/rice/meat/vegetables for dinner in the evening.',
+          generatedBy: 'pattern-engine'
+        };
+      }
+      
+      // Handle "What time do you go to sleep at night" pattern
+      if (lowercaseFilename.includes('what time do you go to sleep at night')) {
+        return {
+          question: 'What time do you go to sleep at night?',
+          answer: 'I go to sleep at 9/10/11 o\'clock at night.',
+          generatedBy: 'pattern-engine'
+        };
+      }
+      
+      // Handle breakfast questions
+      if (lowercaseFilename.includes('for breakfast') || 
+          (lowercaseFilename.includes('eat') && lowercaseFilename.includes('morning'))) {
+        return {
+          question: 'What do you eat for breakfast in the morning?',
+          answer: 'I eat cereal/toast/eggs for breakfast in the morning.',
+          generatedBy: 'pattern-engine'
+        };
+      }
+      
+      // For other daily routine questions, extract the question from the filename
+      // and provide a generic but helpful answer template
+      const questionMatch = lowercaseFilename.match(/what\s(.+?)\?/i) || 
+                           lowercaseFilename.match(/what\s(.+?)\.gif/i) ||
+                           lowercaseFilename.match(/what\s(.+?)\.png/i);
+      
+      if (questionMatch && questionMatch[1]) {
+        const questionText = `What ${questionMatch[1]}?`;
+        return {
+          question: questionText,
+          answer: 'I [appropriate response based on the question].',
+          generatedBy: 'pattern-engine'
+        };
+      }
+      
+      // Generic daily routine question if no specific match
+      return {
+        question: 'What do you do during this time of day?',
+        answer: 'I [activity appropriate for the time of day shown].',
+        generatedBy: 'pattern-engine'
+      };
+    }
+    
     case 'hotels': {
       // Hotel-specific questions from Book 7 Unit 4
       
