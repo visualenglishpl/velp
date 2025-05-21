@@ -225,7 +225,11 @@ export default function TeacherDashboardPage() {
             {/* Logo / Title */}
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
-                <Book className="h-8 w-8 text-blue-600" />
+                <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-600">
+                  <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="4" fill="white"/>
+                  <ellipse cx="50" cy="50" rx="25" ry="30" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="3"/>
+                  <circle cx="50" cy="50" r="10" fill="currentColor"/>
+                </svg>
                 <span className="ml-2 font-bold text-xl">Visual English</span>
               </div>
               <div className="ml-6 flex space-x-4">
