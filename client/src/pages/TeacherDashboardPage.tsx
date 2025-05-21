@@ -271,56 +271,27 @@ export default function TeacherDashboardPage() {
   
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header/Navigation */}
+      {/* Header/Navigation - Simplified */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             {/* Logo / Title */}
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
-                <img 
-                  src="https://visualenglishmaterial.s3.eu-north-1.amazonaws.com/VISUAL+WEBSITE/new_hero_logo.png" 
-                  alt="Visual English Logo" 
-                  className="h-10 w-auto"
-                  onError={(e) => {
-                    // Fallback to text if image fails to load
-                    e.currentTarget.style.display = 'none';
-                    const fallbackLogo = document.getElementById('fallback-logo');
-                    if (fallbackLogo) {
-                      fallbackLogo.style.display = 'flex';
-                    }
-                  }}
-                />
-                <div id="fallback-logo" style={{display: 'none'}} className="flex items-center">
-                  <Book className="h-8 w-8 text-blue-600" />
-                  <span className="ml-2 font-bold text-xl">Visual English</span>
-                </div>
+                <Book className="h-6 w-6 text-blue-600 mr-2" />
+                <span className="font-bold text-xl">Visual English</span>
               </div>
-              <div className="ml-6 flex space-x-4">
+              <div className="ml-3">
                 <Badge variant="outline" className="border-blue-200 text-blue-600">Teacher Portal</Badge>
               </div>
             </div>
             
             {/* User info and logout */}
             <div className="flex items-center space-x-4">
-              <div className="relative">
-                <div className="flex items-center space-x-3">
-                  <div className="flex flex-col items-end">
-                    <span className="text-sm font-medium text-gray-700">
-                      {JSON.parse(localStorage.getItem('user') || '{}').fullName || 'Teacher'}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      Teacher Account
-                    </span>
-                  </div>
-                  <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
-                    <GraduationCap className="h-4 w-4" />
-                  </div>
-                </div>
+              <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                <GraduationCap className="h-4 w-4" />
               </div>
-              
               <Button variant="outline" size="sm" onClick={handleLogout}>
-                <LogOut className="h-4 w-4 mr-1" />
                 Logout
               </Button>
             </div>
@@ -331,36 +302,32 @@ export default function TeacherDashboardPage() {
       {/* Main content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col space-y-8">
-          {/* Welcome section */}
+          {/* Welcome section - Simplified */}
           <div>
-            <h1 className="text-2xl font-bold">Teacher Dashboard</h1>
-            <p className="text-gray-600 mt-1">Manage your classes, resources, and students</p>
+            <h1 className="text-2xl font-bold">My Teaching Portal</h1>
           </div>
           
 
           
-          {/* Main Dashboard Tabs */}
+          {/* Main Dashboard Tabs - Simplified */}
           <Tabs defaultValue="books" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="books">My Books</TabsTrigger>
               <TabsTrigger value="classes">My Classes</TabsTrigger>
             </TabsList>
             
             {/* Books Tab */}
             <TabsContent value="books" className="space-y-8">
-              {/* My Books Section */}
-              <div>
-                <h2 className="text-xl font-semibold mb-4">My Teaching Materials</h2>
-              </div>
+              {/* My Books Section - Empty header removed */}
               
-              {/* Quick Access Section */}
+              {/* Quick Access Section - Simplified */}
               <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-100">
                 <div className="flex justify-between items-center mb-3">
                   <h3 className="font-medium text-blue-700">Quick Access</h3>
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="text-xs text-blue-700 hover:bg-blue-100 h-7"
+                    className="text-xs text-blue-700 hover:bg-blue-100 h-7 px-2 py-0"
                     onClick={() => {
                       toast({
                         title: "Managing favorites",
@@ -368,7 +335,7 @@ export default function TeacherDashboardPage() {
                       });
                     }}
                   >
-                    Manage Favorites
+                    Manage
                   </Button>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -412,59 +379,56 @@ export default function TeacherDashboardPage() {
               </div>
 
 
-              {/* Purchased Books & Progress */}
+              {/* Purchased Books - Simplified */}
               <div className="mb-8">
-                <div className="mb-4">
-                  <div className="flex justify-between items-center mb-3">
-                    <h2 className="text-xl font-semibold">Purchased Books & Progress</h2>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-500">Filter:</span>
-                      <div className="flex border rounded-md overflow-hidden">
-                        <button 
-                          className={`px-3 py-1 text-xs font-medium ${bookFilterType === 'all' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
-                          onClick={() => setBookFilterType('all')}
-                        >
-                          All
-                        </button>
-                        <button 
-                          className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'full-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
-                          onClick={() => setBookFilterType('full-access')}
-                        >
-                          Full Access
-                        </button>
-                        <button 
-                          className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'limited-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
-                          onClick={() => setBookFilterType('limited-access')}
-                        >
-                          Limited Access
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                <div className="flex justify-between items-center mb-3">
+                  <h2 className="text-xl font-semibold">My Books</h2>
                   
-                  {/* Search box */}
-                  <div className="relative mb-3">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400">
-                        <path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
-                      </svg>
-                    </div>
-                    <input
-                      type="text"
-                      className="h-10 w-full rounded-md border border-input bg-background pl-10 py-2 text-sm ring-offset-background"
-                      placeholder="Search by unit name, topic, or content..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    {searchQuery && (
-                      <button 
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                        onClick={() => setSearchQuery('')}
-                      >
-                        <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
-                      </button>
-                    )}
+                  {/* Simple filter buttons */}
+                  <div className="flex border rounded-md overflow-hidden">
+                    <button 
+                      className={`px-3 py-1 text-xs font-medium ${bookFilterType === 'all' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                      onClick={() => setBookFilterType('all')}
+                    >
+                      All
+                    </button>
+                    <button 
+                      className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'full-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                      onClick={() => setBookFilterType('full-access')}
+                    >
+                      Full
+                    </button>
+                    <button 
+                      className={`px-3 py-1 text-xs font-medium border-l ${bookFilterType === 'limited-access' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600'}`}
+                      onClick={() => setBookFilterType('limited-access')}
+                    >
+                      Limited
+                    </button>
                   </div>
+                </div>
+                
+                {/* Simple search box */}
+                <div className="relative mb-4">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400">
+                      <path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    className="h-9 w-full rounded-md border border-input bg-background pl-10 py-2 text-sm ring-offset-background"
+                    placeholder="Search books and units..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  {searchQuery && (
+                    <button 
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      onClick={() => setSearchQuery('')}
+                    >
+                      <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                    </button>
+                  )}
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {/* Book 1 - Full Access */}
