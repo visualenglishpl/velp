@@ -341,43 +341,52 @@ export default function TeacherDashboardPage() {
                   <div className="space-y-4">
                     {/* Class 1 */}
                     <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between">
                         <div>
                           <h4 className="font-medium">English Beginners A</h4>
-                          <div className="text-sm text-gray-500 mt-1">
-                            <span>12 students</span>
-                            <span className="ml-3">Book 1, Unit 13 (Colors)</span>
+                          <div className="text-sm text-gray-500 mt-1 space-y-1">
+                            <div><span className="font-medium">Location:</span> Room 101, Main Building</div>
+                            <div><span className="font-medium">Time:</span> Mondays, 14:30-15:30</div>
+                            <div><span className="font-medium">Students:</span> 12</div>
+                            <div><span className="font-medium">Current:</span> Book 1, Unit 13 (Colors)</div>
+                            <div><span className="font-medium">Last lesson:</span> Stopped at slide 15 - Color identification</div>
                           </div>
                         </div>
-                        <Badge className="bg-yellow-400 text-black">Book 1</Badge>
+                        <Badge className="bg-yellow-400 text-black h-fit">Book 1</Badge>
                       </div>
                     </div>
                     
                     {/* Class 2 */}
                     <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between">
                         <div>
                           <h4 className="font-medium">English Intermediate B</h4>
-                          <div className="text-sm text-gray-500 mt-1">
-                            <span>8 students</span>
-                            <span className="ml-3">Book 2, Unit 8 (Shopping)</span>
+                          <div className="text-sm text-gray-500 mt-1 space-y-1">
+                            <div><span className="font-medium">Location:</span> Room 203, Language Center</div>
+                            <div><span className="font-medium">Time:</span> Wednesdays, 10:15-11:30</div>
+                            <div><span className="font-medium">Students:</span> 8</div>
+                            <div><span className="font-medium">Current:</span> Book 2, Unit 8 (Shopping)</div>
+                            <div><span className="font-medium">Last lesson:</span> Stopped at slide 23 - Price expressions</div>
                           </div>
                         </div>
-                        <Badge className="bg-purple-600">Book 2</Badge>
+                        <Badge className="bg-purple-600 h-fit">Book 2</Badge>
                       </div>
                     </div>
                     
                     {/* Class 3 */}
                     <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between">
                         <div>
                           <h4 className="font-medium">English Advanced C</h4>
-                          <div className="text-sm text-gray-500 mt-1">
-                            <span>6 students</span>
-                            <span className="ml-3">Book 4, Unit 3 (Home Sweet Home)</span>
+                          <div className="text-sm text-gray-500 mt-1 space-y-1">
+                            <div><span className="font-medium">Location:</span> Room 315, Online (Zoom)</div>
+                            <div><span className="font-medium">Time:</span> Fridays, 15:45-17:00</div>
+                            <div><span className="font-medium">Students:</span> 6</div>
+                            <div><span className="font-medium">Current:</span> Book 4, Unit 3 (Home Sweet Home)</div>
+                            <div><span className="font-medium">Last lesson:</span> Stopped at slide 18 - Types of houses</div>
                           </div>
                         </div>
-                        <Badge className="bg-blue-500">Book 4</Badge>
+                        <Badge className="bg-blue-500 h-fit">Book 4</Badge>
                       </div>
                     </div>
                     
