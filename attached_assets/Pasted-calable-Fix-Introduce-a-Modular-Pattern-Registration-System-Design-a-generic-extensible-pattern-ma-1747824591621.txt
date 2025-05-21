@@ -1,0 +1,82 @@
+calable Fix: Introduce a Modular Pattern Registration System
+Design a generic, extensible pattern matching framework. Here's what that might look like:
+
+1. Pattern Registration by Category
+Create a registry for units/categories like:
+
+ts
+Copy
+Edit
+// client/src/lib/patternRegistry.ts
+
+export const patternRegistry = {
+  "school-objects": [
+    {
+      regex: /what is it.*pencil/i,
+      question: "What is it?",
+      answer: "It is a pencil."
+    },
+    {
+      regex: /what is it.*ruler/i,
+      question: "What is it?",
+      answer: "It is a ruler."
+    }
+  ],
+  "comparisons": [
+    {
+      regex: /is it a (\w+) or a (\w+)/i,
+      questionTemplate: "Is it a $1 or a $2?",
+      answerTemplate: "It is a $1." // fallback or random logic if actual match is known
+    }
+  ]
+};
+2. Generic Matching Engine
+Rewrite qa-pattern-engine.ts to consume from this registry instead of hardcoding:
+
+ts
+Copy
+Edit
+import { patternRegistry } from './patternRegistry';
+
+export function matchPattern(filename: string) {
+  for (const category in patternRegistry) {
+    for (const pattern of patternRegistry[category]) {
+      const match = filename.match(pattern.regex);
+      if (match) {
+        return {
+          question: pattern.questionTemplate
+            ? pattern.questionTemplate.replace(/\$(\d)/g, (_, i) => match[i])
+            : pattern.question,
+          answer: pattern.answerTemplate
+            ? pattern.answerTemplate.replace(/\$(\d)/g, (_, i) => match[i])
+            : pattern.answer
+        };
+      }
+    }
+  }
+
+  return { question: "What is it?", answer: "It is a school object." }; // fallback
+}
+3. Add Pattern Previews in Dev Tools (Optional)
+For debugging, show which pattern matched and category it came from in dev console.
+
+ts
+Copy
+Edit
+console.log(`[QA-Pattern-Match] Matched pattern in category "${category}":`, pattern.regex);
+4. Future-Proofing
+Add support for translation/localization via questionLang, answerLang
+
+Externalize patterns to JSON/YAML for non-dev editing
+
+Add unit tests for pattern coverage across Units 1–18
+
+🔥 Result
+No more checking each unit manually
+
+All patterns live in a central, extensible structure
+
+Easy for anyone on your team to add/edit
+
+Makes future pattern issues visible and testable
+

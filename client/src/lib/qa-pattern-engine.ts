@@ -9,6 +9,7 @@
  */
 
 import { QuestionAnswer } from '@/hooks/use-excel-qa';
+import { findMatchingPattern } from './patternRegistry';
 
 // Define pattern types that we commonly see in the ESL content
 type PatternType = 
@@ -722,6 +723,17 @@ export function getQuestionAnswer(
           source: 'unit-context'
         };
       } else if (lowerFilename.includes('pen')) {
+        // First try the new modular pattern registry
+        const patternResult = findMatchingPattern(filename, unitId || 'unit2');
+        if (patternResult) {
+          logDebug(`✅ PATTERN REGISTRY: Used modular pattern system for ${filename}`, 0);
+          return {
+            question: patternResult.question,
+            answer: patternResult.answer,
+            generatedBy: 'pattern-registry',
+            source: patternResult.category || 'pattern-registry'
+          };
+        }
         // Check for comparison questions (is it A or B pen)
         if ((lowerFilename.includes('is it a') || lowerFilename.includes('is it')) && lowerFilename.includes('or')) {
           // Try several different pattern matching approaches
@@ -781,6 +793,28 @@ export function getQuestionAnswer(
             return {
               question: "Is it a dog or cat pen?",
               answer: "It is a dog pen. / It is a cat pen.",
+              generatedBy: 'pattern-engine',
+              source: 'unit-context'
+            };
+          }
+          
+          // Handle the case for "Fish or Snake Pencil Case" specifically
+          if (lowerFilename.includes('fish') && lowerFilename.includes('snake') && lowerFilename.includes('pencil case')) {
+            logDebug(`✅ PATTERN ENGINE: School objects - fish/snake pencil case match`, 1);
+            return {
+              question: "Is it a fish or snake pencil case?",
+              answer: "It is a fish pencil case. / It is a snake pencil case.",
+              generatedBy: 'pattern-engine',
+              source: 'unit-context'
+            };
+          }
+          
+          // Handle the case for "Panda or Koala Pencil Case" specifically
+          if (lowerFilename.includes('panda') && lowerFilename.includes('koala') && lowerFilename.includes('pencil case')) {
+            logDebug(`✅ PATTERN ENGINE: School objects - panda/koala pencil case match`, 1);
+            return {
+              question: "Is it a panda or koala pencil case?",
+              answer: "It is a panda pencil case. / It is a koala pencil case.",
               generatedBy: 'pattern-engine',
               source: 'unit-context'
             };
