@@ -685,13 +685,92 @@ export function getQuestionAnswer(
     const unitIdLower = unitId.toLowerCase();
     
     if (unitIdLower.includes('unit2') || unitIdLower.includes('school')) {
-      logDebug(`✅ PATTERN ENGINE: School objects unit match`, 1);
-      return {
-        question: "What is it?",
-        answer: "It is a school object.",
-        generatedBy: 'pattern-engine',
-        source: 'unit-context'
-      };
+      // Extract specific school object from filename
+      const lowerFilename = filename.toLowerCase();
+      
+      // Check for specific school supplies
+      if (lowerFilename.includes('pencil')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - pencil match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a pencil.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else if (lowerFilename.includes('ruler')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - ruler match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a ruler.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else if (lowerFilename.includes('eraser')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - eraser match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is an eraser.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else if (lowerFilename.includes('scissors')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - scissors match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a pair of scissors.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else if (lowerFilename.includes('pen')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - pen match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a pen.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else if (lowerFilename.includes('sharpener')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - sharpener match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a sharpener.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else if (lowerFilename.includes('book')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - book match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a book.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else if (lowerFilename.includes('pencil case')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - pencil case match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a pencil case.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else if (lowerFilename.includes('backpack') || lowerFilename.includes('school bag')) {
+        logDebug(`✅ PATTERN ENGINE: School objects - backpack match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a backpack.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      } else {
+        // Generic school object fallback
+        logDebug(`✅ PATTERN ENGINE: Generic school objects match`, 1);
+        return {
+          question: "What is it?",
+          answer: "It is a school object.",
+          generatedBy: 'pattern-engine',
+          source: 'unit-context'
+        };
+      }
     } else if (unitIdLower.includes('unit17') || unitIdLower.includes('country')) {
       logDebug(`✅ PATTERN ENGINE: Country unit match`, 1);
       return {
