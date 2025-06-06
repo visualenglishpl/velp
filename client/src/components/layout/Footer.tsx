@@ -90,7 +90,7 @@ const Footer = () => {
               <div>
                 <h4 className="text-lg font-medium text-white mb-2">Phone</h4>
                 <div className="space-y-1 text-sm">
-                  <div>Office: 537 829 308</div>
+                  <div>Office: +48 537 829 308</div>
                   <div>Sales & Marketing: +48 506 672 933</div>
                 </div>
               </div>
