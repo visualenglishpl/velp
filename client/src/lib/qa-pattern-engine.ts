@@ -530,13 +530,27 @@ export function generateQuestionAnswer(filename: string, unitId: string = ''): Q
 export function shouldHaveBlankQA(filename: string): boolean {
   const lowerFilename = filename.toLowerCase();
   
+  // Enhanced check for blank questions with better handling of file paths
+  // Extract just the filename part if it contains a path
+  const filenamePart = lowerFilename.split('/').pop() || lowerFilename;
+  
+  // Debug output to help troubleshoot issue
+  console.log(`Checking blank status for: "${filenamePart}" (from: "${filename}")`);
+  
   // Title slides, PDF files, and resource slides should be blank
-  return lowerFilename.includes('00 a') || // Title slides
-         lowerFilename.includes('.pdf') ||  // PDF files
-         lowerFilename.includes('video') || // Video resources
-         lowerFilename.includes('game') ||  // Game resources
-         lowerFilename.includes('wordwall') || // Wordwall games
-         lowerFilename.startsWith('00'); // Other intro resources
+  const isBlank = 
+    filenamePart.includes('00 a') || // Title slides
+    filenamePart.endsWith('.pdf') ||  // PDF files
+    filenamePart.includes('video') || // Video resources 
+    filenamePart.includes('game') ||  // Game resources
+    filenamePart.includes('wordwall') || // Wordwall games
+    filenamePart.startsWith('00'); // Other intro resources
+    
+  if (isBlank) {
+    console.log(`✅ Leaving slide blank (by design): ${filenamePart}`);
+  }
+  
+  return isBlank;
 }
 
 /**

@@ -412,6 +412,23 @@ export default function SimpleContentViewer() {
       }
     };
     
+    // Special handling for slides that should always be blank
+    const filenameOnly = material.content.split('/').pop() || material.content;
+    const lowerFilename = filenameOnly.toLowerCase();
+    
+    // Check if this slide should be blank by design
+    if (
+      lowerFilename.includes('00 a') || // Title slides
+      lowerFilename.endsWith('.pdf') || // PDF files
+      lowerFilename.includes('video') || // Video resources
+      lowerFilename.includes('game') || // Game resources
+      lowerFilename.includes('wordwall') || // Wordwall games
+      lowerFilename.startsWith('00') // Other intro resources
+    ) {
+      logDebug(`Skipping Q&A for blank slide (by design): ${material.content}`);
+      return { ...defaultResult, generatedBy: 'blank-by-design' };
+    }
+    
     if (!material.content) {
       return defaultResult;
     }
@@ -691,22 +708,46 @@ export default function SimpleContentViewer() {
                   const cleanedQuestion = removePrefixes(qa.question).trim();
                   
                   // Check if this is a slide that should be blank (no question)
+                  // Simplified logic focused on file extensions and common prefixes
                   const contentLower = material.content.toLowerCase();
+                  const filenamePart = contentLower.split('/').pop() || contentLower;
+                  
+                  // Debug info
+                  console.log(`Checking if slide should be blank: ${filenamePart}`);
+                  
+                  // Clear rules for what makes a blank slide (no question)
                   const isBlankByDesign = 
-                                         contentLower.includes('00 a') ||
-                                         contentLower.endsWith('.pdf') ||
-                                         contentLower.includes('video') ||
-                                         contentLower.includes('game') ||
-                                         // Fix: Specifically check for questions about school objects
-                                         (contentLower.includes('01 e') && 
-                                          !(contentLower.includes('do you have') || 
-                                            contentLower.includes('what is it') || 
-                                            contentLower.includes('what colour') ||
-                                            contentLower.includes('is it a')));
+                    filenamePart.includes('00 a') ||     // Title slides
+                    filenamePart.endsWith('.pdf') ||     // PDF files
+                    filenamePart.endsWith('.mp4') ||     // Video files
+                    filenamePart.endsWith('.swf') ||     // Flash files
+                    filenamePart.includes('video') ||    // Video resources
+                    filenamePart.includes('game') ||     // Game resources
+                    filenamePart.includes('wordwall') || // Wordwall games
+                    filenamePart.startsWith('00');       // Intro resources
+                    
+                  // Additional check for Book 1 Unit 2
+                  const isBook1Unit2 = bookId === "1" && unitPath === "unit2";
+                  
+                  // For Book 1 Unit 2, make sure school objects show questions
+                  const forceShowQuestion = isBook1Unit2 && 
+                                         filenamePart.includes('01 e') && 
+                                         (filenamePart.includes('pen') || 
+                                          filenamePart.includes('pencil') ||
+                                          filenamePart.includes('ruler') ||
+                                          filenamePart.includes('book') ||
+                                          filenamePart.includes('scissors') ||
+                                          filenamePart.includes('eraser'));
+                                          
+                  const finalIsBlank = isBlankByDesign && !forceShowQuestion;
+                  
+                  if (finalIsBlank) {
+                    console.log(`Slide will be blank (by design): ${filenamePart}`);
+                  }
                   
                   // If no question data exists for this image, or if question is empty after cleaning, 
                   // or if slide is designated as blank by design, don't render the Q&A section at all
-                  if (!hasQuestion || !cleanedQuestion || isBlankByDesign) return null;
+                  if (!hasQuestion || !cleanedQuestion || finalIsBlank) return null;
                   
                   // Otherwise, render the Q&A section
                   return (
