@@ -35,11 +35,16 @@ function isAuthenticated(req: Request, res: Response, next: Function) {
 // Role-based access control middleware
 function hasRole(roles: string[]) {
   return (req: Request, res: Response, next: Function) => {
-    if (!req.isAuthenticated()) {
+    // Check authentication first
+    const isAuth = (typeof req.isAuthenticated === 'function' && req.isAuthenticated()) || 
+                   req.user || req.session?.user;
+    
+    if (!isAuth) {
       return res.status(401).json({ error: "Not authenticated" });
     }
     
-    if (!roles.includes(req.user.role)) {
+    const user = req.user || req.session?.user;
+    if (!user?.role || !roles.includes(user.role)) {
       return res.status(403).json({ error: "Not authorized" });
     }
     
