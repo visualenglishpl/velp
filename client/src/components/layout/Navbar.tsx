@@ -34,6 +34,31 @@ const Navbar = () => {
       window.removeEventListener('storage', updateCartCount);
     };
   }, []);
+
+  const scrollToPricing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // If we're not on the home page, navigate there first
+    if (window.location.pathname !== '/') {
+      window.location.href = '/#pricing';
+      return;
+    }
+    
+    // If we're on the home page, scroll to pricing section
+    const element = document.getElementById('pricing');
+    if (element) {
+      const navbar = document.querySelector('nav');
+      const navbarHeight = navbar ? navbar.offsetHeight : 0;
+      
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navbarHeight - 20; // Add small extra offset
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
   
   return (
     <nav className="bg-white shadow sticky top-0 z-50">
@@ -67,7 +92,7 @@ const Navbar = () => {
               <Link href="/book-videos">
                 <span className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Books</span>
               </Link>
-              <a href="/#pricing" className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Pricing</a>
+              <button onClick={scrollToPricing} className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Pricing</button>
               <Link href="/contact">
                 <span className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Contact</span>
               </Link>
