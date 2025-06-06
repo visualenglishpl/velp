@@ -394,29 +394,22 @@ export default function SimpleContentViewer() {
   };
   
   // Helper function to get question and answer for a material
-  // Use our enhanced Excel QA hook to get better pattern matching
+  // Use Excel QA hook for Q&A data only
   const { findMatchingQA } = useExcelQA(bookId || "1");
-  const currentUnitId = unitPath; // Use unitPath instead of unitId
+  const currentUnitId = unitPath;
   
-  // Using the imported cleanLeadingPatterns function from textCleaners.ts
-  
+  // Simple Excel-only Q&A function
   const getQuestionAnswer = (material: S3Material) => {
-    // Default return value if no match is found
     const defaultResult = { country: "", question: "", answer: "", hasData: false };
     
-    // Enable debug logging
-    const DEBUG_ENABLED = true;
-    const logDebug = (message: string) => {
-      if (DEBUG_ENABLED) {
-        console.log(`[SimpleContentViewer Q&A] ${message}`);
-      }
-    };
+    if (!material.content) {
+      return defaultResult;
+    }
     
-    // Special handling for slides that should always be blank
+    // Check if this slide should be blank by design
     const filenameOnly = material.content.split('/').pop() || material.content;
     const lowerFilename = filenameOnly.toLowerCase();
     
-    // Check if this slide should be blank by design
     if (
       lowerFilename.includes('00 a') || // Title slides
       lowerFilename.endsWith('.pdf') || // PDF files
@@ -425,20 +418,11 @@ export default function SimpleContentViewer() {
       lowerFilename.includes('wordwall') || // Wordwall games
       lowerFilename.startsWith('00') // Other intro resources
     ) {
-      logDebug(`Skipping Q&A for blank slide (by design): ${material.content}`);
       return { ...defaultResult, generatedBy: 'blank-by-design' };
     }
     
-    if (!material.content) {
-      return defaultResult;
-    }
-    
-    // -------- EXCEL-ONLY APPROACH: Use only Excel-based Q&A data --------
-    const filename = material.content;
-    logDebug(`Processing Q&A for: ${filename}`);
-    
-    // Find matching QA from Excel data only
-    const matchingQA = findMatchingQA(filename, currentUnitId);
+    // EXCEL-ONLY: Use only Excel-based Q&A data
+    const matchingQA = findMatchingQA(material.content, currentUnitId);
     
     if (matchingQA) {
       logDebug(`✅ FOUND MATCH using enhanced Excel QA hook: ${matchingQA.question}`);
