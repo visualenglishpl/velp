@@ -24,19 +24,19 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Visual English */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">📚 Visual English</h3>
-            <div className="space-y-2 text-gray-300 mb-4">
-              <div className="flex items-center space-x-2">
-                <Globe size={16} />
-                <a href="https://visualenglish.pl" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  visualenglish.pl
-                </a>
-              </div>
+          <div className="flex flex-col">
+            <h3 className="text-xl font-semibold mb-6 flex items-center">
+              📚 Visual English
+            </h3>
+            <div className="flex items-center space-x-2 mb-6">
+              <Globe size={16} className="text-gray-400" />
+              <a href="https://visualenglish.pl" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                visualenglish.pl
+              </a>
             </div>
-            <div className="flex space-x-3 mb-6">
+            <div className="flex space-x-4">
               <a href="https://www.facebook.com/visualenglishpl" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Facebook size={20} />
               </a>
@@ -56,23 +56,25 @@ const Footer = () => {
           </div>
 
           {/* EduCentre DK / English School */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">🎓 EduCentre DK / English School</h3>
-            <div className="space-y-2 text-gray-300 mb-4">
+          <div className="flex flex-col">
+            <h3 className="text-xl font-semibold mb-6 flex items-center">
+              🎓 EduCentre DK / English School
+            </h3>
+            <div className="space-y-3 mb-6">
               <div className="flex items-center space-x-2">
-                <Globe size={16} />
-                <a href="https://educentredk.pl" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <Globe size={16} className="text-gray-400" />
+                <a href="https://educentredk.pl" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                   educentredk.pl
                 </a>
               </div>
-              <p className="text-sm">
-                Email: info@educentredk.pl<br/>
-                Email: biuro@visualenglish.pl<br/>
-                Phone (OFFICE): 537 829 308<br/>
-                Phone (SALES MARKETING): +48 506 672 933
-              </p>
+              <div className="text-gray-300 text-sm space-y-1">
+                <div>Email: info@educentredk.pl</div>
+                <div>Email: biuro@visualenglish.pl</div>
+                <div>Phone (OFFICE): 537 829 308</div>
+                <div>Phone (SALES MARKETING): +48 506 672 933</div>
+              </div>
             </div>
-            <div className="flex space-x-3 mb-6">
+            <div className="flex space-x-4">
               <a href="https://www.facebook.com/educentredk" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Facebook size={20} />
               </a>
