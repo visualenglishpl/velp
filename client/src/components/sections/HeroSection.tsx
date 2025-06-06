@@ -19,11 +19,11 @@ const HeroSection = () => {
                   alt="Visual English Logo" 
                   className="h-20 mb-5"
                 />
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 leading-tight mb-4">
-                  {t('home.hero.title')}
+                <h1 className="text-3xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+                  Interactive English Learning
                 </h1>
                 <p className="text-lg text-gray-600 mb-6 max-w-md">
-                  {t('home.hero.subtitle')}
+                  For a visual generation
                 </p>
               </div>
               
