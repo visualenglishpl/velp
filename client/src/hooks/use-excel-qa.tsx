@@ -96,7 +96,7 @@ export function useExcelQA(bookId: string) {
 
   const findMatchingQA = useCallback((filename: string, currentUnitId?: string): QuestionAnswer | undefined => {
     // Debug level: 0=none, 1=important, 2=details
-    const debugLevel = 2;
+    const debugLevel = 0;
     
     // Helper function to log with debug level
     const logDebug = (message: string, level: number = 1) => {
@@ -256,17 +256,20 @@ function extractCodePatternFromFilename(filename: string): string | null {
   // Debug log to see what we're working with
   console.log(`DEBUG: First 10 chars of filename: "${filenameWithoutExt.slice(0, 10)}"`);
   
-  // Pattern: Standard section code "01 N A"
-  const standardPattern = filenameWithoutExt.match(/^(\d{2})\s*([A-Za-z])\s*([A-Za-z])/);
-  if (standardPattern) {
-    return `${standardPattern[1]} ${standardPattern[2].toUpperCase()} ${standardPattern[3].toUpperCase()}`;
+  // Pattern: Try exact 2-character pattern first "01 C" (most common in Excel)
+  const simplePattern = filenameWithoutExt.match(/^(\d{2})\s*([A-Za-z])(?:\s|$)/);
+  if (simplePattern) {
+    const pattern = `${simplePattern[1]} ${simplePattern[2].toUpperCase()}`;
+    console.log(`DEBUG: Extracted 2-char pattern: "${pattern}"`);
+    return pattern;
   }
   
-  // Pattern: Simple section code "01 N"
-  const simplePattern = filenameWithoutExt.match(/^(\d{2})\s*([A-Za-z])/);
-  if (simplePattern) {
-    console.log(`DEBUG: Extracted section pattern ${simplePattern[1]} ${simplePattern[2].toLowerCase()}`);
-    return `${simplePattern[1]} ${simplePattern[2].toUpperCase()}`;
+  // Pattern: Extended 3-character pattern "01 N A" (fallback for specific cases)
+  const standardPattern = filenameWithoutExt.match(/^(\d{2})\s*([A-Za-z])\s*([A-Za-z])/);
+  if (standardPattern) {
+    const pattern = `${standardPattern[1]} ${standardPattern[2].toUpperCase()} ${standardPattern[3].toUpperCase()}`;
+    console.log(`DEBUG: Extracted 3-char pattern: "${pattern}"`);
+    return pattern;
   }
   
   return null;

@@ -19,9 +19,16 @@ import * as path from "path";
 
 // Authentication middleware to protect routes
 function isAuthenticated(req: Request, res: Response, next: Function) {
-  if (req.isAuthenticated()) {
+  // Check if isAuthenticated method exists (when using passport)
+  if (typeof req.isAuthenticated === 'function' && req.isAuthenticated()) {
     return next();
   }
+  
+  // Fallback: check for user session or token
+  if (req.user || req.session?.user) {
+    return next();
+  }
+  
   res.status(401).json({ error: "Not authenticated" });
 }
 
@@ -65,15 +72,32 @@ console.log(` - AWS_SECRET_ACCESS_KEY: ${process.env.AWS_SECRET_ACCESS_KEY ? '**
 // S3 bucket name constant
 const S3_BUCKET = "visualenglishmaterial";
 
-// Helper function to generate a presigned URL for S3 objects
+// Cache for presigned URLs to reduce S3 API calls
+const urlCache = new Map<string, { url: string; expires: number }>();
+
+// Helper function to generate a presigned URL for S3 objects with caching
 async function getS3PresignedUrl(key: string, expiresIn = 3600) {
+  // Check cache first
+  const cached = urlCache.get(key);
+  if (cached && cached.expires > Date.now()) {
+    return cached.url;
+  }
+
   const command = new GetObjectCommand({
     Bucket: S3_BUCKET,
     Key: key
   });
   
   try {
-    return await getSignedUrl(s3Client, command, { expiresIn });
+    const url = await getSignedUrl(s3Client, command, { expiresIn });
+    if (url) {
+      // Cache the URL with a buffer time (expires 5 minutes before actual expiration)
+      urlCache.set(key, { 
+        url, 
+        expires: Date.now() + (expiresIn - 300) * 1000 
+      });
+    }
+    return url;
   } catch (error) {
     console.error(`Error generating presigned URL for ${key}:`, error);
     return null;
