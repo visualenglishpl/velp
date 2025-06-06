@@ -25,18 +25,16 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Visual English */}
+          {/* Social Media Links */}
           <div className="flex flex-col">
-            <h3 className="text-xl font-semibold mb-6 flex items-center">
-              📚 Visual English
-            </h3>
+            <h3 className="text-xl font-semibold mb-6">📚 Visual English</h3>
             <div className="flex items-center space-x-2 mb-6">
               <Globe size={16} className="text-gray-400" />
               <a href="https://visualenglish.pl" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                 visualenglish.pl
               </a>
             </div>
-            <div className="flex space-x-4">
+            <div className="flex flex-wrap gap-4 mb-8">
               <a href="https://www.facebook.com/visualenglishpl" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Facebook size={20} />
               </a>
@@ -53,28 +51,15 @@ const Footer = () => {
                 <SiPinterest size={20} />
               </a>
             </div>
-          </div>
 
-          {/* EduCentre DK / English School */}
-          <div className="flex flex-col">
-            <h3 className="text-xl font-semibold mb-6 flex items-center">
-              🎓 EduCentre DK / English School
-            </h3>
-            <div className="space-y-3 mb-6">
-              <div className="flex items-center space-x-2">
-                <Globe size={16} className="text-gray-400" />
-                <a href="https://educentredk.pl" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
-                  educentredk.pl
-                </a>
-              </div>
-              <div className="text-gray-300 text-sm space-y-1">
-                <div>Email: info@educentredk.pl</div>
-                <div>Email: biuro@visualenglish.pl</div>
-                <div>Phone (OFFICE): 537 829 308</div>
-                <div>Phone (SALES MARKETING): +48 506 672 933</div>
-              </div>
+            <h3 className="text-xl font-semibold mb-6">🎓 EduCentre DK / English School</h3>
+            <div className="flex items-center space-x-2 mb-6">
+              <Globe size={16} className="text-gray-400" />
+              <a href="https://educentredk.pl" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                educentredk.pl
+              </a>
             </div>
-            <div className="flex space-x-4">
+            <div className="flex flex-wrap gap-4">
               <a href="https://www.facebook.com/educentredk" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Facebook size={20} />
               </a>
@@ -87,6 +72,28 @@ const Footer = () => {
               <a href="https://www.youtube.com/@EduCentreDK" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Youtube size={20} />
               </a>
+            </div>
+          </div>
+
+          {/* Contact Information */}
+          <div className="flex flex-col">
+            <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
+            <div className="text-gray-300 space-y-4">
+              <div>
+                <h4 className="text-lg font-medium text-white mb-2">Email</h4>
+                <div className="space-y-1 text-sm">
+                  <div>info@educentredk.pl</div>
+                  <div>biuro@visualenglish.pl</div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-medium text-white mb-2">Phone</h4>
+                <div className="space-y-1 text-sm">
+                  <div>Office: 537 829 308</div>
+                  <div>Sales & Marketing: +48 506 672 933</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
