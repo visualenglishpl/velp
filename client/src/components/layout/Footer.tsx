@@ -25,6 +25,36 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Visual English */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">📚 Visual English</h3>
+            <div className="space-y-2 text-gray-300 mb-4">
+              <div className="flex items-center space-x-2">
+                <Globe size={16} />
+                <a href="https://visualenglish.pl" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  visualenglish.pl
+                </a>
+              </div>
+            </div>
+            <div className="flex space-x-3 mb-6">
+              <a href="https://www.facebook.com/visualenglishpl" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Facebook size={20} />
+              </a>
+              <a href="https://www.youtube.com/@visualenglishbooks" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Youtube size={20} />
+              </a>
+              <a href="https://www.tiktok.com/@visualenglishbooks" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <SiTiktok size={20} />
+              </a>
+              <a href="https://www.linkedin.com/in/visualenglish/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Linkedin size={20} />
+              </a>
+              <a href="https://pl.pinterest.com/VisualEnglishConversation/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <SiPinterest size={20} />
+              </a>
+            </div>
+          </div>
+
           {/* EduCentre DK / English School */}
           <div>
             <h3 className="text-xl font-semibold mb-4">🎓 EduCentre DK / English School</h3>
@@ -54,36 +84,6 @@ const Footer = () => {
               </a>
               <a href="https://www.youtube.com/@EduCentreDK" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Youtube size={20} />
-              </a>
-            </div>
-          </div>
-
-          {/* Visual English */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">📚 Visual English</h3>
-            <div className="space-y-2 text-gray-300 mb-4">
-              <div className="flex items-center space-x-2">
-                <Globe size={16} />
-                <a href="https://visualenglish.pl" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  visualenglish.pl
-                </a>
-              </div>
-            </div>
-            <div className="flex space-x-3 mb-6">
-              <a href="https://www.facebook.com/visualenglishpl" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="https://www.youtube.com/@visualenglishbooks" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <Youtube size={20} />
-              </a>
-              <a href="https://www.tiktok.com/@visualenglishbooks" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <SiTiktok size={20} />
-              </a>
-              <a href="https://www.linkedin.com/in/visualenglish/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <Linkedin size={20} />
-              </a>
-              <a href="https://pl.pinterest.com/VisualEnglishConversation/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <SiPinterest size={20} />
               </a>
             </div>
           </div>
