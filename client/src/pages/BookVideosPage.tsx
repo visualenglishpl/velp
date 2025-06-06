@@ -117,12 +117,9 @@ const BookVideosPage = () => {
 
               {/* Video Info */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
                   {video.title}
                 </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  {video.description}
-                </p>
                 <button
                   onClick={() => openVideo(video.youtubeId)}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"

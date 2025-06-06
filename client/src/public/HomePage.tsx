@@ -72,7 +72,7 @@ const HomePage = () => {
       {/* Visual English Series Section */}
       <section id="books" className="py-8 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-3 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Visual English Series</h2>
+          <h2 className="text-4xl font-bold mb-3 text-center text-gray-800">Visual English Series</h2>
           <p className="text-gray-600 text-center mb-6 max-w-2xl mx-auto text-lg">
             Explore our comprehensive English learning materials organized by level. Each book contains interactive lessons with visual content.
           </p>
