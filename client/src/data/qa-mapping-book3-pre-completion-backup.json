@@ -1,0 +1,90 @@
+{
+  "01 A A": {
+    "filename": "01 A A - Classroom Objects.jpg",
+    "codePattern": "01 A A",
+    "question": "What objects can you see in your classroom?",
+    "answer": "I can see a desk, a chair, a board, a book, a pen, a pencil, etc.",
+    "unitId": "unit1",
+    "bookId": "book3"
+  },
+  "01 B A": {
+    "filename": "01 B A - School Subjects.jpg",
+    "codePattern": "01 B A",
+    "question": "What's your favorite subject?",
+    "answer": "My favorite subject is Math/English/Science/Art/etc.",
+    "unitId": "unit1",
+    "bookId": "book3"
+  },
+  "01 C A": {
+    "filename": "01 C A Video - School Subjects Song.mp4",
+    "codePattern": "01 C A",
+    "question": "What subjects do you learn about at school?",
+    "answer": "I learn about Math, English, Science, History, Geography, Art, and Music",
+    "unitId": "unit1",
+    "bookId": "book3"
+  },
+  "02 A A": {
+    "filename": "02 A A - Transportation.jpg",
+    "codePattern": "02 A A",
+    "question": "How do you go to school?",
+    "answer": "I go to school by bus/car/bicycle/on foot",
+    "unitId": "unit2",
+    "bookId": "book3"
+  },
+  "02 B A": {
+    "filename": "02 B A - Public Transport.jpg",
+    "codePattern": "02 B A",
+    "question": "What types of public transportation do you know?",
+    "answer": "I know bus, train, tram, subway, taxi, and plane",
+    "unitId": "unit2",
+    "bookId": "book3"
+  },
+  "03 A A": {
+    "filename": "03 A A - Solar System.jpg",
+    "codePattern": "03 A A",
+    "question": "What planets do you know?",
+    "answer": "I know Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune",
+    "unitId": "unit3",
+    "bookId": "book3"
+  },
+  "03 B A": {
+    "filename": "03 B A - Space Exploration.jpg",
+    "codePattern": "03 B A",
+    "question": "Would you like to travel to space?",
+    "answer": "Yes, I would like to travel to space / No, I wouldn't like to travel to space",
+    "unitId": "unit3",
+    "bookId": "book3"
+  },
+  "04 A A": {
+    "filename": "04 A A - Places in Town.jpg",
+    "codePattern": "04 A A",
+    "question": "What places can you see in a town?",
+    "answer": "In a town I can see shops, a school, a hospital, a park, a library, etc.",
+    "unitId": "unit4",
+    "bookId": "book3"
+  },
+  "04 B A": {
+    "filename": "04 B A - Giving Directions.jpg",
+    "codePattern": "04 B A",
+    "question": "How do I get to the library?",
+    "answer": "Go straight, then turn left/right at the traffic lights",
+    "unitId": "unit4",
+    "bookId": "book3"
+  },
+  "05 A A": {
+    "filename": "05 A A - Food and Drinks.jpg",
+    "codePattern": "05 A A",
+    "question": "What do you like to eat?",
+    "answer": "I like to eat pizza, hamburgers, salad, ice cream, etc.",
+    "unitId": "unit5",
+    "bookId": "book3"
+  },
+  "05 B A": {
+    "filename": "05 B A - Healthy vs Unhealthy Food.jpg",
+    "codePattern": "05 B A",
+    "question": "What foods are healthy?",
+    "answer": "Fruits, vegetables, fish, and nuts are healthy foods",
+    "unitId": "unit5",
+    "bookId": "book3"
+  }
+}

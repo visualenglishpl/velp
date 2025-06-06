@@ -1,0 +1,90 @@
+{
+  "01 A A": {
+    "filename": "01 A A - Colors.jpg",
+    "codePattern": "01 A A",
+    "question": "What colors do you know?",
+    "answer": "I know red, blue, green, yellow, orange, purple, pink, brown, black, white and gray",
+    "unitId": "unit1",
+    "bookId": "book2"
+  },
+  "01 A B": {
+    "filename": "01 A B - What Color is This.jpg",
+    "codePattern": "01 A B",
+    "question": "What color is this?",
+    "answer": "It is red/blue/green/yellow/etc.",
+    "unitId": "unit1",
+    "bookId": "book2"
+  },
+  "01 B A": {
+    "filename": "01 B A - Common Objects.jpg",
+    "codePattern": "01 B A",
+    "question": "What is this?",
+    "answer": "It is a pen/pencil/book/etc.",
+    "unitId": "unit1",
+    "bookId": "book2"
+  },
+  "02 A A": {
+    "filename": "02 A A - Numbers 1-10.jpg",
+    "codePattern": "02 A A",
+    "question": "What numbers do you know?",
+    "answer": "I know 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+    "unitId": "unit2",
+    "bookId": "book2"
+  },
+  "02 B A": {
+    "filename": "02 B A - Counting Objects.jpg",
+    "codePattern": "02 B A",
+    "question": "How many pencils are there?",
+    "answer": "There are (number) pencils",
+    "unitId": "unit2",
+    "bookId": "book2"
+  },
+  "03 A A": {
+    "filename": "03 A A Video - Days of the Week Song.mp4",
+    "codePattern": "03 A A",
+    "question": "What are the days of the week?",
+    "answer": "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
+    "unitId": "unit3",
+    "bookId": "book2"
+  },
+  "03 B A": {
+    "filename": "03 B A - Today Yesterday Tomorrow.jpg",
+    "codePattern": "03 B A",
+    "question": "What day is today/yesterday/tomorrow?",
+    "answer": "Today is (day), yesterday was (day), tomorrow will be (day)",
+    "unitId": "unit3",
+    "bookId": "book2"
+  },
+  "04 A A": {
+    "filename": "04 A A - Family Members.jpg",
+    "codePattern": "04 A A",
+    "question": "Who is in your family?",
+    "answer": "In my family there is my mother, father, sister, brother, etc.",
+    "unitId": "unit4",
+    "bookId": "book2"
+  },
+  "04 B A": {
+    "filename": "04 B A - Is This Your Mother.jpg",
+    "codePattern": "04 B A",
+    "question": "Is this your mother?",
+    "answer": "Yes, she is my mother / No, she is not my mother",
+    "unitId": "unit4",
+    "bookId": "book2"
+  },
+  "05 A A": {
+    "filename": "05 A A - Weather Types.jpg",
+    "codePattern": "05 A A",
+    "question": "What's the weather like today?",
+    "answer": "It's sunny/rainy/cloudy/windy/snowy",
+    "unitId": "unit5",
+    "bookId": "book2"
+  },
+  "05 B A": {
+    "filename": "05 B A - Weather and Clothes.jpg",
+    "codePattern": "05 B A",
+    "question": "What do you wear when it's cold?",
+    "answer": "I wear a coat, scarf, hat, and gloves when it's cold",
+    "unitId": "unit5",
+    "bookId": "book2"
+  }
+}

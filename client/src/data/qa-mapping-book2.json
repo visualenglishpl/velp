@@ -86,5 +86,1205 @@
     "answer": "I wear a coat, scarf, hat, and gloves when it's cold",
     "unitId": "unit5",
     "bookId": "book2"
+  },
+  "06 A": {
+    "filename": "06 A - What is your favorite holidays...",
+    "codePattern": "06 A",
+    "question": "What is your favorite holidays?",
+    "answer": "Answer for: What is your favorite holidays?",
+    "unitId": "unit6",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "06 B": {
+    "filename": "06 B - Do you like holidays...",
+    "codePattern": "06 B",
+    "question": "Do you like holidays?",
+    "answer": "Answer for: Do you like holidays?",
+    "unitId": "unit6",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "06 C": {
+    "filename": "06 C - How often do you use holidays...",
+    "codePattern": "06 C",
+    "question": "How often do you use holidays?",
+    "answer": "Answer for: How often do you use holidays?",
+    "unitId": "unit6",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "06 D": {
+    "filename": "06 D - Can you describe holidays...",
+    "codePattern": "06 D",
+    "question": "Can you describe holidays?",
+    "answer": "Answer for: Can you describe holidays?",
+    "unitId": "unit6",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "06 E": {
+    "filename": "06 E - What do you think about holidays...",
+    "codePattern": "06 E",
+    "question": "What do you think about holidays?",
+    "answer": "Answer for: What do you think about holidays?",
+    "unitId": "unit6",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "06 F": {
+    "filename": "06 F - Have you ever experienced holidays...",
+    "codePattern": "06 F",
+    "question": "Have you ever experienced holidays?",
+    "answer": "Answer for: Have you ever experienced holidays?",
+    "unitId": "unit6",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "06 G": {
+    "filename": "06 G - Would you recommend holidays...",
+    "codePattern": "06 G",
+    "question": "Would you recommend holidays?",
+    "answer": "Answer for: Would you recommend holidays?",
+    "unitId": "unit6",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "06 H": {
+    "filename": "06 H - Is holidays important to you...",
+    "codePattern": "06 H",
+    "question": "Is holidays important to you?",
+    "answer": "Answer for: Is holidays important to you?",
+    "unitId": "unit6",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "07 A": {
+    "filename": "07 A - What is your favorite professions...",
+    "codePattern": "07 A",
+    "question": "What is your favorite professions?",
+    "answer": "Answer for: What is your favorite professions?",
+    "unitId": "unit7",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "07 B": {
+    "filename": "07 B - Do you like professions...",
+    "codePattern": "07 B",
+    "question": "Do you like professions?",
+    "answer": "Answer for: Do you like professions?",
+    "unitId": "unit7",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "07 C": {
+    "filename": "07 C - How often do you use professions...",
+    "codePattern": "07 C",
+    "question": "How often do you use professions?",
+    "answer": "Answer for: How often do you use professions?",
+    "unitId": "unit7",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "07 D": {
+    "filename": "07 D - Can you describe professions...",
+    "codePattern": "07 D",
+    "question": "Can you describe professions?",
+    "answer": "Answer for: Can you describe professions?",
+    "unitId": "unit7",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "07 E": {
+    "filename": "07 E - What do you think about professions...",
+    "codePattern": "07 E",
+    "question": "What do you think about professions?",
+    "answer": "Answer for: What do you think about professions?",
+    "unitId": "unit7",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "07 F": {
+    "filename": "07 F - Have you ever experienced professions...",
+    "codePattern": "07 F",
+    "question": "Have you ever experienced professions?",
+    "answer": "Answer for: Have you ever experienced professions?",
+    "unitId": "unit7",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "07 G": {
+    "filename": "07 G - Would you recommend professions...",
+    "codePattern": "07 G",
+    "question": "Would you recommend professions?",
+    "answer": "Answer for: Would you recommend professions?",
+    "unitId": "unit7",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "07 H": {
+    "filename": "07 H - Is professions important to you...",
+    "codePattern": "07 H",
+    "question": "Is professions important to you?",
+    "answer": "Answer for: Is professions important to you?",
+    "unitId": "unit7",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "08 A": {
+    "filename": "08 A - What is your favorite house...",
+    "codePattern": "08 A",
+    "question": "What is your favorite house?",
+    "answer": "Answer for: What is your favorite house?",
+    "unitId": "unit8",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "08 B": {
+    "filename": "08 B - Do you like house...",
+    "codePattern": "08 B",
+    "question": "Do you like house?",
+    "answer": "Answer for: Do you like house?",
+    "unitId": "unit8",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "08 C": {
+    "filename": "08 C - How often do you use house...",
+    "codePattern": "08 C",
+    "question": "How often do you use house?",
+    "answer": "Answer for: How often do you use house?",
+    "unitId": "unit8",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "08 D": {
+    "filename": "08 D - Can you describe house...",
+    "codePattern": "08 D",
+    "question": "Can you describe house?",
+    "answer": "Answer for: Can you describe house?",
+    "unitId": "unit8",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "08 E": {
+    "filename": "08 E - What do you think about house...",
+    "codePattern": "08 E",
+    "question": "What do you think about house?",
+    "answer": "Answer for: What do you think about house?",
+    "unitId": "unit8",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "08 F": {
+    "filename": "08 F - Have you ever experienced house...",
+    "codePattern": "08 F",
+    "question": "Have you ever experienced house?",
+    "answer": "Answer for: Have you ever experienced house?",
+    "unitId": "unit8",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "08 G": {
+    "filename": "08 G - Would you recommend house...",
+    "codePattern": "08 G",
+    "question": "Would you recommend house?",
+    "answer": "Answer for: Would you recommend house?",
+    "unitId": "unit8",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "08 H": {
+    "filename": "08 H - Is house important to you...",
+    "codePattern": "08 H",
+    "question": "Is house important to you?",
+    "answer": "Answer for: Is house important to you?",
+    "unitId": "unit8",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "09 A": {
+    "filename": "09 A - What is your favorite school...",
+    "codePattern": "09 A",
+    "question": "What is your favorite school?",
+    "answer": "Answer for: What is your favorite school?",
+    "unitId": "unit9",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "09 B": {
+    "filename": "09 B - Do you like school...",
+    "codePattern": "09 B",
+    "question": "Do you like school?",
+    "answer": "Answer for: Do you like school?",
+    "unitId": "unit9",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "09 C": {
+    "filename": "09 C - How often do you use school...",
+    "codePattern": "09 C",
+    "question": "How often do you use school?",
+    "answer": "Answer for: How often do you use school?",
+    "unitId": "unit9",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "09 D": {
+    "filename": "09 D - Can you describe school...",
+    "codePattern": "09 D",
+    "question": "Can you describe school?",
+    "answer": "Answer for: Can you describe school?",
+    "unitId": "unit9",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "09 E": {
+    "filename": "09 E - What do you think about school...",
+    "codePattern": "09 E",
+    "question": "What do you think about school?",
+    "answer": "Answer for: What do you think about school?",
+    "unitId": "unit9",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "09 F": {
+    "filename": "09 F - Have you ever experienced school...",
+    "codePattern": "09 F",
+    "question": "Have you ever experienced school?",
+    "answer": "Answer for: Have you ever experienced school?",
+    "unitId": "unit9",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "09 G": {
+    "filename": "09 G - Would you recommend school...",
+    "codePattern": "09 G",
+    "question": "Would you recommend school?",
+    "answer": "Answer for: Would you recommend school?",
+    "unitId": "unit9",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "09 H": {
+    "filename": "09 H - Is school important to you...",
+    "codePattern": "09 H",
+    "question": "Is school important to you?",
+    "answer": "Answer for: Is school important to you?",
+    "unitId": "unit9",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "10 A": {
+    "filename": "10 A - What is your favorite sports...",
+    "codePattern": "10 A",
+    "question": "What is your favorite sports?",
+    "answer": "Answer for: What is your favorite sports?",
+    "unitId": "unit10",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "10 B": {
+    "filename": "10 B - Do you like sports...",
+    "codePattern": "10 B",
+    "question": "Do you like sports?",
+    "answer": "Answer for: Do you like sports?",
+    "unitId": "unit10",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "10 C": {
+    "filename": "10 C - How often do you use sports...",
+    "codePattern": "10 C",
+    "question": "How often do you use sports?",
+    "answer": "Answer for: How often do you use sports?",
+    "unitId": "unit10",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "10 D": {
+    "filename": "10 D - Can you describe sports...",
+    "codePattern": "10 D",
+    "question": "Can you describe sports?",
+    "answer": "Answer for: Can you describe sports?",
+    "unitId": "unit10",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "10 E": {
+    "filename": "10 E - What do you think about sports...",
+    "codePattern": "10 E",
+    "question": "What do you think about sports?",
+    "answer": "Answer for: What do you think about sports?",
+    "unitId": "unit10",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "10 F": {
+    "filename": "10 F - Have you ever experienced sports...",
+    "codePattern": "10 F",
+    "question": "Have you ever experienced sports?",
+    "answer": "Answer for: Have you ever experienced sports?",
+    "unitId": "unit10",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "10 G": {
+    "filename": "10 G - Would you recommend sports...",
+    "codePattern": "10 G",
+    "question": "Would you recommend sports?",
+    "answer": "Answer for: Would you recommend sports?",
+    "unitId": "unit10",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "10 H": {
+    "filename": "10 H - Is sports important to you...",
+    "codePattern": "10 H",
+    "question": "Is sports important to you?",
+    "answer": "Answer for: Is sports important to you?",
+    "unitId": "unit10",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "11 A": {
+    "filename": "11 A - What is your favorite weather...",
+    "codePattern": "11 A",
+    "question": "What is your favorite weather?",
+    "answer": "Answer for: What is your favorite weather?",
+    "unitId": "unit11",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "11 B": {
+    "filename": "11 B - Do you like weather...",
+    "codePattern": "11 B",
+    "question": "Do you like weather?",
+    "answer": "Answer for: Do you like weather?",
+    "unitId": "unit11",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "11 C": {
+    "filename": "11 C - How often do you use weather...",
+    "codePattern": "11 C",
+    "question": "How often do you use weather?",
+    "answer": "Answer for: How often do you use weather?",
+    "unitId": "unit11",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "11 D": {
+    "filename": "11 D - Can you describe weather...",
+    "codePattern": "11 D",
+    "question": "Can you describe weather?",
+    "answer": "Answer for: Can you describe weather?",
+    "unitId": "unit11",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "11 E": {
+    "filename": "11 E - What do you think about weather...",
+    "codePattern": "11 E",
+    "question": "What do you think about weather?",
+    "answer": "Answer for: What do you think about weather?",
+    "unitId": "unit11",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "11 F": {
+    "filename": "11 F - Have you ever experienced weather...",
+    "codePattern": "11 F",
+    "question": "Have you ever experienced weather?",
+    "answer": "Answer for: Have you ever experienced weather?",
+    "unitId": "unit11",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "11 G": {
+    "filename": "11 G - Would you recommend weather...",
+    "codePattern": "11 G",
+    "question": "Would you recommend weather?",
+    "answer": "Answer for: Would you recommend weather?",
+    "unitId": "unit11",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "11 H": {
+    "filename": "11 H - Is weather important to you...",
+    "codePattern": "11 H",
+    "question": "Is weather important to you?",
+    "answer": "Answer for: Is weather important to you?",
+    "unitId": "unit11",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "12 A": {
+    "filename": "12 A - What is your favorite time...",
+    "codePattern": "12 A",
+    "question": "What is your favorite time?",
+    "answer": "Answer for: What is your favorite time?",
+    "unitId": "unit12",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "12 B": {
+    "filename": "12 B - Do you like time...",
+    "codePattern": "12 B",
+    "question": "Do you like time?",
+    "answer": "Answer for: Do you like time?",
+    "unitId": "unit12",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "12 C": {
+    "filename": "12 C - How often do you use time...",
+    "codePattern": "12 C",
+    "question": "How often do you use time?",
+    "answer": "Answer for: How often do you use time?",
+    "unitId": "unit12",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "12 D": {
+    "filename": "12 D - Can you describe time...",
+    "codePattern": "12 D",
+    "question": "Can you describe time?",
+    "answer": "Answer for: Can you describe time?",
+    "unitId": "unit12",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "12 E": {
+    "filename": "12 E - What do you think about time...",
+    "codePattern": "12 E",
+    "question": "What do you think about time?",
+    "answer": "Answer for: What do you think about time?",
+    "unitId": "unit12",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "12 F": {
+    "filename": "12 F - Have you ever experienced time...",
+    "codePattern": "12 F",
+    "question": "Have you ever experienced time?",
+    "answer": "Answer for: Have you ever experienced time?",
+    "unitId": "unit12",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "12 G": {
+    "filename": "12 G - Would you recommend time...",
+    "codePattern": "12 G",
+    "question": "Would you recommend time?",
+    "answer": "Answer for: Would you recommend time?",
+    "unitId": "unit12",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "12 H": {
+    "filename": "12 H - Is time important to you...",
+    "codePattern": "12 H",
+    "question": "Is time important to you?",
+    "answer": "Answer for: Is time important to you?",
+    "unitId": "unit12",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "13 A": {
+    "filename": "13 A - What is your favorite transportation...",
+    "codePattern": "13 A",
+    "question": "What is your favorite transportation?",
+    "answer": "Answer for: What is your favorite transportation?",
+    "unitId": "unit13",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "13 B": {
+    "filename": "13 B - Do you like transportation...",
+    "codePattern": "13 B",
+    "question": "Do you like transportation?",
+    "answer": "Answer for: Do you like transportation?",
+    "unitId": "unit13",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "13 C": {
+    "filename": "13 C - How often do you use transportation...",
+    "codePattern": "13 C",
+    "question": "How often do you use transportation?",
+    "answer": "Answer for: How often do you use transportation?",
+    "unitId": "unit13",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "13 D": {
+    "filename": "13 D - Can you describe transportation...",
+    "codePattern": "13 D",
+    "question": "Can you describe transportation?",
+    "answer": "Answer for: Can you describe transportation?",
+    "unitId": "unit13",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "13 E": {
+    "filename": "13 E - What do you think about transportation...",
+    "codePattern": "13 E",
+    "question": "What do you think about transportation?",
+    "answer": "Answer for: What do you think about transportation?",
+    "unitId": "unit13",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "13 F": {
+    "filename": "13 F - Have you ever experienced transportation...",
+    "codePattern": "13 F",
+    "question": "Have you ever experienced transportation?",
+    "answer": "Answer for: Have you ever experienced transportation?",
+    "unitId": "unit13",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "13 G": {
+    "filename": "13 G - Would you recommend transportation...",
+    "codePattern": "13 G",
+    "question": "Would you recommend transportation?",
+    "answer": "Answer for: Would you recommend transportation?",
+    "unitId": "unit13",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "13 H": {
+    "filename": "13 H - Is transportation important to you...",
+    "codePattern": "13 H",
+    "question": "Is transportation important to you?",
+    "answer": "Answer for: Is transportation important to you?",
+    "unitId": "unit13",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "14 A": {
+    "filename": "14 A - What is your favorite holidays...",
+    "codePattern": "14 A",
+    "question": "What is your favorite holidays?",
+    "answer": "Answer for: What is your favorite holidays?",
+    "unitId": "unit14",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "14 B": {
+    "filename": "14 B - Do you like holidays...",
+    "codePattern": "14 B",
+    "question": "Do you like holidays?",
+    "answer": "Answer for: Do you like holidays?",
+    "unitId": "unit14",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "14 C": {
+    "filename": "14 C - How often do you use holidays...",
+    "codePattern": "14 C",
+    "question": "How often do you use holidays?",
+    "answer": "Answer for: How often do you use holidays?",
+    "unitId": "unit14",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "14 D": {
+    "filename": "14 D - Can you describe holidays...",
+    "codePattern": "14 D",
+    "question": "Can you describe holidays?",
+    "answer": "Answer for: Can you describe holidays?",
+    "unitId": "unit14",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "14 E": {
+    "filename": "14 E - What do you think about holidays...",
+    "codePattern": "14 E",
+    "question": "What do you think about holidays?",
+    "answer": "Answer for: What do you think about holidays?",
+    "unitId": "unit14",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "14 F": {
+    "filename": "14 F - Have you ever experienced holidays...",
+    "codePattern": "14 F",
+    "question": "Have you ever experienced holidays?",
+    "answer": "Answer for: Have you ever experienced holidays?",
+    "unitId": "unit14",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "14 G": {
+    "filename": "14 G - Would you recommend holidays...",
+    "codePattern": "14 G",
+    "question": "Would you recommend holidays?",
+    "answer": "Answer for: Would you recommend holidays?",
+    "unitId": "unit14",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "14 H": {
+    "filename": "14 H - Is holidays important to you...",
+    "codePattern": "14 H",
+    "question": "Is holidays important to you?",
+    "answer": "Answer for: Is holidays important to you?",
+    "unitId": "unit14",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "15 A": {
+    "filename": "15 A - What is your favorite professions...",
+    "codePattern": "15 A",
+    "question": "What is your favorite professions?",
+    "answer": "Answer for: What is your favorite professions?",
+    "unitId": "unit15",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "15 B": {
+    "filename": "15 B - Do you like professions...",
+    "codePattern": "15 B",
+    "question": "Do you like professions?",
+    "answer": "Answer for: Do you like professions?",
+    "unitId": "unit15",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "15 C": {
+    "filename": "15 C - How often do you use professions...",
+    "codePattern": "15 C",
+    "question": "How often do you use professions?",
+    "answer": "Answer for: How often do you use professions?",
+    "unitId": "unit15",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "15 D": {
+    "filename": "15 D - Can you describe professions...",
+    "codePattern": "15 D",
+    "question": "Can you describe professions?",
+    "answer": "Answer for: Can you describe professions?",
+    "unitId": "unit15",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "15 E": {
+    "filename": "15 E - What do you think about professions...",
+    "codePattern": "15 E",
+    "question": "What do you think about professions?",
+    "answer": "Answer for: What do you think about professions?",
+    "unitId": "unit15",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "15 F": {
+    "filename": "15 F - Have you ever experienced professions...",
+    "codePattern": "15 F",
+    "question": "Have you ever experienced professions?",
+    "answer": "Answer for: Have you ever experienced professions?",
+    "unitId": "unit15",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "15 G": {
+    "filename": "15 G - Would you recommend professions...",
+    "codePattern": "15 G",
+    "question": "Would you recommend professions?",
+    "answer": "Answer for: Would you recommend professions?",
+    "unitId": "unit15",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "15 H": {
+    "filename": "15 H - Is professions important to you...",
+    "codePattern": "15 H",
+    "question": "Is professions important to you?",
+    "answer": "Answer for: Is professions important to you?",
+    "unitId": "unit15",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "16 A": {
+    "filename": "16 A - What is your favorite house...",
+    "codePattern": "16 A",
+    "question": "What is your favorite house?",
+    "answer": "Answer for: What is your favorite house?",
+    "unitId": "unit16",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "16 B": {
+    "filename": "16 B - Do you like house...",
+    "codePattern": "16 B",
+    "question": "Do you like house?",
+    "answer": "Answer for: Do you like house?",
+    "unitId": "unit16",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "16 C": {
+    "filename": "16 C - How often do you use house...",
+    "codePattern": "16 C",
+    "question": "How often do you use house?",
+    "answer": "Answer for: How often do you use house?",
+    "unitId": "unit16",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "16 D": {
+    "filename": "16 D - Can you describe house...",
+    "codePattern": "16 D",
+    "question": "Can you describe house?",
+    "answer": "Answer for: Can you describe house?",
+    "unitId": "unit16",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "16 E": {
+    "filename": "16 E - What do you think about house...",
+    "codePattern": "16 E",
+    "question": "What do you think about house?",
+    "answer": "Answer for: What do you think about house?",
+    "unitId": "unit16",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "16 F": {
+    "filename": "16 F - Have you ever experienced house...",
+    "codePattern": "16 F",
+    "question": "Have you ever experienced house?",
+    "answer": "Answer for: Have you ever experienced house?",
+    "unitId": "unit16",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "16 G": {
+    "filename": "16 G - Would you recommend house...",
+    "codePattern": "16 G",
+    "question": "Would you recommend house?",
+    "answer": "Answer for: Would you recommend house?",
+    "unitId": "unit16",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "16 H": {
+    "filename": "16 H - Is house important to you...",
+    "codePattern": "16 H",
+    "question": "Is house important to you?",
+    "answer": "Answer for: Is house important to you?",
+    "unitId": "unit16",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "17 A": {
+    "filename": "17 A - What is your favorite school...",
+    "codePattern": "17 A",
+    "question": "What is your favorite school?",
+    "answer": "Answer for: What is your favorite school?",
+    "unitId": "unit17",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "17 B": {
+    "filename": "17 B - Do you like school...",
+    "codePattern": "17 B",
+    "question": "Do you like school?",
+    "answer": "Answer for: Do you like school?",
+    "unitId": "unit17",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "17 C": {
+    "filename": "17 C - How often do you use school...",
+    "codePattern": "17 C",
+    "question": "How often do you use school?",
+    "answer": "Answer for: How often do you use school?",
+    "unitId": "unit17",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "17 D": {
+    "filename": "17 D - Can you describe school...",
+    "codePattern": "17 D",
+    "question": "Can you describe school?",
+    "answer": "Answer for: Can you describe school?",
+    "unitId": "unit17",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "17 E": {
+    "filename": "17 E - What do you think about school...",
+    "codePattern": "17 E",
+    "question": "What do you think about school?",
+    "answer": "Answer for: What do you think about school?",
+    "unitId": "unit17",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "17 F": {
+    "filename": "17 F - Have you ever experienced school...",
+    "codePattern": "17 F",
+    "question": "Have you ever experienced school?",
+    "answer": "Answer for: Have you ever experienced school?",
+    "unitId": "unit17",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "17 G": {
+    "filename": "17 G - Would you recommend school...",
+    "codePattern": "17 G",
+    "question": "Would you recommend school?",
+    "answer": "Answer for: Would you recommend school?",
+    "unitId": "unit17",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "17 H": {
+    "filename": "17 H - Is school important to you...",
+    "codePattern": "17 H",
+    "question": "Is school important to you?",
+    "answer": "Answer for: Is school important to you?",
+    "unitId": "unit17",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "18 A": {
+    "filename": "18 A - What is your favorite sports...",
+    "codePattern": "18 A",
+    "question": "What is your favorite sports?",
+    "answer": "Answer for: What is your favorite sports?",
+    "unitId": "unit18",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "18 B": {
+    "filename": "18 B - Do you like sports...",
+    "codePattern": "18 B",
+    "question": "Do you like sports?",
+    "answer": "Answer for: Do you like sports?",
+    "unitId": "unit18",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "18 C": {
+    "filename": "18 C - How often do you use sports...",
+    "codePattern": "18 C",
+    "question": "How often do you use sports?",
+    "answer": "Answer for: How often do you use sports?",
+    "unitId": "unit18",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "18 D": {
+    "filename": "18 D - Can you describe sports...",
+    "codePattern": "18 D",
+    "question": "Can you describe sports?",
+    "answer": "Answer for: Can you describe sports?",
+    "unitId": "unit18",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "18 E": {
+    "filename": "18 E - What do you think about sports...",
+    "codePattern": "18 E",
+    "question": "What do you think about sports?",
+    "answer": "Answer for: What do you think about sports?",
+    "unitId": "unit18",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "18 F": {
+    "filename": "18 F - Have you ever experienced sports...",
+    "codePattern": "18 F",
+    "question": "Have you ever experienced sports?",
+    "answer": "Answer for: Have you ever experienced sports?",
+    "unitId": "unit18",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "18 G": {
+    "filename": "18 G - Would you recommend sports...",
+    "codePattern": "18 G",
+    "question": "Would you recommend sports?",
+    "answer": "Answer for: Would you recommend sports?",
+    "unitId": "unit18",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "18 H": {
+    "filename": "18 H - Is sports important to you...",
+    "codePattern": "18 H",
+    "question": "Is sports important to you?",
+    "answer": "Answer for: Is sports important to you?",
+    "unitId": "unit18",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "19 A": {
+    "filename": "19 A - What is your favorite weather...",
+    "codePattern": "19 A",
+    "question": "What is your favorite weather?",
+    "answer": "Answer for: What is your favorite weather?",
+    "unitId": "unit19",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "19 B": {
+    "filename": "19 B - Do you like weather...",
+    "codePattern": "19 B",
+    "question": "Do you like weather?",
+    "answer": "Answer for: Do you like weather?",
+    "unitId": "unit19",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "19 C": {
+    "filename": "19 C - How often do you use weather...",
+    "codePattern": "19 C",
+    "question": "How often do you use weather?",
+    "answer": "Answer for: How often do you use weather?",
+    "unitId": "unit19",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "19 D": {
+    "filename": "19 D - Can you describe weather...",
+    "codePattern": "19 D",
+    "question": "Can you describe weather?",
+    "answer": "Answer for: Can you describe weather?",
+    "unitId": "unit19",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "19 E": {
+    "filename": "19 E - What do you think about weather...",
+    "codePattern": "19 E",
+    "question": "What do you think about weather?",
+    "answer": "Answer for: What do you think about weather?",
+    "unitId": "unit19",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "19 F": {
+    "filename": "19 F - Have you ever experienced weather...",
+    "codePattern": "19 F",
+    "question": "Have you ever experienced weather?",
+    "answer": "Answer for: Have you ever experienced weather?",
+    "unitId": "unit19",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "19 G": {
+    "filename": "19 G - Would you recommend weather...",
+    "codePattern": "19 G",
+    "question": "Would you recommend weather?",
+    "answer": "Answer for: Would you recommend weather?",
+    "unitId": "unit19",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "19 H": {
+    "filename": "19 H - Is weather important to you...",
+    "codePattern": "19 H",
+    "question": "Is weather important to you?",
+    "answer": "Answer for: Is weather important to you?",
+    "unitId": "unit19",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "20 A": {
+    "filename": "20 A - What is your favorite time...",
+    "codePattern": "20 A",
+    "question": "What is your favorite time?",
+    "answer": "Answer for: What is your favorite time?",
+    "unitId": "unit20",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "20 B": {
+    "filename": "20 B - Do you like time...",
+    "codePattern": "20 B",
+    "question": "Do you like time?",
+    "answer": "Answer for: Do you like time?",
+    "unitId": "unit20",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "20 C": {
+    "filename": "20 C - How often do you use time...",
+    "codePattern": "20 C",
+    "question": "How often do you use time?",
+    "answer": "Answer for: How often do you use time?",
+    "unitId": "unit20",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "20 D": {
+    "filename": "20 D - Can you describe time...",
+    "codePattern": "20 D",
+    "question": "Can you describe time?",
+    "answer": "Answer for: Can you describe time?",
+    "unitId": "unit20",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "20 E": {
+    "filename": "20 E - What do you think about time...",
+    "codePattern": "20 E",
+    "question": "What do you think about time?",
+    "answer": "Answer for: What do you think about time?",
+    "unitId": "unit20",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "20 F": {
+    "filename": "20 F - Have you ever experienced time...",
+    "codePattern": "20 F",
+    "question": "Have you ever experienced time?",
+    "answer": "Answer for: Have you ever experienced time?",
+    "unitId": "unit20",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "20 G": {
+    "filename": "20 G - Would you recommend time...",
+    "codePattern": "20 G",
+    "question": "Would you recommend time?",
+    "answer": "Answer for: Would you recommend time?",
+    "unitId": "unit20",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
+  },
+  "20 H": {
+    "filename": "20 H - Is time important to you...",
+    "codePattern": "20 H",
+    "question": "Is time important to you?",
+    "answer": "Answer for: Is time important to you?",
+    "unitId": "unit20",
+    "bookId": "book2",
+    "source": "generated-completion",
+    "generatedBy": "unit-completion-system"
   }
 }
