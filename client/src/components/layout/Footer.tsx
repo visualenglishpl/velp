@@ -1,6 +1,6 @@
 import { Link } from "wouter";
-import { Facebook, Youtube, Instagram } from "lucide-react";
-import { SiTiktok } from "react-icons/si";
+import { Facebook, Youtube, Instagram, Globe, Linkedin } from "lucide-react";
+import { SiTiktok, SiPinterest } from "react-icons/si";
 
 const Footer = () => {
   const scrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
@@ -25,38 +25,73 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Left side */}
+          {/* EduCentre DK / English School */}
           <div>
-            <div className="flex items-center mb-4">
-              <div className="bg-white p-2 rounded-md">
-                <img 
-                  src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png" 
-                  alt="Visual English Logo"
-                  className="h-16 mr-3"
-                />
+            <h3 className="text-xl font-semibold mb-4">🎓 EduCentre DK / English School</h3>
+            <div className="space-y-2 text-gray-300 mb-4">
+              <div className="flex items-center space-x-2">
+                <Globe size={16} />
+                <a href="https://educentredk.pl" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  educentredk.pl
+                </a>
               </div>
+              <p className="text-sm">
+                Email: info@educentredk.pl<br/>
+                Email: biuro@visualenglish.pl<br/>
+                Phone (OFFICE): 537 829 308<br/>
+                Phone (SALES MARKETING): +48 506 672 933
+              </p>
             </div>
-            <p className="text-gray-300 mb-6 text-base">
-              Interactive English learning for a visual generation.
-            </p>
-            <div className="flex space-x-4">
-              <a href="https://www.facebook.com/visualenglishpl" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <Facebook size={24} />
+            <div className="flex space-x-3 mb-6">
+              <a href="https://www.facebook.com/educentredk" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Facebook size={20} />
               </a>
-              <a href="https://www.youtube.com/@visualenglishbooks" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <Youtube size={24} />
+              <a href="https://www.tiktok.com/@englishschoolpoland" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <SiTiktok size={20} />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <Instagram size={24} />
+              <a href="https://www.instagram.com/englishschoolpoland" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Instagram size={20} />
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <SiTiktok size={22} />
+              <a href="https://www.youtube.com/@EduCentreDK" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Youtube size={20} />
               </a>
             </div>
           </div>
-          
-          {/* Right side links */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+
+          {/* Visual English */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">📚 Visual English</h3>
+            <div className="space-y-2 text-gray-300 mb-4">
+              <div className="flex items-center space-x-2">
+                <Globe size={16} />
+                <a href="https://visualenglish.pl" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  visualenglish.pl
+                </a>
+              </div>
+            </div>
+            <div className="flex space-x-3 mb-6">
+              <a href="https://www.facebook.com/visualenglishpl" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Facebook size={20} />
+              </a>
+              <a href="https://www.youtube.com/@visualenglishbooks" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Youtube size={20} />
+              </a>
+              <a href="https://www.tiktok.com/@visualenglishbooks" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <SiTiktok size={20} />
+              </a>
+              <a href="https://www.linkedin.com/in/visualenglish/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Linkedin size={20} />
+              </a>
+              <a href="https://pl.pinterest.com/VisualEnglishConversation/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <SiPinterest size={20} />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Links */}
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
             <div>
               <h3 className="text-lg font-medium mb-3">About</h3>
               <ul className="space-y-2">
