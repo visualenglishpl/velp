@@ -18,6 +18,7 @@ const HeroSection = () => {
                   src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
                   alt="Visual English Logo" 
                   className="h-20 mb-5"
+                  loading="lazy"
                 />
                 <h1 className="text-3xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
                   Interactive English Learning
@@ -46,8 +47,9 @@ const HeroSection = () => {
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
               <img 
                 src="/api/direct/content/VISUAL WEBSITE/main page.png" 
-                alt="Visual English Learning" 
+                alt="Visual English Learning - Children learning with interactive content" 
                 className="max-w-full h-auto rounded-lg shadow-md"
+                loading="lazy"
               />
             </div>
           </div>

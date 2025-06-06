@@ -70,10 +70,10 @@ const HomePage = () => {
       <HeroSection />
       
       {/* Visual English Series Section */}
-      <section id="books" className="py-12 bg-white">
+      <section id="books" className="py-8 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-4 text-center">Visual English Series</h2>
-          <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold mb-3 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Visual English Series</h2>
+          <p className="text-gray-600 text-center mb-6 max-w-2xl mx-auto text-lg">
             Explore our comprehensive English learning materials organized by level. Each book contains interactive lessons with visual content.
           </p>
           
@@ -99,7 +99,8 @@ const HomePage = () => {
                 <a 
                   key={book.id} 
                   href={`/books/${book.id}`}
-                  className="flex flex-col items-center group hover:transform hover:scale-105 transition-all duration-300"
+                  className="flex flex-col items-center group hover:transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg"
+                  aria-label={`Explore Visual English Book ${book.id} - Interactive learning content`}
                 >
                   <div 
                     className="w-full aspect-square rounded-lg mb-2 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md"
@@ -108,8 +109,9 @@ const HomePage = () => {
                     {book.thumbnailUrl ? (
                       <img 
                         src={book.thumbnailUrl} 
-                        alt={`Visual English Book ${book.id}`}
+                        alt={`Visual English Book ${book.id} - Interactive learning content`}
                         className="w-full h-full object-contain"
+                        loading="lazy"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
                           e.currentTarget.style.display = 'none';
@@ -136,12 +138,12 @@ const HomePage = () => {
             )}
           </div>
           
-          <div className="mt-8">
+          <div className="mt-6">
             {/* Navigation button focused on subscription options only */}
             <div className="text-center">
               <a 
                 href="#pricing" 
-                className="inline-flex items-center justify-center bg-[#5DADEC] text-white px-8 py-3 rounded-full font-medium shadow-sm hover:bg-[#4A9AD9] transition-colors"
+                className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
                 View Subscription Options
               </a>
@@ -151,16 +153,9 @@ const HomePage = () => {
       </section>
       
       {/* Pricing Section - Reduced spacing */}
-      <section id="pricing" className="mt-2 pb-8">
+      <section id="pricing" className="py-6 bg-gray-50">
         <PricingPlans />
       </section>
-      
-      {/* Simple Divider */}
-      <div className="py-8 bg-gradient-to-r from-blue-50 to-purple-50">
-        <div className="container mx-auto px-4">
-          <div className="border-t border-gray-200"></div>
-        </div>
-      </div>
       
       {/* FAQ and Project Sections */}
       <FAQSection />
