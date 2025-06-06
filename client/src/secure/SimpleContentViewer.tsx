@@ -433,47 +433,7 @@ export default function SimpleContentViewer() {
       };
     }
     
-    // -------- APPROACH 3: Fall back to the pattern engine for generated questions --------
-    const patternEngineResult = getPatternEngineQA(filename, currentUnitId);
-    
-    if (patternEngineResult && patternEngineResult.question) {
-      logDebug(`✅ FOUND MATCH using pattern engine: ${patternEngineResult.question}`);
-      
-      // Determine country if available
-      let country = "";
-      if (filename.toLowerCase().includes('poland')) {
-        country = "POLAND";
-      } else if (filename.toLowerCase().includes('britain') || filename.toLowerCase().includes('uk')) {
-        country = "BRITAIN / UK";
-      }
-      
-      return {
-        country,
-        question: patternEngineResult.question,
-        answer: patternEngineResult.answer,
-        hasData: true
-      };
-    }
-    
-    // -------- APPROACH 4: Check title for question format (Q&A in title) --------
-    if (material.title && material.title.includes('?')) {
-      const titleQuestion = material.title.trim();
-      const titleAnswer = material.description || "";
-      
-      if (titleQuestion.length > 2 && titleAnswer.length > 2) {
-        logDebug(`✅ FOUND Q&A in title/description: ${titleQuestion}`);
-        
-        return {
-          country: "",
-          question: titleQuestion,
-          answer: titleAnswer,
-          hasData: true
-        };
-      }
-    }
-    
-    // No match found in any system
-    logDebug(`❌ No Q&A match found for: ${filename}`);
+    // Return default if no Excel match found
     return defaultResult;
   };
   
