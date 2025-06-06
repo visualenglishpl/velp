@@ -238,74 +238,9 @@ export function useExcelQA(bookId: string) {
       }
     }
     
-    // STRATEGY 8: Try any keyword match based on the content
-    // Important patterns to look for
-    const contentKeywords = [
-      // Book 1 Unit 2 (School Objects)
-      { keyword: 'scissors', question: "What are they?", answer: "They are scissors." },
-      { keyword: 'pencil', question: "What is it?", answer: "It is a pencil." },
-      { keyword: 'ruler', question: "What is it?", answer: "It is a ruler." },
-      { keyword: 'sharpener', question: "What is it?", answer: "It is a sharpener." },
-      { keyword: 'pen', question: "What is it?", answer: "It is a pen." },
-      { keyword: 'book', question: "What is it?", answer: "It is a book." },
-      { keyword: 'notebook', question: "What is it?", answer: "It is a notebook." },
-      { keyword: 'eraser', question: "What is it?", answer: "It is an eraser." },
-      { keyword: 'pencil case', question: "What is it?", answer: "It is a pencil case." },
-      { keyword: 'school bag', question: "What is it?", answer: "It is a school bag." },
-      { keyword: 'lego pen', question: "Do you have a Lego pen?", answer: "Yes, I have a Lego pen." },
-      { keyword: 'black pen', question: "Do you have a black pen?", answer: "Yes, I have a black pen." }
-    ];
-    
-    for (const {keyword, question, answer} of contentKeywords) {
-      if (filename.toLowerCase().includes(keyword)) {
-        logDebug(`✅ FOUND MATCH (keyword: ${keyword}) for: ${filename}`, 1);
-        return { question, answer, generatedBy: 'keyword-match' };
-      }
-    }
-
-    // STRATEGY 9: For images with section codes like "01 R" (country images), generate specific questions
-    const sectionMatch = filename.match(/^(\d{2})\s*([A-Za-z])/i);
-    if (sectionMatch) {
-      const sectionNum = sectionMatch[1];
-      const sectionCode = sectionMatch[2].toUpperCase();
-      
-      if (sectionCode === 'R' || filename.toLowerCase().includes('poland')) {
-        logDebug(`✅ FOUND MATCH (R section - Poland) for: ${filename}`, 1);
-        return {
-          question: "What country is this?",
-          answer: "It is Poland.",
-          generatedBy: 'section-code-match'
-        };
-      } else if (sectionCode === 'N' || filename.toLowerCase().includes('britain') || filename.toLowerCase().includes('uk')) {
-        logDebug(`✅ FOUND MATCH (N section - Britain/UK) for: ${filename}`, 1);
-        return {
-          question: "What country is this?", 
-          answer: "It is Britain/UK.",
-          generatedBy: 'section-code-match'
-        };
-      }
-    }
-
-    // Try our new modular pattern system first
-    try {
-      const patternMatch = findPatternMatch(filename, currentUnitId);
-      if (patternMatch) {
-        logDebug(`✅ PATTERN SYSTEM: Found match in modular pattern system for ${filename}`, 1);
-        return {
-          question: patternMatch.question,
-          answer: patternMatch.answer,
-          generatedBy: 'pattern-system',
-          source: patternMatch.source || patternMatch.category
-        };
-      }
-    } catch (error) {
-      console.error("Pattern system error:", error);
-      // Continue to legacy pattern engine if pattern system fails
-    }
-    
-    // FALLBACK: Use the legacy pattern engine to generate a question based on the content
-    logDebug(`⚠️ Using fallback pattern engine for: ${filename}`, 1);
-    return getQuestionAnswer(filename, currentUnitId, normalizedBookId);
+    // NO FALLBACK: Only use Excel data, return undefined if no match found
+    logDebug(`❌ No Excel match found for: ${filename}`, 1);
+    return undefined;
   }, [mappings, normalizedBookId]);
 
   return { mappings, isLoading, error, findMatchingQA };

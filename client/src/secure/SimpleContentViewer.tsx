@@ -433,49 +433,11 @@ export default function SimpleContentViewer() {
       return defaultResult;
     }
     
-    // -------- APPROACH 1: Check for direct dash patterns in the content filename --------
+    // -------- EXCEL-ONLY APPROACH: Use only Excel-based Q&A data --------
     const filename = material.content;
     logDebug(`Processing Q&A for: ${filename}`);
     
-    // Enhanced dash pattern detection with alternate dash characters
-    const dashPattern = /([^-–—]+)\s*[-–—]\s*(.+?)(\.(png|jpg|jpeg|gif|webp|mp4)|$)/i;
-    const dashMatch = filename.match(dashPattern);
-    
-    if (dashMatch && dashMatch[1] && dashMatch[2]) {
-      const question = dashMatch[1].trim();
-      const answer = dashMatch[2].trim();
-      
-      // Make sure both parts look valid (at least 2 characters each)
-      if (question.length > 2 && answer.length > 2) {
-        logDebug(`✅ DIRECT DASH PATTERN found in filename: "${question}" - "${answer}"`);
-        
-        // Format the Q&A properly
-        const formattedQuestion = question.endsWith('?') ? question : question + '?';
-        const formattedAnswer = answer.endsWith('.') ? answer : answer + '.';
-        
-        return {
-          country: "", // Leave blank as we don't know the country from dash pattern
-          question: formattedQuestion, 
-          answer: formattedAnswer,
-          hasData: true
-        };
-      }
-    }
-    
-    // -------- APPROACH 2: Use the enhanced Excel pattern matching system --------
-    // Use the currentUnitId defined at the top of the component
-    
-    // Special handling for Book 1 Unit 2 school objects
-    const isSchoolObject = currentUnitId === 'unit2' && 
-                          filename.toLowerCase().includes('01 e') && 
-                          (filename.toLowerCase().includes('pen') || 
-                           filename.toLowerCase().includes('do you have') ||
-                           filename.toLowerCase().includes('is it a') ||
-                           filename.toLowerCase().includes('what colour'));
-                           
-    logDebug(`Processing school object: ${isSchoolObject ? 'Yes' : 'No'} - ${filename}`);
-    
-    // Find matching QA from Excel or patterns
+    // Find matching QA from Excel data only
     const matchingQA = findMatchingQA(filename, currentUnitId);
     
     if (matchingQA) {
