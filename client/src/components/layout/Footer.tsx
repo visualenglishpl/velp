@@ -27,7 +27,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Social Media Links */}
           <div className="flex flex-col">
-            <h3 className="text-xl font-semibold mb-6">📚 Visual English</h3>
+            <h3 className="text-lg font-semibold mb-6">📚 Visual English</h3>
             <div className="flex items-center space-x-2 mb-6">
               <Globe size={16} className="text-gray-400" />
               <a href="https://visualenglish.pl" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
@@ -52,7 +52,7 @@ const Footer = () => {
               </a>
             </div>
 
-            <h3 className="text-xl font-semibold mb-6">🎓 EduCentre DK / English School</h3>
+            <h3 className="text-lg font-semibold mb-6">🎓 EduCentre DK / English School</h3>
             <div className="flex items-center space-x-2 mb-6">
               <Globe size={16} className="text-gray-400" />
               <a href="https://educentredk.pl" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
