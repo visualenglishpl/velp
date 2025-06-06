@@ -34,11 +34,11 @@ const HeroSection = () => {
                     Start Learning
                   </Button>
                 </Link>
-                <Link href="/method">
+                <a href="https://www.youtube.com/@visualenglishbooks" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" className="border-2 border-green-500 text-green-600 bg-transparent hover:bg-green-50 px-6 py-2.5 text-base font-medium rounded-md w-full sm:w-auto">
-                    Learn More
+                    View Our Books
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
             
