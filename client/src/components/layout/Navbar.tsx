@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [cartItemsCount, setCartItemsCount] = useState(0);
@@ -64,7 +70,20 @@ const Navbar = () => {
               <Link href="/about">
                 <span className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">About</span>
               </Link>
-              <a href="/#books" className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Books</a>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                  Books
+                  <ChevronDown className="w-3 h-3" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <a href="/#books" className="w-full cursor-pointer">Browse Books</a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/book-videos" className="w-full cursor-pointer">Book Flip Videos</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <a href="/#pricing" className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Pricing</a>
               <Link href="/contact">
                 <span className="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">Contact</span>

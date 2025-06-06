@@ -138,17 +138,7 @@ const HomePage = () => {
             )}
           </div>
           
-          <div className="mt-6">
-            {/* Navigation button focused on subscription options only */}
-            <div className="text-center">
-              <a 
-                href="#pricing" 
-                className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              >
-                View Subscription Options
-              </a>
-            </div>
-          </div>
+
         </div>
       </section>
       

@@ -23,6 +23,7 @@ import DirectAdminLogin from "./public/DirectAdminLogin";
 import DirectTeacherLogin from "./public/DirectTeacherLogin";
 import LoginQuickAccess from "./public/LoginQuickAccess";
 import BookPreviewPage from "./public/BookPreviewPage";
+import BookVideosPage from "./pages/BookVideosPage";
 
 // Original paths - still used until migration is complete
 import MethodPage from "./pages/MethodPage";
@@ -159,6 +160,9 @@ function App() {
           </Route>
           <Route path="/about">
             <AboutPage />
+          </Route>
+          <Route path="/book-videos">
+            <BookVideosPage />
           </Route>
           <Route path="/contact">
             <ContactPage />
