@@ -10,7 +10,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useExcelQA } from '@/hooks/use-excel-qa';
-import { getQuestionAnswer as getPatternEngineQA } from '@/lib/qa-pattern-engine';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cleanQuestionText, cleanAnswerText, formatDisplayText, removePrefixes } from '@/lib/textCleaners';
 import { encodeS3Path, createS3ImageUrl, extractQuestionCode, filenameToTitle } from '@/lib/imageUtils';
@@ -425,20 +425,8 @@ export default function SimpleContentViewer() {
     const matchingQA = findMatchingQA(material.content, currentUnitId);
     
     if (matchingQA) {
-      logDebug(`✅ FOUND MATCH using enhanced Excel QA hook: ${matchingQA.question}`);
-      
-      // Determine country if available
-      let country = "";
-      if (filename.toLowerCase().includes('poland') || filename.match(/\b01\s*r\b/i)) {
-        country = "POLAND";
-      } else if (filename.toLowerCase().includes('britain') || 
-                filename.toLowerCase().includes('uk') || 
-                filename.match(/\b02\s*n\b/i)) {
-        country = "BRITAIN / UK";
-      }
-      
       return {
-        country,
+        country: "",
         question: matchingQA.question,
         answer: matchingQA.answer,
         hasData: true
