@@ -165,7 +165,7 @@ const BookThumbnail = ({
 
   return (
     <div className="h-full">
-      <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md h-full flex flex-col`}>
+      <div className={`${bgColorClass} rounded-xl overflow-hidden shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 h-full flex flex-col group cursor-pointer`}>
         {/* Book cover with GIF thumbnail */}
         <div className="relative flex items-center justify-center w-full aspect-square overflow-hidden">
           {/* Colored background */}
@@ -224,7 +224,7 @@ const BookThumbnail = ({
           <p className={`${subTextColorClass} text-xs font-medium mb-2`}>BOOK {formattedBookId}</p>
           <div className="mt-auto space-y-2">
             <Link href={`/books/${bookId}`} className="block w-full">
-              <button className={`w-full ${bookId === '1' ? 'text-gray-900' : 'text-white'} py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1`} style={{ 
+              <button className={`w-full ${bookId === '1' ? 'text-gray-900' : 'text-white'} py-2 px-3 rounded-md font-medium text-xs shadow-sm flex items-center justify-center gap-1 hover:brightness-110 transition-all duration-200 group-hover:scale-105`} style={{ 
                 backgroundColor: bookId === '0a' ? '#FF40FF' :  // Pink
                                bookId === '0b' ? '#FF7F27' :  // Orange
                                bookId === '0c' ? '#00CEDD' :  // Teal

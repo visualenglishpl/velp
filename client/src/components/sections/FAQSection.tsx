@@ -4,30 +4,36 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
+import { HelpCircle, Users, Truck, CreditCard, GraduationCap } from "lucide-react";
 
 const FAQSection = () => {
   const faqItems = [
     {
+      icon: HelpCircle,
       question: "How do I access the digital materials?",
       answer:
         "After purchasing, you'll receive login credentials to our secure portal. From there, you can access all your digital content, including interactive lessons, worksheets, and games. All content works on computers, tablets, and interactive whiteboards.",
     },
     {
+      icon: Users,
       question: "Can I share materials with my students?",
       answer:
         "Yes! All plans allow you to share materials with your students. Individual plans include teacher-only access, but you can display content in your classroom. School plans offer an option to create student accounts with limited access to assigned materials.",
     },
     {
+      icon: Truck,
       question: "How long does shipping take for printed books?",
       answer:
         "Shipping times vary by location. Within Europe, printed books typically arrive within 5-7 business days. International shipping may take 10-14 business days. You'll receive an email with tracking information when your order ships.",
     },
     {
+      icon: CreditCard,
       question: "Can I extend my subscription?",
       answer:
         "Yes, you can extend your subscription at any time through your account dashboard. We offer discounted renewal rates for existing customers. You'll receive email reminders 30 days before your subscription expires.",
     },
     {
+      icon: GraduationCap,
       question: "Are there discounts for larger schools?",
       answer:
         "Absolutely! We offer custom pricing for schools with more than 20 teachers. Contact our education specialists for a personalized quote based on your school's specific needs and number of teaching staff.",
@@ -50,7 +56,10 @@ const FAQSection = () => {
               className="border border-gray-200 rounded-lg overflow-hidden shadow-sm bg-white"
             >
               <AccordionTrigger className="px-5 py-4 text-left hover:no-underline hover:bg-gray-50 transition-colors">
-                <span className="text-gray-800 font-medium text-base">{item.question}</span>
+                <div className="flex items-center space-x-3">
+                  <item.icon className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                  <span className="text-gray-800 font-medium text-base">{item.question}</span>
+                </div>
               </AccordionTrigger>
               <AccordionContent className="px-5 py-4 border-t border-gray-100">
                 <p className="text-gray-600">{item.answer}</p>

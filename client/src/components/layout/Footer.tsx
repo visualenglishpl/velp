@@ -196,6 +196,22 @@ const Footer = () => {
               </Link>
             </p>
           </div>
+          
+          {/* Back to Top Logo */}
+          <div className="mt-8 pt-4 border-t border-gray-800 text-center">
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="inline-block hover:opacity-75 transition-opacity duration-300 group"
+              aria-label="Back to top"
+            >
+              <img 
+                src="/api/direct/content/icons/LOGO VISUAL ENGLISH.png"
+                alt="Visual English Logo - Back to Top" 
+                className="h-12 mx-auto filter brightness-90 group-hover:brightness-100 transition-all duration-300"
+              />
+              <p className="text-xs text-gray-500 mt-1 group-hover:text-gray-400 transition-colors">Back to Top</p>
+            </button>
+          </div>
         </div>
       </div>
     </footer>

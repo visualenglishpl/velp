@@ -37,7 +37,7 @@ const PricingPlans = () => {
     {
       title: "Whole Book\nAccess",
       color: "#00bcd4", // nice teal/cyan color like in the example
-      popular: false, // Not marking any option as popular
+      popular: true, // Mark as most popular
       features: [
         "Full access to all lessons in one book",
         "Downloadable PDFs for each unit",
@@ -82,8 +82,19 @@ const PricingPlans = () => {
           {plans.map((plan, index) => (
             <div 
               key={index} 
-              className="flex flex-col rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-200"
+              className={`flex flex-col rounded-xl overflow-hidden transition-all duration-300 relative ${
+                plan.popular 
+                  ? 'shadow-lg hover:shadow-xl border-2 border-blue-400 transform scale-105' 
+                  : 'shadow-sm hover:shadow-lg border border-gray-200 hover:transform hover:scale-102'
+              }`}
             >
+              {plan.popular && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                  <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg">
+                    Most Popular
+                  </span>
+                </div>
+              )}
               {/* Header - colored top bar */}
               <div 
                 className="text-white text-center py-4 relative"
