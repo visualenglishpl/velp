@@ -533,7 +533,7 @@ export default function SimpleContentViewer() {
                   size="sm" 
                   variant="ghost" 
                   onClick={() => setIsEditMode(true)}
-                  className="text-white/80 hover:text-white hover:bg-red-500/20 transition-all duration-200"
+                  className="text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200"
                   title="Delete Slides"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -544,7 +544,7 @@ export default function SimpleContentViewer() {
                 size="sm" 
                 variant="ghost" 
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                className="text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
+                className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200"
                 title={isFullscreen ? "Exit Fullscreen (F)" : "Enter Fullscreen (F)"}
               >
                 {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -555,7 +555,7 @@ export default function SimpleContentViewer() {
                 size="sm" 
                 variant="ghost" 
                 onClick={() => setShowKeyboardHelp(!showKeyboardHelp)}
-                className="text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
+                className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200"
                 title="Keyboard Shortcuts (?)"
               >
                 <HelpCircle className="h-4 w-4" />
@@ -787,8 +787,8 @@ export default function SimpleContentViewer() {
                   </div>
                 )}
                 
-                {/* Centered content container */}
-                <div className="flex items-center justify-center w-full h-full">
+                {/* Centered content container with proper boundaries */}
+                <div className="flex items-center justify-center w-full h-full p-4 overflow-hidden">
                   {/* Check if content is a video */}
                   {isVideo ? (
                     <video 
@@ -801,15 +801,12 @@ export default function SimpleContentViewer() {
                     </video>
                   ) : (
                     /* Regular image content */
-                    <div className="relative group">
+                    <div className="relative group max-w-full max-h-full">
                       <img 
                         src={imagePath}
                         alt={material.title || `Slide ${index + 1}`}
-                        className="max-h-full max-w-full object-contain mx-auto shadow-2xl rounded-lg border border-white/30 transition-all duration-300 group-hover:shadow-3xl"
-                        style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.1))' }}
+                        className="max-h-full max-w-full object-contain mx-auto shadow-lg rounded-lg"
                       />
-                      {/* Image loading placeholder */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 animate-pulse rounded-lg -z-10"></div>
                     </div>
                   )}
                 </div>
