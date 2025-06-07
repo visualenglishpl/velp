@@ -28,7 +28,7 @@ type S3Material = {
 
 export default function SimpleContentViewer() {
   const [, setLocation] = useLocation();
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const queryClient = useQueryClient();
   const sliderRef = useRef<Slider>(null);
   
@@ -69,7 +69,7 @@ export default function SimpleContentViewer() {
   };
 
   // Fetch materials
-  const { data: materials = [], isLoading } = useQuery({
+  const { data: materials = [], isLoading } = useQuery<S3Material[]>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
   });
 
@@ -123,7 +123,7 @@ export default function SimpleContentViewer() {
             
             // Premium content check
             const freeSlideLimit = 15;
-            const hasPaidAccess = isAuthenticated && user;
+            const hasPaidAccess = user;
             const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
             
             return (
