@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link, useLocation } from 'wouter';
+import { Link, useLocation, useRouter } from 'wouter';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { NavigationButton } from '@/components/ui/navigation-button';
 import { ChevronLeft, PlusCircle, BookOpen, CheckCircle, Ban, Check, Upload, Download, Eye } from 'lucide-react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/use-auth';
@@ -257,13 +258,16 @@ const BooksManagementPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
             <div className="flex items-center">
-              <Link href="/admin">
-                <Button variant="outline" className="mr-4">
-                  <ChevronLeft className="mr-2 h-4 w-4" />
-                  Back to Admin
-                </Button>
-              </Link>
-              <h1 className="text-3xl font-bold text-gray-900">Books Management</h1>
+              <Button 
+                variant="nav" 
+                size="nav"
+                onClick={() => window.location.href = '/admin'}
+                className="flex items-center gap-2"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Back to Admin
+              </Button>
+              <h1 className="text-3xl font-bold text-gray-900 ml-4">Books Management</h1>
             </div>
             <div>
               <Button 
