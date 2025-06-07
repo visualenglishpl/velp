@@ -500,13 +500,13 @@ export default function SimpleContentViewer() {
       <div className={`bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center ${isFullscreen ? 'sticky top-0 z-10 shadow-sm' : ''}`}>
         <div className="flex items-center">
           <Button 
-            size="sm" 
-            variant="ghost" 
+            variant="nav" 
+            size="nav"
             onClick={() => navigate(`/books/${bookId}`)}
-            className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 mr-4 transition-all duration-200"
+            className="mr-4 flex items-center gap-2"
           >
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Books
+            <ChevronLeft className="h-4 w-4" />
+            Back to Unit
           </Button>
           <div className="flex items-center">
             <div className="bg-gray-100 rounded-lg px-3 py-1.5 mr-3">

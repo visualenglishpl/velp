@@ -114,8 +114,11 @@ export default function UnitsPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
             <Link href="/books">
-              <Button variant="outline" className="mb-4 sm:mb-0">
-                ← Back to Books
+              <Button variant="nav" size="nav" className="mb-4 sm:mb-0 flex items-center gap-2">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Books
               </Button>
             </Link>
             <h1 className="text-3xl font-bold">Book {bookId} Units</h1>
@@ -217,14 +220,16 @@ export default function UnitsPage() {
                   </div>
                   <div className="py-3 mt-auto flex flex-col gap-3 px-2">
                     <Button 
-                      className="w-full py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700"
+                      variant="default"
+                      size="default"
+                      className="w-full py-2 flex items-center justify-center font-medium bg-purple-600 hover:bg-purple-700 text-white transition-colors"
                       onClick={() => window.location.href = `/book/${bookId}/unit/${unit.unitNumber}`}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
                         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
                         <circle cx="12" cy="12" r="3"/>
                       </svg>
-                      View Content
+                      Unit {unit.unitNumber}
                     </Button>
                     {!user && (
                       <Button

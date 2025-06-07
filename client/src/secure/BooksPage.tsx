@@ -69,8 +69,9 @@ export default function BooksPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex items-center">
         <Link href="/">
-          <Button variant="ghost" className="p-0 mr-2">
-            <ChevronLeft className="h-5 w-5" />
+          <Button variant="nav" size="nav" className="mr-4 flex items-center gap-2">
+            <ChevronLeft className="h-4 w-4" />
+            Back to Home
           </Button>
         </Link>
         <h1 className="text-3xl font-bold">Visual English Books</h1>
