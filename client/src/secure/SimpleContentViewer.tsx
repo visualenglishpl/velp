@@ -229,18 +229,14 @@ export default function SimpleContentViewer() {
   }, [fetchedMaterials]);
   
   // Image preloading for better performance
-  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
+  const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
   
   const preloadImage = useCallback((imagePath: string) => {
-    if (preloadedImages.has(imagePath)) return;
+    if (preloadedImages.includes(imagePath)) return;
     
     const img = new Image();
     img.onload = () => {
-      setPreloadedImages(prev => {
-        const newSet = new Set(prev);
-        newSet.add(imagePath);
-        return newSet;
-      });
+      setPreloadedImages(prev => [...prev, imagePath]);
     };
     img.src = imagePath;
   }, [preloadedImages]);
@@ -1024,10 +1020,14 @@ export default function SimpleContentViewer() {
                       src={thumbnailPath}
                       alt={`Thumbnail ${index + 1}`}
                       className={`w-full h-full object-cover transition-opacity duration-300 ${
-                        preloadedImages.has(thumbnailPath) ? 'opacity-100' : 'opacity-75'
+                        preloadedImages.includes(thumbnailPath) ? 'opacity-100' : 'opacity-75'
                       }`}
                       loading="lazy"
-                      onLoad={() => setPreloadedImages(prev => new Set([...prev, thumbnailPath]))}
+                      onLoad={() => {
+                        if (!preloadedImages.includes(thumbnailPath)) {
+                          setPreloadedImages(prev => [...prev, thumbnailPath]);
+                        }
+                      }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
