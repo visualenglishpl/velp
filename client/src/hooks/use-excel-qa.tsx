@@ -198,25 +198,7 @@ export function useExcelQA(bookId: string) {
       }
     }
 
-    // STRATEGY 3.7: Enhanced pattern matching for Book 1 Unit 1 specific issues
-    // Map specific problematic filenames to their correct Q&A
-    const specificMappings: Record<string, string> = {
-      // Slide 5 mapping
-      "05 C Draw the Sun or the Moon": "01 A What do you say in the morning",
-      "05 c draw the sun or the moon": "01 A What do you say in the morning",
-      // Slide 10 mapping
-      "10 A Online Game Wordwall – Greetings": "01 E What do you drink in the morning", 
-      "10 a online game wordwall – greetings": "01 E What do you drink in the morning",
-      // Slide 11 mapping
-      "10 C B Online Game Wordwall – Times of the Day": "01 F What do you eat in the morning",
-      "10 c b online game wordwall – times of the day": "01 F What do you eat in the morning"
-    };
-
-    const specificKey = specificMappings[cleanedFilename] || specificMappings[cleanedFilename.toLowerCase()];
-    if (specificKey && filteredMappings[specificKey]) {
-      logDebug(`✅ FOUND MATCH (specific mapping) for: ${cleanedFilename} -> ${specificKey}`, 1);
-      return filteredMappings[specificKey];
-    }
+    // NO HARD-CODED MAPPINGS - If filename doesn't match, leave blank
 
     // STRATEGY 3: Try exact match with dash pattern in filename
     // Example: "What is it - It is a pencil" pattern
