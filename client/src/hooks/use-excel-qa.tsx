@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getQuestionAnswer } from '@/lib/qa-pattern-engine';
-import { findPatternMatch } from '@/lib/patternSystem';
+// Simplified imports - no longer using pattern matching engines
 
 export interface QuestionAnswer {
   question: string;
@@ -125,8 +124,8 @@ export function useExcelQA(bookId: string) {
     logDebug(`Processing: "${cleanedFilename}" (original: "${filename}")`, 2);
     
     if (Object.keys(mappings).length === 0) {
-      logDebug(`No mappings available for ${normalizedBookId}, using pattern engine for ${filename} in ${currentUnitId}`);
-      return getQuestionAnswer(filename, currentUnitId, normalizedBookId);
+      logDebug(`No mappings available for ${normalizedBookId}, leaving blank for ${filename}`);
+      return undefined;
     }
 
     // Debug the filename for better understanding
@@ -151,57 +150,22 @@ export function useExcelQA(bookId: string) {
       });
     }
     
-    // STRATEGY 1: Direct exact match with the cleaned filename
+    // STRATEGY 1: Direct exact match with the complete cleaned filename
     if (filteredMappings[cleanedFilename]) {
-      logDebug(`✅ FOUND MATCH (direct filename) for: ${cleanedFilename}`, 1);
+      logDebug(`✅ FOUND MATCH (exact filename) for: ${cleanedFilename}`, 1);
       return filteredMappings[cleanedFilename];
     }
     
-    // STRATEGY 2: Try with the original filename (legacy support)
-    if (filteredMappings[filename]) {
-      logDebug(`✅ FOUND MATCH (original filename) for: ${filename}`, 1);
-      return filteredMappings[filename];
-    }
-    
-    // STRATEGY 3: Try with just the filename without path or extension
-    const filenameOnly = filename.split('/').pop() || filename;
-    if (filteredMappings[filenameOnly]) {
-      logDebug(`✅ FOUND MATCH (filename only) for: ${filenameOnly}`, 1);
-      return filteredMappings[filenameOnly];
-    }
-
-    // STRATEGY 3.5: Try case-insensitive exact matches
+    // STRATEGY 2: Case-insensitive exact match with complete filename
     const lowerCleanedFilename = cleanedFilename.toLowerCase();
     for (const [key, qa] of Object.entries(filteredMappings)) {
       if (key.toLowerCase() === lowerCleanedFilename) {
-        logDebug(`✅ FOUND MATCH (case-insensitive) for: ${cleanedFilename}`, 1);
+        logDebug(`✅ FOUND MATCH (case-insensitive filename) for: ${cleanedFilename}`, 1);
         return qa;
       }
     }
-    
-    // STRATEGY 3.6: Try matching by extracting just the question part and comparing
-    // Handle filenames like "01 I A What Do You Say in the Morning – Good Morning"
-    const questionMatch = cleanedFilename.match(/^(\d+\s+[A-Z]+\s+[A-Z]+\s+)(.+?)(\s+–\s+.+)?$/i);
-    if (questionMatch) {
-      const codePrefix = questionMatch[1].trim(); // "01 I A"
-      const questionPart = questionMatch[2].trim(); // "What Do You Say in the Morning"
-      
-      logDebug(`Extracted from filename: code="${codePrefix}", question="${questionPart}"`, 2);
-      
-      // Try to find a match with similar question content
-      for (const [key, qa] of Object.entries(filteredMappings)) {
-        if (key.toLowerCase().includes(questionPart.toLowerCase()) || 
-            qa.question?.toLowerCase().includes(questionPart.toLowerCase())) {
-          logDebug(`✅ FOUND MATCH (question content) for: ${cleanedFilename}`, 1);
-          return qa;
-        }
-      }
-    }
 
-    // NO HARD-CODED MAPPINGS - If filename doesn't match, leave blank
-
-    // STRATEGY 3: Try exact match with dash pattern in filename
-    // Example: "What is it - It is a pencil" pattern
+    // If no exact filename match found, only extract Q&A from filenames that contain dash patterns
     const dashMatch = filename.match(/([^-–]+)\s*[-–]\s*(.+?)(\.(png|jpg|jpeg|gif|webp|mp4)|$)/i);
     if (dashMatch && dashMatch[1] && dashMatch[2]) {
       const question = dashMatch[1].trim();
@@ -216,107 +180,12 @@ export function useExcelQA(bookId: string) {
         };
       }
     }
-
-    // STRATEGY 4: Extract and try to match a code pattern 
-    const codePattern = extractCodePatternFromFilename(filename);
-    if (codePattern) {
-      logDebug(`Extracted code pattern: "${codePattern}" from filename`, 2);
-      
-      // Direct match with code pattern
-      if (filteredMappings[codePattern]) {
-        logDebug(`✅ FOUND MATCH (exact code pattern) for: ${filename}`, 1);
-        return filteredMappings[codePattern];
-      }
-      
-      // STRATEGY 5: Try to match with just the main section (e.g., "01 N" from "01 N A")
-      const mainSection = codePattern.split(' ').slice(0, 2).join(' ');
-      
-      // Direct match for main section code
-      const mainSectionKey = Object.keys(filteredMappings).find(key => key === mainSection);
-      if (mainSectionKey) {
-        logDebug(`✅ FOUND MATCH (main section code) for: ${mainSection}`, 1);
-        return filteredMappings[mainSectionKey];
-      }
-      
-      // STRATEGY 6: Find entries that contain the main section in their pattern
-      const matchingEntries = Object.entries(filteredMappings).filter(([_, value]) => {
-        if (value.codePattern) {
-          return value.codePattern.startsWith(mainSection) || 
-                 value.codePattern.includes(mainSection);
-        }
-        return false;
-      });
-      
-      if (matchingEntries.length > 0) {
-        // Log the matching entries' patterns
-        logDebug(`Entries matched with main section "${mainSection}": ${matchingEntries.map(([_, value]) => value.codePattern).join(', ')}`, 2);
-        
-        // Use the first match
-        logDebug(`✅ FOUND MATCH (section-based) for: ${filename}`, 1);
-        return matchingEntries[0][1];
-      } else {
-        logDebug(`No entries matched the code pattern "${codePattern}"`, 2);
-      }
-      
-      // STRATEGY 7: Number pattern match (e.g., "12 K" to match with "12")
-      const numericSection = codePattern.split(' ')[0]; // Get just the number
-      if (numericSection && /^\d+$/.test(numericSection)) {
-        const numericMatches = Object.entries(filteredMappings).filter(([_, value]) => {
-          if (value.codePattern) {
-            return value.codePattern.startsWith(numericSection + ' ');
-          }
-          return false;
-        });
-        
-        if (numericMatches.length > 0) {
-          logDebug(`✅ FOUND MATCH (numeric section) for: ${numericSection}`, 1);
-          return numericMatches[0][1];
-        }
-      }
-    }
     
-    // NO FALLBACK: Only use Excel data, return undefined if no match found
-    logDebug(`❌ No Excel match found for: ${filename}`, 1);
+    // NO MATCH FOUND - Leave blank as requested
+    logDebug(`No match found for: ${filename} - leaving blank`, 1);
     return undefined;
   }, [mappings, normalizedBookId]);
 
   return { mappings, isLoading, error, findMatchingQA };
 }
 
-/**
- * Extract a code pattern from a filename
- */
-function extractCodePatternFromFilename(filename: string): string | null {
-  // Remove file extension
-  const filenameWithoutExt = filename.replace(/\.(png|jpg|jpeg|gif|webp|mp4)$/i, '');
-  
-  // Debug log to see what we're working with
-  console.log(`DEBUG: First 10 chars of filename: "${filenameWithoutExt.slice(0, 10)}"`);
-  
-  // Pattern: Try exact 2-character pattern first "01 C" (most common in Excel)
-  const simplePattern = filenameWithoutExt.match(/^(\d{2})\s*([A-Za-z])(?:\s|$)/);
-  if (simplePattern) {
-    const pattern = `${simplePattern[1]} ${simplePattern[2].toUpperCase()}`;
-    console.log(`DEBUG: Extracted 2-char pattern: "${pattern}"`);
-    return pattern;
-  }
-  
-  // Pattern: Extended 3-character pattern "01 N A" (fallback for specific cases)
-  const standardPattern = filenameWithoutExt.match(/^(\d{2})\s*([A-Za-z])\s*([A-Za-z])/);
-  if (standardPattern) {
-    const pattern = `${standardPattern[1]} ${standardPattern[2].toUpperCase()} ${standardPattern[3].toUpperCase()}`;
-    console.log(`DEBUG: Extracted 3-char pattern: "${pattern}"`);
-    return pattern;
-  }
-  
-  return null;
-}
-
-/**
- * Extract a simplified pattern for debugging
- */
-function extractSimplifiedPattern(filename: string): string | null {
-  // Remove file extension and extract any digit-letter pattern
-  const match = filename.replace(/\.[^.]+$/, '').match(/(\d+)\s*([A-Za-z])/);
-  return match ? `${match[1]} ${match[2]}` : null;
-}
