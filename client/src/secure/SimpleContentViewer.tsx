@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Edit2, Save, Trash2, Loader2 } from 'lucide-react';
 import { createS3ImageUrl } from '@/lib/imageUtils';
-import { useAuth } from '@/hooks/use-auth';
+
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useExcelQA } from '@/hooks/use-excel-qa';
@@ -28,7 +28,6 @@ type S3Material = {
 
 export default function SimpleContentViewer() {
   const [, setLocation] = useLocation();
-  const { user } = useAuth();
   const queryClient = useQueryClient();
   const sliderRef = useRef<Slider>(null);
   
