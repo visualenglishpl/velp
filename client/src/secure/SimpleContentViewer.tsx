@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Loader2, ChevronLeft, ChevronRight, Maximize2, Minimize2, Home, Trash2, Save, X, Edit, PenTool } from 'lucide-react';
+import { Loader2, ChevronLeft, ChevronRight, Maximize2, Minimize2, Home, Trash2, Save, X, Edit, PenTool, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
@@ -531,9 +531,20 @@ export default function SimpleContentViewer() {
                 variant="ghost" 
                 onClick={() => setIsFullscreen(!isFullscreen)}
                 className="text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
-                title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                title={isFullscreen ? "Exit Fullscreen (F)" : "Enter Fullscreen (F)"}
               >
                 {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              </Button>
+              
+              {/* Keyboard shortcuts help button */}
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                onClick={() => setShowKeyboardHelp(!showKeyboardHelp)}
+                className="text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
+                title="Keyboard Shortcuts (?)"
+              >
+                <HelpCircle className="h-4 w-4" />
               </Button>
             </>
           ) : (
@@ -1123,7 +1134,7 @@ export default function SimpleContentViewer() {
                               <div className="mb-2">
                                 <h5 className="text-xs font-medium text-teal-800 mb-1">Objectives:</h5>
                                 <ul className="list-disc pl-4 text-xs text-gray-600 space-y-1">
-                                  {lessonPlan.objectives.slice(0, 3).map((objective, index) => (
+                                  {lessonPlan.objectives.slice(0, 3).map((objective: string, index: number) => (
                                     <li key={index}>{objective}</li>
                                   ))}
                                 </ul>
@@ -1131,7 +1142,7 @@ export default function SimpleContentViewer() {
                               
                               <h5 className="text-xs font-medium text-teal-800 mb-1 mt-3">Lesson Steps:</h5>
                               <ul className="space-y-2 text-sm">
-                                {lessonPlan.steps.map((step, index) => (
+                                {lessonPlan.steps.map((step: any, index: number) => (
                                   <li key={index} className="flex items-start">
                                     <div className="bg-teal-100 text-teal-700 rounded-full p-1 mt-0.5 mr-2">
                                       <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
