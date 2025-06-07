@@ -605,6 +605,7 @@ export default function SimpleContentViewer() {
           {materials.map((material, index) => {
             // Use our improved image path handling utility
             const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
+            console.log('📷 Generated image path:', imagePath, 'for material:', material.content);
             
             // Check for video content using multiple indicators
             const isVideo = material.content.toLowerCase().includes('video') || 
@@ -787,27 +788,66 @@ export default function SimpleContentViewer() {
                   </div>
                 )}
                 
-                {/* Centered content container with proper boundaries */}
-                <div className="flex items-center justify-center w-full h-full p-4 overflow-hidden">
+                {/* Perfect content viewer with loading states */}
+                <div className="relative flex items-center justify-center w-full h-full p-4 overflow-hidden bg-gray-50/30">
                   {/* Check if content is a video */}
                   {isVideo ? (
                     <video 
                       src={imagePath}
                       controls
-                      className="max-h-full max-w-full object-contain mx-auto shadow-lg"
+                      className="object-contain shadow-lg rounded-lg"
+                      style={{ 
+                        maxHeight: '100%', 
+                        maxWidth: '100%',
+                        height: 'auto',
+                        width: 'auto'
+                      }}
                       poster="/assets/video-placeholder.jpg"
+                      onLoadStart={() => console.log('Video loading started')}
+                      onError={(e) => console.error('Video loading error:', e)}
                     >
                       Your browser does not support the video tag.
                     </video>
                   ) : (
-                    /* Regular image content */
-                    <div className="relative group max-w-full max-h-full">
+                    <>
+                      {/* Loading skeleton */}
+                      <div className="absolute inset-4 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse rounded-lg flex items-center justify-center">
+                        <div className="text-gray-400 text-sm">Loading...</div>
+                      </div>
+                      
+                      {/* Perfect image with frame constraints */}
                       <img 
                         src={imagePath}
                         alt={material.title || `Slide ${index + 1}`}
-                        className="max-h-full max-w-full object-contain mx-auto shadow-lg rounded-lg"
+                        className="relative z-10 object-contain shadow-lg rounded-lg transition-opacity duration-300"
+                        style={{ 
+                          maxHeight: '100%', 
+                          maxWidth: '100%',
+                          height: 'auto',
+                          width: 'auto',
+                          opacity: 0
+                        }}
+                        onLoad={(e) => {
+                          console.log('✅ Image loaded successfully:', imagePath);
+                          const img = e.currentTarget;
+                          const skeleton = img.parentElement?.querySelector('.absolute') as HTMLElement;
+                          if (skeleton) skeleton.style.display = 'none';
+                          img.style.opacity = '1';
+                        }}
+                        onError={(e) => {
+                          console.error('❌ Image loading failed:', imagePath);
+                          console.error('Material data:', material);
+                          const img = e.currentTarget;
+                          const skeleton = img.parentElement?.querySelector('.absolute') as HTMLElement;
+                          if (skeleton) {
+                            skeleton.innerHTML = '<div class="text-red-400 text-sm">Image failed to load<br/><span class="text-xs text-gray-500">' + (material.content || 'Unknown path') + '</span></div>';
+                            skeleton.classList.remove('animate-pulse', 'from-gray-100', 'to-gray-200');
+                            skeleton.classList.add('bg-red-50', 'border', 'border-red-200');
+                          }
+                        }}
+                        loading="lazy"
                       />
-                    </div>
+                    </>
                   )}
                 </div>
               </div>
