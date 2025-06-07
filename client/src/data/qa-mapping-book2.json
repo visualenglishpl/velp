@@ -1,94 +1,94 @@
 {
-  "01 A A": {
-    "filename": "01 A A - Colors.jpg",
+  "01 A A Colors.jpg": {
+    "filename": "01 A A Colors.jpg",
     "codePattern": "01 A A",
     "question": "What colors do you know?",
     "answer": "I know red, blue, green, yellow, orange, purple, pink, brown, black, white and gray",
     "unitId": "unit1",
     "bookId": "book2"
   },
-  "01 A B": {
-    "filename": "01 A B - What Color is This.jpg",
+  "01 A B What Color is This.jpg": {
+    "filename": "01 A B What Color is This.jpg",
     "codePattern": "01 A B",
     "question": "What color is this?",
     "answer": "It is red/blue/green/yellow/etc.",
     "unitId": "unit1",
     "bookId": "book2"
   },
-  "01 B A": {
-    "filename": "01 B A - Common Objects.jpg",
+  "01 B A Common Objects.jpg": {
+    "filename": "01 B A Common Objects.jpg",
     "codePattern": "01 B A",
     "question": "What is this?",
     "answer": "It is a pen/pencil/book/etc.",
     "unitId": "unit1",
     "bookId": "book2"
   },
-  "02 A A": {
-    "filename": "02 A A - Numbers 1-10.jpg",
+  "02 A A Numbers 1-10.jpg": {
+    "filename": "02 A A Numbers 1-10.jpg",
     "codePattern": "02 A A",
     "question": "What numbers do you know?",
     "answer": "I know 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
     "unitId": "unit2",
     "bookId": "book2"
   },
-  "02 B A": {
-    "filename": "02 B A - Counting Objects.jpg",
+  "02 B A Counting Objects.jpg": {
+    "filename": "02 B A Counting Objects.jpg",
     "codePattern": "02 B A",
     "question": "How many pencils are there?",
     "answer": "There are (number) pencils",
     "unitId": "unit2",
     "bookId": "book2"
   },
-  "03 A A": {
-    "filename": "03 A A Video - Days of the Week Song.mp4",
+  "03 A A Video Days of the Week Song.mp4": {
+    "filename": "03 A A Video Days of the Week Song.mp4",
     "codePattern": "03 A A",
     "question": "What are the days of the week?",
     "answer": "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
     "unitId": "unit3",
     "bookId": "book2"
   },
-  "03 B A": {
-    "filename": "03 B A - Today Yesterday Tomorrow.jpg",
+  "03 B A Today Yesterday Tomorrow.jpg": {
+    "filename": "03 B A Today Yesterday Tomorrow.jpg",
     "codePattern": "03 B A",
     "question": "What day is today/yesterday/tomorrow?",
     "answer": "Today is (day), yesterday was (day), tomorrow will be (day)",
     "unitId": "unit3",
     "bookId": "book2"
   },
-  "04 A A": {
-    "filename": "04 A A - Family Members.jpg",
+  "04 A A Family Members.jpg": {
+    "filename": "04 A A Family Members.jpg",
     "codePattern": "04 A A",
     "question": "Who is in your family?",
     "answer": "In my family there is my mother, father, sister, brother, etc.",
     "unitId": "unit4",
     "bookId": "book2"
   },
-  "04 B A": {
-    "filename": "04 B A - Is This Your Mother.jpg",
+  "04 B A Is This Your Mother.jpg": {
+    "filename": "04 B A Is This Your Mother.jpg",
     "codePattern": "04 B A",
     "question": "Is this your mother?",
     "answer": "Yes, she is my mother / No, she is not my mother",
     "unitId": "unit4",
     "bookId": "book2"
   },
-  "05 A A": {
-    "filename": "05 A A - Weather Types.jpg",
+  "05 A A Weather Types.jpg": {
+    "filename": "05 A A Weather Types.jpg",
     "codePattern": "05 A A",
     "question": "What's the weather like today?",
     "answer": "It's sunny/rainy/cloudy/windy/snowy",
     "unitId": "unit5",
     "bookId": "book2"
   },
-  "05 B A": {
-    "filename": "05 B A - Weather and Clothes.jpg",
+  "05 B A Weather and Clothes.jpg": {
+    "filename": "05 B A Weather and Clothes.jpg",
     "codePattern": "05 B A",
     "question": "What do you wear when it's cold?",
     "answer": "I wear a coat, scarf, hat, and gloves when it's cold",
     "unitId": "unit5",
     "bookId": "book2"
   },
-  "06 A": {
-    "filename": "06 A - What is your favorite holidays...",
+  "06 A What is your favorite holidays": {
+    "filename": "06 A What is your favorite holidays",
     "codePattern": "06 A",
     "question": "What is your favorite holidays?",
     "answer": "Answer for: What is your favorite holidays?",
@@ -97,8 +97,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "06 B": {
-    "filename": "06 B - Do you like holidays...",
+  "06 B Do you like holidays": {
+    "filename": "06 B Do you like holidays",
     "codePattern": "06 B",
     "question": "Do you like holidays?",
     "answer": "Answer for: Do you like holidays?",
@@ -107,8 +107,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "06 C": {
-    "filename": "06 C - How often do you use holidays...",
+  "06 C How often do you use holidays": {
+    "filename": "06 C How often do you use holidays",
     "codePattern": "06 C",
     "question": "How often do you use holidays?",
     "answer": "Answer for: How often do you use holidays?",
@@ -117,8 +117,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "06 D": {
-    "filename": "06 D - Can you describe holidays...",
+  "06 D Can you describe holidays": {
+    "filename": "06 D Can you describe holidays",
     "codePattern": "06 D",
     "question": "Can you describe holidays?",
     "answer": "Answer for: Can you describe holidays?",
@@ -127,8 +127,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "06 E": {
-    "filename": "06 E - What do you think about holidays...",
+  "06 E What do you think about holidays": {
+    "filename": "06 E What do you think about holidays",
     "codePattern": "06 E",
     "question": "What do you think about holidays?",
     "answer": "Answer for: What do you think about holidays?",
@@ -137,8 +137,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "06 F": {
-    "filename": "06 F - Have you ever experienced holidays...",
+  "06 F Have you ever experienced holidays": {
+    "filename": "06 F Have you ever experienced holidays",
     "codePattern": "06 F",
     "question": "Have you ever experienced holidays?",
     "answer": "Answer for: Have you ever experienced holidays?",
@@ -147,8 +147,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "06 G": {
-    "filename": "06 G - Would you recommend holidays...",
+  "06 G Would you recommend holidays": {
+    "filename": "06 G Would you recommend holidays",
     "codePattern": "06 G",
     "question": "Would you recommend holidays?",
     "answer": "Answer for: Would you recommend holidays?",
@@ -157,8 +157,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "06 H": {
-    "filename": "06 H - Is holidays important to you...",
+  "06 H Is holidays important to you": {
+    "filename": "06 H Is holidays important to you",
     "codePattern": "06 H",
     "question": "Is holidays important to you?",
     "answer": "Answer for: Is holidays important to you?",
@@ -167,8 +167,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "07 A": {
-    "filename": "07 A - What is your favorite professions...",
+  "07 A What is your favorite professions": {
+    "filename": "07 A What is your favorite professions",
     "codePattern": "07 A",
     "question": "What is your favorite professions?",
     "answer": "Answer for: What is your favorite professions?",
@@ -177,8 +177,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "07 B": {
-    "filename": "07 B - Do you like professions...",
+  "07 B Do you like professions": {
+    "filename": "07 B Do you like professions",
     "codePattern": "07 B",
     "question": "Do you like professions?",
     "answer": "Answer for: Do you like professions?",
@@ -187,8 +187,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "07 C": {
-    "filename": "07 C - How often do you use professions...",
+  "07 C How often do you use professions": {
+    "filename": "07 C How often do you use professions",
     "codePattern": "07 C",
     "question": "How often do you use professions?",
     "answer": "Answer for: How often do you use professions?",
@@ -197,8 +197,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "07 D": {
-    "filename": "07 D - Can you describe professions...",
+  "07 D Can you describe professions": {
+    "filename": "07 D Can you describe professions",
     "codePattern": "07 D",
     "question": "Can you describe professions?",
     "answer": "Answer for: Can you describe professions?",
@@ -207,8 +207,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "07 E": {
-    "filename": "07 E - What do you think about professions...",
+  "07 E What do you think about professions": {
+    "filename": "07 E What do you think about professions",
     "codePattern": "07 E",
     "question": "What do you think about professions?",
     "answer": "Answer for: What do you think about professions?",
@@ -217,8 +217,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "07 F": {
-    "filename": "07 F - Have you ever experienced professions...",
+  "07 F Have you ever experienced professions": {
+    "filename": "07 F Have you ever experienced professions",
     "codePattern": "07 F",
     "question": "Have you ever experienced professions?",
     "answer": "Answer for: Have you ever experienced professions?",
@@ -227,8 +227,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "07 G": {
-    "filename": "07 G - Would you recommend professions...",
+  "07 G Would you recommend professions": {
+    "filename": "07 G Would you recommend professions",
     "codePattern": "07 G",
     "question": "Would you recommend professions?",
     "answer": "Answer for: Would you recommend professions?",
@@ -237,8 +237,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "07 H": {
-    "filename": "07 H - Is professions important to you...",
+  "07 H Is professions important to you": {
+    "filename": "07 H Is professions important to you",
     "codePattern": "07 H",
     "question": "Is professions important to you?",
     "answer": "Answer for: Is professions important to you?",
@@ -247,8 +247,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "08 A": {
-    "filename": "08 A - What is your favorite house...",
+  "08 A What is your favorite house": {
+    "filename": "08 A What is your favorite house",
     "codePattern": "08 A",
     "question": "What is your favorite house?",
     "answer": "Answer for: What is your favorite house?",
@@ -257,8 +257,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "08 B": {
-    "filename": "08 B - Do you like house...",
+  "08 B Do you like house": {
+    "filename": "08 B Do you like house",
     "codePattern": "08 B",
     "question": "Do you like house?",
     "answer": "Answer for: Do you like house?",
@@ -267,8 +267,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "08 C": {
-    "filename": "08 C - How often do you use house...",
+  "08 C How often do you use house": {
+    "filename": "08 C How often do you use house",
     "codePattern": "08 C",
     "question": "How often do you use house?",
     "answer": "Answer for: How often do you use house?",
@@ -277,8 +277,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "08 D": {
-    "filename": "08 D - Can you describe house...",
+  "08 D Can you describe house": {
+    "filename": "08 D Can you describe house",
     "codePattern": "08 D",
     "question": "Can you describe house?",
     "answer": "Answer for: Can you describe house?",
@@ -287,8 +287,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "08 E": {
-    "filename": "08 E - What do you think about house...",
+  "08 E What do you think about house": {
+    "filename": "08 E What do you think about house",
     "codePattern": "08 E",
     "question": "What do you think about house?",
     "answer": "Answer for: What do you think about house?",
@@ -297,8 +297,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "08 F": {
-    "filename": "08 F - Have you ever experienced house...",
+  "08 F Have you ever experienced house": {
+    "filename": "08 F Have you ever experienced house",
     "codePattern": "08 F",
     "question": "Have you ever experienced house?",
     "answer": "Answer for: Have you ever experienced house?",
@@ -307,8 +307,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "08 G": {
-    "filename": "08 G - Would you recommend house...",
+  "08 G Would you recommend house": {
+    "filename": "08 G Would you recommend house",
     "codePattern": "08 G",
     "question": "Would you recommend house?",
     "answer": "Answer for: Would you recommend house?",
@@ -317,8 +317,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "08 H": {
-    "filename": "08 H - Is house important to you...",
+  "08 H Is house important to you": {
+    "filename": "08 H Is house important to you",
     "codePattern": "08 H",
     "question": "Is house important to you?",
     "answer": "Answer for: Is house important to you?",
@@ -327,8 +327,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "09 A": {
-    "filename": "09 A - What is your favorite school...",
+  "09 A What is your favorite school": {
+    "filename": "09 A What is your favorite school",
     "codePattern": "09 A",
     "question": "What is your favorite school?",
     "answer": "Answer for: What is your favorite school?",
@@ -337,8 +337,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "09 B": {
-    "filename": "09 B - Do you like school...",
+  "09 B Do you like school": {
+    "filename": "09 B Do you like school",
     "codePattern": "09 B",
     "question": "Do you like school?",
     "answer": "Answer for: Do you like school?",
@@ -347,8 +347,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "09 C": {
-    "filename": "09 C - How often do you use school...",
+  "09 C How often do you use school": {
+    "filename": "09 C How often do you use school",
     "codePattern": "09 C",
     "question": "How often do you use school?",
     "answer": "Answer for: How often do you use school?",
@@ -357,8 +357,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "09 D": {
-    "filename": "09 D - Can you describe school...",
+  "09 D Can you describe school": {
+    "filename": "09 D Can you describe school",
     "codePattern": "09 D",
     "question": "Can you describe school?",
     "answer": "Answer for: Can you describe school?",
@@ -367,8 +367,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "09 E": {
-    "filename": "09 E - What do you think about school...",
+  "09 E What do you think about school": {
+    "filename": "09 E What do you think about school",
     "codePattern": "09 E",
     "question": "What do you think about school?",
     "answer": "Answer for: What do you think about school?",
@@ -377,8 +377,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "09 F": {
-    "filename": "09 F - Have you ever experienced school...",
+  "09 F Have you ever experienced school": {
+    "filename": "09 F Have you ever experienced school",
     "codePattern": "09 F",
     "question": "Have you ever experienced school?",
     "answer": "Answer for: Have you ever experienced school?",
@@ -387,8 +387,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "09 G": {
-    "filename": "09 G - Would you recommend school...",
+  "09 G Would you recommend school": {
+    "filename": "09 G Would you recommend school",
     "codePattern": "09 G",
     "question": "Would you recommend school?",
     "answer": "Answer for: Would you recommend school?",
@@ -397,8 +397,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "09 H": {
-    "filename": "09 H - Is school important to you...",
+  "09 H Is school important to you": {
+    "filename": "09 H Is school important to you",
     "codePattern": "09 H",
     "question": "Is school important to you?",
     "answer": "Answer for: Is school important to you?",
@@ -407,8 +407,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "10 A": {
-    "filename": "10 A - What is your favorite sports...",
+  "10 A What is your favorite sports": {
+    "filename": "10 A What is your favorite sports",
     "codePattern": "10 A",
     "question": "What is your favorite sports?",
     "answer": "Answer for: What is your favorite sports?",
@@ -417,8 +417,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "10 B": {
-    "filename": "10 B - Do you like sports...",
+  "10 B Do you like sports": {
+    "filename": "10 B Do you like sports",
     "codePattern": "10 B",
     "question": "Do you like sports?",
     "answer": "Answer for: Do you like sports?",
@@ -427,8 +427,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "10 C": {
-    "filename": "10 C - How often do you use sports...",
+  "10 C How often do you use sports": {
+    "filename": "10 C How often do you use sports",
     "codePattern": "10 C",
     "question": "How often do you use sports?",
     "answer": "Answer for: How often do you use sports?",
@@ -437,8 +437,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "10 D": {
-    "filename": "10 D - Can you describe sports...",
+  "10 D Can you describe sports": {
+    "filename": "10 D Can you describe sports",
     "codePattern": "10 D",
     "question": "Can you describe sports?",
     "answer": "Answer for: Can you describe sports?",
@@ -447,8 +447,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "10 E": {
-    "filename": "10 E - What do you think about sports...",
+  "10 E What do you think about sports": {
+    "filename": "10 E What do you think about sports",
     "codePattern": "10 E",
     "question": "What do you think about sports?",
     "answer": "Answer for: What do you think about sports?",
@@ -457,8 +457,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "10 F": {
-    "filename": "10 F - Have you ever experienced sports...",
+  "10 F Have you ever experienced sports": {
+    "filename": "10 F Have you ever experienced sports",
     "codePattern": "10 F",
     "question": "Have you ever experienced sports?",
     "answer": "Answer for: Have you ever experienced sports?",
@@ -467,8 +467,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "10 G": {
-    "filename": "10 G - Would you recommend sports...",
+  "10 G Would you recommend sports": {
+    "filename": "10 G Would you recommend sports",
     "codePattern": "10 G",
     "question": "Would you recommend sports?",
     "answer": "Answer for: Would you recommend sports?",
@@ -477,8 +477,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "10 H": {
-    "filename": "10 H - Is sports important to you...",
+  "10 H Is sports important to you": {
+    "filename": "10 H Is sports important to you",
     "codePattern": "10 H",
     "question": "Is sports important to you?",
     "answer": "Answer for: Is sports important to you?",
@@ -487,8 +487,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "11 A": {
-    "filename": "11 A - What is your favorite weather...",
+  "11 A What is your favorite weather": {
+    "filename": "11 A What is your favorite weather",
     "codePattern": "11 A",
     "question": "What is your favorite weather?",
     "answer": "Answer for: What is your favorite weather?",
@@ -497,8 +497,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "11 B": {
-    "filename": "11 B - Do you like weather...",
+  "11 B Do you like weather": {
+    "filename": "11 B Do you like weather",
     "codePattern": "11 B",
     "question": "Do you like weather?",
     "answer": "Answer for: Do you like weather?",
@@ -507,8 +507,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "11 C": {
-    "filename": "11 C - How often do you use weather...",
+  "11 C How often do you use weather": {
+    "filename": "11 C How often do you use weather",
     "codePattern": "11 C",
     "question": "How often do you use weather?",
     "answer": "Answer for: How often do you use weather?",
@@ -517,8 +517,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "11 D": {
-    "filename": "11 D - Can you describe weather...",
+  "11 D Can you describe weather": {
+    "filename": "11 D Can you describe weather",
     "codePattern": "11 D",
     "question": "Can you describe weather?",
     "answer": "Answer for: Can you describe weather?",
@@ -527,8 +527,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "11 E": {
-    "filename": "11 E - What do you think about weather...",
+  "11 E What do you think about weather": {
+    "filename": "11 E What do you think about weather",
     "codePattern": "11 E",
     "question": "What do you think about weather?",
     "answer": "Answer for: What do you think about weather?",
@@ -537,8 +537,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "11 F": {
-    "filename": "11 F - Have you ever experienced weather...",
+  "11 F Have you ever experienced weather": {
+    "filename": "11 F Have you ever experienced weather",
     "codePattern": "11 F",
     "question": "Have you ever experienced weather?",
     "answer": "Answer for: Have you ever experienced weather?",
@@ -547,8 +547,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "11 G": {
-    "filename": "11 G - Would you recommend weather...",
+  "11 G Would you recommend weather": {
+    "filename": "11 G Would you recommend weather",
     "codePattern": "11 G",
     "question": "Would you recommend weather?",
     "answer": "Answer for: Would you recommend weather?",
@@ -557,8 +557,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "11 H": {
-    "filename": "11 H - Is weather important to you...",
+  "11 H Is weather important to you": {
+    "filename": "11 H Is weather important to you",
     "codePattern": "11 H",
     "question": "Is weather important to you?",
     "answer": "Answer for: Is weather important to you?",
@@ -567,8 +567,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "12 A": {
-    "filename": "12 A - What is your favorite time...",
+  "12 A What is your favorite time": {
+    "filename": "12 A What is your favorite time",
     "codePattern": "12 A",
     "question": "What is your favorite time?",
     "answer": "Answer for: What is your favorite time?",
@@ -577,8 +577,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "12 B": {
-    "filename": "12 B - Do you like time...",
+  "12 B Do you like time": {
+    "filename": "12 B Do you like time",
     "codePattern": "12 B",
     "question": "Do you like time?",
     "answer": "Answer for: Do you like time?",
@@ -587,8 +587,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "12 C": {
-    "filename": "12 C - How often do you use time...",
+  "12 C How often do you use time": {
+    "filename": "12 C How often do you use time",
     "codePattern": "12 C",
     "question": "How often do you use time?",
     "answer": "Answer for: How often do you use time?",
@@ -597,8 +597,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "12 D": {
-    "filename": "12 D - Can you describe time...",
+  "12 D Can you describe time": {
+    "filename": "12 D Can you describe time",
     "codePattern": "12 D",
     "question": "Can you describe time?",
     "answer": "Answer for: Can you describe time?",
@@ -607,8 +607,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "12 E": {
-    "filename": "12 E - What do you think about time...",
+  "12 E What do you think about time": {
+    "filename": "12 E What do you think about time",
     "codePattern": "12 E",
     "question": "What do you think about time?",
     "answer": "Answer for: What do you think about time?",
@@ -617,8 +617,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "12 F": {
-    "filename": "12 F - Have you ever experienced time...",
+  "12 F Have you ever experienced time": {
+    "filename": "12 F Have you ever experienced time",
     "codePattern": "12 F",
     "question": "Have you ever experienced time?",
     "answer": "Answer for: Have you ever experienced time?",
@@ -627,8 +627,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "12 G": {
-    "filename": "12 G - Would you recommend time...",
+  "12 G Would you recommend time": {
+    "filename": "12 G Would you recommend time",
     "codePattern": "12 G",
     "question": "Would you recommend time?",
     "answer": "Answer for: Would you recommend time?",
@@ -637,8 +637,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "12 H": {
-    "filename": "12 H - Is time important to you...",
+  "12 H Is time important to you": {
+    "filename": "12 H Is time important to you",
     "codePattern": "12 H",
     "question": "Is time important to you?",
     "answer": "Answer for: Is time important to you?",
@@ -647,8 +647,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "13 A": {
-    "filename": "13 A - What is your favorite transportation...",
+  "13 A What is your favorite transportation": {
+    "filename": "13 A What is your favorite transportation",
     "codePattern": "13 A",
     "question": "What is your favorite transportation?",
     "answer": "Answer for: What is your favorite transportation?",
@@ -657,8 +657,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "13 B": {
-    "filename": "13 B - Do you like transportation...",
+  "13 B Do you like transportation": {
+    "filename": "13 B Do you like transportation",
     "codePattern": "13 B",
     "question": "Do you like transportation?",
     "answer": "Answer for: Do you like transportation?",
@@ -667,8 +667,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "13 C": {
-    "filename": "13 C - How often do you use transportation...",
+  "13 C How often do you use transportation": {
+    "filename": "13 C How often do you use transportation",
     "codePattern": "13 C",
     "question": "How often do you use transportation?",
     "answer": "Answer for: How often do you use transportation?",
@@ -677,8 +677,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "13 D": {
-    "filename": "13 D - Can you describe transportation...",
+  "13 D Can you describe transportation": {
+    "filename": "13 D Can you describe transportation",
     "codePattern": "13 D",
     "question": "Can you describe transportation?",
     "answer": "Answer for: Can you describe transportation?",
@@ -687,8 +687,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "13 E": {
-    "filename": "13 E - What do you think about transportation...",
+  "13 E What do you think about transportation": {
+    "filename": "13 E What do you think about transportation",
     "codePattern": "13 E",
     "question": "What do you think about transportation?",
     "answer": "Answer for: What do you think about transportation?",
@@ -697,8 +697,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "13 F": {
-    "filename": "13 F - Have you ever experienced transportation...",
+  "13 F Have you ever experienced transportation": {
+    "filename": "13 F Have you ever experienced transportation",
     "codePattern": "13 F",
     "question": "Have you ever experienced transportation?",
     "answer": "Answer for: Have you ever experienced transportation?",
@@ -707,8 +707,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "13 G": {
-    "filename": "13 G - Would you recommend transportation...",
+  "13 G Would you recommend transportation": {
+    "filename": "13 G Would you recommend transportation",
     "codePattern": "13 G",
     "question": "Would you recommend transportation?",
     "answer": "Answer for: Would you recommend transportation?",
@@ -717,8 +717,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "13 H": {
-    "filename": "13 H - Is transportation important to you...",
+  "13 H Is transportation important to you": {
+    "filename": "13 H Is transportation important to you",
     "codePattern": "13 H",
     "question": "Is transportation important to you?",
     "answer": "Answer for: Is transportation important to you?",
@@ -727,8 +727,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "14 A": {
-    "filename": "14 A - What is your favorite holidays...",
+  "14 A What is your favorite holidays": {
+    "filename": "14 A What is your favorite holidays",
     "codePattern": "14 A",
     "question": "What is your favorite holidays?",
     "answer": "Answer for: What is your favorite holidays?",
@@ -737,8 +737,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "14 B": {
-    "filename": "14 B - Do you like holidays...",
+  "14 B Do you like holidays": {
+    "filename": "14 B Do you like holidays",
     "codePattern": "14 B",
     "question": "Do you like holidays?",
     "answer": "Answer for: Do you like holidays?",
@@ -747,8 +747,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "14 C": {
-    "filename": "14 C - How often do you use holidays...",
+  "14 C How often do you use holidays": {
+    "filename": "14 C How often do you use holidays",
     "codePattern": "14 C",
     "question": "How often do you use holidays?",
     "answer": "Answer for: How often do you use holidays?",
@@ -757,8 +757,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "14 D": {
-    "filename": "14 D - Can you describe holidays...",
+  "14 D Can you describe holidays": {
+    "filename": "14 D Can you describe holidays",
     "codePattern": "14 D",
     "question": "Can you describe holidays?",
     "answer": "Answer for: Can you describe holidays?",
@@ -767,8 +767,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "14 E": {
-    "filename": "14 E - What do you think about holidays...",
+  "14 E What do you think about holidays": {
+    "filename": "14 E What do you think about holidays",
     "codePattern": "14 E",
     "question": "What do you think about holidays?",
     "answer": "Answer for: What do you think about holidays?",
@@ -777,8 +777,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "14 F": {
-    "filename": "14 F - Have you ever experienced holidays...",
+  "14 F Have you ever experienced holidays": {
+    "filename": "14 F Have you ever experienced holidays",
     "codePattern": "14 F",
     "question": "Have you ever experienced holidays?",
     "answer": "Answer for: Have you ever experienced holidays?",
@@ -787,8 +787,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "14 G": {
-    "filename": "14 G - Would you recommend holidays...",
+  "14 G Would you recommend holidays": {
+    "filename": "14 G Would you recommend holidays",
     "codePattern": "14 G",
     "question": "Would you recommend holidays?",
     "answer": "Answer for: Would you recommend holidays?",
@@ -797,8 +797,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "14 H": {
-    "filename": "14 H - Is holidays important to you...",
+  "14 H Is holidays important to you": {
+    "filename": "14 H Is holidays important to you",
     "codePattern": "14 H",
     "question": "Is holidays important to you?",
     "answer": "Answer for: Is holidays important to you?",
@@ -807,8 +807,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "15 A": {
-    "filename": "15 A - What is your favorite professions...",
+  "15 A What is your favorite professions": {
+    "filename": "15 A What is your favorite professions",
     "codePattern": "15 A",
     "question": "What is your favorite professions?",
     "answer": "Answer for: What is your favorite professions?",
@@ -817,8 +817,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "15 B": {
-    "filename": "15 B - Do you like professions...",
+  "15 B Do you like professions": {
+    "filename": "15 B Do you like professions",
     "codePattern": "15 B",
     "question": "Do you like professions?",
     "answer": "Answer for: Do you like professions?",
@@ -827,8 +827,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "15 C": {
-    "filename": "15 C - How often do you use professions...",
+  "15 C How often do you use professions": {
+    "filename": "15 C How often do you use professions",
     "codePattern": "15 C",
     "question": "How often do you use professions?",
     "answer": "Answer for: How often do you use professions?",
@@ -837,8 +837,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "15 D": {
-    "filename": "15 D - Can you describe professions...",
+  "15 D Can you describe professions": {
+    "filename": "15 D Can you describe professions",
     "codePattern": "15 D",
     "question": "Can you describe professions?",
     "answer": "Answer for: Can you describe professions?",
@@ -847,8 +847,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "15 E": {
-    "filename": "15 E - What do you think about professions...",
+  "15 E What do you think about professions": {
+    "filename": "15 E What do you think about professions",
     "codePattern": "15 E",
     "question": "What do you think about professions?",
     "answer": "Answer for: What do you think about professions?",
@@ -857,8 +857,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "15 F": {
-    "filename": "15 F - Have you ever experienced professions...",
+  "15 F Have you ever experienced professions": {
+    "filename": "15 F Have you ever experienced professions",
     "codePattern": "15 F",
     "question": "Have you ever experienced professions?",
     "answer": "Answer for: Have you ever experienced professions?",
@@ -867,8 +867,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "15 G": {
-    "filename": "15 G - Would you recommend professions...",
+  "15 G Would you recommend professions": {
+    "filename": "15 G Would you recommend professions",
     "codePattern": "15 G",
     "question": "Would you recommend professions?",
     "answer": "Answer for: Would you recommend professions?",
@@ -877,8 +877,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "15 H": {
-    "filename": "15 H - Is professions important to you...",
+  "15 H Is professions important to you": {
+    "filename": "15 H Is professions important to you",
     "codePattern": "15 H",
     "question": "Is professions important to you?",
     "answer": "Answer for: Is professions important to you?",
@@ -887,8 +887,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "16 A": {
-    "filename": "16 A - What is your favorite house...",
+  "16 A What is your favorite house": {
+    "filename": "16 A What is your favorite house",
     "codePattern": "16 A",
     "question": "What is your favorite house?",
     "answer": "Answer for: What is your favorite house?",
@@ -897,8 +897,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "16 B": {
-    "filename": "16 B - Do you like house...",
+  "16 B Do you like house": {
+    "filename": "16 B Do you like house",
     "codePattern": "16 B",
     "question": "Do you like house?",
     "answer": "Answer for: Do you like house?",
@@ -907,8 +907,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "16 C": {
-    "filename": "16 C - How often do you use house...",
+  "16 C How often do you use house": {
+    "filename": "16 C How often do you use house",
     "codePattern": "16 C",
     "question": "How often do you use house?",
     "answer": "Answer for: How often do you use house?",
@@ -917,8 +917,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "16 D": {
-    "filename": "16 D - Can you describe house...",
+  "16 D Can you describe house": {
+    "filename": "16 D Can you describe house",
     "codePattern": "16 D",
     "question": "Can you describe house?",
     "answer": "Answer for: Can you describe house?",
@@ -927,8 +927,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "16 E": {
-    "filename": "16 E - What do you think about house...",
+  "16 E What do you think about house": {
+    "filename": "16 E What do you think about house",
     "codePattern": "16 E",
     "question": "What do you think about house?",
     "answer": "Answer for: What do you think about house?",
@@ -937,8 +937,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "16 F": {
-    "filename": "16 F - Have you ever experienced house...",
+  "16 F Have you ever experienced house": {
+    "filename": "16 F Have you ever experienced house",
     "codePattern": "16 F",
     "question": "Have you ever experienced house?",
     "answer": "Answer for: Have you ever experienced house?",
@@ -947,8 +947,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "16 G": {
-    "filename": "16 G - Would you recommend house...",
+  "16 G Would you recommend house": {
+    "filename": "16 G Would you recommend house",
     "codePattern": "16 G",
     "question": "Would you recommend house?",
     "answer": "Answer for: Would you recommend house?",
@@ -957,8 +957,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "16 H": {
-    "filename": "16 H - Is house important to you...",
+  "16 H Is house important to you": {
+    "filename": "16 H Is house important to you",
     "codePattern": "16 H",
     "question": "Is house important to you?",
     "answer": "Answer for: Is house important to you?",
@@ -967,8 +967,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "17 A": {
-    "filename": "17 A - What is your favorite school...",
+  "17 A What is your favorite school": {
+    "filename": "17 A What is your favorite school",
     "codePattern": "17 A",
     "question": "What is your favorite school?",
     "answer": "Answer for: What is your favorite school?",
@@ -977,8 +977,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "17 B": {
-    "filename": "17 B - Do you like school...",
+  "17 B Do you like school": {
+    "filename": "17 B Do you like school",
     "codePattern": "17 B",
     "question": "Do you like school?",
     "answer": "Answer for: Do you like school?",
@@ -987,8 +987,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "17 C": {
-    "filename": "17 C - How often do you use school...",
+  "17 C How often do you use school": {
+    "filename": "17 C How often do you use school",
     "codePattern": "17 C",
     "question": "How often do you use school?",
     "answer": "Answer for: How often do you use school?",
@@ -997,8 +997,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "17 D": {
-    "filename": "17 D - Can you describe school...",
+  "17 D Can you describe school": {
+    "filename": "17 D Can you describe school",
     "codePattern": "17 D",
     "question": "Can you describe school?",
     "answer": "Answer for: Can you describe school?",
@@ -1007,8 +1007,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "17 E": {
-    "filename": "17 E - What do you think about school...",
+  "17 E What do you think about school": {
+    "filename": "17 E What do you think about school",
     "codePattern": "17 E",
     "question": "What do you think about school?",
     "answer": "Answer for: What do you think about school?",
@@ -1017,8 +1017,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "17 F": {
-    "filename": "17 F - Have you ever experienced school...",
+  "17 F Have you ever experienced school": {
+    "filename": "17 F Have you ever experienced school",
     "codePattern": "17 F",
     "question": "Have you ever experienced school?",
     "answer": "Answer for: Have you ever experienced school?",
@@ -1027,8 +1027,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "17 G": {
-    "filename": "17 G - Would you recommend school...",
+  "17 G Would you recommend school": {
+    "filename": "17 G Would you recommend school",
     "codePattern": "17 G",
     "question": "Would you recommend school?",
     "answer": "Answer for: Would you recommend school?",
@@ -1037,8 +1037,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "17 H": {
-    "filename": "17 H - Is school important to you...",
+  "17 H Is school important to you": {
+    "filename": "17 H Is school important to you",
     "codePattern": "17 H",
     "question": "Is school important to you?",
     "answer": "Answer for: Is school important to you?",
@@ -1047,8 +1047,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "18 A": {
-    "filename": "18 A - What is your favorite sports...",
+  "18 A What is your favorite sports": {
+    "filename": "18 A What is your favorite sports",
     "codePattern": "18 A",
     "question": "What is your favorite sports?",
     "answer": "Answer for: What is your favorite sports?",
@@ -1057,8 +1057,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "18 B": {
-    "filename": "18 B - Do you like sports...",
+  "18 B Do you like sports": {
+    "filename": "18 B Do you like sports",
     "codePattern": "18 B",
     "question": "Do you like sports?",
     "answer": "Answer for: Do you like sports?",
@@ -1067,8 +1067,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "18 C": {
-    "filename": "18 C - How often do you use sports...",
+  "18 C How often do you use sports": {
+    "filename": "18 C How often do you use sports",
     "codePattern": "18 C",
     "question": "How often do you use sports?",
     "answer": "Answer for: How often do you use sports?",
@@ -1077,8 +1077,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "18 D": {
-    "filename": "18 D - Can you describe sports...",
+  "18 D Can you describe sports": {
+    "filename": "18 D Can you describe sports",
     "codePattern": "18 D",
     "question": "Can you describe sports?",
     "answer": "Answer for: Can you describe sports?",
@@ -1087,8 +1087,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "18 E": {
-    "filename": "18 E - What do you think about sports...",
+  "18 E What do you think about sports": {
+    "filename": "18 E What do you think about sports",
     "codePattern": "18 E",
     "question": "What do you think about sports?",
     "answer": "Answer for: What do you think about sports?",
@@ -1097,8 +1097,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "18 F": {
-    "filename": "18 F - Have you ever experienced sports...",
+  "18 F Have you ever experienced sports": {
+    "filename": "18 F Have you ever experienced sports",
     "codePattern": "18 F",
     "question": "Have you ever experienced sports?",
     "answer": "Answer for: Have you ever experienced sports?",
@@ -1107,8 +1107,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "18 G": {
-    "filename": "18 G - Would you recommend sports...",
+  "18 G Would you recommend sports": {
+    "filename": "18 G Would you recommend sports",
     "codePattern": "18 G",
     "question": "Would you recommend sports?",
     "answer": "Answer for: Would you recommend sports?",
@@ -1117,8 +1117,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "18 H": {
-    "filename": "18 H - Is sports important to you...",
+  "18 H Is sports important to you": {
+    "filename": "18 H Is sports important to you",
     "codePattern": "18 H",
     "question": "Is sports important to you?",
     "answer": "Answer for: Is sports important to you?",
@@ -1127,8 +1127,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "19 A": {
-    "filename": "19 A - What is your favorite weather...",
+  "19 A What is your favorite weather": {
+    "filename": "19 A What is your favorite weather",
     "codePattern": "19 A",
     "question": "What is your favorite weather?",
     "answer": "Answer for: What is your favorite weather?",
@@ -1137,8 +1137,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "19 B": {
-    "filename": "19 B - Do you like weather...",
+  "19 B Do you like weather": {
+    "filename": "19 B Do you like weather",
     "codePattern": "19 B",
     "question": "Do you like weather?",
     "answer": "Answer for: Do you like weather?",
@@ -1147,8 +1147,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "19 C": {
-    "filename": "19 C - How often do you use weather...",
+  "19 C How often do you use weather": {
+    "filename": "19 C How often do you use weather",
     "codePattern": "19 C",
     "question": "How often do you use weather?",
     "answer": "Answer for: How often do you use weather?",
@@ -1157,8 +1157,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "19 D": {
-    "filename": "19 D - Can you describe weather...",
+  "19 D Can you describe weather": {
+    "filename": "19 D Can you describe weather",
     "codePattern": "19 D",
     "question": "Can you describe weather?",
     "answer": "Answer for: Can you describe weather?",
@@ -1167,8 +1167,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "19 E": {
-    "filename": "19 E - What do you think about weather...",
+  "19 E What do you think about weather": {
+    "filename": "19 E What do you think about weather",
     "codePattern": "19 E",
     "question": "What do you think about weather?",
     "answer": "Answer for: What do you think about weather?",
@@ -1177,8 +1177,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "19 F": {
-    "filename": "19 F - Have you ever experienced weather...",
+  "19 F Have you ever experienced weather": {
+    "filename": "19 F Have you ever experienced weather",
     "codePattern": "19 F",
     "question": "Have you ever experienced weather?",
     "answer": "Answer for: Have you ever experienced weather?",
@@ -1187,8 +1187,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "19 G": {
-    "filename": "19 G - Would you recommend weather...",
+  "19 G Would you recommend weather": {
+    "filename": "19 G Would you recommend weather",
     "codePattern": "19 G",
     "question": "Would you recommend weather?",
     "answer": "Answer for: Would you recommend weather?",
@@ -1197,8 +1197,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "19 H": {
-    "filename": "19 H - Is weather important to you...",
+  "19 H Is weather important to you": {
+    "filename": "19 H Is weather important to you",
     "codePattern": "19 H",
     "question": "Is weather important to you?",
     "answer": "Answer for: Is weather important to you?",
@@ -1207,8 +1207,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "20 A": {
-    "filename": "20 A - What is your favorite time...",
+  "20 A What is your favorite time": {
+    "filename": "20 A What is your favorite time",
     "codePattern": "20 A",
     "question": "What is your favorite time?",
     "answer": "Answer for: What is your favorite time?",
@@ -1217,8 +1217,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "20 B": {
-    "filename": "20 B - Do you like time...",
+  "20 B Do you like time": {
+    "filename": "20 B Do you like time",
     "codePattern": "20 B",
     "question": "Do you like time?",
     "answer": "Answer for: Do you like time?",
@@ -1227,8 +1227,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "20 C": {
-    "filename": "20 C - How often do you use time...",
+  "20 C How often do you use time": {
+    "filename": "20 C How often do you use time",
     "codePattern": "20 C",
     "question": "How often do you use time?",
     "answer": "Answer for: How often do you use time?",
@@ -1237,8 +1237,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "20 D": {
-    "filename": "20 D - Can you describe time...",
+  "20 D Can you describe time": {
+    "filename": "20 D Can you describe time",
     "codePattern": "20 D",
     "question": "Can you describe time?",
     "answer": "Answer for: Can you describe time?",
@@ -1247,8 +1247,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "20 E": {
-    "filename": "20 E - What do you think about time...",
+  "20 E What do you think about time": {
+    "filename": "20 E What do you think about time",
     "codePattern": "20 E",
     "question": "What do you think about time?",
     "answer": "Answer for: What do you think about time?",
@@ -1257,8 +1257,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "20 F": {
-    "filename": "20 F - Have you ever experienced time...",
+  "20 F Have you ever experienced time": {
+    "filename": "20 F Have you ever experienced time",
     "codePattern": "20 F",
     "question": "Have you ever experienced time?",
     "answer": "Answer for: Have you ever experienced time?",
@@ -1267,8 +1267,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "20 G": {
-    "filename": "20 G - Would you recommend time...",
+  "20 G Would you recommend time": {
+    "filename": "20 G Would you recommend time",
     "codePattern": "20 G",
     "question": "Would you recommend time?",
     "answer": "Answer for: Would you recommend time?",
@@ -1277,8 +1277,8 @@
     "source": "generated-completion",
     "generatedBy": "unit-completion-system"
   },
-  "20 H": {
-    "filename": "20 H - Is time important to you...",
+  "20 H Is time important to you": {
+    "filename": "20 H Is time important to you",
     "codePattern": "20 H",
     "question": "Is time important to you?",
     "answer": "Answer for: Is time important to you?",
