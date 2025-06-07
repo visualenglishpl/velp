@@ -105,6 +105,7 @@ export default function SimpleContentViewer() {
     originalAnswer: string;
     flagReason?: string;
   } | null>(null);
+  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
   const { toast } = useToast();
   
   // Extract bookId and unitNumber from URL path
@@ -343,14 +344,27 @@ export default function SimpleContentViewer() {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft' && currentIndex > 0) {
-        goToSlide(currentIndex - 1);
-      } else if (e.key === 'ArrowRight' && currentIndex < materials.length - 1) {
-        goToSlide(currentIndex + 1);
+      if (e.key === 'ArrowLeft' || e.key === 'h' || e.key === 'H') {
+        e.preventDefault();
+        if (currentIndex > 0) goToSlide(currentIndex - 1);
+      } else if (e.key === 'ArrowRight' || e.key === 'l' || e.key === 'L') {
+        e.preventDefault();
+        if (currentIndex < materials.length - 1) goToSlide(currentIndex + 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        goToSlide(materials.length - 1);
       } else if (e.key === 'Escape' && isFullscreen) {
+        e.preventDefault();
         setIsFullscreen(false);
-      } else if (e.key === 'f' || e.key === 'F') {
+      } else if (e.key === 'f' || e.key === 'F' || e.key === 'F11') {
+        e.preventDefault();
         setIsFullscreen(!isFullscreen);
+      } else if (e.key === '?') {
+        e.preventDefault();
+        setShowKeyboardHelp(!showKeyboardHelp);
       }
     };
     
@@ -1263,6 +1277,55 @@ export default function SimpleContentViewer() {
             
             {/* Downloads section has been removed */}
           </Tabs>
+        </div>
+      )}
+      
+      {/* Keyboard Shortcuts Help Overlay */}
+      {showKeyboardHelp && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-slate-800">Keyboard Shortcuts</h3>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setShowKeyboardHelp(false)}
+                className="h-8 w-8 p-0"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">Next slide</span>
+                <kbd className="px-2 py-1 bg-slate-100 rounded text-xs font-mono">→ or L</kbd>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">Previous slide</span>
+                <kbd className="px-2 py-1 bg-slate-100 rounded text-xs font-mono">← or H</kbd>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">First slide</span>
+                <kbd className="px-2 py-1 bg-slate-100 rounded text-xs font-mono">Home</kbd>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">Last slide</span>
+                <kbd className="px-2 py-1 bg-slate-100 rounded text-xs font-mono">End</kbd>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">Toggle fullscreen</span>
+                <kbd className="px-2 py-1 bg-slate-100 rounded text-xs font-mono">F or F11</kbd>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">Exit fullscreen</span>
+                <kbd className="px-2 py-1 bg-slate-100 rounded text-xs font-mono">Esc</kbd>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">Show this help</span>
+                <kbd className="px-2 py-1 bg-slate-100 rounded text-xs font-mono">?</kbd>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
