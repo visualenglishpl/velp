@@ -96,7 +96,7 @@ export function useExcelQA(bookId: string) {
 
   const findMatchingQA = useCallback((filename: string, currentUnitId?: string): QuestionAnswer | undefined => {
     // Debug level: 0=none, 1=important, 2=details
-    const debugLevel = 0;
+    const debugLevel = 1;
     
     // Helper function to log with debug level
     const logDebug = (message: string, level: number = 1) => {
@@ -161,6 +161,54 @@ export function useExcelQA(bookId: string) {
     if (filteredMappings[filenameOnly]) {
       logDebug(`✅ FOUND MATCH (filename only) for: ${filenameOnly}`, 1);
       return filteredMappings[filenameOnly];
+    }
+
+    // STRATEGY 3.5: Try case-insensitive exact matches
+    const lowerCleanedFilename = cleanedFilename.toLowerCase();
+    for (const [key, qa] of Object.entries(filteredMappings)) {
+      if (key.toLowerCase() === lowerCleanedFilename) {
+        logDebug(`✅ FOUND MATCH (case-insensitive) for: ${cleanedFilename}`, 1);
+        return qa;
+      }
+    }
+    
+    // STRATEGY 3.6: Try matching by extracting just the question part and comparing
+    // Handle filenames like "01 I A What Do You Say in the Morning – Good Morning"
+    const questionMatch = cleanedFilename.match(/^(\d+\s+[A-Z]+\s+[A-Z]+\s+)(.+?)(\s+–\s+.+)?$/i);
+    if (questionMatch) {
+      const codePrefix = questionMatch[1].trim(); // "01 I A"
+      const questionPart = questionMatch[2].trim(); // "What Do You Say in the Morning"
+      
+      logDebug(`Extracted from filename: code="${codePrefix}", question="${questionPart}"`, 2);
+      
+      // Try to find a match with similar question content
+      for (const [key, qa] of Object.entries(filteredMappings)) {
+        if (key.toLowerCase().includes(questionPart.toLowerCase()) || 
+            qa.question?.toLowerCase().includes(questionPart.toLowerCase())) {
+          logDebug(`✅ FOUND MATCH (question content) for: ${cleanedFilename}`, 1);
+          return qa;
+        }
+      }
+    }
+
+    // STRATEGY 3.7: Enhanced pattern matching for Book 1 Unit 1 specific issues
+    // Map specific problematic filenames to their correct Q&A
+    const specificMappings: Record<string, string> = {
+      // Slide 5 mapping
+      "05 C Draw the Sun or the Moon": "01 A What do you say in the morning",
+      "05 c draw the sun or the moon": "01 A What do you say in the morning",
+      // Slide 10 mapping
+      "10 A Online Game Wordwall – Greetings": "01 E What do you drink in the morning", 
+      "10 a online game wordwall – greetings": "01 E What do you drink in the morning",
+      // Slide 11 mapping
+      "10 C B Online Game Wordwall – Times of the Day": "01 F What do you eat in the morning",
+      "10 c b online game wordwall – times of the day": "01 F What do you eat in the morning"
+    };
+
+    const specificKey = specificMappings[cleanedFilename] || specificMappings[cleanedFilename.toLowerCase()];
+    if (specificKey && filteredMappings[specificKey]) {
+      logDebug(`✅ FOUND MATCH (specific mapping) for: ${cleanedFilename} -> ${specificKey}`, 1);
+      return filteredMappings[specificKey];
     }
 
     // STRATEGY 3: Try exact match with dash pattern in filename
