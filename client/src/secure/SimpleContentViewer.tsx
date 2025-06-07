@@ -496,23 +496,23 @@ export default function SimpleContentViewer() {
       ref={containerRef}
       className={`relative ${isFullscreen ? 'fixed inset-0 z-50 bg-gradient-to-br from-slate-50 to-blue-50' : 'rounded-xl shadow-xl border border-slate-200 bg-white overflow-hidden'}`}
     >
-      {/* Enhanced Header with Gradient */}
-      <div className={`bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-6 flex justify-between items-center ${isFullscreen ? 'sticky top-0 z-10 shadow-lg' : 'rounded-t-xl'}`}>
+      {/* Minimal Header */}
+      <div className={`bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center ${isFullscreen ? 'sticky top-0 z-10 shadow-sm' : ''}`}>
         <div className="flex items-center">
           <Button 
             size="sm" 
             variant="ghost" 
             onClick={() => navigate(`/books/${bookId}`)}
-            className="text-white/80 hover:text-white hover:bg-white/10 mr-4 transition-all duration-200"
+            className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 mr-4 transition-all duration-200"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
             Books
           </Button>
           <div className="flex items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5 mr-3">
-              <span className="text-white/90 text-sm font-medium">Book {bookId}</span>
+            <div className="bg-gray-100 rounded-lg px-3 py-1.5 mr-3">
+              <span className="text-gray-700 text-sm font-medium">Book {bookId}</span>
             </div>
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-xl font-semibold text-gray-900">
               {unitData?.title || `Unit ${unitNumber}`}
             </h3>
           </div>
@@ -521,8 +521,8 @@ export default function SimpleContentViewer() {
           {/* Show regular controls when not in edit mode */}
           {!isEditMode ? (
             <>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                <span className="text-white/90 text-sm font-medium">
+              <div className="bg-gray-100 rounded-lg px-3 py-1.5">
+                <span className="text-gray-700 text-sm font-medium">
                   {currentIndex + 1} / {materials.length}
                 </span>
               </div>
@@ -682,13 +682,13 @@ export default function SimpleContentViewer() {
                           <>
                             {qa.country && (
                               <div className="mb-3 text-center">
-                                <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                                <div className="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold">
                                   {qa.country}
                                 </div>
                               </div>
                             )}
-                            <div className="flex items-start justify-between gap-4">
-                              <div className="text-slate-800 text-lg font-semibold flex-grow leading-relaxed">
+                            <div className="text-center">
+                              <div className="text-slate-800 text-lg font-semibold leading-relaxed mb-4">
                                 {/* Apply our improved question text cleaning to remove codes and format properly */}
                                 {cleanQuestionText(removePrefixes(qa.question))}
                               </div>
@@ -697,21 +697,21 @@ export default function SimpleContentViewer() {
                                 <Button 
                                   variant="ghost" 
                                   size="sm" 
-                                  className="h-8 w-8 p-0 opacity-70 hover:opacity-100 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                                  className="h-8 w-8 p-0 opacity-70 hover:opacity-100 hover:bg-gray-50 rounded-lg transition-all duration-200 absolute top-2 right-2"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     openQuestionEditor(material, qa);
                                   }}
                                   title="Edit question/answer"
                                 >
-                                  <PenTool className="h-4 w-4 text-blue-600" />
+                                  <PenTool className="h-4 w-4 text-gray-600" />
                                 </Button>
                               )}
-                            </div>
-                            <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border-l-4 border-green-400">
-                              <div className="text-slate-700 text-lg font-medium leading-relaxed">
-                                {/* Apply our improved answer text cleaning to remove codes and format properly */}
-                                {cleanAnswerText(removePrefixes(qa.answer))}
+                              <div className="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm">
+                                <div className="text-gray-700 text-lg font-medium leading-relaxed">
+                                  {/* Apply our improved answer text cleaning to remove codes and format properly */}
+                                  {cleanAnswerText(removePrefixes(qa.answer))}
+                                </div>
                               </div>
                             </div>
                           </>
@@ -722,30 +722,34 @@ export default function SimpleContentViewer() {
                           (() => {
                             const [question, answer] = material.title.split('→').map(part => part.trim());
                             return (
-                              <>
-                                <div className="text-gray-800 text-base font-medium">
+                              <div className="text-center">
+                                <div className="text-gray-800 text-lg font-semibold mb-4">
                                   {cleanQuestionText(question)}
                                 </div>
-                                <div className="mt-2 font-medium text-gray-900 text-base">
-                                  {cleanAnswerText(answer)}
+                                <div className="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm">
+                                  <div className="text-gray-700 text-lg font-medium">
+                                    {cleanAnswerText(answer)}
+                                  </div>
                                 </div>
-                              </>
+                              </div>
                             );
                           })()
                         )}
                         
                         {/* Check for question mark format */}
                         {material.title && material.title.includes('?') && !qa.hasData && !material.title.includes('→') && (
-                          <>
-                            <div className="text-gray-800 text-base font-medium">
+                          <div className="text-center">
+                            <div className="text-gray-800 text-lg font-semibold mb-4">
                               {cleanQuestionText(material.title)}
                             </div>
                             {material.description && (
-                              <div className="mt-2 font-medium text-gray-900 text-base">
-                                {cleanAnswerText(material.description)}
+                              <div className="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm">
+                                <div className="text-gray-700 text-lg font-medium">
+                                  {cleanAnswerText(material.description)}
+                                </div>
                               </div>
                             )}
-                          </>
+                          </div>
                         )}
                         
                         {/* Default case - just show title if not starting with "Content from" */}
