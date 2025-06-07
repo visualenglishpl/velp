@@ -618,7 +618,7 @@ export default function SimpleContentViewer() {
             const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
             
             return (
-              <div key={index} className="outline-none h-[70vh] w-full flex flex-col justify-center relative bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl mx-2 shadow-lg border border-slate-200">
+              <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
                 {/* Question-Answer section above image - Only show if a question exists */}
                 {(() => {
                   // First check if we have a question from our Q&A mapping system
