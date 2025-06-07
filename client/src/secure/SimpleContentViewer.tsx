@@ -480,33 +480,38 @@ export default function SimpleContentViewer() {
   return (
     <div 
       ref={containerRef}
-      className={`relative ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : 'rounded-lg shadow-md border border-gray-200'}`}
+      className={`relative ${isFullscreen ? 'fixed inset-0 z-50 bg-gradient-to-br from-slate-50 to-blue-50' : 'rounded-xl shadow-xl border border-slate-200 bg-white overflow-hidden'}`}
     >
-      {/* Header with unit info - Enhanced */}
-      <div className={`bg-white border-b border-gray-200 py-3 px-4 flex justify-between items-center ${isFullscreen ? 'sticky top-0 z-10' : 'rounded-t-lg'}`}>
+      {/* Enhanced Header with Gradient */}
+      <div className={`bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-6 flex justify-between items-center ${isFullscreen ? 'sticky top-0 z-10 shadow-lg' : 'rounded-t-xl'}`}>
         <div className="flex items-center">
           <Button 
             size="sm" 
             variant="ghost" 
             onClick={() => navigate(`/books/${bookId}`)}
-            className="text-gray-600 hover:text-blue-600 mr-3"
+            className="text-white/80 hover:text-white hover:bg-white/10 mr-4 transition-all duration-200"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
             Books
           </Button>
-          <h3 className="text-lg font-medium flex items-center">
-            <span className="text-blue-600 font-bold">Book {bookId}</span>
-            <span className="mx-2 text-gray-400">•</span>
-            <span>{unitData?.title || `Unit ${unitNumber}`}</span>
-          </h3>
+          <div className="flex items-center">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5 mr-3">
+              <span className="text-white/90 text-sm font-medium">Book {bookId}</span>
+            </div>
+            <h3 className="text-xl font-semibold text-white">
+              {unitData?.title || `Unit ${unitNumber}`}
+            </h3>
+          </div>
         </div>
         <div className="flex items-center space-x-2">
           {/* Show regular controls when not in edit mode */}
           {!isEditMode ? (
             <>
-              <span className="text-sm text-gray-500">
-                Slide {currentIndex + 1} of {materials.length}
-              </span>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                <span className="text-white/90 text-sm font-medium">
+                  {currentIndex + 1} / {materials.length}
+                </span>
+              </div>
               
               {/* Only show edit button for admins */}
               {user?.role === 'admin' && (
@@ -514,7 +519,7 @@ export default function SimpleContentViewer() {
                   size="sm" 
                   variant="ghost" 
                   onClick={() => setIsEditMode(true)}
-                  className="text-gray-600 hover:text-red-600 hover:bg-red-50"
+                  className="text-white/80 hover:text-white hover:bg-red-500/20 transition-all duration-200"
                   title="Delete Slides"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -525,7 +530,7 @@ export default function SimpleContentViewer() {
                 size="sm" 
                 variant="ghost" 
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                className="text-gray-600 hover:text-blue-600"
+                className="text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
                 title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
               >
                 {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -588,7 +593,7 @@ export default function SimpleContentViewer() {
             const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
             
             return (
-              <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
+              <div key={index} className="outline-none h-[70vh] w-full flex flex-col justify-center relative bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl mx-2 shadow-lg border border-slate-200">
                 {/* Question-Answer section above image - Only show if a question exists */}
                 {(() => {
                   // First check if we have a question from our Q&A mapping system
@@ -645,20 +650,20 @@ export default function SimpleContentViewer() {
                   
                   // Otherwise, render the Q&A section
                   return (
-                    <div className="mb-1 p-2 mx-auto z-10 max-w-2xl">
-                      <div className="flex flex-col items-center text-center">
+                    <div className="mb-6 mx-auto z-10 max-w-4xl px-6">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
                         {/* Try to extract Q&A data */}
                         {qa.hasData && (
                           <>
                             {qa.country && (
-                              <div className="mb-1 text-center">
-                                <h3 className="text-base font-bold text-gray-900">
+                              <div className="mb-3 text-center">
+                                <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">
                                   {qa.country}
-                                </h3>
+                                </div>
                               </div>
                             )}
-                            <div className="flex items-center justify-between">
-                              <div className="text-gray-800 text-base font-medium flex-grow">
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="text-slate-800 text-lg font-semibold flex-grow leading-relaxed">
                                 {/* Apply our improved question text cleaning to remove codes and format properly */}
                                 {cleanQuestionText(removePrefixes(qa.question))}
                               </div>
@@ -667,20 +672,22 @@ export default function SimpleContentViewer() {
                                 <Button 
                                   variant="ghost" 
                                   size="sm" 
-                                  className="ml-2 h-7 w-7 p-0 opacity-70 hover:opacity-100"
+                                  className="h-8 w-8 p-0 opacity-70 hover:opacity-100 hover:bg-blue-50 rounded-lg transition-all duration-200"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     openQuestionEditor(material, qa);
                                   }}
                                   title="Edit question/answer"
                                 >
-                                  <PenTool className="h-3.5 w-3.5" />
+                                  <PenTool className="h-4 w-4 text-blue-600" />
                                 </Button>
                               )}
                             </div>
-                            <div className="mt-2 font-medium text-gray-900 text-base">
-                              {/* Apply our improved answer text cleaning to remove codes and format properly */}
-                              {cleanAnswerText(removePrefixes(qa.answer))}
+                            <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border-l-4 border-green-400">
+                              <div className="text-slate-700 text-lg font-medium leading-relaxed">
+                                {/* Apply our improved answer text cleaning to remove codes and format properly */}
+                                {cleanAnswerText(removePrefixes(qa.answer))}
+                              </div>
                             </div>
                           </>
                         )}
@@ -765,11 +772,16 @@ export default function SimpleContentViewer() {
                     </video>
                   ) : (
                     /* Regular image content */
-                    <img 
-                      src={imagePath}
-                      alt={material.title || `Slide ${index + 1}`}
-                      className="max-h-full max-w-full object-contain mx-auto shadow-lg"
-                    />
+                    <div className="relative group">
+                      <img 
+                        src={imagePath}
+                        alt={material.title || `Slide ${index + 1}`}
+                        className="max-h-full max-w-full object-contain mx-auto shadow-2xl rounded-lg border border-white/30 transition-all duration-300 group-hover:shadow-3xl"
+                        style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.1))' }}
+                      />
+                      {/* Image loading placeholder */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 animate-pulse rounded-lg -z-10"></div>
+                    </div>
                   )}
                 </div>
               </div>
@@ -796,38 +808,48 @@ export default function SimpleContentViewer() {
         </button>
       </div>
       
-      {/* Slide thumbnail reel */}
-      <div className="w-full overflow-x-auto py-3 px-2 border-t border-gray-200 bg-gray-50">
-        <div className="flex space-x-2 min-w-max">
-          {materials.map((material, index) => {
-            // Use our improved image path handling utility
-            const thumbnailPath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
-            const isVideo = material.content.toLowerCase().includes('video') || 
-                          material.content.toLowerCase().endsWith('.mp4');
-            
-            // Check if premium content (similar logic as above)
-            const isAdmin = user?.role === 'admin';
-            const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess && !isAdmin;
-            
-            // Check if this slide is marked for deletion
-            const isMarkedForDeletion = slidesToDelete.has(index);
-            
-            return (
-              <div
-                key={`thumb-${index}`}
-                className="relative flex-shrink-0"
-              >
-                <button
-                  onClick={() => goToSlide(index)}
-                  className={`relative flex-shrink-0 w-20 h-16 border-2 transition-all duration-200 ${
-                    isMarkedForDeletion
-                      ? 'border-red-500 opacity-50' 
-                      : currentIndex === index 
-                        ? 'border-blue-500 shadow-md' 
-                        : 'border-gray-200 hover:border-blue-300'
-                  } rounded overflow-hidden`}
-                  aria-label={`Go to slide ${index + 1}`}
+      {/* Enhanced slide thumbnail reel with progress */}
+      <div className="w-full bg-gradient-to-r from-slate-50 to-blue-50 border-t border-slate-200">
+        {/* Progress indicator */}
+        <div className="w-full bg-slate-200 h-1">
+          <div 
+            className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300 ease-out"
+            style={{ width: `${((currentIndex + 1) / materials.length) * 100}%` }}
+          />
+        </div>
+        
+        {/* Thumbnail navigation */}
+        <div className="overflow-x-auto py-4 px-4">
+          <div className="flex space-x-3 min-w-max">
+            {materials.map((material, index) => {
+              // Use our improved image path handling utility
+              const thumbnailPath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
+              const isVideo = material.content.toLowerCase().includes('video') || 
+                            material.content.toLowerCase().endsWith('.mp4');
+              
+              // Check if premium content (similar logic as above)
+              const isAdmin = user?.role === 'admin';
+              const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess && !isAdmin;
+              
+              // Check if this slide is marked for deletion
+              const isMarkedForDeletion = slidesToDelete.has(index);
+              
+              return (
+                <div
+                  key={`thumb-${index}`}
+                  className="relative flex-shrink-0"
                 >
+                  <button
+                    onClick={() => goToSlide(index)}
+                    className={`relative flex-shrink-0 w-24 h-18 border-3 transition-all duration-300 transform hover:scale-105 ${
+                      isMarkedForDeletion
+                        ? 'border-red-500 opacity-50' 
+                        : currentIndex === index 
+                          ? 'border-blue-500 shadow-xl ring-2 ring-blue-200' 
+                          : 'border-slate-300 hover:border-blue-400 hover:shadow-lg'
+                    } rounded-lg overflow-hidden bg-white`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  >
                   {isPremiumContent && (
                     <div className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-10">
                       <div className="bg-black/60 text-white text-xs p-1 rounded">
@@ -886,6 +908,7 @@ export default function SimpleContentViewer() {
               </div>
             );
           })}
+          </div>
         </div>
       </div>
       
