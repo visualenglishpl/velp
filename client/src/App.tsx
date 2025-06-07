@@ -255,15 +255,15 @@ function App() {
           <ProtectedRoute path="/books/:bookId">
             <UnitsPage />
           </ProtectedRoute>
-          <Route path="/viewer">
+          <ProtectedRoute path="/viewer">
             <SimpleContentViewer />
-          </Route>
-          <Route path="/book/:bookId/unit/:unitNumber">
+          </ProtectedRoute>
+          <ProtectedRoute path="/book/:bookId/unit/:unitNumber">
             <SimpleContentViewer />
-          </Route>
-          <Route path="/book/:bookId">
+          </ProtectedRoute>
+          <ProtectedRoute path="/book/:bookId">
             <SimpleContentViewer />
-          </Route>
+          </ProtectedRoute>
           {/* TEST ROUTES */}
           <Route path="/teacher-resources-test">
             <TeacherResourcesTest />
