@@ -500,22 +500,17 @@ export default function SimpleContentViewer() {
       <div className={`bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center ${isFullscreen ? 'sticky top-0 z-10 shadow-sm' : ''}`}>
         <div className="flex items-center">
           <Button 
-            variant="nav" 
-            size="nav"
-            onClick={() => navigate(`/books/${bookId}`)}
-            className="mr-4 flex items-center gap-2"
+            variant="ghost" 
+            size="sm"
+            onClick={() => navigate(`/admin/books/${bookId || '1'}/units`)}
+            className="mr-4 text-gray-600 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 h-8"
           >
-            <ChevronLeft className="h-4 w-4" />
-            Back to Unit
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Book {bookId?.toUpperCase() || '1'}
           </Button>
-          <div className="flex items-center">
-            <div className="bg-gray-100 rounded-lg px-3 py-1.5 mr-3">
-              <span className="text-gray-700 text-sm font-medium">Book {bookId}</span>
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900">
-              {unitData?.title || `Unit ${unitNumber}`}
-            </h3>
-          </div>
+          <h3 className="text-xl font-semibold text-gray-900">
+            Unit {unitNumber || '1'} Content
+          </h3>
         </div>
         <div className="flex items-center space-x-2">
           {/* Show regular controls when not in edit mode */}
