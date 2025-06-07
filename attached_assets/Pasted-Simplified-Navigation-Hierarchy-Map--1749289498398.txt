@@ -1,0 +1,52 @@
+Simplified Navigation Hierarchy Map
+┌─────────────────────────────────────────────────────────────┐
+│                       ADMIN                                 │
+│                   (Starting Point)                          │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│                BOOK MANAGEMENT                              │
+│                   ← Admin                                   │
+│                                                             │
+│   [Book 1] [Book 2] [Book 3] [Book 4] [Book 7]            │
+└─────┬───────┬───────┬───────┬───────────────────────────────┘
+      │       │       │       │
+      ▼       ▼       ▼       ▼
+┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+│ BOOK 1  │ │ BOOK 2  │ │ BOOK 3  │ │ BOOK 4  │
+│← Book   │ │← Book   │ │← Book   │ │← Book   │
+│Mgmt     │ │Mgmt     │ │Mgmt     │ │Mgmt     │
+│         │ │         │ │         │ │         │
+│[Unit 1] │ │[Unit 1] │ │[Unit 1] │ │[Unit 1] │
+│[Unit 2] │ │[Unit 2] │ │[Unit 2] │ │[Unit 2] │
+│[Unit 3] │ │[Unit 3] │ │[Unit 3] │ │[Unit 3] │
+│   ...   │ │   ...   │ │   ...   │ │   ...   │
+└────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘
+     │           │           │           │
+     ▼           ▼           ▼           ▼
+┌─────────────────────────────────────────────────────────────┐
+│                BOOK 1 UNIT 1                                │
+│                 ← Book 1                                    │
+│                                                             │
+│           [Content Viewer Area]                             │
+│                                                             │
+│  Q: What is the boy saying?                                 │
+│  A: Hello, my name is Tom.                                  │
+│                                                             │
+│           [Previous] [Next]                                 │
+└─────────────────────────────────────────────────────────────┘
+Shortened Navigation Buttons:
+Admin: No back button (starting point)
+Book Management: ← Admin
+Book 1, Book 2, etc.: ← Book Management
+Book 1 Unit 1: ← Book 1
+Content Viewer Flow:
+When you're in the Content Viewer and want to go back:
+
+From Book 1 Unit 1 → Click ← Book 1 → Back to Book 1 unit list
+From Book 1 → Click ← Book Management → Back to book selection
+From Book Management → Click ← Admin → Back to admin dashboard
+Same predictable flow - each back button always takes you to the immediate parent level.
+
+Would you like me to implement this simplified navigation system?

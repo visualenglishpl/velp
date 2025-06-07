@@ -190,7 +190,7 @@ const BooksManagement = () => {
   // Extract unique levels for the filter
   const availableLevels = useMemo(() => {
     const levels = new Set<string>();
-    books.forEach(book => {
+    books.forEach((book: Book) => {
       if (book.level) {
         levels.add(book.level);
       }
@@ -200,7 +200,7 @@ const BooksManagement = () => {
   
   // Filter books based on selected criteria
   const filteredBooks = useMemo(() => {
-    return books.filter(book => {
+    return books.filter((book: Book) => {
       // Filter by publication status
       if (filterStatus !== 'all') {
         if (filterStatus === 'published' && !book.published) return false;
@@ -229,7 +229,7 @@ const BooksManagement = () => {
   const booksByLevel = useMemo(() => {
     const groupedBooks: Record<string, Book[]> = {};
     
-    filteredBooks.forEach(book => {
+    filteredBooks.forEach((book: Book) => {
       const level = book.level || 'Uncategorized';
       if (!groupedBooks[level]) {
         groupedBooks[level] = [];
@@ -459,16 +459,17 @@ const BooksManagement = () => {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center">
               <Link href="/admin">
-                <Button variant="outline" size="sm" className="mr-4">
+                <Button variant="ghost" size="sm" className="mr-4 text-gray-600 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 h-8">
                   <ChevronLeft className="mr-2 h-4 w-4" />
-                  Back to Admin
+                  Admin
                 </Button>
               </Link>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Books Management</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Book Management</h1>
             </div>
             <Button 
               onClick={handleNewBook}
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 h-9"
+              size="sm"
             >
               <PlusCircle className="mr-2 h-4 w-4" />
               Add New Book
@@ -687,8 +688,8 @@ const BooksManagement = () => {
                                 Edit Book
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleSelectBook(book.bookId)}>
-                                <Settings className="h-4 w-4 mr-2" />
-                                Manage Units
+                                <Eye className="h-4 w-4 mr-2" />
+                                View Book {book.bookId.toUpperCase()}
                               </DropdownMenuItem>
                               <DropdownMenuSeparator />
                               <DropdownMenuItem 
@@ -733,16 +734,18 @@ const BooksManagement = () => {
                           variant="outline"
                           size="sm"
                           onClick={() => handleEditBook(book)}
+                          className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 px-3 py-2 h-8"
                         >
                           <Pencil className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
                         <Button
                           size="sm"
-                          className="bg-purple-600 hover:bg-purple-700"
+                          className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 h-8"
                           onClick={() => handleSelectBook(book.bookId)}
                         >
-                          Manage Units
+                          <Eye className="h-4 w-4 mr-2" />
+                          Book {book.bookId.toUpperCase()}
                         </Button>
                       </CardFooter>
                     </Card>
