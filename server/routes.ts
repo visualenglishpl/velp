@@ -16,6 +16,7 @@ import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import multer from "multer";
 import * as path from "path";
+import * as fs from "fs";
 
 // Authentication middleware to protect routes
 function isAuthenticated(req: Request, res: Response, next: Function) {
@@ -2476,6 +2477,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching content:", error);
       res.status(500).json({ error: "Failed to fetch content" });
+    }
+  });
+
+  // Excel Q&A API endpoint - serves question-answer data from JSON mapping files
+  app.get("/api/excel-qa/:bookId/:pattern", async (req, res) => {
+    try {
+      const { bookId, pattern } = req.params;
+      const decodedPattern = decodeURIComponent(pattern);
+      
+      console.log(`Excel Q&A request: ${bookId}/${decodedPattern}`);
+      
+      // Load the appropriate Q&A mapping file
+      const mappingPath = path.join(process.cwd(), 'client', 'src', 'data', `qa-mapping-${bookId}.json`);
+      
+      if (!fs.existsSync(mappingPath)) {
+        console.error(`Q&A mapping file not found: ${mappingPath}`);
+        return res.status(404).json({ error: `Q&A mapping not found for ${bookId}` });
+      }
+      
+      const qaMapping = JSON.parse(fs.readFileSync(mappingPath, 'utf8'));
+      
+      // Look for the pattern in the mapping
+      const qaEntry = qaMapping[decodedPattern];
+      
+      if (!qaEntry) {
+        console.log(`Pattern ${decodedPattern} not found in ${bookId} mapping`);
+        return res.status(404).json({ error: `Question not found for pattern ${decodedPattern}` });
+      }
+      
+      console.log(`Found Q&A for ${decodedPattern}: ${qaEntry.question}`);
+      
+      return res.json({
+        pattern: decodedPattern,
+        question: qaEntry.question,
+        answer: qaEntry.answer,
+        unitId: qaEntry.unitId,
+        bookId: qaEntry.bookId
+      });
+      
+    } catch (error) {
+      console.error("Error serving Excel Q&A:", error);
+      res.status(500).json({ error: "Failed to fetch Q&A data" });
     }
   });
 
