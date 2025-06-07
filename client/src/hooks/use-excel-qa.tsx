@@ -47,14 +47,17 @@ export function useExcelQA(bookId: string) {
         // Try to dynamically load the JSON file
         try {
           const importedModule = await import(`../data/qa-mapping-${normalizedBookId}.json`);
-          const data = importedModule.default;
-          console.log(`Successfully loaded ${Object.keys(data).length} Q&A entries from JSON file for ${normalizedBookId}`);
-          
-          // Save to cache and state
-          loadedMappings[normalizedBookId] = data;
-          setMappings(data);
+          const data = importedModule.default || {};
+          if (Object.keys(data).length > 0) {
+            console.log(`Successfully loaded ${Object.keys(data).length} Q&A entries from JSON file for ${normalizedBookId}`);
+            
+            // Save to cache and state
+            loadedMappings[normalizedBookId] = data;
+            setMappings(data);
+            return;
+          }
         } catch (importError) {
-          console.warn(`Error importing JSON file for ${normalizedBookId}:`, importError);
+          // Silently handle import errors and try API fallback
           
           // Try fetching from the API directly
           try {
@@ -82,8 +85,8 @@ export function useExcelQA(bookId: string) {
           }
         }
       } catch (err) {
-        console.error(`Error loading mappings for ${normalizedBookId}:`, err);
-        setError(err instanceof Error ? err : new Error(String(err)));
+        console.warn(`Could not load mappings for ${normalizedBookId}, using fallback`);
+        setError(null); // Don't set error, just use fallback
         setMappings({});
       } finally {
         setIsLoading(false);
@@ -91,12 +94,16 @@ export function useExcelQA(bookId: string) {
     }
 
     setIsLoading(true);
-    loadMappings();
+    loadMappings().catch(err => {
+      console.warn('Async loading error handled:', err);
+      setMappings({});
+      setIsLoading(false);
+    });
   }, [normalizedBookId]);
 
   const findMatchingQA = useCallback((filename: string, currentUnitId?: string): QuestionAnswer | undefined => {
     // Debug level: 0=none, 1=important, 2=details
-    const debugLevel = 1;
+    const debugLevel = 0;
     
     // Helper function to log with debug level
     const logDebug = (message: string, level: number = 1) => {
