@@ -120,9 +120,9 @@ export default function SimpleContentViewer() {
             const isVideo = material.content.toLowerCase().includes('video') || 
                            material.content.toLowerCase().endsWith('.mp4');
             
-            // Premium content check
+            // Premium content check - since this is a protected route, user has access
             const freeSlideLimit = 15;
-            const hasPaidAccess = user;
+            const hasPaidAccess = true; // User is authenticated via ProtectedRoute
             const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
             
             return (
