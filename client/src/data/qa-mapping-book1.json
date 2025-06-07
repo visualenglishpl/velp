@@ -10268,5 +10268,135 @@
     "bookId": "book1",
     "source": "excel-sync",
     "generatedBy": "excel-synchronization"
+  },
+  "02 N A": {
+    "filename": "02 N A - Is the Dog Happy or Sad",
+    "codePattern": "02 N A",
+    "question": "Is the dog happy or sad?",
+    "answer": "The dog is happy. / The dog is sad.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N B": {
+    "filename": "02 N B - Is the Baby Happy or Sad",
+    "codePattern": "02 N B",
+    "question": "Is the baby happy or sad?",
+    "answer": "The baby is happy. / The baby is sad.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N C": {
+    "filename": "02 N C - Is the Monster Sad or Happy",
+    "codePattern": "02 N C",
+    "question": "Is the monster sad or happy?",
+    "answer": "The monster is sad. / The monster is happy.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N D": {
+    "filename": "02 N D - Is the Girl Happy or Sad",
+    "codePattern": "02 N D",
+    "question": "Is the girl happy or sad?",
+    "answer": "The girl is happy. / The girl is sad.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N E": {
+    "filename": "02 N E - Is the Girl Happy or Sad",
+    "codePattern": "02 N E",
+    "question": "Is the girl happy or sad?",
+    "answer": "The girl is happy. / The girl is sad.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N F": {
+    "filename": "02 N F - Is the Monster Happy or Sad",
+    "codePattern": "02 N F",
+    "question": "Is the monster happy or sad?",
+    "answer": "The monster is happy. / The monster is sad.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N G": {
+    "filename": "02 N G - Is the Man Sad or Happy",
+    "codePattern": "02 N G",
+    "question": "Is the man sad or happy?",
+    "answer": "The man is sad. / The man is happy.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N H": {
+    "filename": "02 N H - Is the Cactus Happy or Sad",
+    "codePattern": "02 N H",
+    "question": "Is the cactus happy or sad?",
+    "answer": "The cactus is happy. / The cactus is sad.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N I": {
+    "filename": "02 N I - Is the Clown Happy or Sad",
+    "codePattern": "02 N I",
+    "question": "Is the clown happy or sad?",
+    "answer": "The clown is happy. / The clown is sad.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N J": {
+    "filename": "02 N J - Is It A Happy or A Sad Eagle",
+    "codePattern": "02 N J",
+    "question": "Is it a happy or a sad eagle?",
+    "answer": "It is a happy eagle. / It is a sad eagle.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N K": {
+    "filename": "02 N K - Is It A Happy or A Sad Snake",
+    "codePattern": "02 N K",
+    "question": "Is it a happy or a sad snake?",
+    "answer": "It is a happy snake. / It is a sad snake.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N L": {
+    "filename": "02 N L - Is It A Happy or A Sad Elephant",
+    "codePattern": "02 N L",
+    "question": "Is it a happy or a sad elephant?",
+    "answer": "It is a happy elephant. / It is a sad elephant.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
+  },
+  "02 N M": {
+    "filename": "02 N M - Are They Sad or Happy",
+    "codePattern": "02 N M",
+    "question": "Are they sad or happy?",
+    "answer": "They are sad. / They are happy.",
+    "unitId": "unit4",
+    "bookId": "book1",
+    "source": "manual-fix",
+    "generatedBy": "unit4-pattern-fix"
   }
 }
