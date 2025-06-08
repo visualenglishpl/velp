@@ -27,6 +27,8 @@ type S3Material = {
 };
 
 export default function SimpleContentViewer() {
+  console.log("SimpleContentViewer mounted - starting component");
+  
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
   const sliderRef = useRef<Slider>(null);
@@ -38,6 +40,8 @@ export default function SimpleContentViewer() {
   const unitPath = pathParts[3] || 'unit1';
   const bookId = bookPath.replace('book', '');
   const unitId = unitPath.replace('unit', '');
+  
+  console.log("SimpleContentViewer - extracted path:", { currentPath, bookId, unitId, bookPath, unitPath });
 
   // Use Excel QA hook for Q&A data
   const { findMatchingQA } = useExcelQA(bookId);
@@ -67,9 +71,18 @@ export default function SimpleContentViewer() {
     return defaultResult;
   };
 
-  // Fetch materials
-  const { data: materials = [], isLoading } = useQuery<S3Material[]>({
-    queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
+  // Fetch materials using correct API endpoint
+  const { data: materials = [], isLoading, error } = useQuery<S3Material[]>({
+    queryKey: [`/api/books/${bookId}/units/${unitId}/materials`],
+  });
+  
+  console.log("SimpleContentViewer - materials query:", { 
+    materials: materials?.length, 
+    isLoading, 
+    error: error?.message,
+    queryKey: `/api/books/${bookId}/units/${unitId}/materials`,
+    bookId,
+    unitId
   });
 
   // Slider settings
