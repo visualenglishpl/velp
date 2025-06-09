@@ -29,7 +29,6 @@ export default function SimpleContentViewer() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imageLoading, setImageLoading] = useState(false);
   const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
-  const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   
   // Extract path parameters from /book/:bookId/unit/:unitNumber format
   const currentPath = window.location.pathname;
@@ -107,17 +106,7 @@ export default function SimpleContentViewer() {
     setCurrentSlide(index);
   };
 
-  const toggleFlagQuestion = (index: number) => {
-    setFlaggedQuestions(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
-      }
-      return newSet;
-    });
-  };
+
 
   // Preload adjacent images for faster navigation
   useEffect(() => {
@@ -249,42 +238,23 @@ export default function SimpleContentViewer() {
             const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, currentMaterial.content);
             const qa = getQuestionAnswer(currentMaterial);
             const hasQuestion = qa.hasData && qa.question.trim() !== '';
-            const isFlagged = flaggedQuestions.has(currentSlide);
             const isVideo = currentMaterial.content.toLowerCase().includes('video') || 
                          currentMaterial.content.toLowerCase().includes('.mp4') ||
                          currentMaterial.content.toLowerCase().includes('.avi') ||
                          currentMaterial.content.toLowerCase().includes('.mov') ||
                          currentMaterial.content.toLowerCase().includes('.swf');
             
-            // Debug logging for problematic slides
-            if ([10, 11, 19, 27].includes(currentSlide)) {
-              console.log(`Debug slide ${currentSlide + 1}:`, {
-                filename: currentMaterial.content,
-                hasQuestion,
-                qa
-              });
-            }
+
             
             return (
               <div className="w-full flex flex-col items-center space-y-6">
                 {/* Question-Answer First (Top) */}
                 {hasQuestion && (
-                  <div className="w-full max-w-4xl">
+                  <div className="w-full max-w-5xl">
                     <div className="text-center space-y-4 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
-                      <div className="flex items-center justify-center space-x-3">
-                        <p className="text-2xl font-light text-gray-800 leading-relaxed">
-                          {qa.question}
-                        </p>
-                        <button
-                          onClick={() => toggleFlagQuestion(currentSlide)}
-                          className={`p-2 rounded-full transition-colors ${
-                            isFlagged ? 'text-red-500 hover:text-red-600 bg-red-50' : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
-                          }`}
-                          title={isFlagged ? "Remove flag" : "Flag this question"}
-                        >
-                          🚩
-                        </button>
-                      </div>
+                      <p className="text-2xl font-light text-gray-800 leading-relaxed">
+                        {qa.question}
+                      </p>
                       {qa.answer && (
                         <p className="text-lg text-gray-600 leading-relaxed">
                           {qa.answer}
@@ -294,8 +264,8 @@ export default function SimpleContentViewer() {
                   </div>
                 )}
                 
-                {/* Constant Size Container for Images/Videos */}
-                <div className="w-full max-w-6xl h-[550px] flex items-center justify-center bg-gray-50 rounded-lg relative overflow-hidden border border-gray-200">
+                {/* Screen-Fitted Container for Images/Videos */}
+                <div className="w-full h-[calc(100vh-280px)] flex items-center justify-center bg-gray-50 rounded-lg relative overflow-hidden border border-gray-200">
                   {imageLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-gray-50/90 z-10">
                       <div className="flex flex-col items-center space-y-2">
@@ -326,7 +296,7 @@ export default function SimpleContentViewer() {
                     <img 
                       src={imagePath} 
                       alt={currentMaterial.title || `Slide ${currentSlide + 1}`}
-                      className="max-w-full max-h-full object-contain"
+                      className="w-full h-full object-contain"
                       onLoadStart={() => setImageLoading(true)}
                       onLoad={() => setImageLoading(false)}
                       onError={() => setImageLoading(false)}
@@ -366,27 +336,7 @@ export default function SimpleContentViewer() {
           </button>
         </div>
 
-        {/* Flagged Questions Section */}
-        {flaggedQuestions.size > 0 && (
-          <div className="mt-6 w-full max-w-4xl">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <h3 className="text-sm font-medium text-red-800 mb-2 flex items-center">
-                🚩 Flagged Questions ({flaggedQuestions.size})
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {Array.from(flaggedQuestions).map(slideIndex => (
-                  <button
-                    key={slideIndex}
-                    onClick={() => goToSlide(slideIndex)}
-                    className="text-xs bg-red-100 hover:bg-red-200 text-red-700 px-2 py-1 rounded transition-colors"
-                  >
-                    Slide {slideIndex + 1}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+
 
         {/* Thumbnail Preview Slider */}
         <div className="mt-6 w-full max-w-4xl">
@@ -398,7 +348,6 @@ export default function SimpleContentViewer() {
                            material.content.toLowerCase().includes('.mp4') ||
                            material.content.toLowerCase().includes('.avi') ||
                            material.content.toLowerCase().includes('.mov');
-              const isFlagged = flaggedQuestions.has(index);
               
               return (
                 <button
@@ -421,9 +370,6 @@ export default function SimpleContentViewer() {
                           <div className="w-0 h-0 border-l-[3px] border-l-black border-y-[2px] border-y-transparent ml-0.5"></div>
                         </div>
                       </div>
-                    )}
-                    {isFlagged && (
-                      <div className="absolute top-0 right-0 text-red-500 text-xs">🚩</div>
                     )}
                   </div>
                   {isActive && (

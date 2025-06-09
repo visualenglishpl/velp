@@ -102,7 +102,7 @@ export function useExcelQA(bookId: string) {
 
   const findMatchingQA = useCallback((filename: string, currentUnitId?: string): QuestionAnswer | undefined => {
     // Debug level: 0=none, 1=important, 2=details
-    const debugLevel = 1;
+    const debugLevel = 0;
     
     // Helper function to log with debug level
     const logDebug = (message: string, level: number = 1) => {
@@ -207,11 +207,28 @@ export function useExcelQA(bookId: string) {
       }
     }
 
-    // If no exact filename match found, only extract Q&A from filenames that contain dash patterns
+    // If no exact filename match found, extract Q&A from filenames that contain dash patterns
     const dashMatch = filename.match(/([^-–]+)\s*[-–]\s*(.+?)(\.(png|jpg|jpeg|gif|webp|mp4)|$)/i);
     if (dashMatch && dashMatch[1] && dashMatch[2]) {
-      const question = dashMatch[1].trim();
-      const answer = dashMatch[2].trim();
+      let question = dashMatch[1].trim();
+      let answer = dashMatch[2].trim();
+      
+      // Remove number codes from questions (like "03 I B", "04 I A", etc.)
+      question = question.replace(/^\d+\s*[A-Z]*\s*[A-Z]*\s*/i, '').trim();
+      
+      // Check if this should be blank based on specific patterns
+      const shouldBeBlank = [
+        /fill in the gaps/i,
+        /match the pictures/i,
+        /draw the sun or the moon/i,
+        /online game/i,
+        /wordwall/i
+      ].some(pattern => filename.match(pattern));
+      
+      if (shouldBeBlank) {
+        logDebug(`Intentionally leaving blank: ${filename}`, 1);
+        return undefined;
+      }
       
       if (question && answer) {
         logDebug(`✅ EXTRACTED Q&A from dash pattern in filename: Q: "${question}", A: "${answer}"`, 1);
