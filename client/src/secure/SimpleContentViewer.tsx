@@ -29,6 +29,7 @@ export default function SimpleContentViewer() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imageLoading, setImageLoading] = useState(false);
   const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
+  const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   
   // Extract path parameters from /book/:bookId/unit/:unitNumber format
   const currentPath = window.location.pathname;
@@ -106,6 +107,18 @@ export default function SimpleContentViewer() {
     setCurrentSlide(index);
   };
 
+  const toggleFlagQuestion = (index: number) => {
+    setFlaggedQuestions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+
   // Preload adjacent images for faster navigation
   useEffect(() => {
     if (materials.length === 0) return;
@@ -131,19 +144,19 @@ export default function SimpleContentViewer() {
     preloadImage(currentSlide - 1);
   }, [currentSlide, materials, bookPath, unitPath, preloadedImages]);
 
-  // Keyboard navigation
+  // Keyboard navigation with wrapping
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
-        prevSlide();
+        setCurrentSlide((prev) => (prev - 1 + materials.length) % materials.length);
       } else if (e.key === 'ArrowRight') {
-        nextSlide();
+        setCurrentSlide((prev) => (prev + 1) % materials.length);
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [currentSlide, materials.length]);
+  }, [materials.length]);
 
   if (isLoading) {
     return (
@@ -211,46 +224,101 @@ export default function SimpleContentViewer() {
       </div>
       
       {/* Clean Content Area */}
-      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full py-8 px-6">
+      <div className="flex-1 flex flex-col max-w-6xl mx-auto w-full py-8 px-6 relative">
+        {/* Left Navigation Button */}
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev - 1 + materials.length) % materials.length)}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105"
+          disabled={materials.length <= 1}
+        >
+          <ChevronLeft className="h-6 w-6 text-gray-700" />
+        </button>
+
+        {/* Right Navigation Button */}
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % materials.length)}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105"
+          disabled={materials.length <= 1}
+        >
+          <ChevronRight className="h-6 w-6 text-gray-700" />
+        </button>
+
         {/* Current Slide */}
-        <div className="flex-1 flex flex-col items-center">
+        <div className="flex-1 flex flex-col items-center px-20">
           {currentMaterial && (() => {
             const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, currentMaterial.content);
             const qa = getQuestionAnswer(currentMaterial);
             const hasQuestion = qa.hasData && qa.question.trim() !== '';
+            const isFlagged = flaggedQuestions.has(currentSlide);
+            const isVideo = currentMaterial.content.toLowerCase().includes('video') || 
+                         currentMaterial.content.toLowerCase().includes('.mp4') ||
+                         currentMaterial.content.toLowerCase().includes('.avi') ||
+                         currentMaterial.content.toLowerCase().includes('.mov');
             
             return (
-              <div className="w-full flex flex-col items-center space-y-8">
-                {/* Image First */}
-                <div className="flex items-center justify-center relative">
-                  {imageLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50 rounded-lg">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
-                    </div>
-                  )}
-                  <img 
-                    src={imagePath} 
-                    alt={currentMaterial.title || `Slide ${currentSlide + 1}`}
-                    className="max-h-[65vh] max-w-full object-contain"
-                    onLoadStart={() => setImageLoading(true)}
-                    onLoad={() => setImageLoading(false)}
-                    onError={() => setImageLoading(false)}
-                  />
-                </div>
-                
-                {/* Question-Answer Below */}
+              <div className="w-full flex flex-col items-center space-y-6">
+                {/* Question-Answer First (Top) */}
                 {hasQuestion && (
-                  <div className="w-full max-w-2xl">
-                    <div className="text-center space-y-4 py-6">
-                      <div className="text-2xl font-light text-gray-900">
-                        {qa.question}
+                  <div className="w-full max-w-3xl">
+                    <div className="text-center space-y-3 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
+                      <div className="flex items-center justify-center space-x-2">
+                        <p className="text-xl font-light text-gray-800 leading-relaxed">
+                          {qa.question}
+                        </p>
+                        <button
+                          onClick={() => toggleFlagQuestion(currentSlide)}
+                          className={`ml-2 p-1 rounded transition-colors ${
+                            isFlagged ? 'text-red-500 hover:text-red-600' : 'text-gray-400 hover:text-red-500'
+                          }`}
+                          title={isFlagged ? "Remove flag" : "Flag this question"}
+                        >
+                          🚩
+                        </button>
                       </div>
-                      <div className="text-lg text-gray-600 leading-relaxed">
-                        {qa.answer}
-                      </div>
+                      {qa.answer && (
+                        <p className="text-base text-gray-600 leading-relaxed">
+                          {qa.answer}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
+                
+                {/* Constant Size Container for Images/Videos */}
+                <div className="w-full max-w-5xl h-[500px] flex items-center justify-center bg-gray-50 rounded-lg relative overflow-hidden">
+                  {imageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
+                    </div>
+                  )}
+                  
+                  {isVideo ? (
+                    <div className="relative w-full h-full">
+                      <video 
+                        controls
+                        className="w-full h-full object-contain"
+                        onLoadStart={() => setImageLoading(true)}
+                        onLoadedData={() => setImageLoading(false)}
+                        onError={() => setImageLoading(false)}
+                      >
+                        <source src={imagePath} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                      <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
+                        VIDEO
+                      </div>
+                    </div>
+                  ) : (
+                    <img 
+                      src={imagePath} 
+                      alt={currentMaterial.title || `Slide ${currentSlide + 1}`}
+                      className="max-w-full max-h-full object-contain"
+                      onLoadStart={() => setImageLoading(true)}
+                      onLoad={() => setImageLoading(false)}
+                      onError={() => setImageLoading(false)}
+                    />
+                  )}
+                </div>
               </div>
             );
           })()}
@@ -279,12 +347,39 @@ export default function SimpleContentViewer() {
           </button>
         </div>
 
+        {/* Flagged Questions Section */}
+        {flaggedQuestions.size > 0 && (
+          <div className="mt-6 w-full max-w-4xl">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <h3 className="text-sm font-medium text-red-800 mb-2 flex items-center">
+                🚩 Flagged Questions ({flaggedQuestions.size})
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {Array.from(flaggedQuestions).map(slideIndex => (
+                  <button
+                    key={slideIndex}
+                    onClick={() => goToSlide(slideIndex)}
+                    className="text-xs bg-red-100 hover:bg-red-200 text-red-700 px-2 py-1 rounded transition-colors"
+                  >
+                    Slide {slideIndex + 1}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Thumbnail Preview Slider */}
         <div className="mt-6 w-full max-w-4xl">
           <div className="flex space-x-2 overflow-x-auto scrollbar-hide py-2 px-4">
             {materials.map((material, index) => {
               const thumbnailPath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
               const isActive = index === currentSlide;
+              const isVideo = material.content.toLowerCase().includes('video') || 
+                           material.content.toLowerCase().includes('.mp4') ||
+                           material.content.toLowerCase().includes('.avi') ||
+                           material.content.toLowerCase().includes('.mov');
+              const isFlagged = flaggedQuestions.has(index);
               
               return (
                 <button
@@ -294,13 +389,23 @@ export default function SimpleContentViewer() {
                     isActive ? 'ring-2 ring-gray-800 ring-offset-2' : 'hover:ring-1 hover:ring-gray-400 hover:ring-offset-1'
                   }`}
                 >
-                  <div className="w-16 h-12 bg-gray-100 rounded overflow-hidden">
+                  <div className="w-16 h-12 bg-gray-100 rounded overflow-hidden relative">
                     <img
                       src={thumbnailPath}
                       alt={`Slide ${index + 1}`}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
+                    {isVideo && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                        <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center">
+                          <div className="w-0 h-0 border-l-[3px] border-l-black border-y-[2px] border-y-transparent ml-0.5"></div>
+                        </div>
+                      </div>
+                    )}
+                    {isFlagged && (
+                      <div className="absolute top-0 right-0 text-red-500 text-xs">🚩</div>
+                    )}
                   </div>
                   {isActive && (
                     <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gray-800 rounded-full"></div>
