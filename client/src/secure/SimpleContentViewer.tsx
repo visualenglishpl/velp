@@ -253,22 +253,32 @@ export default function SimpleContentViewer() {
             const isVideo = currentMaterial.content.toLowerCase().includes('video') || 
                          currentMaterial.content.toLowerCase().includes('.mp4') ||
                          currentMaterial.content.toLowerCase().includes('.avi') ||
-                         currentMaterial.content.toLowerCase().includes('.mov');
+                         currentMaterial.content.toLowerCase().includes('.mov') ||
+                         currentMaterial.content.toLowerCase().includes('.swf');
+            
+            // Debug logging for problematic slides
+            if ([10, 11, 19, 27].includes(currentSlide)) {
+              console.log(`Debug slide ${currentSlide + 1}:`, {
+                filename: currentMaterial.content,
+                hasQuestion,
+                qa
+              });
+            }
             
             return (
               <div className="w-full flex flex-col items-center space-y-6">
                 {/* Question-Answer First (Top) */}
                 {hasQuestion && (
-                  <div className="w-full max-w-3xl">
-                    <div className="text-center space-y-3 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
-                      <div className="flex items-center justify-center space-x-2">
-                        <p className="text-xl font-light text-gray-800 leading-relaxed">
+                  <div className="w-full max-w-4xl">
+                    <div className="text-center space-y-4 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
+                      <div className="flex items-center justify-center space-x-3">
+                        <p className="text-2xl font-light text-gray-800 leading-relaxed">
                           {qa.question}
                         </p>
                         <button
                           onClick={() => toggleFlagQuestion(currentSlide)}
-                          className={`ml-2 p-1 rounded transition-colors ${
-                            isFlagged ? 'text-red-500 hover:text-red-600' : 'text-gray-400 hover:text-red-500'
+                          className={`p-2 rounded-full transition-colors ${
+                            isFlagged ? 'text-red-500 hover:text-red-600 bg-red-50' : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
                           }`}
                           title={isFlagged ? "Remove flag" : "Flag this question"}
                         >
@@ -276,7 +286,7 @@ export default function SimpleContentViewer() {
                         </button>
                       </div>
                       {qa.answer && (
-                        <p className="text-base text-gray-600 leading-relaxed">
+                        <p className="text-lg text-gray-600 leading-relaxed">
                           {qa.answer}
                         </p>
                       )}
@@ -285,10 +295,13 @@ export default function SimpleContentViewer() {
                 )}
                 
                 {/* Constant Size Container for Images/Videos */}
-                <div className="w-full max-w-5xl h-[500px] flex items-center justify-center bg-gray-50 rounded-lg relative overflow-hidden">
+                <div className="w-full max-w-6xl h-[550px] flex items-center justify-center bg-gray-50 rounded-lg relative overflow-hidden border border-gray-200">
                   {imageLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50/90 z-10">
+                      <div className="flex flex-col items-center space-y-2">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
+                        <p className="text-sm text-gray-500">Loading...</p>
+                      </div>
                     </div>
                   )}
                   
@@ -300,11 +313,12 @@ export default function SimpleContentViewer() {
                         onLoadStart={() => setImageLoading(true)}
                         onLoadedData={() => setImageLoading(false)}
                         onError={() => setImageLoading(false)}
+                        poster={imagePath.replace(/\.(mp4|avi|mov|swf)$/i, '.png')}
                       >
                         <source src={imagePath} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
-                      <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
+                      <div className="absolute top-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
                         VIDEO
                       </div>
                     </div>
@@ -318,6 +332,11 @@ export default function SimpleContentViewer() {
                       onError={() => setImageLoading(false)}
                     />
                   )}
+                  
+                  {/* Slide Counter */}
+                  <div className="absolute bottom-3 right-3 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                    {currentSlide + 1} / {materials.length}
+                  </div>
                 </div>
               </div>
             );
