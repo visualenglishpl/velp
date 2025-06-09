@@ -338,9 +338,28 @@ app.get('/api/test', (req, res) => {
       res.status(status).json({ message });
     });
 
-    // ALWAYS serve the app on port 5000
-    const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+    // Try port 5000 first, then fallback to alternatives
+    let port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
     const host = '0.0.0.0';
+    
+    // Function to try starting server on different ports
+    const tryStartServer = async (attemptPort: number): Promise<void> => {
+      return new Promise((resolve, reject) => {
+        const tempServer = server.listen(attemptPort, host, () => {
+          port = attemptPort; // Update the port variable
+          resolve();
+        });
+        
+        tempServer.on('error', (error: any) => {
+          if (error.code === 'EADDRINUSE') {
+            reject(error);
+          } else {
+            console.error(`❌ Server error: ${error.message}`);
+            reject(error);
+          }
+        });
+      });
+    };
     
     // Handle process termination signals with grace period
     const gracefulShutdown = (signal: string) => {
@@ -360,18 +379,7 @@ app.get('/api/test', (req, res) => {
     process.on('SIGINT', () => gracefulShutdown('SIGINT'));
     process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 
-    server.on('error', (error: any) => {
-      console.error(`❌ Server error: ${error.message}`);
-      if (error.code === 'EADDRINUSE') {
-        console.error(`Port ${port} is already in use`);
-        console.log('Attempting to kill existing process and retry...');
-        // Force exit to allow workflow restart
-        setTimeout(() => {
-          console.log('Forcing process exit to clear port...');
-          process.exit(1);
-        }, 2000);
-      }
-    });
+    // Remove the error handler since we're handling port conflicts differently
     
     // Setup Vite before starting the server
     try {
@@ -428,15 +436,36 @@ app.get('/api/test', (req, res) => {
       console.log('✅ Fallback mode configured');
     }
     
-    // Start the server after Vite is configured
-    server.listen(port, host, () => {
-      log(`Server running at http://${host}:${port}`);
-      console.log(`✅ Server successfully bound to ${host}:${port}`);
-    });
+    // Start the server after Vite is configured with port conflict handling
+    const portsToTry = [port, 5001, 5002, 5003, 3000];
+    let serverStarted = false;
     
-    server.on('listening', () => {
-      console.log(`✅ Server is now listening and accepting connections on port ${port}`);
-    });
+    for (const tryPort of portsToTry) {
+      try {
+        await tryStartServer(tryPort);
+        log(`Server running at http://${host}:${port}`);
+        console.log(`✅ Server successfully bound to ${host}:${port}`);
+        
+        server.on('listening', () => {
+          console.log(`✅ Server is now listening and accepting connections on port ${port}`);
+        });
+        
+        serverStarted = true;
+        break;
+      } catch (error: any) {
+        if (error.code === 'EADDRINUSE') {
+          console.log(`Port ${tryPort} is busy, trying next port...`);
+          continue;
+        } else {
+          throw error;
+        }
+      }
+    }
+    
+    if (!serverStarted) {
+      console.error('❌ Could not start server on any available port');
+      process.exit(1);
+    }
 
   } catch (startupError) {
     console.error('❌ Server startup failed:', startupError);
