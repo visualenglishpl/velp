@@ -323,93 +323,76 @@ app.get('/api/test', (req, res) => {
 });
 
 (async () => {
-  // Register our API endpoints
-  registerContentEndpoints(app);
-  
-  // Register main routes
-  const server = await registerRoutes(app);
-
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+  try {
+    // Register our API endpoints
+    registerContentEndpoints(app);
     
-    console.error(`Error: ${message}`, err);
-    res.status(status).json({ message });
-    // Don't throw the error again as it might crash the server
-    // instead, just log it and continue
-  });
+    // Register main routes
+    const server = await registerRoutes(app);
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
-
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
-  const host = '0.0.0.0';
-  
-  // Force server to bind properly with error handling
-  server.listen(port, host, () => {
-    log(`Server running at http://${host}:${port}`);
-    console.log(`✅ Server successfully bound to ${host}:${port}`);
-  });
-  
-  // Immediate connection test
-  server.on('listening', () => {
-    console.log(`✅ Server is now listening and accepting connections on port ${port}`);
-  });
-  
-  // Handle termination signals properly
-  // Enhanced error handling for the server
-  let retryCount = 0;
-  const maxRetries = 3;
-  
-  server.on('error', (error: Error) => {
-    log(`Server error: ${error.message}`);
-    // Attempt to recover from certain types of errors
-    if ((error as any).code === 'EADDRINUSE') {
-      if (retryCount < maxRetries) {
-        retryCount++;
-        log(`Address in use, retrying in 1 second... (Attempt ${retryCount}/${maxRetries})`);
-        setTimeout(() => {
-          server.close();
-          server.listen(port as number, host, () => {
-            log('Server restarted successfully after address was in use');
-          });
-        }, 1000);
-      } else {
-        log(`Failed to bind to port ${port} after ${maxRetries} attempts. Using a different port.`);
-        // Try using a different port
-        const alternatePort = 5001;
-        server.listen(alternatePort, host, () => {
-          log(`Server running at http://${host}:${alternatePort} (alternate port)`);
-        });
-      }
-    }
-  });
-
-  // Handle process termination signals with grace period
-  const gracefulShutdown = (signal: string) => {
-    log(`Received ${signal} signal, shutting down server...`);
-    // Set a timeout to force exit if graceful shutdown takes too long
-    const forceExit = setTimeout(() => {
-      log('Forcing server shutdown after timeout');
-      process.exit(1);
-    }, 10000); // 10 second timeout
-    
-    server.close(() => {
-      clearTimeout(forceExit);
-      log('Server closed gracefully');
-      process.exit(0);
+    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Internal Server Error";
+      
+      console.error(`Error: ${message}`, err);
+      res.status(status).json({ message });
     });
-  };
-  
-  process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+
+    // ALWAYS serve the app on port 5000
+    const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+    const host = '0.0.0.0';
+    
+    // Handle process termination signals with grace period
+    const gracefulShutdown = (signal: string) => {
+      log(`Received ${signal} signal, shutting down server...`);
+      const forceExit = setTimeout(() => {
+        log('Forcing server shutdown after timeout');
+        process.exit(1);
+      }, 10000);
+      
+      server.close(() => {
+        clearTimeout(forceExit);
+        log('Server closed gracefully');
+        process.exit(0);
+      });
+    };
+    
+    process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+    process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+
+    server.on('error', (error: any) => {
+      console.error(`❌ Server error: ${error.message}`);
+      if (error.code === 'EADDRINUSE') {
+        console.error(`Port ${port} is already in use`);
+        process.exit(1);
+      }
+    });
+    
+    // Start the server first, then setup Vite
+    server.listen(port, host, async () => {
+      log(`Server running at http://${host}:${port}`);
+      console.log(`✅ Server successfully bound to ${host}:${port}`);
+      
+      // Setup Vite after server is listening
+      try {
+        if (app.get("env") === "development") {
+          await setupVite(app, server);
+          console.log(`✅ Vite setup completed`);
+        } else {
+          serveStatic(app);
+        }
+      } catch (viteError) {
+        console.error('Vite setup error:', viteError);
+        // Continue without Vite if it fails
+      }
+    });
+    
+    server.on('listening', () => {
+      console.log(`✅ Server is now listening and accepting connections on port ${port}`);
+    });
+
+  } catch (startupError) {
+    console.error('❌ Server startup failed:', startupError);
+    process.exit(1);
+  }
 })();
