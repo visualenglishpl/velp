@@ -1,15 +1,12 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Edit2, Save, Trash2, Loader2 } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { createS3ImageUrl } from '@/lib/imageUtils';
 
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useExcelQA } from '@/hooks/use-excel-qa';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 type S3Material = {
   id: number;
@@ -29,7 +26,7 @@ type S3Material = {
 export default function SimpleContentViewer() {
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
-  const sliderRef = useRef<Slider>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
   
   // Extract path parameters from /book/:bookId/unit/:unitNumber format
   const currentPath = window.location.pathname;
@@ -84,16 +81,36 @@ export default function SimpleContentViewer() {
     queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
   });
 
-  // Slider settings
-  const slickSettings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    adaptiveHeight: true,
-    arrows: true,
+  // Navigation functions
+  const nextSlide = () => {
+    if (currentSlide < materials.length - 1) {
+      setCurrentSlide(currentSlide + 1);
+    }
   };
+
+  const prevSlide = () => {
+    if (currentSlide > 0) {
+      setCurrentSlide(currentSlide - 1);
+    }
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [currentSlide, materials.length]);
 
   if (isLoading) {
     return (
@@ -139,6 +156,9 @@ export default function SimpleContentViewer() {
     );
   }
 
+  // Get current material
+  const currentMaterial = materials[currentSlide];
+  
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
@@ -158,80 +178,85 @@ export default function SimpleContentViewer() {
         </div>
       </div>
       
-      {/* Slider with images */}
-      <div className="relative h-full">
-        <Slider ref={sliderRef} {...slickSettings} className="w-full h-full">
-          {materials.map((material, index) => {
-            const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
-            
-            // Check for video content
-            const isVideo = material.content.toLowerCase().includes('video') || 
-                           material.content.toLowerCase().endsWith('.mp4');
-            
-            // Since this is a protected route, user has full access
-            const isPremiumContent = false;
+      {/* Content Viewer */}
+      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full p-4">
+        {/* Navigation Controls */}
+        <div className="flex items-center justify-between mb-4">
+          <Button 
+            variant="outline" 
+            onClick={prevSlide} 
+            disabled={currentSlide === 0}
+            className="flex items-center gap-2"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Previous
+          </Button>
+          
+          <div className="text-sm text-gray-600 font-medium">
+            {currentSlide + 1} / {materials.length}
+          </div>
+          
+          <Button 
+            variant="outline" 
+            onClick={nextSlide} 
+            disabled={currentSlide === materials.length - 1}
+            className="flex items-center gap-2"
+          >
+            Next
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Current Slide */}
+        <div className="flex-1 flex flex-col">
+          {currentMaterial && (() => {
+            const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, currentMaterial.content);
+            const qa = getQuestionAnswer(currentMaterial);
+            const hasQuestion = qa.hasData && qa.question.trim() !== '';
             
             return (
-              <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
-                {/* Question-Answer section - Excel data only */}
-                {(() => {
-                  const qa = getQuestionAnswer(material);
-                  
-                  // Check if question data exists from Excel
-                  const hasQuestion = qa.hasData && qa.question.trim() !== '';
-                  
-                  // Only show Q&A if we have Excel data
-                  if (!hasQuestion) return null;
-                  
-                  return (
-                    <div className="mb-1 p-2 mx-auto z-10 max-w-2xl">
-                      <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 border">
-                        <div className="text-center space-y-2">
-                          <div className="text-lg font-semibold text-blue-700">
-                            {qa.question}
-                          </div>
-                          <div className="text-base text-gray-700 border-t pt-2">
-                            {qa.answer}
-                          </div>
+              <div className="flex-1 flex flex-col">
+                {/* Question-Answer section */}
+                {hasQuestion && (
+                  <div className="mb-6">
+                    <div className="bg-white rounded-lg shadow-lg p-6 border">
+                      <div className="text-center space-y-3">
+                        <div className="text-xl font-semibold text-blue-700">
+                          {qa.question}
+                        </div>
+                        <div className="text-lg text-gray-700 border-t pt-3">
+                          {qa.answer}
                         </div>
                       </div>
                     </div>
-                  );
-                })()}
+                  </div>
+                )}
                 
                 {/* Image */}
-                <div className="flex-1 flex items-center justify-center relative">
-                  {isPremiumContent ? (
-                    <div className="relative">
-                      <img 
-                        src={imagePath} 
-                        alt={material.title || `Slide ${index + 1}`}
-                        className="max-h-[45vh] max-w-full object-contain filter blur-md"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-lg">
-                        <div className="text-white text-center p-4">
-                          <div className="text-lg font-semibold mb-2">Premium Content</div>
-                          <div className="text-sm">Sign in to access all content</div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <img 
-                      src={imagePath} 
-                      alt={material.title || `Slide ${index + 1}`}
-                      className="max-h-[45vh] max-w-full object-contain"
-                    />
-                  )}
-                </div>
-                
-                {/* Slide counter */}
-                <div className="text-center text-sm text-gray-500 mt-2">
-                  {index + 1} / {materials.length}
+                <div className="flex-1 flex items-center justify-center bg-white rounded-lg shadow-sm border p-4">
+                  <img 
+                    src={imagePath} 
+                    alt={currentMaterial.title || `Slide ${currentSlide + 1}`}
+                    className="max-h-[60vh] max-w-full object-contain"
+                  />
                 </div>
               </div>
             );
-          })}
-        </Slider>
+          })()}
+        </div>
+
+        {/* Slide Dots Navigation */}
+        <div className="flex justify-center mt-6 space-x-2">
+          {materials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${
+                index === currentSlide ? 'bg-blue-600' : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
