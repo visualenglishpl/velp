@@ -165,21 +165,44 @@ export function useExcelQA(bookId: string) {
       }
     }
 
-    // Try pattern-based matching for numbered slides
-    const slidePattern = filename.match(/(\d+)\s*([A-Z])\s*(.+)/i);
-    if (slidePattern) {
-      const slideNum = slidePattern[1];
-      const slideLetter = slidePattern[2].toUpperCase();
-      const slideContent = slidePattern[3];
+    // Try pattern-based matching for numbered slides with multiple formats
+    // Handle patterns like "01 I D" -> "01 D" or "11 A" -> "11 A"
+    const complexPattern = filename.match(/(\d+)\s*([A-Z])\s*([A-Z])\s*(.+)/i);
+    const simplePattern = filename.match(/(\d+)\s*([A-Z])\s*(.+)/i);
+    
+    if (complexPattern) {
+      const slideNum = complexPattern[1];
+      const firstLetter = complexPattern[2].toUpperCase();
+      const secondLetter = complexPattern[3].toUpperCase();
       
-      // Look for entries with this pattern
+      // Try both "01 I D" format and simplified "01 D" format
+      const patterns = [
+        `${slideNum} ${firstLetter} ${secondLetter}`,
+        `${slideNum} ${secondLetter}`, // Skip the middle letter (I)
+        `${slideNum} ${firstLetter}`
+      ];
+      
+      for (const patternKey of patterns) {
+        const matchingEntry = Object.entries(filteredMappings).find(([key, qa]) => {
+          return key.startsWith(patternKey) || qa.codePattern === patternKey;
+        });
+        
+        if (matchingEntry) {
+          logDebug(`✅ FOUND MATCH (complex pattern) for: ${filename} -> ${matchingEntry[0]} (pattern: ${patternKey})`, 1);
+          return matchingEntry[1];
+        }
+      }
+    } else if (simplePattern) {
+      const slideNum = simplePattern[1];
+      const slideLetter = simplePattern[2].toUpperCase();
+      
       const patternKey = `${slideNum} ${slideLetter}`;
       const matchingEntry = Object.entries(filteredMappings).find(([key, qa]) => {
         return key.startsWith(patternKey) || qa.codePattern === patternKey;
       });
       
       if (matchingEntry) {
-        logDebug(`✅ FOUND MATCH (pattern-based) for: ${filename} -> ${matchingEntry[0]}`, 1);
+        logDebug(`✅ FOUND MATCH (simple pattern) for: ${filename} -> ${matchingEntry[0]}`, 1);
         return matchingEntry[1];
       }
     }
