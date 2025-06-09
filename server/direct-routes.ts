@@ -72,20 +72,17 @@ const s3Client = new S3Client({
   forcePathStyle: false // Use virtual-hosted style URLs
 });
 
-// Check the bucket redirect asynchronously (non-blocking)
-setTimeout(async () => {
+// Check the bucket redirect immediately
+(async () => {
   try {
-    console.log("S3 client initialized with region eu-north-1");
     const redirectUrl = await checkBucketRedirect(`https://${S3_BUCKET}.s3.amazonaws.com`);
     if (redirectUrl) {
-      console.log(`S3 bucket redirects to: ${redirectUrl}`);
-    } else {
-      console.log("S3 bucket configuration verified");
+      console.log(`IMPORTANT: S3 bucket redirects to ${redirectUrl}. Please update S3 client configuration to use this endpoint.`);
     }
   } catch (error) {
-    console.warn("S3 redirect check failed (non-critical):", error instanceof Error ? error.message : String(error));
+    console.error("Error checking redirect:", error);
   }
-}, 1000);
+})();
 
 // Log S3 configuration
 console.log(`S3 configuration: Bucket=${S3_BUCKET}, Region=eu-north-1`);
@@ -413,14 +410,14 @@ export function registerDirectRoutes(app: Express) {
       username: 'admin',
       role: 'admin',
       email: 'admin@example.com',
-      fullName: 'Admin User',
-      createdAt: new Date()
+      password: '$2b$10$PX5aQ5N5YCgBZq7TwwQw7.QRH65VNqnWJwWDc8QFG0EY0g/3erRZa' // Hashed 'admin123'
     };
     
     // Create a session for the admin user
     if (req.session) {
       // Set user in session
       req.session.user = adminUser;
+      req.session.isAuthenticated = true;
       
       // Log session ID for debugging
       console.log("Created emergency admin session with ID:", req.session.id);

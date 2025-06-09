@@ -7,7 +7,6 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import timeout from "express-timeout-handler";
 import { configureHMR } from "./hmr-config";
-import { createServer } from "http";
 import path from "path";
 
 // Configure enhanced HMR settings for development
@@ -324,179 +323,87 @@ app.get('/api/test', (req, res) => {
 });
 
 (async () => {
-  try {
-    // Start server first to open port quickly
-    const server = createServer(app);
-    
-    // Try port 5000 first, then fallback to alternatives
-    let port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
-    const host = '0.0.0.0';
-    
-    // Start server immediately to meet port opening requirement
-    await new Promise<void>((resolve, reject) => {
-      server.listen(port, host, () => {
-        console.log(`8:${new Date().toLocaleTimeString().split(':')[1]}:${new Date().toLocaleTimeString().split(':')[2]} [express] Server running at http://${host}:${port}`);
-        console.log(`✅ Server successfully bound to ${host}:${port}`);
-        resolve();
-      });
-      
-      server.on('error', (error: any) => {
-        if (error.code === 'EADDRINUSE') {
-          reject(new Error(`Port ${port} is in use`));
-        } else {
-          reject(error);
-        }
-      });
-    });
-    
-    // Now initialize everything else asynchronously
-    setTimeout(async () => {
-      try {
-        // Register our API endpoints
-        registerContentEndpoints(app);
-        
-        // Register main routes (without creating new server)
-        await registerRoutes(app, server);
+  // Register our API endpoints
+  registerContentEndpoints(app);
+  
+  // Register main routes
+  const server = await registerRoutes(app);
 
-    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-      const status = err.status || err.statusCode || 500;
-      const message = err.message || "Internal Server Error";
-      
-      console.error(`Error: ${message}`, err);
-      res.status(status).json({ message });
-    });
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+    
+    console.error(`Error: ${message}`, err);
+    res.status(status).json({ message });
+    // Don't throw the error again as it might crash the server
+    // instead, just log it and continue
+  });
 
-    // Try port 5000 first, then fallback to alternatives
-    let port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
-    const host = '0.0.0.0';
-    
-    // Function to try starting server on different ports
-    const tryStartServer = async (attemptPort: number): Promise<void> => {
-      return new Promise((resolve, reject) => {
-        const tempServer = server.listen(attemptPort, host, () => {
-          port = attemptPort; // Update the port variable
-          resolve();
-        });
-        
-        tempServer.on('error', (error: any) => {
-          if (error.code === 'EADDRINUSE') {
-            reject(error);
-          } else {
-            console.error(`❌ Server error: ${error.message}`);
-            reject(error);
-          }
-        });
-      });
-    };
-    
-    // Handle process termination signals with grace period
-    const gracefulShutdown = (signal: string) => {
-      log(`Received ${signal} signal, shutting down server...`);
-      const forceExit = setTimeout(() => {
-        log('Forcing server shutdown after timeout');
-        process.exit(1);
-      }, 10000);
-      
-      server.close(() => {
-        clearTimeout(forceExit);
-        log('Server closed gracefully');
-        process.exit(0);
-      });
-    };
-    
-    process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-    process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-
-    // Remove the error handler since we're handling port conflicts differently
-    
-    // Setup Vite before starting the server
-    try {
-      if (app.get("env") === "development") {
-        console.log("Setting up Vite development server...");
-        await setupVite(app, server);
-        console.log(`✅ Vite setup completed`);
-      } else {
-        console.log("Setting up static file serving for production...");
-        serveStatic(app);
-        console.log(`✅ Static file serving configured`);
-      }
-    } catch (viteError) {
-      console.error('Vite setup failed, continuing with fallback mode:', viteError);
-      
-      // Fallback: serve a basic HTML page
-      app.get('*', (req, res) => {
-        if (req.path.startsWith('/api/')) {
-          return; // Don't handle API routes
-        }
-        
-        const fallbackHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visual English Platform</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 0; padding: 20px; background: #f9fafb; }
-    .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    h1 { color: #2563eb; margin-bottom: 20px; }
-    .status { padding: 10px; background: #fef3c7; border-radius: 4px; margin: 20px 0; }
-    .button { display: inline-block; padding: 10px 20px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; margin: 10px 5px 0 0; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Visual English Platform</h1>
-    <div class="status">
-      ⚠️ Development mode temporarily unavailable. Server is running in fallback mode.
-    </div>
-    <p>The server is running successfully, but the frontend development environment needs to be restarted.</p>
-    <a href="/simple" class="button">Simple Interface</a>
-    <a href="/emergency-login" class="button">Admin Access</a>
-    <a href="/api/test" class="button">API Test</a>
-  </div>
-</body>
-</html>`;
-        
-        res.send(fallbackHtml);
-      });
-      
-      console.log('✅ Fallback mode configured');
-    }
-    
-    // Start the server after Vite is configured with port conflict handling
-    const portsToTry = [port, 5001, 5002, 5003, 3000];
-    let serverStarted = false;
-    
-    for (const tryPort of portsToTry) {
-      try {
-        await tryStartServer(tryPort);
-        log(`Server running at http://${host}:${port}`);
-        console.log(`✅ Server successfully bound to ${host}:${port}`);
-        
-        server.on('listening', () => {
-          console.log(`✅ Server is now listening and accepting connections on port ${port}`);
-        });
-        
-        serverStarted = true;
-        break;
-      } catch (error: any) {
-        if (error.code === 'EADDRINUSE') {
-          console.log(`Port ${tryPort} is busy, trying next port...`);
-          continue;
-        } else {
-          throw error;
-        }
-      }
-    }
-    
-    if (!serverStarted) {
-      console.error('❌ Could not start server on any available port');
-      process.exit(1);
-    }
-
-  } catch (startupError) {
-    console.error('❌ Server startup failed:', startupError);
-    process.exit(1);
+  // importantly only setup vite in development and after
+  // setting up all the other routes so the catch-all route
+  // doesn't interfere with the other routes
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
+  } else {
+    serveStatic(app);
   }
+
+  // ALWAYS serve the app on port 5000
+  // this serves both the API and the client.
+  // It is the only port that is not firewalled.
+  const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+  const host = '0.0.0.0';
+  
+  // Type issues: TypeScript expects a number for port, but we need to be explicit for TypeScript
+  server.listen(port as number, host, () => {
+    log(`Server running at http://${host}:${port}`);
+  });
+  
+  // Handle termination signals properly
+  // Enhanced error handling for the server
+  let retryCount = 0;
+  const maxRetries = 3;
+  
+  server.on('error', (error: Error) => {
+    log(`Server error: ${error.message}`);
+    // Attempt to recover from certain types of errors
+    if ((error as any).code === 'EADDRINUSE') {
+      if (retryCount < maxRetries) {
+        retryCount++;
+        log(`Address in use, retrying in 1 second... (Attempt ${retryCount}/${maxRetries})`);
+        setTimeout(() => {
+          server.close();
+          server.listen(port as number, host, () => {
+            log('Server restarted successfully after address was in use');
+          });
+        }, 1000);
+      } else {
+        log(`Failed to bind to port ${port} after ${maxRetries} attempts. Using a different port.`);
+        // Try using a different port
+        const alternatePort = 5001;
+        server.listen(alternatePort, host, () => {
+          log(`Server running at http://${host}:${alternatePort} (alternate port)`);
+        });
+      }
+    }
+  });
+
+  // Handle process termination signals with grace period
+  const gracefulShutdown = (signal: string) => {
+    log(`Received ${signal} signal, shutting down server...`);
+    // Set a timeout to force exit if graceful shutdown takes too long
+    const forceExit = setTimeout(() => {
+      log('Forcing server shutdown after timeout');
+      process.exit(1);
+    }, 10000); // 10 second timeout
+    
+    server.close(() => {
+      clearTimeout(forceExit);
+      log('Server closed gracefully');
+      process.exit(0);
+    });
+  };
+  
+  process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 })();

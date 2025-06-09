@@ -62,7 +62,10 @@ const s3Client = new S3Client({
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ""
-  }
+  },
+  // Explicitly set the endpoint and use path-style addressing
+  endpoint: "https://s3.eu-north-1.amazonaws.com",
+  forcePathStyle: true
 });
 
 // Debug S3 client initialization
@@ -2516,105 +2519,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error serving Excel Q&A:", error);
       res.status(500).json({ error: "Failed to fetch Q&A data" });
-    }
-  });
-
-  // Diagnostic endpoint for Excel QA system and S3 connectivity
-  app.get("/api/diagnose", async (req, res) => {
-    try {
-      console.log("🔍 Running Excel QA diagnostics...");
-
-      // Check if Excel JSON files exist
-      const qaFiles = [
-        { book: '1', path: path.join(__dirname, '../client/src/data/qa-mapping-book1.json') },
-        { book: '4', path: path.join(__dirname, '../client/src/data/qa-mapping-book4.json') },
-        { book: '7', path: path.join(__dirname, '../client/src/data/qa-mapping-book7.json') }
-      ];
-
-      const qaStatus = qaFiles.map(file => {
-        const exists = fs.existsSync(file.path);
-        let preview = null;
-        let count = 0;
-
-        if (exists) {
-          try {
-            const qaData = JSON.parse(fs.readFileSync(file.path, 'utf-8'));
-            count = Object.keys(qaData).length;
-            preview = Object.keys(qaData).slice(0, 3);
-          } catch (err) {
-            preview = `Error reading file: ${err.message}`;
-          }
-        }
-
-        return {
-          book: file.book,
-          exists,
-          count,
-          preview
-        };
-      });
-
-      // Test S3 connectivity
-      let s3Status = "❌ S3 not configured";
-      let s3TestResult = null;
-      
-      if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
-        s3Status = "✅ AWS S3 credentials detected";
-        
-        try {
-          // Test S3 access with a simple list operation
-          const testCommand = new ListObjectsV2Command({
-            Bucket: S3_BUCKET,
-            MaxKeys: 1
-          });
-          
-          const result = await s3Client.send(testCommand);
-          s3TestResult = {
-            success: true,
-            message: "S3 access working",
-            objectCount: result.KeyCount || 0
-          };
-        } catch (error) {
-          s3TestResult = {
-            success: false,
-            message: error.message,
-            code: error.name
-          };
-        }
-      }
-
-      // Test a specific filename lookup
-      const testFilename = 'Slide_4_1_3.jpg';
-      let filenameTest = null;
-      
-      try {
-        const book4Path = path.join(__dirname, '../client/src/data/qa-mapping-book4.json');
-        if (fs.existsSync(book4Path)) {
-          const book4Data = JSON.parse(fs.readFileSync(book4Path, 'utf-8'));
-          const matchFound = Object.keys(book4Data).some(key => 
-            book4Data[key].image && book4Data[key].image.toLowerCase().includes('slide_4_1_3')
-          );
-          filenameTest = {
-            testFile: testFilename,
-            matchFound,
-            totalEntries: Object.keys(book4Data).length
-          };
-        }
-      } catch (err) {
-        filenameTest = { error: err.message };
-      }
-
-      res.json({
-        serverStatus: "✅ Server running on port 5000",
-        s3Status,
-        s3TestResult,
-        qaFiles: qaStatus,
-        filenameTest,
-        timestamp: new Date().toISOString()
-      });
-    } catch (err) {
-      console.error("❌ Diagnostic error:", err);
-      res.status(500).json({ error: err.message });
     }
   });
 
