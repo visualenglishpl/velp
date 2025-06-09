@@ -236,8 +236,12 @@ export default function SimpleContentViewer() {
         <div className="flex-1 flex flex-col items-center px-20">
           {currentMaterial && (() => {
             const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, currentMaterial.content);
+            // Define slides that should be completely blank (activity slides)
+            const blankSlides = [6, 15, 24, 33, 43, 45, 46, 47, 20, 28, 36];
+            const isBlankSlide = blankSlides.includes(currentSlide + 1);
+            
             const qa = getQuestionAnswer(currentMaterial);
-            const hasQuestion = qa.hasData && qa.question.trim() !== '';
+            const hasQuestion = !isBlankSlide && qa.hasData && qa.question.trim() !== '';
             const isVideo = currentMaterial.content.toLowerCase().includes('video') || 
                          currentMaterial.content.toLowerCase().includes('.mp4') ||
                          currentMaterial.content.toLowerCase().includes('.avi') ||
