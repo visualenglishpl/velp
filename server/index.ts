@@ -368,23 +368,23 @@ app.get('/api/test', (req, res) => {
       }
     });
     
-    // Start the server first, then setup Vite
-    server.listen(port, host, async () => {
+    // Setup Vite before starting the server
+    try {
+      if (app.get("env") === "development") {
+        await setupVite(app, server);
+        console.log(`✅ Vite setup completed`);
+      } else {
+        serveStatic(app);
+      }
+    } catch (viteError) {
+      console.error('Vite setup error:', viteError);
+      // Continue without Vite if it fails
+    }
+    
+    // Start the server after Vite is configured
+    server.listen(port, host, () => {
       log(`Server running at http://${host}:${port}`);
       console.log(`✅ Server successfully bound to ${host}:${port}`);
-      
-      // Setup Vite after server is listening
-      try {
-        if (app.get("env") === "development") {
-          await setupVite(app, server);
-          console.log(`✅ Vite setup completed`);
-        } else {
-          serveStatic(app);
-        }
-      } catch (viteError) {
-        console.error('Vite setup error:', viteError);
-        // Continue without Vite if it fails
-      }
     });
     
     server.on('listening', () => {
