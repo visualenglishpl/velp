@@ -27,6 +27,8 @@ export default function SimpleContentViewer() {
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [imageLoading, setImageLoading] = useState(false);
+  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
   
   // Extract path parameters from /book/:bookId/unit/:unitNumber format
   const currentPath = window.location.pathname;
@@ -103,6 +105,31 @@ export default function SimpleContentViewer() {
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
+
+  // Preload adjacent images for faster navigation
+  useEffect(() => {
+    if (materials.length === 0) return;
+    
+    const preloadImage = (index: number) => {
+      if (index >= 0 && index < materials.length) {
+        const material = materials[index];
+        const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
+        
+        if (!preloadedImages.has(imagePath)) {
+          const img = new Image();
+          img.onload = () => {
+            setPreloadedImages(prev => new Set(prev).add(imagePath));
+          };
+          img.src = imagePath;
+        }
+      }
+    };
+
+    // Preload current and adjacent images
+    preloadImage(currentSlide);
+    preloadImage(currentSlide + 1);
+    preloadImage(currentSlide - 1);
+  }, [currentSlide, materials, bookPath, unitPath, preloadedImages]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -195,11 +222,19 @@ export default function SimpleContentViewer() {
             return (
               <div className="w-full flex flex-col items-center space-y-8">
                 {/* Image First */}
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center relative">
+                  {imageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50 rounded-lg">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
+                    </div>
+                  )}
                   <img 
                     src={imagePath} 
                     alt={currentMaterial.title || `Slide ${currentSlide + 1}`}
                     className="max-h-[65vh] max-w-full object-contain"
+                    onLoadStart={() => setImageLoading(true)}
+                    onLoad={() => setImageLoading(false)}
+                    onError={() => setImageLoading(false)}
                   />
                 </div>
                 
@@ -244,14 +279,46 @@ export default function SimpleContentViewer() {
           </button>
         </div>
 
-        {/* Minimal Dots */}
-        <div className="flex justify-center mt-4 space-x-1">
+        {/* Thumbnail Preview Slider */}
+        <div className="mt-6 w-full max-w-4xl">
+          <div className="flex space-x-2 overflow-x-auto scrollbar-hide py-2 px-4">
+            {materials.map((material, index) => {
+              const thumbnailPath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
+              const isActive = index === currentSlide;
+              
+              return (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`flex-shrink-0 relative transition-all duration-200 ${
+                    isActive ? 'ring-2 ring-gray-800 ring-offset-2' : 'hover:ring-1 hover:ring-gray-400 hover:ring-offset-1'
+                  }`}
+                >
+                  <div className="w-16 h-12 bg-gray-100 rounded overflow-hidden">
+                    <img
+                      src={thumbnailPath}
+                      alt={`Slide ${index + 1}`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  {isActive && (
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gray-800 rounded-full"></div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Minimal Dots (Keep as backup navigation) */}
+        <div className="flex justify-center mt-2 space-x-1">
           {materials.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                index === currentSlide ? 'bg-gray-800 w-6' : 'bg-gray-300 hover:bg-gray-400'
+              className={`w-1 h-1 rounded-full transition-all duration-200 ${
+                index === currentSlide ? 'bg-gray-600' : 'bg-gray-300 hover:bg-gray-400'
               }`}
             />
           ))}

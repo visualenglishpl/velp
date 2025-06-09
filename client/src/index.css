@@ -49,6 +49,16 @@
   border: none;
 }
 
+/* Hide scrollbars for thumbnail slider */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* PDF viewer styling for side-by-side layout */
 .pdf-viewer {
   min-height: 600px;
