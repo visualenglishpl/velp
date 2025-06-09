@@ -31,13 +31,25 @@ export default function SimpleContentViewer() {
   const queryClient = useQueryClient();
   const sliderRef = useRef<Slider>(null);
   
-  // Extract path parameters
+  // Extract path parameters from /book/:bookId/unit/:unitNumber format
   const currentPath = window.location.pathname;
   const pathParts = currentPath.split('/');
-  const bookPath = pathParts[2] || 'book1';
-  const unitPath = pathParts[3] || 'unit1';
-  const bookId = bookPath.replace('book', '');
-  const unitId = unitPath.replace('unit', '');
+  
+  // Handle both /book/6/unit/1 and /book/book6/unit/unit1 formats
+  let bookId, unitId;
+  if (pathParts[1] === 'book' && pathParts[3] === 'unit') {
+    // Format: /book/6/unit/1
+    bookId = pathParts[2];
+    unitId = pathParts[4];
+  } else {
+    // Fallback for other formats
+    bookId = '1';
+    unitId = '1';
+  }
+  
+  // Ensure proper book/unit prefix for API calls
+  const bookPath = bookId.startsWith('book') ? bookId : `book${bookId}`;
+  const unitPath = unitId.startsWith('unit') ? unitId : `unit${unitId}`;
 
   // Use Excel QA hook for Q&A data
   const { findMatchingQA } = useExcelQA(bookId);
