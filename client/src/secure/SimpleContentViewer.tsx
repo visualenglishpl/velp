@@ -67,9 +67,9 @@ export default function SimpleContentViewer() {
     return defaultResult;
   };
 
-  // Fetch materials
+  // Fetch materials using the correct direct API endpoint
   const { data: materials = [], isLoading, error } = useQuery<S3Material[]>({
-    queryKey: [`/api/books/${bookId}/units/${unitId}/materials`],
+    queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
   });
 
   // Slider settings
