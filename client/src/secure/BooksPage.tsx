@@ -7,8 +7,6 @@ import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { useQuery } from '@tanstack/react-query';
 import { ChevronLeft } from 'lucide-react';
-import { useAuth } from '@/hooks/use-auth';
-
 // Type for a book with thumbnail URL
 type BookWithThumbnail = {
   bookId: string;
@@ -19,10 +17,6 @@ type BookWithThumbnail = {
 
 export default function BooksPage() {
   const { toast } = useToast();
-  const { user } = useAuth();
-  
-  // Use the authenticated user from the auth context
-  const isAuthenticated = !!user;
 
   // Use React Query to fetch books
   const { data: books, isLoading, error } = useQuery({
