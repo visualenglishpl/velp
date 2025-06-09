@@ -77,8 +77,14 @@ export default function SimpleContentViewer() {
   };
 
   // Fetch materials using the correct direct API endpoint
-  const { data: materials = [], isLoading, error } = useQuery<S3Material[]>({
+  const { data: allMaterials = [], isLoading, error } = useQuery<S3Material[]>({
     queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
+  });
+
+  // Filter out PDF files from the materials
+  const materials = allMaterials.filter(material => {
+    const fileName = material.content?.toLowerCase() || '';
+    return !fileName.endsWith('.pdf');
   });
 
   // Navigation functions
