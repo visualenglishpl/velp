@@ -166,99 +166,92 @@ export default function SimpleContentViewer() {
   const currentMaterial = materials[currentSlide];
   
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b p-4">
-        <div className="flex items-center justify-between max-w-6xl mx-auto">
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Minimal Header */}
+      <div className="border-b border-gray-100 py-3 px-6">
+        <div className="flex items-center justify-between max-w-5xl mx-auto">
           <Button 
             variant="ghost" 
             onClick={() => setLocation('/books')}
-            className="flex items-center gap-2"
+            className="text-gray-500 hover:text-gray-700 p-2"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Books
+            <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="text-2xl font-bold">
-            Book {bookId} - Unit {unitId}
-          </h1>
+          <div className="text-sm font-medium text-gray-600">
+            Book {bookId} · Unit {unitId}
+          </div>
         </div>
       </div>
       
-      {/* Content Viewer */}
-      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full p-4">
-        {/* Navigation Controls */}
-        <div className="flex items-center justify-between mb-4">
-          <Button 
-            variant="outline" 
-            onClick={prevSlide} 
-            disabled={currentSlide === 0}
-            className="flex items-center gap-2"
-          >
-            <ChevronLeft className="h-4 w-4" />
-            Previous
-          </Button>
-          
-          <div className="text-sm text-gray-600 font-medium">
-            {currentSlide + 1} / {materials.length}
-          </div>
-          
-          <Button 
-            variant="outline" 
-            onClick={nextSlide} 
-            disabled={currentSlide === materials.length - 1}
-            className="flex items-center gap-2"
-          >
-            Next
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-
+      {/* Clean Content Area */}
+      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full py-8 px-6">
         {/* Current Slide */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col items-center">
           {currentMaterial && (() => {
             const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, currentMaterial.content);
             const qa = getQuestionAnswer(currentMaterial);
             const hasQuestion = qa.hasData && qa.question.trim() !== '';
             
             return (
-              <div className="flex-1 flex flex-col">
-                {/* Question-Answer section */}
+              <div className="w-full flex flex-col items-center space-y-8">
+                {/* Image First */}
+                <div className="flex items-center justify-center">
+                  <img 
+                    src={imagePath} 
+                    alt={currentMaterial.title || `Slide ${currentSlide + 1}`}
+                    className="max-h-[65vh] max-w-full object-contain"
+                  />
+                </div>
+                
+                {/* Question-Answer Below */}
                 {hasQuestion && (
-                  <div className="mb-6">
-                    <div className="bg-white rounded-lg shadow-lg p-6 border">
-                      <div className="text-center space-y-3">
-                        <div className="text-xl font-semibold text-blue-700">
-                          {qa.question}
-                        </div>
-                        <div className="text-lg text-gray-700 border-t pt-3">
-                          {qa.answer}
-                        </div>
+                  <div className="w-full max-w-2xl">
+                    <div className="text-center space-y-4 py-6">
+                      <div className="text-2xl font-light text-gray-900">
+                        {qa.question}
+                      </div>
+                      <div className="text-lg text-gray-600 leading-relaxed">
+                        {qa.answer}
                       </div>
                     </div>
                   </div>
                 )}
-                
-                {/* Image */}
-                <div className="flex-1 flex items-center justify-center bg-white rounded-lg shadow-sm border p-4">
-                  <img 
-                    src={imagePath} 
-                    alt={currentMaterial.title || `Slide ${currentSlide + 1}`}
-                    className="max-h-[60vh] max-w-full object-contain"
-                  />
-                </div>
               </div>
             );
           })()}
         </div>
 
-        {/* Slide Dots Navigation */}
-        <div className="flex justify-center mt-6 space-x-2">
+        {/* Minimal Navigation */}
+        <div className="flex items-center justify-center space-x-8 mt-8 pt-6">
+          <button
+            onClick={prevSlide}
+            disabled={currentSlide === 0}
+            className="p-3 rounded-full hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+          >
+            <ChevronLeft className="h-6 w-6 text-gray-600" />
+          </button>
+          
+          <div className="text-sm text-gray-400 font-light min-w-[60px] text-center">
+            {currentSlide + 1} / {materials.length}
+          </div>
+          
+          <button
+            onClick={nextSlide}
+            disabled={currentSlide === materials.length - 1}
+            className="p-3 rounded-full hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+          >
+            <ChevronRight className="h-6 w-6 text-gray-600" />
+          </button>
+        </div>
+
+        {/* Minimal Dots */}
+        <div className="flex justify-center mt-4 space-x-1">
           {materials.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentSlide ? 'bg-blue-600' : 'bg-gray-300 hover:bg-gray-400'
+              className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                index === currentSlide ? 'bg-gray-800 w-6' : 'bg-gray-300 hover:bg-gray-400'
               }`}
             />
           ))}
