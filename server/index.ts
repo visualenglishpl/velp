@@ -7,6 +7,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import timeout from "express-timeout-handler";
 import { configureHMR } from "./hmr-config";
+import { createServer } from "http";
 import path from "path";
 
 // Configure enhanced HMR settings for development
@@ -324,11 +325,38 @@ app.get('/api/test', (req, res) => {
 
 (async () => {
   try {
-    // Register our API endpoints
-    registerContentEndpoints(app);
+    // Start server first to open port quickly
+    const server = createServer(app);
     
-    // Register main routes
-    const server = await registerRoutes(app);
+    // Try port 5000 first, then fallback to alternatives
+    let port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+    const host = '0.0.0.0';
+    
+    // Start server immediately to meet port opening requirement
+    await new Promise<void>((resolve, reject) => {
+      server.listen(port, host, () => {
+        console.log(`8:${new Date().toLocaleTimeString().split(':')[1]}:${new Date().toLocaleTimeString().split(':')[2]} [express] Server running at http://${host}:${port}`);
+        console.log(`✅ Server successfully bound to ${host}:${port}`);
+        resolve();
+      });
+      
+      server.on('error', (error: any) => {
+        if (error.code === 'EADDRINUSE') {
+          reject(new Error(`Port ${port} is in use`));
+        } else {
+          reject(error);
+        }
+      });
+    });
+    
+    // Now initialize everything else asynchronously
+    setTimeout(async () => {
+      try {
+        // Register our API endpoints
+        registerContentEndpoints(app);
+        
+        // Register main routes (without creating new server)
+        await registerRoutes(app, server);
 
     app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
       const status = err.status || err.statusCode || 500;
