@@ -62,10 +62,7 @@ const s3Client = new S3Client({
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || ""
-  },
-  // Explicitly set the endpoint and use path-style addressing
-  endpoint: "https://s3.eu-north-1.amazonaws.com",
-  forcePathStyle: true
+  }
 });
 
 // Debug S3 client initialization
@@ -2522,7 +2519,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Diagnostic endpoint for Excel QA system
+  // Diagnostic endpoint for Excel QA system and S3 connectivity
   app.get("/api/diagnose", async (req, res) => {
     try {
       console.log("🔍 Running Excel QA diagnostics...");
@@ -2557,10 +2554,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
         };
       });
 
-      // Check S3 status
+      // Test S3 connectivity
       let s3Status = "❌ S3 not configured";
+      let s3TestResult = null;
+      
       if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
         s3Status = "✅ AWS S3 credentials detected";
+        
+        try {
+          // Test S3 access with a simple list operation
+          const testCommand = new ListObjectsV2Command({
+            Bucket: S3_BUCKET,
+            MaxKeys: 1
+          });
+          
+          const result = await s3Client.send(testCommand);
+          s3TestResult = {
+            success: true,
+            message: "S3 access working",
+            objectCount: result.KeyCount || 0
+          };
+        } catch (error) {
+          s3TestResult = {
+            success: false,
+            message: error.message,
+            code: error.name
+          };
+        }
       }
 
       // Test a specific filename lookup
@@ -2587,6 +2607,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         serverStatus: "✅ Server running on port 5000",
         s3Status,
+        s3TestResult,
         qaFiles: qaStatus,
         filenameTest,
         timestamp: new Date().toISOString()
