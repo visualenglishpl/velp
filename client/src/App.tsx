@@ -39,7 +39,6 @@ import UnitCheckoutPage from "./pages/UnitCheckoutPage";
 import BookSubscription from "./pages/BookSubscription";
 import BookWizardPage from "./pages/BookWizardPage";
 import LessonPlanPreview from "./pages/LessonPlanPreview";
-import ContentViewerTest from "./pages/ContentViewerTest";
 
 // Secure pages (login required)
 // Migrated to /secure folder
@@ -188,9 +187,6 @@ function App() {
           </Route>
           <Route path="/lesson-plan">
             <LessonPlanPreview />
-          </Route>
-          <Route path="/content-viewer-test">
-            <ContentViewerTest />
           </Route>
           <Route path="/cart">
             <CartPage />
