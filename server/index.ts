@@ -354,9 +354,15 @@ app.get('/api/test', (req, res) => {
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
   const host = '0.0.0.0';
   
-  // Type issues: TypeScript expects a number for port, but we need to be explicit for TypeScript
-  server.listen(port as number, host, () => {
+  // Force server to bind properly with error handling
+  server.listen(port, host, () => {
     log(`Server running at http://${host}:${port}`);
+    console.log(`✅ Server successfully bound to ${host}:${port}`);
+  });
+  
+  // Immediate connection test
+  server.on('listening', () => {
+    console.log(`✅ Server is now listening and accepting connections on port ${port}`);
   });
   
   // Handle termination signals properly
