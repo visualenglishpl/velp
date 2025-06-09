@@ -28,7 +28,7 @@ export default function BooksPage() {
       }
       return await response.json();
     },
-    enabled: isAuthenticated, // Only fetch if authenticated
+    // Query is enabled by default since this is a protected route
   });
 
   // If there's an error, show a toast
@@ -92,7 +92,7 @@ export default function BooksPage() {
       ) : (
         // Books grid
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          {displayBooks.map((book) => (
+          {displayBooks.map((book: BookWithThumbnail) => (
             <Link key={book.bookId} href={`/books/${book.bookId}`}>
               <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow cursor-pointer">
                 <CardHeader className="p-0 relative h-48">

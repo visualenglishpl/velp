@@ -68,8 +68,8 @@ export default function SimpleContentViewer() {
   };
 
   // Fetch materials
-  const { data: materials = [], isLoading } = useQuery<S3Material[]>({
-    queryKey: [`/api/direct/${bookPath}/${unitPath}/materials`],
+  const { data: materials = [], isLoading, error } = useQuery<S3Material[]>({
+    queryKey: [`/api/books/${bookId}/units/${unitId}/materials`],
   });
 
   // Slider settings
@@ -87,6 +87,42 @@ export default function SimpleContentViewer() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center p-8">
+          <div className="text-red-600 text-lg font-semibold mb-2">
+            Failed to load content
+          </div>
+          <div className="text-gray-600 mb-4">
+            {error.message || 'Unable to fetch materials'}
+          </div>
+          <Button onClick={() => setLocation('/books')} variant="outline">
+            Back to Books
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!materials || materials.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center p-8">
+          <div className="text-gray-600 text-lg font-semibold mb-2">
+            No content available
+          </div>
+          <div className="text-gray-500 mb-4">
+            Book {bookId} - Unit {unitId} has no materials
+          </div>
+          <Button onClick={() => setLocation('/books')} variant="outline">
+            Back to Books
+          </Button>
+        </div>
       </div>
     );
   }
@@ -120,10 +156,8 @@ export default function SimpleContentViewer() {
             const isVideo = material.content.toLowerCase().includes('video') || 
                            material.content.toLowerCase().endsWith('.mp4');
             
-            // Premium content check - since this is a protected route, user has access
-            const freeSlideLimit = 15;
-            const hasPaidAccess = true; // User is authenticated via ProtectedRoute
-            const isPremiumContent = (index >= freeSlideLimit || isVideo) && !hasPaidAccess;
+            // Since this is a protected route, user has full access
+            const isPremiumContent = false;
             
             return (
               <div key={index} className="outline-none h-[55vh] w-full flex flex-col justify-center relative px-3">
@@ -134,21 +168,8 @@ export default function SimpleContentViewer() {
                   // Check if question data exists from Excel
                   const hasQuestion = qa.hasData && qa.question.trim() !== '';
                   
-                  // Check if this is a blank slide
-                  const contentLower = material.content.toLowerCase();
-                  const filenamePart = contentLower.split('/').pop() || contentLower;
-                  
-                  const isBlankByDesign = 
-                    filenamePart.includes('00 a') ||
-                    filenamePart.endsWith('.pdf') ||
-                    filenamePart.endsWith('.mp4') ||
-                    filenamePart.includes('video') ||
-                    filenamePart.includes('game') ||
-                    filenamePart.includes('wordwall') ||
-                    filenamePart.startsWith('00');
-                  
-                  // Only show Q&A if we have Excel data and it's not a blank slide
-                  if (!hasQuestion || isBlankByDesign) return null;
+                  // Only show Q&A if we have Excel data
+                  if (!hasQuestion) return null;
                   
                   return (
                     <div className="mb-1 p-2 mx-auto z-10 max-w-2xl">
