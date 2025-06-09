@@ -102,7 +102,7 @@ export function useExcelQA(bookId: string) {
 
   const findMatchingQA = useCallback((filename: string, currentUnitId?: string): QuestionAnswer | undefined => {
     // Debug level: 0=none, 1=important, 2=details
-    const debugLevel = 0;
+    const debugLevel = 1;
     
     // Helper function to log with debug level
     const logDebug = (message: string, level: number = 1) => {
@@ -162,6 +162,25 @@ export function useExcelQA(bookId: string) {
       if (key.toLowerCase() === lowerCleanedFilename) {
         logDebug(`✅ FOUND MATCH (case-insensitive filename) for: ${cleanedFilename}`, 1);
         return qa;
+      }
+    }
+
+    // Try pattern-based matching for numbered slides
+    const slidePattern = filename.match(/(\d+)\s*([A-Z])\s*(.+)/i);
+    if (slidePattern) {
+      const slideNum = slidePattern[1];
+      const slideLetter = slidePattern[2].toUpperCase();
+      const slideContent = slidePattern[3];
+      
+      // Look for entries with this pattern
+      const patternKey = `${slideNum} ${slideLetter}`;
+      const matchingEntry = Object.entries(filteredMappings).find(([key, qa]) => {
+        return key.startsWith(patternKey) || qa.codePattern === patternKey;
+      });
+      
+      if (matchingEntry) {
+        logDebug(`✅ FOUND MATCH (pattern-based) for: ${filename} -> ${matchingEntry[0]}`, 1);
+        return matchingEntry[1];
       }
     }
 
