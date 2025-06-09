@@ -213,7 +213,7 @@ export default function SimpleContentViewer() {
       </div>
       
       {/* Clean Content Area */}
-      <div className="flex-1 flex flex-col max-w-6xl mx-auto w-full py-8 px-6 relative">
+      <div className="flex-1 flex flex-col max-w-6xl mx-auto w-full py-4 px-6 relative">
         {/* Left Navigation Button */}
         <button
           onClick={() => setCurrentSlide((prev) => (prev - 1 + materials.length) % materials.length)}
@@ -247,16 +247,16 @@ export default function SimpleContentViewer() {
 
             
             return (
-              <div className="w-full flex flex-col items-center space-y-6">
+              <div className="w-full flex flex-col items-center space-y-3">
                 {/* Question-Answer First (Top) */}
                 {hasQuestion && (
                   <div className="w-full max-w-5xl">
-                    <div className="text-center space-y-4 bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
-                      <p className="text-2xl font-light text-gray-800 leading-relaxed">
+                    <div className="text-center space-y-3 bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+                      <p className="text-xl font-light text-gray-800 leading-relaxed">
                         {qa.question}
                       </p>
                       {qa.answer && (
-                        <p className="text-lg text-gray-600 leading-relaxed">
+                        <p className="text-base text-gray-600 leading-relaxed">
                           {qa.answer}
                         </p>
                       )}
@@ -264,8 +264,8 @@ export default function SimpleContentViewer() {
                   </div>
                 )}
                 
-                {/* Screen-Fitted Container for Images/Videos */}
-                <div className="w-full h-[calc(100vh-280px)] flex items-center justify-center bg-gray-50 rounded-lg relative overflow-hidden border border-gray-200">
+                {/* Optimized Container for Images/Videos - fits with thumbnails below */}
+                <div className="w-full h-[calc(100vh-450px)] flex items-center justify-center bg-gray-50 rounded-lg relative overflow-hidden border border-gray-200">
                   {imageLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-gray-50/90 z-10">
                       <div className="flex flex-col items-center space-y-2">
@@ -279,14 +279,26 @@ export default function SimpleContentViewer() {
                     <div className="relative w-full h-full">
                       <video 
                         controls
+                        preload="metadata"
+                        crossOrigin="anonymous"
                         className="w-full h-full object-contain"
                         onLoadStart={() => setImageLoading(true)}
                         onLoadedData={() => setImageLoading(false)}
-                        onError={() => setImageLoading(false)}
+                        onError={(e) => {
+                          setImageLoading(false);
+                          console.error('Video playback error:', e);
+                        }}
                         poster={imagePath.replace(/\.(mp4|avi|mov|swf)$/i, '.png')}
                       >
                         <source src={imagePath} type="video/mp4" />
-                        Your browser does not support the video tag.
+                        <source src={imagePath} type="video/quicktime" />
+                        <p className="text-center text-gray-600 p-4">
+                          Your browser does not support this video format. 
+                          <br />
+                          <a href={imagePath} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                            Download video file
+                          </a>
+                        </p>
                       </video>
                       <div className="absolute top-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
                         VIDEO
@@ -338,8 +350,8 @@ export default function SimpleContentViewer() {
 
 
 
-        {/* Thumbnail Preview Slider */}
-        <div className="mt-6 w-full max-w-4xl">
+        {/* Thumbnail Preview Slider - Always Visible */}
+        <div className="mt-3 w-full max-w-4xl">
           <div className="flex space-x-2 overflow-x-auto scrollbar-hide py-2 px-4">
             {materials.map((material, index) => {
               const thumbnailPath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, material.content);
