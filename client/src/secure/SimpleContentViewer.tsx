@@ -29,6 +29,7 @@ export default function SimpleContentViewer() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imageLoading, setImageLoading] = useState(false);
   const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
+  const [viewedQuestions, setViewedQuestions] = useState<Set<number>>(new Set());
   
   // Extract path parameters from /book/:bookId/unit/:unitNumber format
   const currentPath = window.location.pathname;
@@ -105,8 +106,6 @@ export default function SimpleContentViewer() {
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
-
-
 
   // Preload adjacent images for faster navigation
   useEffect(() => {
@@ -193,6 +192,24 @@ export default function SimpleContentViewer() {
 
   // Get current material
   const currentMaterial = materials[currentSlide];
+
+  // Track viewed questions
+  useEffect(() => {
+    if (currentMaterial) {
+      const qa = getQuestionAnswer(currentMaterial);
+      const blankSlides = [6, 15, 24, 33, 43, 45, 46, 47, 28];
+      const isBlankSlide = blankSlides.includes(currentSlide + 1);
+      const hasQuestion = !isBlankSlide && qa.hasData && qa.question.trim() !== '';
+      
+      if (hasQuestion) {
+        setViewedQuestions(prev => {
+          const newSet = new Set(prev);
+          newSet.add(currentSlide);
+          return newSet;
+        });
+      }
+    }
+  }, [currentSlide, currentMaterial]);
   
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -237,7 +254,7 @@ export default function SimpleContentViewer() {
           {currentMaterial && (() => {
             const imagePath = createS3ImageUrl(`/api/direct/${bookPath}/${unitPath}/assets`, currentMaterial.content);
             // Define slides that should be completely blank (activity slides)
-            const blankSlides = [6, 15, 24, 33, 43, 45, 46, 47, 20, 28, 36];
+            const blankSlides = [6, 15, 24, 33, 43, 45, 46, 47, 28];
             const isBlankSlide = blankSlides.includes(currentSlide + 1);
             
             const qa = getQuestionAnswer(currentMaterial);
@@ -354,7 +371,7 @@ export default function SimpleContentViewer() {
 
 
 
-        {/* Thumbnail Preview Slider - Always Visible */}
+        {/* Enhanced Thumbnail Preview Slider with Numbers and Indicators */}
         <div className="mt-3 w-full max-w-4xl">
           <div className="flex space-x-2 overflow-x-auto scrollbar-hide py-2 px-4">
             {materials.map((material, index) => {
@@ -365,31 +382,56 @@ export default function SimpleContentViewer() {
                            material.content.toLowerCase().includes('.avi') ||
                            material.content.toLowerCase().includes('.mov');
               
+              // Check if this slide has a viewed question
+              const qa = getQuestionAnswer(material);
+              const blankSlides = [6, 15, 24, 33, 43, 45, 46, 47, 28];
+              const isBlankSlide = blankSlides.includes(index + 1);
+              const hasQuestion = !isBlankSlide && qa.hasData && qa.question.trim() !== '';
+              const isViewed = viewedQuestions.has(index);
+              
               return (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
                   className={`flex-shrink-0 relative transition-all duration-200 ${
-                    isActive ? 'ring-2 ring-gray-800 ring-offset-2' : 'hover:ring-1 hover:ring-gray-400 hover:ring-offset-1'
+                    isActive ? 'ring-2 ring-blue-500 ring-offset-2' : 'hover:ring-1 hover:ring-gray-400 hover:ring-offset-1'
                   }`}
                 >
-                  <div className="w-16 h-12 bg-gray-100 rounded overflow-hidden relative">
+                  <div className="w-20 h-16 bg-gray-100 rounded overflow-hidden relative">
                     <img
                       src={thumbnailPath}
                       alt={`Slide ${index + 1}`}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
+                    
+                    {/* Video Preview Indicator */}
                     {isVideo && (
                       <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                        <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center">
-                          <div className="w-0 h-0 border-l-[3px] border-l-black border-y-[2px] border-y-transparent ml-0.5"></div>
+                        <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                          <div className="w-0 h-0 border-l-[4px] border-l-black border-y-[3px] border-y-transparent ml-0.5"></div>
                         </div>
                       </div>
                     )}
+                    
+                    {/* Question Viewed Tick Indicator */}
+                    {hasQuestion && isViewed && (
+                      <div className="absolute top-1 right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                        <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                    
+                    {/* Slide Number */}
+                    <div className="absolute bottom-1 left-1 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded font-medium">
+                      {index + 1}
+                    </div>
                   </div>
+                  
+                  {/* Active Slide Indicator */}
                   {isActive && (
-                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gray-800 rounded-full"></div>
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full"></div>
                   )}
                 </button>
               );
